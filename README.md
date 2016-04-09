@@ -21,7 +21,7 @@ The module can be easily installed with pip:
 This module depends on `numpy` and `pandas`. Optionally you can get also some nice visualisations if you have `matplotlib` installed.
 
 # Tests
-Tests are under development
+To run the tests, execute the command `python setup.py test`
 
 # Usage
 The module contains one class:
