@@ -1,4 +1,6 @@
 from __future__ import division
+from six import string_types
+
 from collections import OrderedDict
 
 import numpy as np
@@ -57,11 +59,12 @@ class DataFrameSummary(object):
         return pd.value_counts(self.columns_stats.loc['types'])
 
     def summary(self):
-        return pd.concat([self.df.describe(), self.columns_stats])
+        return pd.concat([self.df.describe(), self.columns_stats])[self.df.columns]
 
     @staticmethod
     def _number_format(x):
-        num_format = '{0:,.0f}' if int(x) == x else '{0:,.2f}'
+        eps = 0.000000001
+        num_format = '{0:,.0f}' if abs(int(x) - x) < eps else '{0:,.2f}'
         return num_format.format(x)
 
     @classmethod
@@ -70,7 +73,7 @@ class DataFrameSummary(object):
         return '{}%'.format(x)
 
     def _clean_column(self, column):
-        if not isinstance(column, (int, str, unicode)):
+        if not isinstance(column, (int, string_types)):
             raise ValueError('{} is not a valid column'.format(column))
         return column in self.df.columns
 
@@ -84,9 +87,9 @@ class DataFrameSummary(object):
         # settings types
         stats['types'] = ''
         columns_info = self._get_columns_info(stats)
-        for ctype, columns in columns_info.iteritems():
+        for ctype, columns in columns_info.items():
             stats.ix[columns, 'types'] = ctype
-        return stats.transpose()
+        return stats.transpose()[self.df.columns]
 
     def _get_uniques(self):
         return pd.Series(dict((c, self.df[c].nunique()) for c in self.df.columns), name='uniques')
@@ -125,7 +128,8 @@ class DataFrameSummary(object):
         :return:
         """
         capped_series = np.minimum(series, series.mean() + multiplier * series.std())
-        count = pd.value_counts(series != capped_series)[True]
+        count = pd.value_counts(series != capped_series)
+        count = count[True] if True in count else 0
         perc = self._percent(count / self.length)
         return count, perc
 
@@ -137,14 +141,17 @@ class DataFrameSummary(object):
         :return (array):
         """
         capped_series = np.minimum(series, series.median() + multiplier * series.mad())
-        count = pd.value_counts(series != capped_series)[True]
+        count = pd.value_counts(series != capped_series)
+        count = count[True] if True in count else 0
         perc = self._percent(count / self.length)
         return count, perc
 
     def _get_top_correlations(self, column, threshold=0.65, top=3):
         column_corr = np.fabs(self.corr[column].drop(column)).sort_values(ascending=False,
                                                                           inplace=False)
-        return self.corr[column][column_corr[(column_corr > threshold)][:top].index].to_dict()
+        top_corr = column_corr[(column_corr > threshold)][:top].index
+        correlations = self.corr[column][top_corr].to_dict()
+        return ', '.join('{}: {}'.format(col, self._percent(val)) for col, val in correlations.items())
 
     def _get_numeric_summary(self, column, plot=True):
         series = self.df[column]
@@ -155,11 +162,13 @@ class DataFrameSummary(object):
             except ImportError:
                 pass
 
-        stats = OrderedDict(mean=series.mean(),
-                            std=series.std(),
-                            variance=series.var(),
-                            min=series.min(),
-                            max=series.max())
+        stats = OrderedDict()
+        stats['mean'] = series.mean()
+        stats['std'] = series.std()
+        stats['variance'] = series.var()
+        stats['min'] = series.min()
+        stats['max'] = series.max()
+
         for x in np.array([0.05, 0.25, 0.5, 0.75, 0.95]):
             stats[self._percent(x)] = series.quantile(x)
 
@@ -169,7 +178,7 @@ class DataFrameSummary(object):
         stats['sum'] = series.sum()
         stats['mad'] = series.mad()
         stats['cv'] = stats['std'] / stats['mean'] if stats['mean'] else np.nan
-        stats['zeros_num'] = (self.length - np.count_nonzero(series))
+        stats['zeros_num'] = self.length - np.count_nonzero(series)
         stats['zeros_perc'] = self._percent(stats['zeros_num'] / self.length)
         deviation_of_mean, deviation_of_mean_perc = self._get_deviation_of_mean(series)
         stats['deviating_of_mean'] = deviation_of_mean
@@ -184,7 +193,6 @@ class DataFrameSummary(object):
         series = self.df[column]
         stats = {'min': series.min(), 'max': series.max()}
         stats['range'] = stats['max'] - stats['min']
-        stats['type'] = 'DATE'
         return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]])
 
     def _get_categorical_summary(self, column):
@@ -202,16 +210,16 @@ class DataFrameSummary(object):
     def _get_bool_summary(self, column):
         series = self.df[column]
 
-        for k, v in series.values_count.items():
-            print 'class {}: {{count: {}, percentage: {}}}'.format(k,
-                                                                   v,
-                                                                   self._percent(v / self.length))
+        stats = {}
+        for class_name, class_value in dict(series.value_counts()).items():
+            stats['"{}" count'.format(class_name)] = '{}'.format(class_value)
+            stats['"{}" perc'.format(class_name)] = '{}'.format(
+                self._percent(class_value / self.length))
 
-        stats = dict(self.df[column].value_counts)
         return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]])
 
     def _get_unique_summary(self, column):
-        return self.columns_stats.ix[column, :]
+        return self.columns_stats.ix[:, column]
 
     def _get_column_summary(self, column):
         column_type = self.columns_stats.loc['types'][column]
