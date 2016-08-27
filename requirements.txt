@@ -1,0 +1,4 @@
+pandas==0.18.1
+tensorflow==0.10.0rc0
+matplotlib==1.5.1
+jupyter==1.0.0
