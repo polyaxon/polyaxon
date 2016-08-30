@@ -18,7 +18,7 @@ class PyTest(TestCommand):
 
 
 setup(name='pandas-summary',
-      version='0.0.4',
+      version='0.0.41',
       description='An extension to pandas describe function.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mouradmourafiq@gmail.com',
