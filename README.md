@@ -4,4 +4,32 @@ This is an example of a regressor based on recurrent networks:
 
 The objective is to predict continuous values, sin and cos functions in this example, based on previous observations using the LSTM architecture.
 
+## Install and Run
+
+### Create a Virtual Environment
+It is reccomended that you create a virtualenv for the setup since this example is highly dependant on the versions set in the requirements file.
+
+```
+$ virtualenv ~/python/ltsm
+$ source ~/python/ltsm/bin/activate
+(ltsm) $
+```
+
+### Install Requirements
+This example depends on **tensorflow-0.10.0rc0** to work. You will first need to install the requirements. You will need the appropriate version of tensorflow for your platform, this example is for mac. For more details goto [TAG tensorflow-0.10.0rc0](https://github.com/tensorflow/tensorflow/tree/v0.10.0rc0)
+```
+(ltsm) $ wget https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.10.0rc0-py2-none-any.whl
+(ltsm) $ pip install -U ./tensorflow-0.10.0rc0-py2-none-any.whl
+(ltsm) $ pip install -r ./requirements.tx
+```
+
+### Running on Jupyter
+Three Jupyter notebooks are provided as examples on how to use lstm for predicting shapes. They will be available when you start up Jupyter in the project dir.
+
+```
+(ltsm) $ jupyter notebook
+```
+
+
+## Other Reading
 For more details please look at this blog post [Sequence prediction using recurrent neural networks(LSTM) with TensorFlow](http://mourafiq.com/2016/05/15/predicting-sequences-using-rnn-in-tensorflow.html)

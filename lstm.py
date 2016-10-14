@@ -4,10 +4,8 @@ import tensorflow as tf
 from tensorflow.python.framework import dtypes
 from tensorflow.contrib import learn
 
-
 def x_sin(x):
     return x * np.sin(x)
-
 
 def sin_cos(x):
     return pd.DataFrame(dict(a=np.sin(x), b=np.cos(x)), index=x)
@@ -32,6 +30,7 @@ def rnn_data(data, time_steps, labels=False):
         else:
             data_ = data.iloc[i: i + time_steps].as_matrix()
             rnn_df.append(data_ if len(data_.shape) > 1 else [[i] for i in data_])
+
     return np.array(rnn_df)
 
 
