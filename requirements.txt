@@ -12,7 +12,7 @@ decorator==4.0.10
 entrypoints==0.2.2
 enum34==1.1.6
 funcsigs==1.0.2
-functools32==3.2.3.post2
+functools32
 ipykernel==4.5.0
 ipython==5.1.0
 ipython-genutils==0.1.0
@@ -42,8 +42,8 @@ python-dateutil==2.5.3
 pytz==2016.7
 pyzmq==16.0.0
 qtconsole==4.2.1
-scikit-learn==0.18
 scipy==0.18.1
+scikit-learn==0.18
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.10.0
