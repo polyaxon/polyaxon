@@ -10,7 +10,6 @@ def x_sin(x):
 def sin_cos(x):
     return pd.DataFrame(dict(a=np.sin(x), b=np.cos(x)), index=x)
 
-
 def rnn_data(data, time_steps, labels=False):
     """
     creates new data frame based on previous observation
@@ -31,7 +30,7 @@ def rnn_data(data, time_steps, labels=False):
             data_ = data.iloc[i: i + time_steps].as_matrix()
             rnn_df.append(data_ if len(data_.shape) > 1 else [[i] for i in data_])
 
-    return np.array(rnn_df)
+    return np.array(rnn_df, dtype=np.float32)
 
 
 def split_data(data, val_size=0.1, test_size=0.1):
@@ -56,6 +55,14 @@ def prepare_data(data, time_steps, labels=False, val_size=0.1, test_size=0.1):
             rnn_data(df_val, time_steps, labels=labels),
             rnn_data(df_test, time_steps, labels=labels))
 
+def load_csvdata(rawdata, time_steps, seperate=False):
+    data = rawdata
+    if not isinstance(data, pd.DataFrame):
+        data = pd.DataFrame(data)
+    #print(data)
+    train_x, val_x, test_x = prepare_data(data['a'] if seperate else data, time_steps)
+    train_y, val_y, test_y = prepare_data(data['b'] if seperate else data, time_steps, labels=True)
+    return dict(train=train_x, val=val_x, test=test_x), dict(train=train_y, val=val_y, test=test_y)
 
 def generate_data(fct, x, time_steps, seperate=False):
     """generates data with based on a function fct"""
