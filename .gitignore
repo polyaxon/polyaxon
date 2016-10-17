@@ -62,7 +62,6 @@ target/
 .project
 .settings/
 .idea/
-data/
 
 # ipython checkpoints
 .ipynb_checkpoints/
