@@ -3,6 +3,7 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow.python.framework import dtypes
 from tensorflow.contrib import learn
+from tensorflow.contrib import layers as tflayers
 
 def x_sin(x):
     return x * np.sin(x)
@@ -99,12 +100,12 @@ def lstm_model(num_units, rnn_layers, dense_layers=None, learning_rate=0.1, opti
 
     def dnn_layers(input_layers, layers):
         if layers and isinstance(layers, dict):
-            return learn.ops.dnn(input_layers,
+            return tflayers.stack(input_layers, tflayers.fully_connected,
                                  layers['layers'],
                                  activation=layers.get('activation'),
                                  dropout=layers.get('dropout'))
         elif layers:
-            return learn.ops.dnn(input_layers, layers)
+            return tflayers.stack(input_layers, tflayers.fully_connected, layers)
         else:
             return input_layers
 
