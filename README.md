@@ -16,11 +16,10 @@ $ source ~/python/ltsm/bin/activate
 ```
 
 ### Install Requirements
-This example depends on **tensorflow-0.10.0rc0** to work. You will first need to install the requirements. You will need the appropriate version of tensorflow for your platform, this example is for mac. For more details goto [TAG tensorflow-0.10.0rc0 Setup](https://github.com/tensorflow/tensorflow/blob/v0.10.0rc0/tensorflow/g3doc/get_started/os_setup.md)
+This example depends on **tensorflow-0.11.0** to work. You will first need to install the requirements. You will need the appropriate version of tensorflow for your platform, this example is for mac. For more details goto [TAG tensorflow-0.11.0 Setup](https://github.com/tensorflow/tensorflow/blob/v0.11.0/tensorflow/g3doc/get_started/os_setup.md)
 ```
-(ltsm) $ wget https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.10.0rc0-py2-none-any.whl
-(ltsm) $ pip install -U ./tensorflow-0.10.0rc0-py2-none-any.whl
-(ltsm) $ pip install -r ./requirements.tx
+(ltsm) $ pip install -U https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.11.0-py3-none-any.whl
+(ltsm) $ pip install -r ./requirements.txt
 ```
 
 ### Running on Jupyter

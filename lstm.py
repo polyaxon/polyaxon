@@ -2,14 +2,17 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.python.framework import dtypes
-from tensorflow.contrib import learn
+from tensorflow.contrib import learn as tflearn
 from tensorflow.contrib import layers as tflayers
+
 
 def x_sin(x):
     return x * np.sin(x)
 
+
 def sin_cos(x):
     return pd.DataFrame(dict(a=np.sin(x), b=np.cos(x)), index=x)
+
 
 def rnn_data(data, time_steps, labels=False):
     """
@@ -56,14 +59,16 @@ def prepare_data(data, time_steps, labels=False, val_size=0.1, test_size=0.1):
             rnn_data(df_val, time_steps, labels=labels),
             rnn_data(df_test, time_steps, labels=labels))
 
+
 def load_csvdata(rawdata, time_steps, seperate=False):
     data = rawdata
     if not isinstance(data, pd.DataFrame):
         data = pd.DataFrame(data)
-    #print(data)
+
     train_x, val_x, test_x = prepare_data(data['a'] if seperate else data, time_steps)
     train_y, val_y, test_y = prepare_data(data['b'] if seperate else data, time_steps, labels=True)
     return dict(train=train_x, val=val_x, test=test_x), dict(train=train_y, val=val_y, test=test_y)
+
 
 def generate_data(fct, x, time_steps, seperate=False):
     """generates data with based on a function fct"""
@@ -101,9 +106,9 @@ def lstm_model(num_units, rnn_layers, dense_layers=None, learning_rate=0.1, opti
     def dnn_layers(input_layers, layers):
         if layers and isinstance(layers, dict):
             return tflayers.stack(input_layers, tflayers.fully_connected,
-                                 layers['layers'],
-                                 activation=layers.get('activation'),
-                                 dropout=layers.get('dropout'))
+                                  layers['layers'],
+                                  activation=layers.get('activation'),
+                                  dropout=layers.get('dropout'))
         elif layers:
             return tflayers.stack(input_layers, tflayers.fully_connected, layers)
         else:
@@ -114,7 +119,7 @@ def lstm_model(num_units, rnn_layers, dense_layers=None, learning_rate=0.1, opti
         x_ = tf.unpack(X, axis=1, num=num_units)
         output, layers = tf.nn.rnn(stacked_lstm, x_, dtype=dtypes.float32)
         output = dnn_layers(output[-1], dense_layers)
-        prediction, loss = learn.models.linear_regression(output, y)
+        prediction, loss = tflearn.models.linear_regression(output, y)
         train_op = tf.contrib.layers.optimize_loss(
             loss, tf.contrib.framework.get_global_step(), optimizer=optimizer,
             learning_rate=learning_rate)
