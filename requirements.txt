@@ -1,0 +1,4 @@
+scipy==0.18.1
+tensorflow==1.0.0
+Pillow==4.0.0
+PyYAML==3.12
