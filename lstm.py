@@ -21,7 +21,7 @@ def rnn_data(data, time_steps, labels=False):
         l = [1, 2, 3, 4, 5]
         time_steps = 2
         -> labels == False [[1, 2], [2, 3], [3, 4]]
-        -> labels == True [2, 3, 4, 5]
+        -> labels == True [3, 4, 5]
     """
     rnn_df = []
     for i in range(len(data) - time_steps):
