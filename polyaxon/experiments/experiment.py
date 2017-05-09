@@ -147,12 +147,8 @@ class Experiment(object):
             raise ValueError("Could not start server; be sure to specify "
                              "cluster_spec, task_type, master, and task in "
                              "RunConfig or set the TF_CONFIG environment variable.")
-        server = server_lib.Server(
-            config.cluster_spec,
-            job_name=config.task_type,
-            task_index=config.task_id,
-            config=config.tf_config,
-            start=False)
+        server = server_lib.Server(config.cluster_spec, job_name=config.task_type,
+                                   task_index=config.task_id, config=config.tf_config, start=False)
         server.start()
         return server
 
@@ -482,9 +478,8 @@ class Experiment(object):
 
     def _maybe_export(self, eval_result, checkpoint_path=None):
         """Export the Estimator using export_fn, if defined."""
-        export_dir_base = os.path.join(
-            compat.as_bytes(self._estimator.model_dir),
-            compat.as_bytes("export"))
+        export_dir_base = os.path.join(compat.as_bytes(self._estimator.model_dir),
+                                       compat.as_bytes("export"))
 
         export_results = []
         for strategy in self._export_strategies:

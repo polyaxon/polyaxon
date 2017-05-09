@@ -123,6 +123,7 @@ def get_model_fn(model_config):
                                           config=model_config,
                                           name=model_config.name,
                                           model_type=model_config.model_type,
+                                          summaries=model_config.summaries,
                                           params=model_config.params)
         return model(features, labels, params)
 

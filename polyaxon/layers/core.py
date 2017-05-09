@@ -472,7 +472,7 @@ class Merge(BaseLayer):
 
     def _build(self, dependencies, *args, **kwargs):
         """
-        Input:
+        Args:
             incoming: List of Tensors.
         Returns:
             Merged Tensors.

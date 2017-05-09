@@ -32,9 +32,6 @@ class Conv2d(BaseLayer):
         that is convolved with the input. A second variable called 'b' is added to the result of
         the convolution operation.
 
-        Input:
-            4-D Tensor [batch, height, width, in_channels].
-
         Args:
             num_filter: `int`. The number of convolutional filters.
             filter_size: `int` or `list of int`. Size of filters.
@@ -60,9 +57,6 @@ class Conv2d(BaseLayer):
         Attributes:
             w: `Variable`. Variable representing filter weights.
             b: `Variable`. Variable representing biases.
-
-        Returns:
-            4-D Tensor [batch, new height, new width, num_filter].
         """
         super(Conv2d, self).__init__(mode, name)
         self.num_filter = num_filter
@@ -87,7 +81,12 @@ class Conv2d(BaseLayer):
         return self._b
 
     def _build(self, incoming, *args, **kwargs):
-        """incoming: `Tensor`. Incoming 4-D Tensor."""
+        """
+        Args:
+            4-D Tensor [batch, height, width, in_channels].
+        Returns:
+            4-D Tensor [batch, new height, new width, num_filter].
+        """
         input_shape = get_shape(incoming)
         assert len(input_shape) == 4, 'Incoming Tensor shape must be 4-D'
         filter_size = validate_filter_size(self.filter_size, input_shape[-1], self.num_filter)
@@ -128,9 +127,6 @@ class Conv2dTranspose(BaseLayer):
         Networks)[http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf], but is
         actually the transpose (gradient) of `conv2d` rather than an actual
         deconvolution.
-
-        Input:
-            4-D Tensor [batch, height, width, in_channels].
 
         Args:
             num_filter: `int`. The number of convolutional filters.
@@ -187,7 +183,7 @@ class Conv2dTranspose(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: `Tensor`. Incoming 4-D Tensor.
+            4-D Tensor [batch, height, width, in_channels].
 
         Returns:
             4-D Tensor [batch, new height, new width, num_filter].
@@ -257,9 +253,6 @@ class MaxPool2d(BaseLayer, Pool2dMixin):
     def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='MaxPool2D'):
         """Adds Max Pooling 2D.
 
-        Input:
-            4-D Tensor [batch, height, width, in_channels].
-
         Args:
             kernel_size: 'int` or `list of int`. Pooling kernel size.
             strides: 'int` or `list of int`. Strides of conv operation.
@@ -276,7 +269,7 @@ class MaxPool2d(BaseLayer, Pool2dMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: `Tensor`. Incoming 4-D Layer.
+            4-D Tensor [batch, height, width, in_channels].
 
         Returns:
             4-D Tensor [batch, pooled height, pooled width, in_channels].
@@ -287,9 +280,6 @@ class MaxPool2d(BaseLayer, Pool2dMixin):
 class AvgPool2d(BaseLayer, Pool2dMixin):
     def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='AvgPool2D'):
         """Adds Average Pooling 2D.
-
-        Input:
-            4-D Tensor [batch, height, width, in_channels].
 
         Args:
             kernel_size: 'int` or `list of int`. Pooling kernel size.
@@ -307,7 +297,7 @@ class AvgPool2d(BaseLayer, Pool2dMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: `Tensor`. Incoming 4-D Layer.
+            4-D Tensor [batch, height, width, in_channels].
 
         Returns:
             4-D Tensor [batch, pooled height, pooled width, in_channels].
@@ -319,9 +309,6 @@ class Upsample2d(BaseLayer):
     def __init__(self, mode, kernel_size, name='UpSample2D'):
         """Adds UpSample 2D operation.
 
-        Input:
-            4-D Tensor [batch, height, width, in_channels].
-
         Args:
             kernel_size: 'int` or `list of int`. Upsampling kernel size.
             name: A name for this layer (optional). Default: 'UpSample2D'.
@@ -332,7 +319,7 @@ class Upsample2d(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: `Tensor`. Incoming 4-D Layer to upsample.
+            incoming: `Tensor`. 4-D Tensor [batch, height, width, in_channels] to upsample.
 
         Returns:
             4-D Tensor [batch, pooled height, pooled width, in_channels].
@@ -445,9 +432,6 @@ class Conv1d(BaseLayer):
                  trainable=True, restore=True, name="Conv1D"):
         """Adds a Convolution 1D.
 
-        Input:
-            3-D Tensor [batch, steps, in_channels].
-
         Args:
             num_filter: `int`. The number of convolutional filters.
             filter_size: 'int` or `list of int`. Size of filters.
@@ -499,7 +483,7 @@ class Conv1d(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: `Tensor`. Incoming 3-D Tensor.
+            incoming: `Tensor`. 3-D Tensor [batch, steps, in_channels].
 
         Returns:
             3-D Tensor [batch, new steps, num_filters].
@@ -580,7 +564,7 @@ class MaxPool1d(BaseLayer, Pool1dMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 3-D Tensor [batch, steps, in_channels].
+            incoming: `Tensor`. 3-D Tensor [batch, steps, in_channels].
 
         Returns:
             3-D Tensor [batch, pooled steps, in_channels].
@@ -608,7 +592,7 @@ class AvgPool1d(BaseLayer, Pool1dMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 3-D Tensor [batch, steps, in_channels].
+            incoming: `Tensor`. 3-D Tensor [batch, steps, in_channels].
 
         Returns:
             3-D Tensor [batch, pooled steps, in_channels].
@@ -674,7 +658,7 @@ class Conv3d(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 5-D Tensor [batch, in_depth, in_height, in_width, in_channels].
+            incoming: `Tensor`. 5-D Tensor [batch, in_depth, in_height, in_width, in_channels].
 
         Returns:
             5-D Tensor [filter_depth, filter_height, filter_width, in_channels, out_channels].
@@ -777,7 +761,7 @@ class Conv3dTranspose(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 5-D Tensor [batch, depth, height, width, in_channels].
+            incoming: `Tensor`. 5-D Tensor [batch, depth, height, width, in_channels].
 
         Returns:
             5-D Tensor [batch, new depth, new height, new width, num_filter].
@@ -866,7 +850,7 @@ class MaxPool3d(BaseLayer, Pool3dMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 5-D Tensor [batch, depth, rows, cols, channels].
+            incoming: `Tensor`. 5-D Tensor [batch, depth, rows, cols, channels].
 
         Returns:
             5-D Tensor [batch, pooled depth, pooled rows, pooled cols, in_channels].
@@ -896,7 +880,7 @@ class AvgPool3d(BaseLayer, Pool3dMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 5-D Tensor [batch, depth, rows, cols, channels].
+            incoming: `Tensor`. 5-D Tensor [batch, depth, rows, cols, channels].
 
         Returns:
             5-D Tensor [batch, pooled depth, pooled rows, pooled cols, in_channels].
@@ -928,7 +912,7 @@ class GlobalMaxPool(BaseLayer, GlobalPoolMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 4-D Tensor [batch, height, width, in_channels].
+            incoming: `Tensor`. 4-D Tensor [batch, height, width, in_channels].
 
         Returns:
             2-D Tensor [batch, pooled dim]
@@ -948,7 +932,7 @@ class GlobalAvgPool(BaseLayer, GlobalPoolMixin):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 4-D Tensor [batch, height, width, in_channels].
+            incoming: `Tensor`. 4-D Tensor [batch, height, width, in_channels].
 
         Returns:
             2-D Tensor [batch, pooled dim]
@@ -1038,7 +1022,7 @@ class ResidualBlock(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 4-D Tensor [batch, height, width, in_channels].
+            incoming: `Tensor`. 4-D Tensor [batch, height, width, in_channels].
 
         Returns:
             4-D Tensor [batch, new height, new width, num_filter].
@@ -1167,7 +1151,7 @@ class ResidualBottleneck(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 4-D Tensor [batch, height, width, in_channels].
+            incoming: `Tensor`. 4-D Tensor [batch, height, width, in_channels].
 
         Returns:
             4-D Tensor [batch, new height, new width, num_filter].
@@ -1277,7 +1261,7 @@ class HighwayConv2d(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 4-D Tensor [batch, height, width, in_channels].
+            incoming: `Tensor`. 4-D Tensor [batch, height, width, in_channels].
         Returns:
             4-D Tensor [batch, new height, new width, num_filter].
         """
@@ -1389,7 +1373,7 @@ class HighwayConv1d(BaseLayer):
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
-            incoming: 3-D Tensor [batch, steps, in_channels].
+            incoming: `Tensor`. 3-D Tensor [batch, steps, in_channels].
         Returns:
             3-D Tensor [batch, new steps, num_filters].
         """

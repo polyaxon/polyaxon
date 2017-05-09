@@ -4,13 +4,15 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 
 from tensorflow.python.estimator.model_fn import EstimatorSpec, ModeKeys
+from tensorflow.python.framework import ops
 
+from polyaxon.experiments import summarizer
 from polyaxon.experiments import trainer
 from polyaxon.experiments.subgraph import SubGraph
 from polyaxon.libs import configs, getters
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
-from polyaxon.libs.utils import extract_batch_length, track
+from polyaxon.libs.utils import extract_batch_length, track, get_tracked
 
 
 class BaseModel(GraphModule):
@@ -28,16 +30,21 @@ class BaseModel(GraphModule):
 
         VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
 
-    def __init__(self, mode, config, model_type, name, params):
+    def __init__(self, mode, config, model_type, summaries, name, params):
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
         self.config = config
         self.params = params
         self.model_type = model_type
+        self.summaries = summarizer.SummaryOptions.validate(summaries)
         assert model_type in self.Types.VALUES, "`model_type` provided is unsupported."
+        self._grads_and_vars = None
+        self._total_loss = None
+        self._loss = None
 
     def _clip_gradients(self, grads_and_vars):
         """Clips gradients by global norm."""
         gradients, variables = zip(*grads_and_vars)
+        self._grads_and_vars = grads_and_vars
 
         if self.config.clip_gradients > 0.0:
             clipped_gradients, gradients_norm = tf.clip_by_global_norm(
@@ -62,6 +69,22 @@ class BaseModel(GraphModule):
 
         return optimizer
 
+    def _build_summary_op(self):
+        summary_op = []
+        for summary in self.summaries:
+            if summary == summarizer.SummaryOptions.ACTIVATIONS:
+                activations = get_tracked(tf.GraphKeys.ACTIVATIONS)
+                summary_op += summarizer.add_activations_summary(activations)
+            elif summary == summarizer.SummaryOptions.VARIABLES:
+                variables = tf.trainable_variables()
+                summary_op += summarizer.add_trainable_vars_summary(variables)
+            elif summary == summarizer.SummaryOptions.GRADIENTS:
+                summary_op += summarizer.add_gradients_summary(self._grads_and_vars)
+            elif summary == summarizer.SummaryOptions.LOSS:
+                summary_op += summarizer.add_loss_summaries(self._total_loss, self._loss)
+
+        ops.add_to_collection(tf.summary.merge(summary_op), tf.GraphKeys.SUMMARY_OP)
+
     def _build_loss(self, results, features, labels):
         """Creates the loss operation
 
@@ -69,8 +92,17 @@ class BaseModel(GraphModule):
             `losses` are the per-batch losses.
             `loss` is a single scalar tensor to minimize.
         """
-        return getters.get_loss(
+        losses, loss = getters.get_loss(
             self.config.loss_config.name, results, labels, **self.config.loss_config.params)
+        self._loss = loss
+        self._losses = losses
+
+        other_losses = get_tracked(tf.GraphKeys.REGULARIZATION_LOSSES)
+        if other_losses:
+            loss = [loss] + other_losses
+            loss = tf.add_n(loss, name="TotalLoss")
+            self._total_loss = loss
+        return losses, loss
 
     def _build_eval_metrics(self, results, features, labels):
         """Creates the loss operation
@@ -99,7 +131,7 @@ class BaseModel(GraphModule):
     def _build_train_op(self, loss):
         """Creates the training operation"""
         learning_rate_decay_fn = trainer.create_learning_rate_decay_fn(
-            decay_type=self.config.optimizer_config.lr_decay_type or None,
+            decay_type=self.config.optimizer_config.lr_decay_type,
             decay_steps=self.config.optimizer_config.lr_decay_steps,
             decay_rate=self.config.optimizer_config.lr_decay_rate,
             start_decay_at=self.config.optimizer_config.lr_start_decay_at,
@@ -115,7 +147,7 @@ class BaseModel(GraphModule):
             learning_rate_decay_fn=learning_rate_decay_fn,
             clip_gradients=self._clip_gradients,
             optimizer=optimizer,
-            summaries=['learning_rate', 'loss', 'gradients', 'gradient_norm'])
+            summaries=['learning_rate'])
 
         return train_op
 
@@ -124,7 +156,7 @@ class BaseModel(GraphModule):
         return features, labels
 
     @staticmethod
-    def _create_predictions(results, features, labels, losses=None):
+    def _build_predictions(results, features, labels, losses=None):
         """Creates the dictionary of predictions that is returned by the model."""
         predictions = {'results': results}
         # Add features and, if available, labels to predictions
@@ -147,7 +179,6 @@ class BaseModel(GraphModule):
         tf.contrib.learn.Estimator class for a more detailed explanation.
         """
         return self._template(features, labels, params)
-        # return self._build(features, labels, params)
 
     def _build(self, features, labels, params):
         """Subclasses should implement this method. See the `model_fn` documentation
@@ -157,24 +188,21 @@ class BaseModel(GraphModule):
         features, labels = self._preprocess(features, labels)
         results = self._build_subgraphs(features)
 
+        loss = None
+        train_op = None
+        eval_metrics = None
         if self.mode == ModeKeys.PREDICT:
-            predictions = self._create_predictions(results=results, features=features, labels=labels)
-            loss = None
-            train_op = None
-            eval_metrics = None
+            predictions = self._build_predictions(results=results, features=features, labels=labels)
         else:
             losses, loss = self._build_loss(results, features, labels)
             eval_metrics = self._build_eval_metrics(results, features, labels)
 
-            train_op = None
             if self.mode == ModeKeys.TRAIN:
                 train_op = self._build_train_op(loss)
+                self._build_summary_op()
 
-            predictions = self._create_predictions(
-                results=results,
-                features=features,
-                labels=labels,
-                losses=losses)
+            predictions = self._build_predictions(results=results, features=features,
+                                                  labels=labels, losses=losses)
 
         # We add 'useful' tensors to the graph collection so that we
         # can easly find them in our hooks/monitors.

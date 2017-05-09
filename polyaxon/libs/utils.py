@@ -13,18 +13,37 @@ import tensorflow as tf
 
 from tensorflow.python.ops import math_ops as tf_math_ops
 
+from polyaxon.libs import MAPPING_COLLECTION
+
 
 def track(tensor, collection, scope=None):
-    """Track tensor by collecting the value in a collection."""
+    """Track tensor by adding it to the collection."""
     _collection = '{}/{}'.format(collection, scope) if scope else collection
     if isinstance(tensor, Mapping):
-        key_collection = collection + "_keys"
-        value_collection = collection + "_values"
+        if collection not in MAPPING_COLLECTION:
+            raise TypeError("The collection `{}` does not expect a map type, received {}".format(
+                collection, tensor
+            ))
+        key_collection = _collection + '_keys'
+        value_collection = _collection + '_values'
         for key, value in tensor.items():
-            tf.add_to_collection(key_collection, key)
-            tf.add_to_collection(value_collection, value)
+            tf.add_to_collection(name=key_collection, value=key)
+            tf.add_to_collection(name=value_collection, value=value)
     else:
         tf.add_to_collection(name=_collection, value=tensor)
+
+
+def get_tracked(collection, scope=None):
+    """Returns a list of values in the collection with the given `collection`."""
+    _collection = '{}/{}'.format(collection, scope) if scope else collection
+    if collection in MAPPING_COLLECTION:
+        key_collection = _collection + '_keys'
+        value_collection = _collection + '_values'
+        keys = tf.get_collection(key_collection)
+        values = tf.get_collection(value_collection)
+        return dict(zip(keys, values))
+    else:
+        return tf.get_collection(key=_collection)
 
 
 def get_shape(x):

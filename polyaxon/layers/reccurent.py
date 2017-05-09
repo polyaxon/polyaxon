@@ -56,7 +56,10 @@ class CoreRNN(BaseLayer):
         raise NotImplemented
 
     def _build(self, incoming, *args, **kwargs):
-        """incoming: `Tensor`. Incoming 3-D Tensor."""
+        """
+        Args:
+            incoming: `Tensor`. 3-D Tensor [samples, timesteps, input dim].
+        """
         self._declare_dependencies()
         sequence_length = None
         if self.dynamic:
@@ -114,9 +117,6 @@ class SimpleRNN(CoreRNN):
                  initial_state=None, dynamic=False, trainable=True,
                  restore=True, name='SimpleRNN'):
         """ Simple RNN (Simple Recurrent Layer.)
-
-        Input:
-            3-D Tensor [samples, timesteps, input dim].
 
         Output:
             if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
@@ -180,9 +180,6 @@ class LSTM(CoreRNN):
                  return_state=False, initial_state=None, dynamic=False, trainable=True,
                  restore=True, name='LSTM'):
         """ LSTM (Long Short Term Memory Recurrent Layer).
-
-        Input:
-            3-D Tensor [samples, timesteps, input dim].
 
         Output:
             if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
@@ -262,9 +259,6 @@ class GRU(CoreRNN):
                  trainable=True, restore=True, name='GRU'):
         """ GRU (Gated Recurrent Unit Layer).
 
-        Input:
-            3-D Tensor Layer [samples, timesteps, input dim].
-
         Output:
             if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
             else: 2-D Tensor [samples, output dim].
@@ -342,9 +336,6 @@ class BidirectionalRNN(BaseLayer):
         used i.e. SimpleRNN, LSTM, GRU... with its own parameters. But the two
         cells number of units must match.
 
-        Input:
-            3-D Tensor Layer [samples, timesteps, input dim].
-
         Output:
             if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
             else: 2-D Tensor Layer [samples, output dim].
@@ -381,7 +372,10 @@ class BidirectionalRNN(BaseLayer):
         self.dynamic = dynamic
 
     def _build(self, incoming, *args, **kwargs):
-        """incoming: `Tensor`. The incoming Tensor."""
+        """
+        Args:
+            incoming: `Tensor`. 3-D Tensor Layer [samples, timesteps, input dim].
+        """
         assert (self.rnncell_fw.output_size ==
                 self.rnncell_bw.output_size), "RNN Cells number of units must match!"
         input_shape = get_shape(incoming)

@@ -117,8 +117,7 @@ class Estimator(object):
                                  "but not None params `{}` are passed.".format(model_fn, params))
             if params is None and 'params' in model_fn_args:
                 logging.warning("Estimator's model_fn (%s) includes params "
-                                "argument, but params are not passed to Estimator.",
-                                model_fn)
+                                "argument, but params are not passed to Estimator.", model_fn)
         else:
             raise ValueError("`model_fn` must be provided to Estimator.")
         self._model_fn = model_fn
@@ -419,10 +418,6 @@ class Estimator(object):
         """
         return [name for name, _ in list_variables(self.model_dir)]
 
-    @property
-    def model_dir(self):
-        return self._model_dir
-
     @staticmethod
     def _extract_metric_update_ops(eval_dict):
         """Separate update operations from metric value operations."""
@@ -446,52 +441,6 @@ class Estimator(object):
             update_ops = None
 
         return update_ops, value_ops
-
-    def _evaluate_model(self, input_fn, hooks=None, checkpoint_path=None, name=''):
-        # Check that model has been trained (if nothing has been set explicitly).
-        if not checkpoint_path:
-            latest_path = saver.latest_checkpoint(self._model_dir)
-            if not latest_path:
-                raise NotFittedError("Couldn't find trained model at {}.".format(self._model_dir))
-            checkpoint_path = latest_path
-
-        # Setup output directory.
-        eval_dir = os.path.join(self._model_dir, 'eval' if not name else 'eval_' + name)
-
-        with ops.Graph().as_default() as g:
-            random_seed.set_random_seed(self._config.tf_random_seed)
-            global_step = contrib_framework.create_global_step(g)
-            features, labels = input_fn()
-
-            estimator_spec = self._call_model_fn(features, labels, model_fn_lib.ModeKeys.EVAL)
-            if model_fn_lib.MetricKeys.LOSS in estimator_spec.eval_metric_ops:
-                raise ValueError("Metric with name `{}` is not allowed, because Estimator "
-                                 "already defines a default metric "
-                                 "with the same name.".format(model_fn_lib.MetricKeys.LOSS))
-            estimator_spec.eval_metric_ops[
-                model_fn_lib.MetricKeys.LOSS] = metrics_lib.streaming_mean(estimator_spec.loss)
-            update_op, eval_dict = self._extract_metric_update_ops(estimator_spec.eval_metric_ops)
-
-            if ops.GraphKeys.GLOBAL_STEP in eval_dict:
-                raise ValueError("Metric with name `global_step` is not allowed, because "
-                                 "Estimator already defines a default metric with the same name.")
-            eval_dict[ops.GraphKeys.GLOBAL_STEP] = global_step
-
-            eval_results = evaluation.evaluate_once(
-                checkpoint_path=checkpoint_path,
-                master=self._config.evaluation_master,
-                scaffold=estimator_spec.scaffold,
-                eval_ops=update_op,
-                final_ops=eval_dict,
-                hooks=hooks,
-                config=self._session_config)
-
-            self._write_dict_to_summary(
-                output_dir=eval_dir,
-                dictionary=eval_results,
-                current_global_step=eval_results[ops.GraphKeys.GLOBAL_STEP])
-
-        return eval_results
 
     @staticmethod
     def _get_features_from_input_fn(input_fn):
@@ -540,12 +489,10 @@ class Estimator(object):
 
             scaffold = estimator_spec.scaffold or monitored_session.Scaffold()
             if not (scaffold.saver or ops.get_collection(ops.GraphKeys.SAVERS)):
-                ops.add_to_collection(
-                    ops.GraphKeys.SAVERS,
-                    saver.Saver(
-                        sharded=True,
-                        max_to_keep=self._config.keep_checkpoint_max,
-                        defer_build=True))
+                ops.add_to_collection(ops.GraphKeys.SAVERS,  # TODO remove non restorable vars
+                                      saver.Saver(sharded=True,  # TODO `var_list`
+                                                  max_to_keep=self._config.keep_checkpoint_max,
+                                                  defer_build=True))
 
             chief_hooks = []
             if self._config.save_checkpoints_secs or self._config.save_checkpoints_steps:
@@ -576,6 +523,52 @@ class Estimator(object):
                     _, loss = mon_sess.run([estimator_spec.train_op, estimator_spec.loss])
             summary_io.SummaryWriterCache.clear()
             return loss
+
+    def _evaluate_model(self, input_fn, hooks=None, checkpoint_path=None, name=''):
+        # Check that model has been trained (if nothing has been set explicitly).
+        if not checkpoint_path:
+            latest_path = saver.latest_checkpoint(self._model_dir)
+            if not latest_path:
+                raise NotFittedError("Couldn't find trained model at {}.".format(self._model_dir))
+            checkpoint_path = latest_path
+
+        # Setup output directory.
+        eval_dir = os.path.join(self._model_dir, 'eval' if not name else 'eval_' + name)
+
+        with ops.Graph().as_default() as g:
+            random_seed.set_random_seed(self._config.tf_random_seed)
+            global_step = contrib_framework.create_global_step(g)
+            features, labels = input_fn()
+
+            estimator_spec = self._call_model_fn(features, labels, model_fn_lib.ModeKeys.EVAL)
+            if model_fn_lib.MetricKeys.LOSS in estimator_spec.eval_metric_ops:
+                raise ValueError("Metric with name `{}` is not allowed, because Estimator "
+                                 "already defines a default metric "
+                                 "with the same name.".format(model_fn_lib.MetricKeys.LOSS))
+            estimator_spec.eval_metric_ops[
+                model_fn_lib.MetricKeys.LOSS] = metrics_lib.streaming_mean(estimator_spec.loss)
+            update_op, eval_dict = self._extract_metric_update_ops(estimator_spec.eval_metric_ops)
+
+            if ops.GraphKeys.GLOBAL_STEP in eval_dict:
+                raise ValueError("Metric with name `global_step` is not allowed, because "
+                                 "Estimator already defines a default metric with the same name.")
+            eval_dict[ops.GraphKeys.GLOBAL_STEP] = global_step
+
+            eval_results = evaluation.evaluate_once(
+                checkpoint_path=checkpoint_path,
+                master=self._config.evaluation_master,
+                scaffold=estimator_spec.scaffold,
+                eval_ops=update_op,
+                final_ops=eval_dict,
+                hooks=hooks,
+                config=self._session_config)
+
+            self._write_dict_to_summary(
+                output_dir=eval_dir,
+                dictionary=eval_results,
+                current_global_step=eval_results[ops.GraphKeys.GLOBAL_STEP])
+
+            return eval_results
 
     @staticmethod
     def _write_dict_to_summary(output_dir,

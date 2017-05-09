@@ -185,10 +185,12 @@ class SubGraphConfig(Configurable):
 
 class ModelConfig(Configurable):
     """The ModelConfig holds information needed to create a `Model`."""
-    def __init__(self, loss_config, optimizer_config, graph_config, model_type, name='base_model',
-                 eval_metrics_config=None, clip_gradients=5.0, params=None):
+    def __init__(self, loss_config, optimizer_config, graph_config, model_type,
+                 summaries='all', name='base_model', eval_metrics_config=None,
+                 clip_gradients=5.0, params=None):
         self.name = name
         self.model_type = model_type
+        self.summaries = summaries
         self.loss_config = loss_config
         self.eval_metrics_config = eval_metrics_config
         self.optimizer_config = optimizer_config
@@ -218,8 +220,8 @@ class EstimatorConfig(Configurable):
 
 
 def create_run_config(tf_random_seed=None, save_checkpoints_secs=None, save_checkpoints_steps=600,
-                      keep_checkpoint_max=5, keep_checkpoint_every_n_hours=4, gpu_memory_fraction=1.0,
-                      gpu_allow_growth=False, log_device_placement=False):
+                      keep_checkpoint_max=5, keep_checkpoint_every_n_hours=4,
+                      gpu_memory_fraction=1.0, gpu_allow_growth=False, log_device_placement=False):
     config = run_config.RunConfig(
         tf_random_seed=tf_random_seed,
         save_checkpoints_secs=save_checkpoints_secs,
