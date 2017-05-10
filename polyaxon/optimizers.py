@@ -6,41 +6,201 @@ import tensorflow as tf
 from polyaxon.libs.utils import track
 
 
-def sgd(learning_rate=0.001, lr_decay=0., decay_step=100, staircase=False, use_locking=False,
-        global_step=None, name='SGD'):
+def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_rate,
+                                  start_decay_at=0, stop_decay_at=1e9, min_learning_rate=None,
+                                  staircase=False, global_step=None):
+    """Creates a function that decays the learning rate.
+
+    Args:
+        learning_rate: A Tensor or a floating point value. The learning rate to use.
+        decay_steps: How often to apply decay.
+        decay_rate: A Python number. The decay rate.
+        start_decay_at: Don't decay before this step
+        stop_decay_at: Don't decay after this step
+        min_learning_rate: Don't decay below this number
+        decay_type: A decay function name defined in `tf.train`
+            possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
+                             piecewise_constant, polynomial_decay.
+        staircase: Whether to apply decay in a discrete staircase,
+            as opposed to continuous, fashion.
+        global_step: Scalar int `Tensor`, step counter for each update. If not supplied,
+            it will be fetched from the default graph (see `tf.contrib.framework.get_global_step`
+            for details). If it's not been created, no step will be incremented with each weight
+            update. `learning_rate_decay_fn` requires `global_step`.
+
+    Returns:
+        A function that takes (learning_rate, global_step) as inputs
+        and returns the learning rate for the given step.
+        Returns `None` if decay_type is empty or None.
+    """
+    if decay_type is None or decay_type == "":
+        return learning_rate
+
+    start_decay_at = tf.to_int32(start_decay_at)
+    stop_decay_at = tf.to_int32(stop_decay_at)
+
+    def decay_fn(learning_rate, global_step):
+        """The computed learning rate decay function."""
+        global_step = tf.to_int32(global_step)
+
+        decay_type_fn = getattr(tf.train, decay_type)
+        decayed_learning_rate = decay_type_fn(
+            learning_rate=learning_rate,
+            global_step=tf.minimum(global_step, stop_decay_at) - start_decay_at,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            staircase=staircase,
+            name="decayed_learning_rate")
+
+        final_lr = tf.train.piecewise_constant(
+            x=global_step,
+            boundaries=[start_decay_at],
+            values=[learning_rate, decayed_learning_rate])
+
+        if min_learning_rate:
+            final_lr = tf.maximum(final_lr, min_learning_rate)
+
+        return final_lr
+
+    learning_rate = decay_fn(learning_rate, global_step or tf.contrib.framework.get_global_step())
+    track(learning_rate, tf.GraphKeys.LEARNING_RATE)
+    return learning_rate
+
+
+def sgd(learning_rate=0.001, decay_type="", decay_rate=0., decay_steps=100, start_decay_at=0,
+        stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False, global_step=None,
+        use_locking=False, name='SGD'):
     """ Optimizer that implements the gradient descent algorithm.
 
     Args:
         learning_rate: A Tensor or a floating point value. The learning rate to use.
-        lr_decay: `float`. The learning rate decay to apply.
-        decay_step: `int`. Apply decay every provided steps.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
         staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
         use_locking: If True use locks for update operations.
-        global_step: Scalar int `Tensor`, step counter for each update. If not
-        supplied, it will be fetched from the default graph (see
-            `tf.contrib.framework.get_global_step` for details). If it's
-            not been created, no step will be incremented with each weight
-            update. `learning_rate_decay_fn` requires `global_step`.
         name: Optional name prefix for the operations created when applying gradients.
     """
 
     def optimizer():
-        lr = learning_rate
-        if lr_decay > 0:
-            step_tensor = global_step or tf.contrib.framework.get_global_step()
-            lr = tf.train.exponential_decay(learning_rate=learning_rate, global_step=step_tensor,
-                                            decay_steps=decay_step,
-                                            decay_rate=lr_decay, staircase=staircase)
-            track(lr, tf.GraphKeys.LEARNING_RATE_VARS)
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
 
         return tf.train.GradientDescentOptimizer(
-            learning_rate=lr, use_locking=use_locking, name=name)
+            learning_rate=_learning_rate, use_locking=use_locking, name=name)
 
     return optimizer
 
 
-def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, use_locking=False,
-            name='RMSProp'):
+def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
+             start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
+             global_step=None, use_locking=False, name='Momentum'):
+    """ Optimizer that implements the Momentum.
+
+    Momentum Optimizer accepts learning rate decay. When training a model,
+    it is often recommended to lower the learning rate as the training
+    progresses. The function returns the decayed learning rate.  It is
+    computed as:
+
+    ```python
+    decayed_learning_rate = learning_rate *
+                          decay_rate ^ (global_step / lr_decay_steps)
+    ```
+    Args:
+        learning_rate: `float`. Learning rate.
+        momentum: `float`. Momentum.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: `str`. Optional name prefix for the operations created when applying gradients.
+    """
+
+    def optimizer():
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
+
+        return tf.train.MomentumOptimizer(
+            learning_rate=_learning_rate, momentum=momentum, use_locking=use_locking, name=name)
+
+    return optimizer
+
+
+def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
+             start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
+             use_locking=False, global_step=None, name='Momentum'):
+    """ Optimizer that implements the Nesterov.
+
+    Same as Momentum optimizer but uses nestrov
+    See [Sutskever et. al., 2013](http://jmlr.org/proceedings/papers/v28/sutskever13.pdf)
+
+    ```python
+    decayed_learning_rate = learning_rate *
+                          decay_rate ^ (global_step / lr_decay_steps)
+    ```
+    Args:
+        learning_rate: `float`. Learning rate.
+        momentum: `float`. Momentum.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: `str`. Optional name prefix for the operations created when applying gradients.
+    """
+
+    def optimizer():
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
+
+        return tf.train.MomentumOptimizer(
+            learning_rate=_learning_rate, momentum=momentum, use_locking=use_locking, name=name,
+            use_nesterov=True)
+
+    return optimizer
+
+
+def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_type="",
+            decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+            min_learning_rate=1e-12, staircase=False, global_step=None,
+            use_locking=False, name='RMSProp'):
     """ Optimizer that implements the RMSprop.
 
     Maintain a moving (discounted) average of the square of gradients.
@@ -51,19 +211,41 @@ def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, use_loc
         decay: `float`. Discounting factor for the history/coming gradient.
         momentum: `float`. Momentum.
         epsilon: `float`. Small value to avoid zero denominator.
-        use_locking: `bool`. If True use locks for update operation.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
         name: Optional name prefix for the operations created when applying gradients.
     """
 
     def optimizer():
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
+
         return tf.train.RMSPropOptimizer(
-            learning_rate=learning_rate, decay=decay, momentum=momentum, epsilon=epsilon,
+            learning_rate=_learning_rate, decay=decay, momentum=momentum, epsilon=epsilon,
             use_locking=use_locking, name=name)
 
     return optimizer
 
 
-def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, use_locking=False, name='Adam'):
+def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, decay_type="",
+         decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+         min_learning_rate=1e-12, staircase=False, global_step=None,
+         use_locking=False, name='Adam'):
     """ Optimizer that implements the Adam.
 
     The default value of 1e-8 for epsilon might not be a good default in
@@ -75,82 +257,84 @@ def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, use_locking=
         beta1: `float`. The exponential decay rate for the 1st moment estimates.
         beta2: `float`. The exponential decay rate for the 2nd moment estimates.
         epsilon: `float`. A small constant for numerical stability.
-        use_locking: `bool`. If True use locks for update operation.
+        epsilon: `float`. Small value to avoid zero denominator.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
         name: `str`. Optional name prefix for the operations created when applying gradients.
     """
+
     def optimizer():
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
+
         return tf.train.AdamOptimizer(
-            learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon,
+            learning_rate=_learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon,
             use_locking=use_locking, name=name)
 
     return optimizer
 
 
-def momentum(learning_rate=0.001, momentum=0.9, lr_decay=0., decay_step=100, staircase=False,
-             use_locking=False, global_step=None, name='Momentum'):
-    """ Optimizer that implements the Momentum.
-
-    Momentum Optimizer accepts learning rate decay. When training a model,
-    it is often recommended to lower the learning rate as the training
-    progresses. The function returns the decayed learning rate.  It is
-    computed as:
-
-    ```python
-    decayed_learning_rate = learning_rate *
-                          decay_rate ^ (global_step / decay_steps)
-    ```
-    Args:
-        learning_rate: `float`. Learning rate.
-        momentum: `float`. Momentum.
-        lr_decay: `float`. The learning rate decay to apply.
-        decay_step: `int`. Apply decay every provided steps.
-        staircase: `bool`. It `True` decay learning rate at discrete intervals.
-        use_locking: `bool`. If True use locks for update operation.
-        global_step: Scalar int `Tensor`, step counter for each update. If not
-        supplied, it will be fetched from the default graph (see
-            `tf.contrib.framework.get_global_step` for details). If it's
-            not been created, no step will be incremented with each weight
-            update. `learning_rate_decay_fn` requires `global_step`.
-        name: `str`. Optional name prefix for the operations created when applying gradients.
-    """
-
-    def optimizer():
-        lr = learning_rate
-        if lr_decay > 0:
-            step_tensor = global_step or tf.train.get_global_step()
-            lr = tf.train.exponential_decay(learning_rate=learning_rate, global_step=step_tensor,
-                                            decay_steps=decay_step,
-                                            decay_rate=lr_decay, staircase=staircase)
-            track(lr, tf.GraphKeys.LEARNING_RATE_VARS)
-
-        return tf.train.MomentumOptimizer(
-            learning_rate=lr, momentum=momentum, use_locking=use_locking, name=name)
-
-    return optimizer
-
-
-def adagrad(learning_rate=0.001, initial_accumulator_value=0.1, use_locking=False, name='AdaGrad'):
+def adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type="",
+            decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+            min_learning_rate=1e-12, staircase=False, global_step=None,
+            use_locking=False, name='AdaGrad'):
     """ Optimizer that implements AdaGrad.
 
     Args:
         learning_rate: `float`. Learning rate.
         initial_accumulator_value: `float`. Starting value for the
-            accumulators, must be positive
-        use_locking: `bool`. If True use locks for update operation.
+            accumulators, must be positive.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
         name: `str`. Optional name prefix for the operations created when applying gradients.
     """
 
     def optimizer():
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
+
         return tf.train.AdagradOptimizer(
-            learning_rate=learning_rate, initial_accumulator_value=initial_accumulator_value,
+            learning_rate=_learning_rate, initial_accumulator_value=initial_accumulator_value,
             use_locking=use_locking, name=name)
 
     return optimizer
 
 
 def ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=0.1,
-         l1_regularization_strength=0.0, l2_regularization_strength=0.0, use_locking=False,
-         name='Ftrl'):
+         l1_regularization_strength=0.0, l2_regularization_strength=0.0, decay_type="",
+         decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+         min_learning_rate=1e-12, staircase=False, global_step=None,
+         use_locking=False, name='Ftrl'):
     """ Optimizer that implements Ftrl Proximal.
 
     The Ftrl-proximal algorithm, abbreviated for Follow-the-regularized-leader,
@@ -169,23 +353,44 @@ def ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=
             Only positive values are allowed.
         l1_regularization_strength: `float`. Must be less or equal to zero.
         l2_regularization_strength: `float`. Must be less or equal to zero.
-        use_locking: bool`. If True use locks for update operation.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
         name: `str`. Optional name prefix for the operations created when applying gradients..
     """
 
     def optimizer():
-        with tf.device('/cpu:0'):
-            return tf.train.FtrlOptimizer(
-                learning_rate=learning_rate, learning_rate_power=learning_rate_power,
-                initial_accumulator_value=initial_accumulator_value,
-                l1_regularization_strength=l1_regularization_strength,
-                l2_regularization_strength=l2_regularization_strength,
-                use_locking=use_locking, name=name)
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
+
+        return tf.train.FtrlOptimizer(
+            learning_rate=_learning_rate, learning_rate_power=learning_rate_power,
+            initial_accumulator_value=initial_accumulator_value,
+            l1_regularization_strength=l1_regularization_strength,
+            l2_regularization_strength=l2_regularization_strength,
+            use_locking=use_locking, name=name)
 
     return optimizer
 
 
-def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, use_locking=False, name='AdaDelta'):
+def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type="",
+             decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+             min_learning_rate=1e-12, staircase=False, global_step=None,
+             use_locking=False, name='AdaDelta'):
     """ Optimizer that implements AdaDelta.
 
     Args:
@@ -193,21 +398,43 @@ def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, use_locking=False, nam
         rho: A `Tensor` or a floating point value. The decay rate.
         epsilon: A `Tensor` or a floating point value.  A constant epsilon used to better
             conditioning the grad update.
-        use_locking: If `True` use locks for update operations.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
         name: Optional name prefix for the operations created when applying gradients.
     """
+
     def optimizer():
-        return tf.train.AdadeltaOptimizer(learning_rate=learning_rate, rho=rho, epsilon=epsilon,
+        _learning_rate = create_learning_rate_decay_fn(
+            learning_rate=learning_rate,
+            decay_type=decay_type,
+            decay_steps=decay_steps,
+            decay_rate=decay_rate,
+            start_decay_at=start_decay_at,
+            stop_decay_at=stop_decay_at,
+            min_learning_rate=min_learning_rate,
+            staircase=staircase,
+            global_step=global_step)
+
+        return tf.train.AdadeltaOptimizer(learning_rate=_learning_rate, rho=rho, epsilon=epsilon,
                                           use_locking=use_locking, name=name)
 
     return optimizer
 
 
 OPTIMIZERS = {
+    'Adadelta': adadelta,
     'Adagrad': adagrad,
     'Adam': adam,
     'Ftrl': ftrl,
     'Momentum': momentum,
+    'Nesterov': nesterov,
     'RMSProp': rmsprop,
     'SGD': sgd,
 }

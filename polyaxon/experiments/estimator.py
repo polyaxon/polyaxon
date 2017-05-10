@@ -473,8 +473,6 @@ class Estimator(object):
             global_step = contrib_framework.create_global_step(g)
             features, labels = input_fn()
             estimator_spec = self._call_model_fn(features, labels, model_fn_lib.ModeKeys.TRAIN)
-            # TODO check if need to track here ?
-            ops.add_to_collection(ops.GraphKeys.LOSSES, estimator_spec.loss)
             all_hooks.extend([
                 basic_session_run_hooks.NanTensorHook(estimator_spec.loss),
                 basic_session_run_hooks.LoggingTensorHook(

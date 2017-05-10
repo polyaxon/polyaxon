@@ -33,7 +33,7 @@ def create_experiment_json_fn(output_dir):
             'loss_config': {'name': 'softmax_cross_entropy'},
             'eval_metrics_config': [{'name': 'streaming_accuracy'},
                                     {'name': 'streaming_precision'}],
-            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.008},
+            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002, 'decay_type': 'exponential_decay', 'decay_rate': 0.2},
             'graph_config': {
                 'name': 'lenet',
                 'definition': [
@@ -53,7 +53,7 @@ def create_experiment_json_fn(output_dir):
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
-                                   output_dir="/tmp/polyaxon_logs2/lenet2",
+                                   output_dir="/tmp/polyaxon_logs2/lenet4",
                                    schedule='continuous_train_and_eval')
 
 

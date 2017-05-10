@@ -18,8 +18,9 @@ class SummaryOptions(object):
     LOSS = 'loss'
     GRADIENTS = 'gradients'
     VARIABLES = 'variables'
+    LEARNING_RATE = 'learning_rate'
 
-    VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES]
+    VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE]
 
     @classmethod
     def validate(cls, summaries):
@@ -61,6 +62,14 @@ class SummaryTypes(object):
             return tf.summary.scalar(name=name, tensor=value, **kwargs)
         if stype == cls.IMAGE:
             return tf.summary.image(name=name, tensor=value, **kwargs)
+
+
+def add_learning_rate_summaries():
+    learning_rate = get_tracked(tf.GraphKeys.LEARNING_RATE)
+    if not learning_rate:
+        return []
+
+    return [get_summary(SummaryTypes.SCALAR, 'learning_rate', learning_rate[0])]
 
 
 def add_loss_summaries(total_loss, loss):

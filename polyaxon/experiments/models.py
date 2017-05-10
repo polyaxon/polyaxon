@@ -7,7 +7,6 @@ from tensorflow.python.estimator.model_fn import EstimatorSpec, ModeKeys
 from tensorflow.python.framework import ops
 
 from polyaxon.experiments import summarizer
-from polyaxon.experiments import trainer
 from polyaxon.experiments.subgraph import SubGraph
 from polyaxon.libs import configs, getters
 from polyaxon.libs.dicts import flatten_dict
@@ -54,8 +53,17 @@ class BaseModel(GraphModule):
 
     def _create_optimizer(self):
         """Creates the optimizer"""
-        optimizer = getters.get_optimizer(self.config.optimizer_config.name,
-                                          **self.config.optimizer_config.params)
+        optimizer = getters.get_optimizer(
+            self.config.optimizer_config.name,
+            learning_rate=self.config.optimizer_config.learning_rate,
+            decay_type=self.config.optimizer_config.decay_type,
+            decay_steps=self.config.optimizer_config.decay_steps,
+            decay_rate=self.config.optimizer_config.decay_rate,
+            start_decay_at=self.config.optimizer_config.start_decay_at,
+            stop_decay_at=self.config.optimizer_config.stop_decay_at,
+            min_learning_rate=self.config.optimizer_config.min_learning_rate,
+            staircase=self.config.optimizer_config.staircase,
+            **self.config.optimizer_config.params)
 
         # Optionally wrap with SyncReplicasOptimizer
         if self.config.optimizer_config.sync_replicas > 0:
@@ -82,6 +90,8 @@ class BaseModel(GraphModule):
                 summary_op += summarizer.add_gradients_summary(self._grads_and_vars)
             elif summary == summarizer.SummaryOptions.LOSS:
                 summary_op += summarizer.add_loss_summaries(self._total_loss, self._loss)
+            elif summary == summarizer.SummaryOptions.LEARNING_RATE:
+                summary_op += summarizer.add_learning_rate_summaries()
 
         ops.add_to_collection(tf.summary.merge(summary_op), tf.GraphKeys.SUMMARY_OP)
 
@@ -130,24 +140,14 @@ class BaseModel(GraphModule):
 
     def _build_train_op(self, loss):
         """Creates the training operation"""
-        learning_rate_decay_fn = trainer.create_learning_rate_decay_fn(
-            decay_type=self.config.optimizer_config.lr_decay_type,
-            decay_steps=self.config.optimizer_config.lr_decay_steps,
-            decay_rate=self.config.optimizer_config.lr_decay_rate,
-            start_decay_at=self.config.optimizer_config.lr_start_decay_at,
-            stop_decay_at=self.config.optimizer_config.lr_stop_decay_at,
-            min_learning_rate=self.config.optimizer_config.lr_min_learning_rate,
-            staircase=self.config.optimizer_config.lr_staircase)
-
         optimizer = self._create_optimizer()
         train_op = tf.contrib.layers.optimize_loss(
             loss=loss,
             global_step=tf.contrib.framework.get_global_step(),
-            learning_rate=self.config.optimizer_config.learning_rate,
-            learning_rate_decay_fn=learning_rate_decay_fn,
+            learning_rate=None,
             clip_gradients=self._clip_gradients,
             optimizer=optimizer,
-            summaries=['learning_rate'])
+            summaries=[])
 
         return train_op
 

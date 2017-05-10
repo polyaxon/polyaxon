@@ -135,18 +135,19 @@ class MetricConfig(Configurable):
 
 class OptimizerConfig(Configurable):
     """The OptimizerConfig holds information needed to create a `Optimizer`."""
-    def __init__(self, name, learning_rate=1e-4, lr_decay_type="", lr_decay_steps=100, lr_decay_rate=0.99,
-                 lr_start_decay_at=0, lr_stop_decay_at=tf.int32.max, lr_min_learning_rate=1e-12, lr_staircase=False,
-                 clip_gradients=5.0, sync_replicas=0, sync_replicas_to_aggregate=0, params=None):
+    def __init__(self, name, learning_rate=1e-4, decay_type="", decay_steps=100,
+                 decay_rate=0.99, start_decay_at=0, stop_decay_at=tf.int32.max,
+                 min_learning_rate=1e-12, staircase=False, clip_gradients=5.0,
+                 sync_replicas=0, sync_replicas_to_aggregate=0, params=None):
         self.name = name
         self.learning_rate = learning_rate
-        self.lr_decay_type = lr_decay_type
-        self.lr_decay_steps = lr_decay_steps
-        self.lr_decay_rate = lr_decay_rate
-        self.lr_start_decay_at = lr_start_decay_at
-        self.lr_stop_decay_at = lr_stop_decay_at
-        self.lr_min_learning_rate = lr_min_learning_rate
-        self.lr_staircase = lr_staircase
+        self.decay_type = decay_type
+        self.decay_steps = decay_steps
+        self.decay_rate = decay_rate
+        self.start_decay_at = start_decay_at
+        self.stop_decay_at = stop_decay_at
+        self.min_learning_rate = min_learning_rate
+        self.staircase = staircase
         self.clip_gradients = clip_gradients
         self.sync_replicas = sync_replicas
         self.sync_replicas_to_aggregate = sync_replicas_to_aggregate
