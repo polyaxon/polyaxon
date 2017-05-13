@@ -24,10 +24,10 @@ class VocabularyProcessor(tflearn.preprocessing.VocabularyProcessor):
                  min_frequency=0,
                  vocabulary=None,
                  tokenizer_fn=None):
-        super().__init__(max_document_length, min_frequency, vocabulary, tokenizer_fn)
+        super(VocabularyProcessor, self).__init__(max_document_length, min_frequency, vocabulary, tokenizer_fn)
 
     def fit(self, raw_documents, unused_y=None):
-        """ fit.
+        """fit.
 
         Learn a vocabulary dictionary of all tokens in the raw documents.
 
@@ -41,7 +41,7 @@ class VocabularyProcessor(tflearn.preprocessing.VocabularyProcessor):
         return super().fit(raw_documents, unused_y)
 
     def fit_transform(self, raw_documents, unused_y=None):
-        """ fit_transform.
+        """fit_transform.
 
         Learn the vocabulary dictionary and return indexies of words.
 
@@ -55,7 +55,7 @@ class VocabularyProcessor(tflearn.preprocessing.VocabularyProcessor):
         return super().fit_transform(raw_documents, unused_y)
 
     def transform(self, raw_documents):
-        """ transform.
+        """transform.
 
         Transform documents to word-id matrix.
 
@@ -71,7 +71,7 @@ class VocabularyProcessor(tflearn.preprocessing.VocabularyProcessor):
         return super().transform(raw_documents)
 
     def reverse(self, documents):
-        """ reverse.
+        """reverse.
 
         Reverses output of vocabulary mapping to words.
 
@@ -84,7 +84,7 @@ class VocabularyProcessor(tflearn.preprocessing.VocabularyProcessor):
         return super().reverse(documents)
 
     def save(self, filename):
-        """ save.
+        """save.
 
         Saves vocabulary processor into given file.
 
@@ -95,7 +95,7 @@ class VocabularyProcessor(tflearn.preprocessing.VocabularyProcessor):
 
     @classmethod
     def restore(cls, filename):
-        """ restore.
+        """restore.
 
         Restores vocabulary processor from given file.
 

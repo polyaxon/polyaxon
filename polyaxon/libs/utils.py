@@ -269,23 +269,25 @@ def extract_batch_length(values):
 def new_attr_context(obj, attr):
     """Creates a new context in which an object's attribute can be changed.
 
-  This creates a context in which an object's attribute can be changed.
-  Once the context is exited, the attribute reverts to its original value.
+    This creates a context in which an object's attribute can be changed.
+    Once the context is exited, the attribute reverts to its original value.
 
-  Args:
-    obj: An object whose attribute to restore at the end of the context.
-    attr: An attribute to remember and restore at the end of the context.
+    Args:
+        obj: An object whose attribute to restore at the end of the context.
+        attr: An attribute to remember and restore at the end of the context.
 
-  Yields:
-    Context.
+    Yields:
+        Context.
 
-  Example:
-    my_obj.x = 1
-    with _new_attr_context(my_obj, "x"):
-      my_obj.x = 2
-      print(my_obj.x)
-    print(my_obj.x)
-  """
+    Example:
+        ```python
+        >>> my_obj.x = 1
+        >>> with _new_attr_context(my_obj, "x"):
+        >>>     my_obj.x = 2
+        >>>     print(my_obj.x)
+        >>> print(my_obj.x)
+        ```
+    """
     saved = getattr(obj, attr)
     try:
         yield

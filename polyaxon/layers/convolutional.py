@@ -22,42 +22,43 @@ from polyaxon.variables import variable
 
 
 class Conv2d(BaseLayer):
+    """Adds a 2D convolution layer.
+
+    This operation creates a variable called 'w', representing the convolutional kernel,
+    that is convolved with the input. A second variable called 'b' is added to the result of
+    the convolution operation.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_filter: `int`. The number of convolutional filters.
+        filter_size: `int` or `list of int`. Size of filters.
+        strides: 'int` or list of `int`. Strides of conv operation.
+            Default: [1 1 1 1].
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        activation: `str` (name) or `function` (returning a `Tensor`) or None.
+            Default: 'linear'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Conv2D'.
+
+    Attributes:
+        w: `Variable`. Variable representing filter weights.
+        b: `Variable`. Variable representing biases.
+    """
     def __init__(self, mode, num_filter, filter_size, strides=1, padding='SAME',
                  activation='linear', bias=True, weights_init='uniform_scaling',
                  bias_init='zeros', regularizer=None, scale=0.001,
                  trainable=True, restore=True, name='Conv2D'):
-        """Adds a 2D convolution layer.
-
-        This operation creates a variable called 'w', representing the convolutional kernel,
-        that is convolved with the input. A second variable called 'b' is added to the result of
-        the convolution operation.
-
-        Args:
-            num_filter: `int`. The number of convolutional filters.
-            filter_size: `int` or `list of int`. Size of filters.
-            strides: 'int` or list of `int`. Strides of conv operation.
-                Default: [1 1 1 1].
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            activation: `str` (name) or `function` (returning a `Tensor`) or None.
-                Default: 'linear'.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Conv2D'.
-
-        Attributes:
-            w: `Variable`. Variable representing filter weights.
-            b: `Variable`. Variable representing biases.
-        """
         super(Conv2d, self).__init__(mode, name)
         self.num_filter = num_filter
         self.filter_size = filter_size
@@ -117,46 +118,47 @@ class Conv2d(BaseLayer):
 
 
 class Conv2dTranspose(BaseLayer):
+    """Adds a Convolution 2D Transpose.
+
+    This operation is sometimes called "deconvolution" after (Deconvolutional
+    Networks)[http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf], but is
+    actually the transpose (gradient) of `conv2d` rather than an actual
+    deconvolution.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_filter: `int`. The number of convolutional filters.
+        filter_size: `int` or `list of int`. Size of filters.
+        output_shape: `list of int`. Dimensions of the output tensor.
+            Can optionally include the number of conv filters.
+            [new height, new width, num_filter] or [new height, new width].
+        strides: `int` or list of `int`. Strides of conv operation.
+            Default: [1 1 1 1].
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Conv2DTranspose'.
+
+    Attributes:
+        w: `Variable`. Variable representing filter weights.
+        b: `Variable`. Variable representing biases.
+    """
     def __init__(self, mode, num_filter, filter_size, output_shape, strides=1, padding='SAME',
                  activation='linear', bias=True, weights_init='uniform_scaling',
                  bias_init='zeros', regularizer=None, scale=0.001,
                  trainable=True, restore=True, name='Conv2DTranspose'):
-        """Adds a Convolution 2D Transpose.
-
-        This operation is sometimes called "deconvolution" after (Deconvolutional
-        Networks)[http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf], but is
-        actually the transpose (gradient) of `conv2d` rather than an actual
-        deconvolution.
-
-        Args:
-            num_filter: `int`. The number of convolutional filters.
-            filter_size: `int` or `list of int`. Size of filters.
-            output_shape: `list of int`. Dimensions of the output tensor.
-                Can optionally include the number of conv filters.
-                [new height, new width, num_filter] or [new height, new width].
-            strides: `int` or list of `int`. Strides of conv operation.
-                Default: [1 1 1 1].
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Conv2DTranspose'.
-
-        Attributes:
-            w: `Variable`. Variable representing filter weights.
-            b: `Variable`. Variable representing biases.
-        """
         super(Conv2dTranspose, self).__init__(mode, name)
         self.num_filter = num_filter
         self.filter_size = filter_size
@@ -250,17 +252,18 @@ class Pool2dMixin(object):
 
 
 class MaxPool2d(BaseLayer, Pool2dMixin):
-    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='MaxPool2D'):
-        """Adds Max Pooling 2D.
+    """Adds Max Pooling 2D.
 
-        Args:
-            kernel_size: 'int` or `list of int`. Pooling kernel size.
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Default: SAME as kernel_size.
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            name: A name for this layer (optional). Default: 'MaxPool2D'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        kernel_size: 'int` or `list of int`. Pooling kernel size.
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Default: SAME as kernel_size.
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        name: A name for this layer (optional). Default: 'MaxPool2D'.
+    """
+    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='MaxPool2D'):
         super(MaxPool2d, self).__init__(mode, name)
         self.kernel_size = kernel_size
         self.strides = strides
@@ -278,17 +281,18 @@ class MaxPool2d(BaseLayer, Pool2dMixin):
 
 
 class AvgPool2d(BaseLayer, Pool2dMixin):
-    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='AvgPool2D'):
-        """Adds Average Pooling 2D.
+    """Adds Average Pooling 2D.
 
-        Args:
-            kernel_size: 'int` or `list of int`. Pooling kernel size.
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Default: SAME as kernel_size.
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            name: A name for this layer (optional). Default: 'AvgPool2D'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        kernel_size: 'int` or `list of int`. Pooling kernel size.
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Default: SAME as kernel_size.
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        name: A name for this layer (optional). Default: 'AvgPool2D'.
+    """
+    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='AvgPool2D'):
         super(AvgPool2d, self).__init__(mode, name)
         self.kernel_size = kernel_size
         self.strides = strides
@@ -306,13 +310,14 @@ class AvgPool2d(BaseLayer, Pool2dMixin):
 
 
 class Upsample2d(BaseLayer):
-    def __init__(self, mode, kernel_size, name='UpSample2D'):
-        """Adds UpSample 2D operation.
+    """Adds UpSample 2D operation.
 
-        Args:
-            kernel_size: 'int` or `list of int`. Upsampling kernel size.
-            name: A name for this layer (optional). Default: 'UpSample2D'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        kernel_size: 'int` or `list of int`. Upsampling kernel size.
+        name: A name for this layer (optional). Default: 'UpSample2D'.
+    """
+    def __init__(self, mode, kernel_size, name='UpSample2D'):
         super(Upsample2d, self).__init__(mode, name)
         self.kernel_size = kernel_size
 
@@ -336,31 +341,32 @@ class Upsample2d(BaseLayer):
 
 
 class Upscore(BaseLayer):
+    """Adds an Upscore layer.
+
+    This implements the upscore layer as used in
+    (Fully Convolutional Networks)[http://arxiv.org/abs/1411.4038].
+    The upscore layer is initialized as bilinear upsampling filter.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_classes: `int`. Number of output feature maps.
+        shape: `list of int`. Dimension of the output map
+            [batch_size, new height, new width]. For convinience four values
+             are allows [batch_size, new height, new width, X], where X
+             is ignored.
+        kernel_size: 'int` or `list of int`. Upsampling kernel size.
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Default: [1 2 2 1].
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Upscore'.
+
+    Links:
+        (Fully Convolutional Networks)[http://arxiv.org/abs/1411.4038]
+    """
     def __init__(self, mode, num_classes, shape=None, kernel_size=4, strides=2, trainable=True,
                  restore=True, name='Upscore'):
-        """Adds an Upscore layer.
-
-        This implements the upscore layer as used in
-        (Fully Convolutional Networks)[http://arxiv.org/abs/1411.4038].
-        The upscore layer is initialized as bilinear upsampling filter.
-
-        Args:
-            num_classes: `int`. Number of output feature maps.
-            shape: `list of int`. Dimension of the output map
-                [batch_size, new height, new width]. For convinience four values
-                 are allows [batch_size, new height, new width, X], where X
-                 is ignored.
-            kernel_size: 'int` or `list of int`. Upsampling kernel size.
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Default: [1 2 2 1].
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Upscore'.
-
-        Links:
-            (Fully Convolutional Networks)[http://arxiv.org/abs/1411.4038]
-        """
         super(Upscore, self).__init__(mode, name)
         self.num_classes = num_classes
         self.shape = shape
@@ -426,38 +432,39 @@ class Upscore(BaseLayer):
 
 
 class Conv1d(BaseLayer):
+    """Adds a Convolution 1D.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_filter: `int`. The number of convolutional filters.
+        filter_size: 'int` or `list of int`. Size of filters.
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Default: [1 1 1 1].
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Conv1D'.
+
+    Attributes:
+        w: `Variable`. Variable representing filter weights.
+        b: `Variable`. Variable representing biases.
+    """
     def __init__(self, mode, num_filter, filter_size, strides=1, padding='SAME',
                  activation='linear', bias=True, weights_init='uniform_scaling',
                  bias_init='zeros', regularizer=None, scale=0.001,
                  trainable=True, restore=True, name="Conv1D"):
-        """Adds a Convolution 1D.
-
-        Args:
-            num_filter: `int`. The number of convolutional filters.
-            filter_size: 'int` or `list of int`. Size of filters.
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Default: [1 1 1 1].
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Conv1D'.
-
-        Attributes:
-            w: `Variable`. Variable representing filter weights.
-            b: `Variable`. Variable representing biases.
-        """
         super(Conv1d, self).__init__(mode, name)
         self.num_filter = num_filter
         self.filter_size = filter_size
@@ -545,17 +552,18 @@ class Pool1dMixin(object):
 
 
 class MaxPool1d(BaseLayer, Pool1dMixin):
-    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='MaxPool1D'):
-        """Adds Max Pooling 1D.
+    """Adds Max Pooling 1D.
 
-        Args:
-            kernel_size: `int` or `list of int`. Pooling kernel size.
-            strides: `int` or `list of int`. Strides of conv operation.
-                Default: SAME as kernel_size.
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            name: A name for this layer (optional). Default: 'MaxPool1D'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        kernel_size: `int` or `list of int`. Pooling kernel size.
+        strides: `int` or `list of int`. Strides of conv operation.
+            Default: SAME as kernel_size.
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        name: A name for this layer (optional). Default: 'MaxPool1D'.
+    """
+    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='MaxPool1D'):
         super(MaxPool1d, self).__init__(mode, name)
         self.kernel_size = kernel_size
         self.strides = strides
@@ -573,17 +581,18 @@ class MaxPool1d(BaseLayer, Pool1dMixin):
 
 
 class AvgPool1d(BaseLayer, Pool1dMixin):
-    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='AvgPool1D'):
-        """ Average Pooling 1D.
+    """Average Pooling 1D.
 
-        Args:
-            kernel_size: `int` or `list of int`. Pooling kernel size.
-            strides: `int` or `list of int`. Strides of conv operation.
-                Default: SAME as kernel_size.
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            name: A name for this layer (optional). Default: 'AvgPool1D'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        kernel_size: `int` or `list of int`. Pooling kernel size.
+        strides: `int` or `list of int`. Strides of conv operation.
+            Default: SAME as kernel_size.
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        name: A name for this layer (optional). Default: 'AvgPool1D'.
+    """
+    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='AvgPool1D'):
         super(AvgPool1d, self).__init__(mode, name)
         self.kernel_size = kernel_size
         self.strides = strides
@@ -601,38 +610,39 @@ class AvgPool1d(BaseLayer, Pool1dMixin):
 
 
 class Conv3d(BaseLayer):
+    """Adds Convolution 3D.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_filter: `int`. The number of convolutional filters.
+        filter_size: `int` or `list of int`. Size of filters.
+        strides: 'int` or list of `int`. Strides of conv operation.
+            Default: [1 1 1 1 1]. Must have strides[0] = strides[4] = 1.
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Conv3D'.
+
+    Attributes:
+        w: `Variable`. Variable representing filter weights.
+        b: `Variable`. Variable representing biases.
+    """
     def __init__(self, mode, num_filter, filter_size, strides=1, padding='SAME',
                  activation='linear', bias=True, weights_init='uniform_scaling',
                  bias_init='zeros', regularizer=None, scale=0.001,
                  trainable=True, restore=True, name='Conv3D'):
-        """Adds Convolution 3D.
-
-        Args:
-            num_filter: `int`. The number of convolutional filters.
-            filter_size: `int` or `list of int`. Size of filters.
-            strides: 'int` or list of `int`. Strides of conv operation.
-                Default: [1 1 1 1 1]. Must have strides[0] = strides[4] = 1.
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Conv3D'.
-
-        Attributes:
-            w: `Variable`. Variable representing filter weights.
-            b: `Variable`. Variable representing biases.
-        """
         super(Conv3d, self).__init__(mode, name)
         self.num_filter = num_filter
         self.filter_size = filter_size
@@ -694,47 +704,48 @@ class Conv3d(BaseLayer):
 
 
 class Conv3dTranspose(BaseLayer):
+    """Adds Convolution 3D Transpose.
+
+    This operation is sometimes called "deconvolution" after (Deconvolutional
+    Networks)[http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf], but is
+    actually the transpose (gradient) of `conv3d` rather than an actual
+    deconvolution.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_filter: `int`. The number of convolutional filters.
+        filter_size: `int` or `list of int`. Size of filters.
+        output_shape: `list of int`. Dimensions of the output tensor.
+            Can optionally include the number of conv filters.
+            [new depth, new height, new width, num_filter]
+            or [new depth, new height, new width].
+        strides: `int` or list of `int`. Strides of conv operation.
+            Default: [1 1 1 1 1].
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Conv2DTranspose'.
+
+    Attributes:
+        w: `Variable`. Variable representing filter weights.
+        b: `Variable`. Variable representing biases.
+    """
     def __init__(self, mode, num_filter, filter_size, output_shape, strides=1, padding='SAME',
                  activation='linear', bias=True, weights_init='uniform_scaling',
                  bias_init='zeros', regularizer=None, scale=0.001,
                  trainable=True, restore=True, name='Conv3DTranspose'):
-        """Adds Convolution 3D Transpose.
-
-        This operation is sometimes called "deconvolution" after (Deconvolutional
-        Networks)[http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf], but is
-        actually the transpose (gradient) of `conv3d` rather than an actual
-        deconvolution.
-
-        Args:
-            num_filter: `int`. The number of convolutional filters.
-            filter_size: `int` or `list of int`. Size of filters.
-            output_shape: `list of int`. Dimensions of the output tensor.
-                Can optionally include the number of conv filters.
-                [new depth, new height, new width, num_filter]
-                or [new depth, new height, new width].
-            strides: `int` or list of `int`. Strides of conv operation.
-                Default: [1 1 1 1 1].
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Conv2DTranspose'.
-
-        Attributes:
-            w: `Variable`. Variable representing filter weights.
-            b: `Variable`. Variable representing biases.
-        """
         super(Conv3dTranspose, self).__init__(mode, name)
         self.num_filter = num_filter
         self.filter_size = filter_size
@@ -829,19 +840,20 @@ class Pool3dMixin(object):
 
 
 class MaxPool3d(BaseLayer, Pool3dMixin):
-    def __init__(self, mode, kernel_size, strides=1, padding='SAME', name='MaxPool3D'):
-        """ Max Pooling 3D.
+    """Max Pooling 3D.
 
-        Args:
-            kernel_size: 'int` or `list of int`. Pooling kernel size.
-                Must have kernel_size[0] = kernel_size[1] = 1
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Must have strides[0] = strides[4] = 1.
-                Default: [1 1 1 1 1]
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            name: A name for this layer (optional). Default: 'MaxPool3D'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        kernel_size: 'int` or `list of int`. Pooling kernel size.
+            Must have kernel_size[0] = kernel_size[1] = 1
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Must have strides[0] = strides[4] = 1.
+            Default: [1 1 1 1 1]
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        name: A name for this layer (optional). Default: 'MaxPool3D'.
+    """
+    def __init__(self, mode, kernel_size, strides=1, padding='SAME', name='MaxPool3D'):
         super(MaxPool3d, self).__init__(mode, name)
         self.kernel_size = kernel_size
         self.strides = strides
@@ -859,19 +871,20 @@ class MaxPool3d(BaseLayer, Pool3dMixin):
 
 
 class AvgPool3d(BaseLayer, Pool3dMixin):
-    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='AvgPool3D'):
-        """ Average Pooling 3D.
+    """Average Pooling 3D.
 
-        Args:
-            kernel_size: 'int` or `list of int`. Pooling kernel size.
-                Must have kernel_size[0] = kernel_size[1] = 1
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Must have strides[0] = strides[4] = 1.
-                Default: [1 1 1 1 1]
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            name: A name for this layer (optional). Default: 'AvgPool3D'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        kernel_size: 'int` or `list of int`. Pooling kernel size.
+            Must have kernel_size[0] = kernel_size[1] = 1
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Must have strides[0] = strides[4] = 1.
+            Default: [1 1 1 1 1]
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        name: A name for this layer (optional). Default: 'AvgPool3D'.
+    """
+    def __init__(self, mode, kernel_size, strides=None, padding='SAME', name='AvgPool3D'):
         super(AvgPool3d, self).__init__(mode, name)
         self.kernel_size = kernel_size
         self.strides = strides
@@ -901,12 +914,13 @@ class GlobalPoolMixin(object):
 
 
 class GlobalMaxPool(BaseLayer, GlobalPoolMixin):
-    def __init__(self, mode, name='GlobalMaxPool'):
-        """Adds a Global Max Pooling.
+    """Adds a Global Max Pooling.
 
-        Args:
-            name: A name for this layer (optional). Default: 'GlobalMaxPool'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: A name for this layer (optional). Default: 'GlobalMaxPool'.
+    """
+    def __init__(self, mode, name='GlobalMaxPool'):
         super(GlobalMaxPool, self).__init__(mode, name)
 
     def _build(self, incoming, *args, **kwargs):
@@ -921,12 +935,13 @@ class GlobalMaxPool(BaseLayer, GlobalPoolMixin):
 
 
 class GlobalAvgPool(BaseLayer, GlobalPoolMixin):
-    def __init__(self, mode, name='GlobalAvgPool'):
-        """Adds a Global Average Pooling.
+    """Adds a Global Average Pooling.
 
-        Args:
-            name: A name for this layer (optional). Default: 'GlobalAvgPool'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: A name for this layer (optional). Default: 'GlobalAvgPool'.
+    """
+    def __init__(self, mode, name='GlobalAvgPool'):
         super(GlobalAvgPool, self).__init__(mode, name)
 
     def _build(self, incoming, *args, **kwargs):
@@ -941,50 +956,51 @@ class GlobalAvgPool(BaseLayer, GlobalPoolMixin):
 
 
 class ResidualBlock(BaseLayer):
+    """Adds a Residual Block.
+
+    A residual block as described in MSRA's Deep Residual Network paper.
+    Full pre-activation architecture is used here.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        nb_blocks: `int`. Number of layer blocks.
+        out_channels: `int`. The number of convolutional filters of the
+            convolution layers.
+        downsample: `bool`. If True, apply downsampling using
+            'downsample_strides' for strides.
+        downsample_strides: `int`. The strides to use when downsampling.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        batch_norm: `bool`. If True, apply batch normalization.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'uniform_scaling'.
+        bias_init: `str` (name) or `tf.Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'ShallowBottleneck'.
+
+    References:
+        - Deep Residual Learning for Image Recognition. Kaiming He, Xiangyu
+            Zhang, Shaoqing Ren, Jian Sun. 2015.
+        - Identity Mappings in Deep Residual Networks. Kaiming He, Xiangyu
+            Zhang, Shaoqing Ren, Jian Sun. 2015.
+
+    Links:
+        - [http://arxiv.org/pdf/1512.03385v1.pdf]
+            (http://arxiv.org/pdf/1512.03385v1.pdf)
+        - [Identity Mappings in Deep Residual Networks]
+            (https://arxiv.org/pdf/1603.05027v2.pdf)
+    """
     def __init__(self, mode, nb_blocks, out_channels, downsample=False, downsample_strides=2,
                  activation='relu', batch_norm=True, bias=True, weights_init='variance_scaling',
                  bias_init='zeros', regularizer='L2', scale=0.0001,
                  trainable=True, restore=True, name='ResidualBlock'):
-        """Adds a Residual Block.
-
-        A residual block as described in MSRA's Deep Residual Network paper.
-        Full pre-activation architecture is used here.
-
-        Args:
-            nb_blocks: `int`. Number of layer blocks.
-            out_channels: `int`. The number of convolutional filters of the
-                convolution layers.
-            downsample: `bool`. If True, apply downsampling using
-                'downsample_strides' for strides.
-            downsample_strides: `int`. The strides to use when downsampling.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            batch_norm: `bool`. If True, apply batch normalization.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'uniform_scaling'.
-            bias_init: `str` (name) or `tf.Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'ShallowBottleneck'.
-
-        References:
-            - Deep Residual Learning for Image Recognition. Kaiming He, Xiangyu
-                Zhang, Shaoqing Ren, Jian Sun. 2015.
-            - Identity Mappings in Deep Residual Networks. Kaiming He, Xiangyu
-                Zhang, Shaoqing Ren, Jian Sun. 2015.
-
-        Links:
-            - [http://arxiv.org/pdf/1512.03385v1.pdf]
-                (http://arxiv.org/pdf/1512.03385v1.pdf)
-            - [Identity Mappings in Deep Residual Networks]
-                (https://arxiv.org/pdf/1603.05027v2.pdf)
-        """
         super(ResidualBlock, self).__init__(mode, name)
         self.nb_blocks = nb_blocks
         self.out_channels = out_channels
@@ -1062,52 +1078,53 @@ class ResidualBlock(BaseLayer):
 
 
 class ResidualBottleneck(BaseLayer):
+    """Adds a Residual Bottleneck.
+
+    A residual bottleneck block as described in MSRA's Deep Residual Network
+    paper. Full pre-activation architecture is used here.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        nb_blocks: `int`. Number of layer blocks.
+        bottleneck_size: `int`. The number of convolutional filter of the
+            bottleneck convolutional layer.
+        out_channels: `int`. The number of convolutional filters of the
+            layers surrounding the bottleneck layer.
+        downsample: `bool`. If True, apply downsampling using
+            'downsample_strides' for strides.
+        downsample_strides: `int`. The strides to use when downsampling.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        batch_norm: `bool`. If True, apply batch normalization.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'uniform_scaling'.
+        bias_init: `str` (name) or `tf.Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'DeepBottleneck'.
+
+    References:
+        - Deep Residual Learning for Image Recognition. Kaiming He, Xiangyu
+            Zhang, Shaoqing Ren, Jian Sun. 2015.
+        - Identity Mappings in Deep Residual Networks. Kaiming He, Xiangyu
+            Zhang, Shaoqing Ren, Jian Sun. 2015.
+
+    Links:
+        - [http://arxiv.org/pdf/1512.03385v1.pdf]
+            (http://arxiv.org/pdf/1512.03385v1.pdf)
+        - [Identity Mappings in Deep Residual Networks]
+            (https://arxiv.org/pdf/1603.05027v2.pdf)
+    """
     def __init__(self, mode, nb_blocks, bottleneck_size, out_channels, downsample=False,
                  downsample_strides=2, activation='relu', batch_norm=True, bias=True,
                  weights_init='variance_scaling', bias_init='zeros', regularizer='L2',
                  scale=0.0001, trainable=True, restore=True, name="ResidualBottleneck"):
-        """Adds a Residual Bottleneck.
-
-        A residual bottleneck block as described in MSRA's Deep Residual Network
-        paper. Full pre-activation architecture is used here.
-
-        Args:
-            nb_blocks: `int`. Number of layer blocks.
-            bottleneck_size: `int`. The number of convolutional filter of the
-                bottleneck convolutional layer.
-            out_channels: `int`. The number of convolutional filters of the
-                layers surrounding the bottleneck layer.
-            downsample: `bool`. If True, apply downsampling using
-                'downsample_strides' for strides.
-            downsample_strides: `int`. The strides to use when downsampling.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            batch_norm: `bool`. If True, apply batch normalization.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'uniform_scaling'.
-            bias_init: `str` (name) or `tf.Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'DeepBottleneck'.
-
-        References:
-            - Deep Residual Learning for Image Recognition. Kaiming He, Xiangyu
-                Zhang, Shaoqing Ren, Jian Sun. 2015.
-            - Identity Mappings in Deep Residual Networks. Kaiming He, Xiangyu
-                Zhang, Shaoqing Ren, Jian Sun. 2015.
-
-        Links:
-            - [http://arxiv.org/pdf/1512.03385v1.pdf]
-                (http://arxiv.org/pdf/1512.03385v1.pdf)
-            - [Identity Mappings in Deep Residual Networks]
-                (https://arxiv.org/pdf/1603.05027v2.pdf)
-        """
         super(ResidualBottleneck, self).__init__(mode, name)
         self.nb_blocks = nb_blocks
         self.bottleneck_size = bottleneck_size
@@ -1194,39 +1211,40 @@ class ResidualBottleneck(BaseLayer):
 
 
 class HighwayConv2d(BaseLayer):
+    """Adds a Highway Convolution 2D.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_filter: `int`. The number of convolutional filters.
+        filter_size: 'int` or `list of int`. Size of filters.
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Default: [1 1 1 1].
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Conv2D'.
+
+    Attributes:
+        w: `Variable`. Variable representing filter weights.
+        w_t: `Variable`. Variable representing gate weights.
+        b: `Variable`. Variable representing biases.
+        b_t: `Variable`. Variable representing gate biases.
+    """
     def __init__(self, mode, num_filter, filter_size, strides=1, padding='SAME',
                  activation='linear', weights_init='uniform_scaling',
                  bias_init='zeros', regularizer=None, scale=0.001,
                  trainable=True, restore=True, name="HighwayConv2D"):
-        """Adds a Highway Convolution 2D.
-
-        Args:
-            num_filter: `int`. The number of convolutional filters.
-            filter_size: 'int` or `list of int`. Size of filters.
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Default: [1 1 1 1].
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Conv2D'.
-
-        Attributes:
-            w: `Variable`. Variable representing filter weights.
-            w_t: `Variable`. Variable representing gate weights.
-            b: `Variable`. Variable representing biases.
-            b_t: `Variable`. Variable representing gate biases.
-        """
         super(HighwayConv2d, self).__init__(mode, name)
         self.num_filter = num_filter
         self.filter_size = filter_size
@@ -1308,39 +1326,40 @@ class HighwayConv2d(BaseLayer):
 
 
 class HighwayConv1d(BaseLayer):
+    """Adds a Highway Convolution 1D.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_filter: `int`. The number of convolutional filters.
+        filter_size: 'int` or `list of int`. Size of filters.
+        strides: 'int` or `list of int`. Strides of conv operation.
+            Default: [1 1 1 1].
+        padding: `str` from `"SAME", "VALID"`. Padding algo to use.
+            Default: 'SAME'.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'HighwayConv1D'.
+
+    Attributes:
+        w: `Variable`. Variable representing filter weights.
+        w_t: `Variable`. Variable representing gate weights.
+        b: `Variable`. Variable representing biases.
+        b_t: `Variable`. Variable representing gate biases.
+    """
     def __init__(self, mode, num_filter, filter_size, strides=1, padding='SAME',
                  activation='linear', weights_init='uniform_scaling',
                  bias_init='zeros', regularizer=None, scale=0.001,
                  trainable=True, restore=True, name="HighwayConv1D"):
-        """Adds a Highway Convolution 1D.
-
-        Args:
-            num_filter: `int`. The number of convolutional filters.
-            filter_size: 'int` or `list of int`. Size of filters.
-            strides: 'int` or `list of int`. Strides of conv operation.
-                Default: [1 1 1 1].
-            padding: `str` from `"SAME", "VALID"`. Padding algo to use.
-                Default: 'SAME'.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'HighwayConv1D'.
-
-        Attributes:
-            w: `Variable`. Variable representing filter weights.
-            w_t: `Variable`. Variable representing gate weights.
-            b: `Variable`. Variable representing biases.
-            b_t: `Variable`. Variable representing gate biases.
-        """
         super(HighwayConv1d, self).__init__(mode, name)
         self.num_filter = num_filter
         self.filter_size = filter_size

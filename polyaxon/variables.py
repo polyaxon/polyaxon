@@ -9,9 +9,7 @@ from polyaxon.libs import getters
 @tf.contrib.framework.add_arg_scope
 def variable(name, shape=None, dtype=tf.float32, initializer=None, regularizer=None,
              trainable=True, collections=None, device='', restore=True):
-    """ variable.
-
-    Instantiate a new variable.
+    """Instantiate a new variable.
 
     Args:
         name: `str`. A name for this variable.

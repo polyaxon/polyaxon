@@ -14,39 +14,40 @@ from polyaxon.variables import variable
 
 
 class FullyConnected(BaseLayer):
+    """Adds a fully connected layer.
+
+    `fully_connected` creates a variable called `w`, representing a fully
+    connected weight matrix, which is multiplied by the `incoming` to produce a
+    `Tensor` of hidden units.
+
+    Note: that if `inputs` have a rank greater than 2, then `inputs` is flattened
+    prior to the initial matrix multiply by `weights`.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        n_units: `int`, number of units for this layer.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'FullyConnected'.
+
+    Attributes:
+        w: `Tensor`. Variable representing units weights.
+        b: `Tensor`. Variable representing biases.
+    """
     def __init__(self, mode, n_units, activation='linear', bias=True,
                  weights_init='truncated_normal', bias_init='zeros', regularizer=None,
                  scale=0.001, trainable=True, restore=True, name="FullyConnected"):
-        """Adds a fully connected layer.
-
-        `fully_connected` creates a variable called `w`, representing a fully
-        connected weight matrix, which is multiplied by the `incoming` to produce a
-        `Tensor` of hidden units.
-
-        Note: that if `inputs` have a rank greater than 2, then `inputs` is flattened
-        prior to the initial matrix multiply by `weights`.
-
-        Args:
-            n_units: `int`, number of units for this layer.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'FullyConnected'.
-
-        Attributes:
-            w: `Tensor`. Variable representing units weights.
-            b: `Tensor`. Variable representing biases.
-        """
         super(FullyConnected, self).__init__(mode, name)
         self.n_units = n_units
         self.activation = activation
@@ -108,35 +109,36 @@ class FullyConnected(BaseLayer):
 
 
 class Dropout(BaseLayer):
+    """Adds a Dropout op to the input.
+
+    Outputs the input element scaled up by `1 / keep_prob`. The scaling is so
+    that the expected sum is unchanged.
+
+    By default, each element is kept or dropped independently. If noise_shape
+    is specified, it must be broadcastable to the shape of x, and only dimensions
+    with noise_shape[i] == shape(x)[i] will make independent decisions. For
+    example, if shape(x) = [k, l, m, n] and noise_shape = [k, 1, 1, n], each
+    batch and channel component will be kept independently and each row and column
+    will be kept or not kept together.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        keep_prob : A float representing the probability that each element
+            is kept.
+        noise_shape : A 1-D Tensor of type int32, representing the shape for
+            randomly generated keep/drop flags.
+        name : A name for this layer (optional).
+
+    References:
+        Dropout: A Simple Way to Prevent Neural Networks from Overfitting.
+        N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever & R. Salakhutdinov,
+        (2014), Journal of Machine Learning Research, 5(Jun)(2), 1929-1958.
+
+    Links:
+      [https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf]
+        (https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf)
+    """
     def __init__(self, mode, keep_prob, noise_shape=None, seed=None, name='Dropout'):
-        """Adds a Dropout op to the input.
-
-        Outputs the input element scaled up by `1 / keep_prob`. The scaling is so
-        that the expected sum is unchanged.
-
-        By default, each element is kept or dropped independently. If noise_shape
-        is specified, it must be broadcastable to the shape of x, and only dimensions
-        with noise_shape[i] == shape(x)[i] will make independent decisions. For
-        example, if shape(x) = [k, l, m, n] and noise_shape = [k, 1, 1, n], each
-        batch and channel component will be kept independently and each row and column
-        will be kept or not kept together.
-
-        Args:
-            keep_prob : A float representing the probability that each element
-                is kept.
-            noise_shape : A 1-D Tensor of type int32, representing the shape for
-                randomly generated keep/drop flags.
-            name : A name for this layer (optional).
-
-        References:
-            Dropout: A Simple Way to Prevent Neural Networks from Overfitting.
-            N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever & R. Salakhutdinov,
-            (2014), Journal of Machine Learning Research, 5(Jun)(2), 1929-1958.
-
-        Links:
-          [https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf]
-            (https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf)
-        """
         super(Dropout, self).__init__(mode, name)
         self.keep_prob = keep_prob
         self.noise_shape = noise_shape
@@ -170,15 +172,16 @@ class Dropout(BaseLayer):
 
 
 class Reshape(BaseLayer):
+    """Reshape.
+
+    A layer that reshape the incoming layer tensor output to the desired shape.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        new_shape: A list of `int`. The desired shape.
+        name: A name for this layer (optional).
+    """
     def __init__(self, mode, new_shape, name='Reshape'):
-        """ Reshape.
-
-        A layer that reshape the incoming layer tensor output to the desired shape.
-
-        Args:
-            new_shape: A list of `int`. The desired shape.
-            name: A name for this layer (optional).
-        """
         super(Reshape, self).__init__(mode, name)
         self.new_shape = new_shape
 
@@ -197,8 +200,13 @@ class Reshape(BaseLayer):
 
 
 class Flatten(BaseLayer):
+    """Flatten the incoming Tensor.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: A name for this layer (optional).
+    """
     def __init__(self, mode, name='Flatten'):
-        """ Flatten the incoming Tensor."""
         super(Flatten, self).__init__(mode, name)
 
     def _build(self, incoming, *args, **kwargs):
@@ -218,23 +226,23 @@ class Flatten(BaseLayer):
 
 
 class SingleUnit(BaseLayer):
+    """Adds a Single Unit Layer.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        activation: `str` (name) or `function`. Activation applied to this layer. Default: 'linear'.
+        bias: `bool`. If True, a bias is used.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Linear'.
+
+    Attributes:
+        W: `Tensor`. Variable representing weight.
+        b: `Tensor`. Variable representing bias.
+    """
     def __init__(self, mode, activation='linear', bias=True, trainable=True, restore=True,
                  name='Linear'):
-        """Adds a Single Unit Layer.
-
-        Args:
-            activation: `str` (name) or `function`. Activation applied to this
-                layer (see tflearn.activations). Default: 'linear'.
-            bias: `bool`. If True, a bias is used.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Linear'.
-
-        Attributes:
-            W: `Tensor`. Variable representing weight.
-            b: `Tensor`. Variable representing bias.
-        """
         super(SingleUnit, self).__init__(mode, name)
         self.activation = activation
         self.bias = bias
@@ -286,41 +294,42 @@ class SingleUnit(BaseLayer):
 
 
 class Highway(BaseLayer):
+    """Adds Fully Connected Highway.
+
+    A fully connected highway network layer, with some inspiration from
+    [https://github.com/fomorians/highway-fcn](https://github.com/fomorians/highway-fcn).
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        n_units: `int`, number of units for this layer.
+        activation: `str` (name) or `function` (returning a `Tensor`).
+            Default: 'linear'.
+        transform_dropout: `float`: Keep probability on the highway transform gate.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        bias_init: `str` (name) or `Tensor`. Bias initialization.
+            Default: 'zeros'.
+        regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
+            Default: None.
+        scale: `float`. Regularizer decay parameter. Default: 0.001.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'FullyConnectedHighway'.
+
+    Attributes:
+        W: `Tensor`. Variable representing units weights.
+        W_t: `Tensor`. Variable representing units weights for transform gate.
+        b: `Tensor`. Variable representing biases.
+        b_t: `Tensor`. Variable representing biases for transform gate.
+
+    Links:
+        [https://arxiv.org/abs/1505.00387](https://arxiv.org/abs/1505.00387)
+    """
     def __init__(self, mode, n_units, activation='linear', transform_dropout=None,
                  weights_init='truncated_normal', bias_init='zeros',
                  regularizer=None, scale=0.001, trainable=True,
                  restore=True, name='FullyConnectedHighway'):
-        """Adds Fully Connected Highway.
-
-        A fully connected highway network layer, with some inspiration from
-        [https://github.com/fomorians/highway-fcn](https://github.com/fomorians/highway-fcn).
-
-        Args:
-            n_units: `int`, number of units for this layer.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-                Default: 'linear'.
-            transform_dropout: `float`: Keep probability on the highway transform gate.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            bias_init: `str` (name) or `Tensor`. Bias initialization.
-                Default: 'zeros'.
-            regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
-                Default: None.
-            scale: `float`. Regularizer decay parameter. Default: 0.001.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'FullyConnectedHighway'.
-
-        Attributes:
-            W: `Tensor`. Variable representing units weights.
-            W_t: `Tensor`. Variable representing units weights for transform gate.
-            b: `Tensor`. Variable representing biases.
-            b_t: `Tensor`. Variable representing biases for transform gate.
-
-        Links:
-            [https://arxiv.org/abs/1505.00387](https://arxiv.org/abs/1505.00387)
-        """
         super(Highway, self).__init__(mode, name)
         self.n_units = n_units
         self.activation = activation
@@ -406,16 +415,16 @@ class Highway(BaseLayer):
 
 
 class OneHotEncoding(BaseLayer):
-    def __init__(self, mode, n_classes, on_value=1.0, off_value=0.0, name='OneHotEncoding'):
-        """Transform numeric labels into one hot labels using `tf.one_hot`.
+    """Transform numeric labels into one hot labels using `tf.one_hot`.
 
-        Args:
-            target: `Placeholder`. The labels placeholder.
-            n_classes: `int`. Total number of classes.
-            on_value: `scalar`. A scalar defining the on-value.
-            off_value: `scalar`. A scalar defining the off-value.
-            name: A name for this layer (optional). Default: 'OneHotEncoding'.
-        """
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        n_classes: `int`. Total number of classes.
+        on_value: `scalar`. A scalar defining the on-value.
+        off_value: `scalar`. A scalar defining the off-value.
+        name: A name for this layer (optional). Default: 'OneHotEncoding'.
+    """
+    def __init__(self, mode, n_classes, on_value=1.0, off_value=0.0, name='OneHotEncoding'):
         super(OneHotEncoding, self).__init__(mode, name)
         self.n_classes = n_classes
         self.on_value = on_value
@@ -460,7 +469,8 @@ class Merge(BaseLayer):
         specified, check below for the different options.
 
         Args:
-            mode: `str`. Merging mode, value in `MERGE_MODE`
+            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+            merge_mode: `str`. Merging mode, value in `MERGE_MODE`
             axis: `int`. Represents the axis to use for merging mode.
                 In most cases: 0 for concat and 1 for other modes.
             name: A name for this layer (optional).
@@ -511,14 +521,15 @@ class Merge(BaseLayer):
 
 
 class Concat(BaseLayer):
+    """Concat Outputs.
+
+    A layer that concatenate all outputs of a network into a single tensor.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`. A name for this layer (optional).
+    """
     def __init__(self, mode, name='Concat'):
-        """Concat Outputs.
-
-        A layer that concatenate all outputs of a network into a single tensor.
-
-        Args:
-            name: `str`. A name for this layer (optional).
-        """
         super(Concat, self).__init__(mode, name)
 
     def _build(self, dependencies, *args, **kwargs):
@@ -534,15 +545,16 @@ class Concat(BaseLayer):
 
 
 class Slice(BaseLayer):
+    """Extracts a slice from a tensor.
+
+    This operation extracts a slice of size size from a tensor input starting at
+    the location specified by begin.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`. A name for this layer (optional).
+    """
     def __init__(self, mode, begin, size, name='Slice'):
-        """Extracts a slice from a tensor.
-
-        This operation extracts a slice of size size from a tensor input starting at
-        the location specified by begin.
-
-        Args:
-            name: `str`. A name for this layer (optional).
-        """
         super(Slice, self).__init__(mode, name)
         self.being = begin
         self.size = size

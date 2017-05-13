@@ -15,7 +15,7 @@ def check_metric_data(y_pred, y_true):
 
 
 def built_metric(fct, name, scope, collect):
-    """ Builds the metric function.
+    """Builds the metric function.
 
     Args:
         fct: the metric function to build.
@@ -42,7 +42,7 @@ def built_metric(fct, name, scope, collect):
 
 
 def accuracy(name='Accuracy', scope=None, collect=False):
-    """ Computes the accuracy.
+    """Computes the accuracy.
 
     An op that calculates mean accuracy:
         * y_pred are y_True are both one-hot encoded. (categorical accuracy)
@@ -51,13 +51,12 @@ def accuracy(name='Accuracy', scope=None, collect=False):
 
     Examples:
         ```python
-        input_data = placeholder(shape=[None, 784])
-        y_pred = my_network(input_data) # Apply some ops
-        y_true = placeholder(shape=[None, 10]) # Labels
-        accuracy_op = accuracy(y_pred, y_true)
-
-        # Calculate accuracy by feeding data X and labels Y
-        accuracy_op = sess.run(accuracy_op, feed_dict={input_data: X, y_true: Y})
+        >>> input_data = placeholder(shape=[None, 784])
+        >>> y_pred = my_network(input_data) # Apply some ops
+        >>> y_true = placeholder(shape=[None, 10]) # Labels
+        >>> accuracy_op = accuracy(y_pred, y_true)
+        >>> # Calculate accuracy by feeding data X and labels Y
+        >>> accuracy_op = sess.run(accuracy_op, feed_dict={input_data: X, y_true: Y})
         ```
 
     Args:
@@ -87,19 +86,19 @@ def accuracy(name='Accuracy', scope=None, collect=False):
 
 
 def top_k(k=1, name='TopK', scope=None, collect=False):
-    """ top_k_op.
+    """top_k_op.
 
     An op that calculates top-k mean accuracy.
 
     Examples:
         ```python
-        input_data = placeholder(shape=[None, 784])
-        y_pred = my_network(input_data) # Apply some ops
-        y_true = placeholder(shape=[None, 10]) # Labels
-        top3_op = top_k(y_pred, y_true, 3)
+        >>> input_data = placeholder(shape=[None, 784])
+        >>> y_pred = my_network(input_data) # Apply some ops
+        >>> y_true = placeholder(shape=[None, 10]) # Labels
+        >>> top3_op = top_k(y_pred, y_true, 3)
 
-        # Calculate Top-3 accuracy by feeding data X and labels Y
-        top3_accuracy = sess.run(top3_op, feed_dict={input_data: X, y_true: Y})
+        >>> # Calculate Top-3 accuracy by feeding data X and labels Y
+        >>> top3_accuracy = sess.run(top3_op, feed_dict={input_data: X, y_true: Y})
         ```
 
     Args:
@@ -121,19 +120,19 @@ def top_k(k=1, name='TopK', scope=None, collect=False):
 
 
 def std_error(name='StandardError', scope=None, collect=False):
-    """ standard error.
+    """standard error.
 
     An op that calculates the standard error.
 
     Examples:
         ```python
-        input_data = placeholder(shape=[None, 784])
-        y_pred = my_network(input_data) # Apply some ops
-        y_true = placeholder(shape=[None, 10]) # Labels
-        stderr = std_error(y_pred, y_true)
+        >>> input_data = placeholder(shape=[None, 784])
+        >>> y_pred = my_network(input_data) # Apply some ops
+        >>> y_true = placeholder(shape=[None, 10]) # Labels
+        >>> stderr = std_error(y_pred, y_true)
 
-        # Calculate standard error by feeding data X and labels Y
-        std_error = sess.run(stderr_op, feed_dict={input_data: X, y_true: Y})
+        >>> # Calculate standard error by feeding data X and labels Y
+        >>> std_error = sess.run(stderr_op, feed_dict={input_data: X, y_true: Y})
         ```
 
     Args:

@@ -9,12 +9,11 @@ from polyaxon.variables import variable
 
 
 def built_activation(fct, name, collect):
-    """ Builds the metric function.
+    """Builds the metric function.
 
     Args:
         fct: the activation function to build.
         name: operation name.
-        scope: operation scope.
         collect: whether to collect this metric under the metric collection.
     """
     def activation(x):
@@ -26,7 +25,12 @@ def built_activation(fct, name, collect):
 
 
 def linear(name='Linear', collect=False):
-    """Computes linear/identity function."""
+    """Computes linear/identity function.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
 
     def _linear(x, name):
         with get_name_scope(name=name):
@@ -36,12 +40,22 @@ def linear(name='Linear', collect=False):
 
 
 def tanh(name=None, collect=False):
-    """Computes hyperbolic tangent of x element-wise."""
+    """Computes hyperbolic tangent of x element-wise.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.tanh, name, collect)
 
 
 def sigmoid(name=None, collect=False):
-    """Computes sigmoid of `x` element-wise: `y = 1 / (1 + exp(-x))`."""
+    """Computes sigmoid of `x` element-wise: `y = 1 / (1 + exp(-x))`.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.nn.sigmoid, name, collect)
 
 
@@ -49,34 +63,63 @@ def softmax(name=None, collect=False):
     """Computes softmax activations.
 
     For each batch `i` and class `j` we have
+        `softmax[i, j] = exp(logits[i, j]) / sum(exp(logits[i]))`
 
-      softmax[i, j] = exp(logits[i, j]) / sum(exp(logits[i]))
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
     """
     return built_activation(tf.nn.softmax, name, collect)
 
 
 def softplus(name=None, collect=False):
-    """Computes softplus. `log(exp(features) + 1)`."""
+    """Computes softplus. `log(exp(features) + 1)`.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.nn.softplus, name, collect)
 
 
 def softsign(name=None, collect=False):
-    """Computes softsign: `features / (abs(features) + 1)`."""
+    """Computes softsign: `features / (abs(features) + 1)`.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.nn.softsign, name, collect)
 
 
 def relu(name=None, collect=False):
-    """Computes ReLU, rectified linear: `max(features, 0)`."""
+    """Computes ReLU, rectified linear: `max(features, 0)`.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.nn.relu, name, collect)
 
 
 def relu6(name=None, collect=False):
-    """Computes Rectified Linear 6: `min(max(features, 0), 6)`."""
+    """Computes Rectified Linear 6: `min(max(features, 0), 6)`.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.nn.relu6, name, collect)
 
 
-def leaky_relu(alpha=0.1, name="LeakyReLU", collect=False):
-    """Modified version of ReLU, introducing a nonzero gradient for negative input."""
+def leaky_relu(alpha=0.1, name='LeakyReLU', collect=False):
+    """Modified version of ReLU, introducing a nonzero gradient for negative input.
+
+    Args:
+        alpha: `int`, the multiplier.
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
 
     def _leak_relu(x, name):
         with get_name_scope(name):
@@ -88,9 +131,16 @@ def leaky_relu(alpha=0.1, name="LeakyReLU", collect=False):
     return built_activation(_leak_relu, name, collect)
 
 
-def prelu(channel_shared=False, weights_init='zeros', restore=True, name="PReLU", scope=None,
-          collect=False):
-    """Parametric Rectified Linear Unit."""
+def prelu(channel_shared=False, weights_init='zeros', restore=True, name='PReLU', collect=False):
+    """Parametric Rectified Linear Unit.
+
+    Args:
+        channel_shared:
+        weights_init:
+        restore:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
 
     def _prelu(x, name):
         with get_name_scope(name):
@@ -110,12 +160,22 @@ def prelu(channel_shared=False, weights_init='zeros', restore=True, name="PReLU"
 
 
 def elu(name=None, collect=False):
-    """Computes Exponential Linear Unit."""
+    """Computes Exponential Linear Unit.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.nn.elu, name, collect)
 
 
 def crelu(name='CRelu', collect=False):
-    """Computes Concatenated ReLU."""
+    """Computes Concatenated ReLU.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
     return built_activation(tf.nn.crelu, name, collect)
 
 

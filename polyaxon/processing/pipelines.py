@@ -15,10 +15,13 @@ class Pipeline(SubGraph):
     An InputPipeline defines how data is read, parsed, and separated into
     features and labels.
 
-    Params:
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`, name to give for this pipeline.
+        methods: `list`, list of methods to call in order to create this pipeline.
+        kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
-        num_epochs: Number of times to iterate through the dataset. If None,
-          iterate forever.
+        num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
     """
 
     def __init__(self, mode, name, methods=None, kwargs=None, shuffle=True, num_epochs=None):
@@ -57,7 +60,13 @@ class Pipeline(SubGraph):
 class ParallelTextPipeline(Pipeline):
     """An input pipeline that reads two parallel (line-by-line aligned) text files.
 
-    Params:
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`, name to give for this pipeline.
+        methods: `list`, list of methods to call in order to create this pipeline.
+        kwargs: `list`, list of kwargs to use with the methods.
+        shuffle: If true, shuffle the data.
+        num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         source_files: An array of file names for the source data.
         target_files: An array of file names for the target data. These must
           be aligned to the `source_files`.
@@ -125,7 +134,13 @@ class ParallelTextPipeline(Pipeline):
 class TFRecordPipeline(Pipeline):
     """An input pipeline that reads a TFRecords containing both source and target sequences.
 
-    Params:
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`, name to give for this pipeline.
+        methods: `list`, list of methods to call in order to create this pipeline.
+        kwargs: `list`, list of kwargs to use with the methods.
+        shuffle: If true, shuffle the data.
+        num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         files: An array of file names to read from.
         source_field: The TFRecord feature field containing the source text.
         target_field: The TFRecord feature field containing the target text.
@@ -211,14 +226,18 @@ class TFRecordPipeline(Pipeline):
 class ImageCaptioningPipeline(Pipeline):
     """An input pipeline that reads a TFRecords containing both source and target sequences.
 
-    Params:
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`, name to give for this pipeline.
+        methods: `list`, list of methods to call in order to create this pipeline.
+        kwargs: `list`, list of kwargs to use with the methods.
+        shuffle: If true, shuffle the data.
+        num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         files: An array of file names to read from.
-        source_field: The TFRecord feature field containing the source text.
-        target_field: The TFRecord feature field containing the target text.
-        source_delimiter: A character to split the source text on. Defaults
-          to  " " (space). For character-level training this can be set to the
-          empty string.
-        target_delimiter: Same as `source_delimiter` but for the target text.
+        image_field: The TFRecord feature field containing the source images.
+        image_format: The images extensions.
+        caption_ids_field: The caption ids field.
+        caption_tokens_field: the caption tokends field.
     """
 
     def __init__(self, mode, name,  methods=None, kwargs=None, shuffle=True, num_epochs=None,

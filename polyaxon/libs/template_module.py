@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
 import abc
 
 import six
@@ -7,12 +10,18 @@ import tensorflow as tf
 @six.add_metaclass(abc.ABCMeta)
 class GraphModule(object):
     """Convenience class that makes it easy to share variables.
-      Each instance of this class creates its own set of variables, but
-      each subsequent execution of an instance will re-use its variables.
 
-      Graph components that define variables should inherit from this class
-      and implement their logic in the `_build` method.
-      """
+    Each instance of this class creates its own set of variables, but
+    each subsequent execution of an instance will re-use its variables.
+
+    Graph components that define variables should inherit from this class
+    and implement their logic in the `_build` method.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`, name of this module. Used for `tf.make_template`.
+        module_type: `str`, the type of the module.
+    """
 
     class ModuleType(object):
         MODEL = 'model'
@@ -22,12 +31,6 @@ class GraphModule(object):
         VALUES = [MODEL, SUBGRAPH, LAYER]
 
     def __init__(self, mode, name, module_type=None):
-        """
-        Initialize the module. Each subclass must call this constructor with a name.
-
-        Args:
-          name: Name of this module. Used for `tf.make_template`.
-        """
         self.name = name
         self.mode = mode
         self._template = tf.make_template(name, self._build, create_scope_now_=True)

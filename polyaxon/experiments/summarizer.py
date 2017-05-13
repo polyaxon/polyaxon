@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
 import six
 
@@ -73,7 +71,7 @@ def add_learning_rate_summaries():
 
 
 def add_loss_summaries(total_loss, loss):
-    """ Adds loss scalar summaries.
+    """Adds loss scalar summaries.
 
     Args:
         total_loss: `Tensor`. The total loss (Regression loss + regularization losses).
@@ -95,7 +93,7 @@ def add_loss_summaries(total_loss, loss):
 
 
 def add_activations_summary(activation_ops):
-    """ Adds histogram and scalar summary for given activations.
+    """Adds histogram and scalar summary for given activations.
 
     Args:
         activation_ops: A list of `Tensor`. The activations to summarize.
@@ -116,7 +114,7 @@ def add_activations_summary(activation_ops):
 
 
 def add_gradients_summary(grads):
-    """ Add histogram summary for given gradients and scalar summary for clipped gradients.
+    """Add histogram summary for given gradients and scalar summary for clipped gradients.
 
     Args:
         grads: A list of `Tensor`. The gradients to summarize.
@@ -148,7 +146,7 @@ def add_gradients_summary(grads):
 
 
 def add_trainable_vars_summary(variables):
-    """ Adds histogram summary for given variables weights.
+    """Adds histogram summary for given variables weights.
 
     Args:
         variables: A list of `Variable`. The variables to summarize.
@@ -164,7 +162,7 @@ def add_trainable_vars_summary(variables):
 
 
 def _summary_for_name(name):
-    """ Gets a summary for a given name.
+    """Gets a summary for a given name.
 
     Args:
         name: `str`. The summary name.
@@ -177,7 +175,7 @@ def _summary_for_name(name):
 
 
 def get_summary(stype, name, value=None, collect=True, **kwargs):
-    """ Creates or retrieves a summary.
+    """Creates or retrieves a summary.
 
     It keep tracks of all graph summaries through SUMMARIES_BY_NAMES collection.
     If a summary tags already exists, it will return that summary tensor.

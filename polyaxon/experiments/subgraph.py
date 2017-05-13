@@ -7,7 +7,14 @@ from polyaxon.libs.template_module import GraphModule
 
 
 class SubGraph(GraphModule):
-    """The `SubGraph` is a class that represents the flow of layers."""
+    """The `SubGraph` is a class that represents the flow of layers.
+
+    Args:
+        mode: `str`. Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`. The name of this subgraph, used for creating the scope.
+        methods: `list`.  The methods to connect inside this subgraph, e.g. layers
+        kwargs: `list`. the list key word args to call each method with.
+    """
     def __init__(self, mode, name, methods, kwargs):
         super(SubGraph, self).__init__(mode, name, self.ModuleType.SUBGRAPH)
         self.methods = methods

@@ -3,9 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from tensorflow.python.estimator.model_fn import EstimatorSpec, ModeKeys
+from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.framework import ops
 
+from polyaxon import ModeKeys
 from polyaxon.experiments import summarizer
 from polyaxon.experiments.subgraph import SubGraph
 from polyaxon.libs import configs, getters
@@ -18,9 +19,9 @@ class BaseModel(GraphModule):
     """Abstract base class for models.
 
       Args:
-        mode: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         config: An instance of `ModelConfig`.
-        params: A dictionary of hyperparameter values
+        params: `dic`. A dictionary of hyperparameter values.
     """
     class Types(object):
         REGRESSOR = 'regressor'
@@ -171,13 +172,16 @@ class BaseModel(GraphModule):
 
     @staticmethod
     def batch_size(features, labels):
-        """Returns the batch size of the curren batch based on the passed features."""
+        """Returns the batch size of the curren batch based on the passed features.
+
+        Args:
+            features: The features.
+            labels: The labels
+        """
         return extract_batch_length(features)
 
     def __call__(self, features, labels, params):
-        """Creates the model graph. See the model_fn documentation in
-        tf.contrib.learn.Estimator class for a more detailed explanation.
-        """
+        """Calls the built mode."""
         return self._template(features, labels, params)
 
     def _build(self, features, labels, params):

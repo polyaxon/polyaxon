@@ -70,7 +70,7 @@ def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_
 def sgd(learning_rate=0.001, decay_type="", decay_rate=0., decay_steps=100, start_decay_at=0,
         stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False, global_step=None,
         use_locking=False, name='SGD'):
-    """ Optimizer that implements the gradient descent algorithm.
+    """Optimizer that implements the gradient descent algorithm.
 
     Args:
         learning_rate: A Tensor or a floating point value. The learning rate to use.
@@ -107,7 +107,7 @@ def sgd(learning_rate=0.001, decay_type="", decay_rate=0., decay_steps=100, star
 def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              global_step=None, use_locking=False, name='Momentum'):
-    """ Optimizer that implements the Momentum.
+    """Optimizer that implements the Momentum.
 
     Momentum Optimizer accepts learning rate decay. When training a model,
     it is often recommended to lower the learning rate as the training
@@ -115,8 +115,7 @@ def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
     computed as:
 
     ```python
-    decayed_learning_rate = learning_rate *
-                          decay_rate ^ (global_step / lr_decay_steps)
+    >>> decayed_learning_rate = learning_rate * decay_rate ^ (global_step / lr_decay_steps)
     ```
     Args:
         learning_rate: `float`. Learning rate.
@@ -154,14 +153,13 @@ def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
 def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              use_locking=False, global_step=None, name='Momentum'):
-    """ Optimizer that implements the Nesterov.
+    """Optimizer that implements the Nesterov.
 
     Same as Momentum optimizer but uses nestrov
     See [Sutskever et. al., 2013](http://jmlr.org/proceedings/papers/v28/sutskever13.pdf)
 
     ```python
-    decayed_learning_rate = learning_rate *
-                          decay_rate ^ (global_step / lr_decay_steps)
+    >>> decayed_learning_rate = learning_rate * decay_rate ^ (global_step / lr_decay_steps)
     ```
     Args:
         learning_rate: `float`. Learning rate.
@@ -201,7 +199,7 @@ def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_t
             decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
             min_learning_rate=1e-12, staircase=False, global_step=None,
             use_locking=False, name='RMSProp'):
-    """ Optimizer that implements the RMSprop.
+    """Optimizer that implements the RMSprop.
 
     Maintain a moving (discounted) average of the square of gradients.
     Divide gradient by the root of this average.
@@ -246,7 +244,7 @@ def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, decay_type="
          decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
          min_learning_rate=1e-12, staircase=False, global_step=None,
          use_locking=False, name='Adam'):
-    """ Optimizer that implements the Adam.
+    """Optimizer that implements the Adam.
 
     The default value of 1e-8 for epsilon might not be a good default in
     general. For example, when training an Inception network on ImageNet a
@@ -293,7 +291,7 @@ def adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type="",
             decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
             min_learning_rate=1e-12, staircase=False, global_step=None,
             use_locking=False, name='AdaGrad'):
-    """ Optimizer that implements AdaGrad.
+    """Optimizer that implements AdaGrad.
 
     Args:
         learning_rate: `float`. Learning rate.
@@ -335,7 +333,7 @@ def ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=
          decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
          min_learning_rate=1e-12, staircase=False, global_step=None,
          use_locking=False, name='Ftrl'):
-    """ Optimizer that implements Ftrl Proximal.
+    """Optimizer that implements Ftrl Proximal.
 
     The Ftrl-proximal algorithm, abbreviated for Follow-the-regularized-leader,
     is described in the paper below.
@@ -391,7 +389,7 @@ def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type="",
              decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
              min_learning_rate=1e-12, staircase=False, global_step=None,
              use_locking=False, name='AdaDelta'):
-    """ Optimizer that implements AdaDelta.
+    """Optimizer that implements AdaDelta.
 
     Args:
         learning_rate: A `Tensor` or a floating point value. The learning rate.

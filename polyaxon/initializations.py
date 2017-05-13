@@ -11,7 +11,7 @@ from polyaxon.libs.utils import get_name_scope
 
 
 def zeros(shape=None, dtype=tf.float32, name='zeros'):
-    """ Zeros.
+    """Zeros.
 
     Initialize a tensor with all elements set to zero.
 
@@ -31,7 +31,7 @@ def zeros(shape=None, dtype=tf.float32, name='zeros'):
 
 
 def uniform(shape=None, minval=0, maxval=None, dtype=tf.float32, seed=None, name='Uniform'):
-    """ Uniform.
+    """Uniform.
 
     Initialization with random values from a uniform distribution.
 
@@ -67,7 +67,7 @@ def uniform(shape=None, minval=0, maxval=None, dtype=tf.float32, seed=None, name
 
 
 def uniform_scaling(shape=None, factor=1.0, dtype=tf.float32, seed=None, name='UniformScaling'):
-    """ Uniform Scaling.
+    """Uniform Scaling.
 
     Initialization with random values from uniform distribution without scaling
     variance.
@@ -113,7 +113,7 @@ def uniform_scaling(shape=None, factor=1.0, dtype=tf.float32, seed=None, name='U
 
 
 def normal(shape=None, mean=0.0, stddev=0.02, dtype=tf.float32, seed=None, name='Normal'):
-    """ Normal.
+    """Normal.
 
     Initialization with random values from a normal distribution.
 
@@ -142,7 +142,7 @@ def normal(shape=None, mean=0.0, stddev=0.02, dtype=tf.float32, seed=None, name=
 
 def truncated_normal(shape=None, mean=0.0, stddev=0.02, dtype=tf.float32, seed=None,
                      name='TruncatedNormal'):
-    """ Truncated Normal.
+    """Truncated Normal.
 
     Initialization with random values from a normal truncated distribution.
 
@@ -173,7 +173,7 @@ def truncated_normal(shape=None, mean=0.0, stddev=0.02, dtype=tf.float32, seed=N
 
 
 def xavier(uniform=True, seed=None, dtype=tf.float32, name='Xavier'):
-    """ Xavier.
+    """Xavier.
 
     Returns an initializer performing "Xavier" initialization for weights.
 
@@ -208,7 +208,7 @@ def xavier(uniform=True, seed=None, dtype=tf.float32, name='Xavier'):
 
 def variance_scaling(factor=2.0, mode='FAN_IN', uniform=False, seed=None, dtype=tf.float32,
                      name='Xavier'):
-    """ Variance Scaling.
+    """Variance Scaling.
 
     Returns an initializer that generates tensors without scaling variance.
 
@@ -248,7 +248,6 @@ def variance_scaling(factor=2.0, mode='FAN_IN', uniform=False, seed=None, dtype=
         seed: A Python integer. Used to create random seeds. See
             `set_random_seed` for behavior.
         dtype: The data type. Only floating point types are supported.
-        scope: scope to add the op to.
         name: name of the op.
 
     Returns:
@@ -261,6 +260,7 @@ def variance_scaling(factor=2.0, mode='FAN_IN', uniform=False, seed=None, dtype=
     with get_name_scope(name):
         return tflayers.variance_scaling_initializer(
             factor=factor, mode=mode, uniform=uniform, seed=seed, dtype=dtype)
+
 
 INITIALIZERS = {
     'zeros': zeros,

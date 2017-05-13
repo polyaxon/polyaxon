@@ -73,7 +73,7 @@ def create_experiment_json_fn(output_dir):
     X, y = generate_data(np.sin, np.linspace(0, 100, 10000, dtype=np.float32), 7, seperate=False)
 
     config = {
-        'name': 'real_mnsit',
+        'name': 'time_series',
         'output_dir': output_dir,
         'eval_every_n_steps': 5,
         'run_config': {'save_checkpoints_steps': 100},
@@ -108,14 +108,14 @@ def create_experiment_json_fn(output_dir):
             }
         }
     }
-    experiement_config = plx.configs.ExperimentConfig.read_configs(config)
-    return plx.experiments.create_experiment(experiement_config)
+    experiment_config = plx.configs.ExperimentConfig.read_configs(config)
+    return plx.experiments.create_experiment(experiment_config)
 
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
                                    output_dir="/tmp/polyaxon_logs/timeseries",
-                                   schedule='continuous_train_and_eval')
+                                   schedule='continuous_train_and_evaluate')
 
 
 if __name__ == "__main__":

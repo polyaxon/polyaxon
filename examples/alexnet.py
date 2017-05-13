@@ -53,14 +53,14 @@ def create_experiment_json_fn(output_dir):
             }
         }
     }
-    experiement_config = plx.experiments.ExperimentConfig.read_configs(config)
-    return plx.experiments.create_experiment(experiement_config)
+    experiment_config = plx.experiments.ExperimentConfig.read_configs(config)
+    return plx.experiments.create_experiment(experiment_config)
 
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
                                    output_dir="/tmp/polyaxon_logs/alexnet",
-                                   schedule='continuous_train_and_eval')
+                                   schedule='continuous_train_and_evaluate')
 
 
 if __name__ == "__main__":

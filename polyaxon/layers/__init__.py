@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
 from .convolutional import (
@@ -35,4 +36,4 @@ from .core import (
 )
 from .embedding import Embedding
 from .normalizations import BatchNormalization, L2Normalization, LocalResponseNormalization
-from .reccurent import GRU, LSTM, BasicLSTMCell, BasicRNNCell, BidirectionalRNN, GRUCell, SimpleRNN
+from .recurrent import GRU, LSTM, BasicLSTMCell, BasicRNNCell, BidirectionalRNN, GRUCell, SimpleRNN

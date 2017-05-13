@@ -3,39 +3,40 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from tensorflow.python.estimator.model_fn import ModeKeys
 from tensorflow.python.training import moving_averages
 
+from polyaxon import ModeKeys
 from polyaxon.libs.template_module import BaseLayer
 from polyaxon.libs.utils import get_shape, track
 from polyaxon.variables import variable
 
 
 class BatchNormalization(BaseLayer):
+    """Adds a Batch Normalization.
+
+    Normalize activations of the previous layer at each batch.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        beta: `float`. Default: 0.0.
+        gamma: `float`. Default: 1.0.
+        epsilon: `float`. Defalut: 1e-5.
+        decay: `float`. Default: 0.9.
+        stddev: `float`. Standard deviation for weights initialization.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: `str`. A name for this layer (optional).
+
+    References:
+        Batch Normalization: Accelerating Deep Network Training by Reducing
+        Internal Covariate Shif. Sergey Ioffe, Christian Szegedy. 2015.
+
+    Links:
+        [http://arxiv.org/pdf/1502.03167v3.pdf](http://arxiv.org/pdf/1502.03167v3.pdf)
+    """
     def __init__(self, mode, beta=0.0, gamma=1.0, epsilon=1e-5, decay=0.9, stddev=0.002,
                  trainable=True, restore=True, name='BatchNormalization'):
-        """Adds a Batch Normalization.
-
-        Normalize activations of the previous layer at each batch.
-
-        Args:
-            beta: `float`. Default: 0.0.
-            gamma: `float`. Default: 1.0.
-            epsilon: `float`. Defalut: 1e-5.
-            decay: `float`. Default: 0.9.
-            stddev: `float`. Standard deviation for weights initialization.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: `str`. A name for this layer (optional).
-
-        References:
-            Batch Normalization: Accelerating Deep Network Training by Reducing
-            Internal Covariate Shif. Sergey Ioffe, Christian Szegedy. 2015.
-
-        Links:
-            [http://arxiv.org/pdf/1502.03167v3.pdf](http://arxiv.org/pdf/1502.03167v3.pdf)
-        """
         super(BatchNormalization, self).__init__(mode, name)
         self.beta = beta
         self.gamma = gamma
@@ -95,19 +96,20 @@ class BatchNormalization(BaseLayer):
 
 
 class LocalResponseNormalization(BaseLayer):
+    """Local Response Normalization.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        depth_radius: `int`. 0-D.  Half-width of the 1-D normalization window.
+            Defaults to 5.
+        bias: `float`. An offset (usually positive to avoid dividing by 0).
+            Defaults to 1.0.
+        alpha: `float`. A scale factor, usually positive. Defaults to 0.0001.
+        beta: `float`. An exponent. Defaults to `0.5`.
+        name: `str`. A name for this layer (optional).
+    """
     def __init__(self, mode, depth_radius=5, bias=1.0, alpha=0.0001, beta=0.75,
                  name='LocalResponseNormalization'):
-        """ Local Response Normalization.
-
-        Args:
-            depth_radius: `int`. 0-D.  Half-width of the 1-D normalization window.
-                Defaults to 5.
-            bias: `float`. An offset (usually positive to avoid dividing by 0).
-                Defaults to 1.0.
-            alpha: `float`. A scale factor, usually positive. Defaults to 0.0001.
-            beta: `float`. An exponent. Defaults to `0.5`.
-            name: `str`. A name for this layer (optional).
-        """
         super(LocalResponseNormalization, self).__init__(mode, name)
         self.depth_radius = depth_radius
         self.bias = bias
@@ -128,25 +130,26 @@ class LocalResponseNormalization(BaseLayer):
 
 
 class L2Normalization(BaseLayer):
+    """Adds an L2 Normalization.
+
+    Normalizes along dimension `dim` using an L2 norm.
+
+    For a 1-D tensor with `dim = 0`, computes
+    ```python
+    >>> output = x / sqrt(max(sum(x**2), epsilon))
+    ```
+
+    For `x` with more dimensions, independently normalizes each 1-D slice along
+    dimension `dim`.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        dim: `int`. Dimension along which to normalize.
+        epsilon: `float`. A lower bound value for the norm. Will use
+            `sqrt(epsilon)` as the divisor if `norm < sqrt(epsilon)`.
+        name: `str`. A name for this layer (optional).
+    """
     def __init__(self, mode, dim, epsilon=1e-12, name='l2Normalize'):
-        """Adds an L2 Normalization.
-
-        Normalizes along dimension `dim` using an L2 norm.
-
-        For a 1-D tensor with `dim = 0`, computes
-        ```python
-        >>> output = x / sqrt(max(sum(x**2), epsilon))
-        ```
-
-        For `x` with more dimensions, independently normalizes each 1-D slice along
-        dimension `dim`.
-
-        Args:
-            dim: `int`. Dimension along which to normalize.
-            epsilon: `float`. A lower bound value for the norm. Will use
-                `sqrt(epsilon)` as the divisor if `norm < sqrt(epsilon)`.
-            name: `str`. A name for this layer (optional).
-        """
         super(L2Normalization, self).__init__(mode, name)
         self.dim = dim
         self.epsilon = epsilon

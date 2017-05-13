@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from polyaxon.layers.reccurent import retrieve_seq_length_op
+from polyaxon.layers.recurrent import retrieve_seq_length_op
 from polyaxon.libs import getters
 from polyaxon.libs.template_module import BaseLayer
 from polyaxon.libs.utils import get_shape, track
@@ -11,23 +11,22 @@ from polyaxon.variables import variable
 
 
 class Embedding(BaseLayer):
+    """Embedding layer for a sequence of integer ids or floats.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        input_dim: list of `int`. Vocabulary size (number of ids).
+        output_dim: list of `int`. Embedding size.
+        validate_indices: `bool`. Whether or not to validate gather indices.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+            Default: 'truncated_normal'.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when
+            loading a model.
+        name: A name for this layer (optional). Default: 'Embedding'.
+    """
     def __init__(self, mode, input_dim, output_dim, validate_indices=False,
                  weights_init='truncated_normal', trainable=True, restore=True, name='Embedding'):
-        """ Embedding.
-
-        Embedding layer for a sequence of integer ids or floats.
-
-        Args:
-            input_dim: list of `int`. Vocabulary size (number of ids).
-            output_dim: list of `int`. Embedding size.
-            validate_indices: `bool`. Whether or not to validate gather indices.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-                Default: 'truncated_normal'.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: A name for this layer (optional). Default: 'Embedding'.
-        """
         super(Embedding, self).__init__(mode, name)
         self.input_dim = input_dim
         self.output_dim = output_dim

@@ -10,12 +10,12 @@ import tensorflow as tf
 from tensorflow.contrib.learn.python.learn import export_strategy
 from tensorflow.contrib.learn.python.learn.estimators import run_config
 from tensorflow.contrib.learn.python.learn.learn_runner import _is_distributed
-from tensorflow.python.estimator.model_fn import ModeKeys
 from tensorflow.python.framework import ops
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.training import basic_session_run_hooks, saver, server_lib
 from tensorflow.python.util import compat
 
+from polyaxon import ModeKeys
 from polyaxon.experiments.estimator import Estimator
 from polyaxon.libs import getters
 from polyaxon.libs.utils import new_attr_context
@@ -28,6 +28,41 @@ class Experiment(object):
     After an experiment is created (by passing an Estimator and inputs for
     training and evaluation), an Experiment instance knows how to invoke training
     and eval loops in a sensible fashion for distributed training.
+
+
+    None of the functions passed to this constructor are executed at construction time.
+    They are stored and used when a method is executed which requires it.
+
+    Args:
+        estimator: Object implementing Estimator interface.
+        train_input_fn: function, returns features and labels for training.
+        eval_input_fn: function, returns features and labels for evaluation. If
+            `eval_steps` is `None`, this should be configured only to produce for a
+            finite number of batches (generally, 1 epoch over the evaluation data).
+        train_steps: Perform this many steps of training.  default: None, means train forever.
+        eval_steps: `evaluate` runs until input is exhausted (or another exception is raised),
+            or for `eval_steps` steps, if specified.
+        train_hooks: A list of monitors to pass to the `Estimator`'s `fit` function.
+        eval_hooks: A list of `SessionRunHook` hooks to pass to
+            the `Estimator`'s `evaluate` function.
+        eval_delay_secs: Start evaluating after waiting for this many seconds.
+        continuous_eval_throttle_secs: Do not re-evaluate unless the last evaluation
+            was started at least this many seconds ago for continuous_eval().
+        eval_every_n_steps: (applies only to train_and_evaluate).
+            the minimum number of steps between evaluations. Of course, evaluation does not
+            occur if no new snapshot is available, hence, this is the minimum.
+        delay_workers_by_global_step: if `True` delays training workers based on global step
+            instead of time.
+        export_strategies: A list of `ExportStrategy`s, or a single one, or None.
+        train_steps_per_iteration: (applies only to continuous_train_and_evaluate).
+            Perform this many (integer) number of train steps for each training-evaluation
+            iteration. With a small value, the model will be evaluated more frequently
+            with more checkpoints saved. If `None`, will use a default value
+            (which is smaller than `train_steps` if provided).
+
+    Raises:
+        ValueError: if `estimator` does not implement Estimator interface,
+                    or if export_strategies has the wrong type.
     """
 
     def __init__(self, estimator, train_input_fn, eval_input_fn, train_steps=None, eval_steps=10,
@@ -35,43 +70,6 @@ class Experiment(object):
                  continuous_eval_throttle_secs=60, eval_every_n_steps=1,
                  delay_workers_by_global_step=False, export_strategies=None,
                  train_steps_per_iteration=100):
-        """Constructor for `Experiment`.
-
-        Creates an Experiment instance. None of the functions passed to this
-        constructor are executed at construction time. They are stored and used
-        when a method is executed which requires it.
-
-        Args:
-            estimator: Object implementing Estimator interface.
-            train_input_fn: function, returns features and labels for training.
-            eval_input_fn: function, returns features and labels for evaluation. If
-                `eval_steps` is `None`, this should be configured only to produce for a
-                finite number of batches (generally, 1 epoch over the evaluation data).
-            train_steps: Perform this many steps of training.  default: None, means train forever.
-            eval_steps: `evaluate` runs until input is exhausted (or another exception is raised),
-                or for `eval_steps` steps, if specified.
-            train_hooks: A list of monitors to pass to the `Estimator`'s `fit` function.
-            eval_hooks: A list of `SessionRunHook` hooks to pass to
-                the `Estimator`'s `evaluate` function.
-            eval_delay_secs: Start evaluating after waiting for this many seconds.
-            continuous_eval_throttle_secs: Do not re-evaluate unless the last evaluation
-                was started at least this many seconds ago for continuous_eval().
-            eval_every_n_steps: (applies only to train_and_evaluate).
-                the minimum number of steps between evaluations. Of course, evaluation does not
-                occur if no new snapshot is available, hence, this is the minimum.
-            delay_workers_by_global_step: if `True` delays training workers based on global step
-                instead of time.
-            export_strategies: A list of `ExportStrategy`s, or a single one, or None.
-            train_steps_per_iteration: (applies only to continuous_train_and_eval).
-                Perform this many (integer) number of train steps for each training-evaluation
-                iteration. With a small value, the model will be evaluated more frequently
-                with more checkpoints saved. If `None`, will use a default value
-                (which is smaller than `train_steps` if provided).
-
-        Raises:
-            ValueError: if `estimator` does not implement Estimator interface,
-                        or if export_strategies has the wrong type.
-        """
         if not isinstance(estimator, Estimator):
             raise ValueError("`estimator` must implement `Estimator`.")
 
@@ -376,8 +374,8 @@ class Experiment(object):
         the first and last items, while performing evaluation allows for the second.
 
         Returns:
-          The result of the `evaluate` call to the `Estimator` as well as the
-          export results using the specified `ExportStrategy`.
+            The result of the `evaluate` call to the `Estimator` as well as the
+            export results using the specified `ExportStrategy`.
         """
         # The directory to which evaluation summaries are written are determined
         # by adding a suffix to 'eval'; that suffix is the 'name' parameter to
@@ -405,7 +403,7 @@ class Experiment(object):
                                           hooks=self._eval_hooks)
         return eval_result, self._maybe_export(eval_result)
 
-    def continuous_train_and_eval(self, continuous_eval_predicate_fn=None):
+    def continuous_train_and_evaluate(self, continuous_eval_predicate_fn=None):
         """Interleaves training and evaluation.
 
         The frequency of evaluation is controlled by the `train_steps_per_iteration`
@@ -413,19 +411,19 @@ class Experiment(object):
         `train_steps_per_iteration`, and then be evaluated in turns.
 
         This differs from `train_and_evaluate` as follows:
-          1. The procedure will have train and evaluation in turns. The model
-          will be trained for a number of steps (usuallly smaller than `train_steps`
-          if provided) and then be evaluated.  `train_and_evaluate` will train the
-          model for `train_steps` (no small training iteraions).
+            1. The procedure will have train and evaluation in turns. The model
+            will be trained for a number of steps (usuallly smaller than `train_steps`
+            if provided) and then be evaluated.  `train_and_evaluate` will train the
+            model for `train_steps` (no small training iteraions).
 
-          2. Due to the different approach this schedule takes, it leads to two
-          differences in resource control. First, the resources (e.g., memory) used
-          by training will be released before evaluation (`train_and_evaluate` takes
-          double resources). Second, more checkpoints will be saved as a checkpoint
-          is generated at the end of each small trainning iteration.
+            2. Due to the different approach this schedule takes, it leads to two
+            differences in resource control. First, the resources (e.g., memory) used
+            by training will be released before evaluation (`train_and_evaluate` takes
+            double resources). Second, more checkpoints will be saved as a checkpoint
+            is generated at the end of each small trainning iteration.
 
         Args:
-          continuous_eval_predicate_fn: A predicate function determining whether to
+            continuous_eval_predicate_fn: A predicate function determining whether to
             continue after each iteration. `predicate_fn` takes the evaluation
             results as its arguments. At the beginning of evaluation, the passed
             eval results will be None so it's expected that the predicate function
@@ -433,12 +431,11 @@ class Experiment(object):
             run in an infinite loop or exit when global_step reaches `train_steps`.
 
         Returns:
-          A tuple of the result of the `evaluate` call to the `Estimator` and the
-          export results using the specified `ExportStrategy`.
+           A tuple of the result of the `evaluate` call to the `Estimator` and the
+           export results using the specified `ExportStrategy`.
 
         Raises:
-          ValueError: if `continuous_eval_predicate_fn` is neither None nor
-            callable.
+            ValueError: if `continuous_eval_predicate_fn` is neither None norcallable.
         """
 
         if (continuous_eval_predicate_fn is not None and
@@ -562,7 +559,11 @@ def _execute_schedule(experiment, schedule):
 
 
 def create_experiment(experiment_config):
-    """Creates a new `Experiment` instance."""
+    """Creates a new `Experiment` instance.
+
+    Args:
+        experiment_config: the config to use for creating the experiment.
+    """
     # Creates training input function
     train_input_fn = create_input_data_fn(
         input_data_config=experiment_config.train_input_data_config,

@@ -9,7 +9,7 @@ from polyaxon.libs.utils import get_name_scope, track
 
 
 def built_regularizer(fct, collect):
-    """ Builds the regularizer function.
+    """Builds the regularizer function.
 
     Args:
         fct: the metric function to build.

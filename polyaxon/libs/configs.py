@@ -39,6 +39,11 @@ def _maybe_load_yaml(item):
 
 @six.add_metaclass(abc.ABCMeta)
 class Configurable(object):
+    """`Configurable` is an abstract class for defining an configurable objects.
+
+    A configurable class reads a configuration (YAML, Json) and create a config instance.
+    """
+
     @classmethod
     def _read_configs(cls, config_values):
         if not isinstance(config_values, (np.ndarray, list, tuple)):
@@ -81,7 +86,20 @@ class Configurable(object):
 
 
 class PipelineConfig(Configurable):
-    """The PipelineConfig holds information needed to create a `Pipeline`."""
+    """The PipelineConfig holds information needed to create a `Pipeline`.
+
+    Args:
+        name: `str`, name to give for the pipeline.
+        dynamic_pad: `bool`, If True the piple uses dynamic padding.
+        bucket_boundaries:
+        batch_size: `int`, the batch size.
+        num_epochs: number of epochs to iterate over in this pipeline.
+        min_after_dequeue: `int`, number of element to have in the queue.
+        num_threads: `int`, number of threads to use in the queue.
+        shuffle: If true, shuffle the data.
+        num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
+        params: `dict`, extra information to pass to the pipeline.
+    """
     def __init__(self, name, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4,
                  min_after_dequeue=5000, num_threads=3, shuffle=False, params=None):
         self.name = name
@@ -100,7 +118,14 @@ class PipelineConfig(Configurable):
 
 
 class InputDataConfig(Configurable):
-    """The InputDataConfig holds information needed to create a `InputData`."""
+    """The InputDataConfig holds information needed to create a `InputData`.
+
+    Args:
+        input_type: `str`, the type of the input data, e.g. numpy arrays.
+        pipeline_config: The pipeline config to use.
+        x: The x values, only used with NUMPY and PANDAS types.
+        y: The y values, only used with NUMPY and PANDAS types.
+    """
     NUMPY = 'NUMPY'
     PANDAS = 'PANDAS'
 
@@ -120,25 +145,53 @@ class InputDataConfig(Configurable):
 
 
 class LossConfig(Configurable):
-    """The LossConfig holds information needed to create a `Loss`."""
+    """The LossConfig holds information needed to create a `Loss`.
+
+    Args:
+        name: `str`, name to give for the loss.
+        params: `dict`, extra information to pass to the loss.
+    """
     def __init__(self, name, params=None):
         self.name = name
         self.params = params or {}
 
 
 class MetricConfig(Configurable):
-    """The MetricConfig holds information needed to create a `Metric`."""
+    """The MetricConfig holds information needed to create a `Metric`.
+
+    Args:
+        name: `str`, name to give for the metric.
+        params: `dict`, extra information to pass to the metric.
+    """
     def __init__(self, name, params=None):
         self.name = name
         self.params = params or {}
 
 
 class OptimizerConfig(Configurable):
-    """The OptimizerConfig holds information needed to create a `Optimizer`."""
+    """The OptimizerConfig holds information needed to create a `Optimizer`.
+
+    Args:
+        name: `str`, name to give for the optimizer.
+        learning_rate: A Tensor or a floating point value. The learning rate to use.
+        decay_steps: How often to apply decay.
+        decay_rate: A Python number. The decay rate.
+        start_decay_at: Don't decay before this step
+        stop_decay_at: Don't decay after this step
+        min_learning_rate: Don't decay below this number
+        decay_type: A decay function name defined in `tf.train`
+            possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
+                             piecewise_constant, polynomial_decay.
+        staircase: Whether to apply decay in a discrete staircase,
+            as opposed to continuous, fashion.
+        sync_replicas:
+        sync_replicas_to_aggregate:
+        params: `dict`, extra information to pass to the optimizer.
+    """
     def __init__(self, name, learning_rate=1e-4, decay_type="", decay_steps=100,
                  decay_rate=0.99, start_decay_at=0, stop_decay_at=tf.int32.max,
-                 min_learning_rate=1e-12, staircase=False, clip_gradients=5.0,
-                 sync_replicas=0, sync_replicas_to_aggregate=0, params=None):
+                 min_learning_rate=1e-12, staircase=False, sync_replicas=0,
+                 sync_replicas_to_aggregate=0, params=None):
         self.name = name
         self.learning_rate = learning_rate
         self.decay_type = decay_type
@@ -148,13 +201,21 @@ class OptimizerConfig(Configurable):
         self.stop_decay_at = stop_decay_at
         self.min_learning_rate = min_learning_rate
         self.staircase = staircase
-        self.clip_gradients = clip_gradients
         self.sync_replicas = sync_replicas
         self.sync_replicas_to_aggregate = sync_replicas_to_aggregate
         self.params = params or {}
 
 
 class SubGraphConfig(Configurable):
+    """The configuration used to create subgraphs.
+
+    Handles also nested subgraphs.
+
+    Args:
+        name: `str`. The name of this subgraph, used for creating the scope.
+        methods: `list`.  The methods to connect inside this subgraph, e.g. layers
+        kwargs: `list`. the list key word args to call each method with.
+    """
     def __init__(self, name, methods, kwargs):
         self.name = name
         self.methods = methods
@@ -185,7 +246,18 @@ class SubGraphConfig(Configurable):
 
 
 class ModelConfig(Configurable):
-    """The ModelConfig holds information needed to create a `Model`."""
+    """The ModelConfig holds information needed to create a `Model`.
+
+    Args:
+        loss_config: The loss configuration.
+        optimizer_config: The optimizer configuration.
+        graph_config: The graph configuration.
+        model_type: `str`, The type of the model (`classifier`, 'regressor, or `generator`).
+        summaries: `str` or `list`, the summary levels.
+        eval_metrics_config: The evaluation metrics configuration.
+        clip_gradients: `float`, The value to clip the gradients with.
+        params: `dict`, extra information to pass to the model.
+    """
     def __init__(self, loss_config, optimizer_config, graph_config, model_type,
                  summaries='all', name='base_model', eval_metrics_config=None,
                  clip_gradients=5.0, params=None):
@@ -213,7 +285,13 @@ class ModelConfig(Configurable):
 
 
 class EstimatorConfig(Configurable):
-    """The EstimatorConfig holds information needed to create a `Estimator`."""
+    """The EstimatorConfig holds information needed to create a `Estimator`.
+
+    Args:
+        name: `str`, name to give for the estimator.
+        output_dir: `str`, where to save training and evaluation data.
+        params: `dict`, extra information to pass to the estimator.
+    """
     def __init__(self, name='estimator', output_dir=None, params=None):
         self.name = name
         self.output_dir = output_dir or generate_model_dir()
@@ -236,7 +314,30 @@ def create_run_config(tf_random_seed=None, save_checkpoints_secs=None, save_chec
 
 
 class ExperimentConfig(Configurable):
-    """The ExperimentConfig holds information needed to create a `Experiment`."""
+    """The ExperimentConfig holds information needed to create a `Experiment`.
+
+    Args:
+        name: `str`, name to give for the experiment.
+        output_dir: `str`, where to save training and evaluation data.
+        run_config: Tensorflow run config.
+        train_input_data_config: Train input data configuration.
+        eval_input_data_config: Eval input data configuration.
+        estimator_config: The estimator configuration.
+        model_config: The model configuration.
+        train_hooks_config: The training hooks configuration.
+        eval_hooks_config: The evaluation hooks configuration.
+        eval_metrics_config: The evaluation metrics config.
+        eval_every_n_steps: `int`, the frequency of evaluation.
+        train_steps: `int`, the number of steps to train the model.
+        eval_steps: `int`, the number of steps to eval the model.
+        eval_delay_secs: `int`, used to delay the evaluation.
+        continuous_eval_throttle_secs: Do not re-evaluate unless the last evaluation
+            was started at least this many seconds ago for continuous_eval().
+        delay_workers_by_global_step: if `True` delays training workers based on global step
+            instead of time.
+        export_strategies: A list of `ExportStrategy`s, or a single one, or None.
+        train_steps_per_iteration: (applies only to continuous_train_and_evaluate).
+    """
     def __init__(self, name, output_dir, run_config,
                  train_input_data_config, eval_input_data_config,
                  estimator_config, model_config, train_hooks_config=None, eval_hooks_config=None,

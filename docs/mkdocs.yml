@@ -1,0 +1,38 @@
+site_name: Polyaxon Documentation
+site_url: http://polyaxon.com
+repo_url: https://github.com/polyaxon/polyaxon
+theme: readthedocs
+docs_dir: sources
+site_description: 'Documentation for polyaxon, a python Deep Learning library for TensorFlow.'
+
+dev_addr: '0.0.0.0:8000'
+google_analytics: ['UA-89493331-1', 'polyaxon.com']
+
+pages:
+- Home: index.md
+- Getting started: getting_started.md
+- Experiments:
+  - Introduction: experiments/introduction.md
+  - Expermient: experiments/experiment.md
+  - Estimator: experiments/estimator.md
+  - Model: experiments/model.md
+  - Hooks: experiments/hooks.md
+  - Subgraph: experiments/subgraph.md
+  - Summerizer: experiments/summarizer.md
+- Layers:
+  - Introduction: layers/introduction.md
+  - Core Layers: layers/core.md
+  - Convolutional Layers: layers/convolutional.md
+  - Recurrent Layers: layers/recurrent.md
+  - Embedding Layers: layers/embeddings.md
+- Activations: activations.md
+- Losses: losses.md
+- Metrics: metrics.md
+- Optimizers: optimizers.md
+- Initializations: initializations.md
+- Regularizations: regularizations.md
+- Libs:
+  - Configs: libs/configs.md
+  - Getters: libs/getters.md
+  - Utils: libs/utils.md
+- Contributing: contributing.md

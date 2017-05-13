@@ -30,60 +30,61 @@ from tensorflow.python.training import basic_session_run_hooks, monitored_sessio
 from tensorflow.python.training.session_run_hook import SessionRunHook
 from tensorflow.python.util import compat
 
+from polyaxon import ModeKeys
 from polyaxon.libs.dicts import dict_to_str
 from polyaxon.libs.utils import extract_batch_length, generate_model_dir, get_arguments
 
 
 class Estimator(object):
-    """Estimator class is the basic TensorFlow model trainer/evaluator."""
+    """Estimator class is the basic TensorFlow model trainer/evaluator.
 
+    Constructs an `Estimator` instance.
+
+    Args:
+        model_fn: Model function. Follows the signature:
+            * Args:
+                * `features`: single `Tensor` or `dict` of `Tensor`s
+                     (depending on data passed to `fit`),
+                * `labels`: `Tensor` or `dict` of `Tensor`s (for multi-head models).
+                    If mode is `ModeKeys.PREDICT`, `labels=None` will be passed.
+                    If the `model_fn`'s signature does not accept `mode`,
+                    the `model_fn` must still be able to handle `labels=None`.
+                * `mode`: Optional. Specifies if this training, evaluation or prediction.
+                    See `ModeKeys`.
+                * `params`: Optional `dict` of hyperparameters.  Will receive what
+                    is passed to Estimator in `params` parameter. This allows
+                    to configure Estimators from hyper parameter tuning.
+                * `config`: Optional configuration object. Will receive what is passed
+                    to Estimator in `config` parameter, or the default `config`.
+                    Allows updating things in your model_fn based on configuration
+                    such as `num_ps_replicas`.
+                * `model_dir`: Optional directory where model parameters, graph etc
+                    are saved. Will receive what is passed to Estimator in
+                    `model_dir` parameter, or the default `model_dir`. Allows
+                    updating things in your model_fn that expect model_dir, such as
+                    training hooks.
+
+            * Returns:
+               `EstimatorSpec`
+
+            Supports next three signatures for the function:
+
+                * `(features, labels)`
+                * `(features, labels, mode)`
+                * `(features, labels, mode, params)`
+                * `(features, labels, mode, params, config)`
+                * `(features, labels, mode, params, config, model_dir)`
+
+        model_dir: Directory to save model parameters, graph and etc. This can
+            also be used to load checkpoints from the directory into a estimator to
+            continue training a previously saved model.
+        config: Configuration object.
+        params: `dict` of hyper parameters that will be passed into `model_fn`.
+                  Keys are names of parameters, values are basic python types.
+    Raises:
+        ValueError: parameters of `model_fn` don't match `params`.
+    """
     def __init__(self, model_fn=None, model_dir=None, config=None, params=None):
-        """Constructs an `Estimator` instance.
-
-        Args:
-            model_fn: Model function. Follows the signature:
-                * Args:
-                    * `features`: single `Tensor` or `dict` of `Tensor`s
-                         (depending on data passed to `fit`),
-                    * `labels`: `Tensor` or `dict` of `Tensor`s (for multi-head models).
-                        If mode is `ModeKeys.PREDICT`, `labels=None` will be passed.
-                        If the `model_fn`'s signature does not accept `mode`,
-                        the `model_fn` must still be able to handle `labels=None`.
-                    * `mode`: Optional. Specifies if this training, evaluation or prediction.
-                        See `ModeKeys`.
-                    * `params`: Optional `dict` of hyperparameters.  Will receive what
-                        is passed to Estimator in `params` parameter. This allows
-                        to configure Estimators from hyper parameter tuning.
-                    * `config`: Optional configuration object. Will receive what is passed
-                        to Estimator in `config` parameter, or the default `config`.
-                        Allows updating things in your model_fn based on configuration
-                        such as `num_ps_replicas`.
-                    * `model_dir`: Optional directory where model parameters, graph etc
-                        are saved. Will receive what is passed to Estimator in
-                        `model_dir` parameter, or the default `model_dir`. Allows
-                        updating things in your model_fn that expect model_dir, such as
-                        training hooks.
-
-                * Returns:
-                   `EstimatorSpec`
-
-                Supports next three signatures for the function:
-
-                    * `(features, labels)`
-                    * `(features, labels, mode)`
-                    * `(features, labels, mode, params)`
-                    * `(features, labels, mode, params, config)`
-                    * `(features, labels, mode, params, config, model_dir)`
-
-            model_dir: Directory to save model parameters, graph and etc. This can
-                also be used to load checkpoints from the directory into a estimator to
-                continue training a previously saved model.
-            config: Configuration object.
-            params: `dict` of hyper parameters that will be passed into `model_fn`.
-                      Keys are names of parameters, values are basic python types.
-        Raises:
-            ValueError: parameters of `model_fn` don't match `params`.
-        """
         # Create a run configuration.
         if config is None:
             self._config = run_config.RunConfig()
@@ -203,7 +204,7 @@ class Estimator(object):
                 saved_model_export_utils.get_input_alternatives(input_ops))
 
             # Call the model_fn and collect the output alternatives.
-            estimator_spec = self._call_model_fn(features, None, model_fn_lib.ModeKeys.PREDICT)
+            estimator_spec = self._call_model_fn(features, None, ModeKeys.PREDICT)
             output_alternatives, actual_default_output_alternative_key = (
                 saved_model_export_utils.get_output_alternatives(
                     estimator_spec, default_output_alternative_key))
@@ -382,7 +383,7 @@ class Estimator(object):
             random_seed.set_random_seed(self._config.tf_random_seed)
             contrib_framework.create_global_step(g)
             features = self._get_features_from_input_fn(input_fn)
-            estimator_spec = self._call_model_fn(features, None, model_fn_lib.ModeKeys.PREDICT)
+            estimator_spec = self._call_model_fn(features, None, ModeKeys.PREDICT)
             predictions = self._extract_keys(estimator_spec.predictions, predict_keys)
             with monitored_session.MonitoredSession(
                     session_creator=monitored_session.ChiefSessionCreator(
@@ -472,7 +473,7 @@ class Estimator(object):
             random_seed.set_random_seed(self._config.tf_random_seed)
             global_step = contrib_framework.create_global_step(g)
             features, labels = input_fn()
-            estimator_spec = self._call_model_fn(features, labels, model_fn_lib.ModeKeys.TRAIN)
+            estimator_spec = self._call_model_fn(features, labels, ModeKeys.TRAIN)
             all_hooks.extend([
                 basic_session_run_hooks.NanTensorHook(estimator_spec.loss),
                 basic_session_run_hooks.LoggingTensorHook(
@@ -538,7 +539,7 @@ class Estimator(object):
             global_step = contrib_framework.create_global_step(g)
             features, labels = input_fn()
 
-            estimator_spec = self._call_model_fn(features, labels, model_fn_lib.ModeKeys.EVAL)
+            estimator_spec = self._call_model_fn(features, labels, ModeKeys.EVAL)
             if model_fn_lib.MetricKeys.LOSS in estimator_spec.eval_metric_ops:
                 raise ValueError("Metric with name `{}` is not allowed, because Estimator "
                                  "already defines a default metric "

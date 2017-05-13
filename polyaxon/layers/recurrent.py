@@ -112,43 +112,41 @@ class CoreRNN(BaseLayer):
 
 
 class SimpleRNN(CoreRNN):
+    """Simple RNN (Simple Recurrent Layer.)
+
+    Output:
+        if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
+        else: 2-D Tensor [samples, output dim].
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_units: `int`, number of units for this layer.
+        activation: `str` (name) or `function` (returning a `Tensor`). Default: 'sigmoid'.
+        dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+            input and output keep probability.
+        num_layers: `int` how many times to stack the cell.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+        return_seq: `bool`. If True, returns the full sequence instead of
+            last sequence output only.
+        return_state: `bool`. If True, returns a tuple with output and
+            states: (output, states).
+        initial_state: `Tensor`. An initial state for the RNN.  This must be
+            a tensor of appropriate type and shape [batch_size x cell.state_size].
+        dynamic: `bool`. If True, dynamic computation is performed. It will not
+            compute RNN steps above the sequence length. Note that because TF
+            requires to feed sequences of same length, 0 is used as a mask.
+            So a sequence padded with 0 at the end must be provided. When
+            computation is performed, it will stop when it meets a step with
+            a value of 0.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when loading a model.
+        name: `str`. A name for this layer (optional).
+    """
     def __init__(self, mode, num_units, activation='sigmoid', dropout=None, num_layers=1,
                  bias=True, weights_init=None, return_seq=False, return_state=False,
                  initial_state=None, dynamic=False, trainable=True,
                  restore=True, name='SimpleRNN'):
-        """ Simple RNN (Simple Recurrent Layer.)
-
-        Output:
-            if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
-            else: 2-D Tensor [samples, output dim].
-
-        Args:
-            num_units: `int`, number of units for this layer.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-
-                Default: 'sigmoid'.
-            dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
-                input and output keep probability.
-            num_layers: `int` how many times to stack the cell.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-            return_seq: `bool`. If True, returns the full sequence instead of
-                last sequence output only.
-            return_state: `bool`. If True, returns a tuple with output and
-                states: (output, states).
-            initial_state: `Tensor`. An initial state for the RNN.  This must be
-                a tensor of appropriate type and shape [batch_size x cell.state_size].
-            dynamic: `bool`. If True, dynamic computation is performed. It will not
-                compute RNN steps above the sequence length. Note that because TF
-                requires to feed sequences of same length, 0 is used as a mask.
-                So a sequence padded with 0 at the end must be provided. When
-                computation is performed, it will stop when it meets a step with
-                a value of 0.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: `str`. A name for this layer (optional).
-        """
         super(SimpleRNN, self).__init__(mode, name)
         self.num_units = num_units
         self.activation = activation
@@ -175,55 +173,53 @@ class SimpleRNN(CoreRNN):
 
 
 class LSTM(CoreRNN):
+    """LSTM (Long Short Term Memory Recurrent Layer).
+
+    Output:
+        if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
+        else: 2-D Tensor [samples, output dim].
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_units: `int`, number of units for this layer.
+        activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
+        inner_activation: `str` (name) or `function` (returning a `Tensor`).
+            LSTM inner activation. Default: 'sigmoid'.
+        dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+            input and output keep probability.
+        num_layers: `int` how many times to stack the cell.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+        forget_bias: `float`. Bias of the forget gate. Default: 1.0.
+        return_seq: `bool`. If True, returns the full sequence instead of
+            last sequence output only.
+        return_state: `bool`. If True, returns a tuple with output and
+            states: (output, states).
+        initial_state: `Tensor`. An initial state for the RNN.  This must be
+            a tensor of appropriate type and shape [batch_size x cell.state_size].
+        dynamic: `bool`. If True, dynamic computation is performed. It will not
+            compute RNN steps above the sequence length. Note that because TF
+            requires to feed sequences of same length, 0 is used as a mask.
+            So a sequence padded with 0 at the end must be provided. When
+            computation is performed, it will stop when it meets a step with
+            a value of 0.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when loading a model.
+        name: `str`. A name for this layer (optional).
+
+    References:
+        Long Short Term Memory, Sepp Hochreiter & Jurgen Schmidhuber,
+        Neural Computation 9(8): 1735-1780, 1997.
+
+    Links:
+        [http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf]
+        (http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf)
+
+    """
     def __init__(self, mode, num_units, activation='tanh', inner_activation='sigmoid', dropout=None,
                  num_layers=1, bias=True, weights_init=None, forget_bias=1.0, return_seq=False,
                  return_state=False, initial_state=None, dynamic=False, trainable=True,
                  restore=True, name='LSTM'):
-        """ LSTM (Long Short Term Memory Recurrent Layer).
-
-        Output:
-            if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
-            else: 2-D Tensor [samples, output dim].
-
-        Args:
-            num_units: `int`, number of units for this layer.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-
-                Default: 'tanh'.
-            inner_activation: `str` (name) or `function` (returning a `Tensor`).
-                LSTM inner activation. Default: 'sigmoid'.
-            dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
-                input and output keep probability.
-            num_layers: `int` how many times to stack the cell.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-            forget_bias: `float`. Bias of the forget gate. Default: 1.0.
-            return_seq: `bool`. If True, returns the full sequence instead of
-                last sequence output only.
-            return_state: `bool`. If True, returns a tuple with output and
-                states: (output, states).
-            initial_state: `Tensor`. An initial state for the RNN.  This must be
-                a tensor of appropriate type and shape [batch_size x cell.state_size].
-            dynamic: `bool`. If True, dynamic computation is performed. It will not
-                compute RNN steps above the sequence length. Note that because TF
-                requires to feed sequences of same length, 0 is used as a mask.
-                So a sequence padded with 0 at the end must be provided. When
-                computation is performed, it will stop when it meets a step with
-                a value of 0.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: `str`. A name for this layer (optional).
-
-        References:
-            Long Short Term Memory, Sepp Hochreiter & Jurgen Schmidhuber,
-            Neural Computation 9(8): 1735-1780, 1997.
-
-        Links:
-            [http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf]
-            (http://deeplearning.cs.cmu.edu/pdfs/Hochreiter97_lstm.pdf)
-
-        """
         super(LSTM, self).__init__(mode, name)
         self.num_units = num_units
         self.activation = activation
@@ -253,53 +249,51 @@ class LSTM(CoreRNN):
 
 
 class GRU(CoreRNN):
+    """GRU (Gated Recurrent Unit Layer).
+
+    Output:
+        if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
+        else: 2-D Tensor [samples, output dim].
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_units: `int`, number of units for this layer.
+        activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
+        inner_activation: `str` (name) or `function` (returning a `Tensor`).
+            GRU inner activation. Default: 'sigmoid'.
+        dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+            input and output keep probability.
+        num_layers: `int` how many times to stack the cell.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+        return_seq: `bool`. If True, returns the full sequence instead of
+            last sequence output only.
+        return_state: `bool`. If True, returns a tuple with output and
+            states: (output, states).
+        initial_state: `Tensor`. An initial state for the RNN.  This must be
+            a tensor of appropriate type and shape [batch_size x cell.state_size].
+        dynamic: `bool`. If True, dynamic computation is performed. It will not
+            compute RNN steps above the sequence length. Note that because TF
+            requires to feed sequences of same length, 0 is used as a mask.
+            So a sequence padded with 0 at the end must be provided. When
+            computation is performed, it will stop when it meets a step with
+            a value of 0.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when loading a model.
+        name: `str`. A name for this layer (optional).
+
+    References:
+        Learning Phrase Representations using RNN Encoder–Decoder for
+        Statistical Machine Translation, K. Cho et al., 2014.
+
+    Links:
+        [http://arxiv.org/abs/1406.1078](http://arxiv.org/abs/1406.1078)
+
+    """
     def __init__(self, mode, num_units, activation='tanh', inner_activation='sigmoid',
                  dropout=None, num_layers=1, bias=True, weights_init=None, return_seq=False,
                  return_state=False, initial_state=None, dynamic=False,
                  trainable=True, restore=True, name='GRU'):
-        """ GRU (Gated Recurrent Unit Layer).
-
-        Output:
-            if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
-            else: 2-D Tensor [samples, output dim].
-
-        Args:
-            num_units: `int`, number of units for this layer.
-            activation: `str` (name) or `function` (returning a `Tensor`).
-
-                Default: 'tanh'.
-            inner_activation: `str` (name) or `function` (returning a `Tensor`).
-                GRU inner activation. Default: 'sigmoid'.
-            dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
-                input and output keep probability.
-            num_layers: `int` how many times to stack the cell.
-            bias: `bool`. If True, a bias is used.
-            weights_init: `str` (name) or `Tensor`. Weights initialization.
-            return_seq: `bool`. If True, returns the full sequence instead of
-                last sequence output only.
-            return_state: `bool`. If True, returns a tuple with output and
-                states: (output, states).
-            initial_state: `Tensor`. An initial state for the RNN.  This must be
-                a tensor of appropriate type and shape [batch_size x cell.state_size].
-            dynamic: `bool`. If True, dynamic computation is performed. It will not
-                compute RNN steps above the sequence length. Note that because TF
-                requires to feed sequences of same length, 0 is used as a mask.
-                So a sequence padded with 0 at the end must be provided. When
-                computation is performed, it will stop when it meets a step with
-                a value of 0.
-            trainable: `bool`. If True, weights will be trainable.
-            restore: `bool`. If True, this layer weights will be restored when
-                loading a model.
-            name: `str`. A name for this layer (optional).
-
-        References:
-            Learning Phrase Representations using RNN Encoder–Decoder for
-            Statistical Machine Translation, K. Cho et al., 2014.
-
-        Links:
-            [http://arxiv.org/abs/1406.1078](http://arxiv.org/abs/1406.1078)
-
-        """
         super(GRU, self).__init__(mode, name)
         self.num_units = num_units
         self.activation = activation
@@ -327,41 +321,42 @@ class GRU(CoreRNN):
 
 
 class BidirectionalRNN(BaseLayer):
+    """Bidirectional RNN.
+
+    Build a bidirectional recurrent neural network, it requires 2 RNN Cells
+    to process sequence in forward and backward order. Any RNN Cell can be
+    used i.e. SimpleRNN, LSTM, GRU... with its own parameters. But the two
+    cells number of units must match.
+
+    Output:
+        if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
+        else: 2-D Tensor Layer [samples, output dim].
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        rnncell_fw: `RNNCell`. The RNN Cell to use for foward computation.
+        rnncell_bw: `RNNCell`. The RNN Cell to use for backward computation.
+        return_seq: `bool`. If True, returns the full sequence instead of
+            last sequence output only.
+        return_states: `bool`. If True, returns a tuple with output and
+            states: (output, states).
+        initial_state_fw: `Tensor`. An initial state for the forward RNN.
+            This must be a tensor of appropriate type and shape [batch_size
+            x cell.state_size].
+        initial_state_bw: `Tensor`. An initial state for the backward RNN.
+            This must be a tensor of appropriate type and shape [batch_size
+            x cell.state_size].
+        dynamic: `bool`. If True, dynamic computation is performed. It will not
+            compute RNN steps above the sequence length. Note that because TF
+            requires to feed sequences of same length, 0 is used as a mask.
+            So a sequence padded with 0 at the end must be provided. When
+            computation is performed, it will stop when it meets a step with
+            a value of 0.
+        name: `str`. A name for this layer (optional).
+
+    """
     def __init__(self, mode, rnncell_fw, rnncell_bw, return_seq=False, return_states=False,
                  initial_state_fw=None, initial_state_bw=None, dynamic=False, name='BiRNN'):
-        """ Bidirectional RNN.
-
-        Build a bidirectional recurrent neural network, it requires 2 RNN Cells
-        to process sequence in forward and backward order. Any RNN Cell can be
-        used i.e. SimpleRNN, LSTM, GRU... with its own parameters. But the two
-        cells number of units must match.
-
-        Output:
-            if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
-            else: 2-D Tensor Layer [samples, output dim].
-
-        Args:
-            rnncell_fw: `RNNCell`. The RNN Cell to use for foward computation.
-            rnncell_bw: `RNNCell`. The RNN Cell to use for backward computation.
-            return_seq: `bool`. If True, returns the full sequence instead of
-                last sequence output only.
-            return_states: `bool`. If True, returns a tuple with output and
-                states: (output, states).
-            initial_state_fw: `Tensor`. An initial state for the forward RNN.
-                This must be a tensor of appropriate type and shape [batch_size
-                x cell.state_size].
-            initial_state_bw: `Tensor`. An initial state for the backward RNN.
-                This must be a tensor of appropriate type and shape [batch_size
-                x cell.state_size].
-            dynamic: `bool`. If True, dynamic computation is performed. It will not
-                compute RNN steps above the sequence length. Note that because TF
-                requires to feed sequences of same length, 0 is used as a mask.
-                So a sequence padded with 0 at the end must be provided. When
-                computation is performed, it will stop when it meets a step with
-                a value of 0.
-            name: `str`. A name for this layer (optional).
-
-        """
         super(BidirectionalRNN, self).__init__(mode, name)
         self.rnncell_fw = rnncell_fw
         self.rnncell_bw = rnncell_bw
@@ -447,7 +442,18 @@ class CoreRNNCell(BaseLayer, rnn.RNNCell):
 
 
 class BasicRNNCell(CoreRNNCell):
-    """The most basic RNN cell with custom params."""
+    """The most basic RNN cell with custom params.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_units: `int`, number of units for this layer.
+        activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when loading a model.
+        name: `str`. A name for this layer (optional).
+    """
 
     def __init__(self, mode, num_units, activation='tanh', bias=True, weights_init=None,
                  trainable=True, restore=True, name='BasicRNNCell'):
@@ -482,7 +488,20 @@ class BasicRNNCell(CoreRNNCell):
 
 
 class GRUCell(CoreRNNCell):
-    """Gated Recurrent Unit cell with custom params (cf. http://arxiv.org/abs/1406.1078). """
+    """Gated Recurrent Unit cell with custom params.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_units: `int`, number of units for this layer.
+        activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
+        inner_activation: `str` (name) or `function` (returning a `Tensor`).
+            GRU inner activation. Default: 'sigmoid'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when loading a model.
+        name: `str`. A name for this layer (optional).
+    """
 
     def __init__(self, mode, num_units, activation='tanh', inner_activation='sigmoid', bias=True,
                  weights_init=None, trainable=True, restore=True, name='GRUCell'):
@@ -545,11 +564,29 @@ class BasicLSTMCell(CoreRNNCell):
     use peep-hole connections: it is the basic baseline.
 
     For advanced models, please use the full LSTMCell that follows.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        num_units: `int`, number of units for this layer.
+        forget_bias: `float`. Bias of the forget gate. Default: 1.0.
+        state_is_tuple: If True, accepted and returned states are n-tuples, where
+            `n = len(cells)`.  If False, the states are all
+            concatenated along the column axis.  This latter behavior will soon be
+            deprecated.
+        activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
+        inner_activation: `str` (name) or `function` (returning a `Tensor`).
+            GRU inner activation. Default: 'sigmoid'.
+        bias: `bool`. If True, a bias is used.
+        weights_init: `str` (name) or `Tensor`. Weights initialization.
+        batch_norm: `bool`. If True, use batch normalization for this cell.
+        trainable: `bool`. If True, weights will be trainable.
+        restore: `bool`. If True, this layer weights will be restored when loading a model.
+        name: `str`. A name for this layer (optional).
     """
 
     def __init__(self, mode, num_units, forget_bias=1.0, state_is_tuple=True, activation='tanh',
                  inner_activation='sigmoid', bias=True, weights_init=None,
-                 trainable=True, restore=True, batch_norm=False, name='BasicLSTMCell'):
+                 batch_norm=False, trainable=True, restore=True, name='BasicLSTMCell'):
         super(BasicLSTMCell, self).__init__(mode, name)
         if not state_is_tuple:
             logging.warning(
@@ -636,26 +673,28 @@ class BasicLSTMCell(CoreRNNCell):
 
 
 class DropoutWrapper(CoreRNNCell):
-    """Operator adding dropout to inputs and outputs of the given cell."""
+    """Operator adding dropout to inputs and outputs of the given cell.
+
+    Creates a cell with added input and/or output dropout.
+
+    Dropout is never used on the state.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        cell: an RNNCell, a projection to output_size is added to it.
+        input_keep_prob: unit Tensor or float between 0 and 1, input keep probability;
+            if it is float and 1, no input dropout will be added.
+        output_keep_prob: unit Tensor or float between 0 and 1, output keep
+        probability; if it is float and 1, no output dropout will be added.
+        seed: (optional) integer, the randomness seed.
+
+    Raises:
+      TypeError: if cell is not an RNNCell.
+      ValueError: if keep_prob is not between 0 and 1.
+    """
 
     def __init__(self, mode, cell, input_keep_prob=1.0, output_keep_prob=1.0, seed=None,
                  name='DropoutWrapper'):
-        """Creates a cell with added input and/or output dropout.
-
-        Dropout is never used on the state.
-
-        Args:
-          cell: an RNNCell, a projection to output_size is added to it.
-          input_keep_prob: unit Tensor or float between 0 and 1, input keep
-            probability; if it is float and 1, no input dropout will be added.
-          output_keep_prob: unit Tensor or float between 0 and 1, output keep
-            probability; if it is float and 1, no output dropout will be added.
-          seed: (optional) integer, the randomness seed.
-
-        Raises:
-          TypeError: if cell is not an RNNCell.
-          ValueError: if keep_prob is not between 0 and 1.
-        """
         super(DropoutWrapper, self).__init__(mode, name)
         if not isinstance(cell, CoreRNNCell):
             raise TypeError("The parameter cell is not a RNNCell.")
@@ -706,22 +745,24 @@ class DropoutWrapper(CoreRNNCell):
 
 
 class MultiRNNCell(CoreRNNCell):
-    """RNN cell composed sequentially of multiple simple cells."""
+    """RNN cell composed sequentially of multiple simple cells.
+
+    Create a RNN cell composed sequentially of a number of RNNCells.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        cells: list of RNNCells that will be composed in this order.
+        state_is_tuple: If True, accepted and returned states are n-tuples, where
+            `n = len(cells)`.  If False, the states are all
+            concatenated along the column axis.  This latter behavior will soon be
+            deprecated.
+
+    Raises:
+        ValueError: if cells is empty (not allowed), or at least one of the cells
+            returns a state tuple but the flag `state_is_tuple` is `False`.
+    """
 
     def __init__(self, mode, cells, state_is_tuple=True, name='MultiRNNCell'):
-        """Create a RNN cell composed sequentially of a number of RNNCells.
-
-        Args:
-            cells: list of RNNCells that will be composed in this order.
-            state_is_tuple: If True, accepted and returned states are n-tuples, where
-                `n = len(cells)`.  If False, the states are all
-                concatenated along the column axis.  This latter behavior will soon be
-                deprecated.
-
-        Raises:
-            ValueError: if cells is empty (not allowed), or at least one of the cells
-                returns a state tuple but the flag `state_is_tuple` is `False`.
-        """
         super(MultiRNNCell, self).__init__(mode, name)
         if not cells:
             raise ValueError("Must specify at least one cell for MultiRNNCell.")
@@ -829,7 +870,7 @@ def _linear(args, output_size, bias, bias_start=0.0, weights_init=None,
 
 
 def retrieve_seq_length_op(data):
-    """ An op to compute the length of a sequence. 0 are masked. """
+    """An op to compute the length of a sequence. 0 are masked. """
     with tf.name_scope('GetLength'):
         used = tf.sign(x=tf.reduce_max(tf.abs(data), axis=2))
         length = tf.reduce_sum(input_tensor=used, axis=1)
@@ -838,7 +879,7 @@ def retrieve_seq_length_op(data):
 
 
 def advanced_indexing_op(input, index):
-    """ Advanced Indexing for Sequences. """
+    """Advanced Indexing for Sequences. """
     batch_size = get_shape(input)[0]
     max_length = int(input.get_shape()[1])
     dim_size = int(input.get_shape()[2])

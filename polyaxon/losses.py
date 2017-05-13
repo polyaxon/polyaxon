@@ -23,11 +23,11 @@ def check_loss_data(y_true, y_pred, logits=False):
 def built_loss(fct, weights, name, scope, collect, logits=False):
     """ Builds the loss function.
 
-    :param fct: the loss function to build.
-    :param name: operation name.
-    :param scope: operation scope.
-    :param collect: whether to collect this metric under the metric collection.
-    :return:
+    Args:
+        fct: the loss function to build.
+        name: operation name.
+        scope: operation scope.
+        collect: whether to collect this metric under the metric collection.
     """
     def loss(y_true, y_pred):
         """
@@ -48,6 +48,27 @@ def built_loss(fct, weights, name, scope, collect, logits=False):
 
 
 def absolute_difference(weights=1.0, name='AbsoluteDifference', scope=None, collect=True):
+    """Adds an Absolute Difference loss to the training procedure.
+
+    `weights` acts as a coefficient for the loss. If a scalar is provided, then
+    the loss is simply scaled by the given value. If `weights` is a `Tensor` of
+    shape `[batch_size]`, then the total loss for each sample of the batch is
+    rescaled by the corresponding element in the `weights` vector. If the shape of
+    `weights` matches the shape of `predictions`, then the loss of each
+    measurable element of `predictions` is scaled by the corresponding value of
+    `weights`.
+
+    Args:
+        weights: Optional `Tensor` whose rank is either 0, or the same rank as
+            `labels`, and must be broadcastable to `labels` (i.e., all dimensions must
+            be either `1`, or the same as the corresponding `losses` dimension).
+        name: operation name.
+        scope: operation scope.
+        collect: whether to collect this metric under the metric collection.
+
+    Returns:
+        A scalar `Tensor` representing the loss value.
+    """
     def inner_loss(y_true, y_pred):
         losses = tf_math_ops.abs(tf_math_ops.subtract(y_pred, y_true))
         return losses
@@ -67,7 +88,7 @@ def log_loss(weights=1.0, epsilon=1e-7, name='LogLoss', scope=None, collect=True
 
 
 def mean_squared_error(weights=1.0, name='MeanSquaredError', scope=None, collect=True):
-    """ Computes Mean Square Loss.
+    """Computes Mean Square Loss.
 
     Args:
         weights: Coefficients for the loss a `scalar`.
@@ -89,7 +110,7 @@ def mean_squared_error(weights=1.0, name='MeanSquaredError', scope=None, collect
 
 
 def softmax_cross_entropy(weights=1.0, label_smoothing=0, name='SoftmaxCrossEntropy', scope=None, collect=True):
-    """ Computes Softmax Cross entropy (softmax categorical cross entropy).
+    """Computes Softmax Cross entropy (softmax categorical cross entropy).
 
     Computes softmax cross entropy between y_pred (logits) and
     y_true (labels).
@@ -138,7 +159,7 @@ def softmax_cross_entropy(weights=1.0, label_smoothing=0, name='SoftmaxCrossEntr
 
 
 def sigmoid_cross_entropy(weights=1.0, label_smoothing=0, name='SigmoidCrossEntropy', scope=None, collect=True):
-    """ Computes Sigmoid cross entropy.(binary cross entropy):
+    """Computes Sigmoid cross entropy.(binary cross entropy):
 
     Computes sigmoid cross entropy between y_pred (logits) and y_true
     (labels).
@@ -185,7 +206,7 @@ def sigmoid_cross_entropy(weights=1.0, label_smoothing=0, name='SigmoidCrossEntr
 
 
 def hinge_loss(weights=1.0, name='HingeLoss', scope=None, collect=True):
-    """ Hinge Loss.
+    """Hinge Loss.
 
     Args:
         weights: Coefficients for the loss a `scalar`.
@@ -210,7 +231,7 @@ def hinge_loss(weights=1.0, name='HingeLoss', scope=None, collect=True):
 
 
 def cosine_distance(dim, weights=1.0, name='CosineDistance', scope=None, collect=True):
-    """ Adds a cosine-distance loss to the training procedure.
+    """Adds a cosine-distance loss to the training procedure.
 
     Note that the function assumes that `predictions` and `labels` are already unit-normalized.
 
@@ -243,7 +264,7 @@ def cosine_distance(dim, weights=1.0, name='CosineDistance', scope=None, collect
 
 
 def kullback_leibler_divergence(weights=1.0, name='KullbackLeiberDivergence', scope=None, collect=False):
-    """ Adds a Kullback leiber diverenge loss to the training procedure.
+    """Adds a Kullback leiber diverenge loss to the training procedure.
 
      Args:
         name: name of the op.
@@ -267,19 +288,19 @@ def kullback_leibler_divergence(weights=1.0, name='KullbackLeiberDivergence', sc
 
 
 def poisson_loss(weights=1.0, name='PoissonLoss', scope=None, collect=False):
-    """ Adds a poisson loss to the training procedure.
+    """Adds a poisson loss to the training procedure.
 
-         Args:
-            name: name of the op.
-            scope: The scope for the operations performed in computing the loss.
-            collect: add to losses collection.
+     Args:
+        name: name of the op.
+        scope: The scope for the operations performed in computing the loss.
+        collect: add to losses collection.
 
-        Returns:
-            A scalar `Tensor` representing the loss value.
+    Returns:
+        A scalar `Tensor` representing the loss value.
 
-        Raises:
-            ValueError: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
-        """
+    Raises:
+        ValueError: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+    """
 
     def inner_loss(y_true, y_pred):
         losses = tf.reduce_mean(input_tensor=y_pred - y_true * tf.log(x=y_pred + EPSILON), axis=-1)
