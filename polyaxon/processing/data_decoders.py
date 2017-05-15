@@ -51,7 +51,7 @@ class SplitTokensDecoder(DataDecoder):
         return [self.tokens_feature_name, self.length_feature_name]
 
 
-class TFSEquenceExampleDecoder(DataDecoder):
+class TFSequenceExampleDecoder(DataDecoder):
     """A decoder for TensorFlow Examples.
     Decoding Example proto buffers is comprised of two stages: (1) Example parsing
     and (2) tensor manipulation.

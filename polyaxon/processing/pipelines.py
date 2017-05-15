@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow.contrib.slim.python.slim.data import tfexample_decoder
 
 from polyaxon.experiments.subgraph import SubGraph
-from polyaxon.processing.data_decoders import SplitTokensDecoder, TFSEquenceExampleDecoder
+from polyaxon.processing.data_decoders import SplitTokensDecoder, TFSequenceExampleDecoder
 from polyaxon.processing.data_providers import ParallelDataProvider
 
 
@@ -278,7 +278,7 @@ class ImageCaptioningPipeline(Pipeline):
                 func=lambda x: tf.size(x[self.caption_tokens_field]))
         }
 
-        decoder = TFSEquenceExampleDecoder(
+        decoder = TFSequenceExampleDecoder(
             context_keys_to_features, sequence_keys_to_features, items_to_handlers)
 
         dataset = tf.contrib.slim.dataset.Dataset(
