@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/estimator.py#L38)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/estimator.py#L41)</span>
 ### Estimator
 
 ```python
@@ -59,32 +59,48 @@ Constructs an `Estimator` instance.
 
 
 ```python
-export_savedmodel(self, export_dir_base, serving_input_fn, default_output_alternative_key=None, assets_extra=None, as_text=False, checkpoint_path=None)
+export_savedmodel(self, export_dir_base, serving_input_receiver_fn, assets_extra=None, as_text=False, checkpoint_path=None)
 ```
 
 
 Exports inference graph as a SavedModel into given dir.
-
+This method builds a new graph by first calling the
+serving_input_receiver_fn to obtain feature `Tensor`s, and then calling
+this `Estimator`'s model_fn to generate the model graph based on those
+features. It restores the given checkpoint (or, lacking that, the most
+recent checkpoint) into this graph in a fresh session.  Finally it creates
+a timestamped export directory below the given export_dir_base, and writes
+a `SavedModel` into it containing a single `MetaGraphDef` saved from this
+session.
+The exported `MetaGraphDef` will provide one `SignatureDef` for each
+element of the export_outputs dict returned from the model_fn, named using
+the same keys.  One of these keys is always
+signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY, indicating which
+signature will be served when a serving request does not specify one.
+For each signature, the outputs are provided by the corresponding
+`ExportOutput`s, and the inputs are always the input receivers provided by
+the serving_input_receiver_fn.
+Extra assets may be written into the SavedModel via the extra_assets
+argument.  This should be a dict, where each key gives a destination path
+(including the filename) relative to the assets.extra directory.  The
+corresponding value gives the full path of the source file to be copied.
+For example, the simple case of copying a single file without renaming it
+is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
 - __Args__:
-- __export_dir_base__: A str directory to write the exported graph and checkpoints.
-- __serving_input_fn__: A function that takes no argument and returns an `InputFnOps`.
-- __default_output_alternative_key__: the name of the head to serve when none is specified.
-	Not needed for single-headed models.
-- __assets_extra__: A dict specifying how to populate the assets.extra directory
-	within the exported SavedModel.  Each key should give the destination
-	path (including the filename) relative to the assets.extra directory.
-	The corresponding value gives the full path of the source file to be
-	copied.  For example, the simple case of copying a single file without
-	renaming it is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
-- __as_text__: whether to write the SavedModel proto in text format.
-- __checkpoint_path__: The checkpoint path to export.  If None (the default),
-	the most recent checkpoint found within the model directory is chosen.
-
+  - __export_dir_base__: A string containing a directory in which to create
+timestamped subdirectories containing exported SavedModels.
+  - __serving_input_receiver_fn__: A function that takes no argument and
+returns a `ServingInputReceiver`.
+  - __assets_extra__: A dict specifying how to populate the assets.extra directory
+within the exported SavedModel, or `None` if no extra assets are needed.
+  - __as_text__: whether to write the SavedModel proto in text format.
+  - __checkpoint_path__: The checkpoint path to export.  If `None` (the default),
+the most recent checkpoint found within the model directory is chosen.
 - __Returns__:
   The string path to the exported directory.
-
 - __Raises__:
-  - __ValueError__: if an unrecognized export_type is requested.
+  - __ValueError__: if no serving_input_receiver_fn is provided, no export_outputs
+  are provided, or no checkpoint can be found.
 
 ----
 
@@ -172,24 +188,34 @@ Returns `dict` with evaluation results.
 
 
 ```python
-predict(self, input_fn=None, predict_keys=None, hooks=None)
+predict(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None)
 ```
 
 
 Returns predictions for given features.
 
 - __Args__:
-- __input_fn__: Input function.
-- __predict_keys__: list of `str`, name of the output to predict. If `None`, returns all.
-- __hooks__: List of `SessionRunHook` subclass instances.
-	Used for callbacks inside the prediction call.
+- __input_fn__: Input function returning features which is a dictionary of
+	string feature name to `Tensor` or `SparseTensor`. If it returns a
+	tuple, first item is extracted as features. Prediction continues until
+	`input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
+- __predict_keys__: list of `str`, name of the keys to predict. It is used if
+	the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
+	of the predictions will be filtered from the dictionary. If `None`, returns all.
+- __hooks__: List of `SessionRunHook` subclass instances. Used for callbacks
+	inside the prediction call.
+- __checkpoint_path__: Path of a specific checkpoint to predict. If `None`, the
+	latest checkpoint in `model_dir` is used.
 
-- __Returns__:
-A numpy array of predicted classes or regression values if the
-constructor's `model_fn` returns a `Tensor` for `predictions` or a `dict`
-of numpy arrays if `model_fn` returns a `dict`. Returns an iterable of
-predictions if as_iterable is True.
+- __Yields__:
+Evaluated values of `predictions` tensors.
 
+- __Raises__:
+- __ValueError__: Could not find a trained model in model_dir.
+- __ValueError__: if batch length of predictions are not same.
+- __ValueError__: If there is a conflict between `predict_keys` and `predictions`.
+	For example if `predict_keys` is not `None`
+	but `EstimatorSpec.predictions` is not a `dict`.
 
 ----
 

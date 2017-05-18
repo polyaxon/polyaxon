@@ -1,6 +1,9 @@
-import tensorflow as tf
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
+import tensorflow as tf
 import polyaxon as plx
+
 from examples.mnist_data import load_mnist
 
 
@@ -10,7 +13,7 @@ def create_experiment_json_fn(output_dir):
     config = {
         'name': 'lenet_mnsit',
         'output_dir': output_dir,
-        'eval_every_n_steps': 1,
+        'eval_every_n_steps': 100,
         'train_steps_per_iteration': 100,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
@@ -29,17 +32,21 @@ def create_experiment_json_fn(output_dir):
         },
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
+            'summaries': 'all',
             'model_type': 'classifier',
             'loss_config': {'name': 'softmax_cross_entropy'},
             'eval_metrics_config': [{'name': 'streaming_accuracy'},
                                     {'name': 'streaming_precision'}],
-            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002, 'decay_type': 'exponential_decay', 'decay_rate': 0.2},
+            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002,
+                                 'decay_type': 'exponential_decay', 'decay_rate': 0.2},
             'graph_config': {
                 'name': 'lenet',
                 'definition': [
-                    (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 5, 'strides': 1, 'regularizer': 'l2_regularizer'}),
+                    (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 5, 'strides': 1,
+                                         'regularizer': 'l2_regularizer'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
-                    (plx.layers.Conv2d, {'num_filter': 64, 'filter_size': 5, 'regularizer': 'l2_regularizer'}),
+                    (plx.layers.Conv2d, {'num_filter': 64, 'filter_size': 5,
+                                         'regularizer': 'l2_regularizer'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
                     (plx.layers.FullyConnected, {'n_units': 1024, 'activation': 'tanh'}),
                     (plx.layers.FullyConnected, {'n_units': 10}),

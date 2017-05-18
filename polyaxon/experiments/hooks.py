@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from tensorflow.python.training import basic_session_run_hooks
+from tensorflow.python.training import basic_session_run_hooks, session_run_hook
+from tensorflow.python.platform import tf_logging as logging
 
 
 class LoggingTensorHook(basic_session_run_hooks.LoggingTensorHook):
@@ -166,6 +167,37 @@ class FinalOpsHook(basic_session_run_hooks.FinalOpsHook):
         super(FinalOpsHook, self).__init__(final_ops, final_ops_feed_dict)
 
 
+class StopAfterNEvalsHook(session_run_hook.SessionRunHook):
+    """Run hook used by the evaluation routines to run the `eval_ops` N times."""
+
+    def __init__(self, num_evals, log_progress=True):
+        """Constructs the run hook.
+
+        Args:
+            num_evals: The number of evaluations to run for.
+            log_progress: Whether to log evaluation progress, defaults to True.
+        """
+        # The number of evals to run for.
+        self._num_evals = num_evals
+        self._evals_completed = None
+        self._log_progress = log_progress
+
+    def _set_evals_completed_tensor(self, updated_eval_step):
+        self._evals_completed = updated_eval_step
+
+    def before_run(self, run_context):
+        return session_run_hook.SessionRunArgs({
+            'evals_completed': self._evals_completed
+        })
+
+    def after_run(self, run_context, run_values):
+        evals_completed = run_values.results['evals_completed']
+        if self._log_progress:
+            logging.info('Evaluation [%d/%d]', evals_completed, self._num_evals)
+        if evals_completed >= self._num_evals:
+            run_context.request_stop()
+
+
 HOOKS = {
     'LoggingTensorHook': LoggingTensorHook,
     'StopAtStepHook': StopAtStepHook,
@@ -175,4 +207,5 @@ HOOKS = {
     'SummarySaverHook': SummarySaverHook,
     'GlobalStepWaiterHook': GlobalStepWaiterHook,
     'FinalOpsHook': FinalOpsHook,
+    'StopAfterNEvalsHook': StopAfterNEvalsHook
 }

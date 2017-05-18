@@ -104,16 +104,22 @@ class Experiment(object):
     def eval_steps(self):
         return self._eval_steps
 
-    def _set_export_strategies(self, value):
-        if value is None:
-            self._export_strategies = []
-        elif isinstance(value, list):
-            self._export_strategies = value[:]
-        elif isinstance(value, export_strategy.ExportStrategy):
-            self._export_strategies = [value]
+    def _set_export_strategies(self, values):  # pylint: disable=missing-docstring
+        export_strategies = []
+        if not values:
+            self._export_strategies = ()
+            return
+
+        if isinstance(values, export_strategy.ExportStrategy):
+            export_strategies.append(values)
         else:
-            raise ValueError("`export_strategies` must be an ExportStrategy, "
-                             "a list of ExportStrategies, or None.")
+            for value in values:
+                if not isinstance(value, export_strategy.ExportStrategy):
+                    raise ValueError(
+                        "`export_strategies` must be an ExportStrategy, an iterable of "
+                        "ExportStrategy, or `None`, found {}.".format(value))
+                export_strategies.append(value)
+        self._export_strategies = tuple(export_strategies)
 
     def reset_export_strategies(self, new_export_strategies=None):
         """Resets the export strategies with the `new_export_strategies`.
@@ -460,7 +466,7 @@ class Experiment(object):
                 logging.info("Stop training model as max steps reached")
                 break
 
-            logging.info("Training model for %s steps", train_steps_per_iteration)
+            logging.info("Training model for {} steps".format(train_steps_per_iteration))
             self._call_train(input_fn=self._train_input_fn,
                              steps=train_steps_per_iteration,
                              hooks=self._train_hooks)

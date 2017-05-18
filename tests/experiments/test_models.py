@@ -1,0 +1,250 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+import tensorflow as tf
+import polyaxon as plx
+
+from tensorflow.python.estimator.model_fn import EstimatorSpec
+from tensorflow.python.training import training
+from tensorflow.python.platform import test
+
+from polyaxon.experiments import BaseModel
+from polyaxon.libs.configs import ModelConfig, LossConfig, OptimizerConfig
+from polyaxon.libs.utils import get_tracked
+
+
+class TestBaseModel(test.TestCase):
+    @staticmethod
+    def get_dummy_graph_fn():
+        def graph_fn(mode, inputs):
+            x = plx.layers.FullyConnected(mode=mode, n_units=1, activation='relu')(inputs)
+            x = plx.layers.FullyConnected(mode=mode, n_units=1, activation='relu')(x)
+            return x
+
+        return graph_fn
+
+    def test_build_no_summaries(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=[], name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only activations are created
+        summaries_by_names = get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES)
+        assert summaries_by_names == {}
+
+    def test_build_activation_summaries(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['activations'], name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only activations are created
+        summaries_by_names = get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES)
+        for s_name in summaries_by_names.keys():
+            assert 'Activation' in s_name
+
+    def test_build_loss_summaries(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['loss'], name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only loss are created
+        summaries_by_names = get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES)
+        for s_name in summaries_by_names.keys():
+            assert 'Loss' in s_name
+
+    def test_build_gradients_summaries(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['gradients'], name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only gradients are created
+        summaries_by_names = get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES)
+        for s_name in summaries_by_names.keys():
+            assert 'Gradient' in s_name
+
+    def test_build_variables_summaries(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['variables'], name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only var are created
+        variable_names = {var.op.name for var in tf.trainable_variables()}
+        summaries_names = set(get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES).keys())
+        assert variable_names == summaries_names
+
+    def test_build_learning_rate_summaries(self):
+        training.create_global_step()
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta',
+                                                              decay_type='exponential_decay'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['learning_rate'], name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only var are created
+        summaries_names = list(get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES).keys())
+        assert len(summaries_names) == 1
+        assert summaries_names[0] == 'learning_rate'
+
+    def test_does_not_build_learning_rate_summaries_if_no_decay(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['learning_rate'], name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only var are created
+        summaries_names = list(get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES).keys())
+        assert len(summaries_names) == 0
+
+    def test_build_all_summaries(self):
+        training.create_global_step()
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta',
+                                                              decay_type='exponential_decay'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries='all', name='test', params=None)
+
+        model(x, y, None, None)
+
+        # Only var are created
+        learning_rate_summaries = 0
+        activations_summaries = 0
+        gradients_summaries = 0
+        loss_summaries = 0
+
+        for s_name in get_tracked(collection=tf.GraphKeys.SUMMARIES_BY_NAMES).keys():
+            if 'learning_rate' in s_name:
+                learning_rate_summaries += 1
+            elif 'Activation' in s_name:
+                activations_summaries += 1
+            elif 'Loss' in s_name:
+                loss_summaries += 1
+            elif 'Gradient' in s_name:
+                gradients_summaries += 1
+
+        assert learning_rate_summaries > 0
+        assert activations_summaries > 0
+        assert gradients_summaries > 0
+        assert loss_summaries > 0
+
+    def test_return_estimator_spec(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['learning_rate'], name='test', params=None)
+
+        assert isinstance(model(x, y, None, None), EstimatorSpec)
+
+    def test_handle_train_mode(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['learning_rate'], name='test', params=None)
+        specs = model(x, y, None, None)
+
+        assert specs.loss is not None
+        assert specs.predictions is not None
+        assert 'losses' in specs.predictions
+        assert specs.train_op is not None
+
+    def test_handle_eval_mode(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.EVAL, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['learning_rate'], name='test', params=None)
+        specs = model(x, y, None, None)
+
+        assert specs.loss is not None
+        assert specs.predictions is not None
+        assert 'losses' in specs.predictions
+        assert specs.train_op is None
+
+    def test_handle_predict_mode(self):
+        config = ModelConfig(loss_config=LossConfig(name='log_loss'),
+                             optimizer_config=OptimizerConfig(name='Adadelta'))
+
+        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        y = tf.constant([[1], [1]])
+
+        model = BaseModel(plx.ModeKeys.PREDICT, graph_fn=self.get_dummy_graph_fn(),
+                          config=config, model_type=BaseModel.Types.CLASSIFIER,
+                          summaries=['learning_rate'], name='test', params=None)
+        specs = model(x, y, None, None)
+
+        assert specs.loss is None
+        assert specs.predictions is not None
+        assert 'losses' not in specs.predictions
+        assert specs.train_op is None

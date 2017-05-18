@@ -4,3 +4,4 @@ from __future__ import absolute_import, division, print_function
 from .estimator import Estimator, ESTIMATORS
 from .experiment import Experiment, create_experiment, run_experiment
 from .models import BaseModel, MODELS
+from .subgraph import SubGraph

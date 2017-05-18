@@ -4,15 +4,14 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 
 from tensorflow.python.estimator.model_fn import EstimatorSpec
-from tensorflow.python.framework import ops
+from tensorflow.python.training import training
 
 from polyaxon import ModeKeys
 from polyaxon.experiments import summarizer
-from polyaxon.experiments.subgraph import SubGraph
 from polyaxon.libs import configs, getters
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
-from polyaxon.libs.utils import extract_batch_length, track, get_tracked
+from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments
 
 
 class BaseModel(GraphModule):
@@ -30,7 +29,7 @@ class BaseModel(GraphModule):
 
         VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
 
-    def __init__(self, mode, config, model_type, summaries, name, params):
+    def __init__(self, mode, graph_fn, config, model_type, summaries, name, params):
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
         self.config = config
         self.params = params
@@ -40,6 +39,17 @@ class BaseModel(GraphModule):
         self._grads_and_vars = None
         self._total_loss = None
         self._loss = None
+
+        if graph_fn is not None:
+            # Check number of arguments of the given function matches requirements.
+            model_fn_args = get_arguments(graph_fn)
+            if 'mode' not in model_fn_args or 'inputs' not in model_fn_args:
+                raise ValueError("Model's graph_fn `{}` expects should have 2 args: "
+                                 "`mode` and `inputs`.".format(graph_fn))
+        else:
+            raise ValueError("`graph_fn` must be provided to Model.")
+
+        self._graph_fn = graph_fn
 
     def _clip_gradients(self, grads_and_vars):
         """Clips gradients by global norm."""
@@ -94,7 +104,8 @@ class BaseModel(GraphModule):
             elif summary == summarizer.SummaryOptions.LEARNING_RATE:
                 summary_op += summarizer.add_learning_rate_summaries()
 
-        ops.add_to_collection(tf.summary.merge(summary_op), tf.GraphKeys.SUMMARY_OP)
+        if summary_op:
+            tf.summary.merge(summary_op)
 
     def _build_loss(self, results, features, labels):
         """Creates the loss operation
@@ -132,19 +143,12 @@ class BaseModel(GraphModule):
                 metric.name, results, labels, **metric.params)
         return metrics
 
-    def _build_subgraphs(self, features):
-        """Creates the subgraph operations."""
-        x = features['source_ids']
-        self._graph = SubGraph(self.mode, self.config.graph_config.name,
-                               self.config.graph_config.methods, self.config.graph_config.kwargs)
-        return self._graph(x)
-
     def _build_train_op(self, loss):
         """Creates the training operation"""
         optimizer = self._create_optimizer()
         train_op = tf.contrib.layers.optimize_loss(
             loss=loss,
-            global_step=tf.contrib.framework.get_global_step(),
+            global_step=training.get_or_create_global_step(),
             learning_rate=None,
             clip_gradients=self._clip_gradients,
             optimizer=optimizer,
@@ -180,17 +184,17 @@ class BaseModel(GraphModule):
         """
         return extract_batch_length(features)
 
-    def __call__(self, features, labels, params):
+    def __call__(self, features, labels, params, config):
         """Calls the built mode."""
-        return self._template(features, labels, params)
+        return self._template(features, labels, params, config)
 
-    def _build(self, features, labels, params):
+    def _build(self, features, labels, params, config):
         """Subclasses should implement this method. See the `model_fn` documentation
         in tf.contrib.learn.Estimator class for a more detailed explanation.
         """
         # Pre-process features and labels
         features, labels = self._preprocess(features, labels)
-        results = self._build_subgraphs(features)
+        results = self._graph_fn(mode=self.mode, inputs=features['source_ids'])
 
         loss = None
         train_op = None

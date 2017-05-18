@@ -1,7 +1,12 @@
-import numpy as np
-import pandas as pd
-import tensorflow as tf
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
+import numpy as np
+try:
+    import pandas as pd
+except ImportError:
+    pass
+import tensorflow as tf
 import polyaxon as plx
 
 

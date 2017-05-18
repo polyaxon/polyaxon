@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
+from tensorflow.python.training.training_util import get_global_step
 
 from polyaxon.libs.utils import track
 
@@ -62,7 +63,7 @@ def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_
 
         return final_lr
 
-    learning_rate = decay_fn(learning_rate, global_step or tf.contrib.framework.get_global_step())
+    learning_rate = decay_fn(learning_rate, global_step or get_global_step())
     track(learning_rate, tf.GraphKeys.LEARNING_RATE)
     return learning_rate
 

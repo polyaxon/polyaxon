@@ -238,7 +238,7 @@ def transpose_batch_time(x):
 
 def generate_model_dir():
     base_dir = '/tmp/polyaxon_logs/'
-    return base_dir + uuid.uuid4()
+    return base_dir + uuid.uuid4().hex
 
 
 def get_arguments(func):

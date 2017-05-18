@@ -6,31 +6,34 @@ import os
 import six
 
 import numpy as np
+import tensorflow as tf
 
-from tensorflow.contrib import framework as contrib_framework
 from tensorflow.contrib import metrics as metrics_lib
 from tensorflow.contrib.framework import list_variables, load_variable
-from tensorflow.contrib.framework.python.ops import variables as contrib_variables
-from tensorflow.contrib.learn.python.learn.estimators import run_config
-from tensorflow.contrib.learn.python.learn.estimators._sklearn import NotFittedError
 from tensorflow.contrib.learn.python.learn.estimators.estimator import _get_replica_device_setter
-from tensorflow.contrib.learn.python.learn.utils import saved_model_export_utils
-from tensorflow.contrib.training.python.training import evaluation
 from tensorflow.core.framework import summary_pb2
 from tensorflow.core.protobuf import config_pb2
 from tensorflow.python.client import session as tf_session
 from tensorflow.python.estimator import model_fn as model_fn_lib
+from tensorflow.python.estimator.export.export import (build_all_signature_defs,
+                                                       get_timestamped_export_dir)
 from tensorflow.python.framework import ops, random_seed
-from tensorflow.python.ops import control_flow_ops, data_flow_ops, resources, variables
+from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.platform import gfile
 from tensorflow.python.saved_model import builder as saved_model_builder
 from tensorflow.python.saved_model import tag_constants
-from tensorflow.python.training import basic_session_run_hooks, monitored_session, saver, summary_io
+from tensorflow.python.training import (evaluation,
+                                        monitored_session,
+                                        saver,
+                                        summary_io,
+                                        training)
 from tensorflow.python.training.session_run_hook import SessionRunHook
 from tensorflow.python.util import compat
 
+from polyaxon.experiments import hooks as plx_hooks
 from polyaxon import ModeKeys
+from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.dicts import dict_to_str
 from polyaxon.libs.utils import extract_batch_length, generate_model_dir, get_arguments
 
@@ -87,40 +90,39 @@ class Estimator(object):
     def __init__(self, model_fn=None, model_dir=None, config=None, params=None):
         # Create a run configuration.
         if config is None:
-            self._config = run_config.RunConfig()
+            self._config = RunConfig()
             logging.info("Using default config.")
         else:
-            if not isinstance(config, run_config.RunConfig):
+            if not isinstance(config, RunConfig):
                 raise ValueError("config must be an instance of RunConfig, "
                                  "received {}.".format(config))
             self._config = config
         logging.info("Using config: {}".format(vars(self._config)))
 
-        self._model_dir = model_dir or generate_model_dir()
+        if(model_dir is not None) and (self._config.model_dir is not None):
+            if model_dir != self._config.model_dir:
+                # pylint: disable=g-doc-exception
+                raise ValueError(
+                    "model_dir are set both in constructor and RunConfig, but with "
+                    "different values. In constructor: '{}', in RunConfig: "
+                    "'{}' ".format(model_dir, self._config.model_dir))
+
+        self._model_dir = model_dir or self._config.model_dir or generate_model_dir()
         if self._config.model_dir is None:
             self._config = self._config.replace(model_dir=self._model_dir)
 
-        # if self._config.session_config is None:
-        self._session_config = config_pb2.ConfigProto(allow_soft_placement=True)
-        # else:
-        #     self._session_config = self._config.session_config
+        if self._config.session_config is None:
+            self._session_config = config_pb2.ConfigProto(allow_soft_placement=True)
+        else:
+            self._session_config = self._config.session_config
 
         # Set device function depending if there are replicas or not.
         self._device_fn = _get_replica_device_setter(self._config)
 
         self._graph = None
 
-        if model_fn is not None:
-            # Check number of arguments of the given function matches requirements.
-            model_fn_args = get_arguments(model_fn)
-            if params is not None and 'params' not in model_fn_args:
-                raise ValueError("Estimator's model_fn `{}` has less than 4 arguments, "
-                                 "but not None params `{}` are passed.".format(model_fn, params))
-            if params is None and 'params' in model_fn_args:
-                logging.warning("Estimator's model_fn (%s) includes params "
-                                "argument, but params are not passed to Estimator.", model_fn)
-        else:
-            raise ValueError("`model_fn` must be provided to Estimator.")
+        self._verify_model_fn_args(model_fn, params)
+
         self._model_fn = model_fn
         self._params = params or {}
 
@@ -135,6 +137,37 @@ class Estimator(object):
     @property
     def params(self):
         return copy.deepcopy(self._params)
+
+    @staticmethod
+    def _verify_model_fn_args(model_fn, params):
+        """Verifies model fn arguments."""
+
+        MODEL_FN_ARGS = {'features', 'labels', 'mode', 'params', 'config'}
+
+        if model_fn is not None:
+            # Check number of arguments of the given function matches requirements.
+            model_fn_args = get_arguments(model_fn)
+            if 'features' not in model_fn_args:
+                raise ValueError('model_fn `{}` must include features argument.'.format(model_fn))
+            if 'labels' not in model_fn_args:
+                raise ValueError('model_fn `{}` must include labels argument.'.format(model_fn))
+
+            if params is not None and 'params' not in model_fn_args:
+                raise ValueError("Estimator's model_fn `{}` does not include params argument, "
+                                 "but params `{}` are passed.".format(model_fn, params))
+            if params is None and 'params' in model_fn_args:
+                logging.warning("Estimator's model_fn (%s) includes params "
+                                "argument, but params are not passed to Estimator.", model_fn)
+        else:
+            raise ValueError("`model_fn` must be provided to Estimator.")
+
+        if 'self' in model_fn_args:
+            model_fn_args.remove('self')
+
+        non_valid_args = set(model_fn_args) - MODEL_FN_ARGS
+        if non_valid_args:
+            raise ValueError("model_fn `{}` has following not expected args: {}".format(
+                model_fn, non_valid_args))
 
     def _call_model_fn(self, features, labels, mode):
         """Calls model function with support of 2, 3 or 4 arguments.
@@ -159,89 +192,100 @@ class Estimator(object):
             kwargs['params'] = self.params
         if 'config' in model_fn_args:
             kwargs['config'] = self.config
-        model_fn_results = self._model_fn(features, labels, **kwargs)
+        model_fn_results = self._model_fn(features=features, labels=labels, **kwargs)
 
         if not isinstance(model_fn_results, model_fn_lib.EstimatorSpec):
             raise ValueError('model_fn should return an EstimatorSpec.')
 
         return model_fn_results
 
-    def export_savedmodel(self, export_dir_base, serving_input_fn,
-                          default_output_alternative_key=None,
-                          assets_extra=None, as_text=False, checkpoint_path=None):
+    def export_savedmodel(self, export_dir_base, serving_input_receiver_fn, assets_extra=None,
+                          as_text=False, checkpoint_path=None):
         """Exports inference graph as a SavedModel into given dir.
-
+        This method builds a new graph by first calling the
+        serving_input_receiver_fn to obtain feature `Tensor`s, and then calling
+        this `Estimator`'s model_fn to generate the model graph based on those
+        features. It restores the given checkpoint (or, lacking that, the most
+        recent checkpoint) into this graph in a fresh session.  Finally it creates
+        a timestamped export directory below the given export_dir_base, and writes
+        a `SavedModel` into it containing a single `MetaGraphDef` saved from this
+        session.
+        The exported `MetaGraphDef` will provide one `SignatureDef` for each
+        element of the export_outputs dict returned from the model_fn, named using
+        the same keys.  One of these keys is always
+        signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY, indicating which
+        signature will be served when a serving request does not specify one.
+        For each signature, the outputs are provided by the corresponding
+        `ExportOutput`s, and the inputs are always the input receivers provided by
+        the serving_input_receiver_fn.
+        Extra assets may be written into the SavedModel via the extra_assets
+        argument.  This should be a dict, where each key gives a destination path
+        (including the filename) relative to the assets.extra directory.  The
+        corresponding value gives the full path of the source file to be copied.
+        For example, the simple case of copying a single file without renaming it
+        is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
         Args:
-            export_dir_base: A str directory to write the exported graph and checkpoints.
-            serving_input_fn: A function that takes no argument and returns an `InputFnOps`.
-            default_output_alternative_key: the name of the head to serve when none is specified.
-                Not needed for single-headed models.
-            assets_extra: A dict specifying how to populate the assets.extra directory
-                within the exported SavedModel.  Each key should give the destination
-                path (including the filename) relative to the assets.extra directory.
-                The corresponding value gives the full path of the source file to be
-                copied.  For example, the simple case of copying a single file without
-                renaming it is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
-            as_text: whether to write the SavedModel proto in text format.
-            checkpoint_path: The checkpoint path to export.  If None (the default),
-                the most recent checkpoint found within the model directory is chosen.
-
+          export_dir_base: A string containing a directory in which to create
+            timestamped subdirectories containing exported SavedModels.
+          serving_input_receiver_fn: A function that takes no argument and
+            returns a `ServingInputReceiver`.
+          assets_extra: A dict specifying how to populate the assets.extra directory
+            within the exported SavedModel, or `None` if no extra assets are needed.
+          as_text: whether to write the SavedModel proto in text format.
+          checkpoint_path: The checkpoint path to export.  If `None` (the default),
+            the most recent checkpoint found within the model directory is chosen.
         Returns:
           The string path to the exported directory.
-
         Raises:
-          ValueError: if an unrecognized export_type is requested.
+          ValueError: if no serving_input_receiver_fn is provided, no export_outputs
+              are provided, or no checkpoint can be found.
         """
-        if serving_input_fn is None:
-            raise ValueError('serving_input_fn must be defined.')
+        if serving_input_receiver_fn is None:
+            raise ValueError('serving_input_receiver_fn must be defined.')
 
         with ops.Graph().as_default() as g:
-            contrib_variables.create_global_step(g)
+            training.get_or_create_global_step(g)
             random_seed.set_random_seed(self._config.tf_random_seed)
-            # Call the serving_input_fn and collect the input alternatives.
-            input_ops = serving_input_fn()
-            input_alternatives, features = (
-                saved_model_export_utils.get_input_alternatives(input_ops))
+            serving_input_receiver = serving_input_receiver_fn()
 
-            # Call the model_fn and collect the output alternatives.
-            estimator_spec = self._call_model_fn(features, None, ModeKeys.PREDICT)
-            output_alternatives, actual_default_output_alternative_key = (
-                saved_model_export_utils.get_output_alternatives(
-                    estimator_spec, default_output_alternative_key))
+            # Call the model_fn and collect the export_outputs.
+            estimator_spec = self._call_model_fn(
+                features=serving_input_receiver.features,
+                labels=None,
+                mode=model_fn_lib.ModeKeys.PREDICT)
 
-            # Build the SignatureDefs from all pairs of input and output alternatives
-            signature_def_map = saved_model_export_utils.build_all_signature_defs(
-                input_alternatives, output_alternatives, actual_default_output_alternative_key)
+            # Build the SignatureDefs from receivers and all outputs
+            signature_def_map = build_all_signature_defs(
+                serving_input_receiver.receiver_tensors,
+                estimator_spec.export_outputs)
 
             if not checkpoint_path:
                 # Locate the latest checkpoint
                 checkpoint_path = saver.latest_checkpoint(self._model_dir)
             if not checkpoint_path:
-                raise NotFittedError("Couldn't find trained model at {}.".format(self._model_dir))
+                raise ValueError("Couldn't find trained model at %s." % self._model_dir)
 
-            export_dir = saved_model_export_utils.get_timestamped_export_dir(export_dir_base)
+            export_dir = get_timestamped_export_dir(export_dir_base)
 
-            if estimator_spec.scaffold is not None and estimator_spec.scaffold.saver is not None:
-                saver_for_restore = estimator_spec.scaffold.saver
-            else:
-                saver_for_restore = saver.Saver(sharded=True)
             with tf_session.Session() as session:
-                variables.initialize_local_variables()
-                data_flow_ops.tables_initializer()
-                resources.initialize_resources(resources.shared_resources())
+
+                saver_for_restore = estimator_spec.scaffold.saver or saver.Saver(
+                    sharded=True)
                 saver_for_restore.restore(session, checkpoint_path)
-                init_op = control_flow_ops.group(
-                    variables.local_variables_initializer(),
-                    resources.initialize_resources(resources.shared_resources()),
-                    data_flow_ops.tables_initializer())
+
+                # pylint: disable=protected-access
+                local_init_op = (estimator_spec.scaffold.local_init_op or
+                                 monitored_session.Scaffold._default_local_init_op())
+                # pylint: enable=protected-access
 
                 # Perform the export
                 builder = saved_model_builder.SavedModelBuilder(export_dir)
                 builder.add_meta_graph_and_variables(
                     session, [tag_constants.SERVING],
                     signature_def_map=signature_def_map,
-                    assets_collection=ops.get_collection(ops.GraphKeys.ASSET_FILEPATHS),
-                    legacy_init_op=init_op)
+                    assets_collection=ops.get_collection(
+                        ops.GraphKeys.ASSET_FILEPATHS),
+                    legacy_init_op=local_init_op)
                 builder.save(as_text)
 
             # Add the extra assets
@@ -293,6 +337,10 @@ class Estimator(object):
         """
         if (steps is not None) and (max_steps is not None):
             raise ValueError('Can not provide both steps and max_steps.')
+        if steps is not None and steps <= 0:
+            raise ValueError('Must specify steps > 0, given: {}'.format(steps))
+        if max_steps is not None and max_steps <= 0:
+            raise ValueError('Must specify max_steps > 0, given: {}'.format(max_steps))
 
         if max_steps is not None:
             try:
@@ -305,7 +353,7 @@ class Estimator(object):
 
         hooks = self._check_hooks(hooks)
         if steps is not None or max_steps is not None:
-            hooks.append(basic_session_run_hooks.StopAtStepHook(steps, max_steps))
+            hooks.append(plx_hooks.StopAtStepHook(steps, max_steps))
 
         loss = self._train_model(input_fn=input_fn, hooks=hooks)
         logging.info('Loss for final step: %s.', loss)
@@ -352,36 +400,47 @@ class Estimator(object):
         hooks = self._check_hooks(hooks)
         if steps is not None:
             if steps <= 0:
-                raise ValueError('Must specify steps >= 0, given: {}'.format(steps))
-            hooks.append(evaluation.StopAfterNEvalsHook(num_evals=steps))
+                raise ValueError('Must specify steps > 0, given: {}'.format(steps))
+            hooks.append(evaluation._StopAfterNEvalsHook(num_evals=steps))
         return self._evaluate_model(
             input_fn=input_fn, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
 
-    def predict(self, input_fn=None, predict_keys=None, hooks=None):
+    def predict(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
         """Returns predictions for given features.
 
         Args:
-            input_fn: Input function.
-            predict_keys: list of `str`, name of the output to predict. If `None`, returns all.
-            hooks: List of `SessionRunHook` subclass instances.
-                Used for callbacks inside the prediction call.
+            input_fn: Input function returning features which is a dictionary of
+                string feature name to `Tensor` or `SparseTensor`. If it returns a
+                tuple, first item is extracted as features. Prediction continues until
+                `input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
+            predict_keys: list of `str`, name of the keys to predict. It is used if
+                the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
+                of the predictions will be filtered from the dictionary. If `None`, returns all.
+            hooks: List of `SessionRunHook` subclass instances. Used for callbacks
+                inside the prediction call.
+            checkpoint_path: Path of a specific checkpoint to predict. If `None`, the
+                latest checkpoint in `model_dir` is used.
 
-        Returns:
-            A numpy array of predicted classes or regression values if the
-            constructor's `model_fn` returns a `Tensor` for `predictions` or a `dict`
-            of numpy arrays if `model_fn` returns a `dict`. Returns an iterable of
-            predictions if as_iterable is True.
+        Yields:
+            Evaluated values of `predictions` tensors.
 
+        Raises:
+            ValueError: Could not find a trained model in model_dir.
+            ValueError: if batch length of predictions are not same.
+            ValueError: If there is a conflict between `predict_keys` and `predictions`.
+                For example if `predict_keys` is not `None`
+                but `EstimatorSpec.predictions` is not a `dict`.
         """
         hooks = self._check_hooks(hooks)
         # Check that model has been trained.
-        checkpoint_path = saver.latest_checkpoint(self._model_dir)
         if not checkpoint_path:
-            raise NotFittedError("Couldn't find trained model at %s." % self._model_dir)
+            checkpoint_path = saver.latest_checkpoint(self._model_dir)
+        if not checkpoint_path:
+            raise ValueError("Could not find trained model at %s." % self._model_dir)
 
         with ops.Graph().as_default() as g:
             random_seed.set_random_seed(self._config.tf_random_seed)
-            contrib_framework.create_global_step(g)
+            training.get_or_create_global_step(g)
             features = self._get_features_from_input_fn(input_fn)
             estimator_spec = self._call_model_fn(features, None, ModeKeys.PREDICT)
             predictions = self._extract_keys(estimator_spec.predictions, predict_keys)
@@ -424,28 +483,25 @@ class Estimator(object):
         """Separate update operations from metric value operations."""
         update_ops = []
         value_ops = {}
+        # Sort metrics lexicographically so graph is identical every time.
         for name, metric_ops in sorted(six.iteritems(eval_dict)):
-            if isinstance(metric_ops, (list, tuple)):
-                if len(metric_ops) == 2:
-                    value_ops[name] = metric_ops[0]
-                    update_ops.append(metric_ops[1])
-                else:
-                    logging.warning("Ignoring metric {}. It returned a list|tuple with len {}, "
-                                    "expected 2".format(name, len(metric_ops)))
-                    value_ops[name] = metric_ops
-            else:
-                value_ops[name] = metric_ops
+            value_ops[name] = metric_ops[0]
+            update_ops.append(metric_ops[1])
 
         if update_ops:
-            update_ops = control_flow_ops.group(*update_ops)
+            update_op = control_flow_ops.group(*update_ops)
         else:
-            update_ops = None
+            update_op = None
 
-        return update_ops, value_ops
+        return update_op, value_ops
 
     @staticmethod
     def _get_features_from_input_fn(input_fn):
         result = input_fn()
+        if not ops.get_default_graph().get_collection(ops.GraphKeys.QUEUE_RUNNERS):
+            logging.warning('Input graph does not contain a QueueRunner. '
+                            'That means predict yields forever. '
+                            'This is probably a mistake.')
         if isinstance(result, (list, tuple)):
             return result[0]
         return result
@@ -455,14 +511,14 @@ class Estimator(object):
         if not predict_keys:
             return predictions
         if not isinstance(predictions, dict):
-            raise ValueError("outputs argument is not valid in case of non-dict predictions.")
+            raise ValueError("predict_keys argument is not valid in case of non-dict predictions.")
         existing_keys = predictions.keys()
         predictions = {
             key: value
             for key, value in six.iteritems(predictions) if key in predict_keys
         }
         if not predictions:
-            raise ValueError("Expected to run at least one predict_keys from {}, "
+            raise ValueError("Expected to run at least one output from {}, "
                              "provided {}.".format(existing_keys, predict_keys))
         return predictions
 
@@ -471,12 +527,12 @@ class Estimator(object):
         self._graph = ops.Graph()
         with self._graph.as_default() as g, g.device(self._device_fn):
             random_seed.set_random_seed(self._config.tf_random_seed)
-            global_step = contrib_framework.create_global_step(g)
+            global_step = training.get_or_create_global_step(g)
             features, labels = input_fn()
             estimator_spec = self._call_model_fn(features, labels, ModeKeys.TRAIN)
             all_hooks.extend([
-                basic_session_run_hooks.NanTensorHook(estimator_spec.loss),
-                basic_session_run_hooks.LoggingTensorHook(
+                plx_hooks.NanTensorHook(estimator_spec.loss),
+                plx_hooks.LoggingTensorHook(
                     {
                         'loss': estimator_spec.loss,
                         'step': global_step
@@ -496,12 +552,12 @@ class Estimator(object):
             chief_hooks = []
             if self._config.save_checkpoints_secs or self._config.save_checkpoints_steps:
                 saver_hook_exists = any(
-                    [isinstance(h, basic_session_run_hooks.CheckpointSaverHook)
+                    [isinstance(h, plx_hooks.CheckpointSaverHook)
                      for h in (all_hooks + estimator_spec.training_hooks +
                                chief_hooks + estimator_spec.training_chief_hooks)])
                 if not saver_hook_exists:
                     chief_hooks = [
-                        basic_session_run_hooks.CheckpointSaverHook(
+                        plx_hooks.CheckpointSaverHook(
                             self._model_dir,
                             save_secs=self._config.save_checkpoints_secs,
                             save_steps=self._config.save_checkpoints_steps,
@@ -528,7 +584,7 @@ class Estimator(object):
         if not checkpoint_path:
             latest_path = saver.latest_checkpoint(self._model_dir)
             if not latest_path:
-                raise NotFittedError("Couldn't find trained model at {}.".format(self._model_dir))
+                raise ValueError("Could not find trained model at {}.".format(self._model_dir))
             checkpoint_path = latest_path
 
         # Setup output directory.
@@ -536,7 +592,7 @@ class Estimator(object):
 
         with ops.Graph().as_default() as g:
             random_seed.set_random_seed(self._config.tf_random_seed)
-            global_step = contrib_framework.create_global_step(g)
+            global_step = training.create_global_step(g)
             features, labels = input_fn()
 
             estimator_spec = self._call_model_fn(features, labels, ModeKeys.EVAL)
@@ -553,7 +609,7 @@ class Estimator(object):
                                  "Estimator already defines a default metric with the same name.")
             eval_dict[ops.GraphKeys.GLOBAL_STEP] = global_step
 
-            eval_results = evaluation.evaluate_once(
+            eval_results = evaluation._evaluate_once(
                 checkpoint_path=checkpoint_path,
                 master=self._config.evaluation_master,
                 scaffold=estimator_spec.scaffold,
@@ -585,15 +641,17 @@ class Estimator(object):
         summary_writer = summary_io.SummaryWriterCache.get(output_dir)
         summary_proto = summary_pb2.Summary()
         for key in dictionary:
-            if dictionary[key] is None:
+            if dictionary[key] is None or key == tf.GraphKeys.GLOBAL_STEP:
                 continue
             value = summary_proto.value.add()
             value.tag = key
-            if (isinstance(dictionary[key], np.float32) or
-                    isinstance(dictionary[key], float)):
+            if isinstance(dictionary[key], (np.float32, float)):
                 value.simple_value = float(dictionary[key])
+            elif isinstance(dictionary[key], (int, np.int64, np.int32)):
+                value.simple_value = int(dictionary[key])
             else:
-                logging.warn('Skipping summary for %s, must be a float or np.float32.', key)
+                logging.warn('Skipping summary for %s, must be a '
+                             'float, np.float32, int, int32, or int64.', key)
         summary_writer.add_summary(summary_proto, current_global_step)
         summary_writer.flush()
 

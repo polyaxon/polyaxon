@@ -17,6 +17,32 @@ from tensorflow.contrib.learn.python.learn.estimators import run_config
 from polyaxon.libs.utils import generate_model_dir
 
 
+class RunConfig(run_config.RunConfig):
+    def __init__(self, master=None, num_cores=0, log_device_placement=False,
+                 gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100,
+                 save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5,
+                 keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None):
+        super(RunConfig, self).__init__(master, num_cores, log_device_placement, gpu_memory_fraction,
+                         tf_random_seed, save_summary_steps, save_checkpoints_secs,
+                         save_checkpoints_steps, keep_checkpoint_max, keep_checkpoint_every_n_hours,
+                         evaluation_master, model_dir)
+        self._tf_random_seed = 1
+        self._model_dir = None
+        self._session_config = None
+
+    @property
+    def tf_random_seed(self):
+        return self._tf_random_seed
+
+    @property
+    def model_dir(self):
+        return self._model_dir
+
+    @property
+    def session_config(self):
+        return self._session_config
+
+
 def _maybe_load_json(item):
     """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
     if isinstance(item, str):
@@ -213,33 +239,33 @@ class SubGraphConfig(Configurable):
 
     Args:
         name: `str`. The name of this subgraph, used for creating the scope.
-        methods: `list`.  The methods to connect inside this subgraph, e.g. layers
+        modules: `list`.  The modules to connect inside this subgraph, e.g. layers
         kwargs: `list`. the list key word args to call each method with.
     """
-    def __init__(self, name, methods, kwargs):
+    def __init__(self, name, modules, kwargs):
         self.name = name
-        self.methods = methods
+        self.modules = modules
         self.kwargs = kwargs
 
     @classmethod
     def read_configs(cls, config_values):
 
         def add(method, m_kwargs):
-            methods.append(method)
+            modules.append(method)
             if 'dependencies' in m_kwargs:
                 m_kwargs['dependencies'] = [cls.__class__(**dependency) for dependency
                                             in m_kwargs['dependencies']]
             kwargs.append(m_kwargs)
-            return methods, kwargs
+            return modules, kwargs
 
         config = cls._read_configs(config_values)
 
-        methods = []
+        modules = []
         kwargs = []
         for (method, m_kwargs) in config.pop('definition', []):
-                methods, kwargs = add(method, m_kwargs)
+                modules, kwargs = add(method, m_kwargs)
 
-        config['methods'] = methods
+        config['modules'] = modules
         config['kwargs'] = kwargs
 
         return cls(**config)
@@ -258,14 +284,14 @@ class ModelConfig(Configurable):
         clip_gradients: `float`, The value to clip the gradients with.
         params: `dict`, extra information to pass to the model.
     """
-    def __init__(self, loss_config, optimizer_config, graph_config, model_type,
+    def __init__(self, loss_config, optimizer_config, graph_config=None, model_type=None,
                  summaries='all', name='base_model', eval_metrics_config=None,
                  clip_gradients=5.0, params=None):
         self.name = name
         self.model_type = model_type
         self.summaries = summaries
         self.loss_config = loss_config
-        self.eval_metrics_config = eval_metrics_config
+        self.eval_metrics_config = eval_metrics_config or []
         self.optimizer_config = optimizer_config
         self.graph_config = graph_config
         self.clip_gradients = clip_gradients
@@ -301,7 +327,7 @@ class EstimatorConfig(Configurable):
 def create_run_config(tf_random_seed=None, save_checkpoints_secs=None, save_checkpoints_steps=600,
                       keep_checkpoint_max=5, keep_checkpoint_every_n_hours=4,
                       gpu_memory_fraction=1.0, gpu_allow_growth=False, log_device_placement=False):
-    config = run_config.RunConfig(
+    config = RunConfig(
         tf_random_seed=tf_random_seed,
         save_checkpoints_secs=save_checkpoints_secs,
         save_checkpoints_steps=save_checkpoints_steps,

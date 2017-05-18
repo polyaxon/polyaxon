@@ -1,6 +1,9 @@
-import tensorflow as tf
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
+import tensorflow as tf
 import polyaxon as plx
+
 from examples.mnist_data import load_mnist
 
 

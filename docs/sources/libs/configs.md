@@ -1,4 +1,43 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L41)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L185)</span>
+### MetricConfig
+
+```python
+polyaxon.libs.configs.MetricConfig(name, params=None)
+```
+
+The MetricConfig holds information needed to create a `Metric`.
+
+- __Args__:
+- __name__: `str`, name to give for the metric.
+- __params__: `dict`, extra information to pass to the metric.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
+### RunConfig
+
+```python
+polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
+```
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L173)</span>
+### LossConfig
+
+```python
+polyaxon.libs.configs.LossConfig(name, params=None)
+```
+
+The LossConfig holds information needed to create a `Loss`.
+
+- __Args__:
+- __name__: `str`, name to give for the loss.
+- __params__: `dict`, extra information to pass to the loss.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
 ### Configurable
 
 ```python
@@ -11,7 +50,7 @@ A configurable class reads a configuration (YAML, Json) and create a config inst
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L88)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L114)</span>
 ### PipelineConfig
 
 ```python
@@ -34,7 +73,7 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L120)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L146)</span>
 ### InputDataConfig
 
 ```python
@@ -51,37 +90,7 @@ The InputDataConfig holds information needed to create a `InputData`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L147)</span>
-### LossConfig
-
-```python
-polyaxon.libs.configs.LossConfig(name, params=None)
-```
-
-The LossConfig holds information needed to create a `Loss`.
-
-- __Args__:
-- __name__: `str`, name to give for the loss.
-- __params__: `dict`, extra information to pass to the loss.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L159)</span>
-### MetricConfig
-
-```python
-polyaxon.libs.configs.MetricConfig(name, params=None)
-```
-
-The MetricConfig holds information needed to create a `Metric`.
-
-- __Args__:
-- __name__: `str`, name to give for the metric.
-- __params__: `dict`, extra information to pass to the metric.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L171)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L197)</span>
 ### OptimizerConfig
 
 ```python
@@ -109,11 +118,11 @@ The OptimizerConfig holds information needed to create a `Optimizer`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L209)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L235)</span>
 ### SubGraphConfig
 
 ```python
-polyaxon.libs.configs.SubGraphConfig(name, methods, kwargs)
+polyaxon.libs.configs.SubGraphConfig(name, modules, kwargs)
 ```
 
 The configuration used to create subgraphs.
@@ -122,16 +131,16 @@ Handles also nested subgraphs.
 
 - __Args__:
 - __name__: `str`. The name of this subgraph, used for creating the scope.
-- __methods__: `list`.  The methods to connect inside this subgraph, e.g. layers
+- __modules__: `list`.  The modules to connect inside this subgraph, e.g. layers
 - __kwargs__: `list`. the list key word args to call each method with.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L248)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L274)</span>
 ### ModelConfig
 
 ```python
-polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, graph_config, model_type, summaries='all', name='base_model', eval_metrics_config=None, clip_gradients=5.0, params=None)
+polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, graph_config=None, model_type=None, summaries='all', name='base_model', eval_metrics_config=None, clip_gradients=5.0, params=None)
 ```
 
 The ModelConfig holds information needed to create a `Model`.
@@ -148,7 +157,7 @@ The ModelConfig holds information needed to create a `Model`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L287)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L313)</span>
 ### EstimatorConfig
 
 ```python
@@ -164,7 +173,7 @@ The EstimatorConfig holds information needed to create a `Estimator`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L316)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L342)</span>
 ### ExperimentConfig
 
 ```python

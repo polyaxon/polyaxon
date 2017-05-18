@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
+from polyaxon.experiments.subgraph import SubGraph
+
 
 def get_optimizer(optimizer, **kwargs):
     from polyaxon.optimizers import OPTIMIZERS
@@ -114,18 +116,31 @@ def get_pipeline(pipeline, **kwargs):
     return loss
 
 
-def get_model_fn(model_config):
+def get_graph_fn(config):
+    """Creates the graph operations."""
+    def graph_fn(mode, inputs):
+        graph = SubGraph(mode, config.name, config.modules, config.kwargs)
+        return graph(inputs)
+
+    return graph_fn
+
+
+def get_model_fn(model_config, graph_fn=None):
     from polyaxon.experiments.models import MODELS
 
-    def model_fn(features, labels, params, mode):
+    if not graph_fn:
+        graph_fn = get_graph_fn(model_config.graph_config)
+
+    def model_fn(features, labels, params, mode, config):
         """Builds the model graph"""
         model = MODELS[model_config.name](mode=mode,
+                                          graph_fn=graph_fn,
                                           config=model_config,
                                           name=model_config.name,
                                           model_type=model_config.model_type,
                                           summaries=model_config.summaries,
                                           params=model_config.params)
-        return model(features, labels, params)
+        return model(features=features, labels=labels, params=params, config=config)
 
     return model_fn
 

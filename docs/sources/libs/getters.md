@@ -70,11 +70,22 @@ get_pipeline(pipeline)
 
 ----
 
+### get_graph_fn
+
+
+```python
+get_graph_fn(config)
+```
+
+
+Creates the graph operations.
+----
+
 ### get_model_fn
 
 
 ```python
-get_model_fn(model_config)
+get_model_fn(model_config, graph_fn=None)
 ```
 
 ----

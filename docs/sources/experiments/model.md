@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/models.py#L18)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/models.py#L17)</span>
 ### BaseModel
 
 ```python
-polyaxon.experiments.models.BaseModel(mode, config, model_type, summaries, name, params)
+polyaxon.experiments.models.BaseModel(mode, graph_fn, config, model_type, summaries, name, params)
 ```
 
 Abstract base class for models.
