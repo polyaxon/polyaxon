@@ -13,7 +13,7 @@ def create_experiment_json_fn(output_dir):
     config = {
         'name': 'lenet_mnsit',
         'output_dir': output_dir,
-        'eval_every_n_steps': 100,
+        'eval_every_n_steps': 10,
         'train_steps_per_iteration': 100,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
@@ -60,7 +60,7 @@ def create_experiment_json_fn(output_dir):
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
-                                   output_dir="/tmp/polyaxon_logs2/lenet4",
+                                   output_dir="/tmp/polyaxon_logs/lenet",
                                    schedule='continuous_train_and_evaluate')
 
 

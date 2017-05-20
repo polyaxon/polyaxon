@@ -133,7 +133,7 @@ Adds a Single Unit Layer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L296)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L298)</span>
 ### Highway
 
 ```python
@@ -174,7 +174,7 @@ A fully connected highway network layer, with some inspiration from
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L417)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L419)</span>
 ### OneHotEncoding
 
 ```python
@@ -192,7 +192,7 @@ Transform numeric labels into one hot labels using `tf.one_hot`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L449)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L451)</span>
 ### Merge
 
 ```python
@@ -201,7 +201,7 @@ polyaxon.layers.core.Merge(mode, merge_mode, axis=1, name='Merge')
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L523)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L525)</span>
 ### Concat
 
 ```python
@@ -218,7 +218,7 @@ A layer that concatenate all outputs of a network into a single tensor.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L547)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L549)</span>
 ### Slice
 
 ```python

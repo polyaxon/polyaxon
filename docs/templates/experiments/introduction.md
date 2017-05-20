@@ -33,47 +33,39 @@ output_dir = ''
 config = {
     'name': 'lenet_mnsit',
     'output_dir': output_dir,
-    'eval_every_n_steps': 1,
+    'eval_every_n_steps': 10,
     'train_steps_per_iteration': 100,
     'run_config': {'save_checkpoints_steps': 100},
     'train_input_data_config': {
         'input_type': plx.configs.InputDataConfig.NUMPY,
-        'pipeline_config': {'name': 'train', 
-                            'batch_size': 64, 
-                            'num_epochs': None,
+        'pipeline_config': {'name': 'train', 'batch_size': 64, 'num_epochs': None,
                             'shuffle': True},
-        'x': X['train'],
-        'y': y['train']
+        'x': X_train,
+        'y': Y_train
     },
     'eval_input_data_config': {
         'input_type': plx.configs.InputDataConfig.NUMPY,
-        'pipeline_config': {'name': 'eval', 
-                            'batch_size': 32, 
-                            'num_epochs': None,
+        'pipeline_config': {'name': 'eval', 'batch_size': 32, 'num_epochs': None,
                             'shuffle': False},
-        'x': X['test'],
-        'y': y['test']
+        'x': X_test,
+        'y': Y_test
     },
     'estimator_config': {'output_dir': output_dir},
     'model_config': {
+        'summaries': 'all',
         'model_type': 'classifier',
         'loss_config': {'name': 'softmax_cross_entropy'},
         'eval_metrics_config': [{'name': 'streaming_accuracy'},
                                 {'name': 'streaming_precision'}],
-        'optimizer_config': {'name': 'Adam', 
-                             'learning_rate': 0.002, 
-                             'decay_type': 'exponential_decay', 
-                             'decay_rate': 0.2},
+        'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002,
+                             'decay_type': 'exponential_decay', 'decay_rate': 0.2},
         'graph_config': {
             'name': 'lenet',
             'definition': [
-                (plx.layers.Conv2d, {'num_filter': 32, 
-                                     'filter_size': 5, 
-                                     'strides': 1, 
+                (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 5, 'strides': 1,
                                      'regularizer': 'l2_regularizer'}),
                 (plx.layers.MaxPool2d, {'kernel_size': 2}),
-                (plx.layers.Conv2d, {'num_filter': 64, 
-                                     'filter_size': 5, 
+                (plx.layers.Conv2d, {'num_filter': 64, 'filter_size': 5,
                                      'regularizer': 'l2_regularizer'}),
                 (plx.layers.MaxPool2d, {'kernel_size': 2}),
                 (plx.layers.FullyConnected, {'n_units': 1024, 'activation': 'tanh'}),
@@ -94,8 +86,36 @@ The `Estimator` is where the object responsible for training, evaluating and ext
 An `Estiamtor` expects a function that creates a model graph.  
 
 
+```python
+import polyaxon as plx
+
+def dummy_model_fn(features, labels, mode):
+    pass
+      
+estimator = plx.experiments.Estimator(model_fn=dummy_model_fn)
+```
+
 # Polyaxon Model
 
 A `Model` is `GraphModule` subclass where we define the computation graph.
 
 A `Model` expects all information about how to construct the `Graph`, the `Loss`, the evaluation `Metrics`, the `Optimizer` and the summaries level.
+
+
+```python
+import polyaxon as plx
+
+def graph_fn(mode, inputs):
+    x = plx.layers.FullyConnected(mode, n_units=128)(inputs)
+    x = plx.layers.FullyConnected(mode, n_units=64)(inputs)
+    return plx.layers.FullyConnected(mode, n_units=8)(inputs)
+
+def model_fn(features, labels, mode):
+    loss = plx.configs.LossConfig(name='mean_squared_error')
+    optimizer = plx.configs.OptimizerConfig(name='SGD')
+    model = plx.experiments.RegressorModel(
+    mode=mode, name='my_regressor', graph_fn=graph_fn, 
+    loss_config=loss, optimizer_config=optimizer)
+    
+    return model(features=features, labels=labels)
+```

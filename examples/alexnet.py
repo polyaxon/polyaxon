@@ -56,7 +56,7 @@ def create_experiment_json_fn(output_dir):
             }
         }
     }
-    experiment_config = plx.experiments.ExperimentConfig.read_configs(config)
+    experiment_config = plx.configs.ExperimentConfig.read_configs(config)
     return plx.experiments.create_experiment(experiment_config)
 
 

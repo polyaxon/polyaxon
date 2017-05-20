@@ -18,8 +18,7 @@ Constructs an `Estimator` instance.
 		If mode is `ModeKeys.PREDICT`, `labels=None` will be passed.
 		If the `model_fn`'s signature does not accept `mode`,
 		the `model_fn` must still be able to handle `labels=None`.
-	* `mode`: Optional. Specifies if this training, evaluation or prediction.
-		See `ModeKeys`.
+	* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
 	* `params`: Optional `dict` of hyperparameters.  Will receive what
 		is passed to Estimator in `params` parameter. This allows
 		to configure Estimators from hyper parameter tuning.
@@ -38,7 +37,6 @@ Constructs an `Estimator` instance.
 
 	Supports next three signatures for the function:
 
-	* `(features, labels)`
 	* `(features, labels, mode)`
 	* `(features, labels, mode, params)`
 	* `(features, labels, mode, params, config)`

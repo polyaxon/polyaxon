@@ -11,7 +11,7 @@ from collections import Mapping
 import numpy as np
 import tensorflow as tf
 
-from tensorflow.python.ops import math_ops as tf_math_ops
+from tensorflow.python.ops import math_ops, array_ops
 
 from polyaxon.libs import MAPPING_COLLECTION
 
@@ -225,14 +225,10 @@ def transpose_batch_time(x):
         raise ValueError(
             "Expected input tensor %s to have rank at least 2, but saw shape: %s" %
             (x, x_static_shape))
-    x_rank = tf.array_ops.rank(x)
-    x_t = tf.array_ops.transpose(
-        x, tf.array_ops.concat(
-            ([1, 0], tf_math_ops.range(2, x_rank)), axis=0))
-    x_t.set_shape(
-        tf.tensor_shape.TensorShape([
-            x_static_shape[1].value, x_static_shape[0].value
-        ]).concatenate(x_static_shape[2:]))
+    x_rank = array_ops.rank(x)
+    x_t = array_ops.transpose(x, array_ops.concat(([1, 0], math_ops.range(2, x_rank)), axis=0))
+    x_t.set_shape(tf.tensor_shape.TensorShape([
+        x_static_shape[1].value, x_static_shape[0].value]).concatenate(x_static_shape[2:]))
     return x_t
 
 

@@ -15,6 +15,7 @@ from tensorflow.python.estimator.checkpoint_utils import load_variable
 from tensorflow.python.estimator.export import export
 from tensorflow.python.estimator.export import export_output
 from tensorflow.python.estimator.inputs import numpy_io
+from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.framework import constant_op
 from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
@@ -42,6 +43,7 @@ from tensorflow.python.training import session_run_hook
 from tensorflow.python.training import training
 from tensorflow.python.util import compat
 
+from polyaxon import ModeKeys
 from polyaxon.experiments import Estimator
 from polyaxon.libs.configs import RunConfig
 
@@ -177,7 +179,7 @@ def dummy_input_fn():
 def model_fn_global_step_incrementer(features, labels, mode):
     _, _ = features, labels
     global_step = training.get_global_step()
-    return model_fn_lib.EstimatorSpec(
+    return EstimatorSpec(
         mode,
         loss=constant_op.constant(1.),
         train_op=state_ops.assign_add(global_step, 1))
@@ -193,7 +195,7 @@ def _estimator_spec(expected_features, expected_labels, actual_features, actual_
                                expected_labels, actual_labels, name='assert_labels')
                        ])
     with ops.control_dependencies(assert_ops):
-        return model_fn_lib.EstimatorSpec(
+        return EstimatorSpec(
             mode=mode,
             predictions=constant_op.constant(0.),
             loss=constant_op.constant(0.),
@@ -221,7 +223,7 @@ class TestEstimatorTrain(test.TestCase):
             self.assertItemsEqual(expected_features.keys(), features.keys())
             return _estimator_spec(
                 expected_features, expected_labels, features, labels,
-                model_fn_lib.ModeKeys.TRAIN)
+                ModeKeys.TRAIN)
 
         with self.assertRaises(ValueError):
             Estimator(model_fn=_model_fn, params={'a': 'b'})
@@ -242,7 +244,7 @@ class TestEstimatorTrain(test.TestCase):
         def _model_fn(mode, params, features, labels, config):
             model_fn_call_count[0] += 1
             self.assertItemsEqual(expected_features.keys(), features.keys())
-            self.assertEqual(model_fn_lib.ModeKeys.TRAIN, mode)
+            self.assertEqual(ModeKeys.TRAIN, mode)
             self.assertEqual(expected_params, params)
             self.assertTrue(config.i_am_test)
             return _estimator_spec(expected_features, expected_labels, features, labels, mode)
@@ -267,7 +269,7 @@ class TestEstimatorTrain(test.TestCase):
     #         self.assertEqual(expected_foo, foo)
     #         self.assertEqual(expected_bar, ba§r)
     #         self.assertItemsEqual(expected_features.keys(), features.keys())
-    #         self.assertEqual(model_fn_lib.ModeKeys.TRAIN, mode)
+    #         self.assertEqual(ModeKeys.TRAIN, mode)
     #         self.assertEqual(expected_params, params)
     #         self.assertTrue(config.i_am_test)
     #         return _estimator_spec(
@@ -359,7 +361,7 @@ class TestEstimatorTrain(test.TestCase):
 
         def _model_fn_scaffold(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -382,7 +384,7 @@ class TestEstimatorTrain(test.TestCase):
 
         def _model_fn_hooks(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -404,7 +406,7 @@ class TestEstimatorTrain(test.TestCase):
 
         def _model_fn_hooks(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -445,7 +447,7 @@ class TestEstimatorTrain(test.TestCase):
 
         def _model_fn(features, labels, mode):
             self.features, self.labels, self.mode = features, labels, mode
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -455,7 +457,7 @@ class TestEstimatorTrain(test.TestCase):
         est.train(_input_fn, steps=1)
         self.assertEqual(given_features, self.features)
         self.assertEqual(given_labels, self.labels)
-        self.assertEqual(model_fn_lib.ModeKeys.TRAIN, self.mode)
+        self.assertEqual(ModeKeys.TRAIN, self.mode)
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -464,7 +466,7 @@ class TestEstimatorTrain(test.TestCase):
             _, _, _ = features, labels, mode
             self.assertIsNotNone(training.get_global_step())
             self.assertEqual(expected_random_seed, ops.get_default_graph().seed)
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -483,7 +485,7 @@ def _model_fn_with_eval_metric_ops(features, labels, mode, params):
     metric_update_op = loss.op
     metric_tensor = control_flow_ops.with_dependencies(
         [metric_update_op], constant_op.constant(metric_value))
-    return model_fn_lib.EstimatorSpec(
+    return EstimatorSpec(
         mode,
         loss=loss,
         predictions={'predictions': constant_op.constant(1.)},
@@ -510,9 +512,9 @@ class EstimatorEvaluateTest(test.TestCase):
     def test_model_fn_must_return_estimator_spec(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            if mode == model_fn_lib.ModeKeys.EVAL:
+            if mode == ModeKeys.EVAL:
                 return 'NotGoodNotGood'
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(1.),
                 train_op=control_flow_ops.no_op())
@@ -537,7 +539,7 @@ class EstimatorEvaluateTest(test.TestCase):
 
     # def test_tuple_metrics(self):
     #     def _model_fn(features, labels, mode):
-    #         return model_fn_lib.EstimatorSpec(
+    #         return EstimatorSpec(
     #             mode,
     #             train_op=control_flow_ops.no_op(),
     #             loss=constant_op.constant(1.),
@@ -595,7 +597,7 @@ class EstimatorEvaluateTest(test.TestCase):
                 0., name='local_weight', collections=[ops.GraphKeys.LOCAL_VARIABLES])
             # Loss will be 2, 4, 6, ...
             loss = 2 * state_ops.assign_add(local_weight, 1.)
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=loss,
                 train_op=state_ops.assign_add(training.get_global_step(), 1))
@@ -641,7 +643,7 @@ class EstimatorEvaluateTest(test.TestCase):
             real_saver = saver.Saver()
             self.mock_saver = test.mock.Mock(
                 wraps=real_saver, saver_def=real_saver.saver_def)
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 predictions=constant_op.constant([[1.]]),
                 loss=constant_op.constant(0.),
@@ -662,7 +664,7 @@ class EstimatorEvaluateTest(test.TestCase):
 
         def _model_fn(features, labels, mode):
             self.features, self.labels, self.mode = features, labels, mode
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -673,7 +675,7 @@ class EstimatorEvaluateTest(test.TestCase):
         est.evaluate(_input_fn, steps=1)
         self.assertEqual(given_features, self.features)
         self.assertEqual(given_labels, self.labels)
-        self.assertEqual(model_fn_lib.ModeKeys.EVAL, self.mode)
+        self.assertEqual(ModeKeys.EVAL, self.mode)
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -682,7 +684,7 @@ class EstimatorEvaluateTest(test.TestCase):
             _, _, _ = features, labels, mode
             self.assertIsNotNone(training.get_global_step())
             self.assertEqual(expected_random_seed, ops.get_default_graph().seed)
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -708,7 +710,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_tensor_predictions(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -721,7 +723,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_warn_if_no_queue_runner(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -738,7 +740,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_input_fn_can_return_just_features(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -755,7 +757,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_batch_size_mismatch(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -773,7 +775,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_predict_keys_defined_for_tensor(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -788,7 +790,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_predict_keys_does_not_exists(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -805,7 +807,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_return_given_predict_keys(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -823,7 +825,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_yield_rows_of_tensor(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -838,7 +840,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_yield_rows_of_dict(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -862,7 +864,7 @@ class TestEstimatorPredict(test.TestCase):
     def test_hooks_are_used(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -885,7 +887,7 @@ class TestEstimatorPredict(test.TestCase):
             _, _ = features, labels
             v = variables.Variable([[16.]], name='weight')
             prediction = v * 2
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -901,7 +903,7 @@ class TestEstimatorPredict(test.TestCase):
             _, _ = features, labels
             v = variables.Variable([[16.]], name='weight')
             prediction = v * 2
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -921,7 +923,7 @@ class TestEstimatorPredict(test.TestCase):
             real_saver = saver.Saver()
             self.mock_saver = test.mock.Mock(
                 wraps=real_saver, saver_def=real_saver.saver_def)
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 predictions=constant_op.constant([[1.]]),
                 loss=constant_op.constant(0.),
@@ -942,7 +944,7 @@ class TestEstimatorPredict(test.TestCase):
 
         def _model_fn(features, labels, mode):
             self.features, self.labels, self.mode = features, labels, mode
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -953,7 +955,7 @@ class TestEstimatorPredict(test.TestCase):
         next(est.predict(_input_fn))
         self.assertEqual(given_features, self.features)
         self.assertIsNone(self.labels)
-        self.assertEqual(model_fn_lib.ModeKeys.PREDICT, self.mode)
+        self.assertEqual(ModeKeys.PREDICT, self.mode)
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -962,7 +964,7 @@ class TestEstimatorPredict(test.TestCase):
             _, _, _ = features, labels, mode
             self.assertIsNotNone(training.get_global_step())
             self.assertEqual(expected_random_seed, ops.get_default_graph().seed)
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -978,7 +980,7 @@ def _model_fn_for_export_tests(features, labels, mode):
     variables.Variable(1., name='weight')
     scores = constant_op.constant([3.])
     classes = constant_op.constant(['wumpus'])
-    return model_fn_lib.EstimatorSpec(
+    return EstimatorSpec(
         mode,
         predictions=constant_op.constant(10.),
         loss=constant_op.constant(1.),
@@ -992,7 +994,7 @@ def _model_fn_with_saveables_for_export_tests(features, labels, mode):
     table = saver_test_utils.CheckpointedOp(name='v2')
     train_op = table.insert('k1', 30.0)
     prediction = table.lookup('k1', 0.0)
-    return model_fn_lib.EstimatorSpec(
+    return EstimatorSpec(
         mode,
         predictions=prediction,
         loss=constant_op.constant(1.),
@@ -1195,7 +1197,7 @@ class TestEstimatorExport(test.TestCase):
             self.mock_saver = test.mock.Mock(
                 wraps=real_saver, saver_def=real_saver.saver_def)
             scores = constant_op.constant([3.])
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 predictions=constant_op.constant([[1.]]),
                 loss=constant_op.constant(0.),
@@ -1233,7 +1235,7 @@ class TestEstimatorExport(test.TestCase):
     #
     #         # local_initSop must be an Operation, not a Tensor.
     #         custom_local_init_op = control_flow_ops.group(assign_op)
-    #         return model_fn_lib.EstimatorSpec(
+    #         return EstimatorSpec(
     #             mode=mode,
     #             predictions=constant_op.constant([[1.]]),
     #             loss=constant_op.constant(0.),
@@ -1271,7 +1273,7 @@ class TestEstimatorExport(test.TestCase):
 
         def _model_fn(features, labels, mode):
             self.features, self.labels, self.mode = features, labels, mode
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -1286,7 +1288,7 @@ class TestEstimatorExport(test.TestCase):
         est.export_savedmodel(tempfile.mkdtemp(), serving_input_receiver_fn)
         self.assertEqual(given_features, self.features)
         self.assertIsNone(self.labels)
-        self.assertEqual(model_fn_lib.ModeKeys.PREDICT, self.mode)
+        self.assertEqual(ModeKeys.PREDICT, self.mode)
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -1295,7 +1297,7 @@ class TestEstimatorExport(test.TestCase):
             _, _, _ = features, labels, mode
             self.assertIsNotNone(training.get_global_step())
             self.assertEqual(expected_random_seed, ops.get_default_graph().seed)
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode=mode,
                 loss=constant_op.constant(0.),
                 train_op=constant_op.constant(0.),
@@ -1324,8 +1326,8 @@ class TestEstimatorIntegration(test.TestCase):
                 'predictions': export_output.RegressionOutput(predictions)
             }
 
-            if mode == model_fn_lib.ModeKeys.PREDICT:
-                return model_fn_lib.EstimatorSpec(
+            if mode == ModeKeys.PREDICT:
+                return EstimatorSpec(
                     mode, predictions=predictions, export_outputs=export_outputs)
 
             loss = losses.mean_squared_error(labels, predictions)
@@ -1336,7 +1338,7 @@ class TestEstimatorIntegration(test.TestCase):
                     labels, predictions)
             }
 
-            return model_fn_lib.EstimatorSpec(
+            return EstimatorSpec(
                 mode,
                 predictions=predictions,
                 loss=loss,

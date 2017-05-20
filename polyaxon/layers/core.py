@@ -82,7 +82,7 @@ class FullyConnected(BaseLayer):
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable(
-            name='w', shape=[n_inputs, self.n_units], regularizer=regularizer,
+            name='w', shape=[n_inputs, self.n_units], dtype=incoming.dtype, regularizer=regularizer,
             initializer=getters.get_initializer(self.weights_init), trainable=self.trainable,
             restore=self.restore)
         track(self._w, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
@@ -95,7 +95,7 @@ class FullyConnected(BaseLayer):
 
         self._b = None
         if self.bias:
-            self._b = variable(name='b', shape=[self.n_units],
+            self._b = variable(name='b', shape=[self.n_units], dtype=incoming.dtype,
                                initializer=getters.get_initializer(self.bias_init),
                                trainable=self.trainable, restore=self.restore)
             track(self._b, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
@@ -282,8 +282,10 @@ class SingleUnit(BaseLayer):
 
         self._b = None
         if self.bias:
-            self._b = variable(name='b', shape=[n_inputs], initializer=initializer,
+            self._b = variable(name='b', shape=[n_inputs],
+                               dtype=incoming.dtype, initializer=initializer,
                                trainable=self.trainable, restore=self.restore)
+            inference = tf.add(inference, self._b)
             track(self._b, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
 
         if self.activation:
@@ -476,7 +478,7 @@ class Merge(BaseLayer):
             name: A name for this layer (optional).
         """
         super(Merge, self).__init__(mode, name)
-        assert mode in self.MergeMode.MODES, 'Merge mode not supported.'
+        assert merge_mode in self.MergeMode.MODES, 'Merge mode `{}` not supported.'.format(merge_mode)
         self.merge_mode = merge_mode
         self.axis = axis
 

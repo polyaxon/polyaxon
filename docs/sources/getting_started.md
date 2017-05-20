@@ -3,12 +3,12 @@
 ```python
 import polyaxon as plx
 
-def simple_model(mode, inputs):
+def graph_fn(mode, inputs):
     inference = plx.layers.FullyConnected(mode=mode, n_units=64, activation='tanh')(inputs)
     return plx.layers.FullyConnected(mode=mode, n_units=10)(inference)
 
-results1 = simple_model(plx.ModeKeys.TRAIN, dataset1)
-results2 = simple_model(plx.ModeKeys.EVAL, dataset2)
+results1 = graph_fn(plx.ModeKeys.TRAIN, dataset1)
+results2 = graph_fn(plx.ModeKeys.EVAL, dataset2)
 ```
 
 Same thing can be achieved using `Subgraph`
@@ -16,9 +16,9 @@ Same thing can be achieved using `Subgraph`
 ```python
 import polyaxon as plx
 
-graph = Subgraph(mode=plx.ModeKeys.TRAIN, name='graph',
-                 methods=[plx.layers.FullyConnected, plx.layers.FullyConnected],
-                 kwargs=[{'n_units': 64, 'activation': 'tanh'}, {'n_units': 10}])
+graph = plx.experiments.Subgraph(mode=plx.ModeKeys.TRAIN, name='graph',
+    methods=[plx.layers.FullyConnected, plx.layers.FullyConnected],
+    kwargs=[{'n_units': 64, 'activation': 'tanh'}, {'n_units': 10}])
 
 results1 = graph(dataset1)
 results2 = graph(dataset2)

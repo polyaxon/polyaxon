@@ -11,16 +11,28 @@ from polyaxon.experiments import summarizer
 from polyaxon.libs import configs, getters
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
-from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments
+from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments, get_shape
 
 
 class BaseModel(GraphModule):
-    """Abstract base class for models.
+    """Base class for models.
 
-      Args:
+    Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        graph_fn: Graph function. Follows the signature:
+            * Args:
+                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `inputs`: the feature inputs.
         config: An instance of `ModelConfig`.
-        params: `dic`. A dictionary of hyperparameter values.
+        model_type: `str`, the type of this model.
+            Possible values: `regressor`, `classifier`, `generator`
+        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
+            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+        name: `str`, the name of this model, everything will be encapsulated inside this scope.
+        params: `dict`. A dictionary of hyperparameter values.
+
+    Returns:
+        `EstimatorSpec`
     """
     class Types(object):
         REGRESSOR = 'regressor'
@@ -29,13 +41,17 @@ class BaseModel(GraphModule):
 
         VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
 
-    def __init__(self, mode, graph_fn, config, model_type, summaries, name, params):
+    def __init__(self, mode, name, graph_fn, loss_config, optimizer_config, model_type,
+                 eval_metrics_config=None, summaries='all', clip_gradients=0.5, params=None):
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
-        self.config = config
+        self.loss_config = loss_config
+        self.optimizer_config = optimizer_config
+        self.eval_metrics_config = eval_metrics_config or []
         self.params = params
         self.model_type = model_type
         self.summaries = summarizer.SummaryOptions.validate(summaries)
         assert model_type in self.Types.VALUES, "`model_type` provided is unsupported."
+        self._clip_gradients = clip_gradients
         self._grads_and_vars = None
         self._total_loss = None
         self._loss = None
@@ -51,37 +67,37 @@ class BaseModel(GraphModule):
 
         self._graph_fn = graph_fn
 
-    def _clip_gradients(self, grads_and_vars):
+    def _clip_gradients_fn(self, grads_and_vars):
         """Clips gradients by global norm."""
         gradients, variables = zip(*grads_and_vars)
         self._grads_and_vars = grads_and_vars
 
-        if self.config.clip_gradients > 0.0:
+        if self._clip_gradients > 0.0:
             clipped_gradients, gradients_norm = tf.clip_by_global_norm(
-                t_list=gradients, clip_norm=self.config.clip_gradients)
+                t_list=gradients, clip_norm=self._clip_gradients)
             return list(zip(clipped_gradients, variables))
         return grads_and_vars
 
     def _create_optimizer(self):
         """Creates the optimizer"""
         optimizer = getters.get_optimizer(
-            self.config.optimizer_config.name,
-            learning_rate=self.config.optimizer_config.learning_rate,
-            decay_type=self.config.optimizer_config.decay_type,
-            decay_steps=self.config.optimizer_config.decay_steps,
-            decay_rate=self.config.optimizer_config.decay_rate,
-            start_decay_at=self.config.optimizer_config.start_decay_at,
-            stop_decay_at=self.config.optimizer_config.stop_decay_at,
-            min_learning_rate=self.config.optimizer_config.min_learning_rate,
-            staircase=self.config.optimizer_config.staircase,
-            **self.config.optimizer_config.params)
+            self.optimizer_config.name,
+            learning_rate=self.optimizer_config.learning_rate,
+            decay_type=self.optimizer_config.decay_type,
+            decay_steps=self.optimizer_config.decay_steps,
+            decay_rate=self.optimizer_config.decay_rate,
+            start_decay_at=self.optimizer_config.start_decay_at,
+            stop_decay_at=self.optimizer_config.stop_decay_at,
+            min_learning_rate=self.optimizer_config.min_learning_rate,
+            staircase=self.optimizer_config.staircase,
+            **self.optimizer_config.params)
 
         # Optionally wrap with SyncReplicasOptimizer
-        if self.config.optimizer_config.sync_replicas > 0:
+        if self.optimizer_config.sync_replicas > 0:
             optimizer = tf.train.SyncReplicasOptimizer(
                 opt=optimizer,
-                replicas_to_aggregate=self.config.optimizer_config.sync_replicas_to_aggregate,
-                total_num_replicas=self.config.optimizer_config.sync_replicas)
+                replicas_to_aggregate=self.optimizer_config.sync_replicas_to_aggregate,
+                total_num_replicas=self.optimizer_config.sync_replicas)
             # This is really ugly, but we need to do this to make the optimizer
             # accessible outside of the model.
             configs.SYNC_REPLICAS_OPTIMIZER = optimizer
@@ -97,7 +113,7 @@ class BaseModel(GraphModule):
             elif summary == summarizer.SummaryOptions.VARIABLES:
                 variables = tf.trainable_variables()
                 summary_op += summarizer.add_trainable_vars_summary(variables)
-            elif summary == summarizer.SummaryOptions.GRADIENTS:
+            elif summary == summarizer.SummaryOptions.GRADIENTS and self._clip_gradients > 0.0:
                 summary_op += summarizer.add_gradients_summary(self._grads_and_vars)
             elif summary == summarizer.SummaryOptions.LOSS:
                 summary_op += summarizer.add_loss_summaries(self._total_loss, self._loss)
@@ -115,7 +131,7 @@ class BaseModel(GraphModule):
             `loss` is a single scalar tensor to minimize.
         """
         losses, loss = getters.get_loss(
-            self.config.loss_config.name, results, labels, **self.config.loss_config.params)
+            self.loss_config.name, results, labels, **self.loss_config.params)
         self._loss = loss
         self._losses = losses
 
@@ -133,12 +149,17 @@ class BaseModel(GraphModule):
             `losses` are the per-batch losses.
             `loss` is a single scalar tensor to minimize.
         """
+        lshape = get_shape(labels)
         if self.model_type == self.Types.CLASSIFIER:
-            results = tf.argmax(results, 1)
-            labels = tf.argmax(labels, 1)
+            if len(lshape) == 1 or (len(lshape) and int(lshape[1]) == 1):
+                results = tf.argmax(results)
+                labels = tf.argmax(labels)
+            else:
+                results = tf.argmax(results, 1)
+                labels = tf.argmax(labels, 1)
 
         metrics = {}
-        for metric in self.config.eval_metrics_config:
+        for metric in self.eval_metrics_config:
             metrics[metric.name] = getters.get_eval_metric(
                 metric.name, results, labels, **metric.params)
         return metrics
@@ -150,7 +171,7 @@ class BaseModel(GraphModule):
             loss=loss,
             global_step=training.get_or_create_global_step(),
             learning_rate=None,
-            clip_gradients=self._clip_gradients,
+            clip_gradients=self._clip_gradients_fn,
             optimizer=optimizer,
             summaries=[])
 
@@ -184,11 +205,11 @@ class BaseModel(GraphModule):
         """
         return extract_batch_length(features)
 
-    def __call__(self, features, labels, params, config):
+    def __call__(self, features, labels, params=None, config=None):
         """Calls the built mode."""
         return self._template(features, labels, params, config)
 
-    def _build(self, features, labels, params, config):
+    def _build(self, features, labels, params=None, config=None):
         """Subclasses should implement this method. See the `model_fn` documentation
         in tf.contrib.learn.Estimator class for a more detailed explanation.
         """
@@ -223,6 +244,61 @@ class BaseModel(GraphModule):
                              eval_metric_ops=eval_metrics)
 
 
+class RegressorModel(BaseModel):
+    """Regressor base model.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        graph_fn: Graph function. Follows the signature:
+            * Args:
+                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `inputs`: the feature inputs.
+        config: An instance of `ModelConfig`.
+        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
+            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+        name: `str`, the name of this model, everything will be encapsulated inside this scope.
+        params: `dict`. A dictionary of hyperparameter values.
+
+    Returns:
+        `EstimatorSpec`
+    """
+    def __init__(self, mode, name, graph_fn, loss_config, optimizer_config,
+                 eval_metrics_config=None, summaries='all', clip_gradients=0.5, params=None):
+        super(RegressorModel, self).__init__(
+            mode=mode, name=name, graph_fn=graph_fn, loss_config=loss_config,
+            optimizer_config=optimizer_config, eval_metrics_config=eval_metrics_config,
+            model_type=RegressorModel.Types.REGRESSOR, summaries=summaries,
+            clip_gradients=clip_gradients, params=params)
+
+
+class ClassifierModel(BaseModel):
+    """Regressor base model.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        graph_fn: Graph function. Follows the signature:
+            * Args:
+                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `inputs`: the feature inputs.
+        config: An instance of `ModelConfig`.
+        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
+            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+        name: `str`, the name of this model, everything will be encapsulated inside this scope.
+        params: `dict`. A dictionary of hyperparameter values.
+
+    Returns:
+        `EstimatorSpec`
+    """
+    def __init__(self, mode, name, graph_fn, loss_config, optimizer_config,
+                 summaries, eval_metrics_config=None, clip_gradients=0.5, params=None):
+        super(ClassifierModel, self).__init__(
+            mode=mode, name=name, graph_fn=graph_fn, loss_config=loss_config,
+            optimizer_config=optimizer_config, eval_metrics_config=eval_metrics_config,
+            summaries='all', model_type=RegressorModel.Types.CLASSIFIER,
+            clip_gradients=clip_gradients, params=params)
+
+
 MODELS = {
-    'base_model': BaseModel
+    'classifier': ClassifierModel,
+    'regressor': RegressorModel
 }

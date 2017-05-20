@@ -118,6 +118,7 @@ def get_pipeline(pipeline, **kwargs):
 
 def get_graph_fn(config):
     """Creates the graph operations."""
+
     def graph_fn(mode, inputs):
         graph = SubGraph(mode, config.name, config.modules, config.kwargs)
         return graph(inputs)
@@ -133,13 +134,16 @@ def get_model_fn(model_config, graph_fn=None):
 
     def model_fn(features, labels, params, mode, config):
         """Builds the model graph"""
-        model = MODELS[model_config.name](mode=mode,
-                                          graph_fn=graph_fn,
-                                          config=model_config,
-                                          name=model_config.name,
-                                          model_type=model_config.model_type,
-                                          summaries=model_config.summaries,
-                                          params=model_config.params)
+        model = MODELS[model_config.model_type](
+            mode=mode,
+            name=model_config.name,
+            graph_fn=graph_fn,
+            loss_config=model_config.loss_config,
+            optimizer_config=model_config.optimizer_config,
+            eval_metrics_config=model_config.eval_metrics_config,
+            summaries=model_config.summaries,
+            clip_gradients=model_config.clip_gradients,
+            params=model_config.params)
         return model(features=features, labels=labels, params=params, config=config)
 
     return model_fn

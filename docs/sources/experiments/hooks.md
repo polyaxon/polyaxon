@@ -1,31 +1,3 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L157)</span>
-### FinalOpsHook
-
-```python
-polyaxon.experiments.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
-```
-
-A run hook which evaluates `Tensors` at the end of a session.
-(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
-
-- __Args__:
-- __final_ops__: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
-- __final_ops_feed_dict__: A feed dictionary to use when running `final_ops_dict`.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L85)</span>
-### StepCounterHook
-
-```python
-polyaxon.experiments.hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
-```
-
-Steps per second monitor.
-(A mirror to tensorflow.python.training.basic_session_run_hooks CheckpointSaverHook.)
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L140)</span>
 ### GlobalStepWaiterHook
 
@@ -74,22 +46,15 @@ call.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L95)</span>
-### NanTensorHook
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L85)</span>
+### StepCounterHook
 
 ```python
-polyaxon.experiments.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
+polyaxon.experiments.hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
 ```
 
-NaN Loss monitor.
-(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
-
-Monitors loss and stops training if loss is NaN.
-Can either fail with exception or just stop training.
-
-- __Args__:
-- __loss_tensor__: `Tensor`, the loss tensor.
-- __fail_on_nan_loss__: `bool`, whether to raise exception when loss is NaN.
+Steps per second monitor.
+(A mirror to tensorflow.python.training.basic_session_run_hooks CheckpointSaverHook.)
 
 ----
 
@@ -118,6 +83,25 @@ The tensors will be printed to the log, with `INFO` severity.
 
 - __Raises__:
 - __ValueError__: if `every_n_iter` is non-positive.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L95)</span>
+### NanTensorHook
+
+```python
+polyaxon.experiments.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
+```
+
+NaN Loss monitor.
+(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
+
+Monitors loss and stops training if loss is NaN.
+Can either fail with exception or just stop training.
+
+- __Args__:
+- __loss_tensor__: `Tensor`, the loss tensor.
+- __fail_on_nan_loss__: `bool`, whether to raise exception when loss is NaN.
 
 ----
 
@@ -151,14 +135,20 @@ Saves summaries every N steps.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L170)</span>
-### StopAfterNEvalsHook
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L157)</span>
+### FinalOpsHook
 
 ```python
-polyaxon.experiments.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
+polyaxon.experiments.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
 ```
 
-Run hook used by the evaluation routines to run the `eval_ops` N times.
+A run hook which evaluates `Tensors` at the end of a session.
+(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
+
+- __Args__:
+- __final_ops__: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
+- __final_ops_feed_dict__: A feed dictionary to use when running `final_ops_dict`.
+
 ----
 
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L58)</span>
@@ -186,3 +176,14 @@ Saves checkpoints every N steps or seconds.
 - __Raises__:
 - __ValueError__: One of `save_steps` or `save_secs` should be set.
 - __ValueError__: Exactly one of saver or scaffold should be set.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L170)</span>
+### StopAfterNEvalsHook
+
+```python
+polyaxon.experiments.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
+```
+
+Run hook used by the evaluation routines to run the `eval_ops` N times.

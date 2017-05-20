@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from tensorflow.python.ops import math_ops as tf_math_ops
+from tensorflow.python.ops import math_ops, array_ops
 
 from polyaxon.libs.utils import EPSILON, clip, get_name_scope
 
@@ -11,10 +11,10 @@ from polyaxon.libs.utils import EPSILON, clip, get_name_scope
 def check_loss_data(y_true, y_pred, logits=False):
     if logits:
         y_pred = tf.convert_to_tensor(y_pred)
-        y_true = tf_math_ops.cast(y_true, y_pred.dtype)
+        y_true = math_ops.cast(y_true, y_pred.dtype)
     else:
-        y_pred = tf_math_ops.to_float(y_pred)
-        y_true = tf_math_ops.to_float(y_true)
+        y_pred = math_ops.to_float(y_pred)
+        y_true = math_ops.to_float(y_true)
 
     y_pred.get_shape().assert_is_compatible_with(y_true.get_shape())
     return y_true, y_pred
@@ -70,7 +70,7 @@ def absolute_difference(weights=1.0, name='AbsoluteDifference', scope=None, coll
         A scalar `Tensor` representing the loss value.
     """
     def inner_loss(y_true, y_pred):
-        losses = tf_math_ops.abs(tf_math_ops.subtract(y_pred, y_true))
+        losses = math_ops.abs(math_ops.subtract(y_pred, y_true))
         return losses
 
     return built_loss(inner_loss, weights, name, scope, collect)
@@ -78,10 +78,10 @@ def absolute_difference(weights=1.0, name='AbsoluteDifference', scope=None, coll
 
 def log_loss(weights=1.0, epsilon=1e-7, name='LogLoss', scope=None, collect=True):
     def inner_loss(y_true, y_pred):
-        losses = -tf_math_ops.multiply(
+        losses = -math_ops.multiply(
             y_true,
-            tf_math_ops.log(y_pred + epsilon)) - tf_math_ops.multiply(
-            (1 - y_true), tf_math_ops.log(1 - y_pred + epsilon))
+            math_ops.log(y_pred + epsilon)) - math_ops.multiply(
+            (1 - y_true), math_ops.log(1 - y_pred + epsilon))
         return losses
 
     return built_loss(inner_loss, weights, name, scope, collect)
@@ -104,12 +104,13 @@ def mean_squared_error(weights=1.0, name='MeanSquaredError', scope=None, collect
     """
 
     def inner_loss(y_true, y_pred):
-        losses = tf_math_ops.square(tf_math_ops.subtract(y_pred, y_true))
+        losses = math_ops.square(math_ops.subtract(y_pred, y_true))
         return losses
     return built_loss(inner_loss, weights, name, scope, collect)
 
 
-def softmax_cross_entropy(weights=1.0, label_smoothing=0, name='SoftmaxCrossEntropy', scope=None, collect=True):
+def softmax_cross_entropy(weights=1.0, label_smoothing=0, name='SoftmaxCrossEntropy', scope=None,
+                          collect=True):
     """Computes Softmax Cross entropy (softmax categorical cross entropy).
 
     Computes softmax cross entropy between y_pred (logits) and
@@ -145,7 +146,7 @@ def softmax_cross_entropy(weights=1.0, label_smoothing=0, name='SoftmaxCrossEntr
 
     def inner_loss(y_true, y_pred):
         if label_smoothing > 0:
-            num_classes = tf_math_ops.cast(tf.array_ops.shape(y_true)[1], y_pred.dtype)
+            num_classes = math_ops.cast(array_ops.shape(y_true)[1], y_pred.dtype)
             smooth_positives = 1.0 - label_smoothing
             smooth_negatives = label_smoothing / num_classes
             y_true = y_true * smooth_positives + smooth_negatives
@@ -158,7 +159,8 @@ def softmax_cross_entropy(weights=1.0, label_smoothing=0, name='SoftmaxCrossEntr
     return built_loss(inner_loss, weights, name, scope, collect, True)
 
 
-def sigmoid_cross_entropy(weights=1.0, label_smoothing=0, name='SigmoidCrossEntropy', scope=None, collect=True):
+def sigmoid_cross_entropy(weights=1.0, label_smoothing=0, name='SigmoidCrossEntropy', scope=None,
+                          collect=True):
     """Computes Sigmoid cross entropy.(binary cross entropy):
 
     Computes sigmoid cross entropy between y_pred (logits) and y_true
@@ -222,9 +224,9 @@ def hinge_loss(weights=1.0, name='HingeLoss', scope=None, collect=True):
     """
 
     def inner_loss(y_true, y_pred):
-        all_ones = tf.array_ops.ones_like(y_true)
-        y_true = tf_math_ops.subtract(2 * y_true, all_ones)
-        losses = tf.nn.relu(tf_math_ops.subtract(all_ones, tf_math_ops.multiply(y_true, y_pred)))
+        all_ones = array_ops.ones_like(y_true)
+        y_true = math_ops.subtract(2 * y_true, all_ones)
+        losses = tf.nn.relu(math_ops.subtract(all_ones, math_ops.multiply(y_true, y_pred)))
         return losses
 
     return built_loss(inner_loss, weights, name, scope, collect)
@@ -256,8 +258,8 @@ def cosine_distance(dim, weights=1.0, name='CosineDistance', scope=None, collect
     """
 
     def inner_loss(y_true, y_pred):
-        radial_diffs = tf_math_ops.multiply(y_pred, y_true)
-        losses = 1 - tf_math_ops.reduce_sum(radial_diffs, axis=(dim,), keep_dims=True)
+        radial_diffs = math_ops.multiply(y_pred, y_true)
+        losses = 1 - math_ops.reduce_sum(radial_diffs, axis=(dim,), keep_dims=True)
         return losses
 
     return built_loss(inner_loss, weights, name, scope, collect)
