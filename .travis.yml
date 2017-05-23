@@ -30,6 +30,10 @@ install:
     fi
   - pip install tensorflow
   - python setup.py install
+  - pip install  codecov
 
 script:
   - python setup.py test
+
+after_success:
+  - codecovv
