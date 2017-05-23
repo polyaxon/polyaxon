@@ -9,33 +9,37 @@ from polyaxon.libs import getters
 from polyaxon.libs.configs import InputDataConfig
 
 
-def create_input_data_fn(input_data_config, mode, scope):
+def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=None, y=None):
     """Creates an input data function that can be used with estimators.
     Note that you must pass "factory functions" for both the data provider and
     featurizer to ensure that everything will be created in  the same graph.
 
         Args:
-            input_data_config: the configuration to create a Pipeline instance.
-            mode:
-            scope:
+            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+            pipeline_config: the configuration to create a Pipeline instance.
+            scope: `str`. scope to use for this input data block.
+            input_type: `str`. The type of the input, values: `NUMPY`, `PANDAS`.
+                        If `None`, will create a function based on the pipeline config.
+            x: `np.ndarray` or `np.Dataframe` or `None`.
+            y: `np.ndarray` or `None`.
 
         Returns:
             An input function that returns `(feature_batch, labels_batch)`
             tuples when called.
     """
-    pipeline_config = input_data_config.pipeline_config
+    pipeline_config = pipeline_config
 
-    if input_data_config.input_type == InputDataConfig.NUMPY:
+    if input_type == InputDataConfig.NUMPY:
         # setup_train_data_feeder
-        return numpy_input_fn({'source_ids': input_data_config.x}, input_data_config.y,
+        return numpy_input_fn({'source_ids': x}, y,
                               batch_size=pipeline_config.batch_size,
                               num_epochs=pipeline_config.num_epochs,
                               shuffle=pipeline_config.shuffle,
                               num_threads=pipeline_config.num_threads)
 
-    if input_data_config.input_type == InputDataConfig.PANDAS:
+    if input_type == InputDataConfig.PANDAS:
         # setup_train_data_feeder
-        return pandas_input_fn({'source_ids': input_data_config.x}, input_data_config.y,
+        return pandas_input_fn({'source_ids': x}, y,
                                batch_size=pipeline_config.batch_size,
                                num_epochs=pipeline_config.num_epochs,
                                shuffle=pipeline_config.shuffle,
@@ -44,7 +48,12 @@ def create_input_data_fn(input_data_config, mode, scope):
     def input_fn():
         """Creates features and labels."""
 
-        pipeline = getters.get_pipeline(pipeline_config.name, mode=mode, **pipeline_config.params)
+        pipeline = getters.get_pipeline(pipeline_config.name,
+                                        mode=mode,
+                                        name=pipeline_config.name,
+                                        shuffle=pipeline_config.shuffle,
+                                        num_epochs=pipeline_config.num_epochs,
+                                        **pipeline_config.params)
 
         with tf.variable_scope(scope or 'input_fn'):
             data_provider = pipeline.make_data_provider()

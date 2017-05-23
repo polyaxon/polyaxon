@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import tensorflow as tf
+import json
 
-from tensorflow.contrib.slim.python.slim.data import tfexample_decoder
+import tensorflow as tf
+from tensorflow.contrib import slim as tfslim
 
 from polyaxon.experiments.subgraph import SubGraph
-from polyaxon.processing.data_decoders import SplitTokensDecoder, TFSequenceExampleDecoder
-from polyaxon.processing.data_providers import ParallelDataProvider
+from polyaxon.processing.data_decoders import (
+    SplitTokensDecoder,
+    TFExampleDecoder,
+    TFSequenceExampleDecoder,
+)
+from polyaxon.processing.data_providers import ParallelDatasetProvider, DatasetDataProvider, Dataset
 
 
 class Pipeline(SubGraph):
@@ -18,28 +23,26 @@ class Pipeline(SubGraph):
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
-        methods: `list`, list of methods to call in order to create this pipeline.
+        modules: `list`, list of modules to call in order to create this pipeline.
         kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
     """
 
-    def __init__(self, mode, name, methods=None, kwargs=None, shuffle=True, num_epochs=None):
+    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None):
         self.shuffle = shuffle
         self.num_epochs = num_epochs
-        super(Pipeline, self).__init__(mode=mode, name=name, methods=methods, kwargs=kwargs)
+        super(Pipeline, self).__init__(mode=mode, name=name, modules=modules, kwargs=kwargs)
 
     def make_data_provider(self, **kwargs):
-        """Creates DataProvider instance for this input pipeline. Additional
-        keyword arguments are passed to the DataProvider.
+        """Creates DataProvider instance for this input pipeline. Additional keyword arguments
+        are passed to the DataProvider.
         """
         raise NotImplementedError("Not implemented.")
 
     @property
     def feature_keys(self):
-        """Defines the features that this input pipeline provides. Returns
-          a set of strings.
-        """
+        """Defines the features that this input pipeline provides. Returns a set of strings."""
         return set()
 
     @property
@@ -57,13 +60,87 @@ class Pipeline(SubGraph):
         return items_dict
 
 
+class TFRecordPipeline(Pipeline):
+    """Abstract InputPipeline class. All input pipelines must inherit from this.
+    An InputPipeline defines how data is read, parsed, and separated into
+    features and labels.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        name: `str`, name to give for this pipeline.
+        modules: `list`, list of modules to call in order to create this pipeline.
+        kwargs: `list`, list of kwargs to use with the methods.
+        shuffle: If true, shuffle the data.
+        num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
+    """
+
+    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None,
+                 data_files=None, meta_data_file=None):
+        self.shuffle = shuffle
+        self.num_epochs = num_epochs
+        self.data_files = data_files or []
+        self.meta_data = None
+        if meta_data_file:
+            with open(self.meta_data_file) as meta_data_file:
+                self.meta_data = json.load(meta_data_file)
+        super(TFRecordPipeline, self).__init__(mode=mode, name=name, modules=modules, kwargs=kwargs)
+
+    def make_data_provider(self, **kwargs):
+        """Creates DataProvider instance for this input pipeline. Additional keyword arguments
+        are passed to the DataProvider.
+        """
+        keys_to_features = {
+            'image/encoded': tf.FixedLenFeature((), tf.string, default_value=''),
+            'image/format': tf.FixedLenFeature((), tf.string, default_value='raw'),
+            'image/class/label': tf.FixedLenFeature(
+                [1], tf.int64, default_value=tf.zeros([1], dtype=tf.int64)),
+        }
+
+        image_shape = [self.meta_data.get('height'),
+                       self.meta_data.get('width'),
+                       self.meta_data.get('channels')]
+        if not all(image_shape):
+            # no reshaping should be done
+            image_shape = None
+
+        items_to_handlers = {
+            'image': tfslim.tfexample_decoder.Image(shape=image_shape,
+                                                    channels=self.meta_data.get('channels')),
+            'label': tfslim.tfexample_decoder.Tensor('image/class/label', shape=[]),
+        }
+
+        decoder = TFExampleDecoder(keys_to_features, items_to_handlers)
+
+        dataset = Dataset(
+            data_sources=self.data_files,
+            reader=tf.TFRecordReader,
+            decoder=decoder,
+            num_samples=self.meta_data.get('num_samples', {}).get(self.name),
+            num_classes=self.meta_data['num_classes'],
+            meta_data=self.meta_data,
+            labels_to_names=self.meta_data['labels_to_classes'])
+
+        return DatasetDataProvider(dataset=dataset, shuffle=self.shuffle,
+                                   num_epochs=self.num_epochs, **kwargs)
+
+    @property
+    def feature_keys(self):
+        """Defines the features that this input pipeline provides. Returns a set of strings."""
+        return {'image'}
+
+    @property
+    def label_keys(self):
+        """Defines the labels that this input pipeline provides. Returns a set of strings."""
+        return {'label'}
+
+
 class ParallelTextPipeline(Pipeline):
     """An input pipeline that reads two parallel (line-by-line aligned) text files.
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
-        methods: `list`, list of methods to call in order to create this pipeline.
+        modules: `list`, list of modules to call in order to create this pipeline.
         kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
@@ -75,24 +152,27 @@ class ParallelTextPipeline(Pipeline):
           empty string.
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
-    def __init__(self, mode, name, methods=None, kwargs=None, shuffle=True, num_epochs=None,
+    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None,
                  source_files=None, target_files=None, source_delimiter="", target_delimiter=""):
         self.source_files = source_files or []
         self.target_files = target_files or []
         self.source_delimiter = source_delimiter
         self.target_delimiter = target_delimiter
         super(ParallelTextPipeline, self).__init__(
-            mode=mode, name=name, methods=methods, kwargs=kwargs,
+            mode=mode, name=name, modules=modules, kwargs=kwargs,
             shuffle=shuffle, num_epochs=num_epochs)
 
     def make_data_provider(self, **kwargs):
+        """Creates DataProvider instance for this input pipeline. Additional keyword arguments
+        are passed to the DataProvider.
+        """
         decoder_source = SplitTokensDecoder(
             tokens_feature_name='source_tokens',
             length_feature_name='source_len',
             append_token='SEQUENCE_END',
             delimiter=self.source_delimiter)
 
-        dataset_source = tf.contrib.slim.dataset.Dataset(
+        dataset_source = Dataset(
             data_sources=self.source_files,
             reader=tf.TextLineReader,
             decoder=decoder_source,
@@ -108,14 +188,14 @@ class ParallelTextPipeline(Pipeline):
                 append_token='SEQUENCE_END',
                 delimiter=self.target_delimiter)
 
-            dataset_target = tf.contrib.slim.dataset.Dataset(
+            dataset_target = Dataset(
                 data_sources=self.target_files,
                 reader=tf.TextLineReader,
                 decoder=decoder_target,
                 num_samples=None,
                 items_to_descriptions={})
 
-        return ParallelDataProvider(
+        return ParallelDatasetProvider(
             dataset_source=dataset_source,
             dataset_target=dataset_target,
             shuffle=self.shuffle,
@@ -124,20 +204,22 @@ class ParallelTextPipeline(Pipeline):
 
     @property
     def feature_keys(self):
+        """Defines the features that this input pipeline provides. Returns a set of strings."""
         return {'source_tokens', 'source_len'}
 
     @property
     def label_keys(self):
+        """Defines the labels that this input pipeline provides. Returns a set of strings."""
         return {'target_tokens', 'target_len'}
 
 
-class TFRecordPipeline(Pipeline):
+class TFRecordSourceSequencePipeline(Pipeline):
     """An input pipeline that reads a TFRecords containing both source and target sequences.
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
-        methods: `list`, list of methods to call in order to create this pipeline.
+        modules: `list`, list of modules to call in order to create this pipeline.
         kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
@@ -150,7 +232,7 @@ class TFRecordPipeline(Pipeline):
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
 
-    def __init__(self, mode, name, methods=None, kwargs=None, shuffle=True, num_epochs=None,
+    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None,
                  files=None, source_field='source', target_field='target',
                  source_delimiter="", target_delimiter=""):
         self.files = files or []
@@ -158,10 +240,14 @@ class TFRecordPipeline(Pipeline):
         self.target_field = target_field
         self.source_delimiter = source_delimiter
         self.target_delimiter = target_delimiter
-        super(TFRecordPipeline, self).__init__(mode=mode, name=name, methods=methods, kwargs=kwargs,
-                                               shuffle=shuffle, num_epochs=num_epochs)
+        super(TFRecordSourceSequencePipeline, self).__init__(
+            mode=mode, name=name, modules=modules, kwargs=kwargs, shuffle=shuffle,
+            num_epochs=num_epochs)
 
     def make_data_provider(self, **kwargs):
+        """Creates DataProvider instance for this input pipeline. Additional keyword arguments
+        are passed to the DataProvider.
+        """
         splitter_source = SplitTokensDecoder(
             tokens_feature_name='source_tokens',
             length_feature_name='source_len',
@@ -177,49 +263,43 @@ class TFRecordPipeline(Pipeline):
 
         keys_to_features = {
             self.source_field: tf.FixedLenFeature((), tf.string),
-            self.target_field: tf.FixedLenFeature(
-                (), tf.string, default_value="")
+            self.target_field: tf.FixedLenFeature((), tf.string, default_value="")
         }
 
-        items_to_handlers = {}
-        items_to_handlers['source_tokens'] = tfexample_decoder.ItemHandlerCallback(
-            keys=[self.source_field],
-            func=lambda dict: splitter_source.decode(
-                dict[self.source_field], ['source_tokens'])[0])
-        items_to_handlers['source_len'] = tfexample_decoder.ItemHandlerCallback(
-            keys=[self.source_field],
-            func=lambda dict: splitter_source.decode(
-                dict[self.source_field], ['source_len'])[0])
-        items_to_handlers['target_tokens'] = tfexample_decoder.ItemHandlerCallback(
-            keys=[self.target_field],
-            func=lambda dict: splitter_target.decode(
-                dict[self.target_field], ['target_tokens'])[0])
-        items_to_handlers['target_len'] = tfexample_decoder.ItemHandlerCallback(
-            keys=[self.target_field],
-            func=lambda dict: splitter_target.decode(
-                dict[self.target_field], ['target_len'])[0])
+        items_to_handlers = {
+            'source_tokens': tfslim.tfexample_decoder.ItemHandlerCallback(
+                keys=[self.source_field],
+                func=lambda dict: splitter_source.decode(dict[self.source_field],
+                                                         ['source_tokens'])[0]),
+            'source_len': tfslim.tfexample_decoder.ItemHandlerCallback(
+                keys=[self.source_field],
+                func=lambda dict: splitter_source.decode(dict[self.source_field],
+                                                         ['source_len'])[0]),
+            'target_tokens': tfslim.tfexample_decoder.ItemHandlerCallback(
+                keys=[self.target_field],
+                func=lambda dict: splitter_target.decode(dict[self.target_field],
+                                                         ['target_tokens'])[0]),
+            'target_len': tfslim.tfexample_decoder.ItemHandlerCallback(
+                keys=[self.target_field],
+                func=lambda dict: splitter_target.decode(dict[self.target_field],
+                                                         ['target_len'])[0])
+        }
 
-        decoder = tfexample_decoder.TFExampleDecoder(keys_to_features, items_to_handlers)
+        decoder = TFExampleDecoder(keys_to_features, items_to_handlers)
 
-        dataset = tf.contrib.slim.dataset.Dataset(
-            data_sources=self.files,
-            reader=tf.TFRecordReader,
-            decoder=decoder,
-            num_samples=None,
-            items_to_descriptions={})
+        dataset = Dataset(data_sources=self.files, reader=tf.TFRecordReader, decoder=decoder)
 
-        return tf.contrib.slim.dataset_data_provider.DatasetDataProvider(
-            dataset=dataset,
-            shuffle=self.shuffle,
-            num_epochs=self.num_epochs,
-            **kwargs)
+        return DatasetDataProvider(dataset=dataset, shuffle=self.shuffle,
+                                   num_epochs=self.num_epochs, **kwargs)
 
     @property
     def feature_keys(self):
+        """Defines the features that this input pipeline provides. Returns a set of strings."""
         return {'source_tokens', 'source_len'}
 
     @property
     def label_keys(self):
+        """Defines the labels that this input pipeline provides. Returns a set of strings."""
         return {'target_tokens', 'target_len'}
 
 
@@ -229,7 +309,7 @@ class ImageCaptioningPipeline(Pipeline):
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
-        methods: `list`, list of methods to call in order to create this pipeline.
+        modules: `list`, list of modules to call in order to create this pipeline.
         kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
@@ -240,7 +320,7 @@ class ImageCaptioningPipeline(Pipeline):
         caption_tokens_field: the caption tokends field.
     """
 
-    def __init__(self, mode, name,  methods=None, kwargs=None, shuffle=True, num_epochs=None,
+    def __init__(self, mode, name,  modules=None, kwargs=None, shuffle=True, num_epochs=None,
                  files=None, image_field="image/data", image_format='jpg',
                  caption_ids_field="image/caption_ids", caption_tokens_field="image/caption"):
         self.files = files or []
@@ -248,10 +328,14 @@ class ImageCaptioningPipeline(Pipeline):
         self.image_format = image_format
         self.caption_ids_field = caption_ids_field
         self.caption_tokens_field = caption_tokens_field
-        super(TFRecordPipeline).__init__(mode=mode, name=name, methods=methods, kwargs=kwargs,
-                                         shuffle=shuffle, num_epochs=num_epochs)
+        super(ImageCaptioningPipeline).__init__(
+            mode=mode, name=name, modules=modules, kwargs=kwargs,
+            shuffle=shuffle, num_epochs=num_epochs)
 
     def make_data_provider(self, **kwargs):
+        """Creates DataProvider instance for this input pipeline. Additional keyword arguments
+        are passed to the DataProvider.
+        """
         context_keys_to_features = {
             self.image_field: tf.FixedLenFeature(
                 [], dtype=tf.string),
@@ -267,13 +351,13 @@ class ImageCaptioningPipeline(Pipeline):
         }
 
         items_to_handlers = {
-            'image': tfexample_decoder.Image(
+            'image': tfslim.tfexample_decoder.Image(
                 image_key=self.image_field,
                 format_key="image/format",
                 channels=3),
-            'target_ids': tfexample_decoder.Tensor(self.caption_ids_field),
-            'target_tokens': tfexample_decoder.Tensor(self.caption_tokens_field),
-            'target_len': tfexample_decoder.ItemHandlerCallback(
+            'target_ids': tfslim.tfexample_decoder.Tensor(self.caption_ids_field),
+            'target_tokens': tfslim.tfexample_decoder.Tensor(self.caption_tokens_field),
+            'target_len': tfslim.tfexample_decoder.ItemHandlerCallback(
                 keys=[self.caption_tokens_field],
                 func=lambda x: tf.size(x[self.caption_tokens_field]))
         }
@@ -281,14 +365,14 @@ class ImageCaptioningPipeline(Pipeline):
         decoder = TFSequenceExampleDecoder(
             context_keys_to_features, sequence_keys_to_features, items_to_handlers)
 
-        dataset = tf.contrib.slim.dataset.Dataset(
+        dataset = Dataset(
             data_sources=self.files,
             reader=tf.TFRecordReader,
             decoder=decoder,
             num_samples=None,
             items_to_descriptions={})
 
-        return tf.contrib.slim.dataset_data_provider.DatasetDataProvider(
+        return DatasetDataProvider(
             dataset=dataset,
             shuffle=self.shuffle,
             num_epochs=self.num_epochs,
@@ -296,15 +380,18 @@ class ImageCaptioningPipeline(Pipeline):
 
     @property
     def feature_keys(self):
+        """Defines the features that this input pipeline provides. Returns a set of strings."""
         return {'image'}
 
     @property
     def label_keys(self):
+        """Defines the labels that this input pipeline provides. Returns a set of strings."""
         return {'target_tokens', 'target_ids', 'target_len'}
 
 
 PIPELINES = {
     'ParallelTextPipeline': ParallelTextPipeline,
     'TFRecordPipeline': TFRecordPipeline,
+    'TFRecordSourceSequencePipeline': TFRecordSourceSequencePipeline,
     'ImageCaptioningPipeline': ImageCaptioningPipeline
 }

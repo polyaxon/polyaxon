@@ -136,7 +136,7 @@ class PipelineConfig(Configurable):
         self.min_after_dequeue = min_after_dequeue
         self.num_threads = num_threads
         self.shuffle = shuffle
-        self.params = params
+        self.params = params or {}
 
     @property
     def capacity(self):

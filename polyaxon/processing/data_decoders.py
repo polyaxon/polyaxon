@@ -1,9 +1,113 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import abc
+import six
+
 import tensorflow as tf
 
-from tensorflow.contrib.slim.python.slim.data.data_decoder import DataDecoder
+from tensorflow.python.ops import array_ops
+
+
+@six.add_metaclass(abc.ABCMeta)
+class DataDecoder(object):
+    """An abstract class which is used to decode data for a provider.
+
+    (A mirror to tf.slim.data DataDecoder)
+    """
+
+    @abc.abstractmethod
+    def decode(self, data, items):
+        """Decodes the data to returns the tensors specified by the list of items.
+
+    Args:
+      data: A possibly encoded data format.
+      items: A list of strings, each of which indicate a particular data type.
+
+    Returns:
+      A list of `Tensors`, whose length matches the length of `items`, where
+      each `Tensor` corresponds to each item.
+
+    Raises:
+      ValueError: If any of the items cannot be satisfied.
+    """
+        pass
+
+    @abc.abstractmethod
+    def list_items(self):
+        """Lists the names of the items that the decoder can decode.
+
+    Returns:
+      A list of string names.
+    """
+        pass
+
+
+class TFExampleDecoder(DataDecoder):
+    """A decoder for TensorFlow Examples.
+    (A mirror to tf.slim.data TFExampleDecoder)
+
+    Decoding Example proto buffers is comprised of two stages: (1) Example parsing
+    and (2) tensor manipulation.
+
+    In the first stage, the tf.parse_example function is called with a list of
+    FixedLenFeatures and SparseLenFeatures. These instances tell TF how to parse
+    the example. The output of this stage is a set of tensors.
+
+    In the second stage, the resulting tensors are manipulated to provide the
+    requested 'item' tensors.
+
+    To perform this decoding operation, an ExampleDecoder is given a list of
+    ItemHandlers. Each ItemHandler indicates the set of features for stage 1 and
+    contains the instructions for post_processing its tensors for stage 2.
+    """
+
+    def __init__(self, keys_to_features, items_to_handlers):
+        """Constructs the decoder.
+
+        Args:
+            keys_to_features: a dictionary from TF-Example keys to either
+                tf.VarLenFeature or tf.FixedLenFeature instances.
+            items_to_handlers: a dictionary from items (strings) to ItemHandler instances.
+            Note that the ItemHandler's are provided the keys that they use
+            to return the final item Tensors.
+        """
+        self._keys_to_features = keys_to_features
+        self._items_to_handlers = items_to_handlers
+
+    def list_items(self):
+        """See base class."""
+        return list(self._items_to_handlers.keys())
+
+    def decode(self, serialized_example, items=None):
+        """Decodes the given serialized TF-example.
+
+        Args:
+            serialized_example: a serialized TF-example tensor.
+            items: the list of items to decode. These must be a subset of the item
+                keys in self._items_to_handlers. If `items` is left as None, then all
+                of the items in self._items_to_handlers are decoded.
+
+        Returns:
+            the decoded items, a list of tensor.
+        """
+        example = tf.parse_single_example(serialized_example, self._keys_to_features)
+
+        # Reshape non-sparse elements just once:
+        for k in self._keys_to_features:
+            v = self._keys_to_features[k]
+            if isinstance(v, tf.FixedLenFeature):
+                example[k] = array_ops.reshape(example[k], v.shape)
+
+        if not items:
+            items = self._items_to_handlers.keys()
+
+        outputs = []
+        for item in items:
+            handler = self._items_to_handlers[item]
+            keys_to_tensors = {key: example[key] for key in handler.keys}
+            outputs.append(handler.tensors_to_item(keys_to_tensors))
+        return outputs
 
 
 class SplitTokensDecoder(DataDecoder):

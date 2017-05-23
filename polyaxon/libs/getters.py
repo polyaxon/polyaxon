@@ -108,12 +108,12 @@ def get_pipeline(pipeline, **kwargs):
     from polyaxon.processing.pipelines import PIPELINES
 
     if isinstance(pipeline, str):
-        loss = PIPELINES[pipeline](**kwargs)
+        pipeline = PIPELINES[pipeline](**kwargs)
 
     else:
         raise ValueError('Invalid pipeline type.')
 
-    return loss
+    return pipeline
 
 
 def get_graph_fn(config):

@@ -571,14 +571,20 @@ def create_experiment(experiment_config):
         experiment_config: the config to use for creating the experiment.
     """
     # Creates training input function
+    train_input_data_config = experiment_config.train_input_data_config
     train_input_fn = create_input_data_fn(
-        input_data_config=experiment_config.train_input_data_config,
-        mode=ModeKeys.TRAIN, scope='train_input_fn')
+        pipeline_config=train_input_data_config.pipeline_config,
+        mode=ModeKeys.TRAIN, scope='train_input_fn',
+        input_type=train_input_data_config.input_type,
+        x=train_input_data_config.x, y=train_input_data_config.y)
 
     # Creates eval_input_fn input function
+    eval_input_data_config = experiment_config.eval_input_data_config
     eval_input_fn = create_input_data_fn(
-        input_data_config=experiment_config.eval_input_data_config,
-        mode=ModeKeys.EVAL, scope='eval_input_fn')
+        pipeline_config=eval_input_data_config.pipeline_config,
+        mode=ModeKeys.EVAL, scope='eval_input_fn',
+        input_type=eval_input_data_config.input_type,
+        x=eval_input_data_config.x, y=eval_input_data_config.y)
 
     estimator = getters.get_estimator(experiment_config.estimator_config,
                                       experiment_config.model_config,
