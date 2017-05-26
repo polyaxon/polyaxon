@@ -20,9 +20,9 @@ _TRAIN_LABELS_FILENAME = 'train-labels-idx1-ubyte.gz'
 _TEST_DATA_FILENAME = 't10k-images-idx3-ubyte.gz'
 _TEST_LABELS_FILENAME = 't10k-labels-idx1-ubyte.gz'
 
-_MEAT_DATA_FILENAME = '{}/meta_data.json'
+MEAT_DATA_FILENAME = '{}/meta_data.json'
 
-_RECORD_FILE_NAME_FORMAT = '{}/mnist_{}.tfrecord'
+RECORD_FILE_NAME_FORMAT = '{}/mnist_{}.tfrecord'
 
 _IMAGE_SIZE = 28
 _NUM_CHANNELS = 1
@@ -65,8 +65,11 @@ def _extract_labels(filename, num_labels):
     return labels
 
 
-def prepare_dataset(converter, dataset_dir, data_name, num_images):
-    filename = _RECORD_FILE_NAME_FORMAT.format(dataset_dir, data_name)
+def prepare_dataset(converter, dataset_dir, data_name, num_images, num_validation=0):
+    filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, data_name)
+    if num_validation:
+        validation_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
+
     if tf.gfile.Exists(filename):
         print('`{}` Dataset files already exist. '
               'Exiting without re-creating them.'.format(filename))
@@ -79,22 +82,31 @@ def prepare_dataset(converter, dataset_dir, data_name, num_images):
 
     download_datasets(dataset_dir, _DATA_URL, filenames)
 
+    if data_name == ModeKeys.TRAIN:
+        data_filename = os.path.join(dataset_dir, _TRAIN_DATA_FILENAME)
+        labels_filename = os.path.join(dataset_dir, _TRAIN_LABELS_FILENAME)
+    else:
+        data_filename = os.path.join(dataset_dir, _TEST_DATA_FILENAME)
+        labels_filename = os.path.join(dataset_dir, _TEST_LABELS_FILENAME)
+
+    images = _extract_images(data_filename, num_images)
+    labels = _extract_labels(labels_filename, num_images)
+    if num_validation:
+        images, validation_images = images[num_validation:], images[:num_validation]
+        labels, validation_labels = labels[num_validation:], labels[:num_validation]
+
     with tf.python_io.TFRecordWriter(filename) as tfrecord_writer:
-        if data_name == ModeKeys.TRAIN:
-            data_filename = os.path.join(dataset_dir, _TRAIN_DATA_FILENAME)
-            labels_filename = os.path.join(dataset_dir, _TRAIN_LABELS_FILENAME)
-        else:
-            data_filename = os.path.join(dataset_dir, _TEST_DATA_FILENAME)
-            labels_filename = os.path.join(dataset_dir, _TEST_LABELS_FILENAME)
-
-        images = _extract_images(data_filename, num_images)
-        labels = _extract_labels(labels_filename, num_images)
-
         with tf.Session('') as session:
             converter.convert(session=session, writer=tfrecord_writer, images=images,
                               labels=labels, total_num_items=len(images))
 
-        delete_datasets(dataset_dir, filenames)
+    if num_validation:
+        with tf.python_io.TFRecordWriter(validation_filename) as tfrecord_writer:
+            with tf.Session('') as session:
+                converter.convert(session=session, writer=tfrecord_writer, images=validation_images,
+                                  labels=validation_labels, total_num_items=len(validation_images))
+
+    delete_datasets(dataset_dir, filenames)
 
 
 def prepare(dataset_dir):
@@ -112,13 +124,15 @@ def prepare(dataset_dir):
         classes=classes, colorspace='grayscale', image_format='png',
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
-    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN, 60000)
+    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN, 50000, num_validation=10000)
     prepare_dataset(converter, dataset_dir, ModeKeys.PREDICT, 10000)
 
     # Finally, write the meta data:
-    with open(_MEAT_DATA_FILENAME.format(dataset_dir), 'w') as meta_data_file:
+    with open(MEAT_DATA_FILENAME.format(dataset_dir), 'w') as meta_data_file:
         meta_data = converter.get_meta_data()
-        meta_data['num_samples'] = {ModeKeys.TRAIN: 60000, ModeKeys.PREDICT: 10000}
+        meta_data['num_samples'] = {ModeKeys.TRAIN: 50000,
+                                    ModeKeys.EVAL: 10000,
+                                    ModeKeys.PREDICT: 10000}
         json.dump(meta_data, meta_data_file)
 
     print('\nFinished converting the MNIST dataset!')
@@ -126,19 +140,19 @@ def prepare(dataset_dir):
 
 def create_input_fn(dataset_dir):
     prepare(dataset_dir)
-    train_data_file = _RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.TRAIN)
-    test_data_file = _RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.PREDICT)
-    meta_data_filename = _MEAT_DATA_FILENAME.format(dataset_dir)
+    train_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.TRAIN)
+    eval_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
+    meta_data_filename = MEAT_DATA_FILENAME.format(dataset_dir)
     train_input_fn = create_input_data_fn(
         mode=ModeKeys.TRAIN,
-        pipeline_config=PipelineConfig(name='TFRecordPipeline',
+        pipeline_config=PipelineConfig(name='TFRecordPipeline', dynamic_pad=False,
                                        params={'data_files': train_data_file,
                                                'meta_data_file': meta_data_filename})
     )
-    test_input_fn = create_input_data_fn(
-        mode=ModeKeys.TRAIN,
-        pipeline_config=PipelineConfig(name='TFRecordPipeline',
-                                       params={'data_files': test_data_file,
+    eval_input_fn = create_input_data_fn(
+        mode=ModeKeys.EVAL,
+        pipeline_config=PipelineConfig(name='TFRecordPipeline', dynamic_pad=False,
+                                       params={'data_files': eval_data_file,
                                                'meta_data_file': meta_data_filename})
     )
-    return train_input_fn, test_input_fn
+    return train_input_fn, eval_input_fn
