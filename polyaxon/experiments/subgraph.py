@@ -3,6 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
+from collections import Mapping
+
+import tensorflow as tf
+
 from polyaxon.libs.template_module import GraphModule, BaseLayer
 
 
@@ -13,9 +17,11 @@ class SubGraph(GraphModule):
         mode: `str`. Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`. The name of this subgraph, used for creating the scope.
         modules: `list`.  The modules to connect inside this subgraph, e.g. layers
-        kwargs: `list`. the list key word args to call each method with.
+        kwargs: `list`. The list key word args to call each method with.
+        features: `list`. The list of features keys to extract and use in this subgraph.
+            If `None`, all features will be used.
     """
-    def __init__(self, mode, name, modules, kwargs):
+    def __init__(self, mode, name, modules, kwargs, features=None):
         super(SubGraph, self).__init__(mode, name, self.ModuleType.SUBGRAPH)
         if len(modules) != len(kwargs):
             raise ValueError('`Subgraph` expects `modules` and `kwargs` to have the same length.')
@@ -32,12 +38,21 @@ class SubGraph(GraphModule):
         self._modules = modules
         self._built_modules = []
         self._kwargs = kwargs
+        self._features = features
 
     @property
     def modules(self):
         return self._built_modules
 
+    def _get_incoming(self, incoming):
+        if isinstance(incoming, Mapping):
+            columns = self._features if self._features else list(incoming.keys())
+            _incoming = [incoming[col] for col in columns]
+            return tf.concat(values=_incoming, axis=1) if len(_incoming) > 1 else _incoming[0]
+        return incoming
+
     def _build(self, incoming, *args, **kwargs):
+        incoming = self._get_incoming(incoming)
         for i, m in enumerate(self._modules):
             kwargs = copy.copy(self._kwargs[i])
             if 'dependencies' in kwargs:

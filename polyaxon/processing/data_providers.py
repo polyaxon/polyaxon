@@ -154,8 +154,8 @@ class DatasetDataProvider(DataProvider):
         if record_key in items:
             raise ValueError('The item name used for `record_key` cannot also be '
                              'used for a dataset item: %s', record_key)
-        items.append(record_key)
-        tensors.append(key)
+        # items.append(record_key)
+        # tensors.append(key)
 
         super(DatasetDataProvider, self).__init__(items_to_tensors=dict(zip(items, tensors)),
                                                   num_samples=dataset.num_samples)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import Mapping
+
 import tensorflow as tf
 
 from tensorflow.python.estimator.model_fn import EstimatorSpec
@@ -8,6 +10,7 @@ from tensorflow.python.training import training
 
 from polyaxon import ModeKeys
 from polyaxon.experiments import summarizer
+from polyaxon.layers import OneHotEncoding
 from polyaxon.libs import configs, getters
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
@@ -23,7 +26,9 @@ class BaseModel(GraphModule):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
                 * `inputs`: the feature inputs.
-        config: An instance of `ModelConfig`.
+        graph_fn: An instance of `GraphConfig`.
+        loss_config: An instance of `LossConfig`.
+        optimizer_config: An instance of `OptimizerConfig`.
         model_type: `str`, the type of this model.
             Possible values: `regressor`, `classifier`, `generator`
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
@@ -177,7 +182,7 @@ class BaseModel(GraphModule):
 
         return train_op
 
-    def _preprocess(self, features, labels):
+    def _preprocess(self, mode, features, labels):
         """Model specific preprocessing."""
         return features, labels
 
@@ -186,7 +191,7 @@ class BaseModel(GraphModule):
         """Creates the dictionary of predictions that is returned by the model."""
         predictions = {'results': results}
         # Add features and, if available, labels to predictions
-        predictions.update(flatten_dict({'features': features['source_ids']}))  # TODO: source_ids ?
+        predictions.update(flatten_dict({'features': features}))  # TODO: source_ids ?
         if labels is not None:
             predictions.update(flatten_dict({'labels': labels}))
 
@@ -214,8 +219,8 @@ class BaseModel(GraphModule):
         in tf.contrib.learn.Estimator class for a more detailed explanation.
         """
         # Pre-process features and labels
-        features, labels = self._preprocess(features, labels)
-        results = self._graph_fn(mode=self.mode, inputs=features['source_ids'])
+        features, labels = self._preprocess(self.mode, features, labels)
+        results = self._graph_fn(mode=self.mode, inputs=features)
 
         loss = None
         train_op = None
@@ -253,7 +258,9 @@ class RegressorModel(BaseModel):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
                 * `inputs`: the feature inputs.
-        config: An instance of `ModelConfig`.
+        graph_fn: An instance of `GraphConfig`.
+        loss_config: An instance of `LossConfig`.
+        optimizer_config: An instance of `OptimizerConfig`.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
         name: `str`, the name of this model, everything will be encapsulated inside this scope.
@@ -270,6 +277,11 @@ class RegressorModel(BaseModel):
             model_type=RegressorModel.Types.REGRESSOR, summaries=summaries,
             clip_gradients=clip_gradients, params=params)
 
+    def _preprocess(self, mode, features, labels):
+        if isinstance(labels, Mapping):
+            labels = labels['labels']
+        return super(RegressorModel, self)._preprocess(mode, features, labels)
+
 
 class ClassifierModel(BaseModel):
     """Regressor base model.
@@ -280,23 +292,42 @@ class ClassifierModel(BaseModel):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
                 * `inputs`: the feature inputs.
-        config: An instance of `ModelConfig`.
+        graph_fn: An instance of `GraphConfig`.
+        loss_config: An instance of `LossConfig`.
+        optimizer_config: An instance of `OptimizerConfig`.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
         name: `str`, the name of this model, everything will be encapsulated inside this scope.
+        one_hot_encode:
         params: `dict`. A dictionary of hyperparameter values.
 
     Returns:
         `EstimatorSpec`
     """
     def __init__(self, mode, name, graph_fn, loss_config, optimizer_config,
-                 summaries, eval_metrics_config=None, clip_gradients=0.5, params=None):
+                 summaries='all', eval_metrics_config=None, clip_gradients=0.5, params=None):
+        one_hot_encode = params.pop('one_hot_encode', None)
+        n_classes = params.pop('n_classes', None)
+        if one_hot_encode and (n_classes is None or not isinstance(n_classes, int)):
+            raise ValueError('`n_classes` must be an interger non negative value '
+                             'when `one_hot_encode` is set to `True`, '
+                             'received instead: {}'.format(n_classes))
+
+        self.one_hot_encode = one_hot_encode
+        self.n_classes = n_classes
         super(ClassifierModel, self).__init__(
             mode=mode, name=name, graph_fn=graph_fn, loss_config=loss_config,
             optimizer_config=optimizer_config, eval_metrics_config=eval_metrics_config,
-            summaries='all', model_type=RegressorModel.Types.CLASSIFIER,
+            summaries=summaries, model_type=RegressorModel.Types.CLASSIFIER,
             clip_gradients=clip_gradients, params=params)
 
+    def _preprocess(self, mode, features, labels):
+        if isinstance(labels, Mapping):
+            labels = labels['label']
+
+        if self.one_hot_encode:
+            labels = OneHotEncoding(mode, n_classes=self.n_classes)(labels)
+        return super(ClassifierModel, self)._preprocess(mode, features, labels)
 
 MODELS = {
     'classifier': ClassifierModel,

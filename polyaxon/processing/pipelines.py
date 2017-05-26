@@ -32,7 +32,8 @@ class Pipeline(SubGraph):
     def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None):
         self.shuffle = shuffle
         self.num_epochs = num_epochs
-        super(Pipeline, self).__init__(mode=mode, name=name, modules=modules, kwargs=kwargs)
+        super(Pipeline, self).__init__(
+            mode=mode, name=name, modules=modules or [], kwargs=kwargs or [])
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments
@@ -81,7 +82,7 @@ class TFRecordPipeline(Pipeline):
         self.data_files = data_files or []
         self.meta_data = None
         if meta_data_file:
-            with open(self.meta_data_file) as meta_data_file:
+            with open(meta_data_file) as meta_data_file:
                 self.meta_data = json.load(meta_data_file)
         super(TFRecordPipeline, self).__init__(mode=mode, name=name, modules=modules, kwargs=kwargs)
 
@@ -115,7 +116,7 @@ class TFRecordPipeline(Pipeline):
             data_sources=self.data_files,
             reader=tf.TFRecordReader,
             decoder=decoder,
-            num_samples=self.meta_data.get('num_samples', {}).get(self.name),
+            num_samples=self.meta_data.get('num_samples', {}).get(self.mode),
             num_classes=self.meta_data['num_classes'],
             meta_data=self.meta_data,
             labels_to_names=self.meta_data['labels_to_classes'])
