@@ -39,7 +39,7 @@ def create_experiment_json_fn(output_dir):
             'loss_config': {'name': 'softmax_cross_entropy'},
             'eval_metrics_config': [{'name': 'streaming_accuracy'},
                                     {'name': 'streaming_precision'}],
-            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002,
+            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.1,
                                  'decay_type': 'exponential_decay', 'decay_rate': 0.2},
             'params': {'one_hot_encode': True, 'n_classes': 10},
             'graph_config': {

@@ -111,8 +111,8 @@ class DataProvider(object):
         valid_items = self.list_items()
         for item in items:
             if item not in valid_items:
-                raise ValueError('Item [%s] is invalid. Valid entries include: %s' %
-                                 (item, valid_items))
+                raise ValueError('Item [{}] is invalid. Valid entries include: {}'.format(
+                    item, valid_items))
 
 
 class DatasetDataProvider(DataProvider):
@@ -231,9 +231,8 @@ class ParallelDatasetProvider(DataProvider):
             items = items + items2
             tensors = tensors + tensors2
 
-        super(ParallelDatasetProvider, self).__init__(
-            items_to_tensors=dict(zip(items, tensors)),
-            num_samples=dataset_source.num_samples)
+        super(ParallelDatasetProvider, self).__init__(items_to_tensors=dict(zip(items, tensors)),
+                                                      num_samples=dataset_source.num_samples)
 
 
 def make_parallel_data_provider(data_sources_source,

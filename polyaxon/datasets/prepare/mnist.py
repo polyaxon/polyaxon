@@ -118,13 +118,13 @@ def prepare(dataset_dir):
     if not tf.gfile.Exists(dataset_dir):
         tf.gfile.MakeDirs(dataset_dir)
 
-    image_reader = PNGImageReaderNP(shape=[_IMAGE_SIZE, _IMAGE_SIZE, _NUM_CHANNELS])
+    image_reader = PNGImageReaderNP(shape=(_IMAGE_SIZE, _IMAGE_SIZE, _NUM_CHANNELS))
     classes = ['zero', 'one', 'two', 'three', 'four', 'five', 'size', 'seven', 'eight', 'nine']
     converter = ImagesToTFExampleConverter(
         classes=classes, colorspace='grayscale', image_format='png',
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
-    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN, 50000, num_validation=10000)
+    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN, 60000, num_validation=10000)
     prepare_dataset(converter, dataset_dir, ModeKeys.PREDICT, 10000)
 
     # Finally, write the meta data:

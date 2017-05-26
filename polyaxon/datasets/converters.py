@@ -155,28 +155,26 @@ class ImagesToTFExampleConverter(object):
             height, width = self.get_image_features(image=image)
         else:
             # the image could a bytes string
-            height, width = None, None
+            height, width = self.height, self.width
 
-        features = {
-            'image/class/label': self.to_int64_feature(label),
-            'image/encoded': self.to_bytes_feature(tf.compat.as_bytes(image))
-        }
+        if height is None:
+            raise ValueError('No `height` will be stored for the images. '
+                             'If all images have the `height`, please provide '
+                             'the `height`  at instantiation.')
+
+        if self.width is None:
+            raise ValueError('No `width` will be stored for the images. '
+                             'If all images have the `width`, please provide '
+                             'the `width`  at instantiation.')
+
+        features = {'image/class/label': self.to_int64_feature(label),
+                    'image/encoded': self.to_bytes_feature(tf.compat.as_bytes(image)),
+                    'image/width': self.to_int64_feature(width),
+                    'image/height': self.to_int64_feature(height),
+                    'image/format': self.to_bytes_feature(self.image_format.encode())}
         if self.store_filenames:
             filename_feature = self.to_bytes_feature(tf.compat.as_bytes(os.path.basename(filename)))
             features['image/filename'] = filename_feature
-
-        if self.height is None and height is not None:
-            if height is None or not isinstance(height, int):
-                raise ValueError('No `height` will be stored for the images. '
-                                 'If all images have the `height`, please provide '
-                                 'the `height`  at instantiation.')
-            features['image/height'] = self.to_int64_feature(height)
-        if self.width is None:
-            if width is None or not isinstance(width, int):
-                raise ValueError('No `width` will be stored for the images. '
-                                 'If all images have the `width`, please provide '
-                                 'the `width`  at instantiation.')
-            features['image/width'] = self.to_int64_feature(width)
 
         return tf.train.Example(features=tf.train.Features(feature=features))
 

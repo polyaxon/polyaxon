@@ -81,6 +81,7 @@ def create_experiment_json_fn(output_dir):
         'name': 'time_series',
         'output_dir': output_dir,
         'eval_every_n_steps': 5,
+        'train_steps_per_iteration': 100,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
             'input_type': plx.configs.InputDataConfig.NUMPY,
@@ -108,7 +109,7 @@ def create_experiment_json_fn(output_dir):
                 'definition': [
                     (plx.layers.LSTM, {'num_units': 7, 'num_layers': 1}),
                     # (Slice, {'begin': [0, 6], 'size': [-1, 1]}),
-                    (plx.layers.FullyConnected, {'n_units': 1}),
+                    (plx.layers.FullyConnected, {'n_units': 2}),
                 ]
             }
         }

@@ -298,7 +298,8 @@ class ClassifierModel(BaseModel):
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
         name: `str`, the name of this model, everything will be encapsulated inside this scope.
-        one_hot_encode:
+        one_hot_encode: `bool`. to one hot encode the outputs.
+        n_classes: `int`. The number of classes used in the one hot encoding.
         params: `dict`. A dictionary of hyperparameter values.
 
     Returns:
@@ -306,8 +307,8 @@ class ClassifierModel(BaseModel):
     """
     def __init__(self, mode, name, graph_fn, loss_config, optimizer_config,
                  summaries='all', eval_metrics_config=None, clip_gradients=0.5, params=None):
-        one_hot_encode = params.pop('one_hot_encode', None)
-        n_classes = params.pop('n_classes', None)
+        one_hot_encode = params.get('one_hot_encode', None)
+        n_classes = params.get('n_classes', None)
         if one_hot_encode and (n_classes is None or not isinstance(n_classes, int)):
             raise ValueError('`n_classes` must be an interger non negative value '
                              'when `one_hot_encode` is set to `True`, '
