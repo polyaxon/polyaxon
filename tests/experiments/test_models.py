@@ -24,7 +24,7 @@ class TestBaseModel(test.TestCase):
         return graph_fn
 
     def test_build_no_summaries(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -40,7 +40,7 @@ class TestBaseModel(test.TestCase):
         assert summaries_by_names == {}
 
     def test_build_activation_summaries(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -57,7 +57,7 @@ class TestBaseModel(test.TestCase):
             assert 'Activation' in s_name
 
     def test_build_loss_summaries(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -74,7 +74,7 @@ class TestBaseModel(test.TestCase):
             assert 'Loss' in s_name
 
     def test_build_gradients_summaries(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -91,7 +91,7 @@ class TestBaseModel(test.TestCase):
             assert 'Gradient' in s_name
 
     def test_build_variables_summaries(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -109,7 +109,7 @@ class TestBaseModel(test.TestCase):
 
     def test_build_learning_rate_summaries(self):
         training.create_global_step()
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -127,7 +127,7 @@ class TestBaseModel(test.TestCase):
         assert summaries_names[0] == 'learning_rate'
 
     def test_does_not_build_learning_rate_summaries_if_no_decay(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -144,7 +144,7 @@ class TestBaseModel(test.TestCase):
 
     def test_build_all_summaries(self):
         training.create_global_step()
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -178,7 +178,7 @@ class TestBaseModel(test.TestCase):
         assert loss_summaries > 0
 
     def test_return_estimator_spec(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -190,7 +190,7 @@ class TestBaseModel(test.TestCase):
         assert isinstance(model(x, y, None, None), EstimatorSpec)
 
     def test_handle_train_mode(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
@@ -206,7 +206,7 @@ class TestBaseModel(test.TestCase):
         assert specs.train_op is not None
 
     def test_handle_eval_mode(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.EVAL, graph_fn=self.get_dummy_graph_fn(),
@@ -223,7 +223,7 @@ class TestBaseModel(test.TestCase):
         assert specs.train_op is None
 
     def test_handle_predict_mode(self):
-        x = {'source_ids': tf.placeholder(tf.float32, [2, 89])}
+        x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.ModeKeys.PREDICT, graph_fn=self.get_dummy_graph_fn(),

@@ -127,7 +127,8 @@ class PipelineConfig(Configurable):
         params: `dict`, extra information to pass to the pipeline.
     """
     def __init__(self, name, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4,
-                 min_after_dequeue=5000, num_threads=3, shuffle=False, params=None):
+                 min_after_dequeue=5000, num_threads=3, shuffle=False,
+                 allow_smaller_final_batch=True, params=None):
         self.name = name
         self.dynamic_pad = dynamic_pad
         self.bucket_boundaries = bucket_boundaries
@@ -136,6 +137,7 @@ class PipelineConfig(Configurable):
         self.min_after_dequeue = min_after_dequeue
         self.num_threads = num_threads
         self.shuffle = shuffle
+        self.allow_smaller_final_batch = allow_smaller_final_batch
         self.params = params or {}
 
     @property
@@ -242,10 +244,11 @@ class SubGraphConfig(Configurable):
         modules: `list`.  The modules to connect inside this subgraph, e.g. layers
         kwargs: `list`. the list key word args to call each method with.
     """
-    def __init__(self, name, modules, kwargs):
+    def __init__(self, name, modules, kwargs, features=None):
         self.name = name
         self.modules = modules
         self.kwargs = kwargs
+        self.features = features
 
     @classmethod
     def read_configs(cls, config_values):
