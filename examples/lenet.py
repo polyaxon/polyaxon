@@ -4,11 +4,15 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
-from examples.mnist_data import load_mnist
+from polyaxon.datasets.prepare import mnist
 
 
 def create_experiment_json_fn(output_dir):
-    X_train, Y_train, X_test, Y_test = load_mnist()
+    dataset_dir = './data/mnist'
+    mnist.prepare(dataset_dir)
+    train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)
+    eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.EVAL)
+    meta_data_file = mnist.MEAT_DATA_FILENAME.format(dataset_dir)
 
     config = {
         'name': 'lenet_mnsit',
@@ -17,18 +21,16 @@ def create_experiment_json_fn(output_dir):
         'train_steps_per_iteration': 100,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
-            'input_type': plx.configs.InputDataConfig.NUMPY,
-            'pipeline_config': {'name': 'train', 'batch_size': 64, 'num_epochs': None,
-                                'shuffle': True},
-            'x': X_train,
-            'y': Y_train
+            'pipeline_config': {'name': 'TFRecordPipeline', 'batch_size': 64,  'num_epochs': 1,
+                                'shuffle': True, 'dynamic_pad': False,
+                                'params': {'data_files': train_data_file,
+                                           'meta_data_file': meta_data_file}},
         },
         'eval_input_data_config': {
-            'input_type': plx.configs.InputDataConfig.NUMPY,
-            'pipeline_config': {'name': 'eval', 'batch_size': 32, 'num_epochs': None,
-                                'shuffle': False},
-            'x': X_test,
-            'y': Y_test
+            'pipeline_config': {'name': 'TFRecordPipeline', 'batch_size': 32,  'num_epochs': 1,
+                                'shuffle': True, 'dynamic_pad': False,
+                                'params': {'data_files': eval_data_file,
+                                           'meta_data_file': meta_data_file}},
         },
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
@@ -39,8 +41,10 @@ def create_experiment_json_fn(output_dir):
                                     {'name': 'streaming_precision'}],
             'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002,
                                  'decay_type': 'exponential_decay', 'decay_rate': 0.2},
+            'params': {'one_hot_encode': True, 'n_classes': 10},
             'graph_config': {
                 'name': 'lenet',
+                'features': ['image'],
                 'definition': [
                     (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 5, 'strides': 1,
                                          'regularizer': 'l2_regularizer'}),

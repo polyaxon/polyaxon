@@ -32,8 +32,8 @@ def model_fn(features, labels, mode):
 
 estimator = plx.experiments.Estimator(model_fn=model_fn, model_dir="/tmp/polyaxon_logs/linear")
 
-estimator.train(input_fn=numpy_input_fn({'source_ids': X}, y, shuffle=False, num_epochs=10000,
+estimator.train(input_fn=numpy_input_fn({'X': X}, y, shuffle=False, num_epochs=10000,
                                         batch_size=len(X)))
 
-print([x['results'] for x in estimator.predict(input_fn=numpy_input_fn({'source_ids': X_val}, shuffle=False))])
+print([x['results'] for x in estimator.predict(input_fn=numpy_input_fn({'X': X_val}, shuffle=False))])
 print(y_val)

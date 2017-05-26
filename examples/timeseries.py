@@ -75,7 +75,7 @@ def generate_data(fct, x, time_steps, seperate=False):
 
 
 def create_experiment_json_fn(output_dir):
-    X, y = generate_data(np.sin, np.linspace(0, 100, 10000, dtype=np.float32), 7, seperate=False)
+    X, y = generate_data(sin_cos, np.linspace(0, 100, 10000, dtype=np.float32), 7, seperate=False)
 
     config = {
         'name': 'time_series',

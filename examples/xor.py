@@ -32,7 +32,7 @@ estimator = plx.experiments.Estimator(model_fn=model_fn, model_dir="/tmp/polyaxo
 
 
 def input_fn(num_epochs=1):
-    return numpy_input_fn({'source_ids': X}, y,
+    return numpy_input_fn({'X': X}, y,
                           shuffle=False,
                           num_epochs=num_epochs,
                           batch_size=len(X))
