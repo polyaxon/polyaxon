@@ -61,7 +61,7 @@ class Pipeline(SubGraph):
         return items_dict
 
 
-class TFRecordPipeline(Pipeline):
+class TFRecordImagePipeline(Pipeline):
     """Abstract InputPipeline class. All input pipelines must inherit from this.
     An InputPipeline defines how data is read, parsed, and separated into
     features and labels.
@@ -84,7 +84,7 @@ class TFRecordPipeline(Pipeline):
         if meta_data_file:
             with open(meta_data_file) as meta_data_file:
                 self.meta_data = json.load(meta_data_file)
-        super(TFRecordPipeline, self).__init__(mode=mode, name=name, modules=modules, kwargs=kwargs)
+        super(TFRecordImagePipeline, self).__init__(mode=mode, name=name, modules=modules, kwargs=kwargs)
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments
@@ -392,7 +392,7 @@ class ImageCaptioningPipeline(Pipeline):
 
 PIPELINES = {
     'ParallelTextPipeline': ParallelTextPipeline,
-    'TFRecordPipeline': TFRecordPipeline,
+    'TFRecordImagePipeline': TFRecordImagePipeline,
     'TFRecordSourceSequencePipeline': TFRecordSourceSequencePipeline,
     'ImageCaptioningPipeline': ImageCaptioningPipeline
 }

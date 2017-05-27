@@ -21,13 +21,13 @@ def create_experiment_json_fn(output_dir):
         'train_steps_per_iteration': 100,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
-            'pipeline_config': {'name': 'TFRecordPipeline', 'batch_size': 64,  'num_epochs': 1,
+            'pipeline_config': {'name': 'TFRecordImagePipeline', 'batch_size': 64,  'num_epochs': 1,
                                 'shuffle': True, 'dynamic_pad': False,
                                 'params': {'data_files': train_data_file,
                                            'meta_data_file': meta_data_file}},
         },
         'eval_input_data_config': {
-            'pipeline_config': {'name': 'TFRecordPipeline', 'batch_size': 32,  'num_epochs': 1,
+            'pipeline_config': {'name': 'TFRecordImagePipeline', 'batch_size': 32,  'num_epochs': 1,
                                 'shuffle': True, 'dynamic_pad': False,
                                 'params': {'data_files': eval_data_file,
                                            'meta_data_file': meta_data_file}},

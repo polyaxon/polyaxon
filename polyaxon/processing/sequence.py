@@ -157,5 +157,5 @@ def sequences_get_mask(sequences, pad_val=0):
             if seq[i_token] == pad_val:
                 mask[i_seq, i_token] = 0
             else:
-                break  # <-- exit the for loop, prepcess next sequence
+                break  # <-- exit the for loop, preprocess next sequence
     return mask
