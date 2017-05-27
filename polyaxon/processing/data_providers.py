@@ -117,7 +117,7 @@ class DataProvider(object):
 
 class DatasetDataProvider(DataProvider):
     def __init__(self, dataset, num_readers=1, reader_kwargs=None, shuffle=True, num_epochs=None,
-                 common_queue_capacity=256, common_queue_min=128, record_key='record_key',
+                 common_queue_capacity=256, common_queue_min=128, record_key='__record_key__',
                  seed=None, scope=None):
         """Creates a DatasetDataProvider.
 

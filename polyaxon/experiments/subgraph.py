@@ -10,6 +10,10 @@ import tensorflow as tf
 from polyaxon.libs.template_module import GraphModule, BaseLayer
 
 
+# Currently there's an issue with numpy_input_fn, it's keeps updating the Xs dictionary
+FEATURE_BLACK_LIST = ['__target_key__', '__record_key__']
+
+
 class SubGraph(GraphModule):
     """The `SubGraph` is a class that represents the flow of layers.
 
@@ -33,7 +37,7 @@ class SubGraph(GraphModule):
 
         if wrong_modules:
             raise TypeError('`Subgraph` expects all modules to be subclass of `BaseLayer`, '
-                             'received {}'.format(wrong_modules))
+                            'received {}'.format(wrong_modules))
 
         self._modules = modules
         self._built_modules = []
@@ -47,7 +51,7 @@ class SubGraph(GraphModule):
     def _get_incoming(self, incoming):
         if isinstance(incoming, Mapping):
             columns = self._features if self._features else list(incoming.keys())
-            _incoming = [incoming[col] for col in columns]
+            _incoming = [incoming[col] for col in columns if col not in FEATURE_BLACK_LIST]
             return tf.concat(values=_incoming, axis=1) if len(_incoming) > 1 else _incoming[0]
         return incoming
 

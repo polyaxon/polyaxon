@@ -31,7 +31,7 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
 
     if input_type == InputDataConfig.NUMPY:
         # setup_train_data_feeder
-        return numpy_input_fn({'x': x}, y,
+        return numpy_input_fn(x, y,
                               batch_size=pipeline_config.batch_size,
                               num_epochs=pipeline_config.num_epochs,
                               shuffle=pipeline_config.shuffle,

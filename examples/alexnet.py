@@ -2,13 +2,17 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
-import polyaxon as plx
 
-from examples.mnist_data import load_mnist
+import polyaxon as plx
+from polyaxon.datasets import mnist
 
 
 def create_experiment_json_fn(output_dir):
-    X_train, Y_train, X_test, Y_test = load_mnist()
+    dataset_dir = './data/mnist'
+    mnist.prepare(dataset_dir)
+    train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)
+    eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.EVAL)
+    meta_data_file = mnist.MEAT_DATA_FILENAME.format(dataset_dir)
 
     config = {
         'name': 'real_mnsit',
@@ -16,27 +20,27 @@ def create_experiment_json_fn(output_dir):
         'eval_every_n_steps': 5,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
-            'input_type': plx.configs.InputDataConfig.NUMPY,
-            'pipeline_config': {'name': 'train', 'batch_size': 64, 'num_epochs': 5,
-                                'shuffle': True},
-            'x': X_train,
-            'y': Y_train
+            'pipeline_config': {'name': 'TFRecordPipeline', 'batch_size': 64, 'num_epochs': 5,
+                                'shuffle': True, 'dynamic_pad': False,
+                                'params': {'data_files': train_data_file,
+                                           'meta_data_file': meta_data_file}},
         },
         'eval_input_data_config': {
-            'input_type': plx.configs.InputDataConfig.NUMPY,
-            'pipeline_config': {'name': 'eval', 'batch_size': 32, 'num_epochs': 1,
-                                'shuffle': False},
-            'x': X_test,
-            'y': Y_test
+            'pipeline_config': {'name': 'TFRecordPipeline', 'batch_size': 32, 'num_epochs': 1,
+                                'shuffle': True, 'dynamic_pad': False,
+                                'params': {'data_files': eval_data_file,
+                                           'meta_data_file': meta_data_file}},
         },
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
             'model_type': 'classifier',
             'loss_config': {'name': 'sigmoid_cross_entropy'},
             'eval_metrics_config': [{'name': 'streaming_accuracy'}],
-            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.01},
+            'optimizer_config': {'name': 'Adam', 'learning_rate': 0.001},
+            'params': {'one_hot_encode': True, 'n_classes': 10},
             'graph_config': {
                 'name': 'mnist',
+                'features': ['image'],
                 'definition': [
                     (plx.layers.Conv2d,
                      {'num_filter': 32, 'filter_size': 3, 'strides': 1, 'activation': 'elu',

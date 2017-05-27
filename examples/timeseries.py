@@ -87,14 +87,14 @@ def create_experiment_json_fn(output_dir):
             'input_type': plx.configs.InputDataConfig.NUMPY,
             'pipeline_config': {'name': 'train', 'batch_size': 64, 'num_epochs': None,
                                 'shuffle': False},
-            'x': X['train'],
+            'x': {'x': X['train']},
             'y': y['train']
         },
         'eval_input_data_config': {
             'input_type': plx.configs.InputDataConfig.NUMPY,
             'pipeline_config': {'name': 'eval', 'batch_size': 32, 'num_epochs': None,
                                 'shuffle': False},
-            'x': X['val'],
+            'x': {'x': X['val']},
             'y': y['val']
         },
         'estimator_config': {'output_dir': output_dir},
@@ -106,6 +106,7 @@ def create_experiment_json_fn(output_dir):
             'optimizer_config': {'name': 'Adagrad', 'learning_rate': 0.1},
             'graph_config': {
                 'name': 'regressor',
+                'features': ['x'],
                 'definition': [
                     (plx.layers.LSTM, {'num_units': 7, 'num_layers': 1}),
                     # (Slice, {'begin': [0, 6], 'size': [-1, 1]}),

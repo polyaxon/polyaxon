@@ -2,7 +2,6 @@
 [![PyPI version](https://badge.fury.io/py/polyaxon.svg)](https://badge.fury.io/py/polyaxon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/polyaxon/polyaxon)
-[![codecov](https://codecov.io/gh/mouradmourafiq/polyaxon/branch/master/graph/badge.svg)](https://codecov.io/gh/mouradmourafiq/polyaxon)
 
 # Polyaxon
 
@@ -137,6 +136,11 @@ Alternatively, you can also install from source by running (from source folder):
 # Examples
 
 Some example are provided [here](examples), more examples and use case will pushed, a contribution with an example is also appreciated.
+
+# Project status
+
+Polyaxon is in a pre-release "alpha" state. All interfaces, programming interfaces, and data structures may be changed without prior notice. 
+We'll do our best to communicate potentially disruptive changes.
 
 # Contributions
 

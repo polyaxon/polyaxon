@@ -17,7 +17,7 @@ class TestBaseModel(test.TestCase):
     @staticmethod
     def get_dummy_graph_fn():
         def graph_fn(mode, inputs):
-            x = plx.layers.FullyConnected(mode=mode, n_units=1, activation='relu')(inputs)
+            x = plx.layers.FullyConnected(mode=mode, n_units=1, activation='relu')(inputs['x'])
             x = plx.layers.FullyConnected(mode=mode, n_units=1, activation='relu')(x)
             return x
 
