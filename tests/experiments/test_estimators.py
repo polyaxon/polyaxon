@@ -46,6 +46,7 @@ from tensorflow.python.util import compat
 from polyaxon import ModeKeys
 from polyaxon.experiments import Estimator
 from polyaxon.libs.configs import RunConfig
+from polyaxon.libs.exceptions import EstimatorNotTrainedError
 
 _TMP_DIR = '/tmp/polyaxon_logs'
 _ANOTHER_TMP_DIR = '/another_tmp'
@@ -526,7 +527,7 @@ class EstimatorEvaluateTest(test.TestCase):
 
     def test_no_trained_model(self):
         est = Estimator(model_fn=_model_fn_with_eval_metric_ops)
-        with self.assertRaisesRegexp(ValueError, 'Could not find trained model'):
+        with self.assertRaisesRegexp(EstimatorNotTrainedError, 'Could not find trained model'):
             est.evaluate(dummy_input_fn, steps=1)
 
     def test_scores(self):

@@ -10,11 +10,7 @@ import tensorflow as tf
 
 from polyaxon import ModeKeys
 from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGNumpyImageReader
-from polyaxon.datasets.utils import download_datasets, delete_datasets, make_dataset_dir, \
-    count_tfrecord_file_content
-from polyaxon.libs.configs import PipelineConfig
-from polyaxon.processing import create_input_data_fn
-from polyaxon.processing.image import resize
+from polyaxon.datasets.utils import download_datasets, make_dataset_dir, count_tfrecord_file_content
 
 _DATA_URL = 'https://www.cs.toronto.edu/~kriz/'
 

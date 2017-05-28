@@ -35,6 +35,7 @@ from polyaxon.experiments import hooks as plx_hooks
 from polyaxon import ModeKeys
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.dicts import dict_to_str
+from polyaxon.libs.exceptions import EstimatorNotTrainedError
 from polyaxon.libs.utils import extract_batch_length, generate_model_dir, get_arguments
 
 
@@ -582,7 +583,8 @@ class Estimator(object):
         if not checkpoint_path:
             latest_path = saver.latest_checkpoint(self._model_dir)
             if not latest_path:
-                raise ValueError("Could not find trained model at {}.".format(self._model_dir))
+                error_message = "Could not find trained model at {}.".format(self._model_dir)
+                raise EstimatorNotTrainedError(error_message)
             checkpoint_path = latest_path
 
         # Setup output directory.

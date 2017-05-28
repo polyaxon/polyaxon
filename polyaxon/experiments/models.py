@@ -212,7 +212,7 @@ class BaseModel(GraphModule):
 
     def __call__(self, features, labels, params=None, config=None):
         """Calls the built mode."""
-        return self._template(features, labels, params, config)
+        return super(BaseModel, self).__call__(features, labels, params, config)
 
     def _build(self, features, labels, params=None, config=None):
         """Subclasses should implement this method. See the `model_fn` documentation
