@@ -83,9 +83,10 @@ class BatchNormalization(BaseLayer):
                 return tf.identity(mean), tf.identity(variance)
 
         # Retrieve variable managing training mode
-        is_training = self.mode == ModeKeys.TRAIN
-        mean, var = tf.cond(
-            pred=is_training, fn1=update_mean_var, fn2=lambda: (moving_mean, moving_variance))
+        if self.mode == ModeKeys.TRAIN:
+            mean, var = update_mean_var()
+        else:
+            mean, var = moving_mean, moving_variance
 
         incoming = tf.nn.batch_normalization(x=incoming, mean=mean, variance=var, offset=self._beta,
                                              scale=self._gamma, variance_epsilon=self.epsilon)

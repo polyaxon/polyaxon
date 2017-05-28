@@ -22,7 +22,7 @@ _NUM_CHANNELS = 3
 
 _IMAGE_SIZE = 224
 
-_IMAGE_FORMAT = 'JPEG'
+_IMAGE_FORMAT = 'jpg'
 
 _IMAGE_COLORSPACE = 'RGB'
 
@@ -119,7 +119,7 @@ def prepare(dataset_dir):
 
     image_reader = JPEGImageReader(channels=_NUM_CHANNELS)
     converter = ImagesToTFExampleConverter(
-        classes=list(range(17)), colorspace=_IMAGE_COLORSPACE, image_format=_IMAGE_COLORSPACE,
+        classes=list(range(17)), colorspace=_IMAGE_COLORSPACE, image_format=_IMAGE_FORMAT,
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
     prepare_dataset(converter, dataset_dir, 1360, folds=_FOLDS)
@@ -158,6 +158,3 @@ def create_input_fn(dataset_dir):
                                                'meta_data_file': meta_data_filename})
     )
     return train_input_fn, eval_input_fn
-
-
-prepare('./flowers')

@@ -11,6 +11,8 @@ import tensorflow as tf
 from polyaxon import ModeKeys
 from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGNumpyImageReader
 from polyaxon.datasets.utils import download_datasets, make_dataset_dir, count_tfrecord_file_content
+from polyaxon.libs.configs import PipelineConfig
+from polyaxon.processing import create_input_data_fn
 
 _DATA_URL = 'https://www.cs.toronto.edu/~kriz/'
 
@@ -83,7 +85,7 @@ def prepare(dataset_dir):
         'airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'
     ]
     converter = ImagesToTFExampleConverter(
-        classes=classes, colorspace=_IMAGE_COLORSPACE, image_format=_IMAGE_COLORSPACE,
+        classes=classes, colorspace=_IMAGE_COLORSPACE, image_format=_IMAGE_FORMAT,
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
     prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN,
@@ -110,7 +112,24 @@ def prepare(dataset_dir):
         }
         json.dump(meta_data, meta_data_file)
 
-    print('\nFinished converting the flowers17 dataset!')
+    print('\nFinished converting the cifar10 dataset!')
 
 
-prepare('./cifar')
+def create_input_fn(dataset_dir):
+    prepare(dataset_dir)
+    train_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.TRAIN)
+    eval_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
+    meta_data_filename = MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
+    train_input_fn = create_input_data_fn(
+        mode=ModeKeys.TRAIN,
+        pipeline_config=PipelineConfig(name='TFRecordImagePipeline', dynamic_pad=False,
+                                       params={'data_files': train_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    eval_input_fn = create_input_data_fn(
+        mode=ModeKeys.EVAL,
+        pipeline_config=PipelineConfig(name='TFRecordImagePipeline', dynamic_pad=False,
+                                       params={'data_files': eval_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    return train_input_fn, eval_input_fn

@@ -159,5 +159,3 @@ def create_input_fn(dataset_dir):
                                                'meta_data_file': meta_data_filename})
     )
     return train_input_fn, eval_input_fn
-
-prepare('./mnist')

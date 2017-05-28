@@ -66,7 +66,7 @@ def create_experiment_json_fn(output_dir):
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
-                                   output_dir="/tmp/polyaxon_logs/alexnet",
+                                   output_dir="/tmp/polyaxon_logs/conv_mnsit",
                                    schedule='continuous_train_and_evaluate')
 
 
