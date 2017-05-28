@@ -8,6 +8,12 @@ import tarfile
 import tensorflow as tf
 
 from six.moves import urllib
+from tensorflow.python.framework.errors_impl import NotFoundError
+
+
+def make_dataset_dir(dataset_dir):
+    if not tf.gfile.Exists(dataset_dir):
+        tf.gfile.MakeDirs(dataset_dir)
 
 
 def download_datasets(dataset_dir, url, filenames, uncompress=False):
@@ -52,4 +58,11 @@ def delete_datasets(dataset_dir, filenames):
     """
     for filename in filenames:
         filepath = os.path.join(dataset_dir, filename)
-        tf.gfile.Remove(filepath)
+        try:
+            tf.gfile.Remove(filepath)
+        except NotFoundError:
+            pass
+
+
+def count_tfrecord_file_content(tfrecord_filename):
+    return len([_ for _ in tf.python_io.tf_record_iterator(tfrecord_filename)])

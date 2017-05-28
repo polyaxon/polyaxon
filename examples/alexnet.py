@@ -12,7 +12,7 @@ def create_experiment_json_fn(output_dir):
     mnist.prepare(dataset_dir)
     train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)
     eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.EVAL)
-    meta_data_file = mnist.MEAT_DATA_FILENAME.format(dataset_dir)
+    meta_data_file = mnist.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
         'name': 'real_mnsit',

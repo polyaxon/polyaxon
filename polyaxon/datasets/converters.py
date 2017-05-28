@@ -10,33 +10,42 @@ import tensorflow as tf
 
 
 class ImageReader(object):
-    decoder = None
-
     def __init__(self, channels=3):
-        assert self.decoder is not None, '`decoder` cannot be `None`.'
         self._placeholder = tf.placeholder(dtype=tf.string)
-        self._image = self.decoder(self._placeholder, channels=channels)
+        self._image = self.decoder(channels)
+
+    def decoder(self, channels):
+        raise NotImplementedError
 
     def read(self, session, image_data, processing_fn=None):
         _image = self._image
         if processing_fn:
             _image = processing_fn(_image)
-        return session.run(_image, feed_dict={self._placeholder: image_data})
+        return image_data, session.run(_image, feed_dict={self._placeholder: image_data})
 
 
 class PNGImageReader(ImageReader):
-    decoder = tf.image.decode_png
+    def decoder(self, channels):
+        return tf.image.decode_png(self._placeholder, channels=channels)
     
 
-class PNGImageReaderNP(ImageReader):
+class PNGNumpyImageReader(ImageReader):
     
-    def __init__(self, shape):
+    def __init__(self, shape=None):
         self._placeholder = tf.placeholder(dtype=tf.uint8, shape=shape)
         self._image = tf.image.encode_png(self._placeholder)
 
+    def decoder(self, channels):
+        pass
+
+    def read(self, session, image_data, processing_fn=None):
+        _, image = super(PNGNumpyImageReader, self).read(session, image_data, processing_fn)
+        return image, image
+
 
 class JPEGImageReader(ImageReader):
-    decoder = tf.image.decode_jpeg
+    def decoder(self, channels):
+        return tf.image.decode_jpeg(self._placeholder, channels=channels)
 
 
 class ImagesToTFExampleConverter(object):
@@ -141,18 +150,18 @@ class ImagesToTFExampleConverter(object):
         return tf.train.Feature(float_list=tf.train.FloatList(value=values))
 
     def get_image_features(self, image):
-        height = image.shape[1]
-        width = image.shape[2]
-        assert image.shape[3] == self.channels
+        height = image.shape[0]
+        width = image.shape[1]
+        assert image.shape[2] == self.channels
         if self.height:
             assert height == self.height
         if self.width:
             assert height == self.width
         return height, width
 
-    def create_example(self, image, label, filename):
-        if hasattr(image, 'shape'):
-            height, width = self.get_image_features(image=image)
+    def create_example(self, image_data, encoded_image, label, filename):
+        if hasattr(encoded_image, 'shape'):
+            height, width = self.get_image_features(image=encoded_image)
         else:
             # the image could a bytes string
             height, width = self.height, self.width
@@ -167,11 +176,15 @@ class ImagesToTFExampleConverter(object):
                              'If all images have the `width`, please provide '
                              'the `width`  at instantiation.')
 
-        features = {'image/class/label': self.to_int64_feature(label),
-                    'image/encoded': self.to_bytes_feature(tf.compat.as_bytes(image)),
-                    'image/width': self.to_int64_feature(width),
-                    'image/height': self.to_int64_feature(height),
-                    'image/format': self.to_bytes_feature(self.image_format.encode())}
+        features = {
+            'image/class/label': self.to_int64_feature(label),
+            'image/encoded': self.to_bytes_feature(tf.compat.as_bytes(image_data)),
+            'image/width': self.to_int64_feature(width),
+            'image/height': self.to_int64_feature(height),
+            'image/format': self.to_bytes_feature(self.image_format.encode()),
+            'image/colorspace': self.to_bytes_feature(tf.compat.as_bytes(self.colorspace)),
+            'image/channels': self.to_int64_feature(self.channels),
+        }
         if self.store_filenames:
             filename_feature = self.to_bytes_feature(tf.compat.as_bytes(os.path.basename(filename)))
             features['image/filename'] = filename_feature
@@ -190,8 +203,8 @@ class ImagesToTFExampleConverter(object):
             sys.stdout.write('\r>> Converting image %d/%d' % (i + 1, total_num_items))
             sys.stdout.flush()
 
-            encoded_image = self.image_reader.read(
+            image_data, encoded_image = self.image_reader.read(
                 session=session, image_data=images[i], processing_fn=processing_fn)
-            example = self.create_example(encoded_image, labels[i],
+            example = self.create_example(image_data, encoded_image, labels[i],
                                           filenames[i] if self.store_filenames else None)
             writer.write(example.SerializeToString())

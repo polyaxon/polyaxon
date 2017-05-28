@@ -9,8 +9,8 @@ import numpy as np
 import tensorflow as tf
 
 from polyaxon import ModeKeys
-from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGImageReaderNP
-from polyaxon.datasets.utils import download_datasets, delete_datasets
+from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGNumpyImageReader
+from polyaxon.datasets.utils import download_datasets, delete_datasets, make_dataset_dir
 from polyaxon.libs.configs import PipelineConfig
 from polyaxon.processing import create_input_data_fn
 
@@ -20,7 +20,7 @@ _TRAIN_LABELS_FILENAME = 'train-labels-idx1-ubyte.gz'
 _TEST_DATA_FILENAME = 't10k-images-idx3-ubyte.gz'
 _TEST_LABELS_FILENAME = 't10k-labels-idx1-ubyte.gz'
 
-MEAT_DATA_FILENAME = '{}/meta_data.json'
+MEAT_DATA_FILENAME_FORMAT = '{}/meta_data.json'
 
 RECORD_FILE_NAME_FORMAT = '{}/mnist_{}.tfrecord'
 
@@ -65,10 +65,10 @@ def _extract_labels(filename, num_labels):
     return labels
 
 
-def prepare_dataset(converter, dataset_dir, data_name, num_images, num_validation=0):
+def prepare_dataset(converter, dataset_dir, data_name, num_images, num_eval=0):
     filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, data_name)
-    if num_validation:
-        validation_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
+    if num_eval:
+        eval_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
 
     if tf.gfile.Exists(filename):
         print('`{}` Dataset files already exist. '
@@ -91,20 +91,20 @@ def prepare_dataset(converter, dataset_dir, data_name, num_images, num_validatio
 
     images = _extract_images(data_filename, num_images)
     labels = _extract_labels(labels_filename, num_images)
-    if num_validation:
-        images, validation_images = images[num_validation:], images[:num_validation]
-        labels, validation_labels = labels[num_validation:], labels[:num_validation]
+    if num_eval:
+        images, eval_images = images[num_eval:], images[:num_eval]
+        labels, eval_labels = labels[num_eval:], labels[:num_eval]
 
     with tf.python_io.TFRecordWriter(filename) as tfrecord_writer:
         with tf.Session('') as session:
             converter.convert(session=session, writer=tfrecord_writer, images=images,
                               labels=labels, total_num_items=len(images))
 
-    if num_validation:
-        with tf.python_io.TFRecordWriter(validation_filename) as tfrecord_writer:
+    if num_eval:
+        with tf.python_io.TFRecordWriter(eval_filename) as tfrecord_writer:
             with tf.Session('') as session:
-                converter.convert(session=session, writer=tfrecord_writer, images=validation_images,
-                                  labels=validation_labels, total_num_items=len(validation_images))
+                converter.convert(session=session, writer=tfrecord_writer, images=eval_images,
+                                  labels=eval_labels, total_num_items=len(eval_images))
 
     delete_datasets(dataset_dir, filenames)
 
@@ -115,24 +115,27 @@ def prepare(dataset_dir):
     Args:
         dataset_dir: The dataset directory where the dataset is stored.
     """
-    if not tf.gfile.Exists(dataset_dir):
-        tf.gfile.MakeDirs(dataset_dir)
+    make_dataset_dir(dataset_dir)
 
-    image_reader = PNGImageReaderNP(shape=(_IMAGE_SIZE, _IMAGE_SIZE, _NUM_CHANNELS))
+    image_reader = PNGNumpyImageReader(shape=(_IMAGE_SIZE, _IMAGE_SIZE, _NUM_CHANNELS))
     classes = ['zero', 'one', 'two', 'three', 'four', 'five', 'size', 'seven', 'eight', 'nine']
     converter = ImagesToTFExampleConverter(
         classes=classes, colorspace='grayscale', image_format='png',
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
-    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN, 60000, num_validation=10000)
-    prepare_dataset(converter, dataset_dir, ModeKeys.PREDICT, 10000)
+    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN, 60000, num_eval=10000)
+    prepare_dataset(converter, dataset_dir, 'test', 10000)
 
     # Finally, write the meta data:
-    with open(MEAT_DATA_FILENAME.format(dataset_dir), 'w') as meta_data_file:
+    with open(MEAT_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
         meta_data = converter.get_meta_data()
         meta_data['num_samples'] = {ModeKeys.TRAIN: 50000,
                                     ModeKeys.EVAL: 10000,
                                     ModeKeys.PREDICT: 10000}
+        meta_data['items_to_descriptions'] = {
+            'image': 'A image of fixed size 28.',
+            'label': 'A single integer between 0 and 9',
+        }
         json.dump(meta_data, meta_data_file)
 
     print('\nFinished converting the MNIST dataset!')
@@ -142,7 +145,7 @@ def create_input_fn(dataset_dir):
     prepare(dataset_dir)
     train_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.TRAIN)
     eval_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
-    meta_data_filename = MEAT_DATA_FILENAME.format(dataset_dir)
+    meta_data_filename = MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
     train_input_fn = create_input_data_fn(
         mode=ModeKeys.TRAIN,
         pipeline_config=PipelineConfig(name='TFRecordImagePipeline', dynamic_pad=False,
@@ -156,3 +159,5 @@ def create_input_fn(dataset_dir):
                                                'meta_data_file': meta_data_filename})
     )
     return train_input_fn, eval_input_fn
+
+prepare('./mnist')

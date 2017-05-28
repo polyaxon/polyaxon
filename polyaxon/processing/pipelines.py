@@ -118,6 +118,7 @@ class TFRecordImagePipeline(Pipeline):
             decoder=decoder,
             num_samples=self.meta_data.get('num_samples', {}).get(self.mode),
             num_classes=self.meta_data['num_classes'],
+            items_to_descriptions=self.meta_data.get('items_to_descriptions', {}),
             meta_data=self.meta_data,
             labels_to_names=self.meta_data['labels_to_classes'])
 
