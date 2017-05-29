@@ -20,7 +20,7 @@ class ImageReader(object):
     def read(self, session, image_data, processing_fn=None):
         _image = self._image
         if processing_fn:
-            _image = processing_fn(_image)
+            _image = processing_fn(session, _image)
         return image_data, session.run(_image, feed_dict={self._placeholder: image_data})
 
 
@@ -40,6 +40,19 @@ class PNGNumpyImageReader(ImageReader):
 
     def read(self, session, image_data, processing_fn=None):
         _, image = super(PNGNumpyImageReader, self).read(session, image_data, processing_fn)
+        return image, image
+
+
+class JPGNumpyImageReader(ImageReader):
+    def __init__(self, shape=None):
+        self._placeholder = tf.placeholder(dtype=tf.uint8, shape=shape)
+        self._image = tf.image.encode_jpeg(self._placeholder)
+
+    def decoder(self, channels):
+        pass
+
+    def read(self, session, image_data, processing_fn=None):
+        _, image = super(JPGNumpyImageReader, self).read(session, image_data, processing_fn)
         return image, image
 
 
@@ -171,7 +184,7 @@ class ImagesToTFExampleConverter(object):
                              'If all images have the `height`, please provide '
                              'the `height`  at instantiation.')
 
-        if self.width is None:
+        if width is None:
             raise ValueError('No `width` will be stored for the images. '
                              'If all images have the `width`, please provide '
                              'the `width`  at instantiation.')
@@ -192,7 +205,7 @@ class ImagesToTFExampleConverter(object):
         return tf.train.Example(features=tf.train.Features(feature=features))
 
     def convert(self, session, writer, images, labels, total_num_items, start_index=0,
-                filenames=None, processing_fn=None):
+                filenames=None, processing_fn=None, post_processing_fn=None):
 
         if self.store_filenames and not filenames:
             raise ValueError('`filenames` is required to store the filename in TF-Example.'
@@ -205,6 +218,8 @@ class ImagesToTFExampleConverter(object):
 
             image_data, encoded_image = self.image_reader.read(
                 session=session, image_data=images[i], processing_fn=processing_fn)
+            if post_processing_fn:
+                _, image_data = post_processing_fn(session, encoded_image)
             example = self.create_example(image_data, encoded_image, labels[i],
                                           filenames[i] if self.store_filenames else None)
             writer.write(example.SerializeToString())

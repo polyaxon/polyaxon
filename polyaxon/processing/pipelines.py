@@ -92,7 +92,8 @@ class TFRecordImagePipeline(Pipeline):
         """
         keys_to_features = {
             'image/encoded': tf.FixedLenFeature((), tf.string, default_value=''),
-            'image/format': tf.FixedLenFeature((), tf.string, default_value='raw'),
+            'image/format': tf.FixedLenFeature((), tf.string,
+                                               default_value=self.meta_data.get('image_format')),
             'image/class/label': tf.FixedLenFeature(
                 [1], tf.int64, default_value=tf.zeros([1], dtype=tf.int64)),
         }

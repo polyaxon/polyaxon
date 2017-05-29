@@ -66,3 +66,30 @@ def delete_datasets(dataset_dir, filenames):
 
 def count_tfrecord_file_content(tfrecord_filename):
     return len([_ for _ in tf.python_io.tf_record_iterator(tfrecord_filename)])
+
+
+def verify_tfrecord_image(dataset_dir, create_input_fn, channels=3):
+    import matplotlib.pyplot as plt
+    from tensorflow.python.training import coordinator
+    from tensorflow.python.training import queue_runner_impl
+
+    def details(img, label):
+        print('------image: {}'.format(label))
+        plt.imshow(img)
+        plt.show()
+
+    create_input_fns = create_input_fn(dataset_dir)
+
+    for input_fn in create_input_fns:
+        with tf.Session() as session:
+            image, label = input_fn()
+            coord = coordinator.Coordinator()
+            threads = queue_runner_impl.start_queue_runners(session, coord=coord)
+            img, lab = session.run([image['image'], label['label']])
+
+            print('Train data {}'.format(img[:, :, :].shape))
+            for i in range(3):
+                details(img[i, :, :, :] if channels > 1 else img[i, :, :, 0], lab[i])
+
+            coord.request_stop()
+            coord.join(threads)

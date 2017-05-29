@@ -8,7 +8,11 @@ from random import shuffle
 import tensorflow as tf
 
 from polyaxon import ModeKeys
-from polyaxon.datasets.converters import ImagesToTFExampleConverter, JPEGImageReader
+from polyaxon.datasets.converters import (
+    ImagesToTFExampleConverter,
+    JPEGImageReader,
+    JPGNumpyImageReader
+)
 from polyaxon.datasets.utils import download_datasets, delete_datasets, make_dataset_dir
 from polyaxon.libs.configs import PipelineConfig
 from polyaxon.processing import create_input_data_fn
@@ -22,7 +26,7 @@ _NUM_CHANNELS = 3
 
 _IMAGE_SIZE = 224
 
-_IMAGE_FORMAT = 'jpg'
+_IMAGE_FORMAT = 'jpeg'
 
 _IMAGE_COLORSPACE = 'RGB'
 
@@ -67,9 +71,16 @@ def convert_images(session, writer, converter, filesnames_by_classes):
             labels.append(class_id)
             image_filenames.append(image_filename)
 
+    image_encoder = JPGNumpyImageReader(shape=(_IMAGE_SIZE, _IMAGE_SIZE, _NUM_CHANNELS))
+
+    def processing_fn(session, image):
+        image = resize(image, _IMAGE_SIZE, _IMAGE_SIZE)
+        image.set_shape((_IMAGE_SIZE, _IMAGE_SIZE, _NUM_CHANNELS))
+        return image
+
     converter.convert(session=session, writer=writer, images=images, labels=labels,
                       total_num_items=len(images), filenames=image_filenames,
-                      processing_fn=lambda image: resize(image, _IMAGE_SIZE, _IMAGE_SIZE))
+                      processing_fn=processing_fn, post_processing_fn=image_encoder.read)
 
 
 def prepare_dataset(converter, dataset_dir, num_images, folds):
