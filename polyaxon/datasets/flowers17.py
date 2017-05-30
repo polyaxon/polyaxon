@@ -2,8 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+
 from collections import defaultdict
 from random import shuffle
+from six.moves import xrange
 
 import tensorflow as tf
 
@@ -40,7 +42,7 @@ RECORD_FILE_NAME_FORMAT = '{}/flowers_{}.tfrecord'
 def filenames_by_classes(dataset_dir, num_images, folds):
     class_id = 0
     filenames_classes = defaultdict(list)
-    for i in range(1, num_images + 1):
+    for i in xrange(1, num_images + 1):
         fname = 'image_{:04d}.jpg'.format(i)
         filenames_classes[class_id].append('{}/jpg/{}'.format(dataset_dir, fname))
         if i % 80 == 0 and class_id < 16:
@@ -50,7 +52,7 @@ def filenames_by_classes(dataset_dir, num_images, folds):
     eval_filenames_by_classes = {}
     test_filenames_by_classes = {}
 
-    for i in range(17):
+    for i in xrange(17):
         shuffle(filenames_classes[i])
         parts = len(filenames_classes[i]) // folds
         train_filenames_by_classes[i] = filenames_classes[i][2 * parts:]

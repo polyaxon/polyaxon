@@ -5,6 +5,8 @@ import copy
 import os
 import six
 
+from six.moves import xrange
+
 import numpy as np
 import tensorflow as tf
 
@@ -455,7 +457,7 @@ class Estimator(object):
                         for pred in preds_evaluated:
                             yield pred
                     else:
-                        for i in range(extract_batch_length(preds_evaluated)):
+                        for i in xrange(extract_batch_length(preds_evaluated)):
                             yield {key: value[i] for key, value in six.iteritems(preds_evaluated)}
 
     def get_variable_value(self, name):

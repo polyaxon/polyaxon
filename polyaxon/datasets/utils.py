@@ -5,6 +5,8 @@ import os
 import sys
 import tarfile
 
+from six.moves import xrange
+
 import tensorflow as tf
 
 from six.moves import urllib
@@ -88,7 +90,7 @@ def verify_tfrecord_image(dataset_dir, create_input_fn, channels=3):
             img, lab = session.run([image['image'], label['label']])
 
             print('Train data {}'.format(img[:, :, :].shape))
-            for i in range(3):
+            for i in xrange(3):
                 details(img[i, :, :, :] if channels > 1 else img[i, :, :, 0], lab[i])
 
             coord.request_stop()

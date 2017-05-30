@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from math import ceil
+from six.moves import xrange
 
 import numpy as np
 import tensorflow as tf
@@ -411,12 +412,12 @@ class Upscore(BaseLayer):
             f = ceil(width / 2.0)
             c = (2 * f - 1 - f % 2) / (2.0 * f)
             bi_linear = np.zeros([f_shape[0], f_shape[1]])
-            for x in range(width):
-                for y in range(heigh):
+            for x in xrange(width):
+                for y in xrange(heigh):
                     value = (1 - abs(x / f - c)) * (1 - abs(y / f - c))
                     bi_linear[x, y] = value
             weights = np.zeros(f_shape)
-            for i in range(f_shape[2]):
+            for i in xrange(f_shape[2]):
                 weights[:, :, i, i] = bi_linear
 
             init = tf.constant_initializer(value=weights, dtype=tf.float32)
@@ -1051,7 +1052,7 @@ class ResidualBlock(BaseLayer):
         resnet = incoming
         in_channels = get_shape(incoming)[-1]
 
-        for i in range(self.nb_blocks):
+        for i in xrange(self.nb_blocks):
             identity = resnet
 
             if self._batch_norm1:
@@ -1182,7 +1183,7 @@ class ResidualBottleneck(BaseLayer):
         resnet = incoming
         in_channels = get_shape(incoming)[-1]
 
-        for i in range(self.nb_blocks):
+        for i in xrange(self.nb_blocks):
             identity = resnet
 
             if self._batch_norm1:

@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from six.moves import xrange
+
 import numpy as np
 import tensorflow as tf
 
 from tensorflow.python.framework import dtypes
 from tensorflow.python.ops import standard_ops
 
+from polyaxon import ModeKeys
 from polyaxon.libs import getters
 from polyaxon.libs.template_module import BaseLayer
 from polyaxon.libs.utils import get_shape, track
@@ -36,6 +39,7 @@ class FullyConnected(BaseLayer):
         regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
             Default: None.
         scale: `float`. Regularizer decay parameter. Default: 0.001.
+        keep_prob: `float`. Adds a dropout with this value as `keep_prob`.
         trainable: `bool`. If True, weights will be trainable.
         restore: `bool`. If True, this layer weights will be restored when
             loading a model.
@@ -47,7 +51,7 @@ class FullyConnected(BaseLayer):
     """
     def __init__(self, mode, n_units, activation='linear', bias=True,
                  weights_init='truncated_normal', bias_init='zeros', regularizer=None,
-                 scale=0.001, trainable=True, restore=True, name="FullyConnected"):
+                 scale=0.001, keep_prob=0.0, trainable=True, restore=True, name="FullyConnected"):
         super(FullyConnected, self).__init__(mode, name)
         self.n_units = n_units
         self.activation = activation
@@ -56,6 +60,7 @@ class FullyConnected(BaseLayer):
         self.bias_init = bias_init
         self.regularizer = regularizer
         self.scale = scale
+        self.keep_prob = keep_prob
         self.trainable = trainable
         self.restore = restore
 
@@ -67,6 +72,11 @@ class FullyConnected(BaseLayer):
     def b(self):
         return self._b
 
+    def _declare_dependencies(self):
+        self._dropout = None
+        if self.keep_prob > 0:
+            self._dropout = Dropout(mode=self.mode, keep_prob=self.keep_prob)
+
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
@@ -75,6 +85,7 @@ class FullyConnected(BaseLayer):
         Returns:
             2D Tensor [samples, n_units].
         """
+        self._declare_dependencies()
         input_shape = get_shape(incoming)
 
         assert len(input_shape) > 1, 'Incoming Tensor shape must be at least 2-D'
@@ -103,6 +114,9 @@ class FullyConnected(BaseLayer):
 
         if self.activation:
             inference = getters.get_activation(self.activation, collect=True)(inference)
+
+        if self._dropout:
+            inference = self._dropout(inference)
 
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return inference
@@ -166,7 +180,8 @@ class Dropout(BaseLayer):
                 return tf.nn.dropout(x=inference, keep_prob=_keep_prob,
                                      noise_shape=self.noise_shape, seed=self.seed)
 
-        inference = apply_dropout()
+        if self.mode == ModeKeys.TRAIN:
+            inference = apply_dropout()
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return inference
 
@@ -495,11 +510,11 @@ class Merge(BaseLayer):
             x = tf.concat(axis=self.axis, values=dependencies)
         elif self.merge_mode == self.MergeMode.ELEMENTWISE_SUM:
             x = dependencies[0]
-            for i in range(1, len(dependencies)):
+            for i in xrange(1, len(dependencies)):
                 x = tf.add(x, dependencies[i])
         elif self.merge_mode == self.MergeMode.ELEMENTWISE_MUL:
             x = dependencies[0]
-            for i in range(1, len(dependencies)):
+            for i in xrange(1, len(dependencies)):
                 x = tf.multiply(x, dependencies[i])
         elif self.merge_mode == self.MergeMode.SUM:
             x = tf.reduce_sum(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)

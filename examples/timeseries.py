@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from six.moves import xrange
+
 import numpy as np
 try:
     import pandas as pd
@@ -28,7 +30,7 @@ def rnn_data(data, time_steps, labels=False):
         -> labels == True [3, 4, 5]
     """
     rnn_df = []
-    for i in range(len(data) - time_steps):
+    for i in xrange(len(data) - time_steps):
         if labels:
             try:
                 rnn_df.append(data.iloc[i + time_steps].as_matrix())

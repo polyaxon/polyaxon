@@ -5,6 +5,7 @@ import os
 import sys
 
 from collections import Mapping
+from six.moves import xrange
 
 import tensorflow as tf
 
@@ -212,7 +213,7 @@ class ImagesToTFExampleConverter(object):
                              'Either provide a list of `filenames` or '
                              'set `store_filenames` to `False`')
 
-        for i in range(start_index, len(images)):
+        for i in xrange(start_index, len(images)):
             sys.stdout.write('\r>> Converting image %d/%d' % (i + 1, total_num_items))
             sys.stdout.flush()
 

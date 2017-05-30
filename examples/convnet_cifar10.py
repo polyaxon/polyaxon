@@ -15,7 +15,7 @@ def create_experiment_json_fn(output_dir):
     meta_data_file = cifar10.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
-        'name': 'real_mnsit',
+        'name': 'convnet_cifar10',
         'output_dir': output_dir,
         'eval_every_n_steps': 100,
         'run_config': {'save_checkpoints_steps': 100},
@@ -39,7 +39,7 @@ def create_experiment_json_fn(output_dir):
             'optimizer_config': {'name': 'Adam', 'learning_rate': 0.001},
             'params': {'one_hot_encode': True, 'n_classes': 10},
             'graph_config': {
-                'name': 'mnist',
+                'name': 'convnet',
                 'features': ['image'],
                 'definition': [
                     (plx.layers.Conv2d,

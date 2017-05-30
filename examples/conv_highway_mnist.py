@@ -15,7 +15,7 @@ def create_experiment_json_fn(output_dir):
     meta_data_file = mnist.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
-        'name': 'real_mnsit',
+        'name': 'conv_highway',
         'output_dir': output_dir,
         'eval_every_n_steps': 5,
         'run_config': {'save_checkpoints_steps': 100},

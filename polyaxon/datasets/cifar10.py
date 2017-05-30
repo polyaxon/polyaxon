@@ -8,6 +8,8 @@ import sys
 import numpy as np
 import tensorflow as tf
 
+from six.moves import xrange
+
 from polyaxon import ModeKeys
 from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGNumpyImageReader
 from polyaxon.datasets.utils import download_datasets, make_dataset_dir, count_tfrecord_file_content
@@ -89,7 +91,7 @@ def prepare(dataset_dir):
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
     prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN,
-                    [_DATA_BATCH_FILENAME_FORMAT.format(dataset_dir, i) for i in range(1, 5)])
+                    [_DATA_BATCH_FILENAME_FORMAT.format(dataset_dir, i) for i in xrange(1, 5)])
     prepare_dataset(converter, dataset_dir, ModeKeys.EVAL,
                     [_DATA_BATCH_FILENAME_FORMAT.format(dataset_dir, 5)])
     prepare_dataset(converter, dataset_dir, 'test', [_TEST_DATA_BATCH_FILENAME.format(dataset_dir)])

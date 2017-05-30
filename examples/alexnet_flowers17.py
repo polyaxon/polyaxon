@@ -15,12 +15,13 @@ def create_experiment_json_fn(output_dir):
     meta_data_file = flowers17.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
-        'name': 'real_mnsit',
+        'name': 'alexnet_flowers17',
         'output_dir': output_dir,
-        'eval_every_n_steps': 5,
+        'eval_every_n_steps': 10,
+        'train_steps_per_iteration': 100,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
-            'pipeline_config': {'name': 'TFRecordImagePipeline', 'batch_size': 64, 'num_epochs': 5,
+            'pipeline_config': {'name': 'TFRecordImagePipeline', 'batch_size': 64, 'num_epochs': 1,
                                 'shuffle': True, 'dynamic_pad': False,
                                 'params': {'data_files': train_data_file,
                                            'meta_data_file': meta_data_file}},
@@ -34,12 +35,13 @@ def create_experiment_json_fn(output_dir):
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
             'model_type': 'classifier',
+            'summaries': ['loss'],
             'loss_config': {'name': 'sigmoid_cross_entropy'},
             'eval_metrics_config': [{'name': 'streaming_accuracy'}],
             'optimizer_config': {'name': 'Momentum', 'learning_rate': 0.001},
             'params': {'one_hot_encode': True, 'n_classes': 17},
             'graph_config': {
-                'name': 'mnist',
+                'name': 'alextnet',
                 'features': ['image'],
                 'definition': [
                     (plx.layers.Conv2d,
@@ -56,8 +58,7 @@ def create_experiment_json_fn(output_dir):
                     (plx.layers.Conv2d, {'num_filter': 256, 'filter_size': 3, 'activation': 'relu'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 3, 'strides': 2}),
                     (plx.layers.LocalResponseNormalization, {}),
-                    (plx.layers.FullyConnected, {'n_units': 4096, 'activation': 'tanh'}),
-                    (plx.layers.Dropout, {'keep_prob': 0.5}),
+                    (plx.layers.FullyConnected, {'n_units': 4096, 'activation': 'tanh', 'keep_prob': 0.5}),
                     (plx.layers.FullyConnected, {'n_units': 4096, 'activation': 'tanh'}),
                     (plx.layers.Dropout, {'keep_prob': 0.5}),
                     (plx.layers.FullyConnected, {'n_units': 17}),

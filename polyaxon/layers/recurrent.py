@@ -5,6 +5,8 @@ import abc
 import logging
 import six
 
+from six.moves import xrange
+
 import numpy as np
 import tensorflow as tf
 
@@ -48,7 +50,7 @@ class CoreRNN(BaseLayer):
     def _stack_layers(cell_fn, mode, num_layers, state_is_tuple=True):
         """Stask multiple layers of the incoming cell."""
         if num_layers and num_layers > 1:
-            return MultiRNNCell(mode, [cell_fn() for _ in range(num_layers)], state_is_tuple)
+            return MultiRNNCell(mode, [cell_fn() for _ in xrange(num_layers)], state_is_tuple)
 
         return cell_fn()
 
@@ -73,7 +75,7 @@ class CoreRNN(BaseLayer):
         if type(inference) not in [list, np.array]:
             ndim = len(input_shape)
             assert ndim >= 3, 'Input dim should be at least 3.'
-            axes = [1, 0] + list(range(2, ndim))
+            axes = [1, 0] + list(xrange(2, ndim))
             inference = tf.transpose(inference, (axes))
             inference = tf.unstack(value=inference)
 
@@ -382,7 +384,7 @@ class BidirectionalRNN(BaseLayer):
         if type(inference) not in [list, np.array]:
             ndim = len(input_shape)
             assert ndim >= 3, 'Input dim should be at least 3.'
-            axes = [1, 0] + list(range(2, ndim))
+            axes = [1, 0] + list(xrange(2, ndim))
             inference = tf.transpose(inference, (axes,))
             inference = tf.unstack(inference)
 

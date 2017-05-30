@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from six.moves import xrange
+
 import tensorflow as tf
 
 from tensorflow.python.training import moving_averages
@@ -64,7 +66,7 @@ class BatchNormalization(BaseLayer):
             track(tf.GraphKeys.EXCL_RESTORE_VARIABLES, self._beta)
             track(tf.GraphKeys.EXCL_RESTORE_VARIABLES, self._gamma)
 
-        axis = list(range(input_ndim - 1))
+        axis = list(xrange(input_ndim - 1))
         moving_mean = variable(name='moving_mean', shape=input_shape[-1:],
                                initializer=tf.zeros_initializer(), trainable=False,
                                restore=self.restore)
