@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from six.moves import xrange
+
 import numpy as np
 
 
@@ -153,7 +155,7 @@ def sequences_get_mask(sequences, pad_val=0):
     """
     mask = np.ones_like(sequences)
     for i_seq, seq in enumerate(sequences):
-        for i_token in range(len(seq) - 1, -1, -1):
+        for i_token in xrange(len(seq) - 1, -1, -1):
             if seq[i_token] == pad_val:
                 mask[i_seq, i_token] = 0
             else:

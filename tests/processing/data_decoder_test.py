@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from six.moves import xrange
+
 import numpy as np
 import tensorflow as tf
 
@@ -39,7 +41,7 @@ class TFExampleDecoderTest(test.TestCase):
 
     def _bytes_feature(self, ndarray):
         values = ndarray.flatten().tolist()
-        for i in range(len(values)):
+        for i in xrange(len(values)):
             values[i] = values[i].encode('utf-8')
         return feature_pb2.Feature(bytes_list=feature_pb2.BytesList(value=values))
 
