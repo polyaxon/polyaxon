@@ -17,8 +17,8 @@ from polyaxon.libs.utils import (
     track,
     validate_filter_size,
     validate_filter_size_3d,
-    validate_padding
-)
+    validate_padding,
+    validate_dtype)
 from polyaxon.variables import variable
 
 
@@ -94,7 +94,7 @@ class Conv2d(BaseLayer):
         filter_size = validate_filter_size(self.filter_size, input_shape[-1], self.num_filter)
         strides = int_or_tuple(self.strides)
         padding = validate_padding(self.padding)
-        incoming = tf.cast(incoming, tf.float32) if incoming.dtype == tf.uint8 else incoming
+        incoming = validate_dtype(incoming)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable('w', shape=filter_size, regularizer=regularizer,
@@ -196,7 +196,7 @@ class Conv2dTranspose(BaseLayer):
         filter_size = validate_filter_size(self.filter_size, self.num_filter, input_shape[-1])
         strides = int_or_tuple(self.strides)
         padding = validate_padding(self.padding)
-        incoming = tf.cast(incoming, tf.float32) if incoming.dtype == tf.uint8 else incoming
+        incoming = validate_dtype(incoming)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable('w', shape=filter_size, regularizer=regularizer,
@@ -504,7 +504,7 @@ class Conv1d(BaseLayer):
         strides = int_or_tuple(self.strides)
         strides = [1, strides[1], 1, 1]
         padding = validate_padding(self.padding)
-        incoming = tf.cast(incoming, tf.float32) if incoming.dtype == tf.uint8 else incoming
+        incoming = validate_dtype(incoming)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable('w', shape=filter_size, regularizer=regularizer,
@@ -681,7 +681,7 @@ class Conv3d(BaseLayer):
         filter_size = validate_filter_size_3d(self.filter_size, input_shape[-1], self.num_filter)
         strides = int_or_tuple_3d(self.strides)
         padding = validate_padding(self.padding)
-        incoming = tf.cast(incoming, tf.float32) if incoming.dtype == tf.uint8 else incoming
+        incoming = validate_dtype(incoming)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable('w', shape=filter_size, regularizer=regularizer,
@@ -787,7 +787,7 @@ class Conv3dTranspose(BaseLayer):
         filter_size = validate_filter_size_3d(self.filter_size, self.num_filter, input_shape[-1])
         strides = int_or_tuple_3d(self.strides)
         padding = validate_padding(self.padding)
-        incoming = tf.cast(incoming, tf.float32) if incoming.dtype == tf.uint8 else incoming
+        incoming = validate_dtype(incoming)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable('w', shape=filter_size, regularizer=regularizer,
@@ -1294,7 +1294,7 @@ class HighwayConv2d(BaseLayer):
             self.filter_size, input_shape[-1], self.num_filter)
         strides = int_or_tuple(self.strides)
         padding = validate_padding(self.padding)
-        incoming = tf.cast(incoming, tf.float32) if incoming.dtype == tf.uint8 else incoming
+        incoming = validate_dtype(incoming)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         w_initializer = getters.get_initializer(self.weights_init)
@@ -1409,7 +1409,7 @@ class HighwayConv1d(BaseLayer):
         strides = int_or_tuple(self.strides)
         strides[1] = 1
         padding = validate_padding(self.padding)
-        incoming = tf.cast(incoming, tf.float32) if incoming.dtype == tf.uint8 else incoming
+        incoming = validate_dtype(incoming)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         w_initializer = getters.get_initializer(self.weights_init)

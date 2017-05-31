@@ -39,9 +39,9 @@ class CoreRNN(BaseLayer):
             return cell
 
         if type(dropout) in [tuple, list]:
-            in_keep_prob, out_keep_prob = dropout
+            in_keep_prob, out_keep_prob = (1 - d for d in dropout)
         elif isinstance(dropout, float):
-            in_keep_prob, out_keep_prob = dropout, dropout
+            in_keep_prob, out_keep_prob = 1 - dropout, 1 - dropout
         else:
             raise Exception('Invalid dropout type (must be a 2-D tuple of float)')
         return DropoutWrapper(mode, cell, in_keep_prob, out_keep_prob)
@@ -124,7 +124,7 @@ class SimpleRNN(CoreRNN):
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'sigmoid'.
-        dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+        dropout: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
             input and output keep probability.
         num_layers: `int` how many times to stack the cell.
         bias: `bool`. If True, a bias is used.
@@ -187,7 +187,7 @@ class LSTM(CoreRNN):
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
         inner_activation: `str` (name) or `function` (returning a `Tensor`).
             LSTM inner activation. Default: 'sigmoid'.
-        dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+        dropout: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
             input and output keep probability.
         num_layers: `int` how many times to stack the cell.
         bias: `bool`. If True, a bias is used.
@@ -263,7 +263,7 @@ class GRU(CoreRNN):
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
         inner_activation: `str` (name) or `function` (returning a `Tensor`).
             GRU inner activation. Default: 'sigmoid'.
-        dropout: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+        dropout: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
             input and output keep probability.
         num_layers: `int` how many times to stack the cell.
         bias: `bool`. If True, a bias is used.

@@ -12,7 +12,7 @@ from tensorflow.python.ops import standard_ops
 from polyaxon import ModeKeys
 from polyaxon.libs import getters
 from polyaxon.libs.template_module import BaseLayer
-from polyaxon.libs.utils import get_shape, track
+from polyaxon.libs.utils import get_shape, track, validate_dtype
 from polyaxon.variables import variable
 
 
@@ -39,7 +39,7 @@ class FullyConnected(BaseLayer):
         regularizer: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
             Default: None.
         scale: `float`. Regularizer decay parameter. Default: 0.001.
-        keep_prob: `float`. Adds a dropout with this value as `keep_prob`.
+        dropout: `float`. Adds a dropout with `keep_prob` as `1 - dropout`.
         trainable: `bool`. If True, weights will be trainable.
         restore: `bool`. If True, this layer weights will be restored when
             loading a model.
@@ -51,7 +51,7 @@ class FullyConnected(BaseLayer):
     """
     def __init__(self, mode, n_units, activation='linear', bias=True,
                  weights_init='truncated_normal', bias_init='zeros', regularizer=None,
-                 scale=0.001, keep_prob=0.0, trainable=True, restore=True, name="FullyConnected"):
+                 scale=0.001, dropout=None, trainable=True, restore=True, name="FullyConnected"):
         super(FullyConnected, self).__init__(mode, name)
         self.n_units = n_units
         self.activation = activation
@@ -60,7 +60,7 @@ class FullyConnected(BaseLayer):
         self.bias_init = bias_init
         self.regularizer = regularizer
         self.scale = scale
-        self.keep_prob = keep_prob
+        self.dropout = dropout
         self.trainable = trainable
         self.restore = restore
 
@@ -74,8 +74,8 @@ class FullyConnected(BaseLayer):
 
     def _declare_dependencies(self):
         self._dropout = None
-        if self.keep_prob > 0:
-            self._dropout = Dropout(mode=self.mode, keep_prob=self.keep_prob)
+        if self.dropout:
+            self._dropout = Dropout(mode=self.mode, keep_prob=(1 - self.dropout))
 
     def _build(self, incoming, *args, **kwargs):
         """
@@ -87,6 +87,7 @@ class FullyConnected(BaseLayer):
         """
         self._declare_dependencies()
         input_shape = get_shape(incoming)
+        incoming = validate_dtype(incoming)
 
         assert len(input_shape) > 1, 'Incoming Tensor shape must be at least 2-D'
         n_inputs = int(np.prod(input_shape[1:]))
@@ -378,7 +379,7 @@ class Highway(BaseLayer):
     def _declare_dependencies(self):
         self._transform_dropout = None
         if self.transform_dropout:
-            self._transform_dropout = Dropout(self.mode, self.transform_dropout)
+            self._transform_dropout = Dropout(self.mode, keep_prob=1 - self.transform_dropout)
 
     def _build(self, incoming, *args, **kwargs):
         """
@@ -388,6 +389,7 @@ class Highway(BaseLayer):
         Returns:
             2D Tensor [samples, n_units].
         """
+        self._declare_dependencies()
         input_shape = get_shape(incoming)
         assert len(input_shape) > 1, 'Incoming Tensor shape must be at least 2-D'
         n_inputs = int(np.prod(input_shape[1:]))
