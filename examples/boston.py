@@ -10,7 +10,7 @@ import polyaxon as plx
 import tensorflow as tf
 
 
-def main(unused_argv):
+def main(*args):
     # Load dataset
     boston = datasets.load_boston()
     x, y = boston.data, boston.target
@@ -24,9 +24,9 @@ def main(unused_argv):
     x_train = scaler.fit_transform(x_train)
 
     def graph_fn(mode, inputs):
-        x = plx.layers.FullyConnected(mode, n_units=32, activation='relu', keep_prob=0.8)(inputs['x'])
-        x = plx.layers.FullyConnected(mode, n_units=32, activation='relu', keep_prob=0.8)(x)
-        return plx.layers.FullyConnected(mode, n_units=1, keep_prob=0.8)(x)
+        x = plx.layers.FullyConnected(mode, n_units=32, activation='relu', dropout=0.3)(inputs['x'])
+        x = plx.layers.FullyConnected(mode, n_units=32, activation='relu', dropout=0.3)(x)
+        return plx.layers.FullyConnected(mode, n_units=1, dropout=0.3)(x)
 
     def model_fn(features, labels, mode):
         model = plx.experiments.RegressorModel(
