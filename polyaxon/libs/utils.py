@@ -12,6 +12,7 @@ import numpy as np
 import tensorflow as tf
 
 from tensorflow.python.ops import math_ops, array_ops
+from tensorflow.python.platform import tf_logging as logging
 
 from polyaxon.libs import MAPPING_COLLECTION
 
@@ -60,6 +61,14 @@ def get_shape(x):
         return np.shape(x)
     else:
         raise Exception('Invalid incoming layer.')
+
+
+def validate_dtype(x):
+    if x.dtype == tf.uint8:
+        logging.warn("Received an incoming tensor with dtype: `uint8`, converted it to `float32`.")
+        return tf.cast(x, tf.float32)
+    else:
+        return x
 
 
 def get_variable_scope(name=None, scope=None, values=None, reuse=None):
