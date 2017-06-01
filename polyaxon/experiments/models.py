@@ -16,6 +16,7 @@ from polyaxon.libs.configs import OptimizerConfig, LossConfig
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments, get_shape
+from polyaxon.metrics import ARGMAX_METRICS
 
 
 class BaseModel(GraphModule):
@@ -156,18 +157,20 @@ class BaseModel(GraphModule):
             `loss` is a single scalar tensor to minimize.
         """
         lshape = get_shape(labels)
-        if self.model_type == self.Types.CLASSIFIER:
+
+        def get_labels_and_results(results, labels):
             if len(lshape) == 1 or (len(lshape) and int(lshape[1]) == 1):
-                results = tf.argmax(results)
-                labels = tf.argmax(labels)
+                return tf.argmax(results), tf.argmax(labels)
             else:
-                results = tf.argmax(results, 1)
-                labels = tf.argmax(labels, 1)
+                return tf.argmax(results, 1), tf.argmax(labels, 1)
 
         metrics = {}
         for metric in self.eval_metrics_config:
+            _results, _labels = results, labels
+            if self.model_type == self.Types.CLASSIFIER and metric.name in ARGMAX_METRICS:
+                _results, _labels = get_labels_and_results(results, labels)
             metrics[metric.name] = getters.get_eval_metric(
-                metric.name, results, labels, **metric.params)
+                metric.name, _results, _labels, **metric.params)
         return metrics
 
     def _build_train_op(self, loss):

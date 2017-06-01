@@ -5,6 +5,7 @@ import tensorflow as tf
 
 import polyaxon as plx
 from polyaxon.datasets import mnist
+from polyaxon.libs.configs import MetricConfig
 
 
 def main(*args):
@@ -22,6 +23,7 @@ def main(*args):
     def model_fn(features, labels, mode):
         model = plx.experiments.ClassifierModel(
             mode, graph_fn=graph_fn, summaries='loss', name='classifier',
+            eval_metrics_config=[MetricConfig(name='streaming_accuracy')],
             params={'n_classes': 10, 'one_hot_encode': True})
         return model(features, labels)
 

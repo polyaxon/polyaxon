@@ -175,10 +175,9 @@ EVAL_METRICS = {
     'streaming_precision_at_thresholds': tf.contrib.metrics.streaming_precision_at_thresholds,
     'streaming_recall_at_thresholds': tf.contrib.metrics.streaming_recall_at_thresholds,
     'streaming_sparse_recall_at_k': tf.contrib.metrics.streaming_sparse_recall_at_k,
+    # TODO: this function expects an int64 ==> labels = tf.cast(labels, tf.int64)
     'streaming_sparse_precision_at_k': tf.contrib.metrics.streaming_sparse_precision_at_k,
-    'streaming_sparse_precision_at_top_k': tf.contrib.metrics.streaming_sparse_precision_at_top_k,
     'streaming_sparse_average_precision_at_k': tf.contrib.metrics.streaming_sparse_average_precision_at_k,
-    'streaming_sparse_average_precision_at_top_k': tf.contrib.metrics.streaming_sparse_average_precision_at_top_k,
     'streaming_mean_absolute_error': tf.contrib.metrics.streaming_mean_absolute_error,
     'streaming_mean_relative_error': tf.contrib.metrics.streaming_mean_relative_error,
     'streaming_mean_squared_error': tf.contrib.metrics.streaming_mean_squared_error,
@@ -189,3 +188,8 @@ EVAL_METRICS = {
     'streaming_percentage_less': tf.contrib.metrics.streaming_percentage_less,
     'streaming_mean_iou': tf.contrib.metrics.streaming_mean_iou
 }
+
+
+ARGMAX_METRICS = ['streaming_true_positives', 'streaming_true_negatives',
+                  'streaming_false_positives', 'streaming_false_negatives', 'streaming_recall',
+                  'streaming_auc', 'streaming_accuracy', 'streaming_precision']
