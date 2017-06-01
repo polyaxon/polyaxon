@@ -6,6 +6,8 @@ import abc
 import six
 import tensorflow as tf
 
+from tensorflow.python.platform import tf_logging as logging
+
 
 @six.add_metaclass(abc.ABCMeta)
 class GraphModule(object):
@@ -33,8 +35,9 @@ class GraphModule(object):
     def __init__(self, mode, name, module_type=None):
         self.name = name
         self.mode = mode
-        self._template = tf.make_template(name, self._build, create_scope_now_=True)
-        self._unique_name = self._template.variable_scope.name.split("/")[-1]
+        self._template = None
+        self._is_built = False
+        self._unique_name = None
         self._type = module_type
         # Docstrings for the class should be the docstring for the _build method
         self.__doc__ = self._build.__doc__
@@ -45,16 +48,34 @@ class GraphModule(object):
     def type(self):
         return self._type
 
+    def build(self):
+        """Builds the module and sets the scope.
+
+        This function will get called automatically when the module gets called.
+        """
+        if self._is_built:
+            logging.info('Current Module name: `{}` is already built.'.format(self.name))
+            return
+
+        self._is_built = True
+        self._template = tf.make_template(self.name, self._build, create_scope_now_=True)
+        self._unique_name = self._template.variable_scope.name.split("/")[-1]
+
     def _build(self, incoming, *args, **kwargs):
         """Subclasses should implement their logic here."""
         raise NotImplementedError
 
     def __call__(self, *args, **kwargs):
-        # pylint: disable=missing-docstring
+        if not self._is_built:
+            self.build()
+
         return self._template(*args, **kwargs)
 
     def variable_scope(self):
         """Returns the proper variable scope for this module."""
+        if not self._is_built:
+            logging.info('Current Module: `{}` is called before build.'.format(self.name))
+            return None
         return tf.variable_scope(self._template.variable_scope)
 
     @property
