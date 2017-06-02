@@ -50,9 +50,9 @@ def create_experiment_json_fn(output_dir):
                      {'num_filter': 16, 'filter_size': 1, 'strides': 1, 'activation': 'elu'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
                     (plx.layers.BatchNormalization, {}),
-                    (plx.layers.FullyConnected, {'n_units': 128, 'activation': 'elu'}),
-                    (plx.layers.FullyConnected, {'n_units': 256, 'activation': 'elu'}),
-                    (plx.layers.FullyConnected, {'n_units': 10}),
+                    (plx.layers.FullyConnected, {'num_units': 128, 'activation': 'elu'}),
+                    (plx.layers.FullyConnected, {'num_units': 256, 'activation': 'elu'}),
+                    (plx.layers.FullyConnected, {'num_units': 10}),
                 ]
             }
         }

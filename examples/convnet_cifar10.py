@@ -50,9 +50,9 @@ def create_experiment_json_fn(output_dir):
                     (plx.layers.Conv2d, {'num_filter': 64, 'filter_size': 3, 'activation': 'relu'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
                     (plx.layers.LocalResponseNormalization, {}),
-                    (plx.layers.FullyConnected, {'n_units': 512, 'activation': 'relu'}),
+                    (plx.layers.FullyConnected, {'num_units': 512, 'activation': 'relu'}),
                     (plx.layers.Dropout, {'keep_prob': 0.5}),
-                    (plx.layers.FullyConnected, {'n_units': 10}),
+                    (plx.layers.FullyConnected, {'num_units': 10}),
                 ]
             }
         }

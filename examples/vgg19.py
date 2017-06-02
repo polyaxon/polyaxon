@@ -74,11 +74,11 @@ def create_experiment_json_fn(output_dir):
                                          'activation': 'relu'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2, 'strides': 2}),
 
-                    (plx.layers.FullyConnected, {'n_units': 4096, 'activation': 'relu',
+                    (plx.layers.FullyConnected, {'num_units': 4096, 'activation': 'relu',
                                                  'keep_prob': 0.5}),
-                    (plx.layers.FullyConnected, {'n_units': 4096, 'activation': 'relu',
+                    (plx.layers.FullyConnected, {'num_units': 4096, 'activation': 'relu',
                                                  'keep_prob': 0.5}),
-                    (plx.layers.FullyConnected, {'n_units': 17}),
+                    (plx.layers.FullyConnected, {'num_units': 17}),
                 ]
             }
         }

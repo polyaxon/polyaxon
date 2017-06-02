@@ -25,14 +25,12 @@ class SubGraph(GraphModule):
         features: `list`. The list of features keys to extract and use in this subgraph.
             If `None`, all features will be used.
     """
-    def __init__(self, mode, name, modules, kwargs, features=None):
+    def __init__(self, mode, name, modules, features=None):
         super(SubGraph, self).__init__(mode, name, self.ModuleType.SUBGRAPH)
-        if len(modules) != len(kwargs):
-            raise ValueError('`Subgraph` expects `modules` and `kwargs` to have the same length.')
 
         wrong_modules = []
         for i, m in enumerate(modules):
-            if not issubclass(m, BaseLayer):
+            if not isinstance(m, BaseLayer):
                 wrong_modules.append((i + 1, m))
 
         if wrong_modules:
@@ -40,13 +38,11 @@ class SubGraph(GraphModule):
                             'received {}'.format(wrong_modules))
 
         self._modules = modules
-        self._built_modules = []
-        self._kwargs = kwargs
         self._features = features
 
     @property
     def modules(self):
-        return self._built_modules
+        return self._modules
 
     def _get_incoming(self, incoming):
         if isinstance(incoming, Mapping):
@@ -57,12 +53,27 @@ class SubGraph(GraphModule):
 
     def _build(self, incoming, *args, **kwargs):
         incoming = self._get_incoming(incoming)
-        for i, m in enumerate(self._modules):
-            kwargs = copy.copy(self._kwargs[i])
-            if 'dependencies' in kwargs:
-                incoming = [dependency(self.mode, **dependency)(incoming)
-                            for dependency in kwargs.pop('dependencies', [])]
-            built_m = m(mode=self.mode, **kwargs)
-            self._built_modules.append(built_m)
-            incoming = built_m(incoming)
+        for module in self._modules:
+            incoming = module(incoming, *args, **kwargs)
         return incoming
+
+    @classmethod
+    def build_subgraph_modules(cls, mode, subgraph_config):
+        if len(subgraph_config.modules) != len(subgraph_config.kwargs):
+            raise ValueError('`Subgraph` expects `modules` and `modules_kwargs` '
+                             'to have the same length.')
+
+        built_modules = []
+        for i, module in enumerate(subgraph_config.modules):
+            kwargs = copy.copy(subgraph_config.kwargs[i])
+            if 'modules' in kwargs:
+                dependencies = []
+                for dependency_config in kwargs['modules']:
+                    dependencies.append(cls.build_subgraph_modules(
+                        mode=mode, subgraph_config=dependency_config))
+
+                kwargs['modules'] = dependencies
+
+            built_module = module(mode=mode, **kwargs)
+            built_modules.append(built_module)
+        return built_modules

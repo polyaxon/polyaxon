@@ -23,7 +23,6 @@ from .convolutional import (
     Upscore
 )
 from .core import (
-    Concat,
     Dropout,
     Flatten,
     FullyConnected,

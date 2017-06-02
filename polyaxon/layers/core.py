@@ -28,7 +28,7 @@ class FullyConnected(BaseLayer):
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-        n_units: `int`, number of units for this layer.
+        num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`).
             Default: 'linear'.
         bias: `bool`. If True, a bias is used.
@@ -49,11 +49,11 @@ class FullyConnected(BaseLayer):
         w: `Tensor`. Variable representing units weights.
         b: `Tensor`. Variable representing biases.
     """
-    def __init__(self, mode, n_units, activation='linear', bias=True,
+    def __init__(self, mode, num_units, activation='linear', bias=True,
                  weights_init='truncated_normal', bias_init='zeros', regularizer=None,
                  scale=0.001, dropout=None, trainable=True, restore=True, name="FullyConnected"):
         super(FullyConnected, self).__init__(mode, name)
-        self.n_units = n_units
+        self.num_units = num_units
         self.activation = activation
         self.bias = bias
         self.weights_init = weights_init
@@ -83,7 +83,7 @@ class FullyConnected(BaseLayer):
             incoming: (2+)-D Tensor [samples, input dim]. If not 2D, input will be flatten.
 
         Returns:
-            2D Tensor [samples, n_units].
+            2D Tensor [samples, num_units].
         """
         self._declare_dependencies()
         input_shape = get_shape(incoming)
@@ -94,7 +94,7 @@ class FullyConnected(BaseLayer):
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable(
-            name='w', shape=[n_inputs, self.n_units], dtype=incoming.dtype, regularizer=regularizer,
+            name='w', shape=[n_inputs, self.num_units], dtype=incoming.dtype, regularizer=regularizer,
             initializer=getters.get_initializer(self.weights_init), trainable=self.trainable,
             restore=self.restore)
         track(self._w, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
@@ -107,7 +107,7 @@ class FullyConnected(BaseLayer):
 
         self._b = None
         if self.bias:
-            self._b = variable(name='b', shape=[self.n_units], dtype=incoming.dtype,
+            self._b = variable(name='b', shape=[self.num_units], dtype=incoming.dtype,
                                initializer=getters.get_initializer(self.bias_init),
                                trainable=self.trainable, restore=self.restore)
             track(self._b, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
@@ -319,7 +319,7 @@ class Highway(BaseLayer):
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-        n_units: `int`, number of units for this layer.
+        num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`).
             Default: 'linear'.
         transform_dropout: `float`: Keep probability on the highway transform gate.
@@ -344,12 +344,12 @@ class Highway(BaseLayer):
     Links:
         [https://arxiv.org/abs/1505.00387](https://arxiv.org/abs/1505.00387)
     """
-    def __init__(self, mode, n_units, activation='linear', transform_dropout=None,
+    def __init__(self, mode, num_units, activation='linear', transform_dropout=None,
                  weights_init='truncated_normal', bias_init='zeros',
                  regularizer=None, scale=0.001, trainable=True,
                  restore=True, name='FullyConnectedHighway'):
         super(Highway, self).__init__(mode, name)
-        self.n_units = n_units
+        self.num_units = num_units
         self.activation = activation
         self.weights_init = weights_init
         self.bias_init = bias_init
@@ -387,7 +387,7 @@ class Highway(BaseLayer):
             incoming: (2+)-D Tensor [samples, input dim]. If not 2D, input will be flatten.
 
         Returns:
-            2D Tensor [samples, n_units].
+            2D Tensor [samples, num_units].
         """
         self._declare_dependencies()
         input_shape = get_shape(incoming)
@@ -396,23 +396,23 @@ class Highway(BaseLayer):
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         initializer = getters.get_initializer(self.weights_init)
-        self._w = variable(name='w', shape=[n_inputs, self.n_units], regularizer=regularizer,
+        self._w = variable(name='w', shape=[n_inputs, self.num_units], regularizer=regularizer,
                            initializer=initializer, trainable=self.trainable,
                            restore=self.restore)
         track(self._w, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
 
-        self._b = variable(name='b', shape=[self.n_units],
+        self._b = variable(name='b', shape=[self.num_units],
                            initializer=getters.get_initializer(self.bias_init),
                            trainable=self.trainable, restore=self.restore)
         track(self._b, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
 
         # Weight and bias for the transform gate
-        self._w_t = variable(name='w_t', shape=[n_inputs, self.n_units],
+        self._w_t = variable(name='w_t', shape=[n_inputs, self.num_units],
                              regularizer=None, initializer=initializer,
                              trainable=self.trainable, restore=self.restore)
         track(self._w_t, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
 
-        self._b_t = variable(name='b_t', shape=[self.n_units],
+        self._b_t = variable(name='b_t', shape=[self.num_units],
                              initializer=tf.constant_initializer(-1),
                              trainable=self.trainable, restore=self.restore)
         track(self._b_t, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
@@ -465,103 +465,6 @@ class OneHotEncoding(BaseLayer):
         return incoming
 
 
-class Merge(BaseLayer):
-    class MergeMode(object):
-        CONCAT = 'concat'
-        ELEMENTWISE_SUM = 'elemwise_sum'
-        ELEMENTWISE_MUL = 'elemwise_mul'
-        SUM = 'sum'
-        MEAN = 'mean'
-        PROD = 'prod'
-        MAX = 'max'
-        MIN = 'min'
-        AND = 'and'
-        OR = 'or'
-
-        MODES = [CONCAT, ELEMENTWISE_SUM, ELEMENTWISE_MUL, ELEMENTWISE_MUL,
-                 SUM, MEAN, PROD, MAX, MIN, AND, OR]
-
-    def __init__(self, mode, merge_mode, axis=1, name='Merge'):
-        """Adds a merge op.
-
-        Merge a list of `Tensor` into a single one. A merging 'mode' must be
-        specified, check below for the different options.
-
-        Args:
-            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-            merge_mode: `str`. Merging mode, value in `MERGE_MODE`
-            axis: `int`. Represents the axis to use for merging mode.
-                In most cases: 0 for concat and 1 for other modes.
-            name: A name for this layer (optional).
-        """
-        super(Merge, self).__init__(mode, name)
-        assert merge_mode in self.MergeMode.MODES, 'Merge mode `{}` not supported.'.format(merge_mode)
-        self.merge_mode = merge_mode
-        self.axis = axis
-
-    def _build(self, dependencies, *args, **kwargs):
-        """
-        Args:
-            incoming: List of Tensors.
-        Returns:
-            Merged Tensors.
-        """
-        assert len(dependencies) > 1, 'Merge required 2 or more tensors.'
-
-        if self.merge_mode == self.MergeMode.CONCAT:
-            x = tf.concat(axis=self.axis, values=dependencies)
-        elif self.merge_mode == self.MergeMode.ELEMENTWISE_SUM:
-            x = dependencies[0]
-            for i in xrange(1, len(dependencies)):
-                x = tf.add(x, dependencies[i])
-        elif self.merge_mode == self.MergeMode.ELEMENTWISE_MUL:
-            x = dependencies[0]
-            for i in xrange(1, len(dependencies)):
-                x = tf.multiply(x, dependencies[i])
-        elif self.merge_mode == self.MergeMode.SUM:
-            x = tf.reduce_sum(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)
-        elif self.merge_mode == self.MergeMode.MEAN:
-            x = tf.reduce_mean(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)
-        elif self.merge_mode == self.MergeMode.PROD:
-            x = tf.reduce_prod(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)
-        elif self.merge_mode == self.MergeMode.MAX:
-            x = tf.reduce_max(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)
-        elif self.merge_mode == self.MergeMode.MIN:
-            x = tf.reduce_min(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)
-        elif self.merge_mode == self.MergeMode.AND:
-            x = tf.reduce_all(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)
-        elif self.merge_mode == self.MergeMode.OR:
-            x = tf.reduce_any(tf.concat(axis=self.axis, values=dependencies), axis=self.axis)
-        else:
-            raise Exception('Unknown merge mode', str(self.merge_mode))
-
-        track(x, tf.GraphKeys.LAYER_TENSOR, self.module_name)
-        return x
-
-
-class Concat(BaseLayer):
-    """Concat Outputs.
-
-    A layer that concatenate all outputs of a network into a single tensor.
-
-    Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-        name: `str`. A name for this layer (optional).
-    """
-    def __init__(self, mode, name='Concat'):
-        super(Concat, self).__init__(mode, name)
-
-    def _build(self, dependencies, *args, **kwargs):
-        """
-        Args:
-            dependencies: List of Tensors [_shape_].
-        Returns:
-            Concatenated Tensors [nb_tensors, _shape_].
-        """
-        x = tf.concat(axis=1, values=dependencies)
-        track(x, tf.GraphKeys.LAYER_TENSOR, self.module_name)
-        return x
-
 
 class Slice(BaseLayer):
     """Extracts a slice from a tensor.
@@ -586,5 +489,82 @@ class Slice(BaseLayer):
             Concatenated Tensors [nb_tensors, _shape_].
         """
         x = tf.slice(incoming, begin=self.being, size=self.size)
+        track(x, tf.GraphKeys.LAYER_TENSOR, self.module_name)
+        return x
+
+
+class Merge(BaseLayer):
+    class MergeMode(object):
+        CONCAT = 'concat'
+        ELEMENTWISE_SUM = 'elemwise_sum'
+        ELEMENTWISE_MUL = 'elemwise_mul'
+        SUM = 'sum'
+        MEAN = 'mean'
+        PROD = 'prod'
+        MAX = 'max'
+        MIN = 'min'
+        AND = 'and'
+        OR = 'or'
+
+        MODES = [CONCAT, ELEMENTWISE_SUM, ELEMENTWISE_MUL, ELEMENTWISE_MUL,
+                 SUM, MEAN, PROD, MAX, MIN, AND, OR]
+
+    def __init__(self, mode, modules, merge_mode, axis=1, name='Merge'):
+        """Adds a merge op.
+
+        Merge a list of `Tensor` into a single one. A merging 'mode' must be
+        specified, check below for the different options.
+
+        Args:
+            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+            modules: the modules to merge.
+            merge_mode: `str`. Merging mode, value in `MERGE_MODE`
+            axis: `int`. Represents the axis to use for merging mode.
+                In most cases: 0 for concat and 1 for other modes.
+            name: A name for this layer (optional).
+        """
+        super(Merge, self).__init__(mode, name)
+        assert len(modules) > 1, '{} requires 2 or more modules.'.format(self.__class__)
+        assert merge_mode in self.MergeMode.MODES, 'Merge mode `{}` not supported.'.format(merge_mode)
+        self._modules = modules
+        self._built_modules = None
+        self.merge_mode = merge_mode
+        self.axis = axis
+
+    def _build(self, incoming, *args, **kwargs):
+        """
+        Args:
+            incoming: List of Tensors.
+        Returns:
+            Merged Tensors.
+        """
+        self._built_modules = [module(incoming, *args, **kwargs) for module in self._modules]
+        if self.merge_mode == self.MergeMode.CONCAT:
+            x = tf.concat(axis=self.axis, values=self.built_modules)
+        elif self.merge_mode == self.MergeMode.ELEMENTWISE_SUM:
+            x = self.built_modules[0]
+            for i in xrange(1, len(self.built_modules)):
+                x = tf.add(x, self.built_modules[i])
+        elif self.merge_mode == self.MergeMode.ELEMENTWISE_MUL:
+            x = self.built_modules[0]
+            for i in xrange(1, len(self.built_modules)):
+                x = tf.multiply(x, self.built_modules[i])
+        elif self.merge_mode == self.MergeMode.SUM:
+            x = tf.reduce_sum(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+        elif self.merge_mode == self.MergeMode.MEAN:
+            x = tf.reduce_mean(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+        elif self.merge_mode == self.MergeMode.PROD:
+            x = tf.reduce_prod(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+        elif self.merge_mode == self.MergeMode.MAX:
+            x = tf.reduce_max(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+        elif self.merge_mode == self.MergeMode.MIN:
+            x = tf.reduce_min(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+        elif self.merge_mode == self.MergeMode.AND:
+            x = tf.reduce_all(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+        elif self.merge_mode == self.MergeMode.OR:
+            x = tf.reduce_any(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+        else:
+            raise Exception('Unknown merge mode', str(self.merge_mode))
+
         track(x, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return x

@@ -51,11 +51,11 @@ def create_experiment_json_fn(output_dir):
                                          'regularizer': 'l2_regularizer'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
                     (plx.layers.LocalResponseNormalization, {}),
-                    (plx.layers.FullyConnected, {'n_units': 128, 'activation': 'tanh'}),
+                    (plx.layers.FullyConnected, {'num_units': 128, 'activation': 'tanh'}),
                     (plx.layers.Dropout, {'keep_prob': 0.8}),
-                    (plx.layers.FullyConnected, {'n_units': 256, 'activation': 'tanh'}),
+                    (plx.layers.FullyConnected, {'num_units': 256, 'activation': 'tanh'}),
                     (plx.layers.Dropout, {'keep_prob': 0.8}),
-                    (plx.layers.FullyConnected, {'n_units': 10}),
+                    (plx.layers.FullyConnected, {'num_units': 10}),
                 ]
             }
         }

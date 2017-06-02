@@ -24,16 +24,15 @@ class Pipeline(SubGraph):
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
         modules: `list`, list of modules to call in order to create this pipeline.
-        kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
     """
 
-    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None):
+    def __init__(self, mode, name, modules=None, shuffle=True, num_epochs=None):
         self.shuffle = shuffle
         self.num_epochs = num_epochs
         super(Pipeline, self).__init__(
-            mode=mode, name=name, modules=modules or [], kwargs=kwargs or [])
+            mode=mode, name=name, modules=modules or [])
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments
@@ -70,12 +69,11 @@ class TFRecordImagePipeline(Pipeline):
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
         modules: `list`, list of modules to call in order to create this pipeline.
-        kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
     """
 
-    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None,
+    def __init__(self, mode, name, modules=None, shuffle=True, num_epochs=None,
                  data_files=None, meta_data_file=None):
         self.shuffle = shuffle
         self.num_epochs = num_epochs
@@ -84,7 +82,7 @@ class TFRecordImagePipeline(Pipeline):
         if meta_data_file:
             with open(meta_data_file) as meta_data_file:
                 self.meta_data = json.load(meta_data_file)
-        super(TFRecordImagePipeline, self).__init__(mode=mode, name=name, modules=modules, kwargs=kwargs)
+        super(TFRecordImagePipeline, self).__init__(mode=mode, name=name, modules=modules)
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments
@@ -144,7 +142,6 @@ class ParallelTextPipeline(Pipeline):
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
         modules: `list`, list of modules to call in order to create this pipeline.
-        kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         source_files: An array of file names for the source data.
@@ -155,15 +152,14 @@ class ParallelTextPipeline(Pipeline):
           empty string.
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
-    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None,
+    def __init__(self, mode, name, modules=None, shuffle=True, num_epochs=None,
                  source_files=None, target_files=None, source_delimiter="", target_delimiter=""):
         self.source_files = source_files or []
         self.target_files = target_files or []
         self.source_delimiter = source_delimiter
         self.target_delimiter = target_delimiter
         super(ParallelTextPipeline, self).__init__(
-            mode=mode, name=name, modules=modules, kwargs=kwargs,
-            shuffle=shuffle, num_epochs=num_epochs)
+            mode=mode, name=name, modules=modules, shuffle=shuffle, num_epochs=num_epochs)
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments
@@ -223,7 +219,6 @@ class TFRecordSourceSequencePipeline(Pipeline):
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
         modules: `list`, list of modules to call in order to create this pipeline.
-        kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         files: An array of file names to read from.
@@ -235,7 +230,7 @@ class TFRecordSourceSequencePipeline(Pipeline):
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
 
-    def __init__(self, mode, name, modules=None, kwargs=None, shuffle=True, num_epochs=None,
+    def __init__(self, mode, name, modules=None, shuffle=True, num_epochs=None,
                  files=None, source_field='source', target_field='target',
                  source_delimiter="", target_delimiter=""):
         self.files = files or []
@@ -244,8 +239,7 @@ class TFRecordSourceSequencePipeline(Pipeline):
         self.source_delimiter = source_delimiter
         self.target_delimiter = target_delimiter
         super(TFRecordSourceSequencePipeline, self).__init__(
-            mode=mode, name=name, modules=modules, kwargs=kwargs, shuffle=shuffle,
-            num_epochs=num_epochs)
+            mode=mode, name=name, modules=modules, shuffle=shuffle, num_epochs=num_epochs)
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments
@@ -313,7 +307,6 @@ class ImageCaptioningPipeline(Pipeline):
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`, name to give for this pipeline.
         modules: `list`, list of modules to call in order to create this pipeline.
-        kwargs: `list`, list of kwargs to use with the methods.
         shuffle: If true, shuffle the data.
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         files: An array of file names to read from.
@@ -323,7 +316,7 @@ class ImageCaptioningPipeline(Pipeline):
         caption_tokens_field: the caption tokends field.
     """
 
-    def __init__(self, mode, name,  modules=None, kwargs=None, shuffle=True, num_epochs=None,
+    def __init__(self, mode, name,  modules=None, shuffle=True, num_epochs=None,
                  files=None, image_field="image/data", image_format='jpg',
                  caption_ids_field="image/caption_ids", caption_tokens_field="image/caption"):
         self.files = files or []
@@ -332,8 +325,7 @@ class ImageCaptioningPipeline(Pipeline):
         self.caption_ids_field = caption_ids_field
         self.caption_tokens_field = caption_tokens_field
         super(ImageCaptioningPipeline).__init__(
-            mode=mode, name=name, modules=modules, kwargs=kwargs,
-            shuffle=shuffle, num_epochs=num_epochs)
+            mode=mode, name=name, modules=modules, shuffle=shuffle, num_epochs=num_epochs)
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments

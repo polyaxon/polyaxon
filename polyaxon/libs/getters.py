@@ -120,8 +120,8 @@ def get_graph_fn(config):
     """Creates the graph operations."""
 
     def graph_fn(mode, inputs):
-        graph = SubGraph(mode=mode, name=config.name, modules=config.modules, kwargs=config.kwargs,
-                         features=config.features)
+        modules = SubGraph.build_subgraph_modules(mode, config)
+        graph = SubGraph(mode=mode, name=config.name, modules=modules, features=config.features)
         return graph(inputs)
 
     return graph_fn

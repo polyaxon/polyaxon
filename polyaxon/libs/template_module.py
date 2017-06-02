@@ -48,7 +48,7 @@ class GraphModule(object):
     def type(self):
         return self._type
 
-    def build(self):
+    def build(self, *args, **kwargs):
         """Builds the module and sets the scope.
 
         This function will get called automatically when the module gets called.
@@ -67,7 +67,7 @@ class GraphModule(object):
 
     def __call__(self, *args, **kwargs):
         if not self._is_built:
-            self.build()
+            self.build(*args, **kwargs)
 
         return self._template(*args, **kwargs)
 
@@ -87,4 +87,4 @@ class GraphModule(object):
 @six.add_metaclass(abc.ABCMeta)
 class BaseLayer(GraphModule):
     def __init__(self, mode, name):
-        super(BaseLayer, self).__init__(mode, name, self.ModuleType.LAYER)
+        super(BaseLayer, self).__init__(mode=mode, name=name, module_type=self.ModuleType.LAYER)

@@ -12,13 +12,13 @@ def main(*args):
     def graph_fn(mode, inputs):
         x = inputs['image']
         x = plx.layers.FullyConnected(
-            mode, n_units=64, activation='elu', regularizer='l2_regularizer')(x)
+            mode, num_units=64, activation='elu', regularizer='l2_regularizer')(x)
 
         for i in range(10):
-            x = plx.layers.Highway(mode, n_units=64, activation='elu',
+            x = plx.layers.Highway(mode, num_units=64, activation='elu',
                                    regularizer='l2_regularizer', transform_dropout=0.8)(x)
 
-        return plx.layers.FullyConnected(mode, n_units=10)(x)
+        return plx.layers.FullyConnected(mode, num_units=10)(x)
 
     def model_fn(features, labels, mode):
         model = plx.experiments.ClassifierModel(

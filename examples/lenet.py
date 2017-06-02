@@ -58,8 +58,8 @@ def create_experiment_json_fn(output_dir):
                     (plx.layers.Conv2d, {'num_filter': 64, 'filter_size': 5,
                                          'regularizer': 'l2_regularizer'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
-                    (plx.layers.FullyConnected, {'n_units': 1024, 'activation': 'tanh'}),
-                    (plx.layers.FullyConnected, {'n_units': 10}),
+                    (plx.layers.FullyConnected, {'num_units': 1024, 'activation': 'tanh'}),
+                    (plx.layers.FullyConnected, {'num_units': 10}),
                 ]
             }
         }

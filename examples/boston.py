@@ -24,9 +24,10 @@ def main(*args):
     x_train = scaler.fit_transform(x_train)
 
     def graph_fn(mode, inputs):
-        x = plx.layers.FullyConnected(mode, n_units=32, activation='relu', dropout=0.3)(inputs['x'])
-        x = plx.layers.FullyConnected(mode, n_units=32, activation='relu', dropout=0.3)(x)
-        return plx.layers.FullyConnected(mode, n_units=1, dropout=0.3)(x)
+        x = plx.layers.FullyConnected(
+            mode, num_units=32, activation='relu', dropout=0.3)(inputs['x'])
+        x = plx.layers.FullyConnected(mode, num_units=32, activation='relu', dropout=0.3)(x)
+        return plx.layers.FullyConnected(mode, num_units=1, dropout=0.3)(x)
 
     def model_fn(features, labels, mode):
         model = plx.experiments.RegressorModel(
