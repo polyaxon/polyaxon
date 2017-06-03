@@ -465,7 +465,6 @@ class OneHotEncoding(BaseLayer):
         return incoming
 
 
-
 class Slice(BaseLayer):
     """Extracts a slice from a tensor.
 
@@ -531,6 +530,10 @@ class Merge(BaseLayer):
         self.merge_mode = merge_mode
         self.axis = axis
 
+    @property
+    def modules(self):
+        return self._modules
+
     def _build(self, incoming, *args, **kwargs):
         """
         Args:
@@ -540,29 +543,29 @@ class Merge(BaseLayer):
         """
         self._built_modules = [module(incoming, *args, **kwargs) for module in self._modules]
         if self.merge_mode == self.MergeMode.CONCAT:
-            x = tf.concat(axis=self.axis, values=self.built_modules)
+            x = tf.concat(axis=self.axis, values=self._built_modules)
         elif self.merge_mode == self.MergeMode.ELEMENTWISE_SUM:
-            x = self.built_modules[0]
-            for i in xrange(1, len(self.built_modules)):
-                x = tf.add(x, self.built_modules[i])
+            x = self._built_modules[0]
+            for i in xrange(1, len(self._built_modules)):
+                x = tf.add(x, self._built_modules[i])
         elif self.merge_mode == self.MergeMode.ELEMENTWISE_MUL:
-            x = self.built_modules[0]
-            for i in xrange(1, len(self.built_modules)):
-                x = tf.multiply(x, self.built_modules[i])
+            x = self._built_modules[0]
+            for i in xrange(1, len(self._built_modules)):
+                x = tf.multiply(x, self._built_modules[i])
         elif self.merge_mode == self.MergeMode.SUM:
-            x = tf.reduce_sum(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+            x = tf.reduce_sum(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.MEAN:
-            x = tf.reduce_mean(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+            x = tf.reduce_mean(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.PROD:
-            x = tf.reduce_prod(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+            x = tf.reduce_prod(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.MAX:
-            x = tf.reduce_max(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+            x = tf.reduce_max(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.MIN:
-            x = tf.reduce_min(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+            x = tf.reduce_min(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.AND:
-            x = tf.reduce_all(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+            x = tf.reduce_all(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.OR:
-            x = tf.reduce_any(tf.concat(axis=self.axis, values=self.built_modules), axis=self.axis)
+            x = tf.reduce_any(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         else:
             raise Exception('Unknown merge mode', str(self.merge_mode))
 

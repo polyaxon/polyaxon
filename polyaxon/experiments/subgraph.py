@@ -69,8 +69,13 @@ class SubGraph(GraphModule):
             if 'modules' in kwargs:
                 dependencies = []
                 for dependency_config in kwargs['modules']:
-                    dependencies.append(cls.build_subgraph_modules(
-                        mode=mode, subgraph_config=dependency_config))
+                    dependency = cls(
+                        mode=mode,
+                        name=dependency_config.name,
+                        modules=cls.build_subgraph_modules(mode=mode,
+                                                           subgraph_config=dependency_config),
+                        features=dependency_config.features)
+                    dependencies.append(dependency)
 
                 kwargs['modules'] = dependencies
 

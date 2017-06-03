@@ -255,9 +255,9 @@ class SubGraphConfig(Configurable):
 
         def add(method, m_kwargs):
             modules.append(method)
-            if 'dependencies' in m_kwargs:
-                m_kwargs['dependencies'] = [cls.__class__(**dependency) for dependency
-                                            in m_kwargs['dependencies']]
+            if 'modules' in m_kwargs:
+                m_kwargs['modules'] = [cls.read_configs(module_config)
+                                       for module_config in m_kwargs['modules']]
             kwargs.append(m_kwargs)
             return modules, kwargs
 
