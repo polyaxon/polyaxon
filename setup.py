@@ -43,7 +43,8 @@ setup(name='polyaxon',
           'numpy',
           'six',
           'Pillow',
-          'pyyaml'
+          'pyyaml',
+          'tensorflow'
       ],
       classifiers=[
         'Programming Language :: Python',

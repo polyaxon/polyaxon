@@ -29,6 +29,7 @@ class GraphModule(object):
         MODEL = 'model'
         LAYER = 'layer'
         SUBGRAPH = 'subgraph'
+        IMAGE_PROCESSOR = 'image_processor'
 
         VALUES = [MODEL, SUBGRAPH, LAYER]
 
@@ -88,3 +89,10 @@ class GraphModule(object):
 class BaseLayer(GraphModule):
     def __init__(self, mode, name):
         super(BaseLayer, self).__init__(mode=mode, name=name, module_type=self.ModuleType.LAYER)
+
+
+@six.add_metaclass(abc.ABCMeta)
+class ImageProcessorModule(GraphModule):
+    def __init__(self, mode, name):
+        super(ImageProcessorModule, self).__init__(
+            mode=mode, name=name, module_type=self.ModuleType.IMAGE_PROCESSOR)
