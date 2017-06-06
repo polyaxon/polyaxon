@@ -1,81 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
-### RunConfig
-
-```python
-polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
-```
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
-### Configurable
-
-```python
-polyaxon.libs.configs.Configurable()
-```
-
-`Configurable` is an abstract class for defining an configurable objects.
-
-A configurable class reads a configuration (YAML, Json) and create a config instance.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L114)</span>
-### PipelineConfig
-
-```python
-polyaxon.libs.configs.PipelineConfig(name, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
-```
-
-The PipelineConfig holds information needed to create a `Pipeline`.
-
-- __Args__:
-- __name__: `str`, name to give for the pipeline.
-- __dynamic_pad__: `bool`, If True the piple uses dynamic padding.
-- __bucket_boundaries__:
-- __batch_size__: `int`, the batch size.
-- __num_epochs__: number of epochs to iterate over in this pipeline.
-- __min_after_dequeue__: `int`, number of element to have in the queue.
-- __num_threads__: `int`, number of threads to use in the queue.
-- __shuffle__: If true, shuffle the data.
-- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
-- __params__: `dict`, extra information to pass to the pipeline.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L148)</span>
-### InputDataConfig
-
-```python
-polyaxon.libs.configs.InputDataConfig(input_type=None, pipeline_config=None, x=None, y=None)
-```
-
-The InputDataConfig holds information needed to create a `InputData`.
-
-- __Args__:
-- __input_type__: `str`, the type of the input data, e.g. numpy arrays.
-- __pipeline_config__: The pipeline config to use.
-- __x__: The x values, only used with NUMPY and PANDAS types.
-- __y__: The y values, only used with NUMPY and PANDAS types.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L175)</span>
-### LossConfig
-
-```python
-polyaxon.libs.configs.LossConfig(name, params=None)
-```
-
-The LossConfig holds information needed to create a `Loss`.
-
-- __Args__:
-- __name__: `str`, name to give for the loss.
-- __params__: `dict`, extra information to pass to the loss.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L187)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L203)</span>
 ### MetricConfig
 
 ```python
@@ -90,7 +13,7 @@ The MetricConfig holds information needed to create a `Metric`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L199)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L215)</span>
 ### OptimizerConfig
 
 ```python
@@ -118,7 +41,7 @@ The OptimizerConfig holds information needed to create a `Optimizer`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L237)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L253)</span>
 ### SubGraphConfig
 
 ```python
@@ -136,44 +59,7 @@ Handles also nested subgraphs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L277)</span>
-### ModelConfig
-
-```python
-polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, graph_config=None, model_type=None, summaries='all', name='base_model', eval_metrics_config=None, clip_gradients=5.0, params=None)
-```
-
-The ModelConfig holds information needed to create a `Model`.
-
-- __Args__:
-- __loss_config__: The loss configuration.
-- __optimizer_config__: The optimizer configuration.
-- __graph_config__: The graph configuration.
-- __model_type__: `str`, The type of the model (`classifier`, 'regressor, or `generator`).
-- __summaries__: `str` or `list`, the summary levels.
-- __eval_metrics_config__: The evaluation metrics configuration.
-- __clip_gradients__: `float`, The value to clip the gradients with.
-- __params__: `dict`, extra information to pass to the model.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L316)</span>
-### EstimatorConfig
-
-```python
-polyaxon.libs.configs.EstimatorConfig(name='estimator', output_dir=None, params=None)
-```
-
-The EstimatorConfig holds information needed to create a `Estimator`.
-
-- __Args__:
-- __name__: `str`, name to give for the estimator.
-- __output_dir__: `str`, where to save training and evaluation data.
-- __params__: `dict`, extra information to pass to the estimator.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L346)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L362)</span>
 ### ExperimentConfig
 
 ```python
@@ -203,6 +89,120 @@ The ExperimentConfig holds information needed to create a `Experiment`.
 	instead of time.
 - __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
 - __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
+### RunConfig
+
+```python
+polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
+```
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
+### Configurable
+
+```python
+polyaxon.libs.configs.Configurable()
+```
+
+`Configurable` is an abstract class for defining an configurable objects.
+
+A configurable class reads a configuration (YAML, Json) and create a config instance.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L114)</span>
+### PipelineConfig
+
+```python
+polyaxon.libs.configs.PipelineConfig(name, subgraph_configs_by_features=None, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
+```
+
+The PipelineConfig holds information needed to create a `Pipeline`.
+
+- __Args__:
+- __name__: `str`, name to give for the pipeline.
+- __dynamic_pad__: `bool`, If True the piple uses dynamic padding.
+- __bucket_boundaries__:
+- __batch_size__: `int`, the batch size.
+- __num_epochs__: number of epochs to iterate over in this pipeline.
+- __min_after_dequeue__: `int`, number of element to have in the queue.
+- __num_threads__: `int`, number of threads to use in the queue.
+- __shuffle__: If true, shuffle the data.
+- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+- __params__: `dict`, extra information to pass to the pipeline.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L164)</span>
+### InputDataConfig
+
+```python
+polyaxon.libs.configs.InputDataConfig(input_type=None, pipeline_config=None, x=None, y=None)
+```
+
+The InputDataConfig holds information needed to create a `InputData`.
+
+- __Args__:
+- __input_type__: `str`, the type of the input data, e.g. numpy arrays.
+- __pipeline_config__: The pipeline config to use.
+- __x__: The x values, only used with NUMPY and PANDAS types.
+- __y__: The y values, only used with NUMPY and PANDAS types.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L191)</span>
+### LossConfig
+
+```python
+polyaxon.libs.configs.LossConfig(name, params=None)
+```
+
+The LossConfig holds information needed to create a `Loss`.
+
+- __Args__:
+- __name__: `str`, name to give for the loss.
+- __params__: `dict`, extra information to pass to the loss.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L293)</span>
+### ModelConfig
+
+```python
+polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, graph_config=None, model_type=None, summaries='all', name='base_model', eval_metrics_config=None, clip_gradients=5.0, params=None)
+```
+
+The ModelConfig holds information needed to create a `Model`.
+
+- __Args__:
+- __loss_config__: The loss configuration.
+- __optimizer_config__: The optimizer configuration.
+- __graph_config__: The graph configuration.
+- __model_type__: `str`, The type of the model (`classifier`, 'regressor, or `generator`).
+- __summaries__: `str` or `list`, the summary levels.
+- __eval_metrics_config__: The evaluation metrics configuration.
+- __clip_gradients__: `float`, The value to clip the gradients with.
+- __params__: `dict`, extra information to pass to the model.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L332)</span>
+### EstimatorConfig
+
+```python
+polyaxon.libs.configs.EstimatorConfig(name='estimator', output_dir=None, params=None)
+```
+
+The EstimatorConfig holds information needed to create a `Estimator`.
+
+- __Args__:
+- __name__: `str`, name to give for the estimator.
+- __output_dir__: `str`, where to save training and evaluation data.
+- __params__: `dict`, extra information to pass to the estimator.
 
 ----
 

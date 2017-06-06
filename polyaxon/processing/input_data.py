@@ -48,16 +48,17 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
     def input_fn():
         """Creates features and labels."""
 
-        pipeline = getters.get_pipeline(pipeline_config.name,
-                                        mode=mode,
-                                        name=pipeline_config.name,
-                                        shuffle=pipeline_config.shuffle,
-                                        num_epochs=pipeline_config.num_epochs,
-                                        **pipeline_config.params)
+        pipeline = getters.get_pipeline(
+            mode=mode, name=pipeline_config.name, shuffle=pipeline_config.shuffle,
+            num_epochs=pipeline_config.num_epochs,
+            subgraph_configs_by_features=pipeline_config.subgraph_configs_by_features,
+            **pipeline_config.params)
 
         with tf.variable_scope(scope or 'input_fn'):
             data_provider = pipeline.make_data_provider()
             features_and_labels = pipeline.read_from_data_provider(data_provider)
+            # call pipeline processors
+            features_and_labels = pipeline(features_and_labels)
 
             if pipeline_config.bucket_boundaries:
                 _, batch = tf.contrib.training.bucket_by_sequence_length(

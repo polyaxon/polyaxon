@@ -494,7 +494,7 @@ Adds a Global Average Pooling.
 ### ResidualBlock
 
 ```python
-polyaxon.layers.convolutional.ResidualBlock(mode, nb_blocks, out_channels, downsample=False, downsample_strides=2, activation='relu', batch_norm=True, bias=True, weights_init='variance_scaling', bias_init='zeros', regularizer='L2', scale=0.0001, trainable=True, restore=True, name='ResidualBlock')
+polyaxon.layers.convolutional.ResidualBlock(mode, num_blocks, out_channels, downsample=False, downsample_strides=2, activation='relu', batch_norm=True, bias=True, weights_init='variance_scaling', bias_init='zeros', regularizer='l2_regularizer', scale=0.0001, trainable=True, restore=True, name='ResidualBlock')
 ```
 
 Adds a Residual Block.
@@ -504,7 +504,7 @@ Full pre-activation architecture is used here.
 
 - __Args__:
 - __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __nb_blocks__: `int`. Number of layer blocks.
+- __num_blocks__: `int`. Number of layer blocks.
 - __out_channels__: `int`. The number of convolutional filters of the
 	convolution layers.
 - __downsample__: `bool`. If True, apply downsampling using
@@ -544,7 +544,7 @@ Full pre-activation architecture is used here.
 ### ResidualBottleneck
 
 ```python
-polyaxon.layers.convolutional.ResidualBottleneck(mode, nb_blocks, bottleneck_size, out_channels, downsample=False, downsample_strides=2, activation='relu', batch_norm=True, bias=True, weights_init='variance_scaling', bias_init='zeros', regularizer='L2', scale=0.0001, trainable=True, restore=True, name='ResidualBottleneck')
+polyaxon.layers.convolutional.ResidualBottleneck(mode, num_blocks, bottleneck_size, out_channels, downsample=False, downsample_strides=2, activation='relu', batch_norm=True, bias=True, weights_init='variance_scaling', bias_init='zeros', regularizer='l2_regularizer', scale=0.0001, trainable=True, restore=True, name='ResidualBottleneck')
 ```
 
 Adds a Residual Bottleneck.
@@ -554,7 +554,7 @@ paper. Full pre-activation architecture is used here.
 
 - __Args__:
 - __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __nb_blocks__: `int`. Number of layer blocks.
+- __num_blocks__: `int`. Number of layer blocks.
 - __bottleneck_size__: `int`. The number of convolutional filter of the
 	bottleneck convolutional layer.
 - __out_channels__: `int`. The number of convolutional filters of the

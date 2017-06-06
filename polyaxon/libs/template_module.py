@@ -30,6 +30,7 @@ class GraphModule(object):
         LAYER = 'layer'
         SUBGRAPH = 'subgraph'
         IMAGE_PROCESSOR = 'image_processor'
+        PIPELINE = 'pipeline'
 
         VALUES = [MODEL, SUBGRAPH, LAYER]
 

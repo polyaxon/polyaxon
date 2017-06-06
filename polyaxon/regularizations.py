@@ -35,7 +35,6 @@ def l2_regularizer(scale=0.001, name='l2Regularizer', collect=True):
         x: `Tensor`. The tensor to apply regularization.
         scale: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
         name: `str` name of the app.
-        scope: `str` scope to add the op to.
         collect: add to regularization losses
 
     Returns:
@@ -56,7 +55,6 @@ def l1_regularizer(scale=0.001, name='l1Regularizer', collect=True):
       output = sum(|t|) * scale
 
     Args:
-        x: `Tensor`. The tensor to apply regularization.
         scale: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
         name: name of the app.
         collect: add to regularization losses
@@ -77,7 +75,6 @@ def l2_l1_regularizer(scale_l1=0.001, scale_l2=0.001, name='l2l1Regularizer', co
     Computes the L2 and L1 norm of a tensor:
 
     Args:
-        x: `Tensor`. The tensor to apply regularization.
         scale_l1: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
         scale_l2: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
         name: name of the app.

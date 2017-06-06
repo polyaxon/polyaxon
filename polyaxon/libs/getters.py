@@ -104,16 +104,22 @@ def get_loss(loss, y_pred, y_true, **kwargs):
     return loss
 
 
-def get_pipeline(pipeline, **kwargs):
+def get_pipeline(name, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):
     from polyaxon.processing.pipelines import PIPELINES
 
-    if isinstance(pipeline, str):
-        pipeline = PIPELINES[pipeline](**kwargs)
+    subgraphs_by_features = {}
+    if subgraph_configs_by_features:
+        for feature, subgraph_config in subgraph_configs_by_features.items():
+            modules = SubGraph.build_subgraph_modules(mode=mode, subgraph_config=subgraph_config)
+            subgraph = SubGraph(mode=mode, name=subgraph_config.name, modules=modules)
+            subgraphs_by_features[feature] = subgraph
+
+    if isinstance(name, str):
+        return PIPELINES[name](name=name, mode=mode, shuffle=shuffle, num_epochs=num_epochs,
+                               subgraphs_by_features=subgraphs_by_features, **params)
 
     else:
         raise ValueError('Invalid pipeline type.')
-
-    return pipeline
 
 
 def get_graph_fn(config):

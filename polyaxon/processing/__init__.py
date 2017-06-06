@@ -9,7 +9,7 @@ from .data_decoders import (
     TFSequenceExampleDecoder
 )
 from .data_providers import Dataset, DataProvider, DatasetDataProvider, ParallelDatasetProvider
-from .image import *
+from . import image
 from .input_data import create_input_data_fn
 from .text import VocabularyProcessor
 from . import pipelines

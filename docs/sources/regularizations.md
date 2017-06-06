@@ -32,7 +32,6 @@ Computes half the L2 norm of a tensor without the `sqrt`:
 - __x__: `Tensor`. The tensor to apply regularization.
 - __scale__: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
 - __name__: `str` name of the app.
-- __scope__: `str` scope to add the op to.
 - __collect__: add to regularization losses
 
 - __Returns__:
@@ -55,7 +54,6 @@ Computes the L1 norm of a tensor:
   output = sum(|t|) * scale
 
 - __Args__:
-- __x__: `Tensor`. The tensor to apply regularization.
 - __scale__: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
 - __name__: name of the app.
 - __collect__: add to regularization losses
@@ -78,7 +76,6 @@ Returns a function that can be used to apply L2 L1 regularization to a tensor.
 Computes the L2 and L1 norm of a tensor:
 
 - __Args__:
-- __x__: `Tensor`. The tensor to apply regularization.
 - __scale_l1__: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
 - __scale_l2__: `float`. A scalar multiplier `Tensor`. 0.0 disables the regularizer.
 - __name__: name of the app.

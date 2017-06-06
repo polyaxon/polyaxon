@@ -7,8 +7,7 @@ from collections import Mapping
 
 import tensorflow as tf
 
-from polyaxon.libs.template_module import GraphModule, BaseLayer
-
+from polyaxon.libs.template_module import GraphModule, BaseLayer, ImageProcessorModule
 
 # Currently there's an issue with numpy_input_fn, it's keeps updating the Xs dictionary
 FEATURE_BLACK_LIST = ['__target_key__', '__record_key__']
@@ -30,7 +29,7 @@ class SubGraph(GraphModule):
 
         wrong_modules = []
         for i, m in enumerate(modules):
-            if not isinstance(m, BaseLayer):
+            if not isinstance(m, (BaseLayer, ImageProcessorModule)):
                 wrong_modules.append((i + 1, m))
 
         if wrong_modules:

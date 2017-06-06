@@ -1,78 +1,3 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L157)</span>
-### FinalOpsHook
-
-```python
-polyaxon.experiments.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
-```
-
-A run hook which evaluates `Tensors` at the end of a session.
-(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
-
-- __Args__:
-- __final_ops__: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
-- __final_ops_feed_dict__: A feed dictionary to use when running `final_ops_dict`.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L170)</span>
-### StopAfterNEvalsHook
-
-```python
-polyaxon.experiments.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
-```
-
-Run hook used by the evaluation routines to run the `eval_ops` N times.
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L95)</span>
-### NanTensorHook
-
-```python
-polyaxon.experiments.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
-```
-
-NaN Loss monitor.
-(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
-
-Monitors loss and stops training if loss is NaN.
-Can either fail with exception or just stop training.
-
-- __Args__:
-- __loss_tensor__: `Tensor`, the loss tensor.
-- __fail_on_nan_loss__: `bool`, whether to raise exception when loss is NaN.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L111)</span>
-### SummarySaverHook
-
-```python
-polyaxon.experiments.hooks.SummarySaverHook(save_steps=None, save_secs=None, output_dir=None, summary_writer=None, scaffold=None, summary_op=None)
-```
-
-Saves summaries every N steps.
-(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
-
-- __Args__:
-- __save_steps__: `int`, save summaries every N steps. Exactly one of
-	`save_secs` and `save_steps` should be set.
-- __save_secs__: `int`, save summaries every N seconds.
-- __output_dir__: `string`, the directory to save the summaries to. Only used
-	if no `summary_writer` is supplied.
-- __summary_writer__: `SummaryWriter`. If `None` and an `output_dir` was passed,
-	one will be created accordingly.
-- __scaffold__: `Scaffold` to get summary_op if it's not provided.
-- __summary_op__: `Tensor` of type `string` containing the serialized `Summary`
-	protocol buffer or a list of `Tensor`. They are most likely an output
-	by TF summary methods like `tf.summary.scalar` or
-	`tf.summary.merge_all`. It can be passed in as one tensor; if more
-	than one, they must be passed in as a list.
-
-- __Raises__:
-- __ValueError__: Exactly one of scaffold or summary_op should be set.
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L85)</span>
 ### StepCounterHook
 
@@ -113,24 +38,14 @@ call.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L140)</span>
-### GlobalStepWaiterHook
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L170)</span>
+### StopAfterNEvalsHook
 
 ```python
-polyaxon.experiments.hooks.GlobalStepWaiterHook(wait_until_step)
+polyaxon.experiments.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
 ```
 
-Delay execution until global step reaches to wait_until_step.
-(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
-
-This hook delays execution until global step reaches to `wait_until_step`. It
-is used to gradually start workers in distributed settings. One example usage
-would be setting `wait_until_step=int(K*log(task_id+1))` assuming that
-task_id=0 is the chief.
-
-- __Args__:
-- __wait_until_step__: an `int` shows until which global step should we wait.
-
+Run hook used by the evaluation routines to run the `eval_ops` N times.
 ----
 
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L8)</span>
@@ -186,3 +101,88 @@ Saves checkpoints every N steps or seconds.
 - __Raises__:
 - __ValueError__: One of `save_steps` or `save_secs` should be set.
 - __ValueError__: Exactly one of saver or scaffold should be set.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L157)</span>
+### FinalOpsHook
+
+```python
+polyaxon.experiments.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
+```
+
+A run hook which evaluates `Tensors` at the end of a session.
+(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
+
+- __Args__:
+- __final_ops__: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
+- __final_ops_feed_dict__: A feed dictionary to use when running `final_ops_dict`.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L140)</span>
+### GlobalStepWaiterHook
+
+```python
+polyaxon.experiments.hooks.GlobalStepWaiterHook(wait_until_step)
+```
+
+Delay execution until global step reaches to wait_until_step.
+(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
+
+This hook delays execution until global step reaches to `wait_until_step`. It
+is used to gradually start workers in distributed settings. One example usage
+would be setting `wait_until_step=int(K*log(task_id+1))` assuming that
+task_id=0 is the chief.
+
+- __Args__:
+- __wait_until_step__: an `int` shows until which global step should we wait.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L111)</span>
+### SummarySaverHook
+
+```python
+polyaxon.experiments.hooks.SummarySaverHook(save_steps=None, save_secs=None, output_dir=None, summary_writer=None, scaffold=None, summary_op=None)
+```
+
+Saves summaries every N steps.
+(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
+
+- __Args__:
+- __save_steps__: `int`, save summaries every N steps. Exactly one of
+	`save_secs` and `save_steps` should be set.
+- __save_secs__: `int`, save summaries every N seconds.
+- __output_dir__: `string`, the directory to save the summaries to. Only used
+	if no `summary_writer` is supplied.
+- __summary_writer__: `SummaryWriter`. If `None` and an `output_dir` was passed,
+	one will be created accordingly.
+- __scaffold__: `Scaffold` to get summary_op if it's not provided.
+- __summary_op__: `Tensor` of type `string` containing the serialized `Summary`
+	protocol buffer or a list of `Tensor`. They are most likely an output
+	by TF summary methods like `tf.summary.scalar` or
+	`tf.summary.merge_all`. It can be passed in as one tensor; if more
+	than one, they must be passed in as a list.
+
+- __Raises__:
+- __ValueError__: Exactly one of scaffold or summary_op should be set.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L95)</span>
+### NanTensorHook
+
+```python
+polyaxon.experiments.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
+```
+
+NaN Loss monitor.
+(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
+
+Monitors loss and stops training if loss is NaN.
+Can either fail with exception or just stop training.
+
+- __Args__:
+- __loss_tensor__: `Tensor`, the loss tensor.
+- __fail_on_nan_loss__: `bool`, whether to raise exception when loss is NaN.

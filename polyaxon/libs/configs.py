@@ -126,9 +126,11 @@ class PipelineConfig(Configurable):
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         params: `dict`, extra information to pass to the pipeline.
     """
-    def __init__(self, name, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4,
+    def __init__(self, name, subgraph_configs_by_features=None, dynamic_pad=True,
+                 bucket_boundaries=False, batch_size=64, num_epochs=4,
                  min_after_dequeue=5000, num_threads=3, shuffle=False,
                  allow_smaller_final_batch=True, params=None):
+        self.subgraph_configs_by_features = subgraph_configs_by_features
         self.name = name
         self.dynamic_pad = dynamic_pad
         self.bucket_boundaries = bucket_boundaries
@@ -143,6 +145,20 @@ class PipelineConfig(Configurable):
     @property
     def capacity(self):
         return self.min_after_dequeue + self.num_threads * self.batch_size
+
+    @classmethod
+    def read_configs(cls, config_values):
+        config = cls._read_configs(config_values)
+        subgraph_configs_by_features = {}
+        for feature, subgraph_modules in config.pop('definition', {}).items():
+            subgraph_config = {
+                'name': '{}_processing'.format(feature),
+                'definition': subgraph_modules
+            }
+            subgraph_configs_by_features[feature] = SubGraphConfig.read_configs(subgraph_config)
+
+        config['subgraph_configs_by_features'] = subgraph_configs_by_features
+        return cls(**config)
 
 
 class InputDataConfig(Configurable):

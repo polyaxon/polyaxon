@@ -957,7 +957,7 @@ class GlobalAvgPool(BaseLayer, GlobalPoolMixin):
         Returns:
             2-D Tensor [batch, pooled dim]
         """
-        return self._gloabel_pool(incoming, tf.reduce_mean)
+        return self._global_pool(incoming, tf.reduce_mean)
 
 
 class ResidualBlock(BaseLayer):
@@ -968,7 +968,7 @@ class ResidualBlock(BaseLayer):
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-        nb_blocks: `int`. Number of layer blocks.
+        num_blocks: `int`. Number of layer blocks.
         out_channels: `int`. The number of convolutional filters of the
             convolution layers.
         downsample: `bool`. If True, apply downsampling using
@@ -1002,12 +1002,12 @@ class ResidualBlock(BaseLayer):
         - [Identity Mappings in Deep Residual Networks]
             (https://arxiv.org/pdf/1603.05027v2.pdf)
     """
-    def __init__(self, mode, nb_blocks, out_channels, downsample=False, downsample_strides=2,
+    def __init__(self, mode, num_blocks, out_channels, downsample=False, downsample_strides=2,
                  activation='relu', batch_norm=True, bias=True, weights_init='variance_scaling',
-                 bias_init='zeros', regularizer='L2', scale=0.0001,
+                 bias_init='zeros', regularizer='l2_regularizer', scale=0.0001,
                  trainable=True, restore=True, name='ResidualBlock'):
         super(ResidualBlock, self).__init__(mode, name)
-        self.nb_blocks = nb_blocks
+        self.num_blocks = num_blocks
         self.out_channels = out_channels
         self.downsample = downsample
         self.downsample_strides = downsample_strides if self.downsample else 1
@@ -1052,7 +1052,7 @@ class ResidualBlock(BaseLayer):
         resnet = incoming
         in_channels = get_shape(incoming)[-1]
 
-        for i in xrange(self.nb_blocks):
+        for _ in xrange(self.num_blocks):
             identity = resnet
 
             if self._batch_norm1:
@@ -1061,7 +1061,7 @@ class ResidualBlock(BaseLayer):
 
             resnet = self._conv2d_1(resnet)
 
-            if self.batch_norm:
+            if self.batch_norm2:
                 resnet = self._batch_norm2(resnet)
             resnet = getters.get_activation(self.activation)(resnet)
 
@@ -1090,7 +1090,7 @@ class ResidualBottleneck(BaseLayer):
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-        nb_blocks: `int`. Number of layer blocks.
+        num_blocks: `int`. Number of layer blocks.
         bottleneck_size: `int`. The number of convolutional filter of the
             bottleneck convolutional layer.
         out_channels: `int`. The number of convolutional filters of the
@@ -1126,12 +1126,12 @@ class ResidualBottleneck(BaseLayer):
         - [Identity Mappings in Deep Residual Networks]
             (https://arxiv.org/pdf/1603.05027v2.pdf)
     """
-    def __init__(self, mode, nb_blocks, bottleneck_size, out_channels, downsample=False,
+    def __init__(self, mode, num_blocks, bottleneck_size, out_channels, downsample=False,
                  downsample_strides=2, activation='relu', batch_norm=True, bias=True,
-                 weights_init='variance_scaling', bias_init='zeros', regularizer='L2',
+                 weights_init='variance_scaling', bias_init='zeros', regularizer='l2_regularizer',
                  scale=0.0001, trainable=True, restore=True, name="ResidualBottleneck"):
         super(ResidualBottleneck, self).__init__(mode, name)
-        self.nb_blocks = nb_blocks
+        self.num_blocks = num_blocks
         self.bottleneck_size = bottleneck_size
         self.out_channels = out_channels
         self.downsample = downsample
@@ -1183,7 +1183,7 @@ class ResidualBottleneck(BaseLayer):
         resnet = incoming
         in_channels = get_shape(incoming)[-1]
 
-        for i in xrange(self.nb_blocks):
+        for _ in xrange(self.num_blocks):
             identity = resnet
 
             if self._batch_norm1:

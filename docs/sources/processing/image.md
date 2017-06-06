@@ -8,7 +8,47 @@ polyaxon.processing.image.Resize(mode, height, width, method=None, align_corners
 See `plx.image.resize`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L116)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L810)</span>
+### AdjustGamma
+
+```python
+polyaxon.processing.image.AdjustGamma(mode, gamma=1, gain=1, name='AdjustGamma')
+```
+
+See `plx.image.adjust_gamma`'s docstring
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L853)</span>
+### Standardization
+
+```python
+polyaxon.processing.image.Standardization(mode, name='Standardization')
+```
+
+See `plx.image.standardize`'s docstring
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L893)</span>
+### DrawBoundingBoxes
+
+```python
+polyaxon.processing.image.DrawBoundingBoxes(mode, boxes, name='DrawBoundingBoxes')
+```
+
+See `plx.image.draw_bounding_boxes`'s docstring
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1084)</span>
+### TotalVariation
+
+```python
+polyaxon.processing.image.TotalVariation(mode, name='TotalVariation')
+```
+
+See `plx.image.total_variation`'s docstring
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L117)</span>
 ### CentralCrop
 
 ```python
@@ -58,7 +98,7 @@ polyaxon.processing.image.Flip(mode, axis=0, is_random=False, seed=None, name='F
 See `plx.image.flip`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L389)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L390)</span>
 ### Transpose
 
 ```python
@@ -68,7 +108,7 @@ polyaxon.processing.image.Transpose(mode, name='Transpose')
 See `plx.image.transpose`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L432)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L434)</span>
 ### Rotate90
 
 ```python
@@ -78,7 +118,7 @@ polyaxon.processing.image.Rotate90(mode, k=1, is_random=False, seed=None, name='
 See `plx.image.rotate90`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L504)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L506)</span>
 ### ConvertColorSpace
 
 ```python
@@ -88,7 +128,7 @@ polyaxon.processing.image.ConvertColorSpace(mode, from_space, to_space, name='Co
 See `plx.image.convert_color_space`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L556)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L559)</span>
 ### ConvertImagesDtype
 
 ```python
@@ -98,17 +138,7 @@ polyaxon.processing.image.ConvertImagesDtype(mode, dtype, saturate=False, name='
 See `plx.image.convert_images_dtype`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L600)</span>
-### AdjustBrightness
-
-```python
-polyaxon.processing.image.AdjustBrightness(mode, delta, is_random=False, seed=None, name='AdjustBrightness')
-```
-
-See `plx.image.adjust_brightness`'s docstring
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L658)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L661)</span>
 ### AdjustContrast
 
 ```python
@@ -118,7 +148,17 @@ polyaxon.processing.image.AdjustContrast(mode, contrast_factor, contrast_factor_
 See `plx.image.adjust_contrast`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L707)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L603)</span>
+### AdjustBrightness
+
+```python
+polyaxon.processing.image.AdjustBrightness(mode, delta, is_random=False, seed=None, name='AdjustBrightness')
+```
+
+See `plx.image.adjust_brightness`'s docstring
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L710)</span>
 ### AdjustHue
 
 ```python
@@ -128,7 +168,7 @@ polyaxon.processing.image.AdjustHue(mode, delta, is_random=False, seed=None, nam
 See `plx.image.adjust_hue`'s docstring
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L764)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L767)</span>
 ### AdjustSaturation
 
 ```python
@@ -136,46 +176,6 @@ polyaxon.processing.image.AdjustSaturation(mode, saturation_factor, saturation_f
 ```
 
 See `plx.image.adjust_saturation`'s docstring
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L807)</span>
-### AdjustGamma
-
-```python
-polyaxon.processing.image.AdjustGamma(mode, gamma=1, gain=1, name='AdjustGamma')
-```
-
-See `plx.image.adjust_gamma`'s docstring
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L849)</span>
-### Standardization
-
-```python
-polyaxon.processing.image.Standardization(mode, name='Standardization')
-```
-
-See `plx.image.standardize`'s docstring
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L889)</span>
-### DrawBoundingBoxes
-
-```python
-polyaxon.processing.image.DrawBoundingBoxes(mode, boxes, name='DrawBoundingBoxes')
-```
-
-See `plx.image.draw_bounding_boxes`'s docstring
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1080)</span>
-### TotalVariation
-
-```python
-polyaxon.processing.image.TotalVariation(mode, name='TotalVariation')
-```
-
-See `plx.image.total_variation`'s docstring
 ----
 
 ### resize

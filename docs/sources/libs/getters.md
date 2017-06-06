@@ -65,7 +65,7 @@ get_loss(loss, y_pred, y_true)
 
 
 ```python
-get_pipeline(pipeline)
+get_pipeline(name, mode, shuffle, num_epochs, subgraph_configs_by_features=None)
 ```
 
 ----
