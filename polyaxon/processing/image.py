@@ -105,10 +105,11 @@ def central_crop(images, central_fraction):
         `[new_height, new_width, channels]`.
     """
     images_shape = get_shape(images)
-    if images_shape > 4:
-        ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
+    if len(images_shape) > 4:
+        ValueError("'image' must have either 3 or 4 dimensions, "
+                   "received `{}`.".format(images_shape))
 
-    if images_shape == 4:
+    if len(images_shape) == 4:
         return tf.map_fn(lambda img: tf.image.central_crop(img, central_fraction), images)
     return tf.image.central_crop(images, central_fraction)
 
@@ -139,11 +140,10 @@ def random_crop(images, height, width):
         `[new_height, new_width, channels]`.
     """
     images_shape = get_shape(images)
-    if images_shape > 4:
+    if len(images_shape) > 4:
         ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
 
-    if images_shape == 4:
-
+    if len(images_shape) == 4:
         return tf.map_fn(lambda img: tf.random_crop(img, [height, width, images_shape[-1]]), images)
 
     return tf.random_crop(images, [height, width, images_shape[-1]])
@@ -336,10 +336,10 @@ def flip(images, axis=0, is_random=False, seed=None):
         raise ValueError("`axis` should be 0 or 1, received ``".format(axis))
 
     images_shape = get_shape(images)
-    if images_shape > 4:
+    if len(images_shape) > 4:
         ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
 
-    if images_shape == 4:
+    if len(images_shape) == 4:
         if is_random:
             return tf.map_fn(lambda img: method(img, seed), images)
         return tf.map_fn(lambda img: method(img), images)
@@ -377,10 +377,11 @@ def transpose(images):
         ValueError: if the shape of `image` not supported.
     """
     images_shape = get_shape(images)
-    if images_shape > 4:
-        ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
+    if len(images_shape) > 4:
+        ValueError("'image' must have either 3 or 4 dimensions, "
+                   "received `{}`.".format(images_shape))
 
-    if images_shape == 4:
+    if len(images_shape) == 4:
         return tf.map_fn(lambda img: tf.image.transpose_image(img), images)
 
     return tf.image.transpose_image(images)
@@ -420,10 +421,11 @@ def rotate90(images, k=1, is_random=False, seed=None, name=None):
         k = random_ops.random_shuffle([0, 1, 2, 3], seed=seed)[0]
 
     images_shape = get_shape(images)
-    if images_shape > 4:
-        ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
+    if len(images_shape) > 4:
+        ValueError("'image' must have either 3 or 4 dimensions, "
+                   "received `{}`.".format(images_shape))
 
-    if images_shape == 4:
+    if len(images_shape) == 4:
         return tf.map_fn(lambda img: tf.image.rot90(img, k, name), images)
 
     return tf.image.rot90(images, k, name)
@@ -543,10 +545,11 @@ def convert_images_dtype(images, dtype, saturate=False, name=None):
         `image`, converted to `dtype`.
       """
     images_shape = get_shape(images)
-    if images_shape > 4:
-        ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
+    if len(images_shape) > 4:
+        ValueError("'image' must have either 3 or 4 dimensions, "
+                   "received `{}`.".format(images_shape))
 
-    if images_shape == 4:
+    if len(images_shape) == 4:
         return tf.map_fn(lambda img: tf.image.convert_image_dtype(
             img, dtype=dtype, saturate=saturate, name=name), images)
 
@@ -838,10 +841,11 @@ def standardize(images):
 
     """
     images_shape = get_shape(images)
-    if images_shape > 4:
-        ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
+    if len(images_shape) > 4:
+        ValueError("'image' must have either 3 or 4 dimensions, "
+                   "received `{}`.".format(images_shape))
 
-    if images_shape == 4:
+    if len(images_shape) == 4:
         return tf.map_fn(lambda img: tf.image.per_image_standardization(img), images)
     return tf.image.per_image_standardization(images)
 
