@@ -24,7 +24,7 @@ A configurable class reads a configuration (YAML, Json) and create a config inst
 ### PipelineConfig
 
 ```python
-polyaxon.libs.configs.PipelineConfig(name, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000, num_threads=3, shuffle=False, params=None)
+polyaxon.libs.configs.PipelineConfig(name, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
 ```
 
 The PipelineConfig holds information needed to create a `Pipeline`.
@@ -43,7 +43,7 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L146)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L148)</span>
 ### InputDataConfig
 
 ```python
@@ -60,7 +60,7 @@ The InputDataConfig holds information needed to create a `InputData`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L173)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L175)</span>
 ### LossConfig
 
 ```python
@@ -75,7 +75,7 @@ The LossConfig holds information needed to create a `Loss`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L185)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L187)</span>
 ### MetricConfig
 
 ```python
@@ -90,7 +90,7 @@ The MetricConfig holds information needed to create a `Metric`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L197)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L199)</span>
 ### OptimizerConfig
 
 ```python
@@ -118,11 +118,11 @@ The OptimizerConfig holds information needed to create a `Optimizer`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L235)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L237)</span>
 ### SubGraphConfig
 
 ```python
-polyaxon.libs.configs.SubGraphConfig(name, modules, kwargs)
+polyaxon.libs.configs.SubGraphConfig(name, modules, kwargs, features=None)
 ```
 
 The configuration used to create subgraphs.
@@ -136,7 +136,7 @@ Handles also nested subgraphs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L274)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L277)</span>
 ### ModelConfig
 
 ```python
@@ -157,7 +157,7 @@ The ModelConfig holds information needed to create a `Model`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L313)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L316)</span>
 ### EstimatorConfig
 
 ```python
@@ -173,7 +173,7 @@ The EstimatorConfig holds information needed to create a `Estimator`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L342)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L346)</span>
 ### ExperimentConfig
 
 ```python
@@ -212,3 +212,6 @@ The ExperimentConfig holds information needed to create a `Experiment`.
 ```python
 create_run_config(tf_random_seed=None, save_checkpoints_secs=None, save_checkpoints_steps=600, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=4, gpu_memory_fraction=1.0, gpu_allow_growth=False, log_device_placement=False)
 ```
+
+
+Creates a `RunConfig` instance.

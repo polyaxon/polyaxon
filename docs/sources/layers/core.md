@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L16)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L19)</span>
 ### FullyConnected
 
 ```python
-polyaxon.layers.core.FullyConnected(mode, n_units, activation='linear', bias=True, weights_init='truncated_normal', bias_init='zeros', regularizer=None, scale=0.001, trainable=True, restore=True, name='FullyConnected')
+polyaxon.layers.core.FullyConnected(mode, num_units, activation='linear', bias=True, weights_init='truncated_normal', bias_init='zeros', regularizer=None, scale=0.001, dropout=None, trainable=True, restore=True, name='FullyConnected')
 ```
 
 Adds a fully connected layer.
@@ -16,7 +16,7 @@ prior to the initial matrix multiply by `weights`.
 
 - __Args__:
 - __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __n_units__: `int`, number of units for this layer.
+- __num_units__: `int`, number of units for this layer.
 - __activation__: `str` (name) or `function` (returning a `Tensor`).
 	- __Default__: 'linear'.
 - __bias__: `bool`. If True, a bias is used.
@@ -27,6 +27,7 @@ prior to the initial matrix multiply by `weights`.
 - __regularizer__: `str` (name) or `Tensor`. Add a regularizer to this layer weights.
 	- __Default__: None.
 - __scale__: `float`. Regularizer decay parameter. Default: 0.001.
+- __dropout__: `float`. Adds a dropout with `keep_prob` as `1 - dropout`.
 - __trainable__: `bool`. If True, weights will be trainable.
 - __restore__: `bool`. If True, this layer weights will be restored when
 	loading a model.
@@ -38,7 +39,7 @@ prior to the initial matrix multiply by `weights`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L111)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L126)</span>
 ### Dropout
 
 ```python
@@ -76,7 +77,7 @@ N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever & R. Salakhutdinov,
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L174)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L190)</span>
 ### Reshape
 
 ```python
@@ -94,7 +95,7 @@ A layer that reshape the incoming layer tensor output to the desired shape.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L202)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L218)</span>
 ### Flatten
 
 ```python
@@ -109,7 +110,7 @@ Flatten the incoming Tensor.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L228)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L244)</span>
 ### SingleUnit
 
 ```python
@@ -133,11 +134,11 @@ Adds a Single Unit Layer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L298)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L314)</span>
 ### Highway
 
 ```python
-polyaxon.layers.core.Highway(mode, n_units, activation='linear', transform_dropout=None, weights_init='truncated_normal', bias_init='zeros', regularizer=None, scale=0.001, trainable=True, restore=True, name='FullyConnectedHighway')
+polyaxon.layers.core.Highway(mode, num_units, activation='linear', transform_dropout=None, weights_init='truncated_normal', bias_init='zeros', regularizer=None, scale=0.001, trainable=True, restore=True, name='FullyConnectedHighway')
 ```
 
 Adds Fully Connected Highway.
@@ -147,7 +148,7 @@ A fully connected highway network layer, with some inspiration from
 
 - __Args__:
 - __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __n_units__: `int`, number of units for this layer.
+- __num_units__: `int`, number of units for this layer.
 - __activation__: `str` (name) or `function` (returning a `Tensor`).
 	- __Default__: 'linear'.
 - __transform_dropout__: `float`: Keep probability on the highway transform gate.
@@ -174,7 +175,7 @@ A fully connected highway network layer, with some inspiration from
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L419)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L436)</span>
 ### OneHotEncoding
 
 ```python
@@ -192,33 +193,16 @@ Transform numeric labels into one hot labels using `tf.one_hot`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L451)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L495)</span>
 ### Merge
 
 ```python
-polyaxon.layers.core.Merge(mode, merge_mode, axis=1, name='Merge')
+polyaxon.layers.core.Merge(mode, modules, merge_mode, axis=1, name='Merge')
 ```
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L525)</span>
-### Concat
-
-```python
-polyaxon.layers.core.Concat(mode, name='Concat')
-```
-
-Concat Outputs.
-
-A layer that concatenate all outputs of a network into a single tensor.
-
-- __Args__:
-- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __name__: `str`. A name for this layer (optional).
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L549)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L468)</span>
 ### Slice
 
 ```python

@@ -37,6 +37,15 @@ the incoming data shape.
 
 ----
 
+### validate_dtype
+
+
+```python
+validate_dtype(x)
+```
+
+----
+
 ### get_variable_scope
 
 
@@ -142,6 +151,8 @@ formatted value.
 validate_filter_size(filter_size, in_depth, num_filter)
 ```
 
+
+Validates filter size for CNN operations
 ----
 
 ### validate_filter_size_3d
@@ -151,6 +162,8 @@ validate_filter_size(filter_size, in_depth, num_filter)
 validate_filter_size_3d(filter_size, in_depth, num_filter)
 ```
 
+
+Validates filter size for 3d CNN operations
 ----
 
 ### check_restore_tensor

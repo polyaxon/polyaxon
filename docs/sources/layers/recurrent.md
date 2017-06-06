@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L114)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L116)</span>
 ### SimpleRNN
 
 ```python
@@ -15,7 +15,7 @@ if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
 - __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
 - __num_units__: `int`, number of units for this layer.
 - __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'sigmoid'.
-- __dropout__: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+- __dropout__: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
 	input and output keep probability.
 - __num_layers__: `int` how many times to stack the cell.
 - __bias__: `bool`. If True, a bias is used.
@@ -38,7 +38,7 @@ if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L175)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L177)</span>
 ### LSTM
 
 ```python
@@ -57,7 +57,7 @@ if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
 - __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
 - __inner_activation__: `str` (name) or `function` (returning a `Tensor`).
 	LSTM inner activation. Default: 'sigmoid'.
-- __dropout__: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+- __dropout__: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
 	input and output keep probability.
 - __num_layers__: `int` how many times to stack the cell.
 - __bias__: `bool`. If True, a bias is used.
@@ -90,7 +90,7 @@ Neural Computation 9(8): 1735-1780, 1997.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L251)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L253)</span>
 ### GRU
 
 ```python
@@ -109,7 +109,7 @@ if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
 - __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
 - __inner_activation__: `str` (name) or `function` (returning a `Tensor`).
 	GRU inner activation. Default: 'sigmoid'.
-- __dropout__: `tuple` of `float`: (input_keep_prob, output_keep_prob). The
+- __dropout__: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
 	input and output keep probability.
 - __num_layers__: `int` how many times to stack the cell.
 - __bias__: `bool`. If True, a bias is used.
@@ -140,7 +140,7 @@ Statistical Machine Translation, K. Cho et al., 2014.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L323)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L325)</span>
 ### BidirectionalRNN
 
 ```python
@@ -183,7 +183,7 @@ if `return_seq`: 3-D Tensor [samples, timesteps, output dim].
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L444)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L446)</span>
 ### BasicRNNCell
 
 ```python
@@ -204,7 +204,7 @@ The most basic RNN cell with custom params.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L490)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L492)</span>
 ### GRUCell
 
 ```python
@@ -227,7 +227,7 @@ Gated Recurrent Unit cell with custom params.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L555)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L557)</span>
 ### BasicLSTMCell
 
 ```python
@@ -266,7 +266,7 @@ For advanced models, please use the full LSTMCell that follows.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L675)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L677)</span>
 ### DropoutWrapper
 
 ```python
@@ -294,7 +294,7 @@ probability; if it is float and 1, no output dropout will be added.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L747)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L749)</span>
 ### MultiRNNCell
 
 ```python

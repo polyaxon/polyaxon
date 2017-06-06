@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L14)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L16)</span>
 ### BatchNormalization
 
 ```python
@@ -30,7 +30,7 @@ Internal Covariate Shif. Sergey Ioffe, Christian Szegedy. 2015.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L98)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L101)</span>
 ### LocalResponseNormalization
 
 ```python
@@ -51,7 +51,7 @@ Local Response Normalization.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L132)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L135)</span>
 ### L2Normalization
 
 ```python

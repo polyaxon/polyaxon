@@ -15,9 +15,38 @@ from polyaxon import (
     regularizations,
     optimizers,
     variables)
-from polyaxon.libs import configs, getters, utils
+from polyaxon.datasets import cifar10, flowers17, mnist
+from polyaxon.datasets.converters import (
+    ImageReader,
+    PNGImageReader,
+    PNGNumpyImageReader,
+    JPGNumpyImageReader,
+    JPEGImageReader,
+    ImagesToTFExampleConverter
+)
 from polyaxon.experiments import estimator, experiment, hooks, models, subgraph, summarizer
 from polyaxon.layers import convolutional, core, embedding, normalizations, recurrent
+from polyaxon.libs import configs, getters, utils
+from polyaxon.processing import (
+    CategoricalVocabulary,
+    CategoricalProcessor,
+    create_input_data_fn,
+    image,
+    pipelines,
+    VocabularyProcessor,
+)
+from polyaxon.processing.data_decoders import (
+    DataDecoder,
+    TFExampleDecoder,
+    SplitTokensDecoder,
+    TFSequenceExampleDecoder
+)
+from polyaxon.processing.data_providers import (
+    Dataset,
+    DataProvider,
+    DatasetDataProvider,
+    ParallelDatasetProvider
+)
 
 ROOT = 'http://polyaxon.com/docs/'
 
@@ -88,7 +117,6 @@ PAGES = [
             core.Highway,
             core.OneHotEncoding,
             core.Merge,
-            core.Concat,
             core.Slice
         ],
     },
@@ -144,7 +172,51 @@ PAGES = [
             normalizations.L2Normalization
         ],
     },
-
+    {
+        'page': 'processing/categorical_vocabulary.md',
+        'classes': [CategoricalVocabulary, CategoricalProcessor]
+    },
+    {
+        'page': 'processing/vocabulary_processor.md',
+        'classes': [VocabularyProcessor]
+    },
+    {
+        'page': 'processing/image.md',
+        'all_module_functions': [image],
+        'all_module_classes': [image],
+    },
+    {
+        'page': 'processing/input_fn.md',
+        'functions': [create_input_data_fn]
+    },
+    {
+        'page': 'processing/pipelines.md',
+        'classes': [
+            pipelines.Pipeline,
+            pipelines.TFRecordImagePipeline,
+            pipelines.ParallelTextPipeline,
+            pipelines.TFRecordSourceSequencePipeline,
+            pipelines.ImageCaptioningPipeline
+        ]
+    },
+    {
+        'page': 'processing/data_decoders.md',
+        'classes': [
+            DataDecoder,
+            TFExampleDecoder,
+            SplitTokensDecoder,
+            TFSequenceExampleDecoder
+        ]
+    },
+    {
+        'page': 'processing/data_providers.md',
+        'classes': [
+            Dataset,
+            DataProvider,
+            DatasetDataProvider,
+            ParallelDatasetProvider
+        ]
+    },
     {
         'page': 'libs/configs.md',
         'all_module_classes': [configs],
@@ -186,6 +258,29 @@ PAGES = [
     {
         'page': 'variables.md',
         'all_module_functions': [variables],
+    },
+    {
+        'page': 'datasets/converters.md',
+        'classes': [
+            ImageReader,
+            PNGImageReader,
+            PNGNumpyImageReader,
+            JPGNumpyImageReader,
+            JPEGImageReader,
+            ImagesToTFExampleConverter
+        ],
+    },
+    {
+        'page': 'datasets/cifar10.md',
+        'all_module_functions': [cifar10],
+    },
+    {
+        'page': 'datasets/flowers17.md',
+        'all_module_functions': [flowers17],
+    },
+    {
+        'page': 'datasets/mnist.md',
+        'all_module_functions': [mnist],
     },
 ]
 

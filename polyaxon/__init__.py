@@ -14,3 +14,5 @@ from . import metrics
 from . import optimizers
 from . import regularizations
 from . import variables
+from . import datasets
+from . import processing

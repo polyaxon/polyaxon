@@ -87,12 +87,14 @@ class GraphModule(object):
 
 @six.add_metaclass(abc.ABCMeta)
 class BaseLayer(GraphModule):
+    """Convenience class to create layers. See `GraphModule`'s docstring."""
     def __init__(self, mode, name):
         super(BaseLayer, self).__init__(mode=mode, name=name, module_type=self.ModuleType.LAYER)
 
 
 @six.add_metaclass(abc.ABCMeta)
 class ImageProcessorModule(GraphModule):
+    """Convenience class to create image processors. See `GraphModule`'s docstring."""
     def __init__(self, mode, name):
         super(ImageProcessorModule, self).__init__(
             mode=mode, name=name, module_type=self.ModuleType.IMAGE_PROCESSOR)

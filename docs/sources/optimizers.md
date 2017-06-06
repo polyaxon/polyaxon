@@ -1,28 +1,3 @@
-### sgd
-
-
-```python
-sgd(learning_rate=0.001, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='SGD')
-```
-
-
-Optimizer that implements the gradient descent algorithm.
-
-- __Args__:
-- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: Optional name prefix for the operations created when applying gradients.
-
-----
-
 ### create_learning_rate_decay_fn
 
 
@@ -54,6 +29,31 @@ update. `learning_rate_decay_fn` requires `global_step`.
 A function that takes (learning_rate, global_step) as inputs
 and returns the learning rate for the given step.
 Returns `None` if decay_type is empty or None.
+
+----
+
+### sgd
+
+
+```python
+sgd(learning_rate=0.001, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='SGD')
+```
+
+
+Optimizer that implements the gradient descent algorithm.
+
+- __Args__:
+- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
+- __decay_type__: A decay function name defined in `tf.train`
+- __decay_rate__: `float`. The learning rate decay to apply.
+- __decay_steps__: `int`. Apply decay every provided steps.
+- __start_decay_at__: `int`. Don't decay before this step.
+- __stop_decay_at__: `int`. Don't decay after this step.
+- __min_learning_rate__: `float`. Don't decay below this number.
+- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+- __global_step__: Scalar int `Tensor`, step counter for each update.
+- __use_locking__: If True use locks for update operations.
+- __name__: Optional name prefix for the operations created when applying gradients.
 
 ----
 

@@ -180,6 +180,7 @@ def validate_padding(value):
 
 
 def validate_filter_size(filter_size, in_depth, num_filter):
+    """Validates filter size for CNN operations"""
     if isinstance(filter_size, int):
         return [filter_size, filter_size, in_depth, num_filter]
     elif isinstance(filter_size, (tuple, list)):
@@ -193,6 +194,7 @@ def validate_filter_size(filter_size, in_depth, num_filter):
 
 
 def validate_filter_size_3d(filter_size, in_depth, num_filter):
+    """Validates filter size for 3d CNN operations"""
     if isinstance(filter_size, int):
         return [filter_size, filter_size, filter_size, in_depth, num_filter]
     elif isinstance(filter_size, (tuple, list)):

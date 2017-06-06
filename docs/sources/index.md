@@ -137,6 +137,11 @@ Alternatively, you can also install from source by running (from source folder):
 
 Some example are provided [here](examples), more examples and use case will pushed, a contribution with an example is also appreciated.
 
+# Project status
+
+Polyaxon is in a pre-release "alpha" state. All interfaces, programming interfaces, and data structures may be changed without prior notice. 
+We'll do our best to communicate potentially disruptive changes.
+
 # Contributions
 
 Please follow the contribution guide line: *[Contribute to Polyaxon](CONTRIBUTING.md)*.

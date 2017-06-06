@@ -40,6 +40,14 @@ pages:
   - Convolutional Layers: layers/convolutional.md
   - Recurrent Layers: layers/recurrent.md
   - Embedding Layers: layers/embeddings.md
+- Processing:
+  - Categorical Vocabulary: processing/categorical_vocabulary.md
+  - Vocabulary Processor: processing/vocabulary_processor.md
+  - Image: processing/image.md
+  - Input function: processing/input_fn.md
+  - Pipelines: processing/pipelines.md
+  - Data Decoders: processing/data_decoders.md
+  - Data Providers: processing/data_providers.md
 - Activations: activations.md
 - Losses: losses.md
 - Metrics: metrics.md

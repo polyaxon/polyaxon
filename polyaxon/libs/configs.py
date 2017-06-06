@@ -330,6 +330,7 @@ class EstimatorConfig(Configurable):
 def create_run_config(tf_random_seed=None, save_checkpoints_secs=None, save_checkpoints_steps=600,
                       keep_checkpoint_max=5, keep_checkpoint_every_n_hours=4,
                       gpu_memory_fraction=1.0, gpu_allow_growth=False, log_device_placement=False):
+    """Creates a `RunConfig` instance."""
     config = RunConfig(
         tf_random_seed=tf_random_seed,
         save_checkpoints_secs=save_checkpoints_secs,

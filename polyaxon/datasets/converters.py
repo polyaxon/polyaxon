@@ -11,6 +11,7 @@ import tensorflow as tf
 
 
 class ImageReader(object):
+    """Base ImageReader class that provides an operation to read/encode/decode an image."""
     def __init__(self, channels=3):
         self._placeholder = tf.placeholder(dtype=tf.string)
         self._image = self.decoder(channels)
@@ -26,11 +27,13 @@ class ImageReader(object):
 
 
 class PNGImageReader(ImageReader):
+    """A png image class reader"""
     def decoder(self, channels):
         return tf.image.decode_png(self._placeholder, channels=channels)
     
 
 class PNGNumpyImageReader(ImageReader):
+    """A numpy png image class reader"""
     
     def __init__(self, shape=None):
         self._placeholder = tf.placeholder(dtype=tf.uint8, shape=shape)
@@ -45,6 +48,7 @@ class PNGNumpyImageReader(ImageReader):
 
 
 class JPGNumpyImageReader(ImageReader):
+    """A jpeg numpy image class reader"""
     def __init__(self, shape=None):
         self._placeholder = tf.placeholder(dtype=tf.uint8, shape=shape)
         self._image = tf.image.encode_jpeg(self._placeholder)
@@ -58,6 +62,7 @@ class JPGNumpyImageReader(ImageReader):
 
 
 class JPEGImageReader(ImageReader):
+    """A jpeg image class reader"""
     def decoder(self, channels):
         return tf.image.decode_jpeg(self._placeholder, channels=channels)
 
