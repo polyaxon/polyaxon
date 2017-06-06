@@ -77,6 +77,7 @@ def generate_data(fct, x, time_steps, seperate=False):
 
 
 def create_experiment_json_fn(output_dir):
+    """Creates an experiment using LSTM architecture for timeseries regression problem."""
     X, y = generate_data(sin_cos, np.linspace(0, 100, 10000, dtype=np.float32), 7, seperate=False)
 
     config = {

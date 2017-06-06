@@ -8,6 +8,15 @@ from polyaxon.datasets import mnist
 
 
 def create_experiment_json_fn(output_dir):
+    """Creates an experiement using a VGG19 to Oxford's 17 Category Flower Dataset.
+
+    References:
+        * Very Deep Convolutional Networks for Large-Scale Image Recognition.
+        K. Simonyan, A. Zisserman. arXiv technical report, 2014.
+
+    Links:
+        * http://arxiv.org/pdf/1409.1556
+    """
     dataset_dir = './data/flowers17'
     mnist.prepare(dataset_dir)
     train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)

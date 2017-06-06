@@ -8,6 +8,8 @@ from polyaxon.datasets import mnist
 
 
 def create_experiment_json_fn(output_dir):
+    """Creates an experiment using cnn for MNIST dataset classification task."""
+
     dataset_dir = './data/mnist'
     mnist.prepare(dataset_dir)
     train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)

@@ -8,6 +8,14 @@ from polyaxon.datasets import cifar10
 
 
 def create_experiment_json_fn(output_dir):
+    """Creates an experiment using cnn for CIFAR-10 dataset classification task.
+
+    References:
+        * Learning Multiple Layers of Features from Tiny Images, A. Krizhevsky, 2009.
+
+    Links:
+        * [CIFAR-10 Dataset](https://www.cs.toronto.edu/~kriz/cifar.html)
+    """
     dataset_dir = './data/cifar10'
     cifar10.prepare(dataset_dir)
     train_data_file = cifar10.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)

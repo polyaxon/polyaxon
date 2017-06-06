@@ -11,6 +11,16 @@ import tensorflow as tf
 
 
 def main(*args):
+    """Creates an estimator for the boston house-prices datase.
+
+    References:
+        * This dataset concerns housing values in Boston suburbs.
+        It's based on the "Boston Housing Dataset" from University of California, Irvine,
+        which in turn was taken from the StatLib library maintained at Carnegie Mellon University.
+
+    Returns:
+        * https://archive.ics.uci.edu/ml/datasets/Housing
+    """
     # Load dataset
     boston = datasets.load_boston()
     x, y = boston.data, boston.target

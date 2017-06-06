@@ -8,6 +8,17 @@ from polyaxon.datasets import flowers17
 
 
 def create_experiment_json_fn(output_dir):
+    """Creates an experiment using Alexnet applied to Oxford's 17  Category Flower Dataset.
+
+    References:
+        * Alex Krizhevsky, Ilya Sutskever & Geoffrey E. Hinton. ImageNet Classification with
+        Deep Convolutional Neural Networks. NIPS, 2012.
+        * 17 Category Flower Dataset. Maria-Elena Nilsback and Andrew Zisserman.
+
+    Links:
+        * [AlexNet Paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
+        * [Flower Dataset (17)](http://www.robots.ox.ac.uk/~vgg/data/flowers/17/)
+    """
     dataset_dir = './data/flowers17'
     flowers17.prepare(dataset_dir)
     train_data_file = flowers17.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)

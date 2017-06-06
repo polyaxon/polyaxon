@@ -9,6 +9,12 @@ from polyaxon.libs.configs import MetricConfig
 
 
 def main(*args):
+    """Creates an experiment using a highway network.
+
+    Links:
+        * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
+        * [https://arxiv.org/abs/1505.00387](https://arxiv.org/abs/1505.00387)
+    """
     def graph_fn(mode, inputs):
         x = inputs['image']
         x = plx.layers.FullyConnected(
