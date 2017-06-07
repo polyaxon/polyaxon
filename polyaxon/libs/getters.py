@@ -150,7 +150,7 @@ def get_model_fn(model_config, graph_fn=None):
             eval_metrics_config=model_config.eval_metrics_config,
             summaries=model_config.summaries,
             clip_gradients=model_config.clip_gradients,
-            params=model_config.params)
+            **model_config.params)
         return model(features=features, labels=labels, params=params, config=config)
 
     return model_fn

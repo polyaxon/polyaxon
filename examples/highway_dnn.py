@@ -30,7 +30,7 @@ def main(*args):
         model = plx.experiments.ClassifierModel(
             mode, graph_fn=graph_fn, summaries='loss', name='classifier',
             eval_metrics_config=[MetricConfig(name='streaming_accuracy')],
-            params={'n_classes': 10, 'one_hot_encode': True})
+            n_classes=10, one_hot_encode=True)
         return model(features, labels)
 
     estimator = plx.experiments.Estimator(model_fn=model_fn,

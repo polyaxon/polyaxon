@@ -28,7 +28,6 @@ class BaseModel(GraphModule):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
                 * `inputs`: the feature inputs.
-        graph_fn: An instance of `GraphConfig`.
         loss_config: An instance of `LossConfig`.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
         model_type: `str`, the type of this model.
@@ -36,7 +35,6 @@ class BaseModel(GraphModule):
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
         name: `str`, the name of this model, everything will be encapsulated inside this scope.
-        params: `dict`. A dictionary of hyperparameter values.
 
     Returns:
         `EstimatorSpec`
@@ -49,12 +47,11 @@ class BaseModel(GraphModule):
         VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
 
     def __init__(self, mode, name, model_type, graph_fn, loss_config, optimizer_config=None,
-                 eval_metrics_config=None, summaries='all', clip_gradients=0.5, params=None):
+                 eval_metrics_config=None, summaries='all', clip_gradients=0.5):
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
         self.loss_config = loss_config
         self.optimizer_config = optimizer_config or OptimizerConfig('Adam', learning_rate=0.001)
         self.eval_metrics_config = eval_metrics_config or []
-        self.params = params
         self.model_type = model_type
         self.summaries = summarizer.SummaryOptions.validate(summaries)
         assert model_type in self.Types.VALUES, "`model_type` provided is unsupported."
@@ -265,25 +262,23 @@ class RegressorModel(BaseModel):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
                 * `inputs`: the feature inputs.
-        graph_fn: An instance of `GraphConfig`.
         loss_config: An instance of `LossConfig`. Default value `mean_squared_error`.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
         name: `str`, the name of this model, everything will be encapsulated inside this scope.
-        params: `dict`. A dictionary of hyperparameter values.
 
     Returns:
         `EstimatorSpec`
     """
     def __init__(self, mode, name, graph_fn, loss_config=None, optimizer_config=None,
-                 eval_metrics_config=None, summaries='all', clip_gradients=0.5, params=None):
+                 eval_metrics_config=None, summaries='all', clip_gradients=0.5):
         loss_config = loss_config or LossConfig(name='mean_squared_error')
         super(RegressorModel, self).__init__(
             mode=mode, name=name, model_type=RegressorModel.Types.REGRESSOR, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
             eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients, params=params)
+            clip_gradients=clip_gradients)
 
     def _preprocess(self, mode, features, labels):
         if isinstance(labels, Mapping):
@@ -300,7 +295,6 @@ class ClassifierModel(BaseModel):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
                 * `inputs`: the feature inputs.
-        graph_fn: An instance of `GraphConfig`.
         loss_config: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
@@ -308,19 +302,16 @@ class ClassifierModel(BaseModel):
         name: `str`, the name of this model, everything will be encapsulated inside this scope.
         one_hot_encode: `bool`. to one hot encode the outputs.
         n_classes: `int`. The number of classes used in the one hot encoding.
-        params: `dict`. A dictionary of hyperparameter values.
 
     Returns:
         `EstimatorSpec`
     """
     def __init__(self, mode, name, graph_fn, loss_config=None, optimizer_config=None,
-                 summaries='all', eval_metrics_config=None, clip_gradients=0.5, params=None):
+                 summaries='all', eval_metrics_config=None, clip_gradients=0.5,
+                 one_hot_encode=None, n_classes=None):
         loss_config = loss_config or LossConfig(name='sigmoid_cross_entropy')
-        params = params or {}
-        one_hot_encode = params.get('one_hot_encode', None)
-        n_classes = params.get('n_classes', None)
         if one_hot_encode and (n_classes is None or not isinstance(n_classes, int)):
-            raise ValueError('`n_classes` must be an interger non negative value '
+            raise ValueError('`n_classes` must be an integer non negative value '
                              'when `one_hot_encode` is set to `True`, '
                              'received instead: {}'.format(n_classes))
 
@@ -330,7 +321,7 @@ class ClassifierModel(BaseModel):
             mode=mode, name=name, model_type=RegressorModel.Types.CLASSIFIER, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
             eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients, params=params)
+            clip_gradients=clip_gradients)
 
     def _preprocess(self, mode, features, labels):
         if isinstance(labels, Mapping):

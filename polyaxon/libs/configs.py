@@ -305,7 +305,7 @@ class ModelConfig(Configurable):
     """
     def __init__(self, loss_config, optimizer_config, graph_config=None, model_type=None,
                  summaries='all', name='base_model', eval_metrics_config=None,
-                 clip_gradients=5.0, params=None):
+                 clip_gradients=5.0, **params):
         self.name = name
         self.model_type = model_type
         self.summaries = summaries

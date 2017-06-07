@@ -54,7 +54,8 @@ def create_experiment_json_fn(output_dir):
             'eval_metrics_config': [{'name': 'streaming_accuracy'},],
             'optimizer_config': {'name': 'Adam', 'learning_rate': 0.07,
                                  'decay_type': 'exponential_decay', 'decay_rate': 0.2},
-            'params': {'one_hot_encode': True, 'n_classes': 10},
+            'one_hot_encode': True,
+            'n_classes': 10,
             'graph_config': {
                 'name': 'resnet',
                 'features': ['image'],

@@ -31,7 +31,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=[], name='test', params=None)
+                          summaries=[], name='test')
 
         model(x, y, None, None)
 
@@ -47,7 +47,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['activations'], name='test', params=None)
+                          summaries=['activations'], name='test')
 
         model(x, y, None, None)
 
@@ -64,7 +64,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['loss'], name='test', params=None)
+                          summaries=['loss'], name='test')
 
         model(x, y, None, None)
 
@@ -81,7 +81,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['gradients'], name='test', params=None)
+                          summaries=['gradients'], name='test')
 
         model(x, y, None, None)
 
@@ -98,7 +98,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['variables'], name='test', params=None)
+                          summaries=['variables'], name='test')
 
         model(x, y, None, None)
 
@@ -117,7 +117,7 @@ class TestBaseModel(test.TestCase):
                           optimizer_config=OptimizerConfig(name='Adadelta',
                                                            decay_type='exponential_decay'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['learning_rate'], name='test', params=None)
+                          summaries=['learning_rate'], name='test')
 
         model(x, y, None, None)
 
@@ -134,7 +134,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['learning_rate'], name='test', params=None)
+                          summaries=['learning_rate'], name='test')
 
         model(x, y, None, None)
 
@@ -152,7 +152,7 @@ class TestBaseModel(test.TestCase):
                           optimizer_config=OptimizerConfig(name='Adadelta',
                                                            decay_type='exponential_decay'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries='all', name='test', params=None)
+                          summaries='all', name='test')
 
         model(x, y, None, None)
 
@@ -185,7 +185,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['learning_rate'], name='test', params=None)
+                          summaries=['learning_rate'], name='test')
 
         assert isinstance(model(x, y, None, None), EstimatorSpec)
 
@@ -197,7 +197,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['learning_rate'], name='test', params=None)
+                          summaries=['learning_rate'], name='test')
         specs = model(x, y, None, None)
 
         assert specs.loss is not None
@@ -214,7 +214,7 @@ class TestBaseModel(test.TestCase):
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           eval_metrics_config=[],
                           model_type=BaseModel.Types.CLASSIFIER,
-                          summaries=['learning_rate'], name='test', params=None)
+                          summaries=['learning_rate'], name='test')
         specs = model(x, y, None, None)
 
         assert specs.loss is not None
@@ -230,7 +230,7 @@ class TestBaseModel(test.TestCase):
                           loss_config=LossConfig(name='log_loss'),
                           optimizer_config=OptimizerConfig(name='Adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
-                          summaries=['learning_rate'], name='test', params=None)
+                          summaries=['learning_rate'], name='test')
         specs = model(x, y, None, None)
 
         assert specs.loss is None
