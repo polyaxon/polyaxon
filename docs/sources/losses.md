@@ -1,4 +1,4 @@
-### absolute_difference
+## absolute_difference
 
 
 ```python
@@ -17,28 +17,30 @@ measurable element of `predictions` is scaled by the corresponding value of
 `weights`.
 
 - __Args__:
-- __weights__: Optional `Tensor` whose rank is either 0, or the same rank as
-`labels`, and must be broadcastable to `labels` (i.e., all dimensions must
-be either `1`, or the same as the corresponding `losses` dimension).
-- __name__: operation name.
-- __scope__: operation scope.
-- __collect__: whether to collect this metric under the metric collection.
+	- __weights__: Optional `Tensor` whose rank is either 0, or the same rank as
+	`labels`, and must be broadcastable to `labels` (i.e., all dimensions must
+	be either `1`, or the same as the corresponding `losses` dimension).
+	- __name__: operation name.
+	- __scope__: operation scope.
+	- __collect__: whether to collect this metric under the metric collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
+
 
 ----
 
-### log_loss
+## log_loss
 
 
 ```python
 log_loss(weights=1.0, epsilon=1e-07, name='LogLoss', scope=None, collect=True)
 ```
 
+
 ----
 
-### mean_squared_error
+## mean_squared_error
 
 
 ```python
@@ -49,20 +51,21 @@ mean_squared_error(weights=1.0, name='MeanSquaredError', scope=None, collect=Tru
 Computes Mean Square Loss.
 
 - __Args__:
-- __weights__: Coefficients for the loss a `scalar`.
-- __scope__: scope to add the op to.
-- __name__: name of the op.
-- __collect__: add to losses collection.
+	- __weights__: Coefficients for the loss a `scalar`.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to losses collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
-- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 ----
 
-### softmax_cross_entropy
+## softmax_cross_entropy
 
 
 ```python
@@ -90,21 +93,22 @@ that `y_true` (labels) are binary arrays (For example, class 2 out of a
 total of 5 different classes, will be define as [0., 1., 0., 0., 0.])
 
 - __Args__:
-- __weights__: Coefficients for the loss a `scalar`.
-- __label_smoothing__: If greater than `0` then smooth the labels.
-- __scope__: scope to add the op to.
-- __name__: name of the op.
-- __collect__: add to losses collection.
+	- __weights__: Coefficients for the loss a `scalar`.
+	- __label_smoothing__: If greater than `0` then smooth the labels.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to losses collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
-- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 ----
 
-### sigmoid_cross_entropy
+## sigmoid_cross_entropy
 
 
 ```python
@@ -133,21 +137,22 @@ To ensure stability and avoid overflow, the implementation uses
 `y_pred` and `y_true` must have the same type and shape.
 
 - __Args__:
-- __weights__: Coefficients for the loss a `scalar`.
-- __label_smoothing__: If greater than `0` then smooth the labels.
-- __scope__: scope to add the op to.
-- __name__: name of the op.
-- __collect__: add to losses collection.
+	- __weights__: Coefficients for the loss a `scalar`.
+	- __label_smoothing__: If greater than `0` then smooth the labels.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to losses collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
-- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 ----
 
-### hinge_loss
+## hinge_loss
 
 
 ```python
@@ -158,20 +163,21 @@ hinge_loss(weights=1.0, name='HingeLoss', scope=None, collect=True)
 Hinge Loss.
 
 - __Args__:
-- __weights__: Coefficients for the loss a `scalar`.
-- __name__: name of the op.
-- __scope__: The scope for the operations performed in computing the loss.
-- __collect__: add to losses collection.
+	- __weights__: Coefficients for the loss a `scalar`.
+	- __name__: name of the op.
+	- __scope__: The scope for the operations performed in computing the loss.
+	- __collect__: add to losses collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
-- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 ----
 
-### cosine_distance
+## cosine_distance
 
 
 ```python
@@ -190,21 +196,22 @@ do not rely on the current behavior for anything but the shapes documented for
 `weights` below.
 
 - __Args__:
-- __dim__: The dimension along which the cosine distance is computed.
-- __weights__: Coefficients for the loss a `scalar`.
-- __name__: name of the op.
-- __scope__: The scope for the operations performed in computing the loss.
-- __collect__: add to losses collection.
+	- __dim__: The dimension along which the cosine distance is computed.
+	- __weights__: Coefficients for the loss a `scalar`.
+	- __name__: name of the op.
+	- __scope__: The scope for the operations performed in computing the loss.
+	- __collect__: add to losses collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
-- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 ----
 
-### kullback_leibler_divergence
+## kullback_leibler_divergence
 
 
 ```python
@@ -215,19 +222,20 @@ kullback_leibler_divergence(weights=1.0, name='KullbackLeiberDivergence', scope=
 Adds a Kullback leiber diverenge loss to the training procedure.
 
  - __Args__:
-- __name__: name of the op.
-- __scope__: The scope for the operations performed in computing the loss.
-- __collect__: add to losses collection.
+	- __name__: name of the op.
+	- __scope__: The scope for the operations performed in computing the loss.
+	- __collect__: add to losses collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
-- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 ----
 
-### poisson_loss
+## poisson_loss
 
 
 ```python
@@ -238,12 +246,12 @@ poisson_loss(weights=1.0, name='PoissonLoss', scope=None, collect=False)
 Adds a poisson loss to the training procedure.
 
  - __Args__:
-- __name__: name of the op.
-- __scope__: The scope for the operations performed in computing the loss.
-- __collect__: add to losses collection.
+	- __name__: name of the op.
+	- __scope__: The scope for the operations performed in computing the loss.
+	- __collect__: add to losses collection.
 
 - __Returns__:
-A scalar `Tensor` representing the loss value.
+	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
-- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.

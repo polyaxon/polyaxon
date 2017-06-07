@@ -54,7 +54,7 @@ PAGES = [
     {
         'page': 'experiments/experiment.md',
         'classes': [experiment.Experiment],
-        'functions': [
+        'classes_functions': [
             experiment.Experiment.reset_export_strategies,
             experiment.Experiment.extend_eval_hooks,
             experiment.Experiment.extend_eval_hooks,
@@ -65,7 +65,9 @@ PAGES = [
             experiment.Experiment.train_and_evaluate,
             experiment.Experiment.continuous_train_and_evaluate,
             experiment.Experiment.run_std_server,
-            experiment.Experiment.test,
+            experiment.Experiment.test
+        ],
+        'functions': [
             experiment.create_experiment,
             experiment.run_experiment
         ],
@@ -73,7 +75,7 @@ PAGES = [
     {
         'page': 'experiments/estimator.md',
         'classes': [estimator.Estimator],
-        'functions': [
+        'classes_functions': [
             estimator.Estimator.export_savedmodel,
             estimator.Estimator.train,
             estimator.Estimator.evaluate,
@@ -83,8 +85,27 @@ PAGES = [
         ]
     },
     {
-        'page': 'experiments/model.md',
-        'classes': [models.BaseModel]
+        'page': 'experiments/base_model.md',
+        'classes': [models.BaseModel],
+        'classes_functions': [
+            models.BaseModel._clip_gradients_fn,
+            models.BaseModel._create_optimizer,
+            models.BaseModel._build_summary_op,
+            models.BaseModel._build_loss,
+            models.BaseModel._build_eval_metrics,
+            models.BaseModel._build_train_op,
+            models.BaseModel._preprocess,
+            models.BaseModel._build_predictions,
+            models.BaseModel._build,
+            models.BaseModel.batch_size
+        ]
+    },
+    {
+        'page': 'experiments/models.md',
+        'classes': [
+            models.RegressorModel,
+            models.ClassifierModel,
+        ],
     },
     {
         'page': 'experiments/subgraph.md',
@@ -174,11 +195,38 @@ PAGES = [
     },
     {
         'page': 'processing/categorical_vocabulary.md',
-        'classes': [CategoricalVocabulary, CategoricalProcessor]
+        'classes': [CategoricalVocabulary],
+        'classes_functions': [
+            CategoricalVocabulary.freeze,
+            CategoricalVocabulary.get,
+            CategoricalVocabulary.add,
+            CategoricalVocabulary.trim,
+            CategoricalVocabulary.reverse
+
+        ]
+    },
+{
+        'page': 'processing/categorical_processor.md',
+        'classes': [CategoricalProcessor],
+        'classes_functions': [
+            CategoricalProcessor.freeze,
+            CategoricalProcessor.fit,
+            CategoricalProcessor.transform,
+            CategoricalProcessor.fit_transform,
+
+        ]
     },
     {
         'page': 'processing/vocabulary_processor.md',
-        'classes': [VocabularyProcessor]
+        'classes': [VocabularyProcessor],
+        'classes_functions': [
+            VocabularyProcessor.fit,
+            VocabularyProcessor.transform,
+            VocabularyProcessor.fit_transform,
+            VocabularyProcessor.reverse,
+            VocabularyProcessor.save,
+            VocabularyProcessor.restore,
+        ]
     },
     {
         'page': 'processing/image.md',
@@ -388,37 +436,47 @@ def code_snippet(snippet):
     return result
 
 
-def process_class_docstring(docstring):
-    docstring = re.sub(r'\n    # (.*)\n',
-                       r'\n    __\1__\n\n',
-                       docstring)
+def process_class(cls):
 
-    docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n',
-                       r'    - __\1__:\2\n',
-                       docstring)
+    def process_docstring(docstring):
+        docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
+        docstring = docstring.replace('    ' * 3, '\t\t')
+        docstring = docstring.replace('    ' * 2, '\t')
+        docstring = docstring.replace('    ', '')
+        return docstring
 
-    docstring = docstring.replace('    ' * 5, '\t\t')
-    docstring = docstring.replace('    ' * 3, '\t')
-    docstring = docstring.replace('    ', '')
-    return docstring
+    subblocks = []
+    signature = get_class_signature(cls)
+    subblocks.append('<span style="float:right;">' + class_to_source_link(cls) + '</span>')
+    subblocks.append('## ' + cls.__name__ + '\n')
+    subblocks.append(code_snippet(signature))
+    docstring = cls.__doc__
+    if docstring:
+        subblocks.append(process_docstring(docstring))
+
+    return subblocks
 
 
-def process_function_docstring(docstring):
-    docstring = re.sub(r'\n    # (.*)\n',
-                       r'\n    __\1__\n\n',
-                       docstring)
-    docstring = re.sub(r'\n        # (.*)\n',
-                       r'\n        __\1__\n\n',
-                       docstring)
+def process_function(function, class_function=False):
 
-    docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n',
-                       r'    - __\1__:\2\n',
-                       docstring)
+    def process_docstring(docstring):
+        docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
 
-    docstring = docstring.replace('    ' * 6, '\t\t')
-    docstring = docstring.replace('    ' * 4, '\t')
-    docstring = docstring.replace('    ', '')
-    return docstring
+        docstring = docstring.replace('    ' * (5 if class_function else 4), '\t\t')
+        docstring = docstring.replace('    ' * (3 if class_function else 2), '\t')
+        docstring = docstring.replace('    ', '')
+        return docstring
+
+    subblocks = []
+    signature = get_function_signature(function, method=False)
+    signature = signature.replace(function.__module__ + '.', '')
+    subblocks.append(('### ' if class_function else '## ') + function.__name__ + '\n')
+    subblocks.append(code_snippet(signature))
+    docstring = function.__doc__
+    if docstring:
+        subblocks.append(process_docstring(docstring))
+    return subblocks
+
 
 print('Cleaning up existing sources directory.')
 if os.path.exists(SOURCES_DIR):
@@ -454,15 +512,11 @@ for page_data in PAGES:
         classes += module_classes
 
     for cls in classes:
-        subblocks = []
-        signature = get_class_signature(cls)
-        subblocks.append('<span style="float:right;">' + class_to_source_link(cls) + '</span>')
-        subblocks.append('### ' + cls.__name__ + '\n')
-        subblocks.append(code_snippet(signature))
-        docstring = cls.__doc__
-        if docstring:
-            subblocks.append(process_class_docstring(docstring))
-        blocks.append('\n'.join(subblocks))
+        blocks.append('\n'.join(process_class(cls)))
+
+    functions = page_data.get('classes_functions', [])
+    for function in functions:
+        blocks.append('\n\n'.join(process_function(function, class_function=True)))
 
     functions = page_data.get('functions', [])
     for module in page_data.get('all_module_functions', []):
@@ -480,21 +534,12 @@ for page_data in PAGES:
         functions += module_functions
 
     for function in functions:
-        subblocks = []
-        signature = get_function_signature(function, method=False)
-        signature = signature.replace(function.__module__ + '.', '')
-        subblocks.append('### ' + function.__name__ + '\n')
-        subblocks.append(code_snippet(signature))
-        docstring = function.__doc__
-        if docstring:
-            subblocks.append(process_function_docstring(docstring))
-        blocks.append('\n\n'.join(subblocks))
+        blocks.append('\n\n'.join(process_function(function)))
 
     if not blocks:
-        raise RuntimeError('Found no content for page ' +
-                           page_data['page'])
+        raise RuntimeError('Found no content for page ' + page_data['page'])
 
-    mkdown = '\n----\n\n'.join(blocks)
+    mkdown = '\n\n----\n\n'.join(blocks)
     # save module page.
     # Either insert content into existing page,
     # or create page otherwise

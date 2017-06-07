@@ -13,23 +13,22 @@ from polyaxon.processing.data_decoders import SplitTokensDecoder
 
 
 class Dataset(object):
-    """Represents a Dataset specification."""
+    """Represents a Dataset specification.
+
+    Args:
+        data_sources: A list of files that make up the dataset.
+        reader: The reader class, a subclass of BaseReader, e.g. TFRecordReader.
+        decoder: An instance of a data_decoder.
+        num_samples: The number of samples in the dataset.
+        items_to_descriptions: A map from the items that the dataset provides to
+            the descriptions of those items.
+        meta_data: extra information about the current dataset, e.g. num_samples, channels ...
+            Generally read from the meta_data.json file
+        **kwargs: Any remaining dataset-specific fields.
+    """
 
     def __init__(self, data_sources, reader, decoder, num_samples=None, items_to_descriptions=None,
                  meta_data=None, **kwargs):
-        """Initializes the dataset.
-
-        Args:
-            data_sources: A list of files that make up the dataset.
-            reader: The reader class, a subclass of BaseReader, e.g. TFRecordReader.
-            decoder: An instance of a data_decoder.
-            num_samples: The number of samples in the dataset.
-            items_to_descriptions: A map from the items that the dataset provides to
-                the descriptions of those items.
-            meta_data: extra information about the current dataset, e.g. num_samples, channels ...
-                Generally read from the meta_data.json file
-            **kwargs: Any remaining dataset-specific fields.
-        """
         kwargs['data_sources'] = data_sources
         kwargs['reader'] = reader
         kwargs['decoder'] = decoder
@@ -47,14 +46,12 @@ class DataProvider(object):
     All data providers must inherit from DataProvider and implement the Get
     method which returns arbitrary types of data. No assumption is made about the
     source of the data nor the mechanism for providing it.
+
+    Args:
+        items_to_tensors: a dictionary of names to tensors.
+        num_samples: the number of samples in the dataset being provided.
     """
     def __init__(self, items_to_tensors, num_samples):
-        """Constructs the Data Provider.
-
-        Args:
-            items_to_tensors: a dictionary of names to tensors.
-            num_samples: the number of samples in the dataset being provided.
-        """
         self._items_to_tensors = items_to_tensors
         self._num_samples = num_samples
 
@@ -116,26 +113,26 @@ class DataProvider(object):
 
 
 class DatasetDataProvider(DataProvider):
+    """Creates a DatasetDataProvider.
+
+    Args:
+        dataset: An instance of the Dataset class.
+        num_readers: The number of parallel readers to use.
+        reader_kwargs: An optional dict of kwargs for the reader.
+        shuffle: Whether to shuffle the data sources and common queue when reading.
+        num_epochs: The number of times each data source is read. If left as None,
+            the data will be cycled through indefinitely.
+        common_queue_capacity: The capacity of the common queue.
+        common_queue_min: The minimum number of elements in the common queue after a dequeue.
+        record_key: The item name to use for the dataset record keys in the provided tensors.
+        seed: The seed to use if shuffling.
+        scope: Optional name scope for the ops.
+    Raises:
+        ValueError: If `record_key` matches one of the items in the dataset.
+    """
     def __init__(self, dataset, num_readers=1, reader_kwargs=None, shuffle=True, num_epochs=None,
                  common_queue_capacity=256, common_queue_min=128, record_key='__record_key__',
                  seed=None, scope=None):
-        """Creates a DatasetDataProvider.
-
-        Args:
-            dataset: An instance of the Dataset class.
-            num_readers: The number of parallel readers to use.
-            reader_kwargs: An optional dict of kwargs for the reader.
-            shuffle: Whether to shuffle the data sources and common queue when reading.
-            num_epochs: The number of times each data source is read. If left as None,
-                the data will be cycled through indefinitely.
-            common_queue_capacity: The capacity of the common queue.
-            common_queue_min: The minimum number of elements in the common queue after a dequeue.
-            record_key: The item name to use for the dataset record keys in the provided tensors.
-            seed: The seed to use if shuffling.
-            scope: Optional name scope for the ops.
-        Raises:
-            ValueError: If `record_key` matches one of the items in the dataset.
-        """
         key, data = parallel_read(
             dataset.data_sources,
             reader_class=dataset.reader,
@@ -165,19 +162,18 @@ class ParallelDatasetProvider(DataProvider):
     """Creates a ParallelDatasetProvider. This data provider reads two datasets
     in parallel, keeping them aligned.
 
-        Args:
-            dataset_source: The first dataset. An instance of the Dataset class.
-            dataset_target: The second dataset. An instance of the Dataset class.
-                Can be None. If None, only `dataset1` is read.
-            shuffle: Whether to shuffle the data sources and common queue when
-              reading.
-            num_epochs: The number of times each data source is read. If left as None,
-              the data will be cycled through indefinitely.
-            common_queue_capacity: The capacity of the common queue.
-            common_queue_min: The minimum number of elements in the common queue after a dequeue.
-            seed: The seed to use if shuffling.
-      """
-
+    Args:
+        dataset_source: The first dataset. An instance of the Dataset class.
+        dataset_target: The second dataset. An instance of the Dataset class.
+            Can be None. If None, only `dataset1` is read.
+        shuffle: Whether to shuffle the data sources and common queue when
+          reading.
+        num_epochs: The number of times each data source is read. If left as None,
+          the data will be cycled through indefinitely.
+        common_queue_capacity: The capacity of the common queue.
+        common_queue_min: The minimum number of elements in the common queue after a dequeue.
+        seed: The seed to use if shuffling.
+    """
     def __init__(self, dataset_source, dataset_target, shuffle=True, num_epochs=None,
                  common_queue_capacity=4096, common_queue_min=1024, seed=None):
 

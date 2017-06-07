@@ -112,6 +112,11 @@ class BaseModel(GraphModule):
         return optimizer
 
     def _build_summary_op(self):
+        """Builds summaries for this model.
+
+        The summaries are one value (or more) of:
+            * (`ACTIVATIONS`, `VARIABLES`, `GRADIENTS`, `LOSS`, `LEARNING_RATE`)
+        """
         summary_op = []
         for summary in self.summaries:
             if summary == summarizer.SummaryOptions.ACTIVATIONS:
@@ -219,9 +224,7 @@ class BaseModel(GraphModule):
         return super(BaseModel, self).__call__(features, labels, params, config)
 
     def _build(self, features, labels, params=None, config=None):
-        """Subclasses should implement this method. See the `model_fn` documentation
-        in tf.contrib.learn.Estimator class for a more detailed explanation.
-        """
+        """Build the different operation of the model."""
         # Pre-process features and labels
         features, labels = self._preprocess(self.mode, features, labels)
         results = self._graph_fn(mode=self.mode, inputs=features)

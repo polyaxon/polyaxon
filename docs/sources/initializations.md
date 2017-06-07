@@ -1,4 +1,4 @@
-### zeros
+## zeros
 
 
 ```python
@@ -11,16 +11,17 @@ Zeros.
 Initialize a tensor with all elements set to zero.
 
 - __Args__:
-- __shape__: List of `int`. A shape to initialize a Tensor (optional).
-- __dtype__: The tensor data type.
-- __name__: name of the op.
+	- __shape__: List of `int`. A shape to initialize a Tensor (optional).
+	- __dtype__: The tensor data type.
+	- __name__: name of the op.
 
 - __Returns__:
-The Initializer, or an initialized `Tensor` if a shape is specified.
+	The Initializer, or an initialized `Tensor` if a shape is specified.
+
 
 ----
 
-### uniform
+## uniform
 
 
 ```python
@@ -45,18 +46,19 @@ In the integer case, the random integers are slightly biased unless
 `2**32` or `2**64`).
 
 - __Args__:
-- __shape__: List of `int`. A shape to initialize a Tensor (optional).
-- __dtype__: The tensor data type. Only float are supported.
-- __seed__: `int`. Used to create a random seed for the distribution.
-- __name__: name of the op.
+	- __shape__: List of `int`. A shape to initialize a Tensor (optional).
+	- __dtype__: The tensor data type. Only float are supported.
+	- __seed__: `int`. Used to create a random seed for the distribution.
+	- __name__: name of the op.
 
 - __Returns__:
-The Initializer, or an initialized `Tensor` if shape is specified.
+	The Initializer, or an initialized `Tensor` if shape is specified.
+
 
 
 ----
 
-### uniform_scaling
+## uniform_scaling
 
 
 ```python
@@ -86,20 +88,21 @@ and the calculation of constants. In section 2.3 there, the constants were
 numerically computed: for a linear layer it's 1.0, relu: ~1.43, tanh: ~1.15.
 
 - __Args__:
-- __shape__: List of `int`. A shape to initialize a Tensor (optional).
-- __factor__: `float`. A multiplicative factor by which the values will be
-scaled.
-- __dtype__: The tensor data type. Only float are supported.
-- __seed__: `int`. Used to create a random seed for the distribution.
-- __name__: name of the op.
+	- __shape__: List of `int`. A shape to initialize a Tensor (optional).
+	- __factor__: `float`. A multiplicative factor by which the values will be
+	scaled.
+	- __dtype__: The tensor data type. Only float are supported.
+	- __seed__: `int`. Used to create a random seed for the distribution.
+	- __name__: name of the op.
 
 - __Returns__:
-The Initializer, or an initialized `Tensor` if shape is specified.
+	The Initializer, or an initialized `Tensor` if shape is specified.
+
 
 
 ----
 
-### normal
+## normal
 
 
 ```python
@@ -112,22 +115,23 @@ Normal.
 Initialization with random values from a normal distribution.
 
 - __Args__:
-- __shape__: List of `int`. A shape to initialize a Tensor (optional).
-- __mean__: Same as `dtype`. The mean of the truncated normal distribution.
-- __stddev__: Same as `dtype`. The standard deviation of the truncated
-normal distribution.
-- __dtype__: The tensor data type.
-- __seed__: `int`. Used to create a random seed for the distribution.
-- __scope__: scope to add the op to.
-- __name__: name of the op.
+	- __shape__: List of `int`. A shape to initialize a Tensor (optional).
+	- __mean__: Same as `dtype`. The mean of the truncated normal distribution.
+	- __stddev__: Same as `dtype`. The standard deviation of the truncated
+	normal distribution.
+	- __dtype__: The tensor data type.
+	- __seed__: `int`. Used to create a random seed for the distribution.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
 
 - __Returns__:
-The Initializer, or an initialized `Tensor` if shape is specified.
+	The Initializer, or an initialized `Tensor` if shape is specified.
+
 
 
 ----
 
-### truncated_normal
+## truncated_normal
 
 
 ```python
@@ -144,21 +148,22 @@ standard deviation, except that values whose magnitude is more than 2 standard
 deviations from the mean are dropped and re-picked.
 
 - __Args__:
-- __shape__: List of `int`. A shape to initialize a Tensor (optional).
-- __mean__: Same as `dtype`. The mean of the truncated normal distribution.
-- __stddev__: Same as `dtype`. The standard deviation of the truncated
-normal distribution.
-- __dtype__: The tensor data type.
-- __seed__: `int`. Used to create a random seed for the distribution.
-- __name__: name of the op.
+	- __shape__: List of `int`. A shape to initialize a Tensor (optional).
+	- __mean__: Same as `dtype`. The mean of the truncated normal distribution.
+	- __stddev__: Same as `dtype`. The standard deviation of the truncated
+	normal distribution.
+	- __dtype__: The tensor data type.
+	- __seed__: `int`. Used to create a random seed for the distribution.
+	- __name__: name of the op.
 
 - __Returns__:
-The Initializer, or an initialized `Tensor` if shape is specified.
+	The Initializer, or an initialized `Tensor` if shape is specified.
+
 
 
 ----
 
-### xavier
+## xavier
 
 
 ```python
@@ -176,28 +181,29 @@ same in all layers. In uniform distribution this ends up being the range:
 deviation of `sqrt(3. / (in + out))` is used.
 
 - __Args__:
-- __uniform__: Whether to use uniform or normal distributed random
-initialization.
-- __seed__: A Python integer. Used to create random seeds. See
-`set_random_seed` for behavior.
-- __dtype__: The data type. Only floating point types are supported.
-- __name__: name of the op.
+	- __uniform__: Whether to use uniform or normal distributed random
+	initialization.
+	- __seed__: A Python integer. Used to create random seeds. See
+	`set_random_seed` for behavior.
+	- __dtype__: The data type. Only floating point types are supported.
+	- __name__: name of the op.
 
 - __Returns__:
-An initializer for a weight matrix.
+	An initializer for a weight matrix.
 
 - __References__:
-Understanding the difficulty of training deep feedforward neural
-networks. International conference on artificial intelligence and
-statistics. Xavier Glorot and Yoshua Bengio (2010).
+	Understanding the difficulty of training deep feedforward neural
+	networks. International conference on artificial intelligence and
+	statistics. Xavier Glorot and Yoshua Bengio (2010).
 
 - __Links__:
-- __[http__://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf]
-(http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf)
+	- __[http__://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf]
+	(http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf)
+
 
 ----
 
-### variance_scaling
+## variance_scaling
 
 
 ```python
@@ -238,18 +244,18 @@ To get xavier_initializer use either:
 - factor=1.0 mode='FAN_AVG' uniform=False.
 
 - __Args__:
-- __factor__: Float.  A multiplicative factor.
-- __mode__: String.  'FAN_IN', 'FAN_OUT', 'FAN_AVG'.
-- __uniform__: Whether to use uniform or normal distributed random
-initialization.
-- __seed__: A Python integer. Used to create random seeds. See
-`set_random_seed` for behavior.
-- __dtype__: The data type. Only floating point types are supported.
-- __name__: name of the op.
+	- __factor__: Float.  A multiplicative factor.
+	- __mode__: String.  'FAN_IN', 'FAN_OUT', 'FAN_AVG'.
+	- __uniform__: Whether to use uniform or normal distributed random
+	initialization.
+	- __seed__: A Python integer. Used to create random seeds. See
+	`set_random_seed` for behavior.
+	- __dtype__: The data type. Only floating point types are supported.
+	- __name__: name of the op.
 
 - __Returns__:
-An initializer that generates tensors with unit variance.
+	An initializer that generates tensors with unit variance.
 
 - __Raises__:
-- __ValueError__: if `dtype` is not a floating point type.
-- __TypeError__: if `mode` is not in ['FAN_IN', 'FAN_OUT', 'FAN_AVG'].
+	- __ValueError__: if `dtype` is not a floating point type.
+	- __TypeError__: if `mode` is not in ['FAN_IN', 'FAN_OUT', 'FAN_AVG'].

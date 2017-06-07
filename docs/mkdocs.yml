@@ -30,7 +30,8 @@ pages:
   - Introduction: experiments/introduction.md
   - Expermient: experiments/experiment.md
   - Estimator: experiments/estimator.md
-  - Model: experiments/model.md
+  - Base Model: experiments/base_model.md
+  - Models: experiments/models.md
   - Hooks: experiments/hooks.md
   - Subgraph: experiments/subgraph.md
   - Summerizer: experiments/summarizer.md

@@ -1,5 +1,5 @@
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L19)</span>
-### Pipeline
+## Pipeline
 
 ```python
 polyaxon.processing.pipelines.Pipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None)
@@ -10,16 +10,17 @@ An InputPipeline defines how data is read, parsed, and separated into
 features and labels.
 
 - __Args__:
-- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __name__: `str`, name to give for this pipeline.
-- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed.
-- __shuffle__: If true, shuffle the data.
-- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __name__: `str`, name to give for this pipeline.
+	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed.
+	- __shuffle__: If true, shuffle the data.
+	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+
 
 ----
 
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L73)</span>
-### TFRecordImagePipeline
+## TFRecordImagePipeline
 
 ```python
 polyaxon.processing.pipelines.TFRecordImagePipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, data_files=None, meta_data_file=None)
@@ -30,16 +31,17 @@ An InputPipeline defines how data is read, parsed, and separated into
 features and labels.
 
 - __Args__:
-- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __name__: `str`, name to give for this pipeline.
-- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
-- __shuffle__: If true, shuffle the data.
-- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __name__: `str`, name to give for this pipeline.
+	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
+	- __shuffle__: If true, shuffle the data.
+	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+
 
 ----
 
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L148)</span>
-### ParallelTextPipeline
+## ParallelTextPipeline
 
 ```python
 polyaxon.processing.pipelines.ParallelTextPipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, source_files=None, target_files=None, source_delimiter='', target_delimiter='')
@@ -48,23 +50,24 @@ polyaxon.processing.pipelines.ParallelTextPipeline(mode, name, subgraphs_by_feat
 An input pipeline that reads two parallel (line-by-line aligned) text files.
 
 - __Args__:
-- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __name__: `str`, name to give for this pipeline.
-- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
-- __shuffle__: If true, shuffle the data.
-- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
-- __source_files__: An array of file names for the source data.
-- __target_files__: An array of file names for the target data. These must
-  be aligned to the `source_files`.
-- __source_delimiter__: A character to split the source text on. Defaults
-  to  " " (space). For character-level training this can be set to the
-  empty string.
-- __target_delimiter__: Same as `source_delimiter` but for the target text.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __name__: `str`, name to give for this pipeline.
+	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
+	- __shuffle__: If true, shuffle the data.
+	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+	- __source_files__: An array of file names for the source data.
+	- __target_files__: An array of file names for the target data. These must
+	  be aligned to the `source_files`.
+	- __source_delimiter__: A character to split the source text on. Defaults
+	  to  " " (space). For character-level training this can be set to the
+	  empty string.
+	- __target_delimiter__: Same as `source_delimiter` but for the target text.
+
 
 ----
 
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L226)</span>
-### TFRecordSourceSequencePipeline
+## TFRecordSourceSequencePipeline
 
 ```python
 polyaxon.processing.pipelines.TFRecordSourceSequencePipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, files=None, source_field='source', target_field='target', source_delimiter='', target_delimiter='')
@@ -73,23 +76,24 @@ polyaxon.processing.pipelines.TFRecordSourceSequencePipeline(mode, name, subgrap
 An input pipeline that reads a TFRecords containing both source and target sequences.
 
 - __Args__:
-- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __name__: `str`, name to give for this pipeline.
-- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
-- __shuffle__: If true, shuffle the data.
-- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
-- __files__: An array of file names to read from.
-- __source_field__: The TFRecord feature field containing the source text.
-- __target_field__: The TFRecord feature field containing the target text.
-- __source_delimiter__: A character to split the source text on. Defaults
-  to  " " (space). For character-level training this can be set to the
-  empty string.
-- __target_delimiter__: Same as `source_delimiter` but for the target text.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __name__: `str`, name to give for this pipeline.
+	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
+	- __shuffle__: If true, shuffle the data.
+	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+	- __files__: An array of file names to read from.
+	- __source_field__: The TFRecord feature field containing the source text.
+	- __target_field__: The TFRecord feature field containing the target text.
+	- __source_delimiter__: A character to split the source text on. Defaults
+	  to  " " (space). For character-level training this can be set to the
+	  empty string.
+	- __target_delimiter__: Same as `source_delimiter` but for the target text.
+
 
 ----
 
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L315)</span>
-### ImageCaptioningPipeline
+## ImageCaptioningPipeline
 
 ```python
 polyaxon.processing.pipelines.ImageCaptioningPipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, files=None, image_field='image/data', image_format='jpg', caption_ids_field='image/caption_ids', caption_tokens_field='image/caption')
@@ -98,13 +102,13 @@ polyaxon.processing.pipelines.ImageCaptioningPipeline(mode, name, subgraphs_by_f
 An input pipeline that reads a TFRecords containing both source and target sequences.
 
 - __Args__:
-- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-- __name__: `str`, name to give for this pipeline.
-- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
-- __shuffle__: If true, shuffle the data.
-- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
-- __files__: An array of file names to read from.
-- __image_field__: The TFRecord feature field containing the source images.
-- __image_format__: The images extensions.
-- __caption_ids_field__: The caption ids field.
-- __caption_tokens_field__: the caption tokends field.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __name__: `str`, name to give for this pipeline.
+	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
+	- __shuffle__: If true, shuffle the data.
+	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+	- __files__: An array of file names to read from.
+	- __image_field__: The TFRecord feature field containing the source images.
+	- __image_format__: The images extensions.
+	- __caption_ids_field__: The caption ids field.
+	- __caption_tokens_field__: the caption tokends field.

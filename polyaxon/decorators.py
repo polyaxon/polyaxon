@@ -8,11 +8,11 @@ def tf_template(name_):
     """This decorator wraps a method with `tf.make_template`. For example,
 
     Examples:
-        ```python
-        >>> @tf_template
-        ... my_method():
-        ...     # Creates variables
-        ```
+    ```python
+    >>> @tf_template
+    ... my_method():
+    ...     # Creates variables
+    ```
     """
 
     def template_decorator(func):

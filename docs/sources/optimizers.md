@@ -1,4 +1,4 @@
-### create_learning_rate_decay_fn
+## create_learning_rate_decay_fn
 
 
 ```python
@@ -9,30 +9,31 @@ create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_rate
 Creates a function that decays the learning rate.
 
 - __Args__:
-- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
-- __decay_steps__: How often to apply decay.
-- __decay_rate__: A Python number. The decay rate.
-- __start_decay_at__: Don't decay before this step
-- __stop_decay_at__: Don't decay after this step
-- __min_learning_rate__: Don't decay below this number
-- __decay_type__: A decay function name defined in `tf.train`
-possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
-		 piecewise_constant, polynomial_decay.
-- __staircase__: Whether to apply decay in a discrete staircase,
-as opposed to continuous, fashion.
-- __global_step__: Scalar int `Tensor`, step counter for each update. If not supplied,
-it will be fetched from the default graph (see `tf.contrib.framework.get_global_step`
-for details). If it's not been created, no step will be incremented with each weight
-update. `learning_rate_decay_fn` requires `global_step`.
+	- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
+	- __decay_steps__: How often to apply decay.
+	- __decay_rate__: A Python number. The decay rate.
+	- __start_decay_at__: Don't decay before this step
+	- __stop_decay_at__: Don't decay after this step
+	- __min_learning_rate__: Don't decay below this number
+	- __decay_type__: A decay function name defined in `tf.train`
+	possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
+			 piecewise_constant, polynomial_decay.
+	- __staircase__: Whether to apply decay in a discrete staircase,
+	as opposed to continuous, fashion.
+	- __global_step__: Scalar int `Tensor`, step counter for each update. If not supplied,
+	it will be fetched from the default graph (see `tf.contrib.framework.get_global_step`
+	for details). If it's not been created, no step will be incremented with each weight
+	update. `learning_rate_decay_fn` requires `global_step`.
 
 - __Returns__:
-A function that takes (learning_rate, global_step) as inputs
-and returns the learning rate for the given step.
-Returns `None` if decay_type is empty or None.
+	A function that takes (learning_rate, global_step) as inputs
+	and returns the learning rate for the given step.
+	Returns `None` if decay_type is empty or None.
+
 
 ----
 
-### sgd
+## sgd
 
 
 ```python
@@ -43,21 +44,22 @@ sgd(learning_rate=0.001, decay_type='', decay_rate=0.0, decay_steps=100, start_d
 Optimizer that implements the gradient descent algorithm.
 
 - __Args__:
-- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: Optional name prefix for the operations created when applying gradients.
+	- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: Optional name prefix for the operations created when applying gradients.
+
 
 ----
 
-### momentum
+## momentum
 
 
 ```python
@@ -76,22 +78,23 @@ computed as:
 >>> decayed_learning_rate = learning_rate * decay_rate ^ (global_step / lr_decay_steps)
 ```
 - __Args__:
-- __learning_rate__: `float`. Learning rate.
-- __momentum__: `float`. Momentum.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+	- __learning_rate__: `float`. Learning rate.
+	- __momentum__: `float`. Momentum.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+
 
 ----
 
-### nesterov
+## nesterov
 
 
 ```python
@@ -108,22 +111,23 @@ See [Sutskever et. al., 2013](http://jmlr.org/proceedings/papers/v28/sutskever13
 >>> decayed_learning_rate = learning_rate * decay_rate ^ (global_step / lr_decay_steps)
 ```
 - __Args__:
-- __learning_rate__: `float`. Learning rate.
-- __momentum__: `float`. Momentum.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+	- __learning_rate__: `float`. Learning rate.
+	- __momentum__: `float`. Momentum.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+
 
 ----
 
-### rmsprop
+## rmsprop
 
 
 ```python
@@ -137,24 +141,25 @@ Maintain a moving (discounted) average of the square of gradients.
 Divide gradient by the root of this average.
 
 - __Args__:
-- __learning_rate__: `float`. learning rate.
-- __decay__: `float`. Discounting factor for the history/coming gradient.
-- __momentum__: `float`. Momentum.
-- __epsilon__: `float`. Small value to avoid zero denominator.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: Optional name prefix for the operations created when applying gradients.
+	- __learning_rate__: `float`. learning rate.
+	- __decay__: `float`. Discounting factor for the history/coming gradient.
+	- __momentum__: `float`. Momentum.
+	- __epsilon__: `float`. Small value to avoid zero denominator.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: Optional name prefix for the operations created when applying gradients.
+
 
 ----
 
-### adam
+## adam
 
 
 ```python
@@ -169,25 +174,26 @@ general. For example, when training an Inception network on ImageNet a
 current good choice is 1.0 or 0.1.
 
 - __Args__:
-- __learning_rate__: `float`. learning rate.
-- __beta1__: `float`. The exponential decay rate for the 1st moment estimates.
-- __beta2__: `float`. The exponential decay rate for the 2nd moment estimates.
-- __epsilon__: `float`. A small constant for numerical stability.
-- __epsilon__: `float`. Small value to avoid zero denominator.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+	- __learning_rate__: `float`. learning rate.
+	- __beta1__: `float`. The exponential decay rate for the 1st moment estimates.
+	- __beta2__: `float`. The exponential decay rate for the 2nd moment estimates.
+	- __epsilon__: `float`. A small constant for numerical stability.
+	- __epsilon__: `float`. Small value to avoid zero denominator.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+
 
 ----
 
-### adagrad
+## adagrad
 
 
 ```python
@@ -198,23 +204,24 @@ adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type='', decay
 Optimizer that implements AdaGrad.
 
 - __Args__:
-- __learning_rate__: `float`. Learning rate.
-- __initial_accumulator_value__: `float`. Starting value for the
-accumulators, must be positive.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+	- __learning_rate__: `float`. Learning rate.
+	- __initial_accumulator_value__: `float`. Starting value for the
+	accumulators, must be positive.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: `str`. Optional name prefix for the operations created when applying gradients.
+
 
 ----
 
-### ftrl
+## ftrl
 
 
 ```python
@@ -234,26 +241,27 @@ Adagrad with `learning_rate_power=-0.5`, or like gradient descent with
 `learning_rate_power=0.0`.
 
 - __Args__:
-- __learning_rate__: `float`. Learning rate.
-- __learning_rate_power__: `float`. Must be less or equal to zero.
-- __initial_accumulator_value__: `float`. The starting value for accumulators.
-Only positive values are allowed.
-- __l1_regularization_strength__: `float`. Must be less or equal to zero.
-- __l2_regularization_strength__: `float`. Must be less or equal to zero.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: `str`. Optional name prefix for the operations created when applying gradients..
+	- __learning_rate__: `float`. Learning rate.
+	- __learning_rate_power__: `float`. Must be less or equal to zero.
+	- __initial_accumulator_value__: `float`. The starting value for accumulators.
+	Only positive values are allowed.
+	- __l1_regularization_strength__: `float`. Must be less or equal to zero.
+	- __l2_regularization_strength__: `float`. Must be less or equal to zero.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: `str`. Optional name prefix for the operations created when applying gradients..
+
 
 ----
 
-### adadelta
+## adadelta
 
 
 ```python
@@ -264,17 +272,17 @@ adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type='', decay_rate=
 Optimizer that implements AdaDelta.
 
 - __Args__:
-- __learning_rate__: A `Tensor` or a floating point value. The learning rate.
-- __rho__: A `Tensor` or a floating point value. The decay rate.
-- __epsilon__: A `Tensor` or a floating point value.  A constant epsilon used to better
-conditioning the grad update.
-- __decay_type__: A decay function name defined in `tf.train`
-- __decay_rate__: `float`. The learning rate decay to apply.
-- __decay_steps__: `int`. Apply decay every provided steps.
-- __start_decay_at__: `int`. Don't decay before this step.
-- __stop_decay_at__: `int`. Don't decay after this step.
-- __min_learning_rate__: `float`. Don't decay below this number.
-- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
-- __global_step__: Scalar int `Tensor`, step counter for each update.
-- __use_locking__: If True use locks for update operations.
-- __name__: Optional name prefix for the operations created when applying gradients.
+	- __learning_rate__: A `Tensor` or a floating point value. The learning rate.
+	- __rho__: A `Tensor` or a floating point value. The decay rate.
+	- __epsilon__: A `Tensor` or a floating point value.  A constant epsilon used to better
+	conditioning the grad update.
+	- __decay_type__: A decay function name defined in `tf.train`
+	- __decay_rate__: `float`. The learning rate decay to apply.
+	- __decay_steps__: `int`. Apply decay every provided steps.
+	- __start_decay_at__: `int`. Don't decay before this step.
+	- __stop_decay_at__: `int`. Don't decay after this step.
+	- __min_learning_rate__: `float`. Don't decay below this number.
+	- __staircase__: `bool`. It `True` decay learning rate at discrete intervals.
+	- __global_step__: Scalar int `Tensor`, step counter for each update.
+	- __use_locking__: If True use locks for update operations.
+	- __name__: Optional name prefix for the operations created when applying gradients.

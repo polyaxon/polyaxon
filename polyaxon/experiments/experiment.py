@@ -627,17 +627,18 @@ def run_experiment(experiment_fn, output_dir, schedule=None):
     is raised.
 
     Example:
-        ```python
-        >>> def _create_my_experiment(output_dir):
-        >>>     return tf.contrib.learn.Experiment(
-        >>>         estimator=my_estimator(model_dir=output_dir),
-        >>>         train_input_fn=my_train_input,
-        >>>         eval_input_fn=my_eval_input)
+    ```python
+    >>> def _create_my_experiment(output_dir):
+    >>>     return tf.contrib.learn.Experiment(
+    >>>         estimator=my_estimator(model_dir=output_dir),
+    >>>         train_input_fn=my_train_input,
+    >>>         eval_input_fn=my_eval_input)
 
-        >>> run(experiment_fn=_create_my_experiment,
-        >>>     output_dir="some/output/dir",
-        >>>     schedule="train")
-        ```
+    >>> run(experiment_fn=_create_my_experiment,
+    >>>     output_dir="some/output/dir",
+    >>>     schedule="train")
+    ```
+
     Args:
         experiment_fn: A function that creates an `Experiment`. It should accept an
           argument `output_dir` which should be used to create the `Estimator`

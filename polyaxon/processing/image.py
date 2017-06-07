@@ -24,11 +24,11 @@ def resize(images, height, width, method=None, align_corners=False):
 
     `method` can be one of:
 
-    *   <b>`None` no distortion.
-    *   <b>`ResizeMethod.BILINEAR`</b>: [Bilinear interpolation.](https://en.wikipedia.org/wiki/Bilinear_interpolation)
-    *   <b>`ResizeMethod.NEAREST_NEIGHBOR`</b>: [Nearest neighbor interpolation.](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation)
-    *   <b>`ResizeMethod.BICUBIC`</b>: [Bicubic interpolation.](https://en.wikipedia.org/wiki/Bicubic_interpolation)
-    *   <b>`ResizeMethod.AREA`</b>: Area interpolation.
+    *   `None` no distortion.
+    *   `ResizeMethod.BILINEAR`: [Bilinear interpolation.](https://en.wikipedia.org/wiki/Bilinear_interpolation)
+    *   `ResizeMethod.NEAREST_NEIGHBOR`: [Nearest neighbor interpolation.](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation)
+    *   `ResizeMethod.BICUBIC`: [Bicubic interpolation.](https://en.wikipedia.org/wiki/Bicubic_interpolation)
+    *   `ResizeMethod.AREA`: Area interpolation.
 
     Args:
         images: 4-D Tensor of shape `[batch, height, width, channels]` or
@@ -83,12 +83,14 @@ def central_crop(images, central_fraction):
     along each dimension. If we specify central_fraction = 0.5, this function
     returns the region marked with "X" in the below diagram.
 
+    ```
      --------
-    |        |
-    |  XXXX  |
-    |  XXXX  |
-    |        |   where "X" is the central 50% of the image.
+    |........|
+    |..XXXX..|
+    |..XXXX..|
+    |........|   where "X" is the central 50% of the image.
      --------
+    ```
 
     Args:
         images: 4-D Tensor of shape `[batch, height, width, channels]` or
@@ -920,11 +922,11 @@ def non_max_suppression(boxes, scores, max_output_size, iou_threshold=None, name
     using the `tf.gather operation`.  For example:
 
     Examples:
-        ```python
-        >>> selected_indices = tf.image.non_max_suppression(
-        ...     boxes, scores, max_output_size, iou_threshold)
-        >>> selected_boxes = tf.gather(boxes, selected_indices)
-        ```
+    ```python
+    >>> selected_indices = tf.image.non_max_suppression(
+    ...     boxes, scores, max_output_size, iou_threshold)
+    >>> selected_boxes = tf.gather(boxes, selected_indices)
+    ```
 
     Args:
         boxes: A `Tensor` of type `float32`.
@@ -977,21 +979,20 @@ def sample_distorted_bounding_box(image_size, bounding_boxes, seed=None,
     bounding box coordinates are floats in `[0.0, 1.0]` relative to the width and
     height of the underlying image.
 
-    Examples
+    Examples:
+    ```python
+    >>> # Generate a single distorted bounding box.
+    >>> begin, size, bbox_for_draw = tf.image.sample_distorted_bounding_box(
+    ...     tf.shape(image), bounding_boxes=bounding_boxes)
 
-        ```python
-        >>> # Generate a single distorted bounding box.
-        >>> begin, size, bbox_for_draw = tf.image.sample_distorted_bounding_box(
-        ...     tf.shape(image), bounding_boxes=bounding_boxes)
+    >>> # Draw the bounding box in an image summary.
+    >>> image_with_box = tf.image.draw_bounding_boxes(
+    ...     tf.expand_dims(image, 0), bbox_for_draw)
+    >>> tf.image_summary('images_with_box', image_with_box)
 
-        >>> # Draw the bounding box in an image summary.
-        >>> image_with_box = tf.image.draw_bounding_boxes(
-        ...     tf.expand_dims(image, 0), bbox_for_draw)
-        >>> tf.image_summary('images_with_box', image_with_box)
-
-        >>> # Employ the bounding box to distort the image.
-        >>> distorted_image = tf.slice(image, begin, size)
-        ```
+    >>> # Employ the bounding box to distort the image.
+    >>> distorted_image = tf.slice(image, begin, size)
+    ```
 
     Note that if no bounding box information is available, setting
     `use_image_if_no_bounding_boxes = true` will assume there is a single implicit

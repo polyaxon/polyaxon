@@ -287,13 +287,13 @@ def new_attr_context(obj, attr):
         Context.
 
     Example:
-        ```python
-        >>> my_obj.x = 1
-        >>> with _new_attr_context(my_obj, "x"):
-        >>>     my_obj.x = 2
-        >>>     print(my_obj.x)
-        >>> print(my_obj.x)
-        ```
+    ```python
+    >>> my_obj.x = 1
+    >>> with _new_attr_context(my_obj, "x"):
+    >>>     my_obj.x = 2
+    >>>     print(my_obj.x)
+    >>> print(my_obj.x)
+    ```
     """
     saved = getattr(obj, attr)
     try:

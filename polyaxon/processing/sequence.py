@@ -94,13 +94,13 @@ def process_sequences(sequences, end_token=0, pad_val=0, is_shorten=True, remain
         remain_end_id: `boolean`. Keep an end_id in the end.
 
     Examples:
-        ```python
-        >>> sentences_ids = [[4, 3, 5, 3, 2, 2, 2, 2],  <-- end_id is 2
-        ...                  [5, 3, 9, 4, 9, 2, 2, 3]]  <-- end_id is 2
-        >>> sentences_ids = precess_sequences(sentences_ids, end_token=2,
-        ...                                   pad_val=0, is_shorten=True)
-        ... [[4, 3, 5, 3, 0], [5, 3, 9, 4, 9]]
-        ```
+    ```python
+    >>> sentences_ids = [[4, 3, 5, 3, 2, 2, 2, 2],  <-- end_id is 2
+    ...                  [5, 3, 9, 4, 9, 2, 2, 3]]  <-- end_id is 2
+    >>> sentences_ids = precess_sequences(sentences_ids, end_token=2,
+    ...                                   pad_val=0, is_shorten=True)
+    ... [[4, 3, 5, 3, 0], [5, 3, 9, 4, 9]]
+    ```
     """
     max_length = 0
     for seq in sequences:

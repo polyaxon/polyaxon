@@ -50,14 +50,14 @@ def accuracy(name='Accuracy', scope=None, collect=False):
 
 
     Examples:
-        ```python
-        >>> input_data = placeholder(shape=[None, 784])
-        >>> y_pred = my_network(input_data) # Apply some ops
-        >>> y_true = placeholder(shape=[None, 10]) # Labels
-        >>> accuracy_op = accuracy(y_pred, y_true)
-        >>> # Calculate accuracy by feeding data X and labels Y
-        >>> accuracy_op = sess.run(accuracy_op, feed_dict={input_data: X, y_true: Y})
-        ```
+    ```python
+    >>> input_data = placeholder(shape=[None, 784])
+    >>> y_pred = my_network(input_data) # Apply some ops
+    >>> y_true = placeholder(shape=[None, 10]) # Labels
+    >>> accuracy_op = accuracy(y_pred, y_true)
+    >>> # Calculate accuracy by feeding data X and labels Y
+    >>> accuracy_op = sess.run(accuracy_op, feed_dict={input_data: X, y_true: Y})
+    ```
 
     Args:
         scope: scope to add the op to.
@@ -91,15 +91,15 @@ def top_k(k=1, name='TopK', scope=None, collect=False):
     An op that calculates top-k mean accuracy.
 
     Examples:
-        ```python
-        >>> input_data = placeholder(shape=[None, 784])
-        >>> y_pred = my_network(input_data) # Apply some ops
-        >>> y_true = placeholder(shape=[None, 10]) # Labels
-        >>> top3_op = top_k(y_pred, y_true, 3)
+    ```python
+    >>> input_data = placeholder(shape=[None, 784])
+    >>> y_pred = my_network(input_data) # Apply some ops
+    >>> y_true = placeholder(shape=[None, 10]) # Labels
+    >>> top3_op = top_k(y_pred, y_true, 3)
 
-        >>> # Calculate Top-3 accuracy by feeding data X and labels Y
-        >>> top3_accuracy = sess.run(top3_op, feed_dict={input_data: X, y_true: Y})
-        ```
+    >>> # Calculate Top-3 accuracy by feeding data X and labels Y
+    >>> top3_accuracy = sess.run(top3_op, feed_dict={input_data: X, y_true: Y})
+    ```
 
     Args:
         k: `int`. Number of top elements to look at for computing precision.
@@ -125,15 +125,16 @@ def std_error(name='StandardError', scope=None, collect=False):
     An op that calculates the standard error.
 
     Examples:
-        ```python
-        >>> input_data = placeholder(shape=[None, 784])
-        >>> y_pred = my_network(input_data) # Apply some ops
-        >>> y_true = placeholder(shape=[None, 10]) # Labels
-        >>> stderr = std_error(y_pred, y_true)
+    ```python
+    >>> input_data = placeholder(shape=[None, 784])
+    >>> y_pred = my_network(input_data) # Apply some ops
+    >>> y_true = placeholder(shape=[None, 10]) # Labels
+    >>> stderr = std_error(y_pred, y_true)
 
-        >>> # Calculate standard error by feeding data X and labels Y
-        >>> std_error = sess.run(stderr_op, feed_dict={input_data: X, y_true: Y})
-        ```
+    >>> # Calculate standard error by feeding data X and labels Y
+    >>> std_error = sess.run(stderr_op, feed_dict={input_data: X, y_true: Y})
+    ```
+
 
     Args:
         scope: scope to add the op to.

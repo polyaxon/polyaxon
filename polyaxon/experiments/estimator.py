@@ -226,20 +226,20 @@ class Estimator(object):
         For example, the simple case of copying a single file without renaming it
         is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
         Args:
-          export_dir_base: A string containing a directory in which to create
-            timestamped subdirectories containing exported SavedModels.
-          serving_input_receiver_fn: A function that takes no argument and
-            returns a `ServingInputReceiver`.
-          assets_extra: A dict specifying how to populate the assets.extra directory
-            within the exported SavedModel, or `None` if no extra assets are needed.
-          as_text: whether to write the SavedModel proto in text format.
-          checkpoint_path: The checkpoint path to export.  If `None` (the default),
-            the most recent checkpoint found within the model directory is chosen.
+            export_dir_base: A string containing a directory in which to create
+                timestamped subdirectories containing exported SavedModels.
+            serving_input_receiver_fn: A function that takes no argument and
+                returns a `ServingInputReceiver`.
+            assets_extra: A dict specifying how to populate the assets.extra directory
+                within the exported SavedModel, or `None` if no extra assets are needed.
+            as_text: whether to write the SavedModel proto in text format.
+            checkpoint_path: The checkpoint path to export.  If `None` (the default),
+                the most recent checkpoint found within the model directory is chosen.
         Returns:
-          The string path to the exported directory.
+            The string path to the exported directory.
         Raises:
-          ValueError: if no serving_input_receiver_fn is provided, no export_outputs
-              are provided, or no checkpoint can be found.
+            ValueError: if no serving_input_receiver_fn is provided, no export_outputs
+                are provided, or no checkpoint can be found.
         """
         if serving_input_receiver_fn is None:
             raise ValueError('serving_input_receiver_fn must be defined.')

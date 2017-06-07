@@ -1,13 +1,14 @@
-### check_metric_data
+## check_metric_data
 
 
 ```python
 check_metric_data(y_pred, y_true)
 ```
 
+
 ----
 
-### built_metric
+## built_metric
 
 
 ```python
@@ -18,14 +19,15 @@ built_metric(fct, name, scope, collect)
 Builds the metric function.
 
 - __Args__:
-- __fct__: the metric function to build.
-- __name__: operation name.
-- __scope__: operation scope.
-- __collect__: whether to collect this metric under the metric collection.
+	- __fct__: the metric function to build.
+	- __name__: operation name.
+	- __scope__: operation scope.
+	- __collect__: whether to collect this metric under the metric collection.
+
 
 ----
 
-### accuracy
+## accuracy
 
 
 ```python
@@ -36,8 +38,8 @@ accuracy(name='Accuracy', scope=None, collect=False)
 Computes the accuracy.
 
 An op that calculates mean accuracy:
-* y_pred are y_True are both one-hot encoded. (categorical accuracy)
-* y_pred are logits are binary encoded (and represented as int32). (binary accuracy)
+	* y_pred are y_True are both one-hot encoded. (categorical accuracy)
+	* y_pred are logits are binary encoded (and represented as int32). (binary accuracy)
 
 
 - __Examples__:
@@ -51,16 +53,17 @@ An op that calculates mean accuracy:
 ```
 
 - __Args__:
-- __scope__: scope to add the op to.
-- __name__: name of the op.
-- __collect__: add to metrics collection.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to metrics collection.
 
 - __Returns__:
-`Float`. The mean accuracy.
+	`Float`. The mean accuracy.
+
 
 ----
 
-### top_k
+## top_k
 
 
 ```python
@@ -84,17 +87,18 @@ An op that calculates top-k mean accuracy.
 ```
 
 - __Args__:
-- __k__: `int`. Number of top elements to look at for computing precision.
-- __scope__: scope to add the op to.
-- __name__: name of the op.
-- __collect__: add to metrics collection.
+	- __k__: `int`. Number of top elements to look at for computing precision.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to metrics collection.
 
 - __Returns__:
-`Float`. The top-k mean accuracy.
+	`Float`. The top-k mean accuracy.
+
 
 ----
 
-### std_error
+## std_error
 
 
 ```python
@@ -117,10 +121,11 @@ An op that calculates the standard error.
 >>> std_error = sess.run(stderr_op, feed_dict={input_data: X, y_true: Y})
 ```
 
+
 - __Args__:
-- __scope__: scope to add the op to.
-- __name__: name of the op.
-- __collect__: add to metrics collection.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to metrics collection.
 
 - __Returns__:
-`Float`. The standard error.
+	`Float`. The standard error.
