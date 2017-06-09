@@ -20,7 +20,7 @@ def create_experiment_json_fn(output_dir):
     meta_data_file = mnist.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
-        'name': 'autoencoder_mnsit',
+        'name': 'conv_autoencoder_mnsit',
         'output_dir': output_dir,
         'eval_every_n_steps': 100,
         'train_steps_per_iteration': 1000,
@@ -33,7 +33,6 @@ def create_experiment_json_fn(output_dir):
                                 'definition': {
                                     'image': [
                                         (plx.processing.image.Standardization, {}),
-                                        (plx.layers.Reshape, {'new_shape': [28 * 28]}),
                                     ]
                                 }
                                 },
@@ -43,12 +42,6 @@ def create_experiment_json_fn(output_dir):
                                 'shuffle': True, 'dynamic_pad': False,
                                 'params': {'data_files': eval_data_file,
                                            'meta_data_file': meta_data_file},
-                                'definition': {
-                                    'image': [
-                                        (plx.processing.image.Standardization, {}),
-                                        (plx.layers.Reshape, {'new_shape': [28 * 28]})
-                                    ]
-                                }
                                 },
         },
         'estimator_config': {'output_dir': output_dir},
@@ -58,14 +51,26 @@ def create_experiment_json_fn(output_dir):
             'optimizer_config': {'name': 'Adadelta', 'learning_rate': 0.9},
             'encoder_config': {
                 'definition': [
-                    (plx.layers.FullyConnected, {'num_units': 128}),
-                    (plx.layers.FullyConnected, {'num_units': 256}),
+                    (plx.layers.Conv2d,
+                     {'num_filter': 32, 'filter_size': 3, 'strides': 1, 'activation': 'relu',
+                      'regularizer': 'l2_regularizer'}),
+                    (plx.layers.MaxPool2d, {'kernel_size': 2}),
+                    (plx.layers.Conv2d, {'num_filter': 16, 'filter_size': 3, 'activation': 'relu',
+                                         'regularizer': 'l2_regularizer'}),
+                    (plx.layers.MaxPool2d, {'kernel_size': 2}),
                 ]
             },
             'decoder_config': {
                 'definition': [
-                    (plx.layers.FullyConnected, {'num_units': 256}),
-                    (plx.layers.FullyConnected, {'num_units': 28 * 28}),
+                    (plx.layers.Conv2d,
+                     {'num_filter': 16, 'filter_size': 3, 'strides': 1, 'activation': 'relu',
+                      'regularizer': 'l2_regularizer'}),
+                    (plx.layers.Upsample2d, {'kernel_size': 2}),
+                    (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 3, 'activation': 'relu',
+                                         'regularizer': 'l2_regularizer'}),
+                    (plx.layers.Upsample2d, {'kernel_size': 2}),
+                    (plx.layers.Conv2d, {'num_filter': 1, 'filter_size': 3, 'activation': 'relu',
+                                         'regularizer': 'l2_regularizer'}),
                 ]
             }
         }
@@ -76,7 +81,7 @@ def create_experiment_json_fn(output_dir):
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
-                                   output_dir="/tmp/polyaxon_logs/autoencoder",
+                                   output_dir="/tmp/polyaxon_logs/conv_autoencoder",
                                    schedule='continuous_train_and_evaluate')
 
 
