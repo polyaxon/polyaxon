@@ -43,8 +43,9 @@ class BaseModel(GraphModule):
         REGRESSOR = 'regressor'
         CLASSIFIER = 'classifier'
         GENERATOR = 'generator'
+        AUTOENCODER = 'autoencoder'
 
-        VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
+        VALUES = [REGRESSOR, CLASSIFIER, GENERATOR, AUTOENCODER]
 
     def __init__(self, mode, name, model_type, graph_fn, loss_config, optimizer_config=None,
                  eval_metrics_config=None, summaries='all', clip_gradients=0.5):
@@ -60,16 +61,19 @@ class BaseModel(GraphModule):
         self._total_loss = None
         self._loss = None
 
-        if graph_fn is not None:
-            # Check number of arguments of the given function matches requirements.
-            model_fn_args = get_arguments(graph_fn)
-            if 'mode' not in model_fn_args or 'inputs' not in model_fn_args:
-                raise ValueError("Model's graph_fn `{}` expects should have 2 args: "
-                                 "`mode` and `inputs`.".format(graph_fn))
-        else:
-            raise ValueError("`graph_fn` must be provided to Model.")
-
+        self._check_subgraph_fn(function=graph_fn)
         self._graph_fn = graph_fn
+
+    @staticmethod
+    def _check_subgraph_fn(function):
+        if function is not None:
+            # Check number of arguments of the given function matches requirements.
+            model_fn_args = get_arguments(function)
+            if 'mode' not in model_fn_args or 'inputs' not in model_fn_args:
+                raise ValueError("Model's `{}` `{}` should have 2 args: "
+                                 "`mode` and `inputs`.".format(function.__name__, function))
+        else:
+            raise ValueError("`{}}` must be provided to Model.".format(function.__name__))
 
     def _clip_gradients_fn(self, grads_and_vars):
         """Clips gradients by global norm."""
@@ -108,7 +112,7 @@ class BaseModel(GraphModule):
 
         return optimizer
 
-    def _build_summary_op(self):
+    def _build_summary_op(self, results=None, features=None, labels=None):
         """Builds summaries for this model.
 
         The summaries are one value (or more) of:
@@ -237,7 +241,7 @@ class BaseModel(GraphModule):
 
             if self.mode == ModeKeys.TRAIN:
                 train_op = self._build_train_op(loss)
-                self._build_summary_op()
+                self._build_summary_op(results=results, features=features, labels=labels)
 
             predictions = self._build_predictions(results=results, features=features,
                                                   labels=labels, losses=losses)
@@ -331,7 +335,64 @@ class ClassifierModel(BaseModel):
             labels = OneHotEncoding(mode, n_classes=self.n_classes)(labels)
         return super(ClassifierModel, self)._preprocess(mode, features, labels)
 
+
+class AutoEncoder(BaseModel):
+    """AutoEncoder base model.
+
+        Args:
+            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+            encoder_fn: Encoder Graph function. Follows the signature:
+                * Args:
+                    * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                    * `inputs`: the feature inputs.
+            decoder_fn: Decoder Graph function. Follows the signature:
+                * Args:
+                    * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                    * `inputs`: the feature inputs.
+            loss_config: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
+            optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
+            summaries: `str` or `list`. The verbosity of the tensorboard visualization.
+                Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+            name: `str`, the name of this model, everything will be encapsulated inside this scope.
+
+        Returns:
+            `EstimatorSpec`
+        """
+    def __init__(self, mode, name, encoder_fn, decoder_fn, loss_config=None, optimizer_config=None,
+                 summaries='all', eval_metrics_config=None, clip_gradients=0.5):
+        self._check_subgraph_fn(function=encoder_fn)
+        self._check_subgraph_fn(function=decoder_fn)
+        loss_config = loss_config or LossConfig(name='mean_squared_error')
+        self._encode_fn = encoder_fn
+        self._decoder_fn = decoder_fn
+
+        def graph_fn(mode, inputs):
+            x = self._encode_fn(mode, inputs)
+            return self._decoder_fn(mode, x)
+
+        super(AutoEncoder, self).__init__(
+            mode=mode, name=name, model_type=RegressorModel.Types.AUTOENCODER, graph_fn=graph_fn,
+            loss_config=loss_config, optimizer_config=optimizer_config,
+            eval_metrics_config=eval_metrics_config, summaries=summaries,
+            clip_gradients=clip_gradients)
+
+    def __call__(self, features, labels=None, params=None, config=None):
+        return super(AutoEncoder, self).__call__(features, features, params, config)
+
+    def _build(self, features, labels=None, params=None, config=None):
+        return super(AutoEncoder, self)._build(features, features, params, config)
+
+    def _preprocess(self, mode, features, labels=None):
+        if isinstance(features, Mapping):
+            if len(features) > 1:
+                raise ValueError("Autoencoder accept only one feature value, "
+                                 "received a dict of `{}` instead".format(list(features.keys())))
+            features = list(features.values())[0]
+        return super(AutoEncoder, self)._preprocess(mode, features, features)
+
+
 MODELS = {
     'classifier': ClassifierModel,
-    'regressor': RegressorModel
+    'regressor': RegressorModel,
+    'autoencoder': AutoEncoder
 }

@@ -133,24 +133,43 @@ def get_graph_fn(config):
     return graph_fn
 
 
-def get_model_fn(model_config, graph_fn=None):
+def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None):
     from polyaxon.experiments.models import MODELS
 
     if not graph_fn:
         graph_fn = get_graph_fn(model_config.graph_config)
 
+    if not encoder_fn:
+        encoder_fn = get_graph_fn(model_config.encoder_config)
+
+    if not decoder_fn:
+        decoder_fn = get_graph_fn(model_config.decoder_config)
+
     def model_fn(features, labels, params, mode, config):
         """Builds the model graph"""
-        model = MODELS[model_config.model_type](
-            mode=mode,
-            name=model_config.name,
-            graph_fn=graph_fn,
-            loss_config=model_config.loss_config,
-            optimizer_config=model_config.optimizer_config,
-            eval_metrics_config=model_config.eval_metrics_config,
-            summaries=model_config.summaries,
-            clip_gradients=model_config.clip_gradients,
-            **model_config.params)
+        if model_config.model_type == 'autoencoder':
+            model = MODELS[model_config.model_type](
+                mode=mode,
+                name=model_config.name,
+                encoder_fn=encoder_fn,
+                decoder_fn=decoder_fn,
+                loss_config=model_config.loss_config,
+                optimizer_config=model_config.optimizer_config,
+                eval_metrics_config=model_config.eval_metrics_config,
+                summaries=model_config.summaries,
+                clip_gradients=model_config.clip_gradients,
+                **model_config.params)
+        else:
+            model = MODELS[model_config.model_type](
+                mode=mode,
+                name=model_config.name,
+                graph_fn=graph_fn,
+                loss_config=model_config.loss_config,
+                optimizer_config=model_config.optimizer_config,
+                eval_metrics_config=model_config.eval_metrics_config,
+                summaries=model_config.summaries,
+                clip_gradients=model_config.clip_gradients,
+                **model_config.params)
         return model(features=features, labels=labels, params=params, config=config)
 
     return model_fn

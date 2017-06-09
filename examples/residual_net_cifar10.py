@@ -57,7 +57,7 @@ def create_experiment_json_fn(output_dir):
             'summaries': 'all',
             'model_type': 'classifier',
             'loss_config': {'name': 'softmax_cross_entropy'},
-            'eval_metrics_config': [{'name': 'streaming_accuracy'},],
+            'eval_metrics_config': [{'name': 'streaming_accuracy'}],
             'optimizer_config': {'name': 'Adam', 'learning_rate': 0.07,
                                  'decay_type': 'exponential_decay', 'decay_rate': 0.2},
             'one_hot_encode': True,

@@ -79,7 +79,7 @@ class Configurable(object):
 
         for config_value in config_values:
             if not isinstance(config_value, (Mapping, str)):
-                raise 'Expects list of Mapping/string instances, received {} instead'.format(type(config_value))
+                raise TypeError('Expects list of Mapping/string instances, received {} instead'.format(type(config_value)))
 
             if isinstance(config_value, Mapping):
                 config.update(config_value)
@@ -108,7 +108,7 @@ class Configurable(object):
     @classmethod
     def read_configs(cls, config_values):
         config = cls._read_configs(config_values)
-        return cls(**config)
+        return cls(**config) if config else None
 
 
 class PipelineConfig(Configurable):
@@ -278,6 +278,8 @@ class SubGraphConfig(Configurable):
             return modules, kwargs
 
         config = cls._read_configs(config_values)
+        if not config:
+            return None
 
         modules = []
         kwargs = []
@@ -303,9 +305,9 @@ class ModelConfig(Configurable):
         clip_gradients: `float`, The value to clip the gradients with.
         params: `dict`, extra information to pass to the model.
     """
-    def __init__(self, loss_config, optimizer_config, graph_config=None, model_type=None,
-                 summaries='all', name='base_model', eval_metrics_config=None,
-                 clip_gradients=5.0, **params):
+    def __init__(self, loss_config, optimizer_config, graph_config=None, encoder_config=None,
+                 decoder_config=None, model_type=None, summaries='all', name='base_model',
+                 eval_metrics_config=None, clip_gradients=5.0, **params):
         self.name = name
         self.model_type = model_type
         self.summaries = summaries
@@ -313,6 +315,8 @@ class ModelConfig(Configurable):
         self.eval_metrics_config = eval_metrics_config or []
         self.optimizer_config = optimizer_config
         self.graph_config = graph_config
+        self.encoder_config = encoder_config
+        self.decoder_config = decoder_config
         self.clip_gradients = clip_gradients
         self.params = params or {}
 
@@ -320,11 +324,21 @@ class ModelConfig(Configurable):
     def read_configs(cls, config_values):
         config = cls._read_configs(config_values)
 
-        config['loss_config'] = LossConfig.read_configs(config['loss_config'])
+        config['loss_config'] = LossConfig.read_configs(config.get('loss_config', {}))
         config['eval_metrics_config'] = [MetricConfig.read_configs(metric) for metric
                                          in config.get('eval_metrics_config', [])]
-        config['optimizer_config'] = OptimizerConfig.read_configs(config['optimizer_config'])
-        config['graph_config'] = SubGraphConfig.read_configs(config.get('graph_config'))
+        config['optimizer_config'] = OptimizerConfig.read_configs(config.get('optimizer_config', {}))
+        config['graph_config'] = SubGraphConfig.read_configs(config.get('graph_config', {}))
+
+        encoder_config = config.get('encoder_config', {})
+        if encoder_config:
+            encoder_config = [{'name': 'Encoder'}, encoder_config]
+        config['encoder_config'] = SubGraphConfig.read_configs(encoder_config)
+
+        decoder_config = config.get('decoder_config', {})
+        if decoder_config:
+            decoder_config = [{'name': 'Decoder'}, decoder_config]
+        config['decoder_config'] = SubGraphConfig.read_configs(decoder_config)
 
         return cls(**config)
 
