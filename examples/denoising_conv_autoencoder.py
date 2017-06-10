@@ -20,7 +20,7 @@ def create_experiment_json_fn(output_dir):
     meta_data_file = mnist.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
-        'name': 'conv_autoencoder_mnsit',
+        'name': 'denoising_conv_autoencoder_mnsit',
         'output_dir': output_dir,
         'eval_every_n_steps': 100,
         'train_steps_per_iteration': 1000,
@@ -33,6 +33,7 @@ def create_experiment_json_fn(output_dir):
                                 'definition': {
                                     'image': [
                                         (plx.processing.image.Standardization, {}),
+                                        (plx.layers.GaussianNoise, {'scale': 0.5})
                                     ]
                                 }
                                 },
@@ -51,9 +52,9 @@ def create_experiment_json_fn(output_dir):
         },
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
-            'summaries': 'all',
+            'summaries': ['loss', 'image_input', 'image_output'],
             'model_type': 'autoencoder',
-            'optimizer_config': {'name': 'Adadelta', 'learning_rate': 0.9},
+            'optimizer_config': {'name': 'Adadelta', 'learning_rate': 0.99},
             'encoder_config': {
                 'definition': [
                     (plx.layers.Conv2d,
@@ -86,7 +87,7 @@ def create_experiment_json_fn(output_dir):
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
-                                   output_dir="/tmp/polyaxon_logs/conv_autoencoder",
+                                   output_dir="/tmp/polyaxon_logs/denoising_conv_autoencoder",
                                    schedule='continuous_train_and_evaluate')
 
 

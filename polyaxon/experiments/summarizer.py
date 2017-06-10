@@ -17,20 +17,23 @@ class SummaryOptions(object):
     GRADIENTS = 'gradients'
     VARIABLES = 'variables'
     LEARNING_RATE = 'learning_rate'
+    IMAGE_INPUT = 'image_input'
+    IMAGE_OUTPUT = 'image_output'
 
-    VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE]
+    ALL = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE]
+    VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE, IMAGE_INPUT, IMAGE_OUTPUT]
 
     @classmethod
     def validate(cls, summaries):
         if isinstance(summaries, six.string_types):
             if summaries == 'all':
-                return cls.VALUES
+                return cls.ALL
             if summaries in cls.VALUES:
                 return [summaries]
 
         if isinstance(summaries, (list, tuple)):
             if 'all' in summaries:
-                return cls.VALUES
+                return cls.ALL
             if not set(summaries) - set(cls.VALUES):
                 return summaries
 
@@ -159,6 +162,10 @@ def add_trainable_vars_summary(variables):
     for var in variables:
         summary.append(get_summary(SummaryTypes.HISTOGRAM, var.op.name, var))
     return summary
+
+
+def add_image_summary(value, op_name=None):
+    return [get_summary(SummaryTypes.IMAGE, op_name or value.op.name, value)]
 
 
 def _summary_for_name(name):
