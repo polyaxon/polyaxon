@@ -187,6 +187,39 @@ class Dropout(BaseLayer):
         return inference
 
 
+class GaussianNoise(BaseLayer):
+    """Additive zero-centered Gaussian noise.
+
+    This is useful to mitigate overfitting, could be used as a form of random data augmentation.
+    Gaussian Noise (GS) is a natural choice as corruption process for real valued inputs.
+
+    As it is a regularization layer, it is only active at training time.
+
+    Args:
+        scale: A 0-D Tensor or Python `float`. The scale at which to apply the the noise.
+        mean: A 0-D Tensor or Python `float`. The mean of the noise distribution.
+        stddev: A 0-D Tensor or Python `float`. The standard deviation of the noise distribution.
+        seed: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+        name: A name for this operation (optional).
+    """
+    def __init__(self, mode, scale=1, mean=0., stddev=1.0, seed=None, name='GaussianNoise'):
+        super(GaussianNoise, self).__init__(mode, name)
+        self.scale = scale
+        self.mean = mean
+        self.stddev = stddev
+        self.seed = seed
+
+    def _build(self, incoming, *args, **kwargs):
+        if self.mode == ModeKeys.TRAIN:
+            incoming = validate_dtype(incoming)
+            input_shape = get_shape(incoming)
+            x = incoming + self.scale * tf.random_normal(
+                input_shape[1:],
+                mean=self.mean, stddev=self.stddev, dtype=incoming.dtype, seed=self.seed)
+            return x
+        return incoming
+
+
 class Reshape(BaseLayer):
     """Reshape.
 

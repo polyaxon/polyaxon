@@ -26,6 +26,7 @@ from .core import (
     Dropout,
     Flatten,
     FullyConnected,
+    GaussianNoise,
     Highway,
     Merge,
     OneHotEncoding,

@@ -105,6 +105,7 @@ PAGES = [
         'classes': [
             models.RegressorModel,
             models.ClassifierModel,
+            models.AutoEncoder
         ],
     },
     {
@@ -137,6 +138,7 @@ PAGES = [
             core.SingleUnit,
             core.Highway,
             core.OneHotEncoding,
+            core.GaussianNoise,
             core.Merge,
             core.Slice
         ],
