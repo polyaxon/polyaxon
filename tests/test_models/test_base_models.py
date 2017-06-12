@@ -8,8 +8,8 @@ from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.training import training
 from tensorflow.python.platform import test
 
-from polyaxon.experiments import BaseModel
-from polyaxon.libs.configs import ModelConfig, LossConfig, OptimizerConfig
+from polyaxon.models import BaseModel
+from polyaxon.libs.configs import LossConfig, OptimizerConfig
 from polyaxon.libs.utils import get_tracked
 
 

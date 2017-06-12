@@ -31,8 +31,9 @@ class GraphModule(object):
         SUBGRAPH = 'subgraph'
         IMAGE_PROCESSOR = 'image_processor'
         PIPELINE = 'pipeline'
+        BRIDGE = 'bridge'
 
-        VALUES = [MODEL, SUBGRAPH, LAYER]
+        VALUES = [MODEL, LAYER, SUBGRAPH, IMAGE_PROCESSOR, PIPELINE, BRIDGE]
 
     def __init__(self, mode, name, module_type=None):
         self.name = name
