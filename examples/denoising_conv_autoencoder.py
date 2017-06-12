@@ -26,7 +26,7 @@ def create_experiment_json_fn(output_dir):
         'train_steps_per_iteration': 1000,
         'run_config': {'save_checkpoints_steps': 1000},
         'train_input_data_config': {
-            'pipeline_config': {'name': 'TFRecordImagePipeline', 'batch_size': 64,  'num_epochs': 10,
+            'pipeline_config': {'module': 'TFRecordImagePipeline', 'batch_size': 64,  'num_epochs': 5,
                                 'shuffle': True, 'dynamic_pad': False,
                                 'params': {'data_files': train_data_file,
                                            'meta_data_file': meta_data_file},
@@ -39,7 +39,7 @@ def create_experiment_json_fn(output_dir):
                                 },
         },
         'eval_input_data_config': {
-            'pipeline_config': {'name': 'TFRecordImagePipeline', 'batch_size': 32,  'num_epochs': 1,
+            'pipeline_config': {'module': 'TFRecordImagePipeline', 'batch_size': 32,  'num_epochs': 1,
                                 'shuffle': True, 'dynamic_pad': False,
                                 'params': {'data_files': eval_data_file,
                                            'meta_data_file': meta_data_file},
@@ -52,16 +52,16 @@ def create_experiment_json_fn(output_dir):
         },
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
-            'summaries': ['loss', 'image_input', 'image_output'],
-            'model_type': 'autoencoder',
-            'optimizer_config': {'name': 'Adadelta', 'learning_rate': 0.99},
+            'summaries': ['loss', 'image_input', 'image_result', 'image_generated'],
+            'module': 'Generator',
+            'optimizer_config': {'module': 'adadelta', 'learning_rate': 0.9},
             'encoder_config': {
                 'definition': [
                     (plx.layers.Conv2d,
                      {'num_filter': 32, 'filter_size': 3, 'strides': 1, 'activation': 'relu',
                       'regularizer': 'l2_regularizer'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
-                    (plx.layers.Conv2d, {'num_filter': 16, 'filter_size': 3, 'activation': 'relu',
+                    (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 3, 'activation': 'relu',
                                          'regularizer': 'l2_regularizer'}),
                     (plx.layers.MaxPool2d, {'kernel_size': 2}),
                 ]
@@ -69,7 +69,7 @@ def create_experiment_json_fn(output_dir):
             'decoder_config': {
                 'definition': [
                     (plx.layers.Conv2d,
-                     {'num_filter': 16, 'filter_size': 3, 'strides': 1, 'activation': 'relu',
+                     {'num_filter': 32, 'filter_size': 3, 'strides': 1, 'activation': 'relu',
                       'regularizer': 'l2_regularizer'}),
                     (plx.layers.Upsample2d, {'kernel_size': 2}),
                     (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 3, 'activation': 'relu',

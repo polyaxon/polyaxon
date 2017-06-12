@@ -18,10 +18,12 @@ class SummaryOptions(object):
     VARIABLES = 'variables'
     LEARNING_RATE = 'learning_rate'
     IMAGE_INPUT = 'image_input'
-    IMAGE_OUTPUT = 'image_output'
+    IMAGE_RESULT = 'image_result'
+    IMAGE_GENERATED = 'image_generated'
 
     ALL = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE]
-    VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE, IMAGE_INPUT, IMAGE_OUTPUT]
+    VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE,
+              IMAGE_INPUT, IMAGE_RESULT, IMAGE_GENERATED]
 
     @classmethod
     def validate(cls, summaries):
@@ -37,8 +39,8 @@ class SummaryOptions(object):
             if not set(summaries) - set(cls.VALUES):
                 return summaries
 
-        raise ValueError("The summary `{}` provided is not supported, must a subset of `{}`".format(
-            summaries, cls.VALUES))
+        raise ValueError("The summary `{}` provided is not supported, "
+                         "must be a subset of `{}`".format(summaries, cls.VALUES))
 
 
 class SummaryTypes(object):

@@ -1061,7 +1061,7 @@ class ResidualBlock(BaseLayer):
 
             resnet = self._conv2d_1(resnet)
 
-            if self.batch_norm2:
+            if self._batch_norm2:
                 resnet = self._batch_norm2(resnet)
             resnet = getters.get_activation(self.activation)(resnet)
 

@@ -40,10 +40,10 @@ def main(*args):
         return plx.layers.FullyConnected(mode, num_units=1, dropout=0.3)(x)
 
     def model_fn(features, labels, mode):
-        model = plx.experiments.RegressorModel(
-            mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(name='mean_squared_error'),
-            optimizer_config=plx.configs.OptimizerConfig(name='SGD', learning_rate=0.01),
-            summaries='all', name='regressor')
+        model = plx.models.Regressor(
+            mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(module='mean_squared_error'),
+            optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.01),
+            summaries='all')
         return model(features, labels)
 
     estimator = plx.experiments.Estimator(model_fn=model_fn,

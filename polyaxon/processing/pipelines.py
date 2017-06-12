@@ -29,7 +29,8 @@ class Pipeline(GraphModule):
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
     """
 
-    def __init__(self, mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None):
+    def __init__(self, mode, name='Pipeline', subgraphs_by_features=None, shuffle=True,
+                 num_epochs=None):
         super(Pipeline, self).__init__(
             mode=mode, name=name, module_type=GraphModule.ModuleType.PIPELINE)
         self.subgraphs_by_features = subgraphs_by_features
@@ -83,8 +84,8 @@ class TFRecordImagePipeline(Pipeline):
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
     """
 
-    def __init__(self, mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None,
-                 data_files=None, meta_data_file=None):
+    def __init__(self, mode, name='TFRecordImagePipeline', subgraphs_by_features=None, shuffle=True,
+                 num_epochs=None, data_files=None, meta_data_file=None):
         super(TFRecordImagePipeline, self).__init__(
             mode=mode, name=name, subgraphs_by_features=subgraphs_by_features,
             shuffle=shuffle, num_epochs=num_epochs)
@@ -162,8 +163,9 @@ class ParallelTextPipeline(Pipeline):
           empty string.
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
-    def __init__(self, mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None,
-                 source_files=None, target_files=None, source_delimiter="", target_delimiter=""):
+    def __init__(self, mode, name='ParallelTextPipeline', subgraphs_by_features=None, shuffle=True,
+                 num_epochs=None, source_files=None, target_files=None, source_delimiter="",
+                 target_delimiter=""):
         super(ParallelTextPipeline, self).__init__(
             mode=mode, name=name, subgraphs_by_features=subgraphs_by_features, shuffle=shuffle,
             num_epochs=num_epochs)
@@ -241,9 +243,9 @@ class TFRecordSourceSequencePipeline(Pipeline):
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
 
-    def __init__(self, mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None,
-                 files=None, source_field='source', target_field='target',
-                 source_delimiter="", target_delimiter=""):
+    def __init__(self, mode, name='TFRecordSourceSequencePipeline', subgraphs_by_features=None,
+                 shuffle=True, num_epochs=None, files=None, source_field='source',
+                 target_field='target', source_delimiter="", target_delimiter=""):
         self.files = files or []
         self.source_field = source_field
         self.target_field = target_field
@@ -328,9 +330,10 @@ class ImageCaptioningPipeline(Pipeline):
         caption_tokens_field: the caption tokends field.
     """
 
-    def __init__(self, mode, name,  subgraphs_by_features=None, shuffle=True, num_epochs=None,
-                 files=None, image_field="image/data", image_format='jpg',
-                 caption_ids_field="image/caption_ids", caption_tokens_field="image/caption"):
+    def __init__(self, mode, name='ImageCaptioningPipeline',  subgraphs_by_features=None,
+                 shuffle=True, num_epochs=None, files=None, image_field="image/data",
+                 image_format='jpg', caption_ids_field="image/caption_ids",
+                 caption_tokens_field="image/caption"):
         self.files = files or []
         self.image_field = image_field
         self.image_format = image_format

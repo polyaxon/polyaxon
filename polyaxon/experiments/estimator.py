@@ -531,6 +531,7 @@ class Estimator(object):
             global_step = training.get_or_create_global_step(g)
             features, labels = input_fn()
             estimator_spec = self._call_model_fn(features, labels, ModeKeys.TRAIN)
+            ops.add_to_collection(ops.GraphKeys.LOSSES, estimator_spec.loss)
             all_hooks.extend([
                 plx_hooks.NanTensorHook(estimator_spec.loss),
                 plx_hooks.LoggingTensorHook(
@@ -659,5 +660,5 @@ class Estimator(object):
 
 
 ESTIMATORS = {
-    'estimator': Estimator
+    'Estimator': Estimator
 }

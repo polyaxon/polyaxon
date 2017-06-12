@@ -22,9 +22,9 @@ def graph_fn(mode, inputs):
 
 
 def model_fn(features, labels, mode):
-    model = plx.experiments.RegressorModel(
-        mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(name='mean_squared_error'),
-        optimizer_config=plx.configs.OptimizerConfig(name='SGD', learning_rate=0.009),
+    model = plx.models.Regressor(
+        mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(module='mean_squared_error'),
+        optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.009),
         eval_metrics_config=[],
         summaries='all', name='regressor')
     return model(features, labels)

@@ -148,13 +148,13 @@ def create_input_fn(dataset_dir):
     meta_data_filename = MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
     train_input_fn = create_input_data_fn(
         mode=ModeKeys.TRAIN,
-        pipeline_config=PipelineConfig(name='TFRecordImagePipeline', dynamic_pad=False,
+        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
                                        params={'data_files': train_data_file,
                                                'meta_data_file': meta_data_filename})
     )
     eval_input_fn = create_input_data_fn(
         mode=ModeKeys.EVAL,
-        pipeline_config=PipelineConfig(name='TFRecordImagePipeline', dynamic_pad=False,
+        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
                                        params={'data_files': eval_data_file,
                                                'meta_data_file': meta_data_filename})
     )

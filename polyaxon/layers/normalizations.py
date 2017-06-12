@@ -174,7 +174,7 @@ class L2Normalization(BaseLayer):
 
 
 NORMALIZATIONS = {
-    'batch_normalization': BatchNormalization,
-    'local_response_normalization': LocalResponseNormalization,
-    'l2_normalization': L2Normalization
+    'BatchNormalization': BatchNormalization,
+    'LocalResponseNormalization': LocalResponseNormalization,
+    'L2Normalization': L2Normalization
 }

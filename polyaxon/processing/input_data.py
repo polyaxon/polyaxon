@@ -49,7 +49,7 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
         """Creates features and labels."""
 
         pipeline = getters.get_pipeline(
-            mode=mode, name=pipeline_config.name, shuffle=pipeline_config.shuffle,
+            mode=mode, module=pipeline_config.module, shuffle=pipeline_config.shuffle,
             num_epochs=pipeline_config.num_epochs,
             subgraph_configs_by_features=pipeline_config.subgraph_configs_by_features,
             **pipeline_config.params)

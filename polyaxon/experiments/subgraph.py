@@ -20,11 +20,10 @@ class SubGraph(GraphModule):
         mode: `str`. Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`. The name of this subgraph, used for creating the scope.
         modules: `list`.  The modules to connect inside this subgraph, e.g. layers
-        kwargs: `list`. The list key word args to call each method with.
         features: `list`. The list of features keys to extract and use in this subgraph.
             If `None`, all features will be used.
     """
-    def __init__(self, mode, name, modules, features=None):
+    def __init__(self, mode, modules, name='Subgraph', features=None):
         super(SubGraph, self).__init__(mode, name, self.ModuleType.SUBGRAPH)
 
         wrong_modules = []

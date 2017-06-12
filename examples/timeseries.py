@@ -102,11 +102,11 @@ def create_experiment_json_fn(output_dir):
         },
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
-            'model_type': 'regressor',
-            'loss_config': {'name': 'mean_squared_error'},
-            'eval_metrics_config': [{'name': 'streaming_root_mean_squared_error'},
-                                    {'name': 'streaming_mean_absolute_error'}],
-            'optimizer_config': {'name': 'Adagrad', 'learning_rate': 0.1},
+            'module': 'Regressor',
+            'loss_config': {'module': 'mean_squared_error'},
+            'eval_metrics_config': [{'module': 'streaming_root_mean_squared_error'},
+                                    {'module': 'streaming_mean_absolute_error'}],
+            'optimizer_config': {'module': 'adagrad', 'learning_rate': 0.1},
             'graph_config': {
                 'name': 'regressor',
                 'features': ['x'],

@@ -428,12 +428,12 @@ def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type="",
 
 
 OPTIMIZERS = {
-    'Adadelta': adadelta,
-    'Adagrad': adagrad,
-    'Adam': adam,
-    'Ftrl': ftrl,
-    'Momentum': momentum,
-    'Nesterov': nesterov,
-    'RMSProp': rmsprop,
-    'SGD': sgd,
+    'adadelta': adadelta,
+    'adagrad': adagrad,
+    'adam': adam,
+    'ftrl': ftrl,
+    'momentum': momentum,
+    'nesterov': nesterov,
+    'rmsprop': rmsprop,
+    'sgd': sgd,
 }

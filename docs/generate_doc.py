@@ -24,7 +24,8 @@ from polyaxon.datasets.converters import (
     JPEGImageReader,
     ImagesToTFExampleConverter
 )
-from polyaxon.experiments import estimator, experiment, hooks, models, subgraph, summarizer
+from polyaxon.experiments import estimator, experiment, hooks, subgraph, summarizer
+from polyaxon import models
 from polyaxon.layers import convolutional, core, embedding, normalizations, recurrent
 from polyaxon.libs import configs, getters, utils
 from polyaxon.processing import (
@@ -103,9 +104,9 @@ PAGES = [
     {
         'page': 'experiments/models.md',
         'classes': [
-            models.RegressorModel,
-            models.ClassifierModel,
-            models.AutoEncoder
+            models.Regressor,
+            models.Classifier,
+            models.Generator
         ],
     },
     {

@@ -27,9 +27,9 @@ def main(*args):
         return plx.layers.FullyConnected(mode, num_units=10)(x)
 
     def model_fn(features, labels, mode):
-        model = plx.experiments.ClassifierModel(
-            mode, graph_fn=graph_fn, summaries='loss', name='classifier',
-            eval_metrics_config=[MetricConfig(name='streaming_accuracy')],
+        model = plx.models.Classifier(
+            mode, graph_fn=graph_fn, summaries='loss',
+            eval_metrics_config=[MetricConfig(module='streaming_accuracy')],
             n_classes=10, one_hot_encode=True)
         return model(features, labels)
 
