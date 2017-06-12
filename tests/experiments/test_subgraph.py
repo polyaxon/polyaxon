@@ -9,11 +9,11 @@ from polyaxon.libs.configs import SubGraphConfig
 
 class TestSubgraph(tf.test.TestCase):
     def test_construct(self):
-        config = SubGraphConfig('test',
+        config = SubGraphConfig(name='test',
                                 modules=[plx.layers.FullyConnected, plx.layers.FullyConnected],
                                 kwargs=[{'num_units': 12}, {'num_units': 6}])
         modules = SubGraph.build_subgraph_modules(mode=plx.ModeKeys.TRAIN, subgraph_config=config)
-        subgraph = SubGraph(mode=plx.ModeKeys.TRAIN, name=config.name, modules=modules)
+        subgraph = SubGraph(mode=plx.ModeKeys.TRAIN, modules=modules, **config.params)
 
         inputs = tf.placeholder(tf.float32, [67, 89])
         outputs = subgraph(inputs)
@@ -25,12 +25,13 @@ class TestSubgraph(tf.test.TestCase):
     def test_construct_error(self):
         with self.assertRaises(TypeError):
             config = SubGraphConfig(
-                'test', modules=[plx.layers.FullyConnected, 5], kwargs=[{'num_units': 12}, {}])
+                name='test', modules=[plx.layers.FullyConnected, 5], kwargs=[{'num_units': 12}, {}])
             SubGraph.build_subgraph_modules(mode=plx.ModeKeys.TRAIN, subgraph_config=config)
 
         with self.assertRaises(ValueError):
-            config = SubGraphConfig('test', modules=[plx.layers.FullyConnected, plx.layers.LSTM],
-                                    kwargs=[{'num_units': 12}])
+            config = SubGraphConfig(
+                name='test', modules=[plx.layers.FullyConnected, plx.layers.LSTM],
+                kwargs=[{'num_units': 12}])
             SubGraph.build_subgraph_modules(mode=plx.ModeKeys.TRAIN, subgraph_config=config)
 
     def test_modules_get_scopes_outside_subgraph(self):
@@ -156,9 +157,11 @@ class TestSubgraph(tf.test.TestCase):
         graph_config = SubGraphConfig.read_configs(config_values=graph_config)
 
         graph = SubGraph(
-            mode=plx.ModeKeys.TRAIN, name=graph_config.name,
+            mode=plx.ModeKeys.TRAIN,
             modules=SubGraph.build_subgraph_modules(mode=plx.ModeKeys.TRAIN,
-                                                    subgraph_config=graph_config))
+                                                    subgraph_config=graph_config),
+            **graph_config.params
+        )
 
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
