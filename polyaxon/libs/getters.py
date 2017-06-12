@@ -6,117 +6,117 @@ import tensorflow as tf
 from polyaxon.experiments.subgraph import SubGraph
 
 
-def get_optimizer(optimizer, **kwargs):
+def get_optimizer(module, **kwargs):
     from polyaxon.optimizers import OPTIMIZERS
 
-    if isinstance(optimizer, str):
-        return OPTIMIZERS[optimizer](**kwargs)()
+    if isinstance(module, str):
+        return OPTIMIZERS[module](**kwargs)()
 
-    if hasattr(optimizer, '__call__'):
-        return optimizer()
+    if hasattr(module, '__call__'):
+        return module()
 
 
-def get_activation(activation, **kwargs):
+def get_activation(module, **kwargs):
     from polyaxon.activations import ACTIVATIONS
 
-    if isinstance(activation, str):
-        return ACTIVATIONS[activation](**kwargs)
+    if isinstance(module, str):
+        return ACTIVATIONS[module](**kwargs)
 
-    if hasattr(activation, '__call__'):
-        return activation
+    if hasattr(module, '__call__'):
+        return module
 
-    raise TypeError('Activation {} is unsupported.'.format(activation))
+    raise TypeError('Activation `{}` is not supported.'.format(module))
 
 
-def get_initializer(initializer, **kwargs):
+def get_initializer(module, **kwargs):
     from polyaxon.initializations import INITIALIZERS
 
-    if isinstance(initializer, str):
-        return INITIALIZERS[initializer](**kwargs)
+    if isinstance(module, str):
+        return INITIALIZERS[module](**kwargs)
 
-    return initializer
+    return module
 
 
-def get_regularizer(regularizer, **kwargs):
+def get_regularizer(module, **kwargs):
     from polyaxon.regularizations import REGULIZERS
 
-    if isinstance(regularizer, str):
-        return REGULIZERS[regularizer](**kwargs)
+    if isinstance(module, str):
+        return REGULIZERS[module](**kwargs)
 
-    return regularizer
+    return module
 
 
-def get_metric(metric, incoming, outputs, **kwargs):
+def get_metric(module, incoming, outputs, **kwargs):
     from polyaxon.metrics import METRICS
 
-    if isinstance(metric, str):
-        metric = METRICS[metric](**kwargs)(incoming, outputs)
-    elif hasattr(metric, '__call__'):
+    if isinstance(module, str):
+        module = METRICS[module](**kwargs)(incoming, outputs)
+    elif hasattr(module, '__call__'):
         try:
-            metric = metric(incoming, outputs)
+            module = module(incoming, outputs)
         except TypeError as e:
             print(e.message)
             print('Reminder: Custom metric function arguments must be '
                   'define as follow: custom_metric(y_pred, y_true).')
             exit()
-    elif not isinstance(metric, tf.Tensor):
+    elif not isinstance(module, tf.Tensor):
         ValueError("Invalid Metric type.")
 
-    return metric
+    return module
 
 
-def get_eval_metric(metric, y_pred, y_true, **kwargs):
+def get_eval_metric(module, y_pred, y_true, **kwargs):
     from polyaxon.metrics import EVAL_METRICS
 
-    if isinstance(metric, str):
-        metric = EVAL_METRICS[metric](y_pred, y_true, **kwargs)
-    elif hasattr(metric, '__call__'):
+    if isinstance(module, str):
+        module = EVAL_METRICS[module](y_pred, y_true, **kwargs)
+    elif hasattr(module, '__call__'):
         try:
-            metric = metric(y_pred, y_true)
+            module = module(y_pred, y_true)
         except TypeError as e:
             print(e.message)
             print('Reminder: Custom metric function arguments must be '
                   'define as follow: custom_metric(y_pred, y_true).')
             exit()
-    elif not isinstance(metric, tf.Tensor):
+    elif not isinstance(module, tf.Tensor):
         ValueError("Invalid Metric type.")
 
-    return metric
+    return module
 
 
-def get_loss(loss, y_pred, y_true, **kwargs):
+def get_loss(module, y_pred, y_true, **kwargs):
     from polyaxon.losses import LOSSES
 
-    if isinstance(loss, str):
-        loss = LOSSES[loss](**kwargs)(y_true, y_pred)
+    if isinstance(module, str):
+        module = LOSSES[module](**kwargs)(y_true, y_pred)
 
-    elif hasattr(loss, '__call__'):
+    elif hasattr(module, '__call__'):
         try:
-            loss = loss(y_true, y_pred)
+            module = module(y_true, y_pred)
         except Exception as e:
             print(e.message)
             print('Reminder: Custom loss function arguments must be define as '
                   'follow: custom_loss(y_pred, y_true).')
             exit()
-    elif not isinstance(loss, tf.Tensor):
+    elif not isinstance(module, tf.Tensor):
         raise ValueError('Invalid Loss type.')
 
-    return loss
+    return module
 
 
-def get_pipeline(name, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):
+def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):
     from polyaxon.processing.pipelines import PIPELINES
 
     subgraphs_by_features = {}
     if subgraph_configs_by_features:
         for feature, subgraph_config in subgraph_configs_by_features.items():
             modules = SubGraph.build_subgraph_modules(mode=mode, subgraph_config=subgraph_config)
-            subgraph = SubGraph(mode=mode, name=subgraph_config.name, modules=modules)
+            subgraph = SubGraph(mode=mode, modules=modules, **subgraph_config.params)
             subgraphs_by_features[feature] = subgraph
 
-    if isinstance(name, str):
-        return PIPELINES[name](name=name, mode=mode, shuffle=shuffle, num_epochs=num_epochs,
-                               subgraphs_by_features=subgraphs_by_features, **params)
+    if isinstance(module, str):
+        return PIPELINES[module](mode=mode, shuffle=shuffle, num_epochs=num_epochs,
+                                 subgraphs_by_features=subgraphs_by_features, **params)
 
     else:
         raise ValueError('Invalid pipeline type.')
@@ -127,14 +127,36 @@ def get_graph_fn(config):
 
     def graph_fn(mode, inputs):
         modules = SubGraph.build_subgraph_modules(mode, config)
-        graph = SubGraph(mode=mode, name=config.name, modules=modules, features=config.features)
+        graph = SubGraph(mode=mode, modules=modules, features=config.features, **config.params)
         return graph(inputs)
 
     return graph_fn
 
 
-def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None):
-    from polyaxon.experiments.models import MODELS
+def get_bridge_fn(config):
+    """Creates a bridge function. Defaults to `NoOpBridge`
+
+    Args:
+        config: `BridgeConfig` instance.
+
+    Returns:
+        `function`.
+    """
+    from polyaxon.models.bridges import BRIDGES, NoOpBridge
+
+    def bridge_fn(mode, inputs, encoder_fn, decoder_fn):
+        if config:
+            bridge = BRIDGES[config.module]
+            bridge = bridge(mode=mode, state_size=config.state_size, **config.params)
+            return bridge(inputs, encoder_fn, decoder_fn)
+
+        return NoOpBridge(mode)(inputs, encoder_fn, decoder_fn)
+
+    return bridge_fn
+
+
+def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, bridge_fn=None):
+    from polyaxon.models import MODELS, BaseModel
 
     if not graph_fn:
         graph_fn = get_graph_fn(model_config.graph_config)
@@ -145,14 +167,17 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None):
     if not decoder_fn:
         decoder_fn = get_graph_fn(model_config.decoder_config)
 
+    if not bridge_fn:
+        bridge_fn = get_bridge_fn(model_config.bridge_config)
+
     def model_fn(features, labels, params, mode, config):
         """Builds the model graph"""
-        if model_config.model_type == 'autoencoder':
-            model = MODELS[model_config.model_type](
+        if model_config.module == BaseModel.Types.GENERATOR:
+            model = MODELS[model_config.module](
                 mode=mode,
-                name=model_config.name,
                 encoder_fn=encoder_fn,
                 decoder_fn=decoder_fn,
+                bridge_fn=bridge_fn,
                 loss_config=model_config.loss_config,
                 optimizer_config=model_config.optimizer_config,
                 eval_metrics_config=model_config.eval_metrics_config,
@@ -160,9 +185,8 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None):
                 clip_gradients=model_config.clip_gradients,
                 **model_config.params)
         else:
-            model = MODELS[model_config.model_type](
+            model = MODELS[model_config.module](
                 mode=mode,
-                name=model_config.name,
                 graph_fn=graph_fn,
                 loss_config=model_config.loss_config,
                 optimizer_config=model_config.optimizer_config,
@@ -180,7 +204,7 @@ def get_estimator(estimator_config, model_config, run_config):
 
     model_fn = get_model_fn(model_config)
 
-    estimator = ESTIMATORS[estimator_config.name](
+    estimator = ESTIMATORS[estimator_config.module](
         model_fn=model_fn,
         model_dir=estimator_config.output_dir,
         config=run_config,

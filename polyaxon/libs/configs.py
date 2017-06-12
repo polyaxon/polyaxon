@@ -115,6 +115,7 @@ class PipelineConfig(Configurable):
     """The PipelineConfig holds information needed to create a `Pipeline`.
 
     Args:
+        module: `str`, the pipeline module to use.
         name: `str`, name to give for the pipeline.
         dynamic_pad: `bool`, If True the piple uses dynamic padding.
         bucket_boundaries:
@@ -126,12 +127,13 @@ class PipelineConfig(Configurable):
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         params: `dict`, extra information to pass to the pipeline.
     """
-    def __init__(self, name, subgraph_configs_by_features=None, dynamic_pad=True,
+    def __init__(self, module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True,
                  bucket_boundaries=False, batch_size=64, num_epochs=4,
                  min_after_dequeue=5000, num_threads=3, shuffle=False,
                  allow_smaller_final_batch=True, params=None):
-        self.subgraph_configs_by_features = subgraph_configs_by_features
         self.name = name
+        self.module = module
+        self.subgraph_configs_by_features = subgraph_configs_by_features
         self.dynamic_pad = dynamic_pad
         self.bucket_boundaries = bucket_boundaries
         self.batch_size = batch_size
@@ -192,11 +194,11 @@ class LossConfig(Configurable):
     """The LossConfig holds information needed to create a `Loss`.
 
     Args:
-        name: `str`, name to give for the loss.
+        module: `str`, module loss to use.
         params: `dict`, extra information to pass to the loss.
     """
-    def __init__(self, name, params=None):
-        self.name = name
+    def __init__(self, module, params=None):
+        self.module = module
         self.params = params or {}
 
 
@@ -204,11 +206,11 @@ class MetricConfig(Configurable):
     """The MetricConfig holds information needed to create a `Metric`.
 
     Args:
-        name: `str`, name to give for the metric.
+        module: `str`, name to give for the metric.
         params: `dict`, extra information to pass to the metric.
     """
-    def __init__(self, name, params=None):
-        self.name = name
+    def __init__(self, module, params=None):
+        self.module = module
         self.params = params or {}
 
 
@@ -216,7 +218,7 @@ class OptimizerConfig(Configurable):
     """The OptimizerConfig holds information needed to create a `Optimizer`.
 
     Args:
-        name: `str`, name to give for the optimizer.
+        module: `str`, optimizer optimizer to use.
         learning_rate: A Tensor or a floating point value. The learning rate to use.
         decay_steps: How often to apply decay.
         decay_rate: A Python number. The decay rate.
@@ -232,11 +234,11 @@ class OptimizerConfig(Configurable):
         sync_replicas_to_aggregate:
         params: `dict`, extra information to pass to the optimizer.
     """
-    def __init__(self, name, learning_rate=1e-4, decay_type="", decay_steps=100,
+    def __init__(self, module, learning_rate=1e-4, decay_type="", decay_steps=100,
                  decay_rate=0.99, start_decay_at=0, stop_decay_at=tf.int32.max,
                  min_learning_rate=1e-12, staircase=False, sync_replicas=0,
                  sync_replicas_to_aggregate=0, params=None):
-        self.name = name
+        self.module = module
         self.learning_rate = learning_rate
         self.decay_type = decay_type
         self.decay_steps = decay_steps
@@ -260,11 +262,11 @@ class SubGraphConfig(Configurable):
         modules: `list`.  The modules to connect inside this subgraph, e.g. layers
         kwargs: `list`. the list key word args to call each method with.
     """
-    def __init__(self, name, modules, kwargs, features=None):
-        self.name = name
+    def __init__(self, modules, kwargs, features=None, **params):
         self.modules = modules
         self.kwargs = kwargs
         self.features = features
+        self.params = params or {}
 
     @classmethod
     def read_configs(cls, config_values):
@@ -292,6 +294,16 @@ class SubGraphConfig(Configurable):
         return cls(**config)
 
 
+class BridgeConfig(Configurable):
+    """The BridgeConfig class holds information neede to create a `Bridge` for a generator model.
+
+    """
+    def __init__(self, module, state_size=None, **params):
+        self.module = module
+        self.state_size = state_size
+        self.params = params or {}
+
+
 class ModelConfig(Configurable):
     """The ModelConfig holds information needed to create a `Model`.
 
@@ -305,11 +317,11 @@ class ModelConfig(Configurable):
         clip_gradients: `float`, The value to clip the gradients with.
         params: `dict`, extra information to pass to the model.
     """
-    def __init__(self, loss_config, optimizer_config, graph_config=None, encoder_config=None,
-                 decoder_config=None, model_type=None, summaries='all', name='base_model',
-                 eval_metrics_config=None, clip_gradients=5.0, **params):
-        self.name = name
-        self.model_type = model_type
+    def __init__(self, loss_config, optimizer_config, module=None, graph_config=None,
+                 encoder_config=None, decoder_config=None, bridge_config=None,
+                 summaries='all', eval_metrics_config=None,
+                 clip_gradients=5.0, **params):
+        self.module = module
         self.summaries = summaries
         self.loss_config = loss_config
         self.eval_metrics_config = eval_metrics_config or []
@@ -317,6 +329,7 @@ class ModelConfig(Configurable):
         self.graph_config = graph_config
         self.encoder_config = encoder_config
         self.decoder_config = decoder_config
+        self.bridge_config = bridge_config
         self.clip_gradients = clip_gradients
         self.params = params or {}
 
@@ -328,7 +341,11 @@ class ModelConfig(Configurable):
         config['eval_metrics_config'] = [MetricConfig.read_configs(metric) for metric
                                          in config.get('eval_metrics_config', [])]
         config['optimizer_config'] = OptimizerConfig.read_configs(config.get('optimizer_config', {}))
-        config['graph_config'] = SubGraphConfig.read_configs(config.get('graph_config', {}))
+
+        graph_config = config.get('graph_config', {})
+        if graph_config:
+            graph_config = [{'name': 'graph'}, graph_config]
+        config['graph_config'] = SubGraphConfig.read_configs(graph_config)
 
         encoder_config = config.get('encoder_config', {})
         if encoder_config:
@@ -340,6 +357,8 @@ class ModelConfig(Configurable):
             decoder_config = [{'name': 'Decoder'}, decoder_config]
         config['decoder_config'] = SubGraphConfig.read_configs(decoder_config)
 
+        config['bridge_config'] = BridgeConfig.read_configs(config.get('bridge_config', {}))
+
         return cls(**config)
 
 
@@ -347,12 +366,12 @@ class EstimatorConfig(Configurable):
     """The EstimatorConfig holds information needed to create a `Estimator`.
 
     Args:
-        name: `str`, name to give for the estimator.
+        cls: `str`, estimator class to use.
         output_dir: `str`, where to save training and evaluation data.
         params: `dict`, extra information to pass to the estimator.
     """
-    def __init__(self, name='estimator', output_dir=None, params=None):
-        self.name = name
+    def __init__(self, module='Estimator', output_dir=None, params=None):
+        self.module = module
         self.output_dir = output_dir or generate_model_dir()
         self.params = params
 
