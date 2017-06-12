@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
-
 import tensorflow as tf
 
 from tensorflow.python.estimator.model_fn import EstimatorSpec
@@ -10,9 +8,8 @@ from tensorflow.python.training import training
 
 from polyaxon import ModeKeys
 from polyaxon.experiments import summarizer
-from polyaxon.layers import OneHotEncoding
 from polyaxon.libs import configs, getters
-from polyaxon.libs.configs import OptimizerConfig, LossConfig
+from polyaxon.libs.configs import OptimizerConfig
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments, get_shape
@@ -40,18 +37,17 @@ class BaseModel(GraphModule):
         `EstimatorSpec`
     """
     class Types(object):
-        REGRESSOR = 'regressor'
-        CLASSIFIER = 'classifier'
-        GENERATOR = 'generator'
-        AUTOENCODER = 'autoencoder'
+        REGRESSOR = 'Regressor'
+        CLASSIFIER = 'Classifier'
+        GENERATOR = 'Generator'
 
-        VALUES = [REGRESSOR, CLASSIFIER, GENERATOR, AUTOENCODER]
+        VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
 
-    def __init__(self, mode, name, model_type, graph_fn, loss_config, optimizer_config=None,
-                 eval_metrics_config=None, summaries='all', clip_gradients=0.5):
+    def __init__(self, mode, model_type, graph_fn, loss_config, optimizer_config=None,
+                 eval_metrics_config=None, summaries='all', clip_gradients=0.5, name="Model"):
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
         self.loss_config = loss_config
-        self.optimizer_config = optimizer_config or OptimizerConfig('Adam', learning_rate=0.001)
+        self.optimizer_config = optimizer_config or OptimizerConfig('adam', learning_rate=0.001)
         self.eval_metrics_config = eval_metrics_config or []
         self.model_type = model_type
         self.summaries = summarizer.SummaryOptions.validate(summaries)
@@ -61,19 +57,19 @@ class BaseModel(GraphModule):
         self._total_loss = None
         self._loss = None
 
-        self._check_subgraph_fn(function=graph_fn)
+        self._check_subgraph_fn(function=graph_fn, function_name='graph_fn')
         self._graph_fn = graph_fn
 
     @staticmethod
-    def _check_subgraph_fn(function):
+    def _check_subgraph_fn(function, function_name):
         if function is not None:
             # Check number of arguments of the given function matches requirements.
             model_fn_args = get_arguments(function)
             if 'mode' not in model_fn_args or 'inputs' not in model_fn_args:
                 raise ValueError("Model's `{}` `{}` should have 2 args: "
-                                 "`mode` and `inputs`.".format(function.__name__, function))
+                                 "`mode` and `inputs`.".format(function_name, function))
         else:
-            raise ValueError("`{}}` must be provided to Model.".format(function.__name__))
+            raise ValueError("`{}` must be provided to Model.".format(function_name))
 
     def _clip_gradients_fn(self, grads_and_vars):
         """Clips gradients by global norm."""
@@ -86,10 +82,10 @@ class BaseModel(GraphModule):
             return list(zip(clipped_gradients, variables))
         return grads_and_vars
 
-    def _create_optimizer(self):
+    def _build_optimizer(self):
         """Creates the optimizer"""
         optimizer = getters.get_optimizer(
-            self.optimizer_config.name,
+            self.optimizer_config.module,
             learning_rate=self.optimizer_config.learning_rate,
             decay_type=self.optimizer_config.decay_type,
             decay_steps=self.optimizer_config.decay_steps,
@@ -112,7 +108,7 @@ class BaseModel(GraphModule):
 
         return optimizer
 
-    def _build_summary_op(self, results=None, features=None, labels=None):
+    def _build_summary_op(self, results=None, generated=None, features=None, labels=None):
         """Builds summaries for this model.
 
         The summaries are one value (or more) of:
@@ -132,6 +128,12 @@ class BaseModel(GraphModule):
                 summary_op += summarizer.add_loss_summaries(self._total_loss, self._loss)
             elif summary == summarizer.SummaryOptions.LEARNING_RATE:
                 summary_op += summarizer.add_learning_rate_summaries()
+            elif summary == summarizer.SummaryOptions.IMAGE_INPUT:
+                summary_op += summarizer.add_image_summary(features, op_name='inputs')
+            elif summary == summarizer.SummaryOptions.IMAGE_RESULT:
+                summary_op += summarizer.add_image_summary(results, op_name='results')
+            elif summary == summarizer.SummaryOptions.IMAGE_GENERATED:
+                summary_op += summarizer.add_image_summary(generated, op_name='generated')
 
         if summary_op:
             tf.summary.merge(summary_op)
@@ -139,12 +141,13 @@ class BaseModel(GraphModule):
     def _build_loss(self, results, features, labels):
         """Creates the loss operation
 
-        Returns a tuple `(losses, loss)`:
-            `losses` are the per-batch losses.
-            `loss` is a single scalar tensor to minimize.
+        Returns:
+             tuple `(losses, loss)`:
+                `losses` are the per-batch losses.
+                `loss` is a single scalar tensor to minimize.
         """
         losses, loss = getters.get_loss(
-            self.loss_config.name, results, labels, **self.loss_config.params)
+            self.loss_config.module, results, labels, **self.loss_config.params)
         self._loss = loss
         self._losses = losses
 
@@ -173,15 +176,15 @@ class BaseModel(GraphModule):
         metrics = {}
         for metric in self.eval_metrics_config:
             _results, _labels = results, labels
-            if self.model_type == self.Types.CLASSIFIER and metric.name in ARGMAX_METRICS:
+            if self.model_type == self.Types.CLASSIFIER and metric.module in ARGMAX_METRICS:
                 _results, _labels = get_labels_and_results(results, labels)
-            metrics[metric.name] = getters.get_eval_metric(
-                metric.name, _results, _labels, **metric.params)
+            metrics[metric.module] = getters.get_eval_metric(
+                metric.module, _results, _labels, **metric.params)
         return metrics
 
     def _build_train_op(self, loss):
         """Creates the training operation"""
-        optimizer = self._create_optimizer()
+        optimizer = self._build_optimizer()
         train_op = tf.contrib.layers.optimize_loss(
             loss=loss,
             global_step=training.get_or_create_global_step(),
@@ -199,7 +202,7 @@ class BaseModel(GraphModule):
     @staticmethod
     def _build_predictions(results, features, labels, losses=None):
         """Creates the dictionary of predictions that is returned by the model."""
-        predictions = {'results': results}
+        predictions = flatten_dict({'results': results})
         # Add features and, if available, labels to predictions
         predictions.update(flatten_dict({'features': features}))  # TODO: source_ids ?
         if labels is not None:
@@ -255,144 +258,3 @@ class BaseModel(GraphModule):
                              loss=loss,
                              train_op=train_op,
                              eval_metric_ops=eval_metrics)
-
-
-class RegressorModel(BaseModel):
-    """Regressor base model.
-
-    Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-        graph_fn: Graph function. Follows the signature:
-            * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
-                * `inputs`: the feature inputs.
-        loss_config: An instance of `LossConfig`. Default value `mean_squared_error`.
-        optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
-        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
-            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-        name: `str`, the name of this model, everything will be encapsulated inside this scope.
-
-    Returns:
-        `EstimatorSpec`
-    """
-    def __init__(self, mode, name, graph_fn, loss_config=None, optimizer_config=None,
-                 eval_metrics_config=None, summaries='all', clip_gradients=0.5):
-        loss_config = loss_config or LossConfig(name='mean_squared_error')
-        super(RegressorModel, self).__init__(
-            mode=mode, name=name, model_type=RegressorModel.Types.REGRESSOR, graph_fn=graph_fn,
-            loss_config=loss_config, optimizer_config=optimizer_config,
-            eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients)
-
-    def _preprocess(self, mode, features, labels):
-        if isinstance(labels, Mapping):
-            labels = labels['labels']
-        return super(RegressorModel, self)._preprocess(mode, features, labels)
-
-
-class ClassifierModel(BaseModel):
-    """Regressor base model.
-
-    Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-        graph_fn: Graph function. Follows the signature:
-            * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
-                * `inputs`: the feature inputs.
-        loss_config: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
-        optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
-        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
-            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-        name: `str`, the name of this model, everything will be encapsulated inside this scope.
-        one_hot_encode: `bool`. to one hot encode the outputs.
-        n_classes: `int`. The number of classes used in the one hot encoding.
-
-    Returns:
-        `EstimatorSpec`
-    """
-    def __init__(self, mode, name, graph_fn, loss_config=None, optimizer_config=None,
-                 summaries='all', eval_metrics_config=None, clip_gradients=0.5,
-                 one_hot_encode=None, n_classes=None):
-        loss_config = loss_config or LossConfig(name='sigmoid_cross_entropy')
-        if one_hot_encode and (n_classes is None or not isinstance(n_classes, int)):
-            raise ValueError('`n_classes` must be an integer non negative value '
-                             'when `one_hot_encode` is set to `True`, '
-                             'received instead: {}'.format(n_classes))
-
-        self.one_hot_encode = one_hot_encode
-        self.n_classes = n_classes
-        super(ClassifierModel, self).__init__(
-            mode=mode, name=name, model_type=RegressorModel.Types.CLASSIFIER, graph_fn=graph_fn,
-            loss_config=loss_config, optimizer_config=optimizer_config,
-            eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients)
-
-    def _preprocess(self, mode, features, labels):
-        if isinstance(labels, Mapping):
-            labels = labels['label']
-
-        if self.one_hot_encode:
-            labels = OneHotEncoding(mode, n_classes=self.n_classes)(labels)
-        return super(ClassifierModel, self)._preprocess(mode, features, labels)
-
-
-class AutoEncoder(BaseModel):
-    """AutoEncoder base model.
-
-        Args:
-            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-            encoder_fn: Encoder Graph function. Follows the signature:
-                * Args:
-                    * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
-                    * `inputs`: the feature inputs.
-            decoder_fn: Decoder Graph function. Follows the signature:
-                * Args:
-                    * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
-                    * `inputs`: the feature inputs.
-            loss_config: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
-            optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
-            summaries: `str` or `list`. The verbosity of the tensorboard visualization.
-                Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-            name: `str`, the name of this model, everything will be encapsulated inside this scope.
-
-        Returns:
-            `EstimatorSpec`
-        """
-    def __init__(self, mode, name, encoder_fn, decoder_fn, loss_config=None, optimizer_config=None,
-                 summaries='all', eval_metrics_config=None, clip_gradients=0.5):
-        self._check_subgraph_fn(function=encoder_fn)
-        self._check_subgraph_fn(function=decoder_fn)
-        loss_config = loss_config or LossConfig(name='mean_squared_error')
-        self._encode_fn = encoder_fn
-        self._decoder_fn = decoder_fn
-
-        def graph_fn(mode, inputs):
-            x = self._encode_fn(mode, inputs)
-            return self._decoder_fn(mode, x)
-
-        super(AutoEncoder, self).__init__(
-            mode=mode, name=name, model_type=RegressorModel.Types.AUTOENCODER, graph_fn=graph_fn,
-            loss_config=loss_config, optimizer_config=optimizer_config,
-            eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients)
-
-    def __call__(self, features, labels=None, params=None, config=None):
-        return super(AutoEncoder, self).__call__(features, features, params, config)
-
-    def _build(self, features, labels=None, params=None, config=None):
-        return super(AutoEncoder, self)._build(features, features, params, config)
-
-    def _preprocess(self, mode, features, labels=None):
-        if isinstance(features, Mapping):
-            if len(features) > 1:
-                raise ValueError("Autoencoder accept only one feature value, "
-                                 "received a dict of `{}` instead".format(list(features.keys())))
-            features = list(features.values())[0]
-        return super(AutoEncoder, self)._preprocess(mode, features, features)
-
-
-MODELS = {
-    'classifier': ClassifierModel,
-    'regressor': RegressorModel,
-    'autoencoder': AutoEncoder
-}
