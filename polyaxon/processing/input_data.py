@@ -14,18 +14,18 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
     Note that you must pass "factory functions" for both the data provider and
     featurizer to ensure that everything will be created in  the same graph.
 
-        Args:
-            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
-            pipeline_config: the configuration to create a Pipeline instance.
-            scope: `str`. scope to use for this input data block.
-            input_type: `str`. The type of the input, values: `NUMPY`, `PANDAS`.
-                        If `None`, will create a function based on the pipeline config.
-            x: `np.ndarray` or `np.Dataframe` or `None`.
-            y: `np.ndarray` or `None`.
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        pipeline_config: the configuration to create a Pipeline instance.
+        scope: `str`. scope to use for this input data block.
+        input_type: `str`. The type of the input, values: `NUMPY`, `PANDAS`.
+                    If `None`, will create a function based on the pipeline config.
+        x: `np.ndarray` or `np.Dataframe` or `None`.
+        y: `np.ndarray` or `None`.
 
-        Returns:
-            An input function that returns `(feature_batch, labels_batch)`
-            tuples when called.
+    Returns:
+        An input function that returns `(feature_batch, labels_batch)`
+        tuples when called.
     """
     pipeline_config = pipeline_config
 

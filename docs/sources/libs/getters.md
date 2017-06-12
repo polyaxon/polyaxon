@@ -2,7 +2,7 @@
 
 
 ```python
-get_optimizer(optimizer)
+get_optimizer(module)
 ```
 
 
@@ -12,7 +12,7 @@ get_optimizer(optimizer)
 
 
 ```python
-get_activation(activation)
+get_activation(module)
 ```
 
 
@@ -22,7 +22,7 @@ get_activation(activation)
 
 
 ```python
-get_initializer(initializer)
+get_initializer(module)
 ```
 
 
@@ -32,7 +32,7 @@ get_initializer(initializer)
 
 
 ```python
-get_regularizer(regularizer)
+get_regularizer(module)
 ```
 
 
@@ -42,7 +42,7 @@ get_regularizer(regularizer)
 
 
 ```python
-get_metric(metric, incoming, outputs)
+get_metric(module, incoming, outputs)
 ```
 
 
@@ -52,7 +52,7 @@ get_metric(metric, incoming, outputs)
 
 
 ```python
-get_eval_metric(metric, y_pred, y_true)
+get_eval_metric(module, y_pred, y_true)
 ```
 
 
@@ -62,7 +62,7 @@ get_eval_metric(metric, y_pred, y_true)
 
 
 ```python
-get_loss(loss, y_pred, y_true)
+get_loss(module, y_pred, y_true)
 ```
 
 
@@ -72,7 +72,7 @@ get_loss(loss, y_pred, y_true)
 
 
 ```python
-get_pipeline(name, mode, shuffle, num_epochs, subgraph_configs_by_features=None)
+get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None)
 ```
 
 
@@ -90,11 +90,30 @@ Creates the graph operations.
 
 ----
 
+## get_bridge_fn
+
+
+```python
+get_bridge_fn(config)
+```
+
+
+Creates a bridge function. Defaults to `NoOpBridge`
+
+- __Args__:
+	- __config__: `BridgeConfig` instance.
+
+- __Returns__:
+	`function`.
+
+
+----
+
 ## get_model_fn
 
 
 ```python
-get_model_fn(model_config, graph_fn=None)
+get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, bridge_fn=None)
 ```
 
 

@@ -59,4 +59,9 @@ pages:
   - Configs: libs/configs.md
   - Getters: libs/getters.md
   - Utils: libs/utils.md
+- Datasets:
+  - Converters: datasets/converters.md
+  - Cifar10: datasets/cifar10.md
+  - Flowers17: datasets/flowers17.md
+  - Mnist: datasets/mnist.md
 - Contributing: CONTRIBUTING.md

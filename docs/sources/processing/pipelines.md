@@ -2,7 +2,7 @@
 ## Pipeline
 
 ```python
-polyaxon.processing.pipelines.Pipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None)
+polyaxon.processing.pipelines.Pipeline(mode, name='Pipeline', subgraphs_by_features=None, shuffle=True, num_epochs=None)
 ```
 
 Abstract InputPipeline class. All input pipelines must inherit from this.
@@ -19,11 +19,11 @@ features and labels.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L73)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L74)</span>
 ## TFRecordImagePipeline
 
 ```python
-polyaxon.processing.pipelines.TFRecordImagePipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, data_files=None, meta_data_file=None)
+polyaxon.processing.pipelines.TFRecordImagePipeline(mode, name='TFRecordImagePipeline', subgraphs_by_features=None, shuffle=True, num_epochs=None, data_files=None, meta_data_file=None)
 ```
 
 Abstract InputPipeline class. All input pipelines must inherit from this.
@@ -40,11 +40,11 @@ features and labels.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L148)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L149)</span>
 ## ParallelTextPipeline
 
 ```python
-polyaxon.processing.pipelines.ParallelTextPipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, source_files=None, target_files=None, source_delimiter='', target_delimiter='')
+polyaxon.processing.pipelines.ParallelTextPipeline(mode, name='ParallelTextPipeline', subgraphs_by_features=None, shuffle=True, num_epochs=None, source_files=None, target_files=None, source_delimiter='', target_delimiter='')
 ```
 
 An input pipeline that reads two parallel (line-by-line aligned) text files.
@@ -66,11 +66,11 @@ An input pipeline that reads two parallel (line-by-line aligned) text files.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L226)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L228)</span>
 ## TFRecordSourceSequencePipeline
 
 ```python
-polyaxon.processing.pipelines.TFRecordSourceSequencePipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, files=None, source_field='source', target_field='target', source_delimiter='', target_delimiter='')
+polyaxon.processing.pipelines.TFRecordSourceSequencePipeline(mode, name='TFRecordSourceSequencePipeline', subgraphs_by_features=None, shuffle=True, num_epochs=None, files=None, source_field='source', target_field='target', source_delimiter='', target_delimiter='')
 ```
 
 An input pipeline that reads a TFRecords containing both source and target sequences.
@@ -92,11 +92,11 @@ An input pipeline that reads a TFRecords containing both source and target seque
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L315)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L317)</span>
 ## ImageCaptioningPipeline
 
 ```python
-polyaxon.processing.pipelines.ImageCaptioningPipeline(mode, name, subgraphs_by_features=None, shuffle=True, num_epochs=None, files=None, image_field='image/data', image_format='jpg', caption_ids_field='image/caption_ids', caption_tokens_field='image/caption')
+polyaxon.processing.pipelines.ImageCaptioningPipeline(mode, name='ImageCaptioningPipeline', subgraphs_by_features=None, shuffle=True, num_epochs=None, files=None, image_field='image/data', image_format='jpg', caption_ids_field='image/caption_ids', caption_tokens_field='image/caption')
 ```
 
 An input pipeline that reads a TFRecords containing both source and target sequences.

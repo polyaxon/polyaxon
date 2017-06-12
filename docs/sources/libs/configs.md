@@ -26,12 +26,13 @@ A configurable class reads a configuration (YAML, Json) and create a config inst
 ## PipelineConfig
 
 ```python
-polyaxon.libs.configs.PipelineConfig(name, subgraph_configs_by_features=None, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
+polyaxon.libs.configs.PipelineConfig(module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
 ```
 
 The PipelineConfig holds information needed to create a `Pipeline`.
 
 - __Args__:
+	- __module__: `str`, the pipeline module to use.
 	- __name__: `str`, name to give for the pipeline.
 	- __dynamic_pad__: `bool`, If True the piple uses dynamic padding.
 	- __bucket_boundaries__:
@@ -46,7 +47,7 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L164)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L166)</span>
 ## InputDataConfig
 
 ```python
@@ -64,126 +65,52 @@ The InputDataConfig holds information needed to create a `InputData`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L191)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L193)</span>
 ## LossConfig
 
 ```python
-polyaxon.libs.configs.LossConfig(name, params=None)
+polyaxon.libs.configs.LossConfig(module, params=None)
 ```
 
 The LossConfig holds information needed to create a `Loss`.
 
 - __Args__:
-	- __name__: `str`, name to give for the loss.
+	- __module__: `str`, module loss to use.
 	- __params__: `dict`, extra information to pass to the loss.
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L203)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L205)</span>
 ## MetricConfig
 
 ```python
-polyaxon.libs.configs.MetricConfig(name, params=None)
+polyaxon.libs.configs.MetricConfig(module, params=None)
 ```
 
 The MetricConfig holds information needed to create a `Metric`.
 
 - __Args__:
-	- __name__: `str`, name to give for the metric.
+	- __module__: `str`, name to give for the metric.
 	- __params__: `dict`, extra information to pass to the metric.
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L215)</span>
-## OptimizerConfig
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L297)</span>
+## BridgeConfig
 
 ```python
-polyaxon.libs.configs.OptimizerConfig(name, learning_rate=0.0001, decay_type='', decay_steps=100, decay_rate=0.99, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, sync_replicas=0, sync_replicas_to_aggregate=0, params=None)
+polyaxon.libs.configs.BridgeConfig(module, state_size=None)
 ```
 
-The OptimizerConfig holds information needed to create a `Optimizer`.
+The BridgeConfig class holds information neede to create a `Bridge` for a generator model.
 
-- __Args__:
-	- __name__: `str`, name to give for the optimizer.
-	- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
-	- __decay_steps__: How often to apply decay.
-	- __decay_rate__: A Python number. The decay rate.
-	- __start_decay_at__: Don't decay before this step
-	- __stop_decay_at__: Don't decay after this step
-	- __min_learning_rate__: Don't decay below this number
-	- __decay_type__: A decay function name defined in `tf.train`
-		possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
-				 piecewise_constant, polynomial_decay.
-	- __staircase__: Whether to apply decay in a discrete staircase,
-		as opposed to continuous, fashion.
-	- __sync_replicas__:
-	- __sync_replicas_to_aggregate__:
-	- __params__: `dict`, extra information to pass to the optimizer.
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L253)</span>
-## SubGraphConfig
-
-```python
-polyaxon.libs.configs.SubGraphConfig(name, modules, kwargs, features=None)
-```
-
-The configuration used to create subgraphs.
-
-Handles also nested subgraphs.
-
-- __Args__:
-	- __name__: `str`. The name of this subgraph, used for creating the scope.
-	- __modules__: `list`.  The modules to connect inside this subgraph, e.g. layers
-	- __kwargs__: `list`. the list key word args to call each method with.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L293)</span>
-## ModelConfig
-
-```python
-polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, graph_config=None, model_type=None, summaries='all', name='base_model', eval_metrics_config=None, clip_gradients=5.0, params=None)
-```
-
-The ModelConfig holds information needed to create a `Model`.
-
-- __Args__:
-	- __loss_config__: The loss configuration.
-	- __optimizer_config__: The optimizer configuration.
-	- __graph_config__: The graph configuration.
-	- __model_type__: `str`, The type of the model (`classifier`, 'regressor, or `generator`).
-	- __summaries__: `str` or `list`, the summary levels.
-	- __eval_metrics_config__: The evaluation metrics configuration.
-	- __clip_gradients__: `float`, The value to clip the gradients with.
-	- __params__: `dict`, extra information to pass to the model.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L332)</span>
-## EstimatorConfig
-
-```python
-polyaxon.libs.configs.EstimatorConfig(name='estimator', output_dir=None, params=None)
-```
-
-The EstimatorConfig holds information needed to create a `Estimator`.
-
-- __Args__:
-	- __name__: `str`, name to give for the estimator.
-	- __output_dir__: `str`, where to save training and evaluation data.
-	- __params__: `dict`, extra information to pass to the estimator.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L362)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L395)</span>
 ## ExperimentConfig
 
 ```python
@@ -213,6 +140,93 @@ The ExperimentConfig holds information needed to create a `Experiment`.
 		instead of time.
 	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
 	- __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L307)</span>
+## ModelConfig
+
+```python
+polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, module=None, graph_config=None, encoder_config=None, decoder_config=None, bridge_config=None, summaries='all', eval_metrics_config=None, clip_gradients=5.0)
+```
+
+The ModelConfig holds information needed to create a `Model`.
+
+- __Args__:
+	- __loss_config__: The loss configuration.
+	- __optimizer_config__: The optimizer configuration.
+	- __graph_config__: The graph configuration.
+	- __model_type__: `str`, The type of the model (`classifier`, 'regressor, or `generator`).
+	- __summaries__: `str` or `list`, the summary levels.
+	- __eval_metrics_config__: The evaluation metrics configuration.
+	- __clip_gradients__: `float`, The value to clip the gradients with.
+	- __params__: `dict`, extra information to pass to the model.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L365)</span>
+## EstimatorConfig
+
+```python
+polyaxon.libs.configs.EstimatorConfig(module='Estimator', output_dir=None, params=None)
+```
+
+The EstimatorConfig holds information needed to create a `Estimator`.
+
+- __Args__:
+	- __cls__: `str`, estimator class to use.
+	- __output_dir__: `str`, where to save training and evaluation data.
+	- __params__: `dict`, extra information to pass to the estimator.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L217)</span>
+## OptimizerConfig
+
+```python
+polyaxon.libs.configs.OptimizerConfig(module, learning_rate=0.0001, decay_type='', decay_steps=100, decay_rate=0.99, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, sync_replicas=0, sync_replicas_to_aggregate=0, params=None)
+```
+
+The OptimizerConfig holds information needed to create a `Optimizer`.
+
+- __Args__:
+	- __module__: `str`, optimizer optimizer to use.
+	- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
+	- __decay_steps__: How often to apply decay.
+	- __decay_rate__: A Python number. The decay rate.
+	- __start_decay_at__: Don't decay before this step
+	- __stop_decay_at__: Don't decay after this step
+	- __min_learning_rate__: Don't decay below this number
+	- __decay_type__: A decay function name defined in `tf.train`
+		possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
+				 piecewise_constant, polynomial_decay.
+	- __staircase__: Whether to apply decay in a discrete staircase,
+		as opposed to continuous, fashion.
+	- __sync_replicas__:
+	- __sync_replicas_to_aggregate__:
+	- __params__: `dict`, extra information to pass to the optimizer.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L255)</span>
+## SubGraphConfig
+
+```python
+polyaxon.libs.configs.SubGraphConfig(modules, kwargs, features=None)
+```
+
+The configuration used to create subgraphs.
+
+Handles also nested subgraphs.
+
+- __Args__:
+	- __name__: `str`. The name of this subgraph, used for creating the scope.
+	- __modules__: `list`.  The modules to connect inside this subgraph, e.g. layers
+	- __kwargs__: `list`. the list key word args to call each method with.
 
 
 ----

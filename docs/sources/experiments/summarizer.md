@@ -8,7 +8,7 @@ polyaxon.experiments.summarizer.SummaryOptions()
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/summarizer.py#L41)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/summarizer.py#L46)</span>
 ## SummaryTypes
 
 ```python

@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/models.py#L259)</span>
-## RegressorModel
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/regressors.py#L12)</span>
+## Regressor
 
 ```python
-polyaxon.experiments.models.RegressorModel(mode, name, graph_fn, loss_config=None, optimizer_config=None, eval_metrics_config=None, summaries='all', clip_gradients=0.5, params=None)
+polyaxon.models.regressors.Regressor(mode, graph_fn, loss_config=None, optimizer_config=None, eval_metrics_config=None, summaries='all', clip_gradients=0.5, name='Regressor')
 ```
 
 Regressor base model.
@@ -13,13 +13,11 @@ Regressor base model.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
 		* `inputs`: the feature inputs.
-	- __graph_fn__: An instance of `GraphConfig`.
 	- __loss_config__: An instance of `LossConfig`. Default value `mean_squared_error`.
 	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
 	- __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
-	- __params__: `dict`. A dictionary of hyperparameter values.
 
 - __Returns__:
 	`EstimatorSpec`
@@ -27,11 +25,11 @@ Regressor base model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/models.py#L294)</span>
-## ClassifierModel
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/classifiers.py#L13)</span>
+## Classifier
 
 ```python
-polyaxon.experiments.models.ClassifierModel(mode, name, graph_fn, loss_config=None, optimizer_config=None, summaries='all', eval_metrics_config=None, clip_gradients=0.5, params=None)
+polyaxon.models.classifiers.Classifier(mode, graph_fn, loss_config=None, optimizer_config=None, summaries='all', eval_metrics_config=None, clip_gradients=0.5, one_hot_encode=None, n_classes=None, name='Classfier')
 ```
 
 Regressor base model.
@@ -42,7 +40,6 @@ Regressor base model.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
 		* `inputs`: the feature inputs.
-	- __graph_fn__: An instance of `GraphConfig`.
 	- __loss_config__: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
 	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
@@ -50,7 +47,43 @@ Regressor base model.
 	- __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
 	- __one_hot_encode__: `bool`. to one hot encode the outputs.
 	- __n_classes__: `int`. The number of classes used in the one hot encoding.
-	- __params__: `dict`. A dictionary of hyperparameter values.
+
+- __Returns__:
+	`EstimatorSpec`
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/generators.py#L19)</span>
+## Generator
+
+```python
+polyaxon.models.generators.Generator(mode, encoder_fn, decoder_fn, bridge_fn, loss_config=None, optimizer_config=None, summaries='all', eval_metrics_config=None, clip_gradients=0.5, name='Generator')
+```
+
+Generator base model.
+
+- __Args__:
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __encoder_fn__: Encoder Graph function. Follows the signature:
+		* Args:
+		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `inputs`: the feature inputs.
+	- __decoder_fn__: Decoder Graph function. Follows the signature:
+		* Args:
+		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `inputs`: the feature inputs.
+	- __bridge_fn__: The bridge to use. Follows the signature:
+		* Args:
+		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `inputs`: the feature inputs.
+		* `encoder_fn`: the encoder function.
+		* `decoder_fn` the decoder function.
+	- __loss_config__: An instance of `LossConfig`. Default value `mean_squared_error`.
+	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adadelta`.
+	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
+		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+	- __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
 
 - __Returns__:
 	`EstimatorSpec`

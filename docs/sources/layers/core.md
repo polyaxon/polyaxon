@@ -79,7 +79,7 @@ will be kept or not kept together.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L190)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L223)</span>
 ## Reshape
 
 ```python
@@ -98,7 +98,7 @@ A layer that reshape the incoming layer tensor output to the desired shape.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L218)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L251)</span>
 ## Flatten
 
 ```python
@@ -114,7 +114,7 @@ Flatten the incoming Tensor.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L244)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L277)</span>
 ## SingleUnit
 
 ```python
@@ -139,7 +139,7 @@ Adds a Single Unit Layer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L314)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L347)</span>
 ## Highway
 
 ```python
@@ -181,7 +181,7 @@ A fully connected highway network layer, with some inspiration from
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L436)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L469)</span>
 ## OneHotEncoding
 
 ```python
@@ -200,7 +200,31 @@ Transform numeric labels into one hot labels using `tf.one_hot`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L495)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L190)</span>
+## GaussianNoise
+
+```python
+polyaxon.layers.core.GaussianNoise(mode, scale=1, mean=0.0, stddev=1.0, seed=None, name='GaussianNoise')
+```
+
+Additive zero-centered Gaussian noise.
+
+This is useful to mitigate overfitting, could be used as a form of random data augmentation.
+Gaussian Noise (GS) is a natural choice as corruption process for real valued inputs.
+
+As it is a regularization layer, it is only active at training time.
+
+- __Args__:
+	- __scale__: A 0-D Tensor or Python `float`. The scale at which to apply the the noise.
+	- __mean__: A 0-D Tensor or Python `float`. The mean of the noise distribution.
+	- __stddev__: A 0-D Tensor or Python `float`. The standard deviation of the noise distribution.
+	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+	- __name__: A name for this operation (optional).
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L528)</span>
 ## Merge
 
 ```python
@@ -210,7 +234,7 @@ polyaxon.layers.core.Merge(mode, modules, merge_mode, axis=1, name='Merge')
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L468)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L501)</span>
 ## Slice
 
 ```python

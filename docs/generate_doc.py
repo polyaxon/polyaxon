@@ -90,7 +90,7 @@ PAGES = [
         'classes': [models.BaseModel],
         'classes_functions': [
             models.BaseModel._clip_gradients_fn,
-            models.BaseModel._create_optimizer,
+            models.BaseModel._build_optimizer,
             models.BaseModel._build_summary_op,
             models.BaseModel._build_loss,
             models.BaseModel._build_eval_metrics,

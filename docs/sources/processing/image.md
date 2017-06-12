@@ -1,80 +1,3 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L436)</span>
-## Rotate90
-
-```python
-polyaxon.processing.image.Rotate90(mode, k=1, is_random=False, seed=None, name='Rotate90')
-```
-
-See `plx.image.rotate90`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L508)</span>
-## ConvertColorSpace
-
-```python
-polyaxon.processing.image.ConvertColorSpace(mode, from_space, to_space, name='ConvertColorSpace')
-```
-
-See `plx.image.convert_color_space`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L561)</span>
-## ConvertImagesDtype
-
-```python
-polyaxon.processing.image.ConvertImagesDtype(mode, dtype, saturate=False, name='ConvertImagesDtype')
-```
-
-See `plx.image.convert_images_dtype`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L605)</span>
-## AdjustBrightness
-
-```python
-polyaxon.processing.image.AdjustBrightness(mode, delta, is_random=False, seed=None, name='AdjustBrightness')
-```
-
-See `plx.image.adjust_brightness`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L663)</span>
-## AdjustContrast
-
-```python
-polyaxon.processing.image.AdjustContrast(mode, contrast_factor, contrast_factor_max=None, is_random=False, seed=None, name='AdjustContrast')
-```
-
-See `plx.image.adjust_contrast`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L712)</span>
-## AdjustHue
-
-```python
-polyaxon.processing.image.AdjustHue(mode, delta, is_random=False, seed=None, name='AdjustHue')
-```
-
-See `plx.image.adjust_hue`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L769)</span>
-## AdjustSaturation
-
-```python
-polyaxon.processing.image.AdjustSaturation(mode, saturation_factor, saturation_factor_max=None, is_random=False, seed=None, name='AdjustSaturation')
-```
-
-See `plx.image.adjust_saturation`'s docstring
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L64)</span>
 ## Resize
 
@@ -149,6 +72,83 @@ polyaxon.processing.image.Transpose(mode, name='Transpose')
 ```
 
 See `plx.image.transpose`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L436)</span>
+## Rotate90
+
+```python
+polyaxon.processing.image.Rotate90(mode, k=1, is_random=False, seed=None, name='Rotate90')
+```
+
+See `plx.image.rotate90`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L508)</span>
+## ConvertColorSpace
+
+```python
+polyaxon.processing.image.ConvertColorSpace(mode, from_space, to_space, name='ConvertColorSpace')
+```
+
+See `plx.image.convert_color_space`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L561)</span>
+## ConvertImagesDtype
+
+```python
+polyaxon.processing.image.ConvertImagesDtype(mode, dtype, saturate=False, name='ConvertImagesDtype')
+```
+
+See `plx.image.convert_images_dtype`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L605)</span>
+## AdjustBrightness
+
+```python
+polyaxon.processing.image.AdjustBrightness(mode, delta, is_random=False, seed=None, name='AdjustBrightness')
+```
+
+See `plx.image.adjust_brightness`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L663)</span>
+## AdjustContrast
+
+```python
+polyaxon.processing.image.AdjustContrast(mode, contrast_factor, contrast_factor_max=None, is_random=False, seed=None, name='AdjustContrast')
+```
+
+See `plx.image.adjust_contrast`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L712)</span>
+## AdjustHue
+
+```python
+polyaxon.processing.image.AdjustHue(mode, delta, is_random=False, seed=None, name='AdjustHue')
+```
+
+See `plx.image.adjust_hue`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L769)</span>
+## AdjustSaturation
+
+```python
+polyaxon.processing.image.AdjustSaturation(mode, saturation_factor, saturation_factor_max=None, is_random=False, seed=None, name='AdjustSaturation')
+```
+
+See `plx.image.adjust_saturation`'s docstring
 
 ----
 
@@ -598,6 +598,210 @@ Convert image(s) to `dtype`, scaling its values if needed.
 
 ----
 
+## adjust_brightness
+
+
+```python
+adjust_brightness(images, delta, is_random=False, seed=None)
+```
+
+
+Adjust (randomly) the brightness of RGB or Grayscale images.
+(A mirror to tf.image adjust_brightness, random_birightness)
+
+This is a convenience method that converts an RGB image to float
+representation, adjusts its brightness, and then converts it back to the
+original data type. If several adjustments are chained it is advisable to
+minimize the number of redundant conversions.
+
+The value `delta` is added to all components of the tensor `image`. Both
+`image` and `delta` are converted to `float` before adding (and `image` is
+scaled appropriately if it is in fixed-point representation). For regular
+images, `delta` should be in the range `[0,1)`, as it is added to the image in
+floating point representation, where pixel values are in the `[0,1)` range.
+
+If `is_random` is `True`, adjust brightness using a value randomly picked in the
+interval `[-delta, delta)`.
+
+- __Args__:
+	- __images__: A tensor.
+	- __delta__: `float`. Amount to add to the pixel values.
+	- __is_random__: `bool`, If True, adjust randomly.
+	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+
+- __Returns__:
+	A brightness-adjusted tensor of the same shape and type as `images`.
+
+
+----
+
+## adjust_contrast
+
+
+```python
+adjust_contrast(images, contrast_factor, contrast_factor_max=None, is_random=False, seed=None)
+```
+
+
+Adjust (randomly) the contrast of RGB or grayscale images by contrast factor.
+(A mirror to tf.image adjust_contrast, random_contrast)
+
+This is a convenience method that converts an RGB image to float
+representation, adjusts its contrast, and then converts it back to the
+original data type. If several adjustments are chained it is advisable to
+minimize the number of redundant conversions.
+
+`images` is a tensor of at least 3 dimensions.  The last 3 dimensions are
+interpreted as `[height, width, channels]`.  The other dimensions only
+represent a collection of images, such as `[batch, height, width, channels].`
+
+Contrast is adjusted independently for each channel of each image.
+
+For each channel, this Op computes the mean of the image pixels in the
+channel and then adjusts each component `x` of each pixel to
+`(x - mean) * contrast_factor + mean`.
+
+If `is_random` is `True`: Equivalent to `adjust_contrast()` but the value is
+	randomly picked in the interval `[contrast_factor, contrast_factor_max]`.
+
+- __Args__:
+	- __images__: `tensor`. images tensor with 3 or more dimensions.
+	- __contrast_factor__: `float`.  Lower bound for the random contrast factor.
+	- __contrast_factor_max__: `float`.  Upper bound for the random contrast factor.
+	Used for random adjustment.
+	- __is_random__: `bool`, If True, adjust randomly.
+	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+
+- __Returns__:
+	The contrast-adjusted tensor.
+
+- __Raises__:
+	- __ValueError__: if `contrast_factor_max <= contrast_factor`
+		if `contrast_factor < 0`
+		if `contrast_factor_max` is None (for random.)
+
+
+----
+
+## adjust_hue
+
+
+```python
+adjust_hue(images, delta, is_random=False, seed=None, name=None)
+```
+
+
+Adjust (randomly) hue of an RGB images.
+(A mirror to tf.image adjust_hue, random_hue)
+
+This is a convenience method that converts an RGB image to float
+representation, converts it to HSV, add an offset to the hue channel, converts
+back to RGB and then back to the original data type. If several adjustments
+are chained it is advisable to minimize the number of redundant conversions.
+
+`image` is an RGB image.  The image hue is adjusted by converting the
+image to HSV and rotating the hue channel (H) by `delta`.
+The image is then converted back to RGB.
+
+`delta` must be in the interval `[-1, 1]`.
+
+If `is_random` is `True` adjust hue but uses a value randomly picked in
+the interval `[-delta, delta]`.
+
+- __Args__:
+	- __images__: RGB image or images. Size of the last dimension must be 3.
+	- __delta__: float.  How much to add to the hue channel.
+	- __is_random__: `bool`, If True, adjust randomly.
+	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+	- __name__: A name for this operation (optional).
+
+- __Returns__:
+	Adjusted image(s), same shape and DType as `image`.
+
+
+----
+
+## adjust_saturation
+
+
+```python
+adjust_saturation(images, saturation_factor, saturation_factor_max=None, is_random=False, seed=None, name=None)
+```
+
+
+Adjust (randomly) saturation of RGB images.
+(A mirror to tf.image adjust_saturation, random_saturation)
+
+This is a convenience method that converts an RGB image to float
+representation, converts it to HSV, add an offset to the saturation channel,
+converts back to RGB and then back to the original data type. If several
+adjustments are chained it is advisable to minimize the number of redundant
+conversions.
+
+The image saturation is adjusted by converting the images to HSV and
+multiplying the saturation (S) channel by `saturation_factor` and clipping.
+The images is then converted back to RGB.
+
+If `is_random` is `True` adjust saturation but uses a value randomly picked in
+the interval `[saturation_factor, saturation_factor_max]`.
+
+- __Args__:
+	- __images__: RGB image or images. Size of the last dimension must be 3.
+	- __saturation_factor__: float.  Lower bound for the random saturation factor.
+	- __saturation_factor_max__: float.  Upper bound for the random saturation factor.
+	- __is_random__: `bool`, If True, adjust randomly.
+	- __seed__: An operation-specific seed. It will be used in conjunction
+	  with the graph-level seed to determine the real seeds that will be
+	  used in this operation. Please see the documentation of
+	  set_random_seed for its interaction with the graph-level random seed.
+	- __name__: A name for this operation (optional).
+
+- __Returns__:
+	Adjusted image(s), same shape and DType as `image`.
+
+- __Raises__:
+
+	- __ValueError__: if `saturation_factor_max <= saturation_factor`
+		if `saturation_factor < 0`
+		if `saturation_factor_max is None (for random.)`
+
+
+----
+
+## adjust_gamma
+
+
+```python
+adjust_gamma(image, gamma=1, gain=1)
+```
+
+
+Performs Gamma Correction on the input image.
+Also known as Power Law Transform. This function transforms the
+input image pixelwise according to the equation Out = In**gamma
+after scaling each pixel to the range 0 to 1.
+(A mirror to tf.image adjust_gamma)
+
+- __Args__:
+	image : A Tensor.
+	gamma : A scalar. Non negative real number.
+	gain  : A scalar. The constant multiplier.
+
+- __Returns__:
+	A Tensor. Gamma corrected output image.
+
+- __Notes__:
+	For gamma greater than 1, the histogram will shift towards left and
+	the output image will be darker than the input image.
+	For gamma less than 1, the histogram will shift towards right and
+	the output image will be brighter than the input image.
+
+- __References__:
+	[1] http://en.wikipedia.org/wiki/Gamma_correction
+
+
+----
+
 ## standardize
 
 
@@ -856,207 +1060,3 @@ This implements the anisotropic 2-D version of the formula described here:
 	total variation for each image in the batch.
 	If `images` was 3-D, return a scalar float with the total variation for
 	that image.
-
-
-----
-
-## adjust_brightness
-
-
-```python
-adjust_brightness(images, delta, is_random=False, seed=None)
-```
-
-
-Adjust (randomly) the brightness of RGB or Grayscale images.
-(A mirror to tf.image adjust_brightness, random_birightness)
-
-This is a convenience method that converts an RGB image to float
-representation, adjusts its brightness, and then converts it back to the
-original data type. If several adjustments are chained it is advisable to
-minimize the number of redundant conversions.
-
-The value `delta` is added to all components of the tensor `image`. Both
-`image` and `delta` are converted to `float` before adding (and `image` is
-scaled appropriately if it is in fixed-point representation). For regular
-images, `delta` should be in the range `[0,1)`, as it is added to the image in
-floating point representation, where pixel values are in the `[0,1)` range.
-
-If `is_random` is `True`, adjust brightness using a value randomly picked in the
-interval `[-delta, delta)`.
-
-- __Args__:
-	- __images__: A tensor.
-	- __delta__: `float`. Amount to add to the pixel values.
-	- __is_random__: `bool`, If True, adjust randomly.
-	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
-
-- __Returns__:
-	A brightness-adjusted tensor of the same shape and type as `images`.
-
-
-----
-
-## adjust_contrast
-
-
-```python
-adjust_contrast(images, contrast_factor, contrast_factor_max=None, is_random=False, seed=None)
-```
-
-
-Adjust (randomly) the contrast of RGB or grayscale images by contrast factor.
-(A mirror to tf.image adjust_contrast, random_contrast)
-
-This is a convenience method that converts an RGB image to float
-representation, adjusts its contrast, and then converts it back to the
-original data type. If several adjustments are chained it is advisable to
-minimize the number of redundant conversions.
-
-`images` is a tensor of at least 3 dimensions.  The last 3 dimensions are
-interpreted as `[height, width, channels]`.  The other dimensions only
-represent a collection of images, such as `[batch, height, width, channels].`
-
-Contrast is adjusted independently for each channel of each image.
-
-For each channel, this Op computes the mean of the image pixels in the
-channel and then adjusts each component `x` of each pixel to
-`(x - mean) * contrast_factor + mean`.
-
-If `is_random` is `True`: Equivalent to `adjust_contrast()` but the value is
-	randomly picked in the interval `[contrast_factor, contrast_factor_max]`.
-
-- __Args__:
-	- __images__: `tensor`. images tensor with 3 or more dimensions.
-	- __contrast_factor__: `float`.  Lower bound for the random contrast factor.
-	- __contrast_factor_max__: `float`.  Upper bound for the random contrast factor.
-	Used for random adjustment.
-	- __is_random__: `bool`, If True, adjust randomly.
-	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
-
-- __Returns__:
-	The contrast-adjusted tensor.
-
-- __Raises__:
-	- __ValueError__: if `contrast_factor_max <= contrast_factor`
-		if `contrast_factor < 0`
-		if `contrast_factor_max` is None (for random.)
-
-
-----
-
-## adjust_hue
-
-
-```python
-adjust_hue(images, delta, is_random=False, seed=None, name=None)
-```
-
-
-Adjust (randomly) hue of an RGB images.
-(A mirror to tf.image adjust_hue, random_hue)
-
-This is a convenience method that converts an RGB image to float
-representation, converts it to HSV, add an offset to the hue channel, converts
-back to RGB and then back to the original data type. If several adjustments
-are chained it is advisable to minimize the number of redundant conversions.
-
-`image` is an RGB image.  The image hue is adjusted by converting the
-image to HSV and rotating the hue channel (H) by `delta`.
-The image is then converted back to RGB.
-
-`delta` must be in the interval `[-1, 1]`.
-
-If `is_random` is `True` adjust hue but uses a value randomly picked in
-the interval `[-delta, delta]`.
-
-- __Args__:
-	- __images__: RGB image or images. Size of the last dimension must be 3.
-	- __delta__: float.  How much to add to the hue channel.
-	- __is_random__: `bool`, If True, adjust randomly.
-	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
-	- __name__: A name for this operation (optional).
-
-- __Returns__:
-	Adjusted image(s), same shape and DType as `image`.
-
-
-----
-
-## adjust_saturation
-
-
-```python
-adjust_saturation(images, saturation_factor, saturation_factor_max=None, is_random=False, seed=None, name=None)
-```
-
-
-Adjust (randomly) saturation of RGB images.
-(A mirror to tf.image adjust_saturation, random_saturation)
-
-This is a convenience method that converts an RGB image to float
-representation, converts it to HSV, add an offset to the saturation channel,
-converts back to RGB and then back to the original data type. If several
-adjustments are chained it is advisable to minimize the number of redundant
-conversions.
-
-The image saturation is adjusted by converting the images to HSV and
-multiplying the saturation (S) channel by `saturation_factor` and clipping.
-The images is then converted back to RGB.
-
-If `is_random` is `True` adjust saturation but uses a value randomly picked in
-the interval `[saturation_factor, saturation_factor_max]`.
-
-- __Args__:
-	- __images__: RGB image or images. Size of the last dimension must be 3.
-	- __saturation_factor__: float.  Lower bound for the random saturation factor.
-	- __saturation_factor_max__: float.  Upper bound for the random saturation factor.
-	- __is_random__: `bool`, If True, adjust randomly.
-	- __seed__: An operation-specific seed. It will be used in conjunction
-	  with the graph-level seed to determine the real seeds that will be
-	  used in this operation. Please see the documentation of
-	  set_random_seed for its interaction with the graph-level random seed.
-	- __name__: A name for this operation (optional).
-
-- __Returns__:
-	Adjusted image(s), same shape and DType as `image`.
-
-- __Raises__:
-
-	- __ValueError__: if `saturation_factor_max <= saturation_factor`
-		if `saturation_factor < 0`
-		if `saturation_factor_max is None (for random.)`
-
-
-----
-
-## adjust_gamma
-
-
-```python
-adjust_gamma(image, gamma=1, gain=1)
-```
-
-
-Performs Gamma Correction on the input image.
-Also known as Power Law Transform. This function transforms the
-input image pixelwise according to the equation Out = In**gamma
-after scaling each pixel to the range 0 to 1.
-(A mirror to tf.image adjust_gamma)
-
-- __Args__:
-	image : A Tensor.
-	gamma : A scalar. Non negative real number.
-	gain  : A scalar. The constant multiplier.
-
-- __Returns__:
-	A Tensor. Gamma corrected output image.
-
-- __Notes__:
-	For gamma greater than 1, the histogram will shift towards left and
-	the output image will be darker than the input image.
-	For gamma less than 1, the histogram will shift towards right and
-	the output image will be brighter than the input image.
-
-- __References__:
-	[1] http://en.wikipedia.org/wiki/Gamma_correction
