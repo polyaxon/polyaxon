@@ -103,9 +103,9 @@ class Generator(BaseModel):
         """
         losses, loss = getters.get_loss(
             self.loss_config.module, results.results, labels, **self.loss_config.params)
-        if results.loss:
+        if results.loss is not None:
             loss += results.loss
-        if results.losses:
+        if results.losses is not None:
             losses += results.losses
         self._loss = loss
         self._losses = losses
