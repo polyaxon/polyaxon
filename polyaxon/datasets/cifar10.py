@@ -12,9 +12,13 @@ from six.moves import xrange
 
 from polyaxon import ModeKeys
 from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGNumpyImageReader
-from polyaxon.datasets.utils import download_datasets, make_dataset_dir, count_tfrecord_file_content
-from polyaxon.libs.configs import PipelineConfig
-from polyaxon.processing import create_input_data_fn
+from polyaxon.datasets.utils import (
+    download_datasets,
+    make_dataset_dir,
+    count_tfrecord_file_content,
+    create_dataset_input_fn,
+    create_dataset_test_input_fn
+)
 
 _DATA_URL = 'https://www.cs.toronto.edu/~kriz/'
 
@@ -118,20 +122,11 @@ def prepare(dataset_dir):
 
 
 def create_input_fn(dataset_dir):
-    prepare(dataset_dir)
-    train_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.TRAIN)
-    eval_data_file = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
-    meta_data_filename = MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
-    train_input_fn = create_input_data_fn(
-        mode=ModeKeys.TRAIN,
-        pipeline_config=PipelineConfig(name='TFRecordImagePipeline', dynamic_pad=False,
-                                       params={'data_files': train_data_file,
-                                               'meta_data_file': meta_data_filename})
-    )
-    eval_input_fn = create_input_data_fn(
-        mode=ModeKeys.EVAL,
-        pipeline_config=PipelineConfig(name='TFRecordImagePipeline', dynamic_pad=False,
-                                       params={'data_files': eval_data_file,
-                                               'meta_data_file': meta_data_filename})
-    )
-    return train_input_fn, eval_input_fn
+    return create_dataset_input_fn(
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
+
+
+def create_test_input_fn(dataset_dir):
+    return create_dataset_test_input_fn(
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
+

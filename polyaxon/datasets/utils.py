@@ -12,6 +12,10 @@ import tensorflow as tf
 from six.moves import urllib
 from tensorflow.python.framework.errors_impl import NotFoundError
 
+from polyaxon import ModeKeys
+from polyaxon.libs.configs import PipelineConfig
+from polyaxon.processing import create_input_data_fn
+
 
 def make_dataset_dir(dataset_dir):
     if not tf.gfile.Exists(dataset_dir):
@@ -41,7 +45,6 @@ def download_datasets(dataset_dir, url, filenames, uncompress=False):
             sys.stdout.flush()
 
         filepath, _ = urllib.request.urlretrieve(url + filename, filepath, _progress)
-        print()
 
         with tf.gfile.GFile(filepath) as f:
             size = f.size()
@@ -95,3 +98,38 @@ def verify_tfrecord_image(dataset_dir, create_input_fn, channels=3):
 
             coord.request_stop()
             coord.join(threads)
+
+
+def create_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_format,
+                            meta_data_file_name_format):
+    prepare_fn(dataset_dir)
+    train_data_file = record_file_name_format.format(dataset_dir, ModeKeys.TRAIN)
+    eval_data_file = record_file_name_format.format(dataset_dir, ModeKeys.EVAL)
+    meta_data_filename = meta_data_file_name_format.format(dataset_dir)
+    train_input_fn = create_input_data_fn(
+        mode=ModeKeys.TRAIN,
+        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
+                                       params={'data_files': train_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    eval_input_fn = create_input_data_fn(
+        mode=ModeKeys.EVAL,
+        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
+                                       params={'data_files': eval_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    return train_input_fn, eval_input_fn
+
+
+def create_dataset_test_input_fn(dataset_dir, prepare_fn, record_file_name_format,
+                                 meta_data_file_name_format):
+    prepare_fn(dataset_dir)
+    test_data_file = record_file_name_format.format(dataset_dir, 'test')
+    meta_data_filename = meta_data_file_name_format.format(dataset_dir)
+    test_input_fn = create_input_data_fn(
+        mode=ModeKeys.PREDICT,
+        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
+                                       params={'data_files': test_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    return test_input_fn
