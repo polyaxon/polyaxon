@@ -272,6 +272,11 @@ def extract_batch_length(values):
     return batch_length
 
 
+def get_tensor_batch_size(values):
+    """Extracts batch size from tensor"""
+    return tf.gather(params=tf.shape(input=values), indices=tf.constant([0]))
+
+
 @contextlib.contextmanager
 def new_attr_context(obj, attr):
     """Creates a new context in which an object's attribute can be changed.

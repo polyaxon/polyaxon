@@ -10,7 +10,7 @@ import tensorflow as tf
 
 from polyaxon.layers import FullyConnected
 from polyaxon.libs.template_module import GraphModule
-from polyaxon.libs.utils import get_name_scope, get_shape
+from polyaxon.libs.utils import get_name_scope, get_shape, get_tensor_batch_size
 
 
 class BridgeSpec(namedtuple("BridgeSpec", "encoded generated results losses loss")):
@@ -34,6 +34,10 @@ class BaseBridge(GraphModule):
         super(BaseBridge, self).__init__(mode=mode, name=name, module_type=self.ModuleType.BRIDGE)
         self.state_size = state_size
 
+    def _get_decoder_shape(self, incoming):
+        batch_size = get_tensor_batch_size(incoming)
+        return tf.concat(axis=0, values=[batch_size, tf.constant(value=self.state_size)])
+
     def encode(self, incoming, encoder_fn, *args, **kwargs):
         """Encodes the incoming tensor.
 
@@ -43,7 +47,10 @@ class BaseBridge(GraphModule):
             *args:
             **kwargs:
         """
-        return encoder_fn(mode=self.mode, inputs=incoming)
+        x = encoder_fn(mode=self.mode, inputs=incoming)
+        if self.state_size is None:
+            self.state_size = get_shape(x)[1:]
+        return x
 
     def decode(self, incoming, decoder_fn, *args, **kwargs):
         """Decodes the incoming tensor if it's validates against the state size of the decoder.
@@ -55,10 +62,15 @@ class BaseBridge(GraphModule):
             *args:
             **kwargs:
         """
-        if get_shape(incoming)[1:] == self.state_size:
+        incoming_shape = get_shape(incoming)
+        if incoming_shape[1:] == self.state_size:
             return decoder_fn(mode=self.mode, inputs=incoming)
         else:
-            return decoder_fn(mode=self.mode, inputs=tf.random_normal([1] + self.state_size))
+            if incoming_shape[0] is not None:
+                shape = incoming_shape
+            else:
+                shape = self._get_decoder_shape(incoming)
+            return decoder_fn(mode=self.mode, inputs=tf.random_normal(shape=shape))
 
     def _build(self, incoming, encoder_fn, decoder_fn, *args, **kwargs):
         """Subclasses should implement their logic here."""
@@ -79,7 +91,6 @@ class NoOpBridge(BaseBridge):
 
     def _build(self, incoming, encoder_fn, decoder_fn, *args, **kwargs):
         x = self.encode(incoming=incoming, encoder_fn=encoder_fn)
-        self.state_size = get_shape(x)[1:]
         results = self.decode(incoming=x, decoder_fn=decoder_fn)
         return BridgeSpec(encoded=x,
                           generated=self.decode(incoming=incoming, decoder_fn=decoder_fn),
@@ -95,6 +106,7 @@ class LatentBridge(BaseBridge):
     This bridge should be used by VAE.
 
     Args:
+        latent_dim: `int`. The latent dimension to use.
         mode: `str`. Specifies if this training, evaluation or prediction. See `ModeKeys`.
         name: `str`. The name of this subgraph, used for creating the scope.
 
@@ -102,14 +114,17 @@ class LatentBridge(BaseBridge):
         z_mean: `Tensor`. The latent distribution mean.
         z_log_sigma: `Tensor`. The latent distribution log variance.
     """
-    def __init__(self, mode, state_size, mean=0., stddev=1., name="LatentBridge"):
+    def __init__(self, mode, latent_dim=1, state_size=None, mean=0., stddev=1.,
+                 name="LatentBridge"):
+        state_size = state_size or [latent_dim]
         super(LatentBridge, self).__init__(mode=mode, state_size=state_size, name=name)
+        self.latent_dim = latent_dim
         self.mean = mean
         self.stddev = stddev
 
     def _build_dependencies(self):
-        self.z_mean = FullyConnected(self.mode, num_units=self.state_size)
-        self.z_log_sigma = FullyConnected(self.mode, num_units=self.state_size)
+        self.z_mean = FullyConnected(self.mode, num_units=self.latent_dim, name='z_mean')
+        self.z_log_sigma = FullyConnected(self.mode, num_units=self.latent_dim, name='z_log_sigma')
 
     def _build(self, incoming, encoder_fn, decoder_fn, *args, **kwargs):
         self._build_dependencies()
@@ -117,8 +132,9 @@ class LatentBridge(BaseBridge):
         z_mean = self.z_mean(encoded)
         z_log_sigma = self.z_log_sigma(encoded)
 
-        eps = tf.random_normal(
-            shape=[None, self.state_size], mean=self.mean, stddev=self.stddev, dtype=tf.float32)
+        shape = self._get_decoder_shape(incoming)
+        eps = tf.random_normal(shape=shape, mean=self.mean, stddev=self.stddev,
+                               dtype=tf.float32, name='eps')
         z = tf.add(z_mean, tf.multiply(tf.sqrt(tf.exp(z_log_sigma)), eps))
         decoded = self.decode(incoming=z, decoder_fn=decoder_fn)
         with get_name_scope('latent_loss') as scope_:
@@ -130,7 +146,6 @@ class LatentBridge(BaseBridge):
                           results=decoded,
                           losses=losses,
                           loss=loss)
-
 
 
 BRIDGES = {

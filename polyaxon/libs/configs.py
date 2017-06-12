@@ -421,7 +421,7 @@ class ExperimentConfig(Configurable):
                  train_input_data_config, eval_input_data_config,
                  estimator_config, model_config, train_hooks_config=None, eval_hooks_config=None,
                  eval_metrics_config=None, eval_every_n_steps=1000, train_steps=10000,
-                 eval_steps=100, eval_delay_secs=0, continuous_eval_throttle_secs=60,
+                 eval_steps=10, eval_delay_secs=0, continuous_eval_throttle_secs=60,
                  delay_workers_by_global_step=False, export_strategies=None,
                  train_steps_per_iteration=1000):
         self.name = name
