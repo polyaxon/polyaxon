@@ -246,6 +246,18 @@ Extracts batch length of predictions.
 
 ----
 
+## get_tensor_batch_size
+
+
+```python
+get_tensor_batch_size(values)
+```
+
+
+Extracts batch size from tensor
+
+----
+
 ## new_attr_context
 
 

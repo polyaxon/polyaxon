@@ -30,3 +30,13 @@ Runs download and conversion operation.
 ```python
 create_input_fn(dataset_dir)
 ```
+
+
+----
+
+## create_test_input_fn
+
+
+```python
+create_test_input_fn(dataset_dir)
+```

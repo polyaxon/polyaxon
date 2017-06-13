@@ -30,17 +30,21 @@ pages:
   - Introduction: experiments/introduction.md
   - Expermient: experiments/experiment.md
   - Estimator: experiments/estimator.md
-  - Base Model: experiments/base_model.md
-  - Models: experiments/models.md
   - Hooks: experiments/hooks.md
   - Subgraph: experiments/subgraph.md
   - Summerizer: experiments/summarizer.md
+- Models:
+  - Base Model: models/base_model.md
+  - Models: models/models.md
 - Layers:
   - Introduction: layers/introduction.md
   - Core Layers: layers/core.md
   - Convolutional Layers: layers/convolutional.md
   - Recurrent Layers: layers/recurrent.md
   - Embedding Layers: layers/embeddings.md
+- Bridges:
+  - Base Bridge: bridges/base_bridge.md
+  - Bridges: bridges/bridges.md
 - Processing:
   - Categorical Vocabulary: processing/categorical_vocabulary.md
   - Vocabulary Processor: processing/vocabulary_processor.md

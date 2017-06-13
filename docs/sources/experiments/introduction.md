@@ -53,11 +53,11 @@ config = {
     'estimator_config': {'output_dir': output_dir},
     'model_config': {
         'summaries': 'all',
-        'model_type': 'classifier',
-        'loss_config': {'name': 'softmax_cross_entropy'},
-        'eval_metrics_config': [{'name': 'streaming_accuracy'},
-                                {'name': 'streaming_precision'}],
-        'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002,
+        'module': 'Classifier',
+        'loss_config': {'module': 'softmax_cross_entropy'},
+        'eval_metrics_config': [{'module': 'streaming_accuracy'},
+                                {'module': 'streaming_precision'}],
+        'optimizer_config': {'module': 'adam', 'learning_rate': 0.002,
                              'decay_type': 'exponential_decay', 'decay_rate': 0.2},
         'graph_config': {
             'name': 'lenet',
@@ -111,9 +111,9 @@ def graph_fn(mode, inputs):
     return plx.layers.FullyConnected(mode, n_units=8)(inputs)
 
 def model_fn(features, labels, mode):
-    loss = plx.configs.LossConfig(name='mean_squared_error')
-    optimizer = plx.configs.OptimizerConfig(name='SGD')
-    model = plx.experiments.RegressorModel(
+    loss = plx.configs.LossConfig(module='mean_squared_error')
+    optimizer = plx.configs.OptimizerConfig(module='SGD')
+    model = plx.models.Regressor(
     mode=mode, name='my_regressor', graph_fn=graph_fn, 
     loss_config=loss, optimizer_config=optimizer)
     

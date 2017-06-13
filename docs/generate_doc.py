@@ -26,6 +26,7 @@ from polyaxon.datasets.converters import (
 )
 from polyaxon.experiments import estimator, experiment, hooks, subgraph, summarizer
 from polyaxon import models
+from polyaxon import bridges
 from polyaxon.layers import convolutional, core, embedding, normalizations, recurrent
 from polyaxon.libs import configs, getters, utils
 from polyaxon.processing import (
@@ -52,6 +53,7 @@ from polyaxon.processing.data_providers import (
 ROOT = 'http://polyaxon.com/docs/'
 
 PAGES = [
+    # Experiments
     {
         'page': 'experiments/experiment.md',
         'classes': [experiment.Experiment],
@@ -86,30 +88,6 @@ PAGES = [
         ]
     },
     {
-        'page': 'experiments/base_model.md',
-        'classes': [models.BaseModel],
-        'classes_functions': [
-            models.BaseModel._clip_gradients_fn,
-            models.BaseModel._build_optimizer,
-            models.BaseModel._build_summary_op,
-            models.BaseModel._build_loss,
-            models.BaseModel._build_eval_metrics,
-            models.BaseModel._build_train_op,
-            models.BaseModel._preprocess,
-            models.BaseModel._build_predictions,
-            models.BaseModel._build,
-            models.BaseModel.batch_size
-        ]
-    },
-    {
-        'page': 'experiments/models.md',
-        'classes': [
-            models.Regressor,
-            models.Classifier,
-            models.Generator
-        ],
-    },
-    {
         'page': 'experiments/subgraph.md',
         'classes': [subgraph.SubGraph]
     },
@@ -129,6 +107,33 @@ PAGES = [
         'classes': hooks.HOOKS.values()
     },
 
+    # Models
+    {
+        'page': 'models/base_model.md',
+        'classes': [models.BaseModel],
+        'classes_functions': [
+            models.BaseModel._clip_gradients_fn,
+            models.BaseModel._build_optimizer,
+            models.BaseModel._build_summary_op,
+            models.BaseModel._build_loss,
+            models.BaseModel._build_eval_metrics,
+            models.BaseModel._build_train_op,
+            models.BaseModel._preprocess,
+            models.BaseModel._build_predictions,
+            models.BaseModel._build,
+            models.BaseModel.batch_size
+        ]
+    },
+    {
+        'page': 'models/models.md',
+        'classes': [
+            models.Regressor,
+            models.Classifier,
+            models.Generator
+        ],
+    },
+
+    # Layers
     {
         'page': 'layers/core.md',
         'classes': [
@@ -196,6 +201,24 @@ PAGES = [
             normalizations.L2Normalization
         ],
     },
+
+    # Bridges
+    {
+        'page': 'bridges/base_bridge.md',
+        'classes': [bridges.BaseBridge],
+        'classes_functions': [
+            bridges.BaseBridge.encode,
+            bridges.BaseBridge.decode,
+            bridges.BaseBridge._get_decoder_shape,
+            bridges.BaseBridge._build
+        ]
+    },
+    {
+        'page': 'bridges/bridges.md',
+        'classes': [bridges.NoOpBridge, bridges.LatentBridge]
+    },
+
+    # Processing
     {
         'page': 'processing/categorical_vocabulary.md',
         'classes': [CategoricalVocabulary],
@@ -208,7 +231,7 @@ PAGES = [
 
         ]
     },
-{
+    {
         'page': 'processing/categorical_processor.md',
         'classes': [CategoricalProcessor],
         'classes_functions': [
@@ -268,6 +291,8 @@ PAGES = [
             ParallelDatasetProvider
         ]
     },
+
+    # Libs
     {
         'page': 'libs/configs.md',
         'all_module_classes': [configs],
@@ -282,6 +307,7 @@ PAGES = [
         'all_module_functions': [utils]
     },
 
+    # Other modules
     {
         'page': 'activations.md',
         'all_module_functions': [activations],
@@ -310,6 +336,8 @@ PAGES = [
         'page': 'variables.md',
         'all_module_functions': [variables],
     },
+
+    # Datasets
     {
         'page': 'datasets/converters.md',
         'classes': [
