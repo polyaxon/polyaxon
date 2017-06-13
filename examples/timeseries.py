@@ -112,7 +112,6 @@ def create_experiment_json_fn(output_dir):
                 'features': ['x'],
                 'definition': [
                     (plx.layers.LSTM, {'num_units': 7, 'num_layers': 1}),
-                    # (Slice, {'begin': [0, 6], 'size': [-1, 1]}),
                     (plx.layers.FullyConnected, {'num_units': 2}),
                 ]
             }
