@@ -5,6 +5,7 @@ from tensorflow.python.estimator.model_fn import ModeKeys
 
 from . import experiments
 from . import models
+from . import bridges
 from . import layers
 from . import processing
 from .libs import *

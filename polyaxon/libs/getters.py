@@ -142,7 +142,7 @@ def get_bridge_fn(config):
     Returns:
         `function`.
     """
-    from polyaxon.models.bridges import BRIDGES, NoOpBridge
+    from polyaxon.bridges import BRIDGES, NoOpBridge
 
     def bridge_fn(mode, inputs, encoder_fn, decoder_fn):
         if config:

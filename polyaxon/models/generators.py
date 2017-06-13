@@ -8,12 +8,11 @@ import tensorflow as tf
 from tensorflow.python.estimator.model_fn import EstimatorSpec
 
 from polyaxon import ModeKeys
+from polyaxon.bridges import BridgeSpec
 from polyaxon.libs import getters
 from polyaxon.libs.configs import OptimizerConfig, LossConfig
-from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.utils import get_tracked, get_arguments, track
 from polyaxon.models.base import BaseModel
-from polyaxon.models.bridges import BridgeSpec, NoOpBridge
 
 
 class Generator(BaseModel):
