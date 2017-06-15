@@ -10,7 +10,7 @@ Adds a Batch Normalization.
 Normalize activations of the previous layer at each batch.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __beta__: `float`. Default: 0.0.
 	- __gamma__: `float`. Default: 1.0.
 	- __epsilon__: `float`. Defalut: 1e-5.
@@ -41,7 +41,7 @@ polyaxon.layers.normalizations.LocalResponseNormalization(mode, depth_radius=5, 
 Local Response Normalization.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __depth_radius__: `int`. 0-D.  Half-width of the 1-D normalization window.
 		Defaults to 5.
 	- __bias__: `float`. An offset (usually positive to avoid dividing by 0).
@@ -73,7 +73,7 @@ For `x` with more dimensions, independently normalizes each 1-D slice along
 dimension `dim`.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __dim__: `int`. Dimension along which to normalize.
 	- __epsilon__: `float`. A lower bound value for the norm. Will use
 		`sqrt(epsilon)` as the divisor if `norm < sqrt(epsilon)`.

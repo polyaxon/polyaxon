@@ -15,7 +15,7 @@ connected weight matrix, which is multiplied by the `incoming` to produce a
 prior to the initial matrix multiply by `weights`.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __activation__: `str` (name) or `function` (returning a `Tensor`).
 		- __Default__: 'linear'.
@@ -60,7 +60,7 @@ batch and channel component will be kept independently and each row and column
 will be kept or not kept together.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	keep_prob : A float representing the probability that each element
 		is kept.
 	noise_shape : A 1-D Tensor of type int32, representing the shape for
@@ -91,7 +91,7 @@ Reshape.
 A layer that reshape the incoming layer tensor output to the desired shape.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __new_shape__: A list of `int`. The desired shape.
 	- __name__: A name for this layer (optional).
 
@@ -108,7 +108,7 @@ polyaxon.layers.core.Flatten(mode, name='Flatten')
 Flatten the incoming Tensor.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: A name for this layer (optional).
 
 
@@ -124,7 +124,7 @@ polyaxon.layers.core.SingleUnit(mode, activation='linear', bias=True, trainable=
 Adds a Single Unit Layer.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __activation__: `str` (name) or `function`. Activation applied to this layer. Default: 'linear'.
 	- __bias__: `bool`. If True, a bias is used.
 	- __trainable__: `bool`. If True, weights will be trainable.
@@ -152,7 +152,7 @@ A fully connected highway network layer, with some inspiration from
 - __[https__://github.com/fomorians/highway-fcn](https://github.com/fomorians/highway-fcn).
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __activation__: `str` (name) or `function` (returning a `Tensor`).
 		- __Default__: 'linear'.
@@ -191,7 +191,7 @@ polyaxon.layers.core.OneHotEncoding(mode, n_classes, on_value=1.0, off_value=0.0
 Transform numeric labels into one hot labels using `tf.one_hot`.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __n_classes__: `int`. Total number of classes.
 	- __on_value__: `scalar`. A scalar defining the on-value.
 	- __off_value__: `scalar`. A scalar defining the off-value.
@@ -247,5 +247,5 @@ This operation extracts a slice of size size from a tensor input starting at
 the location specified by begin.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: `str`. A name for this layer (optional).

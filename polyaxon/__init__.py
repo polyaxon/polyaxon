@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from tensorflow.python.estimator.model_fn import ModeKeys
-
+from .modes import Modes
 from . import experiments
 from . import models
 from . import bridges
+from . import encoders
+from . import decoders
 from . import layers
 from . import processing
 from .libs import *

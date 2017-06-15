@@ -14,7 +14,7 @@ class Embedding(BaseLayer):
     """Embedding layer for a sequence of integer ids or floats.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         input_dim: list of `int`. Vocabulary size (number of ids).
         output_dim: list of `int`. Embedding size.
         validate_indices: `bool`. Whether or not to validate gather indices.

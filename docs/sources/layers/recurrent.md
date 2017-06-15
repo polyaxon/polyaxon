@@ -12,7 +12,7 @@ Simple RNN (Simple Recurrent Layer.)
 	- __else__: 2-D Tensor [samples, output dim].
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'sigmoid'.
 	- __dropout__: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
@@ -53,7 +53,7 @@ LSTM (Long Short Term Memory Recurrent Layer).
 	- __else__: 2-D Tensor [samples, output dim].
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
 	- __inner_activation__: `str` (name) or `function` (returning a `Tensor`).
@@ -106,7 +106,7 @@ GRU (Gated Recurrent Unit Layer).
 	- __else__: 2-D Tensor [samples, output dim].
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
 	- __inner_activation__: `str` (name) or `function` (returning a `Tensor`).
@@ -162,7 +162,7 @@ cells number of units must match.
 	- __else__: 2-D Tensor Layer [samples, output dim].
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __rnncell_fw__: `RNNCell`. The RNN Cell to use for foward computation.
 	- __rnncell_bw__: `RNNCell`. The RNN Cell to use for backward computation.
 	- __return_seq__: `bool`. If True, returns the full sequence instead of
@@ -197,7 +197,7 @@ polyaxon.layers.recurrent.BasicRNNCell(mode, num_units, activation='tanh', bias=
 The most basic RNN cell with custom params.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
 	- __bias__: `bool`. If True, a bias is used.
@@ -219,7 +219,7 @@ polyaxon.layers.recurrent.GRUCell(mode, num_units, activation='tanh', inner_acti
 Gated Recurrent Unit cell with custom params.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __activation__: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
 	- __inner_activation__: `str` (name) or `function` (returning a `Tensor`).
@@ -253,7 +253,7 @@ use peep-hole connections: it is the basic baseline.
 For advanced models, please use the full LSTMCell that follows.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_units__: `int`, number of units for this layer.
 	- __forget_bias__: `float`. Bias of the forget gate. Default: 1.0.
 	- __state_is_tuple__: If True, accepted and returned states are n-tuples, where
@@ -287,7 +287,7 @@ Creates a cell with added input and/or output dropout.
 Dropout is never used on the state.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __cell__: an RNNCell, a projection to output_size is added to it.
 	- __input_keep_prob__: unit Tensor or float between 0 and 1, input keep probability;
 		if it is float and 1, no input dropout will be added.
@@ -314,7 +314,7 @@ RNN cell composed sequentially of multiple simple cells.
 Create a RNN cell composed sequentially of a number of RNNCells.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __cells__: list of RNNCells that will be composed in this order.
 	- __state_is_tuple__: If True, accepted and returned states are n-tuples, where
 		`n = len(cells)`.  If False, the states are all

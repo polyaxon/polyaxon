@@ -12,7 +12,7 @@ that is convolved with the input. A second variable called 'b' is added to the r
 the convolution operation.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_filter__: `int`. The number of convolutional filters.
 	- __filter_size__: `int` or `list of int`. Size of filters.
 	- __strides__: 'int` or list of `int`. Strides of conv operation.
@@ -56,7 +56,7 @@ actually the transpose (gradient) of `conv2d` rather than an actual
 deconvolution.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_filter__: `int`. The number of convolutional filters.
 	- __filter_size__: `int` or `list of int`. Size of filters.
 	- __output_shape__: `list of int`. Dimensions of the output tensor.
@@ -98,7 +98,7 @@ polyaxon.layers.convolutional.MaxPool2d(mode, kernel_size, strides=None, padding
 Adds Max Pooling 2D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __kernel_size__: 'int` or `list of int`. Pooling kernel size.
 	- __strides__: 'int` or `list of int`. Strides of conv operation.
 		- __Default__: SAME as kernel_size.
@@ -119,7 +119,7 @@ polyaxon.layers.convolutional.AvgPool2d(mode, kernel_size, strides=None, padding
 Adds Average Pooling 2D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __kernel_size__: 'int` or `list of int`. Pooling kernel size.
 	- __strides__: 'int` or `list of int`. Strides of conv operation.
 		- __Default__: SAME as kernel_size.
@@ -140,7 +140,7 @@ polyaxon.layers.convolutional.Upsample2d(mode, kernel_size, name='UpSample2D')
 Adds UpSample 2D operation.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __kernel_size__: 'int` or `list of int`. Upsampling kernel size.
 	- __name__: A name for this layer (optional). Default: 'UpSample2D'.
 
@@ -157,7 +157,7 @@ polyaxon.layers.convolutional.HighwayConv2d(mode, num_filter, filter_size, strid
 Adds a Highway Convolution 2D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_filter__: `int`. The number of convolutional filters.
 	- __filter_size__: 'int` or `list of int`. Size of filters.
 	- __strides__: 'int` or `list of int`. Strides of conv operation.
@@ -201,7 +201,7 @@ This implements the upscore layer as used in
 The upscore layer is initialized as bilinear upsampling filter.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_classes__: `int`. Number of output feature maps.
 	- __shape__: `list of int`. Dimension of the output map
 		[batch_size, new height, new width]. For convinience four values
@@ -231,7 +231,7 @@ polyaxon.layers.convolutional.Conv1d(mode, num_filter, filter_size, strides=1, p
 Adds a Convolution 1D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_filter__: `int`. The number of convolutional filters.
 	- __filter_size__: 'int` or `list of int`. Size of filters.
 	- __strides__: 'int` or `list of int`. Strides of conv operation.
@@ -270,7 +270,7 @@ polyaxon.layers.convolutional.MaxPool1d(mode, kernel_size, strides=None, padding
 Adds Max Pooling 1D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __kernel_size__: `int` or `list of int`. Pooling kernel size.
 	- __strides__: `int` or `list of int`. Strides of conv operation.
 		- __Default__: SAME as kernel_size.
@@ -291,7 +291,7 @@ polyaxon.layers.convolutional.AvgPool1d(mode, kernel_size, strides=None, padding
 Average Pooling 1D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __kernel_size__: `int` or `list of int`. Pooling kernel size.
 	- __strides__: `int` or `list of int`. Strides of conv operation.
 		- __Default__: SAME as kernel_size.
@@ -312,7 +312,7 @@ polyaxon.layers.convolutional.HighwayConv1d(mode, num_filter, filter_size, strid
 Adds a Highway Convolution 1D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_filter__: `int`. The number of convolutional filters.
 	- __filter_size__: 'int` or `list of int`. Size of filters.
 	- __strides__: 'int` or `list of int`. Strides of conv operation.
@@ -352,7 +352,7 @@ polyaxon.layers.convolutional.Conv3d(mode, num_filter, filter_size, strides=1, p
 Adds Convolution 3D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_filter__: `int`. The number of convolutional filters.
 	- __filter_size__: `int` or `list of int`. Size of filters.
 	- __strides__: 'int` or list of `int`. Strides of conv operation.
@@ -396,7 +396,7 @@ actually the transpose (gradient) of `conv3d` rather than an actual
 deconvolution.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_filter__: `int`. The number of convolutional filters.
 	- __filter_size__: `int` or `list of int`. Size of filters.
 	- __output_shape__: `list of int`. Dimensions of the output tensor.
@@ -439,7 +439,7 @@ polyaxon.layers.convolutional.MaxPool3d(mode, kernel_size, strides=1, padding='S
 Max Pooling 3D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __kernel_size__: 'int` or `list of int`. Pooling kernel size.
 		Must have kernel_size[0] = kernel_size[1] = 1
 	- __strides__: 'int` or `list of int`. Strides of conv operation.
@@ -462,7 +462,7 @@ polyaxon.layers.convolutional.AvgPool3d(mode, kernel_size, strides=None, padding
 Average Pooling 3D.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __kernel_size__: 'int` or `list of int`. Pooling kernel size.
 		Must have kernel_size[0] = kernel_size[1] = 1
 	- __strides__: 'int` or `list of int`. Strides of conv operation.
@@ -485,7 +485,7 @@ polyaxon.layers.convolutional.GlobalMaxPool(mode, name='GlobalMaxPool')
 Adds a Global Max Pooling.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: A name for this layer (optional). Default: 'GlobalMaxPool'.
 
 
@@ -501,7 +501,7 @@ polyaxon.layers.convolutional.GlobalAvgPool(mode, name='GlobalAvgPool')
 Adds a Global Average Pooling.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: A name for this layer (optional). Default: 'GlobalAvgPool'.
 
 
@@ -520,7 +520,7 @@ A residual block as described in MSRA's Deep Residual Network paper.
 Full pre-activation architecture is used here.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_blocks__: `int`. Number of layer blocks.
 	- __out_channels__: `int`. The number of convolutional filters of the
 		convolution layers.
@@ -571,7 +571,7 @@ A residual bottleneck block as described in MSRA's Deep Residual Network
 paper. Full pre-activation architecture is used here.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __num_blocks__: `int`. Number of layer blocks.
 	- __bottleneck_size__: `int`. The number of convolutional filter of the
 		bottleneck convolutional layer.

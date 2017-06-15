@@ -15,7 +15,7 @@ from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.training import basic_session_run_hooks, saver, server_lib
 from tensorflow.python.util import compat
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.experiments.estimator import Estimator
 from polyaxon.libs import getters
 from polyaxon.libs.utils import new_attr_context
@@ -574,7 +574,7 @@ def create_experiment(experiment_config):
     train_input_data_config = experiment_config.train_input_data_config
     train_input_fn = create_input_data_fn(
         pipeline_config=train_input_data_config.pipeline_config,
-        mode=ModeKeys.TRAIN, scope='train_input_fn',
+        mode=Modes.TRAIN, scope='train_input_fn',
         input_type=train_input_data_config.input_type,
         x=train_input_data_config.x, y=train_input_data_config.y)
 
@@ -582,7 +582,7 @@ def create_experiment(experiment_config):
     eval_input_data_config = experiment_config.eval_input_data_config
     eval_input_fn = create_input_data_fn(
         pipeline_config=eval_input_data_config.pipeline_config,
-        mode=ModeKeys.EVAL, scope='eval_input_fn',
+        mode=Modes.EVAL, scope='eval_input_fn',
         input_type=eval_input_data_config.input_type,
         x=eval_input_data_config.x, y=eval_input_data_config.y)
 

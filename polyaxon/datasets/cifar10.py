@@ -10,14 +10,14 @@ import tensorflow as tf
 
 from six.moves import xrange
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGNumpyImageReader
 from polyaxon.datasets.utils import (
     download_datasets,
     make_dataset_dir,
     count_tfrecord_file_content,
     create_dataset_input_fn,
-    create_dataset_test_input_fn
+    create_dataset_predict_input_fn
 )
 
 _DATA_URL = 'https://www.cs.toronto.edu/~kriz/'
@@ -94,22 +94,23 @@ def prepare(dataset_dir):
         classes=classes, colorspace=_IMAGE_COLORSPACE, image_format=_IMAGE_FORMAT,
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
-    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN,
+    prepare_dataset(converter, dataset_dir, Modes.TRAIN,
                     [_DATA_BATCH_FILENAME_FORMAT.format(dataset_dir, i) for i in xrange(1, 5)])
-    prepare_dataset(converter, dataset_dir, ModeKeys.EVAL,
+    prepare_dataset(converter, dataset_dir, Modes.EVAL,
                     [_DATA_BATCH_FILENAME_FORMAT.format(dataset_dir, 5)])
-    prepare_dataset(converter, dataset_dir, 'test', [_TEST_DATA_BATCH_FILENAME.format(dataset_dir)])
+    prepare_dataset(converter, dataset_dir, Modes.PREDICT,
+                    [_TEST_DATA_BATCH_FILENAME.format(dataset_dir)])
 
     # Finally, write the meta data:
     with open(MEAT_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
         meta_data = converter.get_meta_data()
         meta_data['num_samples'] = {
-            ModeKeys.TRAIN: count_tfrecord_file_content(
-                RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.TRAIN)),
-            ModeKeys.EVAL: count_tfrecord_file_content(
-                RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)),
-            'test': count_tfrecord_file_content(
-                RECORD_FILE_NAME_FORMAT.format(dataset_dir, 'test'))
+            Modes.TRAIN: count_tfrecord_file_content(
+                RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.TRAIN)),
+            Modes.EVAL: count_tfrecord_file_content(
+                RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.EVAL)),
+            Modes.PREDICT: count_tfrecord_file_content(
+                RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.PREDICT))
         }
         meta_data['items_to_descriptions'] = {
             'image': 'A image of colorspace {} resized to {}.'.format(
@@ -126,7 +127,7 @@ def create_input_fn(dataset_dir):
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
 
 
-def create_test_input_fn(dataset_dir):
-    return create_dataset_test_input_fn(
+def create_predict_input_fn(dataset_dir):
+    return create_dataset_predict_input_fn(
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
 

@@ -7,9 +7,8 @@ import tensorflow as tf
 
 from tensorflow.python.estimator.model_fn import EstimatorSpec
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.bridges import BridgeSpec
-from polyaxon.libs import getters
 from polyaxon.libs.configs import OptimizerConfig, LossConfig
 from polyaxon.libs.utils import get_tracked, get_arguments, track
 from polyaxon.models.base import BaseModel
@@ -19,18 +18,18 @@ class Generator(BaseModel):
     """Generator base model.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         encoder_fn: Encoder Graph function. Follows the signature:
             * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
         decoder_fn: Decoder Graph function. Follows the signature:
             * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
         bridge_fn: The bridge to use. Follows the signature:
             * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
                 * `encoder_fn`: the encoder function.
                 * `decoder_fn` the decoder function.
@@ -48,7 +47,7 @@ class Generator(BaseModel):
                  optimizer_config=None, summaries='all', eval_metrics_config=None,
                  clip_gradients=0.5, name="Generator"):
         optimizer_config = optimizer_config or OptimizerConfig('adadelta', learning_rate=0.4)
-        loss_config = loss_config or LossConfig(module='mean_squared_error')
+        loss_config = loss_config or LossConfig(module='sigmoid_cross_entropy')
         self._check_subgraph_fn(function=encoder_fn, function_name='encoder_fn')
         self._check_subgraph_fn(function=decoder_fn, function_name='decoder_fn')
         self._check_bridge_fn(function=bridge_fn)
@@ -70,6 +69,7 @@ class Generator(BaseModel):
             # Check number of arguments of the given function matches requirements.
             model_fn_args = get_arguments(function)
             if ('mode' not in model_fn_args or
+                    'loss_config' not in model_fn_args or
                     'inputs' not in model_fn_args or
                     'encoder_fn' not in model_fn_args or
                     'encoder_fn' not in model_fn_args):
@@ -87,8 +87,8 @@ class Generator(BaseModel):
         """
 
         def graph_fn(mode, inputs):
-            return self._bridge_fn(
-                mode=mode, inputs=inputs, encoder_fn=self._encode_fn, decoder_fn=self._decoder_fn)
+            return self._bridge_fn(mode=mode, inputs=inputs, loss_config=self.loss_config,
+                                   encoder_fn=self._encode_fn, decoder_fn=self._decoder_fn)
 
         return graph_fn
 
@@ -100,12 +100,15 @@ class Generator(BaseModel):
                 `losses` are the per-batch losses.
                 `loss` is a single scalar tensor to minimize.
         """
-        losses, loss = getters.get_loss(
-            self.loss_config.module, results.results, labels, **self.loss_config.params)
-        if results.loss is not None:
-            loss += results.loss
-        if results.losses is not None:
-            losses += results.losses
+        # losses, loss = getters.get_loss(
+        #     self.loss_config.module, results.results, labels, **self.loss_config.params)
+        # if results.loss is not None:
+        #     loss += results.loss
+        # if results.losses is not None:
+        #     losses += results.losses
+
+        loss = results.loss
+        losses = results.losses
         self._loss = loss
         self._losses = losses
 
@@ -122,36 +125,30 @@ class Generator(BaseModel):
                 raise ValueError("Autoencoder accept only one feature value, "
                                  "received a dict of `{}` instead".format(list(features.keys())))
             features = list(features.values())[0]
-        return super(Generator, self)._preprocess(mode, features, features)
+        return super(Generator, self)._preprocess(mode, features, labels)
 
     def _build(self, features, labels=None, params=None, config=None):
         # Pre-process features and labels
         features, labels = self._preprocess(self.mode, features, labels)
-        results = self._graph_fn(mode=self.mode, inputs=features)
+        results = self._call_graph_fn(mode=self.mode, inputs=features)
         if not isinstance(results, BridgeSpec):
-            raise ValueError('`bridge_fn` should return an BridgeSpec.')
-        predictions_results = {
-            'results': results.results,
-            'encoded': results.encoded,
-            'generated': results.generated
-        }
+            raise ValueError('`bridge_fn` should return a BridgeSpec.')
 
         loss = None
         train_op = None
         eval_metrics = None
-        if self.mode == ModeKeys.PREDICT:
+        if Modes.is_infer(self.mode):
             predictions = self._build_predictions(
-                results=predictions_results, features=features, labels=labels)
+                results=results.results, features=features, labels=labels)
         else:
-            losses, loss = self._build_loss(results, features, labels)
-            eval_metrics = self._build_eval_metrics(results.results, features, labels)
+            losses, loss = self._build_loss(results, features, features)
+            eval_metrics = self._build_eval_metrics(results.results, features, features)
 
-            if self.mode == ModeKeys.TRAIN:
+            if Modes.is_train(self.mode):
                 train_op = self._build_train_op(loss)
-                self._build_summary_op(results=results.results, generated=results.generated,
-                                       features=features, labels=labels)
+                self._build_summary_op(results=results.results, features=features, labels=labels)
 
-            predictions = self._build_predictions(results=predictions_results, features=features,
+            predictions = self._build_predictions(results=results.results, features=features,
                                                   labels=labels, losses=losses)
 
         # We add 'useful' tensors to the graph collection so that we

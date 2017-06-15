@@ -43,7 +43,7 @@ from tensorflow.python.training import session_run_hook
 from tensorflow.python.training import training
 from tensorflow.python.util import compat
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.experiments import Estimator
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.exceptions import EstimatorNotTrainedError
@@ -224,7 +224,7 @@ class TestEstimatorTrain(test.TestCase):
             self.assertItemsEqual(expected_features.keys(), features.keys())
             return _estimator_spec(
                 expected_features, expected_labels, features, labels,
-                ModeKeys.TRAIN)
+                Modes.TRAIN)
 
         with self.assertRaises(ValueError):
             Estimator(model_fn=_model_fn, params={'a': 'b'})
@@ -245,7 +245,7 @@ class TestEstimatorTrain(test.TestCase):
         def _model_fn(mode, params, features, labels, config):
             model_fn_call_count[0] += 1
             self.assertItemsEqual(expected_features.keys(), features.keys())
-            self.assertEqual(ModeKeys.TRAIN, mode)
+            self.assertTrue(Modes.is_train(mode))
             self.assertEqual(expected_params, params)
             self.assertTrue(config.i_am_test)
             return _estimator_spec(expected_features, expected_labels, features, labels, mode)
@@ -270,7 +270,7 @@ class TestEstimatorTrain(test.TestCase):
     #         self.assertEqual(expected_foo, foo)
     #         self.assertEqual(expected_bar, ba§r)
     #         self.assertItemsEqual(expected_features.keys(), features.keys())
-    #         self.assertEqual(ModeKeys.TRAIN, mode)
+    #         self.assertEqual(Modes.TRAIN, mode)
     #         self.assertEqual(expected_params, params)
     #         self.assertTrue(config.i_am_test)
     #         return _estimator_spec(
@@ -458,7 +458,7 @@ class TestEstimatorTrain(test.TestCase):
         est.train(_input_fn, steps=1)
         self.assertEqual(given_features, self.features)
         self.assertEqual(given_labels, self.labels)
-        self.assertEqual(ModeKeys.TRAIN, self.mode)
+        self.assertTrue(Modes.is_train(self.mode))
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -513,7 +513,7 @@ class EstimatorEvaluateTest(test.TestCase):
     def test_model_fn_must_return_estimator_spec(self):
         def _model_fn(features, labels, mode):
             _, _ = features, labels
-            if mode == ModeKeys.EVAL:
+            if Modes.is_eval(mode):
                 return 'NotGoodNotGood'
             return EstimatorSpec(
                 mode,
@@ -676,7 +676,7 @@ class EstimatorEvaluateTest(test.TestCase):
         est.evaluate(_input_fn, steps=1)
         self.assertEqual(given_features, self.features)
         self.assertEqual(given_labels, self.labels)
-        self.assertEqual(ModeKeys.EVAL, self.mode)
+        self.assertTrue(Modes.is_eval(self.mode))
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -956,7 +956,7 @@ class TestEstimatorPredict(test.TestCase):
         next(est.predict(_input_fn))
         self.assertEqual(given_features, self.features)
         self.assertIsNone(self.labels)
-        self.assertEqual(ModeKeys.PREDICT, self.mode)
+        self.assertTrue(Modes.is_infer(self.mode))
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -1289,7 +1289,7 @@ class TestEstimatorExport(test.TestCase):
         est.export_savedmodel(tempfile.mkdtemp(), serving_input_receiver_fn)
         self.assertEqual(given_features, self.features)
         self.assertIsNone(self.labels)
-        self.assertEqual(ModeKeys.PREDICT, self.mode)
+        self.assertTrue(Modes.is_infer(self.mode))
 
     def test_graph_initialization_global_step_and_random_seed(self):
         expected_random_seed = RunConfig().tf_random_seed
@@ -1327,7 +1327,7 @@ class TestEstimatorIntegration(test.TestCase):
                 'predictions': export_output.RegressionOutput(predictions)
             }
 
-            if mode == ModeKeys.PREDICT:
+            if Modes.is_infer(mode):
                 return EstimatorSpec(
                     mode, predictions=predictions, export_outputs=export_outputs)
 

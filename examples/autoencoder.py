@@ -15,8 +15,8 @@ def create_experiment_json_fn(output_dir):
     """
     dataset_dir = './data/mnist'
     mnist.prepare(dataset_dir)
-    train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)
-    eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.EVAL)
+    train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.TRAIN)
+    eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.EVAL)
     meta_data_file = mnist.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
@@ -55,6 +55,7 @@ def create_experiment_json_fn(output_dir):
         'model_config': {
             'module': 'Generator',
             'summaries': ['loss'],
+            'loss_config': {'module': 'mean_squared_error'},
             'optimizer_config': {'module': 'adadelta', 'learning_rate': 0.9},
             'encoder_config': {
                 'definition': [

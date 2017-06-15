@@ -121,7 +121,7 @@ class SimpleRNN(CoreRNN):
         else: 2-D Tensor [samples, output dim].
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'sigmoid'.
         dropout: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
@@ -182,7 +182,7 @@ class LSTM(CoreRNN):
         else: 2-D Tensor [samples, output dim].
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
         inner_activation: `str` (name) or `function` (returning a `Tensor`).
@@ -258,7 +258,7 @@ class GRU(CoreRNN):
         else: 2-D Tensor [samples, output dim].
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
         inner_activation: `str` (name) or `function` (returning a `Tensor`).
@@ -335,7 +335,7 @@ class BidirectionalRNN(BaseLayer):
         else: 2-D Tensor Layer [samples, output dim].
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         rnncell_fw: `RNNCell`. The RNN Cell to use for foward computation.
         rnncell_bw: `RNNCell`. The RNN Cell to use for backward computation.
         return_seq: `bool`. If True, returns the full sequence instead of
@@ -447,7 +447,7 @@ class BasicRNNCell(CoreRNNCell):
     """The most basic RNN cell with custom params.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
         bias: `bool`. If True, a bias is used.
@@ -493,7 +493,7 @@ class GRUCell(CoreRNNCell):
     """Gated Recurrent Unit cell with custom params.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`). Default: 'tanh'.
         inner_activation: `str` (name) or `function` (returning a `Tensor`).
@@ -568,7 +568,7 @@ class BasicLSTMCell(CoreRNNCell):
     For advanced models, please use the full LSTMCell that follows.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         forget_bias: `float`. Bias of the forget gate. Default: 1.0.
         state_is_tuple: If True, accepted and returned states are n-tuples, where
@@ -682,7 +682,7 @@ class DropoutWrapper(CoreRNNCell):
     Dropout is never used on the state.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         cell: an RNNCell, a projection to output_size is added to it.
         input_keep_prob: unit Tensor or float between 0 and 1, input keep probability;
             if it is float and 1, no input dropout will be added.
@@ -752,7 +752,7 @@ class MultiRNNCell(CoreRNNCell):
     Create a RNN cell composed sequentially of a number of RNNCells.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         cells: list of RNNCells that will be composed in this order.
         state_is_tuple: If True, accepted and returned states are n-tuples, where
             `n = len(cells)`.  If False, the states are all

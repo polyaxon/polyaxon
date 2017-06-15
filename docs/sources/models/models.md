@@ -8,10 +8,10 @@ polyaxon.models.regressors.Regressor(mode, graph_fn, loss_config=None, optimizer
 Regressor base model.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __graph_fn__: Graph function. Follows the signature:
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
 	- __loss_config__: An instance of `LossConfig`. Default value `mean_squared_error`.
 	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
@@ -35,10 +35,10 @@ polyaxon.models.classifiers.Classifier(mode, graph_fn, loss_config=None, optimiz
 Regressor base model.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __graph_fn__: Graph function. Follows the signature:
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
 	- __loss_config__: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
 	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
@@ -54,7 +54,7 @@ Regressor base model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/generators.py#L18)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/generators.py#L17)</span>
 ## Generator
 
 ```python
@@ -64,18 +64,18 @@ polyaxon.models.generators.Generator(mode, encoder_fn, decoder_fn, bridge_fn, lo
 Generator base model.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __encoder_fn__: Encoder Graph function. Follows the signature:
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
 	- __decoder_fn__: Decoder Graph function. Follows the signature:
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
 	- __bridge_fn__: The bridge to use. Follows the signature:
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
 		* `encoder_fn`: the encoder function.
 		* `decoder_fn` the decoder function.

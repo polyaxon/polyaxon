@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from tensorflow.python.ops.template import Template
 from tensorflow.python.platform import test
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.libs.template_module import GraphModule
 
 
@@ -16,7 +16,7 @@ class DummyModule(GraphModule):
 
 class TestGraphModule(test.TestCase):
     def test_build(self):
-        module = DummyModule(mode=ModeKeys.TRAIN, name='test')
+        module = DummyModule(mode=Modes.TRAIN, name='test')
         assert module._template is None
         assert module._is_built is False
         assert module.module_name is None
@@ -31,7 +31,7 @@ class TestGraphModule(test.TestCase):
         assert module.variable_scope() is not None
 
     def test_build_with_calling_the_module(self):
-        module = DummyModule(mode=ModeKeys.TRAIN, name='test')
+        module = DummyModule(mode=Modes.TRAIN, name='test')
         assert module._template is None
         assert module._is_built is False
         assert module.module_name is None
@@ -46,8 +46,8 @@ class TestGraphModule(test.TestCase):
         assert module.variable_scope() is not None
 
     def test_unique_name(self):
-        module1 = DummyModule(mode=ModeKeys.TRAIN, name='test')
-        module2 = DummyModule(mode=ModeKeys.TRAIN, name='test')
+        module1 = DummyModule(mode=Modes.TRAIN, name='test')
+        module2 = DummyModule(mode=Modes.TRAIN, name='test')
 
         module1.build()
         module2.build()

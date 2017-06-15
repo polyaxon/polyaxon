@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/bridges/base.py#L23)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/bridges/base.py#L24)</span>
 ## BaseBridge
 
 ```python
@@ -10,7 +10,7 @@ An abstract base class for defining a bridge.
 A bridge defines how state is passed between encoder and decoder.
 
 - __Args__:
-	- __mode__: `str`. Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`. Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: `str`. The name of this bridge, used for creating the scope.
 	- __state_size__: `int`. The bridge state size.
 
@@ -72,8 +72,8 @@ Returns the decoder expected shape based on the incoming tensor.
 
 
 ```python
-_build(self, incoming, encoder_fn, decoder_fn)
+_build(self, incoming, loss_config, encoder_fn, decoder_fn)
 ```
 
 
-Subclasses should implement their logic here.
+Subclasses should implement their logic here and must return a `BridgeSpec`.

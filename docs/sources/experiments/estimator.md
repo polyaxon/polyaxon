@@ -15,10 +15,10 @@ Constructs an `Estimator` instance.
 		* `features`: single `Tensor` or `dict` of `Tensor`s
 			 (depending on data passed to `fit`),
 		* `labels`: `Tensor` or `dict` of `Tensor`s (for multi-head models).
-			If mode is `ModeKeys.PREDICT`, `labels=None` will be passed.
+			If mode is `Modes.PREDICT`, `labels=None` will be passed.
 			If the `model_fn`'s signature does not accept `mode`,
 			the `model_fn` must still be able to handle `labels=None`.
-		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `params`: Optional `dict` of hyperparameters.  Will receive what
 			is passed to Estimator in `params` parameter. This allows
 			to configure Estimators from hyper parameter tuning.
@@ -194,7 +194,7 @@ predict(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None
 ```
 
 
-Returns predictions for given features.
+Returns predictions for given features with `PREDICT` mode.
 
 - __Args__:
 	- __input_fn__: Input function returning features which is a dictionary of

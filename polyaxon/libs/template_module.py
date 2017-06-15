@@ -20,7 +20,7 @@ class GraphModule(object):
     and implement their logic in the `_build` method.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`, name of this module. Used for `tf.make_template`.
         module_type: `str`, the type of the module.
     """

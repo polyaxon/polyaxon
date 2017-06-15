@@ -122,12 +122,14 @@ def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features
         raise ValueError('Invalid pipeline type.')
 
 
-def get_graph_fn(config):
+def get_graph_fn(config, graph_class=None):
     """Creates the graph operations."""
+    if graph_class is None:
+        graph_class = SubGraph
 
     def graph_fn(mode, inputs):
-        modules = SubGraph.build_subgraph_modules(mode, config)
-        graph = SubGraph(mode=mode, modules=modules, features=config.features, **config.params)
+        modules = graph_class.build_subgraph_modules(mode, config)
+        graph = graph_class(mode=mode, modules=modules, features=config.features, **config.params)
         return graph(inputs)
 
     return graph_fn
@@ -144,11 +146,11 @@ def get_bridge_fn(config):
     """
     from polyaxon.bridges import BRIDGES, NoOpBridge
 
-    def bridge_fn(mode, inputs, encoder_fn, decoder_fn):
+    def bridge_fn(mode, inputs, loss_config, encoder_fn, decoder_fn):
         if config:
             bridge = BRIDGES[config.module]
             bridge = bridge(mode=mode, state_size=config.state_size, **config.params)
-            return bridge(inputs, encoder_fn, decoder_fn)
+            return bridge(inputs, loss_config, encoder_fn, decoder_fn)
 
         return NoOpBridge(mode)(inputs, encoder_fn, decoder_fn)
 
@@ -157,15 +159,19 @@ def get_bridge_fn(config):
 
 def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, bridge_fn=None):
     from polyaxon.models import MODELS, BaseModel
+    from polyaxon.encoders import ENCODERS, Encoder
+    from polyaxon.decoders import DECODERS, Decoder
 
     if not graph_fn:
         graph_fn = get_graph_fn(model_config.graph_config)
 
-    if not encoder_fn:
-        encoder_fn = get_graph_fn(model_config.encoder_config)
+    if not encoder_fn and model_config.encoder_config:
+        encoder = ENCODERS.get(model_config.encoder_config.module, Encoder)
+        encoder_fn = get_graph_fn(model_config.encoder_config, encoder)
 
-    if not decoder_fn:
-        decoder_fn = get_graph_fn(model_config.decoder_config)
+    if not decoder_fn and model_config.decoder_config:
+        decoder = DECODERS.get(model_config.encoder_config.module, Decoder)
+        decoder_fn = get_graph_fn(model_config.decoder_config, decoder)
 
     if not bridge_fn:
         bridge_fn = get_bridge_fn(model_config.bridge_config)

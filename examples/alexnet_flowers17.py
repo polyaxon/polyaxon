@@ -21,8 +21,8 @@ def create_experiment_json_fn(output_dir):
     """
     dataset_dir = './data/flowers17'
     flowers17.prepare(dataset_dir)
-    train_data_file = flowers17.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)
-    eval_data_file = flowers17.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.EVAL)
+    train_data_file = flowers17.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.TRAIN)
+    eval_data_file = flowers17.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.EVAL)
     meta_data_file = flowers17.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {

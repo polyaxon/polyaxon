@@ -22,7 +22,7 @@ class Pipeline(GraphModule):
     features and labels.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`, name to give for this pipeline.
         subgraphs_by_features: `dict`, list of modules to call for each feature to be processed.
         shuffle: If true, shuffle the data.
@@ -77,7 +77,7 @@ class TFRecordImagePipeline(Pipeline):
     features and labels.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`, name to give for this pipeline.
         subgraphs_by_features: `dict`, list of modules to call for each feature to be processed
         shuffle: If true, shuffle the data.
@@ -150,7 +150,7 @@ class ParallelTextPipeline(Pipeline):
     """An input pipeline that reads two parallel (line-by-line aligned) text files.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`, name to give for this pipeline.
         subgraphs_by_features: `dict`, list of modules to call for each feature to be processed
         shuffle: If true, shuffle the data.
@@ -229,7 +229,7 @@ class TFRecordSourceSequencePipeline(Pipeline):
     """An input pipeline that reads a TFRecords containing both source and target sequences.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`, name to give for this pipeline.
         subgraphs_by_features: `dict`, list of modules to call for each feature to be processed
         shuffle: If true, shuffle the data.
@@ -318,7 +318,7 @@ class ImageCaptioningPipeline(Pipeline):
     """An input pipeline that reads a TFRecords containing both source and target sequences.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`, name to give for this pipeline.
         subgraphs_by_features: `dict`, list of modules to call for each feature to be processed
         shuffle: If true, shuffle the data.

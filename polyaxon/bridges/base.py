@@ -8,12 +8,13 @@ import six
 
 import tensorflow as tf
 
-
+from polyaxon.decoders.base import DecoderSpec
+from polyaxon.encoders.base import EncoderSpec
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import get_shape, get_tensor_batch_size
 
 
-class BridgeSpec(namedtuple("BridgeSpec", "encoded generated results losses loss")):
+class BridgeSpec(namedtuple("BridgeSpec", "results losses loss")):
 
     def items(self):
         return self._asdict().items()
@@ -26,7 +27,7 @@ class BaseBridge(GraphModule):
     A bridge defines how state is passed between encoder and decoder.
 
     Args:
-        mode: `str`. Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`. Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`. The name of this bridge, used for creating the scope.
         state_size: `int`. The bridge state size.
     """
@@ -49,9 +50,13 @@ class BaseBridge(GraphModule):
             **kwargs:
         """
         x = encoder_fn(mode=self.mode, inputs=incoming)
+
+        if not isinstance(x, EncoderSpec):
+            raise ValueError('`encoder_fn` should return an EncoderSpec.')
+
         if self.state_size is None:
-            self.state_size = get_shape(x)[1:]
-        return x
+            self.state_size = x.output_size
+        return x.output
 
     def decode(self, incoming, decoder_fn, *args, **kwargs):
         """Decodes the incoming tensor if it's validates against the state size of the decoder.
@@ -64,15 +69,26 @@ class BaseBridge(GraphModule):
             **kwargs:
         """
         incoming_shape = get_shape(incoming)
-        if incoming_shape[1:] == self.state_size:
-            return decoder_fn(mode=self.mode, inputs=incoming)
-        else:
-            if incoming_shape[0] is not None:
-                shape = incoming_shape
-            else:
-                shape = self._get_decoder_shape(incoming)
-            return decoder_fn(mode=self.mode, inputs=tf.random_normal(shape=shape))
+        if incoming_shape[1:] != self.state_size:
+            raise ValueError('`incoming` tensor is incompatible with decoder function, '
+                             'expects a tensor with shape `{}`, '
+                             'received instead `{}`'.format(self.state_size, incoming_shape[1:]))
 
-    def _build(self, incoming, encoder_fn, decoder_fn, *args, **kwargs):
+        # TODO: make decode capable of generating values directly,
+        # TODO: basically accecpting None incoming values. Should also specify a distribution.
+
+        # shape = self._get_decoder_shape(incoming)
+        # return decoder_fn(mode=self.mode, inputs=tf.random_normal(shape=shape))
+
+        x = decoder_fn(mode=self.mode, inputs=incoming)
+        if not isinstance(x, DecoderSpec):
+            raise ValueError('`decoder_fn` should return an DecoderSpec.')
+        return x.output
+
+    def _build_loss(self, incoming, results, loss_config, **kwargs):
         """Subclasses should implement their logic here."""
+        raise NotImplementedError
+
+    def _build(self, incoming, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
+        """Subclasses should implement their logic here and must return a `BridgeSpec`."""
         raise NotImplementedError

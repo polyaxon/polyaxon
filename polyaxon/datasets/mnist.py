@@ -8,14 +8,14 @@ import os
 import numpy as np
 import tensorflow as tf
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.datasets.converters import ImagesToTFExampleConverter, PNGNumpyImageReader
 from polyaxon.datasets.utils import (
     download_datasets,
     delete_datasets,
     make_dataset_dir,
     create_dataset_input_fn,
-    create_dataset_test_input_fn
+    create_dataset_predict_input_fn
 )
 
 _DATA_URL = 'http://yann.lecun.com/exdb/mnist/'
@@ -72,21 +72,21 @@ def _extract_labels(filename, num_labels):
 def prepare_dataset(converter, dataset_dir, data_name, num_images, num_eval=0):
     filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, data_name)
     if num_eval:
-        eval_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
+        eval_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.EVAL)
 
     if tf.gfile.Exists(filename):
         print('`{}` Dataset files already exist. '
               'Exiting without re-creating them.'.format(filename))
         return
 
-    if data_name == ModeKeys.TRAIN:
+    if data_name == Modes.TRAIN:
         filenames = [_TRAIN_DATA_FILENAME, _TRAIN_LABELS_FILENAME]
     else:
         filenames = [_TEST_DATA_FILENAME, _TEST_LABELS_FILENAME]
 
     download_datasets(dataset_dir, _DATA_URL, filenames)
 
-    if data_name == ModeKeys.TRAIN:
+    if data_name == Modes.TRAIN:
         data_filename = os.path.join(dataset_dir, _TRAIN_DATA_FILENAME)
         labels_filename = os.path.join(dataset_dir, _TRAIN_LABELS_FILENAME)
     else:
@@ -127,15 +127,15 @@ def prepare(dataset_dir):
         classes=classes, colorspace='grayscale', image_format='png',
         channels=_NUM_CHANNELS, image_reader=image_reader, height=_IMAGE_SIZE, width=_IMAGE_SIZE)
 
-    prepare_dataset(converter, dataset_dir, ModeKeys.TRAIN, 60000, num_eval=10000)
-    prepare_dataset(converter, dataset_dir, 'test', 10000)
+    prepare_dataset(converter, dataset_dir, Modes.TRAIN, 60000, num_eval=10000)
+    prepare_dataset(converter, dataset_dir, Modes.PREDICT, 10000)
 
     # Finally, write the meta data:
     with open(MEAT_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
         meta_data = converter.get_meta_data()
-        meta_data['num_samples'] = {ModeKeys.TRAIN: 50000,
-                                    ModeKeys.EVAL: 10000,
-                                    ModeKeys.PREDICT: 10000}
+        meta_data['num_samples'] = {Modes.TRAIN: 50000,
+                                    Modes.EVAL: 10000,
+                                    Modes.PREDICT: 10000}
         meta_data['items_to_descriptions'] = {
             'image': 'A image of fixed size 28.',
             'label': 'A single integer between 0 and 9',
@@ -150,7 +150,7 @@ def create_input_fn(dataset_dir):
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
 
 
-def create_test_input_fn(dataset_dir):
-    return create_dataset_test_input_fn(
+def create_predict_input_fn(dataset_dir):
+    return create_dataset_predict_input_fn(
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
 

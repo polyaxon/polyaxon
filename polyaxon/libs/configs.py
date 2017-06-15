@@ -260,12 +260,14 @@ class SubGraphConfig(Configurable):
     Args:
         name: `str`. The name of this subgraph, used for creating the scope.
         modules: `list`.  The modules to connect inside this subgraph, e.g. layers
-        kwargs: `list`. the list key word args to call each method with.
+        features: `list`. The list of features to use for this subgraph.
+        module: `str`. The Subgraph module to use. e.g.
     """
-    def __init__(self, modules, kwargs, features=None, **params):
+    def __init__(self, modules, kwargs, features=None, module=None, **params):
         self.modules = modules
         self.kwargs = kwargs
         self.features = features
+        self.module = module
         self.params = params or {}
 
     @classmethod
@@ -347,16 +349,8 @@ class ModelConfig(Configurable):
             graph_config = [{'name': 'graph'}, graph_config]
         config['graph_config'] = SubGraphConfig.read_configs(graph_config)
 
-        encoder_config = config.get('encoder_config', {})
-        if encoder_config:
-            encoder_config = [{'name': 'Encoder'}, encoder_config]
-        config['encoder_config'] = SubGraphConfig.read_configs(encoder_config)
-
-        decoder_config = config.get('decoder_config', {})
-        if decoder_config:
-            decoder_config = [{'name': 'Decoder'}, decoder_config]
-        config['decoder_config'] = SubGraphConfig.read_configs(decoder_config)
-
+        config['encoder_config'] = SubGraphConfig.read_configs(config.get('encoder_config', {}))
+        config['decoder_config'] = SubGraphConfig.read_configs(config.get('decoder_config', {}))
         config['bridge_config'] = BridgeConfig.read_configs(config.get('bridge_config', {}))
 
         return cls(**config)

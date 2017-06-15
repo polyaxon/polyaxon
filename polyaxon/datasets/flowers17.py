@@ -9,7 +9,7 @@ from six.moves import xrange
 
 import tensorflow as tf
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.datasets.converters import (
     ImagesToTFExampleConverter,
     JPEGImageReader,
@@ -20,7 +20,7 @@ from polyaxon.datasets.utils import (
     delete_datasets,
     make_dataset_dir,
     create_dataset_input_fn,
-    create_dataset_test_input_fn
+    create_dataset_predict_input_fn
 )
 from polyaxon.processing.image import resize
 
@@ -62,9 +62,9 @@ def filenames_by_classes(dataset_dir, num_images, folds):
         train_filenames_by_classes[i] = filenames_classes[i][2 * parts:]
         eval_filenames_by_classes[i] = filenames_classes[i][:parts]
         test_filenames_by_classes[i] = filenames_classes[i][parts:2 * parts]
-    return {ModeKeys.TRAIN: train_filenames_by_classes,
-            ModeKeys.EVAL: eval_filenames_by_classes,
-            'test': test_filenames_by_classes}
+    return {Modes.TRAIN: train_filenames_by_classes,
+            Modes.EVAL: eval_filenames_by_classes,
+            Modes.PREDICT: test_filenames_by_classes}
 
 
 def convert_images(session, writer, converter, filesnames_by_classes):
@@ -90,9 +90,9 @@ def convert_images(session, writer, converter, filesnames_by_classes):
 
 
 def prepare_dataset(converter, dataset_dir, num_images, folds):
-    train_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.TRAIN)
-    eval_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, ModeKeys.EVAL)
-    test_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, 'test')
+    train_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.TRAIN)
+    eval_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.EVAL)
+    test_filename = RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.PREDICT)
 
     filenames = [train_filename, eval_filename, test_filename]
     files_exist = [tf.gfile.Exists(f) for f in filenames]
@@ -108,20 +108,20 @@ def prepare_dataset(converter, dataset_dir, num_images, folds):
 
     with tf.python_io.TFRecordWriter(train_filename) as tfrecord_writer:
         with tf.Session('') as session:
-            print('converting {} images.'.format(ModeKeys.TRAIN))
+            print('converting {} images.'.format(Modes.TRAIN))
             convert_images(
-                session, tfrecord_writer, converter, filesnames_by_classes[ModeKeys.TRAIN])
+                session, tfrecord_writer, converter, filesnames_by_classes[Modes.TRAIN])
 
     with tf.python_io.TFRecordWriter(eval_filename) as tfrecord_writer:
         with tf.Session('') as session:
-            print('converting {} images.'.format(ModeKeys.EVAL))
+            print('converting {} images.'.format(Modes.EVAL))
             convert_images(
-                session, tfrecord_writer, converter, filesnames_by_classes[ModeKeys.EVAL])
+                session, tfrecord_writer, converter, filesnames_by_classes[Modes.EVAL])
 
     with tf.python_io.TFRecordWriter(test_filename) as tfrecord_writer:
         with tf.Session('') as session:
             print('converting test images.')
-            convert_images(session, tfrecord_writer, converter, filesnames_by_classes['test'])
+            convert_images(session, tfrecord_writer, converter, filesnames_by_classes[Modes.PREDICT])
 
 
 def prepare(dataset_dir):
@@ -144,9 +144,9 @@ def prepare(dataset_dir):
     # Finally, write the meta data:
     with open(MEAT_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
         meta_data = converter.get_meta_data()
-        meta_data['num_samples'] = {ModeKeys.TRAIN: 1360 - 2 * (1360 // _FOLDS),
-                                    ModeKeys.EVAL: 1360 // _FOLDS,
-                                    'test': 1360 // _FOLDS}
+        meta_data['num_samples'] = {Modes.TRAIN: 1360 - 2 * (1360 // _FOLDS),
+                                    Modes.EVAL: 1360 // _FOLDS,
+                                    Modes.PREDICT: 1360 // _FOLDS}
         meta_data['items_to_descriptions'] = {
             'image': 'A image of colorspace {} resized to {}.'.format(
                 _IMAGE_COLORSPACE, _IMAGE_SIZE),
@@ -162,7 +162,7 @@ def create_input_fn(dataset_dir):
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
 
 
-def create_test_input_fn(dataset_dir):
-    return create_dataset_test_input_fn(
+def create_predict_input_fn(dataset_dir):
+    return create_dataset_predict_input_fn(
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
 

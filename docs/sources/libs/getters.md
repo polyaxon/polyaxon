@@ -82,7 +82,7 @@ get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=Non
 
 
 ```python
-get_graph_fn(config)
+get_graph_fn(config, graph_class=None)
 ```
 
 

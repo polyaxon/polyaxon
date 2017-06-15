@@ -7,7 +7,7 @@ import tensorflow as tf
 
 from tensorflow.python.training import moving_averages
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.libs.template_module import BaseLayer
 from polyaxon.libs.utils import get_shape, track
 from polyaxon.variables import variable
@@ -19,7 +19,7 @@ class BatchNormalization(BaseLayer):
     Normalize activations of the previous layer at each batch.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         beta: `float`. Default: 0.0.
         gamma: `float`. Default: 1.0.
         epsilon: `float`. Defalut: 1e-5.
@@ -85,7 +85,7 @@ class BatchNormalization(BaseLayer):
                 return tf.identity(mean), tf.identity(variance)
 
         # Retrieve variable managing training mode
-        if self.mode == ModeKeys.TRAIN:
+        if Modes.is_train(self.mode):
             mean, var = update_mean_var()
         else:
             mean, var = moving_mean, moving_variance
@@ -102,7 +102,7 @@ class LocalResponseNormalization(BaseLayer):
     """Local Response Normalization.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         depth_radius: `int`. 0-D.  Half-width of the 1-D normalization window.
             Defaults to 5.
         bias: `float`. An offset (usually positive to avoid dividing by 0).
@@ -146,7 +146,7 @@ class L2Normalization(BaseLayer):
     dimension `dim`.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         dim: `int`. Dimension along which to normalize.
         epsilon: `float`. A lower bound value for the norm. Will use
             `sqrt(epsilon)` as the divisor if `norm < sqrt(epsilon)`.

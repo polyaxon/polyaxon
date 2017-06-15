@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.training import training
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.experiments import summarizer
 from polyaxon.libs import configs, getters
 from polyaxon.libs.configs import OptimizerConfig
@@ -20,10 +20,10 @@ class BaseModel(GraphModule):
     """Base class for models.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         graph_fn: Graph function. Follows the signature:
             * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
         loss_config: An instance of `LossConfig`.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
@@ -71,6 +71,21 @@ class BaseModel(GraphModule):
         else:
             raise ValueError("`{}` must be provided to Model.".format(function_name))
 
+    def _call_graph_fn(self, mode, inputs):
+        """Calls model function with support of 2, 3 or 4 arguments.
+
+        Args:
+            mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+            inputs: `Tensor` or `dict` of tensors
+
+        Raises:
+            TypeError: if the mode does not correspond to the model_type.
+        """
+        if mode in [Modes.GENERATE, Modes.ENCODE] and self.model_type != self.Types.GENERATOR:
+            raise TypeError("Current model type `{}` does not support passed mode `{}`.".format(
+                self.model_type, mode))
+        return self._graph_fn(mode=mode, inputs=inputs)
+
     def _clip_gradients_fn(self, grads_and_vars):
         """Clips gradients by global norm."""
         gradients, variables = zip(*grads_and_vars)
@@ -108,7 +123,7 @@ class BaseModel(GraphModule):
 
         return optimizer
 
-    def _build_summary_op(self, results=None, generated=None, features=None, labels=None):
+    def _build_summary_op(self, results=None, features=None, labels=None):
         """Builds summaries for this model.
 
         The summaries are one value (or more) of:
@@ -129,11 +144,11 @@ class BaseModel(GraphModule):
             elif summary == summarizer.SummaryOptions.LEARNING_RATE:
                 summary_op += summarizer.add_learning_rate_summaries()
             elif summary == summarizer.SummaryOptions.IMAGE_INPUT:
-                summary_op += summarizer.add_image_summary(features, op_name='inputs')
+                summary_op += summarizer.add_image_summary(tf.reshape(features, [-1, 28, 28, 1]),
+                                                           op_name='inputs')
             elif summary == summarizer.SummaryOptions.IMAGE_RESULT:
-                summary_op += summarizer.add_image_summary(results, op_name='results')
-            elif summary == summarizer.SummaryOptions.IMAGE_GENERATED:
-                summary_op += summarizer.add_image_summary(generated, op_name='generated')
+                summary_op += summarizer.add_image_summary(tf.reshape(results, [-1, 28, 28, 1]),
+                                                           op_name='results')
 
         if summary_op:
             tf.summary.merge(summary_op)
@@ -231,18 +246,18 @@ class BaseModel(GraphModule):
         """Build the different operation of the model."""
         # Pre-process features and labels
         features, labels = self._preprocess(self.mode, features, labels)
-        results = self._graph_fn(mode=self.mode, inputs=features)
+        results = self._call_graph_fn(mode=self.mode, inputs=features)
 
         loss = None
         train_op = None
         eval_metrics = None
-        if self.mode == ModeKeys.PREDICT:
+        if Modes.is_infer(self.mode):
             predictions = self._build_predictions(results=results, features=features, labels=labels)
         else:
             losses, loss = self._build_loss(results, features, labels)
             eval_metrics = self._build_eval_metrics(results, features, labels)
 
-            if self.mode == ModeKeys.TRAIN:
+            if Modes.is_train(self.mode):
                 train_op = self._build_train_op(loss)
                 self._build_summary_op(results=results, features=features, labels=labels)
 

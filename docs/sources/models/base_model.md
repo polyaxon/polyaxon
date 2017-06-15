@@ -8,10 +8,10 @@ polyaxon.models.base.BaseModel(mode, model_type, graph_fn, loss_config, optimize
 Base class for models.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __graph_fn__: Graph function. Follows the signature:
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
 	- __loss_config__: An instance of `LossConfig`.
 	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
@@ -55,7 +55,7 @@ Creates the optimizer
 
 
 ```python
-_build_summary_op(self, results=None, generated=None, features=None, labels=None)
+_build_summary_op(self, results=None, features=None, labels=None)
 ```
 
 

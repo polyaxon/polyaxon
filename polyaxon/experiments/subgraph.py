@@ -17,14 +17,14 @@ class SubGraph(GraphModule):
     """The `SubGraph` is a class that represents the flow of layers.
 
     Args:
-        mode: `str`. Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`. Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`. The name of this subgraph, used for creating the scope.
         modules: `list`.  The modules to connect inside this subgraph, e.g. layers
         features: `list`. The list of features keys to extract and use in this subgraph.
             If `None`, all features will be used.
     """
     def __init__(self, mode, modules, name='Subgraph', features=None):
-        super(SubGraph, self).__init__(mode, name, self.ModuleType.SUBGRAPH)
+        super(SubGraph, self).__init__(mode=mode, name=name, module_type=self.ModuleType.SUBGRAPH)
 
         wrong_modules = []
         for i, m in enumerate(modules):

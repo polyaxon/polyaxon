@@ -9,7 +9,7 @@ import tensorflow as tf
 from tensorflow.python.framework import dtypes
 from tensorflow.python.ops import standard_ops
 
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.libs import getters
 from polyaxon.libs.template_module import BaseLayer
 from polyaxon.libs.utils import get_shape, track, validate_dtype
@@ -27,7 +27,7 @@ class FullyConnected(BaseLayer):
     prior to the initial matrix multiply by `weights`.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`).
             Default: 'linear'.
@@ -137,7 +137,7 @@ class Dropout(BaseLayer):
     will be kept or not kept together.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         keep_prob : A float representing the probability that each element
             is kept.
         noise_shape : A 1-D Tensor of type int32, representing the shape for
@@ -181,7 +181,7 @@ class Dropout(BaseLayer):
                 return tf.nn.dropout(x=inference, keep_prob=_keep_prob,
                                      noise_shape=self.noise_shape, seed=self.seed)
 
-        if self.mode == ModeKeys.TRAIN:
+        if Modes.is_train(self.mode):
             inference = apply_dropout()
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return inference
@@ -210,7 +210,7 @@ class GaussianNoise(BaseLayer):
         self.seed = seed
 
     def _build(self, incoming, *args, **kwargs):
-        if self.mode == ModeKeys.TRAIN:
+        if Modes.is_train(self.mode):
             incoming = validate_dtype(incoming)
             input_shape = get_shape(incoming)
             x = incoming + self.scale * tf.random_normal(
@@ -226,7 +226,7 @@ class Reshape(BaseLayer):
     A layer that reshape the incoming layer tensor output to the desired shape.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         new_shape: A list of `int`. The desired shape.
         name: A name for this layer (optional).
     """
@@ -252,7 +252,7 @@ class Flatten(BaseLayer):
     """Flatten the incoming Tensor.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: A name for this layer (optional).
     """
     def __init__(self, mode, name='Flatten'):
@@ -278,7 +278,7 @@ class SingleUnit(BaseLayer):
     """Adds a Single Unit Layer.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         activation: `str` (name) or `function`. Activation applied to this layer. Default: 'linear'.
         bias: `bool`. If True, a bias is used.
         trainable: `bool`. If True, weights will be trainable.
@@ -351,7 +351,7 @@ class Highway(BaseLayer):
     [https://github.com/fomorians/highway-fcn](https://github.com/fomorians/highway-fcn).
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_units: `int`, number of units for this layer.
         activation: `str` (name) or `function` (returning a `Tensor`).
             Default: 'linear'.
@@ -470,7 +470,7 @@ class OneHotEncoding(BaseLayer):
     """Transform numeric labels into one hot labels using `tf.one_hot`.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         n_classes: `int`. Total number of classes.
         on_value: `scalar`. A scalar defining the on-value.
         off_value: `scalar`. A scalar defining the off-value.
@@ -505,7 +505,7 @@ class Slice(BaseLayer):
     the location specified by begin.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`. A name for this layer (optional).
     """
     def __init__(self, mode, begin, size, name='Slice'):
@@ -548,7 +548,7 @@ class Merge(BaseLayer):
         specified, check below for the different options.
 
         Args:
-            mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+            mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
             modules: the modules to merge.
             merge_mode: `str`. Merging mode, value in `MERGE_MODE`
             axis: `int`. Represents the axis to use for merging mode.

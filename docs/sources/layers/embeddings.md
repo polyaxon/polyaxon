@@ -8,7 +8,7 @@ polyaxon.layers.embedding.Embedding(mode, input_dim, output_dim, validate_indice
 Embedding layer for a sequence of integer ids or floats.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __input_dim__: list of `int`. Vocabulary size (number of ids).
 	- __output_dim__: list of `int`. Embedding size.
 	- __validate_indices__: `bool`. Whether or not to validate gather indices.

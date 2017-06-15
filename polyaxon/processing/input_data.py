@@ -3,10 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from tensorflow.python.estimator.inputs.inputs import numpy_input_fn, pandas_input_fn
-
 from polyaxon.libs import getters
 from polyaxon.libs.configs import InputDataConfig
+from polyaxon.processing.input_fn import numpy_input_fn, pandas_input_fn
 
 
 def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=None, y=None):
@@ -15,7 +14,7 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
     featurizer to ensure that everything will be created in  the same graph.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         pipeline_config: the configuration to create a Pipeline instance.
         scope: `str`. scope to use for this input data block.
         input_type: `str`. The type of the input, values: `NUMPY`, `PANDAS`.

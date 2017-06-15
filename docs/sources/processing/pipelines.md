@@ -10,7 +10,7 @@ An InputPipeline defines how data is read, parsed, and separated into
 features and labels.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: `str`, name to give for this pipeline.
 	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed.
 	- __shuffle__: If true, shuffle the data.
@@ -31,7 +31,7 @@ An InputPipeline defines how data is read, parsed, and separated into
 features and labels.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: `str`, name to give for this pipeline.
 	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
 	- __shuffle__: If true, shuffle the data.
@@ -50,7 +50,7 @@ polyaxon.processing.pipelines.ParallelTextPipeline(mode, name='ParallelTextPipel
 An input pipeline that reads two parallel (line-by-line aligned) text files.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: `str`, name to give for this pipeline.
 	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
 	- __shuffle__: If true, shuffle the data.
@@ -76,7 +76,7 @@ polyaxon.processing.pipelines.TFRecordSourceSequencePipeline(mode, name='TFRecor
 An input pipeline that reads a TFRecords containing both source and target sequences.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: `str`, name to give for this pipeline.
 	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
 	- __shuffle__: If true, shuffle the data.
@@ -102,7 +102,7 @@ polyaxon.processing.pipelines.ImageCaptioningPipeline(mode, name='ImageCaptionin
 An input pipeline that reads a TFRecords containing both source and target sequences.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __name__: `str`, name to give for this pipeline.
 	- __subgraphs_by_features__: `dict`, list of modules to call for each feature to be processed
 	- __shuffle__: If true, shuffle the data.

@@ -30,7 +30,7 @@ class Conv2d(BaseLayer):
     the convolution operation.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_filter: `int`. The number of convolutional filters.
         filter_size: `int` or `list of int`. Size of filters.
         strides: 'int` or list of `int`. Strides of conv operation.
@@ -127,7 +127,7 @@ class Conv2dTranspose(BaseLayer):
     deconvolution.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_filter: `int`. The number of convolutional filters.
         filter_size: `int` or `list of int`. Size of filters.
         output_shape: `list of int`. Dimensions of the output tensor.
@@ -257,7 +257,7 @@ class MaxPool2d(BaseLayer, Pool2dMixin):
     """Adds Max Pooling 2D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         kernel_size: 'int` or `list of int`. Pooling kernel size.
         strides: 'int` or `list of int`. Strides of conv operation.
             Default: SAME as kernel_size.
@@ -286,7 +286,7 @@ class AvgPool2d(BaseLayer, Pool2dMixin):
     """Adds Average Pooling 2D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         kernel_size: 'int` or `list of int`. Pooling kernel size.
         strides: 'int` or `list of int`. Strides of conv operation.
             Default: SAME as kernel_size.
@@ -315,7 +315,7 @@ class Upsample2d(BaseLayer):
     """Adds UpSample 2D operation.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         kernel_size: 'int` or `list of int`. Upsampling kernel size.
         name: A name for this layer (optional). Default: 'UpSample2D'.
     """
@@ -350,7 +350,7 @@ class Upscore(BaseLayer):
     The upscore layer is initialized as bilinear upsampling filter.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_classes: `int`. Number of output feature maps.
         shape: `list of int`. Dimension of the output map
             [batch_size, new height, new width]. For convinience four values
@@ -437,7 +437,7 @@ class Conv1d(BaseLayer):
     """Adds a Convolution 1D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_filter: `int`. The number of convolutional filters.
         filter_size: 'int` or `list of int`. Size of filters.
         strides: 'int` or `list of int`. Strides of conv operation.
@@ -558,7 +558,7 @@ class MaxPool1d(BaseLayer, Pool1dMixin):
     """Adds Max Pooling 1D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         kernel_size: `int` or `list of int`. Pooling kernel size.
         strides: `int` or `list of int`. Strides of conv operation.
             Default: SAME as kernel_size.
@@ -587,7 +587,7 @@ class AvgPool1d(BaseLayer, Pool1dMixin):
     """Average Pooling 1D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         kernel_size: `int` or `list of int`. Pooling kernel size.
         strides: `int` or `list of int`. Strides of conv operation.
             Default: SAME as kernel_size.
@@ -616,7 +616,7 @@ class Conv3d(BaseLayer):
     """Adds Convolution 3D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_filter: `int`. The number of convolutional filters.
         filter_size: `int` or `list of int`. Size of filters.
         strides: 'int` or list of `int`. Strides of conv operation.
@@ -716,7 +716,7 @@ class Conv3dTranspose(BaseLayer):
     deconvolution.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_filter: `int`. The number of convolutional filters.
         filter_size: `int` or `list of int`. Size of filters.
         output_shape: `list of int`. Dimensions of the output tensor.
@@ -848,7 +848,7 @@ class MaxPool3d(BaseLayer, Pool3dMixin):
     """Max Pooling 3D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         kernel_size: 'int` or `list of int`. Pooling kernel size.
             Must have kernel_size[0] = kernel_size[1] = 1
         strides: 'int` or `list of int`. Strides of conv operation.
@@ -879,7 +879,7 @@ class AvgPool3d(BaseLayer, Pool3dMixin):
     """Average Pooling 3D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         kernel_size: 'int` or `list of int`. Pooling kernel size.
             Must have kernel_size[0] = kernel_size[1] = 1
         strides: 'int` or `list of int`. Strides of conv operation.
@@ -922,7 +922,7 @@ class GlobalMaxPool(BaseLayer, GlobalPoolMixin):
     """Adds a Global Max Pooling.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: A name for this layer (optional). Default: 'GlobalMaxPool'.
     """
     def __init__(self, mode, name='GlobalMaxPool'):
@@ -943,7 +943,7 @@ class GlobalAvgPool(BaseLayer, GlobalPoolMixin):
     """Adds a Global Average Pooling.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         name: A name for this layer (optional). Default: 'GlobalAvgPool'.
     """
     def __init__(self, mode, name='GlobalAvgPool'):
@@ -967,7 +967,7 @@ class ResidualBlock(BaseLayer):
     Full pre-activation architecture is used here.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_blocks: `int`. Number of layer blocks.
         out_channels: `int`. The number of convolutional filters of the
             convolution layers.
@@ -1089,7 +1089,7 @@ class ResidualBottleneck(BaseLayer):
     paper. Full pre-activation architecture is used here.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_blocks: `int`. Number of layer blocks.
         bottleneck_size: `int`. The number of convolutional filter of the
             bottleneck convolutional layer.
@@ -1219,7 +1219,7 @@ class HighwayConv2d(BaseLayer):
     """Adds a Highway Convolution 2D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_filter: `int`. The number of convolutional filters.
         filter_size: 'int` or `list of int`. Size of filters.
         strides: 'int` or `list of int`. Strides of conv operation.
@@ -1335,7 +1335,7 @@ class HighwayConv1d(BaseLayer):
     """Adds a Highway Convolution 1D.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         num_filter: `int`. The number of convolutional filters.
         filter_size: 'int` or `list of int`. Size of filters.
         strides: 'int` or `list of int`. Strides of conv operation.

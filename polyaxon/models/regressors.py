@@ -13,10 +13,10 @@ class Regressor(BaseModel):
     """Regressor base model.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         graph_fn: Graph function. Follows the signature:
             * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
         loss_config: An instance of `LossConfig`. Default value `mean_squared_error`.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.

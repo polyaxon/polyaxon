@@ -8,15 +8,15 @@ from polyaxon.datasets import mnist
 
 
 def create_experiment_json_fn(output_dir):
-    """Creates an auto encoder on MNIST handwritten digits.
+    """Creates a variational auto encoder on MNIST handwritten digits.
 
     inks:
         * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
     """
     dataset_dir = './data/mnist'
     mnist.prepare(dataset_dir)
-    train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.TRAIN)
-    eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.ModeKeys.EVAL)
+    train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.TRAIN)
+    eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.EVAL)
     meta_data_file = mnist.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     config = {
@@ -54,7 +54,7 @@ def create_experiment_json_fn(output_dir):
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
             'module': 'Generator',
-            'summaries': ['loss'],
+            'summaries': ['loss', 'image_input', 'image_result', 'image_generated'],
             'optimizer_config': {'module': 'adadelta', 'learning_rate': 0.9},
             'encoder_config': {
                 'definition': [

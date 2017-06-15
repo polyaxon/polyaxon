@@ -1,22 +1,3 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L255)</span>
-## SubGraphConfig
-
-```python
-polyaxon.libs.configs.SubGraphConfig(modules, kwargs, features=None)
-```
-
-The configuration used to create subgraphs.
-
-Handles also nested subgraphs.
-
-- __Args__:
-	- __name__: `str`. The name of this subgraph, used for creating the scope.
-	- __modules__: `list`.  The modules to connect inside this subgraph, e.g. layers
-	- __kwargs__: `list`. the list key word args to call each method with.
-
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L205)</span>
 ## MetricConfig
 
@@ -29,35 +10,6 @@ The MetricConfig holds information needed to create a `Metric`.
 - __Args__:
 	- __module__: `str`, name to give for the metric.
 	- __params__: `dict`, extra information to pass to the metric.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L217)</span>
-## OptimizerConfig
-
-```python
-polyaxon.libs.configs.OptimizerConfig(module, learning_rate=0.0001, decay_type='', decay_steps=100, decay_rate=0.99, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, sync_replicas=0, sync_replicas_to_aggregate=0, params=None)
-```
-
-The OptimizerConfig holds information needed to create a `Optimizer`.
-
-- __Args__:
-	- __module__: `str`, optimizer optimizer to use.
-	- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
-	- __decay_steps__: How often to apply decay.
-	- __decay_rate__: A Python number. The decay rate.
-	- __start_decay_at__: Don't decay before this step
-	- __stop_decay_at__: Don't decay after this step
-	- __min_learning_rate__: Don't decay below this number
-	- __decay_type__: A decay function name defined in `tf.train`
-		possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
-				 piecewise_constant, polynomial_decay.
-	- __staircase__: Whether to apply decay in a discrete staircase,
-		as opposed to continuous, fashion.
-	- __sync_replicas__:
-	- __sync_replicas_to_aggregate__:
-	- __params__: `dict`, extra information to pass to the optimizer.
 
 
 ----
@@ -131,7 +83,7 @@ polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=F
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L365)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L359)</span>
 ## EstimatorConfig
 
 ```python
@@ -162,7 +114,56 @@ A configurable class reads a configuration (YAML, Json) and create a config inst
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L297)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L217)</span>
+## OptimizerConfig
+
+```python
+polyaxon.libs.configs.OptimizerConfig(module, learning_rate=0.0001, decay_type='', decay_steps=100, decay_rate=0.99, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, sync_replicas=0, sync_replicas_to_aggregate=0, params=None)
+```
+
+The OptimizerConfig holds information needed to create a `Optimizer`.
+
+- __Args__:
+	- __module__: `str`, optimizer optimizer to use.
+	- __learning_rate__: A Tensor or a floating point value. The learning rate to use.
+	- __decay_steps__: How often to apply decay.
+	- __decay_rate__: A Python number. The decay rate.
+	- __start_decay_at__: Don't decay before this step
+	- __stop_decay_at__: Don't decay after this step
+	- __min_learning_rate__: Don't decay below this number
+	- __decay_type__: A decay function name defined in `tf.train`
+		possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
+				 piecewise_constant, polynomial_decay.
+	- __staircase__: Whether to apply decay in a discrete staircase,
+		as opposed to continuous, fashion.
+	- __sync_replicas__:
+	- __sync_replicas_to_aggregate__:
+	- __params__: `dict`, extra information to pass to the optimizer.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L255)</span>
+## SubGraphConfig
+
+```python
+polyaxon.libs.configs.SubGraphConfig(modules, kwargs, features=None, module=None)
+```
+
+The configuration used to create subgraphs.
+
+Handles also nested subgraphs.
+
+- __Args__:
+	- __name__: `str`. The name of this subgraph, used for creating the scope.
+	- __modules__: `list`.  The modules to connect inside this subgraph, e.g. layers
+	- __features__: `list`. The list of features to use for this subgraph.
+	- __module__: `str`. The Subgraph module to use. e.g.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L299)</span>
 ## BridgeConfig
 
 ```python
@@ -175,7 +176,7 @@ The BridgeConfig class holds information neede to create a `Bridge` for a genera
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L307)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L309)</span>
 ## ModelConfig
 
 ```python
@@ -197,7 +198,7 @@ The ModelConfig holds information needed to create a `Model`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L395)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L389)</span>
 ## ExperimentConfig
 
 ```python

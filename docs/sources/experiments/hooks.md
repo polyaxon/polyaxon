@@ -29,36 +29,6 @@ Saves summaries every N steps.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L157)</span>
-## FinalOpsHook
-
-```python
-polyaxon.experiments.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
-```
-
-A run hook which evaluates `Tensors` at the end of a session.
-(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
-
-- __Args__:
-	- __final_ops__: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
-	- __final_ops_feed_dict__: A feed dictionary to use when running `final_ops_dict`.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L85)</span>
-## StepCounterHook
-
-```python
-polyaxon.experiments.hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
-```
-
-Steps per second monitor.
-(A mirror to tensorflow.python.training.basic_session_run_hooks CheckpointSaverHook.)
-
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L33)</span>
 ## StopAtStepHook
 
@@ -88,63 +58,52 @@ call.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L140)</span>
-## GlobalStepWaiterHook
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L95)</span>
+## NanTensorHook
 
 ```python
-polyaxon.experiments.hooks.GlobalStepWaiterHook(wait_until_step)
+polyaxon.experiments.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
 ```
 
-Delay execution until global step reaches to wait_until_step.
+NaN Loss monitor.
+(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
+
+Monitors loss and stops training if loss is NaN.
+Can either fail with exception or just stop training.
+
+- __Args__:
+	- __loss_tensor__: `Tensor`, the loss tensor.
+	- __fail_on_nan_loss__: `bool`, whether to raise exception when loss is NaN.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L157)</span>
+## FinalOpsHook
+
+```python
+polyaxon.experiments.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
+```
+
+A run hook which evaluates `Tensors` at the end of a session.
 (A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
 
-This hook delays execution until global step reaches to `wait_until_step`. It
-is used to gradually start workers in distributed settings. One example usage
-would be setting `wait_until_step=int(K*log(task_id+1))` assuming that
-task_id=0 is the chief.
-
 - __Args__:
-	- __wait_until_step__: an `int` shows until which global step should we wait.
+	- __final_ops__: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
+	- __final_ops_feed_dict__: A feed dictionary to use when running `final_ops_dict`.
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L170)</span>
-## StopAfterNEvalsHook
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L85)</span>
+## StepCounterHook
 
 ```python
-polyaxon.experiments.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
+polyaxon.experiments.hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
 ```
 
-Run hook used by the evaluation routines to run the `eval_ops` N times.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L8)</span>
-## LoggingTensorHook
-
-```python
-polyaxon.experiments.hooks.LoggingTensorHook(tensors, every_n_iter=None, every_n_secs=None, formatter=None)
-```
-
-Prints the given tensors once every N local steps or once every N seconds.
-(A mirror to tensorflow.python.training.basic_session_run_hooks LoggingTensorHook.)
-
-The tensors will be printed to the log, with `INFO` severity.
-
-- __Args__:
-	- __tensors__: `dict` that maps string-valued tags to tensors/tensor names,
-		or `iterable` of tensors/tensor names.
-	- __every_n_iter__: `int`, print the values of `tensors` once every N local
-		steps taken on the current worker.
-	- __every_n_secs__: `int` or `float`, print the values of `tensors` once every N
-		seconds. Exactly one of `every_n_iter` and `every_n_secs` should be
-		provided.
-	- __formatter__: function, takes dict of `tag`->`Tensor` and returns a string.
-		If `None` uses default printing all tensors.
-
-- __Raises__:
-	- __ValueError__: if `every_n_iter` is non-positive.
+Steps per second monitor.
+(A mirror to tensorflow.python.training.basic_session_run_hooks CheckpointSaverHook.)
 
 
 ----
@@ -178,19 +137,60 @@ Saves checkpoints every N steps or seconds.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L95)</span>
-## NanTensorHook
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L8)</span>
+## LoggingTensorHook
 
 ```python
-polyaxon.experiments.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
+polyaxon.experiments.hooks.LoggingTensorHook(tensors, every_n_iter=None, every_n_secs=None, formatter=None)
 ```
 
-NaN Loss monitor.
-(A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
+Prints the given tensors once every N local steps or once every N seconds.
+(A mirror to tensorflow.python.training.basic_session_run_hooks LoggingTensorHook.)
 
-Monitors loss and stops training if loss is NaN.
-Can either fail with exception or just stop training.
+The tensors will be printed to the log, with `INFO` severity.
 
 - __Args__:
-	- __loss_tensor__: `Tensor`, the loss tensor.
-	- __fail_on_nan_loss__: `bool`, whether to raise exception when loss is NaN.
+	- __tensors__: `dict` that maps string-valued tags to tensors/tensor names,
+		or `iterable` of tensors/tensor names.
+	- __every_n_iter__: `int`, print the values of `tensors` once every N local
+		steps taken on the current worker.
+	- __every_n_secs__: `int` or `float`, print the values of `tensors` once every N
+		seconds. Exactly one of `every_n_iter` and `every_n_secs` should be
+		provided.
+	- __formatter__: function, takes dict of `tag`->`Tensor` and returns a string.
+		If `None` uses default printing all tensors.
+
+- __Raises__:
+	- __ValueError__: if `every_n_iter` is non-positive.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L170)</span>
+## StopAfterNEvalsHook
+
+```python
+polyaxon.experiments.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
+```
+
+Run hook used by the evaluation routines to run the `eval_ops` N times.
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L140)</span>
+## GlobalStepWaiterHook
+
+```python
+polyaxon.experiments.hooks.GlobalStepWaiterHook(wait_until_step)
+```
+
+Delay execution until global step reaches to wait_until_step.
+(A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
+
+This hook delays execution until global step reaches to `wait_until_step`. It
+is used to gradually start workers in distributed settings. One example usage
+would be setting `wait_until_step=int(K*log(task_id+1))` assuming that
+task_id=0 is the chief.
+
+- __Args__:
+	- __wait_until_step__: an `int` shows until which global step should we wait.

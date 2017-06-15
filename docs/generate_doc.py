@@ -27,6 +27,8 @@ from polyaxon.datasets.converters import (
 from polyaxon.experiments import estimator, experiment, hooks, subgraph, summarizer
 from polyaxon import models
 from polyaxon import bridges
+from polyaxon import encoders
+from polyaxon import decoders
 from polyaxon.layers import convolutional, core, embedding, normalizations, recurrent
 from polyaxon.libs import configs, getters, utils
 from polyaxon.processing import (
@@ -216,6 +218,24 @@ PAGES = [
     {
         'page': 'bridges/bridges.md',
         'classes': [bridges.NoOpBridge, bridges.LatentBridge]
+    },
+    # Encoders
+    {
+        'page': 'encoders/encoder.md',
+        'classes': [encoders.Encoder],
+        'classes_functions': [
+            encoders.Encoder._build,
+            encoders.Encoder.encode,
+        ]
+    },
+    # Decoders
+    {
+        'page': 'decoders/decoder.md',
+        'classes': [decoders.Decoder],
+        'classes_functions': [
+            decoders.Decoder._build,
+            decoders.Decoder.decode,
+        ]
     },
 
     # Processing

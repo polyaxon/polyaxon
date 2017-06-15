@@ -16,7 +16,7 @@ from tensorflow.contrib.learn.python.learn.estimators.estimator import _get_repl
 from tensorflow.core.framework import summary_pb2
 from tensorflow.core.protobuf import config_pb2
 from tensorflow.python.client import session as tf_session
-from tensorflow.python.estimator import model_fn as model_fn_lib
+from tensorflow.python.estimator.model_fn import EstimatorSpec, MetricKeys
 from tensorflow.python.estimator.export.export import (build_all_signature_defs,
                                                        get_timestamped_export_dir)
 from tensorflow.python.framework import ops, random_seed
@@ -34,7 +34,7 @@ from tensorflow.python.training.session_run_hook import SessionRunHook
 from tensorflow.python.util import compat
 
 from polyaxon.experiments import hooks as plx_hooks
-from polyaxon import ModeKeys
+from polyaxon import Modes
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.dicts import dict_to_str
 from polyaxon.libs.exceptions import EstimatorNotTrainedError
@@ -52,10 +52,10 @@ class Estimator(object):
                 * `features`: single `Tensor` or `dict` of `Tensor`s
                      (depending on data passed to `fit`),
                 * `labels`: `Tensor` or `dict` of `Tensor`s (for multi-head models).
-                    If mode is `ModeKeys.PREDICT`, `labels=None` will be passed.
+                    If mode is `Modes.PREDICT`, `labels=None` will be passed.
                     If the `model_fn`'s signature does not accept `mode`,
                     the `model_fn` must still be able to handle `labels=None`.
-                * `mode`: Specifies if this training, evaluation or prediction. See `ModeKeys`.
+                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `params`: Optional `dict` of hyperparameters.  Will receive what
                     is passed to Estimator in `params` parameter. This allows
                     to configure Estimators from hyper parameter tuning.
@@ -176,7 +176,7 @@ class Estimator(object):
         Args:
             features: features dict.
             labels: labels dict.
-            mode: ModeKeys
+            mode: Modes
 
         Returns:
             A `ModelFnOps` object.
@@ -195,7 +195,7 @@ class Estimator(object):
             kwargs['config'] = self.config
         model_fn_results = self._model_fn(features=features, labels=labels, **kwargs)
 
-        if not isinstance(model_fn_results, model_fn_lib.EstimatorSpec):
+        if not isinstance(model_fn_results, EstimatorSpec):
             raise ValueError('model_fn should return an EstimatorSpec.')
 
         return model_fn_results
@@ -253,7 +253,7 @@ class Estimator(object):
             estimator_spec = self._call_model_fn(
                 features=serving_input_receiver.features,
                 labels=None,
-                mode=model_fn_lib.ModeKeys.PREDICT)
+                mode=Modes.PREDICT)
 
             # Build the SignatureDefs from receivers and all outputs
             signature_def_map = build_all_signature_defs(
@@ -406,10 +406,11 @@ class Estimator(object):
         return self._evaluate_model(
             input_fn=input_fn, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
 
-    def predict(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
-        """Returns predictions for given features.
+    def _infer(self, mode, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
+        """Returns predictions for given features given an inference mode.
 
         Args:
+            mode: The inference to use, possible values: PREDICT, GENERATE, ENCODE.
             input_fn: Input function returning features which is a dictionary of
                 string feature name to `Tensor` or `SparseTensor`. If it returns a
                 tuple, first item is extracted as features. Prediction continues until
@@ -443,7 +444,7 @@ class Estimator(object):
             random_seed.set_random_seed(self._config.tf_random_seed)
             training.get_or_create_global_step(g)
             features = self._get_features_from_input_fn(input_fn)
-            estimator_spec = self._call_model_fn(features, None, ModeKeys.PREDICT)
+            estimator_spec = self._call_model_fn(features, None, mode)
             predictions = self._extract_keys(estimator_spec.predictions, predict_keys)
             with monitored_session.MonitoredSession(
                     session_creator=monitored_session.ChiefSessionCreator(
@@ -459,6 +460,93 @@ class Estimator(object):
                     else:
                         for i in xrange(extract_batch_length(preds_evaluated)):
                             yield {key: value[i] for key, value in six.iteritems(preds_evaluated)}
+
+    def predict(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
+        """Returns predictions for given features with `PREDICT` mode.
+
+        Args:
+            input_fn: Input function returning features which is a dictionary of
+                string feature name to `Tensor` or `SparseTensor`. If it returns a
+                tuple, first item is extracted as features. Prediction continues until
+                `input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
+            predict_keys: list of `str`, name of the keys to predict. It is used if
+                the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
+                of the predictions will be filtered from the dictionary. If `None`, returns all.
+            hooks: List of `SessionRunHook` subclass instances. Used for callbacks
+                inside the prediction call.
+            checkpoint_path: Path of a specific checkpoint to predict. If `None`, the
+                latest checkpoint in `model_dir` is used.
+
+        Yields:
+            Evaluated values of `predictions` tensors.
+
+        Raises:
+            ValueError: Could not find a trained model in model_dir.
+            ValueError: if batch length of predictions are not same.
+            ValueError: If there is a conflict between `predict_keys` and `predictions`.
+                For example if `predict_keys` is not `None`
+                but `EstimatorSpec.predictions` is not a `dict`.
+        """
+        return self._infer(Modes.PREDICT, input_fn=input_fn, predict_keys=predict_keys, hooks=hooks,
+                           checkpoint_path=checkpoint_path)
+
+    def generate(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
+        """Returns predictions for given features with `GENERATE` mode.
+
+        Args:
+            input_fn: Input function returning features which is a dictionary of
+                string feature name to `Tensor` or `SparseTensor`. If it returns a
+                tuple, first item is extracted as features. Prediction continues until
+                `input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
+            predict_keys: list of `str`, name of the keys to predict. It is used if
+                the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
+                of the predictions will be filtered from the dictionary. If `None`, returns all.
+            hooks: List of `SessionRunHook` subclass instances. Used for callbacks
+                inside the prediction call.
+            checkpoint_path: Path of a specific checkpoint to predict. If `None`, the
+                latest checkpoint in `model_dir` is used.
+
+        Yields:
+            Evaluated values of `predictions` tensors.
+
+        Raises:
+            ValueError: Could not find a trained model in model_dir.
+            ValueError: if batch length of predictions are not same.
+            ValueError: If there is a conflict between `predict_keys` and `predictions`.
+                For example if `predict_keys` is not `None`
+                but `EstimatorSpec.predictions` is not a `dict`.
+        """
+        return self._infer(Modes.GENERATE, input_fn=input_fn, predict_keys=predict_keys,
+                           hooks=hooks, checkpoint_path=checkpoint_path)
+
+    def encode(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
+        """Returns predictions for given features with `ENCODE` mode.
+
+        Args:
+            input_fn: Input function returning features which is a dictionary of
+                string feature name to `Tensor` or `SparseTensor`. If it returns a
+                tuple, first item is extracted as features. Prediction continues until
+                `input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
+            predict_keys: list of `str`, name of the keys to predict. It is used if
+                the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
+                of the predictions will be filtered from the dictionary. If `None`, returns all.
+            hooks: List of `SessionRunHook` subclass instances. Used for callbacks
+                inside the prediction call.
+            checkpoint_path: Path of a specific checkpoint to predict. If `None`, the
+                latest checkpoint in `model_dir` is used.
+
+        Yields:
+            Evaluated values of `predictions` tensors.
+
+        Raises:
+            ValueError: Could not find a trained model in model_dir.
+            ValueError: if batch length of predictions are not same.
+            ValueError: If there is a conflict between `predict_keys` and `predictions`.
+                For example if `predict_keys` is not `None`
+                but `EstimatorSpec.predictions` is not a `dict`.
+        """
+        return self._infer(Modes.ENCODE, input_fn=input_fn, predict_keys=predict_keys, hooks=hooks,
+                           checkpoint_path=checkpoint_path)
 
     def get_variable_value(self, name):
         """Returns value of the variable given by name.
@@ -530,7 +618,7 @@ class Estimator(object):
             random_seed.set_random_seed(self._config.tf_random_seed)
             global_step = training.get_or_create_global_step(g)
             features, labels = input_fn()
-            estimator_spec = self._call_model_fn(features, labels, ModeKeys.TRAIN)
+            estimator_spec = self._call_model_fn(features, labels, Modes.TRAIN)
             ops.add_to_collection(ops.GraphKeys.LOSSES, estimator_spec.loss)
             all_hooks.extend([
                 plx_hooks.NanTensorHook(estimator_spec.loss),
@@ -598,13 +686,13 @@ class Estimator(object):
             global_step = training.create_global_step(g)
             features, labels = input_fn()
 
-            estimator_spec = self._call_model_fn(features, labels, ModeKeys.EVAL)
-            if model_fn_lib.MetricKeys.LOSS in estimator_spec.eval_metric_ops:
+            estimator_spec = self._call_model_fn(features, labels, Modes.EVAL)
+            if MetricKeys.LOSS in estimator_spec.eval_metric_ops:
                 raise ValueError("Metric with name `{}` is not allowed, because Estimator "
                                  "already defines a default metric "
-                                 "with the same name.".format(model_fn_lib.MetricKeys.LOSS))
+                                 "with the same name.".format(MetricKeys.LOSS))
             estimator_spec.eval_metric_ops[
-                model_fn_lib.MetricKeys.LOSS] = metrics_lib.streaming_mean(estimator_spec.loss)
+                MetricKeys.LOSS] = metrics_lib.streaming_mean(estimator_spec.loss)
             update_op, eval_dict = self._extract_metric_update_ops(estimator_spec.eval_metric_ops)
 
             if ops.GraphKeys.GLOBAL_STEP in eval_dict:

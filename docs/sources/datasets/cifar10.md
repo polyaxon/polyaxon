@@ -34,9 +34,9 @@ create_input_fn(dataset_dir)
 
 ----
 
-## create_test_input_fn
+## create_predict_input_fn
 
 
 ```python
-create_test_input_fn(dataset_dir)
+create_predict_input_fn(dataset_dir)
 ```

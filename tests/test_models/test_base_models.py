@@ -27,7 +27,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -43,7 +43,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -60,7 +60,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -77,7 +77,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -94,7 +94,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -112,7 +112,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta',
                                                            decay_type='exponential_decay'),
@@ -130,7 +130,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -147,7 +147,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta',
                                                            decay_type='exponential_decay'),
@@ -181,7 +181,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -193,7 +193,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.TRAIN, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
@@ -209,7 +209,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.EVAL, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.EVAL, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           eval_metrics_config=[],
@@ -226,7 +226,7 @@ class TestBaseModel(test.TestCase):
         x = {'x': tf.placeholder(tf.float32, [2, 89])}
         y = tf.constant([[1], [1]])
 
-        model = BaseModel(plx.ModeKeys.PREDICT, graph_fn=self.get_dummy_graph_fn(),
+        model = BaseModel(plx.Modes.PREDICT, graph_fn=self.get_dummy_graph_fn(),
                           loss_config=LossConfig(module='log_loss'),
                           optimizer_config=OptimizerConfig(module='adadelta'),
                           model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],

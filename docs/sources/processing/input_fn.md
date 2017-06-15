@@ -11,7 +11,7 @@ Note that you must pass "factory functions" for both the data provider and
 featurizer to ensure that everything will be created in  the same graph.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `ModeKeys`.
+	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	- __pipeline_config__: the configuration to create a Pipeline instance.
 	- __scope__: `str`. scope to use for this input data block.
 	- __input_type__: `str`. The type of the input, values: `NUMPY`, `PANDAS`.
