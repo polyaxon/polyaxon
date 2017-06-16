@@ -262,7 +262,7 @@ def get_arguments(func):
 
 
 def extract_batch_length(values):
-    """Extracts batch length of predictions."""
+    """Extracts batch length of values."""
     batch_length = None
     for key, value in six.iteritems(values):
         batch_length = batch_length or get_shape(value)[0]

@@ -230,7 +230,7 @@ class BaseModel(GraphModule):
 
     @staticmethod
     def batch_size(features, labels):
-        """Returns the batch size of the curren batch based on the passed features.
+        """Returns the batch size of the current batch based on the passed features.
 
         Args:
             features: The features.

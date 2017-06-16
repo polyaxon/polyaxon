@@ -98,7 +98,6 @@ class Estimator(object):
                 raise ValueError("config must be an instance of RunConfig, "
                                  "received {}.".format(config))
             self._config = config
-        logging.info("Using config: {}".format(vars(self._config)))
 
         if(model_dir is not None) and (self._config.model_dir is not None):
             if model_dir != self._config.model_dir:
@@ -111,6 +110,7 @@ class Estimator(object):
         self._model_dir = model_dir or self._config.model_dir or generate_model_dir()
         if self._config.model_dir is None:
             self._config = self._config.replace(model_dir=self._model_dir)
+        logging.info("Using config: {}".format(vars(self._config)))
 
         if self._config.session_config is None:
             self._session_config = config_pb2.ConfigProto(allow_soft_placement=True)
@@ -203,28 +203,25 @@ class Estimator(object):
     def export_savedmodel(self, export_dir_base, serving_input_receiver_fn, assets_extra=None,
                           as_text=False, checkpoint_path=None):
         """Exports inference graph as a SavedModel into given dir.
-        This method builds a new graph by first calling the
-        serving_input_receiver_fn to obtain feature `Tensor`s, and then calling
-        this `Estimator`'s model_fn to generate the model graph based on those
-        features. It restores the given checkpoint (or, lacking that, the most
-        recent checkpoint) into this graph in a fresh session.  Finally it creates
-        a timestamped export directory below the given export_dir_base, and writes
-        a `SavedModel` into it containing a single `MetaGraphDef` saved from this
+        This method builds a new graph by first calling the serving_input_receiver_fn to
+        obtain feature `Tensor`s, and then calling this `Estimator`'s model_fn
+        to generate the model graph based on those features. It restores the given checkpoint
+        (or, lacking that, the most recent checkpoint) into this graph in a fresh session.
+        Finally it creates a timestamped export directory below the given export_dir_base,
+        and writes a `SavedModel` into it containing a single `MetaGraphDef` saved from this
         session.
-        The exported `MetaGraphDef` will provide one `SignatureDef` for each
-        element of the export_outputs dict returned from the model_fn, named using
-        the same keys.  One of these keys is always
-        signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY, indicating which
-        signature will be served when a serving request does not specify one.
-        For each signature, the outputs are provided by the corresponding
-        `ExportOutput`s, and the inputs are always the input receivers provided by
-        the serving_input_receiver_fn.
-        Extra assets may be written into the SavedModel via the extra_assets
-        argument.  This should be a dict, where each key gives a destination path
-        (including the filename) relative to the assets.extra directory.  The
-        corresponding value gives the full path of the source file to be copied.
-        For example, the simple case of copying a single file without renaming it
-        is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
+        The exported `MetaGraphDef` will provide one `SignatureDef` for each element of the
+        export_outputs dict returned from the model_fn, named using the same keys.
+        One of these keys is always signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY,
+        indicating which signature will be served when a serving request does not specify one.
+        For each signature, the outputs are provided by the corresponding `ExportOutput`s,
+        and the inputs are always the input receivers provided by the serving_input_receiver_fn.
+        Extra assets may be written into the SavedModel via the extra_assets argument.
+        This should be a dict, where each key gives a destination path (including the filename)
+        relative to the assets.extra directory.  The corresponding value gives the full path of
+        the source file to be copied. For example, the simple case of copying a single file without
+        renaming it is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
+
         Args:
             export_dir_base: A string containing a directory in which to create
                 timestamped subdirectories containing exported SavedModels.
@@ -269,16 +266,10 @@ class Estimator(object):
             export_dir = get_timestamped_export_dir(export_dir_base)
 
             with tf_session.Session() as session:
-
-                saver_for_restore = estimator_spec.scaffold.saver or saver.Saver(
-                    sharded=True)
+                saver_for_restore = estimator_spec.scaffold.saver or saver.Saver(sharded=True)
                 saver_for_restore.restore(session, checkpoint_path)
-
-                # pylint: disable=protected-access
                 local_init_op = (estimator_spec.scaffold.local_init_op or
                                  monitored_session.Scaffold._default_local_init_op())
-                # pylint: enable=protected-access
-
                 # Perform the export
                 builder = saved_model_builder.SavedModelBuilder(export_dir)
                 builder.add_meta_graph_and_variables(
@@ -365,15 +356,10 @@ class Estimator(object):
 
         Stop conditions - we evaluate on the given input data until one of the
         following:
-        - If `steps` is provided, and `steps` batches of size `batch_size` are
-        processed.
+        - If `steps` is provided, and `steps` batches of size `batch_size` are processed.
         - If `input_fn` is provided, and it raises an end-of-input
         exception (`OutOfRangeError` or `StopIteration`).
         - If `x` is provided, and all items in `x` have been processed.
-
-        The return value is a dict containing the metrics specified in `metrics`, as
-        well as an entry `global_step` which contains the value of the global step
-        for which this evaluation was performed.
 
         Args:
             input_fn: Input function returning a tuple of:
@@ -385,18 +371,20 @@ class Estimator(object):
             steps: Number of steps for which to evaluate model. If `None`, evaluate
                 until `x` is consumed or `input_fn` raises an end-of-input exception.
                 See "Stop conditions" above for specifics.
-            name: Name of the evaluation if user needs to run multiple evaluations on
-                different data sets, such as on training data vs test data.
             checkpoint_path: Path of a specific checkpoint to evaluate. If `None`,
                 the latest checkpoint in `model_dir` is used.
             hooks: List of `SessionRunHook` subclass instances.
                 Used for callbacks inside the evaluation call.
+            name: Name of the evaluation if user needs to run multiple evaluations on
+                different data sets, such as on training data vs test data.
 
         Raises:
             ValueError: If `metrics` is not `None` or `dict`.
 
         Returns:
-            Returns `dict` with evaluation results.
+            Returns `dict` with evaluation results; the metrics specified in `metrics`, as
+            well as an entry `global_step` which contains the value of the global step
+            for which this evaluation was performed.
         """
         hooks = self._check_hooks(hooks)
         if steps is not None:
@@ -617,7 +605,8 @@ class Estimator(object):
         with self._graph.as_default() as g, g.device(self._device_fn):
             random_seed.set_random_seed(self._config.tf_random_seed)
             global_step = training.get_or_create_global_step(g)
-            features, labels = input_fn()
+            with ops.device('/cpu:0'):
+                features, labels = input_fn()
             estimator_spec = self._call_model_fn(features, labels, Modes.TRAIN)
             ops.add_to_collection(ops.GraphKeys.LOSSES, estimator_spec.loss)
             all_hooks.extend([
