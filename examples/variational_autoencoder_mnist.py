@@ -10,6 +10,8 @@ import polyaxon as plx
 
 from tensorflow.examples.tutorials.mnist import input_data
 
+from polyaxon.libs.utils import total_tensor_depth
+
 
 def create_experiment_json_fn(output_dir, X_train, y_train, X_eval, y_eval):
     """Creates a variational auto encoder on MNIST handwritten digits.
@@ -115,9 +117,9 @@ def main(*args):
     X_train = mnist.train.images.astype('float32') / 255.
     X_eval = mnist.validation.images.astype('float32') / 255.
     X_test = mnist.test.images.astype('float32') / 255.
-    X_train = X_train.reshape((len(X_train), np.prod(X_train.shape[1:])))
-    X_eval = X_eval.reshape((len(X_eval), np.prod(X_eval.shape[1:])))
-    X_test = X_test.reshape((len(X_test), np.prod(X_test.shape[1:])))
+    X_train = X_train.reshape((len(X_train), total_tensor_depth(X_train)))
+    X_eval = X_eval.reshape((len(X_eval), total_tensor_depth(X_eval)))
+    X_test = X_test.reshape((len(X_test), total_tensor_depth(X_test)))
 
     xp = create_experiment_json_fn("/tmp/polyaxon_logs/vae",
                                    {'images': X_train}, mnist.train.labels,

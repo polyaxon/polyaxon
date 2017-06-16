@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon import Modes
 from polyaxon.bridges.base import BaseBridge, BridgeSpec
-from polyaxon.libs import getters
 
 
 class NoOpBridge(BaseBridge):
@@ -18,9 +17,6 @@ class NoOpBridge(BaseBridge):
     """
     def __init__(self, mode, state_size=None, name="NoOpBridge"):
         super(NoOpBridge, self).__init__(mode=mode, state_size=state_size, name=name)
-
-    def _build_loss(self, incoming, results, loss_config, **kwargs):
-        return getters.get_loss(loss_config.module, results, incoming, **loss_config.params)
 
     def _build(self, incoming, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
         losses, loss = None, None

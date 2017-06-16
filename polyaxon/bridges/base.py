@@ -10,6 +10,7 @@ import tensorflow as tf
 
 from polyaxon.decoders.base import DecoderSpec
 from polyaxon.encoders.base import EncoderSpec
+from polyaxon.libs import getters
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import get_shape, get_tensor_batch_size
 
@@ -86,8 +87,7 @@ class BaseBridge(GraphModule):
         return x.output
 
     def _build_loss(self, incoming, results, loss_config, **kwargs):
-        """Subclasses should implement their logic here."""
-        raise NotImplementedError
+        return getters.get_loss(loss_config.module, results, incoming, **loss_config.params)
 
     def _build(self, incoming, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
         """Subclasses should implement their logic here and must return a `BridgeSpec`."""

@@ -277,6 +277,15 @@ def get_tensor_batch_size(values):
     return tf.gather(params=tf.shape(input=values), indices=tf.constant([0]))
 
 
+def total_tensor_depth(tensor=None, tensor_shape=None):
+    """Returns the size of a tensor without the first (batch) dimension"""
+    if tensor is None and tensor_shape is None:
+        raise ValueError('a tensor or a tensor shape is required.')
+    if tensor_shape:
+        return int(np.prod(tensor_shape[1:]))
+    return int(np.prod(get_shape(tensor)[1:]))
+
+
 @contextlib.contextmanager
 def new_attr_context(obj, attr):
     """Creates a new context in which an object's attribute can be changed.
@@ -305,5 +314,6 @@ def new_attr_context(obj, attr):
         yield
     finally:
         setattr(obj, attr, saved)
+
 
 EPSILON = 1e-10

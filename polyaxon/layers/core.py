@@ -12,7 +12,7 @@ from tensorflow.python.ops import standard_ops
 from polyaxon import Modes
 from polyaxon.libs import getters
 from polyaxon.libs.template_module import BaseLayer
-from polyaxon.libs.utils import get_shape, track, validate_dtype
+from polyaxon.libs.utils import get_shape, track, validate_dtype, total_tensor_depth
 from polyaxon.variables import variable
 
 
@@ -90,7 +90,7 @@ class FullyConnected(BaseLayer):
         incoming = validate_dtype(incoming)
 
         assert len(input_shape) > 1, 'Incoming Tensor shape must be at least 2-D'
-        n_inputs = int(np.prod(input_shape[1:]))
+        n_inputs = total_tensor_depth(tensor_shape=input_shape)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable(
@@ -268,7 +268,7 @@ class Flatten(BaseLayer):
         """
         input_shape = get_shape(incoming)
         assert len(input_shape) > 1, 'Incoming Tensor shape must be at least 2-D'
-        dims = int(np.prod(input_shape[1:]))
+        dims = total_tensor_depth(tensor_shape=input_shape)
         x = tf.reshape(tensor=incoming, shape=[-1, dims])
         track(x, tf.GraphKeys.LAYER_TENSOR, self.name)
         return x
@@ -315,7 +315,7 @@ class SingleUnit(BaseLayer):
             1-D Tensor [samples].
         """
         input_shape = get_shape(incoming)
-        n_inputs = int(np.prod(a=input_shape[1:]))
+        n_inputs = total_tensor_depth(tensor_shape=input_shape)
 
         initializer = tf.constant_initializer(value=np.random.randn())
         self._w = variable(name='w', shape=[n_inputs],
@@ -425,7 +425,7 @@ class Highway(BaseLayer):
         self._declare_dependencies()
         input_shape = get_shape(incoming)
         assert len(input_shape) > 1, 'Incoming Tensor shape must be at least 2-D'
-        n_inputs = int(np.prod(input_shape[1:]))
+        n_inputs = total_tensor_depth(tensor_shape=input_shape)
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         initializer = getters.get_initializer(self.weights_init)
