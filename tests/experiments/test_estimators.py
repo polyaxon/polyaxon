@@ -11,7 +11,7 @@ from google.protobuf import text_format
 
 from tensorflow.python.client import session
 from tensorflow.python.estimator import model_fn as model_fn_lib
-from tensorflow.python.estimator.checkpoint_utils import load_variable
+from tensorflow.contrib.framework import load_variable
 from tensorflow.python.estimator.export import export
 from tensorflow.python.estimator.export import export_output
 from tensorflow.python.estimator.inputs import numpy_io

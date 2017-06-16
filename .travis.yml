@@ -5,6 +5,10 @@ python:
   - "2.7"
   - "3.5"
 
+env:
+  - TENSORFLOW_VERSION=1.1.0
+  - TENSORFLOW_VERSION=1.2.0
+
 install:
   # http://conda.pydata.org/docs/travis.html
   - sudo apt-get update
@@ -28,8 +32,8 @@ install:
     elif [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
       conda install Pillow;
     fi
-  - pip install tensorflow
-  - python setup.py install
+  - pip install -q tensorflow==$TENSORFLOW_VERSION
+  - python setup.py -q install
   - pip install  codecov
 
 script:
