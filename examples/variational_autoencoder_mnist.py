@@ -43,7 +43,7 @@ def create_experiment_json_fn(output_dir, X_train, y_train, X_eval, y_eval):
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
             'module': 'Generator',
-            'summaries': ['loss', 'image_input', 'image_result', 'image_generated'],
+            'summaries': ['loss'],
             'loss_config': {'module': 'sigmoid_cross_entropy'},
             'optimizer_config': {'module': 'adam', 'learning_rate': 0.0009},
             'encoder_config': {

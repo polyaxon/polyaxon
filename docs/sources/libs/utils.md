@@ -242,7 +242,7 @@ extract_batch_length(values)
 ```
 
 
-Extracts batch length of predictions.
+Extracts batch length of values.
 
 ----
 
@@ -255,6 +255,18 @@ get_tensor_batch_size(values)
 
 
 Extracts batch size from tensor
+
+----
+
+## total_tensor_depth
+
+
+```python
+total_tensor_depth(tensor=None, tensor_shape=None)
+```
+
+
+Returns the size of a tensor without the first (batch) dimension
 
 ----
 

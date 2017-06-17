@@ -15,24 +15,28 @@ class Classifier(BaseModel):
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+            Possible values: `regressor`, `classifier`, `generator`
         graph_fn: Graph function. Follows the signature:
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
         loss_config: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
+        eval_metrics_config: a list of `MetricConfig` instances.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-        name: `str`, the name of this model, everything will be encapsulated inside this scope.
+        clip_gradients: `float`. Gradients  clipping by global norm.
+        clip_embed_gradients: `float`. Embedding gradients clipping to a specified value.
         one_hot_encode: `bool`. to one hot encode the outputs.
         n_classes: `int`. The number of classes used in the one hot encoding.
+        name: `str`, the name of this model, everything will be encapsulated inside this scope.
 
     Returns:
         `EstimatorSpec`
     """
     def __init__(self, mode, graph_fn, loss_config=None, optimizer_config=None,
                  summaries='all', eval_metrics_config=None, clip_gradients=0.5,
-                 one_hot_encode=None, n_classes=None, name="Classfier"):
+                 clip_embed_gradients=0.1, one_hot_encode=None, n_classes=None, name="Classfier"):
         loss_config = loss_config or LossConfig(module='sigmoid_cross_entropy')
         if one_hot_encode and (n_classes is None or not isinstance(n_classes, int)):
             raise ValueError('`n_classes` must be an integer non negative value '
@@ -45,7 +49,7 @@ class Classifier(BaseModel):
             mode=mode, name=name, model_type=self.Types.CLASSIFIER, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
             eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients)
+            clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
 
     def _preprocess(self, mode, features, labels):
         if isinstance(labels, Mapping):

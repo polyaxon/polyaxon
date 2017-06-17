@@ -19,11 +19,10 @@ class SummaryOptions(object):
     LEARNING_RATE = 'learning_rate'
     IMAGE_INPUT = 'image_input'
     IMAGE_RESULT = 'image_result'
-    IMAGE_GENERATED = 'image_generated'
 
     ALL = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE]
     VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE,
-              IMAGE_INPUT, IMAGE_RESULT, IMAGE_GENERATED]
+              IMAGE_INPUT, IMAGE_RESULT]
 
     @classmethod
     def validate(cls, summaries):

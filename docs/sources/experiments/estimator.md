@@ -63,28 +63,25 @@ export_savedmodel(self, export_dir_base, serving_input_receiver_fn, assets_extra
 
 
 Exports inference graph as a SavedModel into given dir.
-This method builds a new graph by first calling the
-serving_input_receiver_fn to obtain feature `Tensor`s, and then calling
-this `Estimator`'s model_fn to generate the model graph based on those
-features. It restores the given checkpoint (or, lacking that, the most
-recent checkpoint) into this graph in a fresh session.  Finally it creates
-a timestamped export directory below the given export_dir_base, and writes
-a `SavedModel` into it containing a single `MetaGraphDef` saved from this
+This method builds a new graph by first calling the serving_input_receiver_fn to
+obtain feature `Tensor`s, and then calling this `Estimator`'s model_fn
+to generate the model graph based on those features. It restores the given checkpoint
+(or, lacking that, the most recent checkpoint) into this graph in a fresh session.
+Finally it creates a timestamped export directory below the given export_dir_base,
+and writes a `SavedModel` into it containing a single `MetaGraphDef` saved from this
 session.
-The exported `MetaGraphDef` will provide one `SignatureDef` for each
-element of the export_outputs dict returned from the model_fn, named using
-the same keys.  One of these keys is always
-signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY, indicating which
-signature will be served when a serving request does not specify one.
-For each signature, the outputs are provided by the corresponding
-`ExportOutput`s, and the inputs are always the input receivers provided by
-the serving_input_receiver_fn.
-Extra assets may be written into the SavedModel via the extra_assets
-argument.  This should be a dict, where each key gives a destination path
-(including the filename) relative to the assets.extra directory.  The
-corresponding value gives the full path of the source file to be copied.
-For example, the simple case of copying a single file without renaming it
-is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
+The exported `MetaGraphDef` will provide one `SignatureDef` for each element of the
+export_outputs dict returned from the model_fn, named using the same keys.
+One of these keys is always signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY,
+indicating which signature will be served when a serving request does not specify one.
+For each signature, the outputs are provided by the corresponding `ExportOutput`s,
+and the inputs are always the input receivers provided by the serving_input_receiver_fn.
+Extra assets may be written into the SavedModel via the extra_assets argument.
+This should be a dict, where each key gives a destination path (including the filename)
+relative to the assets.extra directory.  The corresponding value gives the full path of
+the source file to be copied. For example, the simple case of copying a single file without
+renaming it is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
+
 - __Args__:
 	- __export_dir_base__: A string containing a directory in which to create
 	timestamped subdirectories containing exported SavedModels.
@@ -150,15 +147,10 @@ Evaluates given model with provided evaluation data.
 
 Stop conditions - we evaluate on the given input data until one of the
 - __following__:
-- If `steps` is provided, and `steps` batches of size `batch_size` are
-processed.
+- If `steps` is provided, and `steps` batches of size `batch_size` are processed.
 - If `input_fn` is provided, and it raises an end-of-input
 exception (`OutOfRangeError` or `StopIteration`).
 - If `x` is provided, and all items in `x` have been processed.
-
-The return value is a dict containing the metrics specified in `metrics`, as
-well as an entry `global_step` which contains the value of the global step
-for which this evaluation was performed.
 
 - __Args__:
 	- __input_fn__: Input function returning a tuple of:
@@ -170,18 +162,20 @@ for which this evaluation was performed.
 	- __steps__: Number of steps for which to evaluate model. If `None`, evaluate
 	until `x` is consumed or `input_fn` raises an end-of-input exception.
 	See "Stop conditions" above for specifics.
-	- __name__: Name of the evaluation if user needs to run multiple evaluations on
-	different data sets, such as on training data vs test data.
 	- __checkpoint_path__: Path of a specific checkpoint to evaluate. If `None`,
 	the latest checkpoint in `model_dir` is used.
 	- __hooks__: List of `SessionRunHook` subclass instances.
 	Used for callbacks inside the evaluation call.
+	- __name__: Name of the evaluation if user needs to run multiple evaluations on
+	different data sets, such as on training data vs test data.
 
 - __Raises__:
 	- __ValueError__: If `metrics` is not `None` or `dict`.
 
 - __Returns__:
-	Returns `dict` with evaluation results.
+	Returns `dict` with evaluation results; the metrics specified in `metrics`, as
+	well as an entry `global_step` which contains the value of the global step
+	for which this evaluation was performed.
 
 
 ----

@@ -19,6 +19,7 @@ class Generator(BaseModel):
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+            Possible values: `regressor`, `classifier`, `generator`.
         encoder_fn: Encoder Graph function. Follows the signature:
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
@@ -37,6 +38,11 @@ class Generator(BaseModel):
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adadelta`.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+        eval_metrics_config: a list of `MetricConfig` instances.
+        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
+            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+        clip_gradients: `float`. Gradients  clipping by global norm.
+        clip_embed_gradients: `float`. Embedding gradients clipping to a specified value.
         name: `str`, the name of this model, everything will be encapsulated inside this scope.
 
     Returns:
@@ -45,7 +51,7 @@ class Generator(BaseModel):
 
     def __init__(self, mode, encoder_fn, decoder_fn, bridge_fn, loss_config=None,
                  optimizer_config=None, summaries='all', eval_metrics_config=None,
-                 clip_gradients=0.5, name="Generator"):
+                 clip_gradients=0.5, clip_embed_gradients=0.1, name="Generator"):
         optimizer_config = optimizer_config or OptimizerConfig('adadelta', learning_rate=0.4)
         loss_config = loss_config or LossConfig(module='sigmoid_cross_entropy')
         self._check_subgraph_fn(function=encoder_fn, function_name='encoder_fn')
@@ -61,7 +67,7 @@ class Generator(BaseModel):
             mode=mode, name=name, model_type=self.Types.GENERATOR, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
             eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients)
+            clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
 
     @staticmethod
     def _check_bridge_fn(function):

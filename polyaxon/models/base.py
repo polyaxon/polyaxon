@@ -20,20 +20,23 @@ class BaseModel(GraphModule):
     """Base class for models.
 
     Args:
-        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
-        graph_fn: Graph function. Follows the signature:
-            * Args:
-                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
-                * `inputs`: the feature inputs.
-        loss_config: An instance of `LossConfig`.
-        optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
-        model_type: `str`, the type of this model.
+         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+         model_type: `str`, the type of this model.
             Possible values: `regressor`, `classifier`, `generator`
-        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
-            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-        name: `str`, the name of this model, everything will be encapsulated inside this scope.
+         graph_fn: Graph function. Follows the signature:
+             * Args:
+                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
+                 * `inputs`: the feature inputs.
+         loss_config: An instance of `LossConfig`.
+         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
+         eval_metrics_config: a list of `MetricConfig` instances.
+         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
+             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+         clip_gradients: `float`. Gradients  clipping by global norm.
+         clip_embed_gradients: `float`. Embedding gradients clipping to a specified value.
+         name: `str`, the name of this model, everything will be encapsulated inside this scope.
 
-    Returns:
+     Returns:
         `EstimatorSpec`
     """
     class Types(object):
@@ -44,7 +47,8 @@ class BaseModel(GraphModule):
         VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
 
     def __init__(self, mode, model_type, graph_fn, loss_config, optimizer_config=None,
-                 eval_metrics_config=None, summaries='all', clip_gradients=0.5, name="Model"):
+                 eval_metrics_config=None, summaries='all', clip_gradients=0.5,
+                 clip_embed_gradients=0.1, name="Model"):
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
         self.loss_config = loss_config
         self.optimizer_config = optimizer_config or OptimizerConfig('adam', learning_rate=0.001)
@@ -53,6 +57,7 @@ class BaseModel(GraphModule):
         self.summaries = summarizer.SummaryOptions.validate(summaries)
         assert model_type in self.Types.VALUES, "`model_type` provided is unsupported."
         self._clip_gradients = clip_gradients
+        self._clip_embed_gradients = clip_embed_gradients
         self._grads_and_vars = None
         self._total_loss = None
         self._loss = None
@@ -94,7 +99,17 @@ class BaseModel(GraphModule):
         if self._clip_gradients > 0.0:
             clipped_gradients, gradients_norm = tf.clip_by_global_norm(
                 t_list=gradients, clip_norm=self._clip_gradients)
-            return list(zip(clipped_gradients, variables))
+            grads_and_vars = list(zip(clipped_gradients, variables))
+        if self._clip_embed_gradients > 0.0:
+            clipped_gradients = []
+            variables = []
+            for gradient, variable in grads_and_vars:
+                if "embedding" in variable.name or "Embedding" in variable.name:
+                    tmp = tf.clip_by_norm(t=gradient.values, clip_norm=self._clip_embd_gradients)
+                    gradient = tf.IndexedSlices(tmp, gradient.indices, gradient.dense_shape)
+                clipped_gradients.append(gradient)
+                variables.append(variable)
+            grads_and_vars = list(zip(clipped_gradients, variables))
         return grads_and_vars
 
     def _build_optimizer(self):
@@ -144,11 +159,9 @@ class BaseModel(GraphModule):
             elif summary == summarizer.SummaryOptions.LEARNING_RATE:
                 summary_op += summarizer.add_learning_rate_summaries()
             elif summary == summarizer.SummaryOptions.IMAGE_INPUT:
-                summary_op += summarizer.add_image_summary(tf.reshape(features, [-1, 28, 28, 1]),
-                                                           op_name='inputs')
+                summary_op += summarizer.add_image_summary(features, op_name='inputs')
             elif summary == summarizer.SummaryOptions.IMAGE_RESULT:
-                summary_op += summarizer.add_image_summary(tf.reshape(results, [-1, 28, 28, 1]),
-                                                           op_name='results')
+                summary_op += summarizer.add_image_summary(results, op_name='results')
 
         if summary_op:
             tf.summary.merge(summary_op)

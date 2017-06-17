@@ -17,7 +17,7 @@ def create_experiment_json_fn(output_dir):
     Links:
         * http://arxiv.org/pdf/1409.1556
     """
-    dataset_dir = './data/flowers17'
+    dataset_dir = './data/mnist'
     mnist.prepare(dataset_dir)
     train_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.TRAIN)
     eval_data_file = mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.EVAL)

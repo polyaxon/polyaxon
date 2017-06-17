@@ -2,26 +2,29 @@
 ## BaseModel
 
 ```python
-polyaxon.models.base.BaseModel(mode, model_type, graph_fn, loss_config, optimizer_config=None, eval_metrics_config=None, summaries='all', clip_gradients=0.5, name='Model')
+polyaxon.models.base.BaseModel(mode, model_type, graph_fn, loss_config, optimizer_config=None, eval_metrics_config=None, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Base class for models.
 
 - __Args__:
-	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
-	- __graph_fn__: Graph function. Follows the signature:
-		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
-		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __model_type__: `str`, the type of this model.
+	 - __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+	 - __model_type__: `str`, the type of this model.
 		Possible values: `regressor`, `classifier`, `generator`
-	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
-		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-	- __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
+	 - __graph_fn__: Graph function. Follows the signature:
+		 * Args:
+		 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
+		 * `inputs`: the feature inputs.
+	 - __loss_config__: An instance of `LossConfig`.
+	 - __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
+	 - __eval_metrics_config__: a list of `MetricConfig` instances.
+	 - __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
+		 Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+	 - __clip_gradients__: `float`. Gradients  clipping by global norm.
+	 - __clip_embed_gradients__: `float`. Embedding gradients clipping to a specified value.
+	 - __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
 
-- __Returns__:
+ - __Returns__:
 	`EstimatorSpec`
 
 
@@ -158,7 +161,7 @@ batch_size(features, labels)
 ```
 
 
-Returns the batch size of the curren batch based on the passed features.
+Returns the batch size of the current batch based on the passed features.
 
 - __Args__:
 	- __features__: The features.

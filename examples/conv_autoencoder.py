@@ -51,7 +51,7 @@ def create_experiment_json_fn(output_dir):
         },
         'estimator_config': {'output_dir': output_dir},
         'model_config': {
-            'summaries': ['loss', 'image_input', 'image_result', 'image_generated'],
+            'summaries': ['loss', 'image_input', 'image_result'],
             'module': 'Generator',
             'optimizer_config': {'module': 'adadelta', 'learning_rate': 0.9},
             'encoder_config': {

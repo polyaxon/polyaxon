@@ -152,7 +152,7 @@ def get_bridge_fn(config):
             bridge = bridge(mode=mode, state_size=config.state_size, **config.params)
             return bridge(inputs, loss_config, encoder_fn, decoder_fn)
 
-        return NoOpBridge(mode)(inputs, encoder_fn, decoder_fn)
+        return NoOpBridge(mode)(inputs, loss_config, encoder_fn, decoder_fn)
 
     return bridge_fn
 
@@ -189,6 +189,7 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, 
                 eval_metrics_config=model_config.eval_metrics_config,
                 summaries=model_config.summaries,
                 clip_gradients=model_config.clip_gradients,
+                clip_embed_gradients=model_config.clip_embed_gradients,
                 **model_config.params)
         else:
             model = MODELS[model_config.module](
@@ -199,6 +200,7 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, 
                 eval_metrics_config=model_config.eval_metrics_config,
                 summaries=model_config.summaries,
                 clip_gradients=model_config.clip_gradients,
+                clip_embed_gradients=model_config.clip_embed_gradients,
                 **model_config.params)
         return model(features=features, labels=labels, params=params, config=config)
 

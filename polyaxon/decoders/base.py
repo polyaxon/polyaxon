@@ -6,10 +6,7 @@ from collections import namedtuple
 
 import six
 
-import tensorflow as tf
-
 from polyaxon.experiments import SubGraph
-from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import get_shape
 
 DecoderSpec = namedtuple("DecoderSpec", "output output_size")

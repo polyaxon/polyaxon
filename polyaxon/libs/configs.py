@@ -128,9 +128,8 @@ class PipelineConfig(Configurable):
         params: `dict`, extra information to pass to the pipeline.
     """
     def __init__(self, module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True,
-                 bucket_boundaries=False, batch_size=64, num_epochs=4,
-                 min_after_dequeue=5000, num_threads=3, shuffle=False,
-                 allow_smaller_final_batch=True, params=None):
+                 bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000,
+                 num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None):
         self.name = name
         self.module = module
         self.subgraph_configs_by_features = subgraph_configs_by_features
@@ -322,7 +321,7 @@ class ModelConfig(Configurable):
     def __init__(self, loss_config, optimizer_config, module=None, graph_config=None,
                  encoder_config=None, decoder_config=None, bridge_config=None,
                  summaries='all', eval_metrics_config=None,
-                 clip_gradients=5.0, **params):
+                 clip_gradients=5.0, clip_embed_gradients=0.1, **params):
         self.module = module
         self.summaries = summaries
         self.loss_config = loss_config
@@ -333,6 +332,7 @@ class ModelConfig(Configurable):
         self.decoder_config = decoder_config
         self.bridge_config = bridge_config
         self.clip_gradients = clip_gradients
+        self.clip_embed_gradients = clip_embed_gradients
         self.params = params or {}
 
     @classmethod

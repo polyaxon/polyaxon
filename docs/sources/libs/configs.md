@@ -1,19 +1,3 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L205)</span>
-## MetricConfig
-
-```python
-polyaxon.libs.configs.MetricConfig(module, params=None)
-```
-
-The MetricConfig holds information needed to create a `Metric`.
-
-- __Args__:
-	- __module__: `str`, name to give for the metric.
-	- __params__: `dict`, extra information to pass to the metric.
-
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L114)</span>
 ## PipelineConfig
 
@@ -39,46 +23,26 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L166)</span>
-## InputDataConfig
-
-```python
-polyaxon.libs.configs.InputDataConfig(input_type=None, pipeline_config=None, x=None, y=None)
-```
-
-The InputDataConfig holds information needed to create a `InputData`.
-
-- __Args__:
-	- __input_type__: `str`, the type of the input data, e.g. numpy arrays.
-	- __pipeline_config__: The pipeline config to use.
-	- __x__: The x values, only used with NUMPY and PANDAS types.
-	- __y__: The y values, only used with NUMPY and PANDAS types.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L193)</span>
-## LossConfig
-
-```python
-polyaxon.libs.configs.LossConfig(module, params=None)
-```
-
-The LossConfig holds information needed to create a `Loss`.
-
-- __Args__:
-	- __module__: `str`, module loss to use.
-	- __params__: `dict`, extra information to pass to the loss.
-
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
 ## RunConfig
 
 ```python
 polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
 ```
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
+## Configurable
+
+```python
+polyaxon.libs.configs.Configurable()
+```
+
+`Configurable` is an abstract class for defining an configurable objects.
+
+A configurable class reads a configuration (YAML, Json) and create a config instance.
 
 
 ----
@@ -100,21 +64,57 @@ The EstimatorConfig holds information needed to create a `Estimator`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
-## Configurable
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L165)</span>
+## InputDataConfig
 
 ```python
-polyaxon.libs.configs.Configurable()
+polyaxon.libs.configs.InputDataConfig(input_type=None, pipeline_config=None, x=None, y=None)
 ```
 
-`Configurable` is an abstract class for defining an configurable objects.
+The InputDataConfig holds information needed to create a `InputData`.
 
-A configurable class reads a configuration (YAML, Json) and create a config instance.
+- __Args__:
+	- __input_type__: `str`, the type of the input data, e.g. numpy arrays.
+	- __pipeline_config__: The pipeline config to use.
+	- __x__: The x values, only used with NUMPY and PANDAS types.
+	- __y__: The y values, only used with NUMPY and PANDAS types.
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L217)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L192)</span>
+## LossConfig
+
+```python
+polyaxon.libs.configs.LossConfig(module, params=None)
+```
+
+The LossConfig holds information needed to create a `Loss`.
+
+- __Args__:
+	- __module__: `str`, module loss to use.
+	- __params__: `dict`, extra information to pass to the loss.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L204)</span>
+## MetricConfig
+
+```python
+polyaxon.libs.configs.MetricConfig(module, params=None)
+```
+
+The MetricConfig holds information needed to create a `Metric`.
+
+- __Args__:
+	- __module__: `str`, name to give for the metric.
+	- __params__: `dict`, extra information to pass to the metric.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L216)</span>
 ## OptimizerConfig
 
 ```python
@@ -143,7 +143,7 @@ The OptimizerConfig holds information needed to create a `Optimizer`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L255)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L254)</span>
 ## SubGraphConfig
 
 ```python
@@ -163,7 +163,7 @@ Handles also nested subgraphs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L299)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L298)</span>
 ## BridgeConfig
 
 ```python
@@ -176,11 +176,11 @@ The BridgeConfig class holds information neede to create a `Bridge` for a genera
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L309)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L308)</span>
 ## ModelConfig
 
 ```python
-polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, module=None, graph_config=None, encoder_config=None, decoder_config=None, bridge_config=None, summaries='all', eval_metrics_config=None, clip_gradients=5.0)
+polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, module=None, graph_config=None, encoder_config=None, decoder_config=None, bridge_config=None, summaries='all', eval_metrics_config=None, clip_gradients=5.0, clip_embed_gradients=0.1)
 ```
 
 The ModelConfig holds information needed to create a `Model`.

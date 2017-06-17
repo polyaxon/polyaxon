@@ -19,7 +19,7 @@ class SubGraph(GraphModule):
     Args:
         mode: `str`. Specifies if this training, evaluation or prediction. See `Modes`.
         name: `str`. The name of this subgraph, used for creating the scope.
-        modules: `list`.  The modules to connect inside this subgraph, e.g. layers
+        modules: `list`.  The modules to connect inside this subgraph, e.g. layers.
         features: `list`. The list of features keys to extract and use in this subgraph.
             If `None`, all features will be used.
     """
