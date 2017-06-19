@@ -117,7 +117,7 @@ class PipelineConfig(Configurable):
     Args:
         module: `str`, the pipeline module to use.
         name: `str`, name to give for the pipeline.
-        dynamic_pad: `bool`, If True the piple uses dynamic padding.
+        dynamic_pad: `bool`, If True the pipleine uses dynamic padding.
         bucket_boundaries:
         batch_size: `int`, the batch size.
         num_epochs: number of epochs to iterate over in this pipeline.
@@ -128,7 +128,7 @@ class PipelineConfig(Configurable):
         params: `dict`, extra information to pass to the pipeline.
     """
     def __init__(self, module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True,
-                 bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000,
+                 bucket_boundaries=False, batch_size=64, num_epochs=1, min_after_dequeue=5000,
                  num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None):
         self.name = name
         self.module = module

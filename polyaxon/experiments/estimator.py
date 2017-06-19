@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 import os
+from collections import OrderedDict
+
 import six
 
 from six.moves import xrange
@@ -737,6 +739,6 @@ class Estimator(object):
         summary_writer.flush()
 
 
-ESTIMATORS = {
-    'Estimator': Estimator
-}
+ESTIMATORS = OrderedDict([
+    ('Estimator', Estimator),
+])

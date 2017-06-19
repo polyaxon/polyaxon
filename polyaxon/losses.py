@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 import tensorflow as tf
 
 from tensorflow.python.ops import math_ops, array_ops
@@ -311,14 +313,14 @@ def poisson_loss(weights=1.0, name='PoissonLoss', scope=None, collect=False):
     return built_loss(inner_loss, weights, name, scope, collect)
 
 
-LOSSES = {
-    'absolute_difference': absolute_difference,
-    'log_loss': log_loss,
-    'mean_squared_error': mean_squared_error,
-    'softmax_cross_entropy': softmax_cross_entropy,
-    'sigmoid_cross_entropy': sigmoid_cross_entropy,
-    'hinge_loss': hinge_loss,
-    'cosine_distance': cosine_distance,
-    'kullback_leibler_divergence': kullback_leibler_divergence,
-    'poisson_loss': poisson_loss,
-}
+LOSSES = OrderedDict([
+    ('absolute_difference', absolute_difference),
+    ('log_loss', log_loss),
+    ('mean_squared_error', mean_squared_error),
+    ('softmax_cross_entropy', softmax_cross_entropy),
+    ('sigmoid_cross_entropy', sigmoid_cross_entropy),
+    ('hinge_loss', hinge_loss),
+    ('cosine_distance', cosine_distance),
+    ('kullback_leibler_divergence', kullback_leibler_divergence),
+    ('poisson_loss', poisson_loss),
+])

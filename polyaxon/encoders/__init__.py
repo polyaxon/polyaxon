@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 from polyaxon.encoders.base import Encoder, EncoderSpec
 
-ENCODERS = {
-    'Encoder': Encoder,
-}
+ENCODERS = OrderedDict([
+    ('Encoder', Encoder),
+])

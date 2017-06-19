@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 from tensorflow.python.training import basic_session_run_hooks, session_run_hook
 from tensorflow.python.platform import tf_logging as logging
 
@@ -198,14 +200,14 @@ class StopAfterNEvalsHook(session_run_hook.SessionRunHook):
             run_context.request_stop()
 
 
-HOOKS = {
-    'LoggingTensorHook': LoggingTensorHook,
-    'StopAtStepHook': StopAtStepHook,
-    'CheckpointSaverHook': CheckpointSaverHook,
-    'StepCounterHook': StepCounterHook,
-    'NanTensorHook': NanTensorHook,
-    'SummarySaverHook': SummarySaverHook,
-    'GlobalStepWaiterHook': GlobalStepWaiterHook,
-    'FinalOpsHook': FinalOpsHook,
-    'StopAfterNEvalsHook': StopAfterNEvalsHook
-}
+HOOKS = OrderedDict([
+    ('LoggingTensorHook', LoggingTensorHook),
+    ('StopAtStepHook', StopAtStepHook),
+    ('CheckpointSaverHook', CheckpointSaverHook),
+    ('StepCounterHook', StepCounterHook),
+    ('NanTensorHook', NanTensorHook),
+    ('SummarySaverHook', SummarySaverHook),
+    ('GlobalStepWaiterHook', GlobalStepWaiterHook),
+    ('FinalOpsHook', FinalOpsHook),
+    ('StopAfterNEvalsHook', StopAfterNEvalsHook),
+])

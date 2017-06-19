@@ -2,7 +2,7 @@
 ## PipelineConfig
 
 ```python
-polyaxon.libs.configs.PipelineConfig(module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=4, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
+polyaxon.libs.configs.PipelineConfig(module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=1, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
 ```
 
 The PipelineConfig holds information needed to create a `Pipeline`.
@@ -10,7 +10,7 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 - __Args__:
 	- __module__: `str`, the pipeline module to use.
 	- __name__: `str`, name to give for the pipeline.
-	- __dynamic_pad__: `bool`, If True the piple uses dynamic padding.
+	- __dynamic_pad__: `bool`, If True the pipleine uses dynamic padding.
 	- __bucket_boundaries__:
 	- __batch_size__: `int`, the batch size.
 	- __num_epochs__: number of epochs to iterate over in this pipeline.
@@ -19,47 +19,6 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 	- __shuffle__: If true, shuffle the data.
 	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
 	- __params__: `dict`, extra information to pass to the pipeline.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
-## RunConfig
-
-```python
-polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
-```
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
-## Configurable
-
-```python
-polyaxon.libs.configs.Configurable()
-```
-
-`Configurable` is an abstract class for defining an configurable objects.
-
-A configurable class reads a configuration (YAML, Json) and create a config instance.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L359)</span>
-## EstimatorConfig
-
-```python
-polyaxon.libs.configs.EstimatorConfig(module='Estimator', output_dir=None, params=None)
-```
-
-The EstimatorConfig holds information needed to create a `Estimator`.
-
-- __Args__:
-	- __cls__: `str`, estimator class to use.
-	- __output_dir__: `str`, where to save training and evaluation data.
-	- __params__: `dict`, extra information to pass to the estimator.
 
 
 ----
@@ -198,6 +157,23 @@ The ModelConfig holds information needed to create a `Model`.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L359)</span>
+## EstimatorConfig
+
+```python
+polyaxon.libs.configs.EstimatorConfig(module='Estimator', output_dir=None, params=None)
+```
+
+The EstimatorConfig holds information needed to create a `Estimator`.
+
+- __Args__:
+	- __cls__: `str`, estimator class to use.
+	- __output_dir__: `str`, where to save training and evaluation data.
+	- __params__: `dict`, extra information to pass to the estimator.
+
+
+----
+
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L389)</span>
 ## ExperimentConfig
 
@@ -228,6 +204,30 @@ The ExperimentConfig holds information needed to create a `Experiment`.
 		instead of time.
 	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
 	- __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
+## RunConfig
+
+```python
+polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
+```
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
+## Configurable
+
+```python
+polyaxon.libs.configs.Configurable()
+```
+
+`Configurable` is an abstract class for defining an configurable objects.
+
+A configurable class reads a configuration (YAML, Json) and create a config instance.
 
 
 ----

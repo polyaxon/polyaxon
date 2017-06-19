@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 import tensorflow as tf
 
 from tensorflow.python.ops import math_ops as tf_math_ops
@@ -92,8 +94,8 @@ def l2_l1_regularizer(scale_l1=0.001, scale_l2=0.001, name='l2l1Regularizer', co
     return built_regularizer(inner_regularizer, collect)
 
 
-REGULIZERS = {
-    'l1_regularizer': l1_regularizer,
-    'l2_regularizer': l2_regularizer,
-    'l2_l1_regularizer': l2_l1_regularizer
-}
+REGULIZERS = OrderedDict([
+    ('l1_regularizer', l1_regularizer),
+    ('l2_regularizer', l2_regularizer),
+    ('l2_l1_regularizer', l2_l1_regularizer),
+])

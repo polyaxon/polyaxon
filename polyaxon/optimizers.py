@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 import tensorflow as tf
 from tensorflow.python.training.training_util import get_global_step
 
@@ -427,13 +429,13 @@ def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type="",
     return optimizer
 
 
-OPTIMIZERS = {
-    'adadelta': adadelta,
-    'adagrad': adagrad,
-    'adam': adam,
-    'ftrl': ftrl,
-    'momentum': momentum,
-    'nesterov': nesterov,
-    'rmsprop': rmsprop,
-    'sgd': sgd,
-}
+OPTIMIZERS = OrderedDict([
+    ('adadelta', adadelta),
+    ('adagrad', adagrad),
+    ('adam', adam),
+    ('ftrl', ftrl),
+    ('momentum', momentum),
+    ('nesterov', nesterov),
+    ('rmsprop', rmsprop),
+    ('sgd', sgd),
+])

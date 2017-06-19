@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 import tensorflow as tf
 
 from polyaxon.libs.utils import get_name_scope, track
@@ -160,35 +162,35 @@ METRICS = {
 }
 
 
-EVAL_METRICS = {
-    'streaming_true_positives': tf.contrib.metrics.streaming_true_positives,
-    'streaming_true_negatives': tf.contrib.metrics.streaming_true_negatives,
-    'streaming_false_positives': tf.contrib.metrics.streaming_false_positives,
-    'streaming_false_negatives': tf.contrib.metrics.streaming_false_negatives,
-    'streaming_mean': tf.contrib.metrics.streaming_mean,
-    'streaming_mean_tensor': tf.contrib.metrics.streaming_mean_tensor,
-    'streaming_accuracy': tf.contrib.metrics.streaming_accuracy,
-    'streaming_precision': tf.contrib.metrics.streaming_precision,
-    'streaming_recall': tf.contrib.metrics.streaming_recall,
-    'streaming_auc': tf.contrib.metrics.streaming_auc,
-    'streaming_specificity_at_sensitivity': tf.contrib.metrics.streaming_specificity_at_sensitivity,
-    'streaming_sensitivity_at_specificity': tf.contrib.metrics.streaming_sensitivity_at_specificity,
-    'streaming_precision_at_thresholds': tf.contrib.metrics.streaming_precision_at_thresholds,
-    'streaming_recall_at_thresholds': tf.contrib.metrics.streaming_recall_at_thresholds,
-    'streaming_sparse_recall_at_k': tf.contrib.metrics.streaming_sparse_recall_at_k,
+EVAL_METRICS = OrderedDict([
+    ('streaming_true_positives', tf.contrib.metrics.streaming_true_positives),
+    ('streaming_true_negatives', tf.contrib.metrics.streaming_true_negatives),
+    ('streaming_false_positives', tf.contrib.metrics.streaming_false_positives),
+    ('streaming_false_negatives', tf.contrib.metrics.streaming_false_negatives),
+    ('streaming_mean', tf.contrib.metrics.streaming_mean),
+    ('streaming_mean_tensor', tf.contrib.metrics.streaming_mean_tensor),
+    ('streaming_accuracy', tf.contrib.metrics.streaming_accuracy),
+    ('streaming_precision', tf.contrib.metrics.streaming_precision),
+    ('streaming_recall', tf.contrib.metrics.streaming_recall),
+    ('streaming_auc', tf.contrib.metrics.streaming_auc),
+    ('streaming_specificity_at_sensitivity', tf.contrib.metrics.streaming_specificity_at_sensitivity),
+    ('streaming_sensitivity_at_specificity', tf.contrib.metrics.streaming_sensitivity_at_specificity),
+    ('streaming_precision_at_thresholds', tf.contrib.metrics.streaming_precision_at_thresholds),
+    ('streaming_recall_at_thresholds', tf.contrib.metrics.streaming_recall_at_thresholds),
+    ('streaming_sparse_recall_at_k', tf.contrib.metrics.streaming_sparse_recall_at_k),
     # TODO: this function expects an int64 ==> labels = tf.cast(labels, tf.int64)
-    'streaming_sparse_precision_at_k': tf.contrib.metrics.streaming_sparse_precision_at_k,
-    'streaming_sparse_average_precision_at_k': tf.contrib.metrics.streaming_sparse_average_precision_at_k,
-    'streaming_mean_absolute_error': tf.contrib.metrics.streaming_mean_absolute_error,
-    'streaming_mean_relative_error': tf.contrib.metrics.streaming_mean_relative_error,
-    'streaming_mean_squared_error': tf.contrib.metrics.streaming_mean_squared_error,
-    'streaming_root_mean_squared_error': tf.contrib.metrics.streaming_root_mean_squared_error,
-    'streaming_covariance': tf.contrib.metrics.streaming_covariance,
-    'streaming_pearson_correlation': tf.contrib.metrics.streaming_pearson_correlation,
-    'streaming_mean_cosine_distance': tf.contrib.metrics.streaming_mean_cosine_distance,
-    'streaming_percentage_less': tf.contrib.metrics.streaming_percentage_less,
-    'streaming_mean_iou': tf.contrib.metrics.streaming_mean_iou
-}
+    ('streaming_sparse_precision_at_k', tf.contrib.metrics.streaming_sparse_precision_at_k),
+    ('streaming_sparse_average_precision_at_k', tf.contrib.metrics.streaming_sparse_average_precision_at_k),
+    ('streaming_mean_absolute_error', tf.contrib.metrics.streaming_mean_absolute_error),
+    ('streaming_mean_relative_error', tf.contrib.metrics.streaming_mean_relative_error),
+    ('streaming_mean_squared_error', tf.contrib.metrics.streaming_mean_squared_error),
+    ('streaming_root_mean_squared_error', tf.contrib.metrics.streaming_root_mean_squared_error),
+    ('streaming_covariance', tf.contrib.metrics.streaming_covariance),
+    ('streaming_pearson_correlation', tf.contrib.metrics.streaming_pearson_correlation),
+    ('streaming_mean_cosine_distance', tf.contrib.metrics.streaming_mean_cosine_distance),
+    ('streaming_percentage_less', tf.contrib.metrics.streaming_percentage_less),
+    ('streaming_mean_iou', tf.contrib.metrics.streaming_mean_iou),
+])
 
 
 ARGMAX_METRICS = ['streaming_true_positives', 'streaming_true_negatives',
