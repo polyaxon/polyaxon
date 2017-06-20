@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import logging
+from collections import OrderedDict
+
 import six
 
 from six.moves import xrange
@@ -889,3 +891,13 @@ def advanced_indexing_op(input, index):
     flat = tf.reshape(input, [-1, dim_size])
     relevant = tf.gather(flat, index)
     return relevant
+
+RNN_LAYERS = OrderedDict([
+    ('GRU', GRU),
+    ('LSTM', LSTM),
+    ('BasicLSTMCell', BasicLSTMCell),
+    ('BasicRNNCell', BasicRNNCell),
+    ('BidirectionalRNN', BidirectionalRNN),
+    ('GRUCell', GRUCell),
+    ('SimpleRNN', SimpleRNN),
+])

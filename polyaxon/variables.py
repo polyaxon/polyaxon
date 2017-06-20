@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import six
+
 import tensorflow as tf
 
 from polyaxon.libs import getters
@@ -26,13 +28,13 @@ def variable(name, shape=None, dtype=tf.float32, initializer=None, regularizer=N
         A Variable.
     """
 
-    if isinstance(initializer, str):
+    if isinstance(initializer, six.string_types):
         initializer = getters.get_initializer(initializer)
     # Remove shape param if initializer is a Tensor
     if not callable(initializer) and isinstance(initializer, tf.Tensor):
         shape = None
 
-    if isinstance(regularizer, str):
+    if isinstance(regularizer, six.string_types):
         regularizer = getters.get_regularizer(regularizer)
 
     with tf.device(device_name_or_function=device):

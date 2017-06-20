@@ -2,14 +2,18 @@
 from __future__ import absolute_import, division, print_function
 
 import copy
+import six
 
 from collections import Mapping
 
 import tensorflow as tf
 
+from polyaxon.layers import LAYERS
 from polyaxon.libs.template_module import GraphModule, BaseLayer, ImageProcessorModule
 
 # Currently there's an issue with numpy_input_fn, it's keeps updating the Xs dictionary
+from polyaxon.processing import PROCESSORS
+
 FEATURE_BLACK_LIST = ['__target_key__', '__record_key__']
 
 
@@ -63,6 +67,15 @@ class SubGraph(GraphModule):
 
         built_modules = []
         for i, module in enumerate(subgraph_config.modules):
+            if isinstance(module, six.string_types):
+                if module in LAYERS:
+                    module = LAYERS[module]
+                elif module in PROCESSORS:
+                    module = PROCESSORS[module]
+                else:
+                    raise ValueError(
+                        'module `{}` is not supported (see supported LAYERS and PROCESSORS).')
+
             kwargs = copy.copy(subgraph_config.kwargs[i])
             if 'modules' in kwargs:
                 dependencies = []

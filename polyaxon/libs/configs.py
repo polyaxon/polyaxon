@@ -18,10 +18,19 @@ from polyaxon.libs.utils import generate_model_dir
 
 
 class RunConfig(run_config.RunConfig):
-    def __init__(self, master=None, num_cores=0, log_device_placement=False,
-                 gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100,
-                 save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5,
-                 keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None):
+    def __init__(self,
+                 master=None,
+                 num_cores=0,
+                 log_device_placement=False,
+                 gpu_memory_fraction=1.0,
+                 tf_random_seed=None,
+                 save_summary_steps=100,
+                 save_checkpoints_secs=600,
+                 save_checkpoints_steps=None,
+                 keep_checkpoint_max=5,
+                 keep_checkpoint_every_n_hours=10000,
+                 evaluation_master='',
+                 model_dir=None):
         super(RunConfig, self).__init__(master, num_cores, log_device_placement, gpu_memory_fraction,
                          tf_random_seed, save_summary_steps, save_checkpoints_secs,
                          save_checkpoints_steps, keep_checkpoint_max, keep_checkpoint_every_n_hours,
@@ -45,7 +54,7 @@ class RunConfig(run_config.RunConfig):
 
 def _maybe_load_json(item):
     """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
-    if isinstance(item, str):
+    if isinstance(item, six.string_types):
         return json.loads(item)
     elif isinstance(item, dict):
         return item
@@ -55,7 +64,7 @@ def _maybe_load_json(item):
 
 def _maybe_load_yaml(item):
     """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
-    if isinstance(item, str):
+    if isinstance(item, six.string_types):
         return yaml.load(item)
     elif isinstance(item, dict):
         return item
@@ -78,7 +87,7 @@ class Configurable(object):
         config = {}
 
         for config_value in config_values:
-            if not isinstance(config_value, (Mapping, str)):
+            if not isinstance(config_value, (Mapping, six.string_types)):
                 raise TypeError('Expects list of Mapping/string instances, received {} instead'.format(type(config_value)))
 
             if isinstance(config_value, Mapping):
@@ -127,9 +136,19 @@ class PipelineConfig(Configurable):
         num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
         params: `dict`, extra information to pass to the pipeline.
     """
-    def __init__(self, module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True,
-                 bucket_boundaries=False, batch_size=64, num_epochs=1, min_after_dequeue=5000,
-                 num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None):
+    def __init__(self,
+                 module=None,
+                 name=None,
+                 subgraph_configs_by_features=None,
+                 dynamic_pad=True,
+                 bucket_boundaries=False,
+                 batch_size=64,
+                 num_epochs=1,
+                 min_after_dequeue=5000,
+                 num_threads=3,
+                 shuffle=False,
+                 allow_smaller_final_batch=True,
+                 params=None):
         self.name = name
         self.module = module
         self.subgraph_configs_by_features = subgraph_configs_by_features
@@ -233,10 +252,19 @@ class OptimizerConfig(Configurable):
         sync_replicas_to_aggregate:
         params: `dict`, extra information to pass to the optimizer.
     """
-    def __init__(self, module, learning_rate=1e-4, decay_type="", decay_steps=100,
-                 decay_rate=0.99, start_decay_at=0, stop_decay_at=tf.int32.max,
-                 min_learning_rate=1e-12, staircase=False, sync_replicas=0,
-                 sync_replicas_to_aggregate=0, params=None):
+    def __init__(self,
+                 module,
+                 learning_rate=1e-4,
+                 decay_type="",
+                 decay_steps=100,
+                 decay_rate=0.99,
+                 start_decay_at=0,
+                 stop_decay_at=tf.int32.max,
+                 min_learning_rate=1e-12,
+                 staircase=False,
+                 sync_replicas=0,
+                 sync_replicas_to_aggregate=0,
+                 params=None):
         self.module = module
         self.learning_rate = learning_rate
         self.decay_type = decay_type
@@ -318,10 +346,19 @@ class ModelConfig(Configurable):
         clip_gradients: `float`, The value to clip the gradients with.
         params: `dict`, extra information to pass to the model.
     """
-    def __init__(self, loss_config, optimizer_config, module=None, graph_config=None,
-                 encoder_config=None, decoder_config=None, bridge_config=None,
-                 summaries='all', eval_metrics_config=None,
-                 clip_gradients=5.0, clip_embed_gradients=0.1, **params):
+    def __init__(self,
+                 loss_config,
+                 optimizer_config,
+                 module=None,
+                 graph_config=None,
+                 encoder_config=None,
+                 decoder_config=None,
+                 bridge_config=None,
+                 summaries='all',
+                 eval_metrics_config=None,
+                 clip_gradients=5.0,
+                 clip_embed_gradients=0.1,
+                 **params):
         self.module = module
         self.summaries = summaries
         self.loss_config = loss_config
@@ -411,12 +448,24 @@ class ExperimentConfig(Configurable):
         export_strategies: A list of `ExportStrategy`s, or a single one, or None.
         train_steps_per_iteration: (applies only to continuous_train_and_evaluate).
     """
-    def __init__(self, name, output_dir, run_config,
-                 train_input_data_config, eval_input_data_config,
-                 estimator_config, model_config, train_hooks_config=None, eval_hooks_config=None,
-                 eval_metrics_config=None, eval_every_n_steps=1000, train_steps=10000,
-                 eval_steps=10, eval_delay_secs=0, continuous_eval_throttle_secs=60,
-                 delay_workers_by_global_step=False, export_strategies=None,
+    def __init__(self,
+                 name,
+                 output_dir,
+                 run_config,
+                 train_input_data_config,
+                 eval_input_data_config,
+                 estimator_config,
+                 model_config,
+                 train_hooks_config=None,
+                 eval_hooks_config=None,
+                 eval_metrics_config=None,
+                 eval_every_n_steps=1000,
+                 train_steps=10000,
+                 eval_steps=10,
+                 eval_delay_secs=0,
+                 continuous_eval_throttle_secs=60,
+                 delay_workers_by_global_step=False,
+                 export_strategies=None,
                  train_steps_per_iteration=1000):
         self.name = name
         self.output_dir = output_dir or "/tmp/polyaxon_logs/"

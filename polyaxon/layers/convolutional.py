@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
 from math import ceil
 from six.moves import xrange
 
@@ -1450,3 +1451,26 @@ class HighwayConv1d(BaseLayer):
         # Add attributes to Tensor to easy access weights.
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return inference
+
+
+CONV_LAYERS = OrderedDict([
+    ('AvgPool1d', AvgPool1d),
+    ('AvgPool2d', AvgPool2d),
+    ('AvgPool3d', AvgPool3d),
+    ('Conv1d', Conv1d),
+    ('Conv2d', Conv2d),
+    ('Conv2dTranspose', Conv2dTranspose),
+    ('Conv3d', Conv3d),
+    ('Conv3dTranspose', Conv3dTranspose),
+    ('GlobalAvgPool', GlobalAvgPool),
+    ('GlobalMaxPool', GlobalMaxPool),
+    ('HighwayConv1d', HighwayConv1d),
+    ('HighwayConv2d', HighwayConv2d),
+    ('MaxPool1d', MaxPool1d),
+    ('MaxPool2d', MaxPool2d),
+    ('MaxPool3d', MaxPool3d),
+    ('ResidualBlock', ResidualBlock),
+    ('ResidualBottleneck', ResidualBottleneck),
+    ('Upsample2d', Upsample2d),
+    ('Upscore', Upscore),
+])

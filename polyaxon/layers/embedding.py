@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 import tensorflow as tf
 
 from polyaxon.layers.recurrent import retrieve_seq_length_op
@@ -66,3 +68,6 @@ class Embedding(BaseLayer):
         inference.seq_length = retrieve_seq_length_op(tf.reshape(incoming, shape))
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return inference
+
+
+EMBEDDING_LAYERS = OrderedDict([('Embedding', Embedding)])

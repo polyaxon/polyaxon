@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 import tensorflow as tf
 from tensorflow.python.ops import random_ops
 
@@ -1089,3 +1091,25 @@ class TotalVariation(ImageProcessorModule):
 
     def _build(self, incoming, *args, **kwargs):
         return total_variation(images=incoming, name=self.name)
+
+
+IMAGE_PROCESSORS = OrderedDict([
+    ('Resize', Resize),
+    ('CentralCrop', CentralCrop),
+    ('RandomCrop', RandomCrop),
+    ('ExtractGlimpse', ExtractGlimpse),
+    ('ToBoundingBox', ToBoundingBox),
+    ('Flip', Flip),
+    ('Transpose', Transpose),
+    ('Rotate90', Rotate90),
+    ('ConvertColorSpace', ConvertColorSpace),
+    ('ConvertImagesDtype', ConvertImagesDtype),
+    ('AdjustBrightness', AdjustBrightness),
+    ('AdjustContrast', AdjustContrast),
+    ('AdjustHue', AdjustHue),
+    ('AdjustSaturation', AdjustSaturation),
+    ('AdjustGamma', AdjustGamma),
+    ('Standardization', Standardization),
+    ('DrawBoundingBoxes', DrawBoundingBoxes),
+    ('TotalVariation', TotalVariation),
+])

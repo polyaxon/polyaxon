@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import tensorflow as tf
+import six
 
-from polyaxon.experiments.subgraph import SubGraph
+import tensorflow as tf
 
 
 def get_optimizer(module, **kwargs):
     from polyaxon.optimizers import OPTIMIZERS
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         return OPTIMIZERS[module](**kwargs)()
 
     if hasattr(module, '__call__'):
@@ -19,7 +19,7 @@ def get_optimizer(module, **kwargs):
 def get_activation(module, **kwargs):
     from polyaxon.activations import ACTIVATIONS
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         return ACTIVATIONS[module](**kwargs)
 
     if hasattr(module, '__call__'):
@@ -31,7 +31,7 @@ def get_activation(module, **kwargs):
 def get_initializer(module, **kwargs):
     from polyaxon.initializations import INITIALIZERS
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         return INITIALIZERS[module](**kwargs)
 
     return module
@@ -40,7 +40,7 @@ def get_initializer(module, **kwargs):
 def get_regularizer(module, **kwargs):
     from polyaxon.regularizations import REGULIZERS
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         return REGULIZERS[module](**kwargs)
 
     return module
@@ -49,7 +49,7 @@ def get_regularizer(module, **kwargs):
 def get_metric(module, incoming, outputs, **kwargs):
     from polyaxon.metrics import METRICS
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         module = METRICS[module](**kwargs)(incoming, outputs)
     elif hasattr(module, '__call__'):
         try:
@@ -68,7 +68,7 @@ def get_metric(module, incoming, outputs, **kwargs):
 def get_eval_metric(module, y_pred, y_true, **kwargs):
     from polyaxon.metrics import EVAL_METRICS
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         module = EVAL_METRICS[module](y_pred, y_true, **kwargs)
     elif hasattr(module, '__call__'):
         try:
@@ -87,7 +87,7 @@ def get_eval_metric(module, y_pred, y_true, **kwargs):
 def get_loss(module, y_pred, y_true, **kwargs):
     from polyaxon.losses import LOSSES
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         module = LOSSES[module](**kwargs)(y_true, y_pred)
 
     elif hasattr(module, '__call__'):
@@ -105,6 +105,7 @@ def get_loss(module, y_pred, y_true, **kwargs):
 
 
 def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):
+    from polyaxon.experiments.subgraph import SubGraph
     from polyaxon.processing.pipelines import PIPELINES
 
     subgraphs_by_features = {}
@@ -114,7 +115,7 @@ def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features
             subgraph = SubGraph(mode=mode, modules=modules, **subgraph_config.params)
             subgraphs_by_features[feature] = subgraph
 
-    if isinstance(module, str):
+    if isinstance(module, six.string_types):
         return PIPELINES[module](mode=mode, shuffle=shuffle, num_epochs=num_epochs,
                                  subgraphs_by_features=subgraphs_by_features, **params)
 
@@ -124,6 +125,8 @@ def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features
 
 def get_graph_fn(config, graph_class=None):
     """Creates the graph operations."""
+    from polyaxon.experiments.subgraph import SubGraph
+
     if graph_class is None:
         graph_class = SubGraph
 
@@ -225,7 +228,7 @@ def get_hooks(hooks_config):
 
     hooks = []
     for hook, params in hooks_config:
-        if isinstance(hook, str):
+        if isinstance(hook, six.string_types):
             hook = HOOKS[hook](**params)
             hooks.append(hook)
 

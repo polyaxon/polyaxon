@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 from six.moves import xrange
 
 import numpy as np
@@ -604,3 +606,17 @@ class Merge(BaseLayer):
 
         track(x, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return x
+
+
+CORE_LAYERS = OrderedDict([
+    ('Dropout', Dropout),
+    ('Flatten', Flatten),
+    ('FullyConnected', FullyConnected),
+    ('GaussianNoise', GaussianNoise),
+    ('Highway', Highway),
+    ('Merge', Merge),
+    ('OneHotEncoding', OneHotEncoding),
+    ('Reshape', Reshape),
+    ('SingleUnit', SingleUnit),
+    ('Slice', Slice),
+])

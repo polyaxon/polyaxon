@@ -23,10 +23,10 @@ def create_experiment_json_fn(output_dir):
         'name': 'lenet_mnsit',
         'output_dir': output_dir,
         'eval_every_n_steps': 10,
-        'train_steps_per_iteration': 100,
+        'train_steps_per_iteration': 1000,
         'run_config': {'save_checkpoints_steps': 100},
         'train_input_data_config': {
-            'pipeline_config': {'module': 'TFRecordImagePipeline', 'batch_size': 64,  'num_epochs': 1,
+            'pipeline_config': {'module': 'TFRecordImagePipeline', 'batch_size': 64,  'num_epochs': 5,
                                 'shuffle': True, 'dynamic_pad': False,
                                 'params': {'data_files': train_data_file,
                                            'meta_data_file': meta_data_file}},
@@ -50,13 +50,23 @@ def create_experiment_json_fn(output_dir):
                                     {'module': 'streaming_auc'},
                                     {'module': 'streaming_accuracy'},
                                     {'module': 'streaming_precision'}],
-            'optimizer_config': {'module': 'adam', 'learning_rate': 0.7,
+            'optimizer_config': {'module': 'adam', 'learning_rate': 0.007,
                                  'decay_type': 'exponential_decay', 'decay_rate': 0.2},
             'one_hot_encode': True,
             'n_classes': 10,
             'graph_config': {
                 'name': 'lenet',
                 'features': ['image'],
+                # 'definition': [
+                #     ('Conv2d', {'num_filter': 32, 'filter_size': 5, 'strides': 1,
+                #                          'regularizer': 'l2_regularizer'}),
+                #     ('MaxPool2d', {'kernel_size': 2}),
+                #     ('Conv2d', {'num_filter': 64, 'filter_size': 5,
+                #                          'regularizer': 'l2_regularizer'}),
+                #     ('MaxPool2d', {'kernel_size': 2}),
+                #     ('FullyConnected', {'num_units': 1024, 'activation': 'tanh'}),
+                #     ('FullyConnected', {'num_units': 10}),
+                # ]
                 'definition': [
                     (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 5, 'strides': 1,
                                          'regularizer': 'l2_regularizer'}),

@@ -209,7 +209,7 @@ def validate_filter_size_3d(filter_size, in_depth, num_filter):
 
 def check_restore_tensor(tensor_to_check, exclvars):
     for exclvar in exclvars:
-        if isinstance(exclvar, str):
+        if isinstance(exclvar, six.string_types):
             if exclvar.split(':')[0] in tensor_to_check.name:
                 return False
         elif exclvar.name.split(':')[0] in tensor_to_check.name:

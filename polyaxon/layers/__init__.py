@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 from .convolutional import (
+    CONV_LAYERS,
     AvgPool1d,
     AvgPool2d,
     AvgPool3d,
@@ -23,6 +26,7 @@ from .convolutional import (
     Upscore
 )
 from .core import (
+    CORE_LAYERS,
     Dropout,
     Flatten,
     FullyConnected,
@@ -34,6 +38,28 @@ from .core import (
     SingleUnit,
     Slice
 )
-from .embedding import Embedding
-from .normalizations import BatchNormalization, L2Normalization, LocalResponseNormalization
-from .recurrent import GRU, LSTM, BasicLSTMCell, BasicRNNCell, BidirectionalRNN, GRUCell, SimpleRNN
+from .embedding import EMBEDDING_LAYERS, Embedding
+from .normalizations import (
+    NORMALIZATION_LAYERS,
+    BatchNormalization,
+    L2Normalization,
+    LocalResponseNormalization
+)
+from .recurrent import (
+    RNN_LAYERS,
+    GRU,
+    LSTM,
+    BasicLSTMCell,
+    BasicRNNCell,
+    BidirectionalRNN,
+    GRUCell,
+    SimpleRNN
+)
+
+LAYERS = OrderedDict()
+LAYERS.update(CORE_LAYERS)
+LAYERS.update(CONV_LAYERS)
+LAYERS.update(RNN_LAYERS)
+LAYERS.update(EMBEDDING_LAYERS)
+LAYERS.update(RNN_LAYERS)
+LAYERS.update(NORMALIZATION_LAYERS)

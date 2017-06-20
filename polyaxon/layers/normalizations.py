@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 from six.moves import xrange
 
 import tensorflow as tf
@@ -173,8 +175,8 @@ class L2Normalization(BaseLayer):
         return incoming
 
 
-NORMALIZATIONS = {
-    'BatchNormalization': BatchNormalization,
-    'LocalResponseNormalization': LocalResponseNormalization,
-    'L2Normalization': L2Normalization
-}
+NORMALIZATION_LAYERS = OrderedDict([
+    ('BatchNormalization', BatchNormalization),
+    ('LocalResponseNormalization', LocalResponseNormalization),
+    ('L2Normalization', L2Normalization)
+])
