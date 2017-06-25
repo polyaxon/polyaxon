@@ -107,7 +107,7 @@ def sgd(learning_rate=0.001, decay_type="", decay_rate=0., decay_steps=100, star
     return optimizer
 
 
-def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
+def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=10000,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              global_step=None, use_locking=False, name='Momentum'):
     """Optimizer that implements the Momentum.
@@ -153,7 +153,7 @@ def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
     return optimizer
 
 
-def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
+def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=10000,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              use_locking=False, global_step=None, name='Momentum'):
     """Optimizer that implements the Nesterov.
@@ -199,7 +199,7 @@ def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
 
 
 def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_type="",
-            decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+            decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
             min_learning_rate=1e-12, staircase=False, global_step=None,
             use_locking=False, name='RMSProp'):
     """Optimizer that implements the RMSprop.
@@ -244,7 +244,7 @@ def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_t
 
 
 def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, decay_type="",
-         decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+         decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
          min_learning_rate=1e-12, staircase=False, global_step=None,
          use_locking=False, name='Adam'):
     """Optimizer that implements the Adam.
@@ -291,7 +291,7 @@ def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, decay_type="
 
 
 def adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type="",
-            decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+            decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
             min_learning_rate=1e-12, staircase=False, global_step=None,
             use_locking=False, name='AdaGrad'):
     """Optimizer that implements AdaGrad.
@@ -333,7 +333,7 @@ def adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type="",
 
 def ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=0.1,
          l1_regularization_strength=0.0, l2_regularization_strength=0.0, decay_type="",
-         decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+         decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
          min_learning_rate=1e-12, staircase=False, global_step=None,
          use_locking=False, name='Ftrl'):
     """Optimizer that implements Ftrl Proximal.
@@ -389,7 +389,7 @@ def ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=
 
 
 def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type="",
-             decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+             decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
              min_learning_rate=1e-12, staircase=False, global_step=None,
              use_locking=False, name='AdaDelta'):
     """Optimizer that implements AdaDelta.

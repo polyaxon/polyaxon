@@ -256,7 +256,7 @@ class OptimizerConfig(Configurable):
                  module,
                  learning_rate=1e-4,
                  decay_type="",
-                 decay_steps=100,
+                 decay_steps=10000,
                  decay_rate=0.99,
                  start_decay_at=0,
                  stop_decay_at=tf.int32.max,
