@@ -30,7 +30,7 @@ def model_fn(features, labels, mode):
     return model(features, labels)
 
 
-estimator = plx.experiments.Estimator(model_fn=model_fn, model_dir="/tmp/polyaxon_logs/linear")
+estimator = plx.estimators.Estimator(model_fn=model_fn, model_dir="/tmp/polyaxon_logs/linear")
 
 estimator.train(input_fn=numpy_input_fn(
     {'X': X}, y, shuffle=False, num_epochs=10000, batch_size=len(X)))

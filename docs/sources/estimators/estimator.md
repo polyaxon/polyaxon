@@ -1,11 +1,11 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/estimator.py#L46)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/estimator.py#L42)</span>
 ## Estimator
 
 ```python
-polyaxon.experiments.estimator.Estimator(model_fn=None, model_dir=None, config=None, params=None)
+polyaxon.estimators.estimator.Estimator(model_fn, model_dir=None, config=None, params=None)
 ```
 
-Estimator class is the basic TensorFlow model trainer/evaluator.
+Estimator class is a model trainer/evaluator.
 
 Constructs an `Estimator` instance.
 

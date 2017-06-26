@@ -33,7 +33,7 @@ def main(*args):
             n_classes=10, one_hot_encode=True)
         return model(features, labels)
 
-    estimator = plx.experiments.Estimator(model_fn=model_fn,
+    estimator = plx.estimators.Estimator(model_fn=model_fn,
                                           model_dir="/tmp/polyaxon_logs/highway_dnn")
 
     train_input_fn, eval_input_fn = mnist.create_input_fn('./data/mnist')

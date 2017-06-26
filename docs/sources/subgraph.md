@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/subgraph.py#L16)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/subgraph.py#L20)</span>
 ## SubGraph
 
 ```python
-polyaxon.experiments.subgraph.SubGraph(mode, modules, name='Subgraph', features=None)
+polyaxon.libs.subgraph.SubGraph(mode, modules, name='Subgraph', features=None)
 ```
 
 The `SubGraph` is a class that represents the flow of layers.

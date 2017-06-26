@@ -18,7 +18,8 @@ from tensorflow.python.training import server_lib
 from tensorflow.python.training import session_run_hook
 from tensorflow.python.util import compat
 
-from polyaxon.experiments import Experiment, Estimator
+from polyaxon.estimators import Estimator
+from polyaxon.experiments import Experiment
 from polyaxon.experiments.export_utils import make_export_strategy
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.utils import get_arguments

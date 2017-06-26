@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import numpy as np
 import tensorflow as tf
+from tensorflow.python.framework import constant_op
 import polyaxon as plx
 
 from tensorflow.python.estimator.inputs.numpy_io import numpy_input_fn
@@ -37,7 +38,10 @@ def input_fn(num_epochs=1):
                           num_epochs=num_epochs,
                           batch_size=len(X))
 
-estimator.train(input_fn(10000))
+# estimator.train(input_fn(1))
 
-print([x['results'] for x in estimator.predict(input_fn())])
+def input_fn():
+    return {'X': constant_op.constant(X)}, constant_op.constant(y)
+
+print([x['results'] for x in estimator.predict(input_fn)])
 print(y)

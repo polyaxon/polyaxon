@@ -44,7 +44,7 @@ from tensorflow.python.training import training
 from tensorflow.python.util import compat
 
 from polyaxon import Modes
-from polyaxon.experiments import Estimator
+from polyaxon.estimators import Estimator
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.exceptions import EstimatorNotTrainedError
 

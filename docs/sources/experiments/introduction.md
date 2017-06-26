@@ -17,7 +17,7 @@ from tensorflow.python.estimator.inputs.inputs import numpy_input_fn
 
 train_input_fn = numpy_input_fn(X['train'], y['train'], shuffle=True)
 eval_input_fn = numpy_input_fn(x['eval'], y['eval'], shuffle=False)
-estimator = plx.experiments.Estimator(...)
+estimator = plx.estimators.Estimator(...)
 xp = plx.experiments.Experiment(estimator=estimator, 
                                 train_input_fn=train_input_fn,
                                 eval_input_fn=eval_input_fn)
@@ -92,7 +92,7 @@ import polyaxon as plx
 def dummy_model_fn(features, labels, mode):
     pass
       
-estimator = plx.experiments.Estimator(model_fn=dummy_model_fn)
+estimator = plx.estimators.Estimator(model_fn=dummy_model_fn)
 ```
 
 # Polyaxon Model

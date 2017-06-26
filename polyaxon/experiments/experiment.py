@@ -510,15 +510,9 @@ class Experiment(object):
         Returns:
             The result of the `evaluate` call to the `Estimator`.
         """
-        self._call_train(input_fn=self._train_input_fn,
-                         steps=1,
-                         hooks=self._train_hooks)
-
-        eval_result = self._call_evaluate(input_fn=self._eval_input_fn,
-                                          steps=1,
-                                          name="one_pass")
+        self._call_train(input_fn=self._train_input_fn, steps=1, hooks=self._train_hooks)
+        eval_result = self._call_evaluate(input_fn=self._eval_input_fn, steps=1, name="one_pass")
         _ = self._maybe_export(eval_result)
-
         return eval_result
 
 

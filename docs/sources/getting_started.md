@@ -16,9 +16,12 @@ Same thing can be achieved using `Subgraph`
 ```python
 import polyaxon as plx
 
-graph = plx.experiments.Subgraph(mode=plx.Modes.TRAIN, name='graph',
+config = plx.configs.SubGraphConfig(
     methods=[plx.layers.FullyConnected, plx.layers.FullyConnected],
-    kwargs=[{'n_units': 64, 'activation': 'tanh'}, {'n_units': 10}])
+    kwargs=[{'n_units': 64, 'activation': 'tanh'}, {'n_units': 10}]
+)
+modules = plx.libs.SubGraph.build_subgraph_modules(plx.Modes.TRAIN, config)
+graph = plx.libs.SubGraph(mode=plx.Modes.TRAIN, name='graph', modules=modules)
 
 results1 = graph(dataset1)
 results2 = graph(dataset2)

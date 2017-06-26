@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L25)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L26)</span>
 ## Conv2d
 
 ```python
@@ -41,7 +41,7 @@ the convolution operation.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L121)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L122)</span>
 ## Conv2dTranspose
 
 ```python
@@ -88,7 +88,7 @@ deconvolution.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L256)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L257)</span>
 ## MaxPool2d
 
 ```python
@@ -109,7 +109,7 @@ Adds Max Pooling 2D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L285)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L286)</span>
 ## AvgPool2d
 
 ```python
@@ -130,7 +130,7 @@ Adds Average Pooling 2D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L314)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L315)</span>
 ## Upsample2d
 
 ```python
@@ -147,7 +147,7 @@ Adds UpSample 2D operation.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L1218)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L1219)</span>
 ## HighwayConv2d
 
 ```python
@@ -187,7 +187,7 @@ Adds a Highway Convolution 2D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L345)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L346)</span>
 ## Upscore
 
 ```python
@@ -221,7 +221,7 @@ The upscore layer is initialized as bilinear upsampling filter.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L436)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L437)</span>
 ## Conv1d
 
 ```python
@@ -260,7 +260,7 @@ Adds a Convolution 1D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L557)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L558)</span>
 ## MaxPool1d
 
 ```python
@@ -281,7 +281,7 @@ Adds Max Pooling 1D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L586)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L587)</span>
 ## AvgPool1d
 
 ```python
@@ -302,7 +302,7 @@ Average Pooling 1D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L1334)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L1335)</span>
 ## HighwayConv1d
 
 ```python
@@ -342,7 +342,7 @@ Adds a Highway Convolution 1D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L615)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L616)</span>
 ## Conv3d
 
 ```python
@@ -381,7 +381,7 @@ Adds Convolution 3D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L710)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L711)</span>
 ## Conv3dTranspose
 
 ```python
@@ -429,7 +429,7 @@ deconvolution.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L847)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L848)</span>
 ## MaxPool3d
 
 ```python
@@ -452,7 +452,7 @@ Max Pooling 3D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L878)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L879)</span>
 ## AvgPool3d
 
 ```python
@@ -475,7 +475,7 @@ Average Pooling 3D.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L921)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L922)</span>
 ## GlobalMaxPool
 
 ```python
@@ -491,7 +491,7 @@ Adds a Global Max Pooling.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L942)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L943)</span>
 ## GlobalAvgPool
 
 ```python
@@ -507,7 +507,7 @@ Adds a Global Average Pooling.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L963)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L964)</span>
 ## ResidualBlock
 
 ```python
@@ -558,7 +558,7 @@ Full pre-activation architecture is used here.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L1085)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L1086)</span>
 ## ResidualBottleneck
 
 ```python

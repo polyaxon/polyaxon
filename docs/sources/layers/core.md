@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L19)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L21)</span>
 ## FullyConnected
 
 ```python
@@ -40,7 +40,7 @@ prior to the initial matrix multiply by `weights`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L126)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L128)</span>
 ## Dropout
 
 ```python
@@ -79,7 +79,7 @@ will be kept or not kept together.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L223)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L225)</span>
 ## Reshape
 
 ```python
@@ -98,7 +98,7 @@ A layer that reshape the incoming layer tensor output to the desired shape.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L251)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L253)</span>
 ## Flatten
 
 ```python
@@ -114,7 +114,7 @@ Flatten the incoming Tensor.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L277)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L279)</span>
 ## SingleUnit
 
 ```python
@@ -139,7 +139,7 @@ Adds a Single Unit Layer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L347)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L349)</span>
 ## Highway
 
 ```python
@@ -181,7 +181,7 @@ A fully connected highway network layer, with some inspiration from
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L469)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L471)</span>
 ## OneHotEncoding
 
 ```python
@@ -200,7 +200,7 @@ Transform numeric labels into one hot labels using `tf.one_hot`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L190)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L192)</span>
 ## GaussianNoise
 
 ```python
@@ -224,7 +224,7 @@ As it is a regularization layer, it is only active at training time.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L528)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L530)</span>
 ## Merge
 
 ```python
@@ -234,7 +234,7 @@ polyaxon.layers.core.Merge(mode, modules, merge_mode, axis=1, name='Merge')
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L501)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L503)</span>
 ## Slice
 
 ```python

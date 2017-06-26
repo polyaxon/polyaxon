@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L16)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L18)</span>
 ## BatchNormalization
 
 ```python
@@ -31,7 +31,7 @@ Normalize activations of the previous layer at each batch.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L101)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L103)</span>
 ## LocalResponseNormalization
 
 ```python
@@ -53,7 +53,7 @@ Local Response Normalization.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L135)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L137)</span>
 ## L2Normalization
 
 ```python

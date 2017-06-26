@@ -6,7 +6,6 @@ import os.path
 import re
 import shutil
 
-import polyaxon
 from polyaxon import (
     activations,
     initializations,
@@ -15,6 +14,10 @@ from polyaxon import (
     regularizations,
     optimizers,
     variables)
+from polyaxon import bridges
+from polyaxon import decoders
+from polyaxon import encoders
+from polyaxon import models
 from polyaxon.datasets import cifar10, flowers17, mnist
 from polyaxon.datasets.converters import (
     ImageReader,
@@ -24,13 +27,11 @@ from polyaxon.datasets.converters import (
     JPEGImageReader,
     ImagesToTFExampleConverter
 )
-from polyaxon.experiments import estimator, experiment, hooks, subgraph, summarizer
-from polyaxon import models
-from polyaxon import bridges
-from polyaxon import encoders
-from polyaxon import decoders
+from polyaxon.estimators import estimator, hooks
+from polyaxon.experiments import experiment
 from polyaxon.layers import convolutional, core, embedding, normalizations, recurrent
-from polyaxon.libs import configs, getters, utils
+from polyaxon.libs import configs, getters, utils, subgraph
+from polyaxon.models import summarizer
 from polyaxon.processing import (
     CategoricalVocabulary,
     CategoricalProcessor,
@@ -77,8 +78,10 @@ PAGES = [
             experiment.run_experiment
         ],
     },
+
+    # Estimators
     {
-        'page': 'experiments/estimator.md',
+        'page': 'estimators/estimator.md',
         'classes': [estimator.Estimator],
         'classes_functions': [
             estimator.Estimator.export_savedmodel,
@@ -90,22 +93,7 @@ PAGES = [
         ]
     },
     {
-        'page': 'experiments/subgraph.md',
-        'classes': [subgraph.SubGraph]
-    },
-    {
-        'page': 'experiments/summarizer.md',
-        'classes': [summarizer.SummaryOptions, summarizer.SummaryTypes],
-        'functions': [
-            summarizer.add_learning_rate_summaries,
-            summarizer.add_loss_summaries,
-            summarizer.add_activations_summary,
-            summarizer.add_gradients_summary,
-            summarizer.add_trainable_vars_summary,
-        ],
-    },
-    {
-        'page': 'experiments/hooks.md',
+        'page': 'estimators/hooks.md',
         'classes': hooks.HOOKS.values()
     },
 
@@ -132,6 +120,17 @@ PAGES = [
             models.Regressor,
             models.Classifier,
             models.Generator
+        ],
+    },
+    {
+        'page': 'models/summarizer.md',
+        'classes': [summarizer.SummaryOptions, summarizer.SummaryTypes],
+        'functions': [
+            summarizer.add_learning_rate_summaries,
+            summarizer.add_loss_summaries,
+            summarizer.add_activations_summary,
+            summarizer.add_gradients_summary,
+            summarizer.add_trainable_vars_summary,
         ],
     },
 
@@ -355,6 +354,10 @@ PAGES = [
     {
         'page': 'variables.md',
         'all_module_functions': [variables],
+    },
+    {
+        'page': 'subgraph.md',
+        'classes': [subgraph.SubGraph]
     },
 
     # Datasets

@@ -63,7 +63,7 @@ Optimizer that implements the gradient descent algorithm.
 
 
 ```python
-momentum(learning_rate=0.001, momentum=0.9, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='Momentum')
+momentum(learning_rate=0.001, momentum=0.9, decay_type='', decay_rate=0.0, decay_steps=10000, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='Momentum')
 ```
 
 
@@ -98,7 +98,7 @@ computed as:
 
 
 ```python
-nesterov(learning_rate=0.001, momentum=0.9, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, use_locking=False, global_step=None, name='Momentum')
+nesterov(learning_rate=0.001, momentum=0.9, decay_type='', decay_rate=0.0, decay_steps=10000, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, use_locking=False, global_step=None, name='Momentum')
 ```
 
 
@@ -131,7 +131,7 @@ See [Sutskever et. al., 2013](http://jmlr.org/proceedings/papers/v28/sutskever13
 
 
 ```python
-rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='RMSProp')
+rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_type='', decay_rate=0.0, decay_steps=10000, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='RMSProp')
 ```
 
 
@@ -163,7 +163,7 @@ Divide gradient by the root of this average.
 
 
 ```python
-adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-08, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='Adam')
+adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-08, decay_type='', decay_rate=0.0, decay_steps=10000, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='Adam')
 ```
 
 
@@ -197,7 +197,7 @@ current good choice is 1.0 or 0.1.
 
 
 ```python
-adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='AdaGrad')
+adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type='', decay_rate=0.0, decay_steps=10000, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='AdaGrad')
 ```
 
 
@@ -225,7 +225,7 @@ Optimizer that implements AdaGrad.
 
 
 ```python
-ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=0.1, l1_regularization_strength=0.0, l2_regularization_strength=0.0, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='Ftrl')
+ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=0.1, l1_regularization_strength=0.0, l2_regularization_strength=0.0, decay_type='', decay_rate=0.0, decay_steps=10000, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='Ftrl')
 ```
 
 
@@ -265,7 +265,7 @@ Adagrad with `learning_rate_power=-0.5`, or like gradient descent with
 
 
 ```python
-adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type='', decay_rate=0.0, decay_steps=100, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='AdaDelta')
+adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type='', decay_rate=0.0, decay_steps=10000, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, global_step=None, use_locking=False, name='AdaDelta')
 ```
 
 
