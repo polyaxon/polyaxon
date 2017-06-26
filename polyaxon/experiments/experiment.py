@@ -6,7 +6,6 @@ import os
 import time
 
 import tensorflow as tf
-
 from tensorflow.contrib.learn.python.learn import export_strategy
 from tensorflow.contrib.learn.python.learn.estimators import run_config
 from tensorflow.contrib.learn.python.learn.learn_runner import _is_distributed
@@ -16,7 +15,7 @@ from tensorflow.python.training import basic_session_run_hooks, saver, server_li
 from tensorflow.python.util import compat
 
 from polyaxon import Modes
-from polyaxon.experiments.estimator import Estimator
+from polyaxon.estimators.estimator import Estimator
 from polyaxon.libs import getters
 from polyaxon.libs.utils import new_attr_context
 from polyaxon.processing.input_data import create_input_data_fn

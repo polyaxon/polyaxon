@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from .modes import Modes
 from . import experiments
+from . import estimators
 from . import models
 from . import bridges
 from . import encoders

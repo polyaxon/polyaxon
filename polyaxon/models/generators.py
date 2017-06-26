@@ -135,7 +135,7 @@ class Generator(BaseModel):
 
     def _build(self, features, labels=None, params=None, config=None):
         # Pre-process features and labels
-        features, labels = self._preprocess(self.mode, features, labels)
+        features, labels = self._preprocess(features, labels)
         results = self._call_graph_fn(inputs=features)
         if not isinstance(results, BridgeSpec):
             raise ValueError('`bridge_fn` should return a BridgeSpec.')

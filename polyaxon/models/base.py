@@ -2,18 +2,17 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
-
 from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.training import training
 
 from polyaxon import Modes
-from polyaxon.experiments import summarizer
 from polyaxon.libs import configs, getters
 from polyaxon.libs.configs import OptimizerConfig
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments, get_shape
 from polyaxon.metrics import ARGMAX_METRICS
+from polyaxon.models import summarizer
 
 
 class BaseModel(GraphModule):
