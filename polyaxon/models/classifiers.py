@@ -51,10 +51,10 @@ class Classifier(BaseModel):
             eval_metrics_config=eval_metrics_config, summaries=summaries,
             clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
 
-    def _preprocess(self, mode, features, labels):
+    def _preprocess(self, features, labels):
         if isinstance(labels, Mapping):
             labels = labels['label']
 
         if self.one_hot_encode:
-            labels = OneHotEncoding(mode, n_classes=self.n_classes)(labels)
-        return super(Classifier, self)._preprocess(mode, features, labels)
+            labels = OneHotEncoding(self.mode, n_classes=self.n_classes)(labels)
+        return super(Classifier, self)._preprocess(features, labels)

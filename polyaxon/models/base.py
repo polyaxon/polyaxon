@@ -22,7 +22,7 @@ class BaseModel(GraphModule):
     Args:
          mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
          model_type: `str`, the type of this model.
-            Possible values: `regressor`, `classifier`, `generator`
+            Possible values: `Regressor`, `Classifier`, `Generator`, 'RL'
          graph_fn: Graph function. Follows the signature:
              * Args:
                  * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
@@ -43,6 +43,7 @@ class BaseModel(GraphModule):
         REGRESSOR = 'Regressor'
         CLASSIFIER = 'Classifier'
         GENERATOR = 'Generator'
+        RL = 'RL'
 
         VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
 
@@ -76,20 +77,19 @@ class BaseModel(GraphModule):
         else:
             raise ValueError("`{}` must be provided to Model.".format(function_name))
 
-    def _call_graph_fn(self, mode, inputs):
+    def _call_graph_fn(self, inputs):
         """Calls model function with support of 2, 3 or 4 arguments.
 
         Args:
-            mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
             inputs: `Tensor` or `dict` of tensors
 
         Raises:
             TypeError: if the mode does not correspond to the model_type.
         """
-        if mode in [Modes.GENERATE, Modes.ENCODE] and self.model_type != self.Types.GENERATOR:
+        if self.mode in [Modes.GENERATE, Modes.ENCODE] and self.model_type != self.Types.GENERATOR:
             raise TypeError("Current model type `{}` does not support passed mode `{}`.".format(
-                self.model_type, mode))
-        return self._graph_fn(mode=mode, inputs=inputs)
+                self.model_type, self.mode))
+        return self._graph_fn(mode=self.mode, inputs=inputs)
 
     def _clip_gradients_fn(self, grads_and_vars):
         """Clips gradients by global norm."""
@@ -223,7 +223,7 @@ class BaseModel(GraphModule):
 
         return train_op
 
-    def _preprocess(self, mode, features, labels):
+    def _preprocess(self, features, labels):
         """Model specific preprocessing."""
         return features, labels
 
@@ -258,8 +258,8 @@ class BaseModel(GraphModule):
     def _build(self, features, labels, params=None, config=None):
         """Build the different operation of the model."""
         # Pre-process features and labels
-        features, labels = self._preprocess(self.mode, features, labels)
-        results = self._call_graph_fn(mode=self.mode, inputs=features)
+        features, labels = self._preprocess(features, labels)
+        results = self._call_graph_fn(inputs=features)
 
         loss = None
         train_op = None
