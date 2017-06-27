@@ -88,3 +88,41 @@ class TestGraphModule(test.TestCase):
 
             assert lx_results_assign[0] == ly_results_assign[0][0]
             assert lx_results_assign[0] == ly_results_assign[1][0]
+
+    def test_copy_from(self):
+        l1 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1)
+        l2 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1)
+
+        x = tf.placeholder(dtype=tf.float32, shape=[1, 1])
+
+        lx1 = l1(x)
+        lx2 = l2(x)
+
+        init_all_op = tf.global_variables_initializer()
+        copy_op = l2.copy_from(l1)
+        assign_op = l1.get_variables()[0].assign_add([[1]])
+
+        with tf.Session('') as sess:
+            sess.run(init_all_op)
+
+            # Check that initially they have different values
+            lx1_results = lx1.eval({x: [[1]]})
+            lx2_results = lx2.eval({x: [[1]]})
+
+            assert lx1_results[0] != lx2_results[0]
+
+            # Copying the variables should make the layers evaluate to the same value
+            sess.run(copy_op)
+
+            lx1_results = lx1.eval({x: [[1]]})
+            lx2_results = lx2.eval({x: [[1]]})
+
+            assert lx1_results[0] == lx2_results[0]
+
+            # Changing a layer does not affect the other layer
+            sess.run(assign_op)
+
+            lx1_results = lx1.eval({x: [[1]]})
+            lx2_results = lx2.eval({x: [[1]]})
+
+            assert lx1_results[0] != lx2_results[0]
