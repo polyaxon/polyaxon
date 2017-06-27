@@ -17,9 +17,9 @@ from tensorflow.python.platform import tf_logging as logging
 from polyaxon.libs import MAPPING_COLLECTION
 
 
-def track(tensor, collection, scope=None):
+def track(tensor, collection, module_name=None):
     """Track tensor by adding it to the collection."""
-    _collection = '{}/{}'.format(collection, scope) if scope else collection
+    _collection = '{}/{}'.format(collection, module_name) if module_name else collection
     if isinstance(tensor, Mapping):
         if collection not in MAPPING_COLLECTION:
             raise TypeError("The collection `{}` does not expect a map type, received {}".format(
@@ -34,17 +34,17 @@ def track(tensor, collection, scope=None):
         tf.add_to_collection(name=_collection, value=tensor)
 
 
-def get_tracked(collection, scope=None):
+def get_tracked(collection, module_name=None, scope=None):
     """Returns a list of values in the collection with the given `collection`."""
-    _collection = '{}/{}'.format(collection, scope) if scope else collection
+    _collection = '{}/{}'.format(collection, module_name) if module_name else collection
     if collection in MAPPING_COLLECTION:
         key_collection = _collection + '_keys'
         value_collection = _collection + '_values'
         keys = tf.get_collection(key_collection)
-        values = tf.get_collection(value_collection)
+        values = tf.get_collection(value_collection, scope=scope)
         return dict(zip(keys, values))
     else:
-        return tf.get_collection(key=_collection)
+        return tf.get_collection(key=_collection, scope=scope)
 
 
 def get_shape(x):
