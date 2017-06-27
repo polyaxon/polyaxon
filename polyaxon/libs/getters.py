@@ -15,6 +15,18 @@ def get_optimizer(module, **kwargs):
         return module()
 
 
+def get_exploration(module, **kwargs):
+    from polyaxon.rl.explorations import EXPLORATIONS
+
+    if isinstance(module, six.string_types):
+        return EXPLORATIONS[module](**kwargs)()
+
+    if hasattr(module, '__call__'):
+        return module()
+
+    raise TypeError('Exploration `{}` is not supported.'.format(module))
+
+
 def get_activation(module, **kwargs):
     from polyaxon.activations import ACTIVATIONS
 
