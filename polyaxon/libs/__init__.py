@@ -6,3 +6,4 @@ from . import getters
 from . import configs
 from . import utils
 from .subgraph import SubGraph
+from .template_module import GraphModule
