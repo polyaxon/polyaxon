@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import functools
+
 import tensorflow as tf
 import polyaxon as plx
 
@@ -9,7 +11,6 @@ from tensorflow.python.platform import test
 
 
 class DummyModule(plx.libs.GraphModule):
-
     def _build(self, incoming, *args, **kwargs):
         pass
 
@@ -66,7 +67,7 @@ class TestGraphModule(test.TestCase):
         init_all_op = tf.global_variables_initializer()
         assign_op = l.get_variables()[0].assign_add([[1]])
 
-        with tf.Session('') as sess:
+        with self.test_session() as sess:
             sess.run(init_all_op)
             lx_results = lx.eval({x: [[1]]})
             ly_results = ly.eval({y: [[1], [1]]})
@@ -102,7 +103,7 @@ class TestGraphModule(test.TestCase):
         copy_op = l2.copy_from(l1)
         assign_op = l1.get_variables()[0].assign_add([[1]])
 
-        with tf.Session('') as sess:
+        with self.test_session() as sess:
             sess.run(init_all_op)
 
             # Check that initially they have different values
@@ -126,3 +127,39 @@ class TestGraphModule(test.TestCase):
             lx2_results = lx2.eval({x: [[1]]})
 
             assert lx1_results[0] != lx2_results[0]
+
+
+class TestFunctionModule(test.TestCase):
+    def test_checks_function(self):
+        with self.assertRaisesRegexp(TypeError, "`build_fn` must be callable."):
+            plx.libs.FunctionModule(mode=plx.Modes.TRAIN, build_fn='not_a_function')
+
+        with self.assertRaisesRegexp(ValueError, "`build_fn` must include `mode` argument."):
+            plx.libs.FunctionModule(mode=plx.Modes.TRAIN, build_fn=lambda x: x)
+
+    def test_sharing(self):
+        batch_size = 3
+        in_size = 4
+        inputs1 = tf.placeholder(tf.float32, shape=[batch_size, in_size])
+        inputs2 = tf.placeholder(tf.float32, shape=[batch_size, in_size])
+
+        def dummy_fn(mode, inputs, output_size):
+            weight_shape = [inputs.get_shape().as_list()[-1], output_size]
+            weight = tf.get_variable("w", shape=weight_shape, dtype=inputs.dtype)
+            return tf.matmul(inputs, weight)
+
+        build_fn = functools.partial(dummy_fn, output_size=10)
+        model = plx.libs.FunctionModule(plx.Modes.TRAIN, build_fn)
+        outputs1 = model(inputs1)
+        outputs2 = model(inputs2)
+
+        self.assertEqual(model.scope_name(), "dummy_fn")
+
+        import numpy as np
+        input_data = np.random.rand(batch_size, in_size)
+
+        with self.test_session() as sess:
+            sess.run(tf.global_variables_initializer())
+            outputs1, outputs2 = sess.run(
+                [outputs1, outputs2], feed_dict={inputs1: input_data, inputs2: input_data})
+            self.assertAllClose(outputs1, outputs2)

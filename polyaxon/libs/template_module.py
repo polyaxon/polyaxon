@@ -9,7 +9,7 @@ import tensorflow as tf
 
 from tensorflow.python.platform import tf_logging as logging
 
-from polyaxon.libs.utils import get_tracked
+from polyaxon.libs.utils import get_tracked, get_arguments, get_function_name
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -35,8 +35,9 @@ class GraphModule(object):
         IMAGE_PROCESSOR = 'image_processor'
         PIPELINE = 'pipeline'
         BRIDGE = 'bridge'
+        FUNCTION = 'function'
 
-        VALUES = [MODEL, LAYER, SUBGRAPH, IMAGE_PROCESSOR, PIPELINE, BRIDGE]
+        VALUES = [MODEL, LAYER, SUBGRAPH, IMAGE_PROCESSOR, PIPELINE, BRIDGE, FUNCTION]
 
     def __init__(self, mode, name, module_type=None):
         self.name = name
@@ -154,6 +155,7 @@ class GraphModule(object):
 @six.add_metaclass(abc.ABCMeta)
 class BaseLayer(GraphModule):
     """Convenience class to create layers. See `GraphModule`'s docstring."""
+
     def __init__(self, mode, name):
         super(BaseLayer, self).__init__(mode=mode, name=name, module_type=self.ModuleType.LAYER)
 
@@ -161,6 +163,61 @@ class BaseLayer(GraphModule):
 @six.add_metaclass(abc.ABCMeta)
 class ImageProcessorModule(GraphModule):
     """Convenience class to create image processors. See `GraphModule`'s docstring."""
+
     def __init__(self, mode, name):
         super(ImageProcessorModule, self).__init__(
             mode=mode, name=name, module_type=self.ModuleType.IMAGE_PROCESSOR)
+
+
+class FunctionModule(GraphModule):
+    """Constructs a module with a given build function.
+    The Module class can be used to wrap a function assembling a network into a
+    module.
+    For example, the following code implements a simple one-hidden-layer MLP
+    model by defining a function called make_model and using a Module instance
+    to wrap it.
+    ```python
+    >>> import polyaxon as plx
+
+    >>> def model_fn(mode, inputs):
+    >>>     x = plx.layers.FullyConnected(mode, num_units=10)(inputs)
+    >>>     x = plx.layers.FullyConnected(mode, num_units=10)(x)
+    >>>     return x
+
+    >>> model = plx.libs.FunctionModule(mode=plx.Modes.TRAIN, name='simple_mlp', build_fn=model_fn)
+    >>> model(data)
+    ```
+
+    Args:
+        build: Callable to be invoked when connecting the module to the graph.
+            The `build` function is invoked when the module is called, and its
+            role is to specify how to add elements to the Graph, and how to
+            compute output Tensors from input Tensors.
+            The `build` function signature can include the following parameters:
+                `*args` - Input Tensors.
+                `**kwargs` - Additional Python parameters controlling connection.
+
+        name: Module name. If set to `None` (the default), the name will be set to
+            that of the `build` callable converted to `snake_case`. If `build` has
+            no name, the name will be 'module'.
+        Raises:
+            TypeError: If build is not callable.
+    """
+
+    def __init__(self, mode, build_fn, name=None):
+        if not callable(build_fn):
+            raise TypeError("`build_fn` must be callable.")
+
+        build_fn_args = get_arguments(build_fn)
+        if 'mode' not in build_fn_args:
+            raise ValueError("`build_fn` must include `mode` argument.")
+
+        self._build_fn = build_fn
+        super(FunctionModule, self).__init__(
+            mode=mode,
+            name=name or get_function_name(build_fn),
+            module_type=self.ModuleType.IMAGE_PROCESSOR)
+
+    def _build(self, *args, **kwargs):
+        """Forwards call to the passed-in build function."""
+        return self._build_fn(self.mode, *args, **kwargs)

@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import contextlib
+import functools
 import inspect
 import uuid
 import six
@@ -253,12 +254,12 @@ def get_arguments(func):
     if hasattr(func, '__code__'):
         # Regular function.
         return inspect.getargspec(func).args
-    elif hasattr(func, '__call__'):
-        # Callable object.
-        return get_arguments(func.__call__)
     elif hasattr(func, 'func'):
         # Partial function.
         return get_arguments(func.func)
+    elif hasattr(func, '__call__'):
+        # Callable object.
+        return get_arguments(func.__call__)
 
 
 def extract_batch_length(values):
@@ -314,6 +315,19 @@ def new_attr_context(obj, attr):
         yield
     finally:
         setattr(obj, attr, saved)
+
+
+def get_function_name(func):
+    """Returns a module name for a callable or `None` if no name can be found."""
+    if isinstance(func, functools.partial):
+        return get_function_name(func.func)
+
+    try:
+        name = func.__name__
+    except AttributeError:
+        return None
+
+    return name
 
 
 EPSILON = 1e-10
