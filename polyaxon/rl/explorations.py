@@ -2,6 +2,7 @@ from collections import OrderedDict
 
 import tensorflow as tf
 
+from polyaxon.libs.utils import get_arguments
 from polyaxon.rl import exploration_decay
 
 
@@ -59,7 +60,7 @@ def random():
     return exploration
 
 
-def decay(exploration_rate=0.1, decay_type='linear', start_decay_at=0, stop_decay_at=1e9,
+def decay(exploration_rate=0.1, decay_type='polynomial_decay', start_decay_at=0, stop_decay_at=1e9,
           decay_rate=0., staircase=False, decay_steps=10000, min_exploration_rate=0):
     """Builds a decaying exploration.
 
@@ -87,16 +88,31 @@ def decay(exploration_rate=0.1, decay_type='linear', start_decay_at=0, stop_deca
             episode: the current episode.
             timestep: the current timestep.
         """
+        timestep = tf.to_int32(timestep)
         decay_type_fn = getattr(exploration_decay, decay_type)
-        decayed_epislon = decay_type_fn(
+        kwargs = dict(
             exploration_rate=exploration_rate,
-            global_step=tf.minimum(timestep, stop_decay_at) - start_decay_at,
+            timestep=tf.minimum(timestep, tf.to_int32(stop_decay_at)) - tf.to_int32(start_decay_at),
             decay_steps=decay_steps,
-            min_exploration_rate=min_exploration_rate,
-            decay_rate=decay_rate,
-            staircase=staircase,
-            name="decayed_learning_rate")
-        return decayed_epislon
+            name="decayed_exploration_rate"
+        )
+        decay_fn_args = get_arguments(decay_type_fn)
+        if 'decay_rate' in decay_fn_args:
+            kwargs['decay_rate'] = decay_rate
+        if 'staircase' in decay_fn_args:
+            kwargs[staircase] = staircase
+
+        decayed_exploration_rate = decay_type_fn(**kwargs)
+
+        final_exploration_rate = tf.train.piecewise_constant(
+            x=timestep,
+            boundaries=[start_decay_at],
+            values=[exploration_rate, decayed_exploration_rate])
+
+        if min_exploration_rate:
+            final_exploration_rate = tf.maximum(final_exploration_rate, min_exploration_rate)
+
+        return final_exploration_rate
 
     return exploration
 

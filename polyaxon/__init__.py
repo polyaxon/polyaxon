@@ -17,6 +17,7 @@ from . import losses
 from . import metrics
 from . import optimizers
 from . import regularizations
+from .rl import explorations
 from . import variables
 from . import datasets
 from . import processing

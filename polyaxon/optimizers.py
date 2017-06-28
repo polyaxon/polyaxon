@@ -6,7 +6,7 @@ from collections import OrderedDict
 import tensorflow as tf
 from tensorflow.python.training.training_util import get_global_step
 
-from polyaxon.libs.utils import track
+from polyaxon.libs.utils import track, get_arguments
 
 
 def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_rate,
@@ -45,15 +45,21 @@ def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_
     def decay_fn(learning_rate, global_step):
         """The computed learning rate decay function."""
         global_step = tf.to_int32(global_step)
-
         decay_type_fn = getattr(tf.train, decay_type)
-        decayed_learning_rate = decay_type_fn(
+        kwargs = dict(
             learning_rate=learning_rate,
             global_step=tf.minimum(global_step, stop_decay_at) - start_decay_at,
             decay_steps=decay_steps,
-            decay_rate=decay_rate,
             staircase=staircase,
-            name="decayed_learning_rate")
+            name="decayed_learning_rate"
+        )
+        decay_fn_args = get_arguments(decay_type_fn)
+        if 'decay_rate' in decay_fn_args:
+            kwargs['decay_rate'] = decay_rate
+        if 'staircase' in decay_fn_args:
+            kwargs[staircase] = staircase
+
+        decayed_learning_rate = decay_type_fn(**kwargs)
 
         final_lr = tf.train.piecewise_constant(
             x=global_step,
