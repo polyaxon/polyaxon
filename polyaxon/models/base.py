@@ -35,8 +35,11 @@ class BaseModel(GraphModule):
          clip_embed_gradients: `float`. Embedding gradients clipping to a specified value.
          name: `str`, the name of this model, everything will be encapsulated inside this scope.
 
-     Returns:
+    Returns:
         `EstimatorSpec`
+
+    Raises:
+            TypeError: if the mode does not correspond to the model_type.
     """
     class Types(object):
         REGRESSOR = 'Regressor'
@@ -49,6 +52,12 @@ class BaseModel(GraphModule):
     def __init__(self, mode, model_type, graph_fn, loss_config, optimizer_config=None,
                  eval_metrics_config=None, summaries='all', clip_gradients=0.5,
                  clip_embed_gradients=0.1, name="Model"):
+
+        # Check if mode corresponds to the correct model
+        if mode in [Modes.GENERATE, Modes.ENCODE] and model_type != self.Types.GENERATOR:
+            raise TypeError("Current model type `{}` does not support passed mode `{}`.".format(
+                model_type, mode))
+
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
         self.loss_config = loss_config
         self.optimizer_config = optimizer_config or OptimizerConfig('adam', learning_rate=0.001)
@@ -77,17 +86,11 @@ class BaseModel(GraphModule):
             raise ValueError("`{}` must be provided to Model.".format(function_name))
 
     def _call_graph_fn(self, inputs):
-        """Calls model function with support of 2, 3 or 4 arguments.
+        """Calls graph function.
 
         Args:
             inputs: `Tensor` or `dict` of tensors
-
-        Raises:
-            TypeError: if the mode does not correspond to the model_type.
         """
-        if self.mode in [Modes.GENERATE, Modes.ENCODE] and self.model_type != self.Types.GENERATOR:
-            raise TypeError("Current model type `{}` does not support passed mode `{}`.".format(
-                self.model_type, self.mode))
         return self._graph_fn(mode=self.mode, inputs=inputs)
 
     def _clip_gradients_fn(self, grads_and_vars):
@@ -231,12 +234,12 @@ class BaseModel(GraphModule):
         """Creates the dictionary of predictions that is returned by the model."""
         predictions = flatten_dict({'results': results})
         # Add features and, if available, labels to predictions
-        predictions.update(flatten_dict({'features': features}))  # TODO: source_ids ?
+        predictions.update(flatten_dict({'features': features}))
         if labels is not None:
             predictions.update(flatten_dict({'labels': labels}))
 
         if losses is not None:
-            predictions['losses'] = losses  # TODO: transpose_batch_time(losses)
+            predictions['losses'] = losses
 
         return predictions
 
@@ -277,7 +280,7 @@ class BaseModel(GraphModule):
                                                   labels=labels, losses=losses)
 
         # We add 'useful' tensors to the graph collection so that we
-        # can easly find them in our hooks/monitors.
+        # can easily find them in our hooks/monitors.
         track(predictions, tf.GraphKeys.PREDICTIONS)
 
         return EstimatorSpec(mode=self.mode,
