@@ -57,7 +57,7 @@ def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_
         if 'decay_rate' in decay_fn_args:
             kwargs['decay_rate'] = decay_rate
         if 'staircase' in decay_fn_args:
-            kwargs[staircase] = staircase
+            kwargs['staircase'] = staircase
 
         decayed_learning_rate = decay_type_fn(**kwargs)
 

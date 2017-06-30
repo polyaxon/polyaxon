@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
 from collections import OrderedDict
 
 import tensorflow as tf
+from tensorflow.python.training.training_util import get_global_step
 
-from polyaxon.libs.utils import get_arguments
+from polyaxon.libs.utils import get_arguments, track
 from polyaxon.rl import exploration_decay
 
 
@@ -15,49 +19,25 @@ def constant(value=0.5):
     Returns:
         `function` the exploration function logic.
     """
-    def exploration(episode, timestep):
-        """
-        Args:
-            episode: the current episode.
-            timestep: the current timestep.
-        """
-        return value
-
-    return exploration
+    return value
 
 
 def greedy():
-    """Builds a greedy exploration.
+    """Builds a greedy exploration. (never selects random values, i.e. random() < 0 == False).
 
     Returns:
         `function` the exploration function logic.
     """
-    def exploration(episode, timestep):
-        """
-        Args:
-            episode: the current episode.
-            timestep: the current timestep.
-        """
-        return constant(0)
-
-    return exploration
+    return constant(0)
 
 
 def random():
-    """Builds a random exploration.
+    """Builds a random exploration (always selects random values, i.e. random() < 1 == True).
 
     Returns:
         `function` the exploration function logic.
     """
-    def exploration(episode, timestep):
-        """
-        Args:
-            episode: the current episode.
-            timestep: the current timestep.
-        """
-        return constant(1)
-
-    return exploration
+    return constant(1)
 
 
 def decay(exploration_rate=0.1, decay_type='polynomial_decay', start_decay_at=0, stop_decay_at=1e9,
@@ -82,10 +62,10 @@ def decay(exploration_rate=0.1, decay_type='polynomial_decay', start_decay_at=0,
     Returns:
         `function` the exploration function logic.
     """
-    def exploration(episode, timestep):
-        """
+    def decay_fn(timestep):
+        """The computed decayed exploration rate.
+
         Args:
-            episode: the current episode.
             timestep: the current timestep.
         """
         timestep = tf.to_int32(timestep)
@@ -100,7 +80,7 @@ def decay(exploration_rate=0.1, decay_type='polynomial_decay', start_decay_at=0,
         if 'decay_rate' in decay_fn_args:
             kwargs['decay_rate'] = decay_rate
         if 'staircase' in decay_fn_args:
-            kwargs[staircase] = staircase
+            kwargs['staircase'] = staircase
 
         decayed_exploration_rate = decay_type_fn(**kwargs)
 
@@ -114,7 +94,9 @@ def decay(exploration_rate=0.1, decay_type='polynomial_decay', start_decay_at=0,
 
         return final_exploration_rate
 
-    return exploration
+    learning_rate = decay_fn(get_global_step())
+    track(learning_rate, tf.GraphKeys.EXPLORATION_RATE)
+    return learning_rate
 
 
 EXPLORATIONS = OrderedDict([

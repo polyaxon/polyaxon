@@ -164,6 +164,7 @@ def clipped_delta_loss(weights=1.0, clip_value_min=-1., clip_value_max=1., name=
         delta = math_ops.subtract(y_pred, y_true)
         losses = tf.clip_by_value(delta,
                                   clip_value_min=clip_value_min, clip_value_max=clip_value_max)
+        losses = tf.square(losses)
 
         return losses
     return built_loss(inner_loss, weights, name, scope, collect)
