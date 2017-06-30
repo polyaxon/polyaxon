@@ -196,6 +196,47 @@ See `plx.image.total_variation`'s docstring
 
 ----
 
+## central_crop
+
+
+```python
+central_crop(images, central_fraction)
+```
+
+
+Crop the central region of the image.
+(A mirror to tf.image central_crop)
+
+Remove the outer parts of an image but retain the central region of the image
+along each dimension. If we specify central_fraction = 0.5, this function
+returns the region marked with "X" in the below diagram.
+
+```
+ --------
+|........|
+|..XXXX..|
+|..XXXX..|
+|........|   where "X" is the central 50% of the image.
+ --------
+```
+
+- __Args__:
+	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
+	3-D Tensor of shape `[height, width, channels]`.
+	- __central_fraction__: float (0, 1], fraction of size to crop
+
+- __Raises__:
+	- __ValueError__: if central_crop_fraction is not within (0, 1].
+
+- __Returns__:
+	If `images` was 4-D, a 4-D float Tensor of shape
+	`[batch, new_height, new_width, channels]`.
+	If `images` was 3-D, a 3-D float Tensor of shape
+	`[new_height, new_width, channels]`.
+
+
+----
+
 ## resize
 
 
@@ -240,47 +281,6 @@ ratio is not the same as `size`.
 	shape arguments to this function.
 	- __ValueError__: if `size` has invalid shape or type.
 	- __ValueError__: if an unsupported resize method is specified.
-
-- __Returns__:
-	If `images` was 4-D, a 4-D float Tensor of shape
-	`[batch, new_height, new_width, channels]`.
-	If `images` was 3-D, a 3-D float Tensor of shape
-	`[new_height, new_width, channels]`.
-
-
-----
-
-## central_crop
-
-
-```python
-central_crop(images, central_fraction)
-```
-
-
-Crop the central region of the image.
-(A mirror to tf.image central_crop)
-
-Remove the outer parts of an image but retain the central region of the image
-along each dimension. If we specify central_fraction = 0.5, this function
-returns the region marked with "X" in the below diagram.
-
-```
- --------
-|........|
-|..XXXX..|
-|..XXXX..|
-|........|   where "X" is the central 50% of the image.
- --------
-```
-
-- __Args__:
-	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
-	3-D Tensor of shape `[height, width, channels]`.
-	- __central_fraction__: float (0, 1], fraction of size to crop
-
-- __Raises__:
-	- __ValueError__: if central_crop_fraction is not within (0, 1].
 
 - __Returns__:
 	If `images` was 4-D, a 4-D float Tensor of shape

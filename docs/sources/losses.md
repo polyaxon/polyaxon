@@ -65,6 +65,62 @@ Computes Mean Square Loss.
 
 ----
 
+## huber_loss
+
+
+```python
+huber_loss(weights=1.0, clip=0.0, name='HuberLoss', scope=None, collect=True)
+```
+
+
+Computes Huber Loss for DQN.
+
+[Wikipedia link](https://en.wikipedia.org/wiki/Huber_loss)
+[DeepMind link](https://sites.google.com/a/deepmind.com/dqn/)
+
+- __Args__:
+	- __weights__: Coefficients for the loss a `scalar`.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to losses collection.
+
+- __Returns__:
+	A scalar `Tensor` representing the loss value.
+
+- __Raises__:
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
+
+----
+
+## clipped_delta_loss
+
+
+```python
+clipped_delta_loss(weights=1.0, clip_value_min=-1.0, clip_value_max=1.0, name='HuberLoss', scope=None, collect=True)
+```
+
+
+Computes clipped delta Loss for DQN.
+
+[Wikipedia link](https://en.wikipedia.org/wiki/Huber_loss)
+[DeepMind link](https://sites.google.com/a/deepmind.com/dqn/)
+
+- __Args__:
+	- __weights__: Coefficients for the loss a `scalar`.
+	- __scope__: scope to add the op to.
+	- __name__: name of the op.
+	- __collect__: add to losses collection.
+
+- __Returns__:
+	A scalar `Tensor` representing the loss value.
+
+- __Raises__:
+	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
+
+----
+
 ## softmax_cross_entropy
 
 

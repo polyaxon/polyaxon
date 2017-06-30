@@ -24,8 +24,11 @@ Base class for models.
 	 - __clip_embed_gradients__: `float`. Embedding gradients clipping to a specified value.
 	 - __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
 
- - __Returns__:
+- __Returns__:
 	`EstimatorSpec`
+
+- __Raises__:
+		- __TypeError__: if the mode does not correspond to the model_type.
 
 
 ----

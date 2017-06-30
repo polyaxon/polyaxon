@@ -13,6 +13,7 @@ from polyaxon import (
     losses,
     regularizations,
     optimizers,
+    explorations,
     variables)
 from polyaxon import bridges
 from polyaxon import decoders
@@ -114,12 +115,29 @@ PAGES = [
             models.BaseModel.batch_size
         ]
     },
+    # RL Models
+    {
+        'page': 'models/base_rl_model.md',
+        'classes': [models.RLBaseModel],
+        'classes_functions': [
+            models.RLBaseModel._build_exploration,
+            models.RLBaseModel._build_actions,
+            models.RLBaseModel._build_graph_fn,
+            models.RLBaseModel._call_graph_fn,
+            models.RLBaseModel._build_update_target_graph,
+            models.RLBaseModel._build_train_op,
+            models.RLBaseModel._preprocess,
+        ]
+    },
     {
         'page': 'models/models.md',
         'classes': [
             models.Regressor,
             models.Classifier,
-            models.Generator
+            models.Generator,
+            models.DQNModel,
+            models.DDQNModel,
+            models.NAFModel,
         ],
     },
     {
@@ -350,6 +368,10 @@ PAGES = [
     {
         'page': 'optimizers.md',
         'all_module_functions': [optimizers],
+    },
+    {
+        'page': 'explorations.md',
+        'all_module_functions': [explorations],
     },
     {
         'page': 'variables.md',

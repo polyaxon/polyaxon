@@ -1,76 +1,8 @@
-## extract_batch_length
-
-
-```python
-extract_batch_length(values)
-```
-
-
-Extracts batch length of values.
-
-----
-
-## get_tensor_batch_size
-
-
-```python
-get_tensor_batch_size(values)
-```
-
-
-Extracts batch size from tensor
-
-----
-
-## total_tensor_depth
-
-
-```python
-total_tensor_depth(tensor=None, tensor_shape=None)
-```
-
-
-Returns the size of a tensor without the first (batch) dimension
-
-----
-
-## new_attr_context
-
-
-```python
-new_attr_context()
-```
-
-
-Creates a new context in which an object's attribute can be changed.
-
-This creates a context in which an object's attribute can be changed.
-Once the context is exited, the attribute reverts to its original value.
-
-- __Args__:
-	- __obj__: An object whose attribute to restore at the end of the context.
-	- __attr__: An attribute to remember and restore at the end of the context.
-
-- __Yields__:
-	Context.
-
-- __Example__:
-```python
->>> my_obj.x = 1
->>> with _new_attr_context(my_obj, "x"):
->>> my_obj.x = 2
->>> print(my_obj.x)
->>> print(my_obj.x)
-```
-
-
-----
-
 ## track
 
 
 ```python
-track(tensor, collection, scope=None)
+track(tensor, collection, module_name=None)
 ```
 
 
@@ -82,7 +14,7 @@ Track tensor by adding it to the collection.
 
 
 ```python
-get_tracked(collection, scope=None)
+get_tracked(collection, module_name=None, scope=None)
 ```
 
 
@@ -299,3 +231,83 @@ get_arguments(func)
 
 
 Returns list of arguments this function has.
+
+----
+
+## extract_batch_length
+
+
+```python
+extract_batch_length(values)
+```
+
+
+Extracts batch length of values.
+
+----
+
+## get_tensor_batch_size
+
+
+```python
+get_tensor_batch_size(values)
+```
+
+
+Extracts batch size from tensor
+
+----
+
+## total_tensor_depth
+
+
+```python
+total_tensor_depth(tensor=None, tensor_shape=None)
+```
+
+
+Returns the size of a tensor without the first (batch) dimension
+
+----
+
+## new_attr_context
+
+
+```python
+new_attr_context()
+```
+
+
+Creates a new context in which an object's attribute can be changed.
+
+This creates a context in which an object's attribute can be changed.
+Once the context is exited, the attribute reverts to its original value.
+
+- __Args__:
+	- __obj__: An object whose attribute to restore at the end of the context.
+	- __attr__: An attribute to remember and restore at the end of the context.
+
+- __Yields__:
+	Context.
+
+- __Example__:
+```python
+>>> my_obj.x = 1
+>>> with _new_attr_context(my_obj, "x"):
+>>> my_obj.x = 2
+>>> print(my_obj.x)
+>>> print(my_obj.x)
+```
+
+
+----
+
+## get_function_name
+
+
+```python
+get_function_name(func)
+```
+
+
+Returns a module name for a callable or `None` if no name can be found.
