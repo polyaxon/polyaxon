@@ -41,7 +41,7 @@ class Regressor(BaseModel):
             eval_metrics_config=eval_metrics_config, summaries=summaries,
             clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
 
-    def _preprocess(self, mode, features, labels):
+    def _preprocess(self, features, labels):
         if isinstance(labels, Mapping):
             labels = labels['labels']
-        return super(Regressor, self)._preprocess(mode, features, labels)
+        return super(Regressor, self)._preprocess(features, labels)

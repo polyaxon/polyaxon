@@ -2,7 +2,7 @@
 
 
 ```python
-track(tensor, collection, scope=None)
+track(tensor, collection, module_name=None)
 ```
 
 
@@ -14,7 +14,7 @@ Track tensor by adding it to the collection.
 
 
 ```python
-get_tracked(collection, scope=None)
+get_tracked(collection, module_name=None, scope=None)
 ```
 
 
@@ -298,3 +298,16 @@ Once the context is exited, the attribute reverts to its original value.
 >>> print(my_obj.x)
 >>> print(my_obj.x)
 ```
+
+
+----
+
+## get_function_name
+
+
+```python
+get_function_name(func)
+```
+
+
+Returns a module name for a callable or `None` if no name can be found.

@@ -125,18 +125,18 @@ class Generator(BaseModel):
             self._total_loss = loss
         return losses, loss
 
-    def _preprocess(self, mode, features, labels=None):
+    def _preprocess(self, features, labels=None):
         if isinstance(features, Mapping):
             if len(features) > 1:
                 raise ValueError("Autoencoder accept only one feature value, "
                                  "received a dict of `{}` instead".format(list(features.keys())))
             features = list(features.values())[0]
-        return super(Generator, self)._preprocess(mode, features, labels)
+        return super(Generator, self)._preprocess(features, labels)
 
     def _build(self, features, labels=None, params=None, config=None):
         # Pre-process features and labels
-        features, labels = self._preprocess(self.mode, features, labels)
-        results = self._call_graph_fn(mode=self.mode, inputs=features)
+        features, labels = self._preprocess(features, labels)
+        results = self._call_graph_fn(inputs=features)
         if not isinstance(results, BridgeSpec):
             raise ValueError('`bridge_fn` should return a BridgeSpec.')
 

@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L64)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L66)</span>
 ## Resize
 
 ```python
@@ -9,7 +9,7 @@ See `plx.image.resize`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L119)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L121)</span>
 ## CentralCrop
 
 ```python
@@ -20,7 +20,7 @@ See `plx.image.central_crop`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L154)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L156)</span>
 ## RandomCrop
 
 ```python
@@ -31,7 +31,7 @@ See `plx.image.random_crop`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L217)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L219)</span>
 ## ExtractGlimpse
 
 ```python
@@ -42,7 +42,7 @@ See `plx.image.extract_glimpse`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L288)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L290)</span>
 ## ToBoundingBox
 
 ```python
@@ -53,7 +53,7 @@ See `plx.image.to_bounding_box`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L352)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L354)</span>
 ## Flip
 
 ```python
@@ -64,7 +64,7 @@ See `plx.image.flip`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L392)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L394)</span>
 ## Transpose
 
 ```python
@@ -75,7 +75,7 @@ See `plx.image.transpose`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L436)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L438)</span>
 ## Rotate90
 
 ```python
@@ -86,7 +86,7 @@ See `plx.image.rotate90`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L508)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L510)</span>
 ## ConvertColorSpace
 
 ```python
@@ -97,7 +97,7 @@ See `plx.image.convert_color_space`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L561)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L563)</span>
 ## ConvertImagesDtype
 
 ```python
@@ -108,7 +108,7 @@ See `plx.image.convert_images_dtype`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L605)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L607)</span>
 ## AdjustBrightness
 
 ```python
@@ -119,7 +119,7 @@ See `plx.image.adjust_brightness`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L663)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L665)</span>
 ## AdjustContrast
 
 ```python
@@ -130,7 +130,7 @@ See `plx.image.adjust_contrast`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L712)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L714)</span>
 ## AdjustHue
 
 ```python
@@ -141,7 +141,7 @@ See `plx.image.adjust_hue`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L769)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L771)</span>
 ## AdjustSaturation
 
 ```python
@@ -152,7 +152,7 @@ See `plx.image.adjust_saturation`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L812)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L814)</span>
 ## AdjustGamma
 
 ```python
@@ -163,7 +163,7 @@ See `plx.image.adjust_gamma`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L855)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L857)</span>
 ## Standardization
 
 ```python
@@ -174,7 +174,7 @@ See `plx.image.standardize`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L895)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L897)</span>
 ## DrawBoundingBoxes
 
 ```python
@@ -185,7 +185,7 @@ See `plx.image.draw_bounding_boxes`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1085)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1087)</span>
 ## TotalVariation
 
 ```python
@@ -193,6 +193,47 @@ polyaxon.processing.image.TotalVariation(mode, name='TotalVariation')
 ```
 
 See `plx.image.total_variation`'s docstring
+
+----
+
+## central_crop
+
+
+```python
+central_crop(images, central_fraction)
+```
+
+
+Crop the central region of the image.
+(A mirror to tf.image central_crop)
+
+Remove the outer parts of an image but retain the central region of the image
+along each dimension. If we specify central_fraction = 0.5, this function
+returns the region marked with "X" in the below diagram.
+
+```
+ --------
+|........|
+|..XXXX..|
+|..XXXX..|
+|........|   where "X" is the central 50% of the image.
+ --------
+```
+
+- __Args__:
+	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
+	3-D Tensor of shape `[height, width, channels]`.
+	- __central_fraction__: float (0, 1], fraction of size to crop
+
+- __Raises__:
+	- __ValueError__: if central_crop_fraction is not within (0, 1].
+
+- __Returns__:
+	If `images` was 4-D, a 4-D float Tensor of shape
+	`[batch, new_height, new_width, channels]`.
+	If `images` was 3-D, a 3-D float Tensor of shape
+	`[new_height, new_width, channels]`.
+
 
 ----
 
@@ -240,47 +281,6 @@ ratio is not the same as `size`.
 	shape arguments to this function.
 	- __ValueError__: if `size` has invalid shape or type.
 	- __ValueError__: if an unsupported resize method is specified.
-
-- __Returns__:
-	If `images` was 4-D, a 4-D float Tensor of shape
-	`[batch, new_height, new_width, channels]`.
-	If `images` was 3-D, a 3-D float Tensor of shape
-	`[new_height, new_width, channels]`.
-
-
-----
-
-## central_crop
-
-
-```python
-central_crop(images, central_fraction)
-```
-
-
-Crop the central region of the image.
-(A mirror to tf.image central_crop)
-
-Remove the outer parts of an image but retain the central region of the image
-along each dimension. If we specify central_fraction = 0.5, this function
-returns the region marked with "X" in the below diagram.
-
-```
- --------
-|........|
-|..XXXX..|
-|..XXXX..|
-|........|   where "X" is the central 50% of the image.
- --------
-```
-
-- __Args__:
-	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
-	3-D Tensor of shape `[height, width, channels]`.
-	- __central_fraction__: float (0, 1], fraction of size to crop
-
-- __Raises__:
-	- __ValueError__: if central_crop_fraction is not within (0, 1].
 
 - __Returns__:
 	If `images` was 4-D, a 4-D float Tensor of shape

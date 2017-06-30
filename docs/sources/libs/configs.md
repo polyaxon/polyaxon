@@ -1,4 +1,28 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L114)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
+## RunConfig
+
+```python
+polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
+```
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L76)</span>
+## Configurable
+
+```python
+polyaxon.libs.configs.Configurable()
+```
+
+`Configurable` is an abstract class for defining an configurable objects.
+
+A configurable class reads a configuration (YAML, Json) and create a config instance.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L123)</span>
 ## PipelineConfig
 
 ```python
@@ -23,7 +47,7 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L165)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L184)</span>
 ## InputDataConfig
 
 ```python
@@ -41,7 +65,7 @@ The InputDataConfig holds information needed to create a `InputData`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L192)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L211)</span>
 ## LossConfig
 
 ```python
@@ -57,7 +81,7 @@ The LossConfig holds information needed to create a `Loss`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L204)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L223)</span>
 ## MetricConfig
 
 ```python
@@ -73,11 +97,11 @@ The MetricConfig holds information needed to create a `Metric`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L216)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L235)</span>
 ## OptimizerConfig
 
 ```python
-polyaxon.libs.configs.OptimizerConfig(module, learning_rate=0.0001, decay_type='', decay_steps=100, decay_rate=0.99, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, sync_replicas=0, sync_replicas_to_aggregate=0, params=None)
+polyaxon.libs.configs.OptimizerConfig(module, learning_rate=0.0001, decay_type='', decay_steps=10000, decay_rate=0.99, start_decay_at=0, stop_decay_at=2147483647, min_learning_rate=1e-12, staircase=False, sync_replicas=0, sync_replicas_to_aggregate=0, params=None)
 ```
 
 The OptimizerConfig holds information needed to create a `Optimizer`.
@@ -102,7 +126,7 @@ The OptimizerConfig holds information needed to create a `Optimizer`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L254)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L282)</span>
 ## SubGraphConfig
 
 ```python
@@ -122,7 +146,7 @@ Handles also nested subgraphs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L298)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L326)</span>
 ## BridgeConfig
 
 ```python
@@ -135,7 +159,7 @@ The BridgeConfig class holds information neede to create a `Bridge` for a genera
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L308)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L336)</span>
 ## ModelConfig
 
 ```python
@@ -157,7 +181,7 @@ The ModelConfig holds information needed to create a `Model`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L359)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L396)</span>
 ## EstimatorConfig
 
 ```python
@@ -174,7 +198,7 @@ The EstimatorConfig holds information needed to create a `Estimator`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L389)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L426)</span>
 ## ExperimentConfig
 
 ```python
@@ -204,30 +228,6 @@ The ExperimentConfig holds information needed to create a `Experiment`.
 		instead of time.
 	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
 	- __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
-## RunConfig
-
-```python
-polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
-```
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L67)</span>
-## Configurable
-
-```python
-polyaxon.libs.configs.Configurable()
-```
-
-`Configurable` is an abstract class for defining an configurable objects.
-
-A configurable class reads a configuration (YAML, Json) and create a config instance.
 
 
 ----

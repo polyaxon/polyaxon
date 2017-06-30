@@ -46,7 +46,7 @@ def main(*args):
             summaries='all')
         return model(features, labels)
 
-    estimator = plx.experiments.Estimator(model_fn=model_fn,
+    estimator = plx.estimators.Estimator(model_fn=model_fn,
                                           model_dir="/tmp/polyaxon_logs/boston")
 
     # Fit

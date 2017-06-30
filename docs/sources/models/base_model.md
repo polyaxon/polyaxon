@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/base.py#L19)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/base.py#L18)</span>
 ## BaseModel
 
 ```python
@@ -10,7 +10,7 @@ Base class for models.
 - __Args__:
 	 - __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
 	 - __model_type__: `str`, the type of this model.
-		Possible values: `regressor`, `classifier`, `generator`
+		Possible values: `Regressor`, `Classifier`, `Generator`, 'RL'
 	 - __graph_fn__: Graph function. Follows the signature:
 		 * Args:
 		 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
@@ -24,8 +24,11 @@ Base class for models.
 	 - __clip_embed_gradients__: `float`. Embedding gradients clipping to a specified value.
 	 - __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
 
- - __Returns__:
+- __Returns__:
 	`EstimatorSpec`
+
+- __Raises__:
+		- __TypeError__: if the mode does not correspond to the model_type.
 
 
 ----
@@ -121,7 +124,7 @@ Creates the training operation
 
 
 ```python
-_preprocess(self, mode, features, labels)
+_preprocess(self, features, labels)
 ```
 
 

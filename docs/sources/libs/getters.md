@@ -8,6 +8,16 @@ get_optimizer(module)
 
 ----
 
+## get_exploration
+
+
+```python
+get_exploration(module)
+```
+
+
+----
+
 ## get_activation
 
 

@@ -111,6 +111,65 @@ def mean_squared_error(weights=1.0, name='MeanSquaredError', scope=None, collect
     return built_loss(inner_loss, weights, name, scope, collect)
 
 
+def huber_loss(weights=1.0, clip=0.0, name='HuberLoss', scope=None, collect=True):
+    """Computes Huber Loss for DQN.
+
+    [Wikipedia link](https://en.wikipedia.org/wiki/Huber_loss)
+    [DeepMind link](https://sites.google.com/a/deepmind.com/dqn/)
+
+    Args:
+        weights: Coefficients for the loss a `scalar`.
+        scope: scope to add the op to.
+        name: name of the op.
+        collect: add to losses collection.
+
+    Returns:
+        A scalar `Tensor` representing the loss value.
+
+    Raises:
+        ValueError: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+    """
+
+    def inner_loss(y_true, y_pred):
+        delta = math_ops.abs(math_ops.subtract(y_pred, y_true))
+        losses = math_ops.square(delta)
+        if clip > 0.0:
+            losses = tf.where(delta < clip, 0.5 * losses, delta - 0.5)
+
+        return losses
+    return built_loss(inner_loss, weights, name, scope, collect)
+
+
+def clipped_delta_loss(weights=1.0, clip_value_min=-1., clip_value_max=1., name='HuberLoss', scope=None,
+                 collect=True):
+    """Computes clipped delta Loss for DQN.
+
+    [Wikipedia link](https://en.wikipedia.org/wiki/Huber_loss)
+    [DeepMind link](https://sites.google.com/a/deepmind.com/dqn/)
+
+    Args:
+        weights: Coefficients for the loss a `scalar`.
+        scope: scope to add the op to.
+        name: name of the op.
+        collect: add to losses collection.
+
+    Returns:
+        A scalar `Tensor` representing the loss value.
+
+    Raises:
+        ValueError: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+    """
+
+    def inner_loss(y_true, y_pred):
+        delta = math_ops.subtract(y_pred, y_true)
+        losses = tf.clip_by_value(delta,
+                                  clip_value_min=clip_value_min, clip_value_max=clip_value_max)
+        losses = tf.square(losses)
+
+        return losses
+    return built_loss(inner_loss, weights, name, scope, collect)
+
+
 def softmax_cross_entropy(weights=1.0, label_smoothing=0, name='SoftmaxCrossEntropy', scope=None,
                           collect=True):
     """Computes Softmax Cross entropy (softmax categorical cross entropy).
@@ -323,4 +382,6 @@ LOSSES = OrderedDict([
     ('cosine_distance', cosine_distance),
     ('kullback_leibler_divergence', kullback_leibler_divergence),
     ('poisson_loss', poisson_loss),
+    ('huber_loss', huber_loss),
+    ('clipped_delta_loss', clipped_delta_loss),
 ])

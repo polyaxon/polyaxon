@@ -6,7 +6,6 @@ import os
 import time
 
 import tensorflow as tf
-
 from tensorflow.contrib.learn.python.learn import export_strategy
 from tensorflow.contrib.learn.python.learn.estimators import run_config
 from tensorflow.contrib.learn.python.learn.learn_runner import _is_distributed
@@ -16,7 +15,7 @@ from tensorflow.python.training import basic_session_run_hooks, saver, server_li
 from tensorflow.python.util import compat
 
 from polyaxon import Modes
-from polyaxon.experiments.estimator import Estimator
+from polyaxon.estimators.estimator import Estimator
 from polyaxon.libs import getters
 from polyaxon.libs.utils import new_attr_context
 from polyaxon.processing.input_data import create_input_data_fn
@@ -446,8 +445,7 @@ class Experiment(object):
 
         if (continuous_eval_predicate_fn is not None and
                 not callable(continuous_eval_predicate_fn)):
-            raise ValueError(
-                "`continuous_eval_predicate_fn` must be a callable, or None.")
+            raise ValueError("`continuous_eval_predicate_fn` must be a callable, or None.")
 
         eval_result = None
 
@@ -511,15 +509,9 @@ class Experiment(object):
         Returns:
             The result of the `evaluate` call to the `Estimator`.
         """
-        self._call_train(input_fn=self._train_input_fn,
-                         steps=1,
-                         hooks=self._train_hooks)
-
-        eval_result = self._call_evaluate(input_fn=self._eval_input_fn,
-                                          steps=1,
-                                          name="one_pass")
+        self._call_train(input_fn=self._train_input_fn, steps=1, hooks=self._train_hooks)
+        eval_result = self._call_evaluate(input_fn=self._eval_input_fn, steps=1, name="one_pass")
         _ = self._maybe_export(eval_result)
-
         return eval_result
 
 

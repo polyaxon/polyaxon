@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L10)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L10)</span>
 ## LoggingTensorHook
 
 ```python
-polyaxon.experiments.hooks.LoggingTensorHook(tensors, every_n_iter=None, every_n_secs=None, formatter=None)
+polyaxon.estimators.hooks.LoggingTensorHook(tensors, every_n_iter=None, every_n_secs=None, formatter=None)
 ```
 
 Prints the given tensors once every N local steps or once every N seconds.
@@ -27,11 +27,11 @@ The tensors will be printed to the log, with `INFO` severity.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L35)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L35)</span>
 ## StopAtStepHook
 
 ```python
-polyaxon.experiments.hooks.StopAtStepHook(num_steps=None, last_step=None)
+polyaxon.estimators.hooks.StopAtStepHook(num_steps=None, last_step=None)
 ```
 
 Monitor to request stop at a specified step.
@@ -56,11 +56,11 @@ call.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L60)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L60)</span>
 ## CheckpointSaverHook
 
 ```python
-polyaxon.experiments.hooks.CheckpointSaverHook(checkpoint_dir, save_secs=None, save_steps=None, saver=None, checkpoint_basename='model.ckpt', scaffold=None, listeners=None)
+polyaxon.estimators.hooks.CheckpointSaverHook(checkpoint_dir, save_secs=None, save_steps=None, saver=None, checkpoint_basename='model.ckpt', scaffold=None, listeners=None)
 ```
 
 Saves checkpoints every N steps or seconds.
@@ -85,11 +85,11 @@ Saves checkpoints every N steps or seconds.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L87)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L87)</span>
 ## StepCounterHook
 
 ```python
-polyaxon.experiments.hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
+polyaxon.estimators.hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
 ```
 
 Steps per second monitor.
@@ -98,11 +98,11 @@ Steps per second monitor.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L97)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L97)</span>
 ## NanTensorHook
 
 ```python
-polyaxon.experiments.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
+polyaxon.estimators.hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
 ```
 
 NaN Loss monitor.
@@ -118,11 +118,11 @@ Can either fail with exception or just stop training.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L113)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L113)</span>
 ## SummarySaverHook
 
 ```python
-polyaxon.experiments.hooks.SummarySaverHook(save_steps=None, save_secs=None, output_dir=None, summary_writer=None, scaffold=None, summary_op=None)
+polyaxon.estimators.hooks.SummarySaverHook(save_steps=None, save_secs=None, output_dir=None, summary_writer=None, scaffold=None, summary_op=None)
 ```
 
 Saves summaries every N steps.
@@ -149,11 +149,11 @@ Saves summaries every N steps.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L142)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L142)</span>
 ## GlobalStepWaiterHook
 
 ```python
-polyaxon.experiments.hooks.GlobalStepWaiterHook(wait_until_step)
+polyaxon.estimators.hooks.GlobalStepWaiterHook(wait_until_step)
 ```
 
 Delay execution until global step reaches to wait_until_step.
@@ -170,11 +170,11 @@ task_id=0 is the chief.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L159)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L159)</span>
 ## FinalOpsHook
 
 ```python
-polyaxon.experiments.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
+polyaxon.estimators.hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
 ```
 
 A run hook which evaluates `Tensors` at the end of a session.
@@ -187,11 +187,11 @@ A run hook which evaluates `Tensors` at the end of a session.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/hooks.py#L172)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks.py#L172)</span>
 ## StopAfterNEvalsHook
 
 ```python
-polyaxon.experiments.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
+polyaxon.estimators.hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
 ```
 
 Run hook used by the evaluation routines to run the `eval_ops` N times.

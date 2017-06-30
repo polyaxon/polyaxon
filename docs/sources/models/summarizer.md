@@ -1,18 +1,18 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/summarizer.py#L14)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/summarizer.py#L14)</span>
 ## SummaryOptions
 
 ```python
-polyaxon.experiments.summarizer.SummaryOptions()
+polyaxon.models.summarizer.SummaryOptions()
 ```
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/summarizer.py#L45)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/summarizer.py#L45)</span>
 ## SummaryTypes
 
 ```python
-polyaxon.experiments.summarizer.SummaryTypes()
+polyaxon.models.summarizer.SummaryTypes()
 ```
 
 

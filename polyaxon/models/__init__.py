@@ -7,9 +7,13 @@ from polyaxon.models.base import BaseModel
 from polyaxon.models.generators import Generator
 from polyaxon.models.classifiers import Classifier
 from polyaxon.models.regressors import Regressor
+from polyaxon.models.rl import DQNModel, DDQNModel, NAFModel
 
 MODELS = OrderedDict([
     ('Classifier', Classifier),
     ('Regressor', Regressor),
     ('Generator', Generator),
+    ('DQNModel', DQNModel),
+    ('DDQNModel', DDQNModel),
+    ('NAFModel', NAFModel),
 ])

@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import six
-
 import tensorflow as tf
 
 
@@ -14,6 +13,18 @@ def get_optimizer(module, **kwargs):
 
     if hasattr(module, '__call__'):
         return module()
+
+
+def get_exploration(module, **kwargs):
+    from polyaxon.rl.explorations import EXPLORATIONS
+
+    if isinstance(module, six.string_types):
+        return EXPLORATIONS[module](**kwargs)
+
+    if hasattr(module, '__call__'):
+        return module()
+
+    raise TypeError('Exploration `{}` is not supported.'.format(module))
 
 
 def get_activation(module, **kwargs):
@@ -105,7 +116,7 @@ def get_loss(module, y_pred, y_true, **kwargs):
 
 
 def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):
-    from polyaxon.experiments.subgraph import SubGraph
+    from polyaxon.libs.subgraph import SubGraph
     from polyaxon.processing.pipelines import PIPELINES
 
     subgraphs_by_features = {}
@@ -125,7 +136,7 @@ def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features
 
 def get_graph_fn(config, graph_class=None):
     """Creates the graph operations."""
-    from polyaxon.experiments.subgraph import SubGraph
+    from polyaxon.libs.subgraph import SubGraph
 
     if graph_class is None:
         graph_class = SubGraph
@@ -211,7 +222,7 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, 
 
 
 def get_estimator(estimator_config, model_config, run_config):
-    from polyaxon.experiments.estimator import ESTIMATORS
+    from polyaxon.estimators import ESTIMATORS
 
     model_fn = get_model_fn(model_config)
 
@@ -224,7 +235,7 @@ def get_estimator(estimator_config, model_config, run_config):
 
 
 def get_hooks(hooks_config):
-    from polyaxon.experiments.hooks import HOOKS
+    from polyaxon.estimators.hooks import HOOKS
 
     hooks = []
     for hook, params in hooks_config:

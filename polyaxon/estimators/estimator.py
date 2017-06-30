@@ -3,28 +3,24 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 import os
-from collections import OrderedDict
-
-import six
-
-from six.moves import xrange
 
 import numpy as np
+import six
 import tensorflow as tf
-
+from six.moves import xrange
 from tensorflow.contrib import metrics as metrics_lib
 from tensorflow.contrib.framework import list_variables, load_variable
 from tensorflow.contrib.learn.python.learn.estimators.estimator import _get_replica_device_setter
 from tensorflow.core.framework import summary_pb2
 from tensorflow.core.protobuf import config_pb2
 from tensorflow.python.client import session as tf_session
-from tensorflow.python.estimator.model_fn import EstimatorSpec, MetricKeys
 from tensorflow.python.estimator.export.export import (build_all_signature_defs,
                                                        get_timestamped_export_dir)
+from tensorflow.python.estimator.model_fn import EstimatorSpec, MetricKeys
 from tensorflow.python.framework import ops, random_seed
 from tensorflow.python.ops import control_flow_ops
-from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.platform import gfile
+from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.saved_model import builder as saved_model_builder
 from tensorflow.python.saved_model import tag_constants
 from tensorflow.python.training import (evaluation,
@@ -35,8 +31,8 @@ from tensorflow.python.training import (evaluation,
 from tensorflow.python.training.session_run_hook import SessionRunHook
 from tensorflow.python.util import compat
 
-from polyaxon.experiments import hooks as plx_hooks
 from polyaxon import Modes
+from polyaxon.estimators import hooks as plx_hooks
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.dicts import dict_to_str
 from polyaxon.libs.exceptions import EstimatorNotTrainedError
@@ -44,7 +40,7 @@ from polyaxon.libs.utils import extract_batch_length, generate_model_dir, get_ar
 
 
 class Estimator(object):
-    """Estimator class is the basic TensorFlow model trainer/evaluator.
+    """Estimator class is a model trainer/evaluator.
 
     Constructs an `Estimator` instance.
 
@@ -90,7 +86,7 @@ class Estimator(object):
     Raises:
         ValueError: parameters of `model_fn` don't match `params`.
     """
-    def __init__(self, model_fn=None, model_dir=None, config=None, params=None):
+    def __init__(self, model_fn, model_dir=None, config=None, params=None):
         # Create a run configuration.
         if config is None:
             self._config = RunConfig()
@@ -738,7 +734,3 @@ class Estimator(object):
         summary_writer.add_summary(summary_proto, current_global_step)
         summary_writer.flush()
 
-
-ESTIMATORS = OrderedDict([
-    ('Estimator', Estimator),
-])

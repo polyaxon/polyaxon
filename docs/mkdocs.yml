@@ -29,13 +29,14 @@ pages:
 - Experiments:
   - Introduction: experiments/introduction.md
   - Expermient: experiments/experiment.md
-  - Estimator: experiments/estimator.md
-  - Hooks: experiments/hooks.md
-  - Subgraph: experiments/subgraph.md
-  - Summerizer: experiments/summarizer.md
+- Estimators:
+  - Estimator: estimators/estimator.md
+  - Hooks: estimators/hooks.md
 - Models:
   - Base Model: models/base_model.md
+  - Base RL Model: models/base_rl_model.md
   - Models: models/models.md
+  - Summerizer: models/summarizer.md
 - Layers:
   - Introduction: layers/introduction.md
   - Core Layers: layers/core.md
@@ -63,6 +64,9 @@ pages:
 - Optimizers: optimizers.md
 - Initializations: initializations.md
 - Regularizations: regularizations.md
+- Explorations: explorations.md
+- Variables: variables.md
+- Subgraph: subgraph.md
 - Libs:
   - Configs: libs/configs.md
   - Getters: libs/getters.md

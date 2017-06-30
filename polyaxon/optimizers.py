@@ -6,7 +6,7 @@ from collections import OrderedDict
 import tensorflow as tf
 from tensorflow.python.training.training_util import get_global_step
 
-from polyaxon.libs.utils import track
+from polyaxon.libs.utils import track, get_arguments
 
 
 def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_rate,
@@ -45,15 +45,21 @@ def create_learning_rate_decay_fn(learning_rate, decay_type, decay_steps, decay_
     def decay_fn(learning_rate, global_step):
         """The computed learning rate decay function."""
         global_step = tf.to_int32(global_step)
-
         decay_type_fn = getattr(tf.train, decay_type)
-        decayed_learning_rate = decay_type_fn(
+        kwargs = dict(
             learning_rate=learning_rate,
             global_step=tf.minimum(global_step, stop_decay_at) - start_decay_at,
             decay_steps=decay_steps,
-            decay_rate=decay_rate,
             staircase=staircase,
-            name="decayed_learning_rate")
+            name="decayed_learning_rate"
+        )
+        decay_fn_args = get_arguments(decay_type_fn)
+        if 'decay_rate' in decay_fn_args:
+            kwargs['decay_rate'] = decay_rate
+        if 'staircase' in decay_fn_args:
+            kwargs['staircase'] = staircase
+
+        decayed_learning_rate = decay_type_fn(**kwargs)
 
         final_lr = tf.train.piecewise_constant(
             x=global_step,
@@ -107,7 +113,7 @@ def sgd(learning_rate=0.001, decay_type="", decay_rate=0., decay_steps=100, star
     return optimizer
 
 
-def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
+def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=10000,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              global_step=None, use_locking=False, name='Momentum'):
     """Optimizer that implements the Momentum.
@@ -153,7 +159,7 @@ def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
     return optimizer
 
 
-def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=100,
+def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=10000,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              use_locking=False, global_step=None, name='Momentum'):
     """Optimizer that implements the Nesterov.
@@ -199,7 +205,7 @@ def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
 
 
 def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_type="",
-            decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+            decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
             min_learning_rate=1e-12, staircase=False, global_step=None,
             use_locking=False, name='RMSProp'):
     """Optimizer that implements the RMSprop.
@@ -244,7 +250,7 @@ def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_t
 
 
 def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, decay_type="",
-         decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+         decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
          min_learning_rate=1e-12, staircase=False, global_step=None,
          use_locking=False, name='Adam'):
     """Optimizer that implements the Adam.
@@ -291,7 +297,7 @@ def adam(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, decay_type="
 
 
 def adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type="",
-            decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+            decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
             min_learning_rate=1e-12, staircase=False, global_step=None,
             use_locking=False, name='AdaGrad'):
     """Optimizer that implements AdaGrad.
@@ -333,7 +339,7 @@ def adagrad(learning_rate=0.001, initial_accumulator_value=0.1, decay_type="",
 
 def ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=0.1,
          l1_regularization_strength=0.0, l2_regularization_strength=0.0, decay_type="",
-         decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+         decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
          min_learning_rate=1e-12, staircase=False, global_step=None,
          use_locking=False, name='Ftrl'):
     """Optimizer that implements Ftrl Proximal.
@@ -389,7 +395,7 @@ def ftrl(learning_rate=3.0, learning_rate_power=-0.5, initial_accumulator_value=
 
 
 def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type="",
-             decay_rate=0., decay_steps=100, start_decay_at=0, stop_decay_at=tf.int32.max,
+             decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
              min_learning_rate=1e-12, staircase=False, global_step=None,
              use_locking=False, name='AdaDelta'):
     """Optimizer that implements AdaDelta.

@@ -6,7 +6,7 @@ from collections import namedtuple
 
 import six
 
-from polyaxon.experiments import SubGraph
+from polyaxon.libs.subgraph import SubGraph
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import get_shape
 
