@@ -149,7 +149,8 @@ class GraphModule(object):
             copy_op = current_variables[name].assign(target_variables[name])
             copy_ops.append(copy_op)
 
-        return tf.group(*copy_ops, name='copy_op')
+        return tf.group(*copy_ops,
+                        name='copy_op_from_{}_to_{}'.format(self.module_name, module.module_name))
 
 
 @six.add_metaclass(abc.ABCMeta)

@@ -445,8 +445,7 @@ class Experiment(object):
 
         if (continuous_eval_predicate_fn is not None and
                 not callable(continuous_eval_predicate_fn)):
-            raise ValueError(
-                "`continuous_eval_predicate_fn` must be a callable, or None.")
+            raise ValueError("`continuous_eval_predicate_fn` must be a callable, or None.")
 
         eval_result = None
 

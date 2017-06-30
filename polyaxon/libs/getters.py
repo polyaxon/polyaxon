@@ -19,7 +19,7 @@ def get_exploration(module, **kwargs):
     from polyaxon.rl.explorations import EXPLORATIONS
 
     if isinstance(module, six.string_types):
-        return EXPLORATIONS[module](**kwargs)()
+        return EXPLORATIONS[module](**kwargs)
 
     if hasattr(module, '__call__'):
         return module()
