@@ -408,7 +408,7 @@ class Estimator(object):
         if steps is not None:
             if steps <= 0:
                 raise ValueError('Must specify steps > 0, given: {}'.format(steps))
-            hooks.append(evaluation._StopAfterNEvalsHook(num_evals=steps))
+            hooks.append(plx_hooks.StopAfterNEvalsHook(num_evals=steps))
         return self._evaluate_model(
             input_fn=input_fn, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
 
@@ -574,7 +574,7 @@ class Estimator(object):
             ops.add_to_collection(ops.GraphKeys.LOSSES, estimator_spec.loss)
             all_hooks.extend([
                 plx_hooks.NanTensorHook(estimator_spec.loss),
-                plx_hooks.LoggingTensorHook(
+                plx_hooks.StepLoggingTensorHook(
                     {
                         'loss': estimator_spec.loss,
                         'step': global_step
@@ -594,13 +594,13 @@ class Estimator(object):
             chief_hooks = []
             if self._config.save_checkpoints_secs or self._config.save_checkpoints_steps:
                 saver_hook_exists = any(
-                    [isinstance(h, plx_hooks.CheckpointSaverHook)
+                    [isinstance(h, plx_hooks.StepCheckpointSaverHook)
                      for h in (all_hooks +
                                chief_hooks +
                                list(estimator_spec.training_chief_hooks))])
                 if not saver_hook_exists:
                     chief_hooks += [
-                        plx_hooks.CheckpointSaverHook(
+                        plx_hooks.StepCheckpointSaverHook(
                             self._model_dir,
                             save_secs=self._config.save_checkpoints_secs,
                             save_steps=self._config.save_checkpoints_steps,
