@@ -18,3 +18,5 @@ from .explorations import (
     ornsteinuhlenbeck_process,
     continuous_decay
 )
+
+from . import environments
