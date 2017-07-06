@@ -165,8 +165,8 @@ class BaseModel(GraphModule):
             elif summary == summarizer.SummaryOptions.IMAGE_RESULT:
                 summary_op += summarizer.add_image_summary(results, op_name='results')
 
-        if summary_op:
-            tf.summary.merge(summary_op)
+        # no need to tf.summary.merge(summary_op), for now we merge all at hook level
+        return summary_op
 
     def _build_loss(self, results, features, labels):
         """Creates the loss operation
