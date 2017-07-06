@@ -129,6 +129,15 @@ class Agent(Estimator):
         if first_update < self.memory.batch_size:
             raise ValueError("Cannot update the model before gathering enough data")
 
+        if max_steps is not None:
+            try:
+                start_step = load_variable(self._model_dir, ops.GraphKeys.GLOBAL_STEP)
+                if max_steps <= start_step:
+                    logging.info('Skipping training since max_steps has already saved.')
+                    return self
+            except:  # pylint: disable=bare-except
+                pass
+
         hooks = self._prepare_train(
             first_update, update_frequency, steps, hooks, max_steps, max_episodes)
         loss = self._train_model(env=env, first_update=first_update,

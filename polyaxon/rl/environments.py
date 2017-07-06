@@ -5,10 +5,13 @@ from collections import namedtuple
 
 import numpy as np
 
-import gym
-from gym.wrappers import Monitor
-from gym.spaces import Box
-from gym.spaces.discrete import Discrete
+try:
+    import gym
+    from gym.wrappers import Monitor
+    from gym.spaces import Box
+    from gym.spaces.discrete import Discrete
+except ImportError:
+    pass
 
 
 class EnvSpec(namedtuple("EnvSpec", "action state reward done next_state")):

@@ -3,10 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-import numpy as np
-
 from tensorflow.python.training import basic_session_run_hooks, session_run_hook
 from tensorflow.python.platform import tf_logging as logging
+from tensorflow.python.training import evaluation
 
 from polyaxon.estimators.hooks.utils import can_run_hook
 
@@ -41,7 +40,7 @@ class FinalOpsHook(basic_session_run_hooks.FinalOpsHook):
         super(FinalOpsHook, self).__init__(final_ops, final_ops_feed_dict)
 
 
-class StopAfterNEvalsHook(session_run_hook.SessionRunHook):
+class StopAfterNEvalsHook(evaluation._StopAfterNEvalsHook):
     """Run hook used by the evaluation routines to run the `eval_ops` N times."""
 
     def __init__(self, num_evals, log_progress=True):

@@ -23,11 +23,13 @@ from tensorflow.python.platform import gfile
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.saved_model import builder as saved_model_builder
 from tensorflow.python.saved_model import tag_constants
-from tensorflow.python.training import (evaluation,
-                                        monitored_session,
-                                        saver,
-                                        summary_io,
-                                        training)
+from tensorflow.python.training import (
+    evaluation,
+    monitored_session,
+    saver,
+    summary_io,
+    training
+)
 from tensorflow.python.training.session_run_hook import SessionRunHook
 from tensorflow.python.util import compat
 
@@ -325,15 +327,6 @@ class Estimator(object):
         if max_steps is not None and max_steps <= 0:
             raise ValueError("Must specify max_steps > 0, given: {}".format(max_steps))
 
-        if max_steps is not None:
-            try:
-                start_step = load_variable(self._model_dir, ops.GraphKeys.GLOBAL_STEP)
-                if max_steps <= start_step:
-                    logging.info('Skipping training since max_steps has already saved.')
-                    return self
-            except:  # pylint: disable=bare-except
-                pass
-
         hooks = self._check_hooks(hooks)
         if steps is not None or max_steps is not None:
             hooks.append(plx_hooks.StopAtStepHook(steps, max_steps))
@@ -364,6 +357,15 @@ class Estimator(object):
         Returns:
             `self`, for chaining.
         """
+        if max_steps is not None:
+            try:
+                start_step = load_variable(self._model_dir, ops.GraphKeys.GLOBAL_STEP)
+                if max_steps <= start_step:
+                    logging.info('Skipping training since max_steps has already saved.')
+                    return self
+            except:  # pylint: disable=bare-except
+                pass
+
         hooks = self._prepare_train(steps, hooks, max_steps)
         loss = self._train_model(input_fn=input_fn, hooks=hooks)
         logging.info('Loss for final step: %s.', loss)
