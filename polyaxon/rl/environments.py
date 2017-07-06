@@ -3,18 +3,17 @@ from __future__ import absolute_import, division, print_function
 
 from collections import namedtuple
 
+import numpy as np
+
 import gym
 from gym.wrappers import Monitor
 from gym.spaces import Box
 from gym.spaces.discrete import Discrete
 
 
-class EnvSpec(namedtuple("EnvSpec", "action state reward done")):
+class EnvSpec(namedtuple("EnvSpec", "action state reward done next_state")):
     def items(self):
         return self._asdict().items()
-
-    def to_dict(self):
-        return dict(self.items())
 
 
 class Environment(object):
@@ -33,7 +32,7 @@ class Environment(object):
     def reset(self, return_spec=True):
         raise NotImplementedError
 
-    def step(self, action, return_spec=True):
+    def step(self, action, state, return_spec=True):
         raise NotImplementedError
 
     @property
@@ -72,16 +71,19 @@ class GymEnvironment(Environment):
     def reset(self, return_spec=True):
         state = self._env.reset()
         if return_spec:
-            return EnvSpec(action=None, state=state, reward=0, done=False)
+            return EnvSpec(action=None, state=None, reward=0, done=False, next_state=state)
         return state
 
-    def step(self, action, return_spec=True):
+    def step(self, action, state, return_spec=True):
         if isinstance(self._env.action_space, Box) and not isinstance(action, list):
             action = list(action)
-        state, reward, done, _ = self._env.step(action)
+        elif isinstance(self._env.action_space, Discrete) and isinstance(action, (list, np.ndarray)):
+            action = action[0]
+        next_state, reward, done, _ = self._env.step(action)
         if return_spec:
-            return EnvSpec(action=action, state=state, reward=reward, done=done)
-        return state, reward, done
+            return EnvSpec(
+                action=action, state=state, reward=reward, done=done, next_state=next_state)
+        return next_state, reward, done
 
     @property
     def num_states(self):
