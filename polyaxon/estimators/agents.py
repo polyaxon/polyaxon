@@ -17,6 +17,7 @@ from tensorflow.python.training import (
 from polyaxon import Modes
 from polyaxon.estimators import Estimator
 from polyaxon.estimators import hooks as plx_hooks
+from polyaxon.libs import getters
 from polyaxon.rl.environments import Environment
 from polyaxon.rl.stats import Stats
 from polyaxon.rl.utils import get_or_create_global_episode, get_or_create_global_timestep
@@ -69,10 +70,10 @@ class Agent(Estimator):
     Raises:
         ValueError: parameters of `model_fn` don't match `params`.
     """
-    def __init__(self, model_fn, memory_config, model_dir=None, config=None, params=None):
+    def __init__(self, model_fn, memory, model_dir=None, config=None, params=None):
         super(Agent, self).__init__(
             model_fn=model_fn, model_dir=model_dir, config=config, params=params)
-        self.memory_config = memory_config
+        self.memory = memory
 
     def _prepare_train(self, first_update=1, update_frequency=1, episodes=None, steps=None,
                        hooks=None, max_steps=None, max_episodes=None):
@@ -98,7 +99,7 @@ class Agent(Estimator):
 
         return hooks
 
-    def train(self, env, first_update=2, update_frequency=1, episodes=None, steps=None, hooks=None,
+    def train(self, env, first_update=35, update_frequency=10, episodes=None, steps=None, hooks=None,
               max_steps=None, max_episodes=None):
         """Trains a model given an environment.
 
@@ -125,6 +126,9 @@ class Agent(Estimator):
         Returns:
             `self`, for chaining.
         """
+        if first_update < self.memory.batch_size:
+            raise ValueError("Cannot update the model before gathering enough data")
+
         hooks = self._prepare_train(
             first_update, update_frequency, steps, hooks, max_steps, max_episodes)
         loss = self._train_model(env=env, first_update=first_update,
@@ -192,6 +196,8 @@ class Agent(Estimator):
                     'done': tf.placeholder(dtype=tf.bool, shape=(None,), name='done'),
                     'max_reward': tf.placeholder(
                         dtype=tf.float32, shape=(), name='max_reward'),
+                    'min_reward': tf.placeholder(
+                        dtype=tf.float32, shape=(), name='min_reward'),
                     'avg_reward': tf.placeholder(
                         dtype=tf.float32, shape=(), name='avg_reward'),
                     'total_reward': tf.placeholder(
@@ -201,16 +207,17 @@ class Agent(Estimator):
         if Modes.is_infer(mode):
             return features, None
 
-    def _prepare_feed_dict(self, mode, features, labels, env_spec, stats=None):
+    def _prepare_feed_dict(self, mode, features, labels, env_spec, stats=None, from_memory=False):
         """Creates a feed_dict depending on the agents behavior: `act` or `observe`"""
         feed_dict = {features['state']: [env_spec.next_state]}
         if mode == 'observe':
             feed_dict = {
-                    features['state']: [env_spec.state],
-                    labels['action']: [env_spec.action],
-                    labels['reward']: [env_spec.reward],
-                    labels['done']: [env_spec.done],
+                    features['state']: env_spec.state if from_memory else [env_spec.state],
+                    labels['action']: env_spec.action if from_memory else [env_spec.action],
+                    labels['reward']: env_spec.reward if from_memory else [env_spec.reward],
+                    labels['done']: env_spec.done if from_memory else [env_spec.done],
                     labels['max_reward']: stats.max(),
+                    labels['min_reward']: stats.min(),
                     labels['avg_reward']: stats.avg(),
                     labels['total_reward']: stats.total()
                 }
@@ -248,17 +255,24 @@ class Agent(Estimator):
                 feed_dict=self._prepare_feed_dict('act', features, labels, env_spec))
 
             env_spec = env.step(action, env_spec.next_state)
+
+            self.memory.step(env_spec)
             stats.rewards.append(env_spec.reward)
 
             if env_spec.done:  # TODO: max timestep by episode should also update the episode
                 #  Increment episode number to trigger EpisodeHooks (logging, summary, checkpoint)
                 episode_done = True
                 sess.run([no_run_hooks, update_episode_op])
+
             if (timestep > first_update and timestep % update_frequency == 0) or episode_done:
-                feed_dict = self._prepare_feed_dict('observe', features, labels, env_spec, stats)
-                _, loss = sess.run(
-                    [estimator_spec.train_op, estimator_spec.loss],
-                    feed_dict=feed_dict)
+                if self.memory.can_sample:
+                    feed_dict = self._prepare_feed_dict(
+                        'observe', features, labels, self.memory.sample(), stats, from_memory=True)
+                    _, loss = sess.run(
+                        [estimator_spec.train_op, estimator_spec.loss], feed_dict=feed_dict)
+                else:
+                    feed_dict = self._prepare_feed_dict('observe', features, labels, env_spec, stats)
+                    sess.run([], feed_dict=feed_dict)
         return loss
 
     def _train_model(self, env, first_update, update_frequency, hooks):

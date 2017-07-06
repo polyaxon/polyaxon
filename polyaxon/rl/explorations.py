@@ -41,8 +41,8 @@ def random():
     return constant(1)
 
 
-def decay(exploration_rate=0.1, decay_type='polynomial_decay', start_decay_at=0, stop_decay_at=1e9,
-          decay_rate=0., staircase=False, decay_steps=10000, min_exploration_rate=0):
+def decay(exploration_rate=0.15, decay_type='polynomial_decay', start_decay_at=0, stop_decay_at=1e9,
+          decay_rate=0., staircase=False, decay_steps=100000, min_exploration_rate=0):
     """Builds a decaying exploration.
 
     Decay epsilon based on number of states and the decay_type.

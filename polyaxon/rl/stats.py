@@ -15,6 +15,9 @@ class Stats(object):
     def max(self):
         return np.max(self.rewards)
 
+    def min(self):
+        return np.min(self.rewards)
+
     def avg(self):
         return np.mean(self.rewards)
 

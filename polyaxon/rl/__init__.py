@@ -20,3 +20,4 @@ from .explorations import (
 )
 
 from . import environments
+from . import memories
