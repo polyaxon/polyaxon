@@ -27,7 +27,7 @@ def zeros(shape=None, dtype=tf.float32, name='zeros'):
         return tf.zeros(shape=shape, dtype=dtype, name=name)
     else:
         with get_name_scope(name):
-            return tf.constant_initializer(value=0., dtype=dtype)
+            return tf.constant_initializer(value=0, dtype=dtype)
 
 
 def uniform(shape=None, minval=0, maxval=None, dtype=tf.float32, seed=None, name='Uniform'):

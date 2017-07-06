@@ -3,13 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from tensorflow.python.training import basic_session_run_hooks, session_run_hook
-from tensorflow.python.platform import tf_logging as logging
+from tensorflow.python.training import basic_session_run_hooks
+
+from polyaxon.estimators.hooks.utils import can_run_hook
 
 
-class LoggingTensorHook(basic_session_run_hooks.LoggingTensorHook):
+class StepLoggingTensorHook(basic_session_run_hooks.LoggingTensorHook):
     """Prints the given tensors once every N local steps or once every N seconds.
-    (A mirror to tensorflow.python.training.basic_session_run_hooks LoggingTensorHook.)
+
+    A modified version of tensorflow.python.training.basic_session_run_hooks LoggingTensorHook.
+    Checks the context for `no_run_hooks_op` before calling the the hook.
 
     The tensors will be printed to the log, with `INFO` severity.
 
@@ -29,7 +32,14 @@ class LoggingTensorHook(basic_session_run_hooks.LoggingTensorHook):
     """
 
     def __init__(self, tensors, every_n_iter=None, every_n_secs=None, formatter=None):
-        super(LoggingTensorHook, self).__init__(tensors, every_n_iter, every_n_secs, formatter)
+        super(StepLoggingTensorHook, self).__init__(tensors, every_n_iter, every_n_secs, formatter)
+
+    def before_run(self, run_context):  # pylint: disable=unused-argument
+        self._should_trigger = can_run_hook(run_context)
+        if self._should_trigger:
+            return super(StepLoggingTensorHook, self).before_run(run_context)
+        else:
+            return None
 
 
 class StopAtStepHook(basic_session_run_hooks.StopAtStepHook):
@@ -57,7 +67,7 @@ class StopAtStepHook(basic_session_run_hooks.StopAtStepHook):
         super(StopAtStepHook, self).__init__(num_steps, last_step)
 
 
-class CheckpointSaverHook(basic_session_run_hooks.CheckpointSaverHook):
+class StepCheckpointSaverHook(basic_session_run_hooks.CheckpointSaverHook):
     """Saves checkpoints every N steps or seconds.
     (A mirror to tensorflow.python.training.basic_session_run_hooks CheckpointSaverHook.)
 
@@ -80,8 +90,8 @@ class CheckpointSaverHook(basic_session_run_hooks.CheckpointSaverHook):
 
     def __init__(self, checkpoint_dir, save_secs=None, save_steps=None, saver=None,
                  checkpoint_basename="model.ckpt", scaffold=None, listeners=None):
-        super(CheckpointSaverHook, self).__init__(checkpoint_dir, save_secs, save_steps, saver,
-                                                  checkpoint_basename, scaffold, listeners)
+        super(StepCheckpointSaverHook, self).__init__(checkpoint_dir, save_secs, save_steps, saver,
+                                                      checkpoint_basename, scaffold, listeners)
 
 
 class StepCounterHook(basic_session_run_hooks.StepCounterHook):
@@ -94,23 +104,7 @@ class StepCounterHook(basic_session_run_hooks.StepCounterHook):
             every_n_steps, every_n_secs, output_dir, summary_writer)
 
 
-class NanTensorHook(basic_session_run_hooks.NanTensorHook):
-    """NaN Loss monitor.
-    (A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
-
-    Monitors loss and stops training if loss is NaN.
-    Can either fail with exception or just stop training.
-
-    Args:
-        loss_tensor: `Tensor`, the loss tensor.
-        fail_on_nan_loss: `bool`, whether to raise exception when loss is NaN.
-    """
-
-    def __init__(self, loss_tensor, fail_on_nan_loss=True):
-        super(NanTensorHook, self).__init__(loss_tensor, fail_on_nan_loss)
-
-
-class SummarySaverHook(basic_session_run_hooks.SummarySaverHook):
+class StepSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
     """Saves summaries every N steps.
     (A mirror to tensorflow.python.training.basic_session_run_hooks NanTensorHook.)
 
@@ -135,79 +129,14 @@ class SummarySaverHook(basic_session_run_hooks.SummarySaverHook):
 
     def __init__(self, save_steps=None, save_secs=None, output_dir=None, summary_writer=None,
                  scaffold=None, summary_op=None):
-        super(SummarySaverHook, self).__init__(save_steps, save_secs, output_dir, summary_writer,
-                                               scaffold, summary_op)
+        super(StepSummarySaverHook, self).__init__(
+            save_steps, save_secs, output_dir, summary_writer, scaffold, summary_op)
 
 
-class GlobalStepWaiterHook(basic_session_run_hooks.GlobalStepWaiterHook):
-    """Delay execution until global step reaches to wait_until_step.
-    (A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
-
-    This hook delays execution until global step reaches to `wait_until_step`. It
-    is used to gradually start workers in distributed settings. One example usage
-    would be setting `wait_until_step=int(K*log(task_id+1))` assuming that
-    task_id=0 is the chief.
-
-    Args:
-        wait_until_step: an `int` shows until which global step should we wait.
-    """
-
-    def __init__(self, wait_until_step):
-        super(GlobalStepWaiterHook, self).__init__(wait_until_step)
-
-
-class FinalOpsHook(basic_session_run_hooks.FinalOpsHook):
-    """A run hook which evaluates `Tensors` at the end of a session.
-    (A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
-
-    Args:
-        final_ops: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
-        final_ops_feed_dict: A feed dictionary to use when running `final_ops_dict`.
-    """
-
-    def __init__(self, final_ops, final_ops_feed_dict=None):
-        super(FinalOpsHook, self).__init__(final_ops, final_ops_feed_dict)
-
-
-class StopAfterNEvalsHook(session_run_hook.SessionRunHook):
-    """Run hook used by the evaluation routines to run the `eval_ops` N times."""
-
-    def __init__(self, num_evals, log_progress=True):
-        """Constructs the run hook.
-
-        Args:
-            num_evals: The number of evaluations to run for.
-            log_progress: Whether to log evaluation progress, defaults to True.
-        """
-        # The number of evals to run for.
-        self._num_evals = num_evals
-        self._evals_completed = None
-        self._log_progress = log_progress
-
-    def _set_evals_completed_tensor(self, updated_eval_step):
-        self._evals_completed = updated_eval_step
-
-    def before_run(self, run_context):
-        return session_run_hook.SessionRunArgs({
-            'evals_completed': self._evals_completed
-        })
-
-    def after_run(self, run_context, run_values):
-        evals_completed = run_values.results['evals_completed']
-        if self._log_progress:
-            logging.info('Evaluation [%d/%d]', evals_completed, self._num_evals)
-        if evals_completed >= self._num_evals:
-            run_context.request_stop()
-
-
-HOOKS = OrderedDict([
-    ('LoggingTensorHook', LoggingTensorHook),
+STEP_HOOKS = OrderedDict([
+    ('StepLoggingTensorHook', StepLoggingTensorHook),
     ('StopAtStepHook', StopAtStepHook),
-    ('CheckpointSaverHook', CheckpointSaverHook),
+    ('StepCheckpointSaverHook', StepCheckpointSaverHook),
     ('StepCounterHook', StepCounterHook),
-    ('NanTensorHook', NanTensorHook),
-    ('SummarySaverHook', SummarySaverHook),
-    ('GlobalStepWaiterHook', GlobalStepWaiterHook),
-    ('FinalOpsHook', FinalOpsHook),
-    ('StopAfterNEvalsHook', StopAfterNEvalsHook),
+    ('StepSummarySaverHook', StepSummarySaverHook),
 ])

@@ -19,6 +19,8 @@ class DQNModel(RLBaseModel):
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
         loss_config: An instance of `LossConfig`.
+        num_states: `int`. The number of states.
+        num_actions: `int`. The number of actions.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
         eval_metrics_config: a list of `MetricConfig` instances.
         discount: `float`. The discount factor on the target Q values.
@@ -61,5 +63,5 @@ class DQNModel(RLBaseModel):
             tf.multiply(self._train_results['q'][:-1], action_selector), axis=1)
 
         target_q_value = (reward[:-1] + (1.0 - tf.cast(done[:-1], tf.float32)) *
-                          self.discount * target_q_values[:-1])
+                          self.discount * target_q_values[1:])
         return super(DQNModel, self)._build_loss(train_q_value, features, target_q_value)

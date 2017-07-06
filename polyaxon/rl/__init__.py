@@ -9,9 +9,15 @@ from .exploration_decay import (
     inverse_time_decay
 )
 from .explorations import (
-    EXPLORATIONS,
+    DISCRETE_EXPLORATIONS,
+    CONTINUOUS_EXPLORATIONS,
     constant,
     greedy,
     random,
     decay,
+    ornsteinuhlenbeck_process,
+    continuous_decay
 )
+
+from . import environments
+from . import memories

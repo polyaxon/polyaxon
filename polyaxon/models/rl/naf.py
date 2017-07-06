@@ -21,13 +21,15 @@ class NAFModel(RLBaseModel):
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
         loss_config: An instance of `LossConfig`.
+        num_states: `int`. The number of states.
+        num_actions: `int`. The number of actions.
         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
         eval_metrics_config: a list of `MetricConfig` instances.
         discount: `float`. The discount factor on the target Q values.
         exploration_config: An instance `ExplorationConfig`
         use_target_graph: `bool`. To use a second “target” network,
             which we will use to compute target Q values during our updates.
-        update_frequency: `int`. At which frequency to update the target graph.
+        target_update_frequency: `int`. At which frequency to update the target graph.
             Only used when `use_target_graph` is set tot True.
         is_continuous: `bool`. Is the model built for a continuous or discrete space.
         use_expert_demo: Whether to pretrain the model on a human/expert data.
@@ -41,22 +43,22 @@ class NAFModel(RLBaseModel):
         `EstimatorSpec`
     """
 
-    def __init__(self, mode, graph_fn, loss_config, env, state_preprocessing_fn=None,
+    def __init__(self, mode, graph_fn, loss_config, num_states, num_actions,
                  optimizer_config=None, eval_metrics_config=None, discount=0.97,
-                 exploration_config=None, use_target_graph=True, update_frequency=5,
+                 exploration_config=None, use_target_graph=True, target_update_frequency=5,
                  is_continuous=True, use_expert_demo=False, summaries='all',
                  clip_gradients=0.5, clip_embed_gradients=0.1, name="Model"):
         super(NAFModel, self).__init__(mode=mode,
                                        graph_fn=graph_fn,
                                        loss_config=loss_config,
-                                       env=env,
-                                       state_preprocessing_fn=state_preprocessing_fn,
+                                       num_states=num_states,
+                                       num_actions=num_actions,
                                        optimizer_config=optimizer_config,
                                        eval_metrics_config=eval_metrics_config,
                                        discount=discount,
                                        exploration_config=exploration_config,
                                        use_target_graph=use_target_graph,
-                                       update_frequency=update_frequency,
+                                       target_update_frequency=target_update_frequency,
                                        is_continuous=is_continuous,
                                        dueling=None,  # no dueling
                                        use_expert_demo=use_expert_demo,

@@ -15,11 +15,14 @@ def get_optimizer(module, **kwargs):
         return module()
 
 
-def get_exploration(module, **kwargs):
-    from polyaxon.rl.explorations import EXPLORATIONS
+def get_exploration(module, continuous=False, **kwargs):
+    from polyaxon.rl.explorations import DISCRETE_EXPLORATIONS, CONTINUOUS_EXPLORATIONS
 
     if isinstance(module, six.string_types):
-        return EXPLORATIONS[module](**kwargs)
+        if continuous:
+            return CONTINUOUS_EXPLORATIONS[module](**kwargs)
+        else:
+            return DISCRETE_EXPLORATIONS[module](**kwargs)
 
     if hasattr(module, '__call__'):
         return module()
@@ -113,6 +116,18 @@ def get_loss(module, y_pred, y_true, **kwargs):
         raise ValueError('Invalid Loss type.')
 
     return module
+
+
+def get_memory(module, **kwargs):
+    from polyaxon.rl.memories import MEMORIES
+
+    if isinstance(module, six.string_types):
+        return MEMORIES[module](**kwargs)
+
+    if hasattr(module, '__call__'):
+        return module()
+
+    raise TypeError('Memory `{}` is not supported.'.format(module))
 
 
 def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):

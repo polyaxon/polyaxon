@@ -23,11 +23,13 @@ from tensorflow.python.platform import gfile
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.saved_model import builder as saved_model_builder
 from tensorflow.python.saved_model import tag_constants
-from tensorflow.python.training import (evaluation,
-                                        monitored_session,
-                                        saver,
-                                        summary_io,
-                                        training)
+from tensorflow.python.training import (
+    evaluation,
+    monitored_session,
+    saver,
+    summary_io,
+    training
+)
 from tensorflow.python.training.session_run_hook import SessionRunHook
 from tensorflow.python.util import compat
 
@@ -301,6 +303,36 @@ class Estimator(object):
 
         return hooks
 
+    def _prepare_train(self, steps=None, hooks=None, max_steps=None):
+        """Checks train specifications (steps and hooks) and return the train hooks.
+
+        Args:
+            steps: Number of steps for which to train model. If `None`, train forever.
+                'steps' works incrementally. If you call two times fit(steps=10) then
+                training occurs in total 20 steps. If you don't want to have incremental
+                behaviour please set `max_steps` instead. If set, `max_steps` must be
+                `None`.
+            hooks: List of `BaseMonitor` subclass instances.
+                Used for callbacks inside the training loop.
+            max_steps: Number of total steps for which to train model. If `None`,
+                train forever. If set, `steps` must be `None`.
+
+        Returns:
+            `list`: An updated version of hooks.
+        """
+        if (steps is not None) and (max_steps is not None):
+            raise ValueError("Can not provide both steps and max_steps.")
+        if steps is not None and steps <= 0:
+            raise ValueError("Must specify steps > 0, given: {}".format(steps))
+        if max_steps is not None and max_steps <= 0:
+            raise ValueError("Must specify max_steps > 0, given: {}".format(max_steps))
+
+        hooks = self._check_hooks(hooks)
+        if steps is not None or max_steps is not None:
+            hooks.append(plx_hooks.StopAtStepHook(steps, max_steps))
+
+        return hooks
+
     def train(self, input_fn=None, steps=None, hooks=None, max_steps=None):
         """Trains a model given training data `x` predictions and `y` labels.
 
@@ -325,13 +357,6 @@ class Estimator(object):
         Returns:
             `self`, for chaining.
         """
-        if (steps is not None) and (max_steps is not None):
-            raise ValueError('Can not provide both steps and max_steps.')
-        if steps is not None and steps <= 0:
-            raise ValueError('Must specify steps > 0, given: {}'.format(steps))
-        if max_steps is not None and max_steps <= 0:
-            raise ValueError('Must specify max_steps > 0, given: {}'.format(max_steps))
-
         if max_steps is not None:
             try:
                 start_step = load_variable(self._model_dir, ops.GraphKeys.GLOBAL_STEP)
@@ -341,10 +366,7 @@ class Estimator(object):
             except:  # pylint: disable=bare-except
                 pass
 
-        hooks = self._check_hooks(hooks)
-        if steps is not None or max_steps is not None:
-            hooks.append(plx_hooks.StopAtStepHook(steps, max_steps))
-
+        hooks = self._prepare_train(steps, hooks, max_steps)
         loss = self._train_model(input_fn=input_fn, hooks=hooks)
         logging.info('Loss for final step: %s.', loss)
         return self
@@ -388,64 +410,9 @@ class Estimator(object):
         if steps is not None:
             if steps <= 0:
                 raise ValueError('Must specify steps > 0, given: {}'.format(steps))
-            hooks.append(evaluation._StopAfterNEvalsHook(num_evals=steps))
+            hooks.append(plx_hooks.StopAfterNEvalsHook(num_evals=steps))
         return self._evaluate_model(
             input_fn=input_fn, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
-
-    def _infer(self, mode, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
-        """Returns predictions for given features given an inference mode.
-
-        Args:
-            mode: The inference to use, possible values: PREDICT, GENERATE, ENCODE.
-            input_fn: Input function returning features which is a dictionary of
-                string feature name to `Tensor` or `SparseTensor`. If it returns a
-                tuple, first item is extracted as features. Prediction continues until
-                `input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
-            predict_keys: list of `str`, name of the keys to predict. It is used if
-                the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
-                of the predictions will be filtered from the dictionary. If `None`, returns all.
-            hooks: List of `SessionRunHook` subclass instances. Used for callbacks
-                inside the prediction call.
-            checkpoint_path: Path of a specific checkpoint to predict. If `None`, the
-                latest checkpoint in `model_dir` is used.
-
-        Yields:
-            Evaluated values of `predictions` tensors.
-
-        Raises:
-            ValueError: Could not find a trained model in model_dir.
-            ValueError: if batch length of predictions are not same.
-            ValueError: If there is a conflict between `predict_keys` and `predictions`.
-                For example if `predict_keys` is not `None`
-                but `EstimatorSpec.predictions` is not a `dict`.
-        """
-        hooks = self._check_hooks(hooks)
-        # Check that model has been trained.
-        if not checkpoint_path:
-            checkpoint_path = saver.latest_checkpoint(self._model_dir)
-        if not checkpoint_path:
-            raise ValueError("Could not find trained model at %s." % self._model_dir)
-
-        with ops.Graph().as_default() as g:
-            random_seed.set_random_seed(self._config.tf_random_seed)
-            training.get_or_create_global_step(g)
-            features = self._get_features_from_input_fn(input_fn)
-            estimator_spec = self._call_model_fn(features, None, mode)
-            predictions = self._extract_keys(estimator_spec.predictions, predict_keys)
-            with monitored_session.MonitoredSession(
-                    session_creator=monitored_session.ChiefSessionCreator(
-                        checkpoint_filename_with_path=checkpoint_path,
-                        scaffold=estimator_spec.scaffold,
-                        config=self._session_config),
-                    hooks=hooks) as mon_sess:
-                while not mon_sess.should_stop():
-                    preds_evaluated = mon_sess.run(predictions)
-                    if not isinstance(predictions, dict):
-                        for pred in preds_evaluated:
-                            yield pred
-                    else:
-                        for i in xrange(extract_batch_length(preds_evaluated)):
-                            yield {key: value[i] for key, value in six.iteritems(preds_evaluated)}
 
     def predict(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
         """Returns predictions for given features with `PREDICT` mode.
@@ -473,8 +440,8 @@ class Estimator(object):
                 For example if `predict_keys` is not `None`
                 but `EstimatorSpec.predictions` is not a `dict`.
         """
-        return self._infer(Modes.PREDICT, input_fn=input_fn, predict_keys=predict_keys, hooks=hooks,
-                           checkpoint_path=checkpoint_path)
+        return self._infer_model(Modes.PREDICT, input_fn=input_fn, predict_keys=predict_keys,
+                                 hooks=hooks, checkpoint_path=checkpoint_path)
 
     def generate(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
         """Returns predictions for given features with `GENERATE` mode.
@@ -502,8 +469,8 @@ class Estimator(object):
                 For example if `predict_keys` is not `None`
                 but `EstimatorSpec.predictions` is not a `dict`.
         """
-        return self._infer(Modes.GENERATE, input_fn=input_fn, predict_keys=predict_keys,
-                           hooks=hooks, checkpoint_path=checkpoint_path)
+        return self._infer_model(Modes.GENERATE, input_fn=input_fn, predict_keys=predict_keys,
+                                 hooks=hooks, checkpoint_path=checkpoint_path)
 
     def encode(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
         """Returns predictions for given features with `ENCODE` mode.
@@ -531,8 +498,8 @@ class Estimator(object):
                 For example if `predict_keys` is not `None`
                 but `EstimatorSpec.predictions` is not a `dict`.
         """
-        return self._infer(Modes.ENCODE, input_fn=input_fn, predict_keys=predict_keys, hooks=hooks,
-                           checkpoint_path=checkpoint_path)
+        return self._infer_model(Modes.ENCODE, input_fn=input_fn, predict_keys=predict_keys,
+                                 hooks=hooks, checkpoint_path=checkpoint_path)
 
     def get_variable_value(self, name):
         """Returns value of the variable given by name.
@@ -609,7 +576,7 @@ class Estimator(object):
             ops.add_to_collection(ops.GraphKeys.LOSSES, estimator_spec.loss)
             all_hooks.extend([
                 plx_hooks.NanTensorHook(estimator_spec.loss),
-                plx_hooks.LoggingTensorHook(
+                plx_hooks.StepLoggingTensorHook(
                     {
                         'loss': estimator_spec.loss,
                         'step': global_step
@@ -629,18 +596,33 @@ class Estimator(object):
             chief_hooks = []
             if self._config.save_checkpoints_secs or self._config.save_checkpoints_steps:
                 saver_hook_exists = any(
-                    [isinstance(h, plx_hooks.CheckpointSaverHook)
+                    [isinstance(h, plx_hooks.StepCheckpointSaverHook)
                      for h in (all_hooks +
                                chief_hooks +
                                list(estimator_spec.training_chief_hooks))])
                 if not saver_hook_exists:
-                    chief_hooks = [
-                        plx_hooks.CheckpointSaverHook(
+                    chief_hooks += [
+                        plx_hooks.StepCheckpointSaverHook(
                             self._model_dir,
                             save_secs=self._config.save_checkpoints_secs,
                             save_steps=self._config.save_checkpoints_steps,
                             scaffold=scaffold)
                     ]
+            if self._config.save_summary_steps:
+                saver_hook_exists = any(
+                    [isinstance(h, plx_hooks.StepSummarySaverHook)
+                     for h in (all_hooks +
+                               chief_hooks +
+                               list(estimator_spec.training_chief_hooks))])
+                if not saver_hook_exists:
+                    chief_hooks += [
+                        plx_hooks.StepSummarySaverHook(
+                            scaffold=scaffold,
+                            save_steps=self._config.save_summary_steps,
+                            output_dir=self._model_dir,
+                        )
+                    ]
+
             with monitored_session.MonitoredTrainingSession(
                     master=self._config.master,
                     is_chief=self._config.is_chief,
@@ -648,8 +630,8 @@ class Estimator(object):
                     scaffold=scaffold,
                     hooks=all_hooks,
                     chief_only_hooks=chief_hooks + list(estimator_spec.training_chief_hooks),
-                    save_checkpoint_secs=0,  # Saving is handled by a hook.
-                    save_summaries_steps=self._config.save_summary_steps,
+                    save_checkpoint_secs=0,  # Saving checkpoint is handled by a hook.
+                    save_summaries_steps=0,  # Saving summaries is handled by a hook.
                     config=self._session_config) as mon_sess:
                 loss = None
                 while not mon_sess.should_stop():
@@ -703,6 +685,61 @@ class Estimator(object):
                 current_global_step=eval_results[ops.GraphKeys.GLOBAL_STEP])
 
             return eval_results
+
+    def _infer_model(self, mode, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
+        """Returns predictions for given features given an inference mode.
+
+        Args:
+            mode: The inference to use, possible values: PREDICT, GENERATE, ENCODE.
+            input_fn: Input function returning features which is a dictionary of
+                string feature name to `Tensor` or `SparseTensor`. If it returns a
+                tuple, first item is extracted as features. Prediction continues until
+                `input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
+            predict_keys: list of `str`, name of the keys to predict. It is used if
+                the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
+                of the predictions will be filtered from the dictionary. If `None`, returns all.
+            hooks: List of `SessionRunHook` subclass instances. Used for callbacks
+                inside the prediction call.
+            checkpoint_path: Path of a specific checkpoint to predict. If `None`, the
+                latest checkpoint in `model_dir` is used.
+
+        Yields:
+            Evaluated values of `predictions` tensors.
+
+        Raises:
+            ValueError: Could not find a trained model in model_dir.
+            ValueError: if batch length of predictions are not same.
+            ValueError: If there is a conflict between `predict_keys` and `predictions`.
+                For example if `predict_keys` is not `None`
+                but `EstimatorSpec.predictions` is not a `dict`.
+        """
+        hooks = self._check_hooks(hooks)
+        # Check that model has been trained.
+        if not checkpoint_path:
+            checkpoint_path = saver.latest_checkpoint(self._model_dir)
+        if not checkpoint_path:
+            raise ValueError("Could not find trained model at %s." % self._model_dir)
+
+        with ops.Graph().as_default() as g:
+            random_seed.set_random_seed(self._config.tf_random_seed)
+            training.get_or_create_global_step(g)
+            features = self._get_features_from_input_fn(input_fn)
+            estimator_spec = self._call_model_fn(features, None, mode)
+            predictions = self._extract_keys(estimator_spec.predictions, predict_keys)
+            with monitored_session.MonitoredSession(
+                    session_creator=monitored_session.ChiefSessionCreator(
+                        checkpoint_filename_with_path=checkpoint_path,
+                        scaffold=estimator_spec.scaffold,
+                        config=self._session_config),
+                    hooks=hooks) as mon_sess:
+                while not mon_sess.should_stop():
+                    preds_evaluated = mon_sess.run(predictions)
+                    if not isinstance(predictions, dict):
+                        for pred in preds_evaluated:
+                            yield pred
+                    else:
+                        for i in xrange(extract_batch_length(preds_evaluated)):
+                            yield {key: value[i] for key, value in six.iteritems(preds_evaluated)}
 
     @staticmethod
     def _write_dict_to_summary(output_dir,
