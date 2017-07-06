@@ -3,22 +3,20 @@ from __future__ import absolute_import, division, print_function
 
 import os
 import time
-
 from collections import OrderedDict
 
 import numpy as np
 import tensorflow as tf
-
 from tensorflow.core.util.event_pb2 import SessionLog
 from tensorflow.python.framework import meta_graph
 from tensorflow.python.platform import tf_logging as logging
-from tensorflow.python.training.summary_io import SummaryWriterCache
 from tensorflow.python.training import basic_session_run_hooks, session_run_hook
 from tensorflow.python.training import training_util
+from tensorflow.python.training.summary_io import SummaryWriterCache
 
 from polyaxon.estimators.hooks.utils import can_run_hook
 from polyaxon.libs.utils import get_tracked
-from polyaxon.models.rl.utils import get_global_episode
+from polyaxon.rl.utils import get_global_episode
 
 
 class EpisodeTimer(object):

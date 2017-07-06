@@ -22,6 +22,7 @@ tf.GraphKeys.QUEUES = 'queues'
 tf.GraphKeys.PREDICTIONS = 'predictions'
 tf.GraphKeys.TRAIN_SUMMARIES = 'train_summaries'
 tf.GraphKeys.SUMMARIES_BY_NAMES = 'summaries_by_names'
-
+tf.GraphKeys.GLOBAL_EPISODE = 'global_episode'
+tf.GraphKeys.GLOBAL_TIMESTEP = 'global_timestep'
 
 MAPPING_COLLECTION = [tf.GraphKeys.PREDICTIONS, tf.GraphKeys.SUMMARIES_BY_NAMES]
