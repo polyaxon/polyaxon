@@ -11,6 +11,7 @@ from tensorflow.python.training import training
 from polyaxon import Modes
 from polyaxon.layers import FullyConnected
 from polyaxon.libs import getters
+from polyaxon.libs.configs import LossConfig
 from polyaxon.libs.utils import get_tensor_batch_size
 from polyaxon.libs.template_module import FunctionModule
 from polyaxon.models import BaseModel
@@ -55,7 +56,7 @@ class RLBaseModel(BaseModel):
         `EstimatorSpec`
     """
 
-    def __init__(self, mode, graph_fn, loss_config, num_states, num_actions,
+    def __init__(self, mode, graph_fn, num_states, num_actions, loss_config=None,
                  optimizer_config=None, eval_metrics_config=None, discount=0.97,
                  exploration_config=None, use_target_graph=True, target_update_frequency=5,
                  is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all',
@@ -69,6 +70,7 @@ class RLBaseModel(BaseModel):
         self.is_continuous = is_continuous
         self.dueling = dueling
         self.use_expert_demo = use_expert_demo
+        loss_config = loss_config or LossConfig(module='huber_loss')
         super(RLBaseModel, self).__init__(
             mode=mode, name=name, model_type=self.Types.RL, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
@@ -226,8 +228,10 @@ class RLBaseModel(BaseModel):
                 summary_op += summarizer.add_exploration_rate_summaries()
             if summary == summarizer.SummaryOptions.REWARD:
                 max_reward = labels.get('max_reward', None)
+                min_reward = labels.get('min_reward', None)
                 avg_reward = labels.get('avg_reward', None)
                 total_reward = labels.get('total_reward', None)
-                summary_op += summarizer.add_reward_summaries(max_reward, avg_reward, total_reward)
+                summary_op += summarizer.add_reward_summaries(
+                    max_reward, min_reward, avg_reward, total_reward)
 
         return summary_op

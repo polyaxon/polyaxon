@@ -88,11 +88,14 @@ def add_exploration_rate_summaries():
     return [get_summary(SummaryTypes.SCALAR, 'exploration_rate', exploration_rate[0])]
 
 
-def add_reward_summaries(max_reward, avg_reward, total_reward):
+def add_reward_summaries(max_reward, min_reward, avg_reward, total_reward):
     """Adds reinforcement learning reward summaries."""
     summaries = []
     if max_reward is not None:
         summaries.append(get_summary(SummaryTypes.SCALAR, max_reward.op.name, max_reward))
+
+    if min_reward is not None:
+        summaries.append(get_summary(SummaryTypes.SCALAR, min_reward.op.name, min_reward))
 
     if avg_reward is not None:
         summaries.append(get_summary(SummaryTypes.SCALAR, avg_reward.op.name, avg_reward))
