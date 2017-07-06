@@ -47,7 +47,7 @@ class BaseModel(GraphModule):
         GENERATOR = 'Generator'
         RL = 'RL'
 
-        VALUES = [REGRESSOR, CLASSIFIER, GENERATOR]
+        VALUES = [REGRESSOR, CLASSIFIER, GENERATOR, RL]
 
     def __init__(self, mode, model_type, graph_fn, loss_config, optimizer_config=None,
                  eval_metrics_config=None, summaries='all', clip_gradients=0.5,
