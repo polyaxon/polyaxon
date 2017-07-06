@@ -118,6 +118,18 @@ def get_loss(module, y_pred, y_true, **kwargs):
     return module
 
 
+def get_memory(module, **kwargs):
+    from polyaxon.rl.memories import MEMORIES
+
+    if isinstance(module, six.string_types):
+        return MEMORIES[module](**kwargs)
+
+    if hasattr(module, '__call__'):
+        return module()
+
+    raise TypeError('Memory `{}` is not supported.'.format(module))
+
+
 def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):
     from polyaxon.libs.subgraph import SubGraph
     from polyaxon.processing.pipelines import PIPELINES

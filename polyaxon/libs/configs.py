@@ -237,7 +237,7 @@ class ExplorationConfig(Configurable):
 
     Args:
         module: `str`, name to give for the exploration.
-        params: `dict`, extra information to pass to the metric.
+        params: `dict`, extra information to pass to the exploration.
     """
     def __init__(self, module, params=None):
         self.module = module
@@ -288,6 +288,18 @@ class OptimizerConfig(Configurable):
         self.staircase = staircase
         self.sync_replicas = sync_replicas
         self.sync_replicas_to_aggregate = sync_replicas_to_aggregate
+        self.params = params or {}
+
+
+class MemoryConfig(Configurable):
+    """The MemoryConfig holds information needed to create a `Memory` for an agent.
+
+    Args:
+        module: `str`, name to give for the memory.
+        params: `dict`, extra information to pass to the memory.
+    """
+    def __init__(self, module, params=None):
+        self.module = module
         self.params = params or {}
 
 
