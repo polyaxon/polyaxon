@@ -289,7 +289,8 @@ class Agent(Estimator):
                         'global_timestep': global_timestep,
                         'global_episode': global_episode
                     },
-                    every_n_episodes=1)  # TODO: save every episode?
+                    every_n_episodes=1),  # TODO: save every episode?
+                plx_hooks.EpisodeCounterHook(output_dir=self.model_dir)
             ]
             if self._config.save_checkpoints_secs or self._config.save_checkpoints_steps:
                 saver_hook_exists = any(
