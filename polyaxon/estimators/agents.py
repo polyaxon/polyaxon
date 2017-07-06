@@ -101,6 +101,9 @@ class Agent(Estimator):
         """Trains a model given an environment.
 
         Args:
+            env: `Environment` instance.
+            first_update: `int`. First timestep to calculate the loss and train_op for the model.
+            update_frequency: `int`. The frequecncy at which to calcualate the loss and train_op.
             steps: Number of steps for which to train model. If `None`, train forever.
                 'steps' works incrementally. If you call two times fit(steps=10) then
                 training occurs in total 20 steps. If you don't want to have incremental
@@ -110,6 +113,8 @@ class Agent(Estimator):
                 Used for callbacks inside the training loop.
             max_steps: Number of total steps for which to train model. If `None`,
                 train forever. If set, `steps` must be `None`.
+            max_episodes: Number of total episodes for which to train model. If `None`,
+                train forever. If set, `episodes` must be `None`.
 
             Two calls to `fit(steps=100)` means 200 training iterations.
             On the other hand, two calls to `fit(max_steps=100)` means
@@ -124,78 +129,6 @@ class Agent(Estimator):
                                  update_frequency=update_frequency, hooks=hooks)
         logging.info('Loss for final step: %s.', loss)
         return self
-
-    def evaluate(self, input_fn=None, steps=None, hooks=None, checkpoint_path=None, name=None):
-        """Evaluates given model with provided evaluation data.
-
-        Stop conditions - we evaluate on the given input data until one of the
-        following:
-        - If `steps` is provided, and `steps` batches of size `batch_size` are processed.
-        - If `input_fn` is provided, and it raises an end-of-input
-        exception (`OutOfRangeError` or `StopIteration`).
-        - If `x` is provided, and all items in `x` have been processed.
-
-        Args:
-            input_fn: Input function returning a tuple of:
-                features - Dictionary of string feature name to `Tensor` or `Tensor`.
-                labels - `Tensor` or dictionary of `Tensor` with labels.
-                If `steps` is not provided, this should raise `OutOfRangeError` or
-                `StopIteration` after the desired amount of data (e.g., one epoch) has
-                been provided. See "Stop conditions" above for specifics.
-            steps: Number of steps for which to evaluate model. If `None`, evaluate
-                until `x` is consumed or `input_fn` raises an end-of-input exception.
-                See "Stop conditions" above for specifics.
-            checkpoint_path: Path of a specific checkpoint to evaluate. If `None`,
-                the latest checkpoint in `model_dir` is used.
-            hooks: List of `SessionRunHook` subclass instances.
-                Used for callbacks inside the evaluation call.
-            name: Name of the evaluation if user needs to run multiple evaluations on
-                different data sets, such as on training data vs test data.
-
-        Raises:
-            ValueError: If `metrics` is not `None` or `dict`.
-
-        Returns:
-            Returns `dict` with evaluation results; the metrics specified in `metrics`, as
-            well as an entry `global_step` which contains the value of the global step
-            for which this evaluation was performed.
-        """
-        hooks = self._check_hooks(hooks)
-        if steps is not None:
-            if steps <= 0:
-                raise ValueError('Must specify steps > 0, given: {}'.format(steps))
-            hooks.append(evaluation._StopAfterNEvalsHook(num_evals=steps))
-        return self._evaluate_model(
-            input_fn=input_fn, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
-
-    def predict(self, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
-        """Returns predictions for given features with `PREDICT` mode.
-
-        Args:
-            input_fn: Input function returning features which is a dictionary of
-                string feature name to `Tensor` or `SparseTensor`. If it returns a
-                tuple, first item is extracted as features. Prediction continues until
-                `input_fn` raises an end-of-input exception (`OutOfRangeError` or `StopIteration`).
-            predict_keys: list of `str`, name of the keys to predict. It is used if
-                the `EstimatorSpec.predictions` is a `dict`. If `predict_keys` is used then rest
-                of the predictions will be filtered from the dictionary. If `None`, returns all.
-            hooks: List of `SessionRunHook` subclass instances. Used for callbacks
-                inside the prediction call.
-            checkpoint_path: Path of a specific checkpoint to predict. If `None`, the
-                latest checkpoint in `model_dir` is used.
-
-        Yields:
-            Evaluated values of `predictions` tensors.
-
-        Raises:
-            ValueError: Could not find a trained model in model_dir.
-            ValueError: if batch length of predictions are not same.
-            ValueError: If there is a conflict between `predict_keys` and `predictions`.
-                For example if `predict_keys` is not `None`
-                but `EstimatorSpec.predictions` is not a `dict`.
-        """
-        return self._infer(Modes.PREDICT, input_fn=input_fn, predict_keys=predict_keys, hooks=hooks,
-                           checkpoint_path=checkpoint_path)
 
     def get_variable_value(self, name):
         """Returns value of the variable given by name.
@@ -261,6 +194,7 @@ class Agent(Estimator):
             return features, None
 
     def _prepare_feed_dict(self, mode, features, labels, env_spec):
+        """Creates a feed_dict depending on the agents behavior: `act` or `observe`"""
         feed_dict = {features['state']: [env_spec.next_state]}
         if mode == 'observe':
             feed_dict = {
