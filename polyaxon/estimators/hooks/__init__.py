@@ -24,6 +24,7 @@ from polyaxon.estimators.hooks.episode_hooks import (
     StopAtEpisodeHook,
     EpisodeSummarySaverHook,
     EpisodeCheckpointSaverHook,
+    EpisodeCounterHook,
 )
 
 HOOKS = OrderedDict([
