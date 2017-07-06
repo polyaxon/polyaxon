@@ -8,6 +8,7 @@ from collections import OrderedDict
 import numpy as np
 import tensorflow as tf
 from tensorflow.core.util.event_pb2 import SessionLog
+from tensorflow.core.framework.summary_pb2 import Summary
 from tensorflow.python.framework import meta_graph
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.training import basic_session_run_hooks, session_run_hook
@@ -378,8 +379,48 @@ class EpisodeCheckpointSaverHook(session_run_hook.SessionRunHook):
         return None
 
 
+class EpisodeCounterHook(session_run_hook.SessionRunHook):
+    """TimeSteps and Seconds per episode."""
+    def __init__(self, output_dir=None, summary_writer=None):
+        self._timer = EpisodeTimer(every_episodes=1)
+        self._summary_writer = summary_writer
+        self._output_dir = output_dir
+
+    def begin(self):
+        if self._summary_writer is None and self._output_dir:
+            self._summary_writer = SummaryWriterCache.get(self._output_dir)
+        self._global_episode_tensor = get_global_episode()
+        if self._global_episode_tensor is None:
+            raise RuntimeError("Global step should be created to use EpisodeCounterHook.")
+        self._summary_sec_tag = self._global_episode_tensor.op.name + "/sec"
+        self._summary_steps_tag = self._global_episode_tensor.op.name + "/steps"
+        self._num_steps = 0
+
+    def before_run(self, run_context):  # pylint: disable=unused-argument
+        return session_run_hook.SessionRunArgs(self._global_episode_tensor)
+
+    def after_run(self, run_context, run_values):
+        global_episode = run_values.results
+        self._num_steps += 1
+        if self._timer.should_trigger_for_episode(global_episode):
+            elapsed_time, elapsed_steps = self._timer.update_last_triggered_episode(global_episode)
+            if elapsed_time is not None:
+                steps_per_sec = elapsed_steps / elapsed_time
+                if self._summary_writer is not None:
+                    summary = Summary(value=[
+                        Summary.Value(tag=self._summary_sec_tag, simple_value=steps_per_sec),
+                        Summary.Value(tag=self._summary_steps_tag, simple_value=self._num_steps),
+                    ])
+                    self._summary_writer.add_summary(summary, global_episode)
+                logging.info("%s: %g, %s: %d",
+                             self._summary_sec_tag, steps_per_sec,
+                             self._summary_steps_tag, self._num_steps)
+                self._num_steps = 0
+
+
 EPISODE_HOOKS = OrderedDict([
     ('EpisodeLoggingTensorHook', EpisodeLoggingTensorHook),
     ('StopAtEpisodeHook', StopAtEpisodeHook),
     ('EpisodeSummarySaverHook', EpisodeSummarySaverHook),
+    ('EpisodeCounterHook', EpisodeCounterHook),
 ])
