@@ -232,6 +232,18 @@ class MetricConfig(Configurable):
         self.params = params or {}
 
 
+class ExplorationConfig(Configurable):
+    """The ExplorationConfig holds information needed to create a `Exploration`.
+
+    Args:
+        module: `str`, name to give for the exploration.
+        params: `dict`, extra information to pass to the metric.
+    """
+    def __init__(self, module, params=None):
+        self.module = module
+        self.params = params or {}
+
+
 class OptimizerConfig(Configurable):
     """The OptimizerConfig holds information needed to create a `Optimizer`.
 

@@ -20,9 +20,9 @@ def get_exploration(module, continuous=False, **kwargs):
 
     if isinstance(module, six.string_types):
         if continuous:
-            return CONTINUOUS_EXPLORATIONS[module](**kwargs)()
+            return CONTINUOUS_EXPLORATIONS[module](**kwargs)
         else:
-            return DISCRETE_EXPLORATIONS[module](**kwargs)()
+            return DISCRETE_EXPLORATIONS[module](**kwargs)
 
     if hasattr(module, '__call__'):
         return module()
