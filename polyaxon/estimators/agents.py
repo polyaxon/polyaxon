@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
+
 from tensorflow.contrib.framework import list_variables, load_variable
 from tensorflow.python.framework import ops, random_seed
 from tensorflow.python.platform import tf_logging as logging
@@ -17,6 +18,7 @@ from polyaxon import Modes
 from polyaxon.estimators import Estimator
 from polyaxon.estimators import hooks as plx_hooks
 from polyaxon.rl.environments import Environment
+from polyaxon.rl.stats import Stats
 from polyaxon.rl.utils import get_or_create_global_episode, get_or_create_global_timestep
 
 
@@ -184,16 +186,22 @@ class Agent(Estimator):
                 {
                     'action': tf.placeholder(
                         dtype=tf.float32 if env.is_continuous else tf.int64,
-                        shape=[None, env.num_actions] if env.is_continuous else [None, ],
+                        shape=(None, env.num_actions) if env.is_continuous else (None, ),
                         name='action'),
                     'reward': tf.placeholder(dtype=tf.float32, shape=(None,), name='reward'),
                     'done': tf.placeholder(dtype=tf.bool, shape=(None,), name='done'),
+                    'max_reward': tf.placeholder(
+                        dtype=tf.float32, shape=(), name='max_reward'),
+                    'avg_reward': tf.placeholder(
+                        dtype=tf.float32, shape=(), name='avg_reward'),
+                    'total_reward': tf.placeholder(
+                        dtype=tf.float32, shape=(), name='total_reward'),
                 }
             )
         if Modes.is_infer(mode):
             return features, None
 
-    def _prepare_feed_dict(self, mode, features, labels, env_spec):
+    def _prepare_feed_dict(self, mode, features, labels, env_spec, stats=None):
         """Creates a feed_dict depending on the agents behavior: `act` or `observe`"""
         feed_dict = {features['state']: [env_spec.next_state]}
         if mode == 'observe':
@@ -202,6 +210,9 @@ class Agent(Estimator):
                     labels['action']: [env_spec.action],
                     labels['reward']: [env_spec.reward],
                     labels['done']: [env_spec.done],
+                    labels['max_reward']: stats.max(),
+                    labels['avg_reward']: stats.avg(),
+                    labels['total_reward']: stats.total()
                 }
         return feed_dict
 
@@ -228,21 +239,26 @@ class Agent(Estimator):
             statistics about episode.
         """
         env_spec = env.reset()
+        stats = Stats()
         loss = None
         episode_done = False
         while not env_spec.done:
             _, step, timestep, action = sess.run(
                 [no_run_hooks, global_step, update_timestep_op, estimator_spec.predictions['results']],
                 feed_dict=self._prepare_feed_dict('act', features, labels, env_spec))
+
             env_spec = env.step(action, env_spec.next_state)
+            stats.rewards.append(env_spec.reward)
+
             if env_spec.done:  # TODO: max timestep by episode should also update the episode
                 #  Increment episode number to trigger EpisodeHooks (logging, summary, checkpoint)
                 episode_done = True
                 sess.run([no_run_hooks, update_episode_op])
             if (timestep > first_update and timestep % update_frequency == 0) or episode_done:
+                feed_dict = self._prepare_feed_dict('observe', features, labels, env_spec, stats)
                 _, loss = sess.run(
                     [estimator_spec.train_op, estimator_spec.loss],
-                    feed_dict=self._prepare_feed_dict('observe', features, labels, env_spec))
+                    feed_dict=feed_dict)
         return loss
 
     def _train_model(self, env, first_update, update_frequency, hooks):

@@ -20,9 +20,13 @@ class SummaryOptions(object):
     IMAGE_INPUT = 'image_input'
     IMAGE_RESULT = 'image_result'
 
-    ALL = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE]
+    # RL
+    EXPLORATION = 'exploration'
+    REWARD = 'reward'
+
+    ALL = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE, EXPLORATION, REWARD]
     VALUES = [ACTIVATIONS, LOSS, GRADIENTS, VARIABLES, LEARNING_RATE,
-              IMAGE_INPUT, IMAGE_RESULT]
+              IMAGE_INPUT, IMAGE_RESULT, EXPLORATION, REWARD]
 
     @classmethod
     def validate(cls, summaries):
@@ -67,11 +71,36 @@ class SummaryTypes(object):
 
 
 def add_learning_rate_summaries():
+    """Adds learning rate summaries. Only works when decaying learning rate is chosen."""
     learning_rate = get_tracked(tf.GraphKeys.LEARNING_RATE)
     if not learning_rate:
         return []
 
     return [get_summary(SummaryTypes.SCALAR, 'learning_rate', learning_rate[0])]
+
+
+def add_exploration_rate_summaries():
+    """Adds exploration rate summaries. Only works when decaying exploration rate is chosen."""
+    exploration_rate = get_tracked(tf.GraphKeys.EXPLORATION_RATE)
+    if not exploration_rate:
+        return []
+
+    return [get_summary(SummaryTypes.SCALAR, 'exploration_rate', exploration_rate[0])]
+
+
+def add_reward_summaries(max_reward, avg_reward, total_reward):
+    """Adds reinforcement learning reward summaries."""
+    summaries = []
+    if max_reward is not None:
+        summaries.append(get_summary(SummaryTypes.SCALAR, max_reward.op.name, max_reward))
+
+    if avg_reward is not None:
+        summaries.append(get_summary(SummaryTypes.SCALAR, avg_reward.op.name, avg_reward))
+
+    if total_reward is not None:
+        summaries.append(get_summary(SummaryTypes.SCALAR, total_reward.op.name, total_reward))
+
+    return summaries
 
 
 def add_loss_summaries(total_loss, loss):

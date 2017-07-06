@@ -14,6 +14,7 @@ from polyaxon.libs import getters
 from polyaxon.libs.utils import get_tensor_batch_size
 from polyaxon.libs.template_module import FunctionModule
 from polyaxon.models import BaseModel
+from polyaxon.models import summarizer
 
 
 class RLBaseModel(BaseModel):
@@ -217,3 +218,16 @@ class RLBaseModel(BaseModel):
                 'action' not in labels or 'reward' not in labels or 'done' not in labels):
             raise KeyError("labels must include these keys: `action`, `reward`, `done`.")
         return features, labels
+
+    def _build_summary_op(self, results=None, features=None, labels=None):
+        summary_op = super(RLBaseModel, self)._build_summary_op(results, features, labels)
+        for summary in self.summaries:
+            if summary == summarizer.SummaryOptions.EXPLORATION:
+                summary_op += summarizer.add_exploration_rate_summaries()
+            if summary == summarizer.SummaryOptions.REWARD:
+                max_reward = labels.get('max_reward', None)
+                avg_reward = labels.get('avg_reward', None)
+                total_reward = labels.get('total_reward', None)
+                summary_op += summarizer.add_reward_summaries(max_reward, avg_reward, total_reward)
+
+        return summary_op
