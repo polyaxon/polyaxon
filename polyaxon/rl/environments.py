@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
 from collections import namedtuple
 
 import numpy as np
@@ -103,3 +104,8 @@ class GymEnvironment(Environment):
     @property
     def is_continuous(self):
         return not isinstance(self._env.action_space, Discrete)
+
+
+ENVIRONMENTS = OrderedDict([
+    ('GymEnvironment', GymEnvironment),
+])

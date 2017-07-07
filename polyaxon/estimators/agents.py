@@ -75,7 +75,7 @@ class Agent(Estimator):
             model_fn=model_fn, model_dir=model_dir, config=config, params=params)
         self.memory = memory
 
-    def _prepare_train(self, first_update=1, update_frequency=1, episodes=None, steps=None,
+    def _prepare_train(self, first_update=35, update_frequency=1, episodes=None, steps=None,
                        hooks=None, max_steps=None, max_episodes=None):
         if first_update < 0:
             raise ValueError("Must specify first_update > 0, given: {}".format(first_update))

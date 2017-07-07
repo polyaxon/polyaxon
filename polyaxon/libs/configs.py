@@ -208,6 +208,18 @@ class InputDataConfig(Configurable):
         return cls(**config)
 
 
+class EnvironmentConfig(Configurable):
+    """The EnvironmentConfig holds information needed to create an `Environment`.
+
+    Args:
+        module: `str`, module loss to use.
+        params: `dict`, extra information to pass to the loss.
+    """
+    def __init__(self, module, params=None):
+        self.module = module
+        self.params = params or {}
+
+
 class LossConfig(Configurable):
     """The LossConfig holds information needed to create a `Loss`.
 
@@ -521,6 +533,80 @@ class ExperimentConfig(Configurable):
         config['eval_input_data_config'] = InputDataConfig.read_configs(
             config['eval_input_data_config'])
         config['estimator_config'] = EstimatorConfig.read_configs(config['estimator_config'])
+        config['model_config'] = ModelConfig.read_configs(config['model_config'])
+
+        return cls(**config)
+
+
+class RLExperimentConfig(Configurable):
+    """The RLExperimentConfig holds information needed to create a `RLExperiment`.
+
+    Args:
+        name: `str`, name to give for the experiment.
+        output_dir: `str`, where to save training and evaluation data.
+        run_config: Tensorflow run config.
+        environment_config: Eval environment configuration.
+        run_config: The agent configuration.
+        model_config: The model configuration.
+        train_hooks_config: The training hooks configuration.
+        eval_hooks_config: The evaluation hooks configuration.
+        eval_metrics_config: The evaluation metrics config.
+        eval_every_n_steps: `int`, the frequency of evaluation.
+        train_steps: `int`, the number of steps to train the model.
+        eval_steps: `int`, the number of steps to eval the model.
+        eval_delay_secs: `int`, used to delay the evaluation.
+        continuous_eval_throttle_secs: Do not re-evaluate unless the last evaluation
+            was started at least this many seconds ago for continuous_eval().
+        delay_workers_by_global_step: if `True` delays training workers based on global step
+            instead of time.
+        export_strategies: A list of `ExportStrategy`s, or a single one, or None.
+        train_steps_per_iteration: (applies only to continuous_train_and_evaluate).
+    """
+
+    def __init__(self,
+                 name,
+                 output_dir,
+                 run_config,
+                 environment_config,
+                 agent_config,
+                 model_config,
+                 train_hooks_config=None,
+                 eval_hooks_config=None,
+                 eval_metrics_config=None,
+                 eval_every_n_steps=1000,
+                 train_steps=10000,
+                 eval_steps=10,
+                 eval_delay_secs=0,
+                 continuous_eval_throttle_secs=60,
+                 delay_workers_by_global_step=False,
+                 export_strategies=None,
+                 train_steps_per_iteration=1000):
+        self.name = name
+        self.output_dir = output_dir or "/tmp/polyaxon_logs/"
+
+        self.run_config = run_config
+        self.environment_config = environment_config
+        self.agent_config = agent_config
+        self.model_config = model_config
+        self.train_hooks_config = train_hooks_config or []
+        self.eval_hooks_config = eval_hooks_config or []
+        self.eval_metrics_config = eval_metrics_config or []
+        self.eval_every_n_steps = eval_every_n_steps
+        self.train_steps = train_steps
+        self.eval_steps = eval_steps
+        self.eval_delay_secs = eval_delay_secs
+        self.continuous_eval_throttle_secs = continuous_eval_throttle_secs
+        self.delay_workers_by_global_step = delay_workers_by_global_step
+        self.export_strategies = export_strategies
+        self.train_steps_per_iteration = train_steps_per_iteration
+
+    @classmethod
+    def read_configs(cls, config_values):
+        config = cls._read_configs(config_values)
+
+        config['run_config'] = create_run_config(**config.get('run_config', {}))
+        config['environment_config'] = EnvironmentConfig.read_configs(config['environment_config'])
+        config['agent_config'] = EstimatorConfig.read_configs(config['agent_config'])
         config['model_config'] = ModelConfig.read_configs(config['model_config'])
 
         return cls(**config)
