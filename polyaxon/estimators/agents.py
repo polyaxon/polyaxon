@@ -306,7 +306,10 @@ class Agent(Estimator):
                         'loss': estimator_spec.loss,
                         'step': global_step,
                         'timestep': global_timestep,
-                        'global_episode': global_episode
+                        'global_episode': global_episode,
+                        'max_reward': labels['max_reward'],
+                        'min_reward': labels['min_reward'],
+                        'total_reward': labels['total_reward'],
                     },
                     every_n_iter=100)
             ])
@@ -326,7 +329,10 @@ class Agent(Estimator):
                         'loss': estimator_spec.loss,
                         'step': global_step,
                         'global_timestep': global_timestep,
-                        'global_episode': global_episode
+                        'global_episode': global_episode,
+                        'max_reward': labels['max_reward'],
+                        'min_reward': labels['min_reward'],
+                        'total_reward': labels['total_reward'],
                     },
                     every_n_episodes=1),  # TODO: save every episode?
                 plx_hooks.EpisodeCounterHook(output_dir=self.model_dir)
