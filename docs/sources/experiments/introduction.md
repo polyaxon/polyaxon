@@ -4,6 +4,8 @@ Polyaxon encapsulate all configurations needed to train and evaluate a model in 
 
 An `Experiment` expects a training (and evaluation) data pipeline, a model, and knows how to invoke the training from the estimator.
 
+In case of a reinforcement learning problem, the `RLExperiment` expects an environment, a model, and knows how to invoke the training from the agent.
+
 You can train your estimator pragmatically by invoking the training the experiment directly, or by using the the utils functions provided.
 
 An `Experiement` can be created directly by instantiating the objects needed or by creating a `ExperiemntConfig`.

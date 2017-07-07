@@ -28,8 +28,8 @@ from polyaxon.datasets.converters import (
     JPEGImageReader,
     ImagesToTFExampleConverter
 )
-from polyaxon.estimators import estimator, hooks
-from polyaxon.experiments import experiment
+from polyaxon.estimators import estimator, agents, hooks
+from polyaxon.experiments import experiment, rl_experiment, utils as experiment_utils
 from polyaxon.layers import convolutional, core, embedding, normalizations, recurrent
 from polyaxon.libs import configs, getters, utils, subgraph
 from polyaxon.models import summarizer
@@ -76,8 +76,31 @@ PAGES = [
         ],
         'functions': [
             experiment.create_experiment,
-            experiment.run_experiment
         ],
+    },
+    {
+        'page': 'experiments/rl_experiment.md',
+        'classes': [rl_experiment.RLExperiment],
+        'classes_functions': [
+            rl_experiment.RLExperiment.reset_export_strategies,
+            rl_experiment.RLExperiment.extend_eval_hooks,
+            rl_experiment.RLExperiment.extend_eval_hooks,
+            rl_experiment.RLExperiment.train,
+            rl_experiment.RLExperiment.evaluate,
+            rl_experiment.RLExperiment.continuous_eval,
+            rl_experiment.RLExperiment.continuous_eval_on_train_data,
+            rl_experiment.RLExperiment.train_and_evaluate,
+            rl_experiment.RLExperiment.continuous_train_and_evaluate,
+            rl_experiment.RLExperiment.run_std_server,
+            rl_experiment.RLExperiment.test
+        ],
+        'functions': [
+            rl_experiment.create_rl_experiment,
+        ],
+    },
+    {
+        'page': 'experiments/utils.md',
+        'functions': [experiment_utils.run_experiment]
     },
 
     # Estimators
@@ -94,8 +117,30 @@ PAGES = [
         ]
     },
     {
-        'page': 'estimators/hooks.md',
-        'classes': hooks.HOOKS.values()
+        'page': 'estimators/agent.md',
+        'classes': [agents.Agent],
+        'classes_functions': [
+            agents.Agent.export_savedmodel,
+            agents.Agent.train,
+            agents.Agent.evaluate,
+            agents.Agent.predict,
+            agents.Agent.get_variable_value,
+            agents.Agent.get_variable_names,
+        ]
+    },
+
+    # Hooks
+    {
+        'page': 'hooks/general_hooks.md',
+        'classes': hooks.GENERAL_HOOKS.values()
+    },
+    {
+        'page': 'hooks/step_hooks.md',
+        'classes': hooks.STEP_HOOKS.values()
+    },
+    {
+        'page': 'hooks/episode_hooks.md',
+        'classes': hooks.EPISODE_HOOKS.values()
     },
 
     # Models
@@ -135,6 +180,11 @@ PAGES = [
             models.Regressor,
             models.Classifier,
             models.Generator,
+        ],
+    },
+    {
+        'page': 'models/rl_models.md',
+        'classes': [
             models.DQNModel,
             models.DDQNModel,
             models.NAFModel,

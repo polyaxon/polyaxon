@@ -1,32 +1,34 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/experiment.py#L22)</span>
-## Experiment
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/experiments/rl_experiment.py#L23)</span>
+## RLExperiment
 
 ```python
-polyaxon.experiments.experiment.Experiment(estimator, train_input_fn, eval_input_fn, train_steps=None, eval_steps=10, train_hooks=None, eval_hooks=None, eval_delay_secs=0, continuous_eval_throttle_secs=60, eval_every_n_steps=1, delay_workers_by_global_step=False, export_strategies=None, train_steps_per_iteration=100)
+polyaxon.experiments.rl_experiment.RLExperiment(agent, env, train_steps=None, train_episodes=None, first_update=5000, update_frequency=15, eval_steps=10, train_hooks=None, eval_hooks=None, eval_delay_secs=0, continuous_eval_throttle_secs=60, eval_every_n_steps=1, delay_workers_by_global_step=False, export_strategies=None, train_steps_per_iteration=100)
 ```
 
-Experiment is a class containing all information needed to train a model.
+Experiment is a class containing all information needed to train an agent.
 
-After an experiment is created (by passing an Estimator and inputs for
-training and evaluation), an Experiment instance knows how to invoke training
-and eval loops in a sensible fashion for distributed training.
+After an experiment is created (by passing an Agent for training and evaluation),
+an Experiment instance knows how to invoke training and eval loops in
+a sensible fashion for distributed training.
 
 
 None of the functions passed to this constructor are executed at construction time.
 They are stored and used when a method is executed which requires it.
 
 - __Args__:
-	- __estimator__: Object implementing Estimator interface.
-	- __train_input_fn__: function, returns features and labels for training.
-	- __eval_input_fn__: function, returns features and labels for evaluation. If
-		`eval_steps` is `None`, this should be configured only to produce for a
-		finite number of batches (generally, 1 epoch over the evaluation data).
+	- __agent__: Object implementing an Agent.
 	- __train_steps__: Perform this many steps of training.  default: None, means train forever.
+	- __train_episodes__: Perform this many episodes of training.  default: None, means train forever.
+	- __first_update__: First timestep to calculate `loss` and `train_op`. This is related to the
+		`global_timestep` variable, number of timesteps in episodes.
+	- __update_frequency__: The frequency at which we should calculate `loss` and `train_op`.
+		This frequency is related to the `gloabl_step` which is incremented every time
+		we update the network.
 	- __eval_steps__: `evaluate` runs until input is exhausted (or another exception is raised),
 		or for `eval_steps` steps, if specified.
-	- __train_hooks__: A list of monitors to pass to the `Estimator`'s `fit` function.
+	- __train_hooks__: A list of monitors to pass to the `Agent`'s `fit` function.
 	- __eval_hooks__: A list of `SessionRunHook` hooks to pass to
-		the `Estimator`'s `evaluate` function.
+		the `Agent`'s `evaluate` function.
 	- __eval_delay_secs__: Start evaluating after waiting for this many seconds.
 	- __continuous_eval_throttle_secs__: Do not re-evaluate unless the last evaluation
 		was started at least this many seconds ago for continuous_eval().
@@ -101,9 +103,9 @@ train(self, delay_secs=None)
 ```
 
 
-Fit the estimator using the training data.
+Fit the agent.
 
-Train the estimator for `self._train_steps` steps, after waiting for `delay_secs` seconds.
+Train the agent for `self._train_steps` steps, after waiting for `delay_secs` seconds.
 If `self._train_steps` is `None`, train forever.
 
 - __Args__:
@@ -271,15 +273,15 @@ Tests training, evaluating and exporting the estimator for a single step.
 
 ----
 
-## create_experiment
+## create_rl_experiment
 
 
 ```python
-create_experiment(experiment_config)
+create_rl_experiment(experiment_config)
 ```
 
 
-Creates a new `Experiment` instance.
+Creates a new reinforcement learning `Experiment` instance.
 
 - __Args__:
 	- __experiment_config__: the config to use for creating the experiment.

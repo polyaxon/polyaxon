@@ -12,7 +12,7 @@ get_optimizer(module)
 
 
 ```python
-get_exploration(module)
+get_exploration(module, continuous=False)
 ```
 
 
@@ -78,11 +78,31 @@ get_loss(module, y_pred, y_true)
 
 ----
 
+## get_memory
+
+
+```python
+get_memory(module)
+```
+
+
+----
+
 ## get_pipeline
 
 
 ```python
 get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None)
+```
+
+
+----
+
+## get_environment
+
+
+```python
+get_environment(module)
 ```
 
 
@@ -134,6 +154,16 @@ get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, brid
 
 ```python
 get_estimator(estimator_config, model_config, run_config)
+```
+
+
+----
+
+## get_agent
+
+
+```python
+get_agent(estimator_config, model_config, run_config)
 ```
 
 
