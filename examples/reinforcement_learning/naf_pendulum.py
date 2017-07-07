@@ -4,11 +4,9 @@ from __future__ import absolute_import, division, print_function
 import polyaxon as plx
 import tensorflow as tf
 
-from polyaxon.rl.memories import Memory
-
 
 def main(*args):
-    """Creates an double dqn agent for the openai gym CartPole environment."""
+    """Creates a normalized advantage functions agent for the openai gym Pendulum environment."""
 
     env = plx.envs.GymEnvironment('Pendulum-v0')
 
@@ -24,7 +22,8 @@ def main(*args):
             target_update_frequency=10, summaries='all')
         return model(features, labels)
 
-    memory = Memory(num_states=env.num_states, num_actions=env.num_actions, continuous=env.is_continuous)
+    memory = plx.rl.memories.Memory(
+        num_states=env.num_states, num_actions=env.num_actions, continuous=env.is_continuous)
     estimator = plx.estimators.Agent(
         model_fn=model_fn, memory=memory, model_dir="/tmp/polyaxon_logs/naf_pendulum")
 

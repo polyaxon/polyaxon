@@ -153,5 +153,6 @@ MIT License
 # Credit
 
 This work is based and was inspired from different projects, `tensorflow.contrib.learn`, `keras`, `sonnet`, and `seq2seq`.
-The idea behind creating this library is to provide a tool that allow engineers and researchers to develop and experiment with end to end solution.
-This would allow us to have a complete control over the api and future design decision.
+The idea behind creating this library is to provide a tool that allow engineers and researchers to develop and experiment with end to end solutions.
+
+The choice of creating a new library was very importatn to have a complete control over the apis and future design decisions.

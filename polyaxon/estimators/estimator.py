@@ -275,8 +275,7 @@ class Estimator(object):
                 builder.add_meta_graph_and_variables(
                     session, [tag_constants.SERVING],
                     signature_def_map=signature_def_map,
-                    assets_collection=ops.get_collection(
-                        ops.GraphKeys.ASSET_FILEPATHS),
+                    assets_collection=ops.get_collection(ops.GraphKeys.ASSET_FILEPATHS),
                     legacy_init_op=local_init_op)
                 builder.save(as_text)
 

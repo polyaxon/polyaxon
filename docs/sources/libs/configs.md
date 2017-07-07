@@ -1,3 +1,13 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
+## RunConfig
+
+```python
+polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
+```
+
+
+----
+
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L76)</span>
 ## Configurable
 
@@ -8,80 +18,6 @@ polyaxon.libs.configs.Configurable()
 `Configurable` is an abstract class for defining an configurable objects.
 
 A configurable class reads a configuration (YAML, Json) and create a config instance.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L235)</span>
-## MetricConfig
-
-```python
-polyaxon.libs.configs.MetricConfig(module, params=None)
-```
-
-The MetricConfig holds information needed to create a `Metric`.
-
-- __Args__:
-	- __module__: `str`, name to give for the metric.
-	- __params__: `dict`, extra information to pass to the metric.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L247)</span>
-## ExplorationConfig
-
-```python
-polyaxon.libs.configs.ExplorationConfig(module, params=None)
-```
-
-The ExplorationConfig holds information needed to create a `Exploration`.
-
-- __Args__:
-	- __module__: `str`, name to give for the exploration.
-	- __params__: `dict`, extra information to pass to the exploration.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L211)</span>
-## EnvironmentConfig
-
-```python
-polyaxon.libs.configs.EnvironmentConfig(module, params=None)
-```
-
-The EnvironmentConfig holds information needed to create an `Environment`.
-
-- __Args__:
-	- __module__: `str`, module loss to use.
-	- __params__: `dict`, extra information to pass to the loss.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L223)</span>
-## LossConfig
-
-```python
-polyaxon.libs.configs.LossConfig(module, params=None)
-```
-
-The LossConfig holds information needed to create a `Loss`.
-
-- __Args__:
-	- __module__: `str`, module loss to use.
-	- __params__: `dict`, extra information to pass to the loss.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
-## RunConfig
-
-```python
-polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
-```
 
 
 ----
@@ -125,6 +61,70 @@ The InputDataConfig holds information needed to create a `InputData`.
 	- __pipeline_config__: The pipeline config to use.
 	- __x__: The x values, only used with NUMPY and PANDAS types.
 	- __y__: The y values, only used with NUMPY and PANDAS types.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L211)</span>
+## EnvironmentConfig
+
+```python
+polyaxon.libs.configs.EnvironmentConfig(module, params=None)
+```
+
+The EnvironmentConfig holds information needed to create an `Environment`.
+
+- __Args__:
+	- __module__: `str`, module loss to use.
+	- __params__: `dict`, extra information to pass to the loss.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L223)</span>
+## LossConfig
+
+```python
+polyaxon.libs.configs.LossConfig(module, params=None)
+```
+
+The LossConfig holds information needed to create a `Loss`.
+
+- __Args__:
+	- __module__: `str`, module loss to use.
+	- __params__: `dict`, extra information to pass to the loss.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L235)</span>
+## MetricConfig
+
+```python
+polyaxon.libs.configs.MetricConfig(module, params=None)
+```
+
+The MetricConfig holds information needed to create a `Metric`.
+
+- __Args__:
+	- __module__: `str`, name to give for the metric.
+	- __params__: `dict`, extra information to pass to the metric.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L247)</span>
+## ExplorationConfig
+
+```python
+polyaxon.libs.configs.ExplorationConfig(module, params=None)
+```
+
+The ExplorationConfig holds information needed to create a `Exploration`.
+
+- __Args__:
+	- __module__: `str`, name to give for the exploration.
+	- __params__: `dict`, extra information to pass to the exploration.
 
 
 ----
