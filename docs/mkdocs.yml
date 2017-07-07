@@ -29,13 +29,20 @@ pages:
 - Experiments:
   - Introduction: experiments/introduction.md
   - Expermient: experiments/experiment.md
+  - RLExpermient: experiments/rl_experiment.md
+  - Utils: experiments/utils.md
 - Estimators:
   - Estimator: estimators/estimator.md
-  - Hooks: estimators/hooks.md
+  - Agent: estimators/agent.md
+- Hooks:
+  - GeneralHooks: hooks/general_hooks.md
+  - StepHooks: hooks/step_hooks.md
+  - EpisodeHooks: hooks/episode_hooks.md
 - Models:
   - Base Model: models/base_model.md
   - Base RL Model: models/base_rl_model.md
   - Models: models/models.md
+  - RLModels: models/rl_models.md
   - Summerizer: models/summarizer.md
 - Layers:
   - Introduction: layers/introduction.md

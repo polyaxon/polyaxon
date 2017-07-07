@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
 from collections import namedtuple
 
 import numpy as np
@@ -78,10 +79,11 @@ class GymEnvironment(Environment):
         return state
 
     def step(self, action, state, return_spec=True):
-        if isinstance(self._env.action_space, Box) and not isinstance(action, list):
+        if isinstance(action, (list, np.ndarray)):
+            if isinstance(self._env.action_space, Discrete) or isinstance(action, (list, np.ndarray)):
+                action = action[0]
+        if isinstance(self._env.action_space, Box) and not isinstance(action, (list, np.ndarray)):
             action = list(action)
-        elif isinstance(self._env.action_space, Discrete) and isinstance(action, (list, np.ndarray)):
-            action = action[0]
         next_state, reward, done, _ = self._env.step(action)
         if return_spec:
             return EnvSpec(
@@ -102,3 +104,8 @@ class GymEnvironment(Environment):
     @property
     def is_continuous(self):
         return not isinstance(self._env.action_space, Discrete)
+
+
+ENVIRONMENTS = OrderedDict([
+    ('GymEnvironment', GymEnvironment),
+])

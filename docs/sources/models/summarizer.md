@@ -8,7 +8,7 @@ polyaxon.models.summarizer.SummaryOptions()
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/summarizer.py#L45)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/summarizer.py#L49)</span>
 ## SummaryTypes
 
 ```python
@@ -25,6 +25,8 @@ polyaxon.models.summarizer.SummaryTypes()
 add_learning_rate_summaries()
 ```
 
+
+Adds learning rate summaries. Only works when decaying learning rate is chosen.
 
 ----
 

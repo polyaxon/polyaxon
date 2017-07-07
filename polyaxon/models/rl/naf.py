@@ -60,7 +60,7 @@ class NAFModel(RLBaseModel):
                                        use_target_graph=use_target_graph,
                                        target_update_frequency=target_update_frequency,
                                        is_continuous=is_continuous,
-                                       dueling=None,  # no dueling
+                                       dueling=True,
                                        use_expert_demo=use_expert_demo,
                                        summaries=summaries,
                                        clip_gradients=clip_gradients,
@@ -103,7 +103,7 @@ class NAFModel(RLBaseModel):
         advantage = tf.squeeze(advantage, 2)
 
         # Q = V(s) + A(s, a)
-        train_q_value = tf.squeeze(self._train_results['v'] + advantage, 1)
+        train_q_value = (self._train_results['v'] + advantage)[:-1]
         target_q_value = (reward[:-1] + (1.0 - tf.cast(done[:-1], tf.float32)) *
                           self.discount * self._target_results['v'][1:])
 

@@ -1,3 +1,15 @@
+## get_function_name
+
+
+```python
+get_function_name(func)
+```
+
+
+Returns a module name for a callable or `None` if no name can be found.
+
+----
+
 ## track
 
 
@@ -298,16 +310,3 @@ Once the context is exited, the attribute reverts to its original value.
 >>> print(my_obj.x)
 >>> print(my_obj.x)
 ```
-
-
-----
-
-## get_function_name
-
-
-```python
-get_function_name(func)
-```
-
-
-Returns a module name for a callable or `None` if no name can be found.

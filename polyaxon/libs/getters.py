@@ -149,6 +149,18 @@ def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features
         raise ValueError('Invalid pipeline type.')
 
 
+def get_environment(module, *kwargs):
+    from polyaxon.rl.environments import ENVIRONMENTS
+
+    if isinstance(module, six.string_types):
+        return ENVIRONMENTS[module](**kwargs)
+
+    if hasattr(module, '__call__'):
+        return module()
+
+    raise TypeError('Environment `{}` is not supported.'.format(module))
+
+
 def get_graph_fn(config, graph_class=None):
     """Creates the graph operations."""
     from polyaxon.libs.subgraph import SubGraph
@@ -242,6 +254,19 @@ def get_estimator(estimator_config, model_config, run_config):
     model_fn = get_model_fn(model_config)
 
     estimator = ESTIMATORS[estimator_config.module](
+        model_fn=model_fn,
+        model_dir=estimator_config.output_dir,
+        config=run_config,
+        params=model_config.params)
+    return estimator
+
+
+def get_agent(estimator_config, model_config, run_config):
+    from polyaxon.estimators import AGENTS
+
+    model_fn = get_model_fn(model_config)
+
+    estimator = AGENTS[estimator_config.module](
         model_fn=model_fn,
         model_dir=estimator_config.output_dir,
         config=run_config,

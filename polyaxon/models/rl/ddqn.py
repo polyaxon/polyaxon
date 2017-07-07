@@ -55,7 +55,7 @@ class DDQNModel(RLBaseModel):
                 `losses` are the per-batch losses.
                 `loss` is a single scalar tensor to minimize.
         """
-        reward, action, done = labels['advantage'], labels['action'], labels['done']
+        reward, action, done = labels['reward'], labels['action'], labels['done']
         train_action_selector = OneHotEncoding(
             self.mode, n_classes=self.num_actions)(self._index_action)
         target_q_values = tf.reduce_sum(

@@ -53,7 +53,7 @@ Builds a random exploration (always selects random values, i.e. random() < 1 == 
 
 
 ```python
-decay(exploration_rate=0.1, decay_type='polynomial_decay', start_decay_at=0, stop_decay_at=1000000000.0, decay_rate=0.0, staircase=False, decay_steps=10000, min_exploration_rate=0)
+decay(exploration_rate=0.15, decay_type='polynomial_decay', start_decay_at=0, stop_decay_at=1000000000.0, decay_rate=0.0, staircase=False, decay_steps=100000, min_exploration_rate=0)
 ```
 
 
@@ -62,7 +62,7 @@ Builds a decaying exploration.
 Decay epsilon based on number of states and the decay_type.
 
 - __Args__:
-	- __exploration_rate__: `float`. The initial value of the exploration rate.
+	- __exploration_rate__: `float` or `list` of `float`. The initial value of the exploration rate.
 	- __decay_type__: A decay function name defined in `exploration_decay`
 	possible Values: exponential_decay, inverse_time_decay, natural_exp_decay,
 			 piecewise_constant, polynomial_decay.
@@ -76,3 +76,30 @@ Decay epsilon based on number of states and the decay_type.
 
 - __Returns__:
 	`function` the exploration function logic.
+
+
+----
+
+## ornsteinuhlenbeck_process
+
+
+```python
+ornsteinuhlenbeck_process(num_actions, sigma=0.3, mu=0, theta=0.15)
+```
+
+
+Builds an exploration based on the Ornstein-Uhlenbeck process
+
+The process adds time-correlated noise to the actions taken by the deterministic policy.
+The OU process satisfies the following stochastic differential equation:
+`dxt = theta*(mu - xt)*dt + sigma*dWt`, where Wt denotes the Wiener process.
+
+
+----
+
+## continuous_decay
+
+
+```python
+continuous_decay(num_actions, decay_type='polynomial_decay', start_decay_at=0, stop_decay_at=1000000000.0, decay_rate=0.0, staircase=False, decay_steps=10000, min_exploration_rate=0)
+```

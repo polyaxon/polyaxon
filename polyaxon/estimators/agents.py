@@ -75,7 +75,7 @@ class Agent(Estimator):
             model_fn=model_fn, model_dir=model_dir, config=config, params=params)
         self.memory = memory
 
-    def _prepare_train(self, first_update=1, update_frequency=1, episodes=None, steps=None,
+    def _prepare_train(self, first_update=35, update_frequency=1, episodes=None, steps=None,
                        hooks=None, max_steps=None, max_episodes=None):
         if first_update < 0:
             raise ValueError("Must specify first_update > 0, given: {}".format(first_update))
@@ -306,7 +306,10 @@ class Agent(Estimator):
                         'loss': estimator_spec.loss,
                         'step': global_step,
                         'timestep': global_timestep,
-                        'global_episode': global_episode
+                        'global_episode': global_episode,
+                        'max_reward': labels['max_reward'],
+                        'min_reward': labels['min_reward'],
+                        'total_reward': labels['total_reward'],
                     },
                     every_n_iter=100)
             ])
@@ -326,7 +329,10 @@ class Agent(Estimator):
                         'loss': estimator_spec.loss,
                         'step': global_step,
                         'global_timestep': global_timestep,
-                        'global_episode': global_episode
+                        'global_episode': global_episode,
+                        'max_reward': labels['max_reward'],
+                        'min_reward': labels['min_reward'],
+                        'total_reward': labels['total_reward'],
                     },
                     every_n_episodes=1),  # TODO: save every episode?
                 plx_hooks.EpisodeCounterHook(output_dir=self.model_dir)

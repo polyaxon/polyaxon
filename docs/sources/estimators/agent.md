@@ -1,13 +1,13 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/estimator.py#L44)</span>
-## Estimator
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/agents.py#L26)</span>
+## Agent
 
 ```python
-polyaxon.estimators.estimator.Estimator(model_fn, model_dir=None, config=None, params=None)
+polyaxon.estimators.agents.Agent(model_fn, memory, model_dir=None, config=None, params=None)
 ```
 
-Estimator class is a model trainer/evaluator.
+Agent class is the basic reinforcement learning model trainer/evaluator.
 
-Constructs an `Estimator` instance.
+Constructs an `Agent` instance.
 
 - __Args__:
 	- __model_fn__: Model function. Follows the signature:
@@ -105,16 +105,16 @@ renaming it is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}
 
 
 ```python
-train(self, input_fn=None, steps=None, hooks=None, max_steps=None)
+train(self, env, first_update=35, update_frequency=10, episodes=None, steps=None, hooks=None, max_steps=None, max_episodes=None)
 ```
 
 
-Trains a model given training data `x` predictions and `y` labels.
+Trains a model given an environment.
 
 - __Args__:
-	- __input_fn__: Input function returning a tuple of:
-	features - `Tensor` or dictionary of string feature name to `Tensor`.
-	labels - `Tensor` or dictionary of `Tensor` with labels.
+	- __env__: `Environment` instance.
+	- __first_update__: `int`. First timestep to calculate the loss and train_op for the model.
+	- __update_frequency__: `int`. The frequecncy at which to calcualate the loss and train_op.
 	- __steps__: Number of steps for which to train model. If `None`, train forever.
 	'steps' works incrementally. If you call two times fit(steps=10) then
 	training occurs in total 20 steps. If you don't want to have incremental
@@ -124,6 +124,8 @@ Trains a model given training data `x` predictions and `y` labels.
 	Used for callbacks inside the training loop.
 	- __max_steps__: Number of total steps for which to train model. If `None`,
 	train forever. If set, `steps` must be `None`.
+	- __max_episodes__: Number of total episodes for which to train model. If `None`,
+	train forever. If set, `episodes` must be `None`.
 
 	Two calls to `fit(steps=100)` means 200 training iterations.
 	On the other hand, two calls to `fit(max_steps=100)` means

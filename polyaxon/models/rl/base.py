@@ -103,11 +103,11 @@ class RLBaseModel(BaseModel):
         exploration = self._build_exploration()
 
         if self.is_continuous:
-            if not exploration:
-                return self._train_graph['q']
+            if exploration is None:
+                return self._train_results['q']
 
             # use exploration
-            return self._train_graph['q'] + exploration
+            return self._train_results['q'] + exploration
         else:
             self._index_action = tf.argmax(self._train_results['q'], axis=1)
             if exploration is None:
