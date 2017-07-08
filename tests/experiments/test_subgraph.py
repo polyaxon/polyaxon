@@ -89,27 +89,6 @@ class TestSubgraph(tf.test.TestCase):
         assert m3._template.variable_scope.name == 'test/FullyConnected'
 
     def test_mulitple_inputs(self):
-        # subgraph1_config = SubGraphConfig(
-        #     name='subgraph1', modules=[plx.layers.FullyConnected], kwargs=[{'num_units': 12}])
-        # subgraph1 = SubGraph(
-        #     mode=plx.Modes.TRAIN, name=subgraph1_config.name,
-        #     modules=SubGraph.build_subgraph_modules(mode=plx.Modes.TRAIN,
-        #                                             subgraph_config=subgraph1_config))
-        # subgraph2_config = SubGraphConfig(
-        #     name='subgraph2',
-        #     modules=[plx.layers.FullyConnected, plx.layers.Dropout, plx.layers.FullyConnected],
-        #     kwargs=[{'num_units': 12}, {'keep_prob': 0.8}, {'num_units': 1}])
-        # subgraph2 = SubGraph(
-        #     mode=plx.Modes.TRAIN, name=subgraph2_config.name,
-        #     modules=SubGraph.build_subgraph_modules(mode=plx.Modes.TRAIN,
-        #                                             subgraph_config=subgraph2_config))
-        # graph_config = SubGraphConfig(
-        #     name='test',
-        #     modules=[plx.layers.Merge, plx.layers.FullyConnected],
-        #     kwargs=[{'modules': [subgraph1, subgraph1], 'merge_mode': 'prod'}, {'num_units': 12}])
-        # graph = SubGraph(mode=plx.Modes.TRAIN, name=graph_config.name, )
-
-
         graph_config = {
             'name': 'graph',
             'definition': [

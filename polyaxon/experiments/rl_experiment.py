@@ -189,7 +189,9 @@ def create_rl_experiment(experiment_config):
     agent = getters.get_agent(experiment_config.agent_config,
                               experiment_config.model_config,
                               experiment_config.run_config)
-    env = getters.get_environment(experiment_config.environment_config)
+    env = getters.get_environment(experiment_config.environment_config.module,
+                                  experiment_config.environment_config.env_id,
+                                  **experiment_config.environment_config.params)
     train_hooks = getters.get_hooks(experiment_config.train_hooks_config)
     eval_hooks = getters.get_hooks(experiment_config.eval_hooks_config)
 
@@ -197,9 +199,9 @@ def create_rl_experiment(experiment_config):
         agent=agent,
         env=env,
         train_steps=experiment_config.train_steps,
-        train_episodes=experiment_config.episodes,
+        train_episodes=experiment_config.train_episodes,
         first_update=experiment_config.first_update,
-        update_frequency=experiment_config.udpate_frequency,
+        update_frequency=experiment_config.update_frequency,
         eval_steps=experiment_config.eval_steps,
         train_hooks=train_hooks,
         eval_hooks=eval_hooks,

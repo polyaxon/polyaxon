@@ -149,11 +149,11 @@ def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features
         raise ValueError('Invalid pipeline type.')
 
 
-def get_environment(module, *kwargs):
+def get_environment(module, env_id, **kwargs):
     from polyaxon.rl.environments import ENVIRONMENTS
 
     if isinstance(module, six.string_types):
-        return ENVIRONMENTS[module](**kwargs)
+        return ENVIRONMENTS[module](env_id=env_id, **kwargs)
 
     if hasattr(module, '__call__'):
         return module()
@@ -261,14 +261,17 @@ def get_estimator(estimator_config, model_config, run_config):
     return estimator
 
 
-def get_agent(estimator_config, model_config, run_config):
+def get_agent(agent_config, model_config, run_config):
     from polyaxon.estimators import AGENTS
 
     model_fn = get_model_fn(model_config)
+    memory = get_memory(agent_config.memory_config.module,
+                        **agent_config.memory_config.params)
 
-    estimator = AGENTS[estimator_config.module](
+    estimator = AGENTS[agent_config.module](
         model_fn=model_fn,
-        model_dir=estimator_config.output_dir,
+        memory=memory,
+        model_dir=agent_config.output_dir,
         config=run_config,
         params=model_config.params)
     return estimator

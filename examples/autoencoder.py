@@ -34,8 +34,7 @@ def create_experiment_json_fn(output_dir):
                                     'image': [
                                         (plx.processing.image.Standardization, {}),
                                         (plx.layers.Reshape, {'new_shape': [28 * 28]}),
-                                    ]
-                                }
+                                    ]}
                                 },
         },
         'eval_input_data_config': {
