@@ -17,7 +17,81 @@ from tensorflow.contrib.learn.python.learn.estimators import run_config
 from polyaxon.libs.utils import generate_model_dir
 
 
-class RunConfig(run_config.RunConfig):
+def _maybe_load_json(item):
+    """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
+    if isinstance(item, six.string_types):
+        return json.loads(item)
+    elif isinstance(item, dict):
+        return item
+    else:
+        raise ValueError("Got {}, expected Json string or dict", type(item))
+
+
+def _maybe_load_yaml(item):
+    """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
+    if isinstance(item, six.string_types):
+        return yaml.load(item)
+    elif isinstance(item, dict):
+        return item
+    else:
+        raise ValueError("Got {}, expected YAML string or dict", type(item))
+
+
+@six.add_metaclass(abc.ABCMeta)
+class Configurable(object):
+    """`Configurable` is an abstract class for defining an configurable objects.
+
+    A configurable class reads a configuration (YAML, Json) and create a config instance.
+    """
+
+    @classmethod
+    def _read_configs(cls, config_values):
+        if not isinstance(config_values, (np.ndarray, list, tuple)):
+            config_values = [config_values]
+
+        if not config_values:
+            return None
+
+        config = {}
+        for config_value in config_values:
+            if not isinstance(config_value, (Mapping, six.string_types)):
+                raise TypeError('Expects list of Mapping/string instances, '
+                                'received {} instead'.format(type(config_value)))
+
+            if isinstance(config_value, Mapping):
+                config.update(config_value)
+            else:
+                config.update(cls._read_from_file(config_value))
+        return config
+
+    @classmethod
+    def _read_from_file(cls, f_path):
+        _, ext = os.path.splitext(f_path)
+        if ext in ('.yml', '.yaml'):
+            return cls._read_from_yml(f_path)
+        elif ext == '.json':
+            return cls._read_from_json(f_path)
+
+    @staticmethod
+    def _read_from_yml(f_path):
+        with open(f_path) as f:
+            f_config = yaml.safe_load(f)
+            return f_config
+
+    @staticmethod
+    def _read_from_json(f_path):
+        return json.loads(open(f_path).read())
+
+    @classmethod
+    def read_configs(cls, config_values):
+        config = cls._read_configs(config_values)
+        return cls(**config) if config else None
+
+    def to_dict(self):
+        raise NotImplementedError
+
+
+class RunConfig(run_config.RunConfig, Configurable):
     def __init__(self,
                  master=None,
                  num_cores=0,
@@ -70,77 +144,15 @@ class RunConfig(run_config.RunConfig):
     def to_dict(self):
         return self._to_dict
 
-
-def _maybe_load_json(item):
-    """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
-    if isinstance(item, six.string_types):
-        return json.loads(item)
-    elif isinstance(item, dict):
-        return item
-    else:
-        raise ValueError("Got {}, expected Json string or dict", type(item))
-
-
-def _maybe_load_yaml(item):
-    """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
-    if isinstance(item, six.string_types):
-        return yaml.load(item)
-    elif isinstance(item, dict):
-        return item
-    else:
-        raise ValueError("Got {}, expected YAML string or dict", type(item))
-
-
-@six.add_metaclass(abc.ABCMeta)
-class Configurable(object):
-    """`Configurable` is an abstract class for defining an configurable objects.
-
-    A configurable class reads a configuration (YAML, Json) and create a config instance.
-    """
-
-    @classmethod
-    def _read_configs(cls, config_values):
-        if not isinstance(config_values, (np.ndarray, list, tuple)):
-            config_values = [config_values]
-
-        config = {}
-
-        for config_value in config_values:
-            if not isinstance(config_value, (Mapping, six.string_types)):
-                raise TypeError('Expects list of Mapping/string instances, '
-                                'received {} instead'.format(type(config_value)))
-
-            if isinstance(config_value, Mapping):
-                config.update(config_value)
-            else:
-                config.update(cls._read_from_file(config_value))
-        return config
-
-    @classmethod
-    def _read_from_file(cls, f_path):
-        _, ext = os.path.splitext(f_path)
-        if ext in ('.yml', '.yaml'):
-            return cls._read_from_yml(f_path)
-        elif ext == '.json':
-            return cls._read_from_json(f_path)
-
-    @staticmethod
-    def _read_from_yml(f_path):
-        with open(f_path) as f:
-            f_config = yaml.safe_load(f)
-            return f_config
-
-    @staticmethod
-    def _read_from_json(f_path):
-        return json.loads(open(f_path).read())
-
     @classmethod
     def read_configs(cls, config_values):
-        config = cls._read_configs(config_values)
-        return cls(**config) if config else None
-
-    def to_dict(self):
-        raise NotImplementedError
+        config_values = cls._read_configs(config_values)
+        gpu_allow_growth = config_values.pop('gpu_allow_growth', False)
+        log_device_placement = config_values.pop('log_device_placement', False)
+        config = cls(**config_values)
+        config.tf_config.gpu_options.allow_growth = gpu_allow_growth
+        config.tf_config.log_device_placement = log_device_placement
+        return config
 
 
 class PipelineConfig(Configurable):
@@ -628,22 +640,6 @@ class AgentConfig(EstimatorConfig):
         return cls(**config)
 
 
-def create_run_config(tf_random_seed=None, save_checkpoints_secs=None, save_checkpoints_steps=600,
-                      keep_checkpoint_max=5, keep_checkpoint_every_n_hours=4,
-                      gpu_memory_fraction=1.0, gpu_allow_growth=False, log_device_placement=False):
-    """Creates a `RunConfig` instance."""
-    config = RunConfig(
-        tf_random_seed=tf_random_seed,
-        save_checkpoints_secs=save_checkpoints_secs,
-        save_checkpoints_steps=save_checkpoints_steps,
-        keep_checkpoint_max=keep_checkpoint_max,
-        keep_checkpoint_every_n_hours=keep_checkpoint_every_n_hours,
-        gpu_memory_fraction=gpu_memory_fraction)
-    config.tf_config.gpu_options.allow_growth = gpu_allow_growth
-    config.tf_config.log_device_placement = log_device_placement
-    return config
-
-
 class ExperimentConfig(Configurable):
     """The ExperimentConfig holds information needed to create a `Experiment`.
 
@@ -713,7 +709,7 @@ class ExperimentConfig(Configurable):
     def read_configs(cls, config_values):
         config = cls._read_configs(config_values)
 
-        config['run_config'] = create_run_config(**config.get('run_config', {}))
+        config['run_config'] = RunConfig.read_configs(config.get('run_config', {}))
         config['train_input_data_config'] = InputDataConfig.read_configs(
             config['train_input_data_config'])
         config['eval_input_data_config'] = InputDataConfig.read_configs(
@@ -818,7 +814,7 @@ class RLExperimentConfig(Configurable):
     def read_configs(cls, config_values):
         config = cls._read_configs(config_values)
 
-        config['run_config'] = create_run_config(**config.get('run_config', {}))
+        config['run_config'] = RunConfig.read_configs(config.get('run_config', {}))
         config['environment_config'] = EnvironmentConfig.read_configs(config['environment_config'])
         config['agent_config'] = AgentConfig.read_configs(config['agent_config'])
         config['model_config'] = ModelConfig.read_configs(config['model_config'])

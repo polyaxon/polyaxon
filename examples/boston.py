@@ -50,15 +50,12 @@ def main(*args):
     estimator = plx.estimators.Estimator(model_fn=model_fn,
                                           model_dir="/tmp/polyaxon_logs/boston")
 
-    # Fit
     estimator.train(input_fn=numpy_input_fn(
         {'x': np.asarray(x_train, dtype=np.float32)}, np.expand_dims(y_train, axis=1),
         shuffle=False, num_epochs=5000, batch_size=64))
 
-    # Transform
     x_test = scaler.transform(x_test)
 
-    # Predict and score
     estimator.evaluate(input_fn=numpy_input_fn(
         {'x': np.asarray(x_test, dtype=np.float32)}, np.expand_dims(y_test, axis=1),
         shuffle=False, num_epochs=1, batch_size=32))

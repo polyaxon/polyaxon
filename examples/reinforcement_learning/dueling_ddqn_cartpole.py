@@ -27,7 +27,6 @@ def main(*args):
     estimator = plx.estimators.Agent(
         model_fn=model_fn, memory=memory, model_dir="/tmp/polyaxon_logs/ddqn_cartpole")
 
-    # Fit
     estimator.train(env)
 
 
