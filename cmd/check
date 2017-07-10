@@ -1,0 +1,13 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/environment
+
+if [ hash docker 2>/dev/null ]; then
+    echo "Command ""docker"" not found. For instructions see docker/README.md"
+    exit 1
+fi
+
+if [ hash docker-compose 2>/dev/null ]; then
+    echo "Command ""docker-compose"" not found. For instructions see docker/README.md"
+    exit 1
+fi

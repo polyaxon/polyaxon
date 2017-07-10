@@ -1,0 +1,41 @@
+version: "2"
+
+services:
+  postgres:
+    image: postgres:9.5
+    environment:
+      POSTGRES_USER: "polyaxon"
+      POSTGRES_PASSWORD: "polyaxon"
+    networks:
+      - api
+
+  memcache:
+    image: memcached
+    networks:
+      - api
+
+  web:
+    build: ./
+    command: python3 polyaxon/manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    networks:
+      - api
+    depends_on:
+      - memcache
+      - postgres
+    volumes:
+      - .:/polyaxon
+    ports:
+      - "8000:8000"
+      - "6006:6006"
+      - "8888:8888"
+
+    environment:
+      DJANGO_SETTINGS_MODULE: api.settings
+      MEMCACHE_LOCATION: "memcache:11211"
+      SETTINGS_ENV_DIR: "dev"
+      DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
+
+networks:
+  api:

@@ -1,0 +1,15 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/environment
+
+$DIR/check
+
+if grep -q DATABASE_URL docker-compose.yml ; then
+    PYTESTOPT="--reuse-db -v"
+else
+    PYTESTOPT="-v"
+fi
+
+if [ $? -eq 0 ]; then
+    docker-compose -p web_testing -f docker-compose.yml -f docker-compose.testing.yml run web py.test $PYTESTOPT $*
+fi

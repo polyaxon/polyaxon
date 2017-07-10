@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: polyaxon
+  username: polyaxon

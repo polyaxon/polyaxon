@@ -1,0 +1,9 @@
+{
+  "DJANGO_DEBUG": false,
+  "JS_DEBUG": false,
+  "SECRET_KEY": "secret",
+  "DB_NAME": "travis_ci_test",
+  "DB_USER": "postgres",
+  "DB_PASSWORD": "",
+  "DB_HOST": "localhost"
+}

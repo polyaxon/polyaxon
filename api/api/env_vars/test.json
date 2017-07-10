@@ -1,0 +1,4 @@
+{
+  "DJANGO_DEBUG": true,
+  "SECRET_KEY": "secret"
+}

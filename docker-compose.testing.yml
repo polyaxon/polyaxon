@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  web:
+    build: .
+    environment:
+      WAIT_FOR_PORTS: "memcache:11211 postgres:5432"
+      TESTING: 1
+      DJANGO_SETTINGS_MODULE: api.settings

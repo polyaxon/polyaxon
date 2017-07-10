@@ -1,0 +1,17 @@
+{
+  "PASSWORD_LENGTH": "6",
+  "ADMIN_NAME": "Admins",
+  "ADMIN_MAIL": "test@test.com",
+  "EMAIL_FROM": "<test@test.com>",
+  "DB_ENGINE": "django.db.backends.postgresql_psycopg2",
+  "DB_NAME": "polyaxon",
+  "DB_USER": "polyaxon",
+  "DB_PASSWORD": "polyaxon",
+  "DB_HOST": "postgres",
+  "DB_PORT": "5432",
+  "MEDIA_ROOT": "",
+  "MEDIA_URL": "",
+  "STATIC_ROOT": "static",
+  "STATIC_URL": "/static/",
+  "JS_DEBUG": false
+}

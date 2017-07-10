@@ -1,0 +1,3 @@
+# Set and export hostname to the docker environment.
+[ -z "$HOSTNAME" ] && HOSTNAME=$(hostname)
+export HOSTNAME

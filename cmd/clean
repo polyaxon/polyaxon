@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/environment
+
+echo "Remove stopped containers"
+containers=$(docker ps -a -q -f "status=exited")
+[ -n "$containers" ] && docker rm $containers
+echo "Remove untagged images"
+images=$(docker images -q --filter "dangling=true")
+[ -n "$images" ] && docker rmi $images
+echo "Remove old volumes"
+volumes=$(docker volume ls -qf dangling=true)
+[ -n "$volumes" ] && docker volume rm $volumes
