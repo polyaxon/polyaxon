@@ -3,7 +3,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/environment
 
 if [ hash docker 2>/dev/null ]; then
-    echo "Command ""docker"" not found.
+    echo "Command ""docker"" not found."
     exit 1
 fi
 
