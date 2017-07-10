@@ -14,6 +14,7 @@ import tensorflow as tf
 
 from tensorflow.contrib.learn.python.learn.estimators import run_config
 
+from polyaxon.libs.exceptions import ConfigurationError
 from polyaxon.libs.utils import generate_model_dir
 
 
@@ -24,7 +25,7 @@ def _maybe_load_json(item):
     elif isinstance(item, dict):
         return item
     else:
-        raise ValueError("Got {}, expected Json string or dict", type(item))
+        raise ConfigurationError("Got {}, expected Json string or dict", type(item))
 
 
 def _maybe_load_yaml(item):
@@ -34,7 +35,7 @@ def _maybe_load_yaml(item):
     elif isinstance(item, dict):
         return item
     else:
-        raise ValueError("Got {}, expected YAML string or dict", type(item))
+        raise ConfigurationError("Got {}, expected YAML string or dict", type(item))
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -55,8 +56,9 @@ class Configurable(object):
         config = {}
         for config_value in config_values:
             if not isinstance(config_value, (Mapping, six.string_types)):
-                raise TypeError('Expects list of Mapping/string instances, '
-                                'received {} instead'.format(type(config_value)))
+                raise ConfigurationError(
+                    'Expects list of Mapping/string instances, '
+                    'received {} instead'.format(type(config_value)))
 
             if isinstance(config_value, Mapping):
                 config.update(config_value)
