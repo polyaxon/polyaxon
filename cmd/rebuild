@@ -1,0 +1,11 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/environment
+
+$DIR/check
+
+if [ $? -eq 0 ]; then
+    docker pull polyaxon/polyaxon-1.1.0
+    docker-compose -p plx_testing -f docker-compose.yml -f docker-compose.testing.yml build plx $*
+    docker-compose build plx $*
+fi

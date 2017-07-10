@@ -1,14 +1,20 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L20)</span>
-## RunConfig
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L280)</span>
+## EnvironmentConfig
 
 ```python
-polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
+polyaxon.libs.configs.EnvironmentConfig(module, env_id, params=None)
 ```
+
+The EnvironmentConfig holds information needed to create an `Environment`.
+
+- __Args__:
+	- __module__: `str`, module loss to use.
+	- __params__: `dict`, extra information to pass to the loss.
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L76)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L42)</span>
 ## Configurable
 
 ```python
@@ -22,7 +28,17 @@ A configurable class reads a configuration (YAML, Json) and create a config inst
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L123)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L96)</span>
+## RunConfig
+
+```python
+polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None)
+```
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L160)</span>
 ## PipelineConfig
 
 ```python
@@ -47,7 +63,7 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L184)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L245)</span>
 ## InputDataConfig
 
 ```python
@@ -65,23 +81,7 @@ The InputDataConfig holds information needed to create a `InputData`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L211)</span>
-## EnvironmentConfig
-
-```python
-polyaxon.libs.configs.EnvironmentConfig(module, params=None)
-```
-
-The EnvironmentConfig holds information needed to create an `Environment`.
-
-- __Args__:
-	- __module__: `str`, module loss to use.
-	- __params__: `dict`, extra information to pass to the loss.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L223)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L301)</span>
 ## LossConfig
 
 ```python
@@ -97,7 +97,7 @@ The LossConfig holds information needed to create a `Loss`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L235)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L320)</span>
 ## MetricConfig
 
 ```python
@@ -113,7 +113,7 @@ The MetricConfig holds information needed to create a `Metric`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L247)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L339)</span>
 ## ExplorationConfig
 
 ```python
@@ -129,7 +129,7 @@ The ExplorationConfig holds information needed to create a `Exploration`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L259)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L358)</span>
 ## OptimizerConfig
 
 ```python
@@ -158,7 +158,7 @@ The OptimizerConfig holds information needed to create a `Optimizer`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L306)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L422)</span>
 ## MemoryConfig
 
 ```python
@@ -174,7 +174,7 @@ The MemoryConfig holds information needed to create a `Memory` for an agent.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L318)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L441)</span>
 ## SubGraphConfig
 
 ```python
@@ -194,7 +194,7 @@ Handles also nested subgraphs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L362)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L499)</span>
 ## BridgeConfig
 
 ```python
@@ -207,11 +207,11 @@ The BridgeConfig class holds information neede to create a `Bridge` for a genera
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L372)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L517)</span>
 ## ModelConfig
 
 ```python
-polyaxon.libs.configs.ModelConfig(loss_config, optimizer_config, module=None, graph_config=None, encoder_config=None, decoder_config=None, bridge_config=None, summaries='all', eval_metrics_config=None, clip_gradients=5.0, clip_embed_gradients=0.1)
+polyaxon.libs.configs.ModelConfig(loss_config=None, optimizer_config=None, module=None, graph_config=None, encoder_config=None, decoder_config=None, bridge_config=None, summaries='all', eval_metrics_config=None, clip_gradients=5.0, clip_embed_gradients=0.1)
 ```
 
 The ModelConfig holds information needed to create a `Model`.
@@ -220,7 +220,7 @@ The ModelConfig holds information needed to create a `Model`.
 	- __loss_config__: The loss configuration.
 	- __optimizer_config__: The optimizer configuration.
 	- __graph_config__: The graph configuration.
-	- __model_type__: `str`, The type of the model (`classifier`, 'regressor, or `generator`).
+	- __module__: `str`, The type of the model (`classifier`, 'regressor, or `generator`).
 	- __summaries__: `str` or `list`, the summary levels.
 	- __eval_metrics_config__: The evaluation metrics configuration.
 	- __clip_gradients__: `float`, The value to clip the gradients with.
@@ -229,7 +229,7 @@ The ModelConfig holds information needed to create a `Model`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L432)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L597)</span>
 ## EstimatorConfig
 
 ```python
@@ -239,14 +239,31 @@ polyaxon.libs.configs.EstimatorConfig(module='Estimator', output_dir=None, param
 The EstimatorConfig holds information needed to create a `Estimator`.
 
 - __Args__:
-	- __cls__: `str`, estimator class to use.
+	- __module__: `str`, estimator class to use.
 	- __output_dir__: `str`, where to save training and evaluation data.
 	- __params__: `dict`, extra information to pass to the estimator.
 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L462)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L619)</span>
+## AgentConfig
+
+```python
+polyaxon.libs.configs.AgentConfig(module='Agent', memory_config=None, output_dir=None, params=None)
+```
+
+The EstimatorConfig holds information needed to create a `Estimator`.
+
+- __Args__:
+	- __module__: `str`, estimator class to use.
+	- __output_dir__: `str`, where to save training and evaluation data.
+	- __params__: `dict`, extra information to pass to the estimator.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L645)</span>
 ## ExperimentConfig
 
 ```python
@@ -280,11 +297,11 @@ The ExperimentConfig holds information needed to create a `Experiment`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L541)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L747)</span>
 ## RLExperimentConfig
 
 ```python
-polyaxon.libs.configs.RLExperimentConfig(name, output_dir, run_config, environment_config, agent_config, model_config, train_hooks_config=None, eval_hooks_config=None, eval_metrics_config=None, eval_every_n_steps=1000, train_steps=10000, eval_steps=10, eval_delay_secs=0, continuous_eval_throttle_secs=60, delay_workers_by_global_step=False, export_strategies=None, train_steps_per_iteration=1000)
+polyaxon.libs.configs.RLExperimentConfig(name, output_dir, run_config, environment_config, agent_config, model_config, train_hooks_config=None, eval_hooks_config=None, eval_metrics_config=None, eval_every_n_steps=1000, train_steps=10000, train_episodes=100, first_update=5000, update_frequency=15, eval_steps=10, eval_delay_secs=0, continuous_eval_throttle_secs=60, delay_workers_by_global_step=False, export_strategies=None, train_steps_per_iteration=1000)
 ```
 
 The RLExperimentConfig holds information needed to create a `RLExperiment`.
@@ -309,16 +326,3 @@ The RLExperimentConfig holds information needed to create a `RLExperiment`.
 		instead of time.
 	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
 	- __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
-
-
-----
-
-## create_run_config
-
-
-```python
-create_run_config(tf_random_seed=None, save_checkpoints_secs=None, save_checkpoints_steps=600, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=4, gpu_memory_fraction=1.0, gpu_allow_growth=False, log_device_placement=False)
-```
-
-
-Creates a `RunConfig` instance.

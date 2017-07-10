@@ -196,6 +196,58 @@ See `plx.image.total_variation`'s docstring
 
 ----
 
+## to_bounding_box
+
+
+```python
+to_bounding_box(images, offset_height, offset_width, target_height, target_width, method='crop')
+```
+
+
+Pad/Crop `image` with zeros to the specified `height` and `width`.
+(A mirror to tf.image pad_to_bounding_box and crop_to_bounding_box)
+
+If method == 'pad':
+	Adds `offset_height` rows of zeros on top, `offset_width` columns of
+	zeros on the left, and then pads the image on the bottom and right
+	with zeros until it has dimensions `target_height`, `target_width`.
+
+	This op does nothing if `offset_*` is zero and the image already has size
+	`target_height` by `target_width`.
+
+If method == 'crop':
+	Crops an image to a specified bounding box.
+
+	This op cuts a rectangular part out of `image`. The top-left corner of the
+	returned image is at `offset_height, offset_width` in `image`, and its
+	lower-right corner is at `offset_height + target_height, offset_width + target_width`.
+
+- __Args__:
+	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
+	   3-D Tensor of shape `[height, width, channels]`.
+	- __offset_height__:
+	* pad: Number of rows of zeros to add on top.
+	* crop: Vertical coordinate of the top-left corner of the result the input.
+	- __offset_width__:
+	* pad: Number of columns of zeros to add on the left.
+	* crop: Horizontal coordinate of the top-left corner of the result in the input.
+	- __target_height__: Height of output image.
+	- __target_width__: Width of output image.
+	- __method__: `crop` or `pad`
+
+- __Returns__:
+	If `image` was 4-D, a 4-D float Tensor of shape
+	`[batch, target_height, target_width, channels]`
+	If `image` was 3-D, a 3-D float Tensor of shape
+	`[target_height, target_width, channels]`
+
+- __Raises__:
+	- __ValueError__: If the shape of `image` is incompatible with the `offset_*` or
+	`target_*` arguments, or either `offset_height` or `offset_width` is negative.
+
+
+----
+
 ## resize
 
 
@@ -369,58 +421,6 @@ The argument `normalized` and `centered` controls how the windows are built:
 - __Returns__:
 	A `Tensor` of type `float32`.
 	A tensor representing the glimpses `[batch_size, glimpse_height, glimpse_width, channels]`.
-
-
-----
-
-## to_bounding_box
-
-
-```python
-to_bounding_box(images, offset_height, offset_width, target_height, target_width, method='crop')
-```
-
-
-Pad/Crop `image` with zeros to the specified `height` and `width`.
-(A mirror to tf.image pad_to_bounding_box and crop_to_bounding_box)
-
-If method == 'pad':
-	Adds `offset_height` rows of zeros on top, `offset_width` columns of
-	zeros on the left, and then pads the image on the bottom and right
-	with zeros until it has dimensions `target_height`, `target_width`.
-
-	This op does nothing if `offset_*` is zero and the image already has size
-	`target_height` by `target_width`.
-
-If method == 'crop':
-	Crops an image to a specified bounding box.
-
-	This op cuts a rectangular part out of `image`. The top-left corner of the
-	returned image is at `offset_height, offset_width` in `image`, and its
-	lower-right corner is at `offset_height + target_height, offset_width + target_width`.
-
-- __Args__:
-	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
-	   3-D Tensor of shape `[height, width, channels]`.
-	- __offset_height__:
-	* pad: Number of rows of zeros to add on top.
-	* crop: Vertical coordinate of the top-left corner of the result the input.
-	- __offset_width__:
-	* pad: Number of columns of zeros to add on the left.
-	* crop: Horizontal coordinate of the top-left corner of the result in the input.
-	- __target_height__: Height of output image.
-	- __target_width__: Width of output image.
-	- __method__: `crop` or `pad`
-
-- __Returns__:
-	If `image` was 4-D, a 4-D float Tensor of shape
-	`[batch, target_height, target_width, channels]`
-	If `image` was 3-D, a 3-D float Tensor of shape
-	`[target_height, target_width, channels]`
-
-- __Raises__:
-	- __ValueError__: If the shape of `image` is incompatible with the `offset_*` or
-	`target_*` arguments, or either `offset_height` or `offset_width` is negative.
 
 
 ----

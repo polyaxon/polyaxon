@@ -102,7 +102,7 @@ get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=Non
 
 
 ```python
-get_environment(module)
+get_environment(module, env_id)
 ```
 
 
@@ -163,7 +163,7 @@ get_estimator(estimator_config, model_config, run_config)
 
 
 ```python
-get_agent(estimator_config, model_config, run_config)
+get_agent(agent_config, model_config, run_config)
 ```
 
 

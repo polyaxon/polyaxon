@@ -133,6 +133,14 @@ To install the latest version of Polyaxon: `pip install polyaxon`
 
 Alternatively, you can also install from source by running (from source folder): `python setup.py install`
 
+Or you can just clone the repo `git clone https://github.com/polyaxon/polyaxon.git`, and use the commands to do everything in docker:
+ 
+ * `cmd/rebuild` to build the docker containers.
+ * `cmd/py` to start a python3 shell with all requirements installed.
+ * `cmd/jupyter` to start a jupyter notebook server.
+ * `cmd/tensorboard` to start a tensorboard server.
+ * `cmd/test` to run the tests.   
+
 # Examples
 
 Some example are provided [here](examples), more examples and use case will pushed, a contribution with an example is also appreciated.

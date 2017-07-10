@@ -1,3 +1,21 @@
+## built_activation
+
+
+```python
+built_activation(fct, name, collect)
+```
+
+
+Builds the metric function.
+
+- __Args__:
+	- __fct__: the activation function to build.
+	- __name__: operation name.
+	- __collect__: whether to collect this metric under the metric collection.
+
+
+----
+
 ## linear
 
 
@@ -26,24 +44,6 @@ tanh(name=None, collect=False)
 Computes hyperbolic tangent of x element-wise.
 
 - __Args__:
-	- __name__: operation name.
-	- __collect__: whether to collect this metric under the metric collection.
-
-
-----
-
-## built_activation
-
-
-```python
-built_activation(fct, name, collect)
-```
-
-
-Builds the metric function.
-
-- __Args__:
-	- __fct__: the activation function to build.
 	- __name__: operation name.
 	- __collect__: whether to collect this metric under the metric collection.
 
