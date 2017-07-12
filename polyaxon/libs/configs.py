@@ -106,7 +106,9 @@ class RunConfig(run_config.RunConfig, Configurable):
                  keep_checkpoint_max=5,
                  keep_checkpoint_every_n_hours=10000,
                  evaluation_master='',
-                 model_dir=None):
+                 model_dir=None,
+                 cluster_config=None):
+        self.create_cluster_config(cluster_config)
         super(RunConfig, self).__init__(master, num_cores, log_device_placement,
                                         gpu_memory_fraction,
                                         tf_random_seed, save_summary_steps, save_checkpoints_secs,
@@ -129,6 +131,7 @@ class RunConfig(run_config.RunConfig, Configurable):
             ('keep_checkpoint_every_n_hours', keep_checkpoint_every_n_hours),
             ('evaluation_master', evaluation_master),
             ('model_dir', model_dir),
+            ('cluster_config', cluster_config)
         ])
 
     @property
@@ -155,6 +158,31 @@ class RunConfig(run_config.RunConfig, Configurable):
         config.tf_config.gpu_options.allow_growth = gpu_allow_growth
         config.tf_config.log_device_placement = log_device_placement
         return config
+
+    @staticmethod
+    def create_cluster_config(cluster_config):
+        """Sets the cluster config to the environment variable `TF_CONFIG`.
+
+        Args:
+            cluster_config: `dict`. Represents the cluster config dictionary.
+        """
+        # First we need to check the type of the task for this env
+        task_type = os.environ.get('task_type')
+        if task_type not in ['master', 'ps', 'worker']:
+            return
+
+        try:
+            task_id = int(os.environ.get('task_index'))
+        except TypeError:
+            return
+
+        config = {
+            'environment': cluster_config.pop('environment', 'cloud'),
+            'cluster': cluster_config,
+            'task': {'type': task_type, 'index': task_id}
+        }
+        # Set the cluster config in the environment variable `TF_CONFIG`.
+        os.environ['TF_CONFIG'] = json.dumps(config)
 
 
 class PipelineConfig(Configurable):

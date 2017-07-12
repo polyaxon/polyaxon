@@ -23,6 +23,7 @@ class TestConfigs(tf.test.TestCase):
             ('keep_checkpoint_every_n_hours', 10000),
             ('evaluation_master', ''),
             ('model_dir', None),
+            ('cluster_config', None),
         ])
         config = plx.configs.RunConfig(**config_dict)
 

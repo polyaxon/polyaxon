@@ -269,8 +269,9 @@ class Experiment(object):
         # to train. We might as well start as soon as we can.
         config = self._estimator.config
         if (config.environment != run_config.Environment.LOCAL and
-                    config.environment != run_config.Environment.GOOGLE and
-                config.cluster_spec and config.master):
+                config.environment != run_config.Environment.GOOGLE and
+                config.cluster_spec and
+                config.master):
             self._start_server()
 
         extra_hooks = []
