@@ -1,8 +1,8 @@
-version: "2"
+version: "3"
 
 services:
   postgres:
-    image: postgres:9.5
+    image: postgres:9.5-alpine
     environment:
       POSTGRES_USER: "polyaxon"
       POSTGRES_PASSWORD: "polyaxon"
@@ -11,6 +11,11 @@ services:
 
   memcache:
     image: memcached
+    networks:
+      - api
+
+  redis:
+    image: redis:3.0-alpine
     networks:
       - api
 
@@ -24,6 +29,7 @@ services:
     depends_on:
       - memcache
       - postgres
+      - redis
     volumes:
       - .:/polyaxon
     ports:
@@ -36,6 +42,22 @@ services:
       MEMCACHE_LOCATION: "memcache:11211"
       SETTINGS_ENV_DIR: "dev"
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
+      REDIS_CELERY_BROKER_URL: "redis://redis:6379/0"
+      REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/1"
+
+  worker:
+    build:
+      context: ./
+    volumes:
+      - .:/polyaxon
+    environment:
+      REDIS_CELERY_BROKER_URL: "redis://redis:6379/0"
+      REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/1"
+    networks:
+      - api
+    depends_on:
+      - redis
+
 
 networks:
   api:

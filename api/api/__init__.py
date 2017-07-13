@@ -1,2 +1,4 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
+
+from celery import app as celery_app

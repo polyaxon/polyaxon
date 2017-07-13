@@ -5,5 +5,7 @@
   "DB_NAME": "travis_ci_test",
   "DB_USER": "postgres",
   "DB_PASSWORD": "",
-  "DB_HOST": "localhost"
+  "DB_HOST": "localhost",
+  "REDIS_CELERY_BROKER_URL": "",
+  "REDIS_CELERY_RESULT_BACKEND": ""
 }

@@ -9,4 +9,6 @@ djangorestframework==3.5.3
 djangorestframework-camel-case==0.2.0
 Unipath==1.1
 psycopg2==2.6.2
-polyaxon==0.0.28
+celery==4.0.2
+redis==2.10.5
+https://github.com/polyaxon/polyaxon/archive/master.zip

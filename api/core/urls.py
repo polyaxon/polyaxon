@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^experiments/(?P<pk>[0-9]+)/?$', views.ExperimentDetailView.as_view()),
     url(r'^experiments/(?P<pk>[0-9]+)/estimator/?$', views.ExperimentEstimatorDetailView.as_view()),
     url(r'^experiments/(?P<pk>[0-9]+)/model/?$', views.ExperimentModelDetailView.as_view()),
+    url(r'^experiments/(?P<pk>[0-9]+)/start/?$', views.ExperimentStartView.as_view()),
     url(r'^estimators/?$', views.EstimatorListView.as_view()),
     url(r'^estimators/(?P<pk>[0-9]+)/?$', views.EstimatorDetailView.as_view()),
     url(r'^models/?$', views.PolyaxonModelListView.as_view()),

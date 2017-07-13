@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework import status
+from rest_framework.generics import ListAPIView, RetrieveAPIView, GenericAPIView, CreateAPIView
+from rest_framework.response import Response
 
 from core.models import Experiment, PolyaxonModel, Estimator
 from core.serialiazers import (
@@ -10,7 +12,9 @@ from core.serialiazers import (
     PolyaxonModelSerializer,
     PolyaxonModelDetailSerializer,
     EstimatorSerializer,
-    EstimatorDetailSerializer)
+    EstimatorDetailSerializer,
+)
+from core.tasks import start_experiment
 
 
 class ExperimentListView(ListAPIView):
@@ -39,6 +43,17 @@ class ExperimentModelDetailView(RetrieveAPIView):
     def get_object(self):
         obj = super(ExperimentModelDetailView, self).get_object()
         return obj.model
+
+
+class ExperimentStartView(CreateAPIView):
+    queryset = Experiment.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        job_info = start_experiment(obj)
+        if 'error' not in job_info:
+            return Response(status=status.HTTP_201_CREATED, data=job_info)
+        return Response(job_info['error'], status=status.HTTP_400_BAD_REQUEST)
 
 
 class EstimatorListView(ListAPIView):

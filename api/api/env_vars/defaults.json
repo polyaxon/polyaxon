@@ -13,5 +13,6 @@
   "MEDIA_URL": "",
   "STATIC_ROOT": "static",
   "STATIC_URL": "/static/",
-  "JS_DEBUG": false
+  "JS_DEBUG": false,
+  "CELERY_ALWAYS_EAGER": false
 }

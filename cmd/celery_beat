@@ -4,5 +4,5 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose run --publish 8000:8000 --rm --name=polyaxon_web web python3 ./api/manage.py runserver 0.0.0.0:8000
+    docker-compose run -w /polyaxon/api --rm --name=polyaxon_beat worker celery beat --app api
 fi

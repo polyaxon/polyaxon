@@ -48,7 +48,7 @@ DATABASES = {
     }
 }
 
-TEMPLATE_CONTEXT_PROCESSORS = [
+LIST_TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
     'django.template.context_processors.debug',
     'django.template.context_processors.i18n',
@@ -64,7 +64,7 @@ if JS_DEBUG:
     def js_debug_processor(request):
         return {'js_debug': True}
 
-    TEMPLATE_CONTEXT_PROCESSORS += ('api.settings.js_debug_processor', )
+    LIST_TEMPLATE_CONTEXT_PROCESSORS += ('api.settings.js_debug_processor', )
 
 
 TEMPLATES = [
@@ -76,7 +76,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': config.get_boolean('DJANGO_TEMPLATE_DEBUG', is_optional=True) or DEBUG,
-            'context_processors': TEMPLATE_CONTEXT_PROCESSORS,
+            'context_processors': LIST_TEMPLATE_CONTEXT_PROCESSORS,
         },
     },
 ]

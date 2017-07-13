@@ -17,6 +17,7 @@ from libs.models import DiffModel
 
 
 class Loss(DiffModel):
+    """The `Loss` model serializes the module and parameters to define a loss funciton."""
     LOSSES = ((obj, obj) for obj in plx.losses.LOSSES.keys())
 
     module = models.CharField(max_length=256, choices=LOSSES)
@@ -41,6 +42,7 @@ class Loss(DiffModel):
 
 
 class Metric(DiffModel):
+    """The `Metric` model serializes the module and parameters to define a metric function."""
     METRICS = ((obj, obj) for obj in plx.metrics.EVAL_METRICS.keys())
 
     module = models.CharField(max_length=256, choices=METRICS)
@@ -66,6 +68,7 @@ class Metric(DiffModel):
 
 
 class AgentMemory(DiffModel):
+    """The `AgentMemory` model serializes the module and parameters to define an agent memory."""
     MEMORIES = ((obj, obj) for obj in plx.rl.memories.MEMORIES.keys())
 
     module = models.CharField(max_length=256, choices=MEMORIES)
@@ -91,6 +94,7 @@ class AgentMemory(DiffModel):
 
 
 class Optimizer(DiffModel):
+    """The `Optimizer` model serializes the module and parameters to define a model optimizer."""
     OPTIMIZERS = ((obj, obj) for obj in plx.optimizers.OPTIMIZERS.keys())
 
     module = models.CharField(max_length=256, choices=OPTIMIZERS)
@@ -139,6 +143,7 @@ class Optimizer(DiffModel):
 
 
 class Bridge(DiffModel):
+    """The `Bridge` model serializes the module and parameters to define a generator's bridge."""
     BRIDGES = ((obj, obj) for obj in plx.bridges.BRIDGES.keys())
 
     module = models.CharField(max_length=256, choices=BRIDGES)
@@ -169,6 +174,7 @@ class Bridge(DiffModel):
 
 
 class SubGraph(DiffModel):
+    """The `SugGraph` model serializes the definition of computation graph."""
     definition = models.TextField()
 
     def to_dict(self):
@@ -191,6 +197,7 @@ class SubGraph(DiffModel):
 
 
 class Encoder(DiffModel):
+    """The `Encoder` model serializes the definition of a generator's encoder graph."""
     ENCODERS = ((obj, obj) for obj in plx.encoders.ENCODERS.keys())
 
     module = models.CharField(max_length=256, choices=ENCODERS, null=True, blank=True)
@@ -217,6 +224,7 @@ class Encoder(DiffModel):
 
 
 class Decoder(DiffModel):
+    """The `Encoder` model serializes the definition of a generator's decoder graph."""
     DECODERS = ((obj, obj) for obj in plx.decoders.DECODERS.keys())
 
     module = models.CharField(max_length=256, choices=DECODERS, null=True, blank=True)
@@ -243,6 +251,7 @@ class Decoder(DiffModel):
 
 
 class PolyaxonModel(DiffModel):
+    """The `PolyaxonModel` model serializes the params to define a deep learning model."""
     MODELS = ((obj, obj) for obj in plx.models.MODELS.keys())
     SUMMARIES = ((obj, obj) for obj in SummaryOptions.VALUES)
 
@@ -339,6 +348,7 @@ class PolyaxonModel(DiffModel):
 
 
 class Estimator(DiffModel):
+    """The `Estimator` model serializes the params to define a polyaxon estimator."""
     ESTIMATORS = ((obj, obj) for obj in plx.estimators.ESTIMATORS.keys())
 
     module = models.CharField(max_length=256, choices=ESTIMATORS)
@@ -365,6 +375,7 @@ class Estimator(DiffModel):
 
 
 class Agent(DiffModel):
+    """The `Agent` model serializes the params to define a reinforcement learning agent."""
     AGENTS = ((obj, obj) for obj in plx.estimators.AGENTS.keys())
 
     module = models.CharField(max_length=256, choices=AGENTS)
@@ -402,6 +413,9 @@ class Agent(DiffModel):
 
 
 class Environment(DiffModel):
+    """The `Environment` model serializes a the module and params to define a reinforcement
+    learning environment.
+    """
     ENVIRONMENTS = ((obj, obj) for obj in plx.rl.environments.ENVIRONMENTS.keys())
 
     module = models.CharField(max_length=256, choices=ENVIRONMENTS)
@@ -428,6 +442,7 @@ class Environment(DiffModel):
 
 
 class Pipeline(DiffModel):
+    """The `Pipeline` model serializes the params to define an experiment data pipeline."""
     PIPELINES = ((obj, obj) for obj in plx.processing.pipelines.PIPELINES.keys())
 
     module = models.CharField(max_length=256, choices=PIPELINES, null=True, blank=True)
@@ -483,6 +498,7 @@ class Pipeline(DiffModel):
 
 
 class InputData(DiffModel):
+    """The `InputData` model serializes the params to define an experiment input data flow."""
     INPUT_DATA_TYPES = (
         ('NUMPY', 'NUMPY'),
         ('PANDAS', 'PANDAS')
@@ -515,6 +531,7 @@ class InputData(DiffModel):
 
 
 class RunConfig(DiffModel):
+    """The `RunConfig` model serializes the params to define a tensorflow run config."""
     model_dir = models.CharField(max_length=256, blank=True, null=True)
     master = models.CharField(max_length=256, blank=True, null=True)
     num_cores = models.IntegerField(default=0)
@@ -563,9 +580,11 @@ class RunConfig(DiffModel):
         return plx.configs.RunConfig.read_configs(self.to_dict())
 
 
-class BaseExperiment(DiffModel):
+class Experiment(DiffModel):
+    """The `Experiment` model serializes an the params to define a a polyaxon experiment."""
     HOOK_OPTIONS = ((obj, obj) for obj in HOOKS.keys())
 
+    # shared attributes
     name = models.CharField(max_length=256)
     output_dir = models.CharField(max_length=256)
     run_config = models.ForeignKey(RunConfig)
@@ -584,14 +603,21 @@ class BaseExperiment(DiffModel):
     export_strategies = models.CharField(max_length=256, blank=True, null=True)
     train_steps_per_iteration = models.IntegerField(default=1000)
 
-    class Meta:
-        abstract = True
+    # experiment attributes
+    is_rl = models.BooleanField(default=False)
+    estimator = models.ForeignKey(Estimator, null=True, blank=True)
+    train_input_data = models.ForeignKey(InputData, related_name='train', null=True, blank=True)
+    eval_input_data = models.ForeignKey(InputData, related_name='eval', null=True, blank=True)
+
+    # rl experiment attributes
+    agent = models.ForeignKey(Agent, null=True, blank=True)
+    environment = models.ForeignKey(Environment, null=True, blank=True)
 
     def __str__(self):
         return '{}-{}'.format(self.name, self.id)
 
     def to_dict(self):
-        return {
+        kwargs = {
             'name': self.name,
             'output_dir': self.output_dir,
             'run_config': self.run_config.to_dict(),
@@ -608,8 +634,18 @@ class BaseExperiment(DiffModel):
             'train_steps_per_iteration': self.train_steps_per_iteration
         }
 
+        if self.is_rl:
+            kwargs['agent'] = self.estimator.to_dict()
+            kwargs['env'] = self.env.to_dict()
+        else:
+            kwargs['estimator'] = self.estimator.to_dict()
+            kwargs['train_input_data'] = self.train_input_data.to_dict()
+            kwargs['eval_input_data'] = self.eval_input_data.to_dict()
+
+        return kwargs
+
     @staticmethod
-    def from_config(config):
+    def _base_from_config(config):
         config_dict = config.to_dict()
         config_dict['run_config'] = RunConfig.from_config(config.run_config)
         config_dict['model'] = PolyaxonModel.from_config(config.model_config)
@@ -621,8 +657,45 @@ class BaseExperiment(DiffModel):
         config_dict['eval_hooks'] = config_dict.pop('eval_hooks_config', [])
         return config_dict
 
+    @classmethod
+    def _experiment_from_dict(cls, config):
+        config_dict = cls._base_from_config(config)
+        config_dict['estimator'] = Estimator.from_config(config.estimator_config)
+        config_dict.pop('estimator_config', None)
+        config_dict['train_input_data'] = InputData.from_config(config.train_input_data_config)
+        config_dict.pop('train_input_data_config', None)
+        config_dict['eval_input_data'] = InputData.from_config(config.eval_input_data_config)
+        config_dict.pop('eval_input_data_config', None)
+        eval_metrics = config_dict.pop('eval_metrics')
+
+        config_dict = remove_empty_keys(config_dict)
+        exp = Experiment.objects.create(**config_dict)
+        exp.eval_metrics = eval_metrics
+        return exp
+
+    @classmethod
+    def _rl_experiment_from_config(cls, config):
+        config_dict = cls._base_from_config(config)
+        config_dict['is_rl'] = True
+        config_dict['agent'] = Agent.from_config(config.agent_config)
+        config_dict.pop('agent_config', None)
+        config_dict['environment'] = Environment.from_config(config.environment_config)
+        config_dict.pop('environment_config', None)
+        eval_metrics = config_dict.pop('eval_metrics')
+
+        config_dict = remove_empty_keys(config_dict)
+        exp = Experiment.objects.create(**config_dict)
+        exp.eval_metrics = eval_metrics
+        return exp
+
+    @classmethod
+    def from_config(cls, config):
+        if isinstance(config, plx.configs.RLExperimentConfig):
+            return cls._rl_experiment_from_config(config)
+        return cls._experiment_from_dict(config)
+
     def to_config(self):
-        return {
+        to_config = {
             'name': self.name,
             'output_dir': self.output_dir,
             'run_config': self.run_config.to_config(),
@@ -638,72 +711,12 @@ class BaseExperiment(DiffModel):
             'delay_workers_by_global_step': self.delay_workers_by_global_step,
             'train_steps_per_iteration': self.train_steps_per_iteration
         }
-
-
-class Experiment(BaseExperiment):
-    estimator = models.ForeignKey(Estimator)
-    train_input_data = models.ForeignKey(InputData, related_name='train')
-    eval_input_data = models.ForeignKey(InputData, related_name='eval')
-
-    def to_dict(self):
-        kwargs = super(Experiment, self).to_dict()
-        kwargs['estimator'] = self.estimator.to_dict()
-        kwargs['train_input_data'] = self.train_input_data.to_dict()
-        kwargs['eval_input_data'] = self.eval_input_data.to_dict()
-
-        return kwargs
-
-    @staticmethod
-    def from_config(config):
-        config_dict = BaseExperiment.from_config(config)
-        config_dict['estimator'] = Estimator.from_config(config.estimator_config)
-        config_dict.pop('estimator_config', None)
-        config_dict['train_input_data'] = InputData.from_config(config.train_input_data_config)
-        config_dict.pop('train_input_data_config', None)
-        config_dict['eval_input_data'] = InputData.from_config(config.eval_input_data_config)
-        config_dict.pop('eval_input_data_config', None)
-        eval_metrics = config_dict.pop('eval_metrics')
-
-        config_dict = remove_empty_keys(config_dict)
-        exp = Experiment.objects.create(**config_dict)
-        exp.eval_metrics = eval_metrics
-        return exp
-
-    def to_config(self):
-        to_config = super(Experiment, self).to_config()
-        to_config['estimator_config'] = self.estimator.to_config()
-        to_config['train_input_data_config'] = self.train_input_data.to_config()
-        to_config['eval_input_data_config'] = self.eval_input_data.to_config()
-        return plx.configs.ExperimentConfig(**to_config)
-
-
-class RLExperiment(BaseExperiment):
-    agent = models.ForeignKey(Agent)
-    environment = models.ForeignKey(Environment)
-
-    def to_dict(self):
-        kwargs = super(RLExperiment, self).to_dict()
-        kwargs['agent'] = self.estimator.to_dict()
-        kwargs['env'] = self.env.to_dict()
-
-        return kwargs
-
-    @staticmethod
-    def from_config(config):
-        config_dict = BaseExperiment.from_config(config)
-        config_dict['agent'] = Agent.from_config(config.agent_config)
-        config_dict.pop('agent_config', None)
-        config_dict['environment'] = Environment.from_config(config.environment_config)
-        config_dict.pop('environment_config', None)
-        eval_metrics = config_dict.pop('eval_metrics')
-
-        config_dict = remove_empty_keys(config_dict)
-        exp = RLExperiment.objects.create(**config_dict)
-        exp.eval_metrics = eval_metrics
-        return exp
-
-    def to_config(self):
-        to_config = super(RLExperiment, self).to_config()
-        to_config['agent_config'] = self.agent.to_config()
-        to_config['environment_config'] = self.environment.to_config()
-        return plx.configs.RLExperimentConfig(**to_config)
+        if self.is_rl:
+            to_config['agent_config'] = self.agent.to_config()
+            to_config['environment_config'] = self.environment.to_config()
+            return plx.configs.RLExperimentConfig(**to_config)
+        else:
+            to_config['estimator_config'] = self.estimator.to_config()
+            to_config['train_input_data_config'] = self.train_input_data.to_config()
+            to_config['eval_input_data_config'] = self.eval_input_data.to_config()
+            return plx.configs.ExperimentConfig(**to_config)

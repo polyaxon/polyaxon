@@ -19,7 +19,6 @@ from core.models import (
     Pipeline,
     PolyaxonModel,
     RunConfig,
-    RLExperiment,
     SubGraph,
 )
 
@@ -39,4 +38,3 @@ admin.site.register(Pipeline)
 admin.site.register(InputData)
 admin.site.register(RunConfig)
 admin.site.register(Experiment)
-admin.site.register(RLExperiment)

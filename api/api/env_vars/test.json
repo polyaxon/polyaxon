@@ -1,4 +1,5 @@
 {
   "DJANGO_DEBUG": true,
-  "SECRET_KEY": "secret"
+  "SECRET_KEY": "secret",
+  "CELERY_ALWAYS_EAGER": true
 }

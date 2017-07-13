@@ -1,0 +1,8 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/environment
+
+$DIR/check
+if [ $? -eq 0 ]; then
+    docker-compose run -w /polyaxon/api --rm --name=polyaxon_worker worker celery worker --loglevel=INFO --app api -Q api.xps --concurrency=4 -n default@%h
+fi
