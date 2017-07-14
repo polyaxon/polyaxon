@@ -44,6 +44,7 @@ services:
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
       REDIS_CELERY_BROKER_URL: "redis://redis:6379/0"
       REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/1"
+      REDIS_CELERY_JOB_STATUS_URL: "redis://redis:6379/2"
 
   worker:
     build:
@@ -53,6 +54,7 @@ services:
     environment:
       REDIS_CELERY_BROKER_URL: "redis://redis:6379/0"
       REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/1"
+      REDIS_CELERY_JOB_STATUS_URL: "redis://redis:6379/2"
     networks:
       - api
     depends_on:

@@ -8,5 +8,6 @@ from .apps import *
 from .assets import *
 from .logging import *
 from .debug import *
-from .celery import *
 from .rest import *
+from .celery_settings import *
+from .redis_settings import *

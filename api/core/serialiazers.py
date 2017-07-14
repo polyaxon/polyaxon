@@ -221,3 +221,8 @@ class ExperimentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = '__all__'
+
+
+class StatusSerializer(serializers.Serializer):
+    job_id = serializers.CharField()
+    status = serializers.CharField()

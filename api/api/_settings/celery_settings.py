@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from api.utils import config
 
+CELERY_TRACK_STARTED = True
 
 BROKER_TRANSPORT = 'redis'
 BROKER_URL = config.get_string('REDIS_CELERY_BROKER_URL')
