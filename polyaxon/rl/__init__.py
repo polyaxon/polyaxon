@@ -15,8 +15,8 @@ from .explorations import (
     greedy,
     random,
     decay,
+    random_decay,
     ornsteinuhlenbeck_process,
-    continuous_decay
 )
 
 from . import environments

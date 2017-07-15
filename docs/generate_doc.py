@@ -162,16 +162,16 @@ PAGES = [
     },
     # RL Models
     {
-        'page': 'models/base_rl_model.md',
-        'classes': [models.RLBaseModel],
+        'page': 'models/base_rl_q_model.md',
+        'classes': [models.BaseQModel],
         'classes_functions': [
-            models.RLBaseModel._build_exploration,
-            models.RLBaseModel._build_actions,
-            models.RLBaseModel._build_graph_fn,
-            models.RLBaseModel._call_graph_fn,
-            models.RLBaseModel._build_update_target_graph,
-            models.RLBaseModel._build_train_op,
-            models.RLBaseModel._preprocess,
+            models.BaseQModel._build_exploration,
+            models.BaseQModel._build_actions,
+            models.BaseQModel._build_graph_fn,
+            models.BaseQModel._call_graph_fn,
+            models.BaseQModel._build_update_target_graph,
+            models.BaseQModel._build_train_op,
+            models.BaseQModel._preprocess,
         ]
     },
     {
@@ -183,7 +183,7 @@ PAGES = [
         ],
     },
     {
-        'page': 'models/rl_models.md',
+        'page': 'models/rl_q_models.md',
         'classes': [
             models.DQNModel,
             models.DDQNModel,

@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import abc
+import six
 
 from collections import OrderedDict
 
@@ -13,12 +14,12 @@ from polyaxon.rl.environments import EnvSpec
 @six.add_metaclass(abc.ABCMeta)
 class BaseMemory(object):
     """Base Agent Memory class."""
-    def __init__(self, num_states, num_actions, continuous, size=1000, batch_size=32):
+    def __init__(self, num_states, num_actions, is_continuous, size=1000, batch_size=32):
         self.num_states = num_states
         self.num_actions = num_actions
         self.size = size
         self.batch_size = batch_size
-        self.is_continuous = continuous
+        self.is_continuous = is_continuous
         self.counter = 0
         state, action, reward, next_state, done = self._initialize()
         self.state = state

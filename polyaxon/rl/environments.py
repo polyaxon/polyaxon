@@ -26,6 +26,7 @@ class Environment(object):
         self._env_id = env_id
         self._env = None
         self._closed = False
+        self._num_steps = 0
 
     def __str__(self):
         raise NotImplementedError
@@ -33,8 +34,14 @@ class Environment(object):
     def close(self):
         raise NotImplementedError
 
+    def _reset(self):
+        self._num_steps = 0
+
     def reset(self, return_spec=True):
         raise NotImplementedError
+
+    def _step(self):
+        self._num_steps = +1
 
     def step(self, action, state, return_spec=True):
         raise NotImplementedError
@@ -73,12 +80,14 @@ class GymEnvironment(Environment):
             self._closed = True
 
     def reset(self, return_spec=True):
+        self._reset()
         state = self._env.reset()
         if return_spec:
             return EnvSpec(action=None, state=None, reward=0, done=False, next_state=state)
         return state
 
     def step(self, action, state, return_spec=True):
+        self._step()
         if isinstance(action, (list, np.ndarray)):
             if isinstance(self._env.action_space, Discrete) or isinstance(action, (list, np.ndarray)):
                 action = action[0]

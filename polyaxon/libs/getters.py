@@ -15,11 +15,11 @@ def get_optimizer(module, **kwargs):
         return module()
 
 
-def get_exploration(module, continuous=False, **kwargs):
+def get_exploration(module, is_continuous=False, **kwargs):
     from polyaxon.rl.explorations import DISCRETE_EXPLORATIONS, CONTINUOUS_EXPLORATIONS
 
     if isinstance(module, six.string_types):
-        if continuous:
+        if is_continuous:
             return CONTINUOUS_EXPLORATIONS[module](**kwargs)
         else:
             return DISCRETE_EXPLORATIONS[module](**kwargs)

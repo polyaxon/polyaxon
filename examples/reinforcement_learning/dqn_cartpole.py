@@ -23,7 +23,7 @@ def main(*args):
         return model(features, labels)
 
     memory = plx.rl.memories.Memory(
-        num_states=env.num_states, num_actions=env.num_actions, continuous=env.is_continuous)
+        num_states=env.num_states, num_actions=env.num_actions, is_continuous=env.is_continuous)
     estimator = plx.estimators.Agent(
         model_fn=model_fn, memory=memory, model_dir="/tmp/polyaxon_logs/dqn_cartpole")
 

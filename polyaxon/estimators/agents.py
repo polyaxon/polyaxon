@@ -86,7 +86,7 @@ class Agent(Estimator):
 
         if max_episodes is not None:
             try:
-                start_episode = load_variable(self._model_dir, ops.GraphKeys.GLOBAL_EPISODE)
+                start_episode = load_variable(self._model_dir, tf.GraphKeys.GLOBAL_EPISODE)
                 if max_episodes <= start_episode:
                     logging.info('Skipping training since max_episode has already saved.')
                     return self
@@ -99,8 +99,8 @@ class Agent(Estimator):
 
         return hooks
 
-    def train(self, env, first_update=35, update_frequency=10, episodes=None, steps=None, hooks=None,
-              max_steps=None, max_episodes=None):
+    def train(self, env, first_update=35, update_frequency=10, episodes=None, steps=None,
+              hooks=None, max_steps=None, max_episodes=None):
         """Trains a model given an environment.
 
         Args:

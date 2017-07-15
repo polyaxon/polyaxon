@@ -6,10 +6,10 @@ import tensorflow as tf
 from tensorflow.python.estimator.model_fn import EstimatorSpec
 
 from polyaxon.layers import OneHotEncoding
-from polyaxon.models.rl.base import RLBaseModel
+from polyaxon.models.rl.base import BaseQModel
 
 
-class DQNModel(RLBaseModel):
+class DQNModel(BaseQModel):
     """Implements a double deep Q model.
 
     Args:
@@ -56,11 +56,11 @@ class DQNModel(RLBaseModel):
                 `loss` is a single scalar tensor to minimize.
         """
         reward, action, done = labels['reward'], labels['action'], labels['done']
-        target_q_values = tf.reduce_max(self._target_results['q'], axis=1)
+        target_q_values = tf.reduce_max(self._target_results.q, axis=1)
 
         action_selector = OneHotEncoding(mode=self.mode, n_classes=self.num_actions)(action[:-1])
         train_q_value = tf.reduce_sum(
-            tf.multiply(self._train_results['q'][:-1], action_selector), axis=1)
+            tf.multiply(self._train_results.q[:-1], action_selector), axis=1)
 
         target_q_value = (reward[:-1] + (1.0 - tf.cast(done[:-1], tf.float32)) *
                           self.discount * target_q_values[1:])

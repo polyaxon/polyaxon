@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L21)</span>
-## RLBaseModel
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L24)</span>
+## BaseQModel
 
 ```python
-polyaxon.models.rl.base.RLBaseModel(mode, graph_fn, num_states, num_actions, loss_config=None, optimizer_config=None, eval_metrics_config=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.base.BaseQModel(mode, graph_fn, num_states, num_actions, loss_config=None, optimizer_config=None, eval_metrics_config=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Base reinforcement learning model class.
@@ -70,6 +70,9 @@ _build_actions(self)
 
 Create the chosen action with an exploration policy.
 
+If inference mode is used the, actions are chosen directly without exploration.
+
+
 ----
 
 ### _build_graph_fn
@@ -88,7 +91,7 @@ The structure of the graph is the following:
 	3 - return the the probabilities, if a dueling method is specified,
 	calculate the new probabilities.
 - __Returns__:
-	`function`. The graph function.
+	`function`. The graph function. The graph function must return a QModelSpec.
 
 
 ----

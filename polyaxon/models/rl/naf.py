@@ -8,10 +8,10 @@ import tensorflow as tf
 from tensorflow.python.estimator.model_fn import EstimatorSpec
 
 from polyaxon.layers import FullyConnected
-from polyaxon.models.rl.base import RLBaseModel
+from polyaxon.models.rl.base import BaseQModel
 
 
-class NAFModel(RLBaseModel):
+class NAFModel(BaseQModel):
     """Implements a normalized advantage functions model.
 
     Args:
@@ -80,7 +80,7 @@ class NAFModel(RLBaseModel):
         # Lower triangle matrix
         lt_size = self.num_actions * (self.num_actions + 1) // 2
         lt_entries = FullyConnected(
-            self.mode, num_units=lt_size)(self._train_results['graph_results'])
+            self.mode, num_units=lt_size)(self._train_results.graph_outputs)
         lt_matrix = tf.exp(tf.map_fn(tf.diag, lt_entries[:, :self.num_actions]))
 
         if self.num_actions > 1:
@@ -95,7 +95,7 @@ class NAFModel(RLBaseModel):
         # P = LL^T
         p_matrix = tf.matmul(lt_matrix, tf.transpose(lt_matrix, (0, 2, 1)))
 
-        action_diff = action - self._train_results['a']
+        action_diff = action - self._train_results.a
 
         # A = (a - mean)P(a - mean) / 2
         advantage = -tf.matmul(tf.expand_dims(action_diff, 1),
@@ -103,8 +103,8 @@ class NAFModel(RLBaseModel):
         advantage = tf.squeeze(advantage, 2)
 
         # Q = V(s) + A(s, a)
-        train_q_value = (self._train_results['v'] + advantage)[:-1]
+        train_q_value = (self._train_results.v + advantage)[:-1]
         target_q_value = (reward[:-1] + (1.0 - tf.cast(done[:-1], tf.float32)) *
-                          self.discount * self._target_results['v'][1:])
+                          self.discount * self._target_results.v[1:])
 
         return super(NAFModel, self)._build_loss(train_q_value, features, target_q_value)

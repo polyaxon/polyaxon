@@ -40,9 +40,9 @@ pages:
   - EpisodeHooks: hooks/episode_hooks.md
 - Models:
   - Base Model: models/base_model.md
-  - Base RL Model: models/base_rl_model.md
+  - Base RL Q Model: models/base_rl_q_model.md
   - Models: models/models.md
-  - RLModels: models/rl_models.md
+  - RLQModels: models/rl_q_models.md
   - Summerizer: models/summarizer.md
 - Layers:
   - Introduction: layers/introduction.md

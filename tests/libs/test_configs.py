@@ -204,8 +204,9 @@ class TestConfigs(tf.test.TestCase):
 
         # create object
         get_or_create_global_timestep()
-        plx.getters.get_exploration(config.module, continuous=False, **config.params)
-        plx.getters.get_exploration(config.module, continuous=True, num_actions=1, **config.params)
+        plx.getters.get_exploration(config.module, is_continuous=False, **config.params)
+        plx.getters.get_exploration(
+            config.module, is_continuous=True, num_actions=1, **config.params)
 
     def test_optimizer(self):
         config_dict = {
@@ -230,7 +231,7 @@ class TestConfigs(tf.test.TestCase):
             'params': {
                 'num_states': 4,
                 'num_actions': 2,
-                'continuous': False,
+                'is_continuous': False,
                 'size': 10
             }
         }
@@ -527,7 +528,7 @@ class TestConfigs(tf.test.TestCase):
                     'params': {
                         'num_states': 4,
                         'num_actions': 2,
-                        'continuous': False,
+                        'is_continuous': False,
                         'size': 10
                     }
                 }

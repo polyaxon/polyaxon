@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
+from collections import Mapping, namedtuple
 
 import tensorflow as tf
 
@@ -18,7 +18,10 @@ from polyaxon.models import BaseModel
 from polyaxon.models import summarizer
 
 
-class RLBaseModel(BaseModel):
+QModelSpec = namedtuple("QModelSpec", "graph_outputs a v q")
+
+
+class BaseQModel(BaseModel):
     """Base reinforcement learning model class.
 
     Args:
@@ -71,7 +74,7 @@ class RLBaseModel(BaseModel):
         self.dueling = dueling
         self.use_expert_demo = use_expert_demo
         loss_config = loss_config or LossConfig(module='huber_loss')
-        super(RLBaseModel, self).__init__(
+        super(BaseQModel, self).__init__(
             mode=mode, name=name, model_type=self.Types.RL, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
             eval_metrics_config=eval_metrics_config, summaries=summaries,
@@ -95,24 +98,26 @@ class RLBaseModel(BaseModel):
         return None
 
     def _build_actions(self):
-        """Create the chosen action with an exploration policy."""
-        # TODO: Add possibility to deactivate the exploration in inference mode.
-        batch_size = get_tensor_batch_size(self._train_results['q'])
-        exploration_size = tf.concat(axis=0, values=[batch_size, ])
+        """Create the chosen action with an exploration policy.
 
+        If inference mode is used the, actions are chosen directly without exploration.
+        """
+        batch_size = get_tensor_batch_size(self._train_results.q)
         exploration = self._build_exploration()
 
         if self.is_continuous:
-            if exploration is None:
-                return self._train_results['q']
+            if exploration is None or Modes.is_infer(self.mode):
+                return self._train_results.q
 
             # use exploration
-            return self._train_results['q'] + exploration
+            return self._train_results.q + exploration
         else:
-            self._index_action = tf.argmax(self._train_results['q'], axis=1)
-            if exploration is None:
+            self._index_action = tf.argmax(self._train_results.q, axis=1)
+            if exploration is None or Modes.is_infer(self.mode):
                 return self._index_action
+
             # use exploration
+            exploration_size = tf.concat(axis=0, values=[batch_size, ])
             should_explore = tf.random_uniform((), 0, 1) < exploration
             random_actions = tf.random_uniform(exploration_size, 0, self.num_actions, tf.int64)
             return tf.cond(should_explore, lambda: random_actions, lambda: self._index_action)
@@ -126,16 +131,16 @@ class RLBaseModel(BaseModel):
             3 - return the the probabilities, if a dueling method is specified,
                 calculate the new probabilities.
         Returns:
-            `function`. The graph function.
+            `function`. The graph function. The graph function must return a QModelSpec.
         """
         def graph_fn(mode, inputs):
-            graph_results = self._graph_fn(mode=mode, inputs=inputs)
-            a = FullyConnected(mode, num_units=self.num_actions)(graph_results)
+            graph_outputs = self._graph_fn(mode=mode, inputs=inputs)
+            a = FullyConnected(mode, num_units=self.num_actions)(graph_outputs)
             v = None
-            q = a
+
             if self.dueling is not None:
                 # Q = V(s) + A(s, a)
-                v = FullyConnected(mode, num_units=1)(graph_results)
+                v = FullyConnected(mode, num_units=1)(graph_outputs)
                 if self.dueling == 'mean':
                     q = v + (a - tf.reduce_mean(a, axis=1, keep_dims=True))
                 elif self.dueling == 'max':
@@ -143,9 +148,14 @@ class RLBaseModel(BaseModel):
                 elif self.dueling == 'naive':
                     q = v + a
                 elif self.dueling is True:
-                    q = a
+                    q = tf.identity(a)
+                else:
+                    raise ValueError("The value `{}` provided for "
+                                     "dueling is unsupported.".format(self.dueling))
+            else:
+                q = tf.identity(a)
 
-            return {'graph_results': graph_results, 'a': a, 'v': v, 'q': q}
+            return QModelSpec(graph_outputs=graph_outputs, a=a, v=v, q=q)
 
         return graph_fn
 
@@ -191,8 +201,7 @@ class RLBaseModel(BaseModel):
         In case of use_target_network == True, we append also the update op
         while taking into account the update_frequency.
         """
-        # TODO: override optimize loss to include episodes and timesteps numbers
-        train_op = super(RLBaseModel, self)._build_train_op(loss)
+        train_op = super(BaseQModel, self)._build_train_op(loss)
 
         # check if we need to update the target graph
         if self.use_target_graph:
@@ -200,6 +209,7 @@ class RLBaseModel(BaseModel):
                 tf.equal(tf.mod(training.get_global_step(), self.target_update_frequency), 0),
                 self._build_update_target_graph,
                 lambda: tf.no_op(name='no_op_copy_target'))
+
             # append the target update op to the train op.
             train_op = tf.group(*[train_op, update_op], name='train_and_update_target')
 
@@ -222,7 +232,7 @@ class RLBaseModel(BaseModel):
         return features, labels
 
     def _build_summary_op(self, results=None, features=None, labels=None):
-        summary_op = super(RLBaseModel, self)._build_summary_op(results, features, labels)
+        summary_op = super(BaseQModel, self)._build_summary_op(results, features, labels)
         for summary in self.summaries:
             if summary == summarizer.SummaryOptions.EXPLORATION:
                 summary_op += summarizer.add_exploration_rate_summaries()

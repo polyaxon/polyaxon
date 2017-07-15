@@ -12,7 +12,7 @@ get_optimizer(module)
 
 
 ```python
-get_exploration(module, continuous=False)
+get_exploration(module, is_continuous=False)
 ```
 
 
