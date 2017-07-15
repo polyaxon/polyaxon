@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import abc
+
 from collections import OrderedDict
 
 import numpy as np
@@ -8,22 +10,33 @@ import numpy as np
 from polyaxon.rl.environments import EnvSpec
 
 
+@six.add_metaclass(abc.ABCMeta)
 class BaseMemory(object):
     """Base Agent Memory class."""
     def __init__(self, num_states, num_actions, continuous, size=1000, batch_size=32):
+        self.num_states = num_states
+        self.num_actions = num_actions
         self.size = size
         self.batch_size = batch_size
-
-        self.state = np.empty((self.size, num_states), dtype=np.float32)
-        if continuous:
-            self.action = np.empty((self.size, num_actions), dtype=np.float32)
-        else:
-            self.action = np.empty(self.size, dtype=np.int8)
-        self.reward = np.empty(self.size)
-        self.next_state = np.empty((self.size, num_states), dtype=np.float32)
-        self.done = np.empty(self.size, dtype=np.bool)
-
+        self.is_continuous = continuous
         self.counter = 0
+        state, action, reward, next_state, done = self._initialize()
+        self.state = state
+        self.action = action
+        self.reward = reward
+        self.next_state = next_state
+        self.done = done
+
+    def _initialize(self):
+        state = np.empty((self.size, self.num_states), dtype=np.float32)
+        if self.is_continuous:
+            action = np.empty((self.size, self.num_actions), dtype=np.float32)
+        else:
+            action = np.empty(self.size, dtype=np.int8)
+        reward = np.empty(self.size)
+        next_state = np.empty((self.size, self.num_states), dtype=np.float32)
+        done = np.empty(self.size, dtype=np.bool)
+        return state, action, reward, next_state, done
 
     @property
     def can_sample(self):
@@ -35,9 +48,17 @@ class BaseMemory(object):
     def sample(self):
         raise NotImplementedError
 
+    def clear(self):
+        state, action, reward, next_state, done = self._initialize()
+        self.state = state
+        self.action = action
+        self.reward = reward
+        self.next_state = next_state
+        self.done = done
+
 
 class Memory(BaseMemory):
-    """Simple Agent Memory class."""
+    """Simple agent memory experience class."""
 
     def step(self, env_spec):
         assert isinstance(env_spec, EnvSpec)
