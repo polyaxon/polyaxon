@@ -126,7 +126,7 @@ class Agent(Estimator):
         Returns:
             `self`, for chaining.
         """
-        if first_update < self.memory.batch_size:
+        if not self.memory.can_sample(first_update):
             raise ValueError("Cannot update the model before gathering enough data")
 
         if max_steps is not None:
@@ -218,13 +218,13 @@ class Agent(Estimator):
 
     def _prepare_feed_dict(self, mode, features, labels, env_spec, stats=None, from_memory=False):
         """Creates a feed_dict depending on the agents behavior: `act` or `observe`"""
-        feed_dict = {features['state']: [env_spec.next_state]}
+        feed_dict = {features['state']: [env_spec['next_state']]}
         if mode == 'observe':
             feed_dict = {
-                    features['state']: env_spec.state if from_memory else [env_spec.state],
-                    labels['action']: env_spec.action if from_memory else [env_spec.action],
-                    labels['reward']: env_spec.reward if from_memory else [env_spec.reward],
-                    labels['done']: env_spec.done if from_memory else [env_spec.done],
+                    features['state']: env_spec['state'] if from_memory else [env_spec['state']],
+                    labels['action']: env_spec['action'] if from_memory else [env_spec['action']],
+                    labels['reward']: env_spec['reward'] if from_memory else [env_spec['reward']],
+                    labels['done']: env_spec['done'] if from_memory else [env_spec['done']],
                     labels['max_reward']: stats.max(),
                     labels['min_reward']: stats.min(),
                     labels['avg_reward']: stats.avg(),
@@ -261,11 +261,11 @@ class Agent(Estimator):
         while not env_spec.done:
             _, step, timestep, action = sess.run(
                 [no_run_hooks, global_step, update_timestep_op, estimator_spec.predictions['results']],
-                feed_dict=self._prepare_feed_dict('act', features, labels, env_spec))
+                feed_dict=self._prepare_feed_dict('act', features, labels, env_spec.to_dict()))
 
             env_spec = env.step(action, env_spec.next_state)
 
-            self.memory.step(env_spec)
+            self.memory.step(**env_spec.to_dict())
             stats.rewards.append(env_spec.reward)
 
             if env_spec.done:  # TODO: max timestep by episode should also update the episode
@@ -274,14 +274,15 @@ class Agent(Estimator):
                 sess.run([no_run_hooks, update_episode_op])
 
             if (timestep > first_update and timestep % update_frequency == 0) or episode_done:
-                if self.memory.can_sample:
+                if self.memory.can_sample():
                     feed_dict = self._prepare_feed_dict(
                         'observe', features, labels, self.memory.sample(), stats, from_memory=True)
                     _, loss = sess.run(
                         [estimator_spec.train_op, estimator_spec.loss], feed_dict=feed_dict)
                 else:
-                    feed_dict = self._prepare_feed_dict('observe', features, labels, env_spec, stats)
-                    sess.run([], feed_dict=feed_dict)
+                    feed_dict = self._prepare_feed_dict(
+                        'observe', features, labels, env_spec.to_dict(), stats)
+                    sess.run([], feed_dict=feed_dict)  # no operation since we don't have any data.
         return loss
 
     def _train_model(self, env, first_update, update_frequency, hooks):

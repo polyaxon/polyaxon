@@ -22,8 +22,7 @@ def main(*args):
             target_update_frequency=10, dueling='mean', summaries='all')
         return model(features, labels)
 
-    memory = plx.rl.memories.Memory(
-        num_states=env.num_states, num_actions=env.num_actions, is_continuous=env.is_continuous)
+    memory = plx.rl.memories.Memory()
     estimator = plx.estimators.Agent(
         model_fn=model_fn, memory=memory, model_dir="/tmp/polyaxon_logs/dqn_cartpole")
 

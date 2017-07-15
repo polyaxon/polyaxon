@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import OrderedDict
-from collections import namedtuple
+from collections import namedtuple, OrderedDict
 
 import numpy as np
 
@@ -18,6 +17,9 @@ except ImportError:
 class EnvSpec(namedtuple("EnvSpec", "action state reward done next_state")):
     def items(self):
         return self._asdict().items()
+
+    def to_dict(self):
+        return self._asdict()
 
 
 class Environment(object):

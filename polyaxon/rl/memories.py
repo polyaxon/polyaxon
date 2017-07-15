@@ -1,90 +1,72 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import abc
-import six
-
-from collections import OrderedDict
+import random
 
 import numpy as np
 
-from polyaxon.rl.environments import EnvSpec
+from collections import deque, OrderedDict
 
 
-@six.add_metaclass(abc.ABCMeta)
-class BaseMemory(object):
-    """Base Agent Memory class."""
-    def __init__(self, num_states, num_actions, is_continuous, size=1000, batch_size=32):
-        self.num_states = num_states
-        self.num_actions = num_actions
-        self.size = size
-        self.batch_size = batch_size
-        self.is_continuous = is_continuous
-        self.counter = 0
-        state, action, reward, next_state, done = self._initialize()
-        self.state = state
-        self.action = action
-        self.reward = reward
-        self.next_state = next_state
-        self.done = done
+class Memory(object):
+    """Base Agent Memory class.
 
-    def _initialize(self):
-        state = np.empty((self.size, self.num_states), dtype=np.float32)
-        if self.is_continuous:
-            action = np.empty((self.size, self.num_actions), dtype=np.float32)
+    Args:
+        size: `int`. The size of the memory.
+        batch_size: `int`. The batch size to return during the sampling.
+
+    Attributes:
+        _size: `int`. The size of the memory.
+        _batch_size: `int`. The batch size to return during the sampling.
+        _memory: `deque`. Where to store the data.
+        _counter: `int`. Number of step stored up to size.
+        _spec: `list`. the list of keys corresponding to the data values stored each step.
+    """
+    def __init__(self, size=1000, batch_size=32):
+        self._size = size
+        self._batch_size = batch_size
+        self._memory = deque()
+        self._counter = 0
+        self._spec = None
+
+    def can_sample(self, counter=None):
+        if counter is None:
+            counter = self._counter
+        return counter >= self._batch_size
+
+    def check_step_values(self, **kwargs):
+        if sorted(kwargs.keys()) != self._spec:
+            raise KeyError("The current values provided are different from the previous values.")
+
+    def step(self, **kwargs):
+        if self._spec is None:
+            self._spec = sorted(kwargs.keys())
         else:
-            action = np.empty(self.size, dtype=np.int8)
-        reward = np.empty(self.size)
-        next_state = np.empty((self.size, self.num_states), dtype=np.float32)
-        done = np.empty(self.size, dtype=np.bool)
-        return state, action, reward, next_state, done
+            self.check_step_values(**kwargs)
 
-    @property
-    def can_sample(self):
-        return self.counter >= self.batch_size
+        values = [kwargs[k] for k in self._spec]
 
-    def step(self, env_spec):
-        raise NotImplementedError
+        if self._counter < self._size:
+            self._counter += 1
+        else:
+            self._memory.popleft()
+
+        self._memory.append(values)
 
     def sample(self):
-        raise NotImplementedError
-
-    def clear(self):
-        state, action, reward, next_state, done = self._initialize()
-        self.state = state
-        self.action = action
-        self.reward = reward
-        self.next_state = next_state
-        self.done = done
-
-
-class Memory(BaseMemory):
-    """Simple agent memory experience class."""
-
-    def step(self, env_spec):
-        assert isinstance(env_spec, EnvSpec)
-        idx = self.counter % self.size
-        self.state[idx][:] = env_spec.state
-        self.action[idx] = env_spec.action
-        self.reward[idx] = env_spec.reward
-        self.next_state[idx][:] = env_spec.next_state
-        self.done[idx] = env_spec.done
-
-        self.counter += 1
-
-    def sample(self):
-        if not self.can_sample:
+        if not self.can_sample():
             raise ValueError('Not enough data to sample.')
 
-        max_idx = self.counter if self.counter < self.size else self.size
-        sampled_idx = np.random.randint(0, max_idx, size=self.batch_size)
-        return EnvSpec(
-            state=self.state[sampled_idx],
-            action=self.action[sampled_idx],
-            reward=self.reward[sampled_idx],
-            done=self.done[sampled_idx],
-            next_state=self.next_state[sampled_idx],
-        )
+        sample = {}
+        batch = random.sample(self._memory, self._batch_size)
+        for i, key in enumerate(self._spec):
+            sample[key] = np.array([b_step[i] for b_step in batch])
+
+        return sample
+
+    def clear(self):
+        self._memory = deque()
+        self._counter = 0
 
 
 MEMORIES = OrderedDict([
