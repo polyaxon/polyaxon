@@ -206,7 +206,7 @@ class TestConfigs(tf.test.TestCase):
         get_or_create_global_timestep()
         plx.getters.get_exploration(config.module, is_continuous=False, **config.params)
         plx.getters.get_exploration(
-            config.module, is_continuous=True, num_actions=1, **config.params)
+            config.module, is_continuous=True, exploration_rate=[1, 2], **config.params)
 
     def test_optimizer(self):
         config_dict = {
@@ -229,10 +229,8 @@ class TestConfigs(tf.test.TestCase):
         config_dict = {
             'module': 'Memory',
             'params': {
-                'num_states': 4,
-                'num_actions': 2,
-                'is_continuous': False,
-                'size': 10
+                'size': 10,
+                'batch_size': 32
             }
         }
         config = plx.configs.MemoryConfig.read_configs(config_dict)
@@ -242,11 +240,10 @@ class TestConfigs(tf.test.TestCase):
         for key in config_dict.keys():
             assert to_dict[key] == config_dict[key]
 
-
         # create object
         memory = plx.getters.get_memory(config.module, **config.params)
-        assert memory.state.shape == (10, 4)
-        assert memory.action.shape == (10, )
+        assert memory.can_sample(32)
+        assert not memory.can_sample(10)
 
     def test_subgraph_config(self):
         graph_config_dict = {
@@ -524,13 +521,7 @@ class TestConfigs(tf.test.TestCase):
             'agent_config': {
                 'output_dir': 'output_dir',
                 'memory_config': {
-                    'module': 'Memory',
-                    'params': {
-                        'num_states': 4,
-                        'num_actions': 2,
-                        'is_continuous': False,
-                        'size': 10
-                    }
+                    'module': 'Memory', 'params': {}
                 }
             },
             'environment_config': {'module': 'GymEnvironment', 'env_id': 'CartPole-v0'},
