@@ -132,3 +132,32 @@ def assert_global_counter(global_counter_tensor):
     if global_counter_tensor.get_shape().ndims != 0:
         raise TypeError('Existing `global_counter` is not '
                         'scalar: {}'.format(global_counter_tensor.get_shape()))
+
+
+def get_cumulative_rewards(reward, done,  discount=0.99):
+    """compute cumulative rewards R(s,a) (a.k.a. G(s,a) in Sutton '16)
+
+    `R_t = r_t + gamma*r_{t+1} + gamma^2*r_{t+2} + ...`
+
+    The simple way to compute cumulative rewards is to iterate from last to first time tick
+    and compute R_t = r_t + gamma*R_{t+1} recurrently
+
+    Args:
+        reward: `list`. A list of immediate rewards r(s,a) for the passed episodes.
+        done: `list`. A list of terminal states for the passed episodes.
+        discount: `float`. The discount factor.
+    """
+    if discount == 0:
+        return reward
+
+    cumulative_rewards = []
+    cumulative_reward = 0
+
+    for r, d in zip(reward[::-1], done[::-1]):
+        if d:
+            cumulative_reward = 0.0
+
+        cumulative_reward = r + discount * cumulative_reward
+        cumulative_rewards.insert(0, cumulative_reward)
+
+    return cumulative_rewards
