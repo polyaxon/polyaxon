@@ -15,7 +15,6 @@ from tensorflow.contrib.framework import load_variable
 from tensorflow.python.estimator.export import export
 from tensorflow.python.estimator.export import export_output
 from tensorflow.python.estimator.inputs import numpy_io
-from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.framework import constant_op
 from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
@@ -44,6 +43,7 @@ from tensorflow.python.training import training
 from tensorflow.python.util import compat
 
 from polyaxon import Modes
+from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.estimators import Estimator
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.exceptions import EstimatorNotTrainedError

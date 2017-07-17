@@ -4,10 +4,10 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
-from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.training import training
 from tensorflow.python.platform import test
 
+from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.models import BaseModel
 from polyaxon.libs.configs import LossConfig, OptimizerConfig
 from polyaxon.libs.utils import get_tracked
