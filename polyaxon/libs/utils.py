@@ -56,7 +56,7 @@ def get_shape(x):
     Returns:
         the incoming data shape.
     """
-    if isinstance(x, tf.Tensor):
+    if isinstance(x, (tf.Tensor, tf.Variable)):
         return x.get_shape().as_list()
     elif type(x) in [np.ndarray, list, tuple]:
         return np.shape(x)

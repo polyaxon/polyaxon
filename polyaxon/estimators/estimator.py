@@ -16,7 +16,7 @@ from tensorflow.core.protobuf import config_pb2
 from tensorflow.python.client import session as tf_session
 from tensorflow.python.estimator.export.export import (build_all_signature_defs,
                                                        get_timestamped_export_dir)
-from tensorflow.python.estimator.model_fn import EstimatorSpec, MetricKeys
+from tensorflow.python.estimator.model_fn import MetricKeys
 from tensorflow.python.framework import ops, random_seed
 from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.platform import gfile
@@ -34,6 +34,7 @@ from tensorflow.python.training.session_run_hook import SessionRunHook
 from tensorflow.python.util import compat
 
 from polyaxon import Modes
+from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.estimators import hooks as plx_hooks
 from polyaxon.libs.configs import RunConfig
 from polyaxon.libs.dicts import dict_to_str
