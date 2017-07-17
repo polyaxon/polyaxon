@@ -22,7 +22,7 @@ def main(*args):
         return model(features, labels)
 
     memory = plx.rl.memories.BatchMemory()
-    estimator = plx.estimators.PGAgent(
+    estimator = plx.estimators.TRPOAgent(
         model_fn=model_fn, memory=memory, model_dir="/tmp/polyaxon_logs/trpo_cartpole")
 
     estimator.train(env)

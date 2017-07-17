@@ -5,7 +5,7 @@ from collections import OrderedDict
 
 from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.estimators.estimator import Estimator
-from polyaxon.estimators.agents import Agent, PGAgent
+from polyaxon.estimators.agents import BaseAgent, Agent, PGAgent, TRPOAgent
 from polyaxon.estimators.hooks import HOOKS
 
 
@@ -15,5 +15,6 @@ ESTIMATORS = OrderedDict([
 
 AGENTS = OrderedDict([
     ('Agent', Agent),
-    ('PGAgent', PGAgent)
+    ('PGAgent', PGAgent),
+    ('TRPOAgent', TRPOAgent)
 ])
