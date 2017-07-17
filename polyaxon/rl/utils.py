@@ -1,8 +1,12 @@
 import tensorflow as tf
 
+from six.moves import xrange
+
+import numpy as np
 from tensorflow.python.platform import tf_logging as logging
 
 from polyaxon.libs import getters
+from polyaxon.libs.utils import EPSILON
 from polyaxon.variables import variable
 
 
@@ -161,3 +165,63 @@ def get_cumulative_rewards(reward, done,  discount=0.99):
         cumulative_rewards.insert(0, cumulative_reward)
 
     return cumulative_rewards
+
+
+def conjugate_gradient(fn, b, iterations=50, residual_tolerance=1e-10):
+    """Conjugate gradient solver.
+
+
+    Args:
+        fn: Ax of Ax=b
+        b: b in Ax = b
+
+    Returns: Approximate solution to linear system.
+    """
+    b = np.nan_to_num(b)
+    vector_p = b.copy()
+    residual = b.copy()
+    x = np.zeros_like(b)
+    residual_dot_residual = residual.dot(residual)
+
+    for i in xrange(iterations):
+        z = fn(vector_p)
+        cg_vector_p_dot_z = vector_p.dot(z)
+        if abs(cg_vector_p_dot_z) < EPSILON:
+            cg_vector_p_dot_z = EPSILON
+        v = residual_dot_residual / cg_vector_p_dot_z
+        x += v * vector_p
+
+        residual -= v * z
+        new_residual_dot_residual = residual.dot(residual)
+        alpha = new_residual_dot_residual / (residual_dot_residual + EPSILON)
+
+        # Construct new search direction as linear combination of residual and previous
+        # search vector.
+        vector_p = residual + alpha * vector_p
+        residual_dot_residual = new_residual_dot_residual
+
+        if residual_dot_residual < residual_tolerance:
+            logging.info("Conjugate gradient converged after {} iterations".format(i + 1))
+            break
+
+    return np.nan_to_num(x)
+
+
+def line_search(fn, initial_x, full_step, expected_improve_rate, max_backtracks=10, accept_ratio=0.1):
+    """Backtracking line search, where expected_improve_rate is the slope dy/dx at the initial."""
+
+    function_value = fn(initial_x)
+
+    for step_fraction in 0.5 ** np.arange(max_backtracks):
+        updated_x = initial_x + step_fraction * full_step
+        new_function_value = fn(updated_x)
+
+        actual_improve = function_value - new_function_value
+        expected_improve = expected_improve_rate * step_fraction
+
+        improve_ratio = actual_improve / (expected_improve + EPSILON)
+
+        if improve_ratio > accept_ratio and actual_improve > 0:
+            return True, updated_x
+
+    return False, initial_x

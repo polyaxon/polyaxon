@@ -5,10 +5,19 @@ from collections import Mapping, namedtuple
 
 import tensorflow as tf
 
-from tensorflow.python.estimator.model_fn import EstimatorSpec
+
 from tensorflow.python.training import training
 
+try:
+    from tensorflow.python.ops.distributions.categorical import Categorical
+    from tensorflow.python.ops.distributions.gaussian import Normal
+    from tensorflow.python.ops.distributions import kl
+except ImportError:
+    # tf < 1.2.0
+    from tensorflow.contrib.distributions import Categorical, Normal, kl
+
 from polyaxon import Modes
+from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.layers import FullyConnected
 from polyaxon.libs import getters
 from polyaxon.libs.configs import LossConfig
@@ -19,6 +28,7 @@ from polyaxon.models import summarizer
 
 
 QModelSpec = namedtuple("QModelSpec", "graph_outputs a v q")
+PGModelSpec = namedtuple("PGModelSpec", "graph_outputs a distribution dist_values")
 
 
 class BaseQModel(BaseModel):
@@ -74,6 +84,7 @@ class BaseQModel(BaseModel):
         self.dueling = dueling
         self.use_expert_demo = use_expert_demo
         loss_config = loss_config or LossConfig(module='huber_loss')
+
         super(BaseQModel, self).__init__(
             mode=mode, name=name, model_type=self.Types.RL, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
@@ -245,3 +256,165 @@ class BaseQModel(BaseModel):
                     max_reward, min_reward, avg_reward, total_reward)
 
         return summary_op
+
+    def _build_predictions(self, results, features, labels):
+        """Creates the dictionary of predictions that is returned by the model."""
+        predictions = super(BaseQModel, self)._build_predictions(
+            results=results, features=features, labels=labels)
+        # Add The QModelSpec values to predictions
+        predictions['graph_results'] = self._train_results.graph_outputs
+        predictions['a'] = self._train_results.a
+        predictions['q'] = self._train_results.q
+        if self._train_results.v is not None:
+            predictions['v'] = self._train_results.v
+        return predictions
+
+
+class BasePGModel(BaseModel):
+    """Base reinforcement learning policy gradient model class.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+        graph_fn: Graph function. Follows the signature:
+            * Args:
+                * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
+                * `inputs`: the feature inputs.
+        loss_config: An instance of `LossConfig`.
+        num_states: `int`. The number of states.
+        num_actions: `int`. The number of actions.
+        optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
+        eval_metrics_config: a list of `MetricConfig` instances.
+        is_continuous: `bool`. Is the model built for a continuous or discrete space.
+        summaries: `str` or `list`. The verbosity of the tensorboard visualization.
+            Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+        clip_gradients: `float`. Gradients  clipping by global norm.
+        clip_embed_gradients: `float`. Embedding gradients clipping to a specified value.
+        name: `str`, the name of this model, everything will be encapsulated inside this scope.
+
+     Returns:
+        `EstimatorSpec`
+    """
+    def __init__(self, mode, graph_fn, num_states, num_actions, loss_config=None,
+                 optimizer_config=None, eval_metrics_config=None,
+                 is_deterministic=False,  is_continuous=False, summaries='all',
+                 clip_gradients=0.5, clip_embed_gradients=0.1, name="Model"):
+
+        self.num_states = num_states
+        self.num_actions = num_actions
+        self.is_deterministic = is_deterministic
+        self.is_continuous = is_continuous
+        loss_config = loss_config or LossConfig(module='huber_loss')
+
+        super(BasePGModel, self).__init__(
+            mode=mode, name=name, model_type=self.Types.RL, graph_fn=graph_fn,
+            loss_config=loss_config, optimizer_config=optimizer_config,
+            eval_metrics_config=eval_metrics_config, summaries=summaries,
+            clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
+
+    def _build_eval_metrics(self, results, features, labels):
+        pass
+
+    def _build_train_op(self, loss):
+        return tf.no_op()
+
+    def _build_distribution(self, values):
+        if self.is_continuous:
+            loc, scale = values[:, :self.num_actions], values[:, self.num_actions:]
+            return Normal(loc=loc, scale=scale)
+        else:
+            return Categorical(logits=values)
+
+    def _build_graph_fn(self):
+        """Create the new graph_fn based on the one specified by the user.
+        Returns:
+            `function`. The graph function. The graph function must return a PGModelSpec.
+        """
+        def graph_fn(mode, inputs):
+            graph_outputs = self._graph_fn(mode=mode, inputs=inputs)
+            a = FullyConnected(mode, num_units=self.num_actions)(graph_outputs)
+            if self.is_continuous:
+                values = tf.concat(values=[a, tf.exp(a) + 1], axis=0)
+                distribution = self._build_distribution(values=values)
+            else:
+                values = tf.identity(a)
+                distribution = self._build_distribution(values=a)
+            return PGModelSpec(
+                graph_outputs=graph_outputs, a=a, distribution=distribution, dist_values=values)
+
+        return graph_fn
+
+    def _build_actions(self):
+        """Create the chosen action w/o sampling.
+
+        If inference mode is used the, actions are chosen directly without sampling.
+        """
+        batch_size = get_tensor_batch_size(self._graph_results.a)
+        if self.is_deterministic or Modes.is_infer(self.mode):
+            if self.is_continuous:
+                return self._graph_results.distribution.mean()
+            else:
+                return tf.argmax(self._graph_results.distribution.probs, axis=1)
+        else:
+            if self.is_continuous:
+                return self._graph_results.distribution.sample(sample_shape=batch_size)
+            else:
+                return tf.squeeze(self._graph_results.distribution.sample(sample_shape=batch_size), axis=1)
+
+    def _call_graph_fn(self, inputs):
+        """Calls graph function.
+
+        Creates first one or two graph, i.e. train and target graphs.
+        Return the optimal action given an exploration policy.
+
+        If `is_dueling` is set to `True`,
+        then another layer is added that represents the state value.
+
+        Args:
+            inputs: `Tensor` or `dict` of tensors
+        """
+        graph_fn = self._build_graph_fn()
+        self._graph_results = graph_fn(mode=self.mode, inputs=inputs)
+        return self._build_actions()
+
+    def _preprocess(self, features, labels):
+        """Model specific preprocessing.
+
+        Args:
+            features: `array`, `Tensor` or `dict`. The environment states.
+                if `dict` it must contain a `state` key.
+            labels: `dict`. A dictionary containing `action`, `reward`, `advantage`.
+        """
+        if isinstance(features, Mapping) and 'state' not in features:
+            raise KeyError("features must include a `state` key.")
+
+        if (not Modes.is_infer(self.mode) and
+                'action' not in labels or
+                'reward' not in labels or
+                'discount_reward' not in labels or
+                'done' not in labels or
+                'dist_values' not in labels):
+            raise KeyError("labels must include these keys: `action`, `reward`, `done`, "
+                           " and `dist_values`.")
+        # TODO: add baseline here.
+        return features, labels
+
+    def _build_summary_op(self, results=None, features=None, labels=None):
+        summary_op = super(BasePGModel, self)._build_summary_op(results, features, labels)
+        for summary in self.summaries:
+            if summary == summarizer.SummaryOptions.EXPLORATION:
+                summary_op += summarizer.add_exploration_rate_summaries()
+            if summary == summarizer.SummaryOptions.REWARD:
+                max_reward = labels.get('max_reward', None)
+                min_reward = labels.get('min_reward', None)
+                avg_reward = labels.get('avg_reward', None)
+                total_reward = labels.get('total_reward', None)
+                summary_op += summarizer.add_reward_summaries(
+                    max_reward, min_reward, avg_reward, total_reward)
+
+        return summary_op
+
+    def _likelihood_ratio_sym(self, log_probs, old_log_probs):
+        if self.is_continuous:
+            return tf.exp(log_probs - old_log_probs)
+        else:
+            return

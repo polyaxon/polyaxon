@@ -2,10 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
-from tensorflow.python.estimator.model_fn import EstimatorSpec
 from tensorflow.python.training import training
 
 from polyaxon import Modes
+from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.libs import configs, getters
 from polyaxon.libs.configs import OptimizerConfig
 from polyaxon.libs.dicts import flatten_dict
@@ -229,8 +229,7 @@ class BaseModel(GraphModule):
         """Model specific preprocessing."""
         return features, labels
 
-    @staticmethod
-    def _build_predictions(results, features, labels, losses=None):
+    def _build_predictions(self, results, features, labels):
         """Creates the dictionary of predictions that is returned by the model."""
         predictions = flatten_dict({'results': results})
         # Add features and, if available, labels to predictions
@@ -238,10 +237,13 @@ class BaseModel(GraphModule):
         if labels is not None:
             predictions.update(flatten_dict({'labels': labels}))
 
-        if losses is not None:
-            predictions['losses'] = losses
+        if self._losses is not None:
+            predictions['losses'] = self._losses
 
         return predictions
+
+    def _build_extra_ops(self, results, features, labels):
+        return None
 
     @staticmethod
     def batch_size(features, labels):
@@ -268,6 +270,7 @@ class BaseModel(GraphModule):
         eval_metrics = None
         if Modes.is_infer(self.mode):
             predictions = self._build_predictions(results=results, features=features, labels=labels)
+            extra_ops = self._build_extra_ops(results=results, features=features, labels=labels)
         else:
             losses, loss = self._build_loss(results, features, labels)
             eval_metrics = self._build_eval_metrics(results, features, labels)
@@ -276,8 +279,8 @@ class BaseModel(GraphModule):
                 train_op = self._build_train_op(loss)
                 self._build_summary_op(results=results, features=features, labels=labels)
 
-            predictions = self._build_predictions(results=results, features=features,
-                                                  labels=labels, losses=losses)
+            predictions = self._build_predictions(results=results, features=features, labels=labels)
+            extra_ops = self._build_extra_ops(results=results, features=features, labels=labels)
 
         # We add 'useful' tensors to the graph collection so that we
         # can easily find them in our hooks/monitors.
@@ -286,5 +289,6 @@ class BaseModel(GraphModule):
         return EstimatorSpec(mode=self.mode,
                              predictions=predictions,
                              loss=loss,
+                             extra_ops=extra_ops,
                              train_op=train_op,
                              eval_metric_ops=eval_metrics)

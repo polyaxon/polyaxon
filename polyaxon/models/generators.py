@@ -5,9 +5,8 @@ from collections import Mapping
 
 import tensorflow as tf
 
-from tensorflow.python.estimator.model_fn import EstimatorSpec
-
 from polyaxon import Modes
+from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.bridges import BridgeSpec
 from polyaxon.libs.configs import OptimizerConfig, LossConfig
 from polyaxon.libs.utils import get_tracked, get_arguments, track
