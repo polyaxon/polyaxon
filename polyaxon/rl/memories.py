@@ -29,6 +29,11 @@ class Memory(object):
         self._counter = 0
         self._spec = None
 
+    def get_by_index(self, i):
+        if self._counter == 0:
+            return None
+        return {key: self._memory[i][e] for e, key in enumerate(self._spec)}
+
     def can_sample(self, counter=None):
         if counter is None:
             counter = self._counter
@@ -69,6 +74,24 @@ class Memory(object):
         self._counter = 0
 
 
+class BatchMemory(Memory):
+    """The batch memory buffer batch size data and clear the memory after each sample."""
+    def __init__(self, batch_size=5000):
+        super(BatchMemory, self).__init__(batch_size, batch_size)
+
+    def sample(self):
+        if not self.can_sample():
+            raise ValueError('Not enough data to sample.')
+
+        sample = {}
+        for i, key in enumerate(self._spec):
+            sample[key] = np.array([b_step[i] for b_step in self._memory])
+
+        self.clear()
+        return sample
+
+
 MEMORIES = OrderedDict([
     ('Memory', Memory),
+    ('BatchMemory', BatchMemory),
 ])
