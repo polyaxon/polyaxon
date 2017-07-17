@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import Mapping
+
 import numpy as np
 import tensorflow as tf
+from polyaxon import Modes
 
 try:
-    from tensorflow.python.ops.distributions.categorical import Categorical
-    from tensorflow.python.ops.distributions.normal import Normal
     from tensorflow.python.ops.distributions.kullback_leibler import kl_divergence
 except ImportError:
     # tf < 1.2.0
-    from tensorflow.contrib.distributions import Categorical, Normal, kl as kl_divergence
+    from tensorflow.contrib.distributions import kl as kl_divergence
 
 from polyaxon.libs.utils import get_shape
 from polyaxon.models.rl.base import BasePGModel
@@ -39,11 +40,21 @@ class TRPOModel(BasePGModel):
      Returns:
         `EstimatorSpec`
     """
+    def _build_train_op(self, loss):
+        """Training is done on the agent for TRPO, since it requires custom logic."""
+        return tf.no_op()
+
     def get_vars_grads(self, loss, variables):
         grads = tf.gradients(loss, variables)
         grads_and_vars = list(zip(grads, variables))
         return grads_and_vars, tf.concat(
             values=[tf.reshape(grad, (-1, )) for (grad, v) in grads_and_vars], axis=0)
+
+    def _likelihood_ratio_sym(self, log_probs, old_log_probs):
+        if self.is_continuous:
+            return tf.exp(log_probs - old_log_probs)
+        else:
+            return
 
     def _build_loss(self, results, features, labels):
         """Creates the loss operation

@@ -31,7 +31,43 @@ QModelSpec = namedtuple("QModelSpec", "graph_outputs a v q")
 PGModelSpec = namedtuple("PGModelSpec", "graph_outputs a distribution dist_values")
 
 
-class BaseQModel(BaseModel):
+class BaseRLModel(BaseModel):
+    def _build_summary_op(self, results=None, features=None, labels=None):
+        summary_op = super(BaseRLModel, self)._build_summary_op(results, features, labels)
+        for summary in self.summaries:
+            if summary == summarizer.SummaryOptions.EXPLORATION:
+                summary_op += summarizer.add_exploration_rate_summaries()
+            if summary == summarizer.SummaryOptions.REWARD:
+                max_reward = labels.get('max_reward', None)
+                min_reward = labels.get('min_reward', None)
+                avg_reward = labels.get('avg_reward', None)
+                total_reward = labels.get('total_reward', None)
+                summary_op += summarizer.add_reward_summaries(
+                    max_reward, min_reward, avg_reward, total_reward)
+
+        return summary_op
+
+    def _build_eval_metrics(self, results, features, labels):
+        pass
+
+    def _preprocess(self, features, labels):
+        """Model specific preprocessing.
+
+        Args:
+            features: `array`, `Tensor` or `dict`. The environment states.
+                if `dict` it must contain a `state` key.
+            labels: `dict`. A dictionary containing `action`, `reward`, `advantage`.
+        """
+        if isinstance(features, Mapping) and 'state' not in features:
+            raise KeyError("features must include a `state` key.")
+
+        if (not Modes.is_infer(self.mode) and
+                'action' not in labels or 'reward' not in labels or 'done' not in labels):
+            raise KeyError("labels must include these keys: `action`, `reward`, `done`.")
+        return features, labels
+
+
+class BaseQModel(BaseRLModel):
     """Base reinforcement learning model class.
 
     Args:
@@ -93,9 +129,6 @@ class BaseQModel(BaseModel):
 
         self._train_graph = None
         self._target_graph = None
-
-    def _build_eval_metrics(self, results, features, labels):
-        pass
 
     def _build_exploration(self):
         """Creates the exploration op.
@@ -226,37 +259,6 @@ class BaseQModel(BaseModel):
 
         return train_op
 
-    def _preprocess(self, features, labels):
-        """Model specific preprocessing.
-
-        Args:
-            features: `array`, `Tensor` or `dict`. The environment states.
-                if `dict` it must contain a `state` key.
-            labels: `dict`. A dictionary containing `action`, `reward`, `advantage`.
-        """
-        if isinstance(features, Mapping) and 'state' not in features:
-            raise KeyError("features must include a `state` key.")
-
-        if (not Modes.is_infer(self.mode) and
-                'action' not in labels or 'reward' not in labels or 'done' not in labels):
-            raise KeyError("labels must include these keys: `action`, `reward`, `done`.")
-        return features, labels
-
-    def _build_summary_op(self, results=None, features=None, labels=None):
-        summary_op = super(BaseQModel, self)._build_summary_op(results, features, labels)
-        for summary in self.summaries:
-            if summary == summarizer.SummaryOptions.EXPLORATION:
-                summary_op += summarizer.add_exploration_rate_summaries()
-            if summary == summarizer.SummaryOptions.REWARD:
-                max_reward = labels.get('max_reward', None)
-                min_reward = labels.get('min_reward', None)
-                avg_reward = labels.get('avg_reward', None)
-                total_reward = labels.get('total_reward', None)
-                summary_op += summarizer.add_reward_summaries(
-                    max_reward, min_reward, avg_reward, total_reward)
-
-        return summary_op
-
     def _build_predictions(self, results, features, labels):
         """Creates the dictionary of predictions that is returned by the model."""
         predictions = super(BaseQModel, self)._build_predictions(
@@ -270,7 +272,7 @@ class BaseQModel(BaseModel):
         return predictions
 
 
-class BasePGModel(BaseModel):
+class BasePGModel(BaseRLModel):
     """Base reinforcement learning policy gradient model class.
 
     Args:
@@ -303,19 +305,12 @@ class BasePGModel(BaseModel):
         self.num_actions = num_actions
         self.is_deterministic = is_deterministic
         self.is_continuous = is_continuous
-        loss_config = loss_config or LossConfig(module='huber_loss')
 
         super(BasePGModel, self).__init__(
             mode=mode, name=name, model_type=self.Types.RL, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
             eval_metrics_config=eval_metrics_config, summaries=summaries,
             clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
-
-    def _build_eval_metrics(self, results, features, labels):
-        pass
-
-    def _build_train_op(self, loss):
-        return tf.no_op()
 
     def _build_distribution(self, values):
         if self.is_continuous:
@@ -384,37 +379,11 @@ class BasePGModel(BaseModel):
                 if `dict` it must contain a `state` key.
             labels: `dict`. A dictionary containing `action`, `reward`, `advantage`.
         """
-        if isinstance(features, Mapping) and 'state' not in features:
-            raise KeyError("features must include a `state` key.")
+        features, labels = super(BasePGModel, self)._preprocess(features, labels)
 
         if (not Modes.is_infer(self.mode) and
-                'action' not in labels or
-                'reward' not in labels or
                 'discount_reward' not in labels or
-                'done' not in labels or
                 'dist_values' not in labels):
-            raise KeyError("labels must include these keys: `action`, `reward`, `done`, "
-                           " and `dist_values`.")
+            raise KeyError("labels must include these keys: `discount_reward`, and `dist_values`.")
         # TODO: add baseline here.
         return features, labels
-
-    def _build_summary_op(self, results=None, features=None, labels=None):
-        summary_op = super(BasePGModel, self)._build_summary_op(results, features, labels)
-        for summary in self.summaries:
-            if summary == summarizer.SummaryOptions.EXPLORATION:
-                summary_op += summarizer.add_exploration_rate_summaries()
-            if summary == summarizer.SummaryOptions.REWARD:
-                max_reward = labels.get('max_reward', None)
-                min_reward = labels.get('min_reward', None)
-                avg_reward = labels.get('avg_reward', None)
-                total_reward = labels.get('total_reward', None)
-                summary_op += summarizer.add_reward_summaries(
-                    max_reward, min_reward, avg_reward, total_reward)
-
-        return summary_op
-
-    def _likelihood_ratio_sym(self, log_probs, old_log_probs):
-        if self.is_continuous:
-            return tf.exp(log_probs - old_log_probs)
-        else:
-            return

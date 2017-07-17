@@ -36,7 +36,6 @@ class Classifier(BaseModel):
     def __init__(self, mode, graph_fn, loss_config=None, optimizer_config=None,
                  summaries='all', eval_metrics_config=None, clip_gradients=0.5,
                  clip_embed_gradients=0.1, one_hot_encode=None, n_classes=None, name="Classfier"):
-        loss_config = loss_config or LossConfig(module='sigmoid_cross_entropy')
         if one_hot_encode and (n_classes is None or not isinstance(n_classes, int)):
             raise ValueError('`n_classes` must be an integer non negative value '
                              'when `one_hot_encode` is set to `True`, '
