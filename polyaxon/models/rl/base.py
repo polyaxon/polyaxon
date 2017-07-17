@@ -10,11 +10,11 @@ from tensorflow.python.training import training
 
 try:
     from tensorflow.python.ops.distributions.categorical import Categorical
-    from tensorflow.python.ops.distributions.gaussian import Normal
-    from tensorflow.python.ops.distributions import kl
+    from tensorflow.python.ops.distributions.normal import Normal
+    from tensorflow.python.ops.distributions.kullback_leibler import kl_divergence
 except ImportError:
     # tf < 1.2.0
-    from tensorflow.contrib.distributions import Categorical, Normal, kl
+    from tensorflow.contrib.distributions import Categorical, Normal, kl as kl_divergence
 
 from polyaxon import Modes
 from polyaxon.estimators.estimator_spec import EstimatorSpec

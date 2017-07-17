@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from .converters import (
+from polyaxon.datasets.converters import (
     ImageReader,
     PNGImageReader,
     PNGNumpyImageReader,
@@ -9,4 +9,4 @@ from .converters import (
     JPEGImageReader,
     ImagesToTFExampleConverter
 )
-from . import cifar10, flowers17, mnist
+from polyaxon.datasets import cifar10, flowers17, mnist

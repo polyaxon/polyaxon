@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from .convolutional import (
+from polyaxon.layers.convolutional import (
     CONV_LAYERS,
     AvgPool1d,
     AvgPool2d,
@@ -25,7 +25,7 @@ from .convolutional import (
     Upsample2d,
     Upscore
 )
-from .core import (
+from polyaxon.layers.core import (
     CORE_LAYERS,
     Dropout,
     Flatten,
@@ -38,14 +38,14 @@ from .core import (
     SingleUnit,
     Slice
 )
-from .embedding import EMBEDDING_LAYERS, Embedding
-from .normalizations import (
+from polyaxon.layers.embedding import EMBEDDING_LAYERS, Embedding
+from polyaxon.layers.normalizations import (
     NORMALIZATION_LAYERS,
     BatchNormalization,
     L2Normalization,
     LocalResponseNormalization
 )
-from .recurrent import (
+from polyaxon.layers.recurrent import (
     RNN_LAYERS,
     GRU,
     LSTM,

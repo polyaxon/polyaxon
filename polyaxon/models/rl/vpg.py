@@ -16,8 +16,8 @@ from polyaxon.libs.utils import get_shape
 from polyaxon.models.rl.base import BasePGModel
 
 
-class TRPOModel(BasePGModel):
-    """Implements a trust region policy optimization model
+class VPGModel(BasePGModel):
+    """Implements a vanilla policy gradient model
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
         graph_fn: Graph function. Follows the signature:

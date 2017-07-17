@@ -69,6 +69,7 @@ class BaseModel(GraphModule):
         self._clip_embed_gradients = clip_embed_gradients
         self._grads_and_vars = None
         self._total_loss = None
+        self._losses = None
         self._loss = None
 
         self._check_subgraph_fn(function=graph_fn, function_name='graph_fn')
