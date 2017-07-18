@@ -62,7 +62,7 @@ class BaseRLModel(BaseModel):
             raise KeyError("features must include a `state` key.")
 
         if (not Modes.is_infer(self.mode) and
-                'action' not in labels or 'reward' not in labels or 'done' not in labels):
+                ('action' not in labels or 'reward' not in labels or 'done' not in labels)):
             raise KeyError("labels must include these keys: `action`, `reward`, `done`.")
         return features, labels
 
@@ -381,9 +381,7 @@ class BasePGModel(BaseRLModel):
         """
         features, labels = super(BasePGModel, self)._preprocess(features, labels)
 
-        if (not Modes.is_infer(self.mode) and
-                'discount_reward' not in labels or
-                'dist_values' not in labels):
-            raise KeyError("labels must include these keys: `discount_reward`, and `dist_values`.")
+        if not Modes.is_infer(self.mode) and 'discount_reward' not in labels:
+            raise KeyError("labels must include the keys: `discount_reward``.")
         # TODO: add baseline here.
         return features, labels

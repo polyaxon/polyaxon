@@ -6,4 +6,5 @@ from polyaxon.models.rl.dqn import DQNModel
 from polyaxon.models.rl.ddqn import DDQNModel
 from polyaxon.models.rl.naf import NAFModel
 from polyaxon.models.rl.trpo import TRPOModel
+from polyaxon.models.rl.vpg import VPGModel
 

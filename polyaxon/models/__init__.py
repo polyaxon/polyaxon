@@ -7,7 +7,15 @@ from polyaxon.models.base import BaseModel
 from polyaxon.models.generators import Generator
 from polyaxon.models.classifiers import Classifier
 from polyaxon.models.regressors import Regressor
-from polyaxon.models.rl import BaseQModel, BasePGModel, DQNModel, DDQNModel, NAFModel, TRPOModel
+from polyaxon.models.rl import (
+    BaseQModel,
+    BasePGModel,
+    DQNModel,
+    DDQNModel,
+    NAFModel,
+    TRPOModel,
+    VPGModel
+)
 
 MODELS = OrderedDict([
     ('Classifier', Classifier),
@@ -16,5 +24,6 @@ MODELS = OrderedDict([
     ('DQNModel', DQNModel),
     ('DDQNModel', DDQNModel),
     ('NAFModel', NAFModel),
-    ('TRPOModel', TRPOModel)
+    ('TRPOModel', TRPOModel),
+    ('VPGModel', VPGModel),
 ])

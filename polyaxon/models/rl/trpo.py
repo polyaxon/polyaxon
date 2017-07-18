@@ -44,6 +44,20 @@ class TRPOModel(BasePGModel):
         """Training is done on the agent for TRPO, since it requires custom logic."""
         return tf.no_op()
 
+    def _preprocess(self, features, labels):
+        """Model specific preprocessing.
+
+        Args:
+            features: `array`, `Tensor` or `dict`. The environment states.
+                if `dict` it must contain a `state` key.
+            labels: `dict`. A dictionary containing `action`, `reward`, `advantage`.
+        """
+        features, labels = super(BasePGModel, self)._preprocess(features, labels)
+
+        if not Modes.is_infer(self.mode) and 'dist_values' not in labels:
+            raise KeyError("labels must include the keys: `dist_values`.")
+        return features, labels
+
     def get_vars_grads(self, loss, variables):
         grads = tf.gradients(loss, variables)
         grads_and_vars = list(zip(grads, variables))

@@ -234,7 +234,7 @@ class EpisodeSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
     def before_run(self, run_context):  # pylint: disable=unused-argument
         requests = {"global_episode": self._global_episode_tensor}
         if can_run_hook(run_context):
-            self._request_summary = self._current_episode == self._next_episode
+            self._request_summary = self._current_episode >= self._next_episode
             if self._request_summary:
                 if self._get_summary_op() is not None:
                     requests["summary"] = self._get_summary_op()
@@ -249,12 +249,12 @@ class EpisodeSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
         global_episode = run_values.results["global_episode"]
 
         if self._next_episode is None:
-            self._next_episode = global_episode + 1
+            self._next_episode = global_episode + self._timer._every_episodes
             self._summary_writer.add_session_log(SessionLog(status=SessionLog.START), global_episode)
 
         if self._request_summary and self._timer.should_trigger_for_episode(global_episode):
             self._timer.update_last_triggered_episode(global_episode)
-            self._next_episode = global_episode + 1
+            self._next_episode = global_episode + self._timer._every_episodes
             if "summary" in run_values.results:
                 for summary in run_values.results["summary"]:
                     self._summary_writer.add_summary(summary, global_episode)

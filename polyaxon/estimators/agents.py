@@ -565,9 +565,9 @@ class PGAgent(BaseAgent):
         stats = Stats()
         loss = None
         while not env_spec.done:
-            _, step, timestep, action, next_dist_values = sess.run(
+            _, step, timestep, action = sess.run(
                 [no_run_hooks, global_step, update_timestep_op,
-                 estimator_spec.predictions['results'], estimator_spec.predictions['dist_values']],
+                 estimator_spec.predictions['results']],
                 feed_dict=self._prepare_feed_dict('act', features, labels, env_spec.to_dict()))
 
             env_spec = env.step(action, env_spec.next_state)
@@ -575,15 +575,18 @@ class PGAgent(BaseAgent):
             self.memory.step(**env_spec.to_dict())
             stats.rewards.append(env_spec.reward)
 
-            if env_spec.done:
+            if self.memory.can_sample() and env_spec.done:
+                logging.info('Updating model.')
+                sess.run([no_run_hooks, update_episode_op])
+                feed_dict = self._prepare_feed_dict(
+                    'observe', features, labels, self.memory.sample(), stats, from_memory=True)
+                _, _, loss = sess.run([no_run_hooks, estimator_spec.train_op, estimator_spec.loss],
+                                      feed_dict=feed_dict)
+
+            elif env_spec.done:
                 last_in_memory = self.memory.get_by_index(-1)
                 sess.run([update_episode_op], feed_dict=self._prepare_feed_dict(
                     'observe', features, labels, last_in_memory, stats))
-
-            if self.memory.can_sample():
-                feed_dict = self._prepare_feed_dict(
-                    'observe', features, labels, self.memory.sample(), stats, from_memory=True)
-                _, _, loss = sess.run([no_run_hooks, estimator_spec.train_op, estimator_spec.loss], feed_dict=feed_dict)
         return loss
 
     def _train_model(self, env, hooks):
@@ -636,7 +639,7 @@ class PGAgent(BaseAgent):
                         'min_reward': labels['min_reward'],
                         'total_reward': labels['total_reward'],
                     },
-                    every_n_episodes=1),  # TODO: save every episode?
+                    every_n_episodes=100),  # TODO: save every episode?
                 plx_hooks.EpisodeCounterHook(output_dir=self.model_dir)
             ]
             if self._config.save_checkpoints_secs or self._config.save_checkpoints_steps:
@@ -649,7 +652,7 @@ class PGAgent(BaseAgent):
                     chief_hooks += [
                         plx_hooks.EpisodeCheckpointSaverHook(
                             self._model_dir,
-                            save_episodes=1,  # TODO: save every episode?
+                            save_episodes=100,  # TODO: save every episode?
                             scaffold=scaffold)
                     ]
             if self._config.save_summary_steps:
@@ -662,7 +665,7 @@ class PGAgent(BaseAgent):
                     chief_hooks += [
                         plx_hooks.EpisodeSummarySaverHook(
                             scaffold=scaffold,
-                            save_episodes=1,  # TODO: save every episode?
+                            save_episodes=100,  # TODO: save every episode?
                             output_dir=self._model_dir,
                         )
                     ]
@@ -864,12 +867,8 @@ class TRPOAgent(PGAgent):
             dist_values = next_dist_values[0]
             stats.rewards.append(env_spec.reward)
 
-            if env_spec.done:
-                last_in_memory = self.memory.get_by_index(-1)
-                sess.run([update_episode_op], feed_dict=self._prepare_feed_dict(
-                    'observe', features, labels, last_in_memory, stats))
-
             if self.memory.can_sample():
+                logging.info('Updating model.')
                 feed_dict = self._prepare_feed_dict(
                     'observe', features, labels, self.memory.sample(), stats, from_memory=True)
                 _, policy_gradient = sess.run([no_run_hooks, estimator_spec.predictions['policy_gradient']], feed_dict=feed_dict)
@@ -912,4 +911,9 @@ class TRPOAgent(PGAgent):
                     logging.debug('No update.')
 
                 loss = sess.run([estimator_spec.loss], feed_dict=feed_dict)[0]
+
+            if env_spec.done:
+                last_in_memory = self.memory.get_by_index(-1)
+                sess.run([update_episode_op], feed_dict=self._prepare_feed_dict(
+                    'observe', features, labels, last_in_memory, stats))
         return loss
