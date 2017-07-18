@@ -33,7 +33,10 @@ pages:
   - Utils: experiments/utils.md
 - Estimators:
   - Estimator: estimators/estimator.md
-  - Agent: estimators/agent.md
+- Agents:
+  - Agent: agents/agent.md
+  - PGAgent: agents/pg_agent.md
+  - TRPOAgent: agents/trpo_agent.md
 - Hooks:
   - GeneralHooks: hooks/general_hooks.md
   - StepHooks: hooks/step_hooks.md
@@ -41,8 +44,10 @@ pages:
 - Models:
   - Base Model: models/base_model.md
   - Base RL Q Model: models/base_rl_q_model.md
+  - Base RL PG Model: models/base_rl_pg_model.md
   - Models: models/models.md
   - RLQModels: models/rl_q_models.md
+  - RLPGModels: models/rl_pg_models.md
   - Summerizer: models/summarizer.md
 - Layers:
   - Introduction: layers/introduction.md
@@ -71,9 +76,13 @@ pages:
 - Optimizers: optimizers.md
 - Initializations: initializations.md
 - Regularizations: regularizations.md
-- Explorations: explorations.md
 - Variables: variables.md
 - Subgraph: subgraph.md
+- RL:
+  - Environments: rl/environments.md
+  - Explorations: rl/explorations.md
+  - Memories: rl/memories.md
+  - utils: rl/utils.md
 - Libs:
   - Configs: libs/configs.md
   - Getters: libs/getters.md

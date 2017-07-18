@@ -58,7 +58,7 @@ class BaseAgent(Estimator):
 
 
 class Agent(BaseAgent):
-    """Agent class is the basic reinforcement learning model trainer/evaluator.
+    """Agent class is a reinforcement learning Q model trainer/evaluator.
 
     Constructs an `Agent` instance.
 

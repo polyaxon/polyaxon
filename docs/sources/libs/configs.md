@@ -1,3 +1,70 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L42)</span>
+## Configurable
+
+```python
+polyaxon.libs.configs.Configurable()
+```
+
+`Configurable` is an abstract class for defining an configurable objects.
+
+A configurable class reads a configuration (YAML, Json) and create a config instance.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L96)</span>
+## RunConfig
+
+```python
+polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None, cluster_config=None)
+```
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L188)</span>
+## PipelineConfig
+
+```python
+polyaxon.libs.configs.PipelineConfig(module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=1, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
+```
+
+The PipelineConfig holds information needed to create a `Pipeline`.
+
+- __Args__:
+	- __module__: `str`, the pipeline module to use.
+	- __name__: `str`, name to give for the pipeline.
+	- __dynamic_pad__: `bool`, If True the pipleine uses dynamic padding.
+	- __bucket_boundaries__:
+	- __batch_size__: `int`, the batch size.
+	- __num_epochs__: number of epochs to iterate over in this pipeline.
+	- __min_after_dequeue__: `int`, number of element to have in the queue.
+	- __num_threads__: `int`, number of threads to use in the queue.
+	- __shuffle__: If true, shuffle the data.
+	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
+	- __params__: `dict`, extra information to pass to the pipeline.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L273)</span>
+## InputDataConfig
+
+```python
+polyaxon.libs.configs.InputDataConfig(input_type=None, pipeline_config=None, x=None, y=None)
+```
+
+The InputDataConfig holds information needed to create a `InputData`.
+
+- __Args__:
+	- __input_type__: `str`, the type of the input data, e.g. numpy arrays.
+	- __pipeline_config__: The pipeline config to use.
+	- __x__: The x values, only used with NUMPY and PANDAS types.
+	- __y__: The y values, only used with NUMPY and PANDAS types.
+
+
+----
+
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L308)</span>
 ## EnvironmentConfig
 
@@ -259,70 +326,3 @@ The RLExperimentConfig holds information needed to create a `RLExperiment`.
 		instead of time.
 	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
 	- __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L42)</span>
-## Configurable
-
-```python
-polyaxon.libs.configs.Configurable()
-```
-
-`Configurable` is an abstract class for defining an configurable objects.
-
-A configurable class reads a configuration (YAML, Json) and create a config instance.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L96)</span>
-## RunConfig
-
-```python
-polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=False, gpu_memory_fraction=1.0, tf_random_seed=None, save_summary_steps=100, save_checkpoints_secs=600, save_checkpoints_steps=None, keep_checkpoint_max=5, keep_checkpoint_every_n_hours=10000, evaluation_master='', model_dir=None, cluster_config=None)
-```
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L188)</span>
-## PipelineConfig
-
-```python
-polyaxon.libs.configs.PipelineConfig(module=None, name=None, subgraph_configs_by_features=None, dynamic_pad=True, bucket_boundaries=False, batch_size=64, num_epochs=1, min_after_dequeue=5000, num_threads=3, shuffle=False, allow_smaller_final_batch=True, params=None)
-```
-
-The PipelineConfig holds information needed to create a `Pipeline`.
-
-- __Args__:
-	- __module__: `str`, the pipeline module to use.
-	- __name__: `str`, name to give for the pipeline.
-	- __dynamic_pad__: `bool`, If True the pipleine uses dynamic padding.
-	- __bucket_boundaries__:
-	- __batch_size__: `int`, the batch size.
-	- __num_epochs__: number of epochs to iterate over in this pipeline.
-	- __min_after_dequeue__: `int`, number of element to have in the queue.
-	- __num_threads__: `int`, number of threads to use in the queue.
-	- __shuffle__: If true, shuffle the data.
-	- __num_epochs__: Number of times to iterate through the dataset. If None, iterate forever.
-	- __params__: `dict`, extra information to pass to the pipeline.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L273)</span>
-## InputDataConfig
-
-```python
-polyaxon.libs.configs.InputDataConfig(input_type=None, pipeline_config=None, x=None, y=None)
-```
-
-The InputDataConfig holds information needed to create a `InputData`.
-
-- __Args__:
-	- __input_type__: `str`, the type of the input data, e.g. numpy arrays.
-	- __pipeline_config__: The pipeline config to use.
-	- __x__: The x values, only used with NUMPY and PANDAS types.
-	- __y__: The y values, only used with NUMPY and PANDAS types.

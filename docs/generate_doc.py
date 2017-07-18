@@ -53,6 +53,10 @@ from polyaxon.processing.data_providers import (
     DatasetDataProvider,
     ParallelDatasetProvider
 )
+from polyaxon.rl.environments import EnvSpec, GymEnvironment
+from polyaxon.rl.environments import Environment
+from polyaxon.rl.memories import Memory, BatchMemory
+from polyaxon.rl import utils as rl_utils
 
 ROOT = 'http://polyaxon.com/docs/'
 
@@ -116,16 +120,29 @@ PAGES = [
             estimator.Estimator.get_variable_names,
         ]
     },
+    # Agents
     {
-        'page': 'estimators/agent.md',
+        'page': 'agents/agent.md',
         'classes': [agents.Agent],
         'classes_functions': [
-            agents.Agent.export_savedmodel,
             agents.Agent.train,
-            agents.Agent.evaluate,
-            agents.Agent.predict,
-            agents.Agent.get_variable_value,
-            agents.Agent.get_variable_names,
+            agents.Agent.run_episode,
+        ]
+    },
+    {
+        'page': 'agents/pg_agent.md',
+        'classes': [agents.PGAgent],
+        'classes_functions': [
+            agents.PGAgent.train,
+            agents.PGAgent.run_episode,
+        ]
+    },
+    {
+        'page': 'agents/trpo_agent.md',
+        'classes': [agents.TRPOAgent],
+        'classes_functions': [
+            agents.TRPOAgent.train,
+            agents.TRPOAgent.run_episode,
         ]
     },
 
@@ -175,6 +192,17 @@ PAGES = [
         ]
     },
     {
+        'page': 'models/base_rl_pg_model.md',
+        'classes': [models.BasePGModel],
+        'classes_functions': [
+            models.BasePGModel._build_actions,
+            models.BasePGModel._build_distribution,
+            models.BasePGModel._build_graph_fn,
+            models.BasePGModel._call_graph_fn,
+            models.BasePGModel._preprocess,
+        ]
+    },
+    {
         'page': 'models/models.md',
         'classes': [
             models.Regressor,
@@ -188,6 +216,13 @@ PAGES = [
             models.DQNModel,
             models.DDQNModel,
             models.NAFModel,
+        ],
+    },
+    {
+        'page': 'models/rl_pg_models.md',
+        'classes': [
+            models.VPGModel,
+            models.TRPOModel,
         ],
     },
     {
@@ -420,16 +455,30 @@ PAGES = [
         'all_module_functions': [optimizers],
     },
     {
-        'page': 'explorations.md',
-        'all_module_functions': [explorations],
-    },
-    {
         'page': 'variables.md',
         'all_module_functions': [variables],
     },
     {
         'page': 'subgraph.md',
         'classes': [subgraph.SubGraph]
+    },
+
+    # RL
+    {
+        'page': 'rl/environments.md',
+        'classes': [EnvSpec, Environment, GymEnvironment],
+    },
+    {
+        'page': 'rl/explorations.md',
+        'all_module_functions': [explorations],
+    },
+    {
+        'page': 'rl/memories.md',
+        'classes': [Memory, BatchMemory],
+    },
+    {
+        'page': 'rl/utils.md',
+        'all_module_functions': [rl_utils],
     },
 
     # Datasets

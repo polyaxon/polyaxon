@@ -136,7 +136,7 @@ Model specific preprocessing.
 
 
 ```python
-_build_predictions(results, features, labels, losses=None)
+_build_predictions(self, results, features, labels)
 ```
 
 

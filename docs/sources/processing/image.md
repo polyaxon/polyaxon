@@ -1,36 +1,3 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L66)</span>
-## Resize
-
-```python
-polyaxon.processing.image.Resize(mode, height, width, method=None, align_corners=False, name='Resize')
-```
-
-See `plx.image.resize`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L121)</span>
-## CentralCrop
-
-```python
-polyaxon.processing.image.CentralCrop(mode, central_fraction, name='CentralCrop')
-```
-
-See `plx.image.central_crop`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L156)</span>
-## RandomCrop
-
-```python
-polyaxon.processing.image.RandomCrop(mode, height, width, name='RandomCrop')
-```
-
-See `plx.image.random_crop`'s docstring
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L219)</span>
 ## ExtractGlimpse
 
@@ -149,6 +116,39 @@ polyaxon.processing.image.AdjustSaturation(mode, saturation_factor, saturation_f
 ```
 
 See `plx.image.adjust_saturation`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L66)</span>
+## Resize
+
+```python
+polyaxon.processing.image.Resize(mode, height, width, method=None, align_corners=False, name='Resize')
+```
+
+See `plx.image.resize`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L121)</span>
+## CentralCrop
+
+```python
+polyaxon.processing.image.CentralCrop(mode, central_fraction, name='CentralCrop')
+```
+
+See `plx.image.central_crop`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L156)</span>
+## RandomCrop
+
+```python
+polyaxon.processing.image.RandomCrop(mode, height, width, name='RandomCrop')
+```
+
+See `plx.image.random_crop`'s docstring
 
 ----
 

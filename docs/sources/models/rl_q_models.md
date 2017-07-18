@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/dqn.py#L12)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/dqn.py#L11)</span>
 ## DQNModel
 
 ```python
@@ -44,7 +44,7 @@ Implements a double deep Q model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/ddqn.py#L12)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/ddqn.py#L11)</span>
 ## DDQNModel
 
 ```python
@@ -90,7 +90,7 @@ Implements a double deep Q model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/naf.py#L14)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/naf.py#L13)</span>
 ## NAFModel
 
 ```python
