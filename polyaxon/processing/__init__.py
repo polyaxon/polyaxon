@@ -9,11 +9,17 @@ from polyaxon.processing.data_decoders import (
     SplitTokensDecoder,
     TFSequenceExampleDecoder
 )
-from polyaxon.processing.data_providers import Dataset, DataProvider, DatasetDataProvider, ParallelDatasetProvider
+from polyaxon.processing.data_providers import (
+    Dataset,
+    DataProvider,
+    DatasetDataProvider,
+    ParallelDatasetProvider
+)
 from polyaxon.processing import image
 from polyaxon.processing.input_data import create_input_data_fn
 from polyaxon.processing.text import VocabularyProcessor
 from polyaxon.processing import pipelines
+from polyaxon.processing.input_fn import numpy_input_fn, pandas_input_fn
 
 
 PROCESSORS = IMAGE_PROCESSORS

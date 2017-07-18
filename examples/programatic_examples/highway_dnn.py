@@ -4,8 +4,6 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 
 import polyaxon as plx
-from polyaxon.datasets import mnist
-from polyaxon.libs.configs import MetricConfig
 
 
 def main(*args):
@@ -29,14 +27,14 @@ def main(*args):
     def model_fn(features, labels, mode):
         model = plx.models.Classifier(
             mode, graph_fn=graph_fn, summaries='loss',
-            eval_metrics_config=[MetricConfig(module='streaming_accuracy')],
+            eval_metrics_config=[plx.configs.MetricConfig(module='streaming_accuracy')],
             n_classes=10, one_hot_encode=True)
         return model(features, labels)
 
     estimator = plx.estimators.Estimator(model_fn=model_fn,
-                                          model_dir="/tmp/polyaxon_logs/highway_dnn")
+                                         model_dir="/tmp/polyaxon_logs/highway_dnn")
 
-    train_input_fn, eval_input_fn = mnist.create_input_fn('./data/mnist')
+    train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn('./data/mnist')
     xp = plx.experiments.Experiment(estimator=estimator, train_input_fn=train_input_fn,
                                     eval_input_fn=eval_input_fn, eval_every_n_steps=10)
     xp.continuous_train_and_evaluate()

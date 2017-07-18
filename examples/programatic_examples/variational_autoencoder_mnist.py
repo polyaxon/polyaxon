@@ -4,8 +4,6 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from tensorflow.python.estimator.inputs.numpy_io import numpy_input_fn
-
 import polyaxon as plx
 
 from tensorflow.examples.tutorials.mnist import input_data
@@ -13,60 +11,63 @@ from tensorflow.examples.tutorials.mnist import input_data
 from polyaxon.libs.utils import total_tensor_depth
 
 
-def create_experiment_json_fn(output_dir, X_train, y_train, X_eval, y_eval):
+def encoder_fn(mode, inputs):
+    return plx.encoders.Encoder(
+        mode=mode,
+        modules=[
+            plx.layers.FullyConnected(mode=mode, num_units=256, activation='relu')
+        ]
+    )(inputs)
+
+
+def decoder_fn(mode, inputs):
+    return plx.decoders.Decoder(
+        mode=mode,
+        modules=[
+            plx.layers.FullyConnected(mode=mode, num_units=256, activation='relu'),
+            plx.layers.FullyConnected(mode=mode, num_units=28 * 28)
+        ]
+    )(inputs)
+
+
+def bridge_fn(mode, inputs, loss_config, encoder_fn, decoder_fn):
+    return plx.bridges.LatentBridge(mode, latent_dim=2)(inputs, loss_config, encoder_fn, decoder_fn)
+
+
+def model_fn(features, labels, params, mode, config):
+    model = plx.models.Generator(
+        mode=mode,
+        encoder_fn=encoder_fn,
+        decoder_fn=decoder_fn,
+        bridge_fn=bridge_fn,
+        loss_config=plx.configs.LossConfig(module='sigmoid_cross_entropy'),
+        optimizer_config=plx.configs.OptimizerConfig(module='adam', learning_rate=0.00009),
+        summaries=['loss'])
+    return model(features=features, labels=labels, params=params, config=config)
+
+
+def experiment_fn(output_dir, X_train, y_train, X_eval, y_eval):
     """Creates a variational auto encoder on MNIST handwritten digits.
 
     inks:
         * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
     """
-    config = {
-        'name': 'vae_mnsit',
-        'output_dir': output_dir,
-        'eval_every_n_steps': 100,
-        'train_steps_per_iteration': 100,
-        'train_steps': 2000,
-        'run_config': {'save_checkpoints_steps': 100},
-        'train_input_data_config': {
-             'input_type': plx.configs.InputDataConfig.NUMPY,
-             'pipeline_config': {'name': 'train', 'batch_size': 64, 'num_epochs': None,
-                                 'shuffle': True},
-             'x': X_train,
-             'y': y_train
-         },
-        'eval_input_data_config': {
-             'input_type': plx.configs.InputDataConfig.NUMPY,
-             'pipeline_config': {'name': 'eval', 'batch_size': 32, 'num_epochs': None,
-                                 'shuffle': False},
-             'x': X_eval,
-             'y': y_eval
-         },
-        'estimator_config': {'output_dir': output_dir},
-        'model_config': {
-            'module': 'Generator',
-            'summaries': ['loss'],
-            'loss_config': {'module': 'sigmoid_cross_entropy'},
-            'optimizer_config': {'module': 'adam', 'learning_rate': 0.0009},
-            'encoder_config': {
-                'definition': [
-                    (plx.layers.FullyConnected, {'num_units': 256, 'activation': 'relu'}),
-                ]
-            },
-            'decoder_config': {
-                'definition': [
-                    (plx.layers.FullyConnected, {'num_units': 256, 'activation': 'relu'}),
-                    (plx.layers.FullyConnected, {'num_units': 28 * 28}),
-                ]
-            },
-            'bridge_config': {'module': 'LatentBridge', 'latent_dim': 2}
-        }
-    }
-    experiment_config = plx.configs.ExperimentConfig.read_configs(config)
-    return plx.experiments.create_experiment(experiment_config)
+    run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
+    return plx.experiments.Experiment(
+        estimator=plx.estimators.Estimator(
+            model_fn=model_fn, model_dir=output_dir, config=run_config),
+        train_input_fn=plx.processing.numpy_input_fn(
+            x=X_train, y=y_train, batch_size=64, num_epochs=None, shuffle=False),
+        eval_input_fn=plx.processing.numpy_input_fn(
+            x=X_eval, y=y_eval, batch_size=32, num_epochs=None, shuffle=False),
+        train_steps=5000,
+        eval_steps=100,
+        eval_every_n_steps=5)
 
 
 def encode(estimator, images, labels):
     results = estimator.encode(
-        numpy_input_fn({'images': images}, batch_size=10000, shuffle=False),
+        plx.processing.numpy_input_fn({'images': images}, batch_size=10000, shuffle=False),
         predict_keys=['results'])
 
     x = []
@@ -97,7 +98,7 @@ def generate(estimator):
 
     samples = np.array(samples)
     x_reconstructed = estimator.generate(
-        numpy_input_fn({'samples': samples}, batch_size=n * n, shuffle=False))
+        plx.processing.numpy_input_fn({'samples': samples}, batch_size=n * n, shuffle=False))
 
     results = [x['results'] for x in x_reconstructed]
     for i, x in enumerate(x_axis):
@@ -121,9 +122,9 @@ def main(*args):
     X_eval = X_eval.reshape((len(X_eval), total_tensor_depth(X_eval)))
     X_test = X_test.reshape((len(X_test), total_tensor_depth(X_test)))
 
-    xp = create_experiment_json_fn("/tmp/polyaxon_logs/vae",
-                                   {'images': X_train}, mnist.train.labels,
-                                   {'images': X_eval}, mnist.validation.labels)
+    xp = experiment_fn("/tmp/polyaxon_logs/vae",
+                       {'images': X_train}, mnist.train.labels,
+                       {'images': X_eval}, mnist.validation.labels)
     xp.continuous_train_and_evaluate()
 
     encode(xp.estimator, X_test, mnist.test.labels)
