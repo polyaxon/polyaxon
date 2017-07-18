@@ -109,6 +109,8 @@ class RunConfig(run_config.RunConfig, Configurable):
                  model_dir=None,
                  cluster_config=None):
         self.create_cluster_config(cluster_config)
+        if save_checkpoints_steps is not None:
+            save_checkpoints_secs = None
         super(RunConfig, self).__init__(master, num_cores, log_device_placement,
                                         gpu_memory_fraction,
                                         tf_random_seed, save_summary_steps, save_checkpoints_secs,

@@ -1,0 +1,71 @@
+---
+name: conv_highway
+output_dir: "/tmp/polyaxon_logs/conv_highway_mnsit"
+eval_every_n_steps: 5
+run_config:
+  save_checkpoints_steps: 100
+train_input_data_config:
+  pipeline_config:
+    module: TFRecordImagePipeline
+    batch_size: 64
+    num_epochs: 5
+    shuffle: true
+    dynamic_pad: false
+    params:
+      data_files: "../data/mnist/mnist_train.tfrecord"
+      meta_data_file: "../data/mnist/meta_data.json"
+eval_input_data_config:
+  pipeline_config:
+    module: TFRecordImagePipeline
+    batch_size: 32
+    num_epochs: 1
+    shuffle: true
+    dynamic_pad: false
+    params:
+      data_files: "../data/mnist/mnist_eval.tfrecord"
+      meta_data_file: "../data/mnist/meta_data.json"
+estimator_config:
+  output_dir: "/tmp/polyaxon_logs/conv_highway_mnsit"
+model_config:
+  module: Classifier
+  loss_config:
+    module: softmax_cross_entropy
+  eval_metrics_config:
+  - module: streaming_accuracy
+  optimizer_config:
+    module: adam
+    learning_rate: 0.001
+  one_hot_encode: true
+  n_classes: 10
+  graph_config:
+    name: mnist
+    features:
+    - image
+    definition:
+    - - HighwayConv2d
+      - num_filter: 32
+        filter_size: 3
+        strides: 1
+        activation: elu
+    - - HighwayConv2d
+      - num_filter: 16
+        filter_size: 2
+        strides: 1
+        activation: elu
+    - - HighwayConv2d
+      - num_filter: 16
+        filter_size: 1
+        strides: 1
+        activation: elu
+    - - MaxPool2d
+      - kernel_size: 2
+    - - BatchNormalization
+      - {}
+    - - FullyConnected
+      - num_units: 128
+        activation: elu
+    - - FullyConnected
+      - num_units: 256
+        activation: elu
+    - - FullyConnected
+      - num_units: 10

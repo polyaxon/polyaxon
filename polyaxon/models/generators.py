@@ -153,8 +153,8 @@ class Generator(BaseModel):
                 train_op = self._build_train_op(loss)
                 self._build_summary_op(results=results.results, features=features, labels=labels)
 
-            predictions = self._build_predictions(results=results.results, features=features,
-                                                  labels=labels, losses=losses)
+            predictions = self._build_predictions(
+                results=results.results, features=features, labels=labels)
 
         # We add 'useful' tensors to the graph collection so that we
         # can easly find them in our hooks/monitors.
