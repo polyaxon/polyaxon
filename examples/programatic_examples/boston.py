@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from sklearn import datasets
-from sklearn import model_selection
-from sklearn import preprocessing
-from tensorflow.python.estimator.inputs.numpy_io import numpy_input_fn
-
 import numpy as np
 import polyaxon as plx
 import tensorflow as tf
+
+from sklearn import datasets
+from sklearn import model_selection
+from sklearn import preprocessing
+
+from tensorflow.python.estimator.inputs.numpy_io import numpy_input_fn
 
 
 def main(*args):
