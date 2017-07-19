@@ -78,22 +78,20 @@ class NAFModel(BaseQModel):
 
         # Lower triangle matrix
         lt_size = self.num_actions * (self.num_actions + 1) // 2
-        lt_entries = FullyConnected(
-            self.mode, num_units=lt_size)(self._train_results.graph_outputs)
+        lt_entries = FullyConnected(self.mode, num_units=lt_size)(self._train_results.graph_outputs)
         lt_matrix = tf.exp(tf.map_fn(tf.diag, lt_entries[:, :self.num_actions]))
 
         if self.num_actions > 1:
             offset = self.num_actions
             l_columns = list()
-            for zeros, size in enumerate(xrange(self.num_actions - 1, 0, -1), 1):
-                column = tf.pad(lt_entries[:, offset: offset + size], ((0, 0), (zeros, 0)))
+            for i, size in enumerate(xrange(self.num_actions - 1, 0, -1), 1):
+                column = tf.pad(lt_entries[:, offset: offset + size], ((0, 0), (i, 0)))
                 l_columns.append(column)
                 offset += size
             lt_matrix += tf.stack(l_columns, 1)
 
         # P = LL^T
         p_matrix = tf.matmul(lt_matrix, tf.transpose(lt_matrix, (0, 2, 1)))
-
         action_diff = action - self._train_results.a
 
         # A = (a - mean)P(a - mean) / 2
