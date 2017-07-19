@@ -255,7 +255,7 @@ MIT License
 
 # Credit
 
-This work is based and was inspired from different projects, `tensorflow.contrib.learn`, `keras`, `sonnet`, `seq2seq` and many other great open source projects, see [ACKNOWLEDGMENTS](ACKNOWLEDGMENTS).
+This work is based and was inspired from different projects, `tensorflow.contrib.learn`, `keras`, `sonnet`, `seq2seq` and many other great open source projects, see [ACKNOWLEDGEMENTS](ACKNOWLEDGEMENTS).
 
 The idea behind creating this library is to provide a tool that allow engineers and researchers to develop and experiment with end to end solutions.
 
