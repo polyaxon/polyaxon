@@ -18,26 +18,6 @@ from polyaxon.libs.exceptions import ConfigurationError
 from polyaxon.libs.utils import generate_model_dir
 
 
-def _maybe_load_json(item):
-    """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
-    if isinstance(item, six.string_types):
-        return json.loads(item)
-    elif isinstance(item, dict):
-        return item
-    else:
-        raise ConfigurationError("Got {}, expected Json string or dict", type(item))
-
-
-def _maybe_load_yaml(item):
-    """Parses `item` only if it is a string. If `item` is a dictionary it is returned as-is."""
-    if isinstance(item, six.string_types):
-        return yaml.load(item)
-    elif isinstance(item, dict):
-        return item
-    else:
-        raise ConfigurationError("Got {}, expected YAML string or dict", type(item))
-
-
 @six.add_metaclass(abc.ABCMeta)
 class Configurable(object):
     """`Configurable` is an abstract class for defining an configurable objects.
@@ -62,8 +42,13 @@ class Configurable(object):
 
             if isinstance(config_value, Mapping):
                 config.update(config_value)
-            else:
+            elif os.path.isfile(config_value):
                 config.update(cls._read_from_file(config_value))
+            else:
+                raise ConfigurationError(
+                    "The provided value could not be parsed, please provide a valid: "
+                    "Python dict or path to a configuration file."
+                )
         return config
 
     @classmethod
