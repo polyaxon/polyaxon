@@ -1,4 +1,4 @@
-FROM polyaxon/polyaxon-1.1.0
+FROM polyaxon/polyaxon-1.2.0
 
 MAINTAINER mourad mourafiq <mouradmourafiq@gmail.com>
 

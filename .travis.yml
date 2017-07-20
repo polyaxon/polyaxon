@@ -6,7 +6,6 @@ python:
   - "3.5"
 
 env:
-  - TENSORFLOW_VERSION=1.1.0
   - TENSORFLOW_VERSION=1.2.0
 
 install:

@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L118)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L122)</span>
 ## SimpleRNN
 
 ```python
-polyaxon.layers.recurrent.SimpleRNN(mode, num_units, activation='sigmoid', dropout=None, num_layers=1, bias=True, weights_init=None, return_seq=False, return_state=False, initial_state=None, dynamic=False, trainable=True, restore=True, name='SimpleRNN')
+polyaxon.layers.recurrent.SimpleRNN(mode, num_units, activation='sigmoid', dropout=None, num_layers=1, shared_layers=False, bias=True, weights_init=None, return_seq=False, return_state=False, initial_state=None, dynamic=False, trainable=True, restore=True, name='SimpleRNN')
 ```
 
 Simple RNN (Simple Recurrent Layer.)
@@ -18,6 +18,7 @@ Simple RNN (Simple Recurrent Layer.)
 	- __dropout__: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
 		input and output keep probability.
 	- __num_layers__: `int` how many times to stack the cell.
+	- __shared_layers__: `bool` To share the same parameters in all created layers.
 	- __bias__: `bool`. If True, a bias is used.
 	- __weights_init__: `str` (name) or `Tensor`. Weights initialization.
 	- __return_seq__: `bool`. If True, returns the full sequence instead of
@@ -39,11 +40,11 @@ Simple RNN (Simple Recurrent Layer.)
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L179)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L186)</span>
 ## LSTM
 
 ```python
-polyaxon.layers.recurrent.LSTM(mode, num_units, activation='tanh', inner_activation='sigmoid', dropout=None, num_layers=1, bias=True, weights_init=None, forget_bias=1.0, return_seq=False, return_state=False, initial_state=None, dynamic=False, trainable=True, restore=True, name='LSTM')
+polyaxon.layers.recurrent.LSTM(mode, num_units, activation='tanh', inner_activation='sigmoid', dropout=None, num_layers=1, shared_layers=False, bias=True, weights_init=None, forget_bias=1.0, return_seq=False, return_state=False, initial_state=None, dynamic=False, trainable=True, restore=True, name='LSTM')
 ```
 
 LSTM (Long Short Term Memory Recurrent Layer).
@@ -61,6 +62,7 @@ LSTM (Long Short Term Memory Recurrent Layer).
 	- __dropout__: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
 		input and output keep probability.
 	- __num_layers__: `int` how many times to stack the cell.
+	- __shared_layers__: `bool` To share the same parameters in all created layers.
 	- __bias__: `bool`. If True, a bias is used.
 	- __weights_init__: `str` (name) or `Tensor`. Weights initialization.
 	- __forget_bias__: `float`. Bias of the forget gate. Default: 1.0.
@@ -92,11 +94,11 @@ LSTM (Long Short Term Memory Recurrent Layer).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L255)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L265)</span>
 ## GRU
 
 ```python
-polyaxon.layers.recurrent.GRU(mode, num_units, activation='tanh', inner_activation='sigmoid', dropout=None, num_layers=1, bias=True, weights_init=None, return_seq=False, return_state=False, initial_state=None, dynamic=False, trainable=True, restore=True, name='GRU')
+polyaxon.layers.recurrent.GRU(mode, num_units, activation='tanh', inner_activation='sigmoid', dropout=None, num_layers=1, shared_layers=False, bias=True, weights_init=None, return_seq=False, return_state=False, initial_state=None, dynamic=False, trainable=True, restore=True, name='GRU')
 ```
 
 GRU (Gated Recurrent Unit Layer).
@@ -114,6 +116,7 @@ GRU (Gated Recurrent Unit Layer).
 	- __dropout__: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
 		input and output keep probability.
 	- __num_layers__: `int` how many times to stack the cell.
+	- __shared_layers__: `bool` To share the same parameters in all created layers.
 	- __bias__: `bool`. If True, a bias is used.
 	- __weights_init__: `str` (name) or `Tensor`. Weights initialization.
 	- __return_seq__: `bool`. If True, returns the full sequence instead of
@@ -143,7 +146,7 @@ GRU (Gated Recurrent Unit Layer).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L327)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L340)</span>
 ## BidirectionalRNN
 
 ```python
@@ -187,7 +190,7 @@ cells number of units must match.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L448)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L461)</span>
 ## BasicRNNCell
 
 ```python
@@ -209,7 +212,7 @@ The most basic RNN cell with custom params.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L494)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L507)</span>
 ## GRUCell
 
 ```python
@@ -233,7 +236,7 @@ Gated Recurrent Unit cell with custom params.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L559)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L572)</span>
 ## BasicLSTMCell
 
 ```python
@@ -273,7 +276,7 @@ For advanced models, please use the full LSTMCell that follows.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L679)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L692)</span>
 ## DropoutWrapper
 
 ```python
@@ -302,7 +305,7 @@ Dropout is never used on the state.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L751)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L764)</span>
 ## MultiRNNCell
 
 ```python

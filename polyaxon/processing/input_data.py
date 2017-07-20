@@ -3,9 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
+from tensorflow.python.estimator.inputs.numpy_io import numpy_input_fn
+from tensorflow.python.estimator.inputs.pandas_io import pandas_input_fn
+
 from polyaxon.libs import getters
 from polyaxon.libs.configs import InputDataConfig
-from polyaxon.processing.input_fn import numpy_input_fn, pandas_input_fn
 
 
 def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=None, y=None):

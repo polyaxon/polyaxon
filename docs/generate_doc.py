@@ -456,7 +456,7 @@ PAGES = [
     },
     {
         'page': 'variables.md',
-        'all_module_functions': [variables],
+        'functions': [variables.variable],
     },
     {
         'page': 'subgraph.md',
@@ -668,7 +668,6 @@ for subdir, dirs, fnames in os.walk(TEMPLATES_DIR):
             new_fpath = fpath.replace(TEMPLATES_DIR, SOURCES_DIR)
             shutil.copy(fpath, new_fpath)
 
-print('Starting autogeneration.')
 for page_data in PAGES:
     blocks = []
     classes = page_data.get('classes', [])

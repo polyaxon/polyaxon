@@ -1,4 +1,20 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L42)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L316)</span>
+## LossConfig
+
+```python
+polyaxon.libs.configs.LossConfig(module, params=None)
+```
+
+The LossConfig holds information needed to create a `Loss`.
+
+- __Args__:
+	- __module__: `str`, module loss to use.
+	- __params__: `dict`, extra information to pass to the loss.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L22)</span>
 ## Configurable
 
 ```python
@@ -12,7 +28,7 @@ A configurable class reads a configuration (YAML, Json) and create a config inst
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L96)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L81)</span>
 ## RunConfig
 
 ```python
@@ -22,7 +38,7 @@ polyaxon.libs.configs.RunConfig(master=None, num_cores=0, log_device_placement=F
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L188)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L175)</span>
 ## PipelineConfig
 
 ```python
@@ -47,7 +63,7 @@ The PipelineConfig holds information needed to create a `Pipeline`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L273)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L260)</span>
 ## InputDataConfig
 
 ```python
@@ -65,7 +81,7 @@ The InputDataConfig holds information needed to create a `InputData`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L308)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L295)</span>
 ## EnvironmentConfig
 
 ```python
@@ -81,23 +97,7 @@ The EnvironmentConfig holds information needed to create an `Environment`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L329)</span>
-## LossConfig
-
-```python
-polyaxon.libs.configs.LossConfig(module, params=None)
-```
-
-The LossConfig holds information needed to create a `Loss`.
-
-- __Args__:
-	- __module__: `str`, module loss to use.
-	- __params__: `dict`, extra information to pass to the loss.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L348)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L335)</span>
 ## MetricConfig
 
 ```python
@@ -113,7 +113,7 @@ The MetricConfig holds information needed to create a `Metric`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L367)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L354)</span>
 ## ExplorationConfig
 
 ```python
@@ -129,7 +129,7 @@ The ExplorationConfig holds information needed to create a `Exploration`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L386)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L373)</span>
 ## OptimizerConfig
 
 ```python
@@ -158,7 +158,7 @@ The OptimizerConfig holds information needed to create a `Optimizer`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L450)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L437)</span>
 ## MemoryConfig
 
 ```python
@@ -174,7 +174,7 @@ The MemoryConfig holds information needed to create a `Memory` for an agent.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L469)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L456)</span>
 ## SubGraphConfig
 
 ```python
@@ -194,7 +194,7 @@ Handles also nested subgraphs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L527)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L514)</span>
 ## BridgeConfig
 
 ```python
@@ -207,7 +207,7 @@ The BridgeConfig class holds information neede to create a `Bridge` for a genera
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L545)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L532)</span>
 ## ModelConfig
 
 ```python
@@ -229,7 +229,7 @@ The ModelConfig holds information needed to create a `Model`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L625)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L612)</span>
 ## EstimatorConfig
 
 ```python
@@ -246,7 +246,7 @@ The EstimatorConfig holds information needed to create a `Estimator`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L647)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L634)</span>
 ## AgentConfig
 
 ```python
@@ -263,7 +263,7 @@ The EstimatorConfig holds information needed to create a `Estimator`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L673)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L660)</span>
 ## ExperimentConfig
 
 ```python
@@ -297,7 +297,7 @@ The ExperimentConfig holds information needed to create a `Experiment`.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L775)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L762)</span>
 ## RLExperimentConfig
 
 ```python

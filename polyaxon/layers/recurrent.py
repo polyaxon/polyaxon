@@ -12,8 +12,9 @@ from six.moves import xrange
 import numpy as np
 import tensorflow as tf
 
-import tensorflow.contrib.rnn as rnn
 from tensorflow.python.ops import array_ops
+from tensorflow.python.ops import rnn
+from tensorflow.python.ops import rnn_cell
 from tensorflow.python.util import nest
 
 from polyaxon.layers.core import Dropout
@@ -49,10 +50,13 @@ class CoreRNN(BaseLayer):
         return DropoutWrapper(mode, cell, in_keep_prob, out_keep_prob)
 
     @staticmethod
-    def _stack_layers(cell_fn, mode, num_layers, state_is_tuple=True):
+    def _stack_layers(cell_fn, mode, num_layers, shared_layers, state_is_tuple=True):
         """Stask multiple layers of the incoming cell."""
         if num_layers and num_layers > 1:
-            return MultiRNNCell(mode, [cell_fn() for _ in xrange(num_layers)], state_is_tuple)
+            if shared_layers:
+                return MultiRNNCell(mode, [cell_fn()] * num_layers, state_is_tuple)
+            else:
+                return MultiRNNCell(mode, [cell_fn() for _ in xrange(num_layers)], state_is_tuple)
 
         return cell_fn()
 
@@ -129,6 +133,7 @@ class SimpleRNN(CoreRNN):
         dropout: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
             input and output keep probability.
         num_layers: `int` how many times to stack the cell.
+        shared_layers: `bool` To share the same parameters in all created layers.
         bias: `bool`. If True, a bias is used.
         weights_init: `str` (name) or `Tensor`. Weights initialization.
         return_seq: `bool`. If True, returns the full sequence instead of
@@ -148,8 +153,8 @@ class SimpleRNN(CoreRNN):
         name: `str`. A name for this layer (optional).
     """
     def __init__(self, mode, num_units, activation='sigmoid', dropout=None, num_layers=1,
-                 bias=True, weights_init=None, return_seq=False, return_state=False,
-                 initial_state=None, dynamic=False, trainable=True,
+                 shared_layers=False, bias=True, weights_init=None, return_seq=False,
+                 return_state=False, initial_state=None, dynamic=False, trainable=True,
                  restore=True, name='SimpleRNN'):
         super(SimpleRNN, self).__init__(mode, name)
         self.num_units = num_units
@@ -162,6 +167,7 @@ class SimpleRNN(CoreRNN):
         self.dynamic = dynamic
         self.dropout = dropout
         self.num_layers = num_layers
+        self.shared_layers = shared_layers
         self.trainable = trainable
         self.restore = restore
 
@@ -173,7 +179,8 @@ class SimpleRNN(CoreRNN):
         return self._set_dropout(cell, self.mode, self.dropout)
 
     def _declare_dependencies(self):
-        self._cell = self._stack_layers(self._cell_fn, self.mode, self.num_layers)
+        self._cell = self._stack_layers(
+            self._cell_fn, self.mode, self.num_layers, self.shared_layers)
 
 
 class LSTM(CoreRNN):
@@ -192,6 +199,7 @@ class LSTM(CoreRNN):
         dropout: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
             input and output keep probability.
         num_layers: `int` how many times to stack the cell.
+        shared_layers: `bool` To share the same parameters in all created layers.
         bias: `bool`. If True, a bias is used.
         weights_init: `str` (name) or `Tensor`. Weights initialization.
         forget_bias: `float`. Bias of the forget gate. Default: 1.0.
@@ -221,9 +229,9 @@ class LSTM(CoreRNN):
 
     """
     def __init__(self, mode, num_units, activation='tanh', inner_activation='sigmoid', dropout=None,
-                 num_layers=1, bias=True, weights_init=None, forget_bias=1.0, return_seq=False,
-                 return_state=False, initial_state=None, dynamic=False, trainable=True,
-                 restore=True, name='LSTM'):
+                 num_layers=1, shared_layers=False, bias=True, weights_init=None, forget_bias=1.0,
+                 return_seq=False, return_state=False, initial_state=None, dynamic=False,
+                 trainable=True, restore=True, name='LSTM'):
         super(LSTM, self).__init__(mode, name)
         self.num_units = num_units
         self.activation = activation
@@ -237,6 +245,7 @@ class LSTM(CoreRNN):
         self.dynamic = dynamic
         self.dropout = dropout
         self.num_layers = num_layers
+        self.shared_layers = shared_layers
         self.trainable = trainable
         self.restore = restore
 
@@ -249,7 +258,8 @@ class LSTM(CoreRNN):
         return self._set_dropout(cell, self.mode, self.dropout)
 
     def _declare_dependencies(self):
-        self._cell = self._stack_layers(self._cell_fn, self.mode, self.num_layers)
+        self._cell = self._stack_layers(
+            self._cell_fn, self.mode, self.num_layers, self.shared_layers)
 
 
 class GRU(CoreRNN):
@@ -268,6 +278,7 @@ class GRU(CoreRNN):
         dropout: `tuple` of `float`: (1 - input_keep_prob, 1 - output_keep_prob). The
             input and output keep probability.
         num_layers: `int` how many times to stack the cell.
+        shared_layers: `bool` To share the same parameters in all created layers.
         bias: `bool`. If True, a bias is used.
         weights_init: `str` (name) or `Tensor`. Weights initialization.
         return_seq: `bool`. If True, returns the full sequence instead of
@@ -295,9 +306,9 @@ class GRU(CoreRNN):
 
     """
     def __init__(self, mode, num_units, activation='tanh', inner_activation='sigmoid',
-                 dropout=None, num_layers=1, bias=True, weights_init=None, return_seq=False,
-                 return_state=False, initial_state=None, dynamic=False,
-                 trainable=True, restore=True, name='GRU'):
+                 dropout=None, num_layers=1, shared_layers=False, bias=True,
+                 weights_init=None, return_seq=False, return_state=False, initial_state=None,
+                 dynamic=False, trainable=True, restore=True, name='GRU'):
         super(GRU, self).__init__(mode, name)
         self.num_units = num_units
         self.activation = activation
@@ -310,6 +321,7 @@ class GRU(CoreRNN):
         self.dynamic = dynamic
         self.dropout = dropout
         self.num_layers = num_layers
+        self.shared_layers = shared_layers
         self.trainable = trainable
         self.restore = restore
 
@@ -321,7 +333,8 @@ class GRU(CoreRNN):
         return self._set_dropout(cell, self.mode, self.dropout)
 
     def _declare_dependencies(self):
-        self._cell = self._stack_layers(self._cell_fn, self.mode, self.num_layers)
+        self._cell = self._stack_layers(
+            self._cell_fn, self.mode, self.num_layers, self.shared_layers)
 
 
 class BidirectionalRNN(BaseLayer):
@@ -431,7 +444,7 @@ class BidirectionalRNN(BaseLayer):
 
 
 @six.add_metaclass(abc.ABCMeta)
-class CoreRNNCell(BaseLayer, rnn.RNNCell):
+class CoreRNNCell(BaseLayer, rnn_cell.RNNCell):
     @property
     def w(self):
         return self._w
@@ -623,7 +636,7 @@ class BasicLSTMCell(CoreRNNCell):
 
     @property
     def state_size(self):
-        return (rnn.LSTMStateTuple(self._num_units, self._num_units)
+        return (rnn_cell.LSTMStateTuple(self._num_units, self._num_units)
                 if self._state_is_tuple else 2 * self._num_units)
 
     @property
@@ -664,7 +677,7 @@ class BasicLSTMCell(CoreRNNCell):
             new_h = activation(new_c) * inner_activation(o)
 
         if self._state_is_tuple:
-            new_state = rnn.LSTMStateTuple(new_c, new_h)
+            new_state = rnn_cell.LSTMStateTuple(new_c, new_h)
         else:
             new_state = tf.concat(values=[new_c, new_h], axis=1)
 
