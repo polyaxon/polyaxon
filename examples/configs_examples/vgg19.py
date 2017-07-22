@@ -5,8 +5,8 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def create_experiment_json_fn(output_dir):
-    """Creates an experiement using a VGG19 to Oxford's 17 Category Flower Dataset.
+def experiment_fn(output_dir):
+    """Creates an experiement using a VGG19 to mnist Dataset.
 
     References:
         * Very Deep Convolutional Networks for Large-Scale Image Recognition.
@@ -15,6 +15,8 @@ def create_experiment_json_fn(output_dir):
     Links:
         * http://arxiv.org/pdf/1409.1556
     """
+    plx.datasets.mnist.prepare('../data/mnist')
+
     config = './yaml_configs/vgg19.yml'
     # or
     config = './json_configs/vgg19.json'
@@ -23,7 +25,7 @@ def create_experiment_json_fn(output_dir):
 
 
 def main(*args):
-    plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
+    plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/vgg19",
                                    schedule='continuous_train_and_evaluate')
 

@@ -41,7 +41,7 @@ def experiment_fn(output_dir):
     Links:
         * [CIFAR-10 Dataset](https://www.cs.toronto.edu/~kriz/cifar.html)
     """
-    dataset_dir = './data/cifar10'
+    dataset_dir = '../data/cifar10'
     plx.datasets.cifar10.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.cifar10.create_input_fn(dataset_dir)
 

@@ -97,7 +97,7 @@ def experiment_fn(output_dir):
         * [MNIST Dataset](http://yann.lecun.com/exdb/mnist/)
 
     """
-    dataset_dir = './data/cifar10'
+    dataset_dir = '../data/cifar10'
     plx.datasets.cifar10.prepare(dataset_dir)
     train_data_file = plx.datasets.cifar10.RECORD_FILE_NAME_FORMAT.format(dataset_dir,
                                                                           plx.Modes.TRAIN)

@@ -5,7 +5,7 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def create_experiment_json_fn(output_dir):
+def experiment_fn(output_dir):
     """Creates an experiment using cnn for CIFAR-10 dataset classification task.
 
     References:
@@ -14,6 +14,8 @@ def create_experiment_json_fn(output_dir):
     Links:
         * [CIFAR-10 Dataset](https://www.cs.toronto.edu/~kriz/cifar.html)
     """
+    plx.datasets.cifar10.prepare('../data/conv_cifar10')
+
     config = './yaml_configs/conv_cifar10.yml'
     # or
     config = './json_configs/conv_cifar10.json'
@@ -22,7 +24,7 @@ def create_experiment_json_fn(output_dir):
 
 
 def main(*args):
-    plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
+    plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/convnet_cifar10",
                                    schedule='continuous_train_and_evaluate')
 

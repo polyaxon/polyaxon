@@ -5,7 +5,7 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def create_experiment_json_fn(output_dir):
+def experiment_fn(output_dir):
     """Creates an experiment using deep residual network.
 
     References:
@@ -19,6 +19,8 @@ def create_experiment_json_fn(output_dir):
         * [MNIST Dataset](http://yann.lecun.com/exdb/mnist/)
 
     """
+    plx.datasets.cifar10.prepare('../data/cifar10')
+
     config = './yaml_configs/residual_net_cifar10.yml'
     # or
     config = './json_configs/residual_net_cifar10.json'
@@ -27,7 +29,7 @@ def create_experiment_json_fn(output_dir):
 
 
 def main(*args):
-    plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
+    plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/res_net_cifar10",
                                    schedule='continuous_train_and_evaluate')
 

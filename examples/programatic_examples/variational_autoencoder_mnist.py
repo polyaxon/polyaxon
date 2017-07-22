@@ -112,7 +112,7 @@ def generate(estimator):
 
 
 def main(*args):
-    dataset_dir = "./data/mnist-tf"
+    dataset_dir = "../data/mnist-tf"
     mnist = input_data.read_data_sets(dataset_dir)
 
     X_train = mnist.train.images.astype('float32') / 255.

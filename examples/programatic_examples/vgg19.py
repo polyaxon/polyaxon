@@ -45,7 +45,7 @@ def model_fn(features, labels, params, mode, config):
 
 
 def experiment_fn(output_dir):
-    """Creates an experiement using a VGG19 to Oxford's 17 Category Flower Dataset.
+    """Creates an experiement using a VGG19 to mnist Dataset.
 
     References:
         * Very Deep Convolutional Networks for Large-Scale Image Recognition.
@@ -54,7 +54,7 @@ def experiment_fn(output_dir):
     Links:
         * http://arxiv.org/pdf/1409.1556
     """
-    dataset_dir = './data/mnist'
+    dataset_dir = '../data/mnist'
     plx.datasets.mnist.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn(dataset_dir)
     run_config = plx.configs.RunConfig(save_checkpoints_steps=100)

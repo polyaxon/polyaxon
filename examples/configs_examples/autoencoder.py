@@ -5,12 +5,14 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def create_experiment_json_fn(output_dir):
+def experiment_fn(output_dir):
     """Creates an auto encoder on MNIST handwritten digits.
 
     inks:
         * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
     """
+    plx.datasets.mnist.prepare('../data/mnist')
+
     config = './yaml_configs/autoencoder_mnist.yml'
     # or
     config = './json_configs/autoencoder_mnist.json'
@@ -19,7 +21,7 @@ def create_experiment_json_fn(output_dir):
 
 
 def main(*args):
-    plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
+    plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/autoencoder_mnist",
                                    schedule='continuous_train_and_evaluate')
 

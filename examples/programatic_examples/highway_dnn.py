@@ -33,7 +33,7 @@ def main(*args):
     estimator = plx.estimators.Estimator(model_fn=model_fn,
                                          model_dir="/tmp/polyaxon_logs/highway_dnn")
 
-    train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn('./data/mnist')
+    train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn('../data/mnist')
     xp = plx.experiments.Experiment(estimator=estimator, train_input_fn=train_input_fn,
                                     eval_input_fn=eval_input_fn, eval_every_n_steps=10)
     xp.continuous_train_and_evaluate()

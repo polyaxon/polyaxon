@@ -50,7 +50,7 @@ def experiment_fn(output_dir):
         * [AlexNet Paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
         * [Flower Dataset (17)](http://www.robots.ox.ac.uk/~vgg/data/flowers/17/)
     """
-    dataset_dir = './data/flowers17'
+    dataset_dir = '../data/flowers17'
     plx.datasets.flowers17.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.flowers17.create_input_fn(dataset_dir)
 

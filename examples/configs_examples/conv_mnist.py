@@ -5,7 +5,7 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def create_experiment_json_fn(output_dir):
+def experiment_fn(output_dir):
     """Creates an experiment using cnn for MNIST dataset classification task.
 
     References:
@@ -14,6 +14,8 @@ def create_experiment_json_fn(output_dir):
     Links:
         * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
     """
+    plx.datasets.mnist.prepare('../data/mnist')
+
     config = './yaml_configs/conv_mnist.yml'
     # or
     config = './json_configs/conv_mnist.json'
@@ -22,7 +24,7 @@ def create_experiment_json_fn(output_dir):
 
 
 def main(*args):
-    plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
+    plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/conv_mnsit",
                                    schedule='continuous_train_and_evaluate')
 

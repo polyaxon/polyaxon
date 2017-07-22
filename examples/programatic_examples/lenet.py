@@ -36,7 +36,7 @@ def experiment_fn(output_dir):
     Links:
         * http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
     """
-    dataset_dir = './data/mnist'
+    dataset_dir = '../data/mnist'
     plx.datasets.mnist.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn(dataset_dir)
 

@@ -35,7 +35,7 @@ def model_fn(features, labels, params, mode, config):
 
 def experiment_fn(output_dir):
     """Creates an experiment using cnn for MNIST dataset classification task."""
-    dataset_dir = './data/mnist'
+    dataset_dir = '../data/mnist'
     plx.datasets.mnist.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn(dataset_dir)
 

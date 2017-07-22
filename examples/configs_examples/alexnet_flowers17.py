@@ -5,7 +5,7 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def create_experiment_json_fn(output_dir):
+def experiment_fn(output_dir):
     """Creates an experiment using Alexnet applied to Oxford's 17  Category Flower Dataset.
 
     References:
@@ -17,6 +17,8 @@ def create_experiment_json_fn(output_dir):
         * [AlexNet Paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
         * [Flower Dataset (17)](http://www.robots.ox.ac.uk/~vgg/data/flowers/17/)
     """
+    plx.datasets.flowers17.prepare('../data/flowers17')
+
     config = './yaml_configs/alexnet_flower17.yml'
     # or
     config = './json_configs/alexnet_flower17.json'
@@ -25,7 +27,7 @@ def create_experiment_json_fn(output_dir):
 
 
 def main(*args):
-    plx.experiments.run_experiment(experiment_fn=create_experiment_json_fn,
+    plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/alexnet_flowers17",
                                    schedule='continuous_train_and_evaluate')
 
