@@ -1,4 +1,4 @@
-scipy==0.19.0
+scipy==0.19.1
 tensorflow>=1.2.0
 Pillow==4.1.1
 PyYAML==3.12
