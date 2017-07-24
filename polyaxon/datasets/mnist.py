@@ -24,7 +24,7 @@ _TRAIN_LABELS_FILENAME = 'train-labels-idx1-ubyte.gz'
 _TEST_DATA_FILENAME = 't10k-images-idx3-ubyte.gz'
 _TEST_LABELS_FILENAME = 't10k-labels-idx1-ubyte.gz'
 
-MEAT_DATA_FILENAME_FORMAT = '{}/meta_data.json'
+META_DATA_FILENAME_FORMAT = '{}/meta_data.json'
 
 RECORD_FILE_NAME_FORMAT = '{}/mnist_{}.tfrecord'
 
@@ -131,7 +131,7 @@ def prepare(dataset_dir):
     prepare_dataset(converter, dataset_dir, Modes.PREDICT, 10000)
 
     # Finally, write the meta data:
-    with open(MEAT_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
+    with open(META_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
         meta_data = converter.get_meta_data()
         meta_data['num_samples'] = {Modes.TRAIN: 50000,
                                     Modes.EVAL: 10000,
@@ -147,10 +147,10 @@ def prepare(dataset_dir):
 
 def create_input_fn(dataset_dir):
     return create_dataset_input_fn(
-        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
 
 
 def create_predict_input_fn(dataset_dir):
     return create_dataset_predict_input_fn(
-        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
 

@@ -13,7 +13,6 @@ from polyaxon.processing.data_decoders import (
     TFSequenceExampleDecoder,
 )
 from polyaxon.processing.data_providers import ParallelDatasetProvider, DatasetDataProvider, Dataset
-from polyaxon.processing.image import Flip
 
 
 class Pipeline(GraphModule):

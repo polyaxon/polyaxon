@@ -103,7 +103,7 @@ def experiment_fn(output_dir):
                                                                           plx.Modes.TRAIN)
     eval_data_file = plx.datasets.cifar10.RECORD_FILE_NAME_FORMAT.format(dataset_dir,
                                                                          plx.Modes.EVAL)
-    meta_data_file = plx.datasets.cifar10.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
+    meta_data_file = plx.datasets.cifar10.META_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
     experiment = plx.experiments.Experiment(

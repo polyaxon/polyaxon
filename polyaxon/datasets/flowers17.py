@@ -38,7 +38,7 @@ _IMAGE_COLORSPACE = 'RGB'
 
 _FOLDS = 10
 
-MEAT_DATA_FILENAME_FORMAT = '{}/meta_data.json'
+META_DATA_FILENAME_FORMAT = '{}/meta_data.json'
 
 RECORD_FILE_NAME_FORMAT = '{}/flowers_{}.tfrecord'
 
@@ -142,7 +142,7 @@ def prepare(dataset_dir):
     prepare_dataset(converter, dataset_dir, 1360, folds=_FOLDS)
 
     # Finally, write the meta data:
-    with open(MEAT_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
+    with open(META_DATA_FILENAME_FORMAT.format(dataset_dir), 'w') as meta_data_file:
         meta_data = converter.get_meta_data()
         meta_data['num_samples'] = {Modes.TRAIN: 1360 - 2 * (1360 // _FOLDS),
                                     Modes.EVAL: 1360 // _FOLDS,
@@ -159,10 +159,9 @@ def prepare(dataset_dir):
 
 def create_input_fn(dataset_dir):
     return create_dataset_input_fn(
-        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
 
 
 def create_predict_input_fn(dataset_dir):
     return create_dataset_predict_input_fn(
-        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, MEAT_DATA_FILENAME_FORMAT)
-
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)

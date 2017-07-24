@@ -87,7 +87,7 @@ def experiment_fn(output_dir):
     train_data_file = plx.datasets.mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir,
                                                                         plx.Modes.TRAIN)
     eval_data_file = plx.datasets.mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.EVAL)
-    meta_data_file = plx.datasets.mnist.MEAT_DATA_FILENAME_FORMAT.format(dataset_dir)
+    meta_data_file = plx.datasets.mnist.META_DATA_FILENAME_FORMAT.format(dataset_dir)
 
     run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
     experiment = plx.experiments.Experiment(
