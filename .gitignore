@@ -98,7 +98,7 @@ ENV/
 
 # data
 big_data/
-data/
+examples/data/
 
 # project
 setup.log
@@ -113,5 +113,4 @@ client/node_modules/
 client/css/
 client/polyaxon/**/*.js
 client/polyaxon/**/*.js.map
-/examples/data/
 /examples/polyaxon-logs/

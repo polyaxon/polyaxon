@@ -21,4 +21,11 @@ from polyaxon.rl.explorations import (
 
 from polyaxon.rl import environments
 from polyaxon.rl import memories
-from polyaxon.rl.utils import *  
+from polyaxon.rl.utils import (
+    get_global_episode,
+    get_or_create_global_episode,
+    create_global_episode,
+    get_global_timestep,
+    get_or_create_global_timestep,
+    create_global_timestep
+)

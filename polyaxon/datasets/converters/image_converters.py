@@ -4,10 +4,13 @@ from __future__ import absolute_import, division, print_function
 import os
 import sys
 
-from collections import Mapping
 from six.moves import xrange
 
+from collections import Mapping
+
 import tensorflow as tf
+
+from polyaxon.datasets.converters.base import BaseConverter
 
 
 class ImageReader(object):
@@ -67,7 +70,7 @@ class JPEGImageReader(ImageReader):
         return tf.image.decode_jpeg(self._placeholder, channels=channels)
 
 
-class ImagesToTFExampleConverter(object):
+class ImagesToTFExampleConverter(BaseConverter):
     """Converts images to a TFRecords of TF-Example protos.
 
     Each record is TF-Example protocol buffer which contain a single image and label.
@@ -126,48 +129,6 @@ class ImagesToTFExampleConverter(object):
             'width': self.width
         }
 
-    @staticmethod
-    def to_int64_feature(values):
-        """Returns a TF-Feature of int64s.
-
-          Args:
-            values: A scalar or list of values.
-
-          Returns:
-            a TF-Feature.
-          """
-        if not isinstance(values, list):
-            values = [values]
-        return tf.train.Feature(int64_list=tf.train.Int64List(value=values))
-
-    @staticmethod
-    def to_bytes_feature(values):
-        """Returns a TF-Feature of bytes.
-
-        Args:
-            values: A string.
-
-        Returns:
-            a TF-Feature.
-        """
-        if not isinstance(values, list):
-            values = [values]
-        return tf.train.Feature(bytes_list=tf.train.BytesList(value=values))
-
-    @staticmethod
-    def to_float_feature(values):
-        """Returns a TF-Feature of floats.
-
-        Args:
-            values: A string.
-
-        Returns:
-            a TF-Feature.
-        """
-        if not isinstance(values, list):
-            values = [values]
-        return tf.train.Feature(float_list=tf.train.FloatList(value=values))
-
     def get_image_features(self, image):
         height = image.shape[0]
         width = image.shape[1]
@@ -178,7 +139,7 @@ class ImagesToTFExampleConverter(object):
             assert height == self.width
         return height, width
 
-    def create_example(self, image_data, encoded_image, label, filename):
+    def create_example(self, image_data, encoded_image, label, filename=None):
         if hasattr(encoded_image, 'shape'):
             height, width = self.get_image_features(image=encoded_image)
         else:

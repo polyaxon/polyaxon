@@ -7,6 +7,8 @@ from polyaxon.datasets.converters import (
     PNGNumpyImageReader,
     JPGNumpyImageReader,
     JPEGImageReader,
-    ImagesToTFExampleConverter
+    BaseConverter,
+    ImagesToTFExampleConverter,
+    SequenceToTFExampleConverter
 )
-from polyaxon.datasets import cifar10, flowers17, mnist
+from polyaxon.datasets import cifar10, flowers17, mnist, imdb
