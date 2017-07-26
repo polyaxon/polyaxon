@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
@@ -6,17 +5,9 @@ import polyaxon as plx
 
 
 def graph_fn(mode, features):
-    x = plx.layers.HighwayConv2d(
-        mode=mode, num_filter=32, filter_size=3, strides=1, activation='elu')(features['image'])
-    x = plx.layers.HighwayConv2d(
-        mode=mode, num_filter=16, filter_size=2, strides=1, activation='elu')(x)
-    x = plx.layers.HighwayConv2d(
-        mode=mode, num_filter=16, filter_size=1, strides=1, activation='elu')(x)
-    x = plx.layers.MaxPool2d(mode=mode, kernel_size=2)(x)
-    x = plx.layers.BatchNormalization(mode=mode)(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=128, activation='elu')(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=256, activation='elu')(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=10)(x)
+    x = plx.layers.Embedding(mode=mode, input_dim=10000, output_dim=128)(features['source_token'])
+    x = plx.layers.LSTM(mode=mode, num_units=128, dropout=0.8, dynamic=True)(x)
+    x = plx.layers.FullyConnected(mode=mode, num_units=2)(x)
     return x
 
 
@@ -27,17 +18,17 @@ def model_fn(features, labels, params, mode, config):
         loss_config=plx.configs.LossConfig(module='softmax_cross_entropy'),
         optimizer_config=plx.configs.OptimizerConfig(module='adam', learning_rate=0.001),
         eval_metrics_config=[plx.configs.MetricConfig(module='streaming_accuracy')],
-        summaries=['loss'],
+        summaries='all',
         one_hot_encode=True,
-        n_classes=10)
+        n_classes=2)
     return model(features=features, labels=labels, params=params, config=config)
 
 
 def experiment_fn(output_dir):
-    """Creates an experiment using cnn for MNIST dataset classification task."""
-    dataset_dir = '../data/mnist'
-    plx.datasets.mnist.prepare(dataset_dir)
-    train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn(dataset_dir)
+    """Creates an experiment using LSTM architecture to classify IMDB sentiment dataset."""
+    dataset_dir = '../data/imdb'
+    plx.datasets.imdb.prepare(dataset_dir)
+    train_input_fn, eval_input_fn = plx.datasets.imdb.create_input_fn(dataset_dir)
 
     run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
     experiment = plx.experiments.Experiment(
@@ -45,7 +36,7 @@ def experiment_fn(output_dir):
                                            config=run_config),
         train_input_fn=train_input_fn,
         eval_input_fn=eval_input_fn,
-        train_steps=1000,
+        train_steps=10000,
         eval_steps=10,
         eval_every_n_steps=5)
 
@@ -54,7 +45,7 @@ def experiment_fn(output_dir):
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
-                                   output_dir="/tmp/polyaxon_logs/conv_highway_mnsit",
+                                   output_dir="/tmp/polyaxon_logs/lenet",
                                    schedule='continuous_train_and_evaluate')
 
 

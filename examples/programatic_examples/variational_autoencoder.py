@@ -5,28 +5,28 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def encoder_fn(mode, inputs):
+def encoder_fn(mode, features):
     return plx.encoders.Encoder(
         mode=mode,
         modules=[
             plx.layers.FullyConnected(mode=mode, num_units=128),
             plx.layers.FullyConnected(mode=mode, num_units=256)
         ]
-    )(inputs)
+    )(features)
 
 
-def decoder_fn(mode, inputs):
+def decoder_fn(mode, features):
     return plx.decoders.Decoder(
         mode=mode,
         modules=[
             plx.layers.FullyConnected(mode=mode, num_units=256),
             plx.layers.FullyConnected(mode=mode, num_units=28 * 28)
         ]
-    )(inputs)
+    )(features)
 
 
-def bridge_fn(mode, inputs, loss_config, encoder_fn, decoder_fn):
-    return plx.bridges.LatentBridge(mode)(inputs, loss_config, encoder_fn, decoder_fn)
+def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
+    return plx.bridges.LatentBridge(mode)(features, labels, loss_config, encoder_fn, decoder_fn)
 
 
 def model_fn(features, labels, params, mode, config):

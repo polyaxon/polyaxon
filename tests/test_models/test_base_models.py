@@ -16,8 +16,8 @@ from polyaxon.libs.utils import get_tracked
 class TestBaseModel(test.TestCase):
     @staticmethod
     def get_dummy_graph_fn():
-        def graph_fn(mode, inputs):
-            x = plx.layers.FullyConnected(mode=mode, num_units=1, activation='relu')(inputs['x'])
+        def graph_fn(mode, features):
+            x = plx.layers.FullyConnected(mode=mode, num_units=1, activation='relu')(features['x'])
             x = plx.layers.FullyConnected(mode=mode, num_units=1, activation='relu')(x)
             return x
 

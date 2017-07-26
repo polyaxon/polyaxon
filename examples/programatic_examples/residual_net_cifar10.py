@@ -6,10 +6,10 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def graph_fn(mode, inputs):
+def graph_fn(mode, features):
     x = plx.layers.Conv2d(
         mode=mode, num_filter=16, filter_size=2, strides=1, scale=0.0001, 
-        regularizer='l2_regularizer')(inputs['image'])
+        regularizer='l2_regularizer')(features['image'])
     x = plx.layers.ResidualBlock(mode=mode, num_blocks=5, out_channels=16)(x)
     x = plx.layers.ResidualBlock(mode=mode, num_blocks=1, out_channels=32, downsample=True)(x)
     x = plx.layers.ResidualBlock(mode=mode, num_blocks=4, out_channels=32)(x)

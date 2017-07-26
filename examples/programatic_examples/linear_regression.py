@@ -17,8 +17,8 @@ X_val = np.linspace(1, 1.5, 10)
 y_val = 2 * X_val + np.random.randn(*X_val.shape) * 0.33
 
 
-def graph_fn(mode, inputs):
-    return plx.layers.SingleUnit(mode)(inputs['X'])
+def graph_fn(mode, features):
+    return plx.layers.SingleUnit(mode)(features['X'])
 
 
 def model_fn(features, labels, mode):

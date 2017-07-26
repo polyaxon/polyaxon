@@ -41,6 +41,7 @@ class BaseModel(GraphModule):
     Raises:
             TypeError: if the mode does not correspond to the model_type.
     """
+
     class Types(object):
         REGRESSOR = 'Regressor'
         CLASSIFIER = 'Classifier'
@@ -77,22 +78,28 @@ class BaseModel(GraphModule):
 
     @staticmethod
     def _check_subgraph_fn(function, function_name):
+        """Checks that the functions provided for constructing the graph has a valid signature."""
         if function is not None:
             # Check number of arguments of the given function matches requirements.
             model_fn_args = get_arguments(function)
-            if 'mode' not in model_fn_args or 'inputs' not in model_fn_args:
-                raise ValueError("Model's `{}` `{}` should have 2 args: "
-                                 "`mode` and `inputs`.".format(function_name, function))
+            if 'mode' not in model_fn_args or 'features' not in model_fn_args:
+                raise ValueError(
+                    "Model's `{}` `{}` should have at least 2 args: "
+                    "`mode`, `features`, and possibly `features`.".format(function_name, function))
         else:
             raise ValueError("`{}` must be provided to Model.".format(function_name))
 
-    def _call_graph_fn(self, inputs):
+    def _call_graph_fn(self, features, labels=None):
         """Calls graph function.
 
         Args:
-            inputs: `Tensor` or `dict` of tensors
+            features: `Tensor` or `dict` of tensors
+            labels: `Tensor` or `dict` of tensors
         """
-        return self._graph_fn(mode=self.mode, inputs=inputs)
+        kwargs = {}
+        if 'labels' in get_arguments(self._graph_fn):
+            kwargs['labels'] = labels
+        return self._graph_fn(mode=self.mode, features=features, **kwargs)
 
     def _clip_gradients_fn(self, grads_and_vars):
         """Clips gradients by global norm."""
@@ -264,7 +271,7 @@ class BaseModel(GraphModule):
         """Build the different operation of the model."""
         # Pre-process features and labels
         features, labels = self._preprocess(features, labels)
-        results = self._call_graph_fn(inputs=features)
+        results = self._call_graph_fn(features=features, labels=labels)
 
         loss = None
         train_op = None
@@ -283,8 +290,6 @@ class BaseModel(GraphModule):
             predictions = self._build_predictions(results=results, features=features, labels=labels)
             extra_ops = self._build_extra_ops(results=results, features=features, labels=labels)
 
-        # We add 'useful' tensors to the graph collection so that we
-        # can easily find them in our hooks/monitors.
         track(predictions, tf.GraphKeys.PREDICTIONS)
 
         return EstimatorSpec(mode=self.mode,

@@ -10,8 +10,8 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 
 def create_experiment(task_type, task_index=0):
-    def graph_fn(mode, inputs):
-        x = plx.layers.FullyConnected(mode, num_units=32, activation='tanh')(inputs['X'])
+    def graph_fn(mode, features):
+        x = plx.layers.FullyConnected(mode, num_units=32, activation='tanh')(features['X'])
         return plx.layers.FullyConnected(mode, num_units=1, activation='sigmoid')(x)
 
     def model_fn(features, labels, mode):

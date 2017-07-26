@@ -5,7 +5,7 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def encoder_fn(mode, inputs):
+def encoder_fn(mode, features):
     return plx.encoders.Encoder(
         mode=mode,
         modules=[
@@ -16,10 +16,10 @@ def encoder_fn(mode, inputs):
                               regularizer='l2_regularizer'),
             plx.layers.MaxPool2d(mode=mode,kernel_size=2)
         ]
-    )(inputs)
+    )(features)
 
 
-def decoder_fn(mode, inputs):
+def decoder_fn(mode, features):
     return plx.decoders.Decoder(
         mode=mode,
         modules=[
@@ -32,11 +32,11 @@ def decoder_fn(mode, inputs):
             plx.layers.Conv2d(mode=mode, num_filter=1, filter_size=3, activation='relu',
                               regularizer='l2_regularizer')
         ]
-    )(inputs)
+    )(features)
 
 
-def bridge_fn(mode, inputs, loss_config, encoder_fn, decoder_fn):
-    return plx.bridges.NoOpBridge(mode)(inputs, loss_config, encoder_fn, decoder_fn)
+def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
+    return plx.bridges.NoOpBridge(mode)(features, labels, loss_config, encoder_fn, decoder_fn)
 
 
 def model_fn(features, labels, params, mode, config):

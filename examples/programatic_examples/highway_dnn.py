@@ -12,10 +12,9 @@ def main(*args):
         * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
         * [https://arxiv.org/abs/1505.00387](https://arxiv.org/abs/1505.00387)
     """
-    def graph_fn(mode, inputs):
-        x = inputs['image']
+    def graph_fn(mode, features):
         x = plx.layers.FullyConnected(
-            mode, num_units=64, activation='elu', regularizer='l2_regularizer')(x)
+            mode, num_units=64, activation='elu', regularizer='l2_regularizer')(features['image'])
 
         for i in range(10):
             x = plx.layers.Highway(mode, num_units=64, activation='elu',

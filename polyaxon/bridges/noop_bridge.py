@@ -18,16 +18,17 @@ class NoOpBridge(BaseBridge):
     def __init__(self, mode, state_size=None, name="NoOpBridge"):
         super(NoOpBridge, self).__init__(mode=mode, state_size=state_size, name=name)
 
-    def _build(self, incoming, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
+    def _build(self, features, labels, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
         losses, loss = None, None
         if Modes.GENERATE == self.mode:
-            results = self.decode(incoming=incoming, decoder_fn=decoder_fn)
+            results = self.decode(
+                incoming=features, features=features, labels=labels, decoder_fn=decoder_fn)
         elif Modes.ENCODE == self.mode:
-            results = self.encode(incoming=incoming, encoder_fn=encoder_fn)
+            results = self.encode(features=features, labels=labels, encoder_fn=encoder_fn)
         else:
-            x = self.encode(incoming=incoming, encoder_fn=encoder_fn)
-            results = self.decode(incoming=x, decoder_fn=decoder_fn)
+            x = self.encode(features=features, labels=labels, encoder_fn=encoder_fn)
+            results = self.decode(features=x, labels=labels, decoder_fn=decoder_fn)
             if not Modes.is_infer(self.mode):
-                losses, loss = self._build_loss(incoming, results, loss_config)
+                losses, loss = self._build_loss(results, features, labels, loss_config)
 
         return BridgeSpec(results=results, losses=losses, loss=loss)

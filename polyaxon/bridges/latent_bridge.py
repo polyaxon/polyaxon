@@ -36,8 +36,8 @@ class LatentBridge(BaseBridge):
         self.z_mean = FullyConnected(self.mode, num_units=self.latent_dim, name='z_mean')
         self.z_log_sigma = FullyConnected(self.mode, num_units=self.latent_dim, name='z_log_sigma')
 
-    def _build_loss(self, incoming, results, loss_config, **kwargs):
-        losses, loss = getters.get_loss(loss_config.module, results, incoming, **loss_config.params)
+    def _build_loss(self, results, features, labels, loss_config, **kwargs):
+        losses, loss = getters.get_loss(loss_config.module, results, features, **loss_config.params)
 
         with get_name_scope('latent_loss'):
             z_mean = kwargs['z_mean']
@@ -51,29 +51,28 @@ class LatentBridge(BaseBridge):
         loss += latent_loss
         return losses, loss
 
-    def _build(self, incoming, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
+    def _build(self, features, labels, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
         self._build_dependencies()
 
         losses = None
         loss = None
         if Modes.GENERATE == self.mode:
-            results = self.decode(incoming=incoming, decoder_fn=decoder_fn)
+            results = self.decode(features=features, labels=labels, decoder_fn=decoder_fn)
         elif Modes.ENCODE == self.mode:
-            encoded = self.encode(incoming=incoming, encoder_fn=encoder_fn)
+            encoded = self.encode(features=features, labels=labels, encoder_fn=encoder_fn)
             results = self.z_mean(encoded)
         else:
-            encoded = self.encode(incoming=incoming, encoder_fn=encoder_fn)
+            encoded = self.encode(features=features, labels=labels, encoder_fn=encoder_fn)
             z_mean = self.z_mean(encoded)
             z_log_sigma = self.z_log_sigma(encoded)
-            shape = self._get_decoder_shape(incoming)
-            eps = tf.random_normal(shape=shape, mean=self.mean, stddev=self.stddev,
-                                   dtype=tf.float32, name='eps')
+            shape = self._get_decoder_shape(features)
+            eps = tf.random_normal(
+                shape=shape, mean=self.mean, stddev=self.stddev, dtype=tf.float32, name='eps')
             z = tf.add(z_mean, tf.multiply(tf.sqrt(tf.exp(z_log_sigma)), eps))
-            results = self.decode(incoming=z, decoder_fn=decoder_fn)
-            losses, loss = self._build_loss(incoming, results, loss_config,
-                                            z_mean=z_mean, z_log_sigma=z_log_sigma)
+            results = self.decode(features=z, labels=labels, decoder_fn=decoder_fn)
+            losses, loss = self._build_loss(results, features, labels, loss_config,
+                                            z_mean=z_mean,
+                                            z_log_sigma=z_log_sigma)
 
-        return BridgeSpec(results=results,
-                          losses=losses,
-                          loss=loss)
+        return BridgeSpec(results=results, losses=losses, loss=loss)
 

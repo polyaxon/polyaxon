@@ -10,8 +10,8 @@ def main(*args):
 
     env = plx.envs.GymEnvironment('Pendulum-v0')
 
-    def graph_fn(mode, inputs):
-        return plx.layers.FullyConnected(mode, num_units=512)(inputs['state'])
+    def graph_fn(mode, features):
+        return plx.layers.FullyConnected(mode, num_units=512)(features['state'])
 
     def model_fn(features, labels, mode):
         model = plx.models.NAFModel(

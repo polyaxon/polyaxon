@@ -75,12 +75,14 @@ class Generator(BaseModel):
             model_fn_args = get_arguments(function)
             if ('mode' not in model_fn_args or
                     'loss_config' not in model_fn_args or
-                    'inputs' not in model_fn_args or
+                    'features' not in model_fn_args or
+                    'labels' not in model_fn_args or
                     'encoder_fn' not in model_fn_args or
                     'encoder_fn' not in model_fn_args):
                 raise ValueError(
-                    "Model's `bridge` `{}` should have 4 args: "
-                    "`mode`, `inputs`, `encoder_fn`, and `decoder_fn`.".format(function))
+                    "Model's `bridge` `{}` should have these args: "
+                    "`mode`, `features`, `labels`, `encoder_fn`, "
+                    "and `decoder_fn`.".format(function))
         else:
             raise ValueError("`bridge_fn` must be provided to Model.")
 
@@ -91,26 +93,24 @@ class Generator(BaseModel):
             `function` with args: `mode`, `inputs`.
         """
 
-        def graph_fn(mode, inputs):
-            return self._bridge_fn(mode=mode, inputs=inputs, loss_config=self.loss_config,
-                                   encoder_fn=self._encode_fn, decoder_fn=self._decoder_fn)
+        def graph_fn(mode, features, labels=None):
+            return self._bridge_fn(mode=mode,
+                                   features=features,
+                                   labels=labels,
+                                   loss_config=self.loss_config,
+                                   encoder_fn=self._encode_fn,
+                                   decoder_fn=self._decoder_fn)
 
         return graph_fn
 
     def _build_loss(self, results, features, labels):
-        """Creates the loss operation
+        """Creates the loss operation based on the bridge.
 
         Returns:
              tuple `(losses, loss)`:
                 `losses` are the per-batch losses.
                 `loss` is a single scalar tensor to minimize.
         """
-        # losses, loss = getters.get_loss(
-        #     self.loss_config.module, results.results, labels, **self.loss_config.params)
-        # if results.loss is not None:
-        #     loss += results.loss
-        # if results.losses is not None:
-        #     losses += results.losses
 
         loss = results.loss
         losses = results.losses
@@ -135,7 +135,7 @@ class Generator(BaseModel):
     def _build(self, features, labels=None, params=None, config=None):
         # Pre-process features and labels
         features, labels = self._preprocess(features, labels)
-        results = self._call_graph_fn(inputs=features)
+        results = self._call_graph_fn(features=features, labels=labels)
         if not isinstance(results, BridgeSpec):
             raise ValueError('`bridge_fn` should return a BridgeSpec.')
 
@@ -156,8 +156,6 @@ class Generator(BaseModel):
             predictions = self._build_predictions(
                 results=results.results, features=features, labels=labels)
 
-        # We add 'useful' tensors to the graph collection so that we
-        # can easly find them in our hooks/monitors.
         track(predictions, tf.GraphKeys.PREDICTIONS)
 
         return EstimatorSpec(mode=self.mode,

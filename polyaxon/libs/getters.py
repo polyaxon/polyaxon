@@ -168,10 +168,10 @@ def get_graph_fn(config, graph_class=None):
     if graph_class is None:
         graph_class = SubGraph
 
-    def graph_fn(mode, inputs):
+    def graph_fn(mode, features, labels):
         modules = graph_class.build_subgraph_modules(mode, config)
         graph = graph_class(mode=mode, modules=modules, features=config.features, **config.params)
-        return graph(inputs)
+        return graph(features, labels=labels)
 
     return graph_fn
 
@@ -187,13 +187,13 @@ def get_bridge_fn(config):
     """
     from polyaxon.bridges import BRIDGES, NoOpBridge
 
-    def bridge_fn(mode, inputs, loss_config, encoder_fn, decoder_fn):
+    def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
         if config:
             bridge = BRIDGES[config.module]
             bridge = bridge(mode=mode, state_size=config.state_size, **config.params)
-            return bridge(inputs, loss_config, encoder_fn, decoder_fn)
+            return bridge(features, labels, loss_config, encoder_fn, decoder_fn)
 
-        return NoOpBridge(mode)(inputs, loss_config, encoder_fn, decoder_fn)
+        return NoOpBridge(mode)(features, labels, loss_config, encoder_fn, decoder_fn)
 
     return bridge_fn
 

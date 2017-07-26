@@ -35,21 +35,22 @@ def main(*args):
     scaler = preprocessing.StandardScaler()
     x_train = scaler.fit_transform(x_train)
 
-    def graph_fn(mode, inputs):
+    def graph_fn(mode, features):
         x = plx.layers.FullyConnected(
-            mode, num_units=32, activation='relu', dropout=0.3)(inputs['x'])
+            mode, num_units=32, activation='relu', dropout=0.3)(features['x'])
         x = plx.layers.FullyConnected(mode, num_units=32, activation='relu', dropout=0.3)(x)
         return plx.layers.FullyConnected(mode, num_units=1, dropout=0.3)(x)
 
     def model_fn(features, labels, mode):
         model = plx.models.Regressor(
-            mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(module='mean_squared_error'),
+            mode, graph_fn=graph_fn,
+            loss_config=plx.configs.LossConfig(module='mean_squared_error'),
             optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.01),
             summaries='all')
         return model(features, labels)
 
     estimator = plx.estimators.Estimator(model_fn=model_fn,
-                                          model_dir="/tmp/polyaxon_logs/boston")
+                                         model_dir="/tmp/polyaxon_logs/boston")
 
     estimator.train(input_fn=numpy_input_fn(
         {'x': np.asarray(x_train, dtype=np.float32)}, np.expand_dims(y_train, axis=1),

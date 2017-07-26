@@ -5,9 +5,9 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def graph_fn(mode, inputs):
+def graph_fn(mode, features):
     x = plx.layers.Conv2d(
-        mode=mode, num_filter=64, filter_size=3, activation='relu')(inputs['image'])
+        mode=mode, num_filter=64, filter_size=3, activation='relu')(features['image'])
     x = plx.layers.ResidualBottleneck(
         mode=mode, num_blocks=3, bottleneck_size=16, out_channels=64)(x)
     x = plx.layers.ResidualBottleneck(

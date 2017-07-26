@@ -5,9 +5,9 @@ import tensorflow as tf
 import polyaxon as plx
 
 
-def graph_fn(mode, inputs):
+def graph_fn(mode, features):
     x = plx.layers.Conv2d(mode=mode, num_filter=32, filter_size=5, strides=1,
-                          regularizer='l2_regularizer')(inputs['image'])
+                          regularizer='l2_regularizer')(features['image'])
     x = plx.layers.MaxPool2d(mode=mode, kernel_size=2)(x)
     x = plx.layers.LocalResponseNormalization(mode=mode)(x)
     x = plx.layers.Conv2d(mode=mode, num_filter=64, filter_size=5, regularizer='l2_regularizer')(x)

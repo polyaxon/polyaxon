@@ -21,7 +21,7 @@ from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.layers import FullyConnected
 from polyaxon.libs import getters
 from polyaxon.libs.configs import LossConfig
-from polyaxon.libs.utils import get_tensor_batch_size
+from polyaxon.libs.utils import get_tensor_batch_size, get_arguments
 from polyaxon.libs.template_module import FunctionModule
 from polyaxon.models import BaseModel
 from polyaxon.models import summarizer
@@ -177,8 +177,12 @@ class BaseQModel(BaseRLModel):
         Returns:
             `function`. The graph function. The graph function must return a QModelSpec.
         """
-        def graph_fn(mode, inputs):
-            graph_outputs = self._graph_fn(mode=mode, inputs=inputs)
+        def graph_fn(mode, features, labels=None):
+            kwargs = {}
+            if 'labels' in get_arguments(self._graph_fn):
+                kwargs['labels'] = labels
+
+            graph_outputs = self._graph_fn(mode=mode, features=features, **kwargs)
             a = FullyConnected(mode, num_units=self.num_actions)(graph_outputs)
             v = None
 
@@ -203,7 +207,7 @@ class BaseQModel(BaseRLModel):
 
         return graph_fn
 
-    def _call_graph_fn(self, inputs):
+    def _call_graph_fn(self, features, labels=None):
         """Calls graph function.
 
         Creates first one or two graph, i.e. train and target graphs.
@@ -213,7 +217,8 @@ class BaseQModel(BaseRLModel):
         then another layer is added that represents the state value.
 
         Args:
-            inputs: `Tensor` or `dict` of tensors
+            features: `Tensor` or `dict` of tensors
+            labels: `Tensor` or `dict` of tensors
         """
         graph_fn = self._build_graph_fn()
 
@@ -222,13 +227,13 @@ class BaseQModel(BaseRLModel):
             # so that we can copy one graph to another given a frequency.
             self._train_graph = FunctionModule(
                 mode=self.mode, build_fn=graph_fn, name='train')
-            self._train_results = self._train_graph(inputs=inputs)
+            self._train_results = self._train_graph(features=features, labels=labels)
             self._target_graph = FunctionModule(
                 mode=self.mode, build_fn=graph_fn, name='target')
-            self._target_results = self._target_graph(inputs=inputs)
+            self._target_results = self._target_graph(features=features, labels=labels)
             return self._build_actions()
         else:
-            self._train_results = graph_fn(mode=self.mode, inputs=inputs)
+            self._train_results = graph_fn(mode=self.mode, features=features, labels=labels)
             self._target_results = self._train_results
             return self._build_actions()
 
@@ -324,8 +329,12 @@ class BasePGModel(BaseRLModel):
         Returns:
             `function`. The graph function. The graph function must return a PGModelSpec.
         """
-        def graph_fn(mode, inputs):
-            graph_outputs = self._graph_fn(mode=mode, inputs=inputs)
+        def graph_fn(mode, features, labels=None):
+            kwargs = {}
+            if 'labels' in get_arguments(self._graph_fn):
+                kwargs['labels'] = labels
+
+            graph_outputs = self._graph_fn(mode=mode, features=features, **kwargs)
             a = FullyConnected(mode, num_units=self.num_actions)(graph_outputs)
             if self.is_continuous:
                 values = tf.concat(values=[a, tf.exp(a) + 1], axis=0)
@@ -355,7 +364,7 @@ class BasePGModel(BaseRLModel):
             else:
                 return tf.squeeze(self._graph_results.distribution.sample(sample_shape=batch_size), axis=1)
 
-    def _call_graph_fn(self, inputs):
+    def _call_graph_fn(self, features, labels=None):
         """Calls graph function.
 
         Creates first one or two graph, i.e. train and target graphs.
@@ -368,7 +377,7 @@ class BasePGModel(BaseRLModel):
             inputs: `Tensor` or `dict` of tensors
         """
         graph_fn = self._build_graph_fn()
-        self._graph_results = graph_fn(mode=self.mode, inputs=inputs)
+        self._graph_results = graph_fn(mode=self.mode, features=features, labels=labels)
         return self._build_actions()
 
     def _preprocess(self, features, labels):

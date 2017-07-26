@@ -80,8 +80,8 @@ def generate_data(fct, x, time_steps, seperate=False):
 def experiment_fn(output_dir, X, y, train_steps=1000, num_units=7, output_units=1, num_layers=1):
     """Creates an experiment using LSTM architecture for timeseries regression problem."""
 
-    def graph_fn(mode, inputs):
-        x = plx.layers.LSTM(mode=mode, num_units=num_units, num_layers=num_layers)(inputs['x'])
+    def graph_fn(mode, features):
+        x = plx.layers.LSTM(mode=mode, num_units=num_units, num_layers=num_layers)(features['x'])
         return plx.layers.FullyConnected(mode=mode, num_units=output_units)(x)
 
     def model_fn(features, labels, mode):

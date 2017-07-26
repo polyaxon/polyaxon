@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
-import matplotlib.pyplot as plt
 import tensorflow as tf
 import polyaxon as plx
 
@@ -11,27 +10,27 @@ from tensorflow.examples.tutorials.mnist import input_data
 from polyaxon.libs.utils import total_tensor_depth
 
 
-def encoder_fn(mode, inputs):
+def encoder_fn(mode, features):
     return plx.encoders.Encoder(
         mode=mode,
         modules=[
             plx.layers.FullyConnected(mode=mode, num_units=256, activation='relu')
         ]
-    )(inputs)
+    )(features)
 
 
-def decoder_fn(mode, inputs):
+def decoder_fn(mode, features):
     return plx.decoders.Decoder(
         mode=mode,
         modules=[
             plx.layers.FullyConnected(mode=mode, num_units=256, activation='relu'),
             plx.layers.FullyConnected(mode=mode, num_units=28 * 28)
         ]
-    )(inputs)
+    )(features)
 
 
-def bridge_fn(mode, inputs, loss_config, encoder_fn, decoder_fn):
-    return plx.bridges.LatentBridge(mode, latent_dim=2)(inputs, loss_config, encoder_fn, decoder_fn)
+def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
+    return plx.bridges.LatentBridge(mode, latent_dim=2)(features, labels, loss_config, encoder_fn, decoder_fn)
 
 
 def model_fn(features, labels, params, mode, config):
@@ -76,10 +75,15 @@ def encode(estimator, images, labels):
         x.append(result['results'][0])
         y.append(result['results'][1])
 
-    plt.figure(figsize=(5, 5))
-    plt.scatter(x, y, c=labels)
-    plt.colorbar()
-    plt.show()
+    try:
+        import matplotlib.pyplot as plt
+
+        plt.figure(figsize=(5, 5))
+        plt.scatter(x, y, c=labels)
+        plt.colorbar()
+        plt.show()
+    except ImportError:
+        pass
 
 
 def generate(estimator):
@@ -106,9 +110,14 @@ def generate(estimator):
             digit = results[i * n + j].reshape(28, 28)
             figure[i * 28: (i + 1) * 28, j * 28: (j + 1) * 28] = digit
 
-    plt.figure(figsize=(10, 10))
-    plt.imshow(figure, cmap='Greys_r')
-    plt.show()
+    try:
+        import matplotlib.pyplot as plt
+
+        plt.figure(figsize=(10, 10))
+        plt.imshow(figure, cmap='Greys_r')
+        plt.show()
+    except ImportError:
+        pass
 
 
 def main(*args):
