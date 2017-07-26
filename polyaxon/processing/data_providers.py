@@ -251,7 +251,7 @@ def make_parallel_data_provider(data_sources_source,
             e.g.:
             ```python
             >>> decoder_source = SplitTokensDecoder(
-            >>>     tokens_feature_name="source_tokens",
+            >>>     tokens_feature_name="source_token",
             >>>     length_feature_name="source_len",
             >>>     append_token="SEQUENCE_END",
             >>>     delimiter=" ")
@@ -260,7 +260,7 @@ def make_parallel_data_provider(data_sources_source,
             e.g.:
             ```python
             >>> decoder_target = SplitTokensDecoder(
-            >>>     tokens_feature_name="target_tokens",
+            >>>     tokens_feature_name="target_token",
             >>>     length_feature_name="target_len",
             >>>     prepend_token="SEQUENCE_START",
             >>>     append_token="SEQUENCE_END",

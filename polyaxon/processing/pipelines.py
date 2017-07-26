@@ -71,9 +71,7 @@ class Pipeline(GraphModule):
 
 
 class TFRecordImagePipeline(Pipeline):
-    """Abstract InputPipeline class. All input pipelines must inherit from this.
-    An InputPipeline defines how data is read, parsed, and separated into
-    features and labels.
+    """A Pipeline to convert TF-Records to images.
 
     Args:
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
@@ -145,6 +143,107 @@ class TFRecordImagePipeline(Pipeline):
         return {'label'}
 
 
+class TFRecordSequencePipeline(Pipeline):
+    """A Pipeline to convert TF-Records to sequences.
+
+    At least one sequence must be `source_token`.
+
+    Args:
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+        name: `str`, name to give for this pipeline.
+        subgraphs_by_features: `dict`, list of modules to call for each feature to be processed
+        shuffle: If true, shuffle the data.
+        num_epochs: Number of times to iterate through the dataset. If None, iterate forever.
+    """
+
+    def __init__(self, mode, name='TFRecordSequencePipeline', subgraphs_by_features=None,
+                 shuffle=True, num_epochs=None, data_files=None, meta_data_file=None):
+        super(TFRecordSequencePipeline, self).__init__(
+            mode=mode, name=name, subgraphs_by_features=subgraphs_by_features,
+            shuffle=shuffle, num_epochs=num_epochs)
+        self.data_files = data_files or []
+        self.meta_data = None
+        if meta_data_file:
+            with open(meta_data_file) as meta_data_file:
+                self.meta_data = json.load(meta_data_file)
+
+    def _create_context_features(self):
+        context = {}
+        for feature, feature_type in self.meta_data['context_features_types'].items():
+            if feature_type == 'int':
+                context[feature] = tf.FixedLenFeature([], dtype=tf.int64)
+            elif feature_type == 'float':
+                context[feature] = tf.FixedLenFeature([], dtype=tf.float32)
+            elif feature_type == 'bytes':
+                context[feature] = tf.FixedLenFeature([], dtype=tf.string)
+            else:
+                raise TypeError("The feature type `{}` is not supported.".format({feature_type}))
+        return context
+
+    def _create_sequence_features(self):
+        sequences = {}
+        for feature, feature_type in self.meta_data['sequence_features_types'].items():
+            if feature_type == 'int':
+                sequences[feature] = tf.FixedLenSequenceFeature([], dtype=tf.int64)
+            elif feature_type == 'float':
+                sequences[feature] = tf.FixedLenSequenceFeature([], dtype=tf.float32)
+            elif feature_type == 'bytes':
+                sequences[feature] = tf.FixedLenSequenceFeature([], dtype=tf.string)
+            else:
+                raise TypeError("The feature type `{}` is not supported.".format({feature_type}))
+
+        return sequences
+
+    def _create_items_to_handlers(self):
+        items_to_handlers = {}
+        for feature in self.meta_data['context_features_types']:
+            items_to_handlers[feature] = tfslim.tfexample_decoder.Tensor(feature)
+
+        for feature in self.meta_data['sequence_features_types']:
+            items_to_handlers[feature] = tfslim.tfexample_decoder.Tensor(feature)
+
+        # finally add the source_len, there should be always a source_token feature.
+        items_to_handlers['source_len'] = tfslim.tfexample_decoder.ItemHandlerCallback(
+                keys=['source_token'],
+                func=lambda x: tf.size(x['source_token']))
+        return items_to_handlers
+
+    def make_data_provider(self, **kwargs):
+        """Creates DataProvider instance for this input pipeline. Additional keyword arguments
+        are passed to the DataProvider.
+        """
+        context_keys_to_features = self._create_context_features()
+        sequence_keys_to_features = self._create_sequence_features()
+        items_to_handlers = self._create_items_to_handlers()
+
+        decoder = TFSequenceExampleDecoder(context_keys_to_features=context_keys_to_features,
+                                           sequence_keys_to_features=sequence_keys_to_features,
+                                           items_to_handlers=items_to_handlers)
+
+        dataset = Dataset(
+            data_sources=self.data_files,
+            reader=tf.TFRecordReader,
+            decoder=decoder,
+            num_samples=self.meta_data.get('num_samples', {}).get(self.mode),
+            num_classes=self.meta_data.get('num_classes'),
+            items_to_descriptions=self.meta_data.get('items_to_descriptions', {}),
+            meta_data=self.meta_data,
+            labels_to_names=self.meta_data.get('labels_to_classes'))
+
+        return DatasetDataProvider(dataset=dataset, shuffle=self.shuffle,
+                                   num_epochs=self.num_epochs, **kwargs)
+
+    @property
+    def feature_keys(self):
+        """Defines the features that this input pipeline provides. Returns a set of strings."""
+        return {'source_token', 'source_len'}
+
+    @property
+    def label_keys(self):
+        """Defines the labels that this input pipeline provides. Returns a set of strings."""
+        return {'label'}
+
+
 class ParallelTextPipeline(Pipeline):
     """An input pipeline that reads two parallel (line-by-line aligned) text files.
 
@@ -178,7 +277,7 @@ class ParallelTextPipeline(Pipeline):
         are passed to the DataProvider.
         """
         decoder_source = SplitTokensDecoder(
-            tokens_feature_name='source_tokens',
+            tokens_feature_name='source_token',
             length_feature_name='source_len',
             append_token='SEQUENCE_END',
             delimiter=self.source_delimiter)
@@ -193,7 +292,7 @@ class ParallelTextPipeline(Pipeline):
         dataset_target = None
         if len(self.target_files) > 0:
             decoder_target = SplitTokensDecoder(
-                tokens_feature_name='target_tokens',
+                tokens_feature_name='target_token',
                 length_feature_name='target_len',
                 prepend_token='SEQUENCE_START',
                 append_token='SEQUENCE_END',
@@ -216,12 +315,12 @@ class ParallelTextPipeline(Pipeline):
     @property
     def feature_keys(self):
         """Defines the features that this input pipeline provides. Returns a set of strings."""
-        return {'source_tokens', 'source_len'}
+        return {'source_token', 'source_len'}
 
     @property
     def label_keys(self):
         """Defines the labels that this input pipeline provides. Returns a set of strings."""
-        return {'target_tokens', 'target_len'}
+        return {'target_token', 'target_len'}
 
 
 class TFRecordSourceSequencePipeline(Pipeline):
@@ -259,13 +358,13 @@ class TFRecordSourceSequencePipeline(Pipeline):
         are passed to the DataProvider.
         """
         splitter_source = SplitTokensDecoder(
-            tokens_feature_name='source_tokens',
+            tokens_feature_name='source_token',
             length_feature_name='source_len',
             append_token='SEQUENCE_END',
             delimiter=self.source_delimiter)
 
         splitter_target = SplitTokensDecoder(
-            tokens_feature_name='target_tokens',
+            tokens_feature_name='target_token',
             length_feature_name='target_len',
             prepend_token='SEQUENCE_START',
             append_token='SEQUENCE_END',
@@ -277,18 +376,18 @@ class TFRecordSourceSequencePipeline(Pipeline):
         }
 
         items_to_handlers = {
-            'source_tokens': tfslim.tfexample_decoder.ItemHandlerCallback(
+            'source_token': tfslim.tfexample_decoder.ItemHandlerCallback(
                 keys=[self.source_field],
                 func=lambda dict: splitter_source.decode(dict[self.source_field],
-                                                         ['source_tokens'])[0]),
+                                                         ['source_token'])[0]),
             'source_len': tfslim.tfexample_decoder.ItemHandlerCallback(
                 keys=[self.source_field],
                 func=lambda dict: splitter_source.decode(dict[self.source_field],
                                                          ['source_len'])[0]),
-            'target_tokens': tfslim.tfexample_decoder.ItemHandlerCallback(
+            'target_token': tfslim.tfexample_decoder.ItemHandlerCallback(
                 keys=[self.target_field],
                 func=lambda dict: splitter_target.decode(dict[self.target_field],
-                                                         ['target_tokens'])[0]),
+                                                         ['target_token'])[0]),
             'target_len': tfslim.tfexample_decoder.ItemHandlerCallback(
                 keys=[self.target_field],
                 func=lambda dict: splitter_target.decode(dict[self.target_field],
@@ -305,12 +404,12 @@ class TFRecordSourceSequencePipeline(Pipeline):
     @property
     def feature_keys(self):
         """Defines the features that this input pipeline provides. Returns a set of strings."""
-        return {'source_tokens', 'source_len'}
+        return {'source_token', 'source_len'}
 
     @property
     def label_keys(self):
         """Defines the labels that this input pipeline provides. Returns a set of strings."""
-        return {'target_tokens', 'target_len'}
+        return {'target_token', 'target_len'}
 
 
 class ImageCaptioningPipeline(Pipeline):
@@ -366,7 +465,7 @@ class ImageCaptioningPipeline(Pipeline):
                 format_key="image/format",
                 channels=3),
             'target_ids': tfslim.tfexample_decoder.Tensor(self.caption_ids_field),
-            'target_tokens': tfslim.tfexample_decoder.Tensor(self.caption_tokens_field),
+            'target_token': tfslim.tfexample_decoder.Tensor(self.caption_tokens_field),
             'target_len': tfslim.tfexample_decoder.ItemHandlerCallback(
                 keys=[self.caption_tokens_field],
                 func=lambda x: tf.size(x[self.caption_tokens_field]))
@@ -396,12 +495,13 @@ class ImageCaptioningPipeline(Pipeline):
     @property
     def label_keys(self):
         """Defines the labels that this input pipeline provides. Returns a set of strings."""
-        return {'target_tokens', 'target_ids', 'target_len'}
+        return {'target_token', 'target_ids', 'target_len'}
 
 
 PIPELINES = {
     'ParallelTextPipeline': ParallelTextPipeline,
     'TFRecordImagePipeline': TFRecordImagePipeline,
+    'TFRecordSequencePipeline': TFRecordSequencePipeline,
     'TFRecordSourceSequencePipeline': TFRecordSourceSequencePipeline,
     'ImageCaptioningPipeline': ImageCaptioningPipeline
 }
