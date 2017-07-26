@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import gzip
 import json
 import os
 
@@ -10,22 +9,28 @@ import six.moves.cPickle as pickle
 import numpy as np
 import tensorflow as tf
 
-from datasets.converters.sequence_converters import SequenceToTFExampleConverter
 from polyaxon import Modes
+from polyaxon.datasets.converters.sequence_converters import SequenceToTFExampleConverter
 from polyaxon.datasets.utils import (
     download_datasets,
     delete_datasets,
     make_dataset_dir,
-    create_dataset_input_fn,
-    create_dataset_predict_input_fn
+    create_sequence_dataset_input_fn,
+    create_sequence_dataset_predict_input_fn
 )
 
 _DATA_URL = 'http://www.iro.umontreal.ca/~lisa/deep/data/'
 _FILENAME = 'imdb.pkl'
+_MAX_TOKEN = 10000
+_UNK = 1
 
 META_DATA_FILENAME_FORMAT = '{}/meta_data.json'
 
 RECORD_FILE_NAME_FORMAT = '{}/imdb_{}.tfrecord'
+
+
+def _clean_tokens(seq):
+    return [1 if t >= _MAX_TOKEN else t for t in seq]
 
 
 def prepare_dataset(converter, dataset_dir, dataset, data_name, num_items, num_eval=0):
@@ -43,12 +48,12 @@ def prepare_dataset(converter, dataset_dir, dataset, data_name, num_items, num_e
     if num_eval:
         # split data
         idx = np.random.permutation(num_items)
-        eval_tokens = [{'token': tokens[i]} for i in idx[:num_eval]]
+        eval_tokens = [{'source_token': _clean_tokens(tokens[i])} for i in idx[:num_eval]]
         eval_labels = [{'label': labels[i]} for i in idx[:num_eval]]
-        tokens = [{'token': tokens[i]} for i in idx[num_eval:]]
+        tokens = [{'source_token': _clean_tokens(tokens[i])} for i in idx[num_eval:]]
         labels = [{'label': labels[i]} for i in idx[num_eval:]]
     else:
-        tokens = [{'token': t} for t in tokens]
+        tokens = [{'source_token': _clean_tokens(t)} for t in tokens[:100]]
         labels = [{'label': l} for l in labels]
 
     with tf.python_io.TFRecordWriter(filename) as tfrecord_writer:
@@ -74,12 +79,20 @@ def prepare(dataset_dir):
         dataset_dir: The dataset directory where the dataset is stored.
     """
     make_dataset_dir(dataset_dir)
+    if all([
+        tf.gfile.Exists(RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.TRAIN)),
+        tf.gfile.Exists(RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.EVAL)),
+        tf.gfile.Exists(RECORD_FILE_NAME_FORMAT.format(dataset_dir, Modes.PREDICT)),
+    ]):
+        print('`{}` Dataset files already exist.')
+        return
+
     download_datasets(dataset_dir, _DATA_URL, [_FILENAME])
     with open(os.path.join(dataset_dir, _FILENAME), 'rb') as f:
         train_set = pickle.load(f)
         test_set = pickle.load(f)
 
-    converter = SequenceToTFExampleConverter(sequence_features_types={'token': 'int'},
+    converter = SequenceToTFExampleConverter(sequence_features_types={'source_token': 'int'},
                                              context_features_types={'label': 'int'})
 
     num_items = len(train_set[0])
@@ -95,9 +108,10 @@ def prepare(dataset_dir):
                                     Modes.EVAL: len_eval_data,
                                     Modes.PREDICT: len_test_data}
         meta_data['items_to_descriptions'] = {
-            'token': 'A sequence of word ids.',
+            'source_token': 'A sequence of word ids.',
             'label': 'A single integer 0 or 1',
         }
+        meta_data['num_classes'] = 2
         json.dump(meta_data, meta_data_file)
 
     delete_datasets(dataset_dir, [_FILENAME])
@@ -105,13 +119,13 @@ def prepare(dataset_dir):
 
 
 def create_input_fn(dataset_dir):
-    return create_dataset_input_fn(
-        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
+    return create_sequence_dataset_input_fn(
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT,
+        bucket_boundaries=[140, 200, 300, 400, 500])
 
 
 def create_predict_input_fn(dataset_dir):
-    return create_dataset_predict_input_fn(
-        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
+    return create_sequence_dataset_predict_input_fn(
+        dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT,
+        bucket_boundaries=[140, 200, 300, 400, 500])
 
-
-prepare('imdb')

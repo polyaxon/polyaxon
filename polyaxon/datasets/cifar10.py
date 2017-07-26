@@ -16,8 +16,8 @@ from polyaxon.datasets.utils import (
     download_datasets,
     make_dataset_dir,
     count_tfrecord_file_content,
-    create_dataset_input_fn,
-    create_dataset_predict_input_fn
+    create_image_dataset_input_fn,
+    create_image_dataset_predict_input_fn
 )
 
 _DATA_URL = 'https://www.cs.toronto.edu/~kriz/'
@@ -123,11 +123,11 @@ def prepare(dataset_dir):
 
 
 def create_input_fn(dataset_dir):
-    return create_dataset_input_fn(
+    return create_image_dataset_input_fn(
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
 
 
 def create_predict_input_fn(dataset_dir):
-    return create_dataset_predict_input_fn(
+    return create_image_dataset_predict_input_fn(
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
 

@@ -62,10 +62,6 @@ class Embedding(BaseLayer):
         inference = tf.nn.embedding_lookup(params=self._w, ids=inference,
                                            validate_indices=self.validate_indices)
 
-        # Embedding doesn't support masking, so we save sequence length prior to the lookup.
-        # Expand dim to 3d.
-        shape = [-1] + inference.get_shape().as_list()[1:3] + [1]
-        inference.seq_length = retrieve_seq_length_op(tf.reshape(incoming, shape))
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return inference
 

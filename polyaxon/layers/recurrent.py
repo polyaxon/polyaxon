@@ -82,7 +82,7 @@ class CoreRNN(BaseLayer):
             ndim = len(input_shape)
             assert ndim >= 3, 'Input dim should be at least 3.'
             axes = [1, 0] + list(xrange(2, ndim))
-            inference = tf.transpose(inference, (axes))
+            inference = tf.transpose(inference, axes)
             inference = tf.unstack(value=inference)
 
         if self.dynamic:
@@ -110,7 +110,7 @@ class CoreRNN(BaseLayer):
                 o = outputs
             else:
                 outputs = tf.transpose(tf.stack(outputs), [1, 0, 2])
-                o = advanced_indexing_op(outputs, sequence_length)
+                o = get_sequence_relevant_output(outputs, sequence_length)
         else:
             o = outputs if self.return_seq else outputs[-1]
 
@@ -433,8 +433,8 @@ class BidirectionalRNN(BaseLayer):
             if self.return_seq:
                 o = outputs
             else:
-                outputs = tf.transpose(tf.stack(outputs), [1, 0, 2])
-                o = advanced_indexing_op(outputs, sequence_length)
+                # outputs = tf.transpose(tf.stack(outputs), [1, 0, 2])
+                o = get_sequence_relevant_output(outputs, sequence_length)
         else:
             o = outputs if self.return_seq else outputs[-1]
 
@@ -895,15 +895,17 @@ def retrieve_seq_length_op(data):
     return length
 
 
-def advanced_indexing_op(input, index):
-    """Advanced Indexing for Sequences. """
-    batch_size = get_shape(input)[0]
-    max_length = int(input.get_shape()[1])
-    dim_size = int(input.get_shape()[2])
-    index = tf.range(0, batch_size) * max_length + (index - 1)
+def get_sequence_relevant_output(input, sequence_length):
+    """Returns the last relevant output for a sequence."""
+    input_shape = get_shape(input)
+    batch_size = input_shape[0]
+    max_length = tf.shape(input)[1]
+    dim_size = input_shape[2]
+    index = tf.range(0, batch_size) * max_length + (sequence_length - 1)
     flat = tf.reshape(input, [-1, dim_size])
     relevant = tf.gather(flat, index)
     return relevant
+
 
 RNN_LAYERS = OrderedDict([
     ('GRU', GRU),

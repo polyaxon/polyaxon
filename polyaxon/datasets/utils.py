@@ -100,8 +100,8 @@ def verify_tfrecord_image(dataset_dir, create_input_fn, channels=3):
             coord.join(threads)
 
 
-def create_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_format,
-                            meta_data_file_name_format):
+def create_image_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_format,
+                                  meta_data_file_name_format):
     prepare_fn(dataset_dir)
     train_data_file = record_file_name_format.format(dataset_dir, Modes.TRAIN)
     eval_data_file = record_file_name_format.format(dataset_dir, Modes.EVAL)
@@ -121,8 +121,8 @@ def create_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_format,
     return train_input_fn, eval_input_fn
 
 
-def create_dataset_predict_input_fn(dataset_dir, prepare_fn, record_file_name_format,
-                                    meta_data_file_name_format):
+def create_image_dataset_predict_input_fn(dataset_dir, prepare_fn, record_file_name_format,
+                                          meta_data_file_name_format):
     prepare_fn(dataset_dir)
     test_data_file = record_file_name_format.format(dataset_dir, Modes.PREDICT)
     meta_data_filename = meta_data_file_name_format.format(dataset_dir)
@@ -130,6 +130,45 @@ def create_dataset_predict_input_fn(dataset_dir, prepare_fn, record_file_name_fo
         mode=Modes.PREDICT,
         pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
                                        num_epochs=1,
+                                       params={'data_files': test_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    return test_input_fn
+
+
+def create_sequence_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_format,
+                                     meta_data_file_name_format, bucket_boundaries):
+    prepare_fn(dataset_dir)
+    train_data_file = record_file_name_format.format(dataset_dir, Modes.TRAIN)
+    eval_data_file = record_file_name_format.format(dataset_dir, Modes.EVAL)
+    meta_data_filename = meta_data_file_name_format.format(dataset_dir)
+    train_input_fn = create_input_data_fn(
+        mode=Modes.TRAIN,
+        pipeline_config=PipelineConfig(module='TFRecordSequencePipeline', dynamic_pad=True,
+                                       bucket_boundaries=bucket_boundaries,
+                                       params={'data_files': train_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    eval_input_fn = create_input_data_fn(
+        mode=Modes.EVAL,
+        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=True,
+                                       bucket_boundaries=bucket_boundaries,
+                                       params={'data_files': eval_data_file,
+                                               'meta_data_file': meta_data_filename})
+    )
+    return train_input_fn, eval_input_fn
+
+
+def create_sequence_dataset_predict_input_fn(dataset_dir, prepare_fn, record_file_name_format,
+                                             meta_data_file_name_format, bucket_boundaries):
+    prepare_fn(dataset_dir)
+    test_data_file = record_file_name_format.format(dataset_dir, Modes.PREDICT)
+    meta_data_filename = meta_data_file_name_format.format(dataset_dir)
+    test_input_fn = create_input_data_fn(
+        mode=Modes.PREDICT,
+        pipeline_config=PipelineConfig(module='TFRecordSequencePipeline', dynamic_pad=True,
+                                       num_epochs=1, batch_size=4, min_after_dequeue=0,
+                                       bucket_boundaries=bucket_boundaries,
                                        params={'data_files': test_data_file,
                                                'meta_data_file': meta_data_filename})
     )

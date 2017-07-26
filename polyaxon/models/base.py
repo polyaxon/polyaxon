@@ -108,7 +108,7 @@ class BaseModel(GraphModule):
             variables = []
             for gradient, variable in grads_and_vars:
                 if "embedding" in variable.name or "Embedding" in variable.name:
-                    tmp = tf.clip_by_norm(t=gradient.values, clip_norm=self._clip_embd_gradients)
+                    tmp = tf.clip_by_norm(t=gradient.values, clip_norm=self._clip_embed_gradients)
                     gradient = tf.IndexedSlices(tmp, gradient.indices, gradient.dense_shape)
                 clipped_gradients.append(gradient)
                 variables.append(variable)
