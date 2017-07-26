@@ -21,14 +21,15 @@ A bridge defines how state is passed between encoder and decoder.
 
 
 ```python
-encode(self, incoming, encoder_fn)
+encode(self, features, labels, encoder_fn)
 ```
 
 
 Encodes the incoming tensor.
 
 - __Args__:
-	- __incoming__: `Tensor`.
+	- __features__: `Tensor`.
+	- __labels__: `dict` or `Tensor`
 	- __encoder_fn__: `function`.
 	- __*args__:
 	- __**kwargs__:
@@ -40,7 +41,7 @@ Encodes the incoming tensor.
 
 
 ```python
-decode(self, incoming, decoder_fn)
+decode(self, features, labels, decoder_fn)
 ```
 
 
@@ -48,7 +49,8 @@ Decodes the incoming tensor if it's validates against the state size of the deco
 Otherwise, generates a random value.
 
 - __Args__:
-	- __incoming__: `Tensor`
+	- __features__: `Tensor`
+	- __labels__: `dict` or `Tensor`
 	- __decoder_fn__: `function`.
 	- __*args__:
 	- __**kwargs__:
@@ -72,7 +74,7 @@ Returns the decoder expected shape based on the incoming tensor.
 
 
 ```python
-_build(self, incoming, loss_config, encoder_fn, decoder_fn)
+_build(self, features, labels, loss_config, encoder_fn, decoder_fn)
 ```
 
 

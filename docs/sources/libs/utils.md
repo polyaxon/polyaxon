@@ -26,7 +26,7 @@ Returns a list of values in the collection with the given `collection`.
 
 
 ```python
-get_shape(x)
+get_shape(x, dynamic=False)
 ```
 
 
@@ -34,6 +34,7 @@ Get the incoming data shape.
 
 - __Args__:
 	- __x__: incoming data.
+	- __dynamic__: Whether to get the dynamic shape of the static shape of a tensor.
 - __Returns__:
 	the incoming data shape.
 

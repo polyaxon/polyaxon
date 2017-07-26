@@ -1,15 +1,33 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L316)</span>
-## LossConfig
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L660)</span>
+## ExperimentConfig
 
 ```python
-polyaxon.libs.configs.LossConfig(module, params=None)
+polyaxon.libs.configs.ExperimentConfig(name, output_dir, run_config, train_input_data_config, eval_input_data_config, estimator_config, model_config, train_hooks_config=None, eval_hooks_config=None, eval_metrics_config=None, eval_every_n_steps=1000, train_steps=10000, eval_steps=10, eval_delay_secs=0, continuous_eval_throttle_secs=60, delay_workers_by_global_step=False, export_strategies=None, train_steps_per_iteration=1000)
 ```
 
-The LossConfig holds information needed to create a `Loss`.
+The ExperimentConfig holds information needed to create a `Experiment`.
 
 - __Args__:
-	- __module__: `str`, module loss to use.
-	- __params__: `dict`, extra information to pass to the loss.
+	- __name__: `str`, name to give for the experiment.
+	- __output_dir__: `str`, where to save training and evaluation data.
+	- __run_config__: Tensorflow run config.
+	- __train_input_data_config__: Train input data configuration.
+	- __eval_input_data_config__: Eval input data configuration.
+	- __estimator_config__: The estimator configuration.
+	- __model_config__: The model configuration.
+	- __train_hooks_config__: The training hooks configuration.
+	- __eval_hooks_config__: The evaluation hooks configuration.
+	- __eval_metrics_config__: The evaluation metrics config.
+	- __eval_every_n_steps__: `int`, the frequency of evaluation.
+	- __train_steps__: `int`, the number of steps to train the model.
+	- __eval_steps__: `int`, the number of steps to eval the model.
+	- __eval_delay_secs__: `int`, used to delay the evaluation.
+	- __continuous_eval_throttle_secs__: Do not re-evaluate unless the last evaluation
+		was started at least this many seconds ago for continuous_eval().
+	- __delay_workers_by_global_step__: if `True` delays training workers based on global step
+		instead of time.
+	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
+	- __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
 
 
 ----
@@ -89,6 +107,22 @@ polyaxon.libs.configs.EnvironmentConfig(module, env_id, params=None)
 ```
 
 The EnvironmentConfig holds information needed to create an `Environment`.
+
+- __Args__:
+	- __module__: `str`, module loss to use.
+	- __params__: `dict`, extra information to pass to the loss.
+
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L316)</span>
+## LossConfig
+
+```python
+polyaxon.libs.configs.LossConfig(module, params=None)
+```
+
+The LossConfig holds information needed to create a `Loss`.
 
 - __Args__:
 	- __module__: `str`, module loss to use.
@@ -259,40 +293,6 @@ The EstimatorConfig holds information needed to create a `Estimator`.
 	- __module__: `str`, estimator class to use.
 	- __output_dir__: `str`, where to save training and evaluation data.
 	- __params__: `dict`, extra information to pass to the estimator.
-
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/configs.py#L660)</span>
-## ExperimentConfig
-
-```python
-polyaxon.libs.configs.ExperimentConfig(name, output_dir, run_config, train_input_data_config, eval_input_data_config, estimator_config, model_config, train_hooks_config=None, eval_hooks_config=None, eval_metrics_config=None, eval_every_n_steps=1000, train_steps=10000, eval_steps=10, eval_delay_secs=0, continuous_eval_throttle_secs=60, delay_workers_by_global_step=False, export_strategies=None, train_steps_per_iteration=1000)
-```
-
-The ExperimentConfig holds information needed to create a `Experiment`.
-
-- __Args__:
-	- __name__: `str`, name to give for the experiment.
-	- __output_dir__: `str`, where to save training and evaluation data.
-	- __run_config__: Tensorflow run config.
-	- __train_input_data_config__: Train input data configuration.
-	- __eval_input_data_config__: Eval input data configuration.
-	- __estimator_config__: The estimator configuration.
-	- __model_config__: The model configuration.
-	- __train_hooks_config__: The training hooks configuration.
-	- __eval_hooks_config__: The evaluation hooks configuration.
-	- __eval_metrics_config__: The evaluation metrics config.
-	- __eval_every_n_steps__: `int`, the frequency of evaluation.
-	- __train_steps__: `int`, the number of steps to train the model.
-	- __eval_steps__: `int`, the number of steps to eval the model.
-	- __eval_delay_secs__: `int`, used to delay the evaluation.
-	- __continuous_eval_throttle_secs__: Do not re-evaluate unless the last evaluation
-		was started at least this many seconds ago for continuous_eval().
-	- __delay_workers_by_global_step__: if `True` delays training workers based on global step
-		instead of time.
-	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
-	- __train_steps_per_iteration__: (applies only to continuous_train_and_evaluate).
 
 
 ----

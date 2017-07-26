@@ -134,52 +134,6 @@ class RLExperiment(Experiment):
             hooks=self._train_hooks + extra_hooks)
 
 
-def create_experiment(experiment_config):
-    """Creates a new `Experiment` instance.
-
-    Args:
-        experiment_config: the config to use for creating the experiment.
-    """
-    # Creates training input function
-    train_input_data_config = experiment_config.train_input_data_config
-    train_input_fn = create_input_data_fn(
-        pipeline_config=train_input_data_config.pipeline_config,
-        mode=Modes.TRAIN, scope='train_input_fn',
-        input_type=train_input_data_config.input_type,
-        x=train_input_data_config.x, y=train_input_data_config.y)
-
-    # Creates eval_input_fn input function
-    eval_input_data_config = experiment_config.eval_input_data_config
-    eval_input_fn = create_input_data_fn(
-        pipeline_config=eval_input_data_config.pipeline_config,
-        mode=Modes.EVAL, scope='eval_input_fn',
-        input_type=eval_input_data_config.input_type,
-        x=eval_input_data_config.x, y=eval_input_data_config.y)
-
-    estimator = getters.get_estimator(experiment_config.estimator_config,
-                                      experiment_config.model_config,
-                                      experiment_config.run_config)
-    train_hooks = getters.get_hooks(experiment_config.train_hooks_config)
-    eval_hooks = getters.get_hooks(experiment_config.eval_hooks_config)
-
-    experiment = Experiment(
-        estimator=estimator,
-        train_input_fn=train_input_fn,
-        eval_input_fn=eval_input_fn,
-        train_steps=experiment_config.train_steps,
-        eval_steps=experiment_config.eval_steps,
-        train_hooks=train_hooks,
-        eval_hooks=eval_hooks,
-        eval_delay_secs=experiment_config.eval_delay_secs,
-        continuous_eval_throttle_secs=experiment_config.continuous_eval_throttle_secs,
-        eval_every_n_steps=experiment_config.eval_every_n_steps,
-        delay_workers_by_global_step=experiment_config.delay_workers_by_global_step,
-        export_strategies=experiment_config.export_strategies,
-        train_steps_per_iteration=experiment_config.train_steps_per_iteration)
-
-    return experiment
-
-
 def create_rl_experiment(experiment_config):
     """Creates a new reinforcement learning `Experiment` instance.
 

@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L275)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L280)</span>
 ## BasePGModel
 
 ```python
@@ -75,7 +75,7 @@ Create the new graph_fn based on the one specified by the user.
 
 
 ```python
-_call_graph_fn(self, inputs)
+_call_graph_fn(self, features, labels=None)
 ```
 
 

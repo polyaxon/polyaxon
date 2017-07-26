@@ -6,7 +6,8 @@ import polyaxon as plx
 
 def graph_fn(mode, features):
     x = plx.layers.Embedding(mode=mode, input_dim=10000, output_dim=128)(features['source_token'])
-    x = plx.layers.LSTM(mode=mode, num_units=128, dropout=0.8, dynamic=True)(x)
+    x = plx.layers.LSTM(mode=mode, num_units=128, dropout=0.8, dynamic=True)(
+        x, sequence_length=features['source_len'])
     x = plx.layers.FullyConnected(mode=mode, num_units=2)(x)
     return x
 

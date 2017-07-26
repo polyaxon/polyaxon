@@ -9,6 +9,61 @@ See `plx.image.resize`'s docstring
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L121)</span>
+## CentralCrop
+
+```python
+polyaxon.processing.image.CentralCrop(mode, central_fraction, name='CentralCrop')
+```
+
+See `plx.image.central_crop`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L156)</span>
+## RandomCrop
+
+```python
+polyaxon.processing.image.RandomCrop(mode, height, width, name='RandomCrop')
+```
+
+See `plx.image.random_crop`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L219)</span>
+## ExtractGlimpse
+
+```python
+polyaxon.processing.image.ExtractGlimpse(mode, size, offsets, centered=None, normalized=None, uniform_noise=None, name='ExtractGlimpse')
+```
+
+See `plx.image.extract_glimpse`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L290)</span>
+## ToBoundingBox
+
+```python
+polyaxon.processing.image.ToBoundingBox(mode, offset_height, offset_width, target_height, target_width, method='crop', name='ToBoundingBox')
+```
+
+See `plx.image.to_bounding_box`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L354)</span>
+## Flip
+
+```python
+polyaxon.processing.image.Flip(mode, axis=0, is_random=False, seed=None, name='Flip')
+```
+
+See `plx.image.flip`'s docstring
+
+----
+
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L394)</span>
 ## Transpose
 
@@ -141,58 +196,44 @@ See `plx.image.total_variation`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L219)</span>
-## ExtractGlimpse
+## central_crop
+
 
 ```python
-polyaxon.processing.image.ExtractGlimpse(mode, size, offsets, centered=None, normalized=None, uniform_noise=None, name='ExtractGlimpse')
+central_crop(images, central_fraction)
 ```
 
-See `plx.image.extract_glimpse`'s docstring
 
-----
+Crop the central region of the image.
+(A mirror to tf.image central_crop)
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L290)</span>
-## ToBoundingBox
+Remove the outer parts of an image but retain the central region of the image
+along each dimension. If we specify central_fraction = 0.5, this function
+returns the region marked with "X" in the below diagram.
 
-```python
-polyaxon.processing.image.ToBoundingBox(mode, offset_height, offset_width, target_height, target_width, method='crop', name='ToBoundingBox')
+```
+ --------
+|........|
+|..XXXX..|
+|..XXXX..|
+|........|   where "X" is the central 50% of the image.
+ --------
 ```
 
-See `plx.image.to_bounding_box`'s docstring
+- __Args__:
+	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
+	3-D Tensor of shape `[height, width, channels]`.
+	- __central_fraction__: float (0, 1], fraction of size to crop
 
-----
+- __Raises__:
+	- __ValueError__: if central_crop_fraction is not within (0, 1].
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L354)</span>
-## Flip
+- __Returns__:
+	If `images` was 4-D, a 4-D float Tensor of shape
+	`[batch, new_height, new_width, channels]`.
+	If `images` was 3-D, a 3-D float Tensor of shape
+	`[new_height, new_width, channels]`.
 
-```python
-polyaxon.processing.image.Flip(mode, axis=0, is_random=False, seed=None, name='Flip')
-```
-
-See `plx.image.flip`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L121)</span>
-## CentralCrop
-
-```python
-polyaxon.processing.image.CentralCrop(mode, central_fraction, name='CentralCrop')
-```
-
-See `plx.image.central_crop`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L156)</span>
-## RandomCrop
-
-```python
-polyaxon.processing.image.RandomCrop(mode, height, width, name='RandomCrop')
-```
-
-See `plx.image.random_crop`'s docstring
 
 ----
 
@@ -240,47 +281,6 @@ ratio is not the same as `size`.
 	shape arguments to this function.
 	- __ValueError__: if `size` has invalid shape or type.
 	- __ValueError__: if an unsupported resize method is specified.
-
-- __Returns__:
-	If `images` was 4-D, a 4-D float Tensor of shape
-	`[batch, new_height, new_width, channels]`.
-	If `images` was 3-D, a 3-D float Tensor of shape
-	`[new_height, new_width, channels]`.
-
-
-----
-
-## central_crop
-
-
-```python
-central_crop(images, central_fraction)
-```
-
-
-Crop the central region of the image.
-(A mirror to tf.image central_crop)
-
-Remove the outer parts of an image but retain the central region of the image
-along each dimension. If we specify central_fraction = 0.5, this function
-returns the region marked with "X" in the below diagram.
-
-```
- --------
-|........|
-|..XXXX..|
-|..XXXX..|
-|........|   where "X" is the central 50% of the image.
- --------
-```
-
-- __Args__:
-	- __images__: 4-D Tensor of shape `[batch, height, width, channels]` or
-	3-D Tensor of shape `[height, width, channels]`.
-	- __central_fraction__: float (0, 1], fraction of size to crop
-
-- __Raises__:
-	- __ValueError__: if central_crop_fraction is not within (0, 1].
 
 - __Returns__:
 	If `images` was 4-D, a 4-D float Tensor of shape
@@ -517,6 +517,206 @@ Rotate (randomly) images counter-clockwise by 90 degrees.
 
 - __Raises__:
 	- __ValueError__: if the shape of `image` not supported.
+
+
+----
+
+## convert_color_space
+
+
+```python
+convert_color_space(images, from_space, to_space, name=None)
+```
+
+
+Converts one or more images from RGB to Grayscale.
+(A mirror to tf.image rgb_to_grayscale, rgb_to_hsv, grayscale_to_rgb, and hsv_to_rgb)
+
+Outputs a tensor of the same `DType` and rank as `images`.
+
+Possible conversions:
+	* rgb_to_grayscale: The size of the last dimension of the output is 1,
+	containing the Grayscale value of the pixels.
+	* grayscale_to_rgb: The size of the last dimension of the output is 3,
+	containing the RGB value of the pixels.
+	* hsv_to_rgb: The output is only well defined if the value in `images` are in `[0,1]`.
+	* rgb_to_hsv: The output is only well defined if the value in `images` are in `[0,1]`.
+	`output[..., 0]` contains hue, `output[..., 1]` contains saturation, and
+	`output[..., 2]` contains value. All HSV values are in `[0,1]`. A hue of 0
+	corresponds to pure red, hue 1/3 is pure green, and 2/3 is pure blue.
+	* grayscale_to_hsv: grayscale_to_rgb then rgb_to_hsv
+	* hsv_to_grayscale: hsv_to_rgb then rgb_to_grayscale.
+
+- __Args__:
+	- __images__: 4-D Tensor of shape `[batch, height, width, channels]`
+	- __from_space__: The color to convert from.
+	- __to_space__: The color space to convert to.
+	- __name__: A name for the operation (optional).
+
+- __Returns__:
+	The converted image(s).
+
+
+----
+
+## convert_images_dtype
+
+
+```python
+convert_images_dtype(images, dtype, saturate=False, name=None)
+```
+
+
+Convert image(s) to `dtype`, scaling its values if needed.
+(A mirror to tf.image convert_image_dtype)
+
+  Images that are represented using floating point values are expected to have
+  values in the range [0,1). Image data stored in integer data types are
+  expected to have values in the range `[0,MAX]`, where `MAX` is the largest
+  positive representable number for the data type.
+
+  This op converts between data types, scaling the values appropriately before
+  casting.
+
+  Note that converting from floating point inputs to integer types may lead to
+  over/underflow problems. Set saturate to `True` to avoid such problem in
+  problematic conversions. If enabled, saturation will clip the output into the
+  allowed range before performing a potentially dangerous cast (and only before
+  performing such a cast, i.e., when casting from a floating point to an integer
+  type, and when casting from a signed to an unsigned type; `saturate` has no
+  effect on casts between floats, or on casts that increase the type's range).
+
+  - __Args__:
+	- __images__: An image.
+	- __dtype__: A `DType` to convert `image` to.
+	- __saturate__: If `True`, clip the input before casting (if necessary).
+	- __name__: A name for this operation (optional).
+
+  - __Returns__:
+	`image`, converted to `dtype`.
+  
+
+----
+
+## adjust_brightness
+
+
+```python
+adjust_brightness(images, delta, is_random=False, seed=None)
+```
+
+
+Adjust (randomly) the brightness of RGB or Grayscale images.
+(A mirror to tf.image adjust_brightness, random_birightness)
+
+This is a convenience method that converts an RGB image to float
+representation, adjusts its brightness, and then converts it back to the
+original data type. If several adjustments are chained it is advisable to
+minimize the number of redundant conversions.
+
+The value `delta` is added to all components of the tensor `image`. Both
+`image` and `delta` are converted to `float` before adding (and `image` is
+scaled appropriately if it is in fixed-point representation). For regular
+images, `delta` should be in the range `[0,1)`, as it is added to the image in
+floating point representation, where pixel values are in the `[0,1)` range.
+
+If `is_random` is `True`, adjust brightness using a value randomly picked in the
+interval `[-delta, delta)`.
+
+- __Args__:
+	- __images__: A tensor.
+	- __delta__: `float`. Amount to add to the pixel values.
+	- __is_random__: `bool`, If True, adjust randomly.
+	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+
+- __Returns__:
+	A brightness-adjusted tensor of the same shape and type as `images`.
+
+
+----
+
+## adjust_contrast
+
+
+```python
+adjust_contrast(images, contrast_factor, contrast_factor_max=None, is_random=False, seed=None)
+```
+
+
+Adjust (randomly) the contrast of RGB or grayscale images by contrast factor.
+(A mirror to tf.image adjust_contrast, random_contrast)
+
+This is a convenience method that converts an RGB image to float
+representation, adjusts its contrast, and then converts it back to the
+original data type. If several adjustments are chained it is advisable to
+minimize the number of redundant conversions.
+
+`images` is a tensor of at least 3 dimensions.  The last 3 dimensions are
+interpreted as `[height, width, channels]`.  The other dimensions only
+represent a collection of images, such as `[batch, height, width, channels].`
+
+Contrast is adjusted independently for each channel of each image.
+
+For each channel, this Op computes the mean of the image pixels in the
+channel and then adjusts each component `x` of each pixel to
+`(x - mean) * contrast_factor + mean`.
+
+If `is_random` is `True`: Equivalent to `adjust_contrast()` but the value is
+	randomly picked in the interval `[contrast_factor, contrast_factor_max]`.
+
+- __Args__:
+	- __images__: `tensor`. images tensor with 3 or more dimensions.
+	- __contrast_factor__: `float`.  Lower bound for the random contrast factor.
+	- __contrast_factor_max__: `float`.  Upper bound for the random contrast factor.
+	Used for random adjustment.
+	- __is_random__: `bool`, If True, adjust randomly.
+	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+
+- __Returns__:
+	The contrast-adjusted tensor.
+
+- __Raises__:
+	- __ValueError__: if `contrast_factor_max <= contrast_factor`
+		if `contrast_factor < 0`
+		if `contrast_factor_max` is None (for random.)
+
+
+----
+
+## adjust_hue
+
+
+```python
+adjust_hue(images, delta, is_random=False, seed=None, name=None)
+```
+
+
+Adjust (randomly) hue of an RGB images.
+(A mirror to tf.image adjust_hue, random_hue)
+
+This is a convenience method that converts an RGB image to float
+representation, converts it to HSV, add an offset to the hue channel, converts
+back to RGB and then back to the original data type. If several adjustments
+are chained it is advisable to minimize the number of redundant conversions.
+
+`image` is an RGB image.  The image hue is adjusted by converting the
+image to HSV and rotating the hue channel (H) by `delta`.
+The image is then converted back to RGB.
+
+`delta` must be in the interval `[-1, 1]`.
+
+If `is_random` is `True` adjust hue but uses a value randomly picked in
+the interval `[-delta, delta]`.
+
+- __Args__:
+	- __images__: RGB image or images. Size of the last dimension must be 3.
+	- __delta__: float.  How much to add to the hue channel.
+	- __is_random__: `bool`, If True, adjust randomly.
+	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
+	- __name__: A name for this operation (optional).
+
+- __Returns__:
+	Adjusted image(s), same shape and DType as `image`.
 
 
 ----
@@ -860,203 +1060,3 @@ This implements the anisotropic 2-D version of the formula described here:
 	total variation for each image in the batch.
 	If `images` was 3-D, return a scalar float with the total variation for
 	that image.
-
-
-----
-
-## convert_color_space
-
-
-```python
-convert_color_space(images, from_space, to_space, name=None)
-```
-
-
-Converts one or more images from RGB to Grayscale.
-(A mirror to tf.image rgb_to_grayscale, rgb_to_hsv, grayscale_to_rgb, and hsv_to_rgb)
-
-Outputs a tensor of the same `DType` and rank as `images`.
-
-Possible conversions:
-	* rgb_to_grayscale: The size of the last dimension of the output is 1,
-	containing the Grayscale value of the pixels.
-	* grayscale_to_rgb: The size of the last dimension of the output is 3,
-	containing the RGB value of the pixels.
-	* hsv_to_rgb: The output is only well defined if the value in `images` are in `[0,1]`.
-	* rgb_to_hsv: The output is only well defined if the value in `images` are in `[0,1]`.
-	`output[..., 0]` contains hue, `output[..., 1]` contains saturation, and
-	`output[..., 2]` contains value. All HSV values are in `[0,1]`. A hue of 0
-	corresponds to pure red, hue 1/3 is pure green, and 2/3 is pure blue.
-	* grayscale_to_hsv: grayscale_to_rgb then rgb_to_hsv
-	* hsv_to_grayscale: hsv_to_rgb then rgb_to_grayscale.
-
-- __Args__:
-	- __images__: 4-D Tensor of shape `[batch, height, width, channels]`
-	- __from_space__: The color to convert from.
-	- __to_space__: The color space to convert to.
-	- __name__: A name for the operation (optional).
-
-- __Returns__:
-	The converted image(s).
-
-
-----
-
-## convert_images_dtype
-
-
-```python
-convert_images_dtype(images, dtype, saturate=False, name=None)
-```
-
-
-Convert image(s) to `dtype`, scaling its values if needed.
-(A mirror to tf.image convert_image_dtype)
-
-  Images that are represented using floating point values are expected to have
-  values in the range [0,1). Image data stored in integer data types are
-  expected to have values in the range `[0,MAX]`, where `MAX` is the largest
-  positive representable number for the data type.
-
-  This op converts between data types, scaling the values appropriately before
-  casting.
-
-  Note that converting from floating point inputs to integer types may lead to
-  over/underflow problems. Set saturate to `True` to avoid such problem in
-  problematic conversions. If enabled, saturation will clip the output into the
-  allowed range before performing a potentially dangerous cast (and only before
-  performing such a cast, i.e., when casting from a floating point to an integer
-  type, and when casting from a signed to an unsigned type; `saturate` has no
-  effect on casts between floats, or on casts that increase the type's range).
-
-  - __Args__:
-	- __images__: An image.
-	- __dtype__: A `DType` to convert `image` to.
-	- __saturate__: If `True`, clip the input before casting (if necessary).
-	- __name__: A name for this operation (optional).
-
-  - __Returns__:
-	`image`, converted to `dtype`.
-  
-
-----
-
-## adjust_brightness
-
-
-```python
-adjust_brightness(images, delta, is_random=False, seed=None)
-```
-
-
-Adjust (randomly) the brightness of RGB or Grayscale images.
-(A mirror to tf.image adjust_brightness, random_birightness)
-
-This is a convenience method that converts an RGB image to float
-representation, adjusts its brightness, and then converts it back to the
-original data type. If several adjustments are chained it is advisable to
-minimize the number of redundant conversions.
-
-The value `delta` is added to all components of the tensor `image`. Both
-`image` and `delta` are converted to `float` before adding (and `image` is
-scaled appropriately if it is in fixed-point representation). For regular
-images, `delta` should be in the range `[0,1)`, as it is added to the image in
-floating point representation, where pixel values are in the `[0,1)` range.
-
-If `is_random` is `True`, adjust brightness using a value randomly picked in the
-interval `[-delta, delta)`.
-
-- __Args__:
-	- __images__: A tensor.
-	- __delta__: `float`. Amount to add to the pixel values.
-	- __is_random__: `bool`, If True, adjust randomly.
-	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
-
-- __Returns__:
-	A brightness-adjusted tensor of the same shape and type as `images`.
-
-
-----
-
-## adjust_contrast
-
-
-```python
-adjust_contrast(images, contrast_factor, contrast_factor_max=None, is_random=False, seed=None)
-```
-
-
-Adjust (randomly) the contrast of RGB or grayscale images by contrast factor.
-(A mirror to tf.image adjust_contrast, random_contrast)
-
-This is a convenience method that converts an RGB image to float
-representation, adjusts its contrast, and then converts it back to the
-original data type. If several adjustments are chained it is advisable to
-minimize the number of redundant conversions.
-
-`images` is a tensor of at least 3 dimensions.  The last 3 dimensions are
-interpreted as `[height, width, channels]`.  The other dimensions only
-represent a collection of images, such as `[batch, height, width, channels].`
-
-Contrast is adjusted independently for each channel of each image.
-
-For each channel, this Op computes the mean of the image pixels in the
-channel and then adjusts each component `x` of each pixel to
-`(x - mean) * contrast_factor + mean`.
-
-If `is_random` is `True`: Equivalent to `adjust_contrast()` but the value is
-	randomly picked in the interval `[contrast_factor, contrast_factor_max]`.
-
-- __Args__:
-	- __images__: `tensor`. images tensor with 3 or more dimensions.
-	- __contrast_factor__: `float`.  Lower bound for the random contrast factor.
-	- __contrast_factor_max__: `float`.  Upper bound for the random contrast factor.
-	Used for random adjustment.
-	- __is_random__: `bool`, If True, adjust randomly.
-	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
-
-- __Returns__:
-	The contrast-adjusted tensor.
-
-- __Raises__:
-	- __ValueError__: if `contrast_factor_max <= contrast_factor`
-		if `contrast_factor < 0`
-		if `contrast_factor_max` is None (for random.)
-
-
-----
-
-## adjust_hue
-
-
-```python
-adjust_hue(images, delta, is_random=False, seed=None, name=None)
-```
-
-
-Adjust (randomly) hue of an RGB images.
-(A mirror to tf.image adjust_hue, random_hue)
-
-This is a convenience method that converts an RGB image to float
-representation, converts it to HSV, add an offset to the hue channel, converts
-back to RGB and then back to the original data type. If several adjustments
-are chained it is advisable to minimize the number of redundant conversions.
-
-`image` is an RGB image.  The image hue is adjusted by converting the
-image to HSV and rotating the hue channel (H) by `delta`.
-The image is then converted back to RGB.
-
-`delta` must be in the interval `[-1, 1]`.
-
-If `is_random` is `True` adjust hue but uses a value randomly picked in
-the interval `[-delta, delta]`.
-
-- __Args__:
-	- __images__: RGB image or images. Size of the last dimension must be 3.
-	- __delta__: float.  How much to add to the hue channel.
-	- __is_random__: `bool`, If True, adjust randomly.
-	- __seed__: A Python integer. Used to create a random seed. See @{tf.set_random_seed}.
-	- __name__: A name for this operation (optional).
-
-- __Returns__:
-	Adjusted image(s), same shape and DType as `image`.

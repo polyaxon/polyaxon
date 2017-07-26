@@ -65,12 +65,14 @@ Optionally prepends or appends special tokens.
 polyaxon.processing.data_decoders.TFSequenceExampleDecoder(context_keys_to_features, sequence_keys_to_features, items_to_handlers)
 ```
 
-A decoder for TensorFlow Examples.
+A decoder for TensorFlow Sequence Examples.
+
 Decoding Example proto buffers is comprised of two stages: (1) Example parsing
 and (2) tensor manipulation.
-In the first stage, the tf.parse_example function is called with a list of
-FixedLenFeatures and SparseLenFeatures. These instances tell TF how to parse
-the example. The output of this stage is a set of tensors.
+
+In the first stage, the tf.parse_single_sequence_example function is called with a list of
+FixedLenFeatures, SparseLenFeatures, and FixedLenSequenceFeature.
+These instances tell TF how to parse the example. The output of this stage is a set of tensors.
 In the second stage, the resulting tensors are manipulated to provide the
 requested 'item' tensors.
 To perform this decoding operation, an ExampleDecoder is given a list of

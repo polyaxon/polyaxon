@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L19)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L18)</span>
 ## Pipeline
 
 ```python
@@ -19,16 +19,14 @@ features and labels.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L74)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L73)</span>
 ## TFRecordImagePipeline
 
 ```python
 polyaxon.processing.pipelines.TFRecordImagePipeline(mode, name='TFRecordImagePipeline', subgraphs_by_features=None, shuffle=True, num_epochs=None, data_files=None, meta_data_file=None)
 ```
 
-Abstract InputPipeline class. All input pipelines must inherit from this.
-An InputPipeline defines how data is read, parsed, and separated into
-features and labels.
+A Pipeline to convert TF-Records to images.
 
 - __Args__:
 	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
@@ -40,7 +38,7 @@ features and labels.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L149)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L247)</span>
 ## ParallelTextPipeline
 
 ```python
@@ -66,7 +64,7 @@ An input pipeline that reads two parallel (line-by-line aligned) text files.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L228)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L326)</span>
 ## TFRecordSourceSequencePipeline
 
 ```python
@@ -92,7 +90,7 @@ An input pipeline that reads a TFRecords containing both source and target seque
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L317)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L415)</span>
 ## ImageCaptioningPipeline
 
 ```python

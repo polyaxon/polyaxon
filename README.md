@@ -238,7 +238,7 @@ Or you can just clone the repo `git clone https://github.com/polyaxon/polyaxon.g
 
 # Examples
 
-Some example are provided [here](examples), more examples and use case will pushed, a contribution with an example is also appreciated.
+Some examples are provided [here](examples), more examples and use cases will pushed, a contribution with an example is also appreciated.
 
 # Project status
 

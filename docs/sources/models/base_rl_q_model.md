@@ -100,7 +100,7 @@ The structure of the graph is the following:
 
 
 ```python
-_call_graph_fn(self, inputs)
+_call_graph_fn(self, features, labels=None)
 ```
 
 
@@ -113,7 +113,8 @@ If `is_dueling` is set to `True`,
 then another layer is added that represents the state value.
 
 - __Args__:
-	- __inputs__: `Tensor` or `dict` of tensors
+	- __features__: `Tensor` or `dict` of tensors
+	- __labels__: `Tensor` or `dict` of tensors
 
 
 ----

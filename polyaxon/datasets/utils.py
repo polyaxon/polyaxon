@@ -151,7 +151,7 @@ def create_sequence_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_f
     )
     eval_input_fn = create_input_data_fn(
         mode=Modes.EVAL,
-        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=True,
+        pipeline_config=PipelineConfig(module='TFRecordSequencePipeline', dynamic_pad=True,
                                        bucket_boundaries=bucket_boundaries,
                                        params={'data_files': eval_data_file,
                                                'meta_data_file': meta_data_filename})

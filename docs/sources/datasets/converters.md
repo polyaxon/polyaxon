@@ -1,63 +1,63 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters.py#L13)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L16)</span>
 ## ImageReader
 
 ```python
-polyaxon.datasets.converters.ImageReader(channels=3)
+polyaxon.datasets.converters.image_converters.ImageReader(channels=3)
 ```
 
 Base ImageReader class that provides an operation to read/encode/decode an image.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters.py#L29)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L32)</span>
 ## PNGImageReader
 
 ```python
-polyaxon.datasets.converters.PNGImageReader(channels=3)
+polyaxon.datasets.converters.image_converters.PNGImageReader(channels=3)
 ```
 
 A png image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters.py#L35)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L38)</span>
 ## PNGNumpyImageReader
 
 ```python
-polyaxon.datasets.converters.PNGNumpyImageReader(shape=None)
+polyaxon.datasets.converters.image_converters.PNGNumpyImageReader(shape=None)
 ```
 
 A numpy png image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters.py#L50)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L53)</span>
 ## JPGNumpyImageReader
 
 ```python
-polyaxon.datasets.converters.JPGNumpyImageReader(shape=None)
+polyaxon.datasets.converters.image_converters.JPGNumpyImageReader(shape=None)
 ```
 
 A jpeg numpy image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters.py#L64)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L67)</span>
 ## JPEGImageReader
 
 ```python
-polyaxon.datasets.converters.JPEGImageReader(channels=3)
+polyaxon.datasets.converters.image_converters.JPEGImageReader(channels=3)
 ```
 
 A jpeg image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters.py#L70)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L73)</span>
 ## ImagesToTFExampleConverter
 
 ```python
-polyaxon.datasets.converters.ImagesToTFExampleConverter(classes, colorspace, image_format, channels, image_reader=None, height=None, width=None, store_filenames=False)
+polyaxon.datasets.converters.image_converters.ImagesToTFExampleConverter(classes, colorspace, image_format, channels, image_reader=None, height=None, width=None, store_filenames=False)
 ```
 
 Converts images to a TFRecords of TF-Example protos.

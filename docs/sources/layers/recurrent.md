@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L122)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L121)</span>
 ## SimpleRNN
 
 ```python
@@ -40,7 +40,7 @@ Simple RNN (Simple Recurrent Layer.)
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L186)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L185)</span>
 ## LSTM
 
 ```python
@@ -94,7 +94,7 @@ LSTM (Long Short Term Memory Recurrent Layer).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L265)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L264)</span>
 ## GRU
 
 ```python
@@ -146,7 +146,7 @@ GRU (Gated Recurrent Unit Layer).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L340)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L339)</span>
 ## BidirectionalRNN
 
 ```python
@@ -190,7 +190,7 @@ cells number of units must match.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L461)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L459)</span>
 ## BasicRNNCell
 
 ```python
@@ -212,7 +212,7 @@ The most basic RNN cell with custom params.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L507)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L505)</span>
 ## GRUCell
 
 ```python
@@ -236,7 +236,7 @@ Gated Recurrent Unit cell with custom params.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L572)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L570)</span>
 ## BasicLSTMCell
 
 ```python
@@ -276,7 +276,7 @@ For advanced models, please use the full LSTMCell that follows.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L692)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L690)</span>
 ## DropoutWrapper
 
 ```python
@@ -305,7 +305,7 @@ Dropout is never used on the state.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L764)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L762)</span>
 ## MultiRNNCell
 
 ```python

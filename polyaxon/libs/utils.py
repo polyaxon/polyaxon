@@ -48,15 +48,18 @@ def get_tracked(collection, module_name=None, scope=None):
         return tf.get_collection(key=_collection, scope=scope)
 
 
-def get_shape(x):
+def get_shape(x, dynamic=False):
     """Get the incoming data shape.
 
     Args:
         x: incoming data.
+        dynamic: Whether to get the dynamic shape of the static shape of a tensor.
     Returns:
         the incoming data shape.
     """
     if isinstance(x, (tf.Tensor, tf.Variable)):
+        if dynamic:
+            return tf.shape(x)
         return x.get_shape().as_list()
     elif type(x) in [np.ndarray, list, tuple]:
         return np.shape(x)
