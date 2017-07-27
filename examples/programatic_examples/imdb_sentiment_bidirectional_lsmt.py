@@ -6,8 +6,12 @@ import polyaxon as plx
 
 def graph_fn(mode, features):
     x = plx.layers.Embedding(mode=mode, input_dim=10000, output_dim=128)(features['source_token'])
-    x = plx.layers.LSTM(mode=mode, num_units=128, dropout=0.8, dynamic=True)(
+    rnncell_fw = plx.layers.BasicLSTMCell(mode=mode, num_units=128)
+    rnncell_bw = plx.layers.BasicLSTMCell(mode=mode, num_units=128)
+    x = plx.layers.BidirectionalRNN(
+        mode=mode, rnncell_fw=rnncell_fw, rnncell_bw=rnncell_bw, dynamic=True)(
         x, sequence_length=features['source_len'])
+    x = plx.layers.Dropout(mode=mode, keep_prob=0.5)(x)
     x = plx.layers.FullyConnected(mode=mode, num_units=2)(x)
     return x
 
@@ -26,7 +30,9 @@ def model_fn(features, labels, params, mode, config):
 
 
 def experiment_fn(output_dir):
-    """Creates an experiment using LSTM architecture to classify IMDB sentiment dataset."""
+    """Creates an experiment using bidirectional rnn based on LSTM cells
+    to classify IMDB sentiment dataset.
+    """
     dataset_dir = '../data/imdb'
     plx.datasets.imdb.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.imdb.create_input_fn(dataset_dir)
@@ -46,7 +52,7 @@ def experiment_fn(output_dir):
 
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
-                                   output_dir="/tmp/polyaxon_logs/imdb_lsmt",
+                                   output_dir="/tmp/polyaxon_logs/imdb_bidirectional_lsmt",
                                    schedule='continuous_train_and_evaluate')
 
 
