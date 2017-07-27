@@ -389,34 +389,40 @@ class BidirectionalRNN(BaseLayer):
         """
         assert (self.rnncell_fw.output_size ==
                 self.rnncell_bw.output_size), "RNN Cells number of units must match!"
+
+        sequence_length = kwargs.get('sequence_length')
+        if self.dynamic and sequence_length is None:
+            sequence_length = retrieve_seq_length_op(
+                incoming if isinstance(incoming, tf.Tensor) else tf.stack(incoming))
+
         input_shape = get_shape(incoming)
 
         # TODO: DropoutWrapper
 
         inference = incoming
-        # If a tensor given, convert it to a per timestep list
+        # If a static rnn and tensor given, convert it to a per timestep list
         if type(inference) not in [list, np.array] and not self.dynamic:
             ndim = len(input_shape)
             assert ndim >= 3, 'Input dim should be at least 3.'
             axes = [1, 0] + list(xrange(2, ndim))
-            inference = tf.transpose(inference, (axes,))
-            inference = tf.unstack(inference)
+            inference = tf.transpose(inference, axes)
+            inference = tf.unstack(value=inference)
 
-        sequence_length = None
         if self.dynamic:
-            sequence_length = retrieve_seq_length_op(
-                incoming if isinstance(incoming, tf.Tensor) else tf.stack(incoming))
-            outputs, states_fw, states_bw = tf.nn.bidirectional_dynamic_rnn(
+            # outputs are a tuple of (fw, bw) outputs
+            outputs, (states_fw, states_bw) = tf.nn.bidirectional_dynamic_rnn(
                 cell_fw=self.rnncell_fw, cell_bw=self.rnncell_bw, inputs=inference,
                 initial_state_fw=self.initial_state_fw,
                 initial_state_bw=self.initial_state_bw,
                 sequence_length=sequence_length,
                 dtype=tf.float32)
         else:
+            # outputs are a concatenation of both bw and fw outputs
             outputs, states_fw, states_bw = rnn.static_bidirectional_rnn(
                 cell_fw=self.rnncell_fw, cell_bw=self.rnncell_bw, inputs=inference,
                 initial_state_fw=self.initial_state_fw,
                 initial_state_bw=self.initial_state_bw,
+                sequence_length=sequence_length,
                 dtype=tf.float32)
 
         for v in [self.rnncell_fw.w, self.rnncell_fw.b, self.rnncell_bw.w, self.rnncell_bw.b]:
@@ -426,13 +432,17 @@ class BidirectionalRNN(BaseLayer):
             else:
                 track(v, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
 
-        tf.add_to_collection(tf.GraphKeys.ACTIVATIONS, outputs[-1])
+        if self.dynamic:
+            tf.add_to_collection(tf.GraphKeys.ACTIVATIONS, outputs[0][-1])
+        else:
+            tf.add_to_collection(tf.GraphKeys.ACTIVATIONS, outputs[-1])
 
         if self.dynamic:
             if self.return_seq:
                 o = outputs
             else:
-                o = get_sequence_relevant_output(outputs, sequence_length)
+                # we are only interested in the fw pass here
+                o = get_sequence_relevant_output(outputs[0], sequence_length)
         else:
             o = outputs if self.return_seq else outputs[-1]
 
