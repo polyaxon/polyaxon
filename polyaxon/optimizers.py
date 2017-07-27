@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from collections import OrderedDict
 
 import tensorflow as tf
+
 from tensorflow.python.training.training_util import get_global_step
 
 from polyaxon.libs.utils import track, get_arguments

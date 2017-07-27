@@ -10,9 +10,9 @@ from six.moves import xrange
 import tensorflow as tf
 
 from six.moves import urllib
-from tensorflow.python.framework.errors_impl import NotFoundError
 
 from polyaxon import Modes
+from polyaxon.libs.exceptions import NotFoundError
 from polyaxon.libs.configs import PipelineConfig
 from polyaxon.processing import create_input_data_fn
 

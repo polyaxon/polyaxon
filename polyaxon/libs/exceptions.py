@@ -3,6 +3,11 @@ class ConfigurationError(Exception):
     pass
 
 
+class NotFoundError(Exception):
+    """Exception class to raise if a file was not found."""
+    pass
+
+
 class EstimatorNotTrainedError(Exception):
     """Exception class to raise if estimator is used before being trained."""
     pass

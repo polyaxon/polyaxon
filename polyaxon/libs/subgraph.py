@@ -8,10 +8,8 @@ from collections import Mapping
 
 import tensorflow as tf
 
-from polyaxon.layers import LAYERS
 from polyaxon.libs.template_module import GraphModule, BaseLayer, ImageProcessorModule
-
-# Currently there's an issue with numpy_input_fn, it's keeps updating the Xs dictionary
+from polyaxon.layers import LAYERS
 from polyaxon.processing import PROCESSORS
 
 FEATURE_BLACK_LIST = ['__target_key__', '__record_key__']
