@@ -5,5 +5,5 @@ source $DIR/environment
 $DIR/check
 
 if [ $? -eq 0 ]; then
-     docker-compose run -w /polyaxon/examples/polyaxon-logs -p 6006:6006 --rm --name=polyaxon_tensorboard plx tensorboard --logdir=${PWD} --host=0.0.0.0
+     docker run -v $dir/..:/  -w /polyaxon/examples/polyaxon-logs -p 6006:6006 --rm --name=polyaxon_tensorboard plx tensorboard --logdir=${PWD} --host=0.0.0.0
 fi

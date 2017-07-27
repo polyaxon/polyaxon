@@ -5,5 +5,5 @@ source $DIR/environment
 $DIR/check
 
 if [ $? -eq 0 ]; then
-    docker-compose run --rm --name=polyaxon_python plx ipython
+    docker run -v $DIR/..:/polyaxon -it plx ipython
 fi

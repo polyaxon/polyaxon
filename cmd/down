@@ -4,6 +4,7 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose -f docker-compose.yml -f docker-compose.testing.yml down
-    docker-compose down
+    containers=$(docker ps -a -q --filter=ancestor=plx)
+    [ -n "$containers" ] && docker rm $containers
+    docker rmi plx
 fi

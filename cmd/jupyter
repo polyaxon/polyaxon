@@ -5,5 +5,5 @@ source $DIR/environment
 $DIR/check
 
 if [ $? -eq 0 ]; then
-     docker-compose run -w /polyaxon/examples -p 8888:8888 --rm --name=polyaxon-jupyter plx jupyter notebook --ip 0.0.0.0 --allow-root
+     docker run -v $DIR/..:/polyaxon -w /polyaxon/examples -p 8888:8888 --rm --name=polyaxon-jupyter plx jupyter notebook --ip 0.0.0.0 --allow-root
 fi
