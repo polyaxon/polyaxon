@@ -11,14 +11,13 @@ env:
     - PYTHONPATH=$HOME/builds/polyaxon/polyaxon-api/api
     - PIP_USE_MIRRORS=true
   matrix:
-    - TENSORFLOW_VERSION=1.1.0
-    - TENSORFLOW_VERSION=1.2.0
+    - TENSORFLOW_VERSION=1.2.1
 
 services:
   - postgresql
 
 addons:
-  postgresql: "9.5"
+  postgresql: "9.6"
 
 install:
   # http://conda.pydata.org/docs/travis.html
