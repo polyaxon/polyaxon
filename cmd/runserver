@@ -4,5 +4,9 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose run --publish 8000:8000 --rm --name=polyaxon_web web python3 ./api/manage.py runserver 0.0.0.0:8000
+    if [ -z "$1" ]; then
+        docker-compose run --publish 8000:8000 --rm --name=polyaxon_web web python3 ./api/manage.py runserver 0.0.0.0:8000
+    elif [ "$1" = "uwsgi" ]; then
+        docker-compose run --publish 8000:8000 --rm --name=polyaxon_web web uwsgi --ini uwsgi.ini
+    fi
 fi

@@ -1,4 +1,4 @@
-FROM polyaxon/polyaxon-1.1.0
+FROM polyaxon/polyaxon:api-cpu-3-121
 
 MAINTAINER mourad mourafiq <mouradmourafiq@gmail.com>
 

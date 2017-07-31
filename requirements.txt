@@ -3,12 +3,13 @@ seaborn==0.7.1
 jupyter==1.0.0
 pandas==0.18.1
 pandas-summary==0.0.41
-tensorflow>=1.1.0
-Django==1.11.2
+tensorflow>=1.2.0
+Django==1.11.3
 djangorestframework==3.5.3
 djangorestframework-camel-case==0.2.0
 Unipath==1.1
-psycopg2==2.6.2
+psycopg2==2.7.3
 celery==4.0.2
 redis==2.10.5
+uWSGI==2.0.15
 https://github.com/polyaxon/polyaxon/archive/master.zip

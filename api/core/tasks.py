@@ -6,7 +6,7 @@ import logging
 import polyaxon as plx
 
 from api.settings import CeleryTasks
-from api.celery import app
+from api.celery_api import app
 from core.models import Experiment
 from core.task_status import ExperimentStatus
 

@@ -2,7 +2,10 @@ version: "3"
 
 services:
   postgres:
-    image: postgres:9.5-alpine
+    image: postgres:9.6-alpine
+#    volumes:
+#      - pg_data:/var/lib/postgresql/data
+#      - pg_backups:/pg_backups
     environment:
       POSTGRES_USER: "polyaxon"
       POSTGRES_PASSWORD: "polyaxon"
@@ -60,6 +63,9 @@ services:
     depends_on:
       - redis
 
+#volumes:
+#  pg_data: {}
+#  pg_backups: {}
 
 networks:
   api:
