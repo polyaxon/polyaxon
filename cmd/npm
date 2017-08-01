@@ -4,5 +4,5 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose run -w /polyaxon-api/client web npm $*
+    docker-compose run -w /polyaxon/client --rm --name=polyaxon_npm web npm $*
 fi
