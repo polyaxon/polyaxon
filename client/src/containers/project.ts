@@ -1,6 +1,6 @@
-// import { connect, Dispatch } from 'react-redux';
-// import * as actions from '../actions/project';
-// import { AppState } from '../types/index';
+// import { connect, Dispatch } from "react-redux";
+// import * as actions from "../actions/project";
+// import { AppState } from "../types/index";
 // import Project from "../components/Project";
 //
 //

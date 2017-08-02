@@ -1,4 +1,4 @@
-import {Reducer} from 'redux';
+import {Reducer} from "redux";
 import {ExperimentAction, actionTypes} from "../actions/experiment";
 import {ExperimentModel} from "../models/experiment";
 

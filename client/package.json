@@ -25,6 +25,7 @@
     "webpack-dev-server": "^2.6.1"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.71",
     "@types/react": "^15.0.39",
     "@types/react-bootstrap": "0.0.52",
     "@types/react-dom": "^15.5.1",
@@ -33,6 +34,7 @@
     "@types/react-router-dom": "^4.0.7",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
+    "lodash": "^4.17.4",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.1",
     "react-dom": "^15.6.1",

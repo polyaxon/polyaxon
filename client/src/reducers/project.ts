@@ -1,5 +1,5 @@
-import {Reducer} from 'redux';
-import {actionTypes, ProjectAction} from '../actions/project';
+import {Reducer} from "redux";
+import {actionTypes, ProjectAction} from "../actions/project";
 import {ProjectModel} from "../models/project";
 
 export const projectReducer: Reducer<ProjectModel[]> =
