@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "typeRoots": [
+        "node_modules/@types"
+    ],
     "outDir": "./dist",
     "module": "commonjs",
     "target": "es5",
