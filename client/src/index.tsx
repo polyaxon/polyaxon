@@ -8,6 +8,8 @@ import configureStore from "./configureStore";
 
 
 const store = configureStore();
+store.subscribe(() => console.log(store.getState()));
+// store.dispatch(createExperiment({id:123212313 * Math.random(), name:'Learn about actions'}));
 
 ReactDOM.render(
   <Provider store={store}>

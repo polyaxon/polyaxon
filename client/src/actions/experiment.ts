@@ -3,32 +3,40 @@ import {ExperimentModel} from "../models/experiment";
 
 
 export enum actionTypes {
-    CREATE_EXPERIMENT,
-    DELETE_EXPERIMENT,
-    UPDATE_EXPERIMENT,
+    CREATE_EXPERIMENT='CREATE_EXPERIMENT',
+    DELETE_EXPERIMENT='DELETE_EXPERIMENT',
+    UPDATE_EXPERIMENT='UPDATE_EXPERIMENT',
 }
 
-export interface ExperimentAction extends Action {
-	experiments: ExperimentModel[];
+export interface CreateUpdateExperimentAction extends Action {
+  type: actionTypes.CREATE_EXPERIMENT | actionTypes.UPDATE_EXPERIMENT;
+  experiment: ExperimentModel
 }
 
-export function createExperiment(): ExperimentAction {
+export interface DeleteExperimentAction extends Action {
+  type: actionTypes.DELETE_EXPERIMENT;
+  experimentId: number
+}
+
+export type ExperimentAction = CreateUpdateExperimentAction | DeleteExperimentAction;
+
+export function createExperiment(experiment: ExperimentModel): ExperimentAction {
     return {
       type: actionTypes.CREATE_EXPERIMENT,
-      experiments: []
+      experiment
     }
 }
 
-export function deleteExperiment(): ExperimentAction {
-    return {
-      type: actionTypes.DELETE_EXPERIMENT,
-      experiments: []
-    }
-}
-
-export function updateExperiment(): ExperimentAction {
+export function updateExperiment(experiment: ExperimentModel): ExperimentAction {
     return {
       type: actionTypes.UPDATE_EXPERIMENT,
-      experiments: []
+      experiment
+    }
+}
+
+export function deleteExperiment(experimentId: number): DeleteExperimentAction {
+    return {
+      type: actionTypes.DELETE_EXPERIMENT,
+      experimentId
     }
 }

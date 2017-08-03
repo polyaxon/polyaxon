@@ -1,11 +1,20 @@
 import * as React from "react";
+import {Button} from "react-bootstrap";
+
 import {ExperimentModel} from "../models/experiment";
 
 
-function Experiment(props: ExperimentModel) {
-  return (
-    <div className="project">
+export interface Props {
+  experiment: ExperimentModel;
+  onDelete?: () => void;
+}
 
+
+function Experiment({experiment, onDelete}: Props) {
+  return (
+    <div className="experiment">
+      {experiment.name}
+      <Button className="warning" onClick={onDelete}>delete</Button>
     </div>
   );
 }

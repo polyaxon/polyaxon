@@ -3,34 +3,41 @@ import {ProjectModel} from "../models/project";
 
 
 export enum actionTypes {
-  CREATE_PROJECT,
-  DELETE_PROJECT,
-  UPDATE_PROJECT
+  CREATE_PROJECT='CREATE_PROJECT',
+  DELETE_PROJECT='DELETE_PROJECT',
+  UPDATE_PROJECT='UPDATE_PROJECT',
 }
 
 
-export interface ProjectAction extends Action {
-	project: ProjectModel;
+export interface CreateUpdateProjectAction extends Action {
+  type: actionTypes.CREATE_PROJECT | actionTypes.UPDATE_PROJECT;
+  project: ProjectModel
 }
 
+export interface DeleteProjectAction extends Action {
+  type: actionTypes.DELETE_PROJECT;
+  projectId: number
+}
 
-export function createProject(): ProjectAction {
+export type ProjectAction = CreateUpdateProjectAction | DeleteProjectAction;
+
+export function createProject(project: ProjectModel): ProjectAction {
     return {
       type: actionTypes.CREATE_PROJECT,
-      project: {id:1, name:'lol', description:'sdf', isPrivate:true} as ProjectModel
+      project
     }
 }
 
-export function deleteProject(): ProjectAction {
+export function deleteProject(projectId: number): ProjectAction {
     return {
       type: actionTypes.DELETE_PROJECT,
-      project: {id:1, name:'lol', description:'sdf', isPrivate:true} as ProjectModel
+      projectId
     }
 }
 
-export function updateProject(): ProjectAction {
+export function updateProject(project: ProjectModel): ProjectAction {
     return {
       type: actionTypes.UPDATE_PROJECT,
-      project: {id:1, name:'lol', description:'sdf', isPrivate:true} as ProjectModel
+      project
     }
 }

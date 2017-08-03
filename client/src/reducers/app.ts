@@ -1,12 +1,12 @@
 import {combineReducers} from "redux";
-import {projectReducer} from "./project";
-import {experimentReducer} from "./experiment";
+import {projectsReducer} from "./projects";
+import {experimentsReducer} from "./experiments";
 import {AppState} from "../types/index";
 
 
 const appReducer = combineReducers<AppState>({
-  projects: projectReducer,
-  experiments: experimentReducer
+  projects: projectsReducer,
+  experiments: experimentsReducer,
 });
 
 export default appReducer;

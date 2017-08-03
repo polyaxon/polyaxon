@@ -1,6 +1,9 @@
 import * as React from "react";
 import {Switch, Redirect, Route} from "react-router-dom";
 
+import Experiments from "../containers/experiments";
+import Projects from "../containers/projects";
+
 
 const Home = () => (
   <div>
@@ -18,6 +21,8 @@ function Routes() {
   return (
     <Switch>
         <Route exact path="/" component={Home}/>
+        <Route exact path="/projects" component={Projects}/>
+        <Route exact path="/experiments" component={Experiments}/>
         <Route path="/about" component={About}/>
         <Redirect from="*" to="/"/>
     </Switch>
