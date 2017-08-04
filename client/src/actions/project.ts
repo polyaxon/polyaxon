@@ -1,4 +1,5 @@
 import {Action} from "redux";
+
 import {ProjectModel} from "../models/project";
 
 
@@ -21,21 +22,21 @@ export interface DeleteProjectAction extends Action {
 
 export type ProjectAction = CreateUpdateProjectAction | DeleteProjectAction;
 
-export function createProject(project: ProjectModel): ProjectAction {
+export function createProject(project: ProjectModel): CreateUpdateProjectAction {
     return {
       type: actionTypes.CREATE_PROJECT,
       project
     }
 }
 
-export function deleteProject(projectId: number): ProjectAction {
+export function deleteProject(projectId: number): DeleteProjectAction {
     return {
       type: actionTypes.DELETE_PROJECT,
       projectId
     }
 }
 
-export function updateProject(project: ProjectModel): ProjectAction {
+export function updateProject(project: ProjectModel): CreateUpdateProjectAction {
     return {
       type: actionTypes.UPDATE_PROJECT,
       project

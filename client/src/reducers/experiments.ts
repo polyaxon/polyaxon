@@ -1,4 +1,5 @@
 import {Reducer} from "redux";
+
 import {ExperimentAction, actionTypes} from "../actions/experiment";
 import {ExperimentModel} from "../models/experiment";
 
@@ -15,6 +16,8 @@ export const experimentsReducer: Reducer<ExperimentModel[]> =
       return state.filter(xp => xp.id != action.experimentId);
     case actionTypes.UPDATE_EXPERIMENT:
       return state.map(xp => xp.id === action.experiment.id? action.experiment: xp);
+    case actionTypes.RECEIVE_EXPERIMENTS:
+      return [...state, ...action.experiments];
   }
   return state;
 };
