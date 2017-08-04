@@ -12,4 +12,5 @@ psycopg2==2.7.3
 celery==4.0.2
 redis==2.10.5
 uWSGI==2.0.15
+django-cors-headers==2.1.0
 https://github.com/polyaxon/polyaxon/archive/master.zip
