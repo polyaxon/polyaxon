@@ -18,3 +18,5 @@ EXPOSE 6006
 EXPOSE 8888
 # Django
 EXPOSE 8000
+# npm-dev-server
+EXPOSE 8001

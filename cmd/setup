@@ -24,7 +24,7 @@ if [ $? -eq 0 ]; then
     $DIR/npm install
 
     echo "Compiling ts to js..."
-    $DIR/npm run tsc
+    $DIR/npm run build
 
     rm -f $LOG_FILE || true
 

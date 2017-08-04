@@ -7,7 +7,7 @@ if [ $? -eq 0 ]; then
     if [ -z "$1" ]; then
         docker-compose run --publish 8000:8000 --rm --name=polyaxon_server web python3 ./api/manage.py runserver 0.0.0.0:8000
     elif [ "$1" = "npm" ]; then
-        docker-compose run -w /polyaxon/client --publish 8000:8000 --rm --name=polyaxon_server web npm run dev
+        docker-compose run -w /polyaxon/client --publish 8001:8001 --rm --name=polyaxon_npm_server web npm run dev
     elif [ "$1" = "uwsgi" ]; then
         docker-compose run --publish 8000:8000 --rm --name=polyaxon_server web uwsgi --ini uwsgi.ini
     fi
