@@ -1,12 +1,15 @@
-import {Action} from "redux";
+import {Action, Dispatch} from "redux";
 
 import {ProjectModel} from "../models/project";
+import {PROJECTS_URL} from "../constants/api";
 
 
 export enum actionTypes {
   CREATE_PROJECT='CREATE_PROJECT',
   DELETE_PROJECT='DELETE_PROJECT',
   UPDATE_PROJECT='UPDATE_PROJECT',
+  RECEIVE_PROJECTS='RECEIVE_PROJECTS',
+  REQUEST_PROJECTS='REQUEST_PROJECTS',
 }
 
 
@@ -20,7 +23,16 @@ export interface DeleteProjectAction extends Action {
   projectId: number
 }
 
-export type ProjectAction = CreateUpdateProjectAction | DeleteProjectAction;
+export interface ReceiveProjects extends Action {
+  type: actionTypes.RECEIVE_PROJECTS;
+  projects: ProjectModel[]
+}
+
+export interface RequestProjects extends Action {
+  type: actionTypes.REQUEST_PROJECTS;
+}
+
+export type ProjectAction = CreateUpdateProjectAction | DeleteProjectAction | ReceiveProjects | RequestProjects;
 
 export function createProject(project: ProjectModel): CreateUpdateProjectAction {
     return {
@@ -42,3 +54,28 @@ export function updateProject(project: ProjectModel): CreateUpdateProjectAction 
       project
     }
 }
+
+
+export function requestProjects(): RequestProjects {
+  return {
+    type: actionTypes.REQUEST_PROJECTS,
+  }
+}
+
+export function receiveProjects(projects: ProjectModel[]): ReceiveProjects {
+  return {
+    type: actionTypes.RECEIVE_PROJECTS,
+    projects
+  }
+}
+
+
+export function fetchProjects(): Dispatch<ProjectModel[]> {
+  return dispatch => {
+    dispatch(requestProjects());
+    return fetch(PROJECTS_URL)
+      .then(response => response.json())
+      .then(json => dispatch(receiveProjects(json)))
+  }
+}
+

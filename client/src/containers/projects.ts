@@ -1,7 +1,7 @@
 import { connect, Dispatch } from "react-redux";
 
 import { AppState } from "../types/index";
-import Projects, {Props} from "../components/Projects";
+import Projects from "../components/Projects";
 import {ProjectModel} from "../models/project";
 import * as actions from "../actions/project";
 
@@ -16,6 +16,7 @@ export interface DispatchProps {
   onCreate?: (project: ProjectModel) => any;
   onDelete?: (projectId: number) => any;
   onUpdate?: (project: ProjectModel) => any;
+  fetchData?: () => any;
 }
 
 
@@ -24,6 +25,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>): D
     onCreate: (project: ProjectModel) => dispatch(actions.createProject(project)),
     onDelete: (projectId: number) => dispatch(actions.deleteProject(projectId)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProject(project)),
+    fetchData: () => dispatch(actions.fetchProjects())
   }
 }
 

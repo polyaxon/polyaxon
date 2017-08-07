@@ -19,7 +19,7 @@ export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids:
     case actionTypes.DELETE_PROJECT:
       return {
         ...state,
-        byIds: {...state.byIds, [action.projectId] : {...state.byIds[action.projectId], delete:true}},
+        byIds: {...state.byIds, [action.projectId] : {...state.byIds[action.projectId], id_deleted:true}},
         ids: state.ids.filter(id => id != action.projectId),
       };
     case actionTypes.UPDATE_PROJECT:
@@ -27,6 +27,15 @@ export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids:
         ...state,
         byIds: {...state.byIds, [action.project.id]: action.project}
       };
+    case actionTypes.RECEIVE_PROJECTS:
+      var newState = {...state};
+      for (let project of action.projects) {
+        if (!newState.ids.includes(project.id)) {
+          newState.ids.push(project.id);
+          newState.byIds[project.id] = project;
+        }
+      }
+      return newState;
   }
   return state;
 };
