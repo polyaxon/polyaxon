@@ -12,7 +12,8 @@ class IndexView(TemplateView):
 
 urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
-    url(r'^v1/api/', include('core.urls', namespace='v1')),
+    url(r'^v1/api/', include('core.urls', namespace='api_v1')),
+    url(r'^v1/api/', include('projects.urls', namespace='projects_v1')),
     url(r'^.*$', IndexView.as_view(), name='index'),
 ]
 

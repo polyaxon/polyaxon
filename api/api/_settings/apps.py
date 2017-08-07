@@ -9,7 +9,8 @@ THIRD_PARTY_APPS = (
 PROJECT_APPS = (
     'libs',
     'core',
-    'api'
+    'projects',
+    'api',
 )
 
 INSTALLED_APPS = (

@@ -1,0 +1,28 @@
+[
+{
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+        "created_at": "2017-08-07T13:06:21.248Z",
+        "updated_at": "2017-08-07T13:06:21.248Z",
+        "name": "project1",
+        "description": "First project",
+        "experiments": [
+            1
+        ]
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+        "created_at": "2017-08-07T13:07:21.685Z",
+        "updated_at": "2017-08-07T13:07:21.686Z",
+        "name": "project2",
+        "description": "Second project",
+        "experiments": [
+            2
+        ]
+    }
+}
+]
