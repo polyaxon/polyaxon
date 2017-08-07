@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Button} from "react-bootstrap";
+import {Button, ButtonToolbar} from "react-bootstrap";
 
 import {ProjectModel} from "../models/project";
 
@@ -11,9 +11,16 @@ export interface Props {
 
 function Project({project, onDelete}: Props) {
   return (
-    <div className="project">
-      Project { project.name }
-      <Button className="warning" onClick={onDelete}>delete</Button>
+    <div className="row">
+      <div className="col-md-12 experiment">
+        <h4 className="title"><a>{ project.name }</a></h4>
+        <div>{ project.description }</div>
+        <div className="meta">{ project.createdAt.toLocaleTimeString() }</div>
+        <ButtonToolbar className="pull-right">
+          <Button>View</Button>
+          <Button bsStyle="danger" className="pull-right" onClick={onDelete}>delete</Button>
+        </ButtonToolbar>
+      </div>
     </div>
   );
 }

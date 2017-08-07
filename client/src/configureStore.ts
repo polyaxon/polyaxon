@@ -15,7 +15,7 @@ const configureStore = () => {
 
   const store = createStore<AppState>(
     appReducer,
-    persistedState,
+    // persistedState,
     applyMiddleware(
       thunkMiddleware,
       loggerMiddleware

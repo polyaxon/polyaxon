@@ -14,7 +14,9 @@ function App() {
       <BrowserRouter>
         <div>
           <Header />
-          <Routes />
+          <div className="container container-fluid">
+            <Routes />
+          </div>
           <Footer />
         </div>
       </BrowserRouter>

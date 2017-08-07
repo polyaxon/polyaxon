@@ -214,7 +214,7 @@ class RunConfigDetailSerializer(serializers.ModelSerializer):
 class ExperimentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
-        fields = ('id', 'name',)
+        fields = ('id', 'name', 'created_at', 'updated_at', )
 
 
 class ExperimentDetailSerializer(serializers.ModelSerializer):

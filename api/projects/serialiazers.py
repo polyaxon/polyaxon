@@ -10,7 +10,7 @@ from projects.models import Project
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'name',)
+        fields = ('id', 'name', 'description', 'created_at', 'updated_at', )
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):

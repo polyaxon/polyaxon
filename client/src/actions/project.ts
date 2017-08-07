@@ -75,6 +75,10 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
     dispatch(requestProjects());
     return fetch(PROJECTS_URL)
       .then(response => response.json())
+      .then(json => json.map(project => {
+          return {...project, createdAt: new Date(project.createdAt), updatedAt: new Date(project.updatedAt)};
+        })
+      )
       .then(json => dispatch(receiveProjects(json)))
   }
 }

@@ -5,8 +5,8 @@ import {ProjectModel} from "../models/project";
 
 export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids: number[]}> =
 	(state: {byIds: {[id: number]: ProjectModel}, ids: number[]} = {
-    byIds: {10: {id: 10, name: 'name1'}, 20: {id: 20, name: 'name2'}},
-    ids: [10, 20]
+    byIds: {},
+    ids: []
 	}, action: ProjectAction) => {
 
   switch (action.type) {
@@ -32,8 +32,8 @@ export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids:
       for (let project of action.projects) {
         if (!newState.ids.includes(project.id)) {
           newState.ids.push(project.id);
-          newState.byIds[project.id] = project;
         }
+        newState.byIds[project.id] = project;
       }
       return newState;
   }

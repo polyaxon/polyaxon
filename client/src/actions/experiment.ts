@@ -72,6 +72,10 @@ export function fetchExperiments(): Dispatch<ExperimentModel[]> {
     dispatch(requestExperiments());
     return fetch(EXPERIMENTS_URL)
       .then(response => response.json())
+      .then(json => json.map(xp => {
+          return {...xp, createdAt: new Date(xp.createdAt), updatedAt: new Date(xp.updatedAt)};
+        })
+      )
       .then(json => dispatch(receiveExperiments(json)))
   }
 }

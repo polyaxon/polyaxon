@@ -5,8 +5,8 @@ import {ExperimentModel} from "../models/experiment";
 
 export const experimentsReducer: Reducer<{byIds: {[id: number]: ExperimentModel}, ids: number[]}> =
 	(state: {byIds: {[id: number]: ExperimentModel}, ids: number[]} = {
-    byIds: {10: {id: 10, name: 'name1'}, 20: {id: 20, name: 'name2'}},
-    ids: [10, 20]
+    byIds: {},
+    ids: []
 	}, action: ExperimentAction) => {
 
   switch (action.type) {
@@ -34,6 +34,7 @@ export const experimentsReducer: Reducer<{byIds: {[id: number]: ExperimentModel}
           newState.ids.push(xp.id);
           newState.byIds[xp.id] = xp;
         }
+        newState.byIds[xp.id] = xp;
       }
       return newState;
   }

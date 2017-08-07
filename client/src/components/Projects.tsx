@@ -22,7 +22,7 @@ export default class Projects extends React.Component<Props, Object> {
     const {projects, onCreate, onUpdate, onDelete, fetchData} = this.props;
     return (
       <ul>
-        {projects.map(project => <li key={project.id}><Project project={project} onDelete={() => onDelete(project.id)}/></li>)}
+        {projects.map(project => <li className="list-item" key={project.id}><Project project={project} onDelete={() => onDelete(project.id)}/></li>)}
       </ul>
     );
   }
