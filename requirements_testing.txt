@@ -7,4 +7,4 @@ mock==2.0.0
 prospector==0.12.7
 pyflakes==1.6.0
 pytest==3.2.0
-gym==0.9.1
+gym==0.9.2
