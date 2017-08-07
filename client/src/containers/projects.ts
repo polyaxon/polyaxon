@@ -7,7 +7,9 @@ import * as actions from "../actions/project";
 
 
 export function mapStateToProps(state: AppState)  {
-  return {projects: state.projects}
+  if (state.projects)
+    return {projects: (<any>Object).values(state.projects.byIds)};
+  return [];
 }
 
 export interface DispatchProps {
