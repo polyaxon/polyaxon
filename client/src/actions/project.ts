@@ -8,13 +8,15 @@ export enum actionTypes {
   CREATE_PROJECT='CREATE_PROJECT',
   DELETE_PROJECT='DELETE_PROJECT',
   UPDATE_PROJECT='UPDATE_PROJECT',
+  RECEIVE_PROJECT='RECEIVE_PROJECT',
+  REQUEST_PROJECT='REQUEST_PROJECT',
   RECEIVE_PROJECTS='RECEIVE_PROJECTS',
   REQUEST_PROJECTS='REQUEST_PROJECTS',
 }
 
 
-export interface CreateUpdateProjectAction extends Action {
-  type: actionTypes.CREATE_PROJECT | actionTypes.UPDATE_PROJECT;
+export interface CreateUpdateReceiveProjectAction extends Action {
+  type: actionTypes.CREATE_PROJECT | actionTypes.UPDATE_PROJECT | actionTypes.RECEIVE_PROJECT;
   project: ProjectModel
 }
 
@@ -29,12 +31,12 @@ export interface ReceiveProjects extends Action {
 }
 
 export interface RequestProjects extends Action {
-  type: actionTypes.REQUEST_PROJECTS;
+  type: actionTypes.REQUEST_PROJECTS | actionTypes.REQUEST_PROJECT;
 }
 
-export type ProjectAction = CreateUpdateProjectAction | DeleteProjectAction | ReceiveProjects | RequestProjects;
+export type ProjectAction = CreateUpdateReceiveProjectAction | DeleteProjectAction | ReceiveProjects | RequestProjects;
 
-export function createProject(project: ProjectModel): CreateUpdateProjectAction {
+export function createProject(project: ProjectModel): CreateUpdateReceiveProjectAction {
     return {
       type: actionTypes.CREATE_PROJECT,
       project
@@ -48,7 +50,7 @@ export function deleteProject(projectId: number): DeleteProjectAction {
     }
 }
 
-export function updateProject(project: ProjectModel): CreateUpdateProjectAction {
+export function updateProject(project: ProjectModel): CreateUpdateReceiveProjectAction {
     return {
       type: actionTypes.UPDATE_PROJECT,
       project
@@ -56,9 +58,22 @@ export function updateProject(project: ProjectModel): CreateUpdateProjectAction 
 }
 
 
+export function requestProject(): RequestProjects {
+  return {
+    type: actionTypes.REQUEST_PROJECT,
+  }
+}
+
 export function requestProjects(): RequestProjects {
   return {
     type: actionTypes.REQUEST_PROJECTS,
+  }
+}
+
+export function receiveProject(project: ProjectModel): CreateUpdateReceiveProjectAction {
+  return {
+    type: actionTypes.RECEIVE_PROJECT,
+    project
   }
 }
 
@@ -80,6 +95,20 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
         })
       )
       .then(json => dispatch(receiveProjects(json)))
+  }
+}
+
+
+export function fetchProject(projectId: number): Dispatch<ProjectModel> {
+  return dispatch => {
+    dispatch(requestProject());
+    return fetch(PROJECTS_URL + projectId)
+      .then(response => response.json())
+      .then(json => {
+          return {...json, createdAt: new Date(json.createdAt), updatedAt: new Date(json.updatedAt)};
+        }
+      )
+      .then(json => dispatch(receiveProject(json)))
   }
 }
 

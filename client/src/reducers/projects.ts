@@ -36,6 +36,13 @@ export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids:
         newState.byIds[project.id] = project;
       }
       return newState;
+    case actionTypes.RECEIVE_PROJECT:
+      var newState = {...state};
+      if (!newState.ids.includes(action.project.id)) {
+        newState.ids.push(action.project.id);
+      }
+      newState.byIds[action.project.id] = action.project;
+      return newState;
   }
   return state;
 };
