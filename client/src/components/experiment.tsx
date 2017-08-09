@@ -6,7 +6,7 @@ import {ExperimentModel} from "../models/experiment";
 
 export interface Props {
   experiment: ExperimentModel;
-  onDelete?: () => void;
+  onDelete: () => void;
 }
 
 

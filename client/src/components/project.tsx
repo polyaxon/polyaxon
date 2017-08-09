@@ -7,7 +7,7 @@ import {ProjectModel} from "../models/project";
 
 export interface Props {
   project: ProjectModel;
-  onDelete?: () => void;
+  onDelete: () => void;
 }
 
 function Project({project, onDelete}: Props) {

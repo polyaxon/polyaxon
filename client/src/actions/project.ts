@@ -1,4 +1,5 @@
 import {Action, Dispatch} from "redux";
+import * as _ from "lodash";
 
 import {ProjectModel} from "../models/project";
 import {PROJECTS_URL} from "../constants/api";
@@ -86,12 +87,15 @@ export function receiveProjects(projects: ProjectModel[]): ReceiveProjects {
 
 
 export function fetchProjects(): Dispatch<ProjectModel[]> {
-  return dispatch => {
+  return (dispatch: any) => {
     dispatch(requestProjects());
     return fetch(PROJECTS_URL)
       .then(response => response.json())
-      .then(json => json.map(project => {
-          return {...project, createdAt: new Date(project.createdAt), updatedAt: new Date(project.updatedAt)};
+      .then(json => json.map((project: ProjectModel) => {
+          return {
+            ...project,
+            createdAt: new Date(_.toString(project.createdAt)),
+            updatedAt: new Date(_.toString(project.updatedAt))};
         })
       )
       .then(json => dispatch(receiveProjects(json)))
@@ -100,12 +104,15 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
 
 
 export function fetchProject(projectId: number): Dispatch<ProjectModel> {
-  return dispatch => {
+  return (dispatch: any) => {
     dispatch(requestProject());
     return fetch(PROJECTS_URL + projectId)
       .then(response => response.json())
       .then(json => {
-          return {...json, createdAt: new Date(json.createdAt), updatedAt: new Date(json.updatedAt)};
+          return {
+            ...json,
+            createdAt: new Date(_.toString(json.createdAt)),
+            updatedAt: new Date(_.toString(json.updatedAt))};
         }
       )
       .then(json => dispatch(receiveProject(json)))

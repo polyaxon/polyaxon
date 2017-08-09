@@ -1,4 +1,5 @@
 import {Action, Dispatch} from "redux";
+import * as _ from "lodash";
 
 import {ExperimentModel} from "../models/experiment";
 import {EXPERIMENTS_URL} from "../constants/api";
@@ -68,12 +69,15 @@ export function receiveExperiments(experiments: ExperimentModel[]): ReceiveExper
 }
 
 export function fetchExperiments(): Dispatch<ExperimentModel[]> {
-  return dispatch => {
+  return (dispatch: any)=> {
     dispatch(requestExperiments());
     return fetch(EXPERIMENTS_URL)
       .then(response => response.json())
-      .then(json => json.map(xp => {
-          return {...xp, createdAt: new Date(xp.createdAt), updatedAt: new Date(xp.updatedAt)};
+      .then(json => json.map((xp: ExperimentModel)=> {
+          return {
+            ...xp,
+            createdAt: new Date(_.toString(xp.createdAt)),
+            updatedAt: new Date(_.toString(xp.updatedAt))};
         })
       )
       .then(json => dispatch(receiveExperiments(json)))

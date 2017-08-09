@@ -1,6 +1,6 @@
 import { connect, Dispatch } from "react-redux";
 import {withRouter} from "react-router-dom";
-import {includes} from 'lodash'
+import * as _ from "lodash";
 
 import { AppState } from "../constants/types";
 import ProjectDetail from "../components/projectDetail";
@@ -9,22 +9,22 @@ import * as actions from "../actions/project";
 
 export function mapStateToProps(state: AppState, params: any)  {
   let projectId = parseInt(params.match.params.projectId);
-  if (includes(state.projects.ids, projectId)) {
+  if (_.includes(state.projects.ids, projectId)) {
     return {project: state.projects.byIds[projectId]};
   }
   return null;
 }
 
 export interface DispatchProps {
-  onDelete?: (projectId: number) => any;
-  fetchData?: (projectId: number) => any;
+  onDelete?: () => any;
+  fetchData?: () => any;
 }
 
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
-    onDelete: (projectId: number) => dispatch(actions.deleteProject(projectId)),
-    fetchData: (projectId: number) => dispatch(actions.fetchProject(projectId))
+    onDelete: () => dispatch(actions.deleteProject(params.match.params.projectId)),
+    fetchData: () => dispatch(actions.fetchProject(params.match.params.projectId))
   }
 }
 

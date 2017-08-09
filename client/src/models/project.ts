@@ -4,8 +4,8 @@ export class ProjectModel {
 	public description?: string;
 	public isPrivate?: boolean = false;
 	public experiments?: Array<number> = [];
-	public createdAt?: Date;
-	public updatedAt?: Date;
+	public createdAt: Date;
+	public updatedAt: Date;
 }
 
 export class ProjectStateSchema {

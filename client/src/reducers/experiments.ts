@@ -1,5 +1,5 @@
 import {Reducer} from "redux";
-import {includes} from 'lodash'
+import * as _ from "lodash";
 
 import {ExperimentAction, actionTypes} from "../actions/experiment";
 import {ExperimentStateSchema, ExperimentsEmptyState} from "../models/experiment";
@@ -11,7 +11,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
     case actionTypes.CREATE_EXPERIMENT:
       return {
         ...state,
-        byIds: {...state.byIds, [action.experiment.id] : experiment},
+        byIds: {...state.byIds, [action.experiment.id] : action.experiment},
         ids: [...state.ids, action.experiment.id]
       };
     case actionTypes.DELETE_EXPERIMENT:
@@ -28,7 +28,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
     case actionTypes.RECEIVE_EXPERIMENTS:
       var newState = {...state};
       for (let xp of action.experiments) {
-        if (!includes(newState.ids, xp.id)) {
+        if (!_.includes(newState.ids, xp.id)) {
           newState.ids.push(xp.id);
           newState.byIds[xp.id] = xp;
         }

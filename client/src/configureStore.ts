@@ -1,6 +1,7 @@
 import {createStore, applyMiddleware} from "redux";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {throttle} from 'lodash'
+import * as _ from "lodash";
+
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
@@ -15,14 +16,14 @@ const configureStore = () => {
 
   const store = createStore<AppState>(
     appReducer,
-    persistedState,
+    // persistedState,
     applyMiddleware(
       thunkMiddleware,
       loggerMiddleware
     )
   );
 
-  store.subscribe(throttle(() => {
+  store.subscribe(_.throttle(() => {
     saveState(store.getState())
   }, 1000));
 
