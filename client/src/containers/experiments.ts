@@ -1,6 +1,6 @@
 import { connect, Dispatch } from "react-redux";
 
-import { AppState } from "../types/index";
+import { AppState } from "../constants/types";
 import Experiments from "../components/experiments";
 import {ExperimentModel} from "../models/experiment";
 import * as actions from "../actions/experiment";

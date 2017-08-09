@@ -6,7 +6,7 @@ import { createLogger } from 'redux-logger'
 
 
 import appReducer from "./reducers/app";
-import {AppState} from "./types/index";
+import {AppState} from "./constants/types";
 import { loadState, saveState } from './localStorage'
 
 const configureStore = () => {
@@ -15,7 +15,7 @@ const configureStore = () => {
 
   const store = createStore<AppState>(
     appReducer,
-    // persistedState,
+    persistedState,
     applyMiddleware(
       thunkMiddleware,
       loggerMiddleware

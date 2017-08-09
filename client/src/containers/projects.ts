@@ -1,6 +1,6 @@
 import { connect, Dispatch } from "react-redux";
 
-import { AppState } from "../types/index";
+import { AppState } from "../constants/types";
 import Projects from "../components/projects";
 import {ProjectModel} from "../models/project";
 import * as actions from "../actions/project";
