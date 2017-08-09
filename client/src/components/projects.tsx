@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Project from "./Project";
+import Project from "./project";
 import {ProjectModel} from "../models/project";
 
 export interface Props {

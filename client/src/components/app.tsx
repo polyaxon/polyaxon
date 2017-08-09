@@ -2,11 +2,11 @@ import * as React from "react";
 import {BrowserRouter} from "react-router-dom";
 
 
-import Header from "./Header";
-import Footer from "./Footer";
-import Routes from "./Routes";
+import Header from "./header";
+import Footer from "./footer";
+import Routes from "./routes";
 
-import "./App.less";
+import "./app.less";
 
 
 function App() {

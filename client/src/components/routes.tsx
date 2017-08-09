@@ -3,7 +3,7 @@ import {Switch, Redirect, Route} from "react-router-dom";
 
 import Experiments from "../containers/experiments";
 import Projects from "../containers/projects";
-import ProjectDetail from "../containers/ProjectDetail";
+import ProjectDetail from "../containers/projectDetail";
 
 
 const Home = () => (

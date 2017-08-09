@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Experiment from "./Experiment";
+import Experiment from "./experiment";
 import {ExperimentModel} from "../models/experiment";
 
 export interface Props {

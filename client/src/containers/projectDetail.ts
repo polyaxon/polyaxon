@@ -2,7 +2,7 @@ import { connect, Dispatch } from "react-redux";
 import {withRouter} from "react-router-dom";
 
 import { AppState } from "../types/index";
-import ProjectDetail from "../components/ProjectDetail";
+import ProjectDetail from "../components/projectDetail";
 import * as actions from "../actions/project";
 
 

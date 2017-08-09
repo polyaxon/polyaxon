@@ -2,7 +2,7 @@ import * as React from "react";
 import {NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
-import "./Footer.less";
+import "./footer.less";
 
 function Footer() {
   return (

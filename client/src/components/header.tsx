@@ -2,7 +2,7 @@ import * as React from "react";
 import {MenuItem, Nav, Navbar, NavItem, NavDropdown} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
-import "./Header.less";
+import "./header.less";
 
 
 function Header() {

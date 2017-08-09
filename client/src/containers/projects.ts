@@ -1,7 +1,7 @@
 import { connect, Dispatch } from "react-redux";
 
 import { AppState } from "../types/index";
-import Projects from "../components/Projects";
+import Projects from "../components/projects";
 import {ProjectModel} from "../models/project";
 import * as actions from "../actions/project";
 

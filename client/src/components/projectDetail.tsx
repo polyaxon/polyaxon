@@ -2,6 +2,7 @@ import * as React from "react";
 import {Button, ButtonToolbar} from "react-bootstrap";
 
 import {ProjectModel} from "../models/project";
+import Experiments from "../containers/experiments";
 
 
 export interface Props {
@@ -28,6 +29,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
           <ButtonToolbar className="pull-right">
             <Button bsStyle="danger" className="pull-right" onClick={() => onDelete(project.id)}>delete</Button>
           </ButtonToolbar>
+          <Experiments fetchData={() => null}></Experiments>
         </div>
       </div>
     );

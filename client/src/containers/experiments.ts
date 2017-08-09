@@ -1,7 +1,7 @@
 import { connect, Dispatch } from "react-redux";
 
 import { AppState } from "../types/index";
-import Experiments from "../components/Experiments";
+import Experiments from "../components/experiments";
 import {ExperimentModel} from "../models/experiment";
 import * as actions from "../actions/experiment";
 
@@ -19,13 +19,16 @@ export interface DispatchProps {
   fetchData?: () => any;
 }
 
+interface OwnProps {
+  fetchData?: () => any;
+}
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
   return {
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperiment(experiment)),
     onDelete: (experimentId: number) => dispatch(actions.deleteExperiment(experimentId)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperiment(experiment)),
-    fetchData: () => dispatch(actions.fetchExperiments())
+    fetchData: () => dispatch(ownProps.fetchData? ownProps.fetchData : actions.fetchExperiments())
   }
 }
 
