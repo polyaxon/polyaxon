@@ -11,3 +11,5 @@ export class ExperimentStateSchema {
 	byIds: {[id: number]: ExperimentModel};
 	ids: number[];
 }
+
+export const ExperimentsEmptyState = {byIds: {}, ids: []};

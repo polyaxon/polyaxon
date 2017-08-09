@@ -2,10 +2,10 @@ import {Reducer} from "redux";
 import {includes} from 'lodash'
 
 import {ExperimentAction, actionTypes} from "../actions/experiment";
-import {ExperimentStateSchema} from "../models/experiment";
+import {ExperimentStateSchema, ExperimentsEmptyState} from "../models/experiment";
 
 export const experimentsReducer: Reducer<ExperimentStateSchema> =
-	(state: ExperimentStateSchema = {byIds: {}, ids: []}, action: ExperimentAction) => {
+	(state: ExperimentStateSchema = ExperimentsEmptyState, action: ExperimentAction) => {
 
   switch (action.type) {
     case actionTypes.CREATE_EXPERIMENT:

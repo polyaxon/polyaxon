@@ -13,3 +13,4 @@ export class ProjectStateSchema {
 	ids: number[];
 }
 
+export const ProjectsEmptyState = {byIds: {}, ids: []};
