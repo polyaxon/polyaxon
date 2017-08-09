@@ -6,3 +6,8 @@ export class ExperimentModel {
 	public createdAt?: Date;
 	public updatedAt?: Date;
 }
+
+export class ExperimentStateSchema {
+	byIds: {[id: number]: ExperimentModel};
+	ids: number[];
+}

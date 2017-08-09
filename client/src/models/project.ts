@@ -7,3 +7,9 @@ export class ProjectModel {
 	public createdAt?: Date;
 	public updatedAt?: Date;
 }
+
+export class ProjectStateSchema {
+	byIds: {[id: number]: ProjectModel};
+	ids: number[];
+}
+

@@ -2,13 +2,10 @@ import {Reducer} from "redux";
 import {includes} from 'lodash';
 
 import {ProjectAction, actionTypes} from "../actions/project";
-import {ProjectModel} from "../models/project";
+import {ProjectStateSchema} from "../models/project";
 
-export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids: number[]}> =
-	(state: {byIds: {[id: number]: ProjectModel}, ids: number[]} = {
-    byIds: {},
-    ids: []
-	}, action: ProjectAction) => {
+export const projectsReducer: Reducer<ProjectStateSchema> =
+	(state: ProjectStateSchema = {byIds: {}, ids: []}, action: ProjectAction) => {
 
   switch (action.type) {
     case actionTypes.CREATE_PROJECT:

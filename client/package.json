@@ -36,9 +36,11 @@
     "@types/react-router-bootstrap": "^0.24.2",
     "@types/react-router-dom": "^4.0.7",
     "@types/redux-thunk": "^2.1.0",
+    "@types/sprintf-js": "0.0.27",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
+    "normalizr": "^3.2.3",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.1",
     "react-dom": "^15.6.1",
@@ -48,6 +50,7 @@
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "sprintf-js": "^1.1.1",
     "whatwg-fetch": "^2.0.3"
   }
 }
