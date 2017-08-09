@@ -1,4 +1,5 @@
 import {Reducer} from "redux";
+import {includes} from 'lodash';
 
 import {ProjectAction, actionTypes} from "../actions/project";
 import {ProjectModel} from "../models/project";
@@ -30,7 +31,7 @@ export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids:
     case actionTypes.RECEIVE_PROJECTS:
       var newState = {...state};
       for (let project of action.projects) {
-        if (!newState.ids.includes(project.id)) {
+        if (!includes(newState.ids, project.id)) {
           newState.ids.push(project.id);
         }
         newState.byIds[project.id] = project;
@@ -38,7 +39,7 @@ export const projectsReducer: Reducer<{byIds: {[id: number]: ProjectModel}, ids:
       return newState;
     case actionTypes.RECEIVE_PROJECT:
       var newState = {...state};
-      if (!newState.ids.includes(action.project.id)) {
+      if (!includes(newState.ids, action.project.id)) {
         newState.ids.push(action.project.id);
       }
       newState.byIds[action.project.id] = action.project;

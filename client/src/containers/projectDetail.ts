@@ -1,5 +1,6 @@
 import { connect, Dispatch } from "react-redux";
 import {withRouter} from "react-router-dom";
+import {includes} from 'lodash'
 
 import { AppState } from "../types/index";
 import ProjectDetail from "../components/projectDetail";
@@ -8,7 +9,7 @@ import * as actions from "../actions/project";
 
 export function mapStateToProps(state: AppState, params: any)  {
   let projectId = parseInt(params.match.params.projectId);
-  if (state.projects.ids.includes(projectId)) {
+  if (includes(state.projects.ids, projectId)) {
     return {project: state.projects.byIds[projectId]};
   }
   return null;

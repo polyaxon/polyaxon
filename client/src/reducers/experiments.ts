@@ -1,4 +1,5 @@
 import {Reducer} from "redux";
+import {includes} from 'lodash'
 
 import {ExperimentAction, actionTypes} from "../actions/experiment";
 import {ExperimentModel} from "../models/experiment";
@@ -30,7 +31,7 @@ export const experimentsReducer: Reducer<{byIds: {[id: number]: ExperimentModel}
     case actionTypes.RECEIVE_EXPERIMENTS:
       var newState = {...state};
       for (let xp of action.experiments) {
-        if (!newState.ids.includes(xp.id)) {
+        if (!includes(newState.ids, xp.id)) {
           newState.ids.push(xp.id);
           newState.byIds[xp.id] = xp;
         }
