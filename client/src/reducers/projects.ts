@@ -20,7 +20,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
     case actionTypes.DELETE_PROJECT:
       return {
         ...state,
-        byIds: {...state.byIds, [action.projectId] : {...state.byIds[action.projectId], id_deleted:true}},
+        byIds: {...state.byIds, [action.projectId] : {...state.byIds[action.projectId], deleted:true}},
         ids: state.ids.filter(id => id != action.projectId),
       };
     case actionTypes.UPDATE_PROJECT:

@@ -12,7 +12,7 @@ export function mapStateToProps(state: AppState, params: any)  {
   if (_.includes(state.projects.ids, projectId)) {
     return {project: state.projects.byIds[projectId]};
   }
-  return null;
+  return {project: null};
 }
 
 export interface DispatchProps {

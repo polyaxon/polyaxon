@@ -17,7 +17,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
     case actionTypes.DELETE_EXPERIMENT:
       return {
         ...state,
-        byIds: {...state.byIds, [action.experimentId] : {...state.byIds[action.experimentId], id_deleted:true}},
+        byIds: {...state.byIds, [action.experimentId] : {...state.byIds[action.experimentId], deleted:true}},
         ids: state.ids.filter(id => id != action.experimentId),
       };
     case actionTypes.UPDATE_EXPERIMENT:

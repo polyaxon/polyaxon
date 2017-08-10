@@ -24,9 +24,12 @@ export default class Experiments extends React.Component<Props, Object> {
     const {experiments, onCreate, onUpdate, onDelete, fetchData, projectId} = this.props;
     return (
       <div className="row">
-        <div className="col-md-12 ">
+        <div className="col-md-12">
           <ul>
-            {experiments.map(xp => <li className="list-item" key={xp.id}><Experiment experiment={xp} onDelete={() => onDelete(xp.id)}/></li>)}
+            {experiments.filter(
+              (xp: ExperimentModel) => _.isNil(xp.deleted) || !xp.deleted
+            ).map(
+              (xp: ExperimentModel) => <li className="list-item" key={xp.id}><Experiment experiment={xp} onDelete={() => onDelete(xp.id)}/></li>)}
           </ul>
         </div>
       </div>
