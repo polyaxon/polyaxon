@@ -8,7 +8,6 @@ import {ProjectModel} from "../models/project";
 
 export interface Props {
   projects: ProjectModel[];
-  onCreate: (project: ProjectModel) => any;
   onUpdate: (project: ProjectModel) => any;
   onDelete: (projectId: number) => any;
   fetchData: () => any;
@@ -19,16 +18,16 @@ export interface Props {
 
 export default class Projects extends React.Component<Props, Object> {
   componentDidMount() {
-    const {projects, onCreate, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
+    const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
     fetchData();
   }
 
   public render() {
-    const {projects, onCreate, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
+    const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
 
     return (
       <div>
-        <Button bsStyle="primary" onClick={showModal}>
+        <Button bsStyle="success" className="pull-right" onClick={showModal}>
           New Project
         </Button>
 

@@ -35,6 +35,7 @@
     "@types/react-router": "^4.0.14",
     "@types/react-router-bootstrap": "^0.24.2",
     "@types/react-router-dom": "^4.0.7",
+    "@types/redux-form": "^7.0.2",
     "@types/redux-thunk": "^2.1.0",
     "@types/sprintf-js": "0.0.27",
     "bootstrap": "^3.3.7",
@@ -49,6 +50,7 @@
     "react-router-bootstrap": "^0.24.2",
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
+    "redux-form": "^7.0.3",
     "redux-thunk": "^2.2.0",
     "sprintf-js": "^1.1.1",
     "whatwg-fetch": "^2.0.3"

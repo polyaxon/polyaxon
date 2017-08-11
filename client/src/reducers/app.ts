@@ -1,4 +1,7 @@
 import {Action, combineReducers} from "redux";
+import { reducer as formReducer } from "redux-form";
+
+
 import {projectsReducer, ProjectExperiments} from "./projects";
 import {experimentsReducer} from "./experiments";
 import {AppState} from "../constants/types";
@@ -9,6 +12,7 @@ const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
   experiments: experimentsReducer,
   modal: modalReducer,
+  form: formReducer
 });
 
 function ProjectSliceReducer(state: AppState, action: Action) {
@@ -16,6 +20,7 @@ function ProjectSliceReducer(state: AppState, action: Action) {
     projects: state.projects,
     experiments : ProjectExperiments(state.experiments, action),
     modal: state.modal,
+    form: state.form
   }
 }
 
