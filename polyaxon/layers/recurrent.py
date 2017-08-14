@@ -905,12 +905,9 @@ def retrieve_seq_length_op(data):
 
 def get_sequence_relevant_output(input, sequence_length):
     """Returns the last relevant output for a sequence."""
-    input_shape = get_shape(input)
-    dynamic_input_shape = get_shape(input, dynamic=True)
+    input_shape = get_shape(input, dynamic=True)
 
-    batch_size = input_shape[0] or dynamic_input_shape[0]
-    max_length = input_shape[1] or dynamic_input_shape[1]
-    dim_size = input_shape[2] or dynamic_input_shape[2]
+    batch_size, max_length, dim_size = input_shape[0], input_shape[1], input_shape[2]
     index = tf.range(batch_size) * max_length + (sequence_length - 1)
     flat = tf.reshape(input, [-1, dim_size])
     relevant = tf.gather(flat, index)

@@ -58,9 +58,12 @@ def get_shape(x, dynamic=False):
         the incoming data shape.
     """
     if isinstance(x, (tf.Tensor, tf.Variable)):
-        if dynamic:
-            return tf.shape(x)
-        return x.get_shape().as_list()
+        static_shape = x.shape.as_list()
+        if not dynamic:
+            return static_shape
+
+        dynamic_shape = tf.unstack(tf.shape(x))
+        return [d if s is None else s for (s, d) in zip(static_shape, dynamic_shape)]
     elif type(x) in [np.ndarray, list, tuple]:
         return np.shape(x)
     else:
