@@ -1,7 +1,7 @@
 -r requirements.txt
 
 coverage==4.4.1
-flaky==3.2.0
+flaky==3.4.0
 isort==4.2.5
 mock==2.0.0
 prospector==0.11.7
