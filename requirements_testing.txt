@@ -7,5 +7,5 @@ mock==2.0.0
 prospector==0.12.7
 pyflakes==1.6.0
 pytest==3.2.1
-pylint==1.6.5
+pylint==1.7.2
 gym==0.9.1
