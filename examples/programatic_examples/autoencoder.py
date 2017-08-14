@@ -75,7 +75,8 @@ def experiment_fn(output_dir):
     """
     dataset_dir = '../data/mnist'
     plx.datasets.mnist.prepare(dataset_dir)
-    train_data_file = plx.datasets.mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.TRAIN)
+    train_data_file = plx.datasets.mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir,
+                                                                        plx.Modes.TRAIN)
     eval_data_file = plx.datasets.mnist.RECORD_FILE_NAME_FORMAT.format(dataset_dir, plx.Modes.EVAL)
     meta_data_file = plx.datasets.mnist.META_DATA_FILENAME_FORMAT.format(dataset_dir)
 

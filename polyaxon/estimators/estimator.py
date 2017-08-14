@@ -144,7 +144,7 @@ class Estimator(object):
     def _verify_model_fn_args(model_fn, params):
         """Verifies model fn arguments."""
 
-        MODEL_FN_ARGS = {'features', 'labels', 'mode', 'params', 'config'}
+        valid_model_fn_args = {'features', 'labels', 'mode', 'params', 'config'}
 
         if model_fn is not None:
             # Check number of arguments of the given function matches requirements.
@@ -166,7 +166,7 @@ class Estimator(object):
         if 'self' in model_fn_args:
             model_fn_args.remove('self')
 
-        non_valid_args = set(model_fn_args) - MODEL_FN_ARGS
+        non_valid_args = set(model_fn_args) - valid_model_fn_args
         if non_valid_args:
             raise ValueError("model_fn `{}` has following not expected args: {}".format(
                 model_fn, non_valid_args))
@@ -686,7 +686,8 @@ class Estimator(object):
 
             return eval_results
 
-    def _infer_model(self, mode, input_fn=None, predict_keys=None, hooks=None, checkpoint_path=None):
+    def _infer_model(self, mode, input_fn=None, predict_keys=None, hooks=None,
+                     checkpoint_path=None):
         """Returns predictions for given features given an inference mode.
 
         Args:

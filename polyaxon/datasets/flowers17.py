@@ -121,7 +121,8 @@ def prepare_dataset(converter, dataset_dir, num_images, folds):
     with tf.python_io.TFRecordWriter(test_filename) as tfrecord_writer:
         with tf.Session('') as session:
             print('converting test images.')
-            convert_images(session, tfrecord_writer, converter, filesnames_by_classes[Modes.PREDICT])
+            convert_images(session, tfrecord_writer, converter,
+                           filesnames_by_classes[Modes.PREDICT])
 
 
 def prepare(dataset_dir):

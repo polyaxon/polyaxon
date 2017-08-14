@@ -1,23 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import math
-import os
-import time
-
-import tensorflow as tf
-from tensorflow.contrib.learn.python.learn.estimators import run_config
-from tensorflow.python.framework import ops
-from tensorflow.python.platform import tf_logging as logging
-from tensorflow.python.training import basic_session_run_hooks, saver
-from tensorflow.python.util import compat
-
-from polyaxon import Modes
 from polyaxon.estimators.agents import Agent
 from polyaxon.experiments import Experiment
 from polyaxon.libs import getters
-from polyaxon.libs.utils import new_attr_context
-from polyaxon.processing.input_data import create_input_data_fn
 
 
 class RLExperiment(Experiment):

@@ -5,7 +5,6 @@ from collections import OrderedDict
 
 import tensorflow as tf
 
-from polyaxon.layers.recurrent import retrieve_seq_length_op
 from polyaxon.libs import getters
 from polyaxon.libs.template_module import BaseLayer
 from polyaxon.libs.utils import get_shape, track

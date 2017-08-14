@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
 
 import numpy as np
 import tensorflow as tf
@@ -78,7 +77,7 @@ class TRPOModel(BasePGModel):
                 `losses` are the per-batch losses.
                 `loss` is a single scalar tensor to minimize.
         """
-        reward, action, done, = labels['reward'], labels['action'], labels['done']
+        action = labels['action']
         discount_reward = labels['discount_reward']
         dist_values = labels['dist_values']
         tangents = labels.get('tangents')

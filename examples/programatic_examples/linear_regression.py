@@ -35,5 +35,6 @@ estimator = plx.estimators.Estimator(model_fn=model_fn, model_dir="/tmp/polyaxon
 estimator.train(input_fn=numpy_input_fn(
     {'X': X}, y, shuffle=False, num_epochs=10000, batch_size=len(X)))
 
-print([x['results'] for x in estimator.predict(input_fn=numpy_input_fn({'X': X_val}, shuffle=False))])
+print([x['results'] for x in estimator.predict(input_fn=numpy_input_fn({'X': X_val},
+                                                                       shuffle=False))])
 print(y_val)

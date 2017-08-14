@@ -14,7 +14,7 @@ def experiment_fn(output_dir):
         * 17 Category Flower Dataset. Maria-Elena Nilsback and Andrew Zisserman.
 
     Links:
-        * [AlexNet Paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
+        * [AlexNet Paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)  # noqa
         * [Flower Dataset (17)](http://www.robots.ox.ac.uk/~vgg/data/flowers/17/)
     """
     plx.datasets.flowers17.prepare('../data/flowers17')

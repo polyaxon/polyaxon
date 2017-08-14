@@ -14,7 +14,7 @@ def encoder_fn(mode, features):
             plx.layers.MaxPool2d(mode=mode, kernel_size=2),
             plx.layers.Conv2d(mode=mode, num_filter=32, filter_size=3, activation='relu',
                               regularizer='l2_regularizer'),
-            plx.layers.MaxPool2d(mode=mode,kernel_size=2)
+            plx.layers.MaxPool2d(mode=mode, kernel_size=2)
         ]
     )(features)
 

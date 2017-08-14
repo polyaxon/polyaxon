@@ -44,7 +44,8 @@ def built_loss(fct, weights, name, scope, collect, logits=False):
         with get_name_scope(scope, name, (y_true, y_pred, weights)) as scope_:
             y_true, y_pred = check_loss_data(y_true, y_pred, logits)
             losses = fct(y_true, y_pred)
-            weighted_loss = tf.losses.compute_weighted_loss(losses, weights, scope_, loss_collection)
+            weighted_loss = tf.losses.compute_weighted_loss(
+                losses, weights, scope_, loss_collection)
         return losses, weighted_loss
     return loss
 
@@ -140,8 +141,8 @@ def huber_loss(weights=1.0, clip=0.0, name='HuberLoss', scope=None, collect=True
     return built_loss(inner_loss, weights, name, scope, collect)
 
 
-def clipped_delta_loss(weights=1.0, clip_value_min=-1., clip_value_max=1., name='HuberLoss', scope=None,
-                 collect=True):
+def clipped_delta_loss(weights=1.0, clip_value_min=-1., clip_value_max=1., name='HuberLoss',
+                       scope=None, collect=True):
     """Computes clipped delta Loss for DQN.
 
     [Wikipedia link](https://en.wikipedia.org/wiki/Huber_loss)
@@ -326,7 +327,8 @@ def cosine_distance(dim, weights=1.0, name='CosineDistance', scope=None, collect
     return built_loss(inner_loss, weights, name, scope, collect)
 
 
-def kullback_leibler_divergence(weights=1.0, name='KullbackLeiberDivergence', scope=None, collect=False):
+def kullback_leibler_divergence(weights=1.0, name='KullbackLeiberDivergence', scope=None,
+                                collect=False):
     """Adds a Kullback leiber diverenge loss to the training procedure.
 
      Args:

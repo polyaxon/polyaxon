@@ -128,8 +128,8 @@ class LocalResponseNormalization(BaseLayer):
         Returns:
             4-D Tensor Layer. (Same dimension as input).
         """
-        incoming = tf.nn.lrn( input=incoming, depth_radius=self.depth_radius, bias=self.bias,
-                              alpha=self.alpha, beta=self.beta, name=self.name)
+        incoming = tf.nn.lrn(input=incoming, depth_radius=self.depth_radius, bias=self.bias,
+                             alpha=self.alpha, beta=self.beta, name=self.name)
         track(incoming, tf.GraphKeys.LAYER_TENSOR, self.module_name)
         return incoming
 

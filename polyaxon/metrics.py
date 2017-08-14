@@ -71,7 +71,8 @@ def accuracy(name='Accuracy', scope=None, collect=False):
     """
     def inner_metric(y_pred, y_true):
         def categorical_accuracy(y_pred, y_true):
-            correct_pred = tf.equal(x=tf.argmax(input=y_pred, axis=1), y=tf.argmax(input=y_true, axis=1))
+            correct_pred = tf.equal(x=tf.argmax(input=y_pred, axis=1),
+                                    y=tf.argmax(input=y_true, axis=1))
             return tf.reduce_mean(input_tensor=tf.cast(x=correct_pred, dtype=tf.float32))
 
         def binary_accuracy(y_pred, y_true):
@@ -173,14 +174,17 @@ EVAL_METRICS = OrderedDict([
     ('streaming_precision', tf.contrib.metrics.streaming_precision),
     ('streaming_recall', tf.contrib.metrics.streaming_recall),
     ('streaming_auc', tf.contrib.metrics.streaming_auc),
-    ('streaming_specificity_at_sensitivity', tf.contrib.metrics.streaming_specificity_at_sensitivity),
-    ('streaming_sensitivity_at_specificity', tf.contrib.metrics.streaming_sensitivity_at_specificity),
+    ('streaming_specificity_at_sensitivity',
+     tf.contrib.metrics.streaming_specificity_at_sensitivity),
+    ('streaming_sensitivity_at_specificity',
+     tf.contrib.metrics.streaming_sensitivity_at_specificity),
     ('streaming_precision_at_thresholds', tf.contrib.metrics.streaming_precision_at_thresholds),
     ('streaming_recall_at_thresholds', tf.contrib.metrics.streaming_recall_at_thresholds),
     ('streaming_sparse_recall_at_k', tf.contrib.metrics.streaming_sparse_recall_at_k),
     # TODO: this function expects an int64 ==> labels = tf.cast(labels, tf.int64)
     ('streaming_sparse_precision_at_k', tf.contrib.metrics.streaming_sparse_precision_at_k),
-    ('streaming_sparse_average_precision_at_k', tf.contrib.metrics.streaming_sparse_average_precision_at_k),
+    ('streaming_sparse_average_precision_at_k',
+     tf.contrib.metrics.streaming_sparse_average_precision_at_k),
     ('streaming_mean_absolute_error', tf.contrib.metrics.streaming_mean_absolute_error),
     ('streaming_mean_relative_error', tf.contrib.metrics.streaming_mean_relative_error),
     ('streaming_mean_squared_error', tf.contrib.metrics.streaming_mean_squared_error),

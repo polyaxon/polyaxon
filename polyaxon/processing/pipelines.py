@@ -204,8 +204,8 @@ class TFRecordSequencePipeline(Pipeline):
 
         # finally add the source_len, there should be always a source_token feature.
         items_to_handlers['source_len'] = tfslim.tfexample_decoder.ItemHandlerCallback(
-                keys=['source_token'],
-                func=lambda x: tf.size(x['source_token']))
+            keys=['source_token'],
+            func=lambda x: tf.size(x['source_token']))
         return items_to_handlers
 
     def make_data_provider(self, **kwargs):

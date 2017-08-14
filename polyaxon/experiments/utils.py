@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import tensorflow as tf
-
 from tensorflow.contrib.learn.python.learn.learn_runner import _is_distributed
 from tensorflow.contrib.learn.python.learn.estimators import run_config
 from tensorflow.python.platform import tf_logging as logging
@@ -35,8 +33,7 @@ def _execute_schedule(experiment, schedule):
     if not hasattr(experiment, schedule):
         logging.error("Schedule references non-existent task {}".format(schedule))
         valid_tasks = [x for x in dir(experiment)
-                       if not x.startswith('_')
-                       and callable(getattr(experiment, x))]
+                       if not x.startswith('_') and callable(getattr(experiment, x))]
         logging.error("Allowed values for this experiment are: {}".format(valid_tasks))
         raise ValueError("Schedule references non-existent task {}".format(schedule))
 
@@ -44,8 +41,7 @@ def _execute_schedule(experiment, schedule):
     if not callable(task):
         logging.error("Schedule references non-callable member {}".format(schedule))
         valid_tasks = [x for x in dir(experiment)
-                       if not x.startswith('_')
-                       and callable(getattr(experiment, x))]
+                       if not x.startswith('_') and callable(getattr(experiment, x))]
         logging.error("Allowed values for this experiment are: {}".format(valid_tasks))
         raise TypeError("Schedule references non-callable member {}".format(schedule))
     return task()

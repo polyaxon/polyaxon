@@ -103,7 +103,7 @@ def uniform_scaling(shape=None, factor=1.0, dtype=tf.float32, seed=None, name='U
     if shape:
         input_size = 1.0
         for dim in shape[:-1]:
-          input_size *= float(dim)
+            input_size *= float(dim)
         max_val = math.sqrt(3 / input_size) * factor
         return tf.random_ops.random_uniform(
             shape=shape, minval=-max_val, maxval=max_val, dtype=dtype, seed=seed, name=name)

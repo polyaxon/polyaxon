@@ -207,15 +207,15 @@ class Agent(BaseAgent):
         feed_dict = {features['state']: [env_spec['next_state']]}
         if mode == 'observe':
             feed_dict = {
-                    features['state']: env_spec['state'] if from_memory else [env_spec['state']],
-                    labels['action']: env_spec['action'] if from_memory else [env_spec['action']],
-                    labels['reward']: env_spec['reward'] if from_memory else [env_spec['reward']],
-                    labels['done']: env_spec['done'] if from_memory else [env_spec['done']],
-                    labels['max_reward']: stats.max(),
-                    labels['min_reward']: stats.min(),
-                    labels['avg_reward']: stats.avg(),
-                    labels['total_reward']: stats.total()
-                }
+                features['state']: env_spec['state'] if from_memory else [env_spec['state']],
+                labels['action']: env_spec['action'] if from_memory else [env_spec['action']],
+                labels['reward']: env_spec['reward'] if from_memory else [env_spec['reward']],
+                labels['done']: env_spec['done'] if from_memory else [env_spec['done']],
+                labels['max_reward']: stats.max(),
+                labels['min_reward']: stats.min(),
+                labels['avg_reward']: stats.avg(),
+                labels['total_reward']: stats.total()
+            }
         return feed_dict
 
     def run_episode(self, env, sess, features, labels, no_run_hooks, global_step,
@@ -246,7 +246,10 @@ class Agent(BaseAgent):
         episode_done = False
         while not env_spec.done:
             _, step, timestep, action = sess.run(
-                [no_run_hooks, global_step, update_timestep_op, estimator_spec.predictions['results']],
+                [no_run_hooks,
+                 global_step,
+                 update_timestep_op,
+                 estimator_spec.predictions['results']],
                 feed_dict=self._prepare_feed_dict('act', features, labels, env_spec.to_dict()))
 
             env_spec = env.step(action, env_spec.next_state)
@@ -477,7 +480,8 @@ class PGAgent(BaseAgent):
             except:  # pylint: disable=bare-except
                 pass
 
-        hooks = self._prepare_train(steps=steps, hooks=hooks, max_steps=max_steps, max_episodes=max_episodes)
+        hooks = self._prepare_train(steps=steps, hooks=hooks, max_steps=max_steps,
+                                    max_episodes=max_episodes)
         loss = self._train_model(env=env, hooks=hooks)
         logging.info('Loss for final step: %s.', loss)
         return self
@@ -509,7 +513,9 @@ class PGAgent(BaseAgent):
                         shape=(None, env.num_actions) if env.is_continuous else (None,),
                         name='action'),
                     'reward': tf.placeholder(dtype=tf.float32, shape=(None,), name='reward'),
-                    'discount_reward': tf.placeholder(dtype=tf.float32, shape=(None,), name='discount_reward'),
+                    'discount_reward': tf.placeholder(dtype=tf.float32,
+                                                      shape=(None,),
+                                                      name='discount_reward'),
                     'done': tf.placeholder(dtype=tf.bool, shape=(None,), name='done'),
 
                     'max_reward': tf.placeholder(
@@ -533,7 +539,10 @@ class PGAgent(BaseAgent):
                 features['state']: data['state'] if from_memory else [data['state']],
                 labels['action']: data['action'] if from_memory else [data['action']],
                 labels['reward']: data['reward'] if from_memory else [data['reward']],
-                labels['discount_reward']: get_cumulative_rewards(data['reward'], data['done'], self.optimizer_params['discount']) if from_memory else [data['reward']],
+                labels['discount_reward']: get_cumulative_rewards(
+                    data['reward'],
+                    data['done'],
+                    self.optimizer_params['discount']) if from_memory else [data['reward']],
                 labels['done']: data['done'] if from_memory else [data['done']],
 
                 labels['max_reward']: stats.max(),
@@ -678,7 +687,7 @@ class PGAgent(BaseAgent):
                 chief_only_hooks=chief_hooks + list(estimator_spec.training_chief_hooks),
                 save_checkpoint_secs=0,  # Saving checkpoint is handled by a hook.
                 save_summaries_steps=0,  # Saving summaries is handled by a hook.
-                config=self._session_config) as mon_sess:
+                config=self._session_config) as mon_sess:  # noqa
                 loss = None
                 while not mon_sess.should_stop():
                     loss = self.run_episode(
@@ -786,11 +795,13 @@ class TRPOAgent(PGAgent):
                         shape=(None, env.num_actions) if env.is_continuous else (None,),
                         name='action'),
                     'reward': tf.placeholder(dtype=tf.float32, shape=(None,), name='reward'),
-                    'discount_reward': tf.placeholder(dtype=tf.float32, shape=(None,), name='discount_reward'),
+                    'discount_reward': tf.placeholder(dtype=tf.float32, shape=(None,),
+                                                      name='discount_reward'),
                     'done': tf.placeholder(dtype=tf.bool, shape=(None,), name='done'),
                     'dist_values': tf.placeholder(
                         dtype=tf.float32,
-                        shape=(None, env.num_actions * 2) if env.is_continuous else (None, env.num_actions),
+                        shape=((None, env.num_actions * 2)
+                               if env.is_continuous else (None, env.num_actions)),
                         name='dist_values'),
                     'tangents': tf.placeholder(dtype=tf.float32, shape=(None,), name='tangents'),
                     'theta': tf.placeholder(dtype=tf.float32, shape=(None,), name='theta'),
@@ -816,9 +827,13 @@ class TRPOAgent(PGAgent):
                 features['state']: data['state'] if from_memory else [data['state']],
                 labels['action']: data['action'] if from_memory else [data['action']],
                 labels['reward']: data['reward'] if from_memory else [data['reward']],
-                labels['discount_reward']: get_cumulative_rewards(data['reward'], data['done'], self.optimizer_params['discount']) if from_memory else [data['reward']],
+                labels['discount_reward']: get_cumulative_rewards(
+                    data['reward'],
+                    data['done'],
+                    self.optimizer_params['discount']) if from_memory else [data['reward']],
                 labels['done']: data['done'] if from_memory else [data['done']],
-                labels['dist_values']: data['dist_values'] if from_memory else [data['dist_values']],
+                labels['dist_values']: (data['dist_values']
+                                        if from_memory else [data['dist_values']]),
 
                 labels['max_reward']: stats.max(),
                 labels['min_reward']: stats.min(),
@@ -871,19 +886,25 @@ class TRPOAgent(PGAgent):
                 logging.info('Updating model.')
                 feed_dict = self._prepare_feed_dict(
                     'observe', features, labels, self.memory.sample(), stats, from_memory=True)
-                _, policy_gradient = sess.run([no_run_hooks, estimator_spec.predictions['policy_gradient']], feed_dict=feed_dict)
+                _, policy_gradient = sess.run(
+                    [no_run_hooks, estimator_spec.predictions['policy_gradient']],
+                    feed_dict=feed_dict)
 
                 if np.allclose(policy_gradient, np.zeros_like(policy_gradient)):
                     logging.debug('Gradient zero, skipping update')
                     return
 
-                # TODO: move logic to from tensorflow.contrib.solvers.python.ops.linear_equations import conjugate_gradient
+                # TODO: move logic to conjugate_gradient in
+                # tensorflow.contrib.solvers.python.ops.linear_equations
                 def fisher_vector_product(p):
                     feed_dict[labels['tangents']] = p
-                    _, fvp = sess.run([no_run_hooks, estimator_spec.predictions['fisher_vector_product']], feed_dict)
+                    _, fvp = sess.run(
+                        [no_run_hooks, estimator_spec.predictions['fisher_vector_product']],
+                        feed_dict=feed_dict)
                     return fvp + self.optimizer_params['cg_damping'] * p
 
-                direction = conjugate_gradient(fisher_vector_product, -policy_gradient, self.optimizer_params['cg_iterations'])
+                direction = conjugate_gradient(fisher_vector_product, -policy_gradient,
+                                               self.optimizer_params['cg_iterations'])
                 shs = 0.5 * direction.dot(fisher_vector_product(direction))  # theta
                 lagrange_multiplier = np.sqrt(shs / self.optimizer_params['max_kl_divergence'])
                 update_step = direction / (lagrange_multiplier + EPSILON)
@@ -891,7 +912,8 @@ class TRPOAgent(PGAgent):
                 _, previous_theta = sess.run([no_run_hooks, estimator_spec.extra_ops['get_theta']])
 
                 def compute_loss(theta):
-                    sess.run([no_run_hooks, estimator_spec.extra_ops['set_theta']], feed_dict={labels['theta']: theta})
+                    sess.run([no_run_hooks, estimator_spec.extra_ops['set_theta']],
+                             feed_dict={labels['theta']: theta})
                     return sess.run([no_run_hooks, estimator_spec.loss], feed_dict=feed_dict)[1]
 
                 improved, theta = line_search(

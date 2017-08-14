@@ -1322,10 +1322,10 @@ class HighwayConv2d(BaseLayer):
         # Shared convolution for gating
         convolved = tf.nn.conv2d(input=incoming, filter=self._w,
                                  strides=strides, padding=padding)
-        H = getters.get_activation(self.activation)(convolved + self._b)
-        T = tf.sigmoid(x=tf.multiply(convolved, self._w_t) + self._b_t)
-        C = tf.subtract(x=1.0, y=T)
-        inference = tf.add(x=tf.multiply(x=H, y=T), y=tf.multiply(x=convolved, y=C))
+        h = getters.get_activation(self.activation)(convolved + self._b)
+        t = tf.sigmoid(x=tf.multiply(convolved, self._w_t) + self._b_t)
+        c = tf.subtract(x=1.0, y=t)
+        inference = tf.add(x=tf.multiply(x=h, y=t), y=tf.multiply(x=convolved, y=c))
         track(inference, tf.GraphKeys.ACTIVATIONS)
 
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
@@ -1439,13 +1439,12 @@ class HighwayConv1d(BaseLayer):
         # Shared convolution for gating
         convolved = tf.nn.conv2d(
             input=inference, filter=self._w, strides=strides, padding=padding)
-        H = getters.get_activation(self.activation)(tf.squeeze(convolved + self._b, [2]))
-        T = tf.sigmoid(
-            x=tf.squeeze(input=tf.multiply(convolved, self._w_t) + self._b_t, axis=[2]))
-        C = tf.subtract(x=1.0, y=T)
-        Q = tf.multiply(x=H, y=T)
-        R = tf.multiply(x=tf.squeeze(input=convolved, axis=[2]), y=C)
-        inference = tf.add(x=Q, y=R)
+        h = getters.get_activation(self.activation)(tf.squeeze(convolved + self._b, [2]))
+        t = tf.sigmoid(x=tf.squeeze(input=tf.multiply(convolved, self._w_t) + self._b_t, axis=[2]))
+        c = tf.subtract(x=1.0, y=t)
+        q = tf.multiply(x=h, y=t)
+        r = tf.multiply(x=tf.squeeze(input=convolved, axis=[2]), y=c)
+        inference = tf.add(x=q, y=r)
         track(inference, tf.GraphKeys.ACTIVATIONS)
 
         # Add attributes to Tensor to easy access weights.

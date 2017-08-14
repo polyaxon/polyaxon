@@ -24,7 +24,8 @@ class VocabularyProcessor(tflearn.preprocessing.VocabularyProcessor):
                  min_frequency=0,
                  vocabulary=None,
                  tokenizer_fn=None):
-        super(VocabularyProcessor, self).__init__(max_document_length, min_frequency, vocabulary, tokenizer_fn)
+        super(VocabularyProcessor, self).__init__(
+            max_document_length, min_frequency, vocabulary, tokenizer_fn)
 
     def fit(self, raw_documents, unused_y=None):
         """fit.

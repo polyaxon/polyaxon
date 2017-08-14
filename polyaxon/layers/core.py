@@ -96,9 +96,9 @@ class FullyConnected(BaseLayer):
 
         regularizer = getters.get_regularizer(self.regularizer, scale=self.scale, collect=True)
         self._w = variable(
-            name='w', shape=[n_inputs, self.num_units], dtype=incoming.dtype, regularizer=regularizer,
-            initializer=getters.get_initializer(self.weights_init), trainable=self.trainable,
-            restore=self.restore)
+            name='w', shape=[n_inputs, self.num_units], dtype=incoming.dtype,
+            regularizer=regularizer, initializer=getters.get_initializer(self.weights_init),
+            trainable=self.trainable, restore=self.restore)
         track(self._w, tf.GraphKeys.LAYER_VARIABLES, self.module_name)
 
         inference = incoming
@@ -456,12 +456,12 @@ class Highway(BaseLayer):
         if len(input_shape) > 2:
             incoming = tf.reshape(tensor=incoming, shape=[-1, n_inputs])
 
-        H = getters.get_activation(self.activation)(tf.matmul(a=incoming, b=self._w) + self._b)
-        T = tf.sigmoid(tf.matmul(a=incoming, b=self._w_t) + self._b_t)
+        h = getters.get_activation(self.activation)(tf.matmul(a=incoming, b=self._w) + self._b)
+        t = tf.sigmoid(tf.matmul(a=incoming, b=self._w_t) + self._b_t)
         if self._transform_dropout:
-            T = self._transform_dropout(T)
-        C = tf.subtract(x=1.0, y=T)
-        inference = tf.add(x=tf.multiply(x=H, y=T), y=tf.multiply(x=incoming, y=C))
+            t = self._transform_dropout(t)
+        c = tf.subtract(x=1.0, y=t)
+        inference = tf.add(x=tf.multiply(x=h, y=t), y=tf.multiply(x=incoming, y=c))
         track(inference, tf.GraphKeys.ACTIVATIONS)
 
         track(inference, tf.GraphKeys.LAYER_TENSOR, self.module_name)
@@ -559,7 +559,8 @@ class Merge(BaseLayer):
         """
         super(Merge, self).__init__(mode, name)
         assert len(modules) > 1, '{} requires 2 or more modules.'.format(self.__class__)
-        assert merge_mode in self.MergeMode.MODES, 'Merge mode `{}` not supported.'.format(merge_mode)
+        assert merge_mode in self.MergeMode.MODES, 'Merge mode `{}` not supported.'.format(
+            merge_mode)
         self._modules = modules
         self._built_modules = None
         self.merge_mode = merge_mode
@@ -588,19 +589,26 @@ class Merge(BaseLayer):
             for i in xrange(1, len(self._built_modules)):
                 x = tf.multiply(x, self._built_modules[i])
         elif self.merge_mode == self.MergeMode.SUM:
-            x = tf.reduce_sum(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
+            x = tf.reduce_sum(
+                tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.MEAN:
-            x = tf.reduce_mean(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
+            x = tf.reduce_mean(
+                tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.PROD:
-            x = tf.reduce_prod(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
+            x = tf.reduce_prod(
+                tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.MAX:
-            x = tf.reduce_max(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
+            x = tf.reduce_max(
+                tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.MIN:
-            x = tf.reduce_min(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
+            x = tf.reduce_min(
+                tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.AND:
-            x = tf.reduce_all(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
+            x = tf.reduce_all(
+                tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         elif self.merge_mode == self.MergeMode.OR:
-            x = tf.reduce_any(tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
+            x = tf.reduce_any(
+                tf.concat(axis=self.axis, values=self._built_modules), axis=self.axis)
         else:
             raise Exception('Unknown merge mode', str(self.merge_mode))
 

@@ -91,7 +91,8 @@ class GymEnvironment(Environment):
     def step(self, action, state, return_spec=True):
         self._step()
         if isinstance(action, (list, np.ndarray)):
-            if isinstance(self._env.action_space, Discrete) or isinstance(action, (list, np.ndarray)):
+            if isinstance(self._env.action_space, Discrete) or isinstance(action,
+                                                                          (list, np.ndarray)):
                 action = action[0]
         if isinstance(self._env.action_space, Box) and not isinstance(action, (list, np.ndarray)):
             action = list(action)

@@ -53,8 +53,7 @@ class VPGModel(BasePGModel):
                 `losses` are the per-batch losses.
                 `loss` is a single scalar tensor to minimize.
         """
-        reward, action, done, = labels['reward'], labels['action'], labels['done']
-        discount_reward = labels['discount_reward']
+        action, discount_reward = labels['action'], labels['discount_reward']
 
         log_probs = self._graph_results.distribution.log_prob(action)
         losses = tf.multiply(x=log_probs, y=discount_reward)

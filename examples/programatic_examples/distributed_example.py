@@ -40,13 +40,13 @@ def create_experiment(task_type, task_index=0):
                                    config=config)
 
     # Data
-    X = np.asarray([[0., 0.], [0., 1.], [1., 0.], [1., 1.]])
+    x = np.asarray([[0., 0.], [0., 1.], [1., 0.], [1., 1.]])
     y = np.asarray([[0], [1], [1], [0]])
 
     def input_fn(num_epochs=1):
-        return plx.processing.numpy_input_fn({'X': X}, y,
+        return plx.processing.numpy_input_fn({'X': x}, y,
                                              shuffle=False,
                                              num_epochs=num_epochs,
-                                             batch_size=len(X))
+                                             batch_size=len(x))
 
     return plx.experiments.Experiment(est, input_fn(10000), input_fn(100))

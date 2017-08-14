@@ -18,7 +18,7 @@ def exponential_decay(exploration_rate, timestep, decay_steps, decay_rate, stair
     to a provided initial exploration rate.  It requires a `timestep` value to
     compute the decayed exploration rate.  You can just pass a TensorFlow variable
     that you increment at each training step.
-    
+
     The function returns the decayed exploration rate.  It is computed as:
 
     ```python
@@ -136,8 +136,7 @@ def piecewise_constant(x, boundaries, values, name=None):
 
         # The default isn't needed here because our conditions are mutually
         # exclusive and exhaustive, but tf.case requires it.
-        default = lambda: values[0]
-        return control_flow_ops.case(pred_fn_pairs, default, exclusive=True)
+        return control_flow_ops.case(pred_fn_pairs, lambda: values[0], exclusive=True)
 
 
 def polynomial_decay(exploration_rate, timestep, decay_steps,

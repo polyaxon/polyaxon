@@ -210,7 +210,8 @@ def conjugate_gradient(fn, b, iterations=50, residual_tolerance=1e-10):
     return np.nan_to_num(x)
 
 
-def line_search(fn, initial_x, full_step, expected_improve_rate, max_backtracks=10, accept_ratio=0.1):
+def line_search(fn, initial_x, full_step, expected_improve_rate, max_backtracks=10,
+                accept_ratio=0.1):
     """Backtracking line search, where expected_improve_rate is the slope dy/dx at the initial."""
 
     function_value = fn(initial_x)

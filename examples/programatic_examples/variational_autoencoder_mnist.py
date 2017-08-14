@@ -30,7 +30,8 @@ def decoder_fn(mode, features):
 
 
 def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
-    return plx.bridges.LatentBridge(mode, latent_dim=2)(features, labels, loss_config, encoder_fn, decoder_fn)
+    return plx.bridges.LatentBridge(mode, latent_dim=2)(features, labels, loss_config,
+                                                        encoder_fn, decoder_fn)
 
 
 def model_fn(features, labels, params, mode, config):
@@ -45,7 +46,7 @@ def model_fn(features, labels, params, mode, config):
     return model(features=features, labels=labels, params=params, config=config)
 
 
-def experiment_fn(output_dir, X_train, y_train, X_eval, y_eval):
+def experiment_fn(output_dir, x_train, y_train, x_eval, y_eval):
     """Creates a variational auto encoder on MNIST handwritten digits.
 
     inks:
@@ -56,9 +57,9 @@ def experiment_fn(output_dir, X_train, y_train, X_eval, y_eval):
         estimator=plx.estimators.Estimator(
             model_fn=model_fn, model_dir=output_dir, config=run_config),
         train_input_fn=plx.processing.numpy_input_fn(
-            x=X_train, y=y_train, batch_size=64, num_epochs=None, shuffle=False),
+            x=x_train, y=y_train, batch_size=64, num_epochs=None, shuffle=False),
         eval_input_fn=plx.processing.numpy_input_fn(
-            x=X_eval, y=y_eval, batch_size=32, num_epochs=None, shuffle=False),
+            x=x_eval, y=y_eval, batch_size=32, num_epochs=None, shuffle=False),
         train_steps=5000,
         eval_steps=100,
         eval_every_n_steps=5)
@@ -124,19 +125,19 @@ def main(*args):
     dataset_dir = "../data/mnist-tf"
     mnist = input_data.read_data_sets(dataset_dir)
 
-    X_train = mnist.train.images.astype('float32') / 255.
-    X_eval = mnist.validation.images.astype('float32') / 255.
-    X_test = mnist.test.images.astype('float32') / 255.
-    X_train = X_train.reshape((len(X_train), total_tensor_depth(X_train)))
-    X_eval = X_eval.reshape((len(X_eval), total_tensor_depth(X_eval)))
-    X_test = X_test.reshape((len(X_test), total_tensor_depth(X_test)))
+    x_train = mnist.train.images.astype('float32') / 255.
+    x_eval = mnist.validation.images.astype('float32') / 255.
+    x_test = mnist.test.images.astype('float32') / 255.
+    x_train = x_train.reshape((len(x_train), total_tensor_depth(x_train)))
+    x_eval = x_eval.reshape((len(x_eval), total_tensor_depth(x_eval)))
+    x_test = x_test.reshape((len(x_test), total_tensor_depth(x_test)))
 
     xp = experiment_fn("/tmp/polyaxon_logs/vae",
-                       {'images': X_train}, mnist.train.labels,
-                       {'images': X_eval}, mnist.validation.labels)
+                       {'images': x_train}, mnist.train.labels,
+                       {'images': x_eval}, mnist.validation.labels)
     xp.continuous_train_and_evaluate()
 
-    encode(xp.estimator, X_test, mnist.test.labels)
+    encode(xp.estimator, x_test, mnist.test.labels)
     generate(xp.estimator)
 
 

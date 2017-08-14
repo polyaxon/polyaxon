@@ -12,8 +12,7 @@ class EstimatorSpec(
     collections.namedtuple('EstimatorSpec', [
         'predictions', 'loss', 'train_op', 'eval_metric_ops', 'extra_ops',
         'export_outputs', 'training_chief_hooks', 'training_hooks',
-        'scaffold'
-    ]), _EstimatorSpec):
+        'scaffold']), _EstimatorSpec):
     """Ops and objects returned from a `model_fn` and passed to `Estimator`.
 
     This extends the Tensorflow `EstimatorSpec` with `extra_ops`

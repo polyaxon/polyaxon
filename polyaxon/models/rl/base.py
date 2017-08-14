@@ -11,13 +11,11 @@ from tensorflow.python.training import training
 try:
     from tensorflow.python.ops.distributions.categorical import Categorical
     from tensorflow.python.ops.distributions.normal import Normal
-    from tensorflow.python.ops.distributions.kullback_leibler import kl_divergence
 except ImportError:
     # tf < 1.2.0
-    from tensorflow.contrib.distributions import Categorical, Normal, kl as kl_divergence
+    from tensorflow.contrib.distributions import Categorical, Normal
 
 from polyaxon import Modes
-from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.layers import FullyConnected
 from polyaxon.libs import getters
 from polyaxon.libs.configs import LossConfig
@@ -362,7 +360,8 @@ class BasePGModel(BaseRLModel):
             if self.is_continuous:
                 return self._graph_results.distribution.sample(sample_shape=batch_size)
             else:
-                return tf.squeeze(self._graph_results.distribution.sample(sample_shape=batch_size), axis=1)
+                return tf.squeeze(self._graph_results.distribution.sample(sample_shape=batch_size),
+                                  axis=1)
 
     def _call_graph_fn(self, features, labels=None):
         """Calls graph function.

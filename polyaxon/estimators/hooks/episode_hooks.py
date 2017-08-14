@@ -242,7 +242,6 @@ class EpisodeSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
         return basic_session_run_hooks.SessionRunArgs(requests)
 
     def after_run(self, run_context, run_values):
-        _ = run_context
         if not self._summary_writer:
             return
 
@@ -250,7 +249,8 @@ class EpisodeSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
 
         if self._next_episode is None:
             self._next_episode = global_episode + self._timer._every_episodes
-            self._summary_writer.add_session_log(SessionLog(status=SessionLog.START), global_episode)
+            self._summary_writer.add_session_log(
+                SessionLog(status=SessionLog.START), global_episode)
 
         if self._request_summary and self._timer.should_trigger_for_episode(global_episode):
             self._timer.update_last_triggered_episode(global_episode)

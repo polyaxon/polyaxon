@@ -27,9 +27,9 @@ def resize(images, height, width, method=None, align_corners=False):
     `method` can be one of:
 
     *   `None` no distortion.
-    *   `ResizeMethod.BILINEAR`: [Bilinear interpolation.](https://en.wikipedia.org/wiki/Bilinear_interpolation)
-    *   `ResizeMethod.NEAREST_NEIGHBOR`: [Nearest neighbor interpolation.](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation)
-    *   `ResizeMethod.BICUBIC`: [Bicubic interpolation.](https://en.wikipedia.org/wiki/Bicubic_interpolation)
+    *   `ResizeMethod.BILINEAR`: [Bilinear interpolation.](https://en.wikipedia.org/wiki/Bilinear_interpolation)  # noqa
+    *   `ResizeMethod.NEAREST_NEIGHBOR`: [Nearest neighbor interpolation.](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation)  # noqa
+    *   `ResizeMethod.BICUBIC`: [Bicubic interpolation.](https://en.wikipedia.org/wiki/Bicubic_interpolation)  # noqa
     *   `ResizeMethod.AREA`: Area interpolation.
 
     Args:
@@ -290,7 +290,7 @@ def to_bounding_box(images, offset_height, offset_width, target_height, target_w
 class ToBoundingBox(ImageProcessorModule):
     """See `plx.image.to_bounding_box`'s docstring"""
     def __init__(self, mode, offset_height, offset_width, target_height, target_width,
-                    method='crop', name="ToBoundingBox"):
+                 method='crop', name="ToBoundingBox"):
         super(ToBoundingBox, self).__init__(mode=mode, name=name)
         self.offset_height = offset_height
         self.offset_width = offset_width
@@ -487,7 +487,7 @@ def convert_color_space(images, from_space, to_space, name=None):
     if from_space == 'rgb':
         if to_space == 'grayscale':
             return tf.image.rgb_to_grayscale(images=images, name=name)
-        if to_space =='hsv':
+        if to_space == 'hsv':
             return tf.image.rgb_to_hsv(images=images, name=name)
 
     if from_space == 'grayscale':
@@ -771,7 +771,7 @@ def adjust_saturation(images, saturation_factor, saturation_factor_max=None, is_
 class AdjustSaturation(ImageProcessorModule):
     """See `plx.image.adjust_saturation`'s docstring"""
     def __init__(self, mode, saturation_factor, saturation_factor_max=None, is_random=False,
-                      seed=None, name="AdjustSaturation"):
+                 seed=None, name="AdjustSaturation"):
         super(AdjustSaturation, self).__init__(mode=mode, name=name)
         self.saturation_factor = saturation_factor
         self.saturation_factor_max = saturation_factor_max

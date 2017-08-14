@@ -77,7 +77,7 @@ def generate_data(fct, x, time_steps, seperate=False):
     return dict(train=train_x, val=val_x, test=test_x), dict(train=train_y, val=val_y, test=test_y)
 
 
-def experiment_fn(output_dir, X, y, train_steps=1000, num_units=7, output_units=1, num_layers=1):
+def experiment_fn(output_dir, x, y, train_steps=1000, num_units=7, output_units=1, num_layers=1):
     """Creates an experiment using LSTM architecture for timeseries regression problem."""
 
     def graph_fn(mode, features):
@@ -101,9 +101,9 @@ def experiment_fn(output_dir, X, y, train_steps=1000, num_units=7, output_units=
         estimator=plx.estimators.Estimator(
             model_fn=model_fn, model_dir=output_dir, config=run_config),
         train_input_fn=plx.processing.numpy_input_fn(
-            x={'x': X['train']}, y=y['train'], batch_size=64, num_epochs=None, shuffle=False),
+            x={'x': x['train']}, y=y['train'], batch_size=64, num_epochs=None, shuffle=False),
         eval_input_fn=plx.processing.numpy_input_fn(
-            x={'x': X['train']}, y=y['train'], batch_size=32, num_epochs=None, shuffle=False),
+            x={'x': x['train']}, y=y['train'], batch_size=32, num_epochs=None, shuffle=False),
         train_steps=train_steps,
         eval_steps=10,
         eval_every_n_steps=5)

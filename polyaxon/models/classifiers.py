@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
-from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.layers import OneHotEncoding
 from polyaxon.libs.configs import LossConfig
 from polyaxon.models.base import BaseModel

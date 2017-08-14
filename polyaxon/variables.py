@@ -49,6 +49,7 @@ def variable(name, shape=None, dtype=tf.float32, initializer=None, regularizer=N
                               collections=collections)
 
         if not restore:
-            tf.add_to_collection(name=tf.GraphKeys.EXCL_RESTORE_VARIABLES, value=var)  # @TODO adapt restoring saver
+            # TODO adapt restoring saver
+            tf.add_to_collection(name=tf.GraphKeys.EXCL_RESTORE_VARIABLES, value=var)
 
         return var

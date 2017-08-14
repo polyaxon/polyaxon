@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import abc
 from collections import namedtuple
 
-import six
-
 from polyaxon.libs.subgraph import SubGraph
-from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import get_shape
 
 EncoderSpec = namedtuple("EncoderSpec", "output output_size")

@@ -33,11 +33,11 @@ class PNGImageReader(ImageReader):
     """A png image class reader"""
     def decoder(self, channels):
         return tf.image.decode_png(self._placeholder, channels=channels)
-    
+
 
 class PNGNumpyImageReader(ImageReader):
     """A numpy png image class reader"""
-    
+
     def __init__(self, shape=None):
         self._placeholder = tf.placeholder(dtype=tf.uint8, shape=shape)
         self._image = tf.image.encode_png(self._placeholder)

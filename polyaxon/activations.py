@@ -149,8 +149,8 @@ def prelu(channel_shared=False, weights_init='zeros', restore=True, name='PReLU'
             else:
                 w_shape = get_shape(x)[-1:]
 
-            W_init = getters.get_initializer(weights_init)
-            alphas = variable(shape=w_shape, initializer=W_init, restore=restore, name="alphas")
+            w_init = getters.get_initializer(weights_init)
+            alphas = variable(shape=w_shape, initializer=w_init, restore=restore, name="alphas")
 
             x = tf.nn.relu(features=x) + tf.multiply(x=alphas, y=(x - tf.abs(x))) * 0.5
             x.alphas = alphas

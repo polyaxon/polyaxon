@@ -5,7 +5,6 @@ from six.moves import xrange
 
 import tensorflow as tf
 
-from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.layers import FullyConnected
 from polyaxon.models.rl.base import BaseQModel
 

@@ -398,11 +398,11 @@ class Experiment(object):
         with new_attr_context(self, "_train_hooks"):
             self._train_hooks = self._train_hooks or []
             # if self._eval_every_n_steps:
-                # self._train_hooks += [monitors.ValidationMonitor(
-                #     input_fn=self._eval_input_fn, eval_steps=self._eval_steps,
-                #     every_n_steps=self._eval_every_n_steps,
-                #     name=eval_dir_suffix, hooks=self._eval_hooks
-                # )]
+            #     self._train_hooks += [monitors.ValidationMonitor(
+            #         input_fn=self._eval_input_fn, eval_steps=self._eval_steps,
+            #         every_n_steps=self._eval_every_n_steps,
+            #         name=eval_dir_suffix, hooks=self._eval_hooks
+            #     )]
             self.train(delay_secs=0)
 
         eval_result = self._call_evaluate(input_fn=self._eval_input_fn,
@@ -514,7 +514,7 @@ class Experiment(object):
         """
         self._call_train(input_fn=self._train_input_fn, steps=1, hooks=self._train_hooks)
         eval_result = self._call_evaluate(input_fn=self._eval_input_fn, steps=1, name="one_pass")
-        _ = self._maybe_export(eval_result)
+        self._maybe_export(eval_result)
         return eval_result
 
 

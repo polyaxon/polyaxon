@@ -9,8 +9,6 @@ import tensorflow as tf
 
 from tensorflow.contrib.slim.python.slim.data.parallel_reader import parallel_read
 
-from polyaxon.processing.data_decoders import SplitTokensDecoder
-
 
 class Dataset(object):
     """Represents a Dataset specification.

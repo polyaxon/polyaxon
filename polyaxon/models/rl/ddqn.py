@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.layers import OneHotEncoding
 from polyaxon.models.rl.base import BaseQModel
 
