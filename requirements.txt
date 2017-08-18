@@ -1,0 +1,6 @@
+marshmallow==2.13.5
+six==1.10.0
+click==6.7
+requests==2.18.4
+requests-toolbelt==0.8.0
+polyaxon-schemas==0.0.12
