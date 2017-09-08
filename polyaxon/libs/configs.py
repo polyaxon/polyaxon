@@ -90,6 +90,7 @@ class RunConfig(run_config.RunConfig, Configurable):
                  save_checkpoints_steps=None,
                  keep_checkpoint_max=5,
                  keep_checkpoint_every_n_hours=10000,
+                 log_step_count_steps=100,
                  evaluation_master='',
                  model_dir=None,
                  cluster_config=None):
@@ -101,6 +102,7 @@ class RunConfig(run_config.RunConfig, Configurable):
                                         tf_random_seed, save_summary_steps, save_checkpoints_secs,
                                         save_checkpoints_steps, keep_checkpoint_max,
                                         keep_checkpoint_every_n_hours,
+                                        log_step_count_steps,
                                         evaluation_master, model_dir)
         self._tf_random_seed = 1
         self._model_dir = None

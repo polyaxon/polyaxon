@@ -278,8 +278,7 @@ class Agent(BaseAgent):
 
     def _train_model(self, env, first_update, update_frequency, hooks):
         all_hooks = []
-        self._graph = ops.Graph()
-        with self._graph.as_default() as g, g.device(self._device_fn):
+        with ops.Graph().as_default() as g, g.device(self._device_fn):
             random_seed.set_random_seed(self._config.tf_random_seed)
             global_step = training.get_or_create_global_step(g)
             global_episode = get_or_create_global_episode(g)
@@ -380,7 +379,6 @@ class Agent(BaseAgent):
                         first_update=first_update,
                         update_frequency=update_frequency,
                         estimator_spec=estimator_spec)
-            summary_io.SummaryWriterCache.clear()
             return loss
 
 
@@ -600,8 +598,7 @@ class PGAgent(BaseAgent):
 
     def _train_model(self, env, hooks):
         all_hooks = []
-        self._graph = ops.Graph()
-        with self._graph.as_default() as g, g.device(self._device_fn):
+        with ops.Graph().as_default() as g, g.device(self._device_fn):
             random_seed.set_random_seed(self._config.tf_random_seed)
             global_step = training.get_or_create_global_step(g)
             global_episode = get_or_create_global_episode(g)
@@ -700,7 +697,6 @@ class PGAgent(BaseAgent):
                         update_episode_op=update_episode_op,
                         update_timestep_op=update_timestep_op,
                         estimator_spec=estimator_spec)
-            summary_io.SummaryWriterCache.clear()
             return loss
 
 
