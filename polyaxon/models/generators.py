@@ -5,10 +5,12 @@ from collections import Mapping
 
 import tensorflow as tf
 
+from polyaxon_schemas.optimizers import AdadeltaConfig
+from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
+
 from polyaxon import Modes
 from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.bridges import BridgeSpec
-from polyaxon.libs.configs import OptimizerConfig, LossConfig
 from polyaxon.libs.utils import get_tracked, get_arguments, track
 from polyaxon.models.base import BaseModel
 
@@ -51,8 +53,8 @@ class Generator(BaseModel):
     def __init__(self, mode, encoder_fn, decoder_fn, bridge_fn, loss_config=None,
                  optimizer_config=None, summaries='all', eval_metrics_config=None,
                  clip_gradients=0.5, clip_embed_gradients=0.1, name="Generator"):
-        optimizer_config = optimizer_config or OptimizerConfig('adadelta', learning_rate=0.4)
-        loss_config = loss_config or LossConfig(module='sigmoid_cross_entropy')
+        optimizer_config = optimizer_config or AdadeltaConfig(learning_rate=0.4)
+        loss_config = loss_config or SigmoidCrossEntropyConfig()
         self._check_subgraph_fn(function=encoder_fn, function_name='encoder_fn')
         self._check_subgraph_fn(function=decoder_fn, function_name='decoder_fn')
         self._check_bridge_fn(function=bridge_fn)

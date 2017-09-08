@@ -135,8 +135,8 @@ class BaseQModel(BaseRLModel):
         changing the optimize_loss function????
         """
         if self.exploration_config:
-            return getters.get_exploration(self.exploration_config.module,
-                                           **self.exploration_config.params)
+            return getters.get_exploration(self.exploration_config.IDENTIFIER,
+                                           **self.exploration_config.to_dict())
         return None
 
     def _build_actions(self):

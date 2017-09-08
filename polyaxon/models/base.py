@@ -4,10 +4,11 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 from tensorflow.python.training import training
 
+from polyaxon_schemas.optimizers import AdamConfig
+
 from polyaxon import Modes
 from polyaxon.estimators.estimator_spec import EstimatorSpec
-from polyaxon.libs import configs, getters
-from polyaxon.libs.configs import OptimizerConfig
+from polyaxon.libs import getters
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments, get_shape
@@ -63,7 +64,7 @@ class BaseModel(GraphModule):
 
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
         self.loss_config = loss_config
-        self.optimizer_config = optimizer_config or OptimizerConfig('adam', learning_rate=0.001)
+        self.optimizer_config = optimizer_config or AdamConfig(learning_rate=0.001)
         self.eval_metrics_config = eval_metrics_config or []
         self.model_type = model_type
         self.summaries = summarizer.SummaryOptions.validate(summaries)
@@ -127,26 +128,18 @@ class BaseModel(GraphModule):
     def _build_optimizer(self):
         """Creates the optimizer"""
         optimizer = getters.get_optimizer(
-            self.optimizer_config.module,
-            learning_rate=self.optimizer_config.learning_rate,
-            decay_type=self.optimizer_config.decay_type,
-            decay_steps=self.optimizer_config.decay_steps,
-            decay_rate=self.optimizer_config.decay_rate,
-            start_decay_at=self.optimizer_config.start_decay_at,
-            stop_decay_at=self.optimizer_config.stop_decay_at,
-            min_learning_rate=self.optimizer_config.min_learning_rate,
-            staircase=self.optimizer_config.staircase,
-            **self.optimizer_config.params)
+            self.optimizer_config.IDENTIFIER, **self.optimizer_config.to_dict())
 
-        # Optionally wrap with SyncReplicasOptimizer
-        if self.optimizer_config.sync_replicas > 0:
-            optimizer = tf.train.SyncReplicasOptimizer(
-                opt=optimizer,
-                replicas_to_aggregate=self.optimizer_config.sync_replicas_to_aggregate,
-                total_num_replicas=self.optimizer_config.sync_replicas)
-            # This is really ugly, but we need to do this to make the optimizer
-            # accessible outside of the model.
-            configs.SYNC_REPLICAS_OPTIMIZER = optimizer
+        # TODO: use the _SyncReplicasOptimizerHook
+        # # Optionally wrap with SyncReplicasOptimizer
+        # if self.optimizer_config.sync_replicas > 0:
+        #     optimizer = tf.train.SyncReplicasOptimizer(
+        #         opt=optimizer,
+        #         replicas_to_aggregate=self.optimizer_config.sync_replicas_to_aggregate,
+        #         total_num_replicas=self.optimizer_config.sync_replicas)
+        #     # This is really ugly, but we need to do this to make the optimizer
+        #     # accessible outside of the model.
+        #     configs.SYNC_REPLICAS_OPTIMIZER = optimizer
 
         return optimizer
 
@@ -187,7 +180,7 @@ class BaseModel(GraphModule):
                 `loss` is a single scalar tensor to minimize.
         """
         losses, loss = getters.get_loss(
-            self.loss_config.module, results, labels, **self.loss_config.params)
+            self.loss_config.IDENTIFIER, results, labels, **self.loss_config.to_dict())
         self._loss = loss
         self._losses = losses
 
@@ -219,7 +212,7 @@ class BaseModel(GraphModule):
             if self.model_type == self.Types.CLASSIFIER and metric.module in ARGMAX_METRICS:
                 _results, _labels = get_labels_and_results(results, labels)
             metrics[metric.module] = getters.get_eval_metric(
-                metric.module, _results, _labels, **metric.params)
+                metric.IDENTIFIER, _results, _labels, **metric.to_dict())
         return metrics
 
     def _build_train_op(self, loss):

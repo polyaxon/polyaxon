@@ -3,9 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from polyaxon.libs import getters
-from polyaxon.libs.utils import get_name_scope, get_shape, track
-from polyaxon.variables import variable
+from tensorflow.python.ops import clip_ops
+
+from polyaxon.libs.utils import get_name_scope, track
 
 
 def built_activation(fct, name, collect):
@@ -16,11 +16,13 @@ def built_activation(fct, name, collect):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
+
     def activation(x):
         x = fct(x, name=name)
         if collect:
             track(x, tf.GraphKeys.ACTIVATIONS)
         return x
+
     return activation
 
 
@@ -47,6 +49,21 @@ def tanh(name=None, collect=False):
         collect: whether to collect this metric under the metric collection.
     """
     return built_activation(tf.tanh, name, collect)
+
+
+def hard_sigmoid(name='HardSigmoid', collect=False):
+    """Segment-wise linear approximation of sigmoid.
+
+    Args:
+        name: operation name.
+        collect: whether to collect this metric under the metric collection.
+    """
+
+    def _hard_sigmoid(x, name):
+        with get_name_scope(name=name):
+            return clip_ops.clip_by_value(x, clip_value_min=0., clip_value_max=1.)
+
+    return built_activation(_hard_sigmoid, name, collect)
 
 
 def sigmoid(name=None, collect=False):
@@ -112,53 +129,6 @@ def relu6(name=None, collect=False):
     return built_activation(tf.nn.relu6, name, collect)
 
 
-def leaky_relu(alpha=0.1, name='LeakyReLU', collect=False):
-    """Modified version of ReLU, introducing a nonzero gradient for negative input.
-
-    Args:
-        alpha: `int`, the multiplier.
-        name: operation name.
-        collect: whether to collect this metric under the metric collection.
-    """
-
-    def _leak_relu(x, name):
-        with get_name_scope(name):
-            x = tf.nn.relu(features=x)
-            m_x = tf.nn.relu(features=-x)
-            x -= alpha * m_x
-            return x
-
-    return built_activation(_leak_relu, name, collect)
-
-
-def prelu(channel_shared=False, weights_init='zeros', restore=True, name='PReLU', collect=False):
-    """Parametric Rectified Linear Unit.
-
-    Args:
-        channel_shared:
-        weights_init:
-        restore:
-        name: operation name.
-        collect: whether to collect this metric under the metric collection.
-    """
-
-    def _prelu(x, name):
-        with get_name_scope(name):
-            if channel_shared:
-                w_shape = (1,)
-            else:
-                w_shape = get_shape(x)[-1:]
-
-            w_init = getters.get_initializer(weights_init)
-            alphas = variable(shape=w_shape, initializer=w_init, restore=restore, name="alphas")
-
-            x = tf.nn.relu(features=x) + tf.multiply(x=alphas, y=(x - tf.abs(x))) * 0.5
-            x.alphas = alphas
-            return x
-
-    return built_activation(_prelu, name, collect)
-
-
 def elu(name=None, collect=False):
     """Computes Exponential Linear Unit.
 
@@ -169,7 +139,29 @@ def elu(name=None, collect=False):
     return built_activation(tf.nn.elu, name, collect)
 
 
-def crelu(name='CRelu', collect=False):
+def selu(name='Selu', collect=False):
+    """Scaled Exponential Linear Unit. (Klambauer et al., 2017).
+
+    Arguments:
+        x: A tensor or variable to compute the activation function for.
+
+    Returns:
+      Tensor with the same shape and dtype as `x`.
+
+    References:
+        - [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
+    """
+
+    def _selu(x, name=name):
+        with get_name_scope(name=name):
+            alpha = 1.6732632423543772848170429916717
+            scale = 1.0507009873554804934193349852946
+            return scale * tf.nn.elu(x, alpha)
+
+    return built_activation(_selu, name, collect)
+
+
+def crelu(name=None, collect=False):
     """Computes Concatenated ReLU.
 
     Args:
@@ -188,7 +180,6 @@ ACTIVATIONS = {
     'softsign': softsign,
     'relu': relu,
     'relu6': relu6,
-    'leaky_relu': leaky_relu,
     'elu': elu,
     'crelu': crelu
 }

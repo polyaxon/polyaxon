@@ -93,7 +93,7 @@ class BaseBridge(GraphModule):
         return x.output
 
     def _build_loss(self, results, features, labels, loss_config, **kwargs):
-        return getters.get_loss(loss_config.module, results, features, **loss_config.params)
+        return getters.get_loss(loss_config.IDENTIFIER, results, features, **loss_config.to_dict())
 
     def _build(self, features, labels, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
         """Subclasses should implement their logic here and must return a `BridgeSpec`."""

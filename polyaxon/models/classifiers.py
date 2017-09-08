@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
+
 from polyaxon.layers import OneHotEncoding
-from polyaxon.libs.configs import LossConfig
 from polyaxon.models.base import BaseModel
 
 
@@ -42,7 +43,7 @@ class Classifier(BaseModel):
 
         self.one_hot_encode = one_hot_encode
         self.n_classes = n_classes
-        loss_config = loss_config or LossConfig(module='sigmoid_cross_entropy')
+        loss_config = loss_config or SigmoidCrossEntropyConfig()
         super(Classifier, self).__init__(
             mode=mode, name=name, model_type=self.Types.CLASSIFIER, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,

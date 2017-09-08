@@ -37,7 +37,8 @@ class LatentBridge(BaseBridge):
         self.z_log_sigma = FullyConnected(self.mode, num_units=self.latent_dim, name='z_log_sigma')
 
     def _build_loss(self, results, features, labels, loss_config, **kwargs):
-        losses, loss = getters.get_loss(loss_config.module, results, features, **loss_config.params)
+        losses, loss = getters.get_loss(
+            loss_config.IDENTIFIER, results, features, **loss_config.to_dict())
 
         with get_name_scope('latent_loss'):
             z_mean = kwargs['z_mean']

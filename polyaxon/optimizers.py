@@ -7,6 +7,8 @@ import tensorflow as tf
 
 from tensorflow.python.training.training_util import get_global_step
 
+from polyaxon_schemas import optimizers
+
 from polyaxon.libs.utils import track, get_arguments
 
 
@@ -437,12 +439,12 @@ def adadelta(learning_rate=0.001, rho=0.1, epsilon=1e-08, decay_type="",
 
 
 OPTIMIZERS = OrderedDict([
-    ('adadelta', adadelta),
-    ('adagrad', adagrad),
-    ('adam', adam),
-    ('ftrl', ftrl),
-    ('momentum', momentum),
-    ('nesterov', nesterov),
-    ('rmsprop', rmsprop),
-    ('sgd', sgd),
+    (optimizers.AdadeltaConfig.IDENTIFIER, adadelta),
+    (optimizers.AdagradConfig.IDENTIFIER, adagrad),
+    (optimizers.AdamConfig.IDENTIFIER, adam),
+    (optimizers.FtrlConfig.IDENTIFIER, ftrl),
+    (optimizers.MomentumConfig.IDENTIFIER, momentum),
+    (optimizers.NestrovConfig.IDENTIFIER, nesterov),
+    (optimizers.RMSPropConfig.IDENTIFIER, rmsprop),
+    (optimizers.SGDConfig.IDENTIFIER, sgd),
 ])

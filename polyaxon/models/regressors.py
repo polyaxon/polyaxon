@@ -3,7 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
-from polyaxon.libs.configs import LossConfig
+from polyaxon_schemas.losses import MeanSquaredErrorConfig
+
 from polyaxon.models.base import BaseModel
 
 
@@ -32,7 +33,7 @@ class Regressor(BaseModel):
     def __init__(self, mode, graph_fn, loss_config=None, optimizer_config=None,
                  eval_metrics_config=None, summaries='all', clip_gradients=0.5,
                  clip_embed_gradients=0.1, name="Regressor"):
-        loss_config = loss_config or LossConfig(module='mean_squared_error')
+        loss_config = loss_config or MeanSquaredErrorConfig()
         super(Regressor, self).__init__(
             mode=mode, name=name, model_type=self.Types.REGRESSOR, graph_fn=graph_fn,
             loss_config=loss_config, optimizer_config=optimizer_config,
