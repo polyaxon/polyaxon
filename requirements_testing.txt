@@ -2,7 +2,7 @@
 
 coverage==4.4.1
 flaky==3.4.0
-isort==4.2.5
+isort==4.2.15
 mock==2.0.0
 prospector==0.11.7
 pyflakes==1.5.0
