@@ -336,4 +336,10 @@ def get_function_name(func):
     return name
 
 
+def to_list(value):
+    if isinstance(value, (list, tuple)):
+        return list(value)
+    return [value]
+
+
 EPSILON = 1e-10
