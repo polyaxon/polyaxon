@@ -48,38 +48,43 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
 
     def input_fn():
         """Creates features and labels."""
+        pipeline_params = pipeline_config.to_dict()
+        batch_size = pipeline_params.pop('batch_size', None)
+        dynamic_pad = pipeline_params.pop('dynamic_pad', None)
+        capacity = pipeline_params.pop('capacity', None)
+        del pipeline_params['num_threads']
+        del pipeline_params['min_after_dequeue']
+        allow_smaller_final_batch = pipeline_params.pop('allow_smaller_final_batch', None)
+        bucket_boundaries = pipeline_params.pop('bucket_boundaries', None)
 
         pipeline = getters.get_pipeline(
-            mode=mode, module=pipeline_config.module, shuffle=pipeline_config.shuffle,
-            num_epochs=pipeline_config.num_epochs,
-            subgraph_configs_by_features=pipeline_config.subgraph_configs_by_features,
-            **pipeline_config.params)
+            mode=mode, module=pipeline_config.IDENTIFIER, **pipeline_params)
 
         with tf.variable_scope(scope or 'input_fn'):
             data_provider = pipeline.make_data_provider()
             features_and_labels = pipeline.read_from_data_provider(data_provider)
             # call pipeline processors
-            features_and_labels = pipeline(features_and_labels)
+            features_and_labels = pipeline(features_and_labels, None)
 
-            if pipeline_config.bucket_boundaries:
+            if bucket_boundaries:
                 _, batch = tf.contrib.training.bucket_by_sequence_length(
                     input_length=features_and_labels['source_len'],
-                    bucket_boundaries=pipeline_config.bucket_boundaries,
+                    bucket_boundaries=bucket_boundaries,
                     tensors=features_and_labels,
-                    batch_size=pipeline_config.batch_size,
+                    batch_size=batch_size,
                     keep_input=features_and_labels['source_len'] >= 1,
-                    dynamic_pad=pipeline_config.dynamic_pad,
-                    capacity=pipeline_config.capacity,
-                    allow_smaller_final_batch=pipeline_config.allow_smaller_final_batch,
+                    dynamic_pad=dynamic_pad,
+                    capacity=capacity,
+                    allow_smaller_final_batch=allow_smaller_final_batch,
                     name='bucket_queue')
             else:
                 batch = tf.train.batch(
                     tensors=features_and_labels,
                     enqueue_many=False,
-                    batch_size=pipeline_config.batch_size,
-                    dynamic_pad=pipeline_config.dynamic_pad,
-                    capacity=pipeline_config.capacity,
-                    allow_smaller_final_batch=pipeline_config.allow_smaller_final_batch,
+                    batch_size=batch_size,
+                    dynamic_pad=dynamic_pad,
+                    capacity=capacity,
+                    allow_smaller_final_batch=allow_smaller_final_batch,
                     name='batch_queue')
 
             # Separate features and labels

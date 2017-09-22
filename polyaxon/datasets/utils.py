@@ -5,15 +5,20 @@ import os
 import sys
 import tarfile
 
-from six.moves import xrange
+from polyaxon_schemas.graph import GraphConfig
+from polyaxon_schemas.layers.core import CastConfig
+from polyaxon_schemas.processing.feature_processors import FeatureProcessorsConfig
+from six.moves import xrange, urllib
 
 import tensorflow as tf
 
-from six.moves import urllib
+from polyaxon_schemas.processing.pipelines import (
+    TFRecordImagePipelineConfig,
+    TFRecordSequencePipelineConfig,
+)
 
 from polyaxon import Modes
 from polyaxon.libs.exceptions import NotFoundError
-from polyaxon.libs.configs import PipelineConfig
 from polyaxon.processing import create_input_data_fn
 
 
@@ -106,17 +111,30 @@ def create_image_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_form
     train_data_file = record_file_name_format.format(dataset_dir, Modes.TRAIN)
     eval_data_file = record_file_name_format.format(dataset_dir, Modes.EVAL)
     meta_data_filename = meta_data_file_name_format.format(dataset_dir)
+
+    def get_pipeline_config(mode):
+        return TFRecordImagePipelineConfig(
+            dynamic_pad=False,
+            data_files=train_data_file if Modes.is_train(mode) else eval_data_file,
+            meta_data_file=meta_data_filename,
+            feature_processors=FeatureProcessorsConfig(
+                {'image': GraphConfig(
+                    input_layers=[['image', 0, 0]],
+                    output_layers=[['image_out', 0, 0]],
+                    layers=[
+                        CastConfig(dtype='float32', name='image_out',
+                                   inbound_nodes=[['image', 0, 0]])
+                    ]
+                )}
+            ))
+
     train_input_fn = create_input_data_fn(
         mode=Modes.TRAIN,
-        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
-                                       params={'data_files': train_data_file,
-                                               'meta_data_file': meta_data_filename})
+        pipeline_config=get_pipeline_config(Modes.TRAIN)
     )
     eval_input_fn = create_input_data_fn(
         mode=Modes.EVAL,
-        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
-                                       params={'data_files': eval_data_file,
-                                               'meta_data_file': meta_data_filename})
+        pipeline_config=get_pipeline_config(Modes.EVAL)
     )
     return train_input_fn, eval_input_fn
 
@@ -128,10 +146,11 @@ def create_image_dataset_predict_input_fn(dataset_dir, prepare_fn, record_file_n
     meta_data_filename = meta_data_file_name_format.format(dataset_dir)
     test_input_fn = create_input_data_fn(
         mode=Modes.PREDICT,
-        pipeline_config=PipelineConfig(module='TFRecordImagePipeline', dynamic_pad=False,
-                                       num_epochs=1,
-                                       params={'data_files': test_data_file,
-                                               'meta_data_file': meta_data_filename})
+        pipeline_config=TFRecordImagePipelineConfig(
+            dynamic_pad=False,
+            num_epochs=1,
+            data_files=test_data_file,
+            meta_data_file=meta_data_filename)
     )
     return test_input_fn
 
@@ -144,17 +163,19 @@ def create_sequence_dataset_input_fn(dataset_dir, prepare_fn, record_file_name_f
     meta_data_filename = meta_data_file_name_format.format(dataset_dir)
     train_input_fn = create_input_data_fn(
         mode=Modes.TRAIN,
-        pipeline_config=PipelineConfig(module='TFRecordSequencePipeline', dynamic_pad=True,
-                                       bucket_boundaries=bucket_boundaries,
-                                       params={'data_files': train_data_file,
-                                               'meta_data_file': meta_data_filename})
+        pipeline_config=TFRecordSequencePipelineConfig(
+            dynamic_pad=True,
+            bucket_boundaries=bucket_boundaries,
+            data_files=train_data_file,
+            meta_data_file=meta_data_filename)
     )
     eval_input_fn = create_input_data_fn(
         mode=Modes.EVAL,
-        pipeline_config=PipelineConfig(module='TFRecordSequencePipeline', dynamic_pad=True,
-                                       bucket_boundaries=bucket_boundaries,
-                                       params={'data_files': eval_data_file,
-                                               'meta_data_file': meta_data_filename})
+        pipeline_config=TFRecordSequencePipelineConfig(
+            dynamic_pad=True,
+            bucket_boundaries=bucket_boundaries,
+            data_files=eval_data_file,
+            meta_data_file=meta_data_filename)
     )
     return train_input_fn, eval_input_fn
 
@@ -166,10 +187,13 @@ def create_sequence_dataset_predict_input_fn(dataset_dir, prepare_fn, record_fil
     meta_data_filename = meta_data_file_name_format.format(dataset_dir)
     test_input_fn = create_input_data_fn(
         mode=Modes.PREDICT,
-        pipeline_config=PipelineConfig(module='TFRecordSequencePipeline', dynamic_pad=True,
-                                       num_epochs=1, batch_size=4, min_after_dequeue=0,
-                                       bucket_boundaries=bucket_boundaries,
-                                       params={'data_files': test_data_file,
-                                               'meta_data_file': meta_data_filename})
+        pipeline_config=TFRecordSequencePipelineConfig(
+            dynamic_pad=True,
+            num_epochs=1,
+            batch_size=4,
+            min_after_dequeue=0,
+            bucket_boundaries=bucket_boundaries,
+            data_files=test_data_file,
+            meta_data_file=meta_data_filename)
     )
     return test_input_fn
