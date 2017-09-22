@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import Mapping
+
 import six
+
 import tensorflow as tf
+
+from polyaxon_schemas.initializations import InitializerSchema
+from polyaxon_schemas.utils import to_camel_case
+
+from polyaxon.libs.utils import to_list, get_shape
 
 
 def get_optimizer(module, **kwargs):
@@ -15,11 +23,31 @@ def get_optimizer(module, **kwargs):
         return module()
 
 
-def get_exploration(module, is_continuous=False, **kwargs):
+def get_constraint(module, **kwargs):
+    from polyaxon.constraints import CONSTRAINTS
+
+    if isinstance(module, six.string_types):
+        return CONSTRAINTS[module].from_config(**kwargs)
+
+    if hasattr(module, '__call__'):
+        return module()
+
+
+def get_layer(module, **kwargs):
+    from polyaxon.layers import LAYERS
+
+    if isinstance(module, six.string_types):
+        return LAYERS[module].from_config(**kwargs)
+
+    if hasattr(module, '__call__'):
+        return module
+
+
+def get_exploration(module, **kwargs):
     from polyaxon.rl.explorations import DISCRETE_EXPLORATIONS, CONTINUOUS_EXPLORATIONS
 
     if isinstance(module, six.string_types):
-        if is_continuous:
+        if kwargs.pop('is_continuous', False):
             return CONTINUOUS_EXPLORATIONS[module](**kwargs)
         else:
             return DISCRETE_EXPLORATIONS[module](**kwargs)
@@ -46,44 +74,55 @@ def get_initializer(module, **kwargs):
     from polyaxon.initializations import INITIALIZERS
 
     if isinstance(module, six.string_types):
-        return INITIALIZERS[module](**kwargs)
-
+        return INITIALIZERS[to_camel_case(module)](**kwargs)
+    if isinstance(module, Mapping):
+        config = InitializerSchema(strict=True).load(data=module).data
+        return INITIALIZERS[config.IDENTIFIER](**config.to_dict())
     return module
 
 
 def get_regularizer(module, **kwargs):
-    from polyaxon.regularizations import REGULIZERS
+    from polyaxon.regularizations import REGULARIZERS
 
     if isinstance(module, six.string_types):
-        return REGULIZERS[module](**kwargs)
+        return REGULARIZERS[module](**kwargs)
 
     return module
 
 
-def get_metric(module, incoming, outputs, **kwargs):
-    from polyaxon.metrics import METRICS
+def get_metric(module, y_pred, y_true, **kwargs):
+    from polyaxon.metrics import METRICS, ARGMAX_METRICS
+
+    def get_labels_and_results(results, labels):
+        lshape = get_shape(labels)
+        if len(lshape) == 1 or (len(lshape) and int(lshape[1]) == 1):
+            return tf.argmax(results), tf.argmax(labels)
+        else:
+            return tf.argmax(results, 1), tf.argmax(labels, 1)
 
     if isinstance(module, six.string_types):
-        module = METRICS[module](**kwargs)(incoming, outputs)
-    elif hasattr(module, '__call__'):
-        try:
-            module = module(incoming, outputs)
-        except TypeError as e:
-            print(e.message)
-            print('Reminder: Custom metric function arguments must be '
-                  'define as follow: custom_metric(y_pred, y_true).')
-            exit()
-    elif not isinstance(module, tf.Tensor):
-        ValueError("Invalid Metric type.")
+        input_layer = kwargs.pop('input_layer', None)
+        output_layer = kwargs.pop('output_layer', None)
+        if isinstance(y_pred, Mapping):
+            if input_layer is not None:
+                y_pred = y_pred[input_layer]
+            elif len(y_pred) == 1:
+                y_pred = list(six.itervalues(y_pred))[0]
+            else:
+                raise ValueError("Eval Metric input is not defined and results has multiple keys!")
 
-    return module
+        if isinstance(y_true, Mapping):
+            if output_layer is not None:
+                y_true = y_true[output_layer]
+            elif len(y_true) == 1:
+                y_true = list(six.itervalues(y_true))[0]
+            else:
+                raise ValueError("Eval Metric output is not defined and labels has multiple keys!")
 
+        if module in ARGMAX_METRICS:
+            y_pred, y_true = get_labels_and_results(y_pred, y_true)
+        module = METRICS[module](y_pred, y_true, **kwargs)
 
-def get_eval_metric(module, y_pred, y_true, **kwargs):
-    from polyaxon.metrics import EVAL_METRICS
-
-    if isinstance(module, six.string_types):
-        module = EVAL_METRICS[module](y_pred, y_true, **kwargs)
     elif hasattr(module, '__call__'):
         try:
             module = module(y_pred, y_true)
@@ -102,6 +141,24 @@ def get_loss(module, y_pred, y_true, **kwargs):
     from polyaxon.losses import LOSSES
 
     if isinstance(module, six.string_types):
+        input_layer = kwargs.pop('input_layer', None)
+        output_layer = kwargs.pop('output_layer', None)
+        if isinstance(y_pred, Mapping):
+            if input_layer is not None:
+                y_pred = y_pred[input_layer]
+            elif len(y_pred) == 1:
+                y_pred = list(six.itervalues(y_pred))[0]
+            else:
+                raise ValueError("Loss input is not defined and results has multiple keys!")
+
+        if isinstance(y_true, Mapping):
+            if output_layer is not None:
+                y_true = y_true[output_layer]
+            elif len(y_true) == 1:
+                y_true = list(six.itervalues(y_true))[0]
+            else:
+                raise ValueError("Loss output is not defined and labels has multiple keys!")
+
         module = LOSSES[module](**kwargs)(y_true, y_pred)
 
     elif hasattr(module, '__call__'):
@@ -130,20 +187,16 @@ def get_memory(module, **kwargs):
     raise TypeError('Memory `{}` is not supported.'.format(module))
 
 
-def get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None, **params):
-    from polyaxon.libs.subgraph import SubGraph
+def get_pipeline(module, mode, **params):
     from polyaxon.processing.pipelines import PIPELINES
 
-    subgraphs_by_features = {}
-    if subgraph_configs_by_features:
-        for feature, subgraph_config in subgraph_configs_by_features.items():
-            modules = SubGraph.build_subgraph_modules(mode=mode, subgraph_config=subgraph_config)
-            subgraph = SubGraph(mode=mode, modules=modules, **subgraph_config.params)
-            subgraphs_by_features[feature] = subgraph
+    feature_processors = params.pop('feature_processors', {})
+    if feature_processors:
+        for feature, graph_config in feature_processors.items():
+            feature_processors[feature] = get_graph_fn(graph_config)
 
     if isinstance(module, six.string_types):
-        return PIPELINES[module](mode=mode, shuffle=shuffle, num_epochs=num_epochs,
-                                 subgraphs_by_features=subgraphs_by_features, **params)
+        return PIPELINES[module](mode=mode, feature_processors=feature_processors, **params)
 
     else:
         raise ValueError('Invalid pipeline type.')
@@ -163,15 +216,24 @@ def get_environment(module, env_id, **kwargs):
 
 def get_graph_fn(config, graph_class=None):
     """Creates the graph operations."""
-    from polyaxon.libs.subgraph import SubGraph
+    from polyaxon.libs.graph import Graph
 
     if graph_class is None:
-        graph_class = SubGraph
+        graph_class = Graph
 
-    def graph_fn(mode, features, labels):
-        modules = graph_class.build_subgraph_modules(mode, config)
-        graph = graph_class(mode=mode, modules=modules, features=config.features, **config.params)
-        return graph(features, labels=labels)
+    def graph_fn(mode, features, labels, return_dict=True):
+        graph = graph_class.from_config(mode, features, labels, config)
+        inputs = []
+        for i_name in graph.input_names:
+            if i_name in features:
+                inputs.append(features[i_name])
+            elif isinstance(labels, Mapping) and i_name in labels:
+                inputs.append(labels[i_name])
+
+        outputs = to_list(graph(inputs))
+        if return_dict:
+            return dict(zip(graph.output_names, outputs))
+        return outputs
 
     return graph_fn
 
@@ -281,9 +343,10 @@ def get_hooks(hooks_config):
     from polyaxon.estimators.hooks import HOOKS
 
     hooks = []
-    for hook, params in hooks_config:
+    for hook_dict in hooks_config:
+        hook_config, hook = six.iteritems(hook_dict)[0]
         if isinstance(hook, six.string_types):
-            hook = HOOKS[hook](**params)
+            hook = HOOKS[hook](**hook_config.to_dict())
             hooks.append(hook)
 
     return hooks
