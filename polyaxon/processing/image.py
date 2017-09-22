@@ -4,10 +4,34 @@ from __future__ import absolute_import, division, print_function
 from collections import OrderedDict
 
 import tensorflow as tf
+
+from tensorflow.contrib.keras.python.keras.engine import Layer
 from tensorflow.python.ops import random_ops
 
-from polyaxon.libs.template_module import ImageProcessorModule
+from polyaxon_schemas.processing.image import (
+    ResizeConfig,
+    CentralCropConfig,
+    RandomCropConfig,
+    ExtractGlimpseConfig,
+    ToBoundingBoxConfig,
+    FlipConfig,
+    TransposeConfig,
+    Rotate90Config,
+    ConvertColorSpaceConfig,
+    ConvertImagesDtypeConfig,
+    AdjustBrightnessConfig,
+    AdjustContrastConfig,
+    AdjustHueConfig,
+    AdjustSaturationConfig,
+    AdjustGammaConfig,
+    StandardizationConfig,
+    DrawBoundingBoxesConfig,
+    TotalVariationConfig,
+)
+
 from polyaxon.libs.utils import get_shape, get_name_scope
+
+from polyaxon.libs.base_object import BaseObject
 
 
 def resize(images, height, width, method=None, align_corners=False):
@@ -63,18 +87,24 @@ def resize(images, height, width, method=None, align_corners=False):
         images=images, size=size, method=method, align_corners=align_corners)
 
 
-class Resize(ImageProcessorModule):
+class Resize(BaseObject, Layer):
     """See `plx.image.resize`'s docstring"""
-    def __init__(self, mode, height, width, method=None, align_corners=False, name="Resize"):
-        super(Resize, self).__init__(mode=mode, name=name)
+    CONFIG = ResizeConfig
+
+    def __init__(self, height, width, method=None, align_corners=False, **kwargs):
+        super(Resize, self).__init__(**kwargs)
         self.height = height
         self.width = width
         self.method = method
         self.alighn_corners = align_corners
 
-    def _build(self, incoming, *args, **kwargs):
-        return resize(images=incoming, height=self.height, width=self.width, method=self.method,
-                      align_corners=self.alighn_corners)
+    def call(self, inputs, **kwargs):
+        return resize(
+            images=inputs,
+            height=self.height,
+            width=self.width,
+            method=self.method,
+            align_corners=self.alighn_corners)
 
 
 def central_crop(images, central_fraction):
@@ -118,14 +148,16 @@ def central_crop(images, central_fraction):
     return tf.image.central_crop(images, central_fraction)
 
 
-class CentralCrop(ImageProcessorModule):
+class CentralCrop(BaseObject, Layer):
     """See `plx.image.central_crop`'s docstring"""
-    def __init__(self, mode, central_fraction, name="CentralCrop"):
-        super(CentralCrop, self).__init__(mode=mode, name=name)
+    CONFIG = CentralCropConfig
+
+    def __init__(self, central_fraction, **kwargs):
+        super(CentralCrop, self).__init__(**kwargs)
         self.central_fraction = central_fraction
 
-    def _build(self, incoming, *args, **kwargs):
-        return central_crop(images=incoming, central_fraction=self.central_fraction)
+    def call(self, inputs, **kwargs):
+        return central_crop(images=inputs, central_fraction=self.central_fraction)
 
 
 def random_crop(images, height, width):
@@ -153,15 +185,17 @@ def random_crop(images, height, width):
     return tf.random_crop(images, [height, width, images_shape[-1]])
 
 
-class RandomCrop(ImageProcessorModule):
+class RandomCrop(BaseObject, Layer):
     """See `plx.image.random_crop`'s docstring"""
-    def __init__(self, mode, height, width, name="RandomCrop"):
-        super(RandomCrop, self).__init__(mode=mode, name=name)
+    CONFIG = RandomCropConfig
+
+    def __init__(self, height, width, **kwargs):
+        super(RandomCrop, self).__init__(**kwargs)
         self.height = height
         self.width = width
 
-    def _build(self, incoming, *args, **kwargs):
-        return random_crop(images=incoming, height=self.height, width=self.width)
+    def call(self, inputs, **kwargs):
+        return random_crop(images=inputs, height=self.height, width=self.width)
 
 
 def extract_glimpse(images, size, offsets, centered=None, normalized=None,
@@ -216,21 +250,27 @@ def extract_glimpse(images, size, offsets, centered=None, normalized=None,
         images, size, offsets, centered, normalized, uniform_noise, name)
 
 
-class ExtractGlimpse(ImageProcessorModule):
+class ExtractGlimpse(BaseObject, Layer):
     """See `plx.image.extract_glimpse`'s docstring"""
-    def __init__(self, mode, size, offsets, centered=None, normalized=None, uniform_noise=None,
-                 name="ExtractGlimpse"):
-        super(ExtractGlimpse, self).__init__(mode=mode, name=name)
+    CONFIG = ExtractGlimpseConfig
+
+    def __init__(self, size, offsets, centered=None, normalized=None, uniform_noise=None,
+                 **kwargs):
+        super(ExtractGlimpse, self).__init__(**kwargs)
         self.size = size
         self.offsets = offsets
         self.centred = centered
         self.normalized = normalized
         self.uniform_noise = uniform_noise
 
-    def _build(self, incoming, *args, **kwargs):
-        return extract_glimpse(images=incoming, size=self.size, offsets=self.offsets,
-                               centered=self.centred, normalized=self.normalized,
-                               uniform_noise=self.uniform_noise, name=self.name)
+    def call(self, inputs, **kwargs):
+        return extract_glimpse(images=inputs,
+                               size=self.size,
+                               offsets=self.offsets,
+                               centered=self.centred,
+                               normalized=self.normalized,
+                               uniform_noise=self.uniform_noise,
+                               name=self.name)
 
 
 def to_bounding_box(images, offset_height, offset_width, target_height, target_width,
@@ -287,19 +327,21 @@ def to_bounding_box(images, offset_height, offset_width, target_height, target_w
         images, offset_height, offset_width, target_height, target_width)
 
 
-class ToBoundingBox(ImageProcessorModule):
+class ToBoundingBox(BaseObject, Layer):
     """See `plx.image.to_bounding_box`'s docstring"""
-    def __init__(self, mode, offset_height, offset_width, target_height, target_width,
-                 method='crop', name="ToBoundingBox"):
-        super(ToBoundingBox, self).__init__(mode=mode, name=name)
+    CONFIG = ToBoundingBoxConfig
+
+    def __init__(self, offset_height, offset_width, target_height, target_width,
+                 method='crop', **kwargs):
+        super(ToBoundingBox, self).__init__(**kwargs)
         self.offset_height = offset_height
         self.offset_width = offset_width
         self.target_height = target_height
         self.target_width = target_width
         self.method = method
 
-    def _build(self, incoming, *args, **kwargs):
-        return to_bounding_box(images=incoming, offset_height=self.offset_height,
+    def call(self, inputs, **kwargs):
+        return to_bounding_box(images=inputs, offset_height=self.offset_height,
                                offset_width=self.offset_width,  target_height=self.target_height,
                                target_width=self.target_width, method=self.method)
 
@@ -351,16 +393,18 @@ def flip(images, axis=0, is_random=False, seed=None):
     return method(images)
 
 
-class Flip(ImageProcessorModule):
+class Flip(BaseObject, Layer):
     """See `plx.image.flip`'s docstring"""
-    def __init__(self, mode, axis=0, is_random=False, seed=None, name="Flip"):
-        super(Flip, self).__init__(mode=mode, name=name)
+    CONFIG = FlipConfig
+
+    def __init__(self, axis=0, is_random=False, seed=None, **kwargs):
+        super(Flip, self).__init__(**kwargs)
         self.axis = axis
         self.is_random = is_random
         self.seed = seed
 
-    def _build(self, incoming, *args, **kwargs):
-        return flip(images=incoming, axis=self.axis, is_random=self.is_random,  seed=self.seed)
+    def call(self, inputs, **kwargs):
+        return flip(images=inputs, axis=self.axis, is_random=self.is_random,  seed=self.seed)
 
 
 def transpose(images):
@@ -391,13 +435,15 @@ def transpose(images):
     return tf.image.transpose_image(images)
 
 
-class Transpose(ImageProcessorModule):
+class Transpose(BaseObject, Layer):
     """See `plx.image.transpose`'s docstring"""
-    def __init__(self, mode, name="Transpose"):
-        super(Transpose, self).__init__(mode=mode, name=name)
+    CONFIG = TransposeConfig
 
-    def _build(self, incoming, *args, **kwargs):
-        return transpose(images=incoming)
+    def __init__(self, **kwargs):
+        super(Transpose, self).__init__(**kwargs)
+
+    def call(self, inputs, **kwargs):
+        return transpose(images=inputs)
 
 
 def rotate90(images, k=1, is_random=False, seed=None, name=None):
@@ -435,16 +481,21 @@ def rotate90(images, k=1, is_random=False, seed=None, name=None):
     return tf.image.rot90(images, k, name)
 
 
-class Rotate90(ImageProcessorModule):
+class Rotate90(BaseObject, Layer):
     """See `plx.image.rotate90`'s docstring"""
-    def __init__(self, mode, k=1, is_random=False, seed=None, name="Rotate90"):
-        super(Rotate90, self).__init__(mode=mode, name=name)
+    CONFIG = Rotate90Config
+
+    def __init__(self, k=1, is_random=False, seed=None, **kwargs):
+        super(Rotate90, self).__init__(**kwargs)
         self.k = k
         self.is_random = is_random
         self.seed = seed
 
-    def _build(self, incoming, *args, **kwargs):
-        return rotate90(images=incoming, k=self.k, is_random=self.is_random,  seed=self.seed,
+    def call(self, inputs, **kwargs):
+        return rotate90(images=inputs,
+                        k=self.k,
+                        is_random=self.is_random,
+                        seed=self.seed,
                         name=self.name)
 
 
@@ -507,16 +558,20 @@ def convert_color_space(images, from_space, to_space, name=None):
                 return tf.image.rgb_to_grayscale(images=_images)
 
 
-class ConvertColorSpace(ImageProcessorModule):
+class ConvertColorSpace(BaseObject, Layer):
     """See `plx.image.convert_color_space`'s docstring"""
-    def __init__(self, mode, from_space, to_space, name="ConvertColorSpace"):
-        super(ConvertColorSpace, self).__init__(mode=mode, name=name)
+    CONFIG = ConvertColorSpaceConfig
+
+    def __init__(self, from_space, to_space, **kwargs):
+        super(ConvertColorSpace, self).__init__(**kwargs)
         self.from_space = from_space
         self.to_space = to_space
 
-    def _build(self, incoming, *args, **kwargs):
-        return convert_color_space(images=incoming, from_space=self.from_space,
-                                   to_space=self.to_space, name=self.name)
+    def call(self, inputs, **kwargs):
+        return convert_color_space(images=inputs,
+                                   from_space=self.from_space,
+                                   to_space=self.to_space,
+                                   name=self.name)
 
 
 def convert_images_dtype(images, dtype, saturate=False, name=None):
@@ -560,16 +615,20 @@ def convert_images_dtype(images, dtype, saturate=False, name=None):
     return tf.image.convert_image_dtype(images, dtype=dtype, saturate=saturate, name=name)
 
 
-class ConvertImagesDtype(ImageProcessorModule):
+class ConvertImagesDtype(BaseObject, Layer):
     """See `plx.image.convert_images_dtype`'s docstring"""
-    def __init__(self, mode, dtype, saturate=False, name="ConvertImagesDtype"):
-        super(ConvertImagesDtype, self).__init__(mode=mode, name=name)
+    CONFIG = ConvertImagesDtypeConfig
+
+    def __init__(self, dtype, saturate=False, **kwargs):
+        super(ConvertImagesDtype, self).__init__(**kwargs)
         self.dtype = dtype
         self.saturate = saturate
 
-    def _build(self, incoming, *args, **kwargs):
-        return convert_images_dtype(images=incoming, dtype=self.dtype,
-                                    saturate=self.saturate, name=self.name)
+    def call(self, inputs, **kwargs):
+        return convert_images_dtype(images=inputs,
+                                    dtype=self.dtype,
+                                    saturate=self.saturate,
+                                    name=self.name)
 
 
 def adjust_brightness(images, delta, is_random=False, seed=None):
@@ -604,16 +663,20 @@ def adjust_brightness(images, delta, is_random=False, seed=None):
     return tf.image.adjust_brightness(images, delta=delta)
 
 
-class AdjustBrightness(ImageProcessorModule):
+class AdjustBrightness(BaseObject, Layer):
     """See `plx.image.adjust_brightness`'s docstring"""
-    def __init__(self, mode, delta, is_random=False, seed=None, name="AdjustBrightness"):
-        super(AdjustBrightness, self).__init__(mode=mode, name=name)
+    CONFIG = AdjustBrightnessConfig
+
+    def __init__(self, delta, is_random=False, seed=None, **kwargs):
+        super(AdjustBrightness, self).__init__(**kwargs)
         self.delta = delta
         self.is_random = is_random
         self.seed = seed
 
-    def _build(self, incoming, *args, **kwargs):
-        return adjust_brightness(images=incoming, delta=self.delta, is_random=self.is_random,
+    def call(self, inputs, **kwargs):
+        return adjust_brightness(images=inputs,
+                                 delta=self.delta,
+                                 is_random=self.is_random,
                                  seed=self.seed)
 
 
@@ -662,20 +725,24 @@ def adjust_contrast(images, contrast_factor, contrast_factor_max=None, is_random
     return tf.image.adjust_contrast(images, contrast_factor)
 
 
-class AdjustContrast(ImageProcessorModule):
+class AdjustContrast(BaseObject, Layer):
     """See `plx.image.adjust_contrast`'s docstring"""
-    def __init__(self, mode, contrast_factor, contrast_factor_max=None, is_random=False, seed=None,
-                 name="AdjustContrast"):
-        super(AdjustContrast, self).__init__(mode=mode, name=name)
+    CONFIG = AdjustContrastConfig
+
+    def __init__(self, contrast_factor, contrast_factor_max=None, is_random=False, seed=None,
+                 **kwargs):
+        super(AdjustContrast, self).__init__(**kwargs)
         self.contrast_factor = contrast_factor
         self.contrast_factor_max = contrast_factor_max
         self.is_random = is_random
         self.seed = seed
 
-    def _build(self, incoming, *args, **kwargs):
-        return adjust_contrast(images=incoming, contrast_factor=self.contrast_factor,
+    def call(self, inputs, **kwargs):
+        return adjust_contrast(images=inputs,
+                               contrast_factor=self.contrast_factor,
                                contrast_factor_max=self.contrast_factor_max,
-                               is_random=self.is_random, seed=self.seed)
+                               is_random=self.is_random,
+                               seed=self.seed)
 
 
 def adjust_hue(images, delta, is_random=False, seed=None, name=None):
@@ -711,17 +778,22 @@ def adjust_hue(images, delta, is_random=False, seed=None, name=None):
     return tf.image.adjust_hue(images=images, delta=delta, name=name)
 
 
-class AdjustHue(ImageProcessorModule):
+class AdjustHue(BaseObject, Layer):
     """See `plx.image.adjust_hue`'s docstring"""
-    def __init__(self, mode, delta, is_random=False, seed=None, name="AdjustHue"):
-        super(AdjustHue, self).__init__(mode=mode, name=name)
+    CONFIG = AdjustHueConfig
+
+    def __init__(self, delta, is_random=False, seed=None, **kwargs):
+        super(AdjustHue, self).__init__(**kwargs)
         self.delta = delta
         self.is_random = is_random
         self.seed = seed
 
-    def _build(self, incoming, *args, **kwargs):
-        return adjust_hue(images=incoming, delta=self.delta, is_random=self.is_random,
-                          seed=self.seed, name=self.name)
+    def call(self, inputs, **kwargs):
+        return adjust_hue(images=inputs,
+                          delta=self.delta,
+                          is_random=self.is_random,
+                          seed=self.seed,
+                          name=self.name)
 
 
 def adjust_saturation(images, saturation_factor, saturation_factor_max=None, is_random=False,
@@ -768,20 +840,25 @@ def adjust_saturation(images, saturation_factor, saturation_factor_max=None, is_
     return tf.image.adjust_saturation(images, saturation_factor=saturation_factor, name=name)
 
 
-class AdjustSaturation(ImageProcessorModule):
+class AdjustSaturation(BaseObject, Layer):
     """See `plx.image.adjust_saturation`'s docstring"""
-    def __init__(self, mode, saturation_factor, saturation_factor_max=None, is_random=False,
-                 seed=None, name="AdjustSaturation"):
-        super(AdjustSaturation, self).__init__(mode=mode, name=name)
+    CONFIG = AdjustSaturationConfig
+
+    def __init__(self, saturation_factor, saturation_factor_max=None, is_random=False,
+                 seed=None, **kwargs):
+        super(AdjustSaturation, self).__init__(**kwargs)
         self.saturation_factor = saturation_factor
         self.saturation_factor_max = saturation_factor_max
         self.is_random = is_random
         self.seed = seed
 
-    def _build(self, incoming, *args, **kwargs):
-        return adjust_saturation(images=incoming, saturation_factor=self.saturation_factor,
+    def call(self, inputs, **kwargs):
+        return adjust_saturation(images=inputs,
+                                 saturation_factor=self.saturation_factor,
                                  saturation_factor_max=self.saturation_factor_max,
-                                 is_random=self.is_random, seed=self.seed, name=self.name)
+                                 is_random=self.is_random,
+                                 seed=self.seed,
+                                 name=self.name)
 
 
 def adjust_gamma(image, gamma=1, gain=1):
@@ -811,15 +888,17 @@ def adjust_gamma(image, gamma=1, gain=1):
     return tf.image.adjust_gamma(image, gamma, gain)
 
 
-class AdjustGamma(ImageProcessorModule):
+class AdjustGamma(BaseObject, Layer):
     """See `plx.image.adjust_gamma`'s docstring"""
-    def __init__(self, mode, gamma=1, gain=1, name="AdjustGamma"):
-        super(AdjustGamma, self).__init__(mode=mode, name=name)
+    CONFIG = AdjustGammaConfig
+
+    def __init__(self, gamma=1, gain=1, **kwargs):
+        super(AdjustGamma, self).__init__(**kwargs)
         self.gamma = gamma
         self.gain = gain
 
-    def _build(self, incoming, *args, **kwargs):
-        return adjust_gamma(image=incoming, gamma=self.gamma, gain=self.gain)
+    def call(self, inputs, **kwargs):
+        return adjust_gamma(image=inputs, gamma=self.gamma, gain=self.gain)
 
 
 def standardize(images):
@@ -854,13 +933,15 @@ def standardize(images):
     return tf.image.per_image_standardization(images)
 
 
-class Standardization(ImageProcessorModule):
+class Standardization(BaseObject, Layer):
     """See `plx.image.standardize`'s docstring"""
-    def __init__(self, mode, name="Standardization"):
-        super(Standardization, self).__init__(mode=mode, name=name)
+    CONFIG = StandardizationConfig
 
-    def _build(self, incoming, *args, **kwargs):
-        return standardize(images=incoming)
+    def __init__(self, **kwargs):
+        super(Standardization, self).__init__(**kwargs)
+
+    def call(self, inputs, **kwargs):
+        return standardize(images=inputs)
 
 
 def draw_bounding_boxes(images, boxes, name=None):
@@ -894,14 +975,16 @@ def draw_bounding_boxes(images, boxes, name=None):
     return tf.image.draw_bounding_boxes(images=images, boxes=boxes, name=name)
 
 
-class DrawBoundingBoxes(ImageProcessorModule):
+class DrawBoundingBoxes(BaseObject, Layer):
     """See `plx.image.draw_bounding_boxes`'s docstring"""
-    def __init__(self, mode, boxes, name="DrawBoundingBoxes"):
-        super(DrawBoundingBoxes, self).__init__(mode=mode, name=name)
+    CONFIG = DrawBoundingBoxesConfig
+
+    def __init__(self, boxes, **kwargs):
+        super(DrawBoundingBoxes, self).__init__(**kwargs)
         self.boxes = boxes
 
-    def _build(self, incoming, *args, **kwargs):
-        return draw_bounding_boxes(images=incoming, boxes=self.boxes, name=self.name)
+    def call(self, inputs, **kwargs):
+        return draw_bounding_boxes(images=inputs, boxes=self.boxes, name=self.name)
 
 
 def non_max_suppression(boxes, scores, max_output_size, iou_threshold=None, name=None):
@@ -1084,13 +1167,15 @@ def total_variation(images, name=None):
     return tf.image.total_variation(images=images, name=name)
 
 
-class TotalVariation(ImageProcessorModule):
+class TotalVariation(BaseObject, Layer):
     """See `plx.image.total_variation`'s docstring"""
-    def __init__(self, mode, name="TotalVariation"):
-        super(TotalVariation, self).__init__(mode=mode, name=name)
+    CONFIG = TotalVariationConfig
 
-    def _build(self, incoming, *args, **kwargs):
-        return total_variation(images=incoming, name=self.name)
+    def __init__(self, **kwargs):
+        super(TotalVariation, self).__init__(**kwargs)
+
+    def call(self, inputs, **kwargs):
+        return total_variation(images=inputs, name=self.name)
 
 
 IMAGE_PROCESSORS = OrderedDict([
