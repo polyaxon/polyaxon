@@ -8,22 +8,17 @@ from tensorflow.python.ops import clip_ops
 from polyaxon.libs.utils import get_name_scope, track
 
 
-def built_activation(fct, name, collect):
+def built_activation(x, collect):
     """Builds the metric function.
 
     Args:
-        fct: the activation function to build.
-        name: operation name.
+        x: activated tensor.
         collect: whether to collect this metric under the metric collection.
     """
 
-    def activation(x):
-        x = fct(x, name=name)
-        if collect:
-            track(x, tf.GraphKeys.ACTIVATIONS)
-        return x
-
-    return activation
+    if collect:
+        track(x, tf.GraphKeys.ACTIVATIONS)
+    return x
 
 
 def linear(name='Linear', collect=False):
@@ -34,11 +29,10 @@ def linear(name='Linear', collect=False):
         collect: whether to collect this metric under the metric collection.
     """
 
-    def _linear(x, name):
-        with get_name_scope(name=name):
-            return x
+    def linear(x):
+        return built_activation(x, collect)
 
-    return built_activation(_linear, name, collect)
+    return linear
 
 
 def tanh(name=None, collect=False):
@@ -48,7 +42,10 @@ def tanh(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.tanh, name, collect)
+    def tanh(x):
+        return built_activation(tf.tanh(x, name), collect)
+
+    return tanh
 
 
 def hard_sigmoid(name='HardSigmoid', collect=False):
@@ -59,11 +56,12 @@ def hard_sigmoid(name='HardSigmoid', collect=False):
         collect: whether to collect this metric under the metric collection.
     """
 
-    def _hard_sigmoid(x, name):
+    def hard_sigmoid(x):
         with get_name_scope(name=name):
-            return clip_ops.clip_by_value(x, clip_value_min=0., clip_value_max=1.)
+            x = clip_ops.clip_by_value(x, clip_value_min=0., clip_value_max=1.)
+            return built_activation(x, collect)
 
-    return built_activation(_hard_sigmoid, name, collect)
+    return hard_sigmoid
 
 
 def sigmoid(name=None, collect=False):
@@ -73,7 +71,10 @@ def sigmoid(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.sigmoid, name, collect)
+    def sigmoid(x):
+        return built_activation(tf.nn.sigmoid(x, name), collect)
+
+    return sigmoid
 
 
 def softmax(name=None, collect=False):
@@ -86,7 +87,10 @@ def softmax(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.softmax, name, collect)
+    def softmax(x):
+        return built_activation(tf.nn.softmax(x, name), collect)
+
+    return softmax
 
 
 def softplus(name=None, collect=False):
@@ -96,7 +100,10 @@ def softplus(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.softplus, name, collect)
+    def softplus(x):
+        return built_activation(tf.nn.softplus(x, name), collect)
+
+    return softplus
 
 
 def softsign(name=None, collect=False):
@@ -106,7 +113,10 @@ def softsign(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.softsign, name, collect)
+    def softsign(x):
+        return built_activation(tf.nn.softsign(x, name), collect)
+
+    return softsign
 
 
 def relu(name=None, collect=False):
@@ -116,7 +126,10 @@ def relu(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.relu, name, collect)
+    def relu(x):
+        return built_activation(tf.nn.relu(x, name), collect)
+
+    return relu
 
 
 def relu6(name=None, collect=False):
@@ -126,7 +139,10 @@ def relu6(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.relu6, name, collect)
+    def relu6(x):
+        return built_activation(tf.nn.relu6(x, name), collect)
+
+    return relu6
 
 
 def elu(name=None, collect=False):
@@ -136,7 +152,10 @@ def elu(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.elu, name, collect)
+    def elu(x):
+        return built_activation(tf.nn.elu(x, name), collect)
+
+    return elu
 
 
 def selu(name='Selu', collect=False):
@@ -152,13 +171,14 @@ def selu(name='Selu', collect=False):
         - [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
     """
 
-    def _selu(x, name=name):
+    def selu(x):
         with get_name_scope(name=name):
             alpha = 1.6732632423543772848170429916717
             scale = 1.0507009873554804934193349852946
-            return scale * tf.nn.elu(x, alpha)
+            x = scale * tf.nn.elu(x, alpha)
+            return built_activation(x, collect)
 
-    return built_activation(_selu, name, collect)
+    return selu
 
 
 def crelu(name=None, collect=False):
@@ -168,13 +188,17 @@ def crelu(name=None, collect=False):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    return built_activation(tf.nn.crelu, name, collect)
+    def crelu(x):
+        return built_activation(tf.nn.crelu(x, name), collect)
+
+    return crelu
 
 
 ACTIVATIONS = {
     'linear': linear,
     'tanh': tanh,
     'sigmoid': sigmoid,
+    'hard_sigmoid': hard_sigmoid,
     'softmax': softmax,
     'softplus': softplus,
     'softsign': softsign,
