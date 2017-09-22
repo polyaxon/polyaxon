@@ -2,25 +2,34 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+
 import numpy as np
 import tensorflow as tf
 import polyaxon as plx
+
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
+
+from polyaxon_schemas.losses import AbsoluteDifferenceConfig
+from polyaxon_schemas.optimizers import SGDConfig
+
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
 
 def create_experiment(task_type, task_index=0):
     def graph_fn(mode, features):
-        x = plx.layers.FullyConnected(mode, num_units=32, activation='tanh')(features['X'])
-        return plx.layers.FullyConnected(mode, num_units=1, activation='sigmoid')(x)
+        set_learning_phase(plx.Modes.is_train(mode))
+
+        x = plx.layers.Dense(mode, units=32, activation='tanh')(features['X'])
+        return plx.layers.Dense(mode, units=1, activation='sigmoid')(x)
 
     def model_fn(features, labels, mode):
         model = plx.models.Regressor(
             mode, graph_fn=graph_fn,
-            loss_config=plx.configs.LossConfig(module='absolute_difference'),
-            optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.5,
-                                                         decay_type='exponential_decay',
-                                                         decay_steps=10),
+            loss_config=AbsoluteDifferenceConfig(),
+            optimizer_config=SGDConfig(learning_rate=0.5,
+                                       decay_type='exponential_decay',
+                                       decay_steps=10),
             summaries='all', name='xor')
         return model(features, labels)
 

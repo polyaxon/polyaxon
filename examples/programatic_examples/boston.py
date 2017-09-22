@@ -2,8 +2,16 @@
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
+
+from polyaxon_schemas.optimizers import SGDConfig
+
+
 import polyaxon as plx
 import tensorflow as tf
+
+from polyaxon_schemas.losses import MeanSquaredErrorConfig
+
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 
 from sklearn import datasets
 from sklearn import model_selection
@@ -36,16 +44,20 @@ def main(*args):
     x_train = scaler.fit_transform(x_train)
 
     def graph_fn(mode, features):
-        x = plx.layers.FullyConnected(
-            mode, num_units=32, activation='relu', dropout=0.3)(features['x'])
-        x = plx.layers.FullyConnected(mode, num_units=32, activation='relu', dropout=0.3)(x)
-        return plx.layers.FullyConnected(mode, num_units=1, dropout=0.3)(x)
+        set_learning_phase(plx.Modes.is_train(mode))
+
+        x = plx.layers.Dense(units=32, activation='relu')(features['x'])
+        x = plx.layers.Dropout(rate=0.3)(x)
+        x = plx.layers.Dense(units=32, activation='relu')(x)
+        x = plx.layers.Dropout(rate=0.3)(x)
+        x = plx.layers.Dense(units=1)(x)
+        return plx.layers.Dropout(rate=0.3)(x)
 
     def model_fn(features, labels, mode):
         model = plx.models.Regressor(
             mode, graph_fn=graph_fn,
-            loss_config=plx.configs.LossConfig(module='mean_squared_error'),
-            optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.01),
+            loss_config=MeanSquaredErrorConfig(),
+            optimizer_config=SGDConfig(learning_rate=0.001),
             summaries='all')
         return model(features, labels)
 

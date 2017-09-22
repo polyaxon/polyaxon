@@ -13,12 +13,15 @@ def main(*args):
     env = plx.envs.GymEnvironment('CartPole-v0')
 
     def graph_fn(mode, features):
-        return plx.layers.FullyConnected(mode, num_units=512)(features['state'])
+        return plx.layers.Dense(units=512)(features['state'])
 
     def model_fn(features, labels, mode):
         model = plx.models.TRPOModel(
-            mode, graph_fn=graph_fn,
-            num_states=env.num_states, num_actions=env.num_actions, summaries='all')
+            mode,
+            graph_fn=graph_fn,
+            num_states=env.num_states,
+            num_actions=env.num_actions,
+            summaries='all')
         return model(features, labels)
 
     memory = plx.rl.memories.BatchMemory()

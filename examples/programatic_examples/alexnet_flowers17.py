@@ -4,24 +4,34 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
+
+from polyaxon_schemas.optimizers import MomentumConfig
+from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
+from polyaxon_schemas.metrics import StreamingAccuracyConfig
+
+from polyaxon.regularizations import l2
+
 
 def graph_fn(mode, features):
-    x = plx.layers.Conv2d(mode=mode, num_filter=96, filter_size=11, strides=4, activation='relu',
-                          regularizer='l2_regularizer')(features['image'])
-    x = plx.layers.MaxPool2d(mode=mode, kernel_size=3, strides=2)(x)
-    x = plx.layers.LocalResponseNormalization(mode=mode)(x)
-    x = plx.layers.Conv2d(mode=mode, num_filter=156, filter_size=5, activation='relu',
-                          regularizer='l2_regularizer')(x)
-    x = plx.layers.MaxPool2d(mode=mode, kernel_size=3, strides=2)(x)
-    x = plx.layers.LocalResponseNormalization(mode=mode)(x)
-    x = plx.layers.Conv2d(mode=mode, num_filter=384, filter_size=3, activation='relu')(x)
-    x = plx.layers.Conv2d(mode=mode, num_filter=384, filter_size=3, activation='relu')(x)
-    x = plx.layers.Conv2d(mode=mode, num_filter=256, filter_size=3, activation='relu')(x)
-    x = plx.layers.MaxPool2d(mode=mode, kernel_size=3, strides=2)(x)
-    x = plx.layers.LocalResponseNormalization(mode=mode)(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=4096, activation='tanh', dropout=0.5)(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=4096, activation='tanh', dropout=0.5)(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=17)(x)
+    set_learning_phase(plx.Modes.is_train(mode))
+
+    x = plx.layers.Conv2D(filters=96, kernel_size=11, strides=4, activation='relu',
+                          kernel_regularizer=l2(0.02))(features['image'])
+    x = plx.layers.MaxPooling2D(pool_size=3, strides=2)(x)
+    x = plx.layers.Conv2D(filters=156, kernel_size=5, activation='relu',
+                          kernel_regularizer=l2(0.02))(x)
+    x = plx.layers.MaxPooling2D(pool_size=3, strides=2)(x)
+    x = plx.layers.Conv2D(filters=384, kernel_size=3, activation='relu')(x)
+    x = plx.layers.Conv2D(filters=384, kernel_size=3, activation='relu')(x)
+    x = plx.layers.Conv2D(filters=256, kernel_size=3, activation='relu')(x)
+    x = plx.layers.MaxPooling2D(pool_size=3, strides=2)(x)
+    x = plx.layers.Flatten()(x)
+    x = plx.layers.Dense(units=4096, activation='tanh')(x)
+    x = plx.layers.Dropout(rate=0.5)(x)
+    x = plx.layers.Dense(units=4096, activation='tanh')(x)
+    x = plx.layers.Dropout(rate=0.5)(x)
+    x = plx.layers.Dense(units=17)(x)
     return x
 
 
@@ -29,9 +39,9 @@ def model_fn(features, labels, params, mode, config):
     model = plx.models.Classifier(
         mode=mode,
         graph_fn=graph_fn,
-        loss_config=plx.configs.LossConfig(module='sigmoid_cross_entropy'),
-        optimizer_config=plx.configs.OptimizerConfig(module='momentum', learning_rate=0.001),
-        eval_metrics_config=[plx.configs.MetricConfig(module='streaming_accuracy')],
+        loss_config=SigmoidCrossEntropyConfig(),
+        optimizer_config=MomentumConfig(learning_rate=0.001),
+        eval_metrics_config=[StreamingAccuracyConfig()],
         summaries=['loss'],
         one_hot_encode=True,
         n_classes=17)
@@ -54,7 +64,7 @@ def experiment_fn(output_dir):
     plx.datasets.flowers17.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.flowers17.create_input_fn(dataset_dir)
 
-    run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
+    run_config = plx.estimators.RunConfig().replace(save_checkpoints_steps=100)
     experiment = plx.experiments.Experiment(
         estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir,
                                            config=run_config),

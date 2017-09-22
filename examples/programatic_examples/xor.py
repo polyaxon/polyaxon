@@ -16,8 +16,8 @@ y = np.asarray([[0], [1], [1], [0]])
 
 
 def graph_fn(mode, features):
-    x = plx.layers.FullyConnected(mode, num_units=32, activation='tanh')(features['X'])
-    return plx.layers.FullyConnected(mode, num_units=1, activation='sigmoid')(x)
+    x = plx.layers.Dense(mode, num_units=32, activation='tanh')(features['X'])
+    return plx.layers.Dense(mode, num_units=1, activation='sigmoid')(x)
 
 
 def model_fn(features, labels, mode):

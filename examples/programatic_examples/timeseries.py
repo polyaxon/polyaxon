@@ -5,12 +5,21 @@ from six.moves import xrange
 
 import numpy as np
 
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
+
 try:
     import pandas as pd
 except ImportError:
     pass
 
 import polyaxon as plx
+
+from polyaxon_schemas.losses import MeanSquaredErrorConfig
+from polyaxon_schemas.metrics import (
+    StreamingRootMeanSquaredErrorConfig,
+    StreamingMeanAbsoluteErrorConfig,
+)
+from polyaxon_schemas.optimizers import AdagradConfig
 
 
 def x_sin(x):
@@ -81,25 +90,27 @@ def experiment_fn(output_dir, x, y, train_steps=1000, num_units=7, output_units=
     """Creates an experiment using LSTM architecture for timeseries regression problem."""
 
     def graph_fn(mode, features):
-        x = plx.layers.LSTM(mode=mode, num_units=num_units, num_layers=num_layers)(features['x'])
-        return plx.layers.FullyConnected(mode=mode, num_units=output_units)(x)
+        set_learning_phase(plx.Modes.is_train(mode))
+
+        x = features['x']
+        for i in range(num_layers):
+            x = plx.layers.LSTM(units=num_units)(x)
+        return plx.layers.Dense(units=output_units)(x)
 
     def model_fn(features, labels, mode):
         return plx.models.Regressor(
             mode=mode,
             graph_fn=graph_fn,
-            loss_config=plx.configs.LossConfig(module='mean_squared_error'),
-            optimizer_config=plx.configs.OptimizerConfig(module='adagrad', learning_rate=0.1),
+            loss_config=MeanSquaredErrorConfig(),
+            optimizer_config=AdagradConfig(learning_rate=0.1),
             eval_metrics_config=[
-                plx.configs.MetricConfig(module='streaming_root_mean_squared_error'),
-                plx.configs.MetricConfig(module='streaming_mean_absolute_error')
+                StreamingRootMeanSquaredErrorConfig(),
+                StreamingMeanAbsoluteErrorConfig()
             ]
         )(features=features, labels=labels)
 
-    run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
     return plx.experiments.Experiment(
-        estimator=plx.estimators.Estimator(
-            model_fn=model_fn, model_dir=output_dir, config=run_config),
+        estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir),
         train_input_fn=plx.processing.numpy_input_fn(
             x={'x': x['train']}, y=y['train'], batch_size=64, num_epochs=None, shuffle=False),
         eval_input_fn=plx.processing.numpy_input_fn(

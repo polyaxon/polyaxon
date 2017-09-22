@@ -9,7 +9,7 @@ def encoder_fn(mode, features):
     return plx.encoders.Encoder(
         mode=mode,
         modules=[
-            plx.layers.Conv2d(mode=mode, num_filter=32, filter_size=3, strides=1, activation='relu',
+            plx.layers.Conv2D(mode=mode, num_filter=32, filter_size=3, strides=1, activation='relu',
                               regularizer='l2_regularizer'),
             plx.layers.MaxPool2d(mode=mode, kernel_size=2),
             plx.layers.Conv2d(mode=mode, num_filter=32, filter_size=3, activation='relu',

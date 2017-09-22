@@ -4,18 +4,26 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
+
+from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
+from polyaxon_schemas.metrics import StreamingAccuracyConfig
+from polyaxon_schemas.optimizers import AdamConfig
+
+
 
 def graph_fn(mode, features):
-    x = plx.layers.Conv2d(
-        mode=mode, num_filter=32, filter_size=3, strides=1, activation='relu')(features['image'])
-    x = plx.layers.MaxPool2d(mode=mode, kernel_size=2)(x)
-    x = plx.layers.LocalResponseNormalization(mode=mode)(x)
-    x = plx.layers.Conv2d(mode=mode, num_filter=64, filter_size=3, activation='relu')(x)
-    x = plx.layers.Conv2d(mode=mode, num_filter=64, filter_size=3, activation='relu')(x)
-    x = plx.layers.MaxPool2d(mode=mode, kernel_size=2)(x)
-    x = plx.layers.LocalResponseNormalization(mode=mode)(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=512, activation='tanh', dropout=0.5)(x)
-    x = plx.layers.FullyConnected(mode=mode, num_units=10)(x)
+    set_learning_phase(plx.Modes.is_train(mode))
+
+    x = plx.layers.Conv2D(filters=32, kernel_size=3, activation='relu')(features['image'])
+    x = plx.layers.MaxPooling2D(pool_size=2)(x)
+    x = plx.layers.Conv2D(filters=64, kernel_size=3, activation='relu')(x)
+    x = plx.layers.Conv2D(filters=64, kernel_size=3, activation='relu')(x)
+    x = plx.layers.MaxPooling2D(pool_size=2)(x)
+    x = plx.layers.Flatten()(x)
+    x = plx.layers.Dense(units=512, activation='tanh')(x)
+    x = plx.layers.Dropout(rate=0.5)(x)
+    x = plx.layers.Dense(units=10)(x)
     return x
 
 
@@ -23,9 +31,9 @@ def model_fn(features, labels, params, mode, config):
     model = plx.models.Classifier(
         mode=mode,
         graph_fn=graph_fn,
-        loss_config=plx.configs.LossConfig(module='sigmoid_cross_entropy'),
-        optimizer_config=plx.configs.OptimizerConfig(module='adam', learning_rate=0.001),
-        eval_metrics_config=[plx.configs.MetricConfig(module='streaming_accuracy')],
+        loss_config=SigmoidCrossEntropyConfig(),
+        optimizer_config=AdamConfig(learning_rate=0.001),
+        eval_metrics_config=[StreamingAccuracyConfig()],
         summaries=['loss'],
         one_hot_encode=True,
         n_classes=10)
@@ -45,10 +53,8 @@ def experiment_fn(output_dir):
     plx.datasets.cifar10.prepare(dataset_dir)
     train_input_fn, eval_input_fn = plx.datasets.cifar10.create_input_fn(dataset_dir)
 
-    run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
     experiment = plx.experiments.Experiment(
-        estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir,
-                                           config=run_config),
+        estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir),
         train_input_fn=train_input_fn,
         eval_input_fn=eval_input_fn,
         train_steps=1000,
