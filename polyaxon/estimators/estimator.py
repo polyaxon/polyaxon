@@ -20,7 +20,7 @@ from tensorflow.python.training.session_run_hook import SessionRunHook
 from polyaxon import Modes
 from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.estimators import hooks as plx_hooks
-from polyaxon.libs.configs import RunConfig
+from polyaxon.estimators.run_config import RunConfig
 from polyaxon.libs.exceptions import EstimatorNotTrainedError
 from polyaxon.libs.utils import extract_batch_length, generate_model_dir, get_arguments
 
