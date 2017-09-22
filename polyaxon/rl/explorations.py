@@ -7,6 +7,8 @@ from functools import partial
 import numpy as np
 import tensorflow as tf
 
+from polyaxon_schemas.rl import explorations
+
 from polyaxon.libs.utils import get_arguments, track
 from polyaxon.rl import exploration_decay
 from polyaxon.rl.utils import get_global_timestep
@@ -183,15 +185,15 @@ def ornsteinuhlenbeck_process(num_actions, sigma=0.3, mu=0, theta=0.15):
 
 
 DISCRETE_EXPLORATIONS = OrderedDict([
-    ('constant', constant),
-    ('greedy', greedy),
-    ('random', random),
-    ('decay', decay),
-    ('random_decay', random_decay),
+    (explorations.ConstantExplorationConfig.IDENTIFIER, constant),
+    (explorations.GreedyExplorationConfig.IDENTIFIER, greedy),
+    (explorations.RandomExplorationConfig.IDENTIFIER, random),
+    (explorations.DecayExplorationConfig.IDENTIFIER, decay),
+    (explorations.RandomDecayExplorationConfig.IDENTIFIER, random_decay),
 ])
 
 CONTINUOUS_EXPLORATIONS = OrderedDict([
-    ('decay', decay),
-    ('random_decay', random_decay),
-    ('ornsteinuhlenbeck_process', ornsteinuhlenbeck_process),
+    (explorations.DecayExplorationConfig.IDENTIFIER, decay),
+    (explorations.RandomDecayExplorationConfig.IDENTIFIER, random_decay),
+    (explorations.OrnsteinUhlenbeckExplorationConfig.IDENTIFIER, ornsteinuhlenbeck_process),
 ])

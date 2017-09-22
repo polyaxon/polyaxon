@@ -7,6 +7,8 @@ import numpy as np
 
 from collections import deque, OrderedDict
 
+from polyaxon_schemas.rl import memories
+
 
 class Memory(object):
     """Base Agent Memory class.
@@ -92,6 +94,6 @@ class BatchMemory(Memory):
 
 
 MEMORIES = OrderedDict([
-    ('Memory', Memory),
-    ('BatchMemory', BatchMemory),
+    (memories.BaseMemoryConfig.IDENTIFIER, Memory),
+    (memories.BatchMemoryConfig.IDENTIFIER, BatchMemory),
 ])

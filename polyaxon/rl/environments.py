@@ -13,6 +13,8 @@ try:
 except ImportError:
     pass
 
+from polyaxon_schemas.rl import environments
+
 
 class EnvSpec(namedtuple("EnvSpec", "action state reward done next_state")):
     def items(self):
@@ -119,5 +121,5 @@ class GymEnvironment(Environment):
 
 
 ENVIRONMENTS = OrderedDict([
-    ('GymEnvironment', GymEnvironment),
+    (environments.GymEnvironmentConfig.IDENTIFIER, GymEnvironment),
 ])
