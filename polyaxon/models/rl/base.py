@@ -16,7 +16,7 @@ except ImportError:
     from tensorflow.contrib.distributions import Categorical, Normal
 
 from polyaxon import Modes
-from polyaxon.layers import FullyConnected
+from polyaxon.layers.core import Dense
 from polyaxon.libs import getters
 from polyaxon.libs.configs import LossConfig
 from polyaxon.libs.utils import get_tensor_batch_size, get_arguments
@@ -181,12 +181,12 @@ class BaseQModel(BaseRLModel):
                 kwargs['labels'] = labels
 
             graph_outputs = self._graph_fn(mode=mode, features=features, **kwargs)
-            a = FullyConnected(mode, num_units=self.num_actions)(graph_outputs)
+            a = Dense(units=self.num_actions)(graph_outputs)
             v = None
 
             if self.dueling is not None:
                 # Q = V(s) + A(s, a)
-                v = FullyConnected(mode, num_units=1)(graph_outputs)
+                v = Dense(units=1)(graph_outputs)
                 if self.dueling == 'mean':
                     q = v + (a - tf.reduce_mean(a, axis=1, keep_dims=True))
                 elif self.dueling == 'max':
@@ -333,7 +333,7 @@ class BasePGModel(BaseRLModel):
                 kwargs['labels'] = labels
 
             graph_outputs = self._graph_fn(mode=mode, features=features, **kwargs)
-            a = FullyConnected(mode, num_units=self.num_actions)(graph_outputs)
+            a = Dense(units=self.num_actions)(graph_outputs)
             if self.is_continuous:
                 values = tf.concat(values=[a, tf.exp(a) + 1], axis=0)
                 distribution = self._build_distribution(values=values)

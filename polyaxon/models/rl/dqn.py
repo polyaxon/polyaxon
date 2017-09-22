@@ -3,7 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
-from polyaxon.layers import OneHotEncoding
+from tensorflow.python.ops import standard_ops
+
 from polyaxon.models.rl.base import BaseQModel
 
 
@@ -56,7 +57,7 @@ class DQNModel(BaseQModel):
         reward, action, done = labels['reward'], labels['action'], labels['done']
         target_q_values = tf.reduce_max(self._target_results.q, axis=1)
 
-        action_selector = OneHotEncoding(mode=self.mode, n_classes=self.num_actions)(action[:-1])
+        action_selector = standard_ops.one_hot(indices=action[:-1], depth=self.num_actions)
         train_q_value = tf.reduce_sum(
             tf.multiply(self._train_results.q[:-1], action_selector), axis=1)
 

@@ -5,7 +5,7 @@ from six.moves import xrange
 
 import tensorflow as tf
 
-from polyaxon.layers import FullyConnected
+from polyaxon.layers.core import Dense
 from polyaxon.models.rl.base import BaseQModel
 
 
@@ -77,7 +77,7 @@ class NAFModel(BaseQModel):
 
         # Lower triangle matrix
         lt_size = self.num_actions * (self.num_actions + 1) // 2
-        lt_entries = FullyConnected(self.mode, num_units=lt_size)(self._train_results.graph_outputs)
+        lt_entries = Dense(units=lt_size)(self._train_results.graph_outputs)
         lt_matrix = tf.exp(tf.map_fn(tf.diag, lt_entries[:, :self.num_actions]))
 
         if self.num_actions > 1:

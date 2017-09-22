@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
+
 from tensorflow.python.training import training
 
 from polyaxon_schemas.optimizers import AdamConfig
@@ -11,8 +12,7 @@ from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.libs import getters
 from polyaxon.libs.dicts import flatten_dict
 from polyaxon.libs.template_module import GraphModule
-from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments, get_shape
-from polyaxon.metrics import ARGMAX_METRICS
+from polyaxon.libs.utils import extract_batch_length, track, get_tracked, get_arguments
 from polyaxon.models import summarizer
 
 
@@ -198,21 +198,10 @@ class BaseModel(GraphModule):
             `losses` are the per-batch losses.
             `loss` is a single scalar tensor to minimize.
         """
-        lshape = get_shape(labels)
-
-        def get_labels_and_results(results, labels):
-            if len(lshape) == 1 or (len(lshape) and int(lshape[1]) == 1):
-                return tf.argmax(results), tf.argmax(labels)
-            else:
-                return tf.argmax(results, 1), tf.argmax(labels, 1)
-
         metrics = {}
         for metric in self.eval_metrics_config:
-            _results, _labels = results, labels
-            if self.model_type == self.Types.CLASSIFIER and metric.module in ARGMAX_METRICS:
-                _results, _labels = get_labels_and_results(results, labels)
-            metrics[metric.module] = getters.get_eval_metric(
-                metric.IDENTIFIER, _results, _labels, **metric.to_dict())
+            metrics[metric.IDENTIFIER] = getters.get_metric(
+                metric.IDENTIFIER, results, labels, **metric.to_dict())
         return metrics
 
     def _build_train_op(self, loss):

@@ -2,7 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
-from polyaxon.libs.configs import OptimizerConfig
+
+from polyaxon_schemas.optimizers import AdamConfig
 
 from polyaxon.libs.utils import get_tracked
 from polyaxon.models.rl.base import BasePGModel
@@ -36,7 +37,7 @@ class VPGModel(BasePGModel):
                  is_deterministic=False,  is_continuous=False, summaries='all',
                  clip_gradients=0.5, clip_embed_gradients=0.1, name="Model"):
 
-        optimizer_config = optimizer_config or OptimizerConfig('adam', learning_rate=0.004)
+        optimizer_config = optimizer_config or AdamConfig(learning_rate=0.004)
 
         super(VPGModel, self).__init__(
             mode=mode, name=name, graph_fn=graph_fn, num_states=num_states, num_actions=num_actions,

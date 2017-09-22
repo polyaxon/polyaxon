@@ -3,9 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from tensorflow.python.ops import standard_ops
+
 from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
 
-from polyaxon.layers import OneHotEncoding
 from polyaxon.models.base import BaseModel
 
 
@@ -55,5 +56,5 @@ class Classifier(BaseModel):
             labels = labels['label']
 
         if self.one_hot_encode:
-            labels = OneHotEncoding(self.mode, n_classes=self.n_classes)(labels)
+            labels = standard_ops.one_hot(indices=labels, depth=self.n_classes)
         return super(Classifier, self)._preprocess(features, labels)

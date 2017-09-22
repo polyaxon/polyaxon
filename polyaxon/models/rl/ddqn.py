@@ -2,8 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
+from tensorflow.python.ops import standard_ops
 
-from polyaxon.layers import OneHotEncoding
 from polyaxon.models.rl.base import BaseQModel
 
 
@@ -54,12 +54,11 @@ class DDQNModel(BaseQModel):
                 `loss` is a single scalar tensor to minimize.
         """
         reward, action, done = labels['reward'], labels['action'], labels['done']
-        train_action_selector = OneHotEncoding(
-            self.mode, n_classes=self.num_actions)(self._index_action)
+        train_action_selector = standard_ops.one_hot(indices=self._index_action, depth=self.num_actions)
         target_q_values = tf.reduce_sum(
             tf.multiply(self._target_results.q, train_action_selector), axis=1)
 
-        action_selector = OneHotEncoding(mode=self.mode, n_classes=self.num_actions)(action[:-1])
+        action_selector = standard_ops.one_hot(indices=action[:-1], depth=self.num_actions)
         train_q_value = tf.reduce_sum(
             tf.multiply(self._train_results.q[:-1], action_selector), axis=1)
 
