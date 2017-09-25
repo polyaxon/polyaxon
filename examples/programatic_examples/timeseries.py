@@ -5,8 +5,6 @@ from six.moves import xrange
 
 import numpy as np
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-
 try:
     import pandas as pd
 except ImportError:
@@ -16,8 +14,8 @@ import polyaxon as plx
 
 from polyaxon_schemas.losses import MeanSquaredErrorConfig
 from polyaxon_schemas.metrics import (
-    StreamingRootMeanSquaredErrorConfig,
-    StreamingMeanAbsoluteErrorConfig,
+    RootMeanSquaredErrorConfig,
+    MeanAbsoluteErrorConfig,
 )
 from polyaxon_schemas.optimizers import AdagradConfig
 
@@ -90,8 +88,6 @@ def experiment_fn(output_dir, x, y, train_steps=1000, num_units=7, output_units=
     """Creates an experiment using LSTM architecture for timeseries regression problem."""
 
     def graph_fn(mode, features):
-        set_learning_phase(plx.Modes.is_train(mode))
-
         x = features['x']
         for i in range(num_layers):
             x = plx.layers.LSTM(units=num_units)(x)
@@ -104,8 +100,8 @@ def experiment_fn(output_dir, x, y, train_steps=1000, num_units=7, output_units=
             loss_config=MeanSquaredErrorConfig(),
             optimizer_config=AdagradConfig(learning_rate=0.1),
             eval_metrics_config=[
-                StreamingRootMeanSquaredErrorConfig(),
-                StreamingMeanAbsoluteErrorConfig()
+                RootMeanSquaredErrorConfig(),
+                MeanAbsoluteErrorConfig()
             ]
         )(features=features, labels=labels)
 

@@ -4,17 +4,12 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-
 from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
-from polyaxon_schemas.metrics import StreamingAccuracyConfig
+from polyaxon_schemas.metrics import AccuracyConfig
 from polyaxon_schemas.optimizers import AdamConfig
 
 
-
 def graph_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
-
     x = plx.layers.Conv2D(filters=32, kernel_size=3, activation='relu')(features['image'])
     x = plx.layers.MaxPooling2D(pool_size=2)(x)
     x = plx.layers.Conv2D(filters=64, kernel_size=3, activation='relu')(x)
@@ -33,7 +28,7 @@ def model_fn(features, labels, params, mode, config):
         graph_fn=graph_fn,
         loss_config=SigmoidCrossEntropyConfig(),
         optimizer_config=AdamConfig(learning_rate=0.001),
-        eval_metrics_config=[StreamingAccuracyConfig()],
+        eval_metrics_config=[AccuracyConfig()],
         summaries=['loss'],
         one_hot_encode=True,
         n_classes=10)
@@ -67,7 +62,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/convnet_cifar10",
-                                   schedule='continuous_train_and_evaluate')
+                                   schedule='continuous_train_and_eval')
 
 
 if __name__ == "__main__":

@@ -3,10 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import numpy as np
 import tensorflow as tf
-
 import polyaxon as plx
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 from tensorflow.examples.tutorials.mnist import input_data
 
 from polyaxon_schemas.optimizers import AdamConfig
@@ -16,14 +14,11 @@ from polyaxon.libs.utils import total_tensor_depth
 
 
 def encoder_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
-
     x = plx.layers.Dense(units=128)(features)
     return plx.layers.Dense(units=256)(x)
 
 
 def decoder_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
     x = plx.layers.Dense(units=256)(features)
     return plx.layers.Dense(units=28 * 28)(x)
 
@@ -132,7 +127,7 @@ def main(*args):
     xp = experiment_fn("/tmp/polyaxon_logs/vae_mnist",
                        {'images': x_train}, mnist.train.labels,
                        {'images': x_eval}, mnist.validation.labels)
-    xp.continuous_train_and_evaluate()
+    xp.continuous_train_and_eval()
 
     encode(xp.estimator, x_test, mnist.test.labels)
     generate(xp.estimator)

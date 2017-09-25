@@ -3,16 +3,12 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-
 from polyaxon_schemas.losses import SoftmaxCrossEntropyConfig
-from polyaxon_schemas.metrics import StreamingAccuracyConfig
+from polyaxon_schemas.metrics import AccuracyConfig
 from polyaxon_schemas.optimizers import AdamConfig
 
 
 def graph_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
-
     x = plx.layers.Embedding(input_dim=10000, output_dim=128)(features['source_token'])
     x = plx.layers.Bidirectional(plx.layers.LSTM(units=128, dropout=0.2, recurrent_dropout=0.2))(x)
     x = plx.layers.Dropout(rate=0.5)(x)
@@ -26,7 +22,7 @@ def model_fn(features, labels, params, mode, config):
         graph_fn=graph_fn,
         loss_config=SoftmaxCrossEntropyConfig(),
         optimizer_config=AdamConfig(learning_rate=0.001),
-        eval_metrics_config=[StreamingAccuracyConfig()],
+        eval_metrics_config=[AccuracyConfig()],
         summaries='all',
         one_hot_encode=True,
         n_classes=2)
@@ -55,7 +51,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/imdb_bidirectional_lsmt",
-                                   schedule='continuous_train_and_evaluate')
+                                   schedule='continuous_train_and_eval')
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ def built_activation(x, collect):
     return x
 
 
-def linear(name='Linear', collect=False):
+def linear(name='Linear', collect=True):
     """Computes linear/identity function.
 
     Args:
@@ -35,7 +35,7 @@ def linear(name='Linear', collect=False):
     return linear
 
 
-def tanh(name=None, collect=False):
+def tanh(name=None, collect=True):
     """Computes hyperbolic tangent of x element-wise.
 
     Args:
@@ -48,7 +48,7 @@ def tanh(name=None, collect=False):
     return tanh
 
 
-def hard_sigmoid(name='HardSigmoid', collect=False):
+def hard_sigmoid(name='HardSigmoid', collect=True):
     """Segment-wise linear approximation of sigmoid.
 
     Args:
@@ -64,7 +64,7 @@ def hard_sigmoid(name='HardSigmoid', collect=False):
     return hard_sigmoid
 
 
-def sigmoid(name=None, collect=False):
+def sigmoid(name=None, collect=True):
     """Computes sigmoid of `x` element-wise: `y = 1 / (1 + exp(-x))`.
 
     Args:
@@ -77,7 +77,7 @@ def sigmoid(name=None, collect=False):
     return sigmoid
 
 
-def softmax(name=None, collect=False):
+def softmax(name=None, collect=True):
     """Computes softmax activations.
 
     For each batch `i` and class `j` we have
@@ -93,7 +93,7 @@ def softmax(name=None, collect=False):
     return softmax
 
 
-def softplus(name=None, collect=False):
+def softplus(name=None, collect=True):
     """Computes softplus. `log(exp(features) + 1)`.
 
     Args:
@@ -106,7 +106,7 @@ def softplus(name=None, collect=False):
     return softplus
 
 
-def softsign(name=None, collect=False):
+def softsign(name=None, collect=True):
     """Computes softsign: `features / (abs(features) + 1)`.
 
     Args:
@@ -119,7 +119,7 @@ def softsign(name=None, collect=False):
     return softsign
 
 
-def relu(name=None, collect=False):
+def relu(name=None, collect=True):
     """Computes ReLU, rectified linear: `max(features, 0)`.
 
     Args:
@@ -132,7 +132,7 @@ def relu(name=None, collect=False):
     return relu
 
 
-def relu6(name=None, collect=False):
+def relu6(name=None, collect=True):
     """Computes Rectified Linear 6: `min(max(features, 0), 6)`.
 
     Args:
@@ -145,7 +145,7 @@ def relu6(name=None, collect=False):
     return relu6
 
 
-def elu(name=None, collect=False):
+def elu(name=None, collect=True):
     """Computes Exponential Linear Unit.
 
     Args:
@@ -158,7 +158,7 @@ def elu(name=None, collect=False):
     return elu
 
 
-def selu(name='Selu', collect=False):
+def selu(name='Selu', collect=True):
     """Scaled Exponential Linear Unit. (Klambauer et al., 2017).
 
     Arguments:
@@ -181,7 +181,7 @@ def selu(name='Selu', collect=False):
     return selu
 
 
-def crelu(name=None, collect=False):
+def crelu(name=None, collect=True):
     """Computes Concatenated ReLU.
 
     Args:

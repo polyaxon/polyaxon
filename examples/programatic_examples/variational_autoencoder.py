@@ -4,8 +4,6 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-
 from polyaxon_schemas.losses import MeanSquaredErrorConfig
 from polyaxon_schemas.optimizers import AdamConfig
 from polyaxon_schemas.processing.feature_processors import FeatureProcessorsConfig
@@ -13,14 +11,11 @@ from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
 
 
 def encoder_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
-
     x = plx.layers.Dense(units=128)(features)
     return plx.layers.Dense(units=256)(x)
 
 
 def decoder_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
     x = plx.layers.Dense(units=256)(features)
     return plx.layers.Dense(units=28 * 28)(x)
 
@@ -106,7 +101,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/vae",
-                                   schedule='continuous_train_and_evaluate')
+                                   schedule='continuous_train_and_eval')
 
 
 if __name__ == "__main__":

@@ -57,7 +57,7 @@ class TestGraphModule(test.TestCase):
         assert module2.module_name == 'test_1'
 
     def test_variable_sharing(self):
-        l = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1)
+        l = plx.layers.Dense(units=1)
         x = tf.placeholder(dtype=tf.float32, shape=[1, 1])
         y = tf.placeholder(dtype=tf.float32, shape=[2, 1])
 
@@ -65,7 +65,7 @@ class TestGraphModule(test.TestCase):
         ly = l(y)
 
         init_all_op = tf.global_variables_initializer()
-        assign_op = l.get_variables()[0].assign_add([[1]])
+        assign_op = l.variables[0].assign_add([[1]])
 
         with self.test_session() as sess:
             sess.run(init_all_op)
@@ -91,8 +91,11 @@ class TestGraphModule(test.TestCase):
             assert lx_results_assign[0] == ly_results_assign[1][0]
 
     def test_copy_from(self):
-        l1 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1)
-        l2 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1)
+        def graph_fn(mode, x):
+            return plx.layers.Dense(units=1)(x)
+
+        l1 = plx.FunctionModule(mode=plx.Modes.TRAIN, build_fn=graph_fn, name='fn1')
+        l2 = plx.FunctionModule(mode=plx.Modes.TRAIN, build_fn=graph_fn, name='fn2')
 
         x = tf.placeholder(dtype=tf.float32, shape=[1, 1])
 
@@ -129,8 +132,14 @@ class TestGraphModule(test.TestCase):
             assert lx1_results[0] != lx2_results[0]
 
     def test_copy_from_with_no_trainable_vars(self):
-        l1 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1)
-        l2 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1, trainable=False)
+        def graph_fn1(mode, x):
+            return plx.layers.Dense(units=1)(x)
+
+        def graph_fn2(mode, x):
+            return plx.layers.Dense(units=1, trainable=False)(x)
+
+        l1 = plx.FunctionModule(mode=plx.Modes.TRAIN, build_fn=graph_fn1, name='fn1')
+        l2 = plx.FunctionModule(mode=plx.Modes.TRAIN, build_fn=graph_fn2, name='fn2')
 
         x = tf.placeholder(dtype=tf.float32, shape=[1, 1])
 
@@ -167,8 +176,14 @@ class TestGraphModule(test.TestCase):
             assert lx1_results[0] != lx2_results[0]
 
     def test_copy_from_works_with_control_flow(self):
-        l1 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1)
-        l2 = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, num_units=1, trainable=False)
+        def graph_fn1(mode, x):
+            return plx.layers.Dense(units=1)(x)
+
+        def graph_fn2(mode, x):
+            return plx.layers.Dense(units=1, trainable=False)(x)
+
+        l1 = plx.FunctionModule(mode=plx.Modes.TRAIN, build_fn=graph_fn1, name='fn1')
+        l2 = plx.FunctionModule(mode=plx.Modes.TRAIN, build_fn=graph_fn2, name='fn2')
 
         x = tf.placeholder(dtype=tf.float32, shape=[1, 1])
 

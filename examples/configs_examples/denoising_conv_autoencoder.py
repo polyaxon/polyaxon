@@ -14,8 +14,6 @@ def experiment_fn(output_dir):
     plx.datasets.mnist.prepare('../data/mnist')
 
     config = './yaml_configs/denoising_conv_autoencoder.yml'
-    # or
-    config = './json_configs/denoising_conv_autoencoder.json'
     experiment_config = plx.configs.ExperimentConfig.read_configs(config)
     return plx.experiments.create_experiment(experiment_config)
 
@@ -23,7 +21,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/denoising_conv_autoencoder",
-                                   schedule='continuous_train_and_evaluate')
+                                   schedule='continuous_train_and_eval')
 
 
 if __name__ == "__main__":

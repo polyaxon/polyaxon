@@ -97,7 +97,7 @@ class Dense(BaseObject, core.Dense):
             **kwargs)
 
 
-class ActivityRegularization(core.ActivityRegularization):
+class ActivityRegularization(BaseObject, core.ActivityRegularization):
     CONFIG = ActivityRegularizationConfig
 
 
@@ -112,7 +112,8 @@ class Cast(BaseObject, Layer):
         return tf.cast(inputs, self.dtype)
 
 
-Lambda = core.Lambda
+class Lambda(core.Lambda):
+    pass
 
 CORE_LAYERS = OrderedDict([
     (Masking.CONFIG.IDENTIFIER, Masking),

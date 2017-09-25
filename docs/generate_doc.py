@@ -16,8 +16,7 @@ from polyaxon import (
     explorations,
     variables)
 from polyaxon import bridges
-from polyaxon import decoders
-from polyaxon import encoders
+
 from polyaxon import models
 from polyaxon.datasets import cifar10, flowers17, mnist
 from polyaxon.datasets.converters import (
@@ -30,8 +29,21 @@ from polyaxon.datasets.converters import (
 )
 from polyaxon.estimators import estimator, agents, hooks
 from polyaxon.experiments import experiment, rl_experiment, utils as experiment_utils
-from polyaxon.layers import convolutional, core, embedding, normalizations, recurrent
-from polyaxon.libs import configs, getters, utils, subgraph
+from polyaxon.layers import (
+    advanced_activations,
+    convolutional,
+    convolutional_recurrent,
+    core,
+    embeddings,
+    local,
+    merge,
+    noise,
+    normalizations,
+    pooling,
+    recurrent,
+    wrappers,
+)
+from polyaxon.libs import getters, utils
 from polyaxon.models import summarizer
 from polyaxon.processing import (
     CategoricalVocabulary,
@@ -67,19 +79,14 @@ PAGES = [
         'classes': [experiment.Experiment],
         'classes_functions': [
             experiment.Experiment.reset_export_strategies,
-            experiment.Experiment.extend_eval_hooks,
-            experiment.Experiment.extend_eval_hooks,
             experiment.Experiment.train,
             experiment.Experiment.evaluate,
             experiment.Experiment.continuous_eval,
             experiment.Experiment.continuous_eval_on_train_data,
             experiment.Experiment.train_and_evaluate,
-            experiment.Experiment.continuous_train_and_evaluate,
+            experiment.Experiment.continuous_train_and_eval,
             experiment.Experiment.run_std_server,
             experiment.Experiment.test
-        ],
-        'functions': [
-            experiment.create_experiment,
         ],
     },
     {
@@ -87,19 +94,14 @@ PAGES = [
         'classes': [rl_experiment.RLExperiment],
         'classes_functions': [
             rl_experiment.RLExperiment.reset_export_strategies,
-            rl_experiment.RLExperiment.extend_eval_hooks,
-            rl_experiment.RLExperiment.extend_eval_hooks,
             rl_experiment.RLExperiment.train,
             rl_experiment.RLExperiment.evaluate,
             rl_experiment.RLExperiment.continuous_eval,
             rl_experiment.RLExperiment.continuous_eval_on_train_data,
             rl_experiment.RLExperiment.train_and_evaluate,
-            rl_experiment.RLExperiment.continuous_train_and_evaluate,
+            rl_experiment.RLExperiment.continuous_train_and_eval,
             rl_experiment.RLExperiment.run_std_server,
             rl_experiment.RLExperiment.test
-        ],
-        'functions': [
-            rl_experiment.create_rl_experiment,
         ],
     },
     {
@@ -239,71 +241,133 @@ PAGES = [
 
     # Layers
     {
+        'page': 'layers/advanced_activations.md',
+        'classes': [
+            advanced_activations.LeakyReLU,
+            advanced_activations.PReLU,
+            advanced_activations.ELU,
+            advanced_activations.ThresholdedReLU,
+        ],
+    },
+    {
         'page': 'layers/core.md',
         'classes': [
-            core.FullyConnected,
+            core.Masking,
             core.Dropout,
+            core.SpatialDropout1D,
+            core.SpatialDropout2D,
+            core.SpatialDropout3D,
+            core.Activation,
             core.Reshape,
+            core.Permute,
             core.Flatten,
-            core.SingleUnit,
-            core.Highway,
-            core.OneHotEncoding,
-            core.GaussianNoise,
-            core.Merge,
-            core.Slice
+            core.RepeatVector,
+            core.Lambda,
+            core.Dense,
+            core.ActivityRegularization,
+            core.Cast,
         ],
     },
     {
         'page': 'layers/convolutional.md',
         'classes': [
-            convolutional.Conv2d,
-            convolutional.Conv2dTranspose,
-            convolutional.MaxPool2d,
-            convolutional.AvgPool2d,
-            convolutional.Upsample2d,
-            convolutional.HighwayConv2d,
-            convolutional.Upscore,
-            convolutional.Conv1d,
-            convolutional.MaxPool1d,
-            convolutional.AvgPool1d,
-            convolutional.HighwayConv1d,
-            convolutional.Conv3d,
-            convolutional.Conv3dTranspose,
-            convolutional.MaxPool3d,
-            convolutional.AvgPool3d,
-            convolutional.GlobalMaxPool,
-            convolutional.GlobalAvgPool,
-            convolutional.ResidualBlock,
-            convolutional.ResidualBottleneck,
+            convolutional.Conv1D,
+            convolutional.Conv2D,
+            convolutional.Conv3D,
+            convolutional.Conv2DTranspose,
+            convolutional.Conv3DTranspose,
+            convolutional.SeparableConv2D,
+            convolutional.UpSampling1D,
+            convolutional.UpSampling2D,
+            convolutional.UpSampling3D,
+            convolutional.ZeroPadding1D,
+            convolutional.ZeroPadding2D,
+            convolutional.ZeroPadding3D,
+            convolutional.Cropping1D,
+            convolutional.Cropping2D,
+            convolutional.Cropping3D,
         ],
+    },
+    {
+        'page': 'layers/convolutional_recurrent.md',
+        'classes': [
+            convolutional_recurrent.ConvRecurrent2D,
+            convolutional_recurrent.ConvLSTM2D
+        ]
+    },
+    {
+        'page': 'layers/local.md',
+        'classes': [
+            local.LocallyConnected1D,
+            local.LocallyConnected2D
+        ]
+    },
+    {
+        'page': 'layers/merge.md',
+        'classes': [
+            merge.Add,
+            merge.Multiply,
+            merge.Average,
+            merge.Maximum,
+            merge.Concatenate,
+            merge.Dot,
+        ]
+    },
+    {
+        'page': 'layers/noise.md',
+        'classes': [
+            noise.GaussianNoise,
+            noise.GaussianDropout,
+            noise.AlphaDropout,
+        ]
+    },
+    {
+        'page': 'layers/pooling.md',
+        'classes': [
+            pooling.AveragePooling1D,
+            pooling.MaxPooling1D,
+            pooling.AveragePooling2D,
+            pooling.MaxPooling2D,
+            pooling.AveragePooling3D,
+            pooling.MaxPooling3D,
+            pooling.GlobalAveragePooling1D,
+            pooling.GlobalMaxPooling1D,
+            pooling.GlobalAveragePooling2D,
+            pooling.GlobalMaxPooling2D,
+            pooling.GlobalAveragePooling3D,
+            pooling.GlobalMaxPooling3D,
+        ]
     },
     {
         'page': 'layers/recurrent.md',
         'classes': [
+            recurrent.Recurrent,
             recurrent.SimpleRNN,
             recurrent.LSTM,
-            recurrent.GRU,
-            recurrent.BidirectionalRNN,
-            recurrent.BasicRNNCell,
-            recurrent.GRUCell,
-            recurrent.BasicLSTMCell,
-            recurrent.DropoutWrapper,
-            recurrent.MultiRNNCell
+            recurrent.GRU
         ],
     },
     {
         'page': 'layers/embeddings.md',
         'classes': [
-            embedding.Embedding,
+            embeddings.Embedding,
         ],
     },
     {
         'page': 'layers/normalizations.md',
         'classes': [
             normalizations.BatchNormalization,
-            normalizations.LocalResponseNormalization,
-            normalizations.L2Normalization
+            # normalizations.LocalResponseNormalization,
+            # normalizations.L2Normalization
         ],
+    },
+    {
+        'page': 'layers/wrappers.md',
+        'classes': [
+            wrappers.Wrapper,
+            wrappers.TimeDistributed,
+            wrappers.Bidirectional,
+        ]
     },
 
     # Bridges
@@ -320,24 +384,6 @@ PAGES = [
     {
         'page': 'bridges/bridges.md',
         'classes': [bridges.NoOpBridge, bridges.LatentBridge]
-    },
-    # Encoders
-    {
-        'page': 'encoders/encoder.md',
-        'classes': [encoders.Encoder],
-        'classes_functions': [
-            encoders.Encoder._build,
-            encoders.Encoder.encode,
-        ]
-    },
-    # Decoders
-    {
-        'page': 'decoders/decoder.md',
-        'classes': [decoders.Decoder],
-        'classes_functions': [
-            decoders.Decoder._build,
-            decoders.Decoder.decode,
-        ]
     },
 
     # Processing
@@ -416,11 +462,6 @@ PAGES = [
 
     # Libs
     {
-        'page': 'libs/configs.md',
-        'all_module_classes': [configs],
-        'all_module_functions': [configs]
-    },
-    {
         'page': 'libs/getters.md',
         'all_module_functions': [getters]
     },
@@ -436,7 +477,7 @@ PAGES = [
     },
     {
         'page': 'initializations.md',
-        'all_module_functions': [initializations],
+        'all_module_classes': [initializations],
     },
     {
         'page': 'metrics.md',
@@ -457,10 +498,6 @@ PAGES = [
     {
         'page': 'variables.md',
         'functions': [variables.variable],
-    },
-    {
-        'page': 'subgraph.md',
-        'classes': [subgraph.SubGraph]
     },
 
     # RL

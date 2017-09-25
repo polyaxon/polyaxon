@@ -34,13 +34,10 @@ class RLExperiment(Experiment):
         eval_delay_secs: Start evaluating after waiting for this many seconds.
         continuous_eval_throttle_secs: Do not re-evaluate unless the last evaluation
             was started at least this many seconds ago for continuous_eval().
-        eval_every_n_steps: (applies only to train_and_evaluate).
-            the minimum number of steps between evaluations. Of course, evaluation does not
-            occur if no new snapshot is available, hence, this is the minimum.
         delay_workers_by_global_step: if `True` delays training workers based on global step
             instead of time.
         export_strategies: A list of `ExportStrategy`s, or a single one, or None.
-        train_steps_per_iteration: (applies only to continuous_train_and_evaluate).
+        train_steps_per_iteration: (applies only to continuous_train_and_eval).
             Perform this many (integer) number of train steps for each training-evaluation
             iteration. With a small value, the model will be evaluated more frequently
             with more checkpoints saved. If `None`, will use a default value
@@ -51,48 +48,47 @@ class RLExperiment(Experiment):
                     or if export_strategies has the wrong type.
     """
 
-    def __init__(self, agent, env, train_steps=None, train_episodes=None,
-                 first_update=5000, update_frequency=15, eval_steps=10,
-                 train_hooks=None, eval_hooks=None, eval_delay_secs=0,
-                 continuous_eval_throttle_secs=60, eval_every_n_steps=1,
-                 delay_workers_by_global_step=False, export_strategies=None,
+    def __init__(self,
+                 agent,
+                 env,
+                 train_steps=None,
+                 train_episodes=None,
+                 first_update=5000,
+                 update_frequency=15,
+                 eval_steps=10,
+                 train_hooks=None,
+                 eval_hooks=None,
+                 eval_delay_secs=0,
+                 continuous_eval_throttle_secs=60,
+                 delay_workers_by_global_step=False,
+                 export_strategies=None,
                  train_steps_per_iteration=100):
-
         if not isinstance(agent, Agent):
             raise ValueError("`estimator` must implement `Estimator`.")
 
-        super(Experiment, self).__init__()
+        super(RLExperiment, self).__init__(
+            estimator=agent,
+            train_input_fn=None,
+            eval_input_fn=None,
+            train_steps=train_steps,
+            eval_steps=eval_steps,
+            train_hooks=train_hooks,
+            eval_hooks=eval_hooks,
+            eval_delay_secs=eval_delay_secs,
+            continuous_eval_throttle_secs=continuous_eval_throttle_secs,
+            delay_workers_by_global_step=delay_workers_by_global_step,
+            export_strategies=export_strategies,
+            train_steps_per_iteration=train_steps_per_iteration
+        )
         self._agent = agent
-        self._estimator = agent  # The estimator in this case os the agent
         self._env = env
-        self._train_steps = train_steps
         self._train_episodes = train_episodes
         self._first_update = first_update
         self._update_frequency = update_frequency
-        self._eval_steps = eval_steps
-        self._set_export_strategies(export_strategies)
-        self._train_hooks = train_hooks[:] if train_hooks else []
-        self._eval_hooks = eval_hooks[:] if eval_hooks else []
-        self._eval_delay_secs = eval_delay_secs
-        self._continuous_eval_throttle_secs = continuous_eval_throttle_secs
-        self._eval_every_n_steps = eval_every_n_steps
-        self._delay_workers_by_global_step = delay_workers_by_global_step
-
-        if train_steps_per_iteration is not None and not isinstance(train_steps_per_iteration, int):
-            raise ValueError("`train_steps_per_iteration` must be an integer.")
-        self._train_steps_per_iteration = train_steps_per_iteration
 
     @property
     def agent(self):
         return self._agent
-
-    @property
-    def train_steps(self):
-        return self._train_steps
-
-    @property
-    def eval_steps(self):
-        return self._eval_steps
 
     def _call_train(self, steps=None, first_update=None, update_frequency=None, episodes=None,
                     hooks=None, max_steps=None, max_episodes=None):
@@ -118,38 +114,3 @@ class RLExperiment(Experiment):
             first_update=self._first_update, update_frequency=self._update_frequency,
             max_steps=self._train_steps, max_episodes=self._train_episodes,
             hooks=self._train_hooks + extra_hooks)
-
-
-def create_rl_experiment(experiment_config):
-    """Creates a new reinforcement learning `Experiment` instance.
-
-    Args:
-        experiment_config: the config to use for creating the experiment.
-    """
-    agent = getters.get_agent(experiment_config.agent_config,
-                              experiment_config.model_config,
-                              experiment_config.run_config)
-    env = getters.get_environment(experiment_config.environment_config.module,
-                                  experiment_config.environment_config.env_id,
-                                  **experiment_config.environment_config.params)
-    train_hooks = getters.get_hooks(experiment_config.train_hooks_config)
-    eval_hooks = getters.get_hooks(experiment_config.eval_hooks_config)
-
-    experiment = RLExperiment(
-        agent=agent,
-        env=env,
-        train_steps=experiment_config.train_steps,
-        train_episodes=experiment_config.train_episodes,
-        first_update=experiment_config.first_update,
-        update_frequency=experiment_config.update_frequency,
-        eval_steps=experiment_config.eval_steps,
-        train_hooks=train_hooks,
-        eval_hooks=eval_hooks,
-        eval_delay_secs=experiment_config.eval_delay_secs,
-        continuous_eval_throttle_secs=experiment_config.continuous_eval_throttle_secs,
-        eval_every_n_steps=experiment_config.eval_every_n_steps,
-        delay_workers_by_global_step=experiment_config.delay_workers_by_global_step,
-        export_strategies=experiment_config.export_strategies,
-        train_steps_per_iteration=experiment_config.train_steps_per_iteration)
-
-    return experiment

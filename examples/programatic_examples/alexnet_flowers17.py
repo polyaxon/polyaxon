@@ -4,18 +4,14 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-
 from polyaxon_schemas.optimizers import MomentumConfig
 from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
-from polyaxon_schemas.metrics import StreamingAccuracyConfig
+from polyaxon_schemas.metrics import AccuracyConfig
 
 from polyaxon.regularizations import l2
 
 
 def graph_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
-
     x = plx.layers.Conv2D(filters=96, kernel_size=11, strides=4, activation='relu',
                           kernel_regularizer=l2(0.02))(features['image'])
     x = plx.layers.MaxPooling2D(pool_size=3, strides=2)(x)
@@ -41,7 +37,7 @@ def model_fn(features, labels, params, mode, config):
         graph_fn=graph_fn,
         loss_config=SigmoidCrossEntropyConfig(),
         optimizer_config=MomentumConfig(learning_rate=0.001),
-        eval_metrics_config=[StreamingAccuracyConfig()],
+        eval_metrics_config=[AccuracyConfig()],
         summaries=['loss'],
         one_hot_encode=True,
         n_classes=17)
@@ -66,13 +62,13 @@ def experiment_fn(output_dir):
 
     run_config = plx.estimators.RunConfig().replace(save_checkpoints_steps=100)
     experiment = plx.experiments.Experiment(
-        estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir,
+        estimator=plx.estimators.Estimator(model_fn=model_fn,
+                                           model_dir=output_dir,
                                            config=run_config),
         train_input_fn=train_input_fn,
         eval_input_fn=eval_input_fn,
         train_steps=1000,
-        eval_steps=10,
-        eval_every_n_steps=5)
+        eval_steps=10)
 
     return experiment
 
@@ -80,7 +76,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/alexnet_flowers17",
-                                   schedule='continuous_train_and_evaluate')
+                                   schedule='continuous_train_and_eval')
 
 
 if __name__ == "__main__":

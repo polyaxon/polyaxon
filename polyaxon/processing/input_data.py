@@ -7,7 +7,6 @@ from tensorflow.python.estimator.inputs.numpy_io import numpy_input_fn
 from tensorflow.python.estimator.inputs.pandas_io import pandas_input_fn
 
 from polyaxon.libs import getters
-from polyaxon.libs.configs import InputDataConfig
 
 
 def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=None, y=None):
@@ -30,7 +29,7 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
     """
     pipeline_config = pipeline_config
 
-    if input_type == InputDataConfig.NUMPY:
+    if input_type == 'NUMPY':
         # setup_train_data_feeder
         return numpy_input_fn(x, y,
                               batch_size=pipeline_config.batch_size,
@@ -38,7 +37,7 @@ def create_input_data_fn(mode, pipeline_config, scope=None, input_type=None, x=N
                               shuffle=pipeline_config.shuffle,
                               num_threads=pipeline_config.num_threads)
 
-    if input_type == InputDataConfig.PANDAS:
+    if input_type == 'PANDAS':
         # setup_train_data_feeder
         return pandas_input_fn(x, y,
                                batch_size=pipeline_config.batch_size,

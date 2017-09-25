@@ -7,7 +7,6 @@ import numpy as np
 import tensorflow as tf
 import polyaxon as plx
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 
 from polyaxon_schemas.losses import AbsoluteDifferenceConfig
 from polyaxon_schemas.optimizers import SGDConfig
@@ -18,8 +17,6 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 def create_experiment(task_type, task_index=0):
     def graph_fn(mode, features):
-        set_learning_phase(plx.Modes.is_train(mode))
-
         x = plx.layers.Dense(mode, units=32, activation='tanh')(features['X'])
         return plx.layers.Dense(mode, units=1, activation='sigmoid')(x)
 

@@ -5,20 +5,16 @@ from collections import Mapping, namedtuple
 
 import tensorflow as tf
 
-
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 from tensorflow.python.training import training
+from tensorflow.python.ops.distributions.categorical import Categorical
+from tensorflow.python.ops.distributions.normal import Normal
 
-try:
-    from tensorflow.python.ops.distributions.categorical import Categorical
-    from tensorflow.python.ops.distributions.normal import Normal
-except ImportError:
-    # tf < 1.2.0
-    from tensorflow.contrib.distributions import Categorical, Normal
+from polyaxon_schemas.losses import HuberLossConfig
 
 from polyaxon import Modes
 from polyaxon.layers.core import Dense
 from polyaxon.libs import getters
-from polyaxon.libs.configs import LossConfig
 from polyaxon.libs.utils import get_tensor_batch_size, get_arguments
 from polyaxon.libs.template_module import FunctionModule
 from polyaxon.models import BaseModel
@@ -117,7 +113,7 @@ class BaseQModel(BaseRLModel):
         self.is_continuous = is_continuous
         self.dueling = dueling
         self.use_expert_demo = use_expert_demo
-        loss_config = loss_config or LossConfig(module='huber_loss')
+        loss_config = loss_config or HuberLossConfig()
 
         super(BaseQModel, self).__init__(
             mode=mode, name=name, model_type=self.Types.RL, graph_fn=graph_fn,
@@ -218,6 +214,8 @@ class BaseQModel(BaseRLModel):
             features: `Tensor` or `dict` of tensors
             labels: `Tensor` or `dict` of tensors
         """
+        set_learning_phase(Modes.is_train(self.mode))
+
         graph_fn = self._build_graph_fn()
 
         if self.use_target_graph:
@@ -375,6 +373,8 @@ class BasePGModel(BaseRLModel):
         Args:
             inputs: `Tensor` or `dict` of tensors
         """
+        set_learning_phase(Modes.is_train(self.mode))
+
         graph_fn = self._build_graph_fn()
         self._graph_results = graph_fn(mode=self.mode, features=features, labels=labels)
         return self._build_actions()

@@ -2,20 +2,15 @@
 from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
+import polyaxon as plx
 
 from polyaxon_schemas.losses import MeanSquaredErrorConfig
 from polyaxon_schemas.optimizers import AdadeltaConfig
 from polyaxon_schemas.processing.feature_processors import FeatureProcessorsConfig
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
 
-import polyaxon as plx
-
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-
 
 def encoder_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
-
     x = plx.layers.Conv2D(filters=32, kernel_size=3, activation='relu', padding='same')(features)
     x = plx.layers.MaxPooling2D(pool_size=2, padding='same')(x)
     x = plx.layers.Conv2D(filters=32, kernel_size=3, activation='relu', padding='same')(x)
@@ -23,8 +18,6 @@ def encoder_fn(mode, features):
 
 
 def decoder_fn(mode, features):
-    set_learning_phase(plx.Modes.is_train(mode))
-
     x = plx.layers.Conv2D(filters=32, kernel_size=3, activation='relu', padding='same')(features)
     x = plx.layers.UpSampling2D(size=2)(x)
     x = plx.layers.Conv2D(filters=32, kernel_size=3, activation='relu', padding='same')(x)
@@ -52,7 +45,7 @@ def get_train_input_fn(data_files, meta_data_file):
     return plx.processing.create_input_data_fn(
         mode=plx.Modes.TRAIN,
         pipeline_config=TFRecordImagePipelineConfig(
-            shuffle=plx.Modes.TRAIN,
+            shuffle=True,
             dynamic_pad=False,
             batch_size=64,
             data_files=data_files,
@@ -86,7 +79,7 @@ def get_eval_input_fn(data_files, meta_data_file):
     return plx.processing.create_input_data_fn(
         mode=plx.Modes.EVAL,
         pipeline_config=TFRecordImagePipelineConfig(
-            shuffle=plx.Modes.EVAL,
+            shuffle=False,
             dynamic_pad=False,
             batch_size=32,
             data_files=data_files,
@@ -138,7 +131,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/denoising_conv_autoencoder",
-                                   schedule='continuous_train_and_evaluate')
+                                   schedule='continuous_train_and_eval')
 
 
 if __name__ == "__main__":

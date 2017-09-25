@@ -41,10 +41,11 @@ setup(name='polyaxon',
           'reinforcement-learning'
       ],
       install_requires=[
-          'numpy',
+          'numpy==1.13.1',
           'six',
-          'Pillow',
-          'pyyaml',
+          'Pillow==4.1.1',
+          'tensorflow==1.3.0',
+          'polyaxon-schemas==0.0.11'
       ],
       classifiers=[
         'Programming Language :: Python',

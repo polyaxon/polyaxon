@@ -17,8 +17,6 @@ def experiment_fn(output_dir):
     plx.datasets.cifar10.prepare('../data/conv_cifar10')
 
     config = './yaml_configs/conv_cifar10.yml'
-    # or
-    config = './json_configs/conv_cifar10.json'
     experiment_config = plx.configs.ExperimentConfig.read_configs(config)
     return plx.experiments.create_experiment(experiment_config)
 
@@ -26,7 +24,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/convnet_cifar10",
-                                   schedule='continuous_train_and_evaluate')
+                                   schedule='continuous_train_and_eval')
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 from tensorflow.python.training import training
 
 from polyaxon_schemas.optimizers import AdamConfig
@@ -99,6 +100,8 @@ class BaseModel(GraphModule):
             features: `Tensor` or `dict` of tensors
             labels: `Tensor` or `dict` of tensors
         """
+        set_learning_phase(Modes.is_train(self.mode))
+
         kwargs = {}
         if 'labels' in get_arguments(self._graph_fn):
             kwargs['labels'] = labels

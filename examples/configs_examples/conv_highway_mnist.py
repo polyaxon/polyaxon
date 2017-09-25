@@ -10,8 +10,6 @@ def experiment_fn(output_dir):
     plx.datasets.mnist.prepare('../data/mnist')
 
     config = './yaml_configs/conv_highway_mnist.yml'
-    # or
-    config = './json_configs/conv_highway_mnist.json'
     experiment_config = plx.configs.ExperimentConfig.read_configs(config)
     return plx.experiments.create_experiment(experiment_config)
 
@@ -19,7 +17,7 @@ def experiment_fn(output_dir):
 def main(*args):
     plx.experiments.run_experiment(experiment_fn=experiment_fn,
                                    output_dir="/tmp/polyaxon_logs/conv_highway_mnsit",
-                                   schedule="continuous_train_and_evaluate")
+                                   schedule="continuous_train_and_eval")
 
 
 if __name__ == "__main__":

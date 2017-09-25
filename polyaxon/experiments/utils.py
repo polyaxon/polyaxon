@@ -1,50 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from tensorflow.contrib.learn.python.learn.learn_runner import _is_distributed
-from tensorflow.contrib.learn.python.learn.estimators import run_config
-from tensorflow.python.platform import tf_logging as logging
-
-from polyaxon.experiments.experiment import Experiment
-
-
-def _get_default_schedule(config):
-    """Returns the default schedule for the provided RunConfig."""
-    if not config or not _is_distributed(config):
-        return 'train_and_evaluate'
-
-    if not config.task_type:
-        raise ValueError("Must specify a schedule")
-
-    if config.task_type == run_config.TaskType.MASTER:
-        # TODO(rhaertel): handle the case where there is more than one master
-        # or explicitly disallow such a case.
-        return 'train_and_evaluate'
-    elif config.task_type == run_config.TaskType.PS:
-        return 'run_std_server'
-    elif config.task_type == run_config.TaskType.WORKER:
-        return 'train'
-
-    raise ValueError("No default schedule for task type: {}".format(config.task_type))
-
-
-def _execute_schedule(experiment, schedule):
-    """Execute the method named `schedule` of `experiment`."""
-    if not hasattr(experiment, schedule):
-        logging.error("Schedule references non-existent task {}".format(schedule))
-        valid_tasks = [x for x in dir(experiment)
-                       if not x.startswith('_') and callable(getattr(experiment, x))]
-        logging.error("Allowed values for this experiment are: {}".format(valid_tasks))
-        raise ValueError("Schedule references non-existent task {}".format(schedule))
-
-    task = getattr(experiment, schedule)
-    if not callable(task):
-        logging.error("Schedule references non-callable member {}".format(schedule))
-        valid_tasks = [x for x in dir(experiment)
-                       if not x.startswith('_') and callable(getattr(experiment, x))]
-        logging.error("Allowed values for this experiment are: {}".format(valid_tasks))
-        raise TypeError("Schedule references non-callable member {}".format(schedule))
-    return task()
+from tensorflow.contrib.learn.python.learn import learn_runner
 
 
 def run_experiment(experiment_fn, output_dir, schedule=None):
@@ -93,19 +50,4 @@ def run_experiment(experiment_fn, output_dir, schedule=None):
           default, or `schedule` doesn't reference a member of `Experiment`.
         TypeError: `schedule` references non-callable member.
     """
-    if not output_dir:
-        raise ValueError("Must specify an output directory")
-    if not callable(experiment_fn):
-        raise TypeError("Experiment builder `{}` is not callable.".format(experiment_fn))
-
-    # Call the builder
-    experiment = experiment_fn(output_dir=output_dir)
-    if not isinstance(experiment, Experiment):
-        raise TypeError("Experiment builder did not return an Experiment instance, "
-                        "got {} instead.".format(type(experiment)))
-
-    # Get the schedule
-    config = experiment.estimator.config
-    schedule = schedule or _get_default_schedule(config)
-
-    return _execute_schedule(experiment, schedule)
+    return learn_runner.run(experiment_fn, output_dir, schedule)

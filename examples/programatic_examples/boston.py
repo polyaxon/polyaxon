@@ -11,8 +11,6 @@ import tensorflow as tf
 
 from polyaxon_schemas.losses import MeanSquaredErrorConfig
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-
 from sklearn import datasets
 from sklearn import model_selection
 from sklearn import preprocessing
@@ -44,8 +42,6 @@ def main(*args):
     x_train = scaler.fit_transform(x_train)
 
     def graph_fn(mode, features):
-        set_learning_phase(plx.Modes.is_train(mode))
-
         x = plx.layers.Dense(units=32, activation='relu')(features['x'])
         x = plx.layers.Dropout(rate=0.3)(x)
         x = plx.layers.Dense(units=32, activation='relu')(x)
