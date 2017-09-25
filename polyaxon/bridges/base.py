@@ -8,8 +8,6 @@ import six
 
 import tensorflow as tf
 
-from polyaxon.decoders.base import DecoderSpec
-from polyaxon.encoders.base import EncoderSpec
 from polyaxon.libs import getters
 from polyaxon.libs.template_module import GraphModule
 from polyaxon.libs.utils import get_shape, get_tensor_batch_size, get_arguments
@@ -53,14 +51,11 @@ class BaseBridge(GraphModule):
         """
         if 'labels' in get_arguments(encoder_fn):
             kwargs['labels'] = labels
-        x = encoder_fn(mode=self.mode, features=features, **kwargs)
-
-        if not isinstance(x, EncoderSpec):
-            raise ValueError('`encoder_fn` should return an EncoderSpec.')
+        output = encoder_fn(mode=self.mode, features=features, **kwargs)
 
         if self.state_size is None:
-            self.state_size = x.output_size
-        return x.output
+            self.state_size = get_shape(output)[1:]
+        return output
 
     def decode(self, features, labels, decoder_fn, *args, **kwargs):
         """Decodes the incoming tensor if it's validates against the state size of the decoder.
@@ -73,12 +68,6 @@ class BaseBridge(GraphModule):
             *args:
             **kwargs:
         """
-        incoming_shape = get_shape(features)
-        if incoming_shape[1:] != self.state_size:
-            raise ValueError('`incoming` tensor is incompatible with decoder function, '
-                             'expects a tensor with shape `{}`, '
-                             'received instead `{}`'.format(self.state_size, incoming_shape[1:]))
-
         # TODO: make decode capable of generating values directly,
         # TODO: basically accepting None incoming values. Should also specify a distribution.
 
@@ -87,10 +76,7 @@ class BaseBridge(GraphModule):
         if 'labels' in get_arguments(decoder_fn):
             kwargs['labels'] = labels
 
-        x = decoder_fn(mode=self.mode, features=features, **kwargs)
-        if not isinstance(x, DecoderSpec):
-            raise ValueError('`decoder_fn` should return an DecoderSpec.')
-        return x.output
+        return decoder_fn(mode=self.mode, features=features, **kwargs)
 
     def _build_loss(self, results, features, labels, loss_config, **kwargs):
         return getters.get_loss(loss_config.IDENTIFIER, results, features, **loss_config.to_dict())

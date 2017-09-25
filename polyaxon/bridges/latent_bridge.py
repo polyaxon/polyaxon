@@ -5,7 +5,7 @@ import tensorflow as tf
 
 from polyaxon import Modes
 from polyaxon.bridges.base import BaseBridge, BridgeSpec
-from polyaxon.layers import FullyConnected
+from polyaxon.layers.core import Dense
 from polyaxon.libs import getters
 from polyaxon.libs.utils import get_name_scope
 
@@ -33,8 +33,8 @@ class LatentBridge(BaseBridge):
         self.stddev = stddev
 
     def _build_dependencies(self):
-        self.z_mean = FullyConnected(self.mode, num_units=self.latent_dim, name='z_mean')
-        self.z_log_sigma = FullyConnected(self.mode, num_units=self.latent_dim, name='z_log_sigma')
+        self.z_mean = Dense(units=self.latent_dim, name='z_mean')
+        self.z_log_sigma = Dense(units=self.latent_dim, name='z_log_sigma')
 
     def _build_loss(self, results, features, labels, loss_config, **kwargs):
         losses, loss = getters.get_loss(
