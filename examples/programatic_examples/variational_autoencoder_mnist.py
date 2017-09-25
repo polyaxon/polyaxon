@@ -3,30 +3,29 @@ from __future__ import absolute_import, division, print_function
 
 import numpy as np
 import tensorflow as tf
+
 import polyaxon as plx
 
+from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 from tensorflow.examples.tutorials.mnist import input_data
+
+from polyaxon_schemas.optimizers import AdamConfig
+from polyaxon_schemas.losses import MeanSquaredErrorConfig
 
 from polyaxon.libs.utils import total_tensor_depth
 
 
 def encoder_fn(mode, features):
-    return plx.encoders.Encoder(
-        mode=mode,
-        modules=[
-            plx.layers.FullyConnected(mode=mode, num_units=256, activation='relu')
-        ]
-    )(features)
+    set_learning_phase(plx.Modes.is_train(mode))
+
+    x = plx.layers.Dense(units=128)(features)
+    return plx.layers.Dense(units=256)(x)
 
 
 def decoder_fn(mode, features):
-    return plx.decoders.Decoder(
-        mode=mode,
-        modules=[
-            plx.layers.FullyConnected(mode=mode, num_units=256, activation='relu'),
-            plx.layers.FullyConnected(mode=mode, num_units=28 * 28)
-        ]
-    )(features)
+    set_learning_phase(plx.Modes.is_train(mode))
+    x = plx.layers.Dense(units=256)(features)
+    return plx.layers.Dense(units=28 * 28)(x)
 
 
 def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
@@ -40,8 +39,8 @@ def model_fn(features, labels, params, mode, config):
         encoder_fn=encoder_fn,
         decoder_fn=decoder_fn,
         bridge_fn=bridge_fn,
-        loss_config=plx.configs.LossConfig(module='sigmoid_cross_entropy'),
-        optimizer_config=plx.configs.OptimizerConfig(module='adam', learning_rate=0.00009),
+        loss_config=MeanSquaredErrorConfig(),
+        optimizer_config=AdamConfig(learning_rate=0.00009),
         summaries=['loss'])
     return model(features=features, labels=labels, params=params, config=config)
 
@@ -52,10 +51,8 @@ def experiment_fn(output_dir, x_train, y_train, x_eval, y_eval):
     inks:
         * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
     """
-    run_config = plx.configs.RunConfig(save_checkpoints_steps=100)
     return plx.experiments.Experiment(
-        estimator=plx.estimators.Estimator(
-            model_fn=model_fn, model_dir=output_dir, config=run_config),
+        estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir),
         train_input_fn=plx.processing.numpy_input_fn(
             x=x_train, y=y_train, batch_size=64, num_epochs=None, shuffle=False),
         eval_input_fn=plx.processing.numpy_input_fn(
@@ -132,7 +129,7 @@ def main(*args):
     x_eval = x_eval.reshape((len(x_eval), total_tensor_depth(x_eval)))
     x_test = x_test.reshape((len(x_test), total_tensor_depth(x_test)))
 
-    xp = experiment_fn("/tmp/polyaxon_logs/vae",
+    xp = experiment_fn("/tmp/polyaxon_logs/vae_mnist",
                        {'images': x_train}, mnist.train.labels,
                        {'images': x_eval}, mnist.validation.labels)
     xp.continuous_train_and_evaluate()
