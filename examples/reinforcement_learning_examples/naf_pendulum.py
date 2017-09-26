@@ -20,10 +20,10 @@ def main(*args):
     def model_fn(features, labels, mode):
         model = plx.models.NAFModel(
             mode, graph_fn=graph_fn,
-            loss_config=HuberLossConfig(),
+            loss=HuberLossConfig(),
             num_states=env.num_states,
             num_actions=env.num_actions,
-            optimizer_config=SGDConfig(learning_rate=0.01),
+            optimizer=SGDConfig(learning_rate=0.01),
             exploration_config=DecayExplorationConfig(is_continuous=True),
             target_update_frequency=10,
             summaries='all')

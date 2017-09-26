@@ -68,7 +68,6 @@ train:
       meta_data_file: "../data/mnist/meta_data.json"
 
 eval:
-  eval_every_n_steps: 10
   data_pipeline:
     TFRecordImagePipeline:
       batch_size: 32

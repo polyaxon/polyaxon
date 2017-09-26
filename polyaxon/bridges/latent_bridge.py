@@ -36,9 +36,9 @@ class LatentBridge(BaseBridge):
         self.z_mean = Dense(units=self.latent_dim, name='z_mean')
         self.z_log_sigma = Dense(units=self.latent_dim, name='z_log_sigma')
 
-    def _build_loss(self, results, features, labels, loss_config, **kwargs):
+    def _build_loss(self, results, features, labels, loss, **kwargs):
         losses, loss = getters.get_loss(
-            loss_config.IDENTIFIER, results, features, **loss_config.to_dict())
+            loss.IDENTIFIER, results, features, **loss.to_dict())
 
         with get_name_scope('latent_loss'):
             z_mean = kwargs['z_mean']
@@ -52,7 +52,7 @@ class LatentBridge(BaseBridge):
         loss += latent_loss
         return losses, loss
 
-    def _build(self, features, labels, loss_config, encoder_fn, decoder_fn, *args, **kwargs):
+    def _build(self, features, labels, loss, encoder_fn, decoder_fn, *args, **kwargs):
         self._build_dependencies()
 
         losses = None
@@ -71,7 +71,7 @@ class LatentBridge(BaseBridge):
                 shape=shape, mean=self.mean, stddev=self.stddev, dtype=tf.float32, name='eps')
             z = tf.add(z_mean, tf.multiply(tf.sqrt(tf.exp(z_log_sigma)), eps))
             results = self.decode(features=z, labels=labels, decoder_fn=decoder_fn)
-            losses, loss = self._build_loss(results, features, labels, loss_config,
+            losses, loss = self._build_loss(results, features, labels, loss,
                                             z_mean=z_mean,
                                             z_log_sigma=z_log_sigma)
 

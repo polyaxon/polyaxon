@@ -23,10 +23,10 @@ def model_fn(features, labels, params, mode, config):
     model = plx.models.Classifier(
         mode=mode,
         graph_fn=graph_fn,
-        loss_config=SigmoidCrossEntropyConfig(),
-        optimizer_config=AdamConfig(
+        loss=SigmoidCrossEntropyConfig(),
+        optimizer=AdamConfig(
             learning_rate=0.007, decay_type='exponential_decay', decay_rate=0.1),
-        eval_metrics_config=[AccuracyConfig()],
+        metrics=[AccuracyConfig()],
         summaries='all',
         one_hot_encode=True,
         n_classes=10)
@@ -48,8 +48,7 @@ def experiment_fn(output_dir):
         train_input_fn=train_input_fn,
         eval_input_fn=eval_input_fn,
         train_steps=10000,
-        eval_steps=10,
-        eval_every_n_steps=5)
+        eval_steps=10)
 
     return experiment
 

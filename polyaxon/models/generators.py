@@ -35,11 +35,11 @@ class Generator(BaseModel):
                 * `inputs`: the feature inputs.
                 * `encoder_fn`: the encoder function.
                 * `decoder_fn` the decoder function.
-        loss_config: An instance of `LossConfig`. Default value `mean_squared_error`.
-        optimizer_config: An instance of `OptimizerConfig`. Default value `Adadelta`.
+        loss: An instance of `LossConfig`. Default value `mean_squared_error`.
+        optimizer: An instance of `OptimizerConfig`. Default value `Adadelta`.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-        eval_metrics_config: a list of `MetricConfig` instances.
+        metrics: a list of `MetricConfig` instances.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
         clip_gradients: `float`. Gradients  clipping by global norm.
@@ -50,11 +50,20 @@ class Generator(BaseModel):
         `EstimatorSpec`
     """
 
-    def __init__(self, mode, encoder_fn, decoder_fn, bridge_fn, loss_config=None,
-                 optimizer_config=None, summaries='all', eval_metrics_config=None,
-                 clip_gradients=0.5, clip_embed_gradients=0.1, name="Generator"):
-        optimizer_config = optimizer_config or AdadeltaConfig(learning_rate=0.4)
-        loss_config = loss_config or SigmoidCrossEntropyConfig()
+    def __init__(self,
+                 mode,
+                 encoder_fn,
+                 decoder_fn,
+                 bridge_fn,
+                 loss=None,
+                 optimizer=None,
+                 summaries='all',
+                 metrics=None,
+                 clip_gradients=0.5,
+                 clip_embed_gradients=0.1,
+                 name="Generator"):
+        optimizer = optimizer or AdadeltaConfig(learning_rate=0.4)
+        loss = loss or SigmoidCrossEntropyConfig()
         self._check_subgraph_fn(function=encoder_fn, function_name='encoder_fn')
         self._check_subgraph_fn(function=decoder_fn, function_name='decoder_fn')
         self._check_bridge_fn(function=bridge_fn)
@@ -65,10 +74,16 @@ class Generator(BaseModel):
         graph_fn = self._build_graph_fn()
 
         super(Generator, self).__init__(
-            mode=mode, name=name, model_type=self.Types.GENERATOR, graph_fn=graph_fn,
-            loss_config=loss_config, optimizer_config=optimizer_config,
-            eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
+            mode=mode,
+            name=name,
+            model_type=self.Types.GENERATOR,
+            graph_fn=graph_fn,
+            loss=loss,
+            optimizer=optimizer,
+            metrics=metrics,
+            summaries=summaries,
+            clip_gradients=clip_gradients,
+            clip_embed_gradients=clip_embed_gradients)
 
     @staticmethod
     def _check_bridge_fn(function):
@@ -76,7 +91,7 @@ class Generator(BaseModel):
             # Check number of arguments of the given function matches requirements.
             model_fn_args = get_arguments(function)
             if ('mode' not in model_fn_args or
-                    'loss_config' not in model_fn_args or
+                    'loss' not in model_fn_args or
                     'features' not in model_fn_args or
                     'labels' not in model_fn_args or
                     'encoder_fn' not in model_fn_args or
@@ -99,7 +114,7 @@ class Generator(BaseModel):
             return self._bridge_fn(mode=mode,
                                    features=features,
                                    labels=labels,
-                                   loss_config=self.loss_config,
+                                   loss=self.loss,
                                    encoder_fn=self._encode_fn,
                                    decoder_fn=self._decoder_fn)
 

@@ -31,10 +31,10 @@ class TestBaseModel(test.TestCase):
 
         model = BaseModel(plx.Modes.TRAIN,
                           graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=[],
                           name='test')
 
@@ -50,10 +50,10 @@ class TestBaseModel(test.TestCase):
 
         model = BaseModel(plx.Modes.TRAIN,
                           graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=['activations'],
                           name='test')
 
@@ -69,9 +69,9 @@ class TestBaseModel(test.TestCase):
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
-                          model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
+                          model_type=BaseModel.Types.CLASSIFIER, metrics=[],
                           summaries=['loss'], name='test')
 
         model(x, y, None, None)
@@ -87,10 +87,10 @@ class TestBaseModel(test.TestCase):
 
         model = BaseModel(plx.Modes.TRAIN,
                           graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=['gradients'],
                           name='test')
 
@@ -107,10 +107,10 @@ class TestBaseModel(test.TestCase):
 
         model = BaseModel(plx.Modes.TRAIN,
                           graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=['variables'],
                           name='test')
 
@@ -127,9 +127,9 @@ class TestBaseModel(test.TestCase):
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(decay_type='exponential_decay'),
-                          model_type=BaseModel.Types.CLASSIFIER, eval_metrics_config=[],
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(decay_type='exponential_decay'),
+                          model_type=BaseModel.Types.CLASSIFIER, metrics=[],
                           summaries=['learning_rate'],
                           name='test')
 
@@ -146,10 +146,10 @@ class TestBaseModel(test.TestCase):
 
         model = BaseModel(plx.Modes.TRAIN,
                           graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=['learning_rate'],
                           name='test')
 
@@ -165,10 +165,10 @@ class TestBaseModel(test.TestCase):
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.Modes.TRAIN, graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(decay_type='exponential_decay'),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(decay_type='exponential_decay'),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries='all',
                           name='test')
 
@@ -201,10 +201,10 @@ class TestBaseModel(test.TestCase):
 
         model = BaseModel(plx.Modes.TRAIN,
                           graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=['learning_rate'],
                           name='test')
 
@@ -216,10 +216,10 @@ class TestBaseModel(test.TestCase):
 
         model = BaseModel(plx.Modes.TRAIN,
                           graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=['learning_rate'],
                           name='test')
         specs = model(x, y, None, None)
@@ -234,9 +234,9 @@ class TestBaseModel(test.TestCase):
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.Modes.EVAL, graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
-                          eval_metrics_config=[],
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
+                          metrics=[],
                           model_type=BaseModel.Types.CLASSIFIER,
                           summaries=['learning_rate'],
                           name='test')
@@ -252,10 +252,10 @@ class TestBaseModel(test.TestCase):
         y = tf.constant([[1], [1]])
 
         model = BaseModel(plx.Modes.PREDICT, graph_fn=self.get_dummy_graph_fn(),
-                          loss_config=LogLossConfig(),
-                          optimizer_config=AdadeltaConfig(),
+                          loss=LogLossConfig(),
+                          optimizer=AdadeltaConfig(),
                           model_type=BaseModel.Types.CLASSIFIER,
-                          eval_metrics_config=[],
+                          metrics=[],
                           summaries=['learning_rate'],
                           name='test')
         specs = model(x, y, None, None)

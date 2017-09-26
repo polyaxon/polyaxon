@@ -21,10 +21,10 @@ def main(*args):
         model = plx.models.DQNModel(
             mode,
             graph_fn=graph_fn,
-            loss_config=HuberLossConfig(),
+            loss=HuberLossConfig(),
             num_states=env.num_states,
             num_actions=env.num_actions,
-            optimizer_config=SGDConfig(learning_rate=0.01),
+            optimizer=SGDConfig(learning_rate=0.01),
             exploration_config=DecayExplorationConfig(),
             target_update_frequency=10,
             dueling='mean',

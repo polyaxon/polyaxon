@@ -1,7 +1,6 @@
 {
   "name": "conv_autoencoder_mnsit",
   "output_dir": "/tmp/polyaxon_logs/conv_autoencode_mnist",
-  "eval_every_n_steps": 100,
   "train_steps_per_iteration": 1000,
   "run_config": {
     "save_checkpoints_steps": 1000
@@ -58,7 +57,7 @@
       "image_input",
       "image_result"
     ],
-    "loss_config": {
+    "loss": {
       "module": "mean_squared_error"
     },
     "optimizer_config": {

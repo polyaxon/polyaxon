@@ -1,7 +1,6 @@
 ---
 name: alexnet_flowers17
 output_dir: "/tmp/polyaxon_logs/alexnet_flowers17"
-eval_every_n_steps: 10
 train_steps_per_iteration: 100
 run_config:
   save_checkpoints_steps: 100
@@ -31,9 +30,9 @@ model_config:
   module: Classifier
   summaries:
   - loss
-  loss_config:
+  loss:
     module: sigmoid_cross_entropy
-  eval_metrics_config:
+  metrics:
   - module: streaming_accuracy
   optimizer_config:
     module: momentum

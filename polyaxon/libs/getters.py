@@ -249,32 +249,22 @@ def get_bridge_fn(config):
     """
     from polyaxon.bridges import BRIDGES, NoOpBridge
 
-    def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
+    def bridge_fn(mode, features, labels, loss, encoder_fn, decoder_fn):
         if config:
             bridge = BRIDGES[config.module]
             bridge = bridge(mode=mode, state_size=config.state_size, **config.params)
-            return bridge(features, labels, loss_config, encoder_fn, decoder_fn)
+            return bridge(features, labels, loss, encoder_fn, decoder_fn)
 
-        return NoOpBridge(mode)(features, labels, loss_config, encoder_fn, decoder_fn)
+        return NoOpBridge(mode)(features, labels, loss, encoder_fn, decoder_fn)
 
     return bridge_fn
 
 
 def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, bridge_fn=None):
     from polyaxon.models import MODELS, BaseModel
-    from polyaxon.encoders import ENCODERS, Encoder
-    from polyaxon.decoders import DECODERS, Decoder
 
     if not graph_fn:
         graph_fn = get_graph_fn(model_config.graph_config)
-
-    if not encoder_fn and model_config.encoder_config:
-        encoder = ENCODERS.get(model_config.encoder_config.module, Encoder)
-        encoder_fn = get_graph_fn(model_config.encoder_config, encoder)
-
-    if not decoder_fn and model_config.decoder_config:
-        decoder = DECODERS.get(model_config.encoder_config.module, Decoder)
-        decoder_fn = get_graph_fn(model_config.decoder_config, decoder)
 
     if not bridge_fn:
         bridge_fn = get_bridge_fn(model_config.bridge_config)
@@ -287,9 +277,9 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, 
                 encoder_fn=encoder_fn,
                 decoder_fn=decoder_fn,
                 bridge_fn=bridge_fn,
-                loss_config=model_config.loss_config,
-                optimizer_config=model_config.optimizer_config,
-                eval_metrics_config=model_config.eval_metrics_config,
+                loss=model_config.loss,
+                optimizer=model_config.optimizer,
+                metrics=model_config.metrics,
                 summaries=model_config.summaries,
                 clip_gradients=model_config.clip_gradients,
                 clip_embed_gradients=model_config.clip_embed_gradients,
@@ -298,9 +288,9 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, 
             model = MODELS[model_config.module](
                 mode=mode,
                 graph_fn=graph_fn,
-                loss_config=model_config.loss_config,
-                optimizer_config=model_config.optimizer_config,
-                eval_metrics_config=model_config.eval_metrics_config,
+                loss=model_config.loss,
+                optimizer=model_config.optimizer,
+                metrics=model_config.metrics,
                 summaries=model_config.summaries,
                 clip_gradients=model_config.clip_gradients,
                 clip_embed_gradients=model_config.clip_embed_gradients,

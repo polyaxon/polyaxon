@@ -22,8 +22,8 @@ def graph_fn(mode, features):
 
 def model_fn(features, labels, mode):
     model = plx.models.Regressor(
-        mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(module='absolute_difference'),
-        optimizer_config=plx.configs.OptimizerConfig(
+        mode, graph_fn=graph_fn, loss=plx.configs.LossConfig(module='absolute_difference'),
+        optimizer=plx.configs.OptimizerConfig(
             module='sgd', learning_rate=0.5,  decay_type='exponential_decay', decay_steps=10),
         summaries='all', name='xor')
     return model(features, labels)

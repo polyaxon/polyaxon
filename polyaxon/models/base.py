@@ -28,9 +28,9 @@ class BaseModel(GraphModule):
              * Args:
                  * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                  * `inputs`: the feature inputs.
-         loss_config: An instance of `LossConfig`.
-         optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
-         eval_metrics_config: a list of `MetricConfig` instances.
+         loss: An instance of `LossConfig`.
+         optimizer: An instance of `OptimizerConfig`. Default value `Adam`.
+         metrics: a list of `MetricConfig` instances.
          summaries: `str` or `list`. The verbosity of the tensorboard visualization.
              Possible values: [
              `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
@@ -54,9 +54,17 @@ class BaseModel(GraphModule):
 
         VALUES = [REGRESSOR, CLASSIFIER, GENERATOR, RL]
 
-    def __init__(self, mode, model_type, graph_fn, loss_config, optimizer_config=None,
-                 eval_metrics_config=None, summaries='all', clip_gradients=0.5,
-                 clip_embed_gradients=0.1, name="Model"):
+    def __init__(self,
+                 mode,
+                 model_type,
+                 graph_fn,
+                 loss,
+                 optimizer=None,
+                 metrics=None,
+                 summaries='all',
+                 clip_gradients=0.5,
+                 clip_embed_gradients=0.1,
+                 name="Model"):
 
         # Check if mode corresponds to the correct model
         if mode in [Modes.GENERATE, Modes.ENCODE] and model_type != self.Types.GENERATOR:
@@ -64,9 +72,9 @@ class BaseModel(GraphModule):
                 model_type, mode))
 
         super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
-        self.loss_config = loss_config
-        self.optimizer_config = optimizer_config or AdamConfig(learning_rate=0.001)
-        self.eval_metrics_config = eval_metrics_config or []
+        self.loss = loss
+        self.optimizer = optimizer or AdamConfig(learning_rate=0.001)
+        self.metrics = metrics or []
         self.model_type = model_type
         self.summaries = summarizer.SummaryOptions.validate(summaries)
         assert model_type in self.Types.VALUES, "`model_type` provided is unsupported."
@@ -131,15 +139,15 @@ class BaseModel(GraphModule):
     def _build_optimizer(self):
         """Creates the optimizer"""
         optimizer = getters.get_optimizer(
-            self.optimizer_config.IDENTIFIER, **self.optimizer_config.to_dict())
+            self.optimizer.IDENTIFIER, **self.optimizer.to_dict())
 
         # TODO: use the _SyncReplicasOptimizerHook
         # # Optionally wrap with SyncReplicasOptimizer
-        # if self.optimizer_config.sync_replicas > 0:
+        # if self.optimizer.sync_replicas > 0:
         #     optimizer = tf.train.SyncReplicasOptimizer(
         #         opt=optimizer,
-        #         replicas_to_aggregate=self.optimizer_config.sync_replicas_to_aggregate,
-        #         total_num_replicas=self.optimizer_config.sync_replicas)
+        #         replicas_to_aggregate=self.optimizer.sync_replicas_to_aggregate,
+        #         total_num_replicas=self.optimizer.sync_replicas)
         #     # This is really ugly, but we need to do this to make the optimizer
         #     # accessible outside of the model.
         #     configs.SYNC_REPLICAS_OPTIMIZER = optimizer
@@ -183,7 +191,7 @@ class BaseModel(GraphModule):
                 `loss` is a single scalar tensor to minimize.
         """
         losses, loss = getters.get_loss(
-            self.loss_config.IDENTIFIER, results, labels, **self.loss_config.to_dict())
+            self.loss.IDENTIFIER, results, labels, **self.loss.to_dict())
         self._loss = loss
         self._losses = losses
 
@@ -202,7 +210,7 @@ class BaseModel(GraphModule):
             `loss` is a single scalar tensor to minimize.
         """
         metrics = {}
-        for metric in self.eval_metrics_config:
+        for metric in self.metrics:
             metrics[metric.IDENTIFIER] = getters.get_metric(
                 metric.IDENTIFIER, results, labels, **metric.to_dict())
         return metrics

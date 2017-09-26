@@ -97,9 +97,9 @@ def experiment_fn(output_dir, x, y, train_steps=1000, num_units=7, output_units=
         return plx.models.Regressor(
             mode=mode,
             graph_fn=graph_fn,
-            loss_config=MeanSquaredErrorConfig(),
-            optimizer_config=AdagradConfig(learning_rate=0.1),
-            eval_metrics_config=[
+            loss=MeanSquaredErrorConfig(),
+            optimizer=AdagradConfig(learning_rate=0.1),
+            metrics=[
                 RootMeanSquaredErrorConfig(),
                 MeanAbsoluteErrorConfig()
             ]
@@ -112,5 +112,4 @@ def experiment_fn(output_dir, x, y, train_steps=1000, num_units=7, output_units=
         eval_input_fn=plx.processing.numpy_input_fn(
             x={'x': x['train']}, y=y['train'], batch_size=32, num_epochs=None, shuffle=False),
         train_steps=train_steps,
-        eval_steps=10,
-        eval_every_n_steps=5)
+        eval_steps=10)

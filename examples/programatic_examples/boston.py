@@ -52,8 +52,8 @@ def main(*args):
     def model_fn(features, labels, mode):
         model = plx.models.Regressor(
             mode, graph_fn=graph_fn,
-            loss_config=MeanSquaredErrorConfig(),
-            optimizer_config=SGDConfig(learning_rate=0.001),
+            loss=MeanSquaredErrorConfig(),
+            optimizer=SGDConfig(learning_rate=0.001),
             summaries='all')
         return model(features, labels)
 

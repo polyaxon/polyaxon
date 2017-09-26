@@ -35,9 +35,9 @@ def model_fn(features, labels, params, mode, config):
     model = plx.models.Classifier(
         mode=mode,
         graph_fn=graph_fn,
-        loss_config=SigmoidCrossEntropyConfig(),
-        optimizer_config=MomentumConfig(learning_rate=0.001),
-        eval_metrics_config=[AccuracyConfig()],
+        loss=SigmoidCrossEntropyConfig(),
+        optimizer=MomentumConfig(learning_rate=0.001),
+        metrics=[AccuracyConfig()],
         summaries=['loss'],
         one_hot_encode=True,
         n_classes=17)

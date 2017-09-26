@@ -23,8 +23,8 @@ def create_experiment(task_type, task_index=0):
     def model_fn(features, labels, mode):
         model = plx.models.Regressor(
             mode, graph_fn=graph_fn,
-            loss_config=AbsoluteDifferenceConfig(),
-            optimizer_config=SGDConfig(learning_rate=0.5,
+            loss=AbsoluteDifferenceConfig(),
+            optimizer=SGDConfig(learning_rate=0.5,
                                        decay_type='exponential_decay',
                                        decay_steps=10),
             summaries='all', name='xor')

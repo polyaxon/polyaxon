@@ -16,11 +16,11 @@ class DDQNModel(BaseQModel):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
-        loss_config: An instance of `LossConfig`.
+        loss: An instance of `LossConfig`.
         num_states: `int`. The number of states.
         num_actions: `int`. The number of actions.
-        optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
-        eval_metrics_config: a list of `MetricConfig` instances.
+        optimizer: An instance of `OptimizerConfig`. Default value `Adam`.
+        metrics: a list of `MetricConfig` instances.
         discount: `float`. The discount factor on the target Q values.
         exploration_config: An instance `ExplorationConfig`
         use_target_graph: `bool`. To use a second “target” network,

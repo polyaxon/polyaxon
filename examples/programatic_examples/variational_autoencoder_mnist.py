@@ -23,8 +23,8 @@ def decoder_fn(mode, features):
     return plx.layers.Dense(units=28 * 28)(x)
 
 
-def bridge_fn(mode, features, labels, loss_config, encoder_fn, decoder_fn):
-    return plx.bridges.LatentBridge(mode, latent_dim=2)(features, labels, loss_config,
+def bridge_fn(mode, features, labels, loss, encoder_fn, decoder_fn):
+    return plx.bridges.LatentBridge(mode, latent_dim=2)(features, labels, loss,
                                                         encoder_fn, decoder_fn)
 
 
@@ -34,8 +34,8 @@ def model_fn(features, labels, params, mode, config):
         encoder_fn=encoder_fn,
         decoder_fn=decoder_fn,
         bridge_fn=bridge_fn,
-        loss_config=MeanSquaredErrorConfig(),
-        optimizer_config=AdamConfig(learning_rate=0.00009),
+        loss=MeanSquaredErrorConfig(),
+        optimizer=AdamConfig(learning_rate=0.00009),
         summaries=['loss'])
     return model(features=features, labels=labels, params=params, config=config)
 
@@ -53,8 +53,7 @@ def experiment_fn(output_dir, x_train, y_train, x_eval, y_eval):
         eval_input_fn=plx.processing.numpy_input_fn(
             x=x_eval, y=y_eval, batch_size=32, num_epochs=None, shuffle=False),
         train_steps=5000,
-        eval_steps=100,
-        eval_every_n_steps=5)
+        eval_steps=100)
 
 
 def encode(estimator, images, labels):

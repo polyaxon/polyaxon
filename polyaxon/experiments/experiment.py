@@ -91,7 +91,7 @@ class Experiment(TFExperiment):
             input_fn=input_fn, steps=steps, max_steps=max_steps, hooks=hooks)
 
     def _call_evaluate(self, input_fn=None, steps=None, name=None, checkpoint_path=None,
-                       hooks=None):
+                       hooks=None, metrics=None):
         return self._estimator.evaluate(
             input_fn=input_fn, steps=steps, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
 
@@ -167,15 +167,6 @@ class Experiment(TFExperiment):
 
     def train_and_evaluate(self):
         """Interleaves training and evaluation.
-
-        The frequency of evaluation is controlled by the constructor arg `eval_every_n_steps`.
-        When this parameter is None or 0, evaluation happens only after training has completed.
-        Note that evaluation cannot happen more frequently than checkpoints are taken.
-        If no new snapshots are available when evaluation is supposed to occur,
-        then evaluation doesn't happen for another `eval_every_n_steps` steps
-        (assuming a checkpoint is available at that point).
-        Thus, settings `eval_every_n_steps` to 1 means that the model will be evaluated
-        everytime there is a new checkpoint.
 
         This is particular useful for a "Master" task in the cloud, whose responsibility
         it is to take checkpoints, evaluate those checkpoints, and write out summaries.

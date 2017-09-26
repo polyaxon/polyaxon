@@ -20,9 +20,9 @@ class Classifier(BaseModel):
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
-        loss_config: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
-        optimizer_config: An instance of `OptimizerConfig`. Default value `Adam`.
-        eval_metrics_config: a list of `MetricConfig` instances.
+        loss: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
+        optimizer: An instance of `OptimizerConfig`. Default value `Adam`.
+        metrics: a list of `MetricConfig` instances.
         summaries: `str` or `list`. The verbosity of the tensorboard visualization.
             Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
         clip_gradients: `float`. Gradients  clipping by global norm.
@@ -34,9 +34,19 @@ class Classifier(BaseModel):
     Returns:
         `EstimatorSpec`
     """
-    def __init__(self, mode, graph_fn, loss_config=None, optimizer_config=None,
-                 summaries='all', eval_metrics_config=None, clip_gradients=0.5,
-                 clip_embed_gradients=0.1, one_hot_encode=None, n_classes=None, name="Classifier"):
+
+    def __init__(self,
+                 mode,
+                 graph_fn,
+                 loss=None,
+                 optimizer=None,
+                 summaries='all',
+                 metrics=None,
+                 clip_gradients=0.5,
+                 clip_embed_gradients=0.1,
+                 one_hot_encode=None,
+                 n_classes=None,
+                 name="Classifier"):
         if one_hot_encode and (n_classes is None or not isinstance(n_classes, int)):
             raise ValueError('`n_classes` must be an integer non negative value '
                              'when `one_hot_encode` is set to `True`, '
@@ -44,12 +54,18 @@ class Classifier(BaseModel):
 
         self.one_hot_encode = one_hot_encode
         self.n_classes = n_classes
-        loss_config = loss_config or SigmoidCrossEntropyConfig()
+        loss = loss or SigmoidCrossEntropyConfig()
         super(Classifier, self).__init__(
-            mode=mode, name=name, model_type=self.Types.CLASSIFIER, graph_fn=graph_fn,
-            loss_config=loss_config, optimizer_config=optimizer_config,
-            eval_metrics_config=eval_metrics_config, summaries=summaries,
-            clip_gradients=clip_gradients, clip_embed_gradients=clip_embed_gradients)
+            mode=mode,
+            name=name,
+            model_type=self.Types.CLASSIFIER,
+            graph_fn=graph_fn,
+            loss=loss,
+            optimizer=optimizer,
+            metrics=metrics,
+            summaries=summaries,
+            clip_gradients=clip_gradients,
+            clip_embed_gradients=clip_embed_gradients)
 
     def _preprocess(self, features, labels):
         if isinstance(labels, Mapping):
