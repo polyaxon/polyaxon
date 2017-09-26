@@ -45,7 +45,7 @@ setup(name='polyaxon',
           'six',
           'Pillow==4.1.1',
           'tensorflow==1.3.0',
-          'polyaxon-schemas==0.0.11'
+          'polyaxon-schemas==0.0.12'
       ],
       classifiers=[
         'Programming Language :: Python',
