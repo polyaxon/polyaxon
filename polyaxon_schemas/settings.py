@@ -1,27 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, ValidationError, fields, post_load, validate
+from marshmallow import Schema, fields, post_load, validate
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
 
 
-def validate_task(value):
-    if 'type' not in value or value['type'] not in ClusterSchema.TYPES:
-        raise ValidationError('Task type must be greater one of `{}`.'.format(ClusterSchema.TYPES))
-    if 'index' not in value or not isinstance(value['index'], int):
-        raise ValidationError('Task index must an intege.')
-
-
-def validate_cluster(value):
-    for key in value.keys():
-        if key not in ClusterSchema.TYPES:
-            raise ValidationError('`key` {} is not supported by ClusterConfig'.format(key))
-
-
 class GPUOptionsSchema(Schema):
     gpu_memory_fraction = fields.Float(allow_none=True)
+    allow_growth = fields.Bool(allow_none=True)
+    per_process_gpu_memory_fraction = fields.Float(allow_none=True)
 
     class Meta:
         ordered = True
@@ -35,15 +24,21 @@ class GPUOptionsConfig(BaseConfig):
     IDENTIFIER = 'session'
     SCHEMA = GPUOptionsSchema
 
-    def __init__(self, gpu_memory_fraction=1.0):
+    def __init__(self,
+                 gpu_memory_fraction=None,
+                 allow_growth=True,
+                 per_process_gpu_memory_fraction=None):
         self.gpu_memory_fraction = gpu_memory_fraction
+        self.allow_growth = allow_growth
+        self.per_process_gpu_memory_fraction = per_process_gpu_memory_fraction
 
 
 class SessionSchema(Schema):
     gpu_options = fields.Nested(GPUOptionsSchema, allow_none=True)
     log_device_placement = fields.Bool(allow_none=True)
     allow_soft_placement = fields.Float(allow_none=True)
-    allow_growth = fields.Bool(allow_none=True)
+    intra_op_parallelism_threads = fields.Int(allow_none=True)
+    inter_op_parallelism_threads = fields.Int(allow_none=None)
 
     class Meta:
         ordered = True
@@ -61,19 +56,38 @@ class SessionConfig(BaseConfig):
                  log_device_placement=True,
                  gpu_options=GPUOptionsConfig(),
                  allow_soft_placement=True,
-                 allow_growth=True):
+                 intra_op_parallelism_threads=None,
+                 inter_op_parallelism_threads=None):
         self.gpu_options = gpu_options
         self.log_device_placement = log_device_placement
         self.allow_soft_placement = allow_soft_placement
-        self.allow_growth = allow_growth
+        self.intra_op_parallelism_threads = intra_op_parallelism_threads
+        self.inter_op_parallelism_threads = inter_op_parallelism_threads
+
+
+class IndexedSessionSchema(SessionSchema):
+    index = fields.Int()
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return IndexedSessionConfig(**data)
+
+
+class IndexedSessionConfig(SessionConfig):
+    IDENTIFIER = 'indexed_session'
+    SCHEMA = IndexedSessionSchema
+
+    def __init__(self, index, **kwargs):
+        self.index = index
+        super(IndexedSessionConfig, self).__init__(**kwargs)
 
 
 class ClusterSchema(Schema):
-    TYPES = ['master', 'ps', 'worker']
-
-    environment = fields.String(allow_none=True)
-    cluster = fields.Dict(validate=validate_cluster, allow_none=True)
-    task = fields.Dict(validate=validate_task, allow_none=True)
+    worker = fields.List(fields.Str, allow_none=True)
+    ps = fields.List(fields.Str, allow_none=True)
 
     class Meta:
         ordered = True
@@ -87,21 +101,18 @@ class ClusterConfig(BaseConfig):
     IDENTIFIER = 'cluster'
     SCHEMA = ClusterSchema
 
-    def __init__(self, environment=None, cluster=None, task=None):
-        self.environment = environment
-        self.cluster = cluster
-        self.task = task
+    def __init__(self, worker=None, ps=None):
+        self.worker = worker
+        self.ps = ps
 
 
 class RunSchema(Schema):
-    model_dir = fields.String()
     tf_random_seed = fields.Int(allow_none=True)
     save_summary_steps = fields.Int(allow_none=True)
     save_checkpoints_secs = fields.Int(allow_none=True)
     save_checkpoints_steps = fields.Int(allow_none=True)
     keep_checkpoint_max = fields.Int(allow_none=True)
     keep_checkpoint_every_n_hours = fields.Int(allow_none=True)
-    num_cores = fields.Int(allow_none=True)
 
     session_config = fields.Nested(SessionSchema, allow_none=True)
     cluster_config = fields.Nested(ClusterSchema, allow_none=True)
@@ -119,7 +130,6 @@ class RunConfig(BaseConfig):
     SCHEMA = RunSchema
 
     def __init__(self,
-                 model_dir,
                  tf_random_seed=None,
                  save_summary_steps=100,
                  save_checkpoints_secs=None,
@@ -129,7 +139,6 @@ class RunConfig(BaseConfig):
                  num_cores=None,
                  session_config=None,
                  cluster_config=None, ):
-        self.model_dir = model_dir
         self.tf_random_seed = tf_random_seed
         self.save_summary_steps = save_summary_steps
         self.save_checkpoints_secs = save_checkpoints_secs
@@ -142,11 +151,14 @@ class RunConfig(BaseConfig):
 
 
 class EnvironmentSchema(Schema):
-    type = fields.Str(allow_none=True, validate=validate.OneOf(['local', 'kubernetes']))
-    distributed = fields.Bool(allow_none=True)
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
+    run_config = fields.Nested(RunSchema, allow_none=True)
+    default_worker_config = fields.Nested(SessionSchema, allow_none=True)
+    default_ps_config = fields.Nested(SessionSchema, allow_none=True)
+    worker_configs = fields.Nested(IndexedSessionSchema, many=True, allow_none=True)
+    ps_configs = fields.Nested(IndexedSessionSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -157,26 +169,33 @@ class EnvironmentSchema(Schema):
 
 
 class EnvironmentConfig(BaseConfig):
-    SCHEMA = EnvironmentSchema
     IDENTIFIER = 'environment'
+    SCHEMA = EnvironmentSchema
 
     def __init__(self,
-                 type='local',  # pylint: disable=redefined-builtin
-                 distributed=False,
                  n_workers=None,
                  n_ps=None,
-                 delay_workers_by_global_step=False):
-        self.type = type
-        self.distributed = distributed
+                 delay_workers_by_global_step=False,
+                 run_config=None,
+                 default_worker_config=None,
+                 default_ps_config=None,
+                 worker_configs=None,
+                 ps_configs=None):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.delay_workers_by_global_step = delay_workers_by_global_step
+        self.run_config = run_config
+        self.default_worker_config = default_worker_config
+        self.default_ps_config = default_ps_config
+        self.worker_configs = worker_configs
+        self.ps_configs = ps_configs
 
 
 class SettingsSchema(Schema):
     logging = fields.Nested(LoggingSchema, allow_none=True)
-    train_strategy = fields.Str(allow_none=True)
     export_strategies = fields.Str(allow_none=True)
+    run_type = fields.Str(allow_none=True,
+                          validate=validate.OneOf(['local', 'minikube', 'kubernetes']))
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
 
     class Meta:
@@ -193,10 +212,10 @@ class SettingsConfig(BaseConfig):
 
     def __init__(self,
                  logging=LoggingConfig(),
-                 train_strategy=None,
                  export_strategies=None,
-                 environment=EnvironmentConfig()):
+                 run_type='local',
+                 environment=None):
         self.logging = logging
-        self.train_strategy = train_strategy
         self.export_strategies = export_strategies
+        self.run_type = run_type
         self.environment = environment

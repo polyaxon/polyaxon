@@ -8,9 +8,21 @@ project:
 settings:
   logging:
     level: INFO
-    delay_workers_by_global_step: 10
+    path: /tmp/plx_logs/project1
+  run_type: local
+  environment:
+    n_workers: 5
+    n_ps: 10
+    delay_workers_by_global_step: true
     run_config:
+      tf_random_seed: 100
       save_summary_steps: 100
+      save_checkpoints_secs: 60
+      session:
+        allow_soft_placement: true
+        intra_op_parallelism_threads: 2
+        inter_op_parallelism_threads: 2
+
 
 declarations:
   cnn:

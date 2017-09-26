@@ -32,17 +32,7 @@ class LoggingConfig(BaseConfig):
     def __init__(self,
                  level='INFO',
                  formatter=None,
-                 path=None,
-                 save_summary_steps=100,
-                 save_checkpoints_secs=None,
-                 save_checkpoints_steps=None,
-                 keep_checkpoint_max=5,
-                 keep_checkpoint_every_n_hours=10000):
+                 path=None):
         self.level = level
         self.formatter = formatter
         self.path = path
-        self.save_summary_steps = save_summary_steps
-        self.save_checkpoints_secs = save_checkpoints_secs
-        self.save_checkpoints_steps = save_checkpoints_steps
-        self.keep_checkpoint_max = keep_checkpoint_max
-        self.keep_checkpoint_every_n_hours = keep_checkpoint_every_n_hours

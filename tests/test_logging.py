@@ -13,11 +13,6 @@ class TestLoggingConfigs(TestCase):
             'level': 'INFO',
             'formatter': None,
             'path': 'some/path/logging',
-            'save_summary_steps': 10,
-            'save_checkpoints_secs': None,
-            'save_checkpoints_steps': None,
-            'keep_checkpoint_max': 5,
-            'keep_checkpoint_every_n_hours': 10000
         }
         config = LoggingConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
