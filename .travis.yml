@@ -6,7 +6,7 @@ python:
   - "3.5"
 
 env:
-  - TENSORFLOW_VERSION=1.2.0
+  - TENSORFLOW_VERSION=1.3.0
 
 install:
   # http://conda.pydata.org/docs/travis.html
