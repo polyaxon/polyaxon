@@ -139,7 +139,10 @@ def _get_value_for_key(key, obj, default):
 def to_camel_case(snake_str):
     split_str = snake_str.split('_')
     if len(split_str) == 1:
-        return snake_str if str.isupper(snake_str[0]) else snake_str.title()
+        try:
+            return snake_str if str.isupper(snake_str[0]) else snake_str.title()
+        except TypeError:
+            return snake_str if six.text_type.isupper(snake_str[0]) else snake_str.title()
     return "".join(x.title() for x in split_str)
 
 
