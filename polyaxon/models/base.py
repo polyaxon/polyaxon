@@ -79,10 +79,10 @@ class BaseModel(GraphModule):
         self.optimizer = optimizer or AdamConfig(learning_rate=0.001)
         self.metrics = metrics or []
         self.model_type = model_type
-        self.summaries = summarizer.SummaryOptions.validate(summaries or 'all')
+        self.summaries = summarizer.SummaryOptions.validate(summaries)
         assert model_type in self.Types.VALUES, "`model_type` provided is unsupported."
-        self._clip_gradients = clip_gradients or 0.5
-        self._clip_embed_gradients = clip_embed_gradients or 0.1
+        self._clip_gradients = clip_gradients
+        self._clip_embed_gradients = clip_embed_gradients
         self._grads_and_vars = None
         self._total_loss = None
         self._losses = None
