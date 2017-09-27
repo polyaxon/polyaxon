@@ -41,7 +41,7 @@ class TestModelConfigs(TestCase):
             'loss': SoftmaxCrossEntropyConfig(input_layer=['image', 0, 0],
                                               output_layer=['dense_0', 0, 0]).to_schema(),
             'optimizer': AdamConfig(learning_rate=0.01).to_schema(),
-            'eval_metrics': [
+            'metrics': [
                 AccuracyConfig(input_layer=['image', 0, 0],
                                output_layer=['dense_0', 0, 0]).to_schema(),
                 PrecisionConfig(input_layer=['image', 0, 0],
@@ -78,7 +78,7 @@ class TestModelConfigs(TestCase):
             'loss': SoftmaxCrossEntropyConfig(['image', 0, 0],
                                               output_layer=['dense_0', 0, 0]).to_schema(),
             'optimizer': AdamConfig(learning_rate=0.01).to_schema(),
-            'eval_metrics': [
+            'metrics': [
                 AccuracyConfig(input_layer=['image', 0, 0],
                                output_layer=['dense_0', 0, 0]).to_schema(),
                 PrecisionConfig(input_layer=['image', 0, 0],
@@ -105,7 +105,7 @@ class TestModelConfigs(TestCase):
             'loss': MeanSquaredErrorConfig(input_layer=['image', 0, 0],
                                            output_layer=['dense_0', 0, 0]).to_schema(),
             'optimizer': AdamConfig(learning_rate=0.01).to_schema(),
-            'eval_metrics': [],
+            'metrics': [],
             'summaries': ['loss', 'gradients'],
             'clip_gradients': 0.5,
             'clip_embed_gradients': 0.,

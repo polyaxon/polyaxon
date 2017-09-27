@@ -16,7 +16,7 @@ class BaseModelSchema(Schema):
     graph = fields.Nested(GraphSchema)
     loss = fields.Nested(LossSchema, allow_none=True)
     optimizer = fields.Nested(OptimizerSchema, allow_none=True)
-    eval_metrics = fields.Nested(MetricSchema, many=True, allow_none=True)
+    metrics = fields.Nested(MetricSchema, many=True, allow_none=True)
     summaries = ObjectOrListObject(fields.Str, allow_none=True)
     clip_gradients = fields.Float(allow_none=True)
     clip_embed_gradients = fields.Float(allow_none=True)
@@ -34,12 +34,12 @@ class BaseModelConfig(BaseConfig):
     SCHEMA = BaseModelSchema
     IDENTIFIER = 'model'
 
-    def __init__(self, graph, loss=None, optimizer=None, eval_metrics=None, summaries=None,
+    def __init__(self, graph, loss=None, optimizer=None, metrics=None, summaries=None,
                  clip_gradients=0.5, clip_embed_gradients=0., name=None):
         self.graph = graph
         self.loss = loss
         self.optimizer = optimizer
-        self.eval_metrics = eval_metrics
+        self.metrics = metrics
         self.summaries = summaries
         self.clip_gradients = clip_gradients
         self.clip_embed_gradients = clip_embed_gradients
