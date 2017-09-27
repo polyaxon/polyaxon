@@ -7,17 +7,6 @@ from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.utils import DType
 
 
-class BdfaseInitializerSchema(Schema):
-    dtype = DType(allow_none=True)
-    seed = fields.Int(allow_none=True)
-
-
-class BasedfInitializerConfig(BaseConfig):
-    def __init__(self, seed=None, dtype='float32'):
-        self.seed = seed
-        self.dtype = dtype
-
-
 class ZerosInitializerSchema(Schema):
     dtype = DType(allow_none=True)
 

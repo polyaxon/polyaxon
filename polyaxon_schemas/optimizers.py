@@ -21,6 +21,8 @@ class BaseOptimizerSchema(Schema):
 
 
 class BaseOptimizerConfig(BaseConfig):
+    REDUCED_ATTRIBUTES = ['name']
+
     def __init__(self,
                  learning_rate=0.001,
                  decay_type="",

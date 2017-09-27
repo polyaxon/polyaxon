@@ -20,6 +20,7 @@ class UserSchema(Schema):
 class UserConfig(BaseConfig):
     SCHEMA = UserSchema
     IDENTIFIER = 'user'
+    REDUCED_ATTRIBUTES = ['type']
 
     def __init__(self, uid, username, email, type=None):
         self.uid = uid

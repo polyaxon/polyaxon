@@ -32,7 +32,7 @@ class TestPoolingConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = pooling_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     @staticmethod
     def assert_global_pooling_config(pooling_class, dim):
@@ -40,7 +40,7 @@ class TestPoolingConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = pooling_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_pooling_config(self):
         self.assert_pooling_config(MaxPooling1DConfig, 1)

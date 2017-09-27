@@ -25,6 +25,8 @@ class TestDataConfigs(TestCase):
             'description': 'foo data',
             'details': DataDetailsConfig(
                 state='state', size=1.4, uri='http://www.foo.com/data').to_dict(),
+            'version': None,
+            'resource_id': '1'
         }
         config = DataConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()

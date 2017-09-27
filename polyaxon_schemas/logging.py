@@ -11,11 +11,6 @@ class LoggingSchema(Schema):
         ['INFO', 'DEBUG', 'WARN', 'ERROR', 'FATAL']))
     formatter = fields.Str(allow_none=True)
     path = fields.Str(allow_none=True)
-    save_summary_steps = fields.Int(allow_none=True)
-    save_checkpoints_secs = fields.Int(allow_none=True)
-    save_checkpoints_steps = fields.Int(allow_none=True)
-    keep_checkpoint_max = fields.Int(allow_none=True)
-    keep_checkpoint_every_n_hours = fields.Int(allow_none=True)
 
     class Meta:
         ordered = True

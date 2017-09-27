@@ -12,6 +12,8 @@ class BaseRegularizerSchema(Schema):
 
 
 class BaseRegularizerConfig(BaseConfig):
+    REDUCED_ATTRIBUTES = ['name']
+
     def __init__(self, name, collect=True):
         self.name = name
         self.collect = collect

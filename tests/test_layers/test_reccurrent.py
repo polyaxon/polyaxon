@@ -29,7 +29,7 @@ class TestRecurrentConfigs(TestCase):
             'implementation': 0,
         }
         config = RecurrentConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_simple_rnn_config(self):
         config_dict = {
@@ -50,7 +50,7 @@ class TestRecurrentConfigs(TestCase):
             'recurrent_dropout': 0.,
         }
         config = SimpleRNNConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_gru_config(self):
         config_dict = {
@@ -72,7 +72,7 @@ class TestRecurrentConfigs(TestCase):
             'recurrent_dropout': 0.,
         }
         config = GRUConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_lstm_config(self):
         config_dict = {
@@ -95,4 +95,4 @@ class TestRecurrentConfigs(TestCase):
             'recurrent_dropout': 0.,
         }
         config = LSTMConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)

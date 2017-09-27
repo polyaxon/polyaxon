@@ -20,7 +20,7 @@ class TestWrapperConfigs(TestCase):
             'layer': EmbeddingConfig(input_dim=30, output_dim=30).to_schema(),
         }
         config = wrapper_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_wrapper_config(self):
         self.assert_wrapper_config(WrapperConfig)

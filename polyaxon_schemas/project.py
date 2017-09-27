@@ -23,8 +23,9 @@ class ProjectSchema(Schema):
 class ProjectConfig(BaseConfig):
     SCHEMA = ProjectSchema
     IDENTIFIER = 'project'
+    REDUCED_ATTRIBUTES = ['id', 'description']
 
-    def __init__(self, name, id=None, description='', is_public=True):
+    def __init__(self, name, id=None, description=None, is_public=True):
         self.name = name
         self.id = id
         self.description = description

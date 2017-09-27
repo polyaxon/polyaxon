@@ -16,6 +16,8 @@ class BaseLossSchema(Schema):
 
 
 class BaseLossConfig(BaseConfig):
+    REDUCED_ATTRIBUTES = ['input_layer', 'output_layer', 'name']
+
     def __init__(self, input_layer=None, output_layer=None, weights=1.0, name=None, collect=True):
         self.input_layer = input_layer
         self.output_layer = output_layer

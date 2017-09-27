@@ -19,7 +19,7 @@ class TestAdvancedActivationConfigs(TestCase):
             'alpha': 0.3,
         }
         config = LeakyReLUConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_prelu_config(self):
         config_dict = {
@@ -29,19 +29,19 @@ class TestAdvancedActivationConfigs(TestCase):
             'shared_axes': None
         }
         config = PReLUConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_elu_config(self):
         config_dict = {
             'alpha': 0.1
         }
         config = ELUConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_thresholded_relu_config(self):
         config_dict = {
             'theta': 0.1
         }
         config = ThresholdedReLUConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 

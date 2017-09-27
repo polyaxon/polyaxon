@@ -31,7 +31,7 @@ class TestLocalConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = local_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_local_config(self):
         self.assert_local_config(LocallyConnected1DConfig, 1)

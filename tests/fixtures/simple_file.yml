@@ -5,25 +5,25 @@ project:
   name: project1
 
 model:
-  classifier:
-    loss:
-      MeanSquaredError:
-    optimizer:
-      Adam:
-    graph:
-      input_layers: images
-      layers:
-        - Conv2D:
-            filters: 64
-            kernel_size: [3, 3]
-            strides: [1, 1]
-            activation: relu
-        - MaxPooling2D:
-            kernels: 2
-        - Flatten:
-        - Dense:
-            units: 10
-            activation: softmax
+  model_type: regressor
+  loss:
+    MeanSquaredError:
+  optimizer:
+    Adam:
+  graph:
+    input_layers: images
+    layers:
+      - Conv2D:
+          filters: 64
+          kernel_size: [3, 3]
+          strides: [1, 1]
+          activation: relu
+      - MaxPooling2D:
+          kernels: 2
+      - Flatten:
+      - Dense:
+          units: 10
+          activation: softmax
         
 train:
   data_pipeline:

@@ -19,7 +19,7 @@ class TestNoiseConfigs(TestCase):
         }
 
         config = GaussianNoiseConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_gaussian_dropout_config(self):
         config_dict = {
@@ -27,7 +27,7 @@ class TestNoiseConfigs(TestCase):
         }
 
         config = GaussianDropoutConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_alpha_dropout_config(self):
         config_dict = {
@@ -37,4 +37,4 @@ class TestNoiseConfigs(TestCase):
         }
 
         config = AlphaDropoutConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)

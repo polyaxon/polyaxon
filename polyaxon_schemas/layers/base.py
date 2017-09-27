@@ -18,6 +18,8 @@ class BaseLayerSchema(Schema):
 
 
 class BaseLayerConfig(BaseConfig):
+    REDUCED_ATTRIBUTES = ['name']
+
     def __init__(self, name=None, trainable=True, dtype='float32', inbound_nodes=None):
         self.name = name
         self.trainable = trainable

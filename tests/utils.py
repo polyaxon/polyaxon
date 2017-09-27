@@ -51,9 +51,10 @@ def assert_equal_graphs(result_graph, expected_graph):
             assert v == expected_graph['layers'][layer_i][layer_name][k]
 
 
-def assert_equal_layers(result_layer, expected_layer):
+def assert_equal_layers(config, expected_layer):
+    result_layer = config.to_dict()
     for k, v in six.iteritems(expected_layer):
-        if v is not None:
+        if v is not None or k not in config.REDUCED_ATTRIBUTES:
             assert v == result_layer[k]
         else:
             assert k not in result_layer

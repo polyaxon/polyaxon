@@ -50,7 +50,7 @@ class TestConvolutionConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = conv_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     @staticmethod
     def assert_separable_conv(conv_class, dim):
@@ -75,7 +75,7 @@ class TestConvolutionConfigs(TestCase):
             'bias_constraint': None
         }
         config = conv_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     @staticmethod
     def assert_upsampling(upsampling_class, dim):
@@ -85,7 +85,7 @@ class TestConvolutionConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = upsampling_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     @staticmethod
     def assert_zero_padding(zero_padding_class, dim):
@@ -95,7 +95,7 @@ class TestConvolutionConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = zero_padding_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     @staticmethod
     def assert_cropping(zero_padding_class, dim):
@@ -108,7 +108,7 @@ class TestConvolutionConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = zero_padding_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_conv_config(self):
         self.assert_conv_config(Conv1DConfig, 1)

@@ -31,6 +31,7 @@ class BasePipelineSchema(Schema):
 class BasePipelineConfig(BaseConfig):
     IDENTIFIER = 'BasePipeline'
     SCHEMA = BasePipelineSchema
+    REDUCED_ATTRIBUTES = ['feature_processors']
 
     def __init__(self,
                  name='Pipeline',

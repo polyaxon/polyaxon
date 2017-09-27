@@ -31,54 +31,54 @@ declarations:
     strides: [1, 1]
 
 model:
-  classifier:
-    loss:
-      MeanSquaredError:
-    optimizer:
-      Adam:
-    graph:
-      input_layers: images
-      layers:
-        - for:
-            len: "{{ cnn.kernels|length }}"
-            do:
-              - Conv2D:
-                  filters: "{{ cnn.kernels[index] }}"
-                  kernel_size: "{{ cnn.size }}"
-                  strides: "{{ cnn.strides }}"
-                  activation: relu
-                  tags: tag1
-                  is_output: true
-        - if:
-            cond: 1 == 1
-            do:
-              MaxPooling2D:
-                kernels: 12
+  model_type: classifier
+  loss:
+    MeanSquaredError:
+  optimizer:
+    Adam:
+  graph:
+    input_layers: images
+    layers:
+      - for:
+          len: "{{ cnn.kernels|length }}"
+          do:
+            - Conv2D:
+                filters: "{{ cnn.kernels[index] }}"
+                kernel_size: "{{ cnn.size }}"
+                strides: "{{ cnn.strides }}"
+                activation: relu
+                tags: tag1
                 is_output: true
+      - if:
+          cond: 1 == 1
+          do:
+            MaxPooling2D:
+              kernels: 12
+              is_output: true
 
-        - if:
-            cond: 1 == "{{ cnn.kernels[1] }}"
-            do:
-              MaxPooling2D:
-                kernels: 12
-                is_output: true
-            else_do:
-              for:
-                len: "{{ cnn.kernels|length }}"
-                do:
-                  - Conv2D:
-                      filters: "{{ cnn.kernels[index] }}"
-                      kernel_size: "{{ cnn.size }}"
-                      strides: "{{ cnn.strides }}"
-                      activation: relu
-                      tags: tag2
-                      is_output: true
+      - if:
+          cond: 1 == "{{ cnn.kernels[1] }}"
+          do:
+            MaxPooling2D:
+              kernels: 12
+              is_output: true
+          else_do:
+            for:
+              len: "{{ cnn.kernels|length }}"
+              do:
+                - Conv2D:
+                    filters: "{{ cnn.kernels[index] }}"
+                    kernel_size: "{{ cnn.size }}"
+                    strides: "{{ cnn.strides }}"
+                    activation: relu
+                    tags: tag2
+                    is_output: true
 
-        - Flatten:
-            inbound_nodes: ["{{ tags.tag1[1] }}"]
-        - Dense:
-            units: 10
-            activation: softmax
+      - Flatten:
+          inbound_nodes: ["{{ tags.tag1[1] }}"]
+      - Dense:
+          units: 10
+          activation: softmax
         
 train:
   train_steps: 100

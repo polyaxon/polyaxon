@@ -32,7 +32,8 @@ class BaseModelSchema(Schema):
 
 class BaseModelConfig(BaseConfig):
     SCHEMA = BaseModelSchema
-    IDENTIFIER = 'model'
+    IDENTIFIER = 'Model'
+    REDUCED_ATTRIBUTES = ['name', 'summaries']
 
     def __init__(self, graph, loss=None, optimizer=None, metrics=None, summaries=None,
                  clip_gradients=0.5, clip_embed_gradients=0., name=None):
@@ -60,7 +61,7 @@ class ClassifierSchema(BaseModelSchema):
 
 class ClassifierConfig(BaseModelConfig):
     SCHEMA = ClassifierSchema
-    IDENTIFIER = 'classifier'
+    IDENTIFIER = 'Classifier'
 
     def __init__(self, graph, one_hot_encode=None, n_classes=None, **kwargs):
         super(ClassifierConfig, self).__init__(graph, **kwargs)
@@ -79,7 +80,7 @@ class RegressorSchema(BaseModelSchema):
 
 class RegressorConfig(BaseModelConfig):
     SCHEMA = RegressorSchema
-    IDENTIFIER = 'regressor'
+    IDENTIFIER = 'Regressor'
 
 
 class GeneratorSchema(BaseModelSchema):
@@ -98,7 +99,7 @@ class GeneratorSchema(BaseModelSchema):
 
 class GeneratorConfig(BaseModelConfig):
     SCHEMA = GeneratorSchema
-    IDENTIFIER = 'generator'
+    IDENTIFIER = 'Generator'
 
     def __init__(self, encoder, decoder, bridge, **kwargs):
         super(GeneratorConfig, self).__init__(None, **kwargs)
@@ -115,6 +116,7 @@ class ModelSchema(BaseMultiSchema):
         RegressorConfig.IDENTIFIER: RegressorConfig,
         GeneratorConfig.IDENTIFIER: GeneratorConfig,
     }
+    __support_snake_case__ = True
 
 
 class ModelConfig(BaseConfig):

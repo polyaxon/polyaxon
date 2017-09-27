@@ -2,21 +2,21 @@
 version: 1
 
 model:
-  classifier:
-    loss:
-      MeanSquaredError:
-    optimizer:
-      Adam:
-    graph:
-      input_layers: images
-      layers:
-        - Conv2D:
-            filters: 10
-            kernel_size: [3, 3]
-            strides: [2, 2]
-            activation: relu
-            is_output: true
-        - Dense:
-            units: 10
-            activation: softmax
+  model_type: classifier
+  loss:
+    MeanSquaredError:
+  optimizer:
+    Adam:
+  graph:
+    input_layers: images
+    layers:
+      - Conv2D:
+          filters: 10
+          kernel_size: [3, 3]
+          strides: [2, 2]
+          activation: relu
+          is_output: true
+      - Dense:
+          units: 10
+          activation: softmax
 ...

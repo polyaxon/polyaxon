@@ -38,7 +38,7 @@ class SessionSchema(Schema):
     log_device_placement = fields.Bool(allow_none=True)
     allow_soft_placement = fields.Float(allow_none=True)
     intra_op_parallelism_threads = fields.Int(allow_none=True)
-    inter_op_parallelism_threads = fields.Int(allow_none=None)
+    inter_op_parallelism_threads = fields.Int(allow_none=True)
 
     class Meta:
         ordered = True
@@ -138,7 +138,7 @@ class RunConfig(BaseConfig):
                  keep_checkpoint_every_n_hours=10000,
                  num_cores=None,
                  session_config=None,
-                 cluster_config=None, ):
+                 cluster_config=None):
         self.tf_random_seed = tf_random_seed
         self.save_summary_steps = save_summary_steps
         self.save_checkpoints_secs = save_checkpoints_secs

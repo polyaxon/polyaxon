@@ -211,9 +211,7 @@ class TestImageProcessingConfigs(TestCase):
             'name': 'Resize'
         }
         config = ResizeConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_central_crop_config(self):
         config_dict = {
@@ -222,9 +220,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = CentralCropConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_random_crop_config(self):
         config_dict = {
@@ -234,9 +230,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = RandomCropConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_extract_glimpse_config(self):
         config_dict = {
@@ -249,9 +243,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = ExtractGlimpseConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_to_bounding_box_config(self):
         config_dict = {
@@ -264,9 +256,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = ToBoundingBoxConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_flip_config(self):
         config_dict = {
@@ -277,9 +267,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = FlipConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_transpose_config(self):
         config_dict = {
@@ -287,9 +275,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = TransposeConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_rotate_config(self):
         config_dict = {
@@ -300,9 +286,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = Rotate90Config.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_convert_color_space_config(self):
         config_dict = {
@@ -312,9 +296,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = ConvertColorSpaceConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_convert_image_dtype_config(self):
         config_dict = {
@@ -324,9 +306,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = ConvertImagesDtypeConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_adjust_brightness_config(self):
         config_dict = {
@@ -337,9 +317,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = AdjustBrightnessConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_adjust_contrast_config(self):
         config_dict = {
@@ -351,9 +329,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = AdjustContrastConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_adjust_hue_config(self):
         config_dict = {
@@ -364,9 +340,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = AdjustHueConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_adjust_saturation_config(self):
         config_dict = {
@@ -378,9 +352,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = AdjustSaturationConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_adjust_gamma_config(self):
         config_dict = {
@@ -390,9 +362,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = AdjustGammaConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_standardization_config(self):
         config_dict = {
@@ -400,9 +370,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = StandardizationConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_draw_bounding_boxes_config(self):
         config_dict = {
@@ -411,9 +379,7 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = DrawBoundingBoxesConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_total_variation_config(self):
         config_dict = {
@@ -421,6 +387,4 @@ class TestImageProcessingConfigs(TestCase):
         }
 
         config = TotalVariationConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-
-        assert_equal_layers(config_to_dict, config_dict)
+        assert_equal_layers(config, config_dict)

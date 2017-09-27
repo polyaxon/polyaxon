@@ -13,6 +13,8 @@ class BaseBridgeSchema(Schema):
 
 
 class BaseBridgeConfig(BaseConfig):
+    REDUCED_ATTRIBUTES = ['name']
+
     def __init__(self, state_size=None, name=None):
         self.state_size = state_size
         self.name = name

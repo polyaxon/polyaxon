@@ -6,7 +6,7 @@ from unittest import TestCase
 from polyaxon_schemas.user import UserConfig
 
 
-class TestProjectConfigs(TestCase):
+class TestUserConfigs(TestCase):
     def test_project_config(self):
         config_dict = {'username': 'username',
                        'uid': 'sdfsdf098sdf80s9dSDF800',

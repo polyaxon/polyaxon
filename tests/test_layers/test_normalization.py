@@ -28,4 +28,4 @@ class TestNormalizationConfigs(TestCase):
         }
 
         config = BatchNormalizationConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)

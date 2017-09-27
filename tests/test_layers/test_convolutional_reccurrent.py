@@ -30,7 +30,7 @@ class TestConvolutionalRecurrentConfigs(TestCase):
             'stateful': False
         }
         config = ConvRecurrent2DConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_conv_lstm_2d_config(self):
         config_dict = {
@@ -61,4 +61,4 @@ class TestConvolutionalRecurrentConfigs(TestCase):
             'recurrent_dropout': 0.
         }
         config = ConvLSTM2DConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)

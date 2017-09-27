@@ -25,6 +25,7 @@ class GraphSchema(Schema):
 class GraphConfig(BaseConfig):
     SCHEMA = GraphSchema
     IDENTIFIER = 'graph'
+    REDUCED_ATTRIBUTES = ['name']
 
     def __init__(self, input_layers, output_layers, layers, name='graph'):
         self.input_layers = input_layers

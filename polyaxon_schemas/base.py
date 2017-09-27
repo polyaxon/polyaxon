@@ -15,6 +15,7 @@ class BaseConfig(object):
 
     SCHEMA = None
     IDENTIFIER = None
+    REDUCED_ATTRIBUTES = []  # Attribute to remove in the reduced form if they are null.
 
     def to_dict(self):
         return self.obj_to_dict(self)
@@ -25,7 +26,12 @@ class BaseConfig(object):
     @classmethod
     def obj_to_dict(cls, obj):
         data = cls.SCHEMA(strict=True).dump(obj).data  # pylint: disable=not-callable
-        return {key: value for (key, value) in six.iteritems(data) if value is not None}
+        obj_dict = {key: value for (key, value) in six.iteritems(data)}
+        for attr in cls.REDUCED_ATTRIBUTES:
+            if obj_dict[attr] is None:
+                del obj_dict[attr]
+
+        return obj_dict
 
     @classmethod
     def obj_to_schema(cls, obj):
@@ -39,8 +45,7 @@ class BaseConfig(object):
 class BaseMultiSchema(Schema):
     __multi_schema_name__ = None
     __configs__ = None
-    # to support snake case identifier
-    # e.g. glorot_uniform and GlorotUniform
+    # to support snake case identifier, e.g. glorot_uniform and GlorotUniform
     __support_snake_case__ = False
 
     @post_dump(pass_original=True, pass_many=True)
@@ -72,6 +77,8 @@ class BaseMultiSchema(Schema):
             if isinstance(item, Mapping):
                 if 'class_name' in item:
                     return make(item['class_name'], item['config'])
+                if 'model_type' in item:
+                    return make(item.pop('model_type'), item)
                 assert len(item) == 1
                 key, val = list(six.iteritems(item))[0]
                 return make(key, val)

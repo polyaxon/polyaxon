@@ -15,6 +15,8 @@ class BaseMetricSchema(Schema):
 
 
 class BaseMetricConfig(BaseConfig):
+    REDUCED_ATTRIBUTES = ['input_layer', 'output_layer', 'name']
+
     def __init__(self, input_layer=None, output_layer=None, weights=None, name=None):
         self.input_layer = input_layer
         self.output_layer = output_layer
@@ -108,6 +110,7 @@ class MeanTensorSchema(Schema):
 class MeanTensorConfig(BaseConfig):
     IDENTIFIER = 'MeanTensor'
     SCHEMA = MeanTensorSchema
+    REDUCED_ATTRIBUTES = ['name']
 
     def __init__(self, tensor, weights=None, name=None):
         self.tensor = tensor

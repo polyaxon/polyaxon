@@ -29,7 +29,7 @@ class TestCoreConfigs(TestCase):
             'mask_value': 0.
         }
         config = MaskingConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     @staticmethod
     def assert_dropout_config(dropout_class, dim):
@@ -41,7 +41,7 @@ class TestCoreConfigs(TestCase):
         if dim > 1:
             config_dict['data_format'] = None
         config = dropout_class.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_dropout_config(self):
         self.assert_dropout_config(DropoutConfig, 1)
@@ -54,33 +54,33 @@ class TestCoreConfigs(TestCase):
             'activation': 'relu',
         }
         config = ActivationConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_reshape_config(self):
         config_dict = {
             'target_shape': [1, 1]
         }
         config = ReshapeConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_permute_config(self):
         config_dict = {
             'dims': [1, 1]
         }
         config = PermuteConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_flatten_config(self):
         config_dict = {}
         config = FlattenConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_repeat_vector_config(self):
         config_dict = {
             'n': 12,
         }
         config = RepeatVectorConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_dense_config(self):
         config_dict = {
@@ -97,7 +97,7 @@ class TestCoreConfigs(TestCase):
             'inbound_nodes': [['layer_1', 0, 1], ['layer_2', 1, 1]]
         }
         config = DenseConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_activity_regularization_config(self):
         config_dict = {
@@ -105,11 +105,11 @@ class TestCoreConfigs(TestCase):
             'l2': 0.32,
         }
         config = ActivityRegularizationConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
 
     def test_cast_config(self):
         config_dict = {
             'dtype': 'float32',
         }
         config = CastConfig.from_dict(config_dict)
-        assert_equal_layers(config.to_dict(), config_dict)
+        assert_equal_layers(config, config_dict)
