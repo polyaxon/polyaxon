@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import os
+import tensorflow as tf
 
 from tensorflow.python.estimator import run_config
 
@@ -11,45 +11,53 @@ from polyaxon_schemas import settings
 class RunConfig(run_config.RunConfig):
     CONFIG = settings.RunConfig
 
+    def __init__(self):
+        super(RunConfig, self).__init__()
+        self._cluster_spec = None
+
+    @property
+    def cluster_spec(self):
+        return self._cluster_spec
+
     @classmethod
     def from_config(cls, config):
         if not isinstance(config, cls.CONFIG):
             config = cls.CONFIG.from_dict(config)
 
-        params = config.to_dict()
-        return cls(**params)
+        config_params = {}
+        if config.session:
+            config_params['session_config'] = cls.get_session_config(config.session)
+        if config.cluster:
+            config_params['cluster_spec'] = cls.get_session_config(config.cluster)
 
-    @classmethod
-    def read_configs(cls, config_values):
-        config_values = cls._read_configs(config_values)
-        gpu_allow_growth = config_values.pop('gpu_allow_growth', False)
-        log_device_placement = config_values.pop('log_device_placement', False)
-        config = cls(**config_values)
-        config.tf_config.gpu_options.allow_growth = gpu_allow_growth
-        config.tf_config.log_device_placement = log_device_placement
-        return config
+        params = config.to_dict()
+        return cls().replace(**params)
 
     @staticmethod
-    def create_cluster_config(cluster_config):
-        """Sets the cluster config to the environment variable `TF_CONFIG`.
+    def get_cluster_spec_config(config):
+        if not isinstance(config, settings.ClusterConfig):
+            raise ValueError('`config` must be an instance of `schemas.ClusterConfig`')
 
-        Args:
-            cluster_config: `dict`. Represents the cluster config dictionary.
-        """
-        # First we need to check the type of the task for this env
-        task_type = os.environ.get('task_type')
-        if task_type not in ['master', 'ps', 'worker']:
-            return
+        return tf.train.ClusterSpec(config.to_dict())
 
-        try:
-            task_id = int(os.environ.get('task_index'))
-        except TypeError:
-            return
+    @classmethod
+    def get_session_config(cls, config):
+        if not isinstance(config, settings.SessionConfig):
+            raise ValueError('`config` must be an instance of `schemas.SessionConfig`')
 
-        config = {
-            'environment': cluster_config.pop('environment', 'cloud'),
-            'cluster': cluster_config,
-            'task': {'type': task_type, 'index': task_id}
-        }
-        # Set the cluster config in the environment variable `TF_CONFIG`.
-        os.environ['TF_CONFIG'] = json.dumps(config)
+        session_config = {}
+        if config.gpu_options:
+            session_config['gpu_options'] = cls.get_gpu_options(config.gpu_options)
+
+        params = config.to_dict()
+        params.pop('gpu_options', None)
+        params.pop('index', None)
+        session_config.update(params)
+
+        return tf.ConfigProto(**session_config)
+
+    @staticmethod
+    def get_gpu_options(config):
+        if not isinstance(config, settings.GPUOptionsConfig):
+            raise ValueError('`config` must be an instance of `schemas.GPUOptionsConfig`')
+        return tf.GPUOptions(**config.to_dict())
