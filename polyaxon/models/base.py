@@ -6,6 +6,7 @@ import tensorflow as tf
 from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 from tensorflow.python.training import training
 
+from polyaxon_schemas.models import BaseModelConfig
 from polyaxon_schemas.optimizers import AdamConfig
 
 from polyaxon import Modes
@@ -45,8 +46,10 @@ class BaseModel(GraphModule):
     Raises:
             TypeError: if the mode does not correspond to the model_type.
     """
+    CONFIG = BaseModelConfig
 
     class Types(object):
+        MODEL = 'Model'
         REGRESSOR = 'Regressor'
         CLASSIFIER = 'Classifier'
         GENERATOR = 'Generator'
@@ -71,15 +74,15 @@ class BaseModel(GraphModule):
             raise TypeError("Current model type `{}` does not support passed mode `{}`.".format(
                 model_type, mode))
 
-        super(BaseModel, self).__init__(mode, name, self.ModuleType.MODEL)
+        super(BaseModel, self).__init__(mode, name or "Model", self.ModuleType.MODEL)
         self.loss = loss
         self.optimizer = optimizer or AdamConfig(learning_rate=0.001)
         self.metrics = metrics or []
         self.model_type = model_type
-        self.summaries = summarizer.SummaryOptions.validate(summaries)
+        self.summaries = summarizer.SummaryOptions.validate(summaries or 'all')
         assert model_type in self.Types.VALUES, "`model_type` provided is unsupported."
-        self._clip_gradients = clip_gradients
-        self._clip_embed_gradients = clip_embed_gradients
+        self._clip_gradients = clip_gradients or 0.5
+        self._clip_embed_gradients = clip_embed_gradients or 0.1
         self._grads_and_vars = None
         self._total_loss = None
         self._losses = None
@@ -87,6 +90,33 @@ class BaseModel(GraphModule):
 
         self._check_subgraph_fn(function=graph_fn, function_name='graph_fn')
         self._graph_fn = graph_fn
+
+    @classmethod
+    def from_config(cls, mode, config, graph_fn=None):
+        if not isinstance(config, cls.CONFIG):
+            config = cls.CONFIG.from_dict(config)
+
+        if not graph_fn:
+            graph_fn = getters.get_graph_fn(config.graph)
+
+        model_type = config.IDENTIFIER
+        loss = config.loss
+        optimizer = config.loss
+        metrics = config.metrics
+
+        params = config.to_dict()
+        del params['graph']
+        del params['loss']
+        del params['optimizer']
+        del params['metrics']
+
+        return cls(mode,
+                   model_type=model_type,
+                   graph_fn=graph_fn,
+                   loss=loss,
+                   optimizer=optimizer,
+                   metrics=metrics,
+                   **params)
 
     @staticmethod
     def _check_subgraph_fn(function, function_name):

@@ -264,10 +264,10 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, 
     from polyaxon.models import MODELS, BaseModel
 
     if not graph_fn:
-        graph_fn = get_graph_fn(model_config.graph_config)
+        graph_fn = get_graph_fn(model_config.graph)
 
     if not bridge_fn:
-        bridge_fn = get_bridge_fn(model_config.bridge_config)
+        bridge_fn = get_bridge_fn(model_config.bridge)
 
     def model_fn(features, labels, params, mode, config):
         """Builds the model graph"""
@@ -300,33 +300,32 @@ def get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, 
     return model_fn
 
 
-def get_estimator(estimator_config, model_config, run_config):
+def get_estimator(model, run_config, module='Estimator', output_dir=None):
     from polyaxon.estimators import ESTIMATORS
+    from polyaxon.models import MODELS
 
-    model_fn = get_model_fn(model_config)
+    model_fn = MODELS[model.IDENTIFIER].from_config(model)
 
-    estimator = ESTIMATORS[estimator_config.module](
+    estimator = ESTIMATORS[module](
         model_fn=model_fn,
-        model_dir=estimator_config.output_dir,
-        config=run_config,
-        params=model_config.params)
+        model_dir=output_dir,
+        config=run_config,)
     return estimator
 
 
-def get_agent(agent_config, model_config, run_config):
+def get_agent(module, model, memory, run_config, output_dir=None):
     from polyaxon.estimators import AGENTS
+    from polyaxon.models import MODELS
 
-    model_fn = get_model_fn(model_config)
-    memory = get_memory(agent_config.memory_config.module,
-                        **agent_config.memory_config.params)
+    model_fn = MODELS[model.IDENTIFIER].from_config(model)
+    memory = get_memory(memory.IDENTIFER, **memory.to_dict())
 
-    estimator = AGENTS[agent_config.module](
+    agent = AGENTS[module](
         model_fn=model_fn,
         memory=memory,
-        model_dir=agent_config.output_dir,
-        config=run_config,
-        params=model_config.params)
-    return estimator
+        model_dir=output_dir,
+        config=run_config)
+    return agent
 
 
 def get_hooks(hooks_config):
