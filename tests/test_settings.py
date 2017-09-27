@@ -10,8 +10,7 @@ from polyaxon_schemas.settings import (
     SessionConfig,
     ClusterConfig,
     EnvironmentConfig,
-    SettingsConfig,
-    IndexedSessionConfig)
+    SettingsConfig)
 from tests.utils import assert_equal_dict
 
 
@@ -36,7 +35,7 @@ class TestSettingConfigs(TestCase):
         config = SessionConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-    def test_indexed_session_config(self):
+    def test_indexed_session(self):
         config_dict = {
             'index': 10,
             'log_device_placement': False,
@@ -45,7 +44,7 @@ class TestSettingConfigs(TestCase):
             'inter_op_parallelism_threads': 3,
             'gpu_options': GPUOptionsConfig().to_dict(),
         }
-        config = IndexedSessionConfig.from_dict(config_dict)
+        config = SessionConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
     def test_cluster_config(self):
@@ -76,12 +75,12 @@ class TestSettingConfigs(TestCase):
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add session config
-        config_dict['session_config'] = SessionConfig().to_dict()
+        config_dict['session'] = SessionConfig().to_dict()
         config = RunConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add cluster config
-        config_dict['cluster_config'] = ClusterConfig(
+        config_dict['cluster'] = ClusterConfig(
             worker=['worker'], ps=['ps']
         ).to_dict()
         config = RunConfig.from_dict(config_dict)
@@ -118,7 +117,7 @@ class TestSettingConfigs(TestCase):
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Adding custom config for worker 3
-        config_dict['worker_configs'] = [IndexedSessionConfig(
+        config_dict['worker_configs'] = [SessionConfig(
             index=3,
             gpu_options=GPUOptionsConfig(gpu_memory_fraction=0.4),
             intra_op_parallelism_threads=8,
@@ -128,7 +127,7 @@ class TestSettingConfigs(TestCase):
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Adding custom config for ps 2
-        config_dict['ps_configs'] = [IndexedSessionConfig(
+        config_dict['ps_configs'] = [SessionConfig(
             index=2,
             gpu_options=GPUOptionsConfig(allow_growth=False),
             intra_op_parallelism_threads=1,
