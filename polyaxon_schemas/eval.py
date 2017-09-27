@@ -10,9 +10,9 @@ from polyaxon_schemas.processing.pipelines import PipelineSchema
 
 class EvalSchema(Schema):
     data_pipeline = fields.Nested(PipelineSchema)
-    eval_steps = fields.Int(allow_none=True)
-    eval_hooks = fields.Nested(HookSchema, many=True, allow_none=True)
-    eval_delay_secs = fields.Int(allow_none=True)
+    steps = fields.Int(allow_none=True)
+    hooks = fields.Nested(HookSchema, many=True, allow_none=True)
+    delay_secs = fields.Int(allow_none=True)
     continuous_eval_throttle_secs = fields.Int(allow_none=True)
 
     class Meta:
@@ -29,12 +29,12 @@ class EvalConfig(BaseConfig):
 
     def __init__(self,
                  data_pipeline,
-                 eval_steps=10,
-                 eval_hooks=None,
-                 eval_delay_secs=0,
+                 steps=10,
+                 hooks=None,
+                 delay_secs=0,
                  continuous_eval_throttle_secs=60):
         self.data_pipeline = data_pipeline
-        self.eval_steps = eval_steps
-        self.eval_hooks = eval_hooks
-        self.eval_delay_secs = eval_delay_secs
+        self.steps = steps
+        self.hooks = hooks
+        self.delay_secs = delay_secs
         self.continuous_eval_throttle_secs = continuous_eval_throttle_secs

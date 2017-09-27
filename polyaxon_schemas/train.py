@@ -10,8 +10,8 @@ from polyaxon_schemas.processing.pipelines import PipelineSchema
 
 class TrainSchema(Schema):
     data_pipeline = fields.Nested(PipelineSchema)
-    train_steps = fields.Int(allow_none=True)
-    train_hooks = fields.Nested(HookSchema, many=True, allow_none=True)
+    steps = fields.Int(allow_none=True)
+    hooks = fields.Nested(HookSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -25,7 +25,7 @@ class TrainConfig(BaseConfig):
     SCHEMA = TrainSchema
     IDENTIFIER = 'eval'
 
-    def __init__(self, data_pipeline, train_steps=100, train_hooks=None):
+    def __init__(self, data_pipeline, steps=100, hooks=None):
         self.data_pipeline = data_pipeline
-        self.train_hooks = train_hooks
-        self.train_steps = train_steps
+        self.hooks = hooks
+        self.steps = steps

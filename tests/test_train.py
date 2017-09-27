@@ -18,8 +18,8 @@ class TestTrainConfigs(TestCase):
                 shuffle=True,
                 num_epochs=10,
                 batch_size=64).to_schema(),
-            'train_steps': 100,
-            'train_hooks': [
+            'steps': 100,
+            'hooks': [
                 StepLoggingTensorHookConfig(['Dense_1', 'Conv2D_4'], every_n_iter=100).to_schema()
             ]
         }

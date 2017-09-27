@@ -81,7 +81,7 @@ model:
           activation: softmax
         
 train:
-  train_steps: 100
+  steps: 100
   data_pipeline:
     TFRecordImagePipeline:
       batch_size: 64
