@@ -72,7 +72,14 @@ class Parser(object):
                 if check_operators and cls.is_operator(key):
                     return cls._parse_operator(expression, declarations)
                 if check_graph and key == 'graph':
-                    return cls._parse_graph(expression, declarations)
+                    return {'graph': cls._parse_graph(expression['graph'], declarations)}
+                if check_graph and key == 'feature_processors':
+                    return {
+                        key: {
+                            f_key: cls._parse_graph(f_vlaue, declarations)
+                            for f_key, f_vlaue in six.iteritems(expression[key])
+                        }
+                    }
                 else:
                     return {
                         key: cls.parse_expression(
@@ -116,14 +123,14 @@ class Parser(object):
         return key in Specification.OPERATORS
 
     @classmethod
-    def _parse_graph(cls, expression, declarations):
-        graph = expression['graph']
-        layer_names = set([])
+    def _parse_graph(cls, graph, declarations):
+        input_layers = to_list(graph['input_layers'])
+        layer_names = set(input_layers)
         tags = {}
         layers = []
         outputs = []
         layers_counters = defaultdict(int)
-        unused_layers = set([])
+        unused_layers = set(input_layers)
 
         if not isinstance(graph['layers'], list):
             raise PolyaxonfileError("Graph definition expects a list of layer definitions.")
@@ -146,6 +153,7 @@ class Parser(object):
         layers_declarations.update(declarations)
 
         last_layer = None
+        first_layer = True
         for layer_expression in graph['layers']:
             parsed_layer = cls.parse_expression(layer_expression, layers_declarations, True)
             # Gather all tags from the layers
@@ -181,8 +189,17 @@ class Parser(object):
                     unused_layers.add(layer_value['name'])
 
                 # Check the layers inputs
-                if not layer_value.get('inbound_nodes') and last_layer is not None:
-                    layer_value['inbound_nodes'] = [last_layer['name']]
+                if not layer_value.get('inbound_nodes'):
+                    if last_layer is not None:
+                        layer_value['inbound_nodes'] = [last_layer['name']]
+                    if first_layer and len(input_layers) == 1:
+                        layer_value['inbound_nodes'] = input_layers
+                    if first_layer and len(input_layers) > 1:
+                        raise PolyaxonfileError("The first layer must indicate which input to use,"
+                                                "You have {} layers: {}".format(len(input_layers),
+                                                                                input_layers))
+
+                first_layer = False
                 for input_layer in layer_value.get('inbound_nodes', []):
                     if input_layer not in layer_names:
                         raise PolyaxonfileError(
@@ -215,9 +232,7 @@ class Parser(object):
                 "These layers `{}` were declared but are not used.".format(unused_layers))
 
         return {
-            'graph': {
-                'input_layers': to_list(graph['input_layers']),
-                'layers': layers,
-                'output_layers': outputs
-            }
+            'input_layers': to_list(graph['input_layers']),
+            'layers': layers,
+            'output_layers': outputs
         }

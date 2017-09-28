@@ -53,7 +53,8 @@ class TestParser(TestCase):
                                       'filters': 64,
                                       'kernel_size': [3, 3],
                                       'name': 'Conv2D_1',
-                                      'strides': [1, 1]}
+                                      'strides': [1, 1],
+                                      'inbound_nodes': ['images']}
                            },
                           {'MaxPooling2D': {'inbound_nodes': ['Conv2D_1'],
                                             'kernels': 2,
@@ -121,6 +122,7 @@ class TestParser(TestCase):
                             'kernel_size': [3, 3],
                             'name': 'Conv2D_1',
                             'strides': [1, 1],
+                            'inbound_nodes': ['images'],
                             'tags': ['tag1', 'tag2']}},
                 {'Conv2D': {'activation': 'linear',
                             'filters': 64,
@@ -145,6 +147,111 @@ class TestParser(TestCase):
                            'units': 10}}],
             'output_layers': ['Dense_1']}}
         assert result_expression == expected_result
+
+    def test_parse_graph_with_many_inputs_used(self):
+        expression = {
+            'graph': {
+                'input_layers': ['images'],
+                'layers': [
+                    {'Conv2D': {
+                        'filters': 64,
+                        'kernel_size': [3, 3],
+                        'strides': [1, 1],
+                        'activation': 'relu',
+                        'inbound_nodes': ['images']
+                    }},
+                    {'MaxPooling2D': {'kernels': 2}},
+                    {'Flatten': None},
+                    {'Dense': {
+                        'units': 10,
+                        'activation': 'softmax',
+                    }}
+                ]
+            }
+        }
+
+        parser = Parser()
+        assert parser.parse_expression(expression, {}) == expression
+
+        expected_expression = {
+            'graph': {'input_layers': ['images'],
+                      'layers': [
+                          {'Conv2D': {'activation': 'relu',
+                                      'filters': 64,
+                                      'kernel_size': [3, 3],
+                                      'name': 'Conv2D_1',
+                                      'strides': [1, 1],
+                                      'inbound_nodes': ['images']}
+                           },
+                          {'MaxPooling2D': {'inbound_nodes': ['Conv2D_1'],
+                                            'kernels': 2,
+                                            'name': 'MaxPooling2D_1'}
+                           },
+                          {'Flatten': {'inbound_nodes': ['MaxPooling2D_1'],
+                                       'name': 'Flatten_1'}
+                           },
+                          {'Dense': {'activation': 'softmax',
+                                     'inbound_nodes': ['Flatten_1'],
+                                     'name': 'Dense_1',
+                                     'units': 10}
+                           }
+                      ],
+                      'output_layers': ['Dense_1']}
+        }
+        assert parser.parse_expression(expression, {}, check_graph=True) == expected_expression
+
+    def test_parse_graph_with_many_inputs_and_non_used_raises(self):
+        expression = {
+            'graph': {
+                'input_layers': ['images', 'sounds'],
+                'layers': [
+                    {'Conv2D': {
+                        'filters': 64,
+                        'kernel_size': [3, 3],
+                        'strides': [1, 1],
+                        'activation': 'relu',
+                        'name': 'Conv2D_1',
+                        'inbound_nodes': ['images']
+                    }},
+                    {'MaxPooling2D': {'kernels': 2}},  # This layer is orphan
+                    {'Flatten': {'inbound_nodes': ['Conv2D_1']}},  # Specify the input layer
+                    {'Dense': {
+                        'units': 10,
+                        'activation': 'softmax',
+                    }}
+                ]
+            }
+        }
+
+        parser = Parser()
+        with self.assertRaises(PolyaxonfileError):
+            parser.parse_expression(expression, {}, check_graph=True)
+
+    def test_parse_graph_with_many_inputs_and_some_used_raises(self):
+        expression = {
+            'graph': {
+                'input_layers': ['images', 'sounds'],
+                'layers': [
+                    {'Conv2D': {
+                        'filters': 64,
+                        'kernel_size': [3, 3],
+                        'strides': [1, 1],
+                        'activation': 'relu',
+                        'name': 'Conv2D_1'
+                    }},
+                    {'MaxPooling2D': {'kernels': 2}},  # This layer is orphan
+                    {'Flatten': {'inbound_nodes': ['Conv2D_1']}},  # Specify the input layer
+                    {'Dense': {
+                        'units': 10,
+                        'activation': 'softmax',
+                    }}
+                ]
+            }
+        }
+
+        parser = Parser()
+        with self.assertRaises(PolyaxonfileError):
+            parser.parse_expression(expression, {}, check_graph=True)
 
     def test_parse_graph_with_orphan_layers_raises(self):
         expression = {
