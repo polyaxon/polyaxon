@@ -1,14 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import tensorflow as tf
+
 from polyaxon_schemas.eval import EvalConfig
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.train import TrainConfig
 
-from experiments import Experiment
+from polyaxon.experiments import Experiment
 from polyaxon import Modes, getters
-from polyaxon.estimators.run_config import RunConfig
+from polyaxon.estimators.run_config import RunConfig, TaskType
 from polyaxon.processing.input_data import create_input_data_fn
+
+
+LOGGING_LEVEL = {
+    'INFO': tf.logging.INFO,
+    'DEBUG': tf.logging.DEBUG,
+    'WARN': tf.logging.WARN,
+    'ERROR': tf.logging.ERROR,
+    'FATAL': tf.logging.FATAL,
+}
 
 
 def _get_train(config):
@@ -67,14 +78,17 @@ def _get_local_cluster(num_workers, num_ps):
     return cluster_config
 
 
-def _get_run_configs(environement):
-    def get_master_config(config):
-        return RunConfig.from_config(config)
+def _get_run_configs(environment):
+    def get_master_config(config, task_type=None, task_id=None):
+        config = RunConfig.from_config(config)
+        if not all([task_type, task_id]):
+            return config
+        return config.replace(task_type=task_type, task_id=task_id)
 
-    config = environement.run_config or RunConfig.CONFIG()
+    config = environment.run_config or RunConfig.CONFIG()
 
-    num_workers = environement.n_workers or 0
-    num_ps = environement.n_ps or 0
+    num_workers = environment.n_workers or 0
+    num_ps = environment.n_ps or 0
 
     if not num_workers and not num_ps:
         return {'master': get_master_config(config)}, False
@@ -82,7 +96,7 @@ def _get_run_configs(environement):
     cluster_config = _get_local_cluster(num_workers, num_ps)
     config.cluster = cluster_config
 
-    configs = {'master': get_master_config(config)}
+    configs = {'master': get_master_config(config, TaskType.MASTER, 0)}
 
     if num_workers > 0:
         configs['workers'] = []
@@ -91,30 +105,34 @@ def _get_run_configs(environement):
         configs['ps'] = []
 
     worker_session_configs = {}
-    for session_config in environement.worker_configs or []:
+    for session_config in environment.worker_configs or []:
         worker_session_configs[session_config.index] = session_config
 
     ps_session_configs = {}
-    for session_config in environement.ps_configs or []:
+    for session_config in environment.ps_configs or []:
         ps_session_configs[session_config.index] = session_config
 
-    default_worker_config = environement.default_worker_config
+    default_worker_config = environment.default_worker_config
     for i in range(num_workers):
         config = get_master_config(config)
         session_config = worker_session_configs.get(i, default_worker_config)
         if session_config:
             session_config = RunConfig.get_session_config(session_config)
-            config = config.replace(session_config=session_config)
+            config = config.replace(session_config=session_config,
+                                    task_type=TaskType.WORKER,
+                                    task_id=i)
 
         configs['workers'].append(config)
 
-    default_ps_config = environement.default_ps_config
+    default_ps_config = environment.default_ps_config
     for i in range(num_ps):
         config = get_master_config(config)
         session_config = ps_session_configs.get(i, default_ps_config)
         if session_config:
             session_config = RunConfig.get_session_config(session_config)
-            config = config.replace(session_config=session_config)
+            config = config.replace(session_config=session_config,
+                                    task_type=TaskType.PS,
+                                    task_id=i)
 
         configs['ps'].append(config)
 
@@ -125,12 +143,14 @@ def prepare_experiments(polyaxonfil):
     plx_file = PolyaxonFile(polyaxonfil)
     is_distributed = False
 
-    if not plx_file.settings.environement:
+    if not plx_file.settings.environment:
+        tf.logging.set_verbosity(tf.logging.INFO)
         configs = {'master': [RunConfig()]}
         delay_workers_by_global_step = False
     else:
-        configs, is_distributed = _get_run_configs(plx_file.settings.environement)
-        delay_workers_by_global_step = plx_file.settings.environement.delay_workers_by_global_step
+        tf.logging.set_verbosity(LOGGING_LEVEL[plx_file.settings.logging.level])
+        configs, is_distributed = _get_run_configs(plx_file.settings.environment)
+        delay_workers_by_global_step = plx_file.settings.environment.delay_workers_by_global_step
 
     train_input_fn, train_steps, train_hooks = _get_train(plx_file.train)
     (eval_input_fn, eval_steps, eval_hooks, eval_delay_secs,
