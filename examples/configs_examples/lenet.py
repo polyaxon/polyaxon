@@ -5,6 +5,8 @@ import tensorflow as tf
 
 import polyaxon as plx
 
+from polyaxonfile.manager import prepare_experiments
+
 
 def experiment_fn(output_dir):
     """Creates an experiment using Lenet network.
@@ -15,8 +17,7 @@ def experiment_fn(output_dir):
     plx.datasets.mnist.prepare('../data/mnist')
 
     config = './yaml_configs/lenet.yml'
-    experiment_config = plx.configs.ExperimentConfig.read_configs(config)
-    return plx.experiments.create_experiment(experiment_config)
+    return prepare_experiments(config)
 
 
 def main(*args):

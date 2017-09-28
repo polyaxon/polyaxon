@@ -66,6 +66,13 @@ train:
       dynamic_pad: false
       data_files: ["../data/mnist/mnist_train.tfrecord"]
       meta_data_file: "../data/mnist/meta_data.json"
+      feature_processors:
+        image:
+          input_layers: [image]
+          layers:
+            - Cast:
+                dtype: float32
+
 
 eval:
   data_pipeline:
@@ -75,3 +82,9 @@ eval:
       shuffle: False
       data_files: ["../data/mnist/mnist_train.tfrecord"]
       meta_data_file: "../data/mnist/meta_data.json"
+      feature_processors:
+        image:
+          input_layers: [image]
+          layers:
+            - Cast:
+                dtype: float32
