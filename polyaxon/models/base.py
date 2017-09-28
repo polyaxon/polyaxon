@@ -99,9 +99,8 @@ class BaseModel(GraphModule):
         if not graph_fn:
             graph_fn = getters.get_graph_fn(config.graph)
 
-        model_type = config.IDENTIFIER
         loss = config.loss
-        optimizer = config.loss
+        optimizer = config.optimizer
         metrics = config.metrics
 
         params = config.to_dict()
@@ -110,8 +109,10 @@ class BaseModel(GraphModule):
         del params['optimizer']
         del params['metrics']
 
+        if cls == BaseModel:
+            params['model_type'] = config.IDENTIFIER
+
         return cls(mode,
-                   model_type=model_type,
                    graph_fn=graph_fn,
                    loss=loss,
                    optimizer=optimizer,

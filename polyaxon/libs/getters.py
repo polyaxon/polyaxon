@@ -304,7 +304,11 @@ def get_estimator(model, run_config, module='Estimator', output_dir=None):
     from polyaxon.estimators import ESTIMATORS
     from polyaxon.models import MODELS
 
-    model_fn = MODELS[model.IDENTIFIER].from_config(model)
+    def model_fn(features, labels, params, mode, config):
+        return MODELS[model.IDENTIFIER].from_config(mode, model)(features=features,
+                                                                 labels=labels,
+                                                                 params=params,
+                                                                 config=config)
 
     estimator = ESTIMATORS[module](
         model_fn=model_fn,
