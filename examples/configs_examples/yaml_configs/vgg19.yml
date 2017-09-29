@@ -1,111 +1,137 @@
 ---
-name: vgg19
-output_dir: "/tmp/polyaxon_logs/vgg19"
-train_steps_per_iteration: 100
-run_config:
-  save_checkpoints_steps: 100
-train_input_data_config:
-  pipeline_config:
-    module: TFRecordImagePipeline
-    batch_size: 64
-    num_epochs: 1
-    shuffle: true
-    dynamic_pad: false
-    params:
-      data_files: "../data/mnist/mnist_train.tfrecord"
+version: 1
+
+project:
+  name: vgg19
+
+settings:
+  logging:
+    level: INFO
+    delay_workers_by_global_step: 10
+    run_config:
+      save_summary_steps: 100
+      save_checkpoints_steps: 100
+
+model:
+  classifier:
+    loss:
+      SigmoidCrossEntropy:
+    optimizer:
+      Adam:
+        learning_rate: 0.001
+    metrics:
+      - Accuracy
+      - Precision
+    one_hot_encode: true
+    n_classes: 10
+    graph:
+      input_layers: image
+      layers:
+        - Conv2D:
+            filters: 64
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - Conv2D:
+            filters: 64
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - MaxPooling2D:
+            pool_size: 2
+            strides: 2
+            padding: same
+        - Conv2D:
+            filters: 128
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - Conv2D:
+            filters: 128
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - MaxPooling2D:
+            pool_size: 2
+            strides: 2
+            padding: same
+        - Conv2D:
+            filters: 256
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - Conv2D:
+            filters: 256
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - Conv2D:
+            filters: 256
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - MaxPooling2D:
+            pool_size: 2
+            strides: 2
+            padding: same
+        - Conv2D:
+            filters: 512
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - Conv2D:
+            filters: 512
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - Conv2D:
+            filters: 512
+            kernel_size: 3
+            padding: same
+            activation: relu
+        - MaxPooling2D:
+            pool_size: 2
+            strides: 2
+            padding: same
+        - Flatten:
+        - Dense:
+            units: 4096
+            activation: relu
+            dropout: 0.5
+        - Dense:
+            units: 4096
+            activation: relu
+            dropout: 0.5
+        - Dense:
+            units: 10
+
+train:
+  train_steps: 100
+  data_pipeline:
+    TFRecordImagePipeline:
+      batch_size: 64
+      num_epochs: 5
+      shuffle: true
+      data_files: ["../data/mnist/mnist_train.tfrecord"]
       meta_data_file: "../data/mnist/meta_data.json"
-eval_input_data_config:
-  pipeline_config:
-    module: TFRecordImagePipeline
-    batch_size: 32
-    num_epochs: 1
-    shuffle: true
-    dynamic_pad: false
-    params:
-      data_files: "../data/mnist/mnist_teval.tfrecord"
+      feature_processors:
+        image:
+          input_layers: [image]
+          layers:
+            - Cast:
+                dtype: float32
+
+eval:
+  data_pipeline:
+    TFRecordImagePipeline:
+      batch_size: 32
+      num_epochs: 1
+      shuffle: False
+      data_files: ["../data/mnist/mnist_eval.tfrecord"]
       meta_data_file: "../data/mnist/meta_data.json"
-estimator_config:
-  output_dir: "/tmp/polyaxon_logs/vgg19"
-model_config:
-  module: Classifier
-  summaries:
-  - loss
-  loss:
-    module: softmax_cross_entropy
-  metrics:
-  - module: streaming_accuracy
-  - module: streaming_precision
-  optimizer_config:
-    module: adam
-    learning_rate: 0.007
-    decay_type: exponential_decay
-    decay_rate: 0.2
-  one_hot_encode: true
-  n_classes: 17
-  graph_config:
-    name: vgg
-    features:
-    - image
-    definition:
-    - - Conv2d
-      - num_filter: 64
-        filter_size: 3
-        activation: relu
-    - - Conv2d
-      - num_filter: 64
-        filter_size: 3
-        activation: relu
-    - - MaxPool2d
-      - kernel_size: 2
-        strides: 2
-    - - Conv2d
-      - num_filter: 128
-        filter_size: 3
-        activation: relu
-    - - Conv2d
-      - num_filter: 128
-        filter_size: 3
-        activation: relu
-    - - MaxPool2d
-      - kernel_size: 2
-        strides: 2
-    - - Conv2d
-      - num_filter: 256
-        filter_size: 3
-        activation: relu
-    - - Conv2d
-      - num_filter: 256
-        filter_size: 3
-        activation: relu
-    - - Conv2d
-      - num_filter: 256
-        filter_size: 3
-        activation: relu
-    - - MaxPool2d
-      - kernel_size: 2
-        strides: 2
-    - - Conv2d
-      - num_filter: 512
-        filter_size: 3
-        activation: relu
-    - - Conv2d
-      - num_filter: 512
-        filter_size: 3
-        activation: relu
-    - - Conv2d
-      - num_filter: 512
-        filter_size: 3
-        activation: relu
-    - - MaxPool2d
-      - kernel_size: 2
-        strides: 2
-    - - FullyConnected
-      - num_units: 4096
-        activation: relu
-        dropout: 0.5
-    - - FullyConnected
-      - num_units: 4096
-        activation: relu
-        dropout: 0.5
-    - - FullyConnected
-      - num_units: 17
+      feature_processors:
+        image:
+          input_layers: [image]
+          layers:
+            - Cast:
+                dtype: float32

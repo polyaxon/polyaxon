@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import polyaxon as plx
 
+from polyaxonfile.manager import prepare_experiments
+
 
 def experiment_fn(output_dir):
     """Creates an experiment using cnn for CIFAR-10 dataset classification task.
@@ -14,11 +16,10 @@ def experiment_fn(output_dir):
     Links:
         * [CIFAR-10 Dataset](https://www.cs.toronto.edu/~kriz/cifar.html)
     """
-    plx.datasets.cifar10.prepare('../data/conv_cifar10')
+    plx.datasets.cifar10.prepare('../data/cifar10')
 
-    config = './yaml_configs/conv_cifar10.yml'
-    experiment_config = plx.configs.ExperimentConfig.read_configs(config)
-    return plx.experiments.create_experiment(experiment_config)
+    config = './yaml_configs/convnet_cifar10.yml'
+    return prepare_experiments(config)
 
 
 def main(*args):

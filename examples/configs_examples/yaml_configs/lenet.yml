@@ -12,8 +12,6 @@ settings:
       save_summary_steps: 100
       save_checkpoints_steps: 100
 
-
-
 model:
   classifier:
     loss:
@@ -55,7 +53,6 @@ model:
         - Dense:
            units: 10
 
-
 train:
   train_steps: 100
   data_pipeline:
@@ -63,7 +60,6 @@ train:
       batch_size: 64
       num_epochs: 1
       shuffle: true
-      dynamic_pad: false
       data_files: ["../data/mnist/mnist_train.tfrecord"]
       meta_data_file: "../data/mnist/meta_data.json"
       feature_processors:
@@ -73,14 +69,13 @@ train:
             - Cast:
                 dtype: float32
 
-
 eval:
   data_pipeline:
     TFRecordImagePipeline:
       batch_size: 32
       num_epochs: 1
       shuffle: False
-      data_files: ["../data/mnist/mnist_train.tfrecord"]
+      data_files: ["../data/mnist/mnist_eval.tfrecord"]
       meta_data_file: "../data/mnist/meta_data.json"
       feature_processors:
         image:
