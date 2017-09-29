@@ -6,12 +6,12 @@ import tensorflow as tf
 from polyaxon_schemas.eval import EvalConfig
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.train import TrainConfig
+from polyaxon_schemas.settings import ClusterConfig
 
 from polyaxon.experiments import Experiment
 from polyaxon import Modes, getters
 from polyaxon.estimators.run_config import RunConfig, TaskType
 from polyaxon.processing.input_data import create_input_data_fn
-
 
 LOGGING_LEVEL = {
     'INFO': tf.logging.INFO,
@@ -64,24 +64,22 @@ def _get_local_cluster(num_workers, num_ps):
         workers.append(get_address(worker_port))
         worker_port += 1
 
-    if workers:
-        cluster_config['worker'] = workers
+    cluster_config['worker'] = workers
 
     ps = []
     for i in range(num_ps):
         ps.append(get_address(ps_port))
         ps_port += 1
 
-    if ps:
-        cluster_config['ps'] = ps
+    cluster_config['ps'] = ps
 
-    return cluster_config
+    return ClusterConfig.from_dict(cluster_config)
 
 
 def _get_run_configs(environment):
     def get_master_config(config, task_type=None, task_id=None):
         config = RunConfig.from_config(config)
-        if not all([task_type, task_id]):
+        if task_type is None and task_id is None:
             return config
         return config.replace(task_type=task_type, task_id=task_id)
 
@@ -96,7 +94,7 @@ def _get_run_configs(environment):
     cluster_config = _get_local_cluster(num_workers, num_ps)
     config.cluster = cluster_config
 
-    configs = {'master': get_master_config(config, TaskType.MASTER, 0)}
+    configs = {'master': [get_master_config(config, TaskType.MASTER, 0)]}
 
     if num_workers > 0:
         configs['workers'] = []
@@ -114,27 +112,25 @@ def _get_run_configs(environment):
 
     default_worker_config = environment.default_worker_config
     for i in range(num_workers):
-        config = get_master_config(config)
+        w_config = get_master_config(config, task_type=TaskType.WORKER, task_id=i)
         session_config = worker_session_configs.get(i, default_worker_config)
         if session_config:
             session_config = RunConfig.get_session_config(session_config)
-            config = config.replace(session_config=session_config,
-                                    task_type=TaskType.WORKER,
-                                    task_id=i)
+            w_config = w_config.replace(session_config=session_config)
 
-        configs['workers'].append(config)
+        configs['workers'].append(w_config)
 
     default_ps_config = environment.default_ps_config
     for i in range(num_ps):
-        config = get_master_config(config)
+        ps_config = get_master_config(config)
         session_config = ps_session_configs.get(i, default_ps_config)
         if session_config:
             session_config = RunConfig.get_session_config(session_config)
-            config = config.replace(session_config=session_config,
-                                    task_type=TaskType.PS,
-                                    task_id=i)
+            ps_config = ps_config.replace(session_config=session_config,
+                                          task_type=TaskType.PS,
+                                          task_id=i)
 
-        configs['ps'].append(config)
+        configs['ps'].append(ps_config)
 
     return configs, True
 
@@ -174,11 +170,9 @@ def prepare_experiments(polyaxonfil):
             delay_workers_by_global_step=delay_workers_by_global_step,
             export_strategies=plx_file.settings.export_strategies)
 
-    master_xp = get_experiment(configs['master'][0])
+    xps = [get_experiment(configs['master'][0])]
     if not is_distributed:
-        return get_experiment(configs['master'][0])
-
-    xps = [master_xp]
+        return xps
 
     for i_config in configs.get('workers', []):
         xps.append(get_experiment(i_config))

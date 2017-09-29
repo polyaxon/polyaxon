@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from tensorflow.contrib.learn.python.learn import learn_runner
 
 
-def run_experiment(experiment_fn, output_dir, schedule=None):
+def run_experiment(experiment_fn, output_dir=None, schedule=None):
     """Make and run an experiment.
 
     It creates an Experiment by calling `experiment_fn`. Then it calls the
