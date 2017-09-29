@@ -7,25 +7,29 @@ import polyaxon as plx
 
 from tensorflow.python.estimator.inputs.numpy_io import numpy_input_fn
 
+from polyaxon_schemas.losses import AbsoluteDifferenceConfig
+from polyaxon_schemas.optimizers import SGDConfig
+
 tf.logging.set_verbosity(tf.logging.INFO)
 
-
 # Data
-X = np.asarray([[0., 0.], [0., 1.], [1., 0.], [1., 1.]])
-y = np.asarray([[0], [1], [1], [0]])
+X = np.asarray([[0., 0.], [0., 1.], [1., 0.], [1., 1.]], dtype=np.float32)
+y = np.asarray([[0], [1], [1], [0]], dtype=np.float32)
 
 
 def graph_fn(mode, features):
-    x = plx.layers.Dense(mode, num_units=32, activation='tanh')(features['X'])
-    return plx.layers.Dense(mode, num_units=1, activation='sigmoid')(x)
+    x = plx.layers.Dense(units=32, activation='tanh')(features['X'])
+    return plx.layers.Dense(units=1, activation='sigmoid')(x)
 
 
 def model_fn(features, labels, mode):
     model = plx.models.Regressor(
-        mode, graph_fn=graph_fn, loss=plx.configs.LossConfig(module='absolute_difference'),
-        optimizer=plx.configs.OptimizerConfig(
-            module='sgd', learning_rate=0.5,  decay_type='exponential_decay', decay_steps=10),
-        summaries='all', name='xor')
+        mode,
+        graph_fn=graph_fn,
+        loss=AbsoluteDifferenceConfig(),
+        optimizer=SGDConfig(learning_rate=0.5, decay_type='exponential_decay', decay_steps=10),
+        summaries='all',
+        name='xor')
     return model(features, labels)
 
 

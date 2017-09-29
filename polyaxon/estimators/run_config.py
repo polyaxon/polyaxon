@@ -10,7 +10,6 @@ from tensorflow.python.estimator import run_config
 
 from polyaxon_schemas import settings
 
-
 TaskType = run_config.TaskType
 
 
@@ -40,6 +39,36 @@ def _validate_properties(new_copy):
                                                        num_tasks))
 
 
+def _get_master(cluster_spec, task_type, task_id):
+    """Returns the appropriate string for the TensorFlow master."""
+    if not cluster_spec:
+        return ''
+
+    # If there is only one node in the cluster, do things locally.
+    jobs = cluster_spec.jobs
+    if len(jobs) == 1 and len(cluster_spec.job_tasks(jobs[0])) == 1:
+        return ''
+
+    # Lookup the master in cluster_spec using task_type and task_id,
+    # if possible.
+    if task_type:
+        if task_type not in jobs:
+            raise ValueError(
+                '%s is not a valid task_type in the cluster_spec:\n'
+                '%s\n\n'
+                'Note that these values may be coming from the TF_CONFIG environment '
+                'variable.' % (task_type, cluster_spec))
+        addresses = cluster_spec.job_tasks(task_type)
+        if task_id >= len(addresses) or task_id < 0:
+            raise ValueError(
+                '%d is not a valid task_id for task_type %s in the '
+                'cluster_spec:\n'
+                '%s\n\n'
+                'Note that these value may be coming from the TF_CONFIG environment '
+                'variable.' % (task_id, task_type, cluster_spec))
+        return 'grpc://' + addresses[task_id]
+
+
 class RunConfig(run_config.RunConfig):
     CONFIG = settings.RunConfig
 
@@ -48,6 +77,7 @@ class RunConfig(run_config.RunConfig):
         self._cluster_spec = None
         self._task_type = TaskType.WORKER
         self._task_id = 0
+        self._session_config = tf.ConfigProto()
 
     @property
     def cluster_spec(self):
@@ -61,6 +91,34 @@ class RunConfig(run_config.RunConfig):
     def task_id(self):
         return self._task_id
 
+    @property
+    def is_chief(self):
+        if self.cluster_spec is None:
+            return True
+        return self.task_type == TaskType.MASTER and self.task_id == 0
+
+    @property
+    def master(self):
+        if self.cluster_spec is None:
+            return ''
+        return _get_master(self.cluster_spec, self.task_type, self.task_id)
+
+    @property
+    def num_ps_replicas(self):
+        if self.cluster_spec is None:
+            return 0
+        return self.cluster_spec.num_tasks('ps')
+
+    @property
+    def num_worker_replicas(self):
+        if self.cluster_spec is None:
+            return 1
+        return self.cluster_spec.num_tasks('worker')
+
+    @property
+    def is_distributed(self):
+        return self.num_ps_replicas + self.num_worker_replicas > 1
+
     @classmethod
     def from_config(cls, config):
         if not isinstance(config, cls.CONFIG):
@@ -70,10 +128,13 @@ class RunConfig(run_config.RunConfig):
         if config.session:
             config_params['session_config'] = cls.get_session_config(config.session)
         if config.cluster:
-            config_params['cluster_spec'] = cls.get_session_config(config.cluster)
+            config_params['cluster_spec'] = cls.get_cluster_spec_config(config.cluster)
 
         params = config.to_dict()
-        return cls().replace(**params)
+        params.pop('cluster', None)
+        params.pop('session', None)
+        config_params.update(params)
+        return cls().replace(**config_params)
 
     @staticmethod
     def get_cluster_spec_config(config):

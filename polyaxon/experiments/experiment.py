@@ -5,14 +5,11 @@ import math
 import time
 
 from tensorflow.contrib.learn.python.learn.experiment import Experiment as TFExperiment
-from tensorflow.contrib.learn.python.learn.estimators import run_config
 from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.training import basic_session_run_hooks
+from tensorflow.python.training import server_lib
 
-from polyaxon import Modes
-from polyaxon.libs import getters
 from polyaxon.libs.utils import new_attr_context
-from polyaxon.processing.input_data import create_input_data_fn
 
 
 class Experiment(TFExperiment):
@@ -95,6 +92,25 @@ class Experiment(TFExperiment):
         return self._estimator.evaluate(
             input_fn=input_fn, steps=steps, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
 
+    def _start_server(self):
+        """Creates, starts, and returns a server_lib.Server."""
+        config = self._estimator.config
+        if (not config.cluster_spec or
+                not config.task_type or
+                not config.master or
+                config.task_id is None):
+            raise ValueError("Could not start server; be sure to specify "
+                             "cluster_spec, task_type, master, and task in "
+                             "RunConfig or set the TF_CONFIG environment variable.")
+        server = server_lib.Server(
+            config.cluster_spec,
+            job_name=config.task_type,
+            task_index=config.task_id,
+            config=config.session_config,
+            start=False)
+        server.start()
+        return server
+
     def _prepare_train(self, delay_secs):
         start = time.time()
 
@@ -103,10 +119,7 @@ class Experiment(TFExperiment):
         # Otherwise, the servers will wait to connect to each other before starting
         # to train. We might as well start as soon as we can.
         config = self._estimator.config
-        if (config.environment != run_config.Environment.LOCAL and
-                    config.environment != run_config.Environment.GOOGLE and
-                config.cluster_spec and
-                config.master):
+        if config.cluster_spec and config.master and config.is_distributed:
             self._start_server()
 
         extra_hooks = []
