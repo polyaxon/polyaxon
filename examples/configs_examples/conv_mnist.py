@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import tensorflow as tf
 import polyaxon as plx
 
-from polyaxonfile.manager import prepare_experiments
+from polyaxon.polyaxonfile import local_runner
 
 
-def experiment_fn(output_dir):
+if __name__ == "__main__":
     """Creates an experiment using cnn for MNIST dataset classification task.
 
     References:
@@ -17,17 +16,4 @@ def experiment_fn(output_dir):
         * [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
     """
     plx.datasets.mnist.prepare('../data/mnist')
-
-    config = './yaml_configs/conv_mnist.yml'
-    return prepare_experiments(config)
-
-
-def main(*args):
-    plx.experiments.run_experiment(experiment_fn=experiment_fn,
-                                   output_dir="/tmp/polyaxon_logs/conv_mnsit",
-                                   schedule='continuous_train_and_eval')
-
-
-if __name__ == "__main__":
-    tf.logging.set_verbosity(tf.logging.INFO)
-    tf.app.run()
+    local_runner.run('./yaml_configs/conv_mnist.yml')

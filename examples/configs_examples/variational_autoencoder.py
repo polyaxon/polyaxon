@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import tensorflow as tf
 import polyaxon as plx
 
+from polyaxon.polyaxonfile import local_runner
 
-def experiment_fn(output_dir):
+
+if __name__ == "__main__":
     """Creates a variational auto encoder on MNIST handwritten digits.
 
     inks:
@@ -13,17 +14,4 @@ def experiment_fn(output_dir):
     """
     plx.datasets.mnist.prepare('../data/mnist')
 
-    config = './yaml_configs/variational_autoencoder.yml'
-    experiment_config = plx.configs.ExperimentConfig.read_configs(config)
-    return plx.experiments.create_experiment(experiment_config)
-
-
-def main(*args):
-    plx.experiments.run_experiment(experiment_fn=experiment_fn,
-                                   output_dir="/tmp/polyaxon_logs/vae",
-                                   schedule='continuous_train_and_eval')
-
-
-if __name__ == "__main__":
-    tf.logging.set_verbosity(tf.logging.INFO)
-    tf.app.run()
+    local_runner.run('./yaml_configs/variational_autoencoder.yml')

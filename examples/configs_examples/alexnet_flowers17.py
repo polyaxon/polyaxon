@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import tensorflow as tf
 import polyaxon as plx
 
-from polyaxonfile.manager import prepare_experiments
+from polyaxon.polyaxonfile import local_runner
 
 
-def experiment_fn(output_dir):
+if __name__ == "__main__":
     """Creates an experiment using Alexnet applied to Oxford's 17  Category Flower Dataset.
 
     References:
@@ -20,17 +19,4 @@ def experiment_fn(output_dir):
         * [Flower Dataset (17)](http://www.robots.ox.ac.uk/~vgg/data/flowers/17/)
     """
     plx.datasets.flowers17.prepare('../data/flowers17')
-
-    config = './yaml_configs/alexnet_flower17.yml'
-    return prepare_experiments(config)
-
-
-def main(*args):
-    plx.experiments.run_experiment(experiment_fn=experiment_fn,
-                                   output_dir="/tmp/polyaxon_logs/alexnet_flowers17",
-                                   schedule='continuous_train_and_eval')
-
-
-if __name__ == "__main__":
-    tf.logging.set_verbosity(tf.logging.INFO)
-    tf.app.run()
+    local_runner.run('./yaml_configs/alexnet_flower17.yml')
