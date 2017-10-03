@@ -176,11 +176,20 @@ class EnvironmentConfig(BaseConfig):
         self.ps_configs = ps_configs
 
 
+class RunTypes(object):
+    LOCAL = 'local'
+    MINIKUBE = 'minikube'
+    KUBERNETES = 'kubernetes'
+    AWS = 'aws'
+
+    VALUES = [LOCAL, MINIKUBE, KUBERNETES, AWS]
+
+
 class SettingsSchema(Schema):
     logging = fields.Nested(LoggingSchema, allow_none=True)
     export_strategies = fields.Str(allow_none=True)
     run_type = fields.Str(allow_none=True,
-                          validate=validate.OneOf(['local', 'minikube', 'kubernetes']))
+                          validate=validate.OneOf(RunTypes.VALUES))
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
 
     class Meta:
@@ -198,7 +207,7 @@ class SettingsConfig(BaseConfig):
     def __init__(self,
                  logging=LoggingConfig(),
                  export_strategies=None,
-                 run_type='local',
+                 run_type=RunTypes.LOCAL,
                  environment=None):
         self.logging = logging
         self.export_strategies = export_strategies
