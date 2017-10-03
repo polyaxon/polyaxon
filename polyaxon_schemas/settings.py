@@ -71,6 +71,7 @@ class SessionConfig(BaseConfig):
 
 
 class ClusterSchema(Schema):
+    master = fields.List(fields.Str, allow_none=True)
     worker = fields.List(fields.Str, allow_none=True)
     ps = fields.List(fields.Str, allow_none=True)
 
@@ -86,7 +87,8 @@ class ClusterConfig(BaseConfig):
     IDENTIFIER = 'cluster'
     SCHEMA = ClusterSchema
 
-    def __init__(self, worker=None, ps=None):
+    def __init__(self, master=None, worker=None, ps=None):
+        self.master = master
         self.worker = worker
         self.ps = ps
 
@@ -156,8 +158,8 @@ class EnvironmentConfig(BaseConfig):
     SCHEMA = EnvironmentSchema
 
     def __init__(self,
-                 n_workers=None,
-                 n_ps=None,
+                 n_workers=0,
+                 n_ps=0,
                  delay_workers_by_global_step=False,
                  run_config=None,
                  default_worker_config=None,
