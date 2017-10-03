@@ -9,7 +9,8 @@ settings:
     level: INFO
   environment:
     delay_workers_by_global_step: true
-    n_workers: 2
+    n_workers: 1
+    n_ps: 1
     run_config:
       save_summary_steps: 100
       save_checkpoints_steps: 100
