@@ -8,20 +8,21 @@ project:
 settings:
   logging:
     level: INFO
-    path: /tmp/plx_logs/project1
-  run_type: local
-  environment:
-    n_workers: 5
-    n_ps: 10
-    delay_workers_by_global_step: true
-    run_config:
-      tf_random_seed: 100
-      save_summary_steps: 100
-      save_checkpoints_secs: 60
-      session:
-        allow_soft_placement: true
-        intra_op_parallelism_threads: 2
-        inter_op_parallelism_threads: 2
+    path: /mypath/project1
+  run_type: minikube
+
+environment:
+  n_workers: 5
+  n_ps: 10
+  delay_workers_by_global_step: true
+  run_config:
+    tf_random_seed: 100
+    save_summary_steps: 100
+    save_checkpoints_secs: 60
+    session:
+      allow_soft_placement: true
+      intra_op_parallelism_threads: 2
+      inter_op_parallelism_threads: 2
 
 
 declarations:
@@ -36,6 +37,7 @@ model:
     MeanSquaredError:
   optimizer:
     Adam:
+      learning_rate: 0.21
   graph:
     input_layers: images
     layers:
@@ -48,13 +50,12 @@ model:
                 strides: "{{ cnn.strides }}"
                 activation: relu
                 tags: tag1
-                is_output: true
+
       - if:
           cond: 1 == 1
           do:
             MaxPooling2D:
               kernels: 12
-              is_output: true
 
       - if:
           cond: 1 == "{{ cnn.kernels[1] }}"
@@ -79,6 +80,7 @@ model:
       - Dense:
           units: 10
           activation: softmax
+          name: super_dense
         
 train:
   steps: 100

@@ -38,7 +38,7 @@ class SessionSchema(Schema):
     index = fields.Int(allow_none=True)
     gpu_options = fields.Nested(GPUOptionsSchema, allow_none=True)
     log_device_placement = fields.Bool(allow_none=True)
-    allow_soft_placement = fields.Float(allow_none=True)
+    allow_soft_placement = fields.Bool(allow_none=True)
     intra_op_parallelism_threads = fields.Int(allow_none=True)
     inter_op_parallelism_threads = fields.Int(allow_none=True)
 
@@ -190,7 +190,6 @@ class SettingsSchema(Schema):
     export_strategies = fields.Str(allow_none=True)
     run_type = fields.Str(allow_none=True,
                           validate=validate.OneOf(RunTypes.VALUES))
-    environment = fields.Nested(EnvironmentSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -207,9 +206,7 @@ class SettingsConfig(BaseConfig):
     def __init__(self,
                  logging=LoggingConfig(),
                  export_strategies=None,
-                 run_type=RunTypes.LOCAL,
-                 environment=None):
+                 run_type=RunTypes.LOCAL):
         self.logging = logging
         self.export_strategies = export_strategies
         self.run_type = run_type
-        self.environment = environment

@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
+from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.settings import ClusterConfig, RunTypes
 
 
@@ -45,27 +46,31 @@ class PolyaxonFile(object):
 
     @property
     def version(self):
-        return self.validated_data['version']
+        return self.validated_data[Specification.VERSION]
 
     @property
     def project(self):
-        return self.validated_data['project']
+        return self.validated_data[Specification.PROJECT]
 
     @property
     def model(self):
-        return self.validated_data['model']
+        return self.validated_data[Specification.MODEL]
 
     @property
     def settings(self):
-        return self.validated_data.get('settings', None)
+        return self.validated_data.get(Specification.SETTINGS, None)
+
+    @property
+    def environment(self):
+        return self.validated_data.get(Specification.ENVIRONMENT, None)
 
     @property
     def train(self):
-        return self.validated_data.get('train', None)
+        return self.validated_data.get(Specification.TRAIN, None)
 
     @property
     def eval(self):
-        return self.validated_data.get('eval', None)
+        return self.validated_data.get(Specification.EVAL, None)
 
     @property
     def run_type(self):
@@ -78,9 +83,9 @@ class PolyaxonFile(object):
         }
         is_distributed = False
 
-        if self.settings.environment:
-            cluster['worker'] = self.settings.environment.n_workers
-            cluster['ps'] = self.settings.environment.n_ps
+        if self.environment:
+            cluster['worker'] = self.environment.n_workers
+            cluster['ps'] = self.environment.n_ps
             is_distributed = True
 
         return cluster, is_distributed

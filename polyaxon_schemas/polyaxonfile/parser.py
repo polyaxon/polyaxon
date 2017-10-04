@@ -44,6 +44,10 @@ class Parser(object):
         if Specification.PROJECT in data:
             parsed_data[Specification.PROJECT] = data[Specification.PROJECT]
 
+        if Specification.ENVIRONMENT in data:
+            parsed_data[Specification.ENVIRONMENT] = cls.parse_expression(
+                data[Specification.ENVIRONMENT], {})
+
         if Specification.DECLARATIONS in data:
             parsed_data[Specification.DECLARATIONS] = cls.parse_expression(
                 data[Specification.DECLARATIONS], data[Specification.DECLARATIONS])

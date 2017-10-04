@@ -23,17 +23,23 @@ class Specification(object):
     MATRIX = 'matrix'
     DECLARATIONS = 'declarations'
     SETTINGS = 'settings'
+    ENVIRONMENT = 'environment'
     MODEL = 'model'
     TRAIN = 'train'
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, PROJECT, MATRIX, DECLARATIONS, SETTINGS, MODEL, TRAIN, EVAL
+        VERSION, PROJECT, MATRIX, DECLARATIONS, SETTINGS, ENVIRONMENT, MODEL, TRAIN, EVAL
     )
 
     GRAPH_SECTIONS = (
         MODEL, TRAIN, EVAL
     )
+
+    REQUIRED_SECTIONS = (
+        VERSION, PROJECT, MODEL
+    )
+
     OPERATORS = {
         ForConfig.IDENTIFIER: ForConfig,
         IfConfig.IDENTIFIER: IfConfig,
