@@ -190,6 +190,7 @@ class SettingsSchema(Schema):
     export_strategies = fields.Str(allow_none=True)
     run_type = fields.Str(allow_none=True,
                           validate=validate.OneOf(RunTypes.VALUES))
+    concurrent_experiments = fields.Int(allow_none=True)
 
     class Meta:
         ordered = True
@@ -206,7 +207,9 @@ class SettingsConfig(BaseConfig):
     def __init__(self,
                  logging=LoggingConfig(),
                  export_strategies=None,
-                 run_type=RunTypes.LOCAL):
+                 run_type=RunTypes.LOCAL,
+                 concurrent_experiments=1):
         self.logging = logging
         self.export_strategies = export_strategies
         self.run_type = run_type
+        self.concurrent_experiments = concurrent_experiments

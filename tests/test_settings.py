@@ -141,6 +141,7 @@ class TestSettingConfigs(TestCase):
             'logging': LoggingConfig().to_dict(),
             'export_strategies': None,
             'run_type': 'local',
+            'concurrent_experiments': 2
         }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
