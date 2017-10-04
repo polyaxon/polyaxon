@@ -6,9 +6,9 @@ project:
 
 matrix:
   lr:
-    logspace: 0.01:0.1:100
+    logspace: 0.01:0.1:5
 
-  losses:
+  loss:
     values: [MeanSquaredError, AbsoluteDifferenceError]
 
 model:

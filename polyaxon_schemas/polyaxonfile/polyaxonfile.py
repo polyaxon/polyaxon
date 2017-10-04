@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import itertools
 import six
 
 from polyaxon_schemas.polyaxonfile import validator
@@ -114,6 +115,18 @@ class PolyaxonFile(object):
             is_distributed = True
 
         return cluster, is_distributed
+
+    def get_matrix_declarations(self):
+        if not self.matrix:
+            return None
+
+        declarations = []
+        keys = list(six.iterkeys(self.matrix))
+        values = [v.to_numpy() for v in six.itervalues(self.matrix)]
+        for v in itertools.product(*values):
+            declarations.append(dict(zip(keys, v)))
+
+        return declarations
 
     def get_cluster(self, host='127.0.0.1', master_port=10000, worker_port=11000, ps_port=12000):
         def get_address(port):

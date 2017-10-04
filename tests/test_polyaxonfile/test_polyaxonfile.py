@@ -121,12 +121,19 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/tmp/plx_logs/project1'
         assert isinstance(plxfile.matrix['lr'], MatrixConfig)
-        assert isinstance(plxfile.matrix['losses'], MatrixConfig)
+        assert isinstance(plxfile.matrix['loss'], MatrixConfig)
         assert plxfile.matrix['lr'].to_dict() == {
-            'logspace': {'start': 0.01, 'stop': 0.1, 'num': 100}}
-        assert plxfile.matrix['losses'].to_dict() == {'values': ['MeanSquaredError',
-                                                                 'AbsoluteDifferenceError']}
-        assert plxfile.matrix_space == 102
+            'logspace': {'start': 0.01, 'stop': 0.1, 'num': 5}}
+        assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
+                                                               'AbsoluteDifferenceError']}
+        assert plxfile.matrix_space == 7
+        declarations = []
+        for lr in plxfile.matrix['lr'].to_numpy():
+            for loss in plxfile.matrix['loss'].to_numpy():
+                declarations.append({'loss': loss, 'lr': lr})
+        assert sorted(
+            plxfile.get_matrix_declarations(), key=lambda x: (x['lr'], x['loss'])) == sorted(
+            declarations, key=lambda x: (x['lr'], x['loss']))
         assert plxfile.settings is None
         assert plxfile.environment is None
         assert plxfile.run_type == RunTypes.LOCAL
