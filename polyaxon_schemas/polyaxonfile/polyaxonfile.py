@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import six
+
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
@@ -17,6 +19,8 @@ class PolyaxonFile(object):
         self._data = reader.read(self._filepath)
         Parser.check_data(data=self._data)
         headers = Parser.get_headers(self._data)
+        matrix = Parser.get_matrix(self._data)
+        self._matrix = validator.validate_matrix(matrix)
         self._headers = validator.validate_headers(headers)
         self._parsed_data = Parser.parse(self._data)
         self._validated_data = validator.validate(self._parsed_data)
@@ -30,6 +34,20 @@ class PolyaxonFile(object):
     @property
     def data(self):
         return self._data
+
+    @property
+    def matrix(self):
+        return self._matrix
+
+    @property
+    def matrix_space(self):
+        if not self.matrix:
+            return None
+
+        space_size = 0
+        for value in six.itervalues(self.matrix):
+            space_size += len(value.to_numpy())
+        return space_size
 
     @property
     def headers(self):

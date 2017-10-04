@@ -8,6 +8,7 @@ from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.losses import MeanSquaredErrorConfig
+from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.models import ClassifierConfig, RegressorConfig
 from polyaxon_schemas.optimizers import AdamConfig
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
@@ -40,6 +41,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/tmp/plx_logs/project1'
+        assert plxfile.matrix is None
         assert plxfile.settings is None
         assert plxfile.environment is None
         assert plxfile.run_type == RunTypes.LOCAL
@@ -63,6 +65,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/mypath/project1'
+        assert plxfile.matrix is None
         assert plxfile.run_type == RunTypes.MINIKUBE
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
@@ -111,3 +114,32 @@ class TestPolyaxonfile(TestCase):
         assert len(plxfile.train.data_pipeline.feature_processors.feature_processors) == 1
         assert isinstance(plxfile.eval.data_pipeline, TFRecordImagePipelineConfig)
         assert plxfile.eval.data_pipeline.feature_processors is None
+
+    def test_matrix_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'project1'
+        assert plxfile.project_path == '/tmp/plx_logs/project1'
+        assert isinstance(plxfile.matrix['lr'], MatrixConfig)
+        assert isinstance(plxfile.matrix['losses'], MatrixConfig)
+        assert plxfile.matrix['lr'].to_dict() == {
+            'logspace': {'start': 0.01, 'stop': 0.1, 'num': 100}}
+        assert plxfile.matrix['losses'].to_dict() == {'values': ['MeanSquaredError',
+                                                                 'AbsoluteDifferenceError']}
+        assert plxfile.matrix_space == 102
+        assert plxfile.settings is None
+        assert plxfile.environment is None
+        assert plxfile.run_type == RunTypes.LOCAL
+        assert plxfile.cluster_def == ({'master': 1}, False)
+        assert_equal_dict(plxfile.get_cluster().to_dict(), {'master': ['127.0.0.1:10000'],
+                                                            'ps': [],
+                                                            'worker': []})
+        assert isinstance(plxfile.model, RegressorConfig)
+        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
+        assert isinstance(plxfile.model.optimizer, AdamConfig)
+        assert isinstance(plxfile.model.graph, GraphConfig)
+        assert len(plxfile.model.graph.layers) == 4
+        assert plxfile.model.graph.input_layers == [['images', 0, 0]]
+        last_layer = plxfile.model.graph.layers[-1].name
+        assert plxfile.model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)

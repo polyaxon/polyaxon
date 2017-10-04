@@ -52,6 +52,10 @@ class Parser(object):
         return parsed_data
 
     @classmethod
+    def get_matrix(cls, data):
+        return data.get(Specification.MATRIX)
+
+    @classmethod
     def parse(cls, data):
         cls.check_data(data)
 
