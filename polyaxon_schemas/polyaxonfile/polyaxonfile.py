@@ -15,6 +15,9 @@ class PolyaxonFile(object):
         self._filepath = filepath
 
         self._data = reader.read(self._filepath)
+        Parser.check_data(data=self._data)
+        headers = Parser.get_headers(self._data)
+        self._headers = validator.validate_headers(headers)
         self._parsed_data = Parser.parse(self._data)
         self._validated_data = validator.validate(self._parsed_data)
 
@@ -27,6 +30,10 @@ class PolyaxonFile(object):
     @property
     def data(self):
         return self._data
+
+    @property
+    def headers(self):
+        return self._headers
 
     @property
     def parsed_data(self):
@@ -46,19 +53,19 @@ class PolyaxonFile(object):
 
     @property
     def version(self):
-        return self.validated_data[Specification.VERSION]
+        return self.headers[Specification.VERSION]
 
     @property
     def project(self):
-        return self.validated_data[Specification.PROJECT]
+        return self.headers[Specification.PROJECT]
+
+    @property
+    def settings(self):
+        return self.headers.get(Specification.SETTINGS, None)
 
     @property
     def model(self):
         return self.validated_data[Specification.MODEL]
-
-    @property
-    def settings(self):
-        return self.validated_data.get(Specification.SETTINGS, None)
 
     @property
     def environment(self):

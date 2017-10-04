@@ -30,27 +30,40 @@ class Parser(object):
                     Specification.MIN_VERSION, Specification.MAX_VERSION))
 
     @classmethod
-    def parse(cls, data):
+    def check_data(cls, data):
         cls.validate_version(data)
         for key in (set(six.iterkeys(data)) - set(Specification.SECTIONS)):
             raise PolyaxonfileError("Unexpected section `{}` in Polyaxonfile version `{}`. "
                                     "Please check the Polyaxonfile specification "
                                     "for this version.".format(key, 'v1'))
 
+        for key in Specification.REQUIRED_SECTIONS:
+            if key not in data:
+                raise PolyaxonfileError("{} is a required section for a valid Polyaxonfile".format(
+                    key
+                ))
+
+    @classmethod
+    def get_headers(cls, data):
         parsed_data = {
-            Specification.VERSION: data[Specification.VERSION],
+            section: data[section] for section in Specification.HEADER_SECTIONS
+            if data.get(section)
         }
+        return parsed_data
 
-        if Specification.PROJECT in data:
-            parsed_data[Specification.PROJECT] = data[Specification.PROJECT]
+    @classmethod
+    def parse(cls, data):
+        cls.check_data(data)
 
-        if Specification.ENVIRONMENT in data:
-            parsed_data[Specification.ENVIRONMENT] = cls.parse_expression(
-                data[Specification.ENVIRONMENT], {})
+        parsed_data = {}
 
         if Specification.DECLARATIONS in data:
             parsed_data[Specification.DECLARATIONS] = cls.parse_expression(
                 data[Specification.DECLARATIONS], data[Specification.DECLARATIONS])
+
+        if Specification.ENVIRONMENT in data:
+            parsed_data[Specification.ENVIRONMENT] = cls.parse_expression(
+                data[Specification.ENVIRONMENT], parsed_data.get(Specification.DECLARATIONS, {}))
 
         if Specification.SETTINGS in data:
             parsed_data[Specification.SETTINGS] = cls.parse_expression(

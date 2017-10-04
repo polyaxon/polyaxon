@@ -20,16 +20,20 @@ class Specification(object):
 
     VERSION = 'version'
     PROJECT = 'project'
+    SETTINGS = 'settings'
     MATRIX = 'matrix'
     DECLARATIONS = 'declarations'
-    SETTINGS = 'settings'
     ENVIRONMENT = 'environment'
     MODEL = 'model'
     TRAIN = 'train'
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, PROJECT, MATRIX, DECLARATIONS, SETTINGS, ENVIRONMENT, MODEL, TRAIN, EVAL
+        VERSION, PROJECT, ENVIRONMENT, MATRIX, DECLARATIONS, SETTINGS, MODEL, TRAIN, EVAL
+    )
+
+    HEADER_SECTIONS = (
+        VERSION, PROJECT, SETTINGS
     )
 
     GRAPH_SECTIONS = (
