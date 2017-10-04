@@ -32,33 +32,30 @@ class Parser(object):
     @classmethod
     def parse(cls, data):
         cls.validate_version(data)
-        sections = Specification.sections()
-        for key in (set(six.iterkeys(data)) - sections):
-            raise PolyaxonfileError("Unexpected section `{}` in Polyaxonfile version `{}`."
+        for key in (set(six.iterkeys(data)) - set(Specification.SECTIONS)):
+            raise PolyaxonfileError("Unexpected section `{}` in Polyaxonfile version `{}`. "
                                     "Please check the Polyaxonfile specification "
                                     "for this version.".format(key, 'v1'))
 
         parsed_data = {
-            'version': data['version'],
+            Specification.VERSION: data[Specification.VERSION],
         }
 
-        if 'declarations' in data:
-            parsed_data['declarations'] = cls.parse_expression(
-                data['declarations'], data['declarations'])
+        if Specification.PROJECT in data:
+            parsed_data[Specification.PROJECT] = data[Specification.PROJECT]
 
-        if 'matrix' in data:
-            parsed_data['matrix'] = cls.parse_expression(
-                data['matrix'], parsed_data.get('declarations'))
+        if Specification.DECLARATIONS in data:
+            parsed_data[Specification.DECLARATIONS] = cls.parse_expression(
+                data[Specification.DECLARATIONS], data[Specification.DECLARATIONS])
 
-        for section in Specification.SECTIONS:
-            if section in data:
-                parsed_data[section] = cls.parse_expression(
-                    data[section], parsed_data.get('declarations', {}))
+        if Specification.SETTINGS in data:
+            parsed_data[Specification.SETTINGS] = cls.parse_expression(
+                data[Specification.SETTINGS], parsed_data.get(Specification.DECLARATIONS, {}))
 
         for section in Specification.GRAPH_SECTIONS:
             if section in data:
                 parsed_data[section] = cls.parse_expression(
-                    data[section], parsed_data.get('declarations', {}), True, True)
+                    data[section], parsed_data.get(Specification.DECLARATIONS, {}), True, True)
 
         return parsed_data
 

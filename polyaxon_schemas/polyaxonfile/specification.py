@@ -5,23 +5,36 @@ from polyaxon_schemas.operators import ForConfig, IfConfig
 
 
 class Specification(object):
+    """The polyaxonfile specification.
+
+    HEADERS:
+        version: the version of the file to be parsed and validated.
+        matrix: hyper parameters matrix definition.
+        declarations: variables/modules that can be reused.
+
+    SECTIONS:
+
+    """
     MAX_VERSION = 1.0  # Min Polyaxonfile specification version this CLI supports
     MIN_VERSION = 1.0  # Max Polyaxonfile specification version this CLI supports
 
-    HEADERS = (
-        'version', 'declarations', 'matrix',
-    )
+    VERSION = 'version'
+    PROJECT = 'project'
+    MATRIX = 'matrix'
+    DECLARATIONS = 'declarations'
+    SETTINGS = 'settings'
+    MODEL = 'model'
+    TRAIN = 'train'
+    EVAL = 'eval'
+
     SECTIONS = (
-        'project', 'settings',
+        VERSION, PROJECT, MATRIX, DECLARATIONS, SETTINGS, MODEL, TRAIN, EVAL
     )
+
     GRAPH_SECTIONS = (
-        'model', 'train', 'eval'
+        MODEL, TRAIN, EVAL
     )
     OPERATORS = {
         ForConfig.IDENTIFIER: ForConfig,
         IfConfig.IDENTIFIER: IfConfig,
     }
-
-    @classmethod
-    def sections(cls):
-        return set(cls.HEADERS + cls.SECTIONS + cls.GRAPH_SECTIONS)
