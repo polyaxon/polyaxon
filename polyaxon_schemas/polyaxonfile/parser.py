@@ -2,11 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 import ast
+import copy
+
 import jinja2
 import six
 
 from collections import Mapping, defaultdict
 
+from polyaxon_schemas.polyaxonfile.utils import deep_update
 from polyaxon_schemas.utils import to_list
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.specification import Specification
@@ -56,27 +59,31 @@ class Parser(object):
         return data.get(Specification.MATRIX)
 
     @classmethod
-    def parse(cls, data):
+    def parse(cls, data, matrix_declarations=None):
+        declarations = copy.copy(data.get(Specification.DECLARATIONS, {}))
+        if matrix_declarations:
+            declarations = deep_update(matrix_declarations, declarations)
+
         cls.check_data(data)
 
         parsed_data = {}
 
-        if Specification.DECLARATIONS in data:
-            parsed_data[Specification.DECLARATIONS] = cls.parse_expression(
-                data[Specification.DECLARATIONS], data[Specification.DECLARATIONS])
+        if declarations:
+            declarations = cls.parse_expression(declarations, declarations)
+            parsed_data[Specification.DECLARATIONS] = declarations
 
         if Specification.ENVIRONMENT in data:
             parsed_data[Specification.ENVIRONMENT] = cls.parse_expression(
-                data[Specification.ENVIRONMENT], parsed_data.get(Specification.DECLARATIONS, {}))
+                data[Specification.ENVIRONMENT], declarations)
 
         if Specification.SETTINGS in data:
             parsed_data[Specification.SETTINGS] = cls.parse_expression(
-                data[Specification.SETTINGS], parsed_data.get(Specification.DECLARATIONS, {}))
+                data[Specification.SETTINGS], declarations)
 
         for section in Specification.GRAPH_SECTIONS:
             if section in data:
                 parsed_data[section] = cls.parse_expression(
-                    data[section], parsed_data.get(Specification.DECLARATIONS, {}), True, True)
+                    data[section], declarations, True, True)
 
         return parsed_data
 
@@ -86,22 +93,25 @@ class Parser(object):
             return expression
         if isinstance(expression, Mapping):
             if len(expression) == 1:
-                key = list(six.iterkeys(expression))[0]
+                old_key, value = list(six.iteritems(expression))[0]
+                # always parse the keys, they must be base object or evaluate to base objects
+                key = cls.parse_expression(old_key, declarations)
                 if check_operators and cls.is_operator(key):
-                    return cls._parse_operator(expression, declarations)
+                    return cls._parse_operator({key: value}, declarations)
                 if check_graph and key == 'graph':
-                    return {'graph': cls._parse_graph(expression['graph'], declarations)}
+                    return {'graph': cls._parse_graph(value, declarations)}
                 if check_graph and key == 'feature_processors':
                     return {
                         key: {
-                            f_key: cls._parse_graph(f_vlaue, declarations)
-                            for f_key, f_vlaue in six.iteritems(expression[key])
+                            cls.parse_expression(f_key, declarations):
+                                cls._parse_graph(f_vlaue, declarations)
+                            for f_key, f_vlaue in six.iteritems(value)
                         }
                     }
                 else:
                     return {
                         key: cls.parse_expression(
-                            expression[key], declarations, check_operators, check_graph)
+                            value, declarations, check_operators, check_graph)
                     }
 
             new_expression = {}

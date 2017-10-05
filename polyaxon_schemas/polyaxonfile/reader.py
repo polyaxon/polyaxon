@@ -11,6 +11,7 @@ import six
 import yaml
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.polyaxonfile.utils import deep_update
 
 
 def read(config_values):
@@ -29,25 +30,11 @@ def read(config_values):
                 "received {} instead".format(type(config_value)))
 
         if isinstance(config_value, Mapping):
-            config = _deep_update(config, config_value)
+            config = deep_update(config, config_value)
         elif os.path.isfile(config_value):
-            config = _deep_update(config, _read_from_file(config_value))
+            config = deep_update(config, _read_from_file(config_value))
         else:
             PolyaxonConfigurationError('Cannot read config_value: `{}`'.format(config_value))
-    return config
-
-
-def _deep_update(config, override_config):
-    for k, v in six.iteritems(override_config):
-        if isinstance(v, Mapping):
-            k_config = config.get(k, {})
-            if isinstance(k_config, Mapping):
-                v_config = _deep_update(k_config, v)
-                config[k] = v_config
-            else:
-                config[k] = v
-        else:
-            config[k] = override_config[k]
     return config
 
 

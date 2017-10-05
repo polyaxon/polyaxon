@@ -9,14 +9,15 @@ matrix:
     logspace: 0.01:0.1:5
 
   loss:
-    values: [MeanSquaredError, AbsoluteDifferenceError]
+    values: [MeanSquaredError, AbsoluteDifference]
 
 model:
   model_type: regressor
   loss:
-    MeanSquaredError:
+    "{{ loss }}":
   optimizer:
     Adam:
+      learning_rate: "{{ lr }}"
   graph:
     input_layers: images
     layers:

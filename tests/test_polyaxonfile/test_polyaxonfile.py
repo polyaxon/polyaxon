@@ -7,7 +7,7 @@ from unittest import TestCase
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
 from polyaxon_schemas.logging import LoggingConfig
-from polyaxon_schemas.losses import MeanSquaredErrorConfig
+from polyaxon_schemas.losses import MeanSquaredErrorConfig, AbsoluteDifferenceConfig
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.models import ClassifierConfig, RegressorConfig
 from polyaxon_schemas.optimizers import AdamConfig
@@ -125,28 +125,40 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.matrix['lr'].to_dict() == {
             'logspace': {'start': 0.01, 'stop': 0.1, 'num': 5}}
         assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
-                                                               'AbsoluteDifferenceError']}
-        assert plxfile.matrix_space == 7
+                                                               'AbsoluteDifference']}
+        assert plxfile.matrix_space == 10
         declarations = []
         for lr in plxfile.matrix['lr'].to_numpy():
             for loss in plxfile.matrix['loss'].to_numpy():
                 declarations.append({'loss': loss, 'lr': lr})
         assert sorted(
-            plxfile.get_matrix_declarations(), key=lambda x: (x['lr'], x['loss'])) == sorted(
+            plxfile.matrix_declarations, key=lambda x: (x['lr'], x['loss'])) == sorted(
             declarations, key=lambda x: (x['lr'], x['loss']))
         assert plxfile.settings is None
-        assert plxfile.environment is None
         assert plxfile.run_type == RunTypes.LOCAL
-        assert plxfile.cluster_def == ({'master': 1}, False)
-        assert_equal_dict(plxfile.get_cluster().to_dict(), {'master': ['127.0.0.1:10000'],
-                                                            'ps': [],
-                                                            'worker': []})
-        assert isinstance(plxfile.model, RegressorConfig)
-        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(plxfile.model.optimizer, AdamConfig)
-        assert isinstance(plxfile.model.graph, GraphConfig)
-        assert len(plxfile.model.graph.layers) == 4
-        assert plxfile.model.graph.input_layers == [['images', 0, 0]]
-        last_layer = plxfile.model.graph.layers[-1].name
-        assert plxfile.model.graph.output_layers == [[last_layer, 0, 0]]
-        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
+        # we cannot access property because the current polyaxonfile has multiple experiments
+        with self.assertRaises(AttributeError):
+            plxfile.environment
+        with self.assertRaises(AttributeError):
+            plxfile.cluster_def
+        with self.assertRaises(AttributeError):
+            plxfile.model
+        with self.assertRaises(AttributeError):
+            plxfile.train
+
+        for xp in range(plxfile.matrix_space):
+            assert plxfile.get_environment_at(xp) is None
+            assert plxfile.get_cluster_def_at(xp) == ({'master': 1}, False)
+
+            assert_equal_dict(plxfile.get_cluster(xp).to_dict(),
+                              {'master': ['127.0.0.1:10000'], 'ps': [], 'worker': []})
+            model = plxfile.get_model_at(xp)
+            assert isinstance(model, RegressorConfig)
+            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+            assert isinstance(model.optimizer, AdamConfig)
+            assert isinstance(model.graph, GraphConfig)
+            assert len(model.graph.layers) == 4
+            assert model.graph.input_layers == [['images', 0, 0]]
+            last_layer = model.graph.layers[-1].name
+            assert model.graph.output_layers == [[last_layer, 0, 0]]
+            assert isinstance(plxfile.get_train_at(xp).data_pipeline, TFRecordImagePipelineConfig)
