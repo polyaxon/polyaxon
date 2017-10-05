@@ -61,6 +61,7 @@ class Parser(object):
     @classmethod
     def parse(cls, data, matrix_declarations=None):
         declarations = copy.copy(data.get(Specification.DECLARATIONS, {}))
+        matrix_declarations = copy.copy(matrix_declarations)
         if matrix_declarations:
             declarations = deep_update(matrix_declarations, declarations)
 

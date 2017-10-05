@@ -162,3 +162,47 @@ class TestPolyaxonfile(TestCase):
             last_layer = model.graph.layers[-1].name
             assert model.graph.output_layers == [[last_layer, 0, 0]]
             assert isinstance(plxfile.get_train_at(xp).data_pipeline, TFRecordImagePipelineConfig)
+
+    def test_one_matrix_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'project1'
+        assert plxfile.project_path == '/tmp/plx_logs/project1'
+        assert isinstance(plxfile.matrix['loss'], MatrixConfig)
+        assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
+                                                               'AbsoluteDifference']}
+        assert plxfile.matrix_space == 2
+        declarations = []
+        for loss in plxfile.matrix['loss'].to_numpy():
+            declarations.append({'loss': loss})
+        assert sorted(
+            plxfile.matrix_declarations, key=lambda x: (x['loss'])) == sorted(
+            declarations, key=lambda x: (x['loss']))
+        assert plxfile.settings is None
+        assert plxfile.run_type == RunTypes.LOCAL
+        # we cannot access property because the current polyaxonfile has multiple experiments
+        with self.assertRaises(AttributeError):
+            plxfile.environment
+        with self.assertRaises(AttributeError):
+            plxfile.cluster_def
+        with self.assertRaises(AttributeError):
+            plxfile.model
+        with self.assertRaises(AttributeError):
+            plxfile.train
+
+        for xp in range(plxfile.matrix_space):
+            assert plxfile.get_environment_at(xp) is None
+            assert plxfile.get_cluster_def_at(xp) == ({'master': 1}, False)
+
+            assert_equal_dict(plxfile.get_cluster(xp).to_dict(),
+                              {'master': ['127.0.0.1:10000'], 'ps': [], 'worker': []})
+            model = plxfile.get_model_at(xp)
+            assert isinstance(model, RegressorConfig)
+            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+            assert isinstance(model.optimizer, AdamConfig)
+            assert isinstance(model.graph, GraphConfig)
+            assert len(model.graph.layers) == 4
+            assert model.graph.input_layers == [['images', 0, 0]]
+            last_layer = model.graph.layers[-1].name
+            assert model.graph.output_layers == [[last_layer, 0, 0]]
+            assert isinstance(plxfile.get_train_at(xp).data_pipeline, TFRecordImagePipelineConfig)

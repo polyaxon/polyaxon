@@ -103,11 +103,22 @@ class PolyaxonFile(object):
 
     @cached_property
     def project_path(self):
-        project_path = None
-        if self.settings:
-            project_path = self.settings.logging.path
+        return self.get_project_path_at()
 
-        return project_path or '/tmp/plx_logs/' + self.project.name
+    def get_project_path_at(self, experiment=None):
+        def get_path():
+            project_path = None
+            if self.settings:
+                project_path = self.settings.logging.path
+
+            return project_path or '/tmp/plx_logs/' + self.project.name
+
+        path = get_path()
+        if self.matrix_space == 1 or experiment is None:
+            return path
+
+        return '{}/{}'.format(path, experiment)
+
 
     @cached_property
     def validated_data(self):
