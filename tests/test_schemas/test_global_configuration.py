@@ -7,7 +7,7 @@ from polyaxon_cli.schemas.global_configuration import GlobalConfigurationConfig
 
 
 class TestGlobalConfigs(TestCase):
-    def test_globl_config(self):
+    def test_global_config(self):
         config_dict = {'verbose': True,
                        'host': 'localhost',
                        'working_directory': '.'}
