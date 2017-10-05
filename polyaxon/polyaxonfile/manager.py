@@ -76,10 +76,10 @@ def _get_local_cluster(num_workers, num_ps):
     return ClusterConfig.from_dict(cluster_config)
 
 
-def _get_run_configs(polyaxonfile):
+def _get_run_configs(polyaxonfile, experiment_id):
     plx_file = PolyaxonFile.read(polyaxonfile)
-    environment = plx_file.settings.environment
-    cluster_def, is_distributed = plx_file.cluster_def
+    environment = plx_file.get_environment_at(experiment_id)
+    cluster_def, is_distributed = plx_file.get_cluster_def_at(experiment_id)
 
     def get_master_config(config, task_type=None, task_id=None):
         config = RunConfig.from_config(config)
@@ -92,7 +92,7 @@ def _get_run_configs(polyaxonfile):
     if not is_distributed:
         return {TaskType.MASTER: get_master_config(config)}, False
 
-    config.cluster = plx_file.get_cluster()
+    config.cluster = plx_file.get_cluster(experiment=experiment_id)
 
     configs = {TaskType.MASTER: [get_master_config(config, TaskType.MASTER, 0)]}
 
@@ -133,9 +133,9 @@ def _get_run_configs(polyaxonfile):
     return configs, True
 
 
-def prepare_experiment(polyaxonfile, task_type=TaskType.MASTER, task_id=0):
+def prepare_experiment_run(polyaxonfile, experiment_id, task_type=TaskType.MASTER, task_id=0):
     plx_file = PolyaxonFile.read(polyaxonfile)
-    cluster, is_distributed = plx_file.cluster_def
+    cluster, is_distributed = plx_file.get_cluster_def_at(experiment_id)
 
     if (task_type not in cluster or
             not isinstance(cluster[task_type], int) or
@@ -143,22 +143,23 @@ def prepare_experiment(polyaxonfile, task_type=TaskType.MASTER, task_id=0):
         raise ValueError('task_type, task_id `{}, {}` is not supported by '
                          'the specification file passed.'.format(task_type, task_id))
 
-    if not plx_file.settings.environment:
+    env = plx_file.get_environment_at(experiment_id)
+    if not env:
         tf.logging.set_verbosity(tf.logging.INFO)
         configs = {TaskType.MASTER: [RunConfig()]}
         delay_workers_by_global_step = False
     else:
         tf.logging.set_verbosity(LOGGING_LEVEL[plx_file.settings.logging.level])
-        configs, is_distributed = _get_run_configs(plx_file)
-        delay_workers_by_global_step = plx_file.settings.environment.delay_workers_by_global_step
+        configs, is_distributed = _get_run_configs(plx_file, experiment_id)
+        delay_workers_by_global_step = env.delay_workers_by_global_step
 
-    train_input_fn, train_steps, train_hooks = _get_train(plx_file.train)
+    train_input_fn, train_steps, train_hooks = _get_train(plx_file.get_train_at(experiment_id))
     (eval_input_fn, eval_steps, eval_hooks, eval_delay_secs,
-     continuous_eval_throttle_secs) = _get_eval(plx_file.eval)
+     continuous_eval_throttle_secs) = _get_eval(plx_file.get_eval_at(experiment_id))
 
-    estimator = getters.get_estimator(plx_file.model,
+    estimator = getters.get_estimator(plx_file.get_model_at(experiment_id),
                                       configs[task_type][task_id],
-                                      output_dir=plx_file.project_path)
+                                      output_dir=plx_file.get_project_path_at(experiment_id))
 
     return Experiment(
         estimator=estimator,
@@ -174,7 +175,7 @@ def prepare_experiment(polyaxonfile, task_type=TaskType.MASTER, task_id=0):
         export_strategies=plx_file.settings.export_strategies)
 
 
-def prepare_all_experiments(polyaxonfile):
+def prepare_all_experiment_runs(polyaxonfile):
     plx_file = PolyaxonFile.read(polyaxonfile)
     is_distributed = False
 

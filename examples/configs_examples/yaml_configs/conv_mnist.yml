@@ -4,6 +4,12 @@ version: 1
 project:
   name: conv_mnsit
 
+
+matrix:
+  lr:
+    logspace: 0.01:0.1:2
+
+
 settings:
   logging:
     level: INFO
@@ -21,7 +27,7 @@ model:
       SigmoidCrossEntropy:
     optimizer:
       Adam:
-        learning_rate: 0.001
+        learning_rate: "{{ lr }}"
     metrics:
       - Accuracy
       - Precision

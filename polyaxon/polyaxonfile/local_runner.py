@@ -7,6 +7,7 @@ import signal
 import subprocess
 import sys
 
+import time
 from six.moves import xrange
 from multiprocessing import Process
 
@@ -16,12 +17,13 @@ from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
 from polyaxon.estimators.run_config import TaskType
 from polyaxon.polyaxonfile.manager import (
-    prepare_all_experiments,
-    prepare_experiment,
+    prepare_all_experiment_runs,
+    prepare_experiment_run,
 )
 
 jobs = []
 processes = []
+current_run = {'finished': False}
 
 
 def cleanup():
@@ -37,6 +39,8 @@ atexit.register(cleanup)
 def signal_handler(signal, frame):
     for p in processes:
         p.terminate()
+
+    current_run['finished'] = True
     sys.exit(0)
 
 
@@ -48,9 +52,9 @@ def get_pybin():
     return pybin
 
 
-def run_experiment(polyaxonfile, task_type, task_id, schedule):
+def start_experiment_run(polyaxonfile, experiment_id, task_type, task_id, schedule):
     plx_file = PolyaxonFile.read(polyaxonfile)
-    experiment = prepare_experiment(plx_file, task_type, task_id)
+    experiment = prepare_experiment_run(plx_file, experiment_id, task_type, task_id)
     task = getattr(experiment, schedule)
     return task()
 
@@ -77,38 +81,45 @@ def create_process(env):
 
 def run(polyaxonfile):
     plx_file = PolyaxonFile.read(polyaxonfile)
-    cluster, is_distributed = plx_file.cluster_def
-    if not is_distributed:
-        run_experiment(plx_file, TaskType.MASTER, 0, 'continuous_train_and_eval')
-        return
+    for xp in range(plx_file.matrix_space):
+        logging.info("running Experiment n: {}".format(xp))
+        cluster, is_distributed = plx_file.get_cluster_def_at(xp)
+        if not is_distributed:
+            start_experiment_run(plx_file, xp, TaskType.MASTER, 0, 'continuous_train_and_eval')
+            current_run['finished'] = True
+        else:
+            env = {
+                'polyaxonfile': polyaxonfile,
+                'task_type': TaskType.MASTER,
+                'task_id': 0,
+                'schedule': 'train_and_evaluate'
+            }
 
-    env = {
-        'polyaxonfile': polyaxonfile,
-        'task_type': TaskType.MASTER,
-        'task_id': 0,
-        'schedule': 'train_and_evaluate'
-    }
+            create_process(env)
 
-    create_process(env)
+            for i in xrange(cluster.get(TaskType.WORKER, 0)):
+                env['task_id'] = i
+                env['task_type'] = TaskType.WORKER
+                env['schedule'] = 'train'
+                create_process(env)
 
-    for i in xrange(cluster.get(TaskType.WORKER, 0)):
-        env['task_id'] = i
-        env['task_type'] = TaskType.WORKER
-        env['schedule'] = 'train'
-        create_process(env)
+            for i in xrange(cluster.get(TaskType.PS, 0)):
+                env['task_id'] = i
+                env['task_type'] = TaskType.PS
+                env['schedule'] = 'run_std_server'
+                create_process(env)
 
-    for i in xrange(cluster.get(TaskType.PS, 0)):
-        env['task_id'] = i
-        env['task_type'] = TaskType.PS
-        env['schedule'] = 'run_std_server'
-        create_process(env)
+            for job in jobs:
+                job.join()
 
-    for job in jobs:
-        job.join()
+        while not current_run['finished']:
+            time.sleep(30)
+
+        current_run['finished'] = False
 
 
 def run_all(polyaxonfile):
-    xps = prepare_all_experiments(polyaxonfile)
+    xps = prepare_all_experiment_runs(polyaxonfile)
     for i, xp in enumerate(xps):
         if i == 0:
             schedule = 'train_and_evaluate'
