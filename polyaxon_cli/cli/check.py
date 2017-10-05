@@ -34,8 +34,10 @@ def check(file, all, version, cluster, run_type, project, log_path, matrix, expe
         click.echo('The version is: {}'.format(plx_file.version))
 
     if cluster:
-        cluster_def, is_distributed = plx_file.cluster_def
-        click.echo('The cluster definition is: {}'.format(cluster_def))
+        for xp in range(plx_file.matrix_space):
+            cluster_def, is_distributed = plx_file.get_cluster_def_at(xp)
+            click.echo('The cluster definition for experiment {} is: {}'.format(
+                xp + 1, cluster_def))
 
     if run_type:
         click.echo('The run-type is: {}'.format(plx_file.run_type))
