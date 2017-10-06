@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-import six.moves.cPickle as pickle
+import six.moves.cPickle as pickle  # pylint: disable=import-error
 
 import numpy as np
 import tensorflow as tf
@@ -128,4 +128,3 @@ def create_predict_input_fn(dataset_dir):
     return create_sequence_dataset_predict_input_fn(
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT,
         bucket_boundaries=[140, 200, 300, 400, 500])
-

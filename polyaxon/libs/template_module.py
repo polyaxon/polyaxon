@@ -219,6 +219,6 @@ class FunctionModule(GraphModule):
             name=name or get_function_name(build_fn),
             module_type=self.ModuleType.IMAGE_PROCESSOR)
 
-    def _build(self, *args, **kwargs):
+    def _build(self, *args, **kwargs):  # pylint: disable=arguments-differ
         """Forwards call to the passed-in build function."""
         return self._build_fn(self.mode, *args, **kwargs)

@@ -38,7 +38,7 @@ class PNGImageReader(ImageReader):
 class PNGNumpyImageReader(ImageReader):
     """A numpy png image class reader"""
 
-    def __init__(self, shape=None):
+    def __init__(self, shape=None):  # pylint: disable=super-init-not-called
         self._placeholder = tf.placeholder(dtype=tf.uint8, shape=shape)
         self._image = tf.image.encode_png(self._placeholder)
 
@@ -52,7 +52,7 @@ class PNGNumpyImageReader(ImageReader):
 
 class JPGNumpyImageReader(ImageReader):
     """A jpeg numpy image class reader"""
-    def __init__(self, shape=None):
+    def __init__(self, shape=None):  # pylint: disable=super-init-not-called
         self._placeholder = tf.placeholder(dtype=tf.uint8, shape=shape)
         self._image = tf.image.encode_jpeg(self._placeholder)
 

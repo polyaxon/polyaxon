@@ -7,7 +7,7 @@ import tensorflow as tf
 
 from tensorflow.python.ops import math_ops, array_ops
 
-from polyaxon_schemas import losses
+from polyaxon_schemas import losses as loss_schemas
 
 from polyaxon.libs.utils import EPSILON, clip, get_name_scope
 
@@ -377,15 +377,15 @@ def poisson_loss(weights=1.0, name='PoissonLoss', scope=None, collect=False):
 
 
 LOSSES = OrderedDict([
-    (losses.AbsoluteDifferenceConfig.IDENTIFIER, absolute_difference),
-    (losses.LogLossConfig.IDENTIFIER, log_loss),
-    (losses.MeanSquaredErrorConfig.IDENTIFIER, mean_squared_error),
-    (losses.SoftmaxCrossEntropyConfig.IDENTIFIER, softmax_cross_entropy),
-    (losses.SigmoidCrossEntropyConfig.IDENTIFIER, sigmoid_cross_entropy),
-    (losses.HingeLossConfig.IDENTIFIER, hinge_loss),
-    (losses.CosineDistanceConfig.IDENTIFIER, cosine_distance),
-    (losses.KullbackLeiberDivergenceConfig.IDENTIFIER, kullback_leibler_divergence),
-    (losses.PoissonLossConfig.IDENTIFIER, poisson_loss),
-    (losses.HuberLossConfig.IDENTIFIER, huber_loss),
-    (losses.ClippedDeltaLossConfig.IDENTIFIER, clipped_delta_loss),
+    (loss_schemas.AbsoluteDifferenceConfig.IDENTIFIER, absolute_difference),
+    (loss_schemas.LogLossConfig.IDENTIFIER, log_loss),
+    (loss_schemas.MeanSquaredErrorConfig.IDENTIFIER, mean_squared_error),
+    (loss_schemas.SoftmaxCrossEntropyConfig.IDENTIFIER, softmax_cross_entropy),
+    (loss_schemas.SigmoidCrossEntropyConfig.IDENTIFIER, sigmoid_cross_entropy),
+    (loss_schemas.HingeLossConfig.IDENTIFIER, hinge_loss),
+    (loss_schemas.CosineDistanceConfig.IDENTIFIER, cosine_distance),
+    (loss_schemas.KullbackLeiberDivergenceConfig.IDENTIFIER, kullback_leibler_divergence),
+    (loss_schemas.PoissonLossConfig.IDENTIFIER, poisson_loss),
+    (loss_schemas.HuberLossConfig.IDENTIFIER, huber_loss),
+    (loss_schemas.ClippedDeltaLossConfig.IDENTIFIER, clipped_delta_loss),
 ])

@@ -10,7 +10,6 @@ from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.training import (
     monitored_session,
     saver,
-    summary_io,
     training
 )
 
@@ -37,7 +36,8 @@ class BaseAgent(Estimator):
             model_fn=model_fn, model_dir=model_dir, config=config, params=params)
         self.memory = memory
 
-    def _prepare_train(self, episodes=None, steps=None,
+    def _prepare_train(self,  # pylint: disable=arguments-differ
+                       episodes=None, steps=None,
                        hooks=None, max_steps=None, max_episodes=None):
         hooks = super(BaseAgent, self)._prepare_train(steps=steps, hooks=hooks, max_steps=max_steps)
 
@@ -105,7 +105,8 @@ class Agent(BaseAgent):
     Raises:
         ValueError: parameters of `model_fn` don't match `params`.
     """
-    def _prepare_train(self, first_update=35, update_frequency=1, episodes=None, steps=None,
+    def _prepare_train(self,  # pylint: disable=arguments-differ
+                       first_update=35, update_frequency=1, episodes=None, steps=None,
                        hooks=None, max_steps=None, max_episodes=None):
         if first_update < 0:
             raise ValueError("Must specify first_update > 0, given: {}".format(first_update))
@@ -115,7 +116,8 @@ class Agent(BaseAgent):
         hooks = super(Agent, self)._prepare_train(steps=steps, hooks=hooks, max_steps=max_steps)
         return hooks
 
-    def train(self, env, first_update=35, update_frequency=10, episodes=None, steps=None,
+    def train(self,  # pylint: disable=arguments-differ
+              env, first_update=35, update_frequency=10, episodes=None, steps=None,
               hooks=None, max_steps=None, max_episodes=None):
         """Trains a model given an environment.
 
@@ -276,7 +278,8 @@ class Agent(BaseAgent):
                     sess.run([], feed_dict=feed_dict)
         return loss
 
-    def _train_model(self, env, first_update, update_frequency, hooks):
+    def _train_model(self,  # pylint: disable=arguments-differ
+                     env, first_update, update_frequency, hooks):
         all_hooks = []
         with ops.Graph().as_default() as g, g.device(self._device_fn):
             random_seed.set_random_seed(self._config.tf_random_seed)
@@ -444,7 +447,8 @@ class PGAgent(BaseAgent):
             'discount': 0.97,
         }
 
-    def train(self, env, episodes=None, steps=None, hooks=None, max_steps=None, max_episodes=None):
+    def train(self,  # pylint: disable=arguments-differ
+              env, episodes=None, steps=None, hooks=None, max_steps=None, max_episodes=None):
         """Trains a model given an environment.
 
         Args:
@@ -596,7 +600,7 @@ class PGAgent(BaseAgent):
                     'observe', features, labels, last_in_memory, stats))
         return loss
 
-    def _train_model(self, env, hooks):
+    def _train_model(self, env, hooks):  # pylint: disable=arguments-differ
         all_hooks = []
         with ops.Graph().as_default() as g, g.device(self._device_fn):
             random_seed.set_random_seed(self._config.tf_random_seed)
@@ -867,7 +871,7 @@ class TRPOAgent(PGAgent):
         while not env_spec.done:
             data = env_spec.to_dict()
             data['dist_values'] = dist_values
-            _, step, timestep, action, next_dist_values = sess.run(
+            _, _, timestep, action, next_dist_values = sess.run(
                 [no_run_hooks, global_step, update_timestep_op,
                  estimator_spec.predictions['results'], estimator_spec.predictions['dist_values']],
                 feed_dict=self._prepare_feed_dict('act', features, labels, data))

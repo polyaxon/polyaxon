@@ -22,7 +22,7 @@ class NonNeg(BaseObject, constraints.NonNeg):
 
 
 class UnitNorm(BaseObject, constraints.UnitNorm):
-   CONFIG = UnitNormConfig
+    CONFIG = UnitNormConfig
 
 
 class MinMaxNorm(BaseObject, constraints.MinMaxNorm):

@@ -60,14 +60,14 @@ def _get_local_cluster(num_workers, num_ps):
     }
 
     workers = []
-    for i in range(num_workers):
+    for _ in range(num_workers):
         workers.append(get_address(worker_port))
         worker_port += 1
 
     cluster_config[TaskType.WORKER] = workers
 
     ps = []
-    for i in range(num_ps):
+    for _ in range(num_ps):
         ps.append(get_address(ps_port))
         ps_port += 1
 
@@ -135,7 +135,7 @@ def _get_run_configs(polyaxonfile, experiment_id):
 
 def prepare_experiment_run(polyaxonfile, experiment_id, task_type=TaskType.MASTER, task_id=0):
     plx_file = PolyaxonFile.read(polyaxonfile)
-    cluster, is_distributed = plx_file.get_cluster_def_at(experiment_id)
+    cluster, _ = plx_file.get_cluster_def_at(experiment_id)
 
     if (task_type not in cluster or
             not isinstance(cluster[task_type], int) or
@@ -150,7 +150,7 @@ def prepare_experiment_run(polyaxonfile, experiment_id, task_type=TaskType.MASTE
         delay_workers_by_global_step = False
     else:
         tf.logging.set_verbosity(LOGGING_LEVEL[plx_file.settings.logging.level])
-        configs, is_distributed = _get_run_configs(plx_file, experiment_id)
+        configs, _ = _get_run_configs(plx_file, experiment_id)
         delay_workers_by_global_step = env.delay_workers_by_global_step
 
     train_input_fn, train_steps, train_hooks = _get_train(plx_file.get_train_at(experiment_id))
@@ -175,22 +175,22 @@ def prepare_experiment_run(polyaxonfile, experiment_id, task_type=TaskType.MASTE
         export_strategies=plx_file.settings.export_strategies)
 
 
-def prepare_all_experiment_runs(polyaxonfile):
+def prepare_all_experiment_runs(polyaxonfile, experiment_id):
     plx_file = PolyaxonFile.read(polyaxonfile)
     is_distributed = False
 
-    if not plx_file.settings.environment:
+    if not plx_file.get_environment_at(experiment_id):
         tf.logging.set_verbosity(tf.logging.INFO)
         configs = {TaskType.MASTER: [RunConfig()]}
         delay_workers_by_global_step = False
     else:
         tf.logging.set_verbosity(LOGGING_LEVEL[plx_file.settings.logging.level])
-        configs, is_distributed = _get_run_configs(plx_file.settings.environment)
+        configs, is_distributed = _get_run_configs(plx_file.settings.environment, experiment_id)
         delay_workers_by_global_step = plx_file.settings.environment.delay_workers_by_global_step
 
-    train_input_fn, train_steps, train_hooks = _get_train(plx_file.train)
+    train_input_fn, train_steps, train_hooks = _get_train(plx_file.get_train_at(experiment_id))
     (eval_input_fn, eval_steps, eval_hooks, eval_delay_secs,
-     continuous_eval_throttle_secs) = _get_eval(plx_file.eval)
+     continuous_eval_throttle_secs) = _get_eval(plx_file.get_eval_at(experiment_id))
 
     def get_experiment(config):
         estimator = getters.get_estimator(plx_file.model,

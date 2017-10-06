@@ -119,6 +119,7 @@ def sgd(learning_rate=0.001, decay_type="", decay_rate=0., decay_steps=100, star
 def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=10000,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              global_step=None, use_locking=False, name='Momentum'):
+    # pylint: disable=redefined-outer-name
     """Optimizer that implements the Momentum.
 
     Momentum Optimizer accepts learning rate decay. When training a model,
@@ -165,6 +166,7 @@ def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
 def nesterov(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., decay_steps=10000,
              start_decay_at=0, stop_decay_at=tf.int32.max, min_learning_rate=1e-12, staircase=False,
              use_locking=False, global_step=None, name='Momentum'):
+    # pylint: disable=redefined-outer-name
     """Optimizer that implements the Nesterov.
 
     Same as Momentum optimizer but uses nestrov
@@ -211,6 +213,7 @@ def rmsprop(learning_rate=0.001, decay=0.9, momentum=0.0, epsilon=1e-10, decay_t
             decay_rate=0., decay_steps=10000, start_decay_at=0, stop_decay_at=tf.int32.max,
             min_learning_rate=1e-12, staircase=False, global_step=None,
             use_locking=False, name='RMSProp'):
+    # pylint: disable=redefined-outer-name
     """Optimizer that implements the RMSprop.
 
     Maintain a moving (discounted) average of the square of gradients.

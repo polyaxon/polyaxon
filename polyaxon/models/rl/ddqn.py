@@ -54,7 +54,8 @@ class DDQNModel(BaseQModel):
                 `loss` is a single scalar tensor to minimize.
         """
         reward, action, done = labels['reward'], labels['action'], labels['done']
-        train_action_selector = standard_ops.one_hot(indices=self._index_action, depth=self.num_actions)
+        train_action_selector = standard_ops.one_hot(
+            indices=self._index_action, depth=self.num_actions)
         target_q_values = tf.reduce_sum(
             tf.multiply(self._target_results.q, train_action_selector), axis=1)
 

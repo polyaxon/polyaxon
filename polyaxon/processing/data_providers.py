@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
+# pylint:  disable=too-many-lines
 
 import abc
 import six
@@ -131,7 +132,7 @@ class DatasetDataProvider(DataProvider):
     def __init__(self, dataset, num_readers=1, reader_kwargs=None, shuffle=True, num_epochs=None,
                  common_queue_capacity=256, common_queue_min=128, record_key='__record_key__',
                  seed=None, scope=None):
-        key, data = parallel_read(
+        _, data = parallel_read(
             dataset.data_sources,
             reader_class=dataset.reader,
             num_epochs=num_epochs,

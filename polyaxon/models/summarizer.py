@@ -141,7 +141,7 @@ def add_activations_summary(activation_ops):
     summaries = []
     for activation in activation_ops:
         activation_name = activation.op.name + '/Activations'
-        summaries.append(get_summary(SummaryTypes.HISTOGRAM, activation_name,  activation))
+        summaries.append(get_summary(SummaryTypes.HISTOGRAM, activation_name, activation))
 
         activation_name = activation.op.name + '/Activation'
         summaries.append(get_summary(SummaryTypes.SCALAR, activation_name,

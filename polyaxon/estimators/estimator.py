@@ -73,6 +73,7 @@ class Estimator(tf_estimator.Estimator):
         ValueError: parameters of `model_fn` don't match `params`.
     """
 
+    # pylint: disable=super-init-not-called
     def __init__(self, model_fn, model_dir=None, config=None, params=None):
         # Create a run configuration.
         if config is None:
@@ -86,7 +87,6 @@ class Estimator(tf_estimator.Estimator):
 
         if(model_dir is not None) and (self._config.model_dir is not None):
             if model_dir != self._config.model_dir:
-                # pylint: disable=g-doc-exception
                 raise ValueError(
                     "model_dir are set both in constructor and RunConfig, but with "
                     "different values. In constructor: '{}', in RunConfig: "
@@ -103,14 +103,16 @@ class Estimator(tf_estimator.Estimator):
             self._session_config = self._config.session_config
 
         # Set device function depending if there are replicas or not.
+        # pylint: disable=protected-access
         self._device_fn = tf_estimator._get_replica_device_setter(self._config)
 
-        tf_estimator._verify_model_fn_args(model_fn, params)
+        tf_estimator._verify_model_fn_args(model_fn, params)  # pylint: disable=protected-access
 
         self._model_fn = model_fn
         self._params = params or {}
 
-    def train(self, input_fn=None, steps=None, hooks=None, max_steps=None):
+    def train(self,  # pylint: disable=arguments-differ
+              nput_fn=None, steps=None, hooks=None, max_steps=None):
         """Trains a model given training data `x` predictions and `y` labels.
 
         Args:

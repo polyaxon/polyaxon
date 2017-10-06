@@ -90,12 +90,13 @@ class Generator(BaseModel):
         if function is not None:
             # Check number of arguments of the given function matches requirements.
             model_fn_args = get_arguments(function)
-            if ('mode' not in model_fn_args or
+            cond = ('mode' not in model_fn_args or
                     'loss' not in model_fn_args or
                     'features' not in model_fn_args or
                     'labels' not in model_fn_args or
                     'encoder_fn' not in model_fn_args or
-                    'encoder_fn' not in model_fn_args):
+                    'encoder_fn' not in model_fn_args)
+            if cond:
                 raise ValueError(
                     "Model's `bridge` `{}` should have these args: "
                     "`mode`, `features`, `labels`, `encoder_fn`, "
@@ -163,7 +164,7 @@ class Generator(BaseModel):
             predictions = self._build_predictions(
                 results=results.results, features=features, labels=labels)
         else:
-            losses, loss = self._build_loss(results, features, features)
+            _, loss = self._build_loss(results, features, features)
             eval_metrics = self._build_eval_metrics(results.results, features, features)
 
             if Modes.is_train(self.mode):

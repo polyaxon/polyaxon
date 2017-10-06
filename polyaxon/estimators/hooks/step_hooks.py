@@ -31,9 +31,6 @@ class StepLoggingTensorHook(basic_session_run_hooks.LoggingTensorHook):
         ValueError: if `every_n_iter` is non-positive.
     """
 
-    def __init__(self, tensors, every_n_iter=None, every_n_secs=None, formatter=None):
-        super(StepLoggingTensorHook, self).__init__(tensors, every_n_iter, every_n_secs, formatter)
-
     def before_run(self, run_context):  # pylint: disable=unused-argument
         self._should_trigger = can_run_hook(run_context)
         if self._should_trigger:
@@ -63,8 +60,7 @@ class StopAtStepHook(basic_session_run_hooks.StopAtStepHook):
         ValueError: If one of the arguments is invalid.
     """
 
-    def __init__(self, num_steps=None, last_step=None):
-        super(StopAtStepHook, self).__init__(num_steps, last_step)
+    pass
 
 
 class StepCheckpointSaverHook(basic_session_run_hooks.CheckpointSaverHook):
@@ -88,10 +84,7 @@ class StepCheckpointSaverHook(basic_session_run_hooks.CheckpointSaverHook):
         ValueError: Exactly one of saver or scaffold should be set.
     """
 
-    def __init__(self, checkpoint_dir, save_secs=None, save_steps=None, saver=None,
-                 checkpoint_basename="model.ckpt", scaffold=None, listeners=None):
-        super(StepCheckpointSaverHook, self).__init__(checkpoint_dir, save_secs, save_steps, saver,
-                                                      checkpoint_basename, scaffold, listeners)
+    pass
 
 
 class StepCounterHook(basic_session_run_hooks.StepCounterHook):
@@ -99,9 +92,7 @@ class StepCounterHook(basic_session_run_hooks.StepCounterHook):
     (A mirror to tensorflow.python.training.basic_session_run_hooks CheckpointSaverHook.)
     """
 
-    def __init__(self, every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None):
-        super(StepCounterHook, self).__init__(
-            every_n_steps, every_n_secs, output_dir, summary_writer)
+    pass
 
 
 class StepSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
@@ -127,10 +118,7 @@ class StepSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
         ValueError: Exactly one of scaffold or summary_op should be set.
     """
 
-    def __init__(self, save_steps=None, save_secs=None, output_dir=None, summary_writer=None,
-                 scaffold=None, summary_op=None):
-        super(StepSummarySaverHook, self).__init__(
-            save_steps, save_secs, output_dir, summary_writer, scaffold, summary_op)
+    pass
 
 
 STEP_HOOKS = OrderedDict([

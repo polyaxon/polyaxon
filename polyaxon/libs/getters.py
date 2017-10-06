@@ -95,7 +95,7 @@ def get_metric(module, y_pred, y_true, **kwargs):
 
     def get_labels_and_results(results, labels):
         lshape = get_shape(labels)
-        if len(lshape) == 1 or (len(lshape) and int(lshape[1]) == 1):
+        if len(lshape) == 1 or (lshape and int(lshape[1]) == 1):
             return tf.argmax(results), tf.argmax(labels)
         else:
             return tf.argmax(results, 1), tf.argmax(labels, 1)

@@ -76,7 +76,8 @@ class VPGModel(BasePGModel):
 
         log_probs = self._graph_results.distribution.log_prob(action)
         losses = tf.multiply(x=log_probs, y=discount_reward)
-        loss = -tf.reduce_mean(losses, axis=0, name='loss')
+        loss = -tf.reduce_mean(  # pylint: disable=invalid-unary-operand-type
+            losses, axis=0, name='loss')
 
         self._losses = losses
         self._loss = loss

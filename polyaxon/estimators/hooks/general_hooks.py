@@ -3,8 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from tensorflow.python.training import basic_session_run_hooks, session_run_hook
-from tensorflow.python.platform import tf_logging as logging
+from tensorflow.python.training import basic_session_run_hooks
 from tensorflow.python.training import evaluation
 
 from polyaxon.estimators.hooks.utils import can_run_hook
@@ -23,8 +22,7 @@ class GlobalStepWaiterHook(basic_session_run_hooks.GlobalStepWaiterHook):
         wait_until_step: an `int` shows until which global step should we wait.
     """
 
-    def __init__(self, wait_until_step):
-        super(GlobalStepWaiterHook, self).__init__(wait_until_step)
+    pass
 
 
 class FinalOpsHook(basic_session_run_hooks.FinalOpsHook):
@@ -36,39 +34,13 @@ class FinalOpsHook(basic_session_run_hooks.FinalOpsHook):
         final_ops_feed_dict: A feed dictionary to use when running `final_ops_dict`.
     """
 
-    def __init__(self, final_ops, final_ops_feed_dict=None):
-        super(FinalOpsHook, self).__init__(final_ops, final_ops_feed_dict)
+    pass
 
 
-class StopAfterNEvalsHook(evaluation._StopAfterNEvalsHook):
+class StopAfterNEvalsHook(evaluation._StopAfterNEvalsHook):  # pylint: disable=protected-access
     """Run hook used by the evaluation routines to run the `eval_ops` N times."""
 
-    def __init__(self, num_evals, log_progress=True):
-        """Constructs the run hook.
-
-        Args:
-            num_evals: The number of evaluations to run for.
-            log_progress: Whether to log evaluation progress, defaults to True.
-        """
-        # The number of evals to run for.
-        self._num_evals = num_evals
-        self._evals_completed = None
-        self._log_progress = log_progress
-
-    def _set_evals_completed_tensor(self, updated_eval_step):
-        self._evals_completed = updated_eval_step
-
-    def before_run(self, run_context):
-        return session_run_hook.SessionRunArgs({
-            'evals_completed': self._evals_completed
-        })
-
-    def after_run(self, run_context, run_values):
-        evals_completed = run_values.results['evals_completed']
-        if self._log_progress:
-            logging.info('Evaluation [%d/%d]', evals_completed, self._num_evals)
-        if evals_completed >= self._num_evals:
-            run_context.request_stop()
+    pass
 
 
 class NanTensorHook(basic_session_run_hooks.NanTensorHook):
@@ -84,16 +56,6 @@ class NanTensorHook(basic_session_run_hooks.NanTensorHook):
         loss_tensor: `Tensor`, the loss tensor.
         fail_on_nan_loss: `bool`, whether to raise exception when loss is NaN.
     """
-
-    def __init__(self, loss_tensor, fail_on_nan_loss=True):
-        """Initializes NanLoss monitor.
-
-        Args:
-          loss_tensor: `Tensor`, the loss tensor.
-          fail_on_nan_loss: `bool`, whether to raise exception when loss is NaN.
-        """
-        self._loss_tensor = loss_tensor
-        self._fail_on_nan_loss = fail_on_nan_loss
 
     def before_run(self, run_context):  # pylint: disable=unused-argument
         if can_run_hook(run_context):

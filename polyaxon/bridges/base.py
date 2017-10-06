@@ -81,6 +81,7 @@ class BaseBridge(GraphModule):
     def _build_loss(self, results, features, labels, loss, **kwargs):
         return getters.get_loss(loss.IDENTIFIER, results, features, **loss.to_dict())
 
-    def _build(self, features, labels, loss, encoder_fn, decoder_fn, *args, **kwargs):
+    def _build(self,  # pylint: disable=arguments-differ
+               features, labels, loss, encoder_fn, decoder_fn, *args, **kwargs):
         """Subclasses should implement their logic here and must return a `BridgeSpec`."""
         raise NotImplementedError

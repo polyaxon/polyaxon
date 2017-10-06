@@ -14,7 +14,7 @@ TaskType = run_config.TaskType
 
 
 def _validate_properties(new_copy):
-    run_config._validate_properties(new_copy)
+    run_config._validate_properties(new_copy)  # pylint: disable=protected-access
 
     def _validate(property_name, cond, message):
         property_value = getattr(new_copy, property_name)
@@ -190,6 +190,7 @@ class RunConfig(run_config.RunConfig):
             setattr(new_copy, '_' + key, new_value)
             continue
 
-        run_config._validate_save_ckpt_with_replaced_keys(new_copy, kwargs.keys())
-        run_config._validate_properties(new_copy)
+        run_config._validate_save_ckpt_with_replaced_keys(
+            new_copy, kwargs.keys())  # pylint: disable=protected-access
+        run_config._validate_properties(new_copy)  # pylint: disable=protected-access
         return new_copy

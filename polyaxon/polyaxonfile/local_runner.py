@@ -36,7 +36,7 @@ def cleanup():
 atexit.register(cleanup)
 
 
-def signal_handler(signal, frame):
+def signal_handler(*args):
     for p in processes:
         p.terminate()
 
@@ -47,7 +47,7 @@ def signal_handler(signal, frame):
 def get_pybin():
     try:
         pybin = os.path.join(os.environ['VIRTUAL_ENV'], 'bin/python')
-    except:
+    except:  # pylint: disable=bare-except
         pybin = sys.executable
     return pybin
 
@@ -65,14 +65,15 @@ def run_cmd(pybin, cmd, cwd):
     logging.info(env_cmd)
     p = subprocess.Popen(env_cmd, cwd=cwd, shell=True)
     processes.append(p)
-    (output, error) = p.communicate()
+    _, error = p.communicate()
     if error:
         logging.info('{} - ERROR: '.format(error))
 
 
 def create_process(env):
-    cmd = ("-c \"from polyaxon.polyaxonfile.local_runner import run_experiment; "
-           "run_experiment('{polyaxonfile}', '{task_type}', {task_id}, '{schedule}')\"".format(**env))
+    cmd = ("""-c \"from polyaxon.polyaxonfile.local_runner import run_experiment;
+           run_experiment('{polyaxonfile}', '{task_type}', {task_id}, '{schedule}')\"""".format(
+        **env))
     p = Process(target=run_cmd, args=(get_pybin(), cmd, os.getcwd(),))
     p.daemon = True
     p.start()
@@ -119,15 +120,17 @@ def run(polyaxonfile):
 
 
 def run_all(polyaxonfile):
-    xps = prepare_all_experiment_runs(polyaxonfile)
-    for i, xp in enumerate(xps):
-        if i == 0:
-            schedule = 'train_and_evaluate'
-        else:
-            schedule = 'train'
-        p = Process(target=getattr(xp, schedule))
-        p.start()
-        jobs.append(p)
+    plx_file = PolyaxonFile.read(polyaxonfile)
+    for xp in range(plx_file.matrix_space):
+        xp_runs = prepare_all_experiment_runs(polyaxonfile, xp)
+        for i, xp_run in enumerate(xp_runs):
+            if i == 0:
+                schedule = 'train_and_evaluate'
+            else:
+                schedule = 'train'
+            p = Process(target=getattr(xp_run, schedule))
+            p.start()
+            jobs.append(p)
 
-    for job in jobs:
-        job.join()
+        for job in jobs:
+            job.join()

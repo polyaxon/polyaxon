@@ -76,4 +76,3 @@ class LatentBridge(BaseBridge):
                                             z_log_sigma=z_log_sigma)
 
         return BridgeSpec(results=results, losses=losses, loss=loss)
-

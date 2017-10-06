@@ -90,8 +90,8 @@ class TFRecordImagePipeline(Pipeline):
         self.data_files = data_files or []
         self.meta_data = None
         if meta_data_file:
-            with open(meta_data_file) as meta_data_file:
-                self.meta_data = json.load(meta_data_file)
+            with open(meta_data_file) as f:
+                self.meta_data = json.load(f)
 
     def make_data_provider(self, **kwargs):
         """Creates DataProvider instance for this input pipeline. Additional keyword arguments
@@ -165,8 +165,8 @@ class TFRecordSequencePipeline(Pipeline):
         self.data_files = data_files or []
         self.meta_data = None
         if meta_data_file:
-            with open(meta_data_file) as meta_data_file:
-                self.meta_data = json.load(meta_data_file)
+            with open(meta_data_file) as f:
+                self.meta_data = json.load(f)
 
     def _create_context_features(self):
         context = {}
@@ -291,7 +291,7 @@ class ParallelTextPipeline(Pipeline):
             items_to_descriptions={})
 
         dataset_target = None
-        if len(self.target_files) > 0:
+        if self.target_files:
             decoder_target = SplitTokensDecoder(
                 tokens_feature_name='target_token',
                 length_feature_name='target_len',
@@ -429,7 +429,7 @@ class ImageCaptioningPipeline(Pipeline):
         caption_tokens_field: the caption tokends field.
     """
 
-    def __init__(self, mode, name='ImageCaptioningPipeline',  feature_processors=None,
+    def __init__(self, mode, name='ImageCaptioningPipeline', feature_processors=None,
                  shuffle=True, num_epochs=None, files=None, image_field="image/data",
                  image_format='jpg', caption_ids_field="image/caption_ids",
                  caption_tokens_field="image/caption"):

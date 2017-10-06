@@ -79,7 +79,7 @@ def count_tfrecord_file_content(tfrecord_filename):
 
 
 def verify_tfrecord_image(dataset_dir, create_input_fn, channels=3):
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt  # pylint: disable=import-error
     from tensorflow.python.training import coordinator
     from tensorflow.python.training import queue_runner_impl
 

@@ -152,7 +152,7 @@ class BaseModel(GraphModule):
         self._grads_and_vars = grads_and_vars
 
         if self._clip_gradients > 0.0:
-            clipped_gradients, gradients_norm = tf.clip_by_global_norm(
+            clipped_gradients, _ = tf.clip_by_global_norm(
                 t_list=gradients, clip_norm=self._clip_gradients)
             grads_and_vars = list(zip(clipped_gradients, variables))
         if self._clip_embed_gradients > 0.0:
@@ -289,11 +289,13 @@ class BaseModel(GraphModule):
         """
         return extract_batch_length(features)
 
-    def __call__(self, features, labels, params=None, config=None):
+    def __call__(self,  # pylint: disable=arguments-differ, useless-super-delegation
+                 features, labels, params=None, config=None):
         """Calls the built mode."""
         return super(BaseModel, self).__call__(features, labels, params, config)
 
-    def _build(self, features, labels, params=None, config=None):
+    def _build(self,  # pylint: disable=arguments-differ
+               features, labels, params=None, config=None):
         """Build the different operation of the model."""
         # Pre-process features and labels
         features, labels = self._preprocess(features, labels)
@@ -306,7 +308,7 @@ class BaseModel(GraphModule):
             predictions = self._build_predictions(results=results, features=features, labels=labels)
             extra_ops = self._build_extra_ops(results=results, features=features, labels=labels)
         else:
-            losses, loss = self._build_loss(results, features, labels)
+            _, loss = self._build_loss(results, features, labels)
             eval_metrics = self._build_eval_metrics(results, features, labels)
 
             if Modes.is_train(self.mode):

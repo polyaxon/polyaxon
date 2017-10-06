@@ -1,4 +1,4 @@
-Pillow==4.1.1
+Pillow==4.2.1
 PyYAML==3.12
 numpy==1.13.1
 scipy==0.19.1

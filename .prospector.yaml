@@ -29,7 +29,12 @@ pylint:
     - redefined-variable-type
     - too-many-ancestors
     - too-many-arguments
+    - too-many-instance-attributes
+    - attribute-defined-outside-init
+    - no-else-return
+    - too-many-locals
     - unused-argument
+    - not-context-manager
   enable:
     - missing-final-newline
   options:

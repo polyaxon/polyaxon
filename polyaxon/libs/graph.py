@@ -29,7 +29,7 @@ class Graph(Container):
         raise ConfigurationError("Node type `{}` is not supported.".format(type(node)))
 
     @classmethod
-    def from_config(cls, mode, features, labels, config):
+    def from_config(cls, mode, features, labels, config):  # pylint: disable=arguments-differ
         """Instantiates a Graph container from its config (output of `get_config()`).
 
         Arguments:
@@ -119,7 +119,7 @@ class Graph(Container):
         output_tensors = []
         for layer_data in config.input_layers:
             layer_name, node_index, tensor_index = cls.get_node_data(layer_data)
-            assert layer_name in created_layers, "Layer `` not found".format(layer_name)
+            assert layer_name in created_layers, "Layer `{}` not found".format(layer_name)
             layer = created_layers[layer_name]
             layer_output_tensors = layer.inbound_nodes[node_index].output_tensors
             input_tensors.append(layer_output_tensors[tensor_index])

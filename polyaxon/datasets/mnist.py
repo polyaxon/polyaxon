@@ -153,4 +153,3 @@ def create_input_fn(dataset_dir):
 def create_predict_input_fn(dataset_dir):
     return create_image_dataset_predict_input_fn(
         dataset_dir, prepare, RECORD_FILE_NAME_FORMAT, META_DATA_FILENAME_FORMAT)
-

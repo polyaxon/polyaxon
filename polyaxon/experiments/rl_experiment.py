@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon.estimators.agents import Agent
 from polyaxon.experiments import Experiment
-from polyaxon.libs import getters
 
 
 class RLExperiment(Experiment):
@@ -90,7 +89,8 @@ class RLExperiment(Experiment):
     def agent(self):
         return self._agent
 
-    def _call_train(self, steps=None, first_update=None, update_frequency=None, episodes=None,
+    def _call_train(self,  # pylint: disable=arguments-differ
+                    steps=None, first_update=None, update_frequency=None, episodes=None,
                     hooks=None, max_steps=None, max_episodes=None):
         return self._agent.train(env=self._env, first_update=first_update,
                                  update_frequency=update_frequency, episodes=episodes, steps=steps,

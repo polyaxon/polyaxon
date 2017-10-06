@@ -107,9 +107,9 @@ class NAFModel(BaseQModel):
         action_diff = action - self._train_results.a
 
         # A = (a - mean)P(a - mean) / 2
-        advantage = -tf.matmul(tf.expand_dims(action_diff, 1),
-                               tf.matmul(p_matrix, tf.expand_dims(action_diff, 2))) / 2
-        advantage = tf.squeeze(advantage, 2)
+        advantage = tf.matmul(tf.expand_dims(action_diff, 1),
+                              tf.matmul(p_matrix, tf.expand_dims(action_diff, 2))) / 2
+        advantage = tf.squeeze(-advantage, 2)  # pylint: disable=invalid-unary-operand-type
 
         # Q = V(s) + A(s, a)
         train_q_value = (self._train_results.v + advantage)[:-1]

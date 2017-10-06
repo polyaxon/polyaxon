@@ -64,7 +64,7 @@ def get_shape(x, dynamic=False):
 
         dynamic_shape = tf.unstack(tf.shape(x))
         return [d if s is None else s for (s, d) in zip(static_shape, dynamic_shape)]
-    elif type(x) in [np.ndarray, list, tuple]:
+    elif isinstance(x, (np.ndarray, list, tuple)):
         return np.shape(x)
     else:
         raise Exception('Invalid incoming layer.')
@@ -182,7 +182,7 @@ def validate_padding(value):
     padding = value.upper()
     if padding not in ['SAME', 'VALID']:
         raise ValueError('Padding value `{}` is not supported, '
-                         'expects `SAME`\`VALID`'.format(value))
+                         'expects `SAME` or `VALID`'.format(value))
     return padding
 
 
@@ -259,7 +259,7 @@ def get_arguments(func):
     """Returns list of arguments this function has."""
     if hasattr(func, '__code__'):
         # Regular function.
-        return inspect.getargspec(func).args
+        return inspect.getargspec(func).args  # pylint: disable=deprecated-method
     elif hasattr(func, 'func'):
         # Partial function.
         return get_arguments(func.func)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
+# pylint:  disable=too-many-lines
 
 from collections import OrderedDict
 
@@ -177,7 +178,8 @@ def random_crop(images, height, width):
     """
     images_shape = get_shape(images)
     if len(images_shape) > 4:
-        ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
+        ValueError("'image' must have either 3 or 4 dimensions, "
+                   "received `{}`.".format(images_shape))
 
     if len(images_shape) == 4:
         return tf.map_fn(lambda img: tf.random_crop(img, [height, width, images_shape[-1]]), images)
@@ -254,8 +256,7 @@ class ExtractGlimpse(BaseObject, Layer):
     """See `plx.image.extract_glimpse`'s docstring"""
     CONFIG = ExtractGlimpseConfig
 
-    def __init__(self, size, offsets, centered=None, normalized=None, uniform_noise=None,
-                 **kwargs):
+    def __init__(self, size, offsets, centered=None, normalized=None, uniform_noise=None, **kwargs):
         super(ExtractGlimpse, self).__init__(**kwargs)
         self.size = size
         self.offsets = offsets
@@ -317,7 +318,7 @@ def to_bounding_box(images, offset_height, offset_width, target_height, target_w
         `target_*` arguments, or either `offset_height` or `offset_width` is negative.
     """
     assert method in ['crop', 'pad'], "method should be one of `crop`, `pad`. " \
-                                      "received instead ``".format(method)
+                                      "received instead `{}`".format(method)
 
     if method == 'pad':
         return tf.image.pad_to_bounding_box(
@@ -341,9 +342,12 @@ class ToBoundingBox(BaseObject, Layer):
         self.method = method
 
     def call(self, inputs, **kwargs):
-        return to_bounding_box(images=inputs, offset_height=self.offset_height,
-                               offset_width=self.offset_width,  target_height=self.target_height,
-                               target_width=self.target_width, method=self.method)
+        return to_bounding_box(images=inputs,
+                               offset_height=self.offset_height,
+                               offset_width=self.offset_width,
+                               target_height=self.target_height,
+                               target_width=self.target_width,
+                               method=self.method)
 
 
 def flip(images, axis=0, is_random=False, seed=None):
@@ -379,16 +383,17 @@ def flip(images, axis=0, is_random=False, seed=None):
     elif axis == 1:
         method = tf.image.flip_up_down if not is_random else tf.image.random_flip_up_down
     else:
-        raise ValueError("`axis` should be 0 or 1, received ``".format(axis))
+        raise ValueError("`axis` should be 0 or 1, received `{}`".format(axis))
 
     images_shape = get_shape(images)
     if len(images_shape) > 4:
-        ValueError("'image' must have either 3 or 4 dimensions, received ``.".format(images_shape))
+        ValueError("'image' must have either 3 or 4 dimensions, "
+                   "received `{}`.".format(images_shape))
 
     if len(images_shape) == 4:
         if is_random:
             return tf.map_fn(lambda img: method(img, seed), images)
-        return tf.map_fn(lambda img: method(img), images)
+        return tf.map_fn(method, images)
 
     return method(images)
 
@@ -404,7 +409,7 @@ class Flip(BaseObject, Layer):
         self.seed = seed
 
     def call(self, inputs, **kwargs):
-        return flip(images=inputs, axis=self.axis, is_random=self.is_random,  seed=self.seed)
+        return flip(images=inputs, axis=self.axis, is_random=self.is_random, seed=self.seed)
 
 
 def transpose(images):
@@ -430,7 +435,7 @@ def transpose(images):
                    "received `{}`.".format(images_shape))
 
     if len(images_shape) == 4:
-        return tf.map_fn(lambda img: tf.image.transpose_image(img), images)
+        return tf.map_fn(tf.image.transpose_image, images)
 
     return tf.image.transpose_image(images)
 
@@ -438,9 +443,6 @@ def transpose(images):
 class Transpose(BaseObject, Layer):
     """See `plx.image.transpose`'s docstring"""
     CONFIG = TransposeConfig
-
-    def __init__(self, **kwargs):
-        super(Transpose, self).__init__(**kwargs)
 
     def call(self, inputs, **kwargs):
         return transpose(images=inputs)
@@ -929,16 +931,13 @@ def standardize(images):
                    "received `{}`.".format(images_shape))
 
     if len(images_shape) == 4:
-        return tf.map_fn(lambda img: tf.image.per_image_standardization(img), images)
+        return tf.map_fn(tf.image.per_image_standardization, images)
     return tf.image.per_image_standardization(images)
 
 
 class Standardization(BaseObject, Layer):
     """See `plx.image.standardize`'s docstring"""
     CONFIG = StandardizationConfig
-
-    def __init__(self, **kwargs):
-        super(Standardization, self).__init__(**kwargs)
 
     def call(self, inputs, **kwargs):
         return standardize(images=inputs)
@@ -1170,9 +1169,6 @@ def total_variation(images, name=None):
 class TotalVariation(BaseObject, Layer):
     """See `plx.image.total_variation`'s docstring"""
     CONFIG = TotalVariationConfig
-
-    def __init__(self, **kwargs):
-        super(TotalVariation, self).__init__(**kwargs)
 
     def call(self, inputs, **kwargs):
         return total_variation(images=inputs, name=self.name)

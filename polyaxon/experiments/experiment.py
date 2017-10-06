@@ -83,11 +83,13 @@ class Experiment(TFExperiment):
         """Extends the hooks for training."""
         self._train_hooks.extend(additional_hooks)
 
-    def _call_train(self, input_fn=None, steps=None, hooks=None, max_steps=None):
+    def _call_train(self,  # pylint: disable=arguments-differ
+                    input_fn=None, steps=None, hooks=None, max_steps=None):
         return self._estimator.train(
             input_fn=input_fn, steps=steps, max_steps=max_steps, hooks=hooks)
 
-    def _call_evaluate(self, input_fn=None, steps=None, name=None, checkpoint_path=None,
+    def _call_evaluate(self,  # pylint: disable=arguments-differ
+                       input_fn=None, steps=None, name=None, checkpoint_path=None,
                        hooks=None, metrics=None):
         return self._estimator.evaluate(
             input_fn=input_fn, steps=steps, name=name, checkpoint_path=checkpoint_path, hooks=hooks)
@@ -160,7 +162,7 @@ class Experiment(TFExperiment):
                                 max_steps=self._train_steps,
                                 hooks=self._train_hooks + extra_hooks)
 
-    def evaluate(self, delay_secs=None):
+    def evaluate(self, delay_secs=None):  # pylint: disable=arguments-differ
         """Evaluate on the evaluation data.
 
         Runs evaluation on the evaluation data and returns the result. Runs for

@@ -50,16 +50,13 @@ def pad_sequences(sequences, maxlen=None, dtype='int32', padding='pre', truncati
     # checking for consistency in the main loop below.
     sample_shape = tuple()
     for s in sequences:
-        if len(s) > 0:
-            sample_shape = np.asarray(s).shape[1:]
-            break
+        sample_shape = np.asarray(s).shape[1:]
+        break
 
     x = (np.ones((nb_samples, maxlen) + sample_shape) * value).astype(dtype)
     for idx, s in enumerate(sequences):
-        if not len(s):
-            continue  # empty list/array was found
         if truncating == 'pre':
-            trunc = s[-maxlen:]
+            trunc = s[-maxlen:]  # pylint: disable=invalid-unary-operand-type
         elif truncating == 'post':
             trunc = s[:maxlen]
         else:

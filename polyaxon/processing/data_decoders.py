@@ -79,11 +79,11 @@ class TFExampleDecoder(DataDecoder):
         """See base class."""
         return list(self._items_to_handlers.keys())
 
-    def decode(self, serialized_example, items=None):
+    def decode(self, data, items=None):
         """Decodes the given serialized TF-example.
 
         Args:
-            serialized_example: a serialized TF-example tensor.
+            data: a serialized TF-example tensor.
             items: the list of items to decode. These must be a subset of the item
                 keys in self._items_to_handlers. If `items` is left as None, then all
                 of the items in self._items_to_handlers are decoded.
@@ -91,7 +91,7 @@ class TFExampleDecoder(DataDecoder):
         Returns:
             the decoded items, a list of tensor.
         """
-        example = tf.parse_single_example(serialized_example, self._keys_to_features)
+        example = tf.parse_single_example(data, self._keys_to_features)
 
         # Reshape non-sparse elements just once:
         for k in self._keys_to_features:
@@ -171,8 +171,7 @@ class TFSequenceExampleDecoder(DataDecoder):
     contains the instructions for post_processing its tensors for stage 2.
     """
 
-    def __init__(self, context_keys_to_features, sequence_keys_to_features,
-                 items_to_handlers):
+    def __init__(self, context_keys_to_features, sequence_keys_to_features, items_to_handlers):
         """Constructs the decoder.
         Args:
           keys_to_features: a dictionary from TF-Example keys to either
@@ -190,10 +189,10 @@ class TFSequenceExampleDecoder(DataDecoder):
         """See base class."""
         return list(self._items_to_handlers.keys())
 
-    def decode(self, serialized_example, items=None):
+    def decode(self, data, items=None):
         """Decodes the given serialized TF-example.
         Args:
-          serialized_example: a serialized TF-example tensor.
+          data: a serialized TF-example tensor.
           items: the list of items to decode. These must be a subset of the item
             keys in self._items_to_handlers. If `items` is left as None, then all
             of the items in self._items_to_handlers are decoded.
@@ -201,8 +200,7 @@ class TFSequenceExampleDecoder(DataDecoder):
           the decoded items, a list of tensor.
         """
         context, sequence = tf.parse_single_sequence_example(
-            serialized_example, self._context_keys_to_features,
-            self._sequence_keys_to_features)
+            data, self._context_keys_to_features, self._sequence_keys_to_features)
 
         # Merge context and sequence features
         example = {}

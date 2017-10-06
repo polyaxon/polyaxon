@@ -127,8 +127,7 @@ def assert_global_counter(global_counter_tensor):
         global_counter_tensor: `Tensor` to test.
     """
 
-    if not (isinstance(global_counter_tensor, tf.Variable) or
-            isinstance(global_counter_tensor, tf.Tensor)):
+    if not (isinstance(global_counter_tensor, (tf.Variable, tf.Tensor))):
         raise TypeError("Existing `global_counter` must be a Variable or "
                         "Tensor: {}.".format(global_counter_tensor))
 
@@ -141,7 +140,7 @@ def assert_global_counter(global_counter_tensor):
                         'scalar: {}'.format(global_counter_tensor.get_shape()))
 
 
-def get_cumulative_rewards(reward, done,  discount=0.99):
+def get_cumulative_rewards(reward, done, discount=0.99):
     """compute cumulative rewards R(s,a) (a.k.a. G(s,a) in Sutton '16)
 
     `R_t = r_t + gamma*r_{t+1} + gamma^2*r_{t+2} + ...`

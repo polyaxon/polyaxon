@@ -43,7 +43,7 @@ setup(name='polyaxon',
       install_requires=[
           'numpy==1.13.1',
           'six',
-          'Pillow==4.1.1',
+          'Pillow==4.2.1',
           'tensorflow==1.3.0',
           'polyaxon-schemas==0.0.12'
       ],

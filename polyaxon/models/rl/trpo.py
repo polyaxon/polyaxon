@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-
 import numpy as np
 import tensorflow as tf
+
+from tensorflow.python.ops.distributions.kullback_leibler import kl_divergence
+
 from polyaxon import Modes
-
-try:
-    from tensorflow.python.ops.distributions.kullback_leibler import kl_divergence
-except ImportError:
-    # tf < 1.2.0
-    from tensorflow.contrib.distributions import kl as kl_divergence
-
 from polyaxon.libs.utils import get_shape
 from polyaxon.models.rl.base import BasePGModel
 
@@ -51,7 +46,7 @@ class TRPOModel(BasePGModel):
                 if `dict` it must contain a `state` key.
             labels: `dict`. A dictionary containing `action`, `reward`, `advantage`.
         """
-        features, labels = super(BasePGModel, self)._preprocess(features, labels)
+        features, labels = super(TRPOModel, self)._preprocess(features, labels)
 
         if not Modes.is_infer(self.mode) and 'dist_values' not in labels:
             raise KeyError("labels must include the keys: `dist_values`.")
@@ -88,7 +83,8 @@ class TRPOModel(BasePGModel):
         old_log_probs = old_distribution.log_prob(action)
 
         self._losses = tf.multiply(x=tf.exp(log_probs - old_log_probs), y=discount_reward)
-        self._surrogate_loss = -tf.reduce_mean(self._losses, axis=0, name='surrogate_loss')
+        self._surrogate_loss = -tf.reduce_mean(  # pylint: disable=invalid-unary-operand-type
+            self._losses, axis=0, name='surrogate_loss')
         entropy = self._graph_results.distribution.entropy()
         self._entropy_loss = tf.reduce_mean(entropy, name='entropy_loss')
         kl_divergence_value = kl_divergence(self._graph_results.distribution, old_distribution)
@@ -131,7 +127,7 @@ class TRPOModel(BasePGModel):
 
     def _build_predictions(self, results, features, labels):
         """Creates the dictionary of predictions that is returned by the model."""
-        predictions = super(BasePGModel, self)._build_predictions(
+        predictions = super(TRPOModel, self)._build_predictions(
             results=results, features=features, labels=labels)
         predictions['graph_results'] = self._graph_results.graph_outputs
         predictions['a'] = self._graph_results.a

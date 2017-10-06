@@ -157,8 +157,9 @@ class EpisodeLoggingTensorHook(session_run_hook.SessionRunHook):
             raise RuntimeError("Global episode should be created to use StopAtEpisodeHook.")
 
         # Convert names to tensors if given
-        self._current_tensors = {tag: basic_session_run_hooks._as_graph_element(tensor)
-                                 for (tag, tensor) in self._tensors.items()}
+        self._current_tensors = {
+            tag: basic_session_run_hooks._as_graph_element(tensor)  # pylint: disable=protected-access
+            for (tag, tensor) in self._tensors.items()}
         self._current_tensors['global_episode'] = self._global_episode_tensor
 
     def before_run(self, run_context):  # pylint: disable=unused-argument
@@ -207,6 +208,7 @@ class EpisodeSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
     Raises:
         ValueError: Exactly one of scaffold or summary_op should be set.
     """
+    # pylint: disable=super-init-not-called
     def __init__(self, save_episodes=None, output_dir=None, summary_writer=None, scaffold=None,
                  summary_op=None):
         if output_dir is None:
@@ -248,12 +250,14 @@ class EpisodeSummarySaverHook(basic_session_run_hooks.SummarySaverHook):
         global_episode = run_values.results["global_episode"]
 
         if self._next_episode is None:
+            # pylint: disable=protected-access
             self._next_episode = global_episode + self._timer._every_episodes
             self._summary_writer.add_session_log(
                 SessionLog(status=SessionLog.START), global_episode)
 
         if self._request_summary and self._timer.should_trigger_for_episode(global_episode):
             self._timer.update_last_triggered_episode(global_episode)
+            # pylint: disable=protected-access
             self._next_episode = global_episode + self._timer._every_episodes
             if "summary" in run_values.results:
                 for summary in run_values.results["summary"]:

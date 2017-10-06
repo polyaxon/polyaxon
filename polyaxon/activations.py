@@ -29,7 +29,7 @@ def linear(name='Linear', collect=True):
         collect: whether to collect this metric under the metric collection.
     """
 
-    def linear(x):
+    def linear(x):  # pylint: disable=redefined-outer-name
         return built_activation(x, collect)
 
     return linear
@@ -42,7 +42,7 @@ def tanh(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def tanh(x):
+    def tanh(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.tanh(x, name), collect)
 
     return tanh
@@ -56,7 +56,7 @@ def hard_sigmoid(name='HardSigmoid', collect=True):
         collect: whether to collect this metric under the metric collection.
     """
 
-    def hard_sigmoid(x):
+    def hard_sigmoid(x):  # pylint: disable=redefined-outer-name
         with get_name_scope(name=name):
             x = clip_ops.clip_by_value(x, clip_value_min=0., clip_value_max=1.)
             return built_activation(x, collect)
@@ -71,7 +71,7 @@ def sigmoid(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def sigmoid(x):
+    def sigmoid(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.sigmoid(x, name), collect)
 
     return sigmoid
@@ -87,7 +87,7 @@ def softmax(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def softmax(x):
+    def softmax(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.softmax(x, name), collect)
 
     return softmax
@@ -100,7 +100,7 @@ def softplus(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def softplus(x):
+    def softplus(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.softplus(x, name), collect)
 
     return softplus
@@ -113,7 +113,7 @@ def softsign(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def softsign(x):
+    def softsign(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.softsign(x, name), collect)
 
     return softsign
@@ -126,7 +126,7 @@ def relu(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def relu(x):
+    def relu(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.relu(x, name), collect)
 
     return relu
@@ -139,7 +139,7 @@ def relu6(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def relu6(x):
+    def relu6(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.relu6(x, name), collect)
 
     return relu6
@@ -152,7 +152,7 @@ def elu(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def elu(x):
+    def elu(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.elu(x, name), collect)
 
     return elu
@@ -171,7 +171,7 @@ def selu(name='Selu', collect=True):
         - [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
     """
 
-    def selu(x):
+    def selu(x):  # pylint: disable=redefined-outer-name
         with get_name_scope(name=name):
             alpha = 1.6732632423543772848170429916717
             scale = 1.0507009873554804934193349852946
@@ -188,7 +188,7 @@ def crelu(name=None, collect=True):
         name: operation name.
         collect: whether to collect this metric under the metric collection.
     """
-    def crelu(x):
+    def crelu(x):  # pylint: disable=redefined-outer-name
         return built_activation(tf.nn.crelu(x, name), collect)
 
     return crelu

@@ -44,7 +44,7 @@ def random():
     return constant(1)
 
 
-def _decay_fn(timestep, exploration_rate,  decay_type='polynomial_decay', start_decay_at=0,
+def _decay_fn(timestep, exploration_rate, decay_type='polynomial_decay', start_decay_at=0,
               stop_decay_at=1e9, decay_rate=0., staircase=False, decay_steps=100000,
               min_exploration_rate=0):
     """The computed decayed exploration rate.

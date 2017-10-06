@@ -125,5 +125,5 @@ class EstimatorSpec(
 
 
 def _check_is_tensor_or_operation(x, name):
-    if not (isinstance(x, ops.Operation) or isinstance(x, ops.Tensor)):
+    if not isinstance(x, (ops.Operation, ops.Tensor)):
         raise TypeError('{} must be Operation or Tensor, given: {}'.format(name, x))

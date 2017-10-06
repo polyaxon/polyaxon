@@ -67,6 +67,7 @@ class Memory(object):
         sample = {}
         batch = random.sample(self._memory, self._batch_size)
         for i, key in enumerate(self._spec):
+            # pylint: disable=unsubscriptable-object
             sample[key] = np.array([b_step[i] for b_step in batch])
 
         return sample
