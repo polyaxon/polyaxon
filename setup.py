@@ -42,10 +42,11 @@ setup(name='polyaxon',
       ],
       install_requires=[
           'numpy==1.13.1',
-          'six',
           'Pillow==4.2.1',
+          'polyaxon-schemas==0.0.12',
+          'PyYAML==3.12',
+          'six==1.10.0',
           'tensorflow==1.3.0',
-          'polyaxon-schemas==0.0.12'
       ],
       classifiers=[
         'Programming Language :: Python',
