@@ -119,7 +119,6 @@ class PolyaxonFile(object):
 
         return '{}/{}'.format(path, experiment)
 
-
     @cached_property
     def validated_data(self):
         if self.matrix_space == 1:
