@@ -8,7 +8,7 @@ from polyaxon_schemas.base import BaseConfig
 
 class ProjectSchema(Schema):
     name = fields.Str()  # TODO: must be slug
-    id = fields.Str(allow_none=True)
+    uuid = fields.UUID(allow_none=True)
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)
 
@@ -23,10 +23,10 @@ class ProjectSchema(Schema):
 class ProjectConfig(BaseConfig):
     SCHEMA = ProjectSchema
     IDENTIFIER = 'project'
-    REDUCED_ATTRIBUTES = ['id', 'description']
+    REDUCED_ATTRIBUTES = ['uuid', 'description']
 
-    def __init__(self, name, id=None, description=None, is_public=True):
+    def __init__(self, name, uuid=None, description=None, is_public=True):
         self.name = name
-        self.id = id
+        self.uuid = uuid
         self.description = description
         self.is_public = is_public

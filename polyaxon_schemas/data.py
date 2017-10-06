@@ -32,7 +32,7 @@ class DataDetailsConfig(BaseConfig):
 
 
 class DataSchema(Schema):
-    id = fields.Str()
+    uuid = fields.UUID()
     name = fields.Str()
     created_at = fields.DateTime()
     description = fields.Str(allow_none=True)
@@ -52,8 +52,15 @@ class DataConfig(BaseConfig):
     SCHEMA = DataSchema
     IDENTIFIER = 'data'
 
-    def __init__(self, id, name, created_at, description, details, version=None, resource_id=None):
-        self.id = id
+    def __init__(self,
+                 uuid,
+                 name,
+                 created_at,
+                 description,
+                 details,
+                 version=None,
+                 resource_id=None):
+        self.uuid = uuid
         self.name = name
         self.created_at = self.localize_date(created_at)
         self.description = description
@@ -69,8 +76,8 @@ class DataConfig(BaseConfig):
 
 
 class DatasetSchema(Schema):
+    uuid = fields.UUID()
     name = fields.Str()
-    id = fields.Str()
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean()
 
@@ -86,8 +93,8 @@ class DatasetConfig(BaseConfig):
     SCHEMA = DatasetSchema
     IDENTIFIER = 'dataset'
 
-    def __init__(self, name, id, description, is_public):
+    def __init__(self, uuid, name, description, is_public):
+        self.uuid = uuid
         self.name = name
-        self.id = id
         self.description = description
         self.is_public = is_public

@@ -19,7 +19,8 @@ def deep_update(config, override_config):
             config[k] = override_config[k]
     return config
 
-class cached_property(object):
+
+class cached_property(object):  # noqa
     """
     Decorator that converts a method with a single self argument into a
     property cached on the instance.

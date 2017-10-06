@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import uuid
 from datetime import datetime
 from unittest import TestCase
 
@@ -19,7 +20,7 @@ class TestDataConfigs(TestCase):
 
     def test_data_config(self):
         config_dict = {
-            'id': '123',
+            'uuid': str(uuid.uuid4()),
             'name': 'foo',
             'created_at': datetime.now().isoformat(),
             'description': 'foo data',
@@ -37,7 +38,7 @@ class TestDataConfigs(TestCase):
 
     def test_dataset_config(self):
         config_dict = {
-            'id': '123',
+            'uuid': str(uuid.uuid4()),
             'name': 'foo',
             'description': 'foo data',
             'is_public': True
