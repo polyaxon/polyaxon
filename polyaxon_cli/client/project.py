@@ -70,5 +70,5 @@ class ProjectClient(PolyaxonClient):
         finally:
             # always make sure we clear the console
             bar.done()
-        return response.json().get("id")
+        return response.json().get("uuid")
 

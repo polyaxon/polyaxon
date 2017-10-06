@@ -64,12 +64,12 @@ class DatasetClient(PolyaxonClient):
             logger.error("Data create: ERROR! %s", e.message)
             return None
 
-    def delete_dataset(self, data_id):
-        request_url = self._get_url(data_id)
+    def delete_dataset(self, data_uuid):
+        request_url = self._get_url(data_uuid)
         try:
             # data delete is a synchronous process, it can take a long time
             self.delete(request_url, timeout=60)
             return True
         except PolyaxonException as e:
-            logger.error("Data %s: ERROR! %s", data_id, e.message)
+            logger.error("Data %s: ERROR! %s", data_uuid, e.message)
             return False

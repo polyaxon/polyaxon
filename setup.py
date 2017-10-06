@@ -43,7 +43,8 @@ setup(name='polyaxon-cli',
           "click>=6.7",
           "clint==0.5.1",
           "marshmallow==2.13.5",
-          # "polyaxon-schemas==0.0.12"
+          "https://github.com/polyaxon/polyaxon-schemas/archive/master.zip",
+          # "polyaxon-schemas==.."
           "requests==2.18.4",
           "requests-toolbelt==0.8.0",
           "six==1.11.0",
