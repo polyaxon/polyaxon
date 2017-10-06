@@ -43,10 +43,10 @@ setup(name='polyaxon-cli',
           "click>=6.7",
           "clint==0.5.1",
           "marshmallow==2.13.5",
-          "six==1.11.0",
           # "polyaxon-schemas==0.0.12"
           "requests==2.18.4",
           "requests-toolbelt==0.8.0",
+          "six==1.11.0",
       ],
       entry_points={
           "console_scripts": [

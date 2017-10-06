@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import click
-import six
 
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 

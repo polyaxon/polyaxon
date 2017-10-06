@@ -38,8 +38,8 @@ def check_cli_version():
     if LooseVersion(current_version) < LooseVersion(server_version.min_version):
         click.echo("""Your version of CLI ({}) is no longer compatible with server.""".format(
             current_version))
-        if click.confirm("Do you want to upgrade to version {} now?".format(
-              server_version.latest_version)):
+        if click.confirm("Do you want to upgrade to "
+                         "version {} now?".format(server_version.latest_version)):
             from polyaxon_cli.cli.version import pip_upgrade
             pip_upgrade()
             sys.exit(0)
