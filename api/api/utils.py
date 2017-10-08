@@ -5,9 +5,9 @@ import os
 import six
 
 from distutils.util import strtobool
-from unipath import Path
 
-import polyaxon as plx
+from polyaxon_schemas.polyaxonfile import reader
+from unipath import Path
 
 
 def base_directory():
@@ -20,9 +20,14 @@ ENV_VARS_DIR = ROOT_DIR.child('api').child('api').child('env_vars')
 TESTING = bool(strtobool(os.getenv("TESTING", "0")))
 
 
-class SettingConfig(plx.configs.Configurable):
+class SettingConfig(object):
     def __init__(self, **params):
         self._params = params
+
+    @classmethod
+    def read_configs(cls, config_values):
+        config = reader.read(config_values)
+        return cls(**config) if config else None
 
     def get_int(self, key, is_optional=False):
         """Get a the value corresponding to the key and converts it to `int`.
