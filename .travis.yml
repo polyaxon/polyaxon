@@ -44,7 +44,7 @@ install:
     fi
   - pip install -q tensorflow==$TENSORFLOW_VERSION
   - python setup.py -q install
-  - pip install -r requirements_testing.txt
+  - pip install -r requirements-test.txt
 
 before_script:
   - psql -c "CREATE DATABASE travis_ci_test;" -U postgres

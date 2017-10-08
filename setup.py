@@ -41,17 +41,33 @@ setup(name='polyaxon-api',
           'reinforcement-learning'
       ],
       install_requires=[
-          'numpy',
-          'six',
-          'Pillow',
-          'pyyaml',
+          "celery==4.1.0",
+          "Django==1.11.6",
+          "django-cors-headers==2.1.0",
+          "djangorestframework==3.7.0",
+          "djangorestframework-camel-case==0.2.0",
+          "jupyter==1.0.0",
+          "matplotlib==1.5.3",
+          "pandas==0.20.3",
+          "pandas-summary==0.0.41",
+          "https://github.com/polyaxon/polyaxon/archive/master.zip",
+          # "polyaxon==.."
+          "https://github.com/polyaxon/polyaxon-schemas/archive/master.zip",
+          # "polyaxon-schemas==.."
+          "psycopg2==2.7.3.1",
+          "redis==2.10.6",
+          "seaborn==0.7.1",
+          "six==1.11.0",
+          "tensorflow==1.3.0",
+          "Unipath==1.1",
+          "uWSGI==2.0.15",
       ],
       classifiers=[
-        'Programming Language :: Python',
-        'Operating System :: OS Independent',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Science/Research',
-        'Topic :: Scientific/Engineering :: Artificial Intelligence'
+          'Programming Language :: Python',
+          'Operating System :: OS Independent',
+          'Intended Audience :: Developers',
+          'Intended Audience :: Science/Research',
+          'Topic :: Scientific/Engineering :: Artificial Intelligence'
       ],
       tests_require=['pytest'],
       cmdclass={'test': PyTest})
