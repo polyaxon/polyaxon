@@ -3,8 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 from rest_framework import serializers
 
-from core.serialiazers import ExperimentSerializer
-from projects.models import Project
+from projects.models import Project, Experiment
+
+
+class ExperimentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Experiment
+        fields = '__all__'
 
 
 class ProjectSerializer(serializers.ModelSerializer):
