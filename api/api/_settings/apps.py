@@ -3,12 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 THIRD_PARTY_APPS = (
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 )
 
 PROJECT_APPS = (
     'libs',
-    'core',
+    'users',
     'projects',
     'api',
 )

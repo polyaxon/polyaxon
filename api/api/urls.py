@@ -6,13 +6,15 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
+from rest_framework.authtoken.views import obtain_auth_token
+
 
 class IndexView(TemplateView):
     template_name = "index.html"
 
 urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
-    url(r'^v1/api/', include('core.urls', namespace='api_v1')),
+    url(r'^api/token/', obtain_auth_token),
     url(r'^v1/api/', include('projects.urls', namespace='projects_v1')),
     url(r'^.*$', IndexView.as_view(), name='index'),
 ]

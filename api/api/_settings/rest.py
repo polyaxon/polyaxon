@@ -16,13 +16,16 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ),
+
     'DEFAULT_THROTTLE_RATES': {
         'user': '120/min',
-        'admin': '1000/min',
+        'admin': '100/min',
         'anon': '30/min',
         'health': '10/min',
-        'mailgun': '3000/min',
     },
 
-    'DEFAULT_AUTHENTICATION_CLASSES': ()
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
