@@ -7,7 +7,6 @@ from polyaxon_schemas.base import BaseConfig
 
 
 class UserSchema(Schema):
-    uuid = fields.UUID()
     username = fields.Str()
     email = fields.Email()
     type = fields.Str(allow_none=True)
@@ -22,8 +21,7 @@ class UserConfig(BaseConfig):
     IDENTIFIER = 'user'
     REDUCED_ATTRIBUTES = ['type']
 
-    def __init__(self, uuid, username, email, type=None):
-        self.uuid = uuid
+    def __init__(self, username, email, type=None):
         self.username = username
         self.email = email
         self.type = type

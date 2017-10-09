@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import uuid
 from unittest import TestCase
 
-from polyaxon_schemas.access_token import AccessTokenConfig
+from polyaxon_schemas.experiment import ExperimentConfig
 
 
 class TestProjectConfigs(TestCase):
     def test_project_config(self):
-        config_dict = {'username': 'username',
-                       'token': 'sdfsdf098sdf80s9dSDF800'}
-        config = AccessTokenConfig.from_dict(config_dict)
+        config_dict = {'name': 'test', 'uuid': str(uuid.uuid4()), 'project': str(uuid.uuid4())}
+        config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

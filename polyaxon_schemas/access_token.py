@@ -9,7 +9,6 @@ from polyaxon_schemas.base import BaseConfig
 class AccessTokenSchema(Schema):
     username = fields.Str()
     token = fields.Str()
-    expiry = fields.Number(allow_none=True)
 
     class Meta:
         ordered = True
@@ -23,7 +22,6 @@ class AccessTokenConfig(BaseConfig):
     SCHEMA = AccessTokenSchema
     IDENTIFIER = 'token'
 
-    def __init__(self, username, token, expiry=None):
+    def __init__(self, username, token):
         self.username = username
         self.token = token
-        self.expiry = expiry
