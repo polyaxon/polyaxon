@@ -2,8 +2,12 @@
 from __future__ import absolute_import, division, print_function
 
 from rest_framework.generics import RetrieveAPIView, ListCreateAPIView
+
 from projects.models import Project
-from projects.serialiazers import ProjectSerializer, ProjectDetailSerializer
+from projects.serialiazers import (
+    ProjectSerializer,
+    ProjectDetailSerializer,
+)
 
 
 class ProjectListView(ListCreateAPIView):
@@ -14,3 +18,4 @@ class ProjectListView(ListCreateAPIView):
 class ProjectDetailView(RetrieveAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializer
+    lookup_field = 'uuid'

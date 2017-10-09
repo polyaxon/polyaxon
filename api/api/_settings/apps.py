@@ -11,6 +11,7 @@ PROJECT_APPS = (
     'libs',
     'users',
     'projects',
+    'experiments',
     'api',
 )
 

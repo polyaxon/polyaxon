@@ -8,7 +8,7 @@ from projects import views
 
 urlpatterns = [
     url(r'^projects/?$', views.ProjectListView.as_view()),
-    url(r'^projects/(?P<pk>[0-9]+)/?$', views.ProjectDetailView.as_view()),
+    url(r'^projects/(?P<uuid>[0-9]+)/?$', views.ProjectDetailView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

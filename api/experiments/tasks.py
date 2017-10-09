@@ -7,11 +7,11 @@ import polyaxon as plx
 
 from api.settings import CeleryTasks
 from api.celery_api import app
-from core.models import Experiment
-from core.task_status import ExperimentStatus
+from experiments.models import Experiment
+from experiments.task_status import ExperimentStatus
 
 
-logger = logging.getLogger('polyaxon.api.core')
+logger = logging.getLogger('polyaxon.api.experiments')
 
 
 def get_experiment_run_status(experiment):

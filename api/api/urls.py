@@ -10,13 +10,14 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "api/index.html"
 
 urlpatterns = [
-    url(r'^admin', include(admin.site.urls)),
+    url(r'^users/', include('users.urls', namespace='users')),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^api/token/', obtain_auth_token),
     url(r'^v1/api/', include('projects.urls', namespace='projects_v1')),
-    url(r'^.*$', IndexView.as_view(), name='index'),
+    url(r'^$', IndexView.as_view(), name='index'),
 ]
 
 if settings.DEBUG:

@@ -5,7 +5,7 @@ from django.test import TestCase
 
 import polyaxon as plx
 
-from core.models import Experiment, Loss, Optimizer, SubGraph, PolyaxonModel
+from experiments.models import Experiment, Loss, Optimizer, SubGraph, PolyaxonModel
 
 
 class TestCoreModels(TestCase):
