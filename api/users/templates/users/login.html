@@ -1,0 +1,35 @@
+{% extends "api/index.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <div class="signup-area">
+            <div class="logo-position logo">
+                <a href="/" class="logo-font-login">Polyaxon</a>
+            </div>
+            {% if not additional_login_hint %}
+            <p id="signinLabel">Already have an account? Please sign in.</p>
+            {% endif %}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger sd-login-alert">
+                <strong>Login failed!</strong>
+                {% for error in form.non_field_errors %}
+                <span>{{ error|escape }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if additional_login_hint %}
+            <div class="alert alert-info sd-login-alert">{{ additional_login_hint|escape }}</div>
+            {% endif %}
+            <form class="form-horizontal form-login" role="form" method="post" action="">
+                {% csrf_token %}
+                {% include 'users/formcontents.html' %}
+                <div class="form-group whitespace">
+                    <button id="id_login" class="btn btn-default btn-login" type="submit">Log in</button>
+                    <a id="resetPasswordBtn" class="btn btn-link text-link btn-default" href="{% url 'users:password_reset' %}">Forgot password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

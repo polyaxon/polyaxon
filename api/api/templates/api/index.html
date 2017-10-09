@@ -1,0 +1,64 @@
+<html>
+<head>
+    {% load staticfiles %}
+    <title>Polyaxon</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'node_modules/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- 1. Load libraries -->
+
+    <link href="{{ STATIC_URL }}public/css/global.css" media="all" rel="stylesheet"
+          type="text/css"/>
+    <script>
+
+    </script>
+    <base href="/">
+</head>
+<!-- 3. Display the application -->
+<body>
+<nav class="navbar navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="nav-link brand navbar-brand active" href="/">
+                <img src="{{ STATIC_URL }}public/images/logo_white.svg" alt="Polyaxon">
+            </a>
+            <button type="button" class="navbar-toggle collapsed">
+                <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span>
+                <span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li role="presentation" class=""><a href="/projects">Projects</a></li>
+                <li role="presentation" class=""><a href="/experiments">Experiments</a></li>
+                <li role="presentation" class=""><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container container-fluid">
+    {% block content %}{% endblock %}
+</div>
+<footer class="site-footer">
+    <div class="footer-container"><!-- react-text: 40 -->© 2017 Polyaxon<!-- /react-text -->
+        <nav>
+            <li role="presentation" class=""><a href="/about">About</a></li>
+        </nav>
+        <nav class="social">
+            <a href="https://twitter.com/polyaxonai" title="Follow on Twitter" target="_blank">
+                <i class="icon icon-twitter"></i>
+            </a>
+            <a href="https://github.com/polyaxon" title="Watch on Github" target="_blank">
+                <i class="icon icon-github"></i>
+            </a>
+        </nav>
+        <div><!-- react-text: 50 -->Made with <!-- /react-text --><i class="love">♥</i></div>
+    </div>
+</footer>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import sys
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 from setuptools.command.test import test as TestCommand
 
 
@@ -46,6 +47,7 @@ setup(name='polyaxon-api',
           "django-cors-headers==2.1.0",
           "djangorestframework==3.7.0",
           "djangorestframework-camel-case==0.2.0",
+          "django-registration==2.3",
           "jupyter==1.0.0",
           "matplotlib==1.5.3",
           "pandas==0.20.3",

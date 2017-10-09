@@ -1,0 +1,23 @@
+{% extends "api/index.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <div class="signup-area margin-middle">
+            <div class="logo-position logo">
+                <a href="/" class="logo-font-login">Polyaxon</a>
+            </div>
+            <div id="signinLabel">
+                We sent you an email.
+                Please click the contained link to finish your registration.
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    redirectTo("{{ login_url }}");
+</script>
+{% endblock %}

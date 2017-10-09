@@ -1,0 +1,18 @@
+{% for field in form.hidden_fields %}
+{{ field.as_hidden }}
+{% endfor %}
+{% for field in form.visible_fields %}
+<div class="form-group{% if field.errors %} has-error{% endif %} no-margin">
+    <label class="control-label" for="{{ field.auto_id }}">{{ field.label }}:</label>
+    <div>
+        {{ field }}
+        {% for error in field.errors %}
+        <span class="help-block">{{ error }}</span>
+        {% endfor %}
+        {% if field.help_text %}
+        <span class="sd-form-help">{{ field.help_text }}</span>
+        {% endif %}
+    </div>
+</div>
+<div class="space-m"></div>
+{% endfor %}
