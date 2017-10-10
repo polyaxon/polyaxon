@@ -10,6 +10,7 @@ from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.settings import ClusterConfig, RunTypes
+from polyaxon_schemas.utils import TaskType
 
 
 class PolyaxonFile(object):
@@ -182,14 +183,14 @@ class PolyaxonFile(object):
 
     def get_cluster_def_at(self, experiment):
         cluster = {
-            'master': 1,
+            TaskType.MASTER: 1,
         }
         is_distributed = False
         environment = self.get_environment_at(experiment)
 
         if environment:
-            cluster['worker'] = environment.n_workers
-            cluster['ps'] = environment.n_ps
+            cluster[TaskType.WORKER] = environment.n_workers
+            cluster[TaskType.PS] = environment.n_ps
             is_distributed = True
 
         return cluster, is_distributed
@@ -206,21 +207,21 @@ class PolyaxonFile(object):
         cluster_def, is_distributed = self.get_cluster_def_at(experiment)
 
         cluster_config = {
-            'master': [get_address(master_port)]
+            TaskType.MASTER: [get_address(master_port)]
         }
 
         workers = []
-        for i in range(cluster_def.get('worker', 0)):
+        for i in range(cluster_def.get(TaskType.WORKER, 0)):
             workers.append(get_address(worker_port))
             worker_port += 1
 
-        cluster_config['worker'] = workers
+        cluster_config[TaskType.WORKER] = workers
 
         ps = []
-        for i in range(cluster_def.get('ps', 0)):
+        for i in range(cluster_def.get(TaskType.PS, 0)):
             ps.append(get_address(ps_port))
             ps_port += 1
 
-        cluster_config['ps'] = ps
+        cluster_config[TaskType.PS] = ps
 
         return ClusterConfig.from_dict(cluster_config)

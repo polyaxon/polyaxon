@@ -11,6 +11,8 @@ from polyaxon_schemas.settings import (
     ClusterConfig,
     EnvironmentConfig,
     SettingsConfig)
+from polyaxon_schemas.utils import TaskType
+
 from tests.utils import assert_equal_dict
 
 
@@ -81,7 +83,7 @@ class TestSettingConfigs(TestCase):
 
         # Add cluster config
         config_dict['cluster'] = ClusterConfig(
-            worker=['worker'], ps=['ps']
+            worker=[TaskType.WORKER], ps=[TaskType.PS]
         ).to_dict()
         config = RunConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

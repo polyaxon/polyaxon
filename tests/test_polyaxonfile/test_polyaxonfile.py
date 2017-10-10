@@ -20,6 +20,7 @@ from polyaxon_schemas.settings import (
     RunConfig,
     SessionConfig,
 )
+from polyaxon_schemas.utils import TaskType
 from tests.utils import assert_equal_dict
 
 
@@ -45,10 +46,10 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.settings is None
         assert plxfile.environment is None
         assert plxfile.run_type == RunTypes.LOCAL
-        assert plxfile.cluster_def == ({'master': 1}, False)
-        assert_equal_dict(plxfile.get_cluster().to_dict(), {'master': ['127.0.0.1:10000'],
-                                                            'ps': [],
-                                                            'worker': []})
+        assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
+                                                            TaskType.PS: [],
+                                                            TaskType.WORKER: []})
         assert isinstance(plxfile.model, RegressorConfig)
         assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
         assert isinstance(plxfile.model.optimizer, AdamConfig)
@@ -82,25 +83,29 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.environment.run_config.session.intra_op_parallelism_threads == 2
         assert plxfile.environment.run_config.session.inter_op_parallelism_threads == 2
 
-        assert plxfile.cluster_def == ({'master': 1, 'worker': 5, 'ps': 10}, True)
-        assert_equal_dict(plxfile.get_cluster().to_dict(), {'master': ['127.0.0.1:10000'],
-                                                            'worker': ['127.0.0.1:11000',
-                                                                       '127.0.0.1:11001',
-                                                                       '127.0.0.1:11002',
-                                                                       '127.0.0.1:11003',
-                                                                       '127.0.0.1:11004',
-                                                                       ],
-                                                            'ps': ['127.0.0.1:12000',
-                                                                   '127.0.0.1:12001',
-                                                                   '127.0.0.1:12002',
-                                                                   '127.0.0.1:12003',
-                                                                   '127.0.0.1:12004',
-                                                                   '127.0.0.1:12005',
-                                                                   '127.0.0.1:12006',
-                                                                   '127.0.0.1:12007',
-                                                                   '127.0.0.1:12008',
-                                                                   '127.0.0.1:12009',
-                                                                   ]})
+        assert plxfile.cluster_def == ({TaskType.MASTER: 1,
+                                        TaskType.WORKER: 5,
+                                        TaskType.PS: 10}, True)
+        assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
+                                                            TaskType.WORKER: [
+                                                                '127.0.0.1:11000',
+                                                                '127.0.0.1:11001',
+                                                                '127.0.0.1:11002',
+                                                                '127.0.0.1:11003',
+                                                                '127.0.0.1:11004',
+                                                            ],
+                                                            TaskType.PS: [
+                                                                '127.0.0.1:12000',
+                                                                '127.0.0.1:12001',
+                                                                '127.0.0.1:12002',
+                                                                '127.0.0.1:12003',
+                                                                '127.0.0.1:12004',
+                                                                '127.0.0.1:12005',
+                                                                '127.0.0.1:12006',
+                                                                '127.0.0.1:12007',
+                                                                '127.0.0.1:12008',
+                                                                '127.0.0.1:12009',
+                                                            ]})
         assert isinstance(plxfile.model, ClassifierConfig)
         assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
         assert isinstance(plxfile.model.optimizer, AdamConfig)
@@ -148,10 +153,12 @@ class TestPolyaxonfile(TestCase):
 
         for xp in range(plxfile.matrix_space):
             assert plxfile.get_environment_at(xp) is None
-            assert plxfile.get_cluster_def_at(xp) == ({'master': 1}, False)
+            assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
 
             assert_equal_dict(plxfile.get_cluster(xp).to_dict(),
-                              {'master': ['127.0.0.1:10000'], 'ps': [], 'worker': []})
+                              {TaskType.MASTER: ['127.0.0.1:10000'],
+                               TaskType.PS: [],
+                               TaskType.WORKER: []})
             model = plxfile.get_model_at(xp)
             assert isinstance(model, RegressorConfig)
             assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
@@ -192,10 +199,12 @@ class TestPolyaxonfile(TestCase):
 
         for xp in range(plxfile.matrix_space):
             assert plxfile.get_environment_at(xp) is None
-            assert plxfile.get_cluster_def_at(xp) == ({'master': 1}, False)
+            assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
 
             assert_equal_dict(plxfile.get_cluster(xp).to_dict(),
-                              {'master': ['127.0.0.1:10000'], 'ps': [], 'worker': []})
+                              {TaskType.MASTER: ['127.0.0.1:10000'],
+                               TaskType.PS: [],
+                               TaskType.WORKER: []})
             model = plxfile.get_model_at(xp)
             assert isinstance(model, RegressorConfig)
             assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))

@@ -229,3 +229,9 @@ ACTIVATION_VALUES = [
     'hard_sigmoid', 'linear'
 ]
 TIME_ZONE = timezone('Europe/Berlin')
+
+
+class TaskType(object):
+    MASTER = 'master'
+    PS = 'ps'
+    WORKER = 'worker'
