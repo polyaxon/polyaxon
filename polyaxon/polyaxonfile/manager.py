@@ -6,11 +6,11 @@ import tensorflow as tf
 from polyaxon_schemas.eval import EvalConfig
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.train import TrainConfig
-from polyaxon_schemas.settings import ClusterConfig
+from polyaxon_schemas.utils import TaskType
 
 from polyaxon.experiments import Experiment
 from polyaxon import Modes, getters
-from polyaxon.estimators.run_config import RunConfig, TaskType
+from polyaxon.estimators.run_config import RunConfig
 from polyaxon.processing.input_data import create_input_data_fn
 
 LOGGING_LEVEL = {
@@ -44,36 +44,6 @@ def _get_eval(config):
             config.hooks,
             config.delay_secs,
             config.continuous_eval_throttle_secs)
-
-
-def _get_local_cluster(num_workers, num_ps):
-    host = '127.0.0.1'
-    master_port = 10000
-    worker_port = 11000
-    ps_port = 12000
-
-    def get_address(port):
-        return '{}:{}'.format(host, port)
-
-    cluster_config = {
-        TaskType.MASTER: [get_address(master_port)]
-    }
-
-    workers = []
-    for _ in range(num_workers):
-        workers.append(get_address(worker_port))
-        worker_port += 1
-
-    cluster_config[TaskType.WORKER] = workers
-
-    ps = []
-    for _ in range(num_ps):
-        ps.append(get_address(ps_port))
-        ps_port += 1
-
-    cluster_config[TaskType.PS] = ps
-
-    return ClusterConfig.from_dict(cluster_config)
 
 
 def _get_run_configs(polyaxonfile, experiment_id):

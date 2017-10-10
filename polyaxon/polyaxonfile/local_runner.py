@@ -14,8 +14,8 @@ from multiprocessing import Process
 from tensorflow.python.platform import tf_logging as logging
 
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.utils import TaskType
 
-from polyaxon.estimators.run_config import TaskType
 from polyaxon.polyaxonfile.manager import (
     prepare_all_experiment_runs,
     prepare_experiment_run,

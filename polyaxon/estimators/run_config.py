@@ -9,8 +9,7 @@ import tensorflow as tf
 from tensorflow.python.estimator import run_config
 
 from polyaxon_schemas import settings
-
-TaskType = run_config.TaskType
+from polyaxon_schemas.utils import TaskType
 
 
 def _validate_properties(new_copy):
