@@ -112,7 +112,7 @@ class Estimator(tf_estimator.Estimator):
         self._params = params or {}
 
     def train(self,  # pylint: disable=arguments-differ
-              nput_fn=None, steps=None, hooks=None, max_steps=None):
+              input_fn=None, steps=None, hooks=None, max_steps=None):
         """Trains a model given training data `x` predictions and `y` labels.
 
         Args:

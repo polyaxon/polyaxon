@@ -60,7 +60,7 @@ def _get_run_configs(polyaxonfile, experiment_id):
     config = environment.run_config or RunConfig.CONFIG()
 
     if not is_distributed:
-        return {TaskType.MASTER: get_master_config(config)}, False
+        return {TaskType.MASTER: [get_master_config(config)]}, False
 
     config.cluster = plx_file.get_cluster(experiment=experiment_id)
 
