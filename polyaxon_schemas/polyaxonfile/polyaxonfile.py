@@ -191,7 +191,8 @@ class PolyaxonFile(object):
         if environment:
             cluster[TaskType.WORKER] = environment.n_workers
             cluster[TaskType.PS] = environment.n_ps
-            is_distributed = True
+            if environment.n_workers != 0 or environment.n_ps != 0:
+                is_distributed = True
 
         return cluster, is_distributed
 
