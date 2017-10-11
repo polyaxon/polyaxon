@@ -7,10 +7,11 @@ project:
 settings:
   logging:
     level: INFO
-    delay_workers_by_global_step: 10
-    run_config:
-      save_summary_steps: 100
-      save_checkpoints_steps: 100
+
+environment:
+  run_config:
+    save_summary_steps: 100
+    save_checkpoints_steps: 100
 
 model:
   classifier:
