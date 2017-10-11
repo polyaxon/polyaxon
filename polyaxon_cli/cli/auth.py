@@ -17,7 +17,7 @@ from polyaxon_cli.managers.config import GlobalConfigManager
 def login(token):
     """Log into Polyaxon via Auth0."""
     if not token:
-        cli_info_url = "{}/settings/security".format(GlobalConfigManager.get_value('host'))
+        cli_info_url = "{}/users/token".format(GlobalConfigManager.get_value('host'))
         click.confirm('Authentication token page will now open in your browser. Continue?',
                       abort=True, default=True)
 
