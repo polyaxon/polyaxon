@@ -23,7 +23,7 @@ from polyaxon.polyaxonfile.manager import (
 
 jobs = []
 processes = []
-current_run = {'finished': False}
+current_run = {'finished': False, TaskType.MASTER: None}
 
 
 def cleanup():
@@ -41,7 +41,13 @@ def signal_handler(*args):
         p.terminate()
 
     current_run['finished'] = True
-    sys.exit(0)
+
+
+def check_master_process():
+    print([p.is_alive() for p in jobs])
+    if not current_run['master'].is_alive():
+        signal_handler()
+        cleanup()
 
 
 def get_pybin():
@@ -54,7 +60,7 @@ def get_pybin():
 
 def start_experiment_run(polyaxonfile, experiment_id, task_type, task_id, schedule):
     plx_file = PolyaxonFile.read(polyaxonfile)
-    experiment = prepare_experiment_run(plx_file, experiment_id, task_type, task_id)
+    experiment = prepare_experiment_run(plx_file, int(experiment_id), task_type, int(task_id))
     task = getattr(experiment, schedule)
     return task()
 
@@ -67,17 +73,20 @@ def run_cmd(pybin, cmd, cwd):
     processes.append(p)
     _, error = p.communicate()
     if error:
-        logging.info('{} - ERROR: '.format(error))
+        logging.error('{} - ERROR: '.format(error))
 
 
 def create_process(env):
-    cmd = ("""-c \"from polyaxon.polyaxonfile.local_runner import run_experiment;
-           run_experiment('{polyaxonfile}', '{task_type}', {task_id}, '{schedule}')\"""".format(
+    cmd = ("""-c \"from polyaxon.polyaxonfile.local_runner import start_experiment_run;
+start_experiment_run(
+    '{polyaxonfile}', '{experiment_id}', '{task_type}', {task_id}, '{schedule}')\"""".format(
         **env))
     p = Process(target=run_cmd, args=(get_pybin(), cmd, os.getcwd(),))
     p.daemon = True
     p.start()
     jobs.append(p)
+    if env['task_type'] == TaskType.MASTER:
+        current_run[TaskType.MASTER] = p
 
 
 def run(polyaxonfile):
@@ -92,6 +101,7 @@ def run(polyaxonfile):
             env = {
                 'polyaxonfile': polyaxonfile,
                 'task_type': TaskType.MASTER,
+                'experiment_id': xp,
                 'task_id': 0,
                 'schedule': 'train_and_evaluate'
             }
@@ -114,9 +124,11 @@ def run(polyaxonfile):
                 job.join()
 
         while not current_run['finished']:
-            time.sleep(30)
+            check_master_process()
+            time.sleep(10)
 
         current_run['finished'] = False
+        current_run['master'] = None
 
 
 def run_all(polyaxonfile):
