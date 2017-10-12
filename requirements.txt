@@ -1,6 +1,6 @@
 numpy==1.13.1
 Pillow==4.2.1
-polyaxon-schemas==0.0.12
+polyaxon-schemas==0.0.13
 PyYAML==3.12
 scipy==0.19.1
 six==1.11.0
