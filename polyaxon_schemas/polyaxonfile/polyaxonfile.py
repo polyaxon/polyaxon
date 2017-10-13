@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import itertools
 import six
 
+from polyaxon_schemas.k8s.templates import constants
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
@@ -103,6 +104,18 @@ class PolyaxonFile(object):
         return self.settings.run_type if self.settings else RunTypes.LOCAL
 
     @cached_property
+    def is_local(self):
+        return self.run_type == RunTypes.LOCAL
+
+    @cached_property
+    def is_minikube(self):
+        return self.run_type == RunTypes.MINIKUBE
+
+    @cached_property
+    def is_kubernetes(self):
+        return self.run_type == RunTypes.KUBERNETES
+
+    @cached_property
     def project_path(self):
         return self.get_project_path_at()
 
@@ -196,12 +209,40 @@ class PolyaxonFile(object):
 
         return cluster, is_distributed
 
-    def get_cluster(self,
-                    experiment=0,
-                    host='127.0.0.1',
-                    master_port=10000,
-                    worker_port=11000,
-                    ps_port=12000):
+    def get_k8s_cluster(self, experiment=0, port=2222):
+        cluster_def, is_distributed = self.get_cluster_def_at(experiment)
+
+        def get_address(host):
+            return '{}:{}'.format(host, port)
+
+        task_name = constants.TASK_NAME.format(self.project.name, experiment, TaskType.MASTER, 0)
+        cluster_config = {
+            TaskType.MASTER: [get_address(task_name)]
+        }
+
+        workers = []
+        for i in range(cluster_def.get(TaskType.WORKER, 0)):
+            task_name = constants.TASK_NAME.format(
+                self.project.name, experiment, TaskType.WORKER, i)
+            workers.append(get_address(task_name))
+
+        cluster_config[TaskType.WORKER] = workers
+
+        ps = []
+        for i in range(cluster_def.get(TaskType.PS, 0)):
+            task_name = constants.TASK_NAME.format(
+                self.project.name, experiment, TaskType.PS, i)
+            workers.append(get_address(task_name))
+
+        cluster_config[TaskType.PS] = ps
+
+        return ClusterConfig.from_dict(cluster_config)
+
+    def get_local_cluster(self, experiment=0,
+                          host='127.0.0.1',
+                          master_port=10000,
+                          worker_port=11000,
+                          ps_port=12000):
         def get_address(port):
             return '{}:{}'.format(host, port)
 
@@ -226,3 +267,9 @@ class PolyaxonFile(object):
         cluster_config[TaskType.PS] = ps
 
         return ClusterConfig.from_dict(cluster_config)
+
+    def get_cluster(self, experiment=0):
+        if self.is_local:
+            return self.get_local_cluster(experiment)
+        elif self.run_type in (RunTypes.MINIKUBE, RunTypes.KUBERNETES):
+            return self.get_k8s_cluster(experiment)

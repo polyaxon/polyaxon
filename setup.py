@@ -40,6 +40,7 @@ setup(name='polyaxon-schemas',
       ],
       install_requires=[
           'Jinja2==2.9.6',
+          'kubernetes==3.0.0',
           'marshmallow==2.13.5',
           'numpy==1.13.1',
           'pytz==2017.2',
