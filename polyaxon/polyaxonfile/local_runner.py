@@ -18,7 +18,7 @@ from polyaxon_schemas.utils import TaskType
 
 from polyaxon.polyaxonfile.manager import (
     prepare_all_experiment_runs,
-    prepare_experiment_run,
+    start_experiment_run,
 )
 
 jobs = []
@@ -56,13 +56,6 @@ def get_pybin():
     except:  # pylint: disable=bare-except
         pybin = sys.executable
     return pybin
-
-
-def start_experiment_run(polyaxonfile, experiment_id, task_type, task_id, schedule):
-    plx_file = PolyaxonFile.read(polyaxonfile)
-    experiment = prepare_experiment_run(plx_file, int(experiment_id), task_type, int(task_id))
-    task = getattr(experiment, schedule)
-    return task()
 
 
 def run_cmd(pybin, cmd, cwd):

@@ -145,6 +145,13 @@ def prepare_experiment_run(polyaxonfile, experiment_id, task_type=TaskType.MASTE
         export_strategies=plx_file.settings.export_strategies)
 
 
+def start_experiment_run(polyaxonfile, experiment_id, task_type, task_id, schedule):
+    plx_file = PolyaxonFile.read(polyaxonfile)
+    experiment = prepare_experiment_run(plx_file, int(experiment_id), task_type, int(task_id))
+    task = getattr(experiment, schedule)
+    return task()
+
+
 def prepare_all_experiment_runs(polyaxonfile, experiment_id):
     plx_file = PolyaxonFile.read(polyaxonfile)
     is_distributed = False
