@@ -1,5 +1,5 @@
 numpy==1.13.3
-Pillow==4.2.1
+Pillow==4.3.0
 polyaxon-schemas==0.0.13
 PyYAML==3.12
 scipy==0.19.1
