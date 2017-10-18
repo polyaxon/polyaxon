@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+
 from kubernetes import client, config
 
 from polyaxon_schemas.k8s.templates import config_maps
 from polyaxon_schemas.k8s.templates import constants
+from polyaxon_schemas.k8s.templates import deployments
 from polyaxon_schemas.k8s.templates import persistent_volumes
+from polyaxon_schemas.k8s.templates import pods
+from polyaxon_schemas.k8s.templates import services
+from polyaxon_schemas.utils import TaskType
 
 
 class K8SManager(object):
@@ -13,6 +19,7 @@ class K8SManager(object):
         self.polyaxonfile = polyaxonfile
         config.load_kube_config()
         self.k8s = client.CoreV1Api()
+        self.k8s_beta = client.ExtensionsV1beta1Api()
         self.namespace = 'default'
 
         self.has_data_volume = False
@@ -20,65 +27,175 @@ class K8SManager(object):
         self.has_files_volume = False
         self.has_tmp_volume = False
 
-    @classmethod
-    def create_master(cls):
-        pass
+    def create_master(self, experiment=0):
+        task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
+                                               experiment=experiment,
+                                               task_type=TaskType.MASTER,
+                                               task_id=0)
+        labels = pods.get_labels(project=self.polyaxonfile.project.name,
+                                 experiment=experiment,
+                                 task_type=TaskType.MASTER,
+                                 task_id=0,
+                                 task_name=task_name)
+        ports = [constants.DEFAULT_PORT]
 
-    @classmethod
-    def create_worker(cls):
-        pass
+        volumes, volume_mounts = self.get_pod_volumes()
+        pod = pods.get_pod(project=self.polyaxonfile.project.name,
+                           experiment=experiment,
+                           task_type=TaskType.MASTER,
+                           task_id=0,
+                           volume_mounts=volume_mounts,
+                           volumes=volumes,
+                           ports=ports)
+        self.k8s.create_namespaced_pod(self.namespace, pod)
+        service = services.get_service(
+            name=task_name,
+            labels=labels,
+            ports=ports)
+        self.k8s.create_namespaced_service(self.namespace, service)
 
-    @classmethod
-    def create_ps(cls):
-        pass
+    def create_worker(self, experiment=0):
+        n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[1].get(TaskType.WORKER, 0)
+        ports = [constants.DEFAULT_PORT]
+        volumes, volume_mounts = self.get_pod_volumes()
 
-    @classmethod
-    def config_maps(cls):
-        pass
+        for i in range(n_pods):
+            task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
+                                                   experiment=experiment,
+                                                   task_type=TaskType.MASTER,
+                                                   task_id=0)
+            labels = pods.get_labels(project=self.polyaxonfile.project.name,
+                                     experiment=experiment,
+                                     task_type=TaskType.MASTER,
+                                     task_id=0,
+                                     task_name=task_name)
+            pod = pods.get_pod(project=self.polyaxonfile.project.name,
+                               experiment=experiment,
+                               task_type=TaskType.WORKER,
+                               task_id=i,
+                               volume_mounts=volume_mounts,
+                               volumes=volumes,
+                               ports=ports)
+            self.k8s.create_namespaced_pod(self.namespace, pod)
+            service = services.get_service(
+                name=task_name,
+                labels=labels,
+                ports=ports)
+            self.k8s.create_namespaced_service(self.namespace, service)
 
-    @classmethod
-    def create_persistent_volume(cls):
-        pass
+    def create_ps(self, experiment=0):
+        n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[1].get(TaskType.PS, 0)
+        volumes, volume_mounts = self.get_pod_volumes()
+        ports = [constants.DEFAULT_PORT]
 
-    @classmethod
-    def create_deployment(cls):
-        pass
+        for i in range(n_pods):
+            task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
+                                                   experiment=experiment,
+                                                   task_type=TaskType.MASTER,
+                                                   task_id=0)
+            labels = pods.get_labels(project=self.polyaxonfile.project.name,
+                                     experiment=experiment,
+                                     task_type=TaskType.MASTER,
+                                     task_id=0,
+                                     task_name=task_name)
+            pod = pods.get_pod(project=self.polyaxonfile.project.name,
+                               experiment=experiment,
+                               task_type=TaskType.PS,
+                               task_id=i,
+                               volume_mounts=volume_mounts,
+                               volumes=volumes,
+                               ports=ports)
+            self.k8s.create_namespaced_pod(self.namespace, pod)
+            service = services.get_service(
+                name=task_name,
+                labels=labels,
+                ports=ports)
+            self.k8s.create_namespaced_service(self.namespace, service)
+
+    def create_tensorboard_deployment(self):
+        name = 'tensorboard'
+        ports = [6006]
+        volumes, volume_mounts = self.get_pod_volumes()
+        logs_path = os.path.join('/', constants.LOGS_VOLUME)
+        deployment = deployments.get_deployment(name=name,
+                                                project=self.polyaxonfile.project.name,
+                                                volume_mounts=volume_mounts,
+                                                volumes=volumes,
+                                                args=['tensorboard --logdir={} --port=6006'.format(
+                                                    logs_path)],
+                                                ports=ports,
+                                                role='dashboard')
+        self.k8s_beta.create_namespaced_deployment(self.namespace, deployment)
+        service = services.get_service(
+            name=name,
+            labels=deployments.get_labels(name=name,
+                                          project=self.polyaxonfile.project.name,
+                                          role='dashboard'),
+            ports=ports,
+            service_type='LoadBalancer')
+        self.k8s.create_namespaced_service(self.namespace, service)
+
+    def get_pod_volumes(self):
+        volumes = []
+        volume_mounts = []
+        if self.has_data_volume:
+            volumes.append(pods.get_volume(volume=constants.DATA_VOLUME,
+                                           run_type=self.polyaxonfile.run_type))
+            volume_mounts.append(pods.get_volume_mount(constants.DATA_VOLUME))
+
+        if self.has_logs_volume:
+            volumes.append(pods.get_volume(volume=constants.LOGS_VOLUME,
+                                           run_type=self.polyaxonfile.run_type))
+            volume_mounts.append(pods.get_volume_mount(constants.LOGS_VOLUME))
+
+        if self.has_files_volume:
+            volumes.append(pods.get_volume(volume=constants.POLYAXON_FILES_VOLUME,
+                                           run_type=self.polyaxonfile.run_type))
+            volume_mounts.append(pods.get_volume_mount(constants.POLYAXON_FILES_VOLUME))
+
+        if self.has_tmp_volume:
+            volumes.append(pods.get_volume(volume=constants.TMP_VOLUME,
+                                           run_type=self.polyaxonfile.run_type))
+            volume_mounts.append(pods.get_volume_mount(constants.TMP_VOLUME))
+
+        return volumes, volume_mounts
 
     def create_data_volume(self):
-        pvol = persistent_volumes.get_persistent_volume(constants.DATA_VOLUME,
-                                                        self.polyaxonfile.run_type)
+        pvol = persistent_volumes.get_persistent_volume(volume=constants.DATA_VOLUME,
+                                                        run_type=self.polyaxonfile.run_type)
         self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(constants.DATA_VOLUME)
+        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=constants.DATA_VOLUME)
         self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
         self.has_data_volume = True
 
     def create_logs_volume(self):
-        pvol = persistent_volumes.get_persistent_volume(constants.LOGS_VOLUME,
-                                                        self.polyaxonfile.run_type)
+        pvol = persistent_volumes.get_persistent_volume(volume=constants.LOGS_VOLUME,
+                                                        run_type=self.polyaxonfile.run_type)
         self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(constants.DATA_VOLUME)
+        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=constants.DATA_VOLUME)
         self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
         self.has_logs_volume = True
 
     def create_tmp_volumes(self):
-        pvol = persistent_volumes.get_persistent_volume(constants.TMP_VOLUME,
-                                                        self.polyaxonfile.run_type)
+        pvol = persistent_volumes.get_persistent_volume(volume=constants.TMP_VOLUME,
+                                                        run_type=self.polyaxonfile.run_type)
         self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(constants.DATA_VOLUME)
+        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=constants.DATA_VOLUME)
         self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
         self.has_tmp_volume = True
 
     def create_files_volumes(self):
-        pvol = persistent_volumes.get_persistent_volume(constants.POLYAXON_FILES_VOLUME,
-                                                        self.polyaxonfile.run_type)
+        pvol = persistent_volumes.get_persistent_volume(volume=constants.POLYAXON_FILES_VOLUME,
+                                                        run_type=self.polyaxonfile.run_type)
         self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(constants.POLYAXON_FILES_VOLUME)
+        pvol_claim = persistent_volumes.get_persistent_volume_claim(
+            volume=constants.POLYAXON_FILES_VOLUME)
         self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
         self.has_files_volume = True
 
     def create_cluster_config_map(self, experiment=0):
         config_map = config_maps.get_cluster_config_map(
-            self.polyaxonfile.project.name,
-            experiment,
-            self.polyaxonfile.get_cluster_def_at(experiment))
+            project=self.polyaxonfile.project.name,
+            experiment=experiment,
+            cluster_def=self.polyaxonfile.get_cluster_def_at(experiment)[1])
         self.k8s.create_namespaced_config_map(self.namespace, config_map)

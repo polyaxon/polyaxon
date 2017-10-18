@@ -209,7 +209,7 @@ class PolyaxonFile(object):
 
         return cluster, is_distributed
 
-    def get_k8s_cluster(self, experiment=0, port=2222):
+    def get_k8s_cluster(self, experiment=0, port=constants.DEFAULT_PORT):
         cluster_def, is_distributed = self.get_cluster_def_at(experiment)
 
         def get_address(host):
