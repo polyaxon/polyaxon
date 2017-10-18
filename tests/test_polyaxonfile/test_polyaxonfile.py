@@ -6,6 +6,7 @@ from unittest import TestCase
 
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
+from polyaxon_schemas.k8s.templates import constants
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.losses import MeanSquaredErrorConfig, AbsoluteDifferenceConfig
 from polyaxon_schemas.matrix import MatrixConfig
@@ -86,26 +87,34 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.cluster_def == ({TaskType.MASTER: 1,
                                         TaskType.WORKER: 5,
                                         TaskType.PS: 10}, True)
-        assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
-                                                            TaskType.WORKER: [
-                                                                '127.0.0.1:11000',
-                                                                '127.0.0.1:11001',
-                                                                '127.0.0.1:11002',
-                                                                '127.0.0.1:11003',
-                                                                '127.0.0.1:11004',
-                                                            ],
-                                                            TaskType.PS: [
-                                                                '127.0.0.1:12000',
-                                                                '127.0.0.1:12001',
-                                                                '127.0.0.1:12002',
-                                                                '127.0.0.1:12003',
-                                                                '127.0.0.1:12004',
-                                                                '127.0.0.1:12005',
-                                                                '127.0.0.1:12006',
-                                                                '127.0.0.1:12007',
-                                                                '127.0.0.1:12008',
-                                                                '127.0.0.1:12009',
-                                                            ]})
+
+        def task_name(task_type, task_id):
+            return constants.TASK_NAME.format(project=plxfile.project.name,
+                                              experiment=0,
+                                              task_type=task_type,
+                                              task_id=task_id)
+
+        assert_equal_dict(plxfile.get_cluster().to_dict(),
+                          {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],
+                           TaskType.WORKER: [
+                               '{}:2222'.format(task_name(TaskType.WORKER, 0)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 1)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 2)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 3)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 4)),
+                           ],
+                           TaskType.PS: [
+                               '{}:2222'.format(task_name(TaskType.PS, 0)),
+                               '{}:2222'.format(task_name(TaskType.PS, 1)),
+                               '{}:2222'.format(task_name(TaskType.PS, 2)),
+                               '{}:2222'.format(task_name(TaskType.PS, 3)),
+                               '{}:2222'.format(task_name(TaskType.PS, 4)),
+                               '{}:2222'.format(task_name(TaskType.PS, 5)),
+                               '{}:2222'.format(task_name(TaskType.PS, 6)),
+                               '{}:2222'.format(task_name(TaskType.PS, 7)),
+                               '{}:2222'.format(task_name(TaskType.PS, 8)),
+                               '{}:2222'.format(task_name(TaskType.PS, 9)),
+                           ]})
         assert isinstance(plxfile.model, ClassifierConfig)
         assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
         assert isinstance(plxfile.model.optimizer, AdamConfig)

@@ -215,7 +215,10 @@ class PolyaxonFile(object):
         def get_address(host):
             return '{}:{}'.format(host, port)
 
-        task_name = constants.TASK_NAME.format(self.project.name, experiment, TaskType.MASTER, 0)
+        task_name = constants.TASK_NAME.format(project=self.project.name,
+                                               experiment=experiment,
+                                               task_type=TaskType.MASTER,
+                                               task_id=0)
         cluster_config = {
             TaskType.MASTER: [get_address(task_name)]
         }
@@ -223,7 +226,10 @@ class PolyaxonFile(object):
         workers = []
         for i in range(cluster_def.get(TaskType.WORKER, 0)):
             task_name = constants.TASK_NAME.format(
-                self.project.name, experiment, TaskType.WORKER, i)
+                project=self.project.name,
+                experiment=experiment,
+                task_type=TaskType.WORKER,
+                task_id=i)
             workers.append(get_address(task_name))
 
         cluster_config[TaskType.WORKER] = workers
@@ -231,8 +237,11 @@ class PolyaxonFile(object):
         ps = []
         for i in range(cluster_def.get(TaskType.PS, 0)):
             task_name = constants.TASK_NAME.format(
-                self.project.name, experiment, TaskType.PS, i)
-            workers.append(get_address(task_name))
+                project=self.project.name,
+                experiment=experiment,
+                task_type=TaskType.PS,
+                task_id=i)
+            ps.append(get_address(task_name))
 
         cluster_config[TaskType.PS] = ps
 
