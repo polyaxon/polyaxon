@@ -17,7 +17,7 @@ from polyaxon_schemas.polyaxonfile.utils import deep_update
 def read(config_values):
     """Reads an ordered list of configuration values and deep merge the values in reverse order."""
     if not config_values:
-        return None
+        raise PolyaxonConfigurationError('Cannot read config_value: `{}`'.format(config_values))
 
     if not isinstance(config_values, (np.ndarray, list, tuple)):
         config_values = [config_values]
@@ -34,7 +34,7 @@ def read(config_values):
         elif os.path.isfile(config_value):
             config = deep_update(config, _read_from_file(config_value))
         else:
-            PolyaxonConfigurationError('Cannot read config_value: `{}`'.format(config_value))
+            raise PolyaxonConfigurationError('Cannot read config_value: `{}`'.format(config_value))
     return config
 
 

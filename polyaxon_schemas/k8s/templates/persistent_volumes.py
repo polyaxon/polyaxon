@@ -13,6 +13,7 @@ from polyaxon_schemas.utils import to_list
 STORAGE_BY_VOLUME = {
     constants.DATA_VOLUME: '1Gi',
     constants.LOGS_VOLUME: '1Mi',
+    constants.POLYAXON_FILES_VOLUME: '1Ki',
     constants.TMP_VOLUME: '1Ki'
 }
 

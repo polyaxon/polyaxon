@@ -55,7 +55,7 @@ class K8SManager(object):
         self.k8s.create_namespaced_service(self.namespace, service)
 
     def create_worker(self, experiment=0):
-        n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[1].get(TaskType.WORKER, 0)
+        n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[0].get(TaskType.WORKER, 0)
         ports = [constants.DEFAULT_PORT]
         volumes, volume_mounts = self.get_pod_volumes()
 
@@ -84,7 +84,7 @@ class K8SManager(object):
             self.k8s.create_namespaced_service(self.namespace, service)
 
     def create_ps(self, experiment=0):
-        n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[1].get(TaskType.PS, 0)
+        n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[0].get(TaskType.PS, 0)
         volumes, volume_mounts = self.get_pod_volumes()
         ports = [constants.DEFAULT_PORT]
 
@@ -197,5 +197,5 @@ class K8SManager(object):
         config_map = config_maps.get_cluster_config_map(
             project=self.polyaxonfile.project.name,
             experiment=experiment,
-            cluster_def=self.polyaxonfile.get_cluster_def_at(experiment)[1])
+            cluster_def=self.polyaxonfile.get_cluster().to_dict())
         self.k8s.create_namespaced_config_map(self.namespace, config_map)
