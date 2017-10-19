@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import os
-
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
 
@@ -29,6 +27,20 @@ class K8SManager(object):
         self.has_logs_volume = False
         self.has_files_volume = False
         self.has_tmp_volume = False
+
+    def _create_service(self, service, service_name):
+        service_found = False
+        try:
+            self.k8s.read_namespaced_service(service_name, self.namespace)
+            service_found = True
+            logger.info('A service with name `{}` was found'.format(service_name))
+            self.k8s.patch_namespaced_service(service_name, self.namespace, service)
+            logger.info('Service `{}` was patched'.format(service_name))
+        except ApiException as e:
+            if service_found:
+                raise PolyaxonK8SError(e)
+            self.k8s.create_namespaced_service(self.namespace, service)
+            logger.info('Service `{}` was created'.format(service_name))
 
     def _create_pod(self, experiment, task_type, task_id):
         task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
@@ -65,19 +77,21 @@ class K8SManager(object):
             logger.info('Pod `{}` was created'.format(task_name))
 
         service = services.get_service(name=task_name, labels=labels, ports=ports)
+        self._create_service(service=service, service_name=task_name)
 
+    def _delete_service(self, service_name):
         service_found = False
         try:
-            self.k8s.read_namespaced_service(task_name, self.namespace)
+            self.k8s.read_namespaced_service(service_name, self.namespace)
             service_found = True
-            logger.info('A service with name `{}` was found'.format(task_name))
-            self.k8s.patch_namespaced_pod(task_name, self.namespace, service)
-            logger.info('Service `{}` was patched'.format(task_name))
+            self.k8s.delete_namespaced_service(service_name, self.namespace)
+            logger.info('Service `{}` deleted'.format(service_name))
         except ApiException as e:
             if service_found:
+                logger.warning('Could not delete service `{}`'.format(service_name))
                 raise PolyaxonK8SError(e)
-            self.k8s.create_namespaced_service(self.namespace, service)
-            logger.info('Service `{}` was created'.format(task_name))
+            else:
+                logger.info('Service `{}` was not found'.format(service_name))
 
     def _delete_pod(self, experiment, task_type, task_id):
         task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
@@ -100,20 +114,7 @@ class K8SManager(object):
             else:
                 logger.info('Pod `{}` was not found'.format(task_name))
 
-        service_found = False
-        try:
-            self.k8s.read_namespaced_service(task_name, self.namespace)
-            service_found = True
-            self.k8s.delete_namespaced_service(
-                task_name,
-                self.namespace)
-            logger.info('Service `{}` deleted'.format(task_name))
-        except ApiException as e:
-            if service_found:
-                logger.warning('Could not delete service `{}`'.format(task_name))
-                raise PolyaxonK8SError(e)
-            else:
-                logger.info('Service `{}` was not found'.format(task_name))
+        self._delete_service(task_name)
 
     def create_master(self, experiment=0):
         self._create_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
@@ -145,7 +146,8 @@ class K8SManager(object):
         name = 'tensorboard'
         ports = [6006]
         volumes, volume_mounts = self.get_pod_volumes()
-        logs_path = os.path.join('/', constants.LOGS_VOLUME)
+        logs_path = persistent_volumes.get_vol_path(volume=constants.LOGS_VOLUME,
+                                                    run_type=self.polyaxonfile.run_type)
         deployment = deployments.get_deployment(name=name,
                                                 project=self.polyaxonfile.project.name,
                                                 volume_mounts=volume_mounts,
@@ -154,34 +156,77 @@ class K8SManager(object):
                                                     logs_path)],
                                                 ports=ports,
                                                 role='dashboard')
-        self.k8s_beta.create_namespaced_deployment(self.namespace, deployment)
+        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.polyaxonfile.project.name,
+                                                           name=name)
+
+        deployment_found = False
+        try:
+            self.k8s_beta.read_namespaced_deployment(deployment_name, self.namespace)
+            deployment_found = True
+            logger.info('A deployment with name `{}` was found'.format(deployment_name))
+            self.k8s_beta.patch_namespaced_deployment(deployment_name, self.namespace, deployment)
+            logger.info('Deployment `{}` was patched'.format(deployment_name))
+        except ApiException as e:
+            if deployment_found:
+                raise PolyaxonK8SError(e)
+            self.k8s_beta.create_namespaced_deployment(self.namespace, deployment)
+            logger.info('Deployment `{}` was created'.format(deployment_name))
+
         service = services.get_service(
-            name=name,
+            name=deployment_name,
             labels=deployments.get_labels(name=name,
                                           project=self.polyaxonfile.project.name,
                                           role='dashboard'),
             ports=ports,
             service_type='LoadBalancer')
-        self.k8s.create_namespaced_service(self.namespace, service)
+
+        self._create_service(service=service, service_name=deployment_name)
+
+    def delete_tensorboard_deployment(self):
+        name = 'tensorboard'
+        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.polyaxonfile.project.name,
+                                                           name=name)
+        pod_found = False
+        try:
+            self.k8s_beta.read_namespaced_deployment(deployment_name, self.namespace)
+            pod_found = True
+            self.k8s_beta.delete_namespaced_deployment(
+                deployment_name,
+                self.namespace,
+                client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1_BETA1,
+                                       propagation_policy='Foreground'))
+            logger.info('Deployment `{}` deleted'.format(deployment_name))
+        except ApiException as e:
+            if pod_found:
+                logger.warning('Could not delete deployment `{}`'.format(deployment_name))
+                raise PolyaxonK8SError(e)
+            else:
+                logger.info('Deployment `{}` was not found'.format(deployment_name))
+
+        self._delete_service(deployment_name)
 
     def get_pod_volumes(self):
         volumes = []
         volume_mounts = []
         if self.has_data_volume:
             volumes.append(pods.get_volume(volume=constants.DATA_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(constants.DATA_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(volume=constants.DATA_VOLUME,
+                                                       run_type=self.polyaxonfile.run_type))
 
         if self.has_logs_volume:
             volumes.append(pods.get_volume(volume=constants.LOGS_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(constants.LOGS_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(volume=constants.LOGS_VOLUME,
+                                                       run_type=self.polyaxonfile.run_type))
 
         if self.has_files_volume:
             volumes.append(pods.get_volume(volume=constants.POLYAXON_FILES_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(constants.POLYAXON_FILES_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(volume=constants.POLYAXON_FILES_VOLUME,
+                                                       run_type=self.polyaxonfile.run_type))
 
         if self.has_tmp_volume:
             volumes.append(pods.get_volume(volume=constants.TMP_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(constants.TMP_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(volume=constants.TMP_VOLUME,
+                                                       run_type=self.polyaxonfile.run_type))
 
         return volumes, volume_mounts
 
@@ -213,7 +258,7 @@ class K8SManager(object):
                                                               self.namespace,
                                                               pvol_claim)
             logger.info('Volume claim `{}` was patched'.format(volume_name))
-        except ApiException:
+        except ApiException as e:
             if volume_claim_found:
                 raise PolyaxonK8SError(e)
             self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)

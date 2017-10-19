@@ -18,14 +18,21 @@ STORAGE_BY_VOLUME = {
 }
 
 
-def get_host_path_pvol(volume):
-    vol_path = os.path.join('/', volume)
+def get_host_path_pvol(vol_path):
     return {'host_path': client.V1HostPathVolumeSource(path=vol_path)}
 
 
-def get_nfs_pvol(volume, server=None):
-    vol_path = os.path.join('/', volume)
+def get_nfs_pvol(vol_path, server=None):
     return {'nfs': client.V1NFSVolumeSource(path=vol_path, server=server)}
+
+
+def get_vol_path(volume, run_type):
+    if run_type == RunTypes.MINIKUBE:
+        return os.path.join('/tmp/plx/', volume)
+    elif run_type == RunTypes.KUBERNETES:
+        return os.path.join('/', volume)
+    else:
+        raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))
 
 
 def get_persistent_volume_spec(volume,
@@ -34,10 +41,11 @@ def get_persistent_volume_spec(volume,
                                persistent_volume_reclaim_policy='Recycle'):
     capacity = {'storage': STORAGE_BY_VOLUME[volume]}
     access_modes = to_list(access_modes)
+    vol_path = get_vol_path(volume, run_type)
     if run_type == RunTypes.MINIKUBE:
-        params = get_host_path_pvol(volume)
+        params = get_host_path_pvol(vol_path)
     elif run_type == RunTypes.KUBERNETES:
-        params = get_nfs_pvol(volume)
+        params = get_nfs_pvol(vol_path)
     else:
         raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))
 

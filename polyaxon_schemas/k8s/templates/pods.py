@@ -7,6 +7,7 @@ from kubernetes import client
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.k8s.templates import constants
+from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
 from polyaxon_schemas.settings import RunTypes
 from polyaxon_schemas.utils import TaskType
 
@@ -43,9 +44,9 @@ def get_gpu_volumes():
     ]
 
 
-def get_volume_mount(volume):
+def get_volume_mount(volume, run_type):
     volume_name = constants.VOLUME_NAME.format(vol_name=volume)
-    return client.V1VolumeMount(name=volume_name, mount_path=os.path.join('/', volume))
+    return client.V1VolumeMount(name=volume_name, mount_path=get_vol_path(volume, run_type))
 
 
 def get_volume(volume):
@@ -63,13 +64,16 @@ def get_project_pod_spec(project,
                          gpu_limits=0,
                          gpu_requests=0,
                          env_vars=None,
-                         restart_policy='OnFailure'):
+                         restart_policy=None):
     """Pod spec to be used to create pods for project side: tensorboard, notebooks."""
     volume_mounts = volume_mounts or []
     volumes = volumes or []
 
-    volume_mounts += get_gpu_volume_mounts()
-    volumes += get_gpu_volumes()
+    volume_mounts = volume_mounts or []
+    volumes = volumes or []
+
+    # volume_mounts += get_gpu_volume_mounts()
+    # volumes += get_gpu_volumes()
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
 
