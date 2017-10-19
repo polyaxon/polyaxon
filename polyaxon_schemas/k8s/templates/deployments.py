@@ -17,7 +17,8 @@ def get_labels(name, project, role=None):
 
 def get_deployment_spec(name, project, volume_mounts, volumes, args, ports, role=None, replicas=1):
     labels = get_labels(name, project, role)
-    metadata = client.V1ObjectMeta(labels=labels)
+    metadata = client.V1ObjectMeta(
+        name=constants.DEPLOYMENT_NAME.format(project=project, name=name), labels=labels)
     pod_spec = pods.get_project_pod_spec(project=project,
                                          name=name,
                                          volume_mounts=volume_mounts,
@@ -25,16 +26,13 @@ def get_deployment_spec(name, project, volume_mounts, volumes, args, ports, role
                                          args=args,
                                          ports=ports)
     template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
-    template = client.V1PodTemplate(api_version=constants.K8S_API_VERSION_V1,
-                                    kind=constants.K8S_POD_TEMPLATE_KIND,
-                                    metadata=metadata,
-                                    template=template_spec)
-    return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template)
+    return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
 
 
 def get_deployment(name, project, volume_mounts, volumes, args, ports, role=None, replicas=1):
     labels = get_labels(name, project, role)
-    metadata = client.V1ObjectMeta(name=name, labels=labels)
+    metadata = client.V1ObjectMeta(
+        name=constants.DEPLOYMENT_NAME.format(project=project, name=name), labels=labels)
     spec = get_deployment_spec(name=name,
                                project=project,
                                volume_mounts=volume_mounts,
@@ -43,7 +41,7 @@ def get_deployment(name, project, volume_mounts, volumes, args, ports, role=None
                                ports=ports,
                                role=role,
                                replicas=replicas)
-    return client.AppsV1beta1Deployment(api_version=constants.K8S_API_VERSION_V1,
+    return client.AppsV1beta1Deployment(api_version=constants.K8S_API_VERSION_V1_BETA1,
                                         kind=constants.K8S_DEPLOYMENT_KIND,
                                         metadata=metadata,
                                         spec=spec)

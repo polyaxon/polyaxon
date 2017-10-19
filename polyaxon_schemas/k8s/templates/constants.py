@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 K8S_API_VERSION_V1 = 'v1'
+K8S_API_VERSION_V1_BETA1 = 'extensions/v1beta1'
 K8S_PERSISTENT_VOLUME_KIND = 'PersistentVolume'
 K8S_PERSISTENT_VOLUME_CLAIM_KIND = 'PersistentVolumeClaim'
 K8S_CONFIG_MAP_KIND = 'ConfigMap'
@@ -26,5 +27,6 @@ TASK_LABELS = ('project: "{project}", '
                'task_id: "{task_id}", '
                'task: "{task_name}"')
 POD_CONTAINER_TASK_NAME = '{project}-xp{experiment}-{task_type}{task_id}'
-POD_CONTAINER_PROJECT_NAME = '{project}{name}'
+POD_CONTAINER_PROJECT_NAME = '{project}-{name}'
+DEPLOYMENT_NAME = '{project}-{name}'
 DEFAULT_PORT = 2222
