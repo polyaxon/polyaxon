@@ -95,15 +95,16 @@ def get_task_pod_spec(project,
                       task_id,
                       volume_mounts,
                       volumes,
+                      env_vars=None,
                       args=None,
                       ports=None,
                       gpu_limits=0,
                       gpu_requests=0,
                       restart_policy='OnFailure'):
     """Pod spec to be used to create pods for tasks: master, worker, ps."""
-    env_vars = [
-        get_cluster_env_var(project=project, experiment=experiment, task_type=task_type)
-    ]
+    # env_vars = [
+    #     get_cluster_env_var(project=project, experiment=experiment, task_type=task_type)
+    # ]
 
     volume_mounts = volume_mounts or []
     volumes = volumes or []
@@ -113,7 +114,10 @@ def get_task_pod_spec(project,
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
 
-    container_name = constants.POD_CONTAINER_TASK_NAME.format(task_type=task_type, task_id=task_id)
+    container_name = constants.POD_CONTAINER_TASK_NAME.format(project=project,
+                                                              experiment=experiment,
+                                                              task_type=task_type,
+                                                              task_id=task_id)
     containers = [client.V1Container(name=container_name,
                                      image=constants.DOCKER_IMAGE,
                                      args=args,
