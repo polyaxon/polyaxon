@@ -102,9 +102,9 @@ def get_task_pod_spec(project,
                       gpu_requests=0,
                       restart_policy='OnFailure'):
     """Pod spec to be used to create pods for tasks: master, worker, ps."""
-    # env_vars = [
-    #     get_cluster_env_var(project=project, experiment=experiment, task_type=task_type)
-    # ]
+    env_vars = [
+        get_cluster_env_var(project=project, experiment=experiment, task_type=task_type)
+    ]
 
     volume_mounts = volume_mounts or []
     volumes = volumes or []
