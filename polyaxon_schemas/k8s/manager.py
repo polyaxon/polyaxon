@@ -160,38 +160,65 @@ class K8SManager(object):
 
         return volumes, volume_mounts
 
-    def create_data_volume(self):
-        pvol = persistent_volumes.get_persistent_volume(volume=constants.DATA_VOLUME,
+    def _create_volume(self, volume):
+        pvol = persistent_volumes.get_persistent_volume(volume=volume,
                                                         run_type=self.polyaxonfile.run_type)
         self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=constants.DATA_VOLUME)
+        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=volume)
         self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
+
+    def create_data_volume(self):
+        self._create_volume(constants.DATA_VOLUME)
         self.has_data_volume = True
 
     def create_logs_volume(self):
-        pvol = persistent_volumes.get_persistent_volume(volume=constants.LOGS_VOLUME,
-                                                        run_type=self.polyaxonfile.run_type)
-        self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=constants.DATA_VOLUME)
-        self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
+        self._create_volume(constants.LOGS_VOLUME)
         self.has_logs_volume = True
 
     def create_tmp_volumes(self):
-        pvol = persistent_volumes.get_persistent_volume(volume=constants.TMP_VOLUME,
-                                                        run_type=self.polyaxonfile.run_type)
-        self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=constants.DATA_VOLUME)
-        self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
+        self._create_volume(constants.TMP_VOLUME)
         self.has_tmp_volume = True
 
     def create_files_volumes(self):
-        pvol = persistent_volumes.get_persistent_volume(volume=constants.POLYAXON_FILES_VOLUME,
-                                                        run_type=self.polyaxonfile.run_type)
-        self.k8s.create_persistent_volume(pvol)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(
-            volume=constants.POLYAXON_FILES_VOLUME)
-        self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
+        self._create_volume(constants.POLYAXON_FILES_VOLUME)
         self.has_files_volume = True
+
+    def _delete_volume(self, volume):
+        self.k8s.delete_persistent_volume(
+            volume,
+            client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1))
+        self.k8s.delete_namespaced_persistent_volume_claim(
+            volume,
+            self.namespace,
+            client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1))
+
+    def delete_data_volume(self):
+        self._delete_volume(constants.DATA_VOLUME)
+        self.has_data_volume = False
+
+    def delete_logs_volume(self):
+        self._delete_volume(constants.LOGS_VOLUME)
+        self.has_logs_volume = False
+
+    def delete_tmp_volumes(self):
+        self._create_volume(constants.TMP_VOLUME)
+        self.has_tmp_volume = True
+
+    def delete_files_volumes(self):
+        self._delete_volume(constants.POLYAXON_FILES_VOLUME)
+        self.has_files_volume = False
+
+    def delete_volumes(self):
+        self.delete_data_volume()
+        self.delete_logs_volume()
+        self.delete_files_volumes()
+        self.delete_tmp_volumes()
+
+    def create_volumes(self):
+        self.create_data_volume()
+        self.create_logs_volume()
+        self.create_files_volumes()
+        self.create_tmp_volumes()
 
     def create_cluster_config_map(self, experiment=0):
         config_map = config_maps.get_cluster_config_map(
