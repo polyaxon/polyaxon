@@ -8,6 +8,7 @@ from kubernetes import client
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.k8s.templates import constants
 from polyaxon_schemas.settings import RunTypes
+from polyaxon_schemas.utils import TaskType
 
 
 def get_cluster_env_var(project, experiment, task_type):
@@ -21,8 +22,8 @@ def get_cluster_env_var(project, experiment, task_type):
 
 
 def get_gpu_resources(gpu_limits=0, gpu_requests=0):
-    limits = constants.GPU_RESOURCES.format(gpu_limits) if gpu_limits > 0 else ''
-    requests = constants.GPU_RESOURCES.format(gpu_requests) if gpu_requests > 0 else ''
+    limits = constants.GPU_RESOURCES.format(gpu_limits) if gpu_limits > 0 else None
+    requests = constants.GPU_RESOURCES.format(gpu_requests) if gpu_requests > 0 else None
     return client.V1ResourceRequirements(limits=limits, requests=requests)
 
 
@@ -43,20 +44,14 @@ def get_gpu_volumes():
 
 
 def get_volume_mount(volume):
-    return client.V1VolumeMount(name=volume, mount_path=os.path.join('/', volume))
+    volume_name = constants.VOLUME_NAME.format(vol_name=volume)
+    return client.V1VolumeMount(name=volume_name, mount_path=os.path.join('/', volume))
 
 
-def get_volume(volume, run_type):
-    host_path = None
-    nfs = None
-    path = os.path.join('/', volume)
-    if run_type == RunTypes.MINIKUBE:
-        host_path = client.V1HostPathVolumeSource(path=path)
-    elif run_type == RunTypes.KUBERNETES:
-        nfs = client.V1NFSVolumeSource(path=path)
-    else:
-        raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))
-    return client.V1Volume(name=volume, host_path=host_path, nfs=nfs)
+def get_volume(volume):
+    volume_name = constants.VOLUME_NAME.format(vol_name=volume)
+    pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=volume_name)
+    return client.V1Volume(name=volume_name, persistent_volume_claim=pv_claim)
 
 
 def get_project_pod_spec(project,
@@ -102,15 +97,18 @@ def get_task_pod_spec(project,
                       gpu_requests=0,
                       restart_policy='OnFailure'):
     """Pod spec to be used to create pods for tasks: master, worker, ps."""
-    env_vars = [
-        get_cluster_env_var(project=project, experiment=experiment, task_type=task_type)
+    env_vars = env_vars or []
+    env_vars += [
+        get_cluster_env_var(project=project, experiment=experiment, task_type=TaskType.MASTER),
+        get_cluster_env_var(project=project, experiment=experiment, task_type=TaskType.WORKER),
+        get_cluster_env_var(project=project, experiment=experiment, task_type=TaskType.PS),
     ]
 
     volume_mounts = volume_mounts or []
     volumes = volumes or []
 
-    volume_mounts += get_gpu_volume_mounts()
-    volumes += get_gpu_volumes()
+    # volume_mounts += get_gpu_volume_mounts()
+    # volumes += get_gpu_volumes()
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
 
@@ -130,9 +128,9 @@ def get_task_pod_spec(project,
 
 def get_labels(project, experiment, task_type, task_id, task_name):
     return {'project': project,
-            'experiment': experiment,
+            'experiment': '{}'.format(experiment),
             'task_type': task_type,
-            'task_id': task_id,
+            'task_id': '{}'.format(task_id),
             'task': task_name}
 
 

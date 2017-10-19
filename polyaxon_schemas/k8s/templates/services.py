@@ -8,7 +8,7 @@ from polyaxon_schemas.utils import to_list
 
 
 def get_service(name, labels, ports, service_type=None, external_i_ps=None):
-    external_i_ps = to_list(external_i_ps)
+    external_i_ps = to_list(external_i_ps) if external_i_ps else None
     ports = to_list(ports)
     metadata = client.V1ObjectMeta(name=name, labels=labels)
     service_ports = [client.V1ServicePort(port=port, target_port=port) for port in ports]
