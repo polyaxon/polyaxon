@@ -42,7 +42,22 @@ class K8SManager(object):
             self.k8s.create_namespaced_service(self.namespace, service)
             logger.info('Service `{}` was created'.format(service_name))
 
-    def _create_pod(self, experiment, task_type, task_id):
+    def _get_pod_args(self, experiment, task_type, task_id, schedule):
+        plxfiles_path = persistent_volumes.get_vol_path(volume=constants.POLYAXON_FILES_VOLUME,
+                                                        run_type=self.polyaxonfile.run_type)
+        args = [("""python3 -c \"
+        from polyaxon.polyaxonfile.local_runner import start_experiment_run;
+        start_experiment_run(
+            '{polyaxonfile}', '{experiment_id}', '{task_type}', {task_id}, '{schedule}')\"
+            """.format(
+            polyaxonfile='{}/{}'.format(plxfiles_path, self.polyaxonfile.filename),
+            experiment_id=experiment,
+            task_type=task_type,
+            task_id=task_id,
+            schedule=schedule))]
+        return args
+
+    def _create_pod(self, experiment, task_type, task_id, args=None):
         task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
                                                experiment=experiment,
                                                task_type=task_type,
@@ -61,7 +76,8 @@ class K8SManager(object):
                            task_id=task_id,
                            volume_mounts=volume_mounts,
                            volumes=volumes,
-                           ports=ports)
+                           ports=ports,
+                           args=args)
 
         pod_found = False
         try:
@@ -117,7 +133,11 @@ class K8SManager(object):
         self._delete_service(task_name)
 
     def create_master(self, experiment=0):
-        self._create_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
+        args = self._get_pod_args(experiment=experiment,
+                                  task_type=TaskType.MASTER,
+                                  task_id=0,
+                                  schedule='train_and_evaluate')
+        self._create_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0, args=args)
 
     def delete_master(self, experiment=0):
         self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
@@ -125,7 +145,11 @@ class K8SManager(object):
     def create_worker(self, experiment=0):
         n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[0].get(TaskType.WORKER, 0)
         for i in range(n_pods):
-            self._create_pod(experiment=experiment, task_type=TaskType.WORKER, task_id=i)
+            args = self._get_pod_args(experiment=experiment,
+                                      task_type=TaskType.WORKER,
+                                      task_id=i,
+                                      schedule='train')
+            self._create_pod(experiment=experiment, task_type=TaskType.WORKER, task_id=i, args=args)
 
     def delete_worker(self, experiment=0):
         n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[0].get(TaskType.WORKER, 0)
@@ -135,7 +159,11 @@ class K8SManager(object):
     def create_ps(self, experiment=0):
         n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[0].get(TaskType.PS, 0)
         for i in range(n_pods):
-            self._create_pod(experiment=experiment, task_type=TaskType.PS, task_id=i)
+            args = self._get_pod_args(experiment=experiment,
+                                      task_type=TaskType.PS,
+                                      task_id=i,
+                                      schedule='run_std_server')
+            self._create_pod(experiment=experiment, task_type=TaskType.PS, task_id=i, args=args)
 
     def delete_ps(self, experiment=0):
         n_pods = self.polyaxonfile.get_cluster_def_at(experiment)[0].get(TaskType.PS, 0)

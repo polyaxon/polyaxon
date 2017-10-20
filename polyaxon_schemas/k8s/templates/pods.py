@@ -138,7 +138,7 @@ def get_labels(project, experiment, task_type, task_id, task_name):
             'task': task_name}
 
 
-def get_pod(project, experiment, task_type, task_id, volume_mounts, volumes, ports):
+def get_pod(project, experiment, task_type, task_id, volume_mounts, volumes, ports, args=None):
     task_name = constants.TASK_NAME.format(project=project,
                                            experiment=experiment,
                                            task_type=task_type,
@@ -152,6 +152,7 @@ def get_pod(project, experiment, task_type, task_id, volume_mounts, volumes, por
                              task_id=task_id,
                              volume_mounts=volume_mounts,
                              volumes=volumes,
+                             args=args,
                              ports=ports)
     return client.V1Pod(api_version=constants.K8S_API_VERSION_V1,
                         kind=constants.K8S_POD_KIND,

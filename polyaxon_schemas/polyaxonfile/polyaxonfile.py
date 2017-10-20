@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import itertools
 import six
+import os
 
 from polyaxon_schemas.k8s.templates import constants
 from polyaxon_schemas.polyaxonfile import validator
@@ -19,6 +20,7 @@ class PolyaxonFile(object):
 
     def __init__(self, filepath):
         self._filepath = filepath
+        self._filename = os.path.basename(filepath)
 
         self._data = reader.read(self._filepath)
         Parser.check_data(data=self._data)
@@ -40,6 +42,10 @@ class PolyaxonFile(object):
         if isinstance(filepath, cls):
             return filepath
         return cls(filepath)
+
+    @property
+    def filename(self):
+        return self._filename
 
     @cached_property
     def data(self):
