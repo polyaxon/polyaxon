@@ -5,10 +5,10 @@ import click
 import sys
 
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.polyaxonfile.logger import logger
 from polyaxon_schemas.settings import RunTypes
 
 from polyaxon_cli.cli.version import get_version, PROJECT_NAME
-from polyaxon_cli.logging import logger
 
 
 @click.command()

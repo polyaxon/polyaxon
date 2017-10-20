@@ -8,8 +8,9 @@ import tarfile
 
 from clint.textui import progress
 
+from polyaxon_schemas.polyaxonfile.logger import logger
+
 from polyaxon_cli.exceptions import ERRORS_MAPPING, PolyaxonHTTPError, PolyaxonException
-from polyaxon_cli.logging import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.config import GlobalConfigManager
 

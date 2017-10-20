@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 from polyaxon_schemas.data import DatasetConfig
+from polyaxon_schemas.polyaxonfile.logger import logger
 
 from polyaxon_cli.client.base import PolyaxonClient
 from polyaxon_cli.exceptions import (
@@ -12,7 +13,6 @@ from polyaxon_cli.exceptions import (
     NotFoundError,
     BadRequestError,
 )
-from polyaxon_cli.logging import logger
 
 
 class DatasetClient(PolyaxonClient):

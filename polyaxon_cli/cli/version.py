@@ -2,7 +2,7 @@ import pip
 import pkg_resources
 import click
 
-from polyaxon_cli.logging import logger
+from polyaxon_schemas.polyaxonfile.logger import logger
 
 
 PROJECT_CLI_NAME = "polyaxon-cli"

@@ -6,8 +6,9 @@ import os
 
 import six
 
+from polyaxon_schemas.polyaxonfile.logger import logger
+
 from polyaxon_cli.exceptions import PolyaxonConfigurationError
-from polyaxon_cli.logging import logger
 
 
 class BaseConfigManager(object):

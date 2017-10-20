@@ -3,7 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon_cli.logging import logger
+from polyaxon_schemas.polyaxonfile.logger import logger
+
 from polyaxon_cli.managers.base import BaseConfigManager
 from polyaxon_cli.utils.constants import DEFAULT_IGNORE_LIST
 from polyaxon_cli.utils.files import unix_style_path, matches_glob_list

@@ -5,9 +5,9 @@ import click
 import webbrowser
 
 from polyaxon_schemas.access_token import AccessTokenConfig
+from polyaxon_schemas.polyaxonfile.logger import logger
 
 from polyaxon_cli.client.auth import AuthClient
-from polyaxon_cli.logging import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.config import GlobalConfigManager
 

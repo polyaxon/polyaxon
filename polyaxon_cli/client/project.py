@@ -3,12 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 import sys
 
-from polyaxon_schemas.project import ProjectConfig
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
+
+from polyaxon_schemas.project import ProjectConfig
+from polyaxon_schemas.polyaxonfile.logger import logger
 
 from polyaxon_cli.client.base import PolyaxonClient
 from polyaxon_cli.exceptions import PolyaxonException, AuthenticationError, NotFoundError
-from polyaxon_cli.logging import logger
 from polyaxon_cli.utils.files import get_files_in_current_directory, create_progress_callback
 
 

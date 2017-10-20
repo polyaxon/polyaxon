@@ -7,14 +7,14 @@ import pkg_resources
 
 from distutils.version import LooseVersion
 
+from polyaxon_schemas.polyaxonfile.logger import configure_logger
+
 from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.auth import login, logout
 from polyaxon_cli.cli.config import config
 from polyaxon_cli.cli.run import run
 from polyaxon_cli.cli.version import version, upgrade
-
 from polyaxon_cli.client.version import VersionClient
-from polyaxon_cli.logging import configure_logger
 from polyaxon_cli.managers.config import GlobalConfigManager
 
 

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.polyaxonfile.logger import logger
+
 from polyaxon_cli.client.base import PolyaxonClient
-from polyaxon_cli.logging import logger
 from polyaxon_schemas.version import CliVersionConfig
 
 
