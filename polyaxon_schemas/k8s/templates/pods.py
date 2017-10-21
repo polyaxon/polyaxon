@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import os
-
 from kubernetes import client
 
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.k8s.templates import constants
 from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
-from polyaxon_schemas.settings import RunTypes
 from polyaxon_schemas.utils import TaskType
 
 
@@ -50,9 +46,10 @@ def get_volume_mount(volume, run_type):
 
 
 def get_volume(volume):
-    volume_name = constants.VOLUME_NAME.format(vol_name=volume)
-    pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=volume_name)
-    return client.V1Volume(name=volume_name, persistent_volume_claim=pv_claim)
+    vol_name = constants.VOLUME_NAME.format(vol_name=volume)
+    volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
+    pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=volc_name)
+    return client.V1Volume(name=vol_name, persistent_volume_claim=pv_claim)
 
 
 def get_project_pod_spec(project,
