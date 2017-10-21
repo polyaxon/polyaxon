@@ -15,7 +15,14 @@ def get_labels(name, project, role=None):
     return labels
 
 
-def get_deployment_spec(name, project, volume_mounts, volumes, args, ports, role=None, replicas=1):
+def get_deployment_spec(name,
+                        project,
+                        volume_mounts,
+                        volumes, command,
+                        args,
+                        ports,
+                        role=None,
+                        replicas=1):
     labels = get_labels(name, project, role)
     metadata = client.V1ObjectMeta(
         name=constants.DEPLOYMENT_NAME.format(project=project, name=name), labels=labels)
@@ -23,13 +30,22 @@ def get_deployment_spec(name, project, volume_mounts, volumes, args, ports, role
                                          name=name,
                                          volume_mounts=volume_mounts,
                                          volumes=volumes,
+                                         command=command,
                                          args=args,
                                          ports=ports)
     template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
     return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
 
 
-def get_deployment(name, project, volume_mounts, volumes, args, ports, role=None, replicas=1):
+def get_deployment(name,
+                   project,
+                   volume_mounts,
+                   volumes,
+                   command,
+                   args,
+                   ports,
+                   role=None,
+                   replicas=1):
     labels = get_labels(name, project, role)
     metadata = client.V1ObjectMeta(
         name=constants.DEPLOYMENT_NAME.format(project=project, name=name), labels=labels)
@@ -37,6 +53,7 @@ def get_deployment(name, project, volume_mounts, volumes, args, ports, role=None
                                project=project,
                                volume_mounts=volume_mounts,
                                volumes=volumes,
+                               command=command,
                                args=args,
                                ports=ports,
                                role=role,
