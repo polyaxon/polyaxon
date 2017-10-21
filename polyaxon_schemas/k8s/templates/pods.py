@@ -94,6 +94,7 @@ def get_task_pod_spec(project,
                       volume_mounts,
                       volumes,
                       env_vars=None,
+                      command=None,
                       args=None,
                       ports=None,
                       gpu_limits=0,
@@ -121,6 +122,7 @@ def get_task_pod_spec(project,
                                                               task_id=task_id)
     containers = [client.V1Container(name=container_name,
                                      image=constants.DOCKER_IMAGE,
+                                     command=command,
                                      args=args,
                                      ports=ports,
                                      env=env_vars,
@@ -137,7 +139,15 @@ def get_labels(project, experiment, task_type, task_id, task_name):
             'task': task_name}
 
 
-def get_pod(project, experiment, task_type, task_id, volume_mounts, volumes, ports, args=None):
+def get_pod(project,
+            experiment,
+            task_type,
+            task_id,
+            volume_mounts,
+            volumes,
+            ports,
+            command=None,
+            args=None):
     task_name = constants.TASK_NAME.format(project=project,
                                            experiment=experiment,
                                            task_type=task_type,
@@ -151,6 +161,7 @@ def get_pod(project, experiment, task_type, task_id, volume_mounts, volumes, por
                              task_id=task_id,
                              volume_mounts=volume_mounts,
                              volumes=volumes,
+                             command=command,
                              args=args,
                              ports=ports)
     return client.V1Pod(api_version=constants.K8S_API_VERSION_V1,
