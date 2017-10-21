@@ -76,7 +76,7 @@ def get_persistent_volume_claim_spec(volume, access_modes='ReadWriteOnce', ):
 
 
 def get_persistent_volume_claim(volume):
-    vol_name = constants.VOLUME_NAME.format(vol_name=volume)
+    vol_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
     metadata = client.V1ObjectMeta(name=vol_name)
     spec = get_persistent_volume_claim_spec(volume)
     return client.V1PersistentVolumeClaim(api_version=constants.K8S_API_VERSION_V1,

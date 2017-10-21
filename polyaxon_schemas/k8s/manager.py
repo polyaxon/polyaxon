@@ -259,38 +259,39 @@ class K8SManager(object):
         return volumes, volume_mounts
 
     def _create_volume(self, volume):
-        volume_name = constants.VOLUME_NAME.format(vol_name=volume)
+        vol_name = constants.VOLUME_NAME.format(vol_name=volume)
         pvol = persistent_volumes.get_persistent_volume(volume=volume,
                                                         run_type=self.polyaxonfile.run_type)
 
         volume_found = False
         try:
-            self.k8s.read_persistent_volume(volume_name)
+            self.k8s.read_persistent_volume(vol_name)
             volume_found = True
-            logger.info('A volume with name `{}` was found'.format(volume_name))
-            self.k8s.patch_persistent_volume(volume_name, pvol)
-            logger.info('Volume `{}` was patched'.format(volume_name))
+            logger.info('A volume with name `{}` was found'.format(vol_name))
+            self.k8s.patch_persistent_volume(vol_name, pvol)
+            logger.info('Volume `{}` was patched'.format(vol_name))
         except ApiException as e:
             if volume_found:
                 raise PolyaxonK8SError(e)
             self.k8s.create_persistent_volume(pvol)
-            logger.info('Volume `{}` was created'.format(volume_name))
+            logger.info('Volume `{}` was created'.format(vol_name))
 
+        volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
         pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=volume)
         volume_claim_found = False
         try:
-            self.k8s.read_namespaced_persistent_volume_claim(volume_name, self.namespace)
+            self.k8s.read_namespaced_persistent_volume_claim(volc_name, self.namespace)
             volume_claim_found = True
-            logger.info('A volume claim with name `{}` was found'.format(volume_name))
-            self.k8s.patch_namespaced_persistent_volume_claim(volume_name,
+            logger.info('A volume claim with name `{}` was found'.format(volc_name))
+            self.k8s.patch_namespaced_persistent_volume_claim(volc_name,
                                                               self.namespace,
                                                               pvol_claim)
-            logger.info('Volume claim `{}` was patched'.format(volume_name))
+            logger.info('Volume claim `{}` was patched'.format(volc_name))
         except ApiException as e:
             if volume_claim_found:
                 raise PolyaxonK8SError(e)
             self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
-            logger.info('Volume claim `{}` was created'.format(volume_name))
+            logger.info('Volume claim `{}` was created'.format(volc_name))
 
     def create_data_volume(self):
         self._create_volume(constants.DATA_VOLUME)
