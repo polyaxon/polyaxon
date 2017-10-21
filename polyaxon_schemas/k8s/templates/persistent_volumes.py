@@ -37,6 +37,7 @@ def get_vol_path(volume, run_type):
 
 def get_persistent_volume_spec(volume,
                                run_type,
+                               namespace,
                                access_modes='ReadWriteOnce',
                                persistent_volume_reclaim_policy='Recycle'):
     capacity = {'storage': STORAGE_BY_VOLUME[volume]}
@@ -49,17 +50,27 @@ def get_persistent_volume_spec(volume,
     else:
         raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))
 
+    volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
+    claim_ref = client.V1ObjectReference(api_version=constants.K8S_API_VERSION_V1,
+                                         kind=constants.K8S_PERSISTENT_VOLUME_CLAIM_KIND,
+                                         name=volc_name,
+                                         namespace=namespace)
     return client.V1PersistentVolumeSpec(
         capacity=capacity,
         access_modes=access_modes,
         persistent_volume_reclaim_policy=persistent_volume_reclaim_policy,
+        claim_ref=claim_ref,
         **params)
 
 
-def get_persistent_volume(volume, run_type):
+def get_labels(volume):
+    return {'volume': volume}
+
+
+def get_persistent_volume(volume, run_type, namespace):
     vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-    metadata = client.V1ObjectMeta(name=vol_name)
-    spec = get_persistent_volume_spec(volume, run_type)
+    metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(volume))
+    spec = get_persistent_volume_spec(volume, run_type, namespace)
 
     return client.V1PersistentVolume(api_version=constants.K8S_API_VERSION_V1,
                                      kind=constants.K8S_PERSISTENT_VOLUME_KIND,
@@ -70,9 +81,11 @@ def get_persistent_volume(volume, run_type):
 def get_persistent_volume_claim_spec(volume, access_modes='ReadWriteOnce', ):
     access_modes = to_list(access_modes)
     resources = client.V1ResourceRequirements(requests={'storage': STORAGE_BY_VOLUME[volume]})
+    selector = client.V1LabelSelector(match_labels=get_labels(volume))
     return client.V1PersistentVolumeClaimSpec(
         access_modes=access_modes,
-        resources=resources)
+        resources=resources,
+        selector=selector)
 
 
 def get_persistent_volume_claim(volume):
