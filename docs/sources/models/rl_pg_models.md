@@ -34,7 +34,7 @@ Implements a vanilla policy gradient model
 ## TRPOModel
 
 ```python
-polyaxon.models.rl.base.TRPOModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, is_deterministic=False, is_continuous=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.trpo.TRPOModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, is_deterministic=False, is_continuous=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Implements a trust region policy optimization model

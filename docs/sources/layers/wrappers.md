@@ -2,7 +2,7 @@
 ## Wrapper
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.wrappers.Wrapper(layer)
+polyaxon.layers.wrappers.Wrapper(layer)
 ```
 
 Abstract wrapper base class.
@@ -11,8 +11,8 @@ Abstract wrapper base class.
   Do not use this class as a layer, it is only an abstract base class.
   Two usable wrappers are the `TimeDistributed` and `Bidirectional` wrappers.
 
-  Arguments:
-  - __layer__: The layer to be wrapped.
+- __Arguments__:
+	- __layer__: The layer to be wrapped.
   
 
 ----
@@ -21,7 +21,7 @@ Abstract wrapper base class.
 ## TimeDistributed
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.wrappers.TimeDistributed(layer)
+polyaxon.layers.wrappers.TimeDistributed(layer)
 ```
 
 This wrapper allows to apply a layer to every temporal slice of an input.
@@ -64,8 +64,8 @@ This wrapper allows to apply a layer to every temporal slice of an input.
 					input_shape=(10, 299, 299, 3)))
   ```
 
-  Arguments:
-  - __layer__: a layer instance.
+- __Arguments__:
+	- __layer__: a layer instance.
   
 
 ----
@@ -74,23 +74,23 @@ This wrapper allows to apply a layer to every temporal slice of an input.
 ## Bidirectional
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.wrappers.Bidirectional(layer, merge_mode='concat', weights=None)
+polyaxon.layers.wrappers.Bidirectional(layer, merge_mode='concat', weights=None)
 ```
 
 Bidirectional wrapper for RNNs.
 
-  Arguments:
-  - __layer__: `Recurrent` instance.
-  - __merge_mode__: Mode by which outputs of the
+- __Arguments__:
+	- __layer__: `Recurrent` instance.
+	- __merge_mode__: Mode by which outputs of the
 	  forward and backward RNNs will be combined.
 	  One of {'sum', 'mul', 'concat', 'ave', None}.
 	  If None, the outputs will not be combined,
 	  they will be returned as a list.
 
-  Raises:
-  - __ValueError__: In case of invalid `merge_mode` argument.
+- __Raises__:
+	- __ValueError__: In case of invalid `merge_mode` argument.
 
-  Examples:
+- __Examples__:
 
   ```python
   model = Sequential()

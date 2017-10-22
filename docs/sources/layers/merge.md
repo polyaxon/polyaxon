@@ -2,7 +2,7 @@
 ## Add
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.merge.Add()
+polyaxon.layers.merge.Add()
 ```
 
 Layer that adds a list of inputs.
@@ -18,7 +18,7 @@ Layer that adds a list of inputs.
 ## Multiply
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.merge.Multiply()
+polyaxon.layers.merge.Multiply()
 ```
 
 Layer that multiplies (element-wise) a list of inputs.
@@ -34,7 +34,7 @@ Layer that multiplies (element-wise) a list of inputs.
 ## Average
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.merge.Average()
+polyaxon.layers.merge.Average()
 ```
 
 Layer that averages a list of inputs.
@@ -50,7 +50,7 @@ Layer that averages a list of inputs.
 ## Maximum
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.merge.Maximum()
+polyaxon.layers.merge.Maximum()
 ```
 
 Layer that computes the maximum (element-wise) a list of inputs.
@@ -66,7 +66,7 @@ Layer that computes the maximum (element-wise) a list of inputs.
 ## Concatenate
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.merge.Concatenate(axis=-1)
+polyaxon.layers.merge.Concatenate(axis=-1)
 ```
 
 Layer that concatenates a list of inputs.
@@ -75,9 +75,9 @@ Layer that concatenates a list of inputs.
   all of the same shape expect for the concatenation axis,
   and returns a single tensor, the concatenation of all inputs.
 
-  Arguments:
-  - __axis__: Axis along which to concatenate.
-  - __**kwargs__: standard layer keyword arguments.
+- __Arguments__:
+	- __axis__: Axis along which to concatenate.
+	- __**kwargs__: standard layer keyword arguments.
   
 
 ----
@@ -86,7 +86,7 @@ Layer that concatenates a list of inputs.
 ## Dot
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.merge.Dot(axes, normalize=False)
+polyaxon.layers.merge.Dot(axes, normalize=False)
 ```
 
 Layer that computes a dot product between samples in two tensors.
@@ -96,12 +96,12 @@ Layer that computes a dot product between samples in two tensors.
   where each entry `i` will be the dot product between
   `a[i]` and `b[i]`.
 
-  Arguments:
-  - __axes__: Integer or tuple of integers,
+- __Arguments__:
+	- __axes__: Integer or tuple of integers,
 	  axis or axes along which to take the dot product.
-  - __normalize__: Whether to L2-normalize samples along the
+	- __normalize__: Whether to L2-normalize samples along the
 	  dot product axis before taking the dot product.
 	  If set to True, then the output of the dot product
 	  is the cosine proximity between the two samples.
-  - __**kwargs__: Standard layer keyword arguments.
+	- __**kwargs__: Standard layer keyword arguments.
   

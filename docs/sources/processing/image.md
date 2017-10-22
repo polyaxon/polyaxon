@@ -68,7 +68,7 @@ See `plx.image.flip`'s docstring
 ## Transpose
 
 ```python
-tensorflow.contrib.keras.python.keras.engine.topology.Transpose()
+polyaxon.processing.image.Transpose()
 ```
 
 See `plx.image.transpose`'s docstring
@@ -167,7 +167,7 @@ See `plx.image.adjust_gamma`'s docstring
 ## Standardization
 
 ```python
-tensorflow.contrib.keras.python.keras.engine.topology.Standardization()
+polyaxon.processing.image.Standardization()
 ```
 
 See `plx.image.standardize`'s docstring
@@ -189,7 +189,7 @@ See `plx.image.draw_bounding_boxes`'s docstring
 ## TotalVariation
 
 ```python
-tensorflow.contrib.keras.python.keras.engine.topology.TotalVariation()
+polyaxon.processing.image.TotalVariation()
 ```
 
 See `plx.image.total_variation`'s docstring

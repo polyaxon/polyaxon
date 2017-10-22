@@ -11,7 +11,7 @@ Turns positive integers (indexes) into dense vectors of fixed size.
 
   This layer can only be used as the first layer in a model.
 
-  Example:
+- __Example__:
 
   ```python
 model = Sequential()
@@ -30,16 +30,16 @@ output_array = model.predict(input_array)
 assert output_array.shape == (32, 10, 64)
   ```
 
-  Arguments:
-- __input_dim__: int > 0. Size of the vocabulary,
+- __Arguments__:
+  - __input_dim__: int > 0. Size of the vocabulary,
 	i.e. maximum integer index + 1.
-- __output_dim__: int >= 0. Dimension of the dense embedding.
-- __embeddings_initializer__: Initializer for the `embeddings` matrix.
-- __embeddings_regularizer__: Regularizer function applied to
+  - __output_dim__: int >= 0. Dimension of the dense embedding.
+  - __embeddings_initializer__: Initializer for the `embeddings` matrix.
+  - __embeddings_regularizer__: Regularizer function applied to
 	  the `embeddings` matrix.
-- __embeddings_constraint__: Constraint function applied to
+  - __embeddings_constraint__: Constraint function applied to
 	  the `embeddings` matrix.
-- __mask_zero__: Whether or not the input value 0 is a special "padding"
+  - __mask_zero__: Whether or not the input value 0 is a special "padding"
 	value that should be masked out.
 	This is useful when using recurrent layers,
 	which may take variable length inputs.
@@ -48,7 +48,7 @@ assert output_array.shape == (32, 10, 64)
 	If mask_zero is set to True, as a consequence, index 0 cannot be
 	used in the vocabulary (input_dim should equal size of
 	vocabulary + 1).
-- __input_length__: Length of input sequences, when it is constant.
+  - __input_length__: Length of input sequences, when it is constant.
 	This argument is required if you are going to connect
 	`Flatten` then `Dense` layers upstream
 	(without it, the shape of the dense outputs cannot be computed).
@@ -59,7 +59,7 @@ assert output_array.shape == (32, 10, 64)
   Output shape:
   3D tensor with shape: `(batch_size, sequence_length, output_dim)`.
 
-  References:
+- __References__:
   - [A Theoretically Grounded Application of Dropout in Recurrent Neural
 	Networks](http://arxiv.org/abs/1512.05287)
   

@@ -1,3 +1,23 @@
+## create_input_fn
+
+
+```python
+create_input_fn(dataset_dir)
+```
+
+
+----
+
+## create_predict_input_fn
+
+
+```python
+create_predict_input_fn(dataset_dir)
+```
+
+
+----
+
 ## prepare_dataset
 
 
@@ -20,23 +40,3 @@ Runs download and conversion operation.
 
 - __Args__:
 	- __dataset_dir__: The dataset directory where the dataset is stored.
-
-
-----
-
-## create_input_fn
-
-
-```python
-create_input_fn(dataset_dir)
-```
-
-
-----
-
-## create_predict_input_fn
-
-
-```python
-create_predict_input_fn(dataset_dir)
-```

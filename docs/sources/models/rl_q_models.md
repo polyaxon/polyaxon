@@ -2,7 +2,7 @@
 ## DQNModel
 
 ```python
-polyaxon.models.rl.base.DQNModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.dqn.DQNModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Implements a double deep Q model.
@@ -48,7 +48,7 @@ Implements a double deep Q model.
 ## DDQNModel
 
 ```python
-polyaxon.models.rl.base.DDQNModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.ddqn.DDQNModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Implements a double deep Q model.

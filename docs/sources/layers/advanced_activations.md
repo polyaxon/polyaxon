@@ -2,7 +2,7 @@
 ## LeakyReLU
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.advanced_activations.LeakyReLU(alpha=0.3)
+polyaxon.layers.advanced_activations.LeakyReLU(alpha=0.3)
 ```
 
 Leaky version of a Rectified Linear Unit.
@@ -19,8 +19,8 @@ Leaky version of a Rectified Linear Unit.
   Output shape:
   Same shape as the input.
 
-  Arguments:
-  - __alpha__: float >= 0. Negative slope coefficient.
+- __Arguments__:
+	- __alpha__: float >= 0. Negative slope coefficient.
 
   
 
@@ -30,7 +30,7 @@ Leaky version of a Rectified Linear Unit.
 ## PReLU
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.advanced_activations.PReLU(alpha_initializer='zeros', alpha_regularizer=None, alpha_constraint=None, shared_axes=None)
+polyaxon.layers.advanced_activations.PReLU(alpha_initializer='zeros', alpha_regularizer=None, alpha_constraint=None, shared_axes=None)
 ```
 
 Parametric Rectified Linear Unit.
@@ -48,11 +48,11 @@ Parametric Rectified Linear Unit.
   Output shape:
   Same shape as the input.
 
-  Arguments:
-  - __alpha_initializer__: initializer function for the weights.
-  - __alpha_regularizer__: regularizer for the weights.
-  - __alpha_constraint__: constraint for the weights.
-  - __shared_axes__: the axes along which to share learnable
+- __Arguments__:
+	- __alpha_initializer__: initializer function for the weights.
+	- __alpha_regularizer__: regularizer for the weights.
+	- __alpha_constraint__: constraint for the weights.
+	- __shared_axes__: the axes along which to share learnable
 	  parameters for the activation function.
 	  For example, if the incoming feature maps
 	  are from a 2D convolution
@@ -69,7 +69,7 @@ Parametric Rectified Linear Unit.
 ## ELU
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.advanced_activations.ELU(alpha=1.0)
+polyaxon.layers.advanced_activations.ELU(alpha=1.0)
 ```
 
 Exponential Linear Unit.
@@ -86,8 +86,8 @@ Exponential Linear Unit.
   Output shape:
   Same shape as the input.
 
-  Arguments:
-  - __alpha__: scale for the negative factor.
+- __Arguments__:
+	- __alpha__: scale for the negative factor.
 
   
 
@@ -97,7 +97,7 @@ Exponential Linear Unit.
 ## ThresholdedReLU
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.advanced_activations.ThresholdedReLU(theta=1.0)
+polyaxon.layers.advanced_activations.ThresholdedReLU(theta=1.0)
 ```
 
 Thresholded Rectified Linear Unit.
@@ -114,7 +114,7 @@ Thresholded Rectified Linear Unit.
   Output shape:
   Same shape as the input.
 
-  Arguments:
-  - __theta__: float >= 0. Threshold location of activation.
+- __Arguments__:
+	- __theta__: float >= 0. Threshold location of activation.
 
   

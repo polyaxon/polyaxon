@@ -2,7 +2,7 @@
 ## Masking
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.Masking(mask_value=0.0)
+polyaxon.layers.core.Masking(mask_value=0.0)
 ```
 
 Masks a sequence by using a mask value to skip timesteps.
@@ -15,7 +15,7 @@ Masks a sequence by using a mask value to skip timesteps.
   If any downstream layer does not support masking yet receives such
   an input mask, an exception will be raised.
 
-  Example:
+- __Example__:
 
   Consider a Numpy data array `x` of shape `(samples, timesteps, features)`,
   to be fed to a LSTM layer.
@@ -38,7 +38,7 @@ Masks a sequence by using a mask value to skip timesteps.
 ## Dropout
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.Dropout(rate, noise_shape=None, seed=None)
+polyaxon.layers.core.Dropout(rate, noise_shape=None, seed=None)
 ```
 
 Applies Dropout to the input.
@@ -47,15 +47,15 @@ Applies Dropout to the input.
   a fraction `rate` of input units to 0 at each update during training time,
   which helps prevent overfitting.
 
-  Arguments:
-  - __rate__: float between 0 and 1. Fraction of the input units to drop.
-  - __noise_shape__: 1D integer tensor representing the shape of the
+- __Arguments__:
+	- __rate__: float between 0 and 1. Fraction of the input units to drop.
+	- __noise_shape__: 1D integer tensor representing the shape of the
 	  binary dropout mask that will be multiplied with the input.
 	  For instance, if your inputs have shape
 	  `(batch_size, timesteps, features)` and
 	  you want the dropout mask to be the same for all timesteps,
 	  you can use `noise_shape=(batch_size, 1, features)`.
-  - __seed__: A Python integer to use as random seed.
+	- __seed__: A Python integer to use as random seed.
   
 
 ----
@@ -64,7 +64,7 @@ Applies Dropout to the input.
 ## SpatialDropout1D
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.SpatialDropout1D(rate)
+polyaxon.layers.core.SpatialDropout1D(rate)
 ```
 
 Spatial 1D version of Dropout.
@@ -77,8 +77,8 @@ Spatial 1D version of Dropout.
   decrease. In this case, SpatialDropout1D will help promote independence
   between feature maps and should be used instead.
 
-  Arguments:
-  - __rate__: float between 0 and 1. Fraction of the input units to drop.
+- __Arguments__:
+	- __rate__: float between 0 and 1. Fraction of the input units to drop.
 
   Input shape:
   3D tensor with shape:
@@ -87,7 +87,7 @@ Spatial 1D version of Dropout.
   Output shape:
   Same as input
 
-  References:
+- __References__:
   - [Efficient Object Localization Using Convolutional
 	Networks](https://arxiv.org/abs/1411.4280)
   
@@ -98,7 +98,7 @@ Spatial 1D version of Dropout.
 ## SpatialDropout2D
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.SpatialDropout2D(rate, data_format=None)
+polyaxon.layers.core.SpatialDropout2D(rate, data_format=None)
 ```
 
 Spatial 2D version of Dropout.
@@ -111,9 +111,9 @@ Spatial 2D version of Dropout.
   decrease. In this case, SpatialDropout2D will help promote independence
   between feature maps and should be used instead.
 
-  Arguments:
-  - __rate__: float between 0 and 1. Fraction of the input units to drop.
-  - __data_format__: 'channels_first' or 'channels_last'.
+- __Arguments__:
+	- __rate__: float between 0 and 1. Fraction of the input units to drop.
+	- __data_format__: 'channels_first' or 'channels_last'.
 	  In 'channels_first' mode, the channels dimension
 	  (the depth) is at index 1,
 	  in 'channels_last' mode is it at index 3.
@@ -130,7 +130,7 @@ Spatial 2D version of Dropout.
   Output shape:
   Same as input
 
-  References:
+- __References__:
   - [Efficient Object Localization Using Convolutional
 	Networks](https://arxiv.org/abs/1411.4280)
   
@@ -141,7 +141,7 @@ Spatial 2D version of Dropout.
 ## SpatialDropout3D
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.SpatialDropout3D(rate, data_format=None)
+polyaxon.layers.core.SpatialDropout3D(rate, data_format=None)
 ```
 
 Spatial 3D version of Dropout.
@@ -154,9 +154,9 @@ Spatial 3D version of Dropout.
   decrease. In this case, SpatialDropout3D will help promote independence
   between feature maps and should be used instead.
 
-  Arguments:
-  - __rate__: float between 0 and 1. Fraction of the input units to drop.
-  - __data_format__: 'channels_first' or 'channels_last'.
+- __Arguments__:
+	- __rate__: float between 0 and 1. Fraction of the input units to drop.
+	- __data_format__: 'channels_first' or 'channels_last'.
 	  In 'channels_first' mode, the channels dimension (the depth)
 	  is at index 1, in 'channels_last' mode is it at index 4.
 	  It defaults to the `image_data_format` value found in your
@@ -172,7 +172,7 @@ Spatial 3D version of Dropout.
   Output shape:
   Same as input
 
-  References:
+- __References__:
   - [Efficient Object Localization Using Convolutional
 	Networks](https://arxiv.org/abs/1411.4280)
   
@@ -183,13 +183,13 @@ Spatial 3D version of Dropout.
 ## Activation
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.Activation(activation)
+polyaxon.layers.core.Activation(activation)
 ```
 
 Applies an activation function to an output.
 
-  Arguments:
-  - __activation__: name of activation function to use
+- __Arguments__:
+	- __activation__: name of activation function to use
 	  or alternatively, a Theano or TensorFlow operation.
 
   Input shape:
@@ -207,13 +207,13 @@ Applies an activation function to an output.
 ## Reshape
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.Reshape(target_shape)
+polyaxon.layers.core.Reshape(target_shape)
 ```
 
 Reshapes an output to a certain shape.
 
-  Arguments:
-  - __target_shape__: target shape. Tuple of integers,
+- __Arguments__:
+	- __target_shape__: target shape. Tuple of integers,
 	  does not include the samples dimension (batch size).
 
   Input shape:
@@ -225,7 +225,7 @@ Reshapes an output to a certain shape.
   Output shape:
   `(batch_size,) + target_shape`
 
-  Example:
+- __Example__:
 
   ```python
   # as first layer in a Sequential model
@@ -250,14 +250,14 @@ Reshapes an output to a certain shape.
 ## Permute
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.Permute(dims)
+polyaxon.layers.core.Permute(dims)
 ```
 
 Permutes the dimensions of the input according to a given pattern.
 
   Useful for e.g. connecting RNNs and convnets together.
 
-  Example:
+- __Example__:
 
   ```python
   model = Sequential()
@@ -266,8 +266,8 @@ Permutes the dimensions of the input according to a given pattern.
   # note: `None` is the batch dimension
   ```
 
-  Arguments:
-  - __dims__: Tuple of integers. Permutation pattern, does not include the
+- __Arguments__:
+	- __dims__: Tuple of integers. Permutation pattern, does not include the
 	  samples dimension. Indexing starts at 1.
 	  For instance, `(2, 1)` permutes the first and second dimension
 	  of the input.
@@ -288,12 +288,12 @@ Permutes the dimensions of the input according to a given pattern.
 ## Flatten
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.Flatten()
+polyaxon.layers.core.Flatten()
 ```
 
 Flattens the input. Does not affect the batch size.
 
-  Example:
+- __Example__:
 
   ```python
   model = Sequential()
@@ -313,12 +313,12 @@ Flattens the input. Does not affect the batch size.
 ## RepeatVector
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.RepeatVector(n)
+polyaxon.layers.core.RepeatVector(n)
 ```
 
 Repeats the input n times.
 
-  Example:
+- __Example__:
 
   ```python
   model = Sequential()
@@ -330,8 +330,8 @@ Repeats the input n times.
   # now: model.output_shape == (None, 3, 32)
   ```
 
-  Arguments:
-  - __n__: integer, repetition factor.
+- __Arguments__:
+	- __n__: integer, repetition factor.
 
   Input shape:
   2D tensor of shape `(num_samples, features)`.
@@ -346,12 +346,12 @@ Repeats the input n times.
 ## Lambda
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.Lambda(function, mask=None, arguments=None)
+polyaxon.layers.core.Lambda(function, mask=None, arguments=None)
 ```
 
 Wraps arbitrary expression as a `Layer` object.
 
-  Examples:
+- __Examples__:
 
   ```python
   # add a x -> x^2 layer
@@ -372,10 +372,10 @@ Wraps arbitrary expression as a `Layer` object.
   model.add(Lambda(antirectifier))
   ```
 
-  Arguments:
-  - __function__: The function to be evaluated.
+- __Arguments__:
+	- __function__: The function to be evaluated.
 	  Takes input tensor as first argument.
-  - __arguments__: optional dictionary of keyword arguments to be passed
+	- __arguments__: optional dictionary of keyword arguments to be passed
 	  to the function.
 
   Input shape:
@@ -406,10 +406,10 @@ Just your regular densely-connected NN layer.
   created by the layer, and `bias` is a bias vector created by the layer
   (only applicable if `use_bias` is `True`).
 
-  Note: if the input to the layer has a rank greater than 2, then
+- __Note__: if the input to the layer has a rank greater than 2, then
   it is flattened prior to the initial dot product with `kernel`.
 
-  Example:
+- __Example__:
 
   ```python
   # as first layer in a sequential model:
@@ -423,22 +423,22 @@ Just your regular densely-connected NN layer.
   model.add(Dense(32))
   ```
 
-  Arguments:
-  - __units__: Positive integer, dimensionality of the output space.
-  - __activation__: Activation function to use.
+- __Arguments__:
+	- __units__: Positive integer, dimensionality of the output space.
+	- __activation__: Activation function to use.
 	  If you don't specify anything, no activation is applied
 	  (ie. "linear" activation: `a(x) = x`).
-  - __use_bias__: Boolean, whether the layer uses a bias vector.
-  - __kernel_initializer__: Initializer for the `kernel` weights matrix.
-  - __bias_initializer__: Initializer for the bias vector.
-  - __kernel_regularizer__: Regularizer function applied to
+	- __use_bias__: Boolean, whether the layer uses a bias vector.
+	- __kernel_initializer__: Initializer for the `kernel` weights matrix.
+	- __bias_initializer__: Initializer for the bias vector.
+	- __kernel_regularizer__: Regularizer function applied to
 	  the `kernel` weights matrix.
-  - __bias_regularizer__: Regularizer function applied to the bias vector.
-  - __activity_regularizer__: Regularizer function applied to
+	- __bias_regularizer__: Regularizer function applied to the bias vector.
+	- __activity_regularizer__: Regularizer function applied to
 	  the output of the layer (its "activation")..
-  - __kernel_constraint__: Constraint function applied to
+	- __kernel_constraint__: Constraint function applied to
 	  the `kernel` weights matrix.
-  - __bias_constraint__: Constraint function applied to the bias vector.
+	- __bias_constraint__: Constraint function applied to the bias vector.
 
   Input shape:
   nD tensor with shape: `(batch_size, ..., input_dim)`.
@@ -457,14 +457,14 @@ Just your regular densely-connected NN layer.
 ## ActivityRegularization
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.core.ActivityRegularization(l1=0.0, l2=0.0)
+polyaxon.layers.core.ActivityRegularization(l1=0.0, l2=0.0)
 ```
 
 Layer that applies an update to the cost function based input activity.
 
-  Arguments:
-  - __l1__: L1 regularization factor (positive float).
-  - __l2__: L2 regularization factor (positive float).
+- __Arguments__:
+	- __l1__: L1 regularization factor (positive float).
+	- __l2__: L2 regularization factor (positive float).
 
   Input shape:
   Arbitrary. Use the keyword argument `input_shape`

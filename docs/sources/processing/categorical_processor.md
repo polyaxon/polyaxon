@@ -2,7 +2,7 @@
 ## CategoricalProcessor
 
 ```python
-tensorflow.contrib.learn.python.learn.preprocessing.categorical.CategoricalProcessor(min_frequency=0, share=False, vocabularies=None)
+polyaxon.processing.categorical.CategoricalProcessor(min_frequency=0, share=False, vocabularies=None)
 ```
 
 Maps documents to sequences of word ids.

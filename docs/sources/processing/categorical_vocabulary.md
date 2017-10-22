@@ -2,7 +2,7 @@
 ## CategoricalVocabulary
 
 ```python
-tensorflow.contrib.learn.python.learn.preprocessing.categorical_vocabulary.CategoricalVocabulary(unknown_token='<UNK>', support_reverse=True)
+polyaxon.processing.categorical.CategoricalVocabulary(unknown_token='<UNK>', support_reverse=True)
 ```
 
 Categorical variables vocabulary class.

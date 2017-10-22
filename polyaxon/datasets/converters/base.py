@@ -9,12 +9,12 @@ class BaseConverter(object):
     def to_int64_feature(values):
         """Returns a TF-Feature of int64s.
 
-          Args:
+        Args:
             values: A scalar or list of values.
 
-          Returns:
+        Returns:
             a TF-Feature.
-          """
+        """
         if not isinstance(values, list):
             values = [values]
         return tf.train.Feature(int64_list=tf.train.Int64List(value=values))

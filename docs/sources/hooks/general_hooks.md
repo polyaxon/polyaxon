@@ -2,7 +2,7 @@
 ## GlobalStepWaiterHook
 
 ```python
-tensorflow.python.training.basic_session_run_hooks.GlobalStepWaiterHook(wait_until_step)
+polyaxon.estimators.hooks.general_hooks.GlobalStepWaiterHook(wait_until_step)
 ```
 
 Delay execution until global step reaches to wait_until_step.
@@ -23,7 +23,7 @@ task_id=0 is the chief.
 ## FinalOpsHook
 
 ```python
-tensorflow.python.training.basic_session_run_hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
+polyaxon.estimators.hooks.general_hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
 ```
 
 A run hook which evaluates `Tensors` at the end of a session.
@@ -40,7 +40,7 @@ A run hook which evaluates `Tensors` at the end of a session.
 ## StopAfterNEvalsHook
 
 ```python
-tensorflow.python.training.evaluation.StopAfterNEvalsHook(num_evals, log_progress=True)
+polyaxon.estimators.hooks.general_hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
 ```
 
 Run hook used by the evaluation routines to run the `eval_ops` N times.
@@ -51,7 +51,7 @@ Run hook used by the evaluation routines to run the `eval_ops` N times.
 ## NanTensorHook
 
 ```python
-tensorflow.python.training.basic_session_run_hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
+polyaxon.estimators.hooks.general_hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
 ```
 
 NaN Loss monitor.

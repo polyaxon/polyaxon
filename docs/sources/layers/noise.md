@@ -2,7 +2,7 @@
 ## GaussianNoise
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.noise.GaussianNoise(stddev)
+polyaxon.layers.noise.GaussianNoise(stddev)
 ```
 
 Apply additive zero-centered Gaussian noise.
@@ -14,8 +14,8 @@ Apply additive zero-centered Gaussian noise.
 
   As it is a regularization layer, it is only active at training time.
 
-  Arguments:
-  - __stddev__: float, standard deviation of the noise distribution.
+- __Arguments__:
+	- __stddev__: float, standard deviation of the noise distribution.
 
   Input shape:
   Arbitrary. Use the keyword argument `input_shape`
@@ -32,15 +32,15 @@ Apply additive zero-centered Gaussian noise.
 ## GaussianDropout
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.noise.GaussianDropout(rate)
+polyaxon.layers.noise.GaussianDropout(rate)
 ```
 
 Apply multiplicative 1-centered Gaussian noise.
 
   As it is a regularization layer, it is only active at training time.
 
-  Arguments:
-  - __rate__: float, drop probability (as with `Dropout`).
+- __Arguments__:
+	- __rate__: float, drop probability (as with `Dropout`).
 	  The multiplicative noise will have
 	  standard deviation `sqrt(rate / (1 - rate))`.
 
@@ -52,7 +52,7 @@ Apply multiplicative 1-centered Gaussian noise.
   Output shape:
   Same shape as input.
 
-  References:
+- __References__:
   - [Dropout: A Simple Way to Prevent Neural Networks from Overfitting
 	Srivastava, Hinton, et al.
 	2014](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf)
@@ -64,7 +64,7 @@ Apply multiplicative 1-centered Gaussian noise.
 ## AlphaDropout
 
 ```python
-tensorflow.contrib.keras.python.keras.layers.noise.AlphaDropout(rate, noise_shape=None, seed=None)
+polyaxon.layers.noise.AlphaDropout(rate, noise_shape=None, seed=None)
 ```
 
 Applies Alpha Dropout to the input.
@@ -75,11 +75,11 @@ Applies Alpha Dropout to the input.
   Alpha Dropout fits well to Scaled Exponential Linear Units
   by randomly setting activations to the negative saturation value.
 
-  Arguments:
-  - __rate__: float, drop probability (as with `Dropout`).
+- __Arguments__:
+	- __rate__: float, drop probability (as with `Dropout`).
 	  The multiplicative noise will have
 	  standard deviation `sqrt(rate / (1 - rate))`.
-  - __seed__: A Python integer to use as random seed.
+	- __seed__: A Python integer to use as random seed.
 
   Input shape:
   Arbitrary. Use the keyword argument `input_shape`
@@ -89,6 +89,6 @@ Applies Alpha Dropout to the input.
   Output shape:
   Same shape as input.
 
-  References:
+- __References__:
   - [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
   

@@ -8,6 +8,7 @@ import shutil
 
 from polyaxon import (
     activations,
+    constraints,
     initializations,
     metrics,
     losses,
@@ -476,8 +477,12 @@ PAGES = [
         'all_module_functions': [activations],
     },
     {
-        'page': 'initializations.md',
+        'page': 'initializers.md',
         'all_module_classes': [initializations],
+    },
+    {
+        'page': 'constraints.md',
+        'classes': list(constraints.CONSTRAINTS.values()),
     },
     {
         'page': 'metrics.md',
@@ -488,7 +493,7 @@ PAGES = [
         'all_module_functions': [losses],
     },
     {
-        'page': 'regularizations.md',
+        'page': 'regularizers.md',
         'functions': list(regularizations.REGULARIZERS.values()),
     },
     {
@@ -544,7 +549,7 @@ PAGES = [
     },
 ]
 
-KEYWORDS = ['Examples', 'Arguments', 'Attributes', 'Returns',
+KEYWORDS = ['Examples', 'Args', 'Arguments', 'Attributes', 'Returns',
             'Raises', 'References', 'Links', 'Yields']
 
 EXCLUDE = ['check_loss_data', 'built_loss']
@@ -616,7 +621,7 @@ def get_function_signature(function, method=True):
 def get_class_signature(cls):
     try:
         class_signature = get_function_signature(cls.__init__)
-        class_signature = class_signature.replace('__init__', cls.__name__)
+        class_signature = cls.__module__ + '.' + cls.__name__ + class_signature.split('__init__')[1]
     except:
         # in case the class inherits from object and does not
         # define __init__
@@ -651,7 +656,13 @@ def code_snippet(snippet):
 def process_class(cls):
 
     def process_docstring(docstring):
-        docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
+        indet_levels = [l for l in [len(line) - len(line.lstrip()) for line in docstring.split('\n')]
+                      if l > 0]
+        indent = min(indet_levels) if indet_levels else 0
+        if indent == 2:
+            docstring = re.sub(r'  ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
+        else:
+            docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
         docstring = docstring.replace('    ' * 3, '\t\t')
         docstring = docstring.replace('    ' * 2, '\t')
         docstring = docstring.replace('    ', '')
@@ -673,7 +684,6 @@ def process_function(function, class_function=False):
 
     def process_docstring(docstring):
         docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
-
         docstring = docstring.replace('    ' * (5 if class_function else 4), '\t\t')
         docstring = docstring.replace('    ' * (3 if class_function else 2), '\t')
         docstring = docstring.replace('    ', '')

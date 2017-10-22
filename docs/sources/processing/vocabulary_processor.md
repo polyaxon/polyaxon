@@ -2,7 +2,7 @@
 ## VocabularyProcessor
 
 ```python
-tensorflow.contrib.learn.python.learn.preprocessing.text.VocabularyProcessor(max_document_length, min_frequency=0, vocabulary=None, tokenizer_fn=None)
+polyaxon.processing.text.VocabularyProcessor(max_document_length, min_frequency=0, vocabulary=None, tokenizer_fn=None)
 ```
 
 A mirror to tf.contrib.learn VocabularyProcessor.

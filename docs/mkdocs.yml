@@ -51,17 +51,21 @@ pages:
   - Summerizer: models/summarizer.md
 - Layers:
   - Introduction: layers/introduction.md
-  - Core Layers: layers/core.md
-  - Convolutional Layers: layers/convolutional.md
-  - Recurrent Layers: layers/recurrent.md
-  - Embedding Layers: layers/embeddings.md
+  - Advanced Actications: layers/advanced_activations.md
+  - Convolutional: layers/convolutional.md
+  - Convolutional Reccurent: layers/convolutional_recurrent.md
+  - Core: layers/core.md
+  - Embedding: layers/embeddings.md
+  - Local: layers/local.md
+  - Merge: layers/merge.md
+  - Moise: layers/noise.md
+  - Normalizations: layers/normalizations.md
+  - Pooling: layers/pooling.md
+  - Recurrent: layers/recurrent.md
+  - Wrappers: layers/wrappers.md
 - Bridges:
   - Base Bridge: bridges/base_bridge.md
   - Bridges: bridges/bridges.md
-- Encoders:
-  - Encoder: encoders/encoder.md
-- Decoders:
-  - Decoder: decoders/decoder.md
 - Processing:
   - Categorical Vocabulary: processing/categorical_vocabulary.md
   - Vocabulary Processor: processing/vocabulary_processor.md
@@ -74,17 +78,16 @@ pages:
 - Losses: losses.md
 - Metrics: metrics.md
 - Optimizers: optimizers.md
-- Initializations: initializations.md
-- Regularizations: regularizations.md
+- Initializations: initializers.md
+- Constraints: constraints.md
+- Regularizations: regularizers.md
 - Variables: variables.md
-- Subgraph: subgraph.md
 - RL:
   - Environments: rl/environments.md
   - Explorations: rl/explorations.md
   - Memories: rl/memories.md
   - utils: rl/utils.md
 - Libs:
-  - Configs: libs/configs.md
   - Getters: libs/getters.md
   - Utils: libs/utils.md
 - Datasets:
