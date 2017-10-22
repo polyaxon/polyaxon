@@ -108,50 +108,6 @@ See `plx.image.convert_images_dtype`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L893)</span>
-## AdjustGamma
-
-```python
-polyaxon.processing.image.AdjustGamma(gamma=1, gain=1)
-```
-
-See `plx.image.adjust_gamma`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L938)</span>
-## Standardization
-
-```python
-tensorflow.contrib.keras.python.keras.engine.topology.Standardization()
-```
-
-See `plx.image.standardize`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L977)</span>
-## DrawBoundingBoxes
-
-```python
-polyaxon.processing.image.DrawBoundingBoxes(boxes)
-```
-
-See `plx.image.draw_bounding_boxes`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1169)</span>
-## TotalVariation
-
-```python
-tensorflow.contrib.keras.python.keras.engine.topology.TotalVariation()
-```
-
-See `plx.image.total_variation`'s docstring
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L668)</span>
 ## AdjustBrightness
 
@@ -193,6 +149,50 @@ polyaxon.processing.image.AdjustSaturation(saturation_factor, saturation_factor_
 ```
 
 See `plx.image.adjust_saturation`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L893)</span>
+## AdjustGamma
+
+```python
+polyaxon.processing.image.AdjustGamma(gamma=1, gain=1)
+```
+
+See `plx.image.adjust_gamma`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L938)</span>
+## Standardization
+
+```python
+tensorflow.contrib.keras.python.keras.engine.topology.Standardization()
+```
+
+See `plx.image.standardize`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L977)</span>
+## DrawBoundingBoxes
+
+```python
+polyaxon.processing.image.DrawBoundingBoxes(boxes)
+```
+
+See `plx.image.draw_bounding_boxes`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1169)</span>
+## TotalVariation
+
+```python
+tensorflow.contrib.keras.python.keras.engine.topology.TotalVariation()
+```
+
+See `plx.image.total_variation`'s docstring
 
 ----
 

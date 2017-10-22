@@ -30,6 +30,11 @@ Polyaxon was built with the following goals:
 ## A simple linear regression
 
 ```python
+from polyaxon_schemas.losses import MeanSquaredErrorConfig
+from polyaxon_schemas.optimizers import SGDConfig
+
+import polyaxon as plx 
+
 X = np.linspace(-1, 1, 100)
 y = 2 * X + np.random.randn(*X.shape) * 0.33
 
@@ -39,15 +44,17 @@ y_val = 2 * X_val + np.random.randn(*X_val.shape) * 0.33
 
 
 def graph_fn(mode, inputs):
-    return plx.layers.SingleUnit(mode)(inputs['X'])
+    return plx.layers.Dense(units=1,)(inputs['X'])
 
 
 def model_fn(features, labels, mode):
     model = plx.models.Regressor(
-        mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(module='mean_squared_error'),
-        optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.009),
-        eval_metrics_config=[],
-        summaries='all', name='regressor')
+        mode, 
+        graph_fn=graph_fn, 
+        loss=MeanSquaredErrorConfig(),
+        optimizer=SGDConfig(learning_rate=0.009),
+        summaries='all', 
+        name='regressor')
     return model(features, labels)
 
 
@@ -61,29 +68,33 @@ estimator.train(input_fn=numpy_input_fn(
 ## A reinforcement learning problem
 
 ```python
+from polyaxon_schemas.losses import HuberLossConfig
+from polyaxon_schemas.optimizers import SGDConfig
+from polyaxon_schemas.rl.explorations import DecayExplorationConfig
+
+import polyaxon as plx
+
 env = plx.envs.GymEnvironment('CartPole-v0')
 
-def graph_fn(mode, inputs):
-    return plx.layers.FullyConnected(mode, num_units=512)(inputs['state'])
+def graph_fn(mode, features):
+    return plx.layers.Dense(units=512)(features['state'])
 
 def model_fn(features, labels, mode):
-    model = plx.models.DQNModel(
-        mode, 
-        graph_fn=graph_fn, 
-        loss_config=plx.configs.LossConfig(module='huber_loss'),
-        num_states=env.num_states, 
+    model = plx.models.DDQNModel(
+        mode,
+        graph_fn=graph_fn,
+        loss=HuberLossConfig(),
+        num_states=env.num_states,
         num_actions=env.num_actions,
-        optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.01),
-        exploration_config=plx.configs.ExplorationConfig(module='decay'),
-        target_update_frequency=10, 
-        dueling='mean', 
+        optimizer=SGDConfig(learning_rate=0.01),
+        exploration_config=DecayExplorationConfig(),
+        target_update_frequency=10,
         summaries='all')
     return model(features, labels)
 
-memory = plx.rl.memories.Memory(
-    num_states=env.num_states, num_actions=env.num_actions, continuous=env.is_continuous)
+memory = plx.rl.memories.Memory()
 agent = plx.estimators.Agent(
-    model_fn=model_fn, memory=memory, model_dir="/tmp/polyaxon_logs/dqn_cartpole")
+    model_fn=model_fn, memory=memory, model_dir="/tmp/polyaxon_logs/ddqn_cartpole")
 
 agent.train(env)
 ```
@@ -92,135 +103,279 @@ agent.train(env)
 ## A classification problem
 
 ```python
-X_train, Y_train, X_test, Y_test = load_mnist()
+import tensorflow as tf
+import polyaxon as plx
 
-config = {
-    'name': 'lenet_mnsit',
-    'output_dir': output_dir,
-    'eval_every_n_steps': 10,
-    'train_steps_per_iteration': 100,
-    'run_config': {'save_checkpoints_steps': 100},
-    'train_input_data_config': {
-        'input_type': plx.configs.InputDataConfig.NUMPY,
-        'pipeline_config': {'name': 'train', 'batch_size': 64, 'num_epochs': None,
-                            'shuffle': True},
-        'x': X_train,
-        'y': Y_train
-    },
-    'eval_input_data_config': {
-        'input_type': plx.configs.InputDataConfig.NUMPY,
-        'pipeline_config': {'name': 'eval', 'batch_size': 32, 'num_epochs': None,
-                            'shuffle': False},
-        'x': X_test,
-        'y': Y_test
-    },
-    'estimator_config': {'output_dir': output_dir},
-    'model_config': {
-        'summaries': 'all',
-        'model_type': 'classifier',
-        'loss_config': {'name': 'softmax_cross_entropy'},
-        'eval_metrics_config': [{'name': 'streaming_accuracy'},
-                                {'name': 'streaming_precision'}],
-        'optimizer_config': {'name': 'Adam', 'learning_rate': 0.002,
-                             'decay_type': 'exponential_decay', 'decay_rate': 0.2},
-        'graph_config': {
-            'name': 'lenet',
-            'definition': [
-                (plx.layers.Conv2d, {'num_filter': 32, 'filter_size': 5, 'strides': 1,
-                                     'regularizer': 'l2_regularizer'}),
-                (plx.layers.MaxPool2d, {'kernel_size': 2}),
-                (plx.layers.Conv2d, {'num_filter': 64, 'filter_size': 5,
-                                     'regularizer': 'l2_regularizer'}),
-                (plx.layers.MaxPool2d, {'kernel_size': 2}),
-                (plx.layers.FullyConnected, {'n_units': 1024, 'activation': 'tanh'}),
-                (plx.layers.FullyConnected, {'n_units': 10}),
-            ]
-        }
-    }
-}
-experiment_config = plx.configs.ExperimentConfig.read_configs(config)
-xp = plx.experiments.create_experiment(experiment_config)
-xp.continuous_train_and_evaluate()
+from polyaxon_schemas.optimizers import AdamConfig
+from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
+from polyaxon_schemas.metrics import AccuracyConfig
+
+
+def graph_fn(mode, features):
+    x = plx.layers.Conv2D(filters=32, kernel_size=5)(features['image'])
+    x = plx.layers.MaxPooling2D(pool_size=2)(x)
+    x = plx.layers.Conv2D(filters=64, kernel_size=5)(x)
+    x = plx.layers.MaxPooling2D(pool_size=2)(x)
+    x = plx.layers.Flatten()(x)
+    x = plx.layers.Dense(units=10)(x)
+    return x
+
+
+def model_fn(features, labels, params, mode, config):
+    model = plx.models.Classifier(
+        mode=mode,
+        graph_fn=graph_fn,
+        loss=SigmoidCrossEntropyConfig(),
+        optimizer=AdamConfig(
+            learning_rate=0.007, decay_type='exponential_decay', decay_rate=0.1),
+        metrics=[AccuracyConfig()],
+        summaries='all',
+        one_hot_encode=True,
+        n_classes=10)
+    return model(features=features, labels=labels, params=params, config=config)
+
+
+def experiment_fn(output_dir):
+    """Creates an experiment using Lenet network.
+
+    Links:
+        * http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
+    """
+    dataset_dir = '../data/mnist'
+    plx.datasets.mnist.prepare(dataset_dir)
+    train_input_fn, eval_input_fn = plx.datasets.mnist.create_input_fn(dataset_dir)
+
+    experiment = plx.experiments.Experiment(
+        estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir),
+        train_input_fn=train_input_fn,
+        eval_input_fn=eval_input_fn,
+        train_steps=10000,
+        eval_steps=10)
+
+    return experiment
+
+
+def main(*args):
+    plx.experiments.run_experiment(experiment_fn=experiment_fn,
+                                   output_dir="/tmp/polyaxon_logs/lenet",
+                                   schedule='continuous_train_and_eval')
+
+
+if __name__ == "__main__":
+    tf.logging.set_verbosity(tf.logging.INFO)
+    tf.app.run()
 ```
 
 ## A regression problem
 
-```python
-X, y = generate_data(np.sin, np.linspace(0, 100, 10000, dtype=np.float32), time_steps=7)
+```python    
+from polyaxon_schemas.losses import MeanSquaredErrorConfig
+from polyaxon_schemas.metrics import (
+    RootMeanSquaredErrorConfig,
+    MeanAbsoluteErrorConfig,
+)
+from polyaxon_schemas.optimizers import AdagradConfig
 
-config = {
-    'name': 'time_series',
-    'output_dir': output_dir,
-    'eval_every_n_steps': 5,
-    'run_config': {'save_checkpoints_steps': 100},
-    'train_input_data_config': {
-        'input_type': plx.configs.InputDataConfig.NUMPY,
-        'pipeline_config': {'name': 'train', 'batch_size': 64, 'num_epochs': None,
-                            'shuffle': False},
-        'x': X['train'],
-        'y': y['train']
-    },
-    'eval_input_data_config': {
-        'input_type': plx.configs.InputDataConfig.NUMPY,
-        'pipeline_config': {'name': 'eval', 'batch_size': 32, 'num_epochs': None,
-                            'shuffle': False},
-        'x': X['val'],
-        'y': y['val']
-    },
-    'estimator_config': {'output_dir': output_dir},
-    'model_config': {
-        'model_type': 'regressor',
-        'loss_config': {'name': 'mean_squared_error'},
-        'eval_metrics_config': [{'name': 'streaming_root_mean_squared_error'},
-                                {'name': 'streaming_mean_absolute_error'}],
-        'optimizer_config': {'name': 'Adagrad', 'learning_rate': 0.1},
-        'graph_config': {
-            'name': 'regressor',
-            'definition': [
-                (plx.layers.LSTM, {'num_units': 7, 'num_layers': 1}),
-                # (Slice, {'begin': [0, 6], 'size': [-1, 1]}),
-                (plx.layers.FullyConnected, {'n_units': 1}),
-            ]
-        }
-    }
-}
-experiment_config = plx.configs.ExperimentConfig.read_configs(config)
-xp = plx.experiments.create_experiment(experiment_config)
+import polyaxon as plx
+
+NUM_RNN_LAYERS = 2
+NUM_RNN_UNITS = 2
+
+def graph_fn(mode, features):
+    x = features['x']
+    for i in range(NUM_LAYERS):
+        x = plx.layers.LSTM(units=NUM_RNN_UNITS)(x)
+    return plx.layers.Dense(units=1)(x)
+
+def model_fn(features, labels, mode):
+    return plx.models.Regressor(
+        mode=mode,
+        graph_fn=graph_fn,
+        loss=MeanSquaredErrorConfig(),
+        optimizer=AdagradConfig(learning_rate=0.1),
+        metrics=[
+            RootMeanSquaredErrorConfig(),
+            MeanAbsoluteErrorConfig()
+        ]
+    )(features=features, labels=labels)
+
+xp = plx.experiments.Experiment(
+        estimator=plx.estimators.Estimator(model_fn=model_fn, model_dir=output_dir),
+        train_input_fn=plx.processing.numpy_input_fn(
+            x={'x': x['train']}, y=y['train'], batch_size=64, num_epochs=None, shuffle=False),
+        eval_input_fn=plx.processing.numpy_input_fn(
+            x={'x': x['train']}, y=y['train'], batch_size=32, num_epochs=None, shuffle=False),
+        train_steps=train_steps,
+        eval_steps=10)
 xp.continuous_train_and_evaluate()
 ```
 
 ## Creating a distributed experiment
 
 ```python
-def create_experiment(task_type, task_index=0):
 
-    def graph_fn(mode, inputs):
-        x = plx.layers.FullyConnected(mode, num_units=32, activation='tanh')(inputs['X'])
-        return plx.layers.FullyConnected(mode, num_units=1, activation='sigmoid')(x)
+import numpy as np
+import tensorflow as tf
+from polyaxon_schemas.settings import RunConfig, ClusterConfig
+
+import polyaxon as plx
+
+from polyaxon_schemas.losses import AbsoluteDifferenceConfig
+from polyaxon_schemas.optimizers import SGDConfig
+
+tf.logging.set_verbosity(tf.logging.INFO)
+
+
+def create_experiment(task_type, task_id=0):
+    def graph_fn(mode, features):
+        x = plx.layers.Dense(units=32, activation='tanh')(features['X'])
+        return plx.layers.Dense(units=1, activation='sigmoid')(x)
 
     def model_fn(features, labels, mode):
         model = plx.models.Regressor(
-            mode, graph_fn=graph_fn, loss_config=plx.configs.LossConfig(module='absolute_difference'),
-            optimizer_config=plx.configs.OptimizerConfig(module='sgd', learning_rate=0.5, decay_type='exponential_decay', decay_steps=10),
+            mode, graph_fn=graph_fn,
+            loss=AbsoluteDifferenceConfig(),
+            optimizer=SGDConfig(learning_rate=0.5,
+                                decay_type='exponential_decay',
+                                decay_steps=10),
             summaries='all', name='xor')
         return model(features, labels)
 
-    os.environ['task_type'] = task_type
-    os.environ['task_index'] = str(task_index)
+    config = RunConfig(cluster=ClusterConfig(master=['127.0.0.1:9000'],
+                                             worker=['127.0.0.1:9002'],
+                                             ps=['127.0.0.1:9001']))
 
-    cluster_config = {
-            'master': ['127.0.0.1:9000'],
-            'ps': ['127.0.0.1:9001'],
-            'worker': ['127.0.0.1:9002'],
-            'environment': 'cloud'
-        }
+    config = plx.estimators.RunConfig.from_config(config)
+    config = config.replace(task_type=task_type, task_id=task_id)
 
-    config = plx.configs.RunConfig(cluster_config=cluster_config)
+    est = plx.estimators.Estimator(model_fn=model_fn, model_dir="/tmp/polyaxon_logs/xor",
+                                   config=config)
 
-    estimator = plx.estimators.Estimator(model_fn=model_fn, model_dir="/tmp/polyaxon_logs/xor", config=config)
+    # Data
+    x = np.asarray([[0., 0.], [0., 1.], [1., 0.], [1., 1.]], dtype=np.float32)
+    y = np.asarray([[0], [1], [1], [0]], dtype=np.float32)
 
-    return plx.experiments.Experiment(estimator, input_fn, input_fn)
+    def input_fn(num_epochs=1):
+        return plx.processing.numpy_input_fn({'X': x}, y,
+                                             shuffle=False,
+                                             num_epochs=num_epochs,
+                                             batch_size=len(x))
+
+    return plx.experiments.Experiment(est, input_fn(10000), input_fn(100))
+
+
+# >> create_experiment('master').train_and_evaluate()
+# >> create_experiment('worker').train()
+# >> create_experiment('ps').run_std_server()
 ```
+
+## Creating concurrent experiments in kubernetes clusters based on a yaml file
+
+```yaml
+
+---
+version: 1
+
+project:
+  name: conv_mnsit
+
+matrix:
+  lr:
+    logspace: 0.01:0.1:2
+
+settings:
+  logging:
+    level: INFO
+
+environment:
+  delay_workers_by_global_step: true
+  n_workers: 5
+  n_ps: 3
+  run_config:
+    save_summary_steps: 100
+    save_checkpoints_steps: 100
+
+model:
+  classifier:
+    loss:
+      SigmoidCrossEntropy:
+    optimizer:
+      Adam:
+        learning_rate: "{{ lr }}"
+    metrics:
+      - Accuracy
+      - Precision
+    one_hot_encode: true
+    n_classes: 10
+    graph:
+      input_layers: image
+      layers:
+        - Conv2D:
+            filters: 32
+            kernel_size: 3
+            strides: 1
+            activation: elu
+            regularizer:
+                L2:
+                  l: 0.02
+        - MaxPooling2D:
+            pool_size: 2
+        - Conv2D:
+            filters: 64
+            kernel_size: 3
+            activation: relu
+            regularizer:
+                L2:
+                  l: 0.02
+        - MaxPooling2D:
+            pool_size: 2
+        - Flatten:
+        - Dense:
+            units: 128
+            activation: tanh
+        - Dropout:
+            rate: 0.8
+        - Dense:
+            units: 256
+            activation: tanh
+        - Dropout:
+            rate: 0.8
+        - Dense:
+            units: 10
+
+train:
+  train_steps: 100
+  data_pipeline:
+    TFRecordImagePipeline:
+      batch_size: 64
+      num_epochs: 5
+      shuffle: true
+      data_files: ["../data/mnist/mnist_train.tfrecord"]
+      meta_data_file: "../data/mnist/meta_data.json"
+      feature_processors:
+        image:
+          input_layers: [image]
+          layers:
+            - Cast:
+                dtype: float32
+
+eval:
+  data_pipeline:
+    TFRecordImagePipeline:
+      batch_size: 32
+      num_epochs: 1
+      shuffle: False
+      data_files: ["../data/mnist/mnist_eval.tfrecord"]
+      meta_data_file: "../data/mnist/meta_data.json"
+      feature_processors:
+        image:
+          input_layers: [image]
+          layers:
+            - Cast:
+                dtype: float32
+
+```
+
 
 # Installation
 

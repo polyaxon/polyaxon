@@ -1,30 +1,3 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L112)</span>
-## LecunNormal
-
-```python
-polyaxon.initializations.LecunNormal(seed=None)
-```
-
-LeCun normal initializer.
-
-  It draws samples from a truncated normal distribution centered on 0
-  with `stddev = sqrt(1 / fan_in)`
-  where `fan_in` is the number of input units in the weight tensor.
-
-  Arguments:
-  - __seed__: A Python integer. Used to seed the random generator.
-
-  Returns:
-  An initializer.
-
-  References:
-  - [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
-  - [Efficient
-  Backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
-  
-
-----
-
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L12)</span>
 ## Zeros
 
@@ -407,4 +380,31 @@ LeCun uniform initializer.
   References:
   LeCun 98, Efficient Backprop,
   - __http__://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf
+  
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L112)</span>
+## LecunNormal
+
+```python
+polyaxon.initializations.LecunNormal(seed=None)
+```
+
+LeCun normal initializer.
+
+  It draws samples from a truncated normal distribution centered on 0
+  with `stddev = sqrt(1 / fan_in)`
+  where `fan_in` is the number of input units in the weight tensor.
+
+  Arguments:
+  - __seed__: A Python integer. Used to seed the random generator.
+
+  Returns:
+  An initializer.
+
+  References:
+  - [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
+  - [Efficient
+  Backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
   
