@@ -312,3 +312,12 @@ get_function_name(func)
 
 
 Returns a module name for a callable or `None` if no name can be found.
+
+----
+
+## to_list
+
+
+```python
+to_list(value)
+```

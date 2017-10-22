@@ -2,7 +2,7 @@
 ## DQNModel
 
 ```python
-polyaxon.models.rl.base.DQNModel(mode, graph_fn, num_states, num_actions, loss_config=None, optimizer_config=None, eval_metrics_config=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.base.DQNModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Implements a double deep Q model.
@@ -13,11 +13,11 @@ Implements a double deep Q model.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`.
+	- __loss__: An instance of `LossConfig`.
 	- __num_states__: `int`. The number of states.
 	- __num_actions__: `int`. The number of actions.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __discount__: `float`. The discount factor on the target Q values.
 	- __exploration_config__: An instance `ExplorationConfig`
 	- __use_target_graph__: `bool`. To use a second “target” network,
@@ -44,11 +44,11 @@ Implements a double deep Q model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/ddqn.py#L11)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/ddqn.py#L10)</span>
 ## DDQNModel
 
 ```python
-polyaxon.models.rl.base.DDQNModel(mode, graph_fn, num_states, num_actions, loss_config=None, optimizer_config=None, eval_metrics_config=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.base.DDQNModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Implements a double deep Q model.
@@ -59,11 +59,11 @@ Implements a double deep Q model.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`.
+	- __loss__: An instance of `LossConfig`.
 	- __num_states__: `int`. The number of states.
 	- __num_actions__: `int`. The number of actions.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __discount__: `float`. The discount factor on the target Q values.
 	- __exploration_config__: An instance `ExplorationConfig`
 	- __use_target_graph__: `bool`. To use a second “target” network,
@@ -90,11 +90,11 @@ Implements a double deep Q model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/naf.py#L13)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/naf.py#L12)</span>
 ## NAFModel
 
 ```python
-polyaxon.models.rl.naf.NAFModel(mode, graph_fn, loss_config, num_states, num_actions, optimizer_config=None, eval_metrics_config=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=True, use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.naf.NAFModel(mode, graph_fn, loss, num_states, num_actions, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=True, use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Implements a normalized advantage functions model.
@@ -105,11 +105,11 @@ Implements a normalized advantage functions model.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`.
+	- __loss__: An instance of `LossConfig`.
 	- __num_states__: `int`. The number of states.
 	- __num_actions__: `int`. The number of actions.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __discount__: `float`. The discount factor on the target Q values.
 	- __exploration_config__: An instance `ExplorationConfig`
 	- __use_target_graph__: `bool`. To use a second “target” network,

@@ -1,198 +1,198 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L121)</span>
-## CentralCrop
-
-```python
-polyaxon.processing.image.CentralCrop(mode, central_fraction, name='CentralCrop')
-```
-
-See `plx.image.central_crop`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L66)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L91)</span>
 ## Resize
 
 ```python
-polyaxon.processing.image.Resize(mode, height, width, method=None, align_corners=False, name='Resize')
+polyaxon.processing.image.Resize(height, width, method=None, align_corners=False)
 ```
 
 See `plx.image.resize`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L156)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L152)</span>
+## CentralCrop
+
+```python
+polyaxon.processing.image.CentralCrop(central_fraction)
+```
+
+See `plx.image.central_crop`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L190)</span>
 ## RandomCrop
 
 ```python
-polyaxon.processing.image.RandomCrop(mode, height, width, name='RandomCrop')
+polyaxon.processing.image.RandomCrop(height, width)
 ```
 
 See `plx.image.random_crop`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L219)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L255)</span>
 ## ExtractGlimpse
 
 ```python
-polyaxon.processing.image.ExtractGlimpse(mode, size, offsets, centered=None, normalized=None, uniform_noise=None, name='ExtractGlimpse')
+polyaxon.processing.image.ExtractGlimpse(size, offsets, centered=None, normalized=None, uniform_noise=None)
 ```
 
 See `plx.image.extract_glimpse`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L290)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L331)</span>
 ## ToBoundingBox
 
 ```python
-polyaxon.processing.image.ToBoundingBox(mode, offset_height, offset_width, target_height, target_width, method='crop', name='ToBoundingBox')
+polyaxon.processing.image.ToBoundingBox(offset_height, offset_width, target_height, target_width, method='crop')
 ```
 
 See `plx.image.to_bounding_box`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L354)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L401)</span>
 ## Flip
 
 ```python
-polyaxon.processing.image.Flip(mode, axis=0, is_random=False, seed=None, name='Flip')
+polyaxon.processing.image.Flip(axis=0, is_random=False, seed=None)
 ```
 
 See `plx.image.flip`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L394)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L443)</span>
 ## Transpose
 
 ```python
-polyaxon.processing.image.Transpose(mode, name='Transpose')
+tensorflow.contrib.keras.python.keras.engine.topology.Transpose()
 ```
 
 See `plx.image.transpose`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L438)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L486)</span>
 ## Rotate90
 
 ```python
-polyaxon.processing.image.Rotate90(mode, k=1, is_random=False, seed=None, name='Rotate90')
+polyaxon.processing.image.Rotate90(k=1, is_random=False, seed=None)
 ```
 
 See `plx.image.rotate90`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L510)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L563)</span>
 ## ConvertColorSpace
 
 ```python
-polyaxon.processing.image.ConvertColorSpace(mode, from_space, to_space, name='ConvertColorSpace')
+polyaxon.processing.image.ConvertColorSpace(from_space, to_space)
 ```
 
 See `plx.image.convert_color_space`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L563)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L620)</span>
 ## ConvertImagesDtype
 
 ```python
-polyaxon.processing.image.ConvertImagesDtype(mode, dtype, saturate=False, name='ConvertImagesDtype')
+polyaxon.processing.image.ConvertImagesDtype(dtype, saturate=False)
 ```
 
 See `plx.image.convert_images_dtype`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L607)</span>
-## AdjustBrightness
-
-```python
-polyaxon.processing.image.AdjustBrightness(mode, delta, is_random=False, seed=None, name='AdjustBrightness')
-```
-
-See `plx.image.adjust_brightness`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L665)</span>
-## AdjustContrast
-
-```python
-polyaxon.processing.image.AdjustContrast(mode, contrast_factor, contrast_factor_max=None, is_random=False, seed=None, name='AdjustContrast')
-```
-
-See `plx.image.adjust_contrast`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L714)</span>
-## AdjustHue
-
-```python
-polyaxon.processing.image.AdjustHue(mode, delta, is_random=False, seed=None, name='AdjustHue')
-```
-
-See `plx.image.adjust_hue`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L771)</span>
-## AdjustSaturation
-
-```python
-polyaxon.processing.image.AdjustSaturation(mode, saturation_factor, saturation_factor_max=None, is_random=False, seed=None, name='AdjustSaturation')
-```
-
-See `plx.image.adjust_saturation`'s docstring
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L814)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L893)</span>
 ## AdjustGamma
 
 ```python
-polyaxon.processing.image.AdjustGamma(mode, gamma=1, gain=1, name='AdjustGamma')
+polyaxon.processing.image.AdjustGamma(gamma=1, gain=1)
 ```
 
 See `plx.image.adjust_gamma`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L857)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L938)</span>
 ## Standardization
 
 ```python
-polyaxon.processing.image.Standardization(mode, name='Standardization')
+tensorflow.contrib.keras.python.keras.engine.topology.Standardization()
 ```
 
 See `plx.image.standardize`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L897)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L977)</span>
 ## DrawBoundingBoxes
 
 ```python
-polyaxon.processing.image.DrawBoundingBoxes(mode, boxes, name='DrawBoundingBoxes')
+polyaxon.processing.image.DrawBoundingBoxes(boxes)
 ```
 
 See `plx.image.draw_bounding_boxes`'s docstring
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1087)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L1169)</span>
 ## TotalVariation
 
 ```python
-polyaxon.processing.image.TotalVariation(mode, name='TotalVariation')
+tensorflow.contrib.keras.python.keras.engine.topology.TotalVariation()
 ```
 
 See `plx.image.total_variation`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L668)</span>
+## AdjustBrightness
+
+```python
+polyaxon.processing.image.AdjustBrightness(delta, is_random=False, seed=None)
+```
+
+See `plx.image.adjust_brightness`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L730)</span>
+## AdjustContrast
+
+```python
+polyaxon.processing.image.AdjustContrast(contrast_factor, contrast_factor_max=None, is_random=False, seed=None)
+```
+
+See `plx.image.adjust_contrast`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L783)</span>
+## AdjustHue
+
+```python
+polyaxon.processing.image.AdjustHue(delta, is_random=False, seed=None)
+```
+
+See `plx.image.adjust_hue`'s docstring
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/image.py#L845)</span>
+## AdjustSaturation
+
+```python
+polyaxon.processing.image.AdjustSaturation(saturation_factor, saturation_factor_max=None, is_random=False, seed=None)
+```
+
+See `plx.image.adjust_saturation`'s docstring
 
 ----
 
@@ -220,9 +220,9 @@ ratio is not the same as `size`.
 `method` can be one of:
 
 *   `None` no distortion.
-*   `ResizeMethod.BILINEAR`: [Bilinear interpolation.](https://en.wikipedia.org/wiki/Bilinear_interpolation)
-*   `ResizeMethod.NEAREST_NEIGHBOR`: [Nearest neighbor interpolation.](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation)
-*   `ResizeMethod.BICUBIC`: [Bicubic interpolation.](https://en.wikipedia.org/wiki/Bicubic_interpolation)
+*   `ResizeMethod.BILINEAR`: [Bilinear interpolation.](https://en.wikipedia.org/wiki/Bilinear_interpolation)  # noqa
+*   `ResizeMethod.NEAREST_NEIGHBOR`: [Nearest neighbor interpolation.](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation)  # noqa
+*   `ResizeMethod.BICUBIC`: [Bicubic interpolation.](https://en.wikipedia.org/wiki/Bicubic_interpolation)  # noqa
 *   `ResizeMethod.AREA`: Area interpolation.
 
 - __Args__:

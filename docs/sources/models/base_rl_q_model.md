@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L70)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L63)</span>
 ## BaseQModel
 
 ```python
-polyaxon.models.rl.base.BaseQModel(mode, graph_fn, num_states, num_actions, loss_config=None, optimizer_config=None, eval_metrics_config=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.base.BaseQModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, discount=0.97, exploration_config=None, use_target_graph=True, target_update_frequency=5, is_continuous=False, dueling='mean', use_expert_demo=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Base reinforcement learning model class.
@@ -13,11 +13,11 @@ Base reinforcement learning model class.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`.
+	- __loss__: An instance of `LossConfig`.
 	- __num_states__: `int`. The number of states.
 	- __num_actions__: `int`. The number of actions.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __discount__: `float`. The discount factor on the target Q values.
 	- __exploration_config__: An instance `ExplorationConfig`
 	- __use_target_graph__: `bool`. To use a second “target” network,

@@ -2,7 +2,7 @@
 ## CategoricalVocabulary
 
 ```python
-polyaxon.processing.categorical.CategoricalVocabulary(unknown_token='<UNK>', support_reverse=True)
+tensorflow.contrib.learn.python.learn.preprocessing.categorical_vocabulary.CategoricalVocabulary(unknown_token='<UNK>', support_reverse=True)
 ```
 
 Categorical variables vocabulary class.
@@ -24,7 +24,7 @@ freeze(self, freeze=True)
 Freezes the vocabulary, after which new words return unknown token id.
 
 - __Args__:
-	- __freeze__: True to freeze, False to unfreeze.
+  - __freeze__: True to freeze, False to unfreeze.
 
 
 ----
@@ -42,10 +42,10 @@ Returns word's id in the vocabulary.
 If category is new, creates a new id for it.
 
 - __Args__:
-	- __category__: string or integer to lookup in vocabulary.
+  - __category__: string or integer to lookup in vocabulary.
 
 - __Returns__:
-	interger, id in the vocabulary.
+  interger, id in the vocabulary.
 
 
 ----
@@ -61,8 +61,8 @@ add(self, category, count=1)
 Adds count of the category to the frequency table.
 
 - __Args__:
-	- __category__: string or integer, category to add frequency to.
-	- __count__: optional integer, how many to add.
+  - __category__: string or integer, category to add frequency to.
+  - __count__: optional integer, how many to add.
 
 
 ----
@@ -81,9 +81,9 @@ Remaps ids from 1..n in sort frequency order.
 where n - number of elements left.
 
 - __Args__:
-	- __min_frequency__: minimum frequency to keep.
-	- __max_frequency__: optional, maximum frequency to keep.
-	Useful to remove very frequent categories (like stop words).
+  - __min_frequency__: minimum frequency to keep.
+  - __max_frequency__: optional, maximum frequency to keep.
+Useful to remove very frequent categories (like stop words).
 
 
 ----
@@ -99,10 +99,10 @@ reverse(self, class_id)
 Given class id reverse to original class name.
 
 - __Args__:
-	- __class_id__: Id of the class.
+  - __class_id__: Id of the class.
 
 - __Returns__:
-	Class name.
+  Class name.
 
 - __Raises__:
-	- __ValueError__: if this vocabulary wasn't initialized with support_reverse.
+  - __ValueError__: if this vocabulary wasn't initialized with support_reverse.

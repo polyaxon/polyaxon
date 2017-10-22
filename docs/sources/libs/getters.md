@@ -8,11 +8,31 @@ get_optimizer(module)
 
 ----
 
+## get_constraint
+
+
+```python
+get_constraint(module)
+```
+
+
+----
+
+## get_layer
+
+
+```python
+get_layer(module)
+```
+
+
+----
+
 ## get_exploration
 
 
 ```python
-get_exploration(module, is_continuous=False)
+get_exploration(module)
 ```
 
 
@@ -52,17 +72,7 @@ get_regularizer(module)
 
 
 ```python
-get_metric(module, incoming, outputs)
-```
-
-
-----
-
-## get_eval_metric
-
-
-```python
-get_eval_metric(module, y_pred, y_true)
+get_metric(module, y_pred, y_true)
 ```
 
 
@@ -92,7 +102,7 @@ get_memory(module)
 
 
 ```python
-get_pipeline(module, mode, shuffle, num_epochs, subgraph_configs_by_features=None)
+get_pipeline(module, mode)
 ```
 
 
@@ -153,7 +163,7 @@ get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, brid
 
 
 ```python
-get_estimator(estimator_config, model_config, run_config)
+get_estimator(model, run_config, module='Estimator', output_dir=None)
 ```
 
 
@@ -163,7 +173,7 @@ get_estimator(estimator_config, model_config, run_config)
 
 
 ```python
-get_agent(agent_config, model_config, run_config)
+get_agent(module, model, memory, run_config, output_dir=None)
 ```
 
 

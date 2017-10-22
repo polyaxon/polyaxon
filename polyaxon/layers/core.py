@@ -30,46 +30,57 @@ from polyaxon.libs import getters
 
 class Masking(BaseObject, core.Masking):
     CONFIG = MaskingConfig
+    __doc__ = core.Masking.__doc__
 
 
 class Dropout(BaseObject, core.Dropout):
     CONFIG = DropoutConfig
+    __doc__ = core.Dropout.__doc__
 
 
 class SpatialDropout1D(BaseObject, core.SpatialDropout1D):
     CONFIG = SpatialDropout1DConfig
+    __doc__ = core.SpatialDropout1D.__doc__
 
 
 class SpatialDropout2D(BaseObject, core.SpatialDropout2D):
     CONFIG = SpatialDropout2DConfig
+    __doc__ = core.SpatialDropout2D.__doc__
 
 
 class SpatialDropout3D(BaseObject, core.SpatialDropout3D):
     CONFIG = SpatialDropout3DConfig
+    __doc__ = core.SpatialDropout3D.__doc__
 
 
 class Activation(BaseObject, core.Activation):
     CONFIG = ActivationConfig
+    __doc__ = core.Activation.__doc__
 
 
 class Reshape(BaseObject, core.Reshape):
     CONFIG = ReshapeConfig
+    __doc__ = core.Reshape.__doc__
 
 
 class Permute(BaseObject, core.Permute):
     CONFIG = PermuteConfig
+    __doc__ = core.Permute.__doc__
 
 
 class Flatten(BaseObject, core.Flatten):
     CONFIG = FlattenConfig
+    __doc__ = core.Flatten.__doc__
 
 
 class RepeatVector(BaseObject, core.RepeatVector):
     CONFIG = RepeatVectorConfig
+    __doc__ = core.RepeatVector.__doc__
 
 
 class Dense(BaseObject, core.Dense):
     CONFIG = DenseConfig
+    __doc__ = core.Dense.__doc__
 
     def __init__(self,
                  units,
@@ -99,9 +110,33 @@ class Dense(BaseObject, core.Dense):
 
 class ActivityRegularization(BaseObject, core.ActivityRegularization):
     CONFIG = ActivityRegularizationConfig
+    __doc__ = core.ActivityRegularization.__doc__
 
 
 class Cast(BaseObject, Layer):
+    """Casts a tensor to a new type.
+
+    The operation casts `x` (in case of `Tensor`) or `x.values`
+    (in case of `SparseTensor`) to `dtype`.
+
+    For example:
+
+    ```python
+    # tensor `a` is [1.8, 2.2], dtype=tf.float
+    >>> tf.cast(a, tf.int32) ==> [1, 2]  # dtype=tf.int32
+    ```
+
+    Args:
+        x: A `Tensor` or `SparseTensor`.
+        dtype: The destination type.
+        name: A name for the operation (optional).
+
+    Returns:
+        A `Tensor` or `SparseTensor` with same shape as `x`.
+
+    Raises:
+        TypeError: If `x` cannot be cast to the `dtype`.
+    """
     CONFIG = CastConfig
 
     def __init__(self, dtype='float32', **kwargs):
@@ -113,7 +148,8 @@ class Cast(BaseObject, Layer):
 
 
 class Lambda(core.Lambda):
-    pass
+    __doc__ = core.Lambda.__doc__
+
 
 CORE_LAYERS = OrderedDict([
     (Masking.CONFIG.IDENTIFIER, Masking),

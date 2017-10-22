@@ -2,7 +2,7 @@
 
 
 ```python
-run_experiment(experiment_fn, output_dir, schedule=None)
+run_experiment(experiment_fn, output_dir=None, schedule=None)
 ```
 
 

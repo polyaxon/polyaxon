@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/base.py#L18)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/base.py#L21)</span>
 ## BaseModel
 
 ```python
-polyaxon.models.base.BaseModel(mode, model_type, graph_fn, loss_config, optimizer_config=None, eval_metrics_config=None, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.base.BaseModel(mode, model_type, graph_fn, loss, optimizer=None, metrics=None, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Base class for models.
@@ -15,11 +15,13 @@ Base class for models.
 		 * Args:
 		 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		 * `inputs`: the feature inputs.
-	 - __loss_config__: An instance of `LossConfig`.
-	 - __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	 - __eval_metrics_config__: a list of `MetricConfig` instances.
+	 - __loss__: An instance of `LossConfig`.
+	 - __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	 - __metrics__: a list of `MetricConfig` instances.
 	 - __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
-		 Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+		 Possible values: [
+		 `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
+		 ]
 	 - __clip_gradients__: `float`. Gradients  clipping by global norm.
 	 - __clip_embed_gradients__: `float`. Embedding gradients clipping to a specified value.
 	 - __name__: `str`, the name of this model, everything will be encapsulated inside this scope.

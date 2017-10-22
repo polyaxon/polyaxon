@@ -29,6 +29,7 @@ from polyaxon.libs import getters
 
 class Conv1D(BaseObject, convolutional.Conv1D):
     CONFIG = Conv1DConfig
+    __doc__ = convolutional.Conv1D.__doc__
 
     def __init__(self,
                  filters,
@@ -67,6 +68,7 @@ class Conv1D(BaseObject, convolutional.Conv1D):
 
 class Conv2D(BaseObject, convolutional.Conv2D):
     CONFIG = Conv2DConfig
+    __doc__ = convolutional.Conv2D.__doc__
 
     def __init__(self,
                  filters,
@@ -106,6 +108,7 @@ class Conv2D(BaseObject, convolutional.Conv2D):
 
 class Conv3D(BaseObject, convolutional.Conv3D):
     CONFIG = Conv3DConfig
+    __doc__ = convolutional.Conv3D.__doc__
 
     def __init__(self,
                  filters,
@@ -145,6 +148,7 @@ class Conv3D(BaseObject, convolutional.Conv3D):
 
 class Conv2DTranspose(BaseObject, convolutional.Conv2DTranspose):
     CONFIG = Conv2DTransposeConfig
+    __doc__ = convolutional.Conv2DTranspose.__doc__
 
     def __init__(self,
                  filters,
@@ -182,6 +186,7 @@ class Conv2DTranspose(BaseObject, convolutional.Conv2DTranspose):
 
 class Conv3DTranspose(BaseObject, convolutional.Conv3DTranspose):
     CONFIG = Conv3DTransposeConfig
+    __doc__ = convolutional.Conv3DTranspose.__doc__
 
     def __init__(self,
                  filters,
@@ -219,6 +224,7 @@ class Conv3DTranspose(BaseObject, convolutional.Conv3DTranspose):
 
 class SeparableConv2D(BaseObject, convolutional.SeparableConv2D):
     CONFIG = SeparableConv2DConfig
+    __doc__ = convolutional.SeparableConv2D.__doc__
 
     def __init__(self,
                  filters,
@@ -264,38 +270,47 @@ class SeparableConv2D(BaseObject, convolutional.SeparableConv2D):
 
 class UpSampling1D(BaseObject, convolutional.UpSampling1D):
     CONFIG = UpSampling1DConfig
+    __doc__ = convolutional.UpSampling1D.__doc__
 
 
 class UpSampling2D(BaseObject, convolutional.UpSampling2D):
     CONFIG = UpSampling2DConfig
+    __doc__ = convolutional.UpSampling2D.__doc__
 
 
 class UpSampling3D(BaseObject, convolutional.UpSampling3D):
     CONFIG = UpSampling3DConfig
+    __doc__ = convolutional.UpSampling3D.__doc__
 
 
 class ZeroPadding1D(BaseObject, convolutional.ZeroPadding1D):
     CONFIG = ZeroPadding1DConfig
+    __doc__ = convolutional.ZeroPadding1D.__doc__
 
 
 class ZeroPadding2D(BaseObject, convolutional.ZeroPadding2D):
     CONFIG = ZeroPadding2DConfig
+    __doc__ = convolutional.ZeroPadding2D.__doc__
 
 
 class ZeroPadding3D(BaseObject, convolutional.ZeroPadding3D):
     CONFIG = ZeroPadding3DConfig
+    __doc__ = convolutional.ZeroPadding3D.__doc__
 
 
 class Cropping1D(BaseObject, convolutional.Cropping1D):
     CONFIG = Cropping1DConfig
+    __doc__ = convolutional.Cropping1D.__doc__
 
 
 class Cropping2D(BaseObject, convolutional.Cropping2D):
     CONFIG = Cropping2DConfig
+    __doc__ = convolutional.Cropping2D.__doc__
 
 
 class Cropping3D(BaseObject, convolutional.Cropping3D):
     CONFIG = Cropping3DConfig
+    __doc__ = convolutional.Cropping3D.__doc__
 
 
 CONVOLUTIONAL_LAYERS = OrderedDict([

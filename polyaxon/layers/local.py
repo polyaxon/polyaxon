@@ -12,10 +12,12 @@ from polyaxon.libs.base_object import BaseObject
 
 class LocallyConnected1D(BaseObject, local.LocallyConnected1D):
     CONFIG = LocallyConnected1DConfig
+    __doc__ = local.LocallyConnected1D.__doc__
 
 
 class LocallyConnected2D(BaseObject, local.LocallyConnected2D):
     CONFIG = LocallyConnected2DConfig
+    __doc__ = local.LocallyConnected2D.__doc__
 
 
 LOCAL_LAYERS = OrderedDict([

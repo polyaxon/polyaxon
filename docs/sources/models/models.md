@@ -2,7 +2,7 @@
 ## Regressor
 
 ```python
-polyaxon.models.regressors.Regressor(mode, graph_fn, loss_config=None, optimizer_config=None, eval_metrics_config=None, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Regressor')
+polyaxon.models.regressors.Regressor(mode, graph_fn, loss=None, optimizer=None, metrics=None, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Regressor')
 ```
 
 Regressor base model.
@@ -14,9 +14,9 @@ Regressor base model.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`. Default value `mean_squared_error`.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __loss__: An instance of `LossConfig`. Default value `mean_squared_error`.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
 	- __clip_gradients__: `float`. Gradients  clipping by global norm.
@@ -29,11 +29,11 @@ Regressor base model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/classifiers.py#L12)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/classifiers.py#L13)</span>
 ## Classifier
 
 ```python
-polyaxon.models.classifiers.Classifier(mode, graph_fn, loss_config=None, optimizer_config=None, summaries='all', eval_metrics_config=None, clip_gradients=0.5, clip_embed_gradients=0.1, one_hot_encode=None, n_classes=None, name='Classfier')
+polyaxon.models.classifiers.Classifier(mode, graph_fn, loss=None, optimizer=None, summaries='all', metrics=None, clip_gradients=0.5, clip_embed_gradients=0.1, one_hot_encode=None, n_classes=None, name='Classifier')
 ```
 
 Regressor base model.
@@ -45,9 +45,9 @@ Regressor base model.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __loss__: An instance of `LossConfig`. Default value `sigmoid_cross_entropy`.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
 	- __clip_gradients__: `float`. Gradients  clipping by global norm.
@@ -62,11 +62,11 @@ Regressor base model.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/generators.py#L16)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/generators.py#L18)</span>
 ## Generator
 
 ```python
-polyaxon.models.generators.Generator(mode, encoder_fn, decoder_fn, bridge_fn, loss_config=None, optimizer_config=None, summaries='all', eval_metrics_config=None, clip_gradients=0.5, clip_embed_gradients=0.1, name='Generator')
+polyaxon.models.generators.Generator(mode, encoder_fn, decoder_fn, bridge_fn, loss=None, optimizer=None, summaries='all', metrics=None, clip_gradients=0.5, clip_embed_gradients=0.1, name='Generator')
 ```
 
 Generator base model.
@@ -88,11 +88,11 @@ Generator base model.
 		* `inputs`: the feature inputs.
 		* `encoder_fn`: the encoder function.
 		* `decoder_fn` the decoder function.
-	- __loss_config__: An instance of `LossConfig`. Default value `mean_squared_error`.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adadelta`.
+	- __loss__: An instance of `LossConfig`. Default value `mean_squared_error`.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adadelta`.
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
 	- __clip_gradients__: `float`. Gradients  clipping by global norm.

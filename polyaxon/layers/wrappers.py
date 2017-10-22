@@ -16,14 +16,17 @@ from polyaxon.libs.base_object import BaseObject
 
 class Wrapper(BaseObject, wrappers.Wrapper):
     CONFIG = WrapperConfig
+    __doc__ = wrappers.Wrapper.__doc__
 
 
 class TimeDistributed(BaseObject, wrappers.TimeDistributed):
     CONFIG = TimeDistributedConfig
+    __doc__ = wrappers.TimeDistributed.__doc__
 
 
 class Bidirectional(BaseObject, wrappers.Bidirectional):
     CONFIG = BidirectionalConfig
+    __doc__ = wrappers.Bidirectional.__doc__
 
 
 WRAPPER_LAYERS = OrderedDict([

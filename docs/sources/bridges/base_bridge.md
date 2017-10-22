@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/bridges/base.py#L25)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/bridges/base.py#L23)</span>
 ## BaseBridge
 
 ```python
@@ -74,7 +74,7 @@ Returns the decoder expected shape based on the incoming tensor.
 
 
 ```python
-_build(self, features, labels, loss_config, encoder_fn, decoder_fn)
+_build(self, features, labels, loss, encoder_fn, decoder_fn)
 ```
 
 

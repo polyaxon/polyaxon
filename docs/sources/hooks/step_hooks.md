@@ -2,7 +2,7 @@
 ## StepLoggingTensorHook
 
 ```python
-polyaxon.estimators.hooks.step_hooks.StepLoggingTensorHook(tensors, every_n_iter=None, every_n_secs=None, formatter=None)
+tensorflow.python.training.basic_session_run_hooks.StepLoggingTensorHook(tensors, every_n_iter=None, every_n_secs=None, at_end=False, formatter=None)
 ```
 
 Prints the given tensors once every N local steps or once every N seconds.
@@ -29,11 +29,11 @@ The tensors will be printed to the log, with `INFO` severity.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L45)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L42)</span>
 ## StopAtStepHook
 
 ```python
-polyaxon.estimators.hooks.step_hooks.StopAtStepHook(num_steps=None, last_step=None)
+tensorflow.python.training.basic_session_run_hooks.StopAtStepHook(num_steps=None, last_step=None)
 ```
 
 Monitor to request stop at a specified step.
@@ -58,11 +58,11 @@ call.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L70)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L66)</span>
 ## StepCheckpointSaverHook
 
 ```python
-polyaxon.estimators.hooks.step_hooks.StepCheckpointSaverHook(checkpoint_dir, save_secs=None, save_steps=None, saver=None, checkpoint_basename='model.ckpt', scaffold=None, listeners=None)
+tensorflow.python.training.basic_session_run_hooks.StepCheckpointSaverHook(checkpoint_dir, save_secs=None, save_steps=None, saver=None, checkpoint_basename='model.ckpt', scaffold=None, listeners=None)
 ```
 
 Saves checkpoints every N steps or seconds.
@@ -87,11 +87,11 @@ Saves checkpoints every N steps or seconds.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L97)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L90)</span>
 ## StepCounterHook
 
 ```python
-polyaxon.estimators.hooks.step_hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
+tensorflow.python.training.basic_session_run_hooks.StepCounterHook(every_n_steps=100, every_n_secs=None, output_dir=None, summary_writer=None)
 ```
 
 Steps per second monitor.
@@ -100,11 +100,11 @@ Steps per second monitor.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L107)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L98)</span>
 ## StepSummarySaverHook
 
 ```python
-polyaxon.estimators.hooks.step_hooks.StepSummarySaverHook(save_steps=None, save_secs=None, output_dir=None, summary_writer=None, scaffold=None, summary_op=None)
+tensorflow.python.training.basic_session_run_hooks.StepSummarySaverHook(save_steps=None, save_secs=None, output_dir=None, summary_writer=None, scaffold=None, summary_op=None)
 ```
 
 Saves summaries every N steps.

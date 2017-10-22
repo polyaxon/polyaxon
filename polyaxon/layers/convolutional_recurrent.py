@@ -13,10 +13,12 @@ from polyaxon.libs import getters
 
 class ConvRecurrent2D(BaseObject, convolutional_recurrent.ConvRecurrent2D):
     CONFIG = ConvRecurrent2DConfig
+    __doc__ = convolutional_recurrent.ConvRecurrent2D.__doc__
 
 
 class ConvLSTM2D(BaseObject, convolutional_recurrent.ConvLSTM2D):
     CONFIG = ConvLSTM2DConfig
+    __doc__ = convolutional_recurrent.ConvLSTM2D.__doc__
 
     def __init__(self,
                  filters,

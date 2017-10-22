@@ -19,7 +19,7 @@ Monitor to request stop at a specified episode.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L190)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L191)</span>
 ## EpisodeSummarySaverHook
 
 ```python
@@ -48,7 +48,7 @@ Saves summaries every N episode.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L382)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L386)</span>
 ## EpisodeCounterHook
 
 ```python

@@ -18,21 +18,21 @@ get_or_create_global_episode(graph=None)
 
 ----
 
-## create_global_episode
-
-
-```python
-create_global_episode(graph=None)
-```
-
-
-----
-
 ## get_global_timestep
 
 
 ```python
 get_global_timestep(graph=None)
+```
+
+
+----
+
+## create_global_episode
+
+
+```python
+create_global_episode(graph=None)
 ```
 
 

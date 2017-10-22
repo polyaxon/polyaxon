@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/estimator.py#L45)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/estimator.py#L28)</span>
 ## Estimator
 
 ```python
@@ -63,40 +63,49 @@ export_savedmodel(self, export_dir_base, serving_input_receiver_fn, assets_extra
 
 
 Exports inference graph as a SavedModel into given dir.
-This method builds a new graph by first calling the serving_input_receiver_fn to
-obtain feature `Tensor`s, and then calling this `Estimator`'s model_fn
-to generate the model graph based on those features. It restores the given checkpoint
-(or, lacking that, the most recent checkpoint) into this graph in a fresh session.
-Finally it creates a timestamped export directory below the given export_dir_base,
-and writes a `SavedModel` into it containing a single `MetaGraphDef` saved from this
+
+This method builds a new graph by first calling the
+serving_input_receiver_fn to obtain feature `Tensor`s, and then calling
+this `Estimator`'s model_fn to generate the model graph based on those
+features. It restores the given checkpoint (or, lacking that, the most
+recent checkpoint) into this graph in a fresh session.  Finally it creates
+a timestamped export directory below the given export_dir_base, and writes
+a `SavedModel` into it containing a single `MetaGraphDef` saved from this
 session.
-The exported `MetaGraphDef` will provide one `SignatureDef` for each element of the
-export_outputs dict returned from the model_fn, named using the same keys.
-One of these keys is always signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY,
-indicating which signature will be served when a serving request does not specify one.
-For each signature, the outputs are provided by the corresponding `ExportOutput`s,
-and the inputs are always the input receivers provided by the serving_input_receiver_fn.
-Extra assets may be written into the SavedModel via the extra_assets argument.
-This should be a dict, where each key gives a destination path (including the filename)
-relative to the assets.extra directory.  The corresponding value gives the full path of
-the source file to be copied. For example, the simple case of copying a single file without
-renaming it is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
+
+The exported `MetaGraphDef` will provide one `SignatureDef` for each
+element of the export_outputs dict returned from the model_fn, named using
+the same keys.  One of these keys is always
+signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY, indicating which
+signature will be served when a serving request does not specify one.
+For each signature, the outputs are provided by the corresponding
+`ExportOutput`s, and the inputs are always the input receivers provided by
+the serving_input_receiver_fn.
+
+Extra assets may be written into the SavedModel via the extra_assets
+argument.  This should be a dict, where each key gives a destination path
+(including the filename) relative to the assets.extra directory.  The
+corresponding value gives the full path of the source file to be copied.
+For example, the simple case of copying a single file without renaming it
+is specified as `{'my_asset_file.txt': '/path/to/my_asset_file.txt'}`.
 
 - __Args__:
-	- __export_dir_base__: A string containing a directory in which to create
-	timestamped subdirectories containing exported SavedModels.
-	- __serving_input_receiver_fn__: A function that takes no argument and
-	returns a `ServingInputReceiver`.
-	- __assets_extra__: A dict specifying how to populate the assets.extra directory
-	within the exported SavedModel, or `None` if no extra assets are needed.
-	- __as_text__: whether to write the SavedModel proto in text format.
-	- __checkpoint_path__: The checkpoint path to export.  If `None` (the default),
-	the most recent checkpoint found within the model directory is chosen.
+  - __export_dir_base__: A string containing a directory in which to create
+timestamped subdirectories containing exported SavedModels.
+  - __serving_input_receiver_fn__: A function that takes no argument and
+returns a `ServingInputReceiver`.
+  - __assets_extra__: A dict specifying how to populate the assets.extra directory
+within the exported SavedModel, or `None` if no extra assets are needed.
+  - __as_text__: whether to write the SavedModel proto in text format.
+  - __checkpoint_path__: The checkpoint path to export.  If `None` (the default),
+the most recent checkpoint found within the model directory is chosen.
+
 - __Returns__:
-	The string path to the exported directory.
+  The string path to the exported directory.
+
 - __Raises__:
-	- __ValueError__: if no serving_input_receiver_fn is provided, no export_outputs
-	are provided, or no checkpoint can be found.
+  - __ValueError__: if no serving_input_receiver_fn is provided, no export_outputs
+  are provided, or no checkpoint can be found.
 
 
 ----

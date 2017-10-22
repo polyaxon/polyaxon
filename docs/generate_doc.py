@@ -481,7 +481,7 @@ PAGES = [
     },
     {
         'page': 'metrics.md',
-        'all_module_functions': [metrics],
+        'functions': list(metrics.METRICS.values()),
     },
     {
         'page': 'losses.md',
@@ -489,7 +489,7 @@ PAGES = [
     },
     {
         'page': 'regularizations.md',
-        'all_module_functions': [regularizations],
+        'functions': list(regularizations.REGULARIZERS.values()),
     },
     {
         'page': 'optimizers.md',

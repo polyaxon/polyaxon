@@ -11,42 +11,52 @@ from polyaxon.libs.base_object import BaseObject
 
 class Zeros(BaseObject, init_ops.Zeros):
     CONFIG = initializations.ZerosInitializerConfig
+    __doc__ = init_ops.Zeros.__doc__
 
 
 class Ones(BaseObject, init_ops.Ones):
     CONFIG = initializations.OnesInitializerConfig
+    __doc__ = init_ops.Ones.__doc__
 
 
 class Constant(BaseObject, init_ops.Constant):
     CONFIG = initializations.ConstantInitializerConfig
+    __doc__ = init_ops.Constant.__doc__
 
 
 class Uniform(BaseObject, init_ops.RandomUniform):
     CONFIG = initializations.UniformInitializerConfig
+    __doc__ = init_ops.RandomUniform.__doc__
 
 
 class Normal(BaseObject, init_ops.RandomNormal):
     CONFIG = initializations.NormalInitializerConfig
+    __doc__ = init_ops.RandomNormal.__doc__
 
 
 class TruncatedNormal(BaseObject, init_ops.TruncatedNormal):
     CONFIG = initializations.TruncatedNormalInitializerConfig
+    __doc__ = init_ops.TruncatedNormal.__doc__
 
 
 class VarianceScaling(BaseObject, init_ops.VarianceScaling):
     CONFIG = initializations.VarianceScalingInitializerConfig
+    __doc__ = init_ops.VarianceScaling.__doc__
 
 
 class Orthogonal(BaseObject, init_ops.Orthogonal):
     CONFIG = initializations.OrthogonalInitializerConfig
+    __doc__ = init_ops.Orthogonal.__doc__
 
 
 class Identity(BaseObject, initializers.Identity):
     CONFIG = initializations.IdentityInitializerConfig
+    __doc__ = initializers.Identity.__doc__
 
 
 class GlorotUniform(BaseObject, init_ops.Initializer):
     CONFIG = initializations.GlorotUniformInitializerConfig
+    __doc__ = initializers.glorot_uniform.__doc__
 
     def __init__(self, seed=None):
         self.seed = seed
@@ -57,6 +67,7 @@ class GlorotUniform(BaseObject, init_ops.Initializer):
 
 class GlorotNormal(BaseObject, init_ops.Initializer):
     CONFIG = initializations.GlorotNormalInitializerConfig
+    __doc__ = initializers.glorot_normal.__doc__
 
     def __init__(self, seed=None):
         self.seed = seed
@@ -67,6 +78,7 @@ class GlorotNormal(BaseObject, init_ops.Initializer):
 
 class HeUniform(BaseObject, init_ops.Initializer):
     CONFIG = initializations.HeUniformInitializerConfig
+    __doc__ = initializers.he_uniform.__doc__
 
     def __init__(self, seed=None):
         self.seed = seed
@@ -77,6 +89,7 @@ class HeUniform(BaseObject, init_ops.Initializer):
 
 class HeNormal(BaseObject, init_ops.Initializer):
     CONFIG = initializations.HeNormalInitializerConfig
+    __doc__ = initializers.he_normal.__doc__
 
     def __init__(self, seed=None):
         self.seed = seed
@@ -87,6 +100,7 @@ class HeNormal(BaseObject, init_ops.Initializer):
 
 class LecunUniform(BaseObject, init_ops.Initializer):
     CONFIG = initializations.LecunUniformInitializerConfig
+    __doc__ = initializers.lecun_uniform.__doc__
 
     def __init__(self, seed=None):
         self.seed = seed
@@ -97,6 +111,7 @@ class LecunUniform(BaseObject, init_ops.Initializer):
 
 class LecunNormal(BaseObject, init_ops.Initializer):
     CONFIG = initializations.LecunNormalInitializerConfig
+    __doc__ = initializers.lecun_normal.__doc__
 
     def __init__(self, seed=None):
         self.seed = seed

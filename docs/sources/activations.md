@@ -2,15 +2,14 @@
 
 
 ```python
-built_activation(fct, name, collect)
+built_activation(x, collect)
 ```
 
 
 Builds the metric function.
 
 - __Args__:
-	- __fct__: the activation function to build.
-	- __name__: operation name.
+	- __x__: activated tensor.
 	- __collect__: whether to collect this metric under the metric collection.
 
 
@@ -20,7 +19,7 @@ Builds the metric function.
 
 
 ```python
-linear(name='Linear', collect=False)
+linear(name='Linear', collect=True)
 ```
 
 
@@ -37,7 +36,7 @@ Computes linear/identity function.
 
 
 ```python
-tanh(name=None, collect=False)
+tanh(name=None, collect=True)
 ```
 
 
@@ -50,11 +49,28 @@ Computes hyperbolic tangent of x element-wise.
 
 ----
 
+## hard_sigmoid
+
+
+```python
+hard_sigmoid(name='HardSigmoid', collect=True)
+```
+
+
+Segment-wise linear approximation of sigmoid.
+
+- __Args__:
+	- __name__: operation name.
+	- __collect__: whether to collect this metric under the metric collection.
+
+
+----
+
 ## sigmoid
 
 
 ```python
-sigmoid(name=None, collect=False)
+sigmoid(name=None, collect=True)
 ```
 
 
@@ -71,7 +87,7 @@ Computes sigmoid of `x` element-wise: `y = 1 / (1 + exp(-x))`.
 
 
 ```python
-softmax(name=None, collect=False)
+softmax(name=None, collect=True)
 ```
 
 
@@ -91,7 +107,7 @@ For each batch `i` and class `j` we have
 
 
 ```python
-softplus(name=None, collect=False)
+softplus(name=None, collect=True)
 ```
 
 
@@ -108,7 +124,7 @@ Computes softplus. `log(exp(features) + 1)`.
 
 
 ```python
-softsign(name=None, collect=False)
+softsign(name=None, collect=True)
 ```
 
 
@@ -125,7 +141,7 @@ Computes softsign: `features / (abs(features) + 1)`.
 
 
 ```python
-relu(name=None, collect=False)
+relu(name=None, collect=True)
 ```
 
 
@@ -142,7 +158,7 @@ Computes ReLU, rectified linear: `max(features, 0)`.
 
 
 ```python
-relu6(name=None, collect=False)
+relu6(name=None, collect=True)
 ```
 
 
@@ -155,49 +171,11 @@ Computes Rectified Linear 6: `min(max(features, 0), 6)`.
 
 ----
 
-## leaky_relu
-
-
-```python
-leaky_relu(alpha=0.1, name='LeakyReLU', collect=False)
-```
-
-
-Modified version of ReLU, introducing a nonzero gradient for negative input.
-
-- __Args__:
-	- __alpha__: `int`, the multiplier.
-	- __name__: operation name.
-	- __collect__: whether to collect this metric under the metric collection.
-
-
-----
-
-## prelu
-
-
-```python
-prelu(channel_shared=False, weights_init='zeros', restore=True, name='PReLU', collect=False)
-```
-
-
-Parametric Rectified Linear Unit.
-
-- __Args__:
-	- __channel_shared__:
-	- __weights_init__:
-	- __restore__:
-	- __name__: operation name.
-	- __collect__: whether to collect this metric under the metric collection.
-
-
-----
-
 ## elu
 
 
 ```python
-elu(name=None, collect=False)
+elu(name=None, collect=True)
 ```
 
 
@@ -210,11 +188,33 @@ Computes Exponential Linear Unit.
 
 ----
 
+## selu
+
+
+```python
+selu(name='Selu', collect=True)
+```
+
+
+Scaled Exponential Linear Unit. (Klambauer et al., 2017).
+
+- __Arguments__:
+	- __x__: A tensor or variable to compute the activation function for.
+
+- __Returns__:
+  Tensor with the same shape and dtype as `x`.
+
+- __References__:
+	- [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
+
+
+----
+
 ## crelu
 
 
 ```python
-crelu(name='CRelu', collect=False)
+crelu(name=None, collect=True)
 ```
 
 

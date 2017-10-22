@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L280)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/base.py#L296)</span>
 ## BasePGModel
 
 ```python
-polyaxon.models.rl.base.BasePGModel(mode, graph_fn, num_states, num_actions, loss_config=None, optimizer_config=None, eval_metrics_config=None, is_deterministic=False, is_continuous=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
+polyaxon.models.rl.base.BasePGModel(mode, graph_fn, num_states, num_actions, loss=None, optimizer=None, metrics=None, is_deterministic=False, is_continuous=False, summaries='all', clip_gradients=0.5, clip_embed_gradients=0.1, name='Model')
 ```
 
 Base reinforcement learning policy gradient model class.
@@ -13,11 +13,11 @@ Base reinforcement learning policy gradient model class.
 		* Args:
 		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
 		* `inputs`: the feature inputs.
-	- __loss_config__: An instance of `LossConfig`.
+	- __loss__: An instance of `LossConfig`.
 	- __num_states__: `int`. The number of states.
 	- __num_actions__: `int`. The number of actions.
-	- __optimizer_config__: An instance of `OptimizerConfig`. Default value `Adam`.
-	- __eval_metrics_config__: a list of `MetricConfig` instances.
+	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+	- __metrics__: a list of `MetricConfig` instances.
 	- __is_continuous__: `bool`. Is the model built for a continuous or discrete space.
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`

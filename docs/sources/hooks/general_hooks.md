@@ -1,8 +1,8 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L13)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L12)</span>
 ## GlobalStepWaiterHook
 
 ```python
-polyaxon.estimators.hooks.general_hooks.GlobalStepWaiterHook(wait_until_step)
+tensorflow.python.training.basic_session_run_hooks.GlobalStepWaiterHook(wait_until_step)
 ```
 
 Delay execution until global step reaches to wait_until_step.
@@ -19,11 +19,11 @@ task_id=0 is the chief.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L30)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L28)</span>
 ## FinalOpsHook
 
 ```python
-polyaxon.estimators.hooks.general_hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
+tensorflow.python.training.basic_session_run_hooks.FinalOpsHook(final_ops, final_ops_feed_dict=None)
 ```
 
 A run hook which evaluates `Tensors` at the end of a session.
@@ -36,22 +36,22 @@ A run hook which evaluates `Tensors` at the end of a session.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L43)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L40)</span>
 ## StopAfterNEvalsHook
 
 ```python
-polyaxon.estimators.hooks.general_hooks.StopAfterNEvalsHook(num_evals, log_progress=True)
+tensorflow.python.training.evaluation.StopAfterNEvalsHook(num_evals, log_progress=True)
 ```
 
 Run hook used by the evaluation routines to run the `eval_ops` N times.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L74)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L46)</span>
 ## NanTensorHook
 
 ```python
-polyaxon.estimators.hooks.general_hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
+tensorflow.python.training.basic_session_run_hooks.NanTensorHook(loss_tensor, fail_on_nan_loss=True)
 ```
 
 NaN Loss monitor.

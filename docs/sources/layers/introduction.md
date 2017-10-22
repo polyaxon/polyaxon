@@ -10,7 +10,7 @@ And they should take into account the current mode of the estimator. (`TRAIN`, `
 ```python
 import polyaxon as plx
 
-layer = plx.layers.FullyConnected(mode=plx.Modes.TRAIN, n_units=64, activation='tanh')
+layer = plx.layers.Dense(units=64, activation='tanh')
 ```
 
 Once the layer is created, it can be called as many time as needed with different inputs.
@@ -25,8 +25,10 @@ A layer can build other layers inside its `_build` function.
 import tensorflow as tf
 import polyaxon as plx
 
-rnn_lstm = plx.layers.LSTM(plx.Modes.TRAIN, num_units=3, activation='tanh', 
-                           inner_activation=tf.nn.sigmoid, dropout=0.3, num_layers=4)
+rnn_lstm = plx.layers.LSTM(units=3, 
+                           activation='tanh', 
+                           recurrent_activation='sigmoid', 
+                           dropout=0.3)
 ```
 
 Note that for activations, initializers, and regularizers you can use a string (should be one of the supported values),

@@ -22,6 +22,7 @@ class Recurrent(BaseObject, recurrent.Recurrent):
 
 class SimpleRNN(BaseObject, recurrent.SimpleRNN):
     CONFIG = SimpleRNNConfig
+    __doc__ = recurrent.SimpleRNN.__doc__
 
     def __init__(self,
                  units,
@@ -61,6 +62,7 @@ class SimpleRNN(BaseObject, recurrent.SimpleRNN):
 
 class GRU(BaseObject, recurrent.GRU):
     CONFIG = GRUConfig
+    __doc__ = recurrent.GRU.__doc__
 
     def __init__(self,
                  units,
@@ -102,6 +104,7 @@ class GRU(BaseObject, recurrent.GRU):
 
 class LSTM(BaseObject, recurrent.LSTM):
     CONFIG = LSTMConfig
+    __doc__ = recurrent.LSTM.__doc__
 
     def __init__(self,
                  units,

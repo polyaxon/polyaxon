@@ -12,6 +12,7 @@ from polyaxon.libs.base_object import BaseObject
 
 class BatchNormalization(BaseObject, normalization.BatchNormalization):
     CONFIG = BatchNormalizationConfig
+    __doc__ = normalization.BatchNormalization.__doc__
 
 
 NORMALIZATION_LAYERS = OrderedDict([
