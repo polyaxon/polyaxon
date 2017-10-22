@@ -32,6 +32,7 @@ install:
       conda install Pillow;
     fi
   - pip install -q tensorflow==$TENSORFLOW_VERSION
+  - pip install kubernetes==3.0.0  # otherwise the build breaks
   - python setup.py -q install
   - pip install  codecov
   - pip install gym
