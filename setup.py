@@ -18,7 +18,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-cli',
-      version='0.0.1',
+      version='0.0.11',
       description='Schema definitions and validation for Polyaxon.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mouradmourafiq@gmail.com',
@@ -43,12 +43,12 @@ setup(name='polyaxon-cli',
           "click>=6.7",
           "clint==0.5.1",
           "marshmallow==2.13.5",
-          # "polyaxon-schemas==0.0.13",
+          "polyaxon-schemas==0.0.14",
           "requests==2.18.4",
           "requests-toolbelt==0.8.0",
           "six==1.11.0",
       ],
-      dependency_links = [
+      dependency_links=[
           "https://github.com/polyaxon/polyaxon-schemas/archive/0.0.14.zip",
       ],
       entry_points={
