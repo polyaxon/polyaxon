@@ -441,3 +441,11 @@ class K8SManager(object):
         self.delete_master(experiment)
         self.delete_worker(experiment)
         self.delete_ps(experiment)
+
+    def create_all_experiments(self):
+        for xp in range(self.polyaxonfile.matrix_space):
+            self.create_experiment(xp)
+
+    def delete_all_experiments(self):
+        for xp in range(self.polyaxonfile.matrix_space):
+            self.delete_experiment(xp)
