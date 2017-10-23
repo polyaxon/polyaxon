@@ -286,6 +286,7 @@ matrix:
 settings:
   logging:
     level: INFO
+  run_type: kubernetes
 
 environment:
   delay_workers_by_global_step: true
