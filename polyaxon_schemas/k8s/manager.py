@@ -45,16 +45,15 @@ class K8SManager(object):
     def _get_pod_args(self, experiment, task_type, task_id, schedule):
         plxfiles_path = persistent_volumes.get_vol_path(volume=constants.POLYAXON_FILES_VOLUME,
                                                         run_type=self.polyaxonfile.run_type)
-        args = [(""" \"
-        from polyaxon.polyaxonfile.local_runner import start_experiment_run;
-        start_experiment_run(
-            '{polyaxonfile}', '{experiment_id}', '{task_type}', {task_id}, '{schedule}')\"
-            """.format(
-            polyaxonfile='{}/{}'.format(plxfiles_path, self.polyaxonfile.filename),
-            experiment_id=experiment,
-            task_type=task_type,
-            task_id=task_id,
-            schedule=schedule))]
+        args = [
+            "from polyaxon.polyaxonfile.local_runner import start_experiment_run; "
+            "start_experiment_run('{polyaxonfile}', '{experiment_id}', "
+            "'{task_type}', {task_id}, '{schedule}')".format(
+                polyaxonfile='{}/{}'.format(plxfiles_path, self.polyaxonfile.filename),
+                experiment_id=experiment,
+                task_type=task_type,
+                task_id=task_id,
+                schedule=schedule)]
         return args
 
     def _create_pod(self, experiment, task_type, task_id, command=None, args=None):
