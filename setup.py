@@ -36,7 +36,8 @@ setup(name='polyaxon-schemas',
           'neural-networks',
           'artificial-intelligence',
           'ai',
-          'reinforcement-learning'
+          'reinforcement-learning',
+          'kubernetes',
       ],
       install_requires=[
           'Jinja2==2.9.6',
