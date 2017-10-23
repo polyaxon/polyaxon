@@ -13,7 +13,9 @@ from polyaxon_cli.cli.version import get_version, PROJECT_NAME
 
 @click.command()
 @click.option('--file', '-f', type=click.Path(exists=True), help='The polyaxon file to check.')
-def run(file):
+@click.option('--experiment', '-x', is_flag=True, default=False,
+              help='Run specific experiment, if nothing passed all experiments will be run.')
+def run(file, experiment):
     """Command for running a polyaxonfile."""
     plx_file = PolyaxonFile(file)
     if plx_file.run_type == RunTypes.LOCAL:
@@ -31,5 +33,17 @@ to install to the latest version of polyaxon)""")
                 sys.exit(0)
 
         logger.info('Running polyaxonfile locally')
-        from polyaxon.polyaxonfile.local_runner import run
-        run(file)
+        from polyaxon.polyaxonfile.local_runner import run, run_experiment
+        if experiment:
+            run_experiment(file, experiment)
+        else:
+            run(file)
+
+    else:
+        from polyaxon_schemas.k8s.manager import K8SManager
+        manager = K8SManager(polyaxonfile=file)
+        if experiment:
+            manager.create_experiment(experiment)
+        else:
+            manager.create_all_experiments()
+

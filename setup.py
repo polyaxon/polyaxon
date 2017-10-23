@@ -37,7 +37,8 @@ setup(name='polyaxon-cli',
           'neural-networks',
           'artificial-intelligence',
           'ai',
-          'reinforcement-learning'
+          'reinforcement-learning',
+          'kubernetes',
       ],
       install_requires=[
           "click>=6.7",
