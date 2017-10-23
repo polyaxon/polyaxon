@@ -1,4 +1,4 @@
-numpy==1.13.1
+numpy==1.13.3
 Pillow==4.2.1
 polyaxon-schemas==0.0.14
 polyaxon-cli==0.0.11
