@@ -137,7 +137,7 @@ class PolyaxonFile(object):
         if self.matrix_space == 1 or experiment is None:
             return path
 
-        return '{}/{}'.format(path, experiment)
+        return os.path.join(path, experiment)
 
     @cached_property
     def validated_data(self):
