@@ -148,7 +148,8 @@ def get_pod(project,
             volumes,
             ports,
             command=None,
-            args=None):
+            args=None,
+            restart_policy=None):
     task_name = constants.TASK_NAME.format(project=project,
                                            experiment=experiment,
                                            task_type=task_type,
@@ -164,7 +165,8 @@ def get_pod(project,
                              volumes=volumes,
                              command=command,
                              args=args,
-                             ports=ports)
+                             ports=ports,
+                             restart_policy=restart_policy)
     return client.V1Pod(api_version=constants.K8S_API_VERSION_V1,
                         kind=constants.K8S_POD_KIND,
                         metadata=metadata,
