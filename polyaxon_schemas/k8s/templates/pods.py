@@ -40,14 +40,15 @@ def get_gpu_volumes():
     ]
 
 
-def get_volume_mount(volume, run_type):
-    volume_name = constants.VOLUME_NAME.format(vol_name=volume)
-    return client.V1VolumeMount(name=volume_name, mount_path=get_vol_path(volume, run_type))
+def get_volume_mount(project, volume, run_type):
+    volume_name = constants.VOLUME_NAME.format(project=project, vol_name=volume)
+    return client.V1VolumeMount(name=volume_name,
+                                mount_path=get_vol_path(project, volume, run_type))
 
 
-def get_volume(volume):
-    vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-    volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
+def get_volume(project, volume):
+    vol_name = constants.VOLUME_NAME.format(project=project, vol_name=volume)
+    volc_name = constants.VOLUME_CLAIM_NAME.format(project=project, vol_name=volume)
     pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=volc_name)
     return client.V1Volume(name=vol_name, persistent_volume_claim=pv_claim)
 

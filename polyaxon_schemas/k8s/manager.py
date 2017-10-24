@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
 
@@ -16,17 +18,21 @@ from polyaxon_schemas.utils import TaskType
 
 
 class K8SManager(object):
-    def __init__(self, polyaxonfile):
+    def __init__(self, polyaxonfile, namespace='default'):
         self.polyaxonfile = polyaxonfile
         config.load_kube_config()
         self.k8s = client.CoreV1Api()
         self.k8s_beta = client.ExtensionsV1beta1Api()
-        self.namespace = 'default'
+        self.namespace = namespace
 
         self.has_data_volume = False
         self.has_logs_volume = False
         self.has_files_volume = False
         self.has_tmp_volume = False
+
+    @property
+    def project_name(self):
+        return self.polyaxonfile.project.name
 
     def _create_service(self, service, service_name):
         service_found = False
@@ -43,13 +49,15 @@ class K8SManager(object):
             logger.info('Service `{}` was created'.format(service_name))
 
     def _get_pod_args(self, experiment, task_type, task_id, schedule):
-        plxfiles_path = persistent_volumes.get_vol_path(volume=constants.POLYAXON_FILES_VOLUME,
+        plxfiles_path = persistent_volumes.get_vol_path(project=self.project_name,
+                                                        volume=constants.POLYAXON_FILES_VOLUME,
                                                         run_type=self.polyaxonfile.run_type)
+
         args = [
             "from polyaxon.polyaxonfile.local_runner import start_experiment_run; "
             "start_experiment_run('{polyaxonfile}', '{experiment_id}', "
             "'{task_type}', {task_id}, '{schedule}')".format(
-                polyaxonfile='{}/{}'.format(plxfiles_path, self.polyaxonfile.filename),
+                polyaxonfile=os.path.join(plxfiles_path, self.polyaxonfile.filename),
                 experiment_id=experiment,
                 task_type=task_type,
                 task_id=task_id,
@@ -57,11 +65,11 @@ class K8SManager(object):
         return args
 
     def _create_pod(self, experiment, task_type, task_id, command=None, args=None):
-        task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
+        task_name = constants.TASK_NAME.format(project=self.project_name,
                                                experiment=experiment,
                                                task_type=task_type,
                                                task_id=task_id)
-        labels = pods.get_labels(project=self.polyaxonfile.project.name,
+        labels = pods.get_labels(project=self.project_name,
                                  experiment=experiment,
                                  task_type=task_type,
                                  task_id=task_id,
@@ -69,7 +77,7 @@ class K8SManager(object):
         ports = [constants.DEFAULT_PORT]
 
         volumes, volume_mounts = self.get_pod_volumes()
-        pod = pods.get_pod(project=self.polyaxonfile.project.name,
+        pod = pods.get_pod(project=self.project_name,
                            experiment=experiment,
                            task_type=task_type,
                            task_id=task_id,
@@ -110,7 +118,7 @@ class K8SManager(object):
                 logger.info('Service `{}` was not found'.format(service_name))
 
     def _delete_pod(self, experiment, task_type, task_id):
-        task_name = constants.TASK_NAME.format(project=self.polyaxonfile.project.name,
+        task_name = constants.TASK_NAME.format(project=self.project_name,
                                                experiment=experiment,
                                                task_type=task_type,
                                                task_id=task_id)
@@ -189,18 +197,18 @@ class K8SManager(object):
         name = 'tensorboard'
         ports = [6006]
         volumes, volume_mounts = self.get_pod_volumes()
-        logs_path = persistent_volumes.get_vol_path(volume=constants.LOGS_VOLUME,
+        logs_path = persistent_volumes.get_vol_path(project=self.project_name,
+                                                    volume=constants.LOGS_VOLUME,
                                                     run_type=self.polyaxonfile.run_type)
         deployment = deployments.get_deployment(name=name,
-                                                project=self.polyaxonfile.project.name,
+                                                project=self.project_name,
                                                 volume_mounts=volume_mounts,
                                                 volumes=volumes,
                                                 command=["tensorboard"],
                                                 args=["--logdir={} --port=6006".format(logs_path)],
                                                 ports=ports,
                                                 role='dashboard')
-        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.polyaxonfile.project.name,
-                                                           name=name)
+        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.project_name, name=name)
 
         deployment_found = False
         try:
@@ -217,9 +225,7 @@ class K8SManager(object):
 
         service = services.get_service(
             name=deployment_name,
-            labels=deployments.get_labels(name=name,
-                                          project=self.polyaxonfile.project.name,
-                                          role='dashboard'),
+            labels=deployments.get_labels(name=name, project=self.project_name, role='dashboard'),
             ports=ports,
             service_type='LoadBalancer')
 
@@ -227,8 +233,7 @@ class K8SManager(object):
 
     def delete_tensorboard_deployment(self):
         name = 'tensorboard'
-        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.polyaxonfile.project.name,
-                                                           name=name)
+        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.project_name, name=name)
         pod_found = False
         try:
             self.k8s_beta.read_namespaced_deployment(deployment_name, self.namespace)
@@ -252,30 +257,38 @@ class K8SManager(object):
         volumes = []
         volume_mounts = []
         if self.has_data_volume:
-            volumes.append(pods.get_volume(volume=constants.DATA_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(volume=constants.DATA_VOLUME,
+            volumes.append(pods.get_volume(project=self.project_name,
+                                           volume=constants.DATA_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(project=self.project_name,
+                                                       volume=constants.DATA_VOLUME,
                                                        run_type=self.polyaxonfile.run_type))
 
         if self.has_logs_volume:
-            volumes.append(pods.get_volume(volume=constants.LOGS_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(volume=constants.LOGS_VOLUME,
+            volumes.append(pods.get_volume(project=self.project_name,
+                                           volume=constants.LOGS_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(project=self.project_name,
+                                                       volume=constants.LOGS_VOLUME,
                                                        run_type=self.polyaxonfile.run_type))
 
         if self.has_files_volume:
-            volumes.append(pods.get_volume(volume=constants.POLYAXON_FILES_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(volume=constants.POLYAXON_FILES_VOLUME,
+            volumes.append(pods.get_volume(project=self.project_name,
+                                           volume=constants.POLYAXON_FILES_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(project=self.project_name,
+                                                       volume=constants.POLYAXON_FILES_VOLUME,
                                                        run_type=self.polyaxonfile.run_type))
 
         if self.has_tmp_volume:
-            volumes.append(pods.get_volume(volume=constants.TMP_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(volume=constants.TMP_VOLUME,
+            volumes.append(pods.get_volume(project=self.project_name, volume=constants.TMP_VOLUME))
+            volume_mounts.append(pods.get_volume_mount(project=self.project_name,
+                                                       volume=constants.TMP_VOLUME,
                                                        run_type=self.polyaxonfile.run_type))
 
         return volumes, volume_mounts
 
     def _create_volume(self, volume):
-        vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-        pvol = persistent_volumes.get_persistent_volume(volume=volume,
+        vol_name = constants.VOLUME_NAME.format(project=self.project_name, vol_name=volume)
+        pvol = persistent_volumes.get_persistent_volume(project=self.project_name,
+                                                        volume=volume,
                                                         run_type=self.polyaxonfile.run_type,
                                                         namespace=self.namespace)
 
@@ -292,8 +305,9 @@ class K8SManager(object):
             self.k8s.create_persistent_volume(pvol)
             logger.info('Volume `{}` was created'.format(vol_name))
 
-        volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=volume)
+        volc_name = constants.VOLUME_CLAIM_NAME.format(project=self.project_name, vol_name=volume)
+        pvol_claim = persistent_volumes.get_persistent_volume_claim(project=self.project_name,
+                                                                    volume=volume)
         volume_claim_found = False
         try:
             self.k8s.read_namespaced_persistent_volume_claim(volc_name, self.namespace)
@@ -326,7 +340,7 @@ class K8SManager(object):
         self.has_files_volume = True
 
     def _delete_volume(self, volume):
-        vol_name = constants.VOLUME_NAME.format(vol_name=volume)
+        vol_name = constants.VOLUME_NAME.format(project=self.project_name, vol_name=volume)
         volume_found = False
         try:
             self.k8s.read_persistent_volume(vol_name)
@@ -342,7 +356,7 @@ class K8SManager(object):
             else:
                 logger.info('Volume `{}` was not found'.format(vol_name))
 
-        volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
+        volc_name = constants.VOLUME_CLAIM_NAME.format(project=self.project_name, vol_name=volume)
         volume_claim_found = False
         try:
             self.k8s.read_namespaced_persistent_volume_claim(volc_name, self.namespace)
@@ -388,10 +402,10 @@ class K8SManager(object):
         self.create_tmp_volumes()
 
     def create_cluster_config_map(self, experiment=0):
-        name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=self.polyaxonfile.project.name,
+        name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=self.project_name,
                                                         experiment=experiment)
         config_map = config_maps.get_cluster_config_map(
-            project=self.polyaxonfile.project.name,
+            project=self.project_name,
             experiment=experiment,
             cluster_def=self.polyaxonfile.get_cluster().to_dict())
 
@@ -409,7 +423,7 @@ class K8SManager(object):
             logger.info('Config map `{}` was created'.format(name))
 
     def delete_cluster_config_map(self, experiment=0):
-        name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=self.polyaxonfile.project.name,
+        name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=self.project_name,
                                                         experiment=experiment)
 
         config_map_found = False
