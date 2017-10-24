@@ -12,7 +12,8 @@ def get_cluster_config_map(project, experiment, cluster_def):
         return {k: ','.join(v) for k, v in six.iteritems(cluster_def)}
 
     name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=project, experiment=experiment)
-    metadata = client.V1ObjectMeta(name=name)
+    metadata = client.V1ObjectMeta(
+        name=name, labels={'project': project, 'experiment': '{}'.format(experiment)})
     return client.V1ConfigMap(api_version=constants.K8S_API_VERSION_V1,
                               kind=constants.K8S_CONFIG_MAP_KIND,
                               metadata=metadata,
