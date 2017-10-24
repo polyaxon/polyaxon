@@ -6,6 +6,7 @@ import six
 import os
 
 from polyaxon_schemas.k8s.templates import constants
+from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
@@ -42,6 +43,14 @@ class PolyaxonFile(object):
         if isinstance(filepath, cls):
             return filepath
         return cls(filepath)
+
+    @property
+    def filepath(self):
+        return self._filepath
+
+    @property
+    def filename(self):
+        return self._filename
 
     @property
     def filename(self):
@@ -131,13 +140,19 @@ class PolyaxonFile(object):
             if self.settings:
                 project_path = self.settings.logging.path
 
-            return project_path or '/tmp/plx_logs/' + self.project.name
+            if project_path:
+                return project_path
+
+            if self.run_type == RunTypes.LOCAL:
+                return '/tmp/plx_logs/' + self.project.name
+
+            return get_vol_path(self.project.name, constants.LOGS_VOLUME, self.run_type)
 
         path = get_path()
         if self.matrix_space == 1 or experiment is None:
             return path
 
-        return '{}/{}'.format(path, experiment)
+        return os.path.join(path, experiment)
 
     @cached_property
     def validated_data(self):

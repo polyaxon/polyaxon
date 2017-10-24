@@ -8,6 +8,14 @@ from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
 from polyaxon_schemas.utils import TaskType
 
 
+class PodStatus(object):
+    RUNNING = 'Running'
+    PENDING = 'Pending'
+    CONTAINER_CREATING = 'ContainerCreating'
+    SUCCEEDED = 'Succeeded'
+    FAILED = 'Failed'
+
+
 def get_cluster_env_var(project, experiment, task_type):
     cluster_name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=project, experiment=experiment)
     config_map_key_ref = client.V1ConfigMapKeySelector(name=cluster_name, key=task_type)
