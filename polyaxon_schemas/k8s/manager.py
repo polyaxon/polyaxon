@@ -64,7 +64,13 @@ class K8SManager(object):
                 schedule=schedule)]
         return args
 
-    def _create_pod(self, experiment, task_type, task_id, command=None, args=None):
+    def _create_pod(self,
+                    experiment,
+                    task_type,
+                    task_id,
+                    command=None,
+                    args=None,
+                    restart_policy='Never'):
         task_name = constants.TASK_NAME.format(project=self.project_name,
                                                experiment=experiment,
                                                task_type=task_type,
@@ -85,7 +91,8 @@ class K8SManager(object):
                            volumes=volumes,
                            ports=ports,
                            command=command,
-                           args=args)
+                           args=args,
+                           restart_policy=restart_policy)
 
         pod_found = False
         try:
@@ -463,3 +470,22 @@ class K8SManager(object):
     def delete_all_experiments(self):
         for xp in range(self.polyaxonfile.matrix_space):
             self.delete_experiment(xp)
+
+    def get_experiment_status(self, experiment=0):
+        return self.get_task_status(experiment=experiment,
+                                    task_type=TaskType.MASTER,
+                                    task_id=0)
+
+    def get_task_status(self, experiment, task_type, task_id):
+        task_name = constants.TASK_NAME.format(project=self.project_name,
+                                               experiment=experiment,
+                                               task_type=task_type,
+                                               task_id=task_id)
+        return self.k8s.read_namespaced_pod_status(task_name, self.namespace).status.phase
+
+    def get_task_log(self, experiment, task_type, task_id, **kwargs):
+        task_name = constants.TASK_NAME.format(project=self.project_name,
+                                               experiment=experiment,
+                                               task_type=task_type,
+                                               task_id=task_id)
+        return self.k8s.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
