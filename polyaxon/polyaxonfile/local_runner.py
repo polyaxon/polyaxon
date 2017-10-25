@@ -82,39 +82,44 @@ start_experiment_run(
         current_run[TaskType.MASTER] = p
 
 
+def run_experiment(polyaxonfile, xp):
+    plx_file = PolyaxonFile.read(polyaxonfile)
+    logging.info("running Experiment n: {}".format(xp))
+    cluster, is_distributed = plx_file.get_cluster_def_at(xp)
+    if not is_distributed:
+        start_experiment_run(plx_file, xp, TaskType.MASTER, 0, 'continuous_train_and_eval')
+        current_run['finished'] = True
+    else:
+        env = {
+            'polyaxonfile': polyaxonfile.filepath,
+            'task_type': TaskType.MASTER,
+            'experiment_id': xp,
+            'task_id': 0,
+            'schedule': 'train_and_evaluate'
+        }
+
+        create_process(env)
+
+        for i in xrange(cluster.get(TaskType.WORKER, 0)):
+            env['task_id'] = i
+            env['task_type'] = TaskType.WORKER
+            env['schedule'] = 'train'
+            create_process(env)
+
+        for i in xrange(cluster.get(TaskType.PS, 0)):
+            env['task_id'] = i
+            env['task_type'] = TaskType.PS
+            env['schedule'] = 'run_std_server'
+            create_process(env)
+
+        for job in jobs:
+            job.join()
+
+
 def run(polyaxonfile):
     plx_file = PolyaxonFile.read(polyaxonfile)
     for xp in range(plx_file.matrix_space):
-        logging.info("running Experiment n: {}".format(xp))
-        cluster, is_distributed = plx_file.get_cluster_def_at(xp)
-        if not is_distributed:
-            start_experiment_run(plx_file, xp, TaskType.MASTER, 0, 'continuous_train_and_eval')
-            current_run['finished'] = True
-        else:
-            env = {
-                'polyaxonfile': polyaxonfile,
-                'task_type': TaskType.MASTER,
-                'experiment_id': xp,
-                'task_id': 0,
-                'schedule': 'train_and_evaluate'
-            }
-
-            create_process(env)
-
-            for i in xrange(cluster.get(TaskType.WORKER, 0)):
-                env['task_id'] = i
-                env['task_type'] = TaskType.WORKER
-                env['schedule'] = 'train'
-                create_process(env)
-
-            for i in xrange(cluster.get(TaskType.PS, 0)):
-                env['task_id'] = i
-                env['task_type'] = TaskType.PS
-                env['schedule'] = 'run_std_server'
-                create_process(env)
-
-            for job in jobs:
-                job.join()
+        run_experiment(plx_file, xp)
 
         while not current_run['finished']:
             check_master_process()
