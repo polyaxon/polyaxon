@@ -28,7 +28,6 @@ class K8SManager(object):
         self.has_data_volume = False
         self.has_logs_volume = False
         self.has_files_volume = False
-        self.has_tmp_volume = False
 
     @property
     def project_name(self):
@@ -207,14 +206,15 @@ class K8SManager(object):
         logs_path = persistent_volumes.get_vol_path(project=self.project_name,
                                                     volume=constants.LOGS_VOLUME,
                                                     run_type=self.polyaxonfile.run_type)
-        deployment = deployments.get_deployment(name=name,
-                                                project=self.project_name,
-                                                volume_mounts=volume_mounts,
-                                                volumes=volumes,
-                                                command=["tensorboard"],
-                                                args=["--logdir={} --port=6006".format(logs_path)],
-                                                ports=ports,
-                                                role='dashboard')
+        deployment = deployments.get_deployment(
+            name=name,
+            project=self.project_name,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            command=["/bin/sh", "-c"],
+            args=["tensorboard --logdir={} --port=6006".format(logs_path)],
+            ports=ports,
+            role='dashboard')
         deployment_name = constants.DEPLOYMENT_NAME.format(project=self.project_name, name=name)
 
         deployment_found = False
@@ -284,12 +284,6 @@ class K8SManager(object):
                                                        volume=constants.POLYAXON_FILES_VOLUME,
                                                        run_type=self.polyaxonfile.run_type))
 
-        if self.has_tmp_volume:
-            volumes.append(pods.get_volume(project=self.project_name, volume=constants.TMP_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(project=self.project_name,
-                                                       volume=constants.TMP_VOLUME,
-                                                       run_type=self.polyaxonfile.run_type))
-
         return volumes, volume_mounts
 
     def _create_volume(self, volume):
@@ -338,10 +332,6 @@ class K8SManager(object):
         self._create_volume(constants.LOGS_VOLUME)
         self.has_logs_volume = True
 
-    def create_tmp_volumes(self):
-        self._create_volume(constants.TMP_VOLUME)
-        self.has_tmp_volume = True
-
     def create_files_volumes(self):
         self._create_volume(constants.POLYAXON_FILES_VOLUME)
         self.has_files_volume = True
@@ -388,10 +378,6 @@ class K8SManager(object):
         self._delete_volume(constants.LOGS_VOLUME)
         self.has_logs_volume = False
 
-    def delete_tmp_volumes(self):
-        self._delete_volume(constants.TMP_VOLUME)
-        self.has_tmp_volume = False
-
     def delete_files_volumes(self):
         self._delete_volume(constants.POLYAXON_FILES_VOLUME)
         self.has_files_volume = False
@@ -400,13 +386,11 @@ class K8SManager(object):
         self.delete_data_volume()
         self.delete_logs_volume()
         self.delete_files_volumes()
-        self.delete_tmp_volumes()
 
     def create_volumes(self):
         self.create_data_volume()
         self.create_logs_volume()
         self.create_files_volumes()
-        self.create_tmp_volumes()
 
     def create_cluster_config_map(self, experiment=0):
         name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=self.project_name,
