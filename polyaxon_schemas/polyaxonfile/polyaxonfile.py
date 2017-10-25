@@ -44,6 +44,14 @@ class PolyaxonFile(object):
         return cls(filepath)
 
     @property
+    def filepath(self):
+        return self._filepath
+
+    @property
+    def filename(self):
+        return self._filename
+
+    @property
     def filename(self):
         return self._filename
 
