@@ -25,8 +25,7 @@ from polyaxon_schemas.layers.convolutional import (
     Cropping2DConfig,
     Cropping3DConfig,
 )
-from polyaxon_schemas.layers.convolutional_recurrent import ConvLSTM2DConfig
-from polyaxon_schemas.layers.convolutional_recurrent import ConvRecurrent2DConfig
+from polyaxon_schemas.layers.convolutional_recurrent import ConvLSTM2DConfig, ConvRecurrent2DConfig
 from polyaxon_schemas.layers.core import (
     MaskingConfig,
     DropoutConfig,
@@ -43,11 +42,13 @@ from polyaxon_schemas.layers.core import (
     CastConfig,
 )
 from polyaxon_schemas.layers.embeddings import EmbeddingConfig
-from polyaxon_schemas.layers.local import LocallyConnected1DConfig
-from polyaxon_schemas.layers.local import LocallyConnected2DConfig
+from polyaxon_schemas.layers.local import LocallyConnected1DConfig, LocallyConnected2DConfig
 from polyaxon_schemas.layers.merge import MergeConfig
-from polyaxon_schemas.layers.noise import GaussianDropoutConfig
-from polyaxon_schemas.layers.noise import GaussianNoiseConfig, AlphaDropoutConfig
+from polyaxon_schemas.layers.noise import (
+    GaussianDropoutConfig,
+    GaussianNoiseConfig,
+    AlphaDropoutConfig
+)
 from polyaxon_schemas.layers.normalization import BatchNormalizationConfig
 from polyaxon_schemas.layers.pooling import (
     MaxPooling1DConfig,
@@ -63,8 +64,12 @@ from polyaxon_schemas.layers.pooling import (
     GlobalAveragePooling3DConfig,
     GlobalMaxPooling3DConfig,
 )
-from polyaxon_schemas.layers.recurrent import RecurrentConfig, GRUConfig, LSTMConfig
-from polyaxon_schemas.layers.recurrent import SimpleRNNConfig
+from polyaxon_schemas.layers.recurrent import (
+    RecurrentConfig,
+    GRUConfig,
+    LSTMConfig,
+    SimpleRNNConfig
+)
 from polyaxon_schemas.layers.wrappers import (
     WrapperConfig,
     TimeDistributedConfig,

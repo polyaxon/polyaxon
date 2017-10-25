@@ -3,13 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from polyaxon_schemas.bridges import NoOpBridgeConfig
 from polyaxon_schemas.losses import SoftmaxCrossEntropyConfig, MeanSquaredErrorConfig
 from polyaxon_schemas.metrics import AccuracyConfig, PrecisionConfig
 from polyaxon_schemas.models import (
     BaseModelConfig,
     ClassifierConfig,
     RegressorConfig,
-)
+    GeneratorConfig)
 from polyaxon_schemas.optimizers import AdamConfig
 from tests.utils import assert_equal_graphs, assert_equal_dict
 
@@ -113,3 +114,35 @@ class TestModelConfigs(TestCase):
         config = RegressorConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         self.assert_equal_models(config_to_dict, config_dict)
+
+    def test_generator_model_config(self):
+        config_dict = {
+            'bridge': NoOpBridgeConfig().to_schema(),
+            'encoder': {
+                'input_layers': ['image'],
+                'output_layers': ['encoded'],
+                'layers': [
+                    {'Dense': {'units': 1, 'name': 'encoded'}}
+                ]
+            },
+            'decoder': {
+                'input_layers': ['image'],
+                'output_layers': ['encoded'],
+                'layers': [
+                    {'Dense': {'units': 1, 'name': 'decoded'}}
+                ]
+            },
+            'loss': MeanSquaredErrorConfig(input_layer=['image', 0, 0],
+                                           output_layer=['decoded', 0, 0]).to_schema(),
+            'optimizer': AdamConfig(learning_rate=0.01).to_schema(),
+            'metrics': [],
+            'summaries': ['loss', 'gradients'],
+            'clip_gradients': 0.5,
+            'clip_embed_gradients': 0.,
+            'name': 'model'}
+        config = GeneratorConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        assert config_dict.pop('bridge') == config_to_dict.pop('bridge')
+        assert_equal_graphs(config_dict.pop('encoder'), config_to_dict.pop('encoder'))
+        assert_equal_graphs(config_dict.pop('decoder'), config_to_dict.pop('decoder'))
+        assert_equal_dict(config_dict, config_to_dict)

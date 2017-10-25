@@ -12,9 +12,14 @@ from polyaxon_schemas.utils import to_list
 
 STORAGE_BY_VOLUME = {
     constants.DATA_VOLUME: '1Gi',
+    constants.POLYAXON_FILES_VOLUME: '1Mi',
     constants.LOGS_VOLUME: '1Mi',
-    constants.POLYAXON_FILES_VOLUME: '1Ki',
-    constants.TMP_VOLUME: '1Ki'
+}
+
+MINIKUBE_VOLUME_PATH = {
+    constants.DATA_VOLUME: '/plx/data',
+    constants.POLYAXON_FILES_VOLUME: '/plx/plxfiles',
+    constants.LOGS_VOLUME: '/tmp/plx/logs/{project}',
 }
 
 
@@ -28,7 +33,7 @@ def get_nfs_pvol(vol_path, server=None):
 
 def get_vol_path(project, volume, run_type):
     if run_type == RunTypes.MINIKUBE:
-        return os.path.join('/tmp/plx/', project, volume)
+        return MINIKUBE_VOLUME_PATH[volume].format(project=project)
     elif run_type == RunTypes.KUBERNETES:
         return os.path.join('/plx', project, volume)
     else:

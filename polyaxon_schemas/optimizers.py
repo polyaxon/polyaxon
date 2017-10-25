@@ -58,6 +58,51 @@ class SGDSchema(BaseOptimizerSchema):
 
 
 class SGDConfig(BaseOptimizerConfig):
+    """Optimizer that implements the gradient descent algorithm.
+
+    Args:
+        learning_rate: A Tensor or a floating point value. The learning rate to use.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: SGD
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        SGD:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        SGD: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'SGD'
     SCHEMA = SGDSchema
 
@@ -90,6 +135,61 @@ class MomentumSchema(BaseOptimizerSchema):
 
 
 class MomentumConfig(BaseOptimizerConfig):
+    """Optimizer that implements the Momentum.
+
+    Momentum Optimizer accepts learning rate decay. When training a model,
+    it is often recommended to lower the learning rate as the training
+    progresses. The function returns the decayed learning rate.  It is
+    computed as:
+
+    ```python
+    >>> decayed_learning_rate = learning_rate * decay_rate ^ (global_step / lr_decay_steps)
+    ```
+
+    Args:
+        learning_rate: `float`. Learning rate.
+        momentum: `float`. Momentum.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: `str`. Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: Momentum
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Momentum:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Momentum: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'Momentum'
     SCHEMA = MomentumSchema
 
@@ -124,6 +224,58 @@ class NestrovSchema(BaseOptimizerSchema):
 
 
 class NestrovConfig(BaseOptimizerConfig):
+    """Optimizer that implements the Nesterov.
+
+    Same as Momentum optimizer but uses nestrov
+    See [Sutskever et. al., 2013](http://jmlr.org/proceedings/papers/v28/sutskever13.pdf)
+
+    ```python
+    >>> decayed_learning_rate = learning_rate * decay_rate ^ (global_step / lr_decay_steps)
+    ```
+    Args:
+        learning_rate: `float`. Learning rate.
+        momentum: `float`. Momentum.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: `str`. Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: Nestrov
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Nestrov:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Nestrov: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'Nestrov'
     SCHEMA = NestrovSchema
 
@@ -160,6 +312,57 @@ class RMSPropSchema(BaseOptimizerSchema):
 
 
 class RMSPropConfig(BaseOptimizerConfig):
+    """Optimizer that implements the RMSprop.
+
+    Maintain a moving (discounted) average of the square of gradients.
+    Divide gradient by the root of this average.
+
+    Args:
+        learning_rate: `float`. learning rate.
+        decay: `float`. Discounting factor for the history/coming gradient.
+        momentum: `float`. Momentum.
+        epsilon: `float`. Small value to avoid zero denominator.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: RMSProp
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        RMSProp:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        RMSProp: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'RMSProp'
     SCHEMA = RMSPropSchema
 
@@ -200,6 +403,59 @@ class AdamSchema(BaseOptimizerSchema):
 
 
 class AdamConfig(BaseOptimizerConfig):
+    """Optimizer that implements the Adam.
+
+    The default value of 1e-8 for epsilon might not be a good default in
+    general. For example, when training an Inception network on ImageNet a
+    current good choice is 1.0 or 0.1.
+
+    Args:
+        learning_rate: `float`. learning rate.
+        beta1: `float`. The exponential decay rate for the 1st moment estimates.
+        beta2: `float`. The exponential decay rate for the 2nd moment estimates.
+        epsilon: `float`. A small constant for numerical stability.
+        epsilon: `float`. Small value to avoid zero denominator.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: `str`. Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: Adam
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Adam:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Adam: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'Adam'
     SCHEMA = AdamSchema
 
@@ -238,6 +494,53 @@ class AdagradSchema(BaseOptimizerSchema):
 
 
 class AdagradConfig(BaseOptimizerConfig):
+    """Optimizer that implements AdaGrad.
+
+    Args:
+        learning_rate: `float`. Learning rate.
+        initial_accumulator_value: `float`. Starting value for the
+            accumulators, must be positive.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: `str`. Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: Adagrad
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Adagrad:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Adagrad: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'Adagrad'
     SCHEMA = AdagradSchema
 
@@ -273,6 +576,65 @@ class AdadeltaSchema(BaseOptimizerSchema):
 
 
 class AdadeltaConfig(BaseOptimizerConfig):
+    """Optimizer that implements Ftrl Proximal.
+
+    The Ftrl-proximal algorithm, abbreviated for Follow-the-regularized-leader,
+    is described in the paper below.
+
+    It can give a good performance vs. sparsity tradeoff.
+
+    Ftrl-proximal uses its own global base learning rate and can behave like
+    Adagrad with `learning_rate_power=-0.5`, or like gradient descent with
+    `learning_rate_power=0.0`.
+
+    Args:
+        learning_rate: `float`. Learning rate.
+        learning_rate_power: `float`. Must be less or equal to zero.
+        initial_accumulator_value: `float`. The starting value for accumulators.
+            Only positive values are allowed.
+        l1_regularization_strength: `float`. Must be less or equal to zero.
+        l2_regularization_strength: `float`. Must be less or equal to zero.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: `str`. Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: Adadelta
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Adadelta:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Adadelta: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'Adadelta'
     SCHEMA = AdadeltaSchema
 
@@ -312,6 +674,54 @@ class FtrlSchema(BaseOptimizerSchema):
 
 
 class FtrlConfig(BaseOptimizerConfig):
+    """Optimizer that implements AdaDelta.
+
+    Args:
+        learning_rate: A `Tensor` or a floating point value. The learning rate.
+        rho: A `Tensor` or a floating point value. The decay rate.
+        epsilon: A `Tensor` or a floating point value.  A constant epsilon used to better
+            conditioning the grad update.
+        decay_type: A decay function name defined in `tf.train`
+        decay_rate: `float`. The learning rate decay to apply.
+        decay_steps: `int`. Apply decay every provided steps.
+        start_decay_at: `int`. Don't decay before this step.
+        stop_decay_at: `int`. Don't decay after this step.
+        min_learning_rate: `float`. Don't decay below this number.
+        staircase: `bool`. It `True` decay learning rate at discrete intervals.
+        global_step: Scalar int `Tensor`, step counter for each update.
+        use_locking: If True use locks for update operations.
+        name: Optional name prefix for the operations created when applying gradients.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer: Ftrl
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Ftrl:
+          learning_rate: 0.21
+      # other model properties
+    ```
+
+    or
+
+    ```yaml
+    model:
+      # other model properties
+      optimizer:
+        Ftrl: {learning_rate: 0.21}
+      # other model properties
+    ```
+    """
     IDENTIFIER = 'Ftrl'
     SCHEMA = FtrlSchema
 

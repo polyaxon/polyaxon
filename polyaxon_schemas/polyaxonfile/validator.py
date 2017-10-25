@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import six
 
 from polyaxon_schemas.eval import EvalConfig
+from polyaxon_schemas.run_exec import RunExecConfig
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.models import ModelConfig
 from polyaxon_schemas.polyaxonfile.specification import Specification
@@ -39,15 +40,15 @@ def validate_matrix(data):
 
 def validate(data):
     """Validates the data and creates the config objects"""
-    validated_data = {
-        Specification.MODEL: ModelConfig.from_dict(data[Specification.MODEL])
-    }
+    validated_data = {}
 
     def add_validated_section(section, config):
         if data.get(section):
             validated_data[section] = config.from_dict(data[section])
 
     add_validated_section(Specification.ENVIRONMENT, EnvironmentConfig)
+    add_validated_section(Specification.RUN_EXEC, RunExecConfig)
+    add_validated_section(Specification.MODEL, ModelConfig)
     add_validated_section(Specification.TRAIN, TrainConfig)
     add_validated_section(Specification.EVAL, EvalConfig)
 

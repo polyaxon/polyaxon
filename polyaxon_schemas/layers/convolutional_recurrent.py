@@ -32,6 +32,75 @@ class ConvRecurrent2DSchema(RecurrentSchema):
 
 
 class ConvRecurrent2DConfig(RecurrentConfig):
+    """Abstract base class for convolutional recurrent layers.
+
+    Do not use in a model -- it's not a functional layer!
+
+    Args:
+        filters: Integer, the dimensionality of the output space
+            (i.e. the number output of filters in the convolution).
+        kernel_size: An integer or tuple/list of n integers, specifying the
+            dimensions of the convolution window.
+        strides: An integer or tuple/list of n integers,
+            specifying the strides of the convolution.
+            Specifying any stride value != 1 is incompatible with specifying
+            any `dilation_rate` value != 1.
+        padding: One of `"valid"` or `"same"` (case-insensitive).
+        data_format: A string,
+            one of `channels_last` (default) or `channels_first`.
+            The ordering of the dimensions in the inputs.
+            `channels_last` corresponds to inputs with shape
+            `(batch, time, ..., channels)`
+            while `channels_first` corresponds to
+            inputs with shape `(batch, time, channels, ...)`.
+            It defaults to the `image_data_format` value found in your
+            Keras config file at `~/.keras/keras.json`.
+            If you never set it, then it will be "channels_last".
+        dilation_rate: An integer or tuple/list of n integers, specifying
+            the dilation rate to use for dilated convolution.
+            Currently, specifying any `dilation_rate` value != 1 is
+            incompatible with specifying any `strides` value != 1.
+        return_sequences: Boolean. Whether to return the last output
+            in the output sequence, or the full sequence.
+        go_backwards: Boolean (default False).
+            If True, rocess the input sequence backwards.
+        stateful: Boolean (default False). If True, the last state
+            for each sample at index i in a batch will be used as initial
+            state for the sample of index i in the following batch.
+
+    Input shape:
+        5D tensor with shape `(num_samples, timesteps, channels, rows, cols)`.
+
+    Output shape:
+        - if `return_sequences`: 5D tensor with shape
+            `(num_samples, timesteps, channels, rows, cols)`.
+        - else, 4D tensor with shape `(num_samples, channels, rows, cols)`.
+
+    # Masking
+        This layer supports masking for input data with a variable number
+        of timesteps. To introduce masks to your data,
+        use an `Embedding` layer with the `mask_zero` parameter
+        set to `True`.
+        **Note:** for the time being, masking is only supported with Theano.
+
+    # Note on using statefulness in RNNs
+        You can set RNN layers to be 'stateful', which means that the states
+        computed for the samples in one batch will be reused as initial states
+        for the samples in the next batch.
+        This assumes a one-to-one mapping between
+        samples in different successive batches.
+
+        To enable statefulness:
+            - specify `stateful=True` in the layer constructor.
+            - specify a fixed batch size for your model, by passing
+                a `batch_input_size=(...)` to the first layer in your model.
+                This is the expected shape of your inputs *including the batch
+                size*.
+                It should be a tuple of integers, e.g. `(32, 10, 100)`.
+
+        To reset the states of your model, call `.reset_states()` on either
+        a specific layer, or on your entire model.
+    """
     IDENTIFIER = 'ConvRecurrent2D'
     SCHEMA = ConvRecurrent2DSchema
 
@@ -85,6 +154,123 @@ class ConvLSTM2DSchema(ConvRecurrent2DSchema):
 
 
 class ConvLSTM2DConfig(ConvRecurrent2DConfig):
+    """Convolutional LSTM.
+
+    It is similar to an LSTM layer, but the input transformations
+    and recurrent transformations are both convolutional.
+
+    Args:
+        filters: Integer, the dimensionality of the output space
+            (i.e. the number output of filters in the convolution).
+        kernel_size: An integer or tuple/list of n integers, specifying the
+            dimensions of the convolution window.
+        strides: An integer or tuple/list of n integers,
+            specifying the strides of the convolution.
+            Specifying any stride value != 1 is incompatible with specifying
+            any `dilation_rate` value != 1.
+        padding: One of `"valid"` or `"same"` (case-insensitive).
+        data_format: A string,
+            one of `channels_last` (default) or `channels_first`.
+            The ordering of the dimensions in the inputs.
+            `channels_last` corresponds to inputs with shape
+            `(batch, time, ..., channels)`
+            while `channels_first` corresponds to
+            inputs with shape `(batch, time, channels, ...)`.
+            It defaults to the `image_data_format` value found in your
+            Keras config file at `~/.keras/keras.json`.
+            If you never set it, then it will be "channels_last".
+        dilation_rate: An integer or tuple/list of n integers, specifying
+            the dilation rate to use for dilated convolution.
+            Currently, specifying any `dilation_rate` value != 1 is
+            incompatible with specifying any `strides` value != 1.
+        activation: Activation function to use.
+            If you don't specify anything, no activation is applied
+            (ie. "linear" activation: `a(x) = x`).
+        recurrent_activation: Activation function to use
+            for the recurrent step.
+        use_bias: Boolean, whether the layer uses a bias vector.
+        kernel_initializer: Initializer for the `kernel` weights matrix,
+            used for the linear transformation of the inputs..
+        recurrent_initializer: Initializer for the `recurrent_kernel`
+            weights matrix,
+            used for the linear transformation of the recurrent state..
+        bias_initializer: Initializer for the bias vector.
+        unit_forget_bias: Boolean.
+            If True, add 1 to the bias of the forget gate at initialization.
+            Use in combination with `bias_initializer="zeros"`.
+            This is recommended in [Jozefowicz et
+              al.](http://www.jmlr.org/proceedings/papers/v37/jozefowicz15.pdf)
+        kernel_regularizer: Regularizer function applied to
+            the `kernel` weights matrix.
+        recurrent_regularizer: Regularizer function applied to
+            the `recurrent_kernel` weights matrix.
+        bias_regularizer: Regularizer function applied to the bias vector.
+        activity_regularizer: Regularizer function applied to
+            the output of the layer (its "activation")..
+        kernel_constraint: Constraint function applied to
+            the `kernel` weights matrix.
+        recurrent_constraint: Constraint function applied to
+            the `recurrent_kernel` weights matrix.
+        bias_constraint: Constraint function applied to the bias vector.
+        return_sequences: Boolean. Whether to return the last output
+            in the output sequence, or the full sequence.
+        go_backwards: Boolean (default False).
+            If True, rocess the input sequence backwards.
+        stateful: Boolean (default False). If True, the last state
+            for each sample at index i in a batch will be used as initial
+            state for the sample of index i in the following batch.
+        dropout: Float between 0 and 1.
+            Fraction of the units to drop for
+            the linear transformation of the inputs.
+        recurrent_dropout: Float between 0 and 1.
+            Fraction of the units to drop for
+            the linear transformation of the recurrent state.
+
+    Input shape:
+        - if data_format='channels_first'
+            5D tensor with shape:
+            `(samples,time, channels, rows, cols)`
+        - if data_format='channels_last'
+            5D tensor with shape:
+            `(samples,time, rows, cols, channels)`
+
+    Output shape:
+        - if `return_sequences`
+             - if data_format='channels_first'
+                5D tensor with shape:
+                `(samples, time, filters, output_row, output_col)`
+             - if data_format='channels_last'
+                5D tensor with shape:
+                `(samples, time, output_row, output_col, filters)`
+        - else
+            - if data_format ='channels_first'
+                4D tensor with shape:
+                `(samples, filters, output_row, output_col)`
+            - if data_format='channels_last'
+                4D tensor with shape:
+                `(samples, output_row, output_col, filters)`
+            where o_row and o_col depend on the shape of the filter and
+            the padding
+
+    Raises:
+        ValueError: in case of invalid constructor arguments.
+
+    References:
+        - [Convolutional LSTM Network: A Machine Learning Approach for
+        Precipitation Nowcasting](http://arxiv.org/abs/1506.04214v1)
+        The current implementation does not include the feedback loop on the
+        cells output
+
+    Polyaxonfile usage:
+
+    ```yaml
+    ConvLSTM2D:
+      filters: 3
+      kernel_size: 2 or [2, 2]
+      strides: 1 or [1, 1]
+      padding: valid
+    ```
+    """
     IDENTIFIER = 'ConvLSTM2D'
     SCHEMA = ConvLSTM2DSchema
 

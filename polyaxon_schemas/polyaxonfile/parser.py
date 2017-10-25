@@ -81,6 +81,10 @@ class Parser(object):
             parsed_data[Specification.SETTINGS] = cls.parse_expression(
                 data[Specification.SETTINGS], declarations)
 
+        if Specification.RUN_EXEC in data:
+            parsed_data[Specification.RUN_EXEC] = cls.parse_expression(
+                data[Specification.RUN_EXEC], declarations, True, False)
+
         for section in Specification.GRAPH_SECTIONS:
             if section in data:
                 parsed_data[section] = cls.parse_expression(
@@ -99,8 +103,8 @@ class Parser(object):
                 key = cls.parse_expression(old_key, declarations)
                 if check_operators and cls.is_operator(key):
                     return cls._parse_operator({key: value}, declarations)
-                if check_graph and key == 'graph':
-                    return {'graph': cls._parse_graph(value, declarations)}
+                if check_graph and key in ['graph', 'encoder', 'decoder']:
+                    return {key: cls._parse_graph(value, declarations)}
                 if check_graph and key == 'feature_processors':
                     return {
                         key: {

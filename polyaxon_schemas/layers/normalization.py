@@ -37,6 +37,55 @@ class BatchNormalizationSchema(BaseLayerSchema):
 
 
 class BatchNormalizationConfig(BaseLayerConfig):
+    """Batch normalization layer (Ioffe and Szegedy, 2014).
+
+    Normalize the activations of the previous layer at each batch,
+    i.e. applies a transformation that maintains the mean activation
+    close to 0 and the activation standard deviation close to 1.
+
+    Args:
+        axis: Integer, the axis that should be normalized
+            (typically the features axis).
+            For instance, after a `Conv2D` layer with
+            `data_format="channels_first"`,
+            set `axis=1` in `BatchNormalization`.
+        momentum: Momentum for the moving average.
+        epsilon: Small float added to variance to avoid dividing by zero.
+        center: If True, add offset of `beta` to normalized tensor.
+            If False, `beta` is ignored.
+        scale: If True, multiply by `gamma`.
+            If False, `gamma` is not used.
+            When the next layer is linear (also e.g. `nn.relu`),
+            this can be disabled since the scaling
+            will be done by the next layer.
+        beta_initializer: Initializer for the beta weight.
+        gamma_initializer: Initializer for the gamma weight.
+        moving_mean_initializer: Initializer for the moving mean.
+        moving_variance_initializer: Initializer for the moving variance.
+        beta_regularizer: Optional regularizer for the beta weight.
+        gamma_regularizer: Optional regularizer for the gamma weight.
+        beta_constraint: Optional constraint for the beta weight.
+        gamma_constraint: Optional constraint for the gamma weight.
+
+    Input shape:
+        Arbitrary. Use the keyword argument `input_shape`
+        (tuple of integers, does not include the samples axis)
+        when using this layer as the first layer in a model.
+
+    Output shape:
+        Same shape as input.
+
+    References:
+        - [Batch Normalization: Accelerating Deep Network Training by Reducing
+          Internal Covariate Shift](https://arxiv.org/abs/1502.03167)
+
+    Polyaxonfile usage:
+
+    ```yaml
+    BatchNormalization:
+      momentum: 0.7
+    ```
+    """
     IDENTIFIER = 'BatchNormalization'
     SCHEMA = BatchNormalizationSchema
 

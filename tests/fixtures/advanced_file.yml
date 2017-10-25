@@ -33,8 +33,7 @@ declarations:
 
 model:
   model_type: classifier
-  loss:
-    MeanSquaredError:
+  loss: MeanSquaredError
   optimizer:
     Adam:
       learning_rate: 0.21
@@ -58,12 +57,8 @@ model:
               kernels: 12
 
       - if:
-          cond: 1 == "{{ cnn.kernels[1] }}"
+          cond: "32 == {{ cnn.kernels[1] }}"
           do:
-            MaxPooling2D:
-              kernels: 12
-              is_output: true
-          else_do:
             for:
               len: "{{ cnn.kernels|length }}"
               do:
@@ -74,6 +69,10 @@ model:
                     activation: relu
                     tags: tag2
                     is_output: true
+          else_do:
+            MaxPooling2D:
+              kernels: 12
+              is_output: true
 
       - Flatten:
           inbound_nodes: ["{{ tags.tag1[1] }}"]

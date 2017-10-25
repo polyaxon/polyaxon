@@ -24,12 +24,13 @@ class Specification(object):
     MATRIX = 'matrix'
     DECLARATIONS = 'declarations'
     ENVIRONMENT = 'environment'
+    RUN_EXEC = 'run'
     MODEL = 'model'
     TRAIN = 'train'
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, PROJECT, ENVIRONMENT, MATRIX, DECLARATIONS, SETTINGS, MODEL, TRAIN, EVAL
+        VERSION, PROJECT, ENVIRONMENT, MATRIX, DECLARATIONS, SETTINGS, RUN_EXEC, MODEL, TRAIN, EVAL
     )
 
     HEADER_SECTIONS = (
@@ -41,7 +42,7 @@ class Specification(object):
     )
 
     REQUIRED_SECTIONS = (
-        VERSION, PROJECT, MODEL
+        VERSION, PROJECT
     )
 
     OPERATORS = {
