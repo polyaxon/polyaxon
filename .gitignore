@@ -1,0 +1,113 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# temp files
+*~
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+docker/environment/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.pydevproject
+.project
+.settings/
+.idea/
+.DS_Store
+
+# fab files
+fabsettings.py
+fabfile.py
+fab_templates/
+
+# graphviz files
+*_graphviz.png
+*_graphviz.dot
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# IPython Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+celeryev.pid
+celeryd*pid
+celeryd*log
+
+# dotenv
+.env
+
+# virtualenv
+venv/
+ENV/
+
+# data
+big_data/
+examples/data/
+
+# project
+setup.log
+static/
+reports/
+logs/
+media/
+
+# npm modules and transpiled typescript files
+client/dist/
+client/node_modules/
+client/css/
+client/polyaxon/**/*.js
+client/polyaxon/**/*.js.map
+/examples/polyaxon-logs/
