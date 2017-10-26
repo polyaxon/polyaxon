@@ -9,3 +9,4 @@
     - `python generate_doc.py`
     - `mkdocs build`    # Builds a static site in "site" directory
     - `mkdocs serve`    # Starts a local webserver:  [localhost:8000](localhost:8000)
+- deploy: `mkdocs gh-deploy -b master`

@@ -18,6 +18,9 @@ extra:
     - type: 'twitter'
       link: 'https://twitter.com/polyaxonai'
 
+extra_css:
+    - css/style.css
+
 dev_addr: '0.0.0.0:8000'
 google_analytics: ['UA-89493331-1', 'polyaxon.com']
 copyright: Copyright &copy; 2017 Polyaxon

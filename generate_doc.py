@@ -783,3 +783,6 @@ shutil.copyfile(os.path.join(BASE_DIR, 'CONTRIBUTING.md'),
 shutil.rmtree(os.path.join(DOCS_DIR, 'images'))
 shutil.copytree(os.path.join(TEMPLATES_DIR, 'images'),
                 os.path.join(DOCS_DIR, 'images'))
+shutil.rmtree(os.path.join(DOCS_DIR, 'css'))
+shutil.copytree(os.path.join(TEMPLATES_DIR, 'css'),
+                os.path.join(DOCS_DIR, 'css'))
