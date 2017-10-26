@@ -1,0 +1,9 @@
+---
+version: 1
+
+project:
+  name: video_prediction
+
+exec:
+  cmd: video_prediction_train --model=DNA --num_masks=1
+...

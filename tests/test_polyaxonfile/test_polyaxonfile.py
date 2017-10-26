@@ -4,9 +4,11 @@ from __future__ import absolute_import, division, print_function
 import os
 from unittest import TestCase
 
+from polyaxon_schemas.exec import ExecConfig
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
 from polyaxon_schemas.k8s.templates import constants
+from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.losses import MeanSquaredErrorConfig, AbsoluteDifferenceConfig
 from polyaxon_schemas.matrix import MatrixConfig
@@ -29,10 +31,6 @@ class TestPolyaxonfile(TestCase):
     def test_missing_version_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_version.yml'))
-
-    def test_missing_model_raises(self):
-        with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath('tests/fixtures/missing_model.yml'))
 
     def test_missing_project_raises(self):
         with self.assertRaises(PolyaxonfileError):
@@ -224,3 +222,59 @@ class TestPolyaxonfile(TestCase):
             last_layer = model.graph.layers[-1].name
             assert model.graph.output_layers == [[last_layer, 0, 0]]
             assert isinstance(plxfile.get_train_at(xp).data_pipeline, TFRecordImagePipelineConfig)
+
+    def test_exec_simple_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/exec_simple_file.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'video_prediction'
+        assert plxfile.project_path == "/tmp/plx_logs/video_prediction"
+        assert plxfile.settings is None
+        assert plxfile.run_type == RunTypes.LOCAL
+        assert plxfile.environment is None
+        assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert plxfile.model is None
+        exec = plxfile.exec
+        assert isinstance(exec, ExecConfig)
+        assert exec.cmd == "video_prediction_train --model=DNA --num_masks=1"
+
+    def test_exec_matrix_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/exec_matrix_file.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'video_prediction'
+        assert plxfile.project_path == get_vol_path('video_prediction',
+                                                    constants.LOGS_VOLUME,
+                                                    RunTypes.MINIKUBE)
+        assert isinstance(plxfile.matrix['model'], MatrixConfig)
+        assert plxfile.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
+        assert plxfile.matrix_space == 3
+        declarations = []
+        for loss in plxfile.matrix['model'].to_numpy():
+            declarations.append({'model': loss})
+        assert sorted(
+            plxfile.matrix_declarations, key=lambda x: (x['model'])) == sorted(
+            declarations, key=lambda x: (x['model']))
+        assert isinstance(plxfile.settings, SettingsConfig)
+        assert plxfile.run_type == RunTypes.MINIKUBE
+        # we cannot access property because the current polyaxonfile has multiple experiments
+        with self.assertRaises(AttributeError):
+            plxfile.environment
+        with self.assertRaises(AttributeError):
+            plxfile.cluster_def
+        with self.assertRaises(AttributeError):
+            plxfile.model
+        with self.assertRaises(AttributeError):
+            plxfile.train
+        with self.assertRaises(AttributeError):
+            plxfile.exec
+
+        for xp in range(plxfile.matrix_space):
+            assert plxfile.get_environment_at(xp) is None
+            assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
+            assert plxfile.get_model_at(xp) is None
+            exec = plxfile.get_exec_at(xp)
+            assert isinstance(exec, ExecConfig)
+            declarations = plxfile.get_declarations_at(xp)
+            declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
+            assert exec.cmd == 'video_prediction_train --model="{model}" --num_masks={num_masks}'.format(
+                **declarations
+            )

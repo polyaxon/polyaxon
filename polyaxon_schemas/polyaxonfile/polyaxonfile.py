@@ -94,6 +94,9 @@ class PolyaxonFile(object):
             raise PolyaxonFile('The matrix declaration is not valid.')
         return declarations
 
+    def get_declarations_at(self, experiment):
+        return self.matrix_declarations[experiment]
+
     @cached_property
     def headers(self):
         return self._headers
@@ -169,6 +172,16 @@ class PolyaxonFile(object):
         return self._validated_data[experiment]
 
     @cached_property
+    def exec(self):
+        if self.matrix_space == 1:
+            return self.get_exec_at(0)
+        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
+            please use `get_exec_at(experiment)` instead.""".format(self.matrix_space))
+
+    def get_exec_at(self, experiment):
+        return self.get_validated_data_at(experiment).get(Specification.EXEC, None)
+
+    @cached_property
     def model(self):
         if self.matrix_space == 1:
             return self.get_model_at(0)
@@ -176,7 +189,7 @@ class PolyaxonFile(object):
         please use `get_model_at(experiment)` instead.""".format(self.matrix_space))
 
     def get_model_at(self, experiment):
-        return self.get_validated_data_at(experiment)[Specification.MODEL]
+        return self.get_validated_data_at(experiment).get(Specification.MODEL, None)
 
     @cached_property
     def environment(self):
