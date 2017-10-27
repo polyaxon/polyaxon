@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/regularizations.py#L44)</span>
+
 ## l1
 
 
@@ -14,6 +16,8 @@ Regularizer for L1 regularization.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/regularizations.py#L50)</span>
+
 ## l2
 
 
@@ -29,6 +33,8 @@ Regularizer for L2 regularization.
  
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/regularizations.py#L56)</span>
 
 ## l1_l2
 

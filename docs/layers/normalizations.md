@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/normalizations.py#L13)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/normalizations.py#L13)</span>
 ## BatchNormalization
 
 ```python

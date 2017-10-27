@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/advanced_activations.py#L19)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/advanced_activations.py#L19)</span>
 ## LeakyReLU
 
 ```python
@@ -26,7 +26,7 @@ Leaky version of a Rectified Linear Unit.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/advanced_activations.py#L24)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/advanced_activations.py#L24)</span>
 ## PReLU
 
 ```python
@@ -65,7 +65,7 @@ Parametric Rectified Linear Unit.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/advanced_activations.py#L29)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/advanced_activations.py#L29)</span>
 ## ELU
 
 ```python
@@ -93,7 +93,7 @@ Exponential Linear Unit.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/advanced_activations.py#L34)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/advanced_activations.py#L34)</span>
 ## ThresholdedReLU
 
 ```python

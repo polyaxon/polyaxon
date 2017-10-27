@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/mnist.py#L72)</span>
+
 ## prepare_dataset
 
 
@@ -7,6 +9,8 @@ prepare_dataset(converter, dataset_dir, data_name, num_images, num_eval=0)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/mnist.py#L116)</span>
 
 ## prepare
 
@@ -24,6 +28,8 @@ Runs download and conversion operation.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/mnist.py#L148)</span>
+
 ## create_input_fn
 
 
@@ -33,6 +39,8 @@ create_input_fn(dataset_dir)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/mnist.py#L153)</span>
 
 ## create_predict_input_fn
 

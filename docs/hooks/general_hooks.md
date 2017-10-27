@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/general_hooks.py#L12)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L12)</span>
 ## GlobalStepWaiterHook
 
 ```python
@@ -19,7 +19,7 @@ task_id=0 is the chief.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/general_hooks.py#L28)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L28)</span>
 ## FinalOpsHook
 
 ```python
@@ -36,7 +36,7 @@ A run hook which evaluates `Tensors` at the end of a session.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/general_hooks.py#L40)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L40)</span>
 ## StopAfterNEvalsHook
 
 ```python
@@ -47,7 +47,7 @@ Run hook used by the evaluation routines to run the `eval_ops` N times.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/general_hooks.py#L46)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/general_hooks.py#L46)</span>
 ## NanTensorHook
 
 ```python

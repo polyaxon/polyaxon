@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/flowers17.py#L46)</span>
+
 ## filenames_by_classes
 
 
@@ -7,6 +9,8 @@ filenames_by_classes(dataset_dir, num_images, folds)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/flowers17.py#L70)</span>
 
 ## convert_images
 
@@ -18,6 +22,8 @@ convert_images(session, writer, converter, filesnames_by_classes)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/flowers17.py#L92)</span>
+
 ## prepare_dataset
 
 
@@ -27,6 +33,8 @@ prepare_dataset(converter, dataset_dir, num_images, folds)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/flowers17.py#L128)</span>
 
 ## prepare
 
@@ -44,6 +52,8 @@ Runs download and conversion operation.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/flowers17.py#L161)</span>
+
 ## create_input_fn
 
 
@@ -53,6 +63,8 @@ create_input_fn(dataset_dir)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/flowers17.py#L166)</span>
 
 ## create_predict_input_fn
 

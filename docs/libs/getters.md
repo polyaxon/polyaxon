@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L16)</span>
+
 ## get_optimizer
 
 
@@ -7,6 +9,8 @@ get_optimizer(module)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L26)</span>
 
 ## get_constraint
 
@@ -18,6 +22,8 @@ get_constraint(module)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L36)</span>
+
 ## get_layer
 
 
@@ -27,6 +33,8 @@ get_layer(module)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L46)</span>
 
 ## get_exploration
 
@@ -38,6 +46,8 @@ get_exploration(module)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L61)</span>
+
 ## get_activation
 
 
@@ -47,6 +57,8 @@ get_activation(module)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L73)</span>
 
 ## get_initializer
 
@@ -58,6 +70,8 @@ get_initializer(module)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L84)</span>
+
 ## get_regularizer
 
 
@@ -67,6 +81,8 @@ get_regularizer(module)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L93)</span>
 
 ## get_metric
 
@@ -78,6 +94,8 @@ get_metric(module, y_pred, y_true)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L140)</span>
+
 ## get_loss
 
 
@@ -87,6 +105,8 @@ get_loss(module, y_pred, y_true)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L178)</span>
 
 ## get_memory
 
@@ -98,6 +118,8 @@ get_memory(module)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L190)</span>
+
 ## get_pipeline
 
 
@@ -108,6 +130,8 @@ get_pipeline(module, mode)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L205)</span>
+
 ## get_environment
 
 
@@ -117,6 +141,8 @@ get_environment(module, env_id)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L217)</span>
 
 ## get_graph_fn
 
@@ -129,6 +155,8 @@ get_graph_fn(config, graph_class=None)
 Creates the graph operations.
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L241)</span>
 
 ## get_bridge_fn
 
@@ -149,6 +177,8 @@ Creates a bridge function. Defaults to `NoOpBridge`
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L263)</span>
+
 ## get_model_fn
 
 
@@ -158,6 +188,8 @@ get_model_fn(model_config, graph_fn=None, encoder_fn=None, decoder_fn=None, brid
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L303)</span>
 
 ## get_estimator
 
@@ -169,6 +201,8 @@ get_estimator(model, run_config, module='Estimator', output_dir=None)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L320)</span>
+
 ## get_agent
 
 
@@ -178,6 +212,8 @@ get_agent(module, model, memory, run_config, output_dir=None)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/getters.py#L335)</span>
 
 ## get_hooks
 

@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/constraints.py#L16)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/constraints.py#L16)</span>
 ## MaxNorm
 
 ```python
@@ -32,7 +32,7 @@ MaxNorm weight constraint.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/constraints.py#L21)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/constraints.py#L21)</span>
 ## NonNeg
 
 ```python
@@ -44,7 +44,7 @@ Constrains the weights to be non-negative.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/constraints.py#L26)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/constraints.py#L26)</span>
 ## UnitNorm
 
 ```python
@@ -69,7 +69,7 @@ Constrains the weights incident to each hidden unit to have unit norm.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/constraints.py#L31)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/constraints.py#L31)</span>
 ## MinMaxNorm
 
 ```python

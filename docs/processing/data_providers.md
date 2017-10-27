@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_providers.py#L14)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_providers.py#L14)</span>
 ## Dataset
 
 ```python
@@ -21,7 +21,7 @@ Represents a Dataset specification.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_providers.py#L41)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_providers.py#L41)</span>
 ## DataProvider
 
 ```python
@@ -42,7 +42,7 @@ source of the data nor the mechanism for providing it.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_providers.py#L114)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_providers.py#L114)</span>
 ## DatasetDataProvider
 
 ```python
@@ -69,7 +69,7 @@ Creates a DatasetDataProvider.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_providers.py#L160)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_providers.py#L160)</span>
 ## ParallelDatasetProvider
 
 ```python

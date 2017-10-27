@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/models/rl/vpg.py#L12)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/vpg.py#L12)</span>
 ## VPGModel
 
 ```python
@@ -30,7 +30,7 @@ Implements a vanilla policy gradient model
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/models/rl/trpo.py#L14)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/models/rl/trpo.py#L14)</span>
 ## TRPOModel
 
 ```python

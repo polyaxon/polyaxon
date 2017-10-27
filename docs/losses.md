@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L55)</span>
+
 ## absolute_difference
 
 
@@ -30,6 +32,8 @@ measurable element of `predictions` is scaled by the corresponding value of
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L84)</span>
+
 ## log_loss
 
 
@@ -39,6 +43,8 @@ log_loss(weights=1.0, epsilon=1e-07, name='LogLoss', scope=None, collect=True)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L95)</span>
 
 ## mean_squared_error
 
@@ -64,6 +70,8 @@ Computes Mean Square Loss.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L117)</span>
 
 ## huber_loss
 
@@ -93,6 +101,8 @@ Computes Huber Loss for DQN.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L146)</span>
+
 ## clipped_delta_loss
 
 
@@ -120,6 +130,8 @@ Computes clipped delta Loss for DQN.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L176)</span>
 
 ## softmax_cross_entropy
 
@@ -163,6 +175,8 @@ total of 5 different classes, will be define as [0., 1., 0., 0., 0.])
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L226)</span>
 
 ## sigmoid_cross_entropy
 
@@ -208,6 +222,8 @@ To ensure stability and avoid overflow, the implementation uses
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L274)</span>
+
 ## hinge_loss
 
 
@@ -232,6 +248,8 @@ Hinge Loss.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L299)</span>
 
 ## cosine_distance
 
@@ -267,6 +285,8 @@ do not rely on the current behavior for anything but the shapes documented for
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L332)</span>
+
 ## kullback_leibler_divergence
 
 
@@ -290,6 +310,8 @@ Adds a Kullback leiber diverenge loss to the training procedure.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/losses.py#L357)</span>
 
 ## poisson_loss
 

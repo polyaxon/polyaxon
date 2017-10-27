@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L24)</span>
+
 ## linear
 
 
@@ -14,6 +16,8 @@ Computes linear/identity function.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L11)</span>
 
 ## built_activation
 
@@ -32,6 +36,8 @@ Builds the metric function.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L38)</span>
+
 ## tanh
 
 
@@ -48,6 +54,8 @@ Computes hyperbolic tangent of x element-wise.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L51)</span>
 
 ## hard_sigmoid
 
@@ -66,6 +74,8 @@ Segment-wise linear approximation of sigmoid.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L67)</span>
+
 ## sigmoid
 
 
@@ -82,6 +92,8 @@ Computes sigmoid of `x` element-wise: `y = 1 / (1 + exp(-x))`.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L80)</span>
 
 ## softmax
 
@@ -103,6 +115,8 @@ For each batch `i` and class `j` we have
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L96)</span>
+
 ## softplus
 
 
@@ -119,6 +133,8 @@ Computes softplus. `log(exp(features) + 1)`.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L109)</span>
 
 ## softsign
 
@@ -137,6 +153,8 @@ Computes softsign: `features / (abs(features) + 1)`.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L122)</span>
+
 ## relu
 
 
@@ -153,6 +171,8 @@ Computes ReLU, rectified linear: `max(features, 0)`.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L135)</span>
 
 ## relu6
 
@@ -171,6 +191,8 @@ Computes Rectified Linear 6: `min(max(features, 0), 6)`.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L148)</span>
+
 ## elu
 
 
@@ -187,6 +209,8 @@ Computes Exponential Linear Unit.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L161)</span>
 
 ## selu
 
@@ -209,6 +233,8 @@ Scaled Exponential Linear Unit. (Klambauer et al., 2017).
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/activations.py#L184)</span>
 
 ## crelu
 

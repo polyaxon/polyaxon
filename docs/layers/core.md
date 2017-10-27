@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L31)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L31)</span>
 ## Masking
 
 ```python
@@ -34,7 +34,7 @@ Masks a sequence by using a mask value to skip timesteps.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L36)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L36)</span>
 ## Dropout
 
 ```python
@@ -60,7 +60,7 @@ Applies Dropout to the input.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L41)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L41)</span>
 ## SpatialDropout1D
 
 ```python
@@ -94,7 +94,7 @@ Spatial 1D version of Dropout.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L46)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L46)</span>
 ## SpatialDropout2D
 
 ```python
@@ -137,7 +137,7 @@ Spatial 2D version of Dropout.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L51)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L51)</span>
 ## SpatialDropout3D
 
 ```python
@@ -179,7 +179,7 @@ Spatial 3D version of Dropout.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L56)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L56)</span>
 ## Activation
 
 ```python
@@ -203,7 +203,7 @@ Applies an activation function to an output.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L61)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L61)</span>
 ## Reshape
 
 ```python
@@ -246,7 +246,7 @@ Reshapes an output to a certain shape.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L66)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L66)</span>
 ## Permute
 
 ```python
@@ -284,7 +284,7 @@ Permutes the dimensions of the input according to a given pattern.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L71)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L71)</span>
 ## Flatten
 
 ```python
@@ -309,7 +309,7 @@ Flattens the input. Does not affect the batch size.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L76)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L76)</span>
 ## RepeatVector
 
 ```python
@@ -342,7 +342,7 @@ Repeats the input n times.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L150)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L150)</span>
 ## Lambda
 
 ```python
@@ -390,7 +390,7 @@ Wraps arbitrary expression as a `Layer` object.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L81)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L81)</span>
 ## Dense
 
 ```python
@@ -453,7 +453,7 @@ Just your regular densely-connected NN layer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L111)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L111)</span>
 ## ActivityRegularization
 
 ```python
@@ -477,7 +477,7 @@ Layer that applies an update to the cost function based input activity.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/core.py#L116)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/core.py#L116)</span>
 ## Cast
 
 ```python

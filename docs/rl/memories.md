@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/rl/memories.py#L13)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/memories.py#L13)</span>
 ## Memory
 
 ```python
@@ -21,7 +21,7 @@ Base Agent Memory class.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/rl/memories.py#L80)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/memories.py#L80)</span>
 ## BatchMemory
 
 ```python

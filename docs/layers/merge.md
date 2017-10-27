@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/merge.py#L16)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/merge.py#L16)</span>
 ## Add
 
 ```python
@@ -14,7 +14,7 @@ Layer that adds a list of inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/merge.py#L21)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/merge.py#L21)</span>
 ## Multiply
 
 ```python
@@ -30,7 +30,7 @@ Layer that multiplies (element-wise) a list of inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/merge.py#L26)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/merge.py#L26)</span>
 ## Average
 
 ```python
@@ -46,7 +46,7 @@ Layer that averages a list of inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/merge.py#L31)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/merge.py#L31)</span>
 ## Maximum
 
 ```python
@@ -62,7 +62,7 @@ Layer that computes the maximum (element-wise) a list of inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/merge.py#L36)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/merge.py#L36)</span>
 ## Concatenate
 
 ```python
@@ -82,7 +82,7 @@ Layer that concatenates a list of inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/merge.py#L41)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/merge.py#L41)</span>
 ## Dot
 
 ```python

@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L15)</span>
+
 ## create_learning_rate_decay_fn
 
 
@@ -33,6 +35,8 @@ Creates a function that decays the learning rate.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L82)</span>
+
 ## sgd
 
 
@@ -58,6 +62,8 @@ Optimizer that implements the gradient descent algorithm.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L119)</span>
 
 ## momentum
 
@@ -94,6 +100,8 @@ computed as:
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L166)</span>
+
 ## nesterov
 
 
@@ -127,6 +135,8 @@ See [Sutskever et. al., 2013](http://jmlr.org/proceedings/papers/v28/sutskever13
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L212)</span>
+
 ## rmsprop
 
 
@@ -158,6 +168,8 @@ Divide gradient by the root of this average.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L258)</span>
 
 ## adam
 
@@ -193,6 +205,8 @@ current good choice is 1.0 or 0.1.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L305)</span>
+
 ## adagrad
 
 
@@ -220,6 +234,8 @@ Optimizer that implements AdaGrad.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L346)</span>
 
 ## ftrl
 
@@ -260,6 +276,8 @@ Adagrad with `learning_rate_power=-0.5`, or like gradient descent with
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/optimizers.py#L403)</span>
 
 ## adadelta
 

@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L21)</span>
+
 ## track
 
 
@@ -10,6 +12,8 @@ Track tensor by adding it to the collection.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L38)</span>
+
 ## get_tracked
 
 
@@ -21,6 +25,8 @@ get_tracked(collection, module_name=None, scope=None)
 Returns a list of values in the collection with the given `collection`.
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L51)</span>
 
 ## get_shape
 
@@ -41,6 +47,8 @@ Get the incoming data shape.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L73)</span>
+
 ## validate_dtype
 
 
@@ -50,6 +58,8 @@ validate_dtype(x)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L81)</span>
 
 ## get_variable_scope
 
@@ -61,6 +71,8 @@ get_variable_scope(name=None, scope=None, values=None, reuse=None)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L87)</span>
+
 ## get_name_scope
 
 
@@ -70,6 +82,8 @@ get_name_scope(name=None, scope=None, values=None)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L100)</span>
 
 ## clip
 
@@ -82,6 +96,8 @@ clip(x, min_value, max_value)
 Element-wise value clipping.
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L111)</span>
 
 ## int_or_tuple
 
@@ -108,6 +124,8 @@ This functions normalizes the input value by always returning a tuple.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L140)</span>
+
 ## int_or_tuple_3d
 
 
@@ -133,6 +151,8 @@ This functions normalizes the input value by always returning a tuple.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L170)</span>
+
 ## validate_padding
 
 
@@ -155,6 +175,8 @@ Validates and format padding value
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L189)</span>
+
 ## validate_filter_size
 
 
@@ -166,6 +188,8 @@ validate_filter_size(filter_size, in_depth, num_filter)
 Validates filter size for CNN operations
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L203)</span>
 
 ## validate_filter_size_3d
 
@@ -179,6 +203,8 @@ Validates filter size for 3d CNN operations
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L217)</span>
+
 ## check_restore_tensor
 
 
@@ -188,6 +214,8 @@ check_restore_tensor(tensor_to_check, exclvars)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L227)</span>
 
 ## transpose_batch_time
 
@@ -213,6 +241,8 @@ Retains as much of the static shape information as possible.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L253)</span>
+
 ## generate_model_dir
 
 
@@ -222,6 +252,8 @@ generate_model_dir()
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L258)</span>
 
 ## get_arguments
 
@@ -235,6 +267,8 @@ Returns list of arguments this function has.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L271)</span>
+
 ## extract_batch_length
 
 
@@ -246,6 +280,8 @@ extract_batch_length(values)
 Extracts batch length of values.
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L282)</span>
 
 ## get_tensor_batch_size
 
@@ -259,6 +295,8 @@ Extracts batch size from tensor
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L287)</span>
+
 ## total_tensor_depth
 
 
@@ -270,6 +308,8 @@ total_tensor_depth(tensor=None, tensor_shape=None)
 Returns the size of a tensor without the first (batch) dimension
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L296)</span>
 
 ## new_attr_context
 
@@ -303,6 +343,8 @@ Once the context is exited, the attribute reverts to its original value.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L326)</span>
+
 ## get_function_name
 
 
@@ -314,6 +356,8 @@ get_function_name(func)
 Returns a module name for a callable or `None` if no name can be found.
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/libs/utils.py#L339)</span>
 
 ## to_list
 

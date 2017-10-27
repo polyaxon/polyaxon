@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional_recurrent.py#L14)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional_recurrent.py#L14)</span>
 ## ConvRecurrent2D
 
 ```python
@@ -77,7 +77,7 @@ Abstract base class for convolutional recurrent layers.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional_recurrent.py#L19)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional_recurrent.py#L19)</span>
 ## ConvLSTM2D
 
 ```python

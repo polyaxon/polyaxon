@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/recurrent.py#L19)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L19)</span>
 ## Recurrent
 
 ```python
@@ -8,7 +8,7 @@ polyaxon.layers.recurrent.Recurrent(return_sequences=False, return_state=False, 
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/recurrent.py#L23)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L23)</span>
 ## SimpleRNN
 
 ```python
@@ -56,7 +56,7 @@ Fully-connected RNN where the output is to be fed back to input.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/recurrent.py#L105)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L105)</span>
 ## LSTM
 
 ```python
@@ -118,7 +118,7 @@ Long-Short Term Memory unit - Hochreiter 1997.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/recurrent.py#L63)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/recurrent.py#L63)</span>
 ## GRU
 
 ```python

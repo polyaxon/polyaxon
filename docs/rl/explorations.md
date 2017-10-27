@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/explorations.py#L17)</span>
+
 ## constant
 
 
@@ -17,6 +19,8 @@ Builds a constant exploration.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/explorations.py#L29)</span>
+
 ## greedy
 
 
@@ -33,6 +37,8 @@ Builds a greedy exploration. (never selects random values, i.e. random() < 0 == 
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/explorations.py#L38)</span>
+
 ## random
 
 
@@ -48,6 +54,8 @@ Builds a random exploration (always selects random values, i.e. random() < 1 == 
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/explorations.py#L99)</span>
 
 ## decay
 
@@ -80,6 +88,8 @@ Decay epsilon based on number of states and the decay_type.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/explorations.py#L134)</span>
+
 ## random_decay
 
 
@@ -110,6 +120,8 @@ Decay a random value based on number of states and the decay_type.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/explorations.py#L175)</span>
 
 ## ornsteinuhlenbeck_process
 

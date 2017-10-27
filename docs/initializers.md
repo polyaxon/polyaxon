@@ -1,15 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L12)</span>
-## Zeros
-
-```python
-polyaxon.initializations.Zeros(dtype=<dtype: 'float32'>)
-```
-
-Initializer that generates tensors initialized to 0.
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L17)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L17)</span>
 ## Ones
 
 ```python
@@ -20,7 +9,7 @@ Initializer that generates tensors initialized to 1.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L22)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L22)</span>
 ## Constant
 
 ```python
@@ -103,7 +92,7 @@ larger shape:
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L27)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L27)</span>
 ## Uniform
 
 ```python
@@ -125,7 +114,7 @@ Initializer that generates tensors with a uniform distribution.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L32)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L32)</span>
 ## Normal
 
 ```python
@@ -147,7 +136,7 @@ Initializer that generates tensors with a normal distribution.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L37)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L37)</span>
 ## TruncatedNormal
 
 ```python
@@ -174,7 +163,7 @@ Initializer that generates a truncated normal distribution.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L42)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L42)</span>
 ## VarianceScaling
 
 ```python
@@ -209,7 +198,7 @@ Initializer capable of adapting its scale to the shape of weights tensors.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L47)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L47)</span>
 ## Orthogonal
 
 ```python
@@ -237,7 +226,7 @@ Initializer that generates an orthogonal matrix.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L52)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L52)</span>
 ## Identity
 
 ```python
@@ -254,7 +243,7 @@ Initializer that generates the identity matrix.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L57)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L57)</span>
 ## GlorotUniform
 
 ```python
@@ -281,7 +270,7 @@ Glorot uniform initializer, also called Xavier uniform initializer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L68)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L68)</span>
 ## GlorotNormal
 
 ```python
@@ -308,7 +297,7 @@ Glorot normal initializer, also called Xavier normal initializer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L79)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L79)</span>
 ## HeUniform
 
 ```python
@@ -333,7 +322,7 @@ He uniform variance scaling initializer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L90)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L90)</span>
 ## HeNormal
 
 ```python
@@ -358,7 +347,7 @@ He normal initializer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L101)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L101)</span>
 ## LecunUniform
 
 ```python
@@ -384,7 +373,7 @@ LeCun uniform initializer.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/initializations.py#L112)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L112)</span>
 ## LecunNormal
 
 ```python
@@ -408,3 +397,14 @@ LeCun normal initializer.
   - [Efficient
   Backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
   
+
+----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L12)</span>
+## Zeros
+
+```python
+polyaxon.initializations.Zeros(dtype=<dtype: 'float32'>)
+```
+
+Initializer that generates tensors initialized to 0.

@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/step_hooks.py#L11)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L11)</span>
 ## StepLoggingTensorHook
 
 ```python
@@ -29,7 +29,7 @@ The tensors will be printed to the log, with `INFO` severity.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/step_hooks.py#L42)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L42)</span>
 ## StopAtStepHook
 
 ```python
@@ -58,7 +58,7 @@ call.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/step_hooks.py#L66)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L66)</span>
 ## StepCheckpointSaverHook
 
 ```python
@@ -87,7 +87,7 @@ Saves checkpoints every N steps or seconds.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/step_hooks.py#L90)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L90)</span>
 ## StepCounterHook
 
 ```python
@@ -100,7 +100,7 @@ Steps per second monitor.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/step_hooks.py#L98)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/step_hooks.py#L98)</span>
 ## StepSummarySaverHook
 
 ```python

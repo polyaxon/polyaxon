@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L26)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L26)</span>
 ## AveragePooling1D
 
 ```python
@@ -23,7 +23,7 @@ Average pooling for temporal data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L31)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L31)</span>
 ## MaxPooling1D
 
 ```python
@@ -48,7 +48,7 @@ Max pooling operation for temporal data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L36)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L36)</span>
 ## AveragePooling2D
 
 ```python
@@ -97,7 +97,7 @@ Average pooling operation for spatial data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L41)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L41)</span>
 ## MaxPooling2D
 
 ```python
@@ -146,7 +146,7 @@ Max pooling operation for spatial data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L46)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L46)</span>
 ## AveragePooling3D
 
 ```python
@@ -191,7 +191,7 @@ Average pooling operation for 3D data (spatial or spatio-temporal).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L51)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L51)</span>
 ## MaxPooling3D
 
 ```python
@@ -236,7 +236,7 @@ Max pooling operation for 3D data (spatial or spatio-temporal).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L56)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L56)</span>
 ## GlobalAveragePooling1D
 
 ```python
@@ -255,7 +255,7 @@ Global average pooling operation for temporal data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L61)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L61)</span>
 ## GlobalMaxPooling1D
 
 ```python
@@ -274,7 +274,7 @@ Global max pooling operation for temporal data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L66)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L66)</span>
 ## GlobalAveragePooling2D
 
 ```python
@@ -310,7 +310,7 @@ Global average pooling operation for spatial data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L71)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L71)</span>
 ## GlobalMaxPooling2D
 
 ```python
@@ -346,7 +346,7 @@ Global max pooling operation for spatial data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L76)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L76)</span>
 ## GlobalAveragePooling3D
 
 ```python
@@ -382,7 +382,7 @@ Global Average pooling operation for 3D data.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/pooling.py#L81)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/pooling.py#L81)</span>
 ## GlobalMaxPooling3D
 
 ```python

@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/local.py#L13)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/local.py#L13)</span>
 ## LocallyConnected1D
 
 ```python
@@ -59,7 +59,7 @@ Locally-connected layer for 1D inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/local.py#L18)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/local.py#L18)</span>
 ## LocallyConnected2D
 
 ```python

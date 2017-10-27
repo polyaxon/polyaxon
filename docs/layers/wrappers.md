@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/wrappers.py#L17)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/wrappers.py#L17)</span>
 ## Wrapper
 
 ```python
@@ -17,7 +17,7 @@ Abstract wrapper base class.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/wrappers.py#L22)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/wrappers.py#L22)</span>
 ## TimeDistributed
 
 ```python
@@ -70,7 +70,7 @@ This wrapper allows to apply a layer to every temporal slice of an input.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/wrappers.py#L27)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/wrappers.py#L27)</span>
 ## Bidirectional
 
 ```python

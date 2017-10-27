@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/noise.py#L17)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/noise.py#L17)</span>
 ## GaussianNoise
 
 ```python
@@ -28,7 +28,7 @@ Apply additive zero-centered Gaussian noise.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/noise.py#L22)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/noise.py#L22)</span>
 ## GaussianDropout
 
 ```python
@@ -60,7 +60,7 @@ Apply multiplicative 1-centered Gaussian noise.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/noise.py#L27)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/noise.py#L27)</span>
 ## AlphaDropout
 
 ```python

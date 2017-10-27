@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/pipelines.py#L18)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L18)</span>
 ## Pipeline
 
 ```python
@@ -19,7 +19,7 @@ features and labels.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/pipelines.py#L74)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L74)</span>
 ## TFRecordImagePipeline
 
 ```python
@@ -38,7 +38,7 @@ A Pipeline to convert TF-Records to images.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/pipelines.py#L248)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L248)</span>
 ## ParallelTextPipeline
 
 ```python
@@ -64,7 +64,7 @@ An input pipeline that reads two parallel (line-by-line aligned) text files.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/pipelines.py#L327)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L327)</span>
 ## TFRecordSourceSequencePipeline
 
 ```python
@@ -90,7 +90,7 @@ An input pipeline that reads a TFRecords containing both source and target seque
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/pipelines.py#L416)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/pipelines.py#L416)</span>
 ## ImageCaptioningPipeline
 
 ```python

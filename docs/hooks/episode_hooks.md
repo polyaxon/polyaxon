@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L126)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L126)</span>
 ## EpisodeLoggingTensorHook
 
 ```python
@@ -8,7 +8,7 @@ polyaxon.estimators.hooks.episode_hooks.EpisodeLoggingTensorHook(tensors, every_
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L80)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L80)</span>
 ## StopAtEpisodeHook
 
 ```python
@@ -19,7 +19,7 @@ Monitor to request stop at a specified episode.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L191)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L191)</span>
 ## EpisodeSummarySaverHook
 
 ```python
@@ -48,7 +48,7 @@ Saves summaries every N episode.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L386)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/estimators/hooks/episode_hooks.py#L386)</span>
 ## EpisodeCounterHook
 
 ```python

@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/cifar10.py#L64)</span>
+
 ## prepare_dataset
 
 
@@ -7,6 +9,8 @@ prepare_dataset(converter, dataset_dir, data_name, filenames)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/cifar10.py#L79)</span>
 
 ## prepare
 
@@ -24,6 +28,8 @@ Runs download and conversion operation.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/cifar10.py#L125)</span>
+
 ## create_input_fn
 
 
@@ -33,6 +39,8 @@ create_input_fn(dataset_dir)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/cifar10.py#L130)</span>
 
 ## create_predict_input_fn
 

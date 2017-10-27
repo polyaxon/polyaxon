@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_decoders.py#L13)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_decoders.py#L13)</span>
 ## DataDecoder
 
 ```python
@@ -12,7 +12,7 @@ An abstract class which is used to decode data for a provider.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_decoders.py#L46)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_decoders.py#L46)</span>
 ## TFExampleDecoder
 
 ```python
@@ -39,7 +39,7 @@ contains the instructions for post_processing its tensors for stage 2.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_decoders.py#L113)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_decoders.py#L113)</span>
 ## SplitTokensDecoder
 
 ```python
@@ -58,7 +58,7 @@ Optionally prepends or appends special tokens.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/processing/data_decoders.py#L158)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/processing/data_decoders.py#L158)</span>
 ## TFSequenceExampleDecoder
 
 ```python

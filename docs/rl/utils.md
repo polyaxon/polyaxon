@@ -1,3 +1,5 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L16)</span>
+
 ## get_global_episode
 
 
@@ -7,6 +9,8 @@ get_global_episode(graph=None)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L20)</span>
 
 ## get_or_create_global_episode
 
@@ -18,6 +22,8 @@ get_or_create_global_episode(graph=None)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L28)</span>
+
 ## get_global_timestep
 
 
@@ -27,6 +33,8 @@ get_global_timestep(graph=None)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L24)</span>
 
 ## create_global_episode
 
@@ -38,6 +46,8 @@ create_global_episode(graph=None)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L32)</span>
+
 ## get_or_create_global_timestep
 
 
@@ -48,6 +58,8 @@ get_or_create_global_timestep(graph=None)
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L36)</span>
+
 ## create_global_timestep
 
 
@@ -57,6 +69,8 @@ create_global_timestep(graph=None)
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L40)</span>
 
 ## get_global_counter
 
@@ -86,6 +100,8 @@ in the collection, or by name.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L75)</span>
+
 ## get_or_create_global_counter
 
 
@@ -107,6 +123,8 @@ Returns and create (if necessary) the global counter tensor.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L94)</span>
 
 ## create_global_counter
 
@@ -133,6 +151,8 @@ Create global counter tensor in graph.
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L123)</span>
+
 ## assert_global_counter
 
 
@@ -148,6 +168,8 @@ Asserts `global_counter_tensor` is a scalar int `Variable` or `Tensor`.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L143)</span>
 
 ## get_cumulative_rewards
 
@@ -172,6 +194,8 @@ and compute R_t = r_t + gamma*R_{t+1} recurrently
 
 ----
 
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L172)</span>
+
 ## conjugate_gradient
 
 
@@ -191,6 +215,8 @@ Conjugate gradient solver.
 
 
 ----
+
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/rl/utils.py#L212)</span>
 
 ## line_search
 

@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/datasets/converters/image_converters.py#L16)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L16)</span>
 ## ImageReader
 
 ```python
@@ -9,7 +9,7 @@ Base ImageReader class that provides an operation to read/encode/decode an image
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/datasets/converters/image_converters.py#L32)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L32)</span>
 ## PNGImageReader
 
 ```python
@@ -20,7 +20,7 @@ A png image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/datasets/converters/image_converters.py#L38)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L38)</span>
 ## PNGNumpyImageReader
 
 ```python
@@ -31,7 +31,7 @@ A numpy png image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/datasets/converters/image_converters.py#L53)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L53)</span>
 ## JPGNumpyImageReader
 
 ```python
@@ -42,7 +42,7 @@ A jpeg numpy image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/datasets/converters/image_converters.py#L67)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L67)</span>
 ## JPEGImageReader
 
 ```python
@@ -53,7 +53,7 @@ A jpeg image class reader
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/datasets/converters/image_converters.py#L73)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/datasets/converters/image_converters.py#L73)</span>
 ## ImagesToTFExampleConverter
 
 ```python

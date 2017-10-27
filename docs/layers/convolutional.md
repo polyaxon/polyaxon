@@ -1,4 +1,4 @@
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L30)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L30)</span>
 ## Conv1D
 
 ```python
@@ -63,7 +63,7 @@ polyaxon.layers.convolutional.Conv1D(filters, kernel_size, strides=1, padding='v
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L69)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L69)</span>
 ## Conv2D
 
 ```python
@@ -144,7 +144,7 @@ polyaxon.layers.convolutional.Conv2D(filters, kernel_size, strides=(1, 1), paddi
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L109)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L109)</span>
 ## Conv3D
 
 ```python
@@ -232,7 +232,7 @@ polyaxon.layers.convolutional.Conv3D(filters, kernel_size, strides=(1, 1, 1), pa
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L149)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L149)</span>
 ## Conv2DTranspose
 
 ```python
@@ -320,7 +320,7 @@ Transposed convolution layer (sometimes called Deconvolution).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L187)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L187)</span>
 ## Conv3DTranspose
 
 ```python
@@ -418,7 +418,7 @@ Transposed convolution layer (sometimes called Deconvolution).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L225)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L225)</span>
 ## SeparableConv2D
 
 ```python
@@ -502,7 +502,7 @@ Depthwise separable 2D convolution.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L271)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L271)</span>
 ## UpSampling1D
 
 ```python
@@ -525,7 +525,7 @@ Upsampling layer for 1D inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L276)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L276)</span>
 ## UpSampling2D
 
 ```python
@@ -568,7 +568,7 @@ Upsampling layer for 2D inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L281)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L281)</span>
 ## UpSampling3D
 
 ```python
@@ -611,7 +611,7 @@ Upsampling layer for 3D inputs.
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L286)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L286)</span>
 ## ZeroPadding1D
 
 ```python
@@ -638,7 +638,7 @@ Zero-padding layer for 1D input (e.g. temporal sequence).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L291)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L291)</span>
 ## ZeroPadding2D
 
 ```python
@@ -689,7 +689,7 @@ Zero-padding layer for 2D input (e.g. picture).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L296)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L296)</span>
 ## ZeroPadding3D
 
 ```python
@@ -742,7 +742,7 @@ Zero-padding layer for 3D data (spatial or spatio-temporal).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L301)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L301)</span>
 ## Cropping1D
 
 ```python
@@ -769,7 +769,7 @@ Cropping layer for 1D input (e.g. temporal sequence).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L306)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L306)</span>
 ## Cropping2D
 
 ```python
@@ -832,7 +832,7 @@ Cropping layer for 2D input (e.g. picture).
 
 ----
 
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon-docs/blob/master/polyaxon/layers/convolutional.py#L311)</span>
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/layers/convolutional.py#L311)</span>
 ## Cropping3D
 
 ```python
