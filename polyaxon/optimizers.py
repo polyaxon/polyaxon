@@ -130,6 +130,7 @@ def momentum(learning_rate=0.001, momentum=0.9, decay_type="", decay_rate=0., de
     ```python
     >>> decayed_learning_rate = learning_rate * decay_rate ^ (global_step / lr_decay_steps)
     ```
+
     Args:
         learning_rate: `float`. Learning rate.
         momentum: `float`. Momentum.
