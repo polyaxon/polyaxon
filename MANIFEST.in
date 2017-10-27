@@ -1,4 +1,6 @@
 include README.md
 include CONTRIBUTING.md
 include LICENSE
+graft examples
+graft tests
 recursive-include examples/configs_examples *.json | *.yml
