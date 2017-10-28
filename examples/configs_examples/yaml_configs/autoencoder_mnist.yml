@@ -14,7 +14,7 @@ environment:
     save_checkpoints_steps: 100
 
 model:
-  classifier:
+  generator:
     loss:
       MeanSquaredError:
     optimizer:
@@ -22,6 +22,7 @@ model:
         learning_rate: 0.9
     metrics:
       - Accuracy
+    bridge: NoOpBridge
     encoder:
       input_layers: image
       layers:
@@ -32,6 +33,7 @@ model:
             name: encoded
     decoder:
       input_layers: encoded
+      layers:
         - Dense:
             units: 256
         - Dense:

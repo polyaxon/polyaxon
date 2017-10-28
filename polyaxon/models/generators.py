@@ -11,6 +11,7 @@ from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
 from polyaxon import Modes
 from polyaxon.estimators.estimator_spec import EstimatorSpec
 from polyaxon.bridges import BridgeSpec
+from polyaxon.libs import getters
 from polyaxon.libs.utils import get_tracked, get_arguments, track
 from polyaxon.models.base import BaseModel
 
@@ -84,6 +85,42 @@ class Generator(BaseModel):
             summaries=summaries,
             clip_gradients=clip_gradients,
             clip_embed_gradients=clip_embed_gradients)
+
+    @classmethod
+    def from_config(cls, mode, config, encoder_fn=None, decoder_fn=None, bridge_fn=None):
+        if not isinstance(config, cls.CONFIG):
+            config = cls.CONFIG.from_dict(config)
+
+        if not encoder_fn:
+            encoder_fn = getters.get_graph_fn(config.encoder)
+        if not decoder_fn:
+            decoder_fn = getters.get_graph_fn(config.decoder)
+        if not bridge_fn:
+            bridge_fn = getters.get_bridge_fn(config.bridge)
+
+        loss = config.loss
+        optimizer = config.optimizer
+        metrics = config.metrics
+
+        params = config.to_dict()
+        del params['encoder']
+        del params['decoder']
+        del params['bridge']
+        del params['loss']
+        del params['optimizer']
+        del params['metrics']
+
+        if cls == BaseModel:
+            params['model_type'] = config.IDENTIFIER
+
+        return cls(mode,
+                   encoder_fn=encoder_fn,
+                   decoder_fn=decoder_fn,
+                   bridge_fn=bridge_fn,
+                   loss=loss,
+                   optimizer=optimizer,
+                   metrics=metrics,
+                   **params)
 
     @staticmethod
     def _check_bridge_fn(function):
