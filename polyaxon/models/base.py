@@ -33,9 +33,8 @@ class BaseModel(GraphModule):
          optimizer: An instance of `OptimizerConfig`. Default value `Adam`.
          metrics: a list of `MetricConfig` instances.
          summaries: `str` or `list`. The verbosity of the tensorboard visualization.
-             Possible values: [
-             `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
-             ]
+             Possible values:
+             [`all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`]
          clip_gradients: `float`. Gradients  clipping by global norm.
          clip_embed_gradients: `float`. Embedding gradients clipping to a specified value.
          name: `str`, the name of this model, everything will be encapsulated inside this scope.
@@ -44,7 +43,7 @@ class BaseModel(GraphModule):
         `EstimatorSpec`
 
     Raises:
-            TypeError: if the mode does not correspond to the model_type.
+        TypeError: if the mode does not correspond to the model_type.
     """
     CONFIG = BaseModelConfig
 

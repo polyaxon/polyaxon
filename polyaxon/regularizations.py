@@ -18,7 +18,7 @@ class L1L2(BaseObject, regularizers.L1L2):
 class L1(BaseObject, regularizers.L1L2):
     """Regularizer for L1 regularization.
 
-     Arguments:
+     Args:
          l: Float; regularization factor.
      """
 
@@ -31,7 +31,7 @@ class L1(BaseObject, regularizers.L1L2):
 class L2(BaseObject, regularizers.L1L2):
     """Regularizer for L2 regularization.
 
-     Arguments:
+     Args:
          l: Float; regularization factor.
      """
 
