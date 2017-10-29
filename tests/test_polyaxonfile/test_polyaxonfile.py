@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import os
 from unittest import TestCase
 
+from polyaxon_schemas.bridges import NoOpBridgeConfig
 from polyaxon_schemas.exec import ExecConfig
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
@@ -12,7 +13,7 @@ from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.losses import MeanSquaredErrorConfig, AbsoluteDifferenceConfig
 from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.models import ClassifierConfig, RegressorConfig
+from polyaxon_schemas.models import ClassifierConfig, RegressorConfig, GeneratorConfig
 from polyaxon_schemas.optimizers import AdamConfig
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
@@ -57,6 +58,28 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.model.graph.input_layers == [['images', 0, 0]]
         last_layer = plxfile.model.graph.layers[-1].name
         assert plxfile.model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert plxfile.eval is None
+
+    def test_simple_generator_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_generator_file.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'project1'
+        assert plxfile.project_path == '/tmp/plx_logs/project1'
+        assert plxfile.matrix is None
+        assert plxfile.settings is None
+        assert plxfile.environment is None
+        assert plxfile.run_type == RunTypes.LOCAL
+        assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
+                                                            TaskType.PS: [],
+                                                            TaskType.WORKER: []})
+        assert isinstance(plxfile.model, GeneratorConfig)
+        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
+        assert isinstance(plxfile.model.optimizer, AdamConfig)
+        assert isinstance(plxfile.model.encoder, GraphConfig)
+        assert isinstance(plxfile.model.decoder, GraphConfig)
+        assert isinstance(plxfile.model.bridge, NoOpBridgeConfig)
         assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
         assert plxfile.eval is None
 

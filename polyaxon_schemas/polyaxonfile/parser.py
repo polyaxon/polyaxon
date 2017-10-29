@@ -103,8 +103,8 @@ class Parser(object):
                 key = cls.parse_expression(old_key, declarations)
                 if check_operators and cls.is_operator(key):
                     return cls._parse_operator({key: value}, declarations)
-                if check_graph and key == 'graph':
-                    return {'graph': cls._parse_graph(value, declarations)}
+                if check_graph and key in ['graph', 'encoder', 'decoder']:
+                    return {key: cls._parse_graph(value, declarations)}
                 if check_graph and key == 'feature_processors':
                     return {
                         key: {
