@@ -33,8 +33,7 @@ declarations:
 
 model:
   model_type: classifier
-  loss:
-    MeanSquaredError:
+  loss: MeanSquaredError
   optimizer:
     Adam:
       learning_rate: 0.21

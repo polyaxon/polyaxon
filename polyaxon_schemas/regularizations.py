@@ -31,6 +31,38 @@ class L1RegularizerSchema(BaseRegularizerSchema):
 
 
 class L1RegularizerConfig(BaseRegularizerConfig):
+    """Regularizer for L1 regularization.
+
+    Args:
+        l: Float; regularization factor.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer: L1
+    ```
+
+    or
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer:
+        L1:
+          l: 0.2
+    ```
+
+    or
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer:
+        L1: {l: 0.2}
+    ```
+    """
     IDENTIFIER = 'L1'
     SCHEMA = L1RegularizerSchema
 
@@ -51,6 +83,38 @@ class L2RegularizerSchema(BaseRegularizerSchema):
 
 
 class L2RegularizerConfig(BaseRegularizerConfig):
+    """Regularizer for L2 regularization.
+
+    Args:
+        l: Float; regularization factor.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer: L2
+    ```
+
+    or
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer:
+        L2:
+          l: 0.2
+    ```
+
+    or
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer:
+        L2: {l: 0.2}
+    ```
+    """
     IDENTIFIER = 'L2'
     SCHEMA = L2RegularizerSchema
 
@@ -72,6 +136,40 @@ class L1L2RegularizerSchema(BaseRegularizerSchema):
 
 
 class L1L2RegularizerConfig(BaseRegularizerConfig):
+    """Regularizer for L1 and L2 regularization.
+
+    Args:
+        l1: Float; L1 regularization factor.
+        l2: Float; L2 regularization factor.
+
+    Polyaxonfile usage:
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer: L1L2
+    ```
+
+    or
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer:
+        L1L2:
+          l1: 0.2
+          l2: 0.1
+    ```
+
+    or
+
+    ```yaml
+    Dense:
+      units: 32
+      kernel_regularizer:
+        L1L2: {l1: 0.2, l2: 0.1}
+    ```
+    """
     IDENTIFIER = 'L1L2'
     SCHEMA = L1L2RegularizerSchema
 

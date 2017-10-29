@@ -53,11 +53,9 @@ class TestMetricConfigs(TestCase):
             TrueNegativesConfig,
             FalsePositivesConfig,
             FalseNegativesConfig,
-            MeanConfig,
             AccuracyConfig,
             PrecisionConfig,
             RecallConfig,
-            AUCConfig,
             MeanAbsoluteErrorConfig,
             MeanSquaredErrorConfig,
             RootMeanSquaredErrorConfig,
@@ -69,15 +67,46 @@ class TestMetricConfigs(TestCase):
             config = config_class.from_dict(config_dict)
             self.assert_equal_metrics(config.to_dict(), config_dict)
 
-    def test_mean_tensor_metric_config(self):
+    def test_auc_metric_config(self):
+        config_dict = {
+            'input_layer': 'images',
+            'output_layer': 'relu_1',
+            'specificity': 0.1,
+            'num_thresholds': 300,
+            'weights': None,
+            'curve': 'ROC',
+            'name': 'm',
+        }
+        config = AUCConfig.from_dict(config_dict)
+        self.assert_equal_metrics(config.to_dict(), config_dict)
+
+    def test_mean_metric_config(self):
         config_dicts = [
             {
-                'tensor': ['images', 0, 0],
+                'values': ['images', 0, 0],
                 'weights': None,
                 'name': 'm'
             },
             {
-                'tensor': ['images', 0, 0],
+                'values': ['images', 0, 0],
+                'weights': None,
+                'name': 'm'
+            }
+        ]
+
+        for config_dict in config_dicts:
+            config = MeanConfig.from_dict(config_dict)
+            self.assert_equal_metrics(config.to_dict(), config_dict)
+
+    def test_mean_tensor_metric_config(self):
+        config_dicts = [
+            {
+                'values': ['images', 0, 0],
+                'weights': None,
+                'name': 'm'
+            },
+            {
+                'values': ['images', 0, 0],
                 'weights': None,
                 'name': 'm'
             }
@@ -160,9 +189,7 @@ class TestMetricConfigs(TestCase):
 
     def test_percentage_less_metric_config(self):
         config_dict = {
-            'input_layer': 'images',
-            'output_layer': 'relu_1',
-            'tensor': 'tensor',
+            'values': ['images', 0, 0],
             'threshold': 0.4,
             'weights': None,
             'name': 'm'
