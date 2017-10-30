@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from collections import Mapping
 
 import tensorflow as tf
+from polyaxon_schemas.models import GeneratorConfig
 
 from polyaxon_schemas.optimizers import AdadeltaConfig
 from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
@@ -50,6 +51,7 @@ class Generator(BaseModel):
     Returns:
         `EstimatorSpec`
     """
+    CONFIG = GeneratorConfig
 
     def __init__(self,
                  mode,

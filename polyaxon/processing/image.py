@@ -91,6 +91,7 @@ def resize(images, height, width, method=None, align_corners=False):
 class Resize(BaseObject, Layer):
     """See `plx.image.resize`'s docstring"""
     CONFIG = ResizeConfig
+    __doc__ = ResizeConfig.__doc__
 
     def __init__(self, height, width, method=None, align_corners=False, **kwargs):
         super(Resize, self).__init__(**kwargs)
@@ -152,6 +153,7 @@ def central_crop(images, central_fraction):
 class CentralCrop(BaseObject, Layer):
     """See `plx.image.central_crop`'s docstring"""
     CONFIG = CentralCropConfig
+    __doc__ = CentralCropConfig.__doc__
 
     def __init__(self, central_fraction, **kwargs):
         super(CentralCrop, self).__init__(**kwargs)
@@ -190,6 +192,7 @@ def random_crop(images, height, width):
 class RandomCrop(BaseObject, Layer):
     """See `plx.image.random_crop`'s docstring"""
     CONFIG = RandomCropConfig
+    __doc__ = RandomCropConfig.__doc__
 
     def __init__(self, height, width, **kwargs):
         super(RandomCrop, self).__init__(**kwargs)
@@ -255,6 +258,7 @@ def extract_glimpse(images, size, offsets, centered=None, normalized=None,
 class ExtractGlimpse(BaseObject, Layer):
     """See `plx.image.extract_glimpse`'s docstring"""
     CONFIG = ExtractGlimpseConfig
+    __doc__ = ExtractGlimpseConfig.__doc__
 
     def __init__(self, size, offsets, centered=None, normalized=None, uniform_noise=None, **kwargs):
         super(ExtractGlimpse, self).__init__(**kwargs)
@@ -331,6 +335,7 @@ def to_bounding_box(images, offset_height, offset_width, target_height, target_w
 class ToBoundingBox(BaseObject, Layer):
     """See `plx.image.to_bounding_box`'s docstring"""
     CONFIG = ToBoundingBoxConfig
+    __doc__ = ToBoundingBoxConfig.__doc__
 
     def __init__(self, offset_height, offset_width, target_height, target_width,
                  method='crop', **kwargs):
@@ -401,6 +406,7 @@ def flip(images, axis=0, is_random=False, seed=None):
 class Flip(BaseObject, Layer):
     """See `plx.image.flip`'s docstring"""
     CONFIG = FlipConfig
+    __doc__ = FlipConfig.__doc__
 
     def __init__(self, axis=0, is_random=False, seed=None, **kwargs):
         super(Flip, self).__init__(**kwargs)
@@ -443,6 +449,7 @@ def transpose(images):
 class Transpose(BaseObject, Layer):
     """See `plx.image.transpose`'s docstring"""
     CONFIG = TransposeConfig
+    __doc__ = TransposeConfig.__doc__
 
     def call(self, inputs, **kwargs):
         return transpose(images=inputs)
@@ -486,6 +493,7 @@ def rotate90(images, k=1, is_random=False, seed=None, name=None):
 class Rotate90(BaseObject, Layer):
     """See `plx.image.rotate90`'s docstring"""
     CONFIG = Rotate90Config
+    __doc__ = Rotate90Config.__doc__
 
     def __init__(self, k=1, is_random=False, seed=None, **kwargs):
         super(Rotate90, self).__init__(**kwargs)
@@ -563,6 +571,7 @@ def convert_color_space(images, from_space, to_space, name=None):
 class ConvertColorSpace(BaseObject, Layer):
     """See `plx.image.convert_color_space`'s docstring"""
     CONFIG = ConvertColorSpaceConfig
+    __doc__ = ConvertColorSpaceConfig.__doc__
 
     def __init__(self, from_space, to_space, **kwargs):
         super(ConvertColorSpace, self).__init__(**kwargs)
@@ -580,31 +589,31 @@ def convert_images_dtype(images, dtype, saturate=False, name=None):
     """Convert image(s) to `dtype`, scaling its values if needed.
     (A mirror to tf.image convert_image_dtype)
 
-      Images that are represented using floating point values are expected to have
-      values in the range [0,1). Image data stored in integer data types are
-      expected to have values in the range `[0,MAX]`, where `MAX` is the largest
-      positive representable number for the data type.
+    Images that are represented using floating point values are expected to have
+    values in the range [0,1). Image data stored in integer data types are
+    expected to have values in the range `[0,MAX]`, where `MAX` is the largest
+    positive representable number for the data type.
 
-      This op converts between data types, scaling the values appropriately before
-      casting.
+    This op converts between data types, scaling the values appropriately before
+    casting.
 
-      Note that converting from floating point inputs to integer types may lead to
-      over/underflow problems. Set saturate to `True` to avoid such problem in
-      problematic conversions. If enabled, saturation will clip the output into the
-      allowed range before performing a potentially dangerous cast (and only before
-      performing such a cast, i.e., when casting from a floating point to an integer
-      type, and when casting from a signed to an unsigned type; `saturate` has no
-      effect on casts between floats, or on casts that increase the type's range).
+    Note that converting from floating point inputs to integer types may lead to
+    over/underflow problems. Set saturate to `True` to avoid such problem in
+    problematic conversions. If enabled, saturation will clip the output into the
+    allowed range before performing a potentially dangerous cast (and only before
+    performing such a cast, i.e., when casting from a floating point to an integer
+    type, and when casting from a signed to an unsigned type; `saturate` has no
+    effect on casts between floats, or on casts that increase the type's range).
 
-      Args:
+    Args:
         images: An image.
         dtype: A `DType` to convert `image` to.
         saturate: If `True`, clip the input before casting (if necessary).
         name: A name for this operation (optional).
 
-      Returns:
+    Returns:
         `image`, converted to `dtype`.
-      """
+    """
     images_shape = get_shape(images)
     if len(images_shape) > 4:
         ValueError("'image' must have either 3 or 4 dimensions, "
@@ -620,6 +629,7 @@ def convert_images_dtype(images, dtype, saturate=False, name=None):
 class ConvertImagesDtype(BaseObject, Layer):
     """See `plx.image.convert_images_dtype`'s docstring"""
     CONFIG = ConvertImagesDtypeConfig
+    __doc__ = ConvertImagesDtypeConfig.__doc__
 
     def __init__(self, dtype, saturate=False, **kwargs):
         super(ConvertImagesDtype, self).__init__(**kwargs)
@@ -668,6 +678,7 @@ def adjust_brightness(images, delta, is_random=False, seed=None):
 class AdjustBrightness(BaseObject, Layer):
     """See `plx.image.adjust_brightness`'s docstring"""
     CONFIG = AdjustBrightnessConfig
+    __doc__ = AdjustBrightnessConfig.__doc__
 
     def __init__(self, delta, is_random=False, seed=None, **kwargs):
         super(AdjustBrightness, self).__init__(**kwargs)
@@ -730,6 +741,7 @@ def adjust_contrast(images, contrast_factor, contrast_factor_max=None, is_random
 class AdjustContrast(BaseObject, Layer):
     """See `plx.image.adjust_contrast`'s docstring"""
     CONFIG = AdjustContrastConfig
+    __doc__ = AdjustContrastConfig.__doc__
 
     def __init__(self, contrast_factor, contrast_factor_max=None, is_random=False, seed=None,
                  **kwargs):
@@ -783,6 +795,7 @@ def adjust_hue(images, delta, is_random=False, seed=None, name=None):
 class AdjustHue(BaseObject, Layer):
     """See `plx.image.adjust_hue`'s docstring"""
     CONFIG = AdjustHueConfig
+    __doc__ = AdjustHueConfig.__doc__
 
     def __init__(self, delta, is_random=False, seed=None, **kwargs):
         super(AdjustHue, self).__init__(**kwargs)
@@ -845,6 +858,7 @@ def adjust_saturation(images, saturation_factor, saturation_factor_max=None, is_
 class AdjustSaturation(BaseObject, Layer):
     """See `plx.image.adjust_saturation`'s docstring"""
     CONFIG = AdjustSaturationConfig
+    __doc__ = AdjustSaturationConfig.__doc__
 
     def __init__(self, saturation_factor, saturation_factor_max=None, is_random=False,
                  seed=None, **kwargs):
@@ -893,6 +907,7 @@ def adjust_gamma(image, gamma=1, gain=1):
 class AdjustGamma(BaseObject, Layer):
     """See `plx.image.adjust_gamma`'s docstring"""
     CONFIG = AdjustGammaConfig
+    __doc__ = AdjustGammaConfig.__doc__
 
     def __init__(self, gamma=1, gain=1, **kwargs):
         super(AdjustGamma, self).__init__(**kwargs)
@@ -923,7 +938,6 @@ def standardize(images):
 
     Raises:
         ValueError: if the shape of 'image' is incompatible with this function.
-
     """
     images_shape = get_shape(images)
     if len(images_shape) > 4:
@@ -938,6 +952,7 @@ def standardize(images):
 class Standardization(BaseObject, Layer):
     """See `plx.image.standardize`'s docstring"""
     CONFIG = StandardizationConfig
+    __doc__ = StandardizationConfig.__doc__
 
     def call(self, inputs, **kwargs):
         return standardize(images=inputs)
@@ -977,6 +992,7 @@ def draw_bounding_boxes(images, boxes, name=None):
 class DrawBoundingBoxes(BaseObject, Layer):
     """See `plx.image.draw_bounding_boxes`'s docstring"""
     CONFIG = DrawBoundingBoxesConfig
+    __doc__ = DrawBoundingBoxesConfig.__doc__
 
     def __init__(self, boxes, **kwargs):
         super(DrawBoundingBoxes, self).__init__(**kwargs)
@@ -1169,6 +1185,7 @@ def total_variation(images, name=None):
 class TotalVariation(BaseObject, Layer):
     """See `plx.image.total_variation`'s docstring"""
     CONFIG = TotalVariationConfig
+    __doc__ = TotalVariationConfig.__doc__
 
     def call(self, inputs, **kwargs):
         return total_variation(images=inputs, name=self.name)

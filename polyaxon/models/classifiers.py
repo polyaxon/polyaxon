@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from polyaxon_schemas.models import ClassifierConfig
 from tensorflow.python.ops import standard_ops
 
 from polyaxon_schemas.losses import SigmoidCrossEntropyConfig
@@ -35,6 +36,7 @@ class Classifier(BaseModel):
     Returns:
         `EstimatorSpec`
     """
+    CONFIG = ClassifierConfig
 
     def __init__(self,
                  mode,
