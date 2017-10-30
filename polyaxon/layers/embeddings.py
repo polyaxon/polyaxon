@@ -13,7 +13,7 @@ from polyaxon.libs.base_object import BaseObject
 
 class Embedding(BaseObject, embeddings.Embedding):
     CONFIG = EmbeddingConfig
-    __doc__ = embeddings.Embedding.__doc__
+    __doc__ = EmbeddingConfig.__doc__
 
     def __init__(self,
                  input_dim,

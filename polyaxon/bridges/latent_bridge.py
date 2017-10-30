@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import tensorflow as tf
 
+from polyaxon_schemas.bridges import LatentBridgeConfig
+
 from polyaxon import Modes
 from polyaxon.bridges.base import BaseBridge, BridgeSpec
 from polyaxon.layers.core import Dense
@@ -24,6 +26,9 @@ class LatentBridge(BaseBridge):
         z_mean: `Tensor`. The latent distribution mean.
         z_log_sigma: `Tensor`. The latent distribution log variance.
     """
+    CONFIG = LatentBridgeConfig
+    __doc__ = LatentBridgeConfig.__doc__
+
     def __init__(self, mode, latent_dim=1, state_size=None, mean=0., stddev=1.,
                  name="LatentBridge"):
         state_size = state_size or [latent_dim]

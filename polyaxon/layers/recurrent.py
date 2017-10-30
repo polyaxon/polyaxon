@@ -18,11 +18,12 @@ from polyaxon.libs.base_object import BaseObject
 
 class Recurrent(BaseObject, recurrent.Recurrent):
     CONFIG = RecurrentConfig
+    __doc__ = RecurrentConfig.__doc__
 
 
 class SimpleRNN(BaseObject, recurrent.SimpleRNN):
     CONFIG = SimpleRNNConfig
-    __doc__ = recurrent.SimpleRNN.__doc__
+    __doc__ = SimpleRNNConfig.__doc__
 
     def __init__(self,
                  units,
@@ -62,7 +63,7 @@ class SimpleRNN(BaseObject, recurrent.SimpleRNN):
 
 class GRU(BaseObject, recurrent.GRU):
     CONFIG = GRUConfig
-    __doc__ = recurrent.GRU.__doc__
+    __doc__ = GRUConfig.__doc__
 
     def __init__(self,
                  units,
@@ -104,7 +105,7 @@ class GRU(BaseObject, recurrent.GRU):
 
 class LSTM(BaseObject, recurrent.LSTM):
     CONFIG = LSTMConfig
-    __doc__ = recurrent.LSTM.__doc__
+    __doc__ = LSTMConfig.__doc__
 
     def __init__(self,
                  units,

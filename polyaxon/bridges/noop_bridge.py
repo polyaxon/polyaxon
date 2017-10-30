@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.bridges import NoOpBridgeConfig
 
 from polyaxon import Modes
 from polyaxon.bridges.base import BaseBridge, BridgeSpec
@@ -15,6 +16,9 @@ class NoOpBridge(BaseBridge):
         state_size: `int`. The bridge state size. Default None, it will be inferred
         directly from the incoming tensor.
     """
+    CONFIG = NoOpBridgeConfig
+    __doc__ = NoOpBridgeConfig.__doc__
+
     def __init__(self, mode, state_size=None, name="NoOpBridge"):
         super(NoOpBridge, self).__init__(mode=mode, state_size=state_size, name=name)
 

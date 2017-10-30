@@ -18,22 +18,22 @@ from polyaxon.libs.base_object import BaseObject
 
 class LeakyReLU(BaseObject, advanced_activations.LeakyReLU):
     CONFIG = LeakyReLUConfig
-    __doc__ = advanced_activations.LeakyReLU.__doc__
+    __doc__ = LeakyReLUConfig.__doc__
 
 
 class PReLU(BaseObject, advanced_activations.PReLU):
     CONFIG = PReLUConfig
-    __doc__ = advanced_activations.PReLU.__doc__
+    __doc__ = PReLUConfig.__doc__
 
 
 class ELU(BaseObject, advanced_activations.ELU):
     CONFIG = ELUConfig
-    __doc__ = advanced_activations.ELU.__doc__
+    __doc__ = ELUConfig.__doc__
 
 
 class ThresholdedReLU(BaseObject, advanced_activations.ThresholdedReLU):
     CONFIG = ThresholdedReLUConfig
-    __doc__ = advanced_activations.ThresholdedReLU.__doc__
+    __doc__ = ThresholdedReLUConfig.__doc__
 
 
 ADVANCED_ACTIVATION_LAYERS = OrderedDict([

@@ -15,32 +15,32 @@ from polyaxon_schemas.layers.merge import (
 
 class Add(BaseObject, merge.Add):
     CONFIG = AddConfig
-    __doc__ = merge.Add.__doc__
+    __doc__ = AddConfig.__doc__
 
 
 class Multiply(BaseObject, merge.Multiply):
     CONFIG = MultiplyConfig
-    __doc__ = merge.Multiply.__doc__
+    __doc__ = MultiplyConfig.__doc__
 
 
 class Average(BaseObject, merge.Average):
     CONFIG = AverageConfig
-    __doc__ = merge.Average.__doc__
+    __doc__ = AverageConfig.__doc__
 
 
 class Maximum(BaseObject, merge.Maximum):
     CONFIG = MaximumConfig
-    __doc__ = merge.Maximum.__doc__
+    __doc__ = MaximumConfig.__doc__
 
 
 class Concatenate(BaseObject, merge.Concatenate):
     CONFIG = ConcatenateConfig
-    __doc__ = merge.Concatenate.__doc__
+    __doc__ = ConcatenateConfig.__doc__
 
 
 class Dot(BaseObject, merge.Dot):
     CONFIG = DotConfig
-    __doc__ = merge.Dot.__doc__
+    __doc__ = DotConfig.__doc__
 
 
 MERGE_LAYERS = OrderedDict([

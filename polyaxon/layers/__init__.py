@@ -45,7 +45,6 @@ from polyaxon.layers.core import (
     Permute,
     Flatten,
     RepeatVector,
-    Lambda,
     Dense,
     ActivityRegularization,
 )

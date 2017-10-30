@@ -16,17 +16,17 @@ from polyaxon.libs.base_object import BaseObject
 
 class GaussianNoise(BaseObject, noise.GaussianNoise):
     CONFIG = GaussianNoiseConfig
-    __doc__ = noise.GaussianNoise.__doc__
+    __doc__ = GaussianNoiseConfig.__doc__
 
 
 class GaussianDropout(BaseObject, noise.GaussianDropout):
     CONFIG = GaussianDropoutConfig
-    __doc__ = noise.GaussianDropout.__doc__
+    __doc__ = GaussianDropoutConfig.__doc__
 
 
 class AlphaDropout(BaseObject, noise.AlphaDropout):
     CONFIG = AlphaDropoutConfig
-    __doc__ = noise.AlphaDropout.__doc__
+    __doc__ = AlphaDropoutConfig.__doc__
 
 
 NOISE_LAYERS = OrderedDict([

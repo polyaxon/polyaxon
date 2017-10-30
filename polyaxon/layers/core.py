@@ -30,57 +30,57 @@ from polyaxon.libs import getters
 
 class Masking(BaseObject, core.Masking):
     CONFIG = MaskingConfig
-    __doc__ = core.Masking.__doc__
+    __doc__ = MaskingConfig.__doc__
 
 
 class Dropout(BaseObject, core.Dropout):
     CONFIG = DropoutConfig
-    __doc__ = core.Dropout.__doc__
+    __doc__ = DropoutConfig.__doc__
 
 
 class SpatialDropout1D(BaseObject, core.SpatialDropout1D):
     CONFIG = SpatialDropout1DConfig
-    __doc__ = core.SpatialDropout1D.__doc__
+    __doc__ = SpatialDropout1DConfig.__doc__
 
 
 class SpatialDropout2D(BaseObject, core.SpatialDropout2D):
     CONFIG = SpatialDropout2DConfig
-    __doc__ = core.SpatialDropout2D.__doc__
+    __doc__ = SpatialDropout2DConfig.__doc__
 
 
 class SpatialDropout3D(BaseObject, core.SpatialDropout3D):
     CONFIG = SpatialDropout3DConfig
-    __doc__ = core.SpatialDropout3D.__doc__
+    __doc__ = SpatialDropout3DConfig.__doc__
 
 
 class Activation(BaseObject, core.Activation):
     CONFIG = ActivationConfig
-    __doc__ = core.Activation.__doc__
+    __doc__ = ActivationConfig.__doc__
 
 
 class Reshape(BaseObject, core.Reshape):
     CONFIG = ReshapeConfig
-    __doc__ = core.Reshape.__doc__
+    __doc__ = ReshapeConfig.__doc__
 
 
 class Permute(BaseObject, core.Permute):
     CONFIG = PermuteConfig
-    __doc__ = core.Permute.__doc__
+    __doc__ = PermuteConfig.__doc__
 
 
 class Flatten(BaseObject, core.Flatten):
     CONFIG = FlattenConfig
-    __doc__ = core.Flatten.__doc__
+    __doc__ = FlattenConfig.__doc__
 
 
 class RepeatVector(BaseObject, core.RepeatVector):
     CONFIG = RepeatVectorConfig
-    __doc__ = core.RepeatVector.__doc__
+    __doc__ = RepeatVectorConfig.__doc__
 
 
 class Dense(BaseObject, core.Dense):
     CONFIG = DenseConfig
-    __doc__ = core.Dense.__doc__
+    __doc__ = DenseConfig.__doc__
 
     def __init__(self,
                  units,
@@ -110,7 +110,7 @@ class Dense(BaseObject, core.Dense):
 
 class ActivityRegularization(BaseObject, core.ActivityRegularization):
     CONFIG = ActivityRegularizationConfig
-    __doc__ = core.ActivityRegularization.__doc__
+    __doc__ = ActivityRegularizationConfig.__doc__
 
 
 class Cast(BaseObject, Layer):
@@ -138,6 +138,7 @@ class Cast(BaseObject, Layer):
         TypeError: If `x` cannot be cast to the `dtype`.
     """
     CONFIG = CastConfig
+    __doc__ = CastConfig.__doc__
 
     def __init__(self, dtype='float32', **kwargs):
         super(Cast, self).__init__(**kwargs)
@@ -145,10 +146,6 @@ class Cast(BaseObject, Layer):
 
     def call(self, inputs, **kwargs):
         return tf.cast(inputs, self.dtype)
-
-
-class Lambda(core.Lambda):
-    __doc__ = core.Lambda.__doc__
 
 
 CORE_LAYERS = OrderedDict([
@@ -162,7 +159,6 @@ CORE_LAYERS = OrderedDict([
     (Permute.CONFIG.IDENTIFIER, Permute),
     (Flatten.CONFIG.IDENTIFIER, Flatten),
     (RepeatVector.CONFIG.IDENTIFIER, RepeatVector),
-    ('Lambda', core.Lambda),
     (Dense.CONFIG.IDENTIFIER, Dense),
     (ActivityRegularization.CONFIG.IDENTIFIER, ActivityRegularization),
     (Cast.CONFIG.IDENTIFIER, Cast),

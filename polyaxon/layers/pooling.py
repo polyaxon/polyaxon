@@ -25,62 +25,62 @@ from polyaxon.libs.base_object import BaseObject
 
 class AveragePooling1D(BaseObject, pooling.AveragePooling1D):
     CONFIG = AveragePooling1DConfig
-    __doc__ = pooling.AveragePooling1D.__doc__
+    __doc__ = AveragePooling1DConfig.__doc__
 
 
 class MaxPooling1D(BaseObject, pooling.MaxPooling1D):
     CONFIG = MaxPooling1DConfig
-    __doc__ = pooling.MaxPooling1D.__doc__
+    __doc__ = MaxPooling1DConfig.__doc__
 
 
 class AveragePooling2D(BaseObject, pooling.AveragePooling2D):
     CONFIG = AveragePooling2DConfig
-    __doc__ = pooling.AveragePooling2D.__doc__
+    __doc__ = AveragePooling2DConfig.__doc__
 
 
 class MaxPooling2D(BaseObject, pooling.MaxPooling2D):
     CONFIG = MaxPooling2DConfig
-    __doc__ = pooling.MaxPooling2D.__doc__
+    __doc__ = MaxPooling2DConfig.__doc__
 
 
 class AveragePooling3D(BaseObject, pooling.AveragePooling3D):
     CONFIG = AveragePooling3DConfig
-    __doc__ = pooling.AveragePooling3D.__doc__
+    __doc__ = AveragePooling3DConfig.__doc__
 
 
 class MaxPooling3D(BaseObject, pooling.MaxPooling3D):
     CONFIG = MaxPooling3DConfig
-    __doc__ = pooling.MaxPooling3D.__doc__
+    __doc__ = MaxPooling3DConfig.__doc__
 
 
 class GlobalAveragePooling1D(BaseObject, pooling.GlobalAveragePooling1D):
     CONFIG = GlobalAveragePooling1DConfig
-    __doc__ = pooling.GlobalAveragePooling1D.__doc__
+    __doc__ = GlobalAveragePooling1DConfig.__doc__
 
 
 class GlobalMaxPooling1D(BaseObject, pooling.GlobalMaxPooling1D):
     CONFIG = GlobalMaxPooling1DConfig
-    __doc__ = pooling.GlobalMaxPooling1D.__doc__
+    __doc__ = GlobalMaxPooling1DConfig.__doc__
 
 
 class GlobalAveragePooling2D(BaseObject, pooling.GlobalAveragePooling2D):
     CONFIG = GlobalAveragePooling2DConfig
-    __doc__ = pooling.GlobalAveragePooling2D.__doc__
+    __doc__ = GlobalAveragePooling2DConfig.__doc__
 
 
 class GlobalMaxPooling2D(BaseObject, pooling.GlobalMaxPooling2D):
     CONFIG = GlobalMaxPooling2DConfig
-    __doc__ = pooling.GlobalMaxPooling2D.__doc__
+    __doc__ = GlobalMaxPooling2DConfig.__doc__
 
 
 class GlobalAveragePooling3D(BaseObject, pooling.GlobalAveragePooling3D):
     CONFIG = GlobalAveragePooling3DConfig
-    __doc__ = pooling.GlobalAveragePooling3D.__doc__
+    __doc__ = GlobalAveragePooling3DConfig.__doc__
 
 
 class GlobalMaxPooling3D(BaseObject, pooling.GlobalMaxPooling3D):
     CONFIG = GlobalMaxPooling3DConfig
-    __doc__ = pooling.GlobalMaxPooling3D.__doc__
+    __doc__ = GlobalMaxPooling3DConfig.__doc__
 
 
 POOLING_LAYERS = OrderedDict([
