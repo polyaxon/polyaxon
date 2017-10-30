@@ -81,9 +81,9 @@ class Parser(object):
             parsed_data[Specification.SETTINGS] = cls.parse_expression(
                 data[Specification.SETTINGS], declarations)
 
-        if Specification.EXEC in data:
-            parsed_data[Specification.EXEC] = cls.parse_expression(
-                data[Specification.EXEC], declarations, True, False)
+        if Specification.RUN_EXEC in data:
+            parsed_data[Specification.RUN_EXEC] = cls.parse_expression(
+                data[Specification.RUN_EXEC], declarations, True, False)
 
         for section in Specification.GRAPH_SECTIONS:
             if section in data:

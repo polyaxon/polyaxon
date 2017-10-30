@@ -6,7 +6,7 @@ from marshmallow import Schema, fields, post_load
 from polyaxon_schemas.base import BaseConfig
 
 
-class ExecSchema(Schema):
+class RunExecSchema(Schema):
     cmd = fields.Str()
 
     class Meta:
@@ -14,12 +14,12 @@ class ExecSchema(Schema):
 
     @post_load
     def make(self, data):
-        return ExecConfig(**data)
+        return RunExecConfig(**data)
 
 
-class ExecConfig(BaseConfig):
-    SCHEMA = ExecSchema
-    IDENTIFIER = 'Exec'
+class RunExecConfig(BaseConfig):
+    SCHEMA = RunExecSchema
+    IDENTIFIER = 'run'
 
     def __init__(self, cmd):
         self.cmd = cmd

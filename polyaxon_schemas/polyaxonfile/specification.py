@@ -24,13 +24,13 @@ class Specification(object):
     MATRIX = 'matrix'
     DECLARATIONS = 'declarations'
     ENVIRONMENT = 'environment'
-    EXEC = 'exec'
+    RUN_EXEC = 'run'
     MODEL = 'model'
     TRAIN = 'train'
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, PROJECT, ENVIRONMENT, MATRIX, DECLARATIONS, SETTINGS, EXEC, MODEL, TRAIN, EVAL
+        VERSION, PROJECT, ENVIRONMENT, MATRIX, DECLARATIONS, SETTINGS, RUN_EXEC, MODEL, TRAIN, EVAL
     )
 
     HEADER_SECTIONS = (

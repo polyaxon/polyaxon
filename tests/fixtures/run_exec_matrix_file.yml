@@ -11,7 +11,7 @@ matrix:
   model:
     values: [CDNA, DNA, STP]
 
-exec:
+run:
   cmd:
     if:
       cond: "'DNA' == '{{ model }}'"

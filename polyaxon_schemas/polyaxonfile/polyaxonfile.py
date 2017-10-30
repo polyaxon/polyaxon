@@ -172,14 +172,14 @@ class PolyaxonFile(object):
         return self._validated_data[experiment]
 
     @cached_property
-    def exec(self):
+    def run_exec(self):
         if self.matrix_space == 1:
-            return self.get_exec_at(0)
+            return self.get_run_exec_at(0)
         raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-            please use `get_exec_at(experiment)` instead.""".format(self.matrix_space))
+            please use `get_run_at(experiment)` instead.""".format(self.matrix_space))
 
-    def get_exec_at(self, experiment):
-        return self.get_validated_data_at(experiment).get(Specification.EXEC, None)
+    def get_run_exec_at(self, experiment):
+        return self.get_validated_data_at(experiment).get(Specification.RUN_EXEC, None)
 
     @cached_property
     def model(self):

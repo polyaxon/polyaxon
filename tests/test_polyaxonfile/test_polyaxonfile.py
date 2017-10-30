@@ -5,7 +5,7 @@ import os
 from unittest import TestCase
 
 from polyaxon_schemas.bridges import NoOpBridgeConfig
-from polyaxon_schemas.exec import ExecConfig
+from polyaxon_schemas.run_exec import RunExecConfig
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
 from polyaxon_schemas.k8s.templates import constants
@@ -246,8 +246,8 @@ class TestPolyaxonfile(TestCase):
             assert model.graph.output_layers == [[last_layer, 0, 0]]
             assert isinstance(plxfile.get_train_at(xp).data_pipeline, TFRecordImagePipelineConfig)
 
-    def test_exec_simple_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/exec_simple_file.yml'))
+    def test_run_simple_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
         assert plxfile.project_path == "/tmp/plx_logs/video_prediction"
@@ -256,12 +256,12 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.environment is None
         assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
         assert plxfile.model is None
-        exec = plxfile.exec
-        assert isinstance(exec, ExecConfig)
-        assert exec.cmd == "video_prediction_train --model=DNA --num_masks=1"
+        run_exec = plxfile.run_exec
+        assert isinstance(run_exec, RunExecConfig)
+        assert run_exec.cmd == "video_prediction_train --model=DNA --num_masks=1"
 
-    def test_exec_matrix_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/exec_matrix_file.yml'))
+    def test_run_matrix_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
         assert plxfile.project_path == get_vol_path('video_prediction',
@@ -288,16 +288,16 @@ class TestPolyaxonfile(TestCase):
         with self.assertRaises(AttributeError):
             plxfile.train
         with self.assertRaises(AttributeError):
-            plxfile.exec
+            plxfile.run_exec
 
         for xp in range(plxfile.matrix_space):
             assert plxfile.get_environment_at(xp) is None
             assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
             assert plxfile.get_model_at(xp) is None
-            exec = plxfile.get_exec_at(xp)
-            assert isinstance(exec, ExecConfig)
+            run_exec = plxfile.get_run_exec_at(xp)
+            assert isinstance(run_exec, RunExecConfig)
             declarations = plxfile.get_declarations_at(xp)
             declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
-            assert exec.cmd == 'video_prediction_train --model="{model}" --num_masks={num_masks}'.format(
+            assert run_exec.cmd == 'video_prediction_train --model="{model}" --num_masks={num_masks}'.format(
                 **declarations
             )
