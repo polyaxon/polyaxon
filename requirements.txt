@@ -1,8 +1,8 @@
-numpy==1.13.1
-Pillow==4.2.1
+numpy==1.13.3
+Pillow==4.3.0
 polyaxon-schemas==0.0.14
 polyaxon-cli==0.0.11
 PyYAML==3.12
-scipy==0.19.1
+scipy==1.0.0
 six==1.11.0
 tensorflow==1.3.0
