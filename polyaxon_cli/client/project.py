@@ -10,6 +10,7 @@ from polyaxon_schemas.polyaxonfile.logger import logger
 
 from polyaxon_cli.client.base import PolyaxonClient
 from polyaxon_cli.exceptions import PolyaxonException, AuthenticationError, NotFoundError
+from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.utils.files import get_files_in_current_directory, create_progress_callback
 
 
@@ -41,7 +42,8 @@ class ProjectClient(PolyaxonClient):
 
     def upload(self):
         try:
-            upload_files, total_file_size = get_files_in_current_directory(file_type='code')
+            upload_files, total_file_size = get_files_in_current_directory(
+                file_type='code', file_paths=IgnoreManager.get_unignored_file_paths())
         except OSError:
             sys.exit(
                 "Directory contains too many files to upload. "

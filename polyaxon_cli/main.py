@@ -9,6 +9,7 @@ from distutils.version import LooseVersion
 
 from polyaxon_schemas.polyaxonfile.logger import configure_logger
 
+from polyaxon_cli.cli.init import init
 from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.auth import login, logout
 from polyaxon_cli.cli.config import config
@@ -60,3 +61,4 @@ cli.add_command(upgrade)
 cli.add_command(version)
 cli.add_command(config)
 cli.add_command(check)
+cli.add_command(init)
