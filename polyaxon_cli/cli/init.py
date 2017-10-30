@@ -13,9 +13,9 @@ from polyaxon_cli.utils.files import create_init_file
               help='Init a polyaxon file with `model` step template.')
 @click.option('--exec', is_flag=True, default=False,
               help='Init a polyaxon file with `exec` step template.')
-def init(model, exec):
+def init(model, run):
     """Command for initializing a polyaxonfile."""
-    if not any([model, exec]) and not all([model, exec]):
+    if not any([model, run]) and not all([model, run]):
         raise PolyaxonException("You must specify which file to create, "
                                 "only one option si possible: `--model` or `--exec`.")
 
@@ -23,8 +23,8 @@ def init(model, exec):
     if model:
         result = create_init_file(constants.INIT_FILE_MODEL)
 
-    elif exec:
-        result = create_init_file(constants.INIT_FILE_EXEC)
+    elif run:
+        result = create_init_file(constants.INIT_FILE_RUN)
 
     if result:
         click.secho("Polyaxonfile was created successfully `{}`".format(constants.INIT_FILE),

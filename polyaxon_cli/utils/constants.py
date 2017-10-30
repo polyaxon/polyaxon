@@ -31,20 +31,20 @@ model:
   # set you model
 """
 
-INIT_FILE_EXEC_TEMPLATE = """---
+INIT_FILE_RUN_TEMPLATE = """---
 version: 1
 
 project:
   name: # set you project name
 
-exec:
+run:
   # add you executable here
 """
 
 INIT_FILE_MODEL = 'model'
-INIT_FILE_EXEC = 'exec'
+INIT_FILE_RUN = 'run'
 
 INIT_FILE_TEMPLATES = {
     INIT_FILE_MODEL: INIT_FILE_MODEL_TEMPLATE,
-    INIT_FILE_EXEC: INIT_FILE_EXEC_TEMPLATE
+    INIT_FILE_RUN: INIT_FILE_RUN_TEMPLATE
 }
