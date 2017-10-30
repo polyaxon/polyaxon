@@ -71,13 +71,12 @@ class ClassifierConfig(BaseModelConfig):
 
     Args(programmatic):
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
-            Possible values: `regressor`, `classifier`, `generator`
         graph_fn: Graph function. Follows the signature:
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
 
-    Args(polyaxnofile)
+    Args(polyaxonfile):
         graph: Graph definition. see [Graph]()
 
     Args(commun):
@@ -220,13 +219,12 @@ class RegressorConfig(BaseModelConfig):
 
     Args(programmatic):
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
-            Possible values: `regressor`, `classifier`, `generator`
         graph_fn: Graph function. Follows the signature:
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
                 * `inputs`: the feature inputs.
 
-    Args(polyaxnofile)
+    Args(polyaxonfile):
         graph: Graph definition. see [Graph]()
 
     Args(commun):
@@ -327,7 +325,6 @@ class GeneratorConfig(BaseModelConfig):
 
     Args(programmatic):
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
-            Possible values: `regressor`, `classifier`, `generator`.
         encoder_fn: Encoder Graph function. Follows the signature:
             * Args:
                 * `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
@@ -342,7 +339,7 @@ class GeneratorConfig(BaseModelConfig):
                 * `inputs`: the feature inputs.
                 * `encoder_fn`: the encoder function.
                 * `decoder_fn` the decoder function.
-    Args(polyaxnofile)
+    Args(polyaxonfile):
         encoder: Graph definition. see [Graph]()
         decoder: Graph definition. see [Graph]()
         bridge: Graph definition. see [Graph]()

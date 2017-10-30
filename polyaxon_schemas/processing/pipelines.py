@@ -29,6 +29,31 @@ class BasePipelineSchema(Schema):
 
 
 class BasePipelineConfig(BaseConfig):
+    """Abstract InputPipeline class. All input pipelines must inherit from this.
+    An InputPipeline defines how data is read, parsed, and separated into
+    features and labels.
+
+    Args:
+        name: `str`, name to give for this pipeline.
+        feature_processors: `dict`, list of modules to call for each feature to be processed.
+        shuffle: `bool`, If true, shuffle the data.
+        num_epochs: `int`, Number of times to iterate through the dataset. If None, iterate forever.
+        batch_size: The new batch size pulled from the queue (all queues will have the same size).
+            If a list is passed in then each bucket will have a different batch_size.
+            (python int, int32 scalar or iterable of integers of length num_buckets).
+        bucket_boundaries: `list` of `int` or `None`, increasing non-negative numbers.
+            The edges of the buckets to use when bucketing tensors.
+            Two extra buckets are created, one for input_length < bucket_boundaries[0]
+            and one for input_length >= bucket_boundaries[-1].
+        allow_smaller_final_batch: `bool`, whether to allow a last small batch.
+        dynamic_pad: `bool`, Allow variable dimensions in input shapes.
+            The given dimensions are padded upon dequeue so that tensors
+            within a batch have the same shapes.
+        min_after_dequeue: `int`.
+        num_threads: `int`. The number of threads enqueuing tensors.
+        capacity: `int`, The maximum number of minibatches in the top queue,
+            and also the maximum number of elements within each bucket.
+    """
     IDENTIFIER = 'BasePipeline'
     SCHEMA = BasePipelineSchema
     REDUCED_ATTRIBUTES = ['feature_processors']
@@ -71,6 +96,49 @@ class TFRecordImagePipelineSchema(BasePipelineSchema):
 
 
 class TFRecordImagePipelineConfig(BasePipelineConfig):
+    """A Pipeline to convert TF-Records to images.
+
+    Args:
+        name: `str`, name to give for this pipeline.
+        feature_processors: `dict`, list of modules to call for each feature to be processed.
+        shuffle: `bool`, If true, shuffle the data.
+        num_epochs: `int`, Number of times to iterate through the dataset. If None, iterate forever.
+        batch_size: The new batch size pulled from the queue (all queues will have the same size).
+            If a list is passed in then each bucket will have a different batch_size.
+            (python int, int32 scalar or iterable of integers of length num_buckets).
+        bucket_boundaries: `list` of `int` or `None`, increasing non-negative numbers.
+            The edges of the buckets to use when bucketing tensors.
+            Two extra buckets are created, one for input_length < bucket_boundaries[0]
+            and one for input_length >= bucket_boundaries[-1].
+        allow_smaller_final_batch: `bool`, whether to allow a last small batch.
+        dynamic_pad: `bool`, Allow variable dimensions in input shapes.
+            The given dimensions are padded upon dequeue so that tensors
+            within a batch have the same shapes.
+        min_after_dequeue: `int`.
+        num_threads: `int`. The number of threads enqueuing tensors.
+        capacity: `int`, The maximum number of minibatches in the top queue,
+            and also the maximum number of elements within each bucket.
+        data_files: `list` of `str`. List of the filenames for data.
+        meta_data_file: `str`. Metadata filename
+
+    Polyaxonfile usage:
+
+    ```yaml
+    TFRecordImagePipeline:
+      batch_size: 64
+      num_epochs: 1
+      shuffle: true
+      dynamic_pad: false
+      data_files: ["../data/mnist/mnist_train.tfrecord"]
+      meta_data_file: "../data/mnist/meta_data.json"
+      feature_processors:
+        image:
+          input_layers: [image]
+          layers:
+            - Cast:
+                dtype: float32
+    ```
+    """
     IDENTIFIER = 'TFRecordImagePipeline'
     SCHEMA = TFRecordImagePipelineSchema
 
@@ -93,6 +161,51 @@ class TFRecordSequencePipelineSchema(BasePipelineSchema):
 
 
 class TFRecordSequencePipelineConfig(BasePipelineConfig):
+    """A Pipeline to convert TF-Records to sequences.
+
+    At least one sequence must be `source_token`.
+
+    Args:
+        name: `str`, name to give for this pipeline.
+        feature_processors: `dict`, list of modules to call for each feature to be processed.
+        shuffle: `bool`, If true, shuffle the data.
+        num_epochs: `int`, Number of times to iterate through the dataset. If None, iterate forever.
+        batch_size: The new batch size pulled from the queue (all queues will have the same size).
+            If a list is passed in then each bucket will have a different batch_size.
+            (python int, int32 scalar or iterable of integers of length num_buckets).
+        bucket_boundaries: `list` of `int` or `None`, increasing non-negative numbers.
+            The edges of the buckets to use when bucketing tensors.
+            Two extra buckets are created, one for input_length < bucket_boundaries[0]
+            and one for input_length >= bucket_boundaries[-1].
+        allow_smaller_final_batch: `bool`, whether to allow a last small batch.
+        dynamic_pad: `bool`, Allow variable dimensions in input shapes.
+            The given dimensions are padded upon dequeue so that tensors
+            within a batch have the same shapes.
+        min_after_dequeue: `int`.
+        num_threads: `int`. The number of threads enqueuing tensors.
+        capacity: `int`, The maximum number of minibatches in the top queue,
+            and also the maximum number of elements within each bucket.
+        data_files: `list` of `str`. List of the filenames for data.
+        meta_data_file: `str`. Metadata filename
+
+    Polyaxonfile usage:
+
+    ```yaml
+    TFRecordSequencePipeline:
+      batch_size: 64
+      num_epochs: 1
+      shuffle: true
+      dynamic_pad: false
+      data_files: ["data.tfrecord"]
+      meta_data_file: "meta_data.json"
+      feature_processors:
+        image:
+          input_layers: [sequence]
+          layers:
+            - Cast:
+                dtype: float32
+    ```
+    """
     IDENTIFIER = 'TFRecordSequencePipeline'
     SCHEMA = TFRecordSequencePipelineSchema
 
@@ -117,6 +230,36 @@ class ParallelTextPipelineSchema(BasePipelineSchema):
 
 
 class ParallelTextPipelineConfig(BasePipelineConfig):
+    """An input pipeline that reads two parallel (line-by-line aligned) text files.
+
+    Args:
+        name: `str`, name to give for this pipeline.
+        feature_processors: `dict`, list of modules to call for each feature to be processed.
+        shuffle: `bool`, If true, shuffle the data.
+        num_epochs: `int`, Number of times to iterate through the dataset. If None, iterate forever.
+        batch_size: The new batch size pulled from the queue (all queues will have the same size).
+            If a list is passed in then each bucket will have a different batch_size.
+            (python int, int32 scalar or iterable of integers of length num_buckets).
+        bucket_boundaries: `list` of `int` or `None`, increasing non-negative numbers.
+            The edges of the buckets to use when bucketing tensors.
+            Two extra buckets are created, one for input_length < bucket_boundaries[0]
+            and one for input_length >= bucket_boundaries[-1].
+        allow_smaller_final_batch: `bool`, whether to allow a last small batch.
+        dynamic_pad: `bool`, Allow variable dimensions in input shapes.
+            The given dimensions are padded upon dequeue so that tensors
+            within a batch have the same shapes.
+        min_after_dequeue: `int`.
+        num_threads: `int`. The number of threads enqueuing tensors.
+        capacity: `int`, The maximum number of minibatches in the top queue,
+            and also the maximum number of elements within each bucket.
+        source_files: An array of file names for the source data.
+        target_files: An array of file names for the target data. These must
+          be aligned to the `source_files`.
+        source_delimiter: A character to split the source text on. Defaults
+          to  " " (space). For character-level training this can be set to the
+          empty string.
+        target_delimiter: Same as `source_delimiter` but for the target text.
+    """
     IDENTIFIER = 'ParallelTextPipeline'
     SCHEMA = ParallelTextPipelineSchema
 
@@ -150,6 +293,35 @@ class TFRecordSourceSequencePipelineSchema(BasePipelineSchema):
 
 
 class TFRecordSourceSequencePipelineConfig(BasePipelineConfig):
+    """An input pipeline that reads a TFRecords containing both source and target sequences.
+
+    Args:
+        name: `str`, name to give for this pipeline.
+        feature_processors: `dict`, list of modules to call for each feature to be processed.
+        shuffle: `bool`, If true, shuffle the data.
+        num_epochs: `int`, Number of times to iterate through the dataset. If None, iterate forever.
+        batch_size: The new batch size pulled from the queue (all queues will have the same size).
+            If a list is passed in then each bucket will have a different batch_size.
+            (python int, int32 scalar or iterable of integers of length num_buckets).
+        bucket_boundaries: `list` of `int` or `None`, increasing non-negative numbers.
+            The edges of the buckets to use when bucketing tensors.
+            Two extra buckets are created, one for input_length < bucket_boundaries[0]
+            and one for input_length >= bucket_boundaries[-1].
+        allow_smaller_final_batch: `bool`, whether to allow a last small batch.
+        dynamic_pad: `bool`, Allow variable dimensions in input shapes.
+            The given dimensions are padded upon dequeue so that tensors
+            within a batch have the same shapes.
+        min_after_dequeue: `int`.
+        num_threads: `int`. The number of threads enqueuing tensors.
+        capacity: `int`, The maximum number of minibatches in the top queue,
+            and also the maximum number of elements within each bucket.
+        source_field: The TFRecord feature field containing the source text.
+        target_field: The TFRecord feature field containing the target text.
+        source_delimiter: A character to split the source text on. Defaults
+          to  " " (space). For character-level training this can be set to the
+          empty string.
+        target_delimiter: Same as `source_delimiter` but for the target text.
+    """
     IDENTIFIER = 'TFRecordSourceSequencePipeline'
     SCHEMA = TFRecordSourceSequencePipelineSchema
 
@@ -185,6 +357,34 @@ class ImageCaptioningPipelineSchema(BasePipelineSchema):
 
 
 class ImageCaptioningPipelineConfig(BasePipelineConfig):
+    """An input pipeline that reads a TFRecords containing both source and target sequences.
+
+    Args:
+        name: `str`, name to give for this pipeline.
+        feature_processors: `dict`, list of modules to call for each feature to be processed.
+        shuffle: `bool`, If true, shuffle the data.
+        num_epochs: `int`, Number of times to iterate through the dataset. If None, iterate forever.
+        batch_size: The new batch size pulled from the queue (all queues will have the same size).
+            If a list is passed in then each bucket will have a different batch_size.
+            (python int, int32 scalar or iterable of integers of length num_buckets).
+        bucket_boundaries: `list` of `int` or `None`, increasing non-negative numbers.
+            The edges of the buckets to use when bucketing tensors.
+            Two extra buckets are created, one for input_length < bucket_boundaries[0]
+            and one for input_length >= bucket_boundaries[-1].
+        allow_smaller_final_batch: `bool`, whether to allow a last small batch.
+        dynamic_pad: `bool`, Allow variable dimensions in input shapes.
+            The given dimensions are padded upon dequeue so that tensors
+            within a batch have the same shapes.
+        min_after_dequeue: `int`.
+        num_threads: `int`. The number of threads enqueuing tensors.
+        capacity: `int`, The maximum number of minibatches in the top queue,
+            and also the maximum number of elements within each bucket.
+        files: An array of file names to read from.
+        image_field: The TFRecord feature field containing the source images.
+        image_format: The images extensions.
+        caption_ids_field: The caption ids field.
+        caption_tokens_field: the caption tokends field.
+    """
     IDENTIFIER = 'ImageCaptioningPipeline'
     SCHEMA = ImageCaptioningPipelineSchema
 

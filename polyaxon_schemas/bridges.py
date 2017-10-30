@@ -34,6 +34,55 @@ class LatentBridgeSchema(BaseBridgeSchema):
 
 
 class LatentBridgeConfig(BaseBridgeConfig):
+    """A bridge that create a latent space based on the encoder output.
+
+    This bridge could be used by VAE.
+
+    Args(programmatic):
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+
+    Args:
+        latent_dim: `int`. The latent dimension to use.
+        name: `str`. The name of this subgraph, used for creating the scope.
+
+    Attributes:
+        z_mean: `Tensor`. The latent distribution mean.
+        z_log_sigma: `Tensor`. The latent distribution log variance.
+
+    Returns:
+        `BridgeSpec`
+
+    Programmatic usage:
+
+    ```python
+    def bridge_fn(mode, features, labels, loss, encoder_fn, decoder_fn):
+        return plx.bridges.LatentBridge(mode)(features, labels, loss, encoder_fn, decoder_fn)
+    ```
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      generator:
+        ...
+        bridge: LatentBridge
+        encoder:
+          input_layers: image
+          layers:
+            - Dense:
+                units: 128
+            - Dense:
+                units: 256
+                name: encoded
+        decoder:
+          input_layers: encoded
+          layers:
+            - Dense:
+                units: 256
+            - Dense:
+                units: 784
+    ```
+    """
     IDENTIFIER = 'LatentBridge'
     SCHEMA = LatentBridgeSchema
 
@@ -54,6 +103,51 @@ class NoOpBridgeSchema(BaseBridgeSchema):
 
 
 class NoOpBridgeConfig(BaseBridgeConfig):
+    """A bridge that passes the encoder output to the decoder.
+
+    This bridge could be used by VAE.
+
+    Args(programmatic):
+        mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+
+    Args:
+        state_size: `int`. The latent dimension to use.
+        name: `str`. The name of this subgraph, used for creating the scope.
+
+    Returns:
+        `BridgeSpec`
+
+    Programmatic usage:
+
+    ```python
+    def bridge_fn(mode, features, labels, loss, encoder_fn, decoder_fn):
+        return plx.bridges.NoOpBridge(mode)(features, labels, loss, encoder_fn, decoder_fn)
+    ```
+
+    Polyaxonfile usage:
+
+    ```yaml
+    model:
+      generator:
+        ...
+        bridge: NoOpBridge
+        encoder:
+          input_layers: image
+          layers:
+            - Dense:
+                units: 128
+            - Dense:
+                units: 256
+                name: encoded
+        decoder:
+          input_layers: encoded
+          layers:
+            - Dense:
+                units: 256
+            - Dense:
+                units: 784
+    ```
+    """
     IDENTIFIER = 'NoOpBridge'
     SCHEMA = NoOpBridgeSchema
 
