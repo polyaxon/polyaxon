@@ -16,14 +16,15 @@ class PyTest(TestCommand):
         errcode = pytest.main(self.test_args)
         sys.exit(errcode)
 
-setup(name='polyaxon-schemas',
-      version='0.0.14',
-      description='Schema definitions and validation for Polyaxon.',
+setup(name='polyaxon-k8s',
+      version='0.0.1',
+      description='Polyaxon resources and charts for running and '
+                  'monitoring experiments on kubernetes clusters.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mouradmourafiq@gmail.com',
       author='Mourad Mourafiq',
       author_email='mouradmourafiq@gmail.com',
-      url='https://github.com/polyaxon/polyaxon-schemas',
+      url='https://github.com/polyaxon/polyaxon-k8s',
       license='MIT',
       platforms='any',
       packages=find_packages(),
@@ -40,13 +41,10 @@ setup(name='polyaxon-schemas',
           'kubernetes',
       ],
       install_requires=[
-          'Jinja2==2.9.6',
-          'marshmallow==2.13.5',
-          'numpy==1.13.1',
-          'pytz==2017.2',
+          'kubernetes==3.0.0',
+          'polyaxon-schemas==0.0.14',
           'PyYAML==3.12',
           'six==1.11.0',
-          'kubernetes==3.0.0',
       ],
       classifiers=[
           'Programming Language :: Python',
