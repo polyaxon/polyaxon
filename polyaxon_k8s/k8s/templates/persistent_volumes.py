@@ -16,12 +16,6 @@ STORAGE_BY_VOLUME = {
     constants.LOGS_VOLUME: '1Mi',
 }
 
-MINIKUBE_VOLUME_PATH = {
-    constants.DATA_VOLUME: '/plx/data',
-    constants.POLYAXON_FILES_VOLUME: '/plx/plxfiles',
-    constants.LOGS_VOLUME: '/tmp/plx/logs/{project}',
-}
-
 
 def get_host_path_pvol(vol_path):
     return {'host_path': client.V1HostPathVolumeSource(path=vol_path)}
