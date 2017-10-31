@@ -8,13 +8,13 @@ from polyaxon_schemas.bridges import NoOpBridgeConfig
 from polyaxon_schemas.run_exec import RunExecConfig
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
-from polyaxon_schemas.k8s.templates import constants
-from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.losses import MeanSquaredErrorConfig, AbsoluteDifferenceConfig
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.models import ClassifierConfig, RegressorConfig, GeneratorConfig
 from polyaxon_schemas.optimizers import AdamConfig
+from polyaxon_schemas.polyaxonfile import constants
+from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
 from polyaxon_schemas.settings import (

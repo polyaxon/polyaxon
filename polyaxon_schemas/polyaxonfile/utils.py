@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
 from collections import Mapping
 
 import six
+
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.polyaxonfile import constants
+from polyaxon_schemas.utils import RunTypes
 
 
 def deep_update(config, override_config):
@@ -38,3 +43,18 @@ class cached_property(object):  # noqa
             return self
         res = instance.__dict__[self.name] = self.func(instance)
         return res
+
+
+def get_vol_path(project, volume, run_type):
+    if run_type == RunTypes.MINIKUBE:
+        if volume == constants.LOGS_VOLUME:
+            # this is just a hack to allow all pods to write to logs
+            return '/tmp/plx/logs/{project}'.format(project=project)
+
+        # you must run: `minikube mount --v=3 ~/plx/:/plx/`
+        # where /plx contains both" /plx/data and /plx/plxfiles
+        return os.path.join('/plx', project, volume)
+    elif run_type == RunTypes.KUBERNETES:
+        return os.path.join('/plx', project, volume)
+    else:
+        raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))

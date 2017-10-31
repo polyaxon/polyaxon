@@ -5,6 +5,7 @@ from marshmallow import Schema, fields, post_load, validate
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
+from polyaxon_schemas.utils import RunTypes
 
 
 class GPUOptionsSchema(Schema):
@@ -174,15 +175,6 @@ class EnvironmentConfig(BaseConfig):
         self.default_ps_config = default_ps_config
         self.worker_configs = worker_configs
         self.ps_configs = ps_configs
-
-
-class RunTypes(object):
-    LOCAL = 'local'
-    MINIKUBE = 'minikube'
-    KUBERNETES = 'kubernetes'
-    AWS = 'aws'
-
-    VALUES = [LOCAL, MINIKUBE, KUBERNETES, AWS]
 
 
 class SettingsSchema(Schema):

@@ -235,3 +235,12 @@ class TaskType(object):
     MASTER = 'master'
     PS = 'ps'
     WORKER = 'worker'
+
+
+class RunTypes(object):
+    LOCAL = 'local'
+    MINIKUBE = 'minikube'
+    KUBERNETES = 'kubernetes'
+    AWS = 'aws'
+
+    VALUES = [LOCAL, MINIKUBE, KUBERNETES, AWS]

@@ -46,7 +46,6 @@ setup(name='polyaxon-schemas',
           'pytz==2017.2',
           'PyYAML==3.12',
           'six==1.11.0',
-          'kubernetes==3.0.0',
       ],
       classifiers=[
           'Programming Language :: Python',

@@ -5,13 +5,12 @@ import itertools
 import six
 import os
 
-from polyaxon_schemas.k8s.templates import constants
-from polyaxon_schemas.k8s.templates.persistent_volumes import get_vol_path
+from polyaxon_schemas.polyaxonfile import constants
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification import Specification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.polyaxonfile.utils import cached_property, get_vol_path
 from polyaxon_schemas.settings import ClusterConfig, RunTypes
 from polyaxon_schemas.utils import TaskType
 
