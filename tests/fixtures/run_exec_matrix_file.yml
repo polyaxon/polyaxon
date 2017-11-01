@@ -12,6 +12,9 @@ matrix:
     values: [CDNA, DNA, STP]
 
 run:
+  image: my_image
+  install:
+    - pip install some_lib
   cmd:
     if:
       cond: "'DNA' == '{{ model }}'"

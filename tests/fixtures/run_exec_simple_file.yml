@@ -5,5 +5,6 @@ project:
   name: video_prediction
 
 run:
+  image: my_image
   cmd: video_prediction_train --model=DNA --num_masks=1
 ...

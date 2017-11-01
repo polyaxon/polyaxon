@@ -16,7 +16,24 @@ class TestRunExecConfigs(TestCase):
                    '--problems=translate_ende_wmt32k '
                    '--model=transformer '
                    '--hparams_set=transformer_base_single_gpu '
-                   '--output_dir=~/t2t_train/base'
+                   '--output_dir=~/t2t_train/base',
+            'image': 'some_image_name',
+        }
+        config = RunExecConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+    def test_exce_from_git_repo_with_install_step_config(self):
+        config_dict = {
+            'cmd': 'python t2t-trainer '
+                   '--generate_data '
+                   '--data_dir=~/t2t_data '
+                   '--problems=translate_ende_wmt32k '
+                   '--model=transformer '
+                   '--hparams_set=transformer_base_single_gpu '
+                   '--output_dir=~/t2t_train/base',
+            'image': 'tensorflow:1.3.0',
+            'install': ['pip install tensor2tensor'],
+            'git': 'https://github.com/tensorflow/tensor2tensor.git'
         }
         config = RunExecConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
