@@ -45,12 +45,10 @@ setup(name='polyaxon-cli',
           "clint==0.5.1",
           "marshmallow==2.13.5",
           "polyaxon-schemas==0.0.14",
+          # "polyaxon-k8s==0.0.1",
           "requests==2.18.4",
           "requests-toolbelt==0.8.0",
           "six==1.11.0",
-      ],
-      dependency_links=[
-          "https://github.com/polyaxon/polyaxon-schemas/archive/0.0.14.zip",
       ],
       entry_points={
           "console_scripts": [

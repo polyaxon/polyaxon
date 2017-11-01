@@ -40,8 +40,8 @@ to install to the latest version of polyaxon)""")
             run(file)
 
     else:
-        from polyaxon_schemas.k8s.manager import K8SManager
-        manager = K8SManager(polyaxonfile=file)
+        from polyaxon_k8s.k8s.spawner import K8SSpawner
+        manager = K8SSpawner(polyaxonfile=file)
         if experiment:
             manager.create_experiment(experiment)
         else:
