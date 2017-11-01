@@ -1,4 +1,4 @@
--r requirements.txt
+-r requirements-dev.txt
 
 coverage==4.4.1
 flaky==3.4.0

@@ -1,0 +1,8 @@
+numpy==1.13.1
+Pillow==4.2.1
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@1f2a37d573a3750a47a0aeefd3f48ed15b7c20fa#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-cli.git@becfb482bc4d3da977a1072fbccacea823ae75ba#egg=polyaxon-cli
+PyYAML==3.12
+scipy==0.19.1
+six==1.11.0
+tensorflow==1.3.0
