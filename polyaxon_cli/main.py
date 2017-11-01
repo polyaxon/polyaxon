@@ -13,7 +13,9 @@ from polyaxon_cli.cli.init import init
 from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.auth import login, logout
 from polyaxon_cli.cli.config import config
+from polyaxon_cli.cli.logs import logs
 from polyaxon_cli.cli.run import run
+from polyaxon_cli.cli.status import status
 from polyaxon_cli.cli.stop import stop
 from polyaxon_cli.cli.version import version, upgrade
 from polyaxon_cli.client.version import VersionClient
@@ -59,6 +61,8 @@ cli.add_command(login)
 cli.add_command(logout)
 cli.add_command(run)
 cli.add_command(stop)
+cli.add_command(status)
+cli.add_command(logs)
 cli.add_command(upgrade)
 cli.add_command(version)
 cli.add_command(config)
