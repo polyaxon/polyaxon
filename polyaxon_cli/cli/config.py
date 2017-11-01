@@ -15,10 +15,22 @@ def validate_options(ctx, param, value):
 
 
 @click.group(invoke_without_command=True)
-@click.option('--list', '-l', is_flag=True, help='List global config values')
-@click.option('--get', callback=validate_options, help='Get global config value')
+@click.option('--list', '-l', is_flag=True, help='List all global config values.')
+@click.option('--get', callback=validate_options,
+              help='Get a specific global config value, e.g. polyaxon config --get host')
 def config(list, get):
-    """Command for setting and getting global configurations."""
+    """Command for setting and getting global configurations.
+
+    Example:
+
+    ```
+    polyaxon config --get host
+    ```
+
+    ```
+    polyaxon set --host http://...
+    ```
+    """
     if list:
         config = GlobalConfigManager.get_config()
         click.echo(config.to_dict())
@@ -29,17 +41,12 @@ def config(list, get):
 
 
 @config.command()
-@click.option('--verbose', type=bool, help='The verbosity of the client')
-@click.option('--host', type=str, help='The server endpoint')
-@click.option('--working_directory', type=click.Path(exists=True), help='The working directory')
+@click.option('--verbose', type=bool, help='To set the verbosity of the client')
+@click.option('--host', type=str, help='To set the server endpoint')
+@click.option('--working_directory', type=click.Path(exists=True),
+              help='To set the working directory')
 def set(verbose, host, working_directory):
-    """
-
-    :param verbose:
-    :param host:
-    :param working_directory:
-    :return:
-    """
+    """Command for setting global config values."""
     config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
     if verbose is not None:
         config.verbose = verbose

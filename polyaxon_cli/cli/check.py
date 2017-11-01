@@ -18,7 +18,7 @@ def check_polyaxonfile(file):
 
 @click.command()
 @click.option('--file', '-f', type=click.Path(exists=True), help='The polyaxon file to check.')
-@click.option('--all', '-a', type=click.Path(exists=True),
+@click.option('--all', '-a', is_flag=True, default=False,
               help='Checks and prints the validated file.')
 @click.option('--version', '-v', is_flag=True, default=False, help='Checks and prints the version.')
 @click.option('--cluster', is_flag=True, default=False, help='Checks and prints the cluster def.')
