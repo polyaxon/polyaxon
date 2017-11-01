@@ -22,7 +22,7 @@ def status(file, experiment):
         from polyaxon_k8s.k8s.spawner import K8SSpawner
         spawner = K8SSpawner(polyaxonfile=plx_file)
         status = spawner.get_experiment_status(experiment)
-        message = 'Experiment {} polyaxonfile on {} is {}'
+        message = "Experiment {} polyaxonfile on {} is {}"
         if status == PodStatus.FAILED:
             message = colored.red(message)
         elif status in (PodStatus.PENDING, PodStatus.CONTAINER_CREATING):

@@ -20,10 +20,9 @@ def stop(file, experiment):
         from polyaxon_k8s.k8s.spawner import K8SSpawner
         spawner = K8SSpawner(polyaxonfile=plx_file)
         if experiment is not None:
-            logger.info('Stopping experiment {} polyaxonfile on {}'.format(experiment,
-                                                                          plx_file.run_type))
+            logger.info("Stopping experiment {} polyaxonfile on {}".format(experiment,
+                                                                           plx_file.run_type))
             spawner.delete_experiment(experiment)
         else:
-            logger.info('Stopping experiment all polyaxonfile on {}'.format(plx_file.run_type))
+            logger.info("Stopping experiment all polyaxonfile on {}".format(plx_file.run_type))
             spawner.delete_all_experiments()
-

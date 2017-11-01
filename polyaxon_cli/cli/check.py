@@ -46,28 +46,28 @@ def check(file, all, version, cluster, run_type, project, log_path, matrix, expe
                 cluster_def))
 
     if run_type:
-        click.echo('The run-type is: {}'.format(plx_file.run_type))
+        click.echo("The run-type is: {}".format(plx_file.run_type))
 
     if project:
-        click.echo('The project definition is: {}'.format(plx_file.project.to_dict()))
+        click.echo("The project definition is: {}".format(plx_file.project.to_dict()))
 
     if log_path:
-        click.echo('The project logging path is: {}'.format(plx_file.project_path))
+        click.echo("The project logging path is: {}".format(plx_file.project_path))
 
     if matrix:
         declarations = [str(d) for d in plx_file.matrix_declarations]
-        click.echo('The matrix definition is:\n{}'.format('\n'.join(declarations)))
+        click.echo("The matrix definition is:\n{}".format('\n'.join(declarations)))
 
     if experiments:
         experiments_def = plx_file.experiments_def
         if experiments_def[0] == 1:
-            click.echo('One experiment')
+            click.echo("One experiment")
         elif experiments_def[1] == 1:
-            click.echo('The matrix-space is: {} running sequentially'.format(experiments_def[0]))
+            click.echo("The matrix-space is: {} running sequentially".format(experiments_def[0]))
         else:
-            click.echo('The matrix-space is: {} with {} concurrent runs'.format(*experiments_def))
+            click.echo("The matrix-space is: {} with {} concurrent runs".format(*experiments_def))
 
     if all:
-        click.echo('Validated file:\n{}'.format(plx_file.parsed_data))
+        click.echo("Validated file:\n{}".format(plx_file.parsed_data))
 
     return plx_file

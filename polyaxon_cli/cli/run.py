@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import click
 import sys
 
+import clint
 from polyaxon_schemas.polyaxonfile.logger import logger
 from polyaxon_schemas.settings import RunTypes
 
@@ -27,9 +28,10 @@ def run(file, experiment):
                 from polyaxon_cli.cli.version import pip_upgrade
                 pip_upgrade(PROJECT_NAME)
             else:
-                click.echo("""Your can manually run:
-    pip install -U polyaxon
-to install to the latest version of polyaxon)""")
+                clint.textui.puts("Your can manually run:")
+                with clint.textui.indent(4):
+                    clint.textui.puts("pip install -U polyaxon")
+                clint.textui.puts("to install to the latest version of polyaxon")
                 sys.exit(0)
 
         logger.info('Running polyaxonfile locally')
