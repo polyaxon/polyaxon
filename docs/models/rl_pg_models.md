@@ -7,24 +7,38 @@ polyaxon.models.rl.vpg.VPGModel(mode, graph_fn, num_states, num_actions, loss=No
 
 Implements a vanilla policy gradient model
 - __Args__:
+
 	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+
 	- __graph_fn__: Graph function. Follows the signature:
+
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
-		* `inputs`: the feature inputs.
+			* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
+			* `inputs`: the feature inputs.
 	- __loss__: An instance of `LossConfig`.
+
 	- __num_states__: `int`. The number of states.
+
 	- __num_actions__: `int`. The number of actions.
+
 	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+
 	- __metrics__: a list of `MetricConfig` instances.
+
 	- __is_continuous__: `bool`. Is the model built for a continuous or discrete space.
+
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
+
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
 	- __clip_gradients__: `float`. Gradients  clipping by global norm.
+
 	- __clip_embed_gradients__: `float`. Embedding gradients clipping to a specified value.
+
 	- __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
 
+
  - __Returns__:
+
 	`EstimatorSpec`
 
 
@@ -39,22 +53,36 @@ polyaxon.models.rl.trpo.TRPOModel(mode, graph_fn, num_states, num_actions, loss=
 
 Implements a trust region policy optimization model
 - __Args__:
+
 	- __mode__: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
+
 	- __graph_fn__: Graph function. Follows the signature:
+
 		* Args:
-		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
-		* `inputs`: the feature inputs.
+			* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
+			* `inputs`: the feature inputs.
 	- __loss__: An instance of `LossConfig`.
+
 	- __num_states__: `int`. The number of states.
+
 	- __num_actions__: `int`. The number of actions.
+
 	- __optimizer__: An instance of `OptimizerConfig`. Default value `Adam`.
+
 	- __metrics__: a list of `MetricConfig` instances.
+
 	- __is_continuous__: `bool`. Is the model built for a continuous or discrete space.
+
 	- __summaries__: `str` or `list`. The verbosity of the tensorboard visualization.
+
 		Possible values: `all`, `activations`, `loss`, `learning_rate`, `variables`, `gradients`
 	- __clip_gradients__: `float`. Gradients  clipping by global norm.
+
 	- __clip_embed_gradients__: `float`. Embedding gradients clipping to a specified value.
+
 	- __name__: `str`, the name of this model, everything will be encapsulated inside this scope.
 
+
  - __Returns__:
+
 	`EstimatorSpec`

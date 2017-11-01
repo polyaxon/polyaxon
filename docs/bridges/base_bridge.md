@@ -10,9 +10,13 @@ An abstract base class for defining a bridge.
 A bridge defines how state is passed between encoder and decoder.
 
 - __Args__:
+
 	- __mode__: `str`. Specifies if this training, evaluation or prediction. See `Modes`.
+
 	- __name__: `str`. The name of this bridge, used for creating the scope.
+
 	- __state_size__: `int`. The bridge state size.
+
 
 
 ----
@@ -28,11 +32,17 @@ encode(self, features, labels, encoder_fn)
 Encodes the incoming tensor.
 
 - __Args__:
+
 	- __features__: `Tensor`.
+
 	- __labels__: `dict` or `Tensor`
+
 	- __encoder_fn__: `function`.
+
 	- __*args__:
+
 	- __**kwargs__:
+
 
 
 ----
@@ -49,11 +59,17 @@ Decodes the incoming tensor if it's validates against the state size of the deco
 Otherwise, generates a random value.
 
 - __Args__:
+
 	- __features__: `Tensor`
+
 	- __labels__: `dict` or `Tensor`
+
 	- __decoder_fn__: `function`.
+
 	- __*args__:
+
 	- __**kwargs__:
+
 
 
 ----

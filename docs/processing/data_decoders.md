@@ -51,9 +51,13 @@ returns the tokens and the length.
 Optionally prepends or appends special tokens.
 
 - __Args__:
+
 	- __delimiter__: Delimiter to split on. Must be a single character.
+
 	- __tokens_feature_name__: A descriptive feature name for the token values
+
 	- __length_feature_name__: A descriptive feature name for the length value
+
 
 
 ----

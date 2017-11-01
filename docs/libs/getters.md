@@ -169,9 +169,12 @@ get_bridge_fn(config)
 Creates a bridge function. Defaults to `NoOpBridge`
 
 - __Args__:
+
 	- __config__: `BridgeConfig` instance.
 
+
 - __Returns__:
+
 	`function`.
 
 

@@ -16,33 +16,49 @@ None of the functions passed to this constructor are executed at construction ti
 They are stored and used when a method is executed which requires it.
 
 - __Args__:
+
 	- __agent__: Object implementing an Agent.
+
 	- __train_steps__: Perform this many steps of training.  default: None, means train forever.
+
 	- __train_episodes__: Perform this many episodes of training.  default: None, means train forever.
+
 	- __first_update__: First timestep to calculate `loss` and `train_op`. This is related to the
+
 		`global_timestep` variable, number of timesteps in episodes.
 	- __update_frequency__: The frequency at which we should calculate `loss` and `train_op`.
+
 		This frequency is related to the `gloabl_step` which is incremented every time
 		we update the network.
 	- __eval_steps__: `evaluate` runs until input is exhausted (or another exception is raised),
+
 		or for `eval_steps` steps, if specified.
 	- __train_hooks__: A list of monitors to pass to the `Agent`'s `fit` function.
+
 	- __eval_hooks__: A list of `SessionRunHook` hooks to pass to
+
 		the `Agent`'s `evaluate` function.
 	- __eval_delay_secs__: Start evaluating after waiting for this many seconds.
+
 	- __continuous_eval_throttle_secs__: Do not re-evaluate unless the last evaluation
+
 		was started at least this many seconds ago for continuous_eval().
 	- __delay_workers_by_global_step__: if `True` delays training workers based on global step
+
 		instead of time.
 	- __export_strategies__: A list of `ExportStrategy`s, or a single one, or None.
+
 	- __train_steps_per_iteration__: (applies only to continuous_train_and_eval).
+
 		Perform this many (integer) number of train steps for each training-evaluation
 		iteration. With a small value, the model will be evaluated more frequently
 		with more checkpoints saved. If `None`, will use a default value
 		(which is smaller than `train_steps` if provided).
 
 - __Raises__:
+
 	- __ValueError__: if `estimator` does not implement Estimator interface,
+
 			or if export_strategies has the wrong type.
 
 
@@ -59,10 +75,13 @@ reset_export_strategies(self, new_export_strategies=None)
 Resets the export strategies with the `new_export_strategies`.
 
 - __Args__:
+
   - __new_export_strategies__: A new list of `ExportStrategy`s, or a single one,
+
 or None.
 
 - __Returns__:
+
   The old export strategies.
 
 
@@ -82,9 +101,12 @@ Train the agent for `self._train_steps` steps, after waiting for `delay_secs` se
 If `self._train_steps` is `None`, train forever.
 
 - __Args__:
+
 	- __delay_secs__: Start training after this many seconds.
 
+
 - __Returns__:
+
 	The trained estimator.
 
 
@@ -107,10 +129,13 @@ exhausted or another exception is raised. Start the evaluation after
 `self._eval_delay_secs` seconds.
 
 - __Args__:
+
 	- __delay_secs__: Start evaluating after this many seconds. If `None`, defaults to using
+
 	`self._eval_delays_secs`.
 
 - __Returns__:
+
 	The result of the `evaluate` call to the `Estimator`.
 
 
@@ -152,6 +177,7 @@ Participating in training as the supervisor allows such a task to accomplish
 the first and last items, while performing evaluation allows for the second.
 
 - __Returns__:
+
 	The result of the `evaluate` call to the `Estimator` as well as the
 	export results using the specified `ExportStrategy`.
 
@@ -225,7 +251,9 @@ Starts a TensorFlow server and joins the serving thread.
 Typically used for parameter servers.
 
 - __Raises__:
+
   - __ValueError__: if not enough information is available in the estimator's
+
 config to create a server.
 
 
@@ -242,4 +270,5 @@ test(self)
 Tests training, evaluating and exporting the estimator for a single step.
 
 - __Returns__:
+
   The result of the `evaluate` call to the `Estimator`.

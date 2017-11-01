@@ -19,14 +19,20 @@ measurable element of `predictions` is scaled by the corresponding value of
 `weights`.
 
 - __Args__:
+
 	- __weights__: Optional `Tensor` whose rank is either 0, or the same rank as
+
 	`labels`, and must be broadcastable to `labels` (i.e., all dimensions must
 	be either `1`, or the same as the corresponding `losses` dimension).
 	- __name__: operation name.
+
 	- __scope__: operation scope.
+
 	- __collect__: whether to collect this metric under the metric collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 
@@ -57,16 +63,24 @@ mean_squared_error(weights=1.0, name='MeanSquaredError', scope=None, collect=Tru
 Computes Mean Square Loss.
 
 - __Args__:
+
 	- __weights__: Coefficients for the loss a `scalar`.
+
 	- __scope__: scope to add the op to.
+
 	- __name__: name of the op.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -87,16 +101,24 @@ Computes Huber Loss for DQN.
 [DeepMind link](https://sites.google.com/a/deepmind.com/dqn/)
 
 - __Args__:
+
 	- __weights__: Coefficients for the loss a `scalar`.
+
 	- __scope__: scope to add the op to.
+
 	- __name__: name of the op.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -117,16 +139,24 @@ Computes clipped delta Loss for DQN.
 [DeepMind link](https://sites.google.com/a/deepmind.com/dqn/)
 
 - __Args__:
+
 	- __weights__: Coefficients for the loss a `scalar`.
+
 	- __scope__: scope to add the op to.
+
 	- __name__: name of the op.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -152,6 +182,7 @@ For example, each CIFAR-10 image is labeled with one and only one label:
 an image can be a dog or a truck, but not both.
 
 - __**WARNING__:** This op expects unscaled logits, since it performs a `softmax`
+
 on `y_pred` internally for efficiency.  Do not call this op with the
 output of `softmax`, as it will produce incorrect results.
 
@@ -161,17 +192,26 @@ that `y_true` (labels) are binary arrays (For example, class 2 out of a
 total of 5 different classes, will be define as [0., 1., 0., 0., 0.])
 
 - __Args__:
+
 	- __weights__: Coefficients for the loss a `scalar`.
+
 	- __label_smoothing__: If greater than `0` then smooth the labels.
+
 	- __scope__: scope to add the op to.
+
 	- __name__: name of the op.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -207,17 +247,26 @@ To ensure stability and avoid overflow, the implementation uses
 `y_pred` and `y_true` must have the same type and shape.
 
 - __Args__:
+
 	- __weights__: Coefficients for the loss a `scalar`.
+
 	- __label_smoothing__: If greater than `0` then smooth the labels.
+
 	- __scope__: scope to add the op to.
+
 	- __name__: name of the op.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -235,16 +284,24 @@ hinge_loss(weights=1.0, name='HingeLoss', scope=None, collect=True)
 Hinge Loss.
 
 - __Args__:
+
 	- __weights__: Coefficients for the loss a `scalar`.
+
 	- __name__: name of the op.
+
 	- __scope__: The scope for the operations performed in computing the loss.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -264,23 +321,33 @@ Adds a cosine-distance loss to the training procedure.
 Note that the function assumes that `predictions` and `labels` are already unit-normalized.
 
 - __WARNING__: `weights` also supports dimensions of 1, but the broadcasting does
+
 not work as advertised, you'll wind up with weighted sum instead of weighted
 mean for any but the last dimension. This will be cleaned up soon, so please
 do not rely on the current behavior for anything but the shapes documented for
 `weights` below.
 
 - __Args__:
+
 	- __dim__: The dimension along which the cosine distance is computed.
+
 	- __weights__: Coefficients for the loss a `scalar`.
+
 	- __name__: name of the op.
+
 	- __scope__: The scope for the operations performed in computing the loss.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -298,15 +365,22 @@ kullback_leibler_divergence(weights=1.0, name='KullbackLeiberDivergence', scope=
 Adds a Kullback leiber diverenge loss to the training procedure.
 
  - __Args__:
+
 	- __name__: name of the op.
+
 	- __scope__: The scope for the operations performed in computing the loss.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+
 
 
 ----
@@ -324,12 +398,19 @@ poisson_loss(weights=1.0, name='PoissonLoss', scope=None, collect=False)
 Adds a poisson loss to the training procedure.
 
  - __Args__:
+
 	- __name__: name of the op.
+
 	- __scope__: The scope for the operations performed in computing the loss.
+
 	- __collect__: add to losses collection.
 
+
 - __Returns__:
+
 	A scalar `Tensor` representing the loss value.
 
 - __Raises__:
+
 	- __ValueError__: If `predictions` shape doesn't match `labels` shape, or `weights` is `None`.
+

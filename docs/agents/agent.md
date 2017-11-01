@@ -10,23 +10,25 @@ Agent class is a reinforcement learning Q model trainer/evaluator.
 Constructs an `Agent` instance.
 
 - __Args__:
+
 	- __model_fn__: Model function. Follows the signature:
+
 		* Args:
-		* `features`: single `Tensor` or `dict` of `Tensor`s
+			* `features`: single `Tensor` or `dict` of `Tensor`s
 			 (depending on data passed to `fit`),
-		* `labels`: `Tensor` or `dict` of `Tensor`s (for multi-head models).
+			* `labels`: `Tensor` or `dict` of `Tensor`s (for multi-head models).
 			If mode is `Modes.PREDICT`, `labels=None` will be passed.
 			If the `model_fn`'s signature does not accept `mode`,
 			the `model_fn` must still be able to handle `labels=None`.
-		* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
-		* `params`: Optional `dict` of hyperparameters.  Will receive what
+			* `mode`: Specifies if this training, evaluation or prediction. See `Modes`.
+			* `params`: Optional `dict` of hyperparameters.  Will receive what
 			is passed to Estimator in `params` parameter. This allows
 			to configure Estimators from hyper parameter tuning.
-		* `config`: Optional configuration object. Will receive what is passed
+			* `config`: Optional configuration object. Will receive what is passed
 			to Estimator in `config` parameter, or the default `config`.
 			Allows updating things in your model_fn based on configuration
 			such as `num_ps_replicas`.
-		* `model_dir`: Optional directory where model parameters, graph etc
+			* `model_dir`: Optional directory where model parameters, graph etc
 			are saved. Will receive what is passed to Estimator in
 			`model_dir` parameter, or the default `model_dir`. Allows
 			updating things in your model_fn that expect model_dir, such as
@@ -37,20 +39,26 @@ Constructs an `Agent` instance.
 
 		Supports next three signatures for the function:
 
-		* `(features, labels, mode)`
-		* `(features, labels, mode, params)`
-		* `(features, labels, mode, params, config)`
-		* `(features, labels, mode, params, config, model_dir)`
+			* `(features, labels, mode)`
+			* `(features, labels, mode, params)`
+			* `(features, labels, mode, params, config)`
+			* `(features, labels, mode, params, config, model_dir)`
 
 	- __memory__: An instance of a subclass of `Memory`.
+
 	- __model_dir__: Directory to save model parameters, graph and etc. This can
+
 		also be used to load checkpoints from the directory into a estimator to
 		continue training a previously saved model.
 	- __config__: Configuration object.
+
 	- __params__: `dict` of hyper parameters that will be passed into `model_fn`.
-		  Keys are names of parameters, values are basic python types.
+
+			  Keys are names of parameters, values are basic python types.
 - __Raises__:
+
 	- __ValueError__: parameters of `model_fn` don't match `params`.
+
 
 
 ----
@@ -66,19 +74,27 @@ train(self, env, first_update=35, update_frequency=10, episodes=None, steps=None
 Trains a model given an environment.
 
 - __Args__:
+
 	- __env__: `Environment` instance.
+
 	- __first_update__: `int`. First timestep to calculate the loss and train_op for the model.
+
 	- __update_frequency__: `int`. The frequecncy at which to calcualate the loss and train_op.
+
 	- __steps__: Number of steps for which to train model. If `None`, train forever.
+
 	'steps' works incrementally. If you call two times fit(steps=10) then
 	training occurs in total 20 steps. If you don't want to have incremental
 	behaviour please set `max_steps` instead. If set, `max_steps` must be
 	`None`.
 	- __hooks__: List of `BaseMonitor` subclass instances.
+
 	Used for callbacks inside the training loop.
 	- __max_steps__: Number of total steps for which to train model. If `None`,
+
 	train forever. If set, `steps` must be `None`.
 	- __max_episodes__: Number of total episodes for which to train model. If `None`,
+
 	train forever. If set, `episodes` must be `None`.
 
 	Two calls to `fit(steps=100)` means 200 training iterations.
@@ -86,6 +102,7 @@ Trains a model given an environment.
 	that the second call will not do any iteration since first call did all 100 steps.
 
 - __Returns__:
+
 	`self`, for chaining.
 
 
@@ -108,12 +125,19 @@ We need to differentiate between the `global_timestep` and `global_step`.
  our agent acted. It has an effect on the exploration rate and how it's annealed.
 
 - __Args__:
+
 	- __env__: `Environment` instance.
+
 	- __sess__: `MonitoredTrainingSession` instance.
+
 	- __first_update__: The first timestep we should invoke the train_op and update
+
 	the model loss.
 	- __update_frequency__: The frequency of calculating the loss of the model.
+
 	- __estimator_spec__: `EstimatorSpec` instance.
 
+
 - __Returns__:
+
 	statistics about episode.

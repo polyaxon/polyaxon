@@ -5,25 +5,26 @@
 
 # Polyaxon
 
-Deep Learning and Reinforcement learning library for TensorFlow for building end to end models and experiments.
+Deep Learning and Reinforcement learning library for for building, training and monitoring models and experiments at any scale.
 
 # Design Goals
 
+Polyaxon is a set of tools to help simplify building and training deep learning models.
+
 Polyaxon was built with the following goals:
 
- * Modularity: The creation of a computation graph based on modular and understandable modules,
-    with the possibility to reuse and share the module in subsequent usage.
-
  * Usability: Training a model should be easy enough, and should enable quick experimentations.
+ 
+ * Scale: Experiments running locally, on premise, or on the cloud.
+ 
+ * Concurrency: hyperparameter search and optimization in a concurrent way. 
 
- * Configurable: Models and experiments could be created using a YAML/Json file, but also in python files.
+ * Configurable: Models and experiments could be created using YAML files and/or a Python environment.
 
  * Extensibility: The modularity and the extensive documentation of the code makes it easy to build and extend the set of provided modules.
 
- * Performance: Polyaxon is based on internal `tensorflow` code base and leverage the builtin distributed learning.
-
- * Data Preprocessing: Polyaxon provides many pipelines and data processor to support different data inputs.
-
+ * Monitoring: Polyaxon tracks experiments for comparison and reproducibility.
+ 
 
 # Quick start
 
@@ -390,7 +391,7 @@ Or you can just clone the repo `git clone https://github.com/polyaxon/polyaxon.g
  * `cmd/py` to start a python3 shell with all requirements installed.
  * `cmd/jupyter` to start a jupyter notebook server.
  * `cmd/tensorboard` to start a tensorboard server.
- * `cmd/test` to run the tests.   
+ * `cmd/test` to run the tests.
 
 # Examples
 

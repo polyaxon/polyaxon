@@ -6,6 +6,8 @@ import os.path
 import re
 import shutil
 
+from polyaxon_schemas.processing import pipelines as pipelines_schemas
+
 from polyaxon import (
     activations,
     constraints,
@@ -70,13 +72,16 @@ from polyaxon.rl.environments import EnvSpec, GymEnvironment
 from polyaxon.rl.environments import Environment
 from polyaxon.rl.memories import Memory, BatchMemory
 from polyaxon.rl import utils as rl_utils
-
 ROOT = 'http://docs.polyaxon.com/'
+
+LIB_URL = 'https://github.com/polyaxon/polyaxon/blob/master/'
+SCHEMAS_URL = 'https://github.com/polyaxon/polyaxon-schemas/blob/master/'
+CLI_URL = 'https://github.com/polyaxon/polyaxon-cli/blob/master/'
 
 PAGES = []
 
 PAGES.append(
-    ('https://github.com/polyaxon/polyaxon/blob/master/', [
+    (LIB_URL, [
         # Experiments
         {
             'page': 'experiments/experiment.md',
@@ -169,7 +174,7 @@ PAGES.append(
         # Models
         {
             'page': 'models/base_model.md',
-            'classes': [models.BaseModel],
+            'classes': [(models.BaseModel, models.BaseModel.CONFIG)],
             'classes_functions': [
                 models.BaseModel._clip_gradients_fn,
                 models.BaseModel._build_optimizer,
@@ -211,9 +216,9 @@ PAGES.append(
         {
             'page': 'models/models.md',
             'classes': [
-                models.Regressor,
-                models.Classifier,
-                models.Generator,
+                (models.Regressor, models.Regressor.CONFIG),
+                (models.Classifier, models.Classifier.CONFIG),
+                (models.Generator, models.Generator.CONFIG),
             ],
         },
         {
@@ -247,120 +252,119 @@ PAGES.append(
         {
             'page': 'layers/advanced_activations.md',
             'classes': [
-                advanced_activations.LeakyReLU,
-                advanced_activations.PReLU,
-                advanced_activations.ELU,
-                advanced_activations.ThresholdedReLU,
+                (advanced_activations.LeakyReLU, advanced_activations.LeakyReLU.CONFIG),
+                (advanced_activations.PReLU, advanced_activations.PReLU.CONFIG),
+                (advanced_activations.ELU, advanced_activations.ELU.CONFIG),
+                (advanced_activations.ThresholdedReLU, advanced_activations.ThresholdedReLU.CONFIG),
             ],
         },
         {
             'page': 'layers/core.md',
             'classes': [
-                core.Masking,
-                core.Dropout,
-                core.SpatialDropout1D,
-                core.SpatialDropout2D,
-                core.SpatialDropout3D,
-                core.Activation,
-                core.Reshape,
-                core.Permute,
-                core.Flatten,
-                core.RepeatVector,
-                core.Lambda,
-                core.Dense,
-                core.ActivityRegularization,
-                core.Cast,
+                (core.Masking, core.Masking.CONFIG),
+                (core.Dropout, core.Dropout.CONFIG),
+                (core.SpatialDropout1D, core.SpatialDropout1D.CONFIG),
+                (core.SpatialDropout2D, core.SpatialDropout2D.CONFIG),
+                (core.SpatialDropout3D, core.SpatialDropout3D.CONFIG),
+                (core.Activation, core.Activation.CONFIG),
+                (core.Reshape, core.Reshape.CONFIG),
+                (core.Permute, core.Permute.CONFIG),
+                (core.Flatten, core.Flatten.CONFIG),
+                (core.RepeatVector, core.RepeatVector.CONFIG),
+                (core.Dense, core.Dense.CONFIG),
+                (core.ActivityRegularization, core.ActivityRegularization.CONFIG),
+                (core.Cast, core.Cast.CONFIG),
             ],
         },
         {
             'page': 'layers/convolutional.md',
             'classes': [
-                convolutional.Conv1D,
-                convolutional.Conv2D,
-                convolutional.Conv3D,
-                convolutional.Conv2DTranspose,
-                convolutional.Conv3DTranspose,
-                convolutional.SeparableConv2D,
-                convolutional.UpSampling1D,
-                convolutional.UpSampling2D,
-                convolutional.UpSampling3D,
-                convolutional.ZeroPadding1D,
-                convolutional.ZeroPadding2D,
-                convolutional.ZeroPadding3D,
-                convolutional.Cropping1D,
-                convolutional.Cropping2D,
-                convolutional.Cropping3D,
+                (convolutional.Conv1D, convolutional.Conv1D.CONFIG),
+                (convolutional.Conv2D, convolutional.Conv2D.CONFIG),
+                (convolutional.Conv3D, convolutional.Conv3D.CONFIG),
+                (convolutional.Conv2DTranspose, convolutional.Conv2DTranspose.CONFIG),
+                (convolutional.Conv3DTranspose, convolutional.Conv3DTranspose.CONFIG),
+                (convolutional.SeparableConv2D, convolutional.SeparableConv2D.CONFIG),
+                (convolutional.UpSampling1D, convolutional.UpSampling1D.CONFIG),
+                (convolutional.UpSampling2D, convolutional.UpSampling2D.CONFIG),
+                (convolutional.UpSampling3D, convolutional.UpSampling3D.CONFIG),
+                (convolutional.ZeroPadding1D, convolutional.ZeroPadding1D.CONFIG),
+                (convolutional.ZeroPadding2D, convolutional.ZeroPadding2D.CONFIG),
+                (convolutional.ZeroPadding3D, convolutional.ZeroPadding3D.CONFIG),
+                (convolutional.Cropping1D, convolutional.Cropping1D.CONFIG),
+                (convolutional.Cropping2D, convolutional.Cropping2D.CONFIG),
+                (convolutional.Cropping3D, convolutional.Cropping3D.CONFIG),
             ],
         },
         {
             'page': 'layers/convolutional_recurrent.md',
             'classes': [
-                convolutional_recurrent.ConvRecurrent2D,
-                convolutional_recurrent.ConvLSTM2D
+                (convolutional_recurrent.ConvRecurrent2D, convolutional_recurrent.ConvRecurrent2D),
+                (convolutional_recurrent.ConvLSTM2D, convolutional_recurrent.ConvLSTM2D),
             ]
         },
         {
             'page': 'layers/local.md',
             'classes': [
-                local.LocallyConnected1D,
-                local.LocallyConnected2D
+                (local.LocallyConnected1D, local.LocallyConnected1D),
+                (local.LocallyConnected2D, local.LocallyConnected2D),
             ]
         },
         {
             'page': 'layers/merge.md',
             'classes': [
-                merge.Add,
-                merge.Multiply,
-                merge.Average,
-                merge.Maximum,
-                merge.Concatenate,
-                merge.Dot,
+                (merge.Add, merge.Add),
+                (merge.Multiply, merge.Multiply),
+                (merge.Average, merge.Average),
+                (merge.Maximum, merge.Maximum),
+                (merge.Concatenate, merge.Concatenate),
+                (merge.Dot, merge.Dot),
             ]
         },
         {
             'page': 'layers/noise.md',
             'classes': [
-                noise.GaussianNoise,
-                noise.GaussianDropout,
-                noise.AlphaDropout,
+                (noise.GaussianNoise, noise.GaussianNoise.CONFIG),
+                (noise.GaussianDropout, noise.GaussianDropout.CONFIG),
+                (noise.AlphaDropout, noise.AlphaDropout.CONFIG),
             ]
         },
         {
             'page': 'layers/pooling.md',
             'classes': [
-                pooling.AveragePooling1D,
-                pooling.MaxPooling1D,
-                pooling.AveragePooling2D,
-                pooling.MaxPooling2D,
-                pooling.AveragePooling3D,
-                pooling.MaxPooling3D,
-                pooling.GlobalAveragePooling1D,
-                pooling.GlobalMaxPooling1D,
-                pooling.GlobalAveragePooling2D,
-                pooling.GlobalMaxPooling2D,
-                pooling.GlobalAveragePooling3D,
-                pooling.GlobalMaxPooling3D,
+                (pooling.AveragePooling1D, pooling.AveragePooling1D.CONFIG),
+                (pooling.MaxPooling1D, pooling.MaxPooling1D.CONFIG),
+                (pooling.AveragePooling2D, pooling.AveragePooling2D.CONFIG),
+                (pooling.MaxPooling2D, pooling.MaxPooling2D.CONFIG),
+                (pooling.AveragePooling3D, pooling.AveragePooling3D.CONFIG),
+                (pooling.MaxPooling3D, pooling.MaxPooling3D.CONFIG),
+                (pooling.GlobalAveragePooling1D, pooling.GlobalAveragePooling1D.CONFIG),
+                (pooling.GlobalMaxPooling1D, pooling.GlobalMaxPooling1D.CONFIG),
+                (pooling.GlobalAveragePooling2D, pooling.GlobalAveragePooling2D.CONFIG),
+                (pooling.GlobalMaxPooling2D, pooling.GlobalMaxPooling2D.CONFIG),
+                (pooling.GlobalAveragePooling3D, pooling.GlobalAveragePooling3D.CONFIG),
+                (pooling.GlobalMaxPooling3D, pooling.GlobalMaxPooling3D.CONFIG),
             ]
         },
         {
             'page': 'layers/recurrent.md',
             'classes': [
-                recurrent.Recurrent,
-                recurrent.SimpleRNN,
-                recurrent.LSTM,
-                recurrent.GRU
+                (recurrent.Recurrent, recurrent.Recurrent.CONFIG),
+                (recurrent.SimpleRNN, recurrent.SimpleRNN.CONFIG),
+                (recurrent.LSTM, recurrent.LSTM.CONFIG),
+                (recurrent.GRU, recurrent.GRU.CONFIG),
             ],
         },
         {
             'page': 'layers/embeddings.md',
             'classes': [
-                embeddings.Embedding,
+                (embeddings.Embedding, embeddings.Embedding.CONFIG),
             ],
         },
         {
             'page': 'layers/normalizations.md',
             'classes': [
-                normalizations.BatchNormalization,
+                (normalizations.BatchNormalization, normalizations.BatchNormalization.CONFIG),
                 # normalizations.LocalResponseNormalization,
                 # normalizations.L2Normalization
             ],
@@ -368,9 +372,9 @@ PAGES.append(
         {
             'page': 'layers/wrappers.md',
             'classes': [
-                wrappers.Wrapper,
-                wrappers.TimeDistributed,
-                wrappers.Bidirectional,
+                (wrappers.Wrapper, wrappers.Wrapper.CONFIG),
+                (wrappers.TimeDistributed, wrappers.TimeDistributed.CONFIG),
+                (wrappers.Bidirectional, wrappers.Bidirectional.CONFIG),
             ]
         },
 
@@ -387,7 +391,8 @@ PAGES.append(
         },
         {
             'page': 'bridges/bridges.md',
-            'classes': [bridges.NoOpBridge, bridges.LatentBridge]
+            'classes': [(bridges.NoOpBridge, bridges.NoOpBridge.CONFIG),
+                        (bridges.LatentBridge, bridges.LatentBridge.CONFIG),]
         },
 
         # Processing
@@ -438,11 +443,12 @@ PAGES.append(
         {
             'page': 'processing/pipelines.md',
             'classes': [
-                pipelines.Pipeline,
-                pipelines.TFRecordImagePipeline,
-                pipelines.ParallelTextPipeline,
-                pipelines.TFRecordSourceSequencePipeline,
-                pipelines.ImageCaptioningPipeline
+                (pipelines.Pipeline, pipelines_schemas.PipelineConfig),
+                (pipelines.TFRecordImagePipeline, pipelines_schemas.TFRecordImagePipelineConfig),
+                (pipelines.ParallelTextPipeline, pipelines_schemas.ParallelTextPipelineConfig),
+                (pipelines.TFRecordSourceSequencePipeline,
+                 pipelines_schemas.TFRecordSequencePipelineConfig),
+                (pipelines.ImageCaptioningPipeline, pipelines_schemas.ImageCaptioningPipelineConfig),
             ]
         },
         {
@@ -553,7 +559,8 @@ PAGES.append(
     ]))
 
 KEYWORDS = ['Examples', 'Args', 'Arguments', 'Attributes', 'Returns',
-            'Raises', 'References', 'Links', 'Yields']
+            'Raises', 'References', 'Links', 'Yields', 'Programmatic usage',
+            'Polyaxonfile usage', 'Input shape', 'Output shape']
 
 EXCLUDE = ['check_loss_data', 'built_loss']
 
@@ -562,13 +569,33 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 DOCS_DIR = os.path.join(BASE_DIR, 'docs')
 
 
-def is_polyaxon_module(module_name):
+def is_polyaxon_lib_module(module_name):
     return module_name[:len('polyaxon.')] == 'polyaxon.'
 
 
+def is_polyaxon_cli_module(module_name):
+    return module_name[:len('polyaxon_cli.')] == 'polyaxon_cli.'
+
+
+def is_polyaxon_schemas_module(module_name):
+    return module_name[:len('polyaxon_schemas.')] == 'polyaxon_schemas.'
+
+
+def is_polyaxon_module(module_name):
+    return (is_polyaxon_lib_module(module_name) or
+            is_polyaxon_cli_module(module_name) or
+            is_polyaxon_schemas_module(module_name))
+
+
 def get_module_name(module_name):
-    assert is_polyaxon_module(module_name), "Got wrong module {}".format(module_name)
-    return module_name[:len('polyaxon.')]
+    if is_polyaxon_lib_module(module_name):
+        return module_name[:len('polyaxon.')]
+    if is_polyaxon_cli_module(module_name):
+        return module_name[:len('polyaxon_cli.')]
+    if is_polyaxon_schemas_module(module_name):
+        return module_name[:len('polyaxon_schemas.')]
+
+    raise "Got wrong module {}".format(module_name)
 
 
 def get_earliest_class_that_defined_member(member, cls):
@@ -642,14 +669,25 @@ def class_to_docs_link(cls):
     return link
 
 
-def obj_to_source_link(cls, source_url):
-    module_name = cls.__module__
-    get_module_name(module_name)
-    path = module_name.replace('.', '/')
-    path += '.py'
-    line = inspect.getsourcelines(cls)[-1]
-    link = source_url + path + '#L' + str(line)
-    return '[[source]](' + link + ')'
+def obj_to_source_link(source_url, obj, obj_schema=None):
+    def get_module_link(module, url):
+        module_name = module.__module__
+        get_module_name(module_name)
+        path = module_name.replace('.', '/')
+        path += '.py'
+        line = inspect.getsourcelines(obj)[-1]
+        return url + path + '#L' + str(line)
+
+    obj_link = get_module_link(obj, source_url)
+    link_template = '[[{}]]({})'
+
+    obj_url = link_template.format('source', obj_link)
+    if not obj_schema:
+        return obj_url
+
+    schema_link = get_module_link(obj_schema, SCHEMAS_URL)
+    schema_url = link_template.format('schema source', schema_link)
+    return '{} {}'.format(obj_url, schema_url)
 
 
 def code_snippet(snippet):
@@ -659,53 +697,69 @@ def code_snippet(snippet):
     return result
 
 
+def process_docstring(docstring, line_processor):
+    processed = []
+    inside_snippet = False
+    for line_string in docstring.split('\n'):
+        if '```' in line_string:
+            inside_snippet = not inside_snippet
+
+        for keyword in KEYWORDS:
+            line_string = re.sub(r'    ({})(\(.*\)):'.format(keyword),
+                                 r'    - __\__\2\n\n', line_string)
+
+        if not inside_snippet:
+            line_string = re.sub(r'    ([^\s\\\(]+):(.*)', r'    - __\1__:\2\n', line_string)
+
+        processed.append(line_processor(line_string))
+
+    return '\n'.join(processed)
+
+
 def process_class(cls, source_url):
-    def process_docstring(docstring):
-        indet_levels = [l for l in
-                        [len(line) - len(line.lstrip()) for line in docstring.split('\n')]
-                        if l > 0]
-        indent = min(indet_levels) if indet_levels else 0
-        if indent == 2:
-            docstring = re.sub(r'  ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
-        else:
-            docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
-        docstring = docstring.replace('    ' * 3, '\t\t')
-        docstring = docstring.replace('    ' * 2, '\t')
-        docstring = docstring.replace('    ', '')
-        return docstring
+    def process_line_string(line_string):
+        line_string = line_string.replace('    ' * 4, '\t\t\t')
+        line_string = line_string.replace('    ' * 3, '\t\t')
+        line_string = line_string.replace('    ' * 2, '\t')
+        line_string = line_string.replace('    ', '')
+        return line_string
+
+    cls_schema = None
+    if isinstance(cls, tuple):
+        cls_schema = cls[1]
+        cls = cls[0]
 
     subblocks = []
     signature = get_class_signature(cls)
-    class_source_link = obj_to_source_link(cls, source_url)
+    class_source_link = obj_to_source_link(source_url, cls, cls_schema)
     subblocks.append('<span style="float:right;">' + class_source_link + '</span>')
     subblocks.append('## ' + cls.__name__ + '\n')
     subblocks.append(code_snippet(signature))
-    docstring = cls.__doc__
+    docstring = cls.__doc__ if not cls_schema else cls_schema.__doc__
     if docstring:
-        subblocks.append(process_docstring(docstring))
+        subblocks.append(process_docstring(docstring, process_line_string))
 
     return subblocks
 
 
 def process_function(function, source_url, class_function=False):
-    def process_docstring(docstring):
-        docstring = re.sub(r'    ([^\s\\\(]+):(.*)\n', r'    - __\1__:\2\n', docstring)
-        docstring = docstring.replace('    ' * (5 if class_function else 4), '\t\t')
-        docstring = docstring.replace('    ' * (3 if class_function else 2), '\t')
-        docstring = docstring.replace('    ', '')
-        return docstring
+    def process_line_string(line_string):
+        line_string = line_string.replace('    ' * (5 if class_function else 4), '\t\t')
+        line_string = line_string.replace('    ' * (3 if class_function else 2), '\t')
+        line_string = line_string.replace('    ', '')
+        return line_string
 
     subblocks = []
     signature = get_function_signature(function, method=False)
     if not class_function and is_polyaxon_module(function.__module__):
-        function_source_link = obj_to_source_link(function, source_url)
+        function_source_link = obj_to_source_link(source_url, function)
         subblocks.append('<span style="float:right;">' + function_source_link + '</span>')
     signature = signature.replace(function.__module__ + '.', '')
     subblocks.append(('### ' if class_function else '## ') + function.__name__ + '\n')
     subblocks.append(code_snippet(signature))
     docstring = function.__doc__
     if docstring:
-        subblocks.append(process_docstring(docstring))
+        subblocks.append(process_docstring(docstring, process_line_string))
     return subblocks
 
 

@@ -1,3 +1,14 @@
+<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L12)</span>
+## Zeros
+
+```python
+polyaxon.initializations.Zeros(dtype=<dtype: 'float32'>)
+```
+
+Initializer that generates tensors initialized to 0.
+
+----
+
 <span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L17)</span>
 ## Ones
 
@@ -31,16 +42,19 @@ Initializer that generates tensors with constant values.
   elements in `value` is greater than the number of elements required by the
   tensor shape, the initializer will raise a `ValueError`.
 
-- __Args__:
-  - __value__: A Python scalar, list of values, or a N-dimensional numpy array. All
+  Args:
+- __value__: A Python scalar, list of values, or a N-dimensional numpy array. All
+
   elements of the initialized variable will be set to the corresponding
   value in the `value` argument.
-  - __dtype__: The data type.
-  - __verify_shape__: Boolean that enables verification of the shape of `value`. If
+- __dtype__: The data type.
+
+- __verify_shape__: Boolean that enables verification of the shape of `value`. If
+
   `True`, the initializer will throw an error if the shape of `value` is not
   compatible with the shape of the initialized tensor.
 
-- __Examples__:
+  Examples:
 The following example can be rewritten using a numpy.ndarray instead
 of the `value` list, even reshaped, as shown in the two commented lines
 below the `value` list initialization.
@@ -79,14 +93,14 @@ larger shape:
 >>> with tf.Session():
 >>>   x = tf.get_variable('x', shape=[2, 3], initializer=init)
 
-  - __ValueError__: Too many elements provided. Needed at most 6, but received 8
+ValueError: Too many elements provided. Needed at most 6, but received 8
 
 >>> print('shape verification:')
 >>> init_verify = tf.constant_initializer(value, verify_shape=True)
 >>> with tf.Session():
 >>>   x = tf.get_variable('x', shape=[3, 4], initializer=init_verify)
 
-  - __TypeError__: Expected Tensor's shape: (3, 4), got (8,).
+TypeError: Expected Tensor's shape: (3, 4), got (8,).
   ```
   
 
@@ -101,15 +115,19 @@ polyaxon.initializations.Uniform(minval=0, maxval=None, seed=None, dtype=<dtype:
 
 Initializer that generates tensors with a uniform distribution.
 
-- __Args__:
-  - __minval__: A python scalar or a scalar tensor. Lower bound of the range
+  Args:
+- __minval__: A python scalar or a scalar tensor. Lower bound of the range
+
   of random values to generate.
-  - __maxval__: A python scalar or a scalar tensor. Upper bound of the range
+- __maxval__: A python scalar or a scalar tensor. Upper bound of the range
+
   of random values to generate.  Defaults to 1 for float types.
-  - __seed__: A Python integer. Used to create random seeds. See
+- __seed__: A Python integer. Used to create random seeds. See
+
   @{tf.set_random_seed}
   for behavior.
-  - __dtype__: The data type.
+- __dtype__: The data type.
+
   
 
 ----
@@ -123,15 +141,19 @@ polyaxon.initializations.Normal(mean=0.0, stddev=1.0, seed=None, dtype=<dtype: '
 
 Initializer that generates tensors with a normal distribution.
 
-- __Args__:
-  - __mean__: a python scalar or a scalar tensor. Mean of the random values
+  Args:
+- __mean__: a python scalar or a scalar tensor. Mean of the random values
+
   to generate.
-  - __stddev__: a python scalar or a scalar tensor. Standard deviation of the
+- __stddev__: a python scalar or a scalar tensor. Standard deviation of the
+
   random values to generate.
-  - __seed__: A Python integer. Used to create random seeds. See
+- __seed__: A Python integer. Used to create random seeds. See
+
   @{tf.set_random_seed}
   for behavior.
-  - __dtype__: The data type. Only floating point types are supported.
+- __dtype__: The data type. Only floating point types are supported.
+
   
 
 ----
@@ -150,15 +172,19 @@ Initializer that generates a truncated normal distribution.
   are discarded and re-drawn. This is the recommended initializer for
   neural network weights and filters.
 
-- __Args__:
-  - __mean__: a python scalar or a scalar tensor. Mean of the random values
+  Args:
+- __mean__: a python scalar or a scalar tensor. Mean of the random values
+
   to generate.
-  - __stddev__: a python scalar or a scalar tensor. Standard deviation of the
+- __stddev__: a python scalar or a scalar tensor. Standard deviation of the
+
   random values to generate.
-  - __seed__: A Python integer. Used to create random seeds. See
+- __seed__: A Python integer. Used to create random seeds. See
+
   @{tf.set_random_seed}
   for behavior.
-  - __dtype__: The data type. Only floating point types are supported.
+- __dtype__: The data type. Only floating point types are supported.
+
   
 
 ----
@@ -182,17 +208,23 @@ Initializer capable of adapting its scale to the shape of weights tensors.
   With `distribution="uniform"`, samples are drawn from a uniform distribution
   within [-limit, limit], with `limit = sqrt(3 * scale / n)`.
 
-- __Arguments__:
-  - __scale__: Scaling factor (positive float).
-  - __mode__: One of "fan_in", "fan_out", "fan_avg".
-  - __distribution__: Random distribution to use. One of "normal", "uniform".
-  - __seed__: A Python integer. Used to create random seeds. See
+  Arguments:
+- __scale__: Scaling factor (positive float).
+
+- __mode__: One of "fan_in", "fan_out", "fan_avg".
+
+- __distribution__: Random distribution to use. One of "normal", "uniform".
+
+- __seed__: A Python integer. Used to create random seeds. See
+
   @{tf.set_random_seed}
   for behavior.
-  - __dtype__: The data type. Only floating point types are supported.
+- __dtype__: The data type. Only floating point types are supported.
 
-- __Raises__:
-  - __ValueError__: In case of an invalid value for the "scale", mode" or
+
+  Raises:
+- __ValueError__: In case of an invalid value for the "scale", mode" or
+
   "distribution" arguments.
   
 
@@ -216,10 +248,13 @@ Initializer that generates an orthogonal matrix.
   is initialized, where `n` is the length of the shape vector.
   The matrix is subsequently reshaped to give a tensor of the desired shape.
 
-- __Args__:
-  - __gain__: multiplicative factor to apply to the orthogonal matrix
-  - __dtype__: The type of the output.
-  - __seed__: A Python integer. Used to create random seeds. See
+  Args:
+- __gain__: multiplicative factor to apply to the orthogonal matrix
+
+- __dtype__: The type of the output.
+
+- __seed__: A Python integer. Used to create random seeds. See
+
   @{tf.set_random_seed}
   for behavior.
   
@@ -237,8 +272,9 @@ Initializer that generates the identity matrix.
 
   Only use for square 2D matrices.
 
-- __Arguments__:
-	- __gain__: Multiplicative factor to apply to the identity matrix.
+  Arguments:
+  - __gain__: Multiplicative factor to apply to the identity matrix.
+
   
 
 ----
@@ -257,15 +293,17 @@ Glorot uniform initializer, also called Xavier uniform initializer.
   where `fan_in` is the number of input units in the weight tensor
   and `fan_out` is the number of output units in the weight tensor.
 
-- __Arguments__:
-	- __seed__: A Python integer. Used to seed the random generator.
+  Arguments:
+  - __seed__: A Python integer. Used to seed the random generator.
 
-- __Returns__:
+
+  Returns:
   An initializer.
 
-- __References__:
+  References:
   Glorot & Bengio, AISTATS 2010
-	- __http__://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf
+  - __http__://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf
+
   
 
 ----
@@ -284,15 +322,17 @@ Glorot normal initializer, also called Xavier normal initializer.
   where `fan_in` is the number of input units in the weight tensor
   and `fan_out` is the number of output units in the weight tensor.
 
-- __Arguments__:
-	- __seed__: A Python integer. Used to seed the random generator.
+  Arguments:
+  - __seed__: A Python integer. Used to seed the random generator.
 
-- __Returns__:
+
+  Returns:
   An initializer.
 
-- __References__:
+  References:
   Glorot & Bengio, AISTATS 2010
-	- __http__://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf
+  - __http__://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf
+
   
 
 ----
@@ -310,13 +350,14 @@ He uniform variance scaling initializer.
   where `limit` is `sqrt(6 / fan_in)`
   where `fan_in` is the number of input units in the weight tensor.
 
-- __Arguments__:
-	- __seed__: A Python integer. Used to seed the random generator.
+  Arguments:
+  - __seed__: A Python integer. Used to seed the random generator.
 
-- __Returns__:
+
+  Returns:
   An initializer.
 
-- __References__:
+  References:
   He et al., http://arxiv.org/abs/1502.01852
   
 
@@ -335,13 +376,14 @@ He normal initializer.
   with `stddev = sqrt(2 / fan_in)`
   where `fan_in` is the number of input units in the weight tensor.
 
-- __Arguments__:
-	- __seed__: A Python integer. Used to seed the random generator.
+  Arguments:
+  - __seed__: A Python integer. Used to seed the random generator.
 
-- __Returns__:
+
+  Returns:
   An initializer.
 
-- __References__:
+  References:
   He et al., http://arxiv.org/abs/1502.01852
   
 
@@ -360,15 +402,17 @@ LeCun uniform initializer.
   where `limit` is `sqrt(3 / fan_in)`
   where `fan_in` is the number of input units in the weight tensor.
 
-- __Arguments__:
-	- __seed__: A Python integer. Used to seed the random generator.
+  Arguments:
+  - __seed__: A Python integer. Used to seed the random generator.
 
-- __Returns__:
+
+  Returns:
   An initializer.
 
-- __References__:
+  References:
   LeCun 98, Efficient Backprop,
-	- __http__://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf
+  - __http__://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf
+
   
 
 ----
@@ -386,25 +430,15 @@ LeCun normal initializer.
   with `stddev = sqrt(1 / fan_in)`
   where `fan_in` is the number of input units in the weight tensor.
 
-- __Arguments__:
-	- __seed__: A Python integer. Used to seed the random generator.
+  Arguments:
+  - __seed__: A Python integer. Used to seed the random generator.
 
-- __Returns__:
+
+  Returns:
   An initializer.
 
-- __References__:
+  References:
   - [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
   - [Efficient
   Backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
   
-
-----
-
-<span style="float:right;">[[source]](https://github.com/polyaxon/polyaxon/blob/master/polyaxon/initializations.py#L12)</span>
-## Zeros
-
-```python
-polyaxon.initializations.Zeros(dtype=<dtype: 'float32'>)
-```
-
-Initializer that generates tensors initialized to 0.

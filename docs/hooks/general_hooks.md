@@ -14,7 +14,9 @@ would be setting `wait_until_step=int(K*log(task_id+1))` assuming that
 task_id=0 is the chief.
 
 - __Args__:
+
 	- __wait_until_step__: an `int` shows until which global step should we wait.
+
 
 
 ----
@@ -30,8 +32,11 @@ A run hook which evaluates `Tensors` at the end of a session.
 (A mirror to tensorflow.python.training.basic_session_run_hooks GlobalStepWaiterHook.)
 
 - __Args__:
+
 	- __final_ops__: A single `Tensor`, a list of `Tensors` or a dictionary of names to `Tensors`.
+
 	- __final_ops_feed_dict__: A feed dictionary to use when running `final_ops_dict`.
+
 
 
 ----
@@ -63,5 +68,8 @@ Monitors loss and stops training if loss is NaN.
 Can either fail with exception or just stop training.
 
 - __Args__:
+
 	- __loss_tensor__: `Tensor`, the loss tensor.
+
 	- __fail_on_nan_loss__: `bool`, whether to raise exception when loss is NaN.
+
