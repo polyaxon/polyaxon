@@ -6,6 +6,16 @@ import click
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
 
+def check_polyaxonfile(file):
+    try:
+        plx_file = PolyaxonFile.read(file)
+        click.secho("Polyaxonfile valid", fg='green')
+        return plx_file
+    except Exception as e:
+        click.secho("Polyaxonfile is not valid", fg='red')
+        raise PolyaxonFile(e)
+
+
 @click.command()
 @click.option('--file', '-f', type=click.Path(exists=True), help='The polyaxon file to check.')
 @click.option('--all', '-a', type=click.Path(exists=True),
@@ -22,12 +32,7 @@ from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
               help='Checks and prints the matrix def.')
 def check(file, all, version, cluster, run_type, project, log_path, matrix, experiments):
     """Command for checking a polyaxonfile."""
-    try:
-        plx_file = PolyaxonFile(file)
-        click.secho("Polyaxonfile valid", fg='green')
-    except Exception as e:
-        click.secho("Polyaxonfile is not valid", fg='red')
-        raise PolyaxonFile(e)
+    plx_file = check_polyaxonfile(file)
 
     if version:
         click.echo('The version is: {}'.format(plx_file.version))
@@ -64,3 +69,5 @@ def check(file, all, version, cluster, run_type, project, log_path, matrix, expe
 
     if all:
         click.echo('Validated file:\n{}'.format(plx_file.parsed_data))
+
+    return plx_file

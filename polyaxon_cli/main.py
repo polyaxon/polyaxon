@@ -14,6 +14,7 @@ from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.auth import login, logout
 from polyaxon_cli.cli.config import config
 from polyaxon_cli.cli.run import run
+from polyaxon_cli.cli.stop import stop
 from polyaxon_cli.cli.version import version, upgrade
 from polyaxon_cli.client.version import VersionClient
 from polyaxon_cli.managers.config import GlobalConfigManager
@@ -57,6 +58,7 @@ to upgrade to the latest version `{}`)""".format(server_version.latest_version))
 cli.add_command(login)
 cli.add_command(logout)
 cli.add_command(run)
+cli.add_command(stop)
 cli.add_command(upgrade)
 cli.add_command(version)
 cli.add_command(config)

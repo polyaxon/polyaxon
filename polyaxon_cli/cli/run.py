@@ -4,20 +4,20 @@ from __future__ import absolute_import, division, print_function
 import click
 import sys
 
-from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.polyaxonfile.logger import logger
 from polyaxon_schemas.settings import RunTypes
 
+from polyaxon_cli.cli.check import check_polyaxonfile
 from polyaxon_cli.cli.version import get_version, PROJECT_NAME
 
 
 @click.command()
 @click.option('--file', '-f', type=click.Path(exists=True), help='The polyaxon file to check.')
-@click.option('--experiment', '-x', is_flag=True, default=False,
+@click.option('--experiment', '-x', type=int,
               help='Run specific experiment, if nothing passed all experiments will be run.')
 def run(file, experiment):
-    """Command for running a polyaxonfile."""
-    plx_file = PolyaxonFile(file)
+    """Command for running polyaxonfile experiments."""
+    plx_file = check_polyaxonfile(file)
     if plx_file.run_type == RunTypes.LOCAL:
         # check that polyaxon is installed
         version = get_version(PROJECT_NAME)
@@ -41,9 +41,12 @@ to install to the latest version of polyaxon)""")
 
     else:
         from polyaxon_k8s.k8s.spawner import K8SSpawner
-        manager = K8SSpawner(polyaxonfile=file)
-        if experiment:
-            manager.create_experiment(experiment)
+        spawner = K8SSpawner(polyaxonfile=plx_file)
+        if experiment is not None:
+            logger.info('Running experiment {} polyaxonfile on {}'.format(experiment,
+                                                                          plx_file.run_type))
+            spawner.create_experiment(experiment)
         else:
-            manager.create_all_experiments()
+            logger.info('Running experiment all polyaxonfile on {}'.format(plx_file.run_type))
+            spawner.create_all_experiments()
 

@@ -1,7 +1,7 @@
 click==6.7
 clint==0.5.1
 marshmallow==2.13.5
--e git+https://github.com/polyaxon/polyaxon-schemas.git@ace6deb997f3dbc4aee70a41a777aa6cb3d05076#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@1f2a37d573a3750a47a0aeefd3f48ed15b7c20fa#egg=polyaxon-schemas
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@ad9fa24efb600c58ec316fd5ddd656fbc26e8035#egg=polyaxon-k8s
 requests==2.18.4
 requests-toolbelt==0.8.0
