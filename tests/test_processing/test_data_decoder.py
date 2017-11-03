@@ -206,7 +206,7 @@ class TFExampleDecoderTest(test.TestCase):
         image_shape = (2, 3, 3)
         unused_image, serialized_example = self.generate_image(
             image_format='jpeg', image_shape=image_shape)
-        with self.assertRaises(TypeError):
+        with self.assertRaises((TypeError, ValueError)):
             self.run_decode_example(serialized_example,
                                     tfexample_decoder.Image(dtype=dtypes.uint16),
                                     image_format='jpeg')
