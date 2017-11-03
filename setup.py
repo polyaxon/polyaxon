@@ -16,7 +16,7 @@ class PyTest(TestCommand):
         errcode = pytest.main(self.test_args)
         sys.exit(errcode)
 
-setup(name='polyaxon-k8s',
+setup(name='polyaxon-spawner',
       version='0.0.1',
       description='Polyaxon resources and charts for running and '
                   'monitoring experiments on kubernetes clusters.',

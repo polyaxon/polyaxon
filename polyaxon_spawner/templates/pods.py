@@ -5,8 +5,8 @@ from kubernetes import client
 
 from polyaxon_schemas.utils import TaskType
 
-from polyaxon_k8s.k8s.templates import constants
-from polyaxon_k8s.k8s.templates.persistent_volumes import get_vol_path
+from polyaxon_spawner.templates import constants
+from polyaxon_spawner.templates.persistent_volumes import get_vol_path
 
 
 class PodStatus(object):

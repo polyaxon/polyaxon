@@ -1,6 +1,6 @@
 from kubernetes import client
 
-from polyaxon_k8s.k8s.templates import constants
+from polyaxon_spawner.templates import constants
 
 
 def get_ingress(name, labels, paths):

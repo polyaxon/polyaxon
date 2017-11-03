@@ -5,7 +5,7 @@ from kubernetes import client
 
 from polyaxon_schemas.utils import to_list
 
-from polyaxon_k8s.k8s.templates import constants
+from polyaxon_spawner.templates import constants
 
 
 def get_service(name, labels, ports, service_type=None, external_i_ps=None):

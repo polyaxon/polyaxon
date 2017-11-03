@@ -10,13 +10,13 @@ from polyaxon_schemas.polyaxonfile.logger import logger
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.utils import TaskType
 
-from polyaxon_k8s.k8s.exceptions import PolyaxonK8SError
-from polyaxon_k8s.k8s.templates import config_maps
-from polyaxon_k8s.k8s.templates import constants
-from polyaxon_k8s.k8s.templates import deployments
-from polyaxon_k8s.k8s.templates import persistent_volumes
-from polyaxon_k8s.k8s.templates import pods
-from polyaxon_k8s.k8s.templates import services
+from polyaxon_spawner.exceptions import PolyaxonK8SError
+from polyaxon_spawner.templates import config_maps
+from polyaxon_spawner.templates import constants
+from polyaxon_spawner.templates import deployments
+from polyaxon_spawner.templates import persistent_volumes
+from polyaxon_spawner.templates import pods
+from polyaxon_spawner.templates import services
 
 
 class K8SSpawner(object):
