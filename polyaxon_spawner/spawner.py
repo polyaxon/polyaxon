@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from kubernetes import client, config
+from kubernetes import client, config, watch
 from kubernetes.client.rest import ApiException
 
 from polyaxon_schemas.polyaxonfile.logger import logger
@@ -20,10 +20,15 @@ from polyaxon_spawner.templates import services
 
 
 class K8SSpawner(object):
-    def __init__(self, polyaxonfile, namespace='default'):
+    def __init__(self, polyaxonfile, k8s_config=None, namespace='default'):
         self.polyaxonfile = PolyaxonFile.read(polyaxonfile)
-        config.load_kube_config()
-        self.k8s = client.CoreV1Api()
+        if not k8s_config:
+            config.load_kube_config()
+            self.k8s = client.CoreV1Api(k8s_config)
+        else:
+            api_client = client.api_client.ApiClient(config=k8s_config)
+            self.k8s = client.CoreV1Api(api_client)
+
         self.k8s_beta = client.ExtensionsV1beta1Api()
         self.namespace = namespace
 
@@ -475,3 +480,13 @@ class K8SSpawner(object):
                                                task_type=task_type,
                                                task_id=task_id)
         return self.k8s.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
+
+    def watch_task_log(self, experiment, task_type, task_id, **kwargs):
+        w = watch.Watch()
+        for event in w.stream(self.get_task_log(experiment,
+                                                task_type,
+                                                task_id,
+                                                follow=True,
+                                                **kwargs)):
+            print("Event: %s %s %s" % (
+                event['type'], event['object'].kind, event['object'].metadata.name))
