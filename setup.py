@@ -42,7 +42,7 @@ setup(name='polyaxon-spawner',
       ],
       install_requires=[
           'kubernetes==3.0.0',
-          'polyaxon-schemas==0.0.14',
+          'polyaxon-schemas==0.0.15',
           'PyYAML==3.12',
           'six==1.11.0',
       ],
