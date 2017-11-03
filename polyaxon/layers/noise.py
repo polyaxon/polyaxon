@@ -3,7 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from tensorflow.contrib.keras.python.keras.layers import noise
+try:
+    from tensorflow.python.keras._impl.keras.layers import noise
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.layers import noise
 
 from polyaxon_schemas.layers.noise import (
     GaussianNoiseConfig,

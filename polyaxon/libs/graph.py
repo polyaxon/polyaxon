@@ -4,8 +4,13 @@ from __future__ import absolute_import, division, print_function
 from collections import Mapping
 
 import six
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
-from tensorflow.contrib.keras.python.keras.engine.topology import Container, InputLayer
+
+try:
+    from tensorflow.python.keras._impl.keras.backend import set_learning_phase
+    from tensorflow.python.keras._impl.keras.engine.topology import Container, InputLayer
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
+    from tensorflow.contrib.keras.python.keras.engine.topology import Container, InputLayer
 
 from polyaxon_schemas.graph import GraphConfig
 

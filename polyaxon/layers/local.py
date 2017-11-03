@@ -3,7 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from tensorflow.contrib.keras.python.keras.layers import local
+try:
+    from tensorflow.python.keras._impl.keras.layers import local
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.layers import local
+
 
 from polyaxon_schemas.layers.local import LocallyConnected1DConfig, LocallyConnected2DConfig
 

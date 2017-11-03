@@ -3,7 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from tensorflow.contrib.keras.python.keras.layers import wrappers
+try:
+    from tensorflow.python.keras._impl.keras.layers import wrappers
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.layers import wrappers
 
 from polyaxon_schemas.layers.wrappers import (
     WrapperConfig,

@@ -12,7 +12,7 @@ class EstimatorSpec(
     collections.namedtuple('EstimatorSpec', [
         'predictions', 'loss', 'train_op', 'eval_metric_ops', 'extra_ops',
         'export_outputs', 'training_chief_hooks', 'training_hooks',
-        'scaffold']), _EstimatorSpec):
+        'scaffold', 'evaluation_hooks']), _EstimatorSpec):
     """Ops and objects returned from a `model_fn` and passed to `Estimator`.
 
     This extends the Tensorflow `EstimatorSpec` with `extra_ops`
@@ -94,14 +94,41 @@ class EstimatorSpec(
         TypeError: If any of the arguments is not the expected type.
     """
 
-    def __new__(cls, mode, predictions=None, loss=None, train_op=None, eval_metric_ops=None,
-                extra_ops=None, export_outputs=None, training_chief_hooks=None, training_hooks=None,
-                scaffold=None):
-        spec = _EstimatorSpec(
-            mode=mode, predictions=predictions, loss=loss, train_op=train_op,
-            eval_metric_ops=eval_metric_ops, export_outputs=export_outputs,
-            training_chief_hooks=training_chief_hooks, training_hooks=training_hooks,
-            scaffold=scaffold)
+    def __new__(cls, mode,
+                predictions=None,
+                loss=None,
+                train_op=None,
+                eval_metric_ops=None,
+                extra_ops=None,
+                export_outputs=None,
+                training_chief_hooks=None,
+                training_hooks=None,
+                scaffold=None,
+                evaluation_hooks=None):
+        try:
+            spec = _EstimatorSpec(
+                mode=mode,
+                predictions=predictions,
+                loss=loss,
+                train_op=train_op,
+                eval_metric_ops=eval_metric_ops,
+                export_outputs=export_outputs,
+                training_chief_hooks=training_chief_hooks,
+                training_hooks=training_hooks,
+                scaffold=scaffold,
+                evaluation_hooks=evaluation_hooks)
+        except TypeError:
+            spec = _EstimatorSpec(
+                mode=mode,
+                predictions=predictions,
+                loss=loss,
+                train_op=train_op,
+                eval_metric_ops=eval_metric_ops,
+                export_outputs=export_outputs,
+                training_chief_hooks=training_chief_hooks,
+                training_hooks=training_hooks,
+                scaffold=scaffold)
+            spec.evaluation_hooks = evaluation_hooks
         if extra_ops is None:
             extra_ops = {}
         else:
@@ -121,7 +148,8 @@ class EstimatorSpec(
             export_outputs=spec.export_outputs,
             training_chief_hooks=spec.training_chief_hooks,
             training_hooks=spec.training_hooks,
-            scaffold=spec.scaffold)
+            scaffold=spec.scaffold,
+            evaluation_hooks=spec.evaluation_hooks)
 
 
 def _check_is_tensor_or_operation(x, name):

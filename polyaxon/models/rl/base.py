@@ -5,7 +5,10 @@ from collections import Mapping, namedtuple
 
 import tensorflow as tf
 
-from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
+try:
+    from tensorflow.python.keras._impl.keras.backend import set_learning_phase
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.backend import set_learning_phase
 from tensorflow.python.training import training
 from tensorflow.python.ops.distributions.categorical import Categorical
 from tensorflow.python.ops.distributions.normal import Normal

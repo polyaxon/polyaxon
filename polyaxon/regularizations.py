@@ -3,7 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from tensorflow.contrib.keras.python.keras import regularizers
+try:
+    from tensorflow.python.keras._impl.keras import regularizers
+except ImportError:
+    from tensorflow.contrib.keras.python.keras import regularizers
 
 from polyaxon_schemas import regularizations
 

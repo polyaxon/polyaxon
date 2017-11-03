@@ -1,6 +1,11 @@
 from collections import OrderedDict
 
-from tensorflow.contrib.keras.python.keras.layers import merge
+try:
+    from tensorflow.python.keras._impl.keras.layers import merge
+    tf_14 = True
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.layers import merge
+    tf_14 = False
 
 from polyaxon.libs.base_object import BaseObject
 from polyaxon_schemas.layers.merge import (
@@ -10,12 +15,20 @@ from polyaxon_schemas.layers.merge import (
     MaximumConfig,
     ConcatenateConfig,
     DotConfig,
-)
+    SubtractConfig)
 
 
 class Add(BaseObject, merge.Add):
     CONFIG = AddConfig
     __doc__ = AddConfig.__doc__
+
+
+if tf_14:
+    class Subtract(BaseObject, merge.Subtract):
+        CONFIG = SubtractConfig
+        __doc__ = SubtractConfig.__doc__
+else:
+    pass
 
 
 class Multiply(BaseObject, merge.Multiply):
@@ -45,10 +58,12 @@ class Dot(BaseObject, merge.Dot):
 
 MERGE_LAYERS = OrderedDict([
     (Add.CONFIG.IDENTIFIER, Add),
-    # ('Subtract', Subtract),  # TODO: Add when upgrading to tensorflow 1.4.0
     (Multiply.CONFIG.IDENTIFIER, Multiply),
     (Average.CONFIG.IDENTIFIER, Average),
     (Maximum.CONFIG.IDENTIFIER, Maximum),
     (Concatenate.CONFIG.IDENTIFIER, Concatenate),
     (Dot.CONFIG.IDENTIFIER, Dot),
 ])
+
+if tf_14:
+    MERGE_LAYERS[Subtract.CONFIG.IDENTIFIER] = Subtract

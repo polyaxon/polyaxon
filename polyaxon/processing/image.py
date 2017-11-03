@@ -6,7 +6,10 @@ from collections import OrderedDict
 
 import tensorflow as tf
 
-from tensorflow.contrib.keras.python.keras.engine import Layer
+try:
+    from tensorflow.python.keras._impl.keras.engine import Layer
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.engine import Layer
 from tensorflow.python.ops import random_ops
 
 from polyaxon_schemas.processing.image import (

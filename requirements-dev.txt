@@ -1,7 +1,7 @@
 numpy==1.13.1
 Pillow==4.2.1
--e git+https://github.com/polyaxon/polyaxon-schemas.git@1f2a37d573a3750a47a0aeefd3f48ed15b7c20fa#egg=polyaxon-schemas
--e git+https://github.com/polyaxon/polyaxon-cli.git@becfb482bc4d3da977a1072fbccacea823ae75ba#egg=polyaxon-cli
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@d7517849e4f085def7afc12ec00e71821e4fe313#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-spawner.git@bbc11efb19b63c4f114ff94ed3b41726704456cf#egg=polyaxon-spawner
 PyYAML==3.12
 scipy==0.19.1
 six==1.11.0

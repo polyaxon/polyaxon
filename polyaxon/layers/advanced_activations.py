@@ -4,7 +4,10 @@ from __future__ import absolute_import, division, print_function
 from collections import OrderedDict
 
 
-from tensorflow.contrib.keras.python.keras.layers import advanced_activations
+try:
+    from tensorflow.python.keras._impl.keras.layers import advanced_activations
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.layers import advanced_activations
 
 from polyaxon_schemas.layers.advanced_activations import (
     LeakyReLUConfig,

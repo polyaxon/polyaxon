@@ -5,8 +5,12 @@ from collections import OrderedDict
 
 import tensorflow as tf
 
-from tensorflow.contrib.keras.python.keras.engine import Layer
-from tensorflow.contrib.keras.python.keras.layers import core
+try:
+    from tensorflow.python.keras._impl.keras.layers import Layer
+    from tensorflow.python.keras._impl.keras.layers import core
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.engine import Layer
+    from tensorflow.contrib.keras.python.keras.layers import core
 
 from polyaxon_schemas.layers.core import (
     MaskingConfig,
@@ -141,8 +145,7 @@ class Cast(BaseObject, Layer):
     __doc__ = CastConfig.__doc__
 
     def __init__(self, dtype='float32', **kwargs):
-        super(Cast, self).__init__(**kwargs)
-        self.dtype = dtype
+        super(Cast, self).__init__(dtype=dtype, **kwargs)
 
     def call(self, inputs, **kwargs):
         return tf.cast(inputs, self.dtype)

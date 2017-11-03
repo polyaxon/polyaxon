@@ -373,7 +373,7 @@ class Estimator(tf_estimator.Estimator):
 
         return hooks
 
-    def _call_model_fn(self, features, labels, mode):
+    def _call_model_fn(self, features, labels, mode, config=None):
         """Calls model function.
 
         Args:

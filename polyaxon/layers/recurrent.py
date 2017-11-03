@@ -3,7 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from collections import OrderedDict
 
-from tensorflow.contrib.keras.python.keras.layers import recurrent
+try:
+    from tensorflow.python.keras._impl.keras.layers import recurrent
+except ImportError:
+    from tensorflow.contrib.keras.python.keras.layers import recurrent
 
 from polyaxon_schemas.layers.recurrent import (
     RecurrentConfig,

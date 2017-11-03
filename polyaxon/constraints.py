@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from tensorflow.contrib.keras.python.keras import constraints
+try:
+    from tensorflow.python.keras._impl.keras import constraints
+except ImportError:
+    from tensorflow.contrib.keras.python.keras import constraints
 
 from polyaxon_schemas.constraints import (
     MaxNormConfig,

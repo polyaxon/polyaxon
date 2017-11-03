@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from tensorflow.contrib.keras.python.keras import initializers
+
+try:
+    from tensorflow.python.keras._impl.keras import initializers
+except ImportError:
+    from tensorflow.contrib.keras.python.keras import initializers
 from tensorflow.python.ops import init_ops
 
 from polyaxon_schemas import initializations
