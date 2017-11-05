@@ -6,7 +6,9 @@
   "DB_USER": "postgres",
   "DB_PASSWORD": "",
   "DB_HOST": "localhost",
-  "REDIS_CELERY_BROKER_URL": "",
+  "AMQP_CELERY_BROKER_URL": "amqp://rabbitmq:5672",
+  "CELERYD_PREFETCH_MULTIPLIER": 4,
+//  "REDIS_CELERY_BROKER_URL": "",
   "REDIS_CELERY_RESULT_BACKEND": "",
   "REDIS_CELERY_JOB_STATUS_URL": ""
 }
