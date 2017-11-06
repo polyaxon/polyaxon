@@ -3,14 +3,17 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from kubernetes import client, config, watch
+from kubernetes import client, watch
 from kubernetes.client.rest import ApiException
 
-from polyaxon_schemas.polyaxonfile.logger import logger
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.utils import TaskType
 
-from polyaxon_spawner.exceptions import PolyaxonK8SError
+from polyaxon_k8s import constants as k8s_constants
+from polyaxon_k8s.exceptions import PolyaxonK8SError
+from polyaxon_k8s.manager import K8SManager
+
+from polyaxon_spawner.logger import logger
 from polyaxon_spawner.templates import config_maps
 from polyaxon_spawner.templates import constants
 from polyaxon_spawner.templates import deployments
@@ -19,18 +22,12 @@ from polyaxon_spawner.templates import pods
 from polyaxon_spawner.templates import services
 
 
-class K8SSpawner(object):
-    def __init__(self, polyaxonfile, k8s_config=None, namespace='default'):
+class K8SSpawner(K8SManager):
+    def __init__(self, polyaxonfile, k8s_config=None, namespace='default', in_cluster=False):
+        super(K8SSpawner, self).__init__(k8s_config=k8s_config,
+                                         namespace=namespace,
+                                         in_cluster=in_cluster)
         self.polyaxonfile = PolyaxonFile.read(polyaxonfile)
-        if not k8s_config:
-            config.load_kube_config()
-            self.k8s = client.CoreV1Api(k8s_config)
-        else:
-            api_client = client.api_client.ApiClient(config=k8s_config)
-            self.k8s = client.CoreV1Api(api_client)
-
-        self.k8s_beta = client.ExtensionsV1beta1Api()
-        self.namespace = namespace
 
         self.has_data_volume = False
         self.has_logs_volume = False
@@ -43,15 +40,15 @@ class K8SSpawner(object):
     def _create_service(self, service, service_name):
         service_found = False
         try:
-            self.k8s.read_namespaced_service(service_name, self.namespace)
+            self.k8s_api.read_namespaced_service(service_name, self.namespace)
             service_found = True
             logger.debug('A service with name `{}` was found'.format(service_name))
-            self.k8s.patch_namespaced_service(service_name, self.namespace, service)
+            self.k8s_api.patch_namespaced_service(service_name, self.namespace, service)
             logger.debug('Service `{}` was patched'.format(service_name))
         except ApiException as e:
             if service_found:
                 raise PolyaxonK8SError(e)
-            self.k8s.create_namespaced_service(self.namespace, service)
+            self.k8s_api.create_namespaced_service(self.namespace, service)
             logger.debug('Service `{}` was created'.format(service_name))
 
     def _get_pod_args(self, experiment, task_type, task_id, schedule):
@@ -102,15 +99,15 @@ class K8SSpawner(object):
 
         pod_found = False
         try:
-            self.k8s.read_namespaced_pod(task_name, self.namespace)
+            self.k8s_api.read_namespaced_pod(task_name, self.namespace)
             pod_found = True
             logger.debug('A pod with name `{}` was found'.format(task_name))
-            self.k8s.patch_namespaced_pod(task_name, self.namespace, pod)
+            self.k8s_api.patch_namespaced_pod(task_name, self.namespace, pod)
             logger.debug('Pod `{}` was patched'.format(task_name))
         except ApiException as e:
             if pod_found:
                 raise PolyaxonK8SError(e)
-            self.k8s.create_namespaced_pod(self.namespace, pod)
+            self.k8s_api.create_namespaced_pod(self.namespace, pod)
             logger.debug('Pod `{}` was created'.format(task_name))
 
         service = services.get_service(name=task_name, labels=labels, ports=ports)
@@ -119,9 +116,9 @@ class K8SSpawner(object):
     def _delete_service(self, service_name):
         service_found = False
         try:
-            self.k8s.read_namespaced_service(service_name, self.namespace)
+            self.k8s_api.read_namespaced_service(service_name, self.namespace)
             service_found = True
-            self.k8s.delete_namespaced_service(service_name, self.namespace)
+            self.k8s_api.delete_namespaced_service(service_name, self.namespace)
             logger.debug('Service `{}` deleted'.format(service_name))
         except ApiException as e:
             if service_found:
@@ -137,12 +134,12 @@ class K8SSpawner(object):
                                                task_id=task_id)
         pod_found = False
         try:
-            self.k8s.read_namespaced_pod(task_name, self.namespace)
+            self.k8s_api.read_namespaced_pod(task_name, self.namespace)
             pod_found = True
-            self.k8s.delete_namespaced_pod(
+            self.k8s_api.delete_namespaced_pod(
                 task_name,
                 self.namespace,
-                client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1))
+                client.V1DeleteOptions(api_version=k8s_constants.K8S_API_VERSION_V1))
             logger.debug('Pod `{}` deleted'.format(task_name))
         except ApiException as e:
             if pod_found:
@@ -226,15 +223,16 @@ class K8SSpawner(object):
 
         deployment_found = False
         try:
-            self.k8s_beta.read_namespaced_deployment(deployment_name, self.namespace)
+            self.k8s_beta_api.read_namespaced_deployment(deployment_name, self.namespace)
             deployment_found = True
             logger.info('A deployment with name `{}` was found'.format(deployment_name))
-            self.k8s_beta.patch_namespaced_deployment(deployment_name, self.namespace, deployment)
+            self.k8s_beta_api.patch_namespaced_deployment(
+                deployment_name, self.namespace, deployment)
             logger.info('Deployment `{}` was patched'.format(deployment_name))
         except ApiException as e:
             if deployment_found:
                 raise PolyaxonK8SError(e)
-            self.k8s_beta.create_namespaced_deployment(self.namespace, deployment)
+            self.k8s_beta_api.create_namespaced_deployment(self.namespace, deployment)
             logger.info('Deployment `{}` was created'.format(deployment_name))
 
         service = services.get_service(
@@ -250,12 +248,12 @@ class K8SSpawner(object):
         deployment_name = constants.DEPLOYMENT_NAME.format(project=self.project_name, name=name)
         pod_found = False
         try:
-            self.k8s_beta.read_namespaced_deployment(deployment_name, self.namespace)
+            self.k8s_beta_api.read_namespaced_deployment(deployment_name, self.namespace)
             pod_found = True
-            self.k8s_beta.delete_namespaced_deployment(
+            self.k8s_beta_api.delete_namespaced_deployment(
                 deployment_name,
                 self.namespace,
-                client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1_BETA1,
+                client.V1DeleteOptions(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
                                        propagation_policy='Foreground'))
             logger.debug('Deployment `{}` deleted'.format(deployment_name))
         except ApiException as e:
@@ -302,15 +300,15 @@ class K8SSpawner(object):
 
         volume_found = False
         try:
-            self.k8s.read_persistent_volume(vol_name)
+            self.k8s_api.read_persistent_volume(vol_name)
             volume_found = True
             logger.debug('A volume with name `{}` was found'.format(vol_name))
-            self.k8s.patch_persistent_volume(vol_name, pvol)
+            self.k8s_api.patch_persistent_volume(vol_name, pvol)
             logger.debug('Volume `{}` was patched'.format(vol_name))
         except ApiException as e:
             if volume_found:
                 raise PolyaxonK8SError(e)
-            self.k8s.create_persistent_volume(pvol)
+            self.k8s_api.create_persistent_volume(pvol)
             logger.debug('Volume `{}` was created'.format(vol_name))
 
         volc_name = constants.VOLUME_CLAIM_NAME.format(project=self.project_name, vol_name=volume)
@@ -318,17 +316,17 @@ class K8SSpawner(object):
                                                                     volume=volume)
         volume_claim_found = False
         try:
-            self.k8s.read_namespaced_persistent_volume_claim(volc_name, self.namespace)
+            self.k8s_api.read_namespaced_persistent_volume_claim(volc_name, self.namespace)
             volume_claim_found = True
             logger.debug('A volume claim with name `{}` was found'.format(volc_name))
-            self.k8s.patch_namespaced_persistent_volume_claim(volc_name,
-                                                              self.namespace,
-                                                              pvol_claim)
+            self.k8s_api.patch_namespaced_persistent_volume_claim(volc_name,
+                                                                  self.namespace,
+                                                                  pvol_claim)
             logger.debug('Volume claim `{}` was patched'.format(volc_name))
         except ApiException as e:
             if volume_claim_found:
                 raise PolyaxonK8SError(e)
-            self.k8s.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
+            self.k8s_api.create_namespaced_persistent_volume_claim(self.namespace, pvol_claim)
             logger.debug('Volume claim `{}` was created'.format(volc_name))
 
     def create_data_volume(self):
@@ -347,11 +345,11 @@ class K8SSpawner(object):
         vol_name = constants.VOLUME_NAME.format(project=self.project_name, vol_name=volume)
         volume_found = False
         try:
-            self.k8s.read_persistent_volume(vol_name)
+            self.k8s_api.read_persistent_volume(vol_name)
             volume_found = True
-            self.k8s.delete_persistent_volume(
+            self.k8s_api.delete_persistent_volume(
                 vol_name,
-                client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1))
+                client.V1DeleteOptions(api_version=k8s_constants.K8S_API_VERSION_V1))
             logger.debug('Volume `{}` Deleted'.format(vol_name))
         except ApiException as e:
             if volume_found:
@@ -363,12 +361,12 @@ class K8SSpawner(object):
         volc_name = constants.VOLUME_CLAIM_NAME.format(project=self.project_name, vol_name=volume)
         volume_claim_found = False
         try:
-            self.k8s.read_namespaced_persistent_volume_claim(volc_name, self.namespace)
+            self.k8s_api.read_namespaced_persistent_volume_claim(volc_name, self.namespace)
             volume_claim_found = True
-            self.k8s.delete_namespaced_persistent_volume_claim(
+            self.k8s_api.delete_namespaced_persistent_volume_claim(
                 volc_name,
                 self.namespace,
-                client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1))
+                client.V1DeleteOptions(api_version=k8s_constants.K8S_API_VERSION_V1))
             logger.debug('Volume claim `{}` Deleted'.format(volc_name))
         except ApiException as e:
             if volume_claim_found:
@@ -407,38 +405,12 @@ class K8SSpawner(object):
             experiment=experiment,
             cluster_def=self.polyaxonfile.get_cluster().to_dict())
 
-        config_map_found = False
-        try:
-            self.k8s.read_namespaced_config_map(name, self.namespace)
-            config_map_found = True
-            logger.debug('A config map with name `{}` was found'.format(name))
-            self.k8s.patch_namespaced_config_map(name, self.namespace, config_map)
-            logger.debug('Config map `{}` was patched'.format(name))
-        except ApiException as e:
-            if config_map_found:
-                raise PolyaxonK8SError(e)
-            self.k8s.create_namespaced_config_map(self.namespace, config_map)
-            logger.debug('Config map `{}` was created'.format(name))
+        self.create_or_update_config_map(name=name, body=config_map, reraise=True)
 
     def delete_cluster_config_map(self, experiment=0):
         name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=self.project_name,
                                                         experiment=experiment)
-
-        config_map_found = False
-        try:
-            self.k8s.read_namespaced_config_map(name, self.namespace)
-            config_map_found = True
-            self.k8s.delete_namespaced_config_map(
-                name,
-                self.namespace,
-                client.V1DeleteOptions(api_version=constants.K8S_API_VERSION_V1))
-            logger.debug('Config map `{}` Deleted'.format(name))
-        except ApiException as e:
-            if config_map_found:
-                logger.warning('Could not delete config map `{}`'.format(name))
-                raise PolyaxonK8SError(e)
-            else:
-                logger.debug('Config map `{}` was not found'.format(name))
+        self.delete_config_map(name, reraise=True)
 
     def create_experiment(self, experiment=0):
         self.create_cluster_config_map(experiment)
@@ -472,14 +444,14 @@ class K8SSpawner(object):
                                                experiment=experiment,
                                                task_type=task_type,
                                                task_id=task_id)
-        return self.k8s.read_namespaced_pod_status(task_name, self.namespace).status.phase
+        return self.k8s_api.read_namespaced_pod_status(task_name, self.namespace).status.phase
 
     def get_task_log(self, experiment, task_type, task_id, **kwargs):
         task_name = constants.TASK_NAME.format(project=self.project_name,
                                                experiment=experiment,
                                                task_type=task_type,
                                                task_id=task_id)
-        return self.k8s.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
+        return self.k8s_api.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
 
     def watch_task_log(self, experiment, task_type, task_id, **kwargs):
         w = watch.Watch()

@@ -5,16 +5,10 @@ from kubernetes import client
 
 from polyaxon_schemas.utils import TaskType
 
+from polyaxon_k8s import constants as k8s_constants
+
 from polyaxon_spawner.templates import constants
 from polyaxon_spawner.templates.persistent_volumes import get_vol_path
-
-
-class PodStatus(object):
-    RUNNING = 'Running'
-    PENDING = 'Pending'
-    CONTAINER_CREATING = 'ContainerCreating'
-    SUCCEEDED = 'Succeeded'
-    FAILED = 'Failed'
 
 
 def get_cluster_env_var(project, experiment, task_type):
@@ -176,7 +170,7 @@ def get_pod(project,
                              args=args,
                              ports=ports,
                              restart_policy=restart_policy)
-    return client.V1Pod(api_version=constants.K8S_API_VERSION_V1,
-                        kind=constants.K8S_POD_KIND,
+    return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
+                        kind=k8s_constants.K8S_POD_KIND,
                         metadata=metadata,
                         spec=spec)

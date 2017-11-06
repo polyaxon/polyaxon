@@ -1,4 +1,4 @@
-kubernetes==3.0.0
 polyaxon-schemas==0.0.15
+polyaxon-k8s==0.0.1
 PyYAML==3.12
 six==1.11.0

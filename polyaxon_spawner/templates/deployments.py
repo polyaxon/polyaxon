@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from kubernetes import client
 
+from polyaxon_k8s import constants as k8s_constants
 from polyaxon_spawner.templates import constants
 from polyaxon_spawner.templates import pods
 
@@ -59,7 +60,7 @@ def get_deployment(name,
                                ports=ports,
                                role=role,
                                replicas=replicas)
-    return client.AppsV1beta1Deployment(api_version=constants.K8S_API_VERSION_V1_BETA1,
-                                        kind=constants.K8S_DEPLOYMENT_KIND,
+    return client.AppsV1beta1Deployment(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
+                                        kind=k8s_constants.K8S_DEPLOYMENT_KIND,
                                         metadata=metadata,
                                         spec=spec)

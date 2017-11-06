@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from kubernetes import client
 
+from polyaxon_k8s import constants as k8s_constants
+
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.utils import RunTypes, to_list
@@ -42,8 +44,8 @@ def get_persistent_volume_spec(project,
         raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))
 
     volc_name = constants.VOLUME_CLAIM_NAME.format(project=project, vol_name=volume)
-    claim_ref = client.V1ObjectReference(api_version=constants.K8S_API_VERSION_V1,
-                                         kind=constants.K8S_PERSISTENT_VOLUME_CLAIM_KIND,
+    claim_ref = client.V1ObjectReference(api_version=k8s_constants.K8S_API_VERSION_V1,
+                                         kind=k8s_constants.K8S_PERSISTENT_VOLUME_CLAIM_KIND,
                                          name=volc_name,
                                          namespace=namespace)
     return client.V1PersistentVolumeSpec(
@@ -63,8 +65,8 @@ def get_persistent_volume(project, volume, run_type, namespace):
     metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(project, volume))
     spec = get_persistent_volume_spec(project, volume, run_type, namespace)
 
-    return client.V1PersistentVolume(api_version=constants.K8S_API_VERSION_V1,
-                                     kind=constants.K8S_PERSISTENT_VOLUME_KIND,
+    return client.V1PersistentVolume(api_version=k8s_constants.K8S_API_VERSION_V1,
+                                     kind=k8s_constants.K8S_PERSISTENT_VOLUME_KIND,
                                      metadata=metadata,
                                      spec=spec)
 
@@ -83,7 +85,7 @@ def get_persistent_volume_claim(project, volume):
     vol_name = constants.VOLUME_CLAIM_NAME.format(project=project, vol_name=volume)
     metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(project, volume))
     spec = get_persistent_volume_claim_spec(project, volume)
-    return client.V1PersistentVolumeClaim(api_version=constants.K8S_API_VERSION_V1,
-                                          kind=constants.K8S_PERSISTENT_VOLUME_CLAIM_KIND,
+    return client.V1PersistentVolumeClaim(api_version=k8s_constants.K8S_API_VERSION_V1,
+                                          kind=k8s_constants.K8S_PERSISTENT_VOLUME_CLAIM_KIND,
                                           metadata=metadata,
                                           spec=spec)

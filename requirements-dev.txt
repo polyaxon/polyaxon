@@ -1,4 +1,4 @@
-kubernetes==3.0.0
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@1f2a37d573a3750a47a0aeefd3f48ed15b7c20fa#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@1b619e0db6a2eb15d8ff53aaf22b8c2d4eba235d#egg=polyaxon-k8s
 PyYAML==3.12
 six==1.11.0

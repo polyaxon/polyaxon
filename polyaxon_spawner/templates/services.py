@@ -5,7 +5,7 @@ from kubernetes import client
 
 from polyaxon_schemas.utils import to_list
 
-from polyaxon_spawner.templates import constants
+from polyaxon_k8s import constants as k8s_constants
 
 
 def get_service(name, labels, ports, service_type=None, external_i_ps=None):
@@ -17,7 +17,7 @@ def get_service(name, labels, ports, service_type=None, external_i_ps=None):
                                 type=service_type,
                                 external_i_ps=external_i_ps,
                                 ports=service_ports)
-    return client.V1Service(api_version=constants.K8S_API_VERSION_V1,
-                            kind=constants.K8S_SERVICE_KIND,
+    return client.V1Service(api_version=k8s_constants.K8S_API_VERSION_V1,
+                            kind=k8s_constants.K8S_SERVICE_KIND,
                             metadata=metadata,
                             spec=spec)
