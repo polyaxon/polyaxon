@@ -1,0 +1,235 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+from django.test import TestCase
+
+from clusters.constants import ExperimentLifeCycle
+from experiments.models import ExperimentStatus, Experiment, ExperimentJob
+from experiments.serializers import (
+    ExperimentStatusSerializer,
+    ExperimentSerializer,
+    ExperimentDetailSerializer,
+    ExperimentJobSerializer,
+)
+from tests.factories.factory_experiments import (
+    ExperimentStatusFactory,
+    ExperimentFactory,
+    ExperimentJobFactory,
+)
+
+
+class TestExperimentSerializer(TestCase):
+    serializer_class = ExperimentSerializer
+    model = Experiment
+    factory = ExperimentFactory
+    expected_keys = {'uuid', 'user', 'name', 'created_at', 'updated_at',
+                     'last_status', 'started_at', 'finished_at', 'is_clone', }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory()
+        self.obj2 = self.factory()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('user') == self.obj1.user.username
+        data.pop('created_at')
+        data.pop('updated_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_one_with_status(self):
+        obj1 = self.factory()
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is None
+        assert data['finished_at'] is None
+
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.STARTING)
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is not None
+        assert data['finished_at'] is None
+
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.FINISHED)
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is not None
+        assert data['finished_at'] is not None
+
+    def test_cloned(self):
+        obj1 = self.factory()
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['is_clone'] is False
+
+        obj2 = self.factory()
+        obj1.original_experiment = obj2
+        obj1.save()
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['is_clone'] is True
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+class TestExperimentDetailSerializer(TestCase):
+    serializer_class = ExperimentDetailSerializer
+    model = Experiment
+    factory = ExperimentFactory
+    expected_keys = {
+        'uuid',
+        'created_at',
+        'updated_at',
+        'cluster',
+        'project',
+        'user',
+        'name',
+        'last_status',
+        'description',
+        'polyaxonfile',
+        'config',
+        'original_experiment',
+        'jobs',
+        'started_at',
+        'finished_at',
+        'is_clone'
+    }
+
+    def setUp(self):
+        super().setUp()
+        self.job1 = ExperimentJobFactory()
+        self.obj1 = self.job1.experiment
+        self.obj2 = ExperimentJobFactory()
+        self.obj2 = self.obj2.experiment
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('user') == self.obj1.user.username
+        assert data.pop('cluster') == self.obj1.cluster.uuid.hex
+        assert data.pop('project') == self.obj1.project.uuid.hex
+        assert data.pop('polyaxonfile') == (
+            self.obj1.polyaxonfile.uuid.hex if self.obj1.polyaxonfile else None)
+        assert len(data.pop('jobs')) == 1
+        data.pop('created_at')
+        data.pop('updated_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_one_with_status(self):
+        obj1 = self.factory()
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is None
+        assert data['finished_at'] is None
+
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.STARTING)
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is not None
+        assert data['finished_at'] is None
+
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.FINISHED)
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['started_at'] is not None
+        assert data['finished_at'] is not None
+
+    def test_cloned(self):
+        obj1 = self.factory()
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['is_clone'] is False
+
+        obj2 = self.factory()
+        obj1.original_experiment = obj2
+        obj1.save()
+        data = self.serializer_class(obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data['is_clone'] is True
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+class TestExperimentJobSerializer(TestCase):
+    serializer_class = ExperimentJobSerializer
+    model = ExperimentJob
+    factory = ExperimentJobFactory
+    expected_keys = {'uuid', 'experiment', 'definition', 'created_at', 'updated_at', }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory()
+        self.obj2 = self.factory()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('experiment') == self.obj1.experiment.uuid.hex
+        data.pop('created_at')
+        data.pop('updated_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+class TestExperimentStatusSerializer(TestCase):
+    serializer_class = ExperimentStatusSerializer
+    model = ExperimentStatus
+    factory = ExperimentStatusFactory
+    expected_keys = {'experiment', 'created_at', 'status', }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory()
+        self.obj2 = self.factory()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('experiment') == self.obj1.experiment.uuid.hex
+        data.pop('created_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
