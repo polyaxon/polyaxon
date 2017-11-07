@@ -23,7 +23,6 @@ class Cluster(DiffModel):
         settings.AUTH_USER_MODEL,
         related_name='clusters')
     version_api = JSONField(help_text='The cluster version api infos')
-    nodes = models.ManyToManyField('ClusterNode')
 
 
 class ClusterNode(models.Model):
