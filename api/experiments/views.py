@@ -6,7 +6,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.response import Response
 
 from experiments.models import Experiment
-from experiments.serialiazers import (
+from experiments.serializers import (
     ExperimentSerializer,
     ExperimentDetailSerializer,
     StatusSerializer)
