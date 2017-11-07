@@ -105,6 +105,18 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.environment.run_config.session.intra_op_parallelism_threads == 2
         assert plxfile.environment.run_config.session.inter_op_parallelism_threads == 2
 
+        # check properties for returning worker configs and resources
+        assert plxfile.environment.worker_configs is None
+        assert plxfile.environment.ps_configs is None
+        assert plxfile.environment.resources is None
+        assert plxfile.environment.worker_resources is None
+        assert plxfile.environment.ps_resources is None
+
+        assert plxfile.worker_configs == {}
+        assert plxfile.ps_configs == {}
+        assert plxfile.worker_resources == {}
+        assert plxfile.ps_resources == {}
+
         assert plxfile.cluster_def == ({TaskType.MASTER: 1,
                                         TaskType.WORKER: 5,
                                         TaskType.PS: 10}, True)
@@ -190,6 +202,10 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.environment.worker_configs[0].intra_op_parallelism_threads == 5
         assert plxfile.environment.worker_configs[0].inter_op_parallelism_threads == 5
 
+        assert plxfile.environment.ps_configs is None
+
+        assert plxfile.environment.worker_resources is None
+
         assert isinstance(plxfile.environment.default_ps_resources, PodResourcesConfig)
         assert isinstance(plxfile.environment.default_ps_resources.cpu, K8SResourcesConfig)
         assert plxfile.environment.default_ps_resources.cpu.requests == 2
@@ -200,6 +216,17 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.environment.ps_resources[0].index == 9
         assert plxfile.environment.ps_resources[0].memory.requests == 512
         assert plxfile.environment.ps_resources[0].memory.limits == 1024
+
+        # check that properties for return list of configs and resources is working
+        assert len(plxfile.worker_configs) == plxfile.environment.n_workers
+        assert set(plxfile.worker_configs.values()) == {
+            plxfile.environment.default_worker_config, plxfile.environment.worker_configs[0]}
+        assert plxfile.ps_configs == {}
+
+        assert plxfile.worker_resources == {}
+        assert len(plxfile.ps_resources) == plxfile.environment.n_ps
+        assert set(plxfile.ps_resources.values()) == {
+            plxfile.environment.default_ps_resources, plxfile.environment.ps_resources[0]}
 
         assert plxfile.cluster_def == ({TaskType.MASTER: 1,
                                         TaskType.WORKER: 5,

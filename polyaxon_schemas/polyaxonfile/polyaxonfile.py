@@ -220,6 +220,96 @@ class PolyaxonFile(object):
     def get_eval_at(self, experiment):
         return self.get_validated_data_at(experiment).get(Specification.EVAL, None)
 
+    def _get_configs_at(self, experiment, configs, default_config, task_type):
+        cluster_def, is_distributed = self.get_cluster_def_at(experiment)
+
+        result_configs = {}
+        if not is_distributed:
+            return result_configs
+
+        for session_config in configs or []:
+            result_configs[session_config.index] = session_config
+
+        if default_config:
+            for i in range(cluster_def.get(task_type, 0)):
+                result_configs[i] = result_configs.get(i, default_config)
+
+        return result_configs
+
+    @cached_property
+    def worker_configs(self):
+        if self.matrix_space == 1:
+            return self.get_worker_configs_at(0)
+        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
+           please use `get_worker_configs_at(experiment)` instead.""".format(self.matrix_space))
+
+    def get_worker_configs_at(self, experiment):
+        environment = self.get_environment_at(experiment)
+        return self._get_configs_at(experiment,
+                                    environment.worker_configs,
+                                    environment.default_worker_config,
+                                    TaskType.WORKER)
+
+    @cached_property
+    def ps_configs(self):
+        if self.matrix_space == 1:
+            return self.get_ps_configs_at(0)
+        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
+               please use `get_ps_configs_at(experiment)` instead.""".format(self.matrix_space))
+
+    def get_ps_configs_at(self, experiment):
+        environment = self.get_environment_at(experiment)
+        return self._get_configs_at(experiment,
+                                    environment.ps_configs,
+                                    environment.default_ps_config,
+                                    TaskType.PS)
+
+    def _get_resource_at(self, experiment, resources, default_resources, task_type):
+        cluster_def, is_distributed = self.get_cluster_def_at(experiment)
+
+        if not is_distributed:
+            return None
+
+        result_resources = {}
+        for resources_config in resources or []:
+            result_resources[resources_config.index] = resources_config
+
+        if default_resources:
+            for i in range(cluster_def.get(task_type, 0)):
+                result_resources[i] = result_resources.get(i, default_resources)
+
+        return result_resources
+
+    @cached_property
+    def worker_resources(self):
+        if self.matrix_space == 1:
+            return self.get_worker_resource_at(0)
+        raise AttributeError(
+            "Current polyaxonfile has multiple experiments ({}),"
+            "please use `get_worker_resource_at(experiment)` instead.".format(self.matrix_space))
+
+    def get_worker_resource_at(self, experiment):
+        environment = self.get_environment_at(experiment)
+        return self._get_resource_at(experiment,
+                                     environment.worker_resources,
+                                     environment.default_worker_resources,
+                                     TaskType.WORKER)
+
+    @cached_property
+    def ps_resources(self):
+        if self.matrix_space == 1:
+            return self.get_ps_resource_at(0)
+        raise AttributeError(
+            "Current polyaxonfile has multiple experiments ({}),"
+            "please use `get_ps_resource_at(experiment)` instead.".format(self.matrix_space))
+
+    def get_ps_resource_at(self, experiment):
+        environment = self.get_environment_at(experiment)
+        return self._get_resource_at(experiment,
+                                     environment.ps_resources,
+                                     environment.default_ps_resources,
+                                     TaskType.PS)
+
     @cached_property
     def cluster_def(self):
         if self.matrix_space == 1:
