@@ -10,13 +10,40 @@ from polyaxon_schemas.settings import (
     SessionConfig,
     ClusterConfig,
     EnvironmentConfig,
-    SettingsConfig)
+    SettingsConfig,
+    K8SResourcesConfig, PodResourcesConfig)
 from polyaxon_schemas.utils import TaskType
 
 from tests.utils import assert_equal_dict
 
 
 class TestSettingConfigs(TestCase):
+    def test_k8s_resources_config(self):
+        config_dict = {
+            'requests': 0.8,
+            'limits': 1,
+        }
+        config = K8SResourcesConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_pod_resources_config(self):
+        config_dict = {
+            'cpu': {
+                'requests': 0.8,
+                'limits': 1
+            },
+            'gpu': {
+                'requests': 2,
+                'limits': 4
+            },
+            'memory': {
+                'requests': 265,
+                'limits': 512
+            },
+        }
+        config = PodResourcesConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
     def test_gpu_options_config(self):
         config_dict = {
             'gpu_memory_fraction': 0.8,
@@ -102,6 +129,11 @@ class TestSettingConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
+        # Add run resources
+        config_dict['resources'] = PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict()
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
         # Add default worker session config
         config_dict['default_worker_config'] = SessionConfig(
             intra_op_parallelism_threads=1,
@@ -110,11 +142,23 @@ class TestSettingConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
+        # Add default worker resources
+        config_dict['default_worker_resources'] = PodResourcesConfig(
+            cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
         # Add default ps session config
         config_dict['default_wps_config'] = SessionConfig(
             intra_op_parallelism_threads=0,
             inter_op_parallelism_threads=2
         ).to_dict()
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Add default ps resources
+        config_dict['default_ps_resources'] = PodResourcesConfig(
+            cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
@@ -128,6 +172,12 @@ class TestSettingConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
+        # Adding custom resources for worker 4
+        config_dict['worker_resources'] = [PodResourcesConfig(
+            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
         # Adding custom config for ps 2
         config_dict['ps_configs'] = [SessionConfig(
             index=2,
@@ -135,6 +185,12 @@ class TestSettingConfigs(TestCase):
             intra_op_parallelism_threads=1,
             inter_op_parallelism_threads=1
         ).to_dict()]
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Adding custom resources for ps 4
+        config_dict['ps_resources'] = [PodResourcesConfig(
+            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 

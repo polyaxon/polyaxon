@@ -23,7 +23,7 @@ from polyaxon_schemas.settings import (
     EnvironmentConfig,
     RunConfig,
     SessionConfig,
-)
+    PodResourcesConfig, K8SResourcesConfig)
 from polyaxon_schemas.utils import TaskType
 from tests.utils import assert_equal_dict
 
@@ -104,6 +104,102 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.environment.run_config.session.allow_soft_placement is True
         assert plxfile.environment.run_config.session.intra_op_parallelism_threads == 2
         assert plxfile.environment.run_config.session.inter_op_parallelism_threads == 2
+
+        assert plxfile.cluster_def == ({TaskType.MASTER: 1,
+                                        TaskType.WORKER: 5,
+                                        TaskType.PS: 10}, True)
+
+        def task_name(task_type, task_id):
+            return constants.TASK_NAME.format(project=plxfile.project.name,
+                                              experiment=0,
+                                              task_type=task_type,
+                                              task_id=task_id)
+
+        assert_equal_dict(plxfile.get_cluster().to_dict(),
+                          {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],
+                           TaskType.WORKER: [
+                               '{}:2222'.format(task_name(TaskType.WORKER, 0)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 1)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 2)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 3)),
+                               '{}:2222'.format(task_name(TaskType.WORKER, 4)),
+                           ],
+                           TaskType.PS: [
+                               '{}:2222'.format(task_name(TaskType.PS, 0)),
+                               '{}:2222'.format(task_name(TaskType.PS, 1)),
+                               '{}:2222'.format(task_name(TaskType.PS, 2)),
+                               '{}:2222'.format(task_name(TaskType.PS, 3)),
+                               '{}:2222'.format(task_name(TaskType.PS, 4)),
+                               '{}:2222'.format(task_name(TaskType.PS, 5)),
+                               '{}:2222'.format(task_name(TaskType.PS, 6)),
+                               '{}:2222'.format(task_name(TaskType.PS, 7)),
+                               '{}:2222'.format(task_name(TaskType.PS, 8)),
+                               '{}:2222'.format(task_name(TaskType.PS, 9)),
+                           ]})
+        assert isinstance(plxfile.model, ClassifierConfig)
+        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
+        assert isinstance(plxfile.model.optimizer, AdamConfig)
+        assert plxfile.model.optimizer.learning_rate == 0.21
+        assert isinstance(plxfile.model.graph, GraphConfig)
+        assert len(plxfile.model.graph.layers) == 7
+        assert plxfile.model.graph.input_layers == [['images', 0, 0]]
+        assert len(plxfile.model.graph.output_layers) == 3
+        assert ['super_dense', 0, 0] in plxfile.model.graph.output_layers
+        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert len(plxfile.train.data_pipeline.feature_processors.feature_processors) == 1
+        assert isinstance(plxfile.eval.data_pipeline, TFRecordImagePipelineConfig)
+        assert plxfile.eval.data_pipeline.feature_processors is None
+
+    def test_advanced_file_with_custom_configs_and_resources_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/advanced_file_with_custom_configs_and_resources.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'project1'
+        assert plxfile.project_path == '/mypath/project1'
+        assert plxfile.matrix is None
+        assert plxfile.run_type == RunTypes.MINIKUBE
+        assert isinstance(plxfile.settings, SettingsConfig)
+        assert isinstance(plxfile.settings.logging, LoggingConfig)
+        assert isinstance(plxfile.environment, EnvironmentConfig)
+        assert plxfile.environment.n_workers == 5
+        assert plxfile.environment.n_ps == 10
+        assert plxfile.environment.delay_workers_by_global_step is True
+        assert isinstance(plxfile.environment.run_config, RunConfig)
+        assert plxfile.environment.run_config.tf_random_seed == 100
+        assert plxfile.environment.run_config.save_summary_steps == 100
+        assert plxfile.environment.run_config.save_checkpoints_secs == 60
+
+        assert isinstance(plxfile.environment.resources, PodResourcesConfig)
+        assert isinstance(plxfile.environment.resources.cpu, K8SResourcesConfig)
+        assert plxfile.environment.resources.cpu.requests == 1
+        assert plxfile.environment.resources.cpu.limits == 2
+
+        assert isinstance(plxfile.environment.run_config.session, SessionConfig)
+        assert plxfile.environment.run_config.session.allow_soft_placement is True
+        assert plxfile.environment.run_config.session.intra_op_parallelism_threads == 2
+        assert plxfile.environment.run_config.session.inter_op_parallelism_threads == 2
+
+        assert isinstance(plxfile.environment.default_worker_config, SessionConfig)
+        assert plxfile.environment.default_worker_config.allow_soft_placement is True
+        assert plxfile.environment.default_worker_config.intra_op_parallelism_threads == 1
+        assert plxfile.environment.default_worker_config.inter_op_parallelism_threads == 1
+
+        assert isinstance(plxfile.environment.worker_configs[0], SessionConfig)
+        assert plxfile.environment.worker_configs[0].index == 3
+        assert plxfile.environment.worker_configs[0].allow_soft_placement is False
+        assert plxfile.environment.worker_configs[0].intra_op_parallelism_threads == 5
+        assert plxfile.environment.worker_configs[0].inter_op_parallelism_threads == 5
+
+        assert isinstance(plxfile.environment.default_ps_resources, PodResourcesConfig)
+        assert isinstance(plxfile.environment.default_ps_resources.cpu, K8SResourcesConfig)
+        assert plxfile.environment.default_ps_resources.cpu.requests == 2
+        assert plxfile.environment.default_ps_resources.cpu.limits == 4
+
+        assert isinstance(plxfile.environment.ps_resources[0], PodResourcesConfig)
+        assert isinstance(plxfile.environment.ps_resources[0].memory, K8SResourcesConfig)
+        assert plxfile.environment.ps_resources[0].index == 9
+        assert plxfile.environment.ps_resources[0].memory.requests == 512
+        assert plxfile.environment.ps_resources[0].memory.limits == 1024
 
         assert plxfile.cluster_def == ({TaskType.MASTER: 1,
                                         TaskType.WORKER: 5,

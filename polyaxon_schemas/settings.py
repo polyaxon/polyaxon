@@ -8,6 +8,54 @@ from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
 from polyaxon_schemas.utils import RunTypes
 
 
+class K8SResourcesSchema(Schema):
+    limits = fields.Float(allow_none=True)
+    requests = fields.Float(allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return K8SResourcesConfig(**data)
+
+
+class K8SResourcesConfig(BaseConfig):
+    IDENTIFIER = 'resources'
+    SCHEMA = K8SResourcesSchema
+
+    def __init__(self, limits=None, requests=None):
+        self.limits = limits
+        self.requests = requests
+
+
+class PodResourcesSchema(Schema):
+    # To indicate which worker/ps index this session config belongs to
+    index = fields.Int(allow_none=True)
+    cpu = fields.Nested(K8SResourcesSchema, allow_none=True)
+    memory = fields.Nested(K8SResourcesSchema, allow_none=True)
+    gpu = fields.Nested(K8SResourcesSchema, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return PodResourcesConfig(**data)
+
+
+class PodResourcesConfig(BaseConfig):
+    IDENTIFIER = 'pod_resources'
+    SCHEMA = PodResourcesSchema
+    REDUCED_ATTRIBUTES = ['index']
+
+    def __init__(self, index=None, cpu=None, memory=None, gpu=None):
+        self.index = index
+        self.cpu = cpu
+        self.memory = memory
+        self.gpu = gpu
+
+
 class GPUOptionsSchema(Schema):
     gpu_memory_fraction = fields.Float(allow_none=True)
     allow_growth = fields.Bool(allow_none=True)
@@ -141,10 +189,15 @@ class EnvironmentSchema(Schema):
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
     run_config = fields.Nested(RunSchema, allow_none=True)
+    resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_worker_config = fields.Nested(SessionSchema, allow_none=True)
+    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_ps_config = fields.Nested(SessionSchema, allow_none=True)
+    default_ps_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     worker_configs = fields.Nested(SessionSchema, many=True, allow_none=True)
+    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
     ps_configs = fields.Nested(SessionSchema, many=True, allow_none=True)
+    ps_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -163,18 +216,28 @@ class EnvironmentConfig(BaseConfig):
                  n_ps=0,
                  delay_workers_by_global_step=False,
                  run_config=None,
+                 resources=None,
                  default_worker_config=None,
+                 default_worker_resources=None,
                  default_ps_config=None,
+                 default_ps_resources=None,
                  worker_configs=None,
-                 ps_configs=None):
+                 worker_resources=None,
+                 ps_configs=None,
+                 ps_resources=None):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.delay_workers_by_global_step = delay_workers_by_global_step
         self.run_config = run_config
+        self.resources = resources
         self.default_worker_config = default_worker_config
+        self.default_worker_resources = default_worker_resources
         self.default_ps_config = default_ps_config
+        self.default_ps_resources = default_ps_resources
         self.worker_configs = worker_configs
+        self.worker_resources = worker_resources
         self.ps_configs = ps_configs
+        self.ps_resources = ps_resources
 
 
 class SettingsSchema(Schema):
