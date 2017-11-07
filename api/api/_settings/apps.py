@@ -10,6 +10,7 @@ THIRD_PARTY_APPS = (
 PROJECT_APPS = (
     'libs',
     'users',
+    'clusters',
     'projects',
     'experiments',
     'api',
