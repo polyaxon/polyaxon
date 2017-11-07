@@ -20,15 +20,15 @@ from tests.factories.factory_experiments import (
 
 class TestExperimentSerializer(TestCase):
     serializer_class = ExperimentSerializer
-    model = Experiment
-    factory = ExperimentFactory
+    model_class = Experiment
+    factory_class = ExperimentFactory
     expected_keys = {'uuid', 'user', 'name', 'created_at', 'updated_at',
                      'last_status', 'started_at', 'finished_at', 'is_clone', }
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory()
-        self.obj2 = self.factory()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -43,7 +43,7 @@ class TestExperimentSerializer(TestCase):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        obj1 = self.factory()
+        obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
@@ -65,13 +65,13 @@ class TestExperimentSerializer(TestCase):
         assert data['finished_at'] is not None
 
     def test_cloned(self):
-        obj1 = self.factory()
+        obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['is_clone'] is False
 
-        obj2 = self.factory()
+        obj2 = self.factory_class()
         obj1.original_experiment = obj2
         obj1.save()
         data = self.serializer_class(obj1).data
@@ -80,7 +80,7 @@ class TestExperimentSerializer(TestCase):
         assert data['is_clone'] is True
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model.objects.all(), many=True).data
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
@@ -88,8 +88,8 @@ class TestExperimentSerializer(TestCase):
 
 class TestExperimentDetailSerializer(TestCase):
     serializer_class = ExperimentDetailSerializer
-    model = Experiment
-    factory = ExperimentFactory
+    model_class = Experiment
+    factory_class = ExperimentFactory
     expected_keys = {
         'uuid',
         'created_at',
@@ -134,7 +134,7 @@ class TestExperimentDetailSerializer(TestCase):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        obj1 = self.factory()
+        obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
@@ -156,13 +156,13 @@ class TestExperimentDetailSerializer(TestCase):
         assert data['finished_at'] is not None
 
     def test_cloned(self):
-        obj1 = self.factory()
+        obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
         assert data['is_clone'] is False
 
-        obj2 = self.factory()
+        obj2 = self.factory_class()
         obj1.original_experiment = obj2
         obj1.save()
         data = self.serializer_class(obj1).data
@@ -171,7 +171,7 @@ class TestExperimentDetailSerializer(TestCase):
         assert data['is_clone'] is True
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model.objects.all(), many=True).data
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
@@ -179,14 +179,14 @@ class TestExperimentDetailSerializer(TestCase):
 
 class TestExperimentJobSerializer(TestCase):
     serializer_class = ExperimentJobSerializer
-    model = ExperimentJob
-    factory = ExperimentJobFactory
+    model_class = ExperimentJob
+    factory_class = ExperimentJobFactory
     expected_keys = {'uuid', 'experiment', 'definition', 'created_at', 'updated_at', }
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory()
-        self.obj2 = self.factory()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -201,7 +201,7 @@ class TestExperimentJobSerializer(TestCase):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model.objects.all(), many=True).data
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
@@ -209,14 +209,14 @@ class TestExperimentJobSerializer(TestCase):
 
 class TestExperimentStatusSerializer(TestCase):
     serializer_class = ExperimentStatusSerializer
-    model = ExperimentStatus
-    factory = ExperimentStatusFactory
+    model_class = ExperimentStatus
+    factory_class = ExperimentStatusFactory
     expected_keys = {'experiment', 'created_at', 'status', }
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory()
-        self.obj2 = self.factory()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -229,7 +229,7 @@ class TestExperimentStatusSerializer(TestCase):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model.objects.all(), many=True).data
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys

@@ -11,14 +11,14 @@ from tests.factories.factory_projects import ProjectFactory, PolyaxonfileFactory
 
 class TestPolyaxonfileSerializer(TestCase):
     serializer_class = PolyaxonfileSerializer
-    model = Polyaxonfile
-    factory = PolyaxonfileFactory
+    model_class = Polyaxonfile
+    factory_class = PolyaxonfileFactory
     expected_keys = {'uuid', 'content', 'project', 'user'}
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory()
-        self.obj2 = self.factory()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -32,7 +32,7 @@ class TestPolyaxonfileSerializer(TestCase):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model.objects.all(), many=True).data
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
@@ -40,14 +40,14 @@ class TestPolyaxonfileSerializer(TestCase):
 
 class TestProjectSerializer(TestCase):
     serializer_class = ProjectSerializer
-    model = Project
-    factory = ProjectFactory
+    model_class = Project
+    factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at', 'is_public', }
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory()
-        self.obj1 = self.factory()
+        self.obj1 = self.factory_class()
+        self.obj1 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -62,7 +62,7 @@ class TestProjectSerializer(TestCase):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model.objects.all(), many=True).data
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
@@ -70,15 +70,15 @@ class TestProjectSerializer(TestCase):
 
 class TestProjectDetailSerializer(TestCase):
     serializer_class = ProjectDetailSerializer
-    model = Project
-    factory = ProjectFactory
+    model_class = Project
+    factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at', 'is_public',
                      'experiments', 'polyaxonfiles', }
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory()
-        self.obj1 = self.factory()
+        self.obj1 = self.factory_class()
+        self.obj1 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -95,7 +95,7 @@ class TestProjectDetailSerializer(TestCase):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model.objects.all(), many=True).data
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
