@@ -78,6 +78,20 @@ class ExperimentDetailSerializer(ExperimentSerializer):
         return obj.project.uuid.hex
 
 
+class ExperimentCreateSerializer(ExperimentSerializer):
+
+    class Meta:
+        model = Experiment
+        fields = (
+            'uuid', 'cluster', 'project', 'user', 'name', 'description',
+            'polyaxonfile', 'config', 'original_experiment')
+        extra_kwargs = {
+            'cluster': {'write_only': True},
+            'project': {'write_only': True},
+            'polyaxonfile': {'write_only': True}
+        }
+
+
 class StatusSerializer(serializers.Serializer):
     job_id = serializers.CharField()
     status = serializers.CharField()

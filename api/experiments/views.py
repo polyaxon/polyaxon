@@ -2,23 +2,35 @@
 from __future__ import absolute_import, division, print_function
 
 from rest_framework import status
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, CreateAPIView, \
+    RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
 from experiments.models import Experiment
 from experiments.serializers import (
     ExperimentSerializer,
     ExperimentDetailSerializer,
-    StatusSerializer)
+    StatusSerializer,
+    ExperimentCreateSerializer)
 from experiments.tasks import start_experiment, get_experiment_run_status
 
 
-class ExperimentListView(ListAPIView):
+class ExperimentListView(ListCreateAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
+    create_serializer_class = ExperimentCreateSerializer
+
+    def perform_create(self, serializer):
+        # TODO: update when we allow platform usage without authentication
+        serializer.save(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method.lower() == 'post':
+            return self.create_serializer_class
+        return self.serializer_class
 
 
-class ExperimentDetailView(RetrieveAPIView):
+class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentDetailSerializer
     lookup_field = 'uuid'
