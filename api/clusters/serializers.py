@@ -6,12 +6,16 @@ from rest_framework import fields, serializers
 from clusters.models import Cluster, ClusterNode, GPU
 
 
-class GPUSerilizer(serializers.ModelSerializer):
+class GPUSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
+    cluster_node = fields.SerializerMethodField()
 
     class Meta:
         model = GPU
-        exclude = ('id', 'cluster_node')
+        exclude = ('id', )
+
+    def get_cluster_node(self, obj):
+        return obj.cluster_node.uuid.hex
 
 
 class ClusterNodeSerializer(serializers.ModelSerializer):
@@ -23,7 +27,7 @@ class ClusterNodeSerializer(serializers.ModelSerializer):
 
 
 class ClusterNodeDetailSerializer(ClusterNodeSerializer):
-    gpus = GPUSerilizer(many=True)
+    gpus = GPUSerializer(many=True)
     cluster = fields.SerializerMethodField()
 
     class Meta:
