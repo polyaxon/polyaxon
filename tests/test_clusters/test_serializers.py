@@ -6,7 +6,7 @@ from django.test import TestCase
 from clusters.models import Cluster, GPU, ClusterNode
 from clusters.serializers import (
     ClusterSerializer,
-    GPUSerilizer,
+    GPUSerializer,
     ClusterNodeSerializer,
     ClusterNodeDetailSerializer,
     ClusterDetailSerializer,
@@ -16,10 +16,11 @@ from tests.factories.factory_clusters import ClusterFactory, GPUFactory, Cluster
 
 
 class TestGPUSerializer(TestCase):
-    serializer_class = GPUSerilizer
+    serializer_class = GPUSerializer
     model_class = GPU
     factory_class = GPUFactory
-    expected_keys = {'uuid', 'serial', 'name', 'device', 'memory', 'updated_at', 'created_at', }
+    expected_keys = {'uuid', 'cluster_node', 'serial', 'name', 'device', 'memory', 'updated_at',
+                     'created_at', }
 
     def setUp(self):
         super().setUp()
@@ -31,6 +32,7 @@ class TestGPUSerializer(TestCase):
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('cluster_node') == self.obj1.cluster_node.uuid.hex
         data.pop('created_at')
         data.pop('updated_at')
 
