@@ -104,7 +104,7 @@ class TestClusterDetailViewV1(BaseTest):
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == ClusterDetailSerializer(self.object).data
+        assert resp.data == self.serializer_class(self.object).data
         assert len(resp.data['nodes']) == 2
         assert resp.data['nodes'] == ClusterNodeSerializer(self.object.nodes.all(), many=True).data
 
@@ -233,7 +233,7 @@ class TestClusterNodeDetailViewV1(BaseTest):
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == ClusterNodeDetailSerializer(self.object).data
+        assert resp.data == self.serializer_class(self.object).data
         assert len(resp.data['gpus']) == 2
         assert resp.data['gpus'] == GPUSerializer(self.object.gpus.all(), many=True).data
 
