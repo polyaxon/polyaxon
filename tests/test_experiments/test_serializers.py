@@ -211,7 +211,7 @@ class TestExperimentStatusSerializer(TestCase):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory
-    expected_keys = {'experiment', 'created_at', 'status', }
+    expected_keys = {'uuid', 'experiment', 'created_at', 'status', }
 
     def setUp(self):
         super().setUp()
@@ -222,6 +222,7 @@ class TestExperimentStatusSerializer(TestCase):
         data = self.serializer_class(self.obj1).data
 
         assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('experiment') == self.obj1.experiment.uuid.hex
         data.pop('created_at')
 
