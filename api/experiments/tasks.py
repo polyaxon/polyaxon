@@ -3,13 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-import polyaxon as plx
-
 from api.settings import CeleryTasks
 from api.celery_api import app
 from experiments.models import Experiment
 from experiments.task_status import ExperimentStatus
-
 
 logger = logging.getLogger('polyaxon.api.experiments')
 
@@ -36,5 +33,5 @@ def execute(experiment_id):
         logger.info('Experiment id `{}` does not exist'.format(experiment_id))
         return
 
-    plx_xp = plx.experiments.create_experiment(experiment.to_config())
-    plx_xp.train()
+    # TODO: fix me
+    return experiment
