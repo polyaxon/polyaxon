@@ -36,7 +36,7 @@ class ExperimentStatusFactory(factory.DjangoModelFactory):
 
 
 class ExperimentJobFactory(factory.DjangoModelFactory):
-    definition = {}  # should be a valid k8s config
+    definition = {}  # TODO should be a valid k8s config
     experiment = factory.SubFactory(ExperimentFactory)
 
     class Meta:
