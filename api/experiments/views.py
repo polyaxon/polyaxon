@@ -11,12 +11,17 @@ from rest_framework.generics import (
 )
 from rest_framework.response import Response
 
-from experiments.models import Experiment, ExperimentJob
+from experiments.models import (
+    Experiment,
+    ExperimentJob,
+    ExperimentStatus,
+)
 from experiments.serializers import (
     ExperimentSerializer,
     ExperimentDetailSerializer,
     StatusSerializer,
     ExperimentCreateSerializer,
+    ExperimentStatusSerializer,
     ExperimentJobSerializer,
 )
 from experiments.tasks import start_experiment, get_experiment_run_status
@@ -43,7 +48,7 @@ class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'uuid'
 
 
-class ExperimentJobViewMixin(object):
+class ExperimentViewMixin(object):
     def get_experiment(self):
         experiment_uuid = self.kwargs['experiment_uuid']
         return get_object_or_404(Experiment, uuid=experiment_uuid)
@@ -52,7 +57,21 @@ class ExperimentJobViewMixin(object):
         return queryset.filter(experiment=self.get_experiment())
 
 
-class ExperimentJobListView(ListCreateAPIView, ExperimentJobViewMixin):
+class ExperimentStatusListView(ListCreateAPIView, ExperimentViewMixin):
+    queryset = ExperimentStatus.objects.all()
+    serializer_class = ExperimentStatusSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(experiment=self.get_experiment())
+
+
+class ExperimentStatusDetailView(RetrieveAPIView, ExperimentViewMixin):
+    queryset = ExperimentStatus.objects.all()
+    serializer_class = ExperimentStatusSerializer
+    lookup_field = 'uuid'
+
+
+class ExperimentJobListView(ListCreateAPIView, ExperimentViewMixin):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
 
@@ -60,7 +79,7 @@ class ExperimentJobListView(ListCreateAPIView, ExperimentJobViewMixin):
         serializer.save(experiment=self.get_experiment())
 
 
-class ExperimentJobDetailView(RetrieveUpdateDestroyAPIView, ExperimentJobViewMixin):
+class ExperimentJobDetailView(RetrieveUpdateDestroyAPIView, ExperimentViewMixin):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
     lookup_field = 'uuid'

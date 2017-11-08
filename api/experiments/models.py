@@ -82,6 +82,11 @@ class Experiment(DiffModel):
 
 class ExperimentStatus(models.Model):
     """A model that represents experiment status at certain time."""
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     experiment = models.ForeignKey(Experiment, related_name='status')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(
@@ -126,6 +131,11 @@ class ExperimentJob(DiffModel):
 
 class ExperimentJobStatus(models.Model):
     """A model that represents job status at certain time."""
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     job = models.ForeignKey(ExperimentJob, related_name='status')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(
@@ -140,6 +150,11 @@ class ExperimentJobStatus(models.Model):
 
 class ExperimentJobMessage(models.Model):
     """A model to represent the extend the job status with information about the job."""
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     reason = models.CharField(max_length=256, null=True, blank=True)
     message = models.TextField(null=True, blank=True)
     exit_code = models.IntegerField(null=True, blank=True)

@@ -56,6 +56,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
 
 class ExperimentDetailSerializer(ExperimentSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
     cluster = fields.SerializerMethodField()
     polyaxonfile = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
@@ -83,7 +84,7 @@ class ExperimentCreateSerializer(ExperimentSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'uuid', 'cluster', 'project', 'user', 'name', 'description',
+            'cluster', 'project', 'user', 'name', 'description',
             'polyaxonfile', 'config', 'original_experiment')
         extra_kwargs = {
             'cluster': {'write_only': True},
