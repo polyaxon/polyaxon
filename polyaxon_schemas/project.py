@@ -2,12 +2,13 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import Schema, fields, post_load
+from marshmallow import validate
 
 from polyaxon_schemas.base import BaseConfig
 
 
 class ProjectSchema(Schema):
-    name = fields.Str()  # TODO: must be slug
+    name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))  # TODO: must be slug
     uuid = fields.UUID(allow_none=True)
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)

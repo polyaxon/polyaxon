@@ -33,6 +33,10 @@ class TestPolyaxonfile(TestCase):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_version.yml'))
 
+    def test_wrong_project_name_raises(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/wrong_project_name.yml'))
+
     def test_missing_project_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_project.yml'))

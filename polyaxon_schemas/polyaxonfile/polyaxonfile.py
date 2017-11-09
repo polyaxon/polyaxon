@@ -5,6 +5,9 @@ import itertools
 import six
 import os
 
+from marshmallow import ValidationError
+
+from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.polyaxonfile import constants
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
@@ -26,8 +29,14 @@ class PolyaxonFile(object):
         Parser.check_data(data=self._data)
         headers = Parser.get_headers(self._data)
         matrix = Parser.get_matrix(self._data)
-        self._matrix = validator.validate_matrix(matrix)
-        self._headers = validator.validate_headers(headers)
+        try:
+            self._matrix = validator.validate_matrix(matrix)
+        except ValidationError as e:
+            raise PolyaxonfileError(e)
+        try:
+            self._headers = validator.validate_headers(headers)
+        except ValidationError as e:
+            raise PolyaxonfileError(e)
         self._parsed_data = []
         self._validated_data = []
 
