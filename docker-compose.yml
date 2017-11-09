@@ -24,8 +24,10 @@ services:
       - api
 
   web:
-    build: ./
-    command: python3 polyaxon/manage.py runserver 0.0.0.0:8000
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: python3 api/manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     networks:
@@ -56,7 +58,8 @@ services:
 
   worker:
     build:
-      context: ./
+      context: .
+      dockerfile: ./Dockerfile
     volumes:
       - .:/polyaxon
     environment:

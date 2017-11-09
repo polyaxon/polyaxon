@@ -12,6 +12,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 class IndexView(TemplateView):
     template_name = "api/index.html"
 
+
 API_V1 = 'v1/api'
 
 urlpatterns = [
@@ -26,6 +27,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
