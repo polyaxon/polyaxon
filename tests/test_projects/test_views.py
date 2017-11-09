@@ -131,3 +131,68 @@ class TestProjectDetailViewV1(BaseTest):
         assert self.model_class.objects.count() == 0
         assert Polyaxonfile.objects.count() == 0
         assert Experiment.objects.count() == 0
+
+
+class TestProjectPolyaxonfileListViewV1(BaseTest):
+    serializer_class = PolyaxonfileSerializer
+    model_class = Polyaxonfile
+    factory_class = PolyaxonfileFactory
+    num_objects = 3
+    HAS_AUTH = False
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory()
+        self.url = '/{}/projects/{}/polyaxonfiles/'.format(API_V1, self.project.uuid.hex)
+        self.objects = [self.factory_class(project=self.project)
+                        for _ in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next = resp.data.get('next')
+        assert next is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        data = {'content': """----
+        version: v1
+        model:
+          model_type: classifie"""}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.project == self.project
+        assert last_object.content == data['content']
