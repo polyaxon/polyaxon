@@ -15,13 +15,14 @@ def get_cluster_env_var(project, experiment, task_type):
     cluster_name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=project, experiment=experiment)
     config_map_key_ref = client.V1ConfigMapKeySelector(name=cluster_name, key=task_type)
     value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-    key_name = constants.CONFIG_MAP_CLUSTER_KEY_NAME.format(project=project,
+    key_name = constants.CONFIG_MAP_CLUSTER_KEY_NAME.format(project=project.replace("-", "_"),
                                                             experiment=experiment,
                                                             task_type=task_type)
     return client.V1EnvVar(name=key_name, value_from=value)
 
 
 def get_gpu_resources(gpu_limits=0, gpu_requests=0):
+    # TODO: add cpu and memory resources
     limits = constants.GPU_RESOURCES.format(gpu_limits) if gpu_limits > 0 else None
     requests = constants.GPU_RESOURCES.format(gpu_requests) if gpu_requests > 0 else None
     return client.V1ResourceRequirements(limits=limits, requests=requests)
