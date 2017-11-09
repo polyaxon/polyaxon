@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.conf.urls import url
+from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from experiments import views
-from libs.urls import UUID_PATTERN, EXPERIMENT_UUID_PATTERN, EXPERIMENT_JOB_UUID_PATTERN
+from libs.urls import (
+    UUID_PATTERN,
+    EXPERIMENT_UUID_PATTERN,
+    EXPERIMENT_JOB_UUID_PATTERN,
+    PROJECT_UUID_PATTERN,
+    POLYAXON_FILE_UUID_PATTERN,
+)
 
-urlpatterns = [
+patterns = [
     url(r'^experiments/?$', views.ExperimentListView.as_view()),
     url(r'^experiments/{}/?$'.format(UUID_PATTERN), views.ExperimentDetailView.as_view()),
     url(r'^experiments/{}/status/?$'.format(EXPERIMENT_UUID_PATTERN),
@@ -28,5 +34,12 @@ urlpatterns = [
     # url(r'^experiments/{}/start/?$'.format(UUID_PATTERN), views.ExperimentStartView.as_view()),
     # url(r'^experiments/{}/status/?$'.format(UUID_PATTERN), views.ExperimentStartView.as_view()),
 ]
+
+urlpatterns = (patterns +
+               [url(r'^projects/{}/'.format(PROJECT_UUID_PATTERN),
+                    include(patterns))] +
+               [url(r'^polyaxonfiles/{}/'.format(POLYAXON_FILE_UUID_PATTERN),
+                    include(patterns))]
+               )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
