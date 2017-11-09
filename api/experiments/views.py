@@ -6,6 +6,7 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveAPIView,
     CreateAPIView,
+    RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView,
     get_object_or_404,
 )
@@ -15,7 +16,7 @@ from experiments.models import (
     Experiment,
     ExperimentJob,
     ExperimentStatus,
-)
+    ExperimentJobStatus)
 from experiments.serializers import (
     ExperimentSerializer,
     ExperimentDetailSerializer,
@@ -23,7 +24,7 @@ from experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
-)
+    ExperimentJobStatusSerializer)
 from experiments.tasks import start_experiment, get_experiment_run_status
 
 
@@ -82,6 +83,32 @@ class ExperimentJobListView(ListCreateAPIView, ExperimentViewMixin):
 class ExperimentJobDetailView(RetrieveUpdateDestroyAPIView, ExperimentViewMixin):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
+    lookup_field = 'uuid'
+
+
+class ExperimentJobStatusViewMixin(object):
+    def get_experiment_job(self):
+        experiment_uuid = self.kwargs['experiment_uuid']
+        experiment_job_uuid = self.kwargs['experiment_job_uuid']
+        return get_object_or_404(ExperimentJob,
+                                 uuid=experiment_job_uuid,
+                                 experiment__uuid=experiment_uuid)
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(job=self.get_experiment_job())
+
+
+class ExperimentJobStatusListView(ListCreateAPIView, ExperimentJobStatusViewMixin):
+    queryset = ExperimentJobStatus.objects.all()
+    serializer_class = ExperimentJobStatusSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(job=self.get_experiment_job())
+
+
+class ExperimentJobStatusDetailView(RetrieveUpdateAPIView, ExperimentJobStatusViewMixin):
+    queryset = ExperimentJobStatus.objects.all()
+    serializer_class = ExperimentJobStatusSerializer
     lookup_field = 'uuid'
 
 
