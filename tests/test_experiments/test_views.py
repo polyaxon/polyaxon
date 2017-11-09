@@ -102,7 +102,7 @@ class TestExperimentDetailViewV1(BaseTest):
         self.url = '/{}/experiments/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
-        # Create jobs for the experiment
+        # Create related fields
         for i in range(2):
             ExperimentJobFactory(experiment=self.object)
 

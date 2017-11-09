@@ -97,7 +97,7 @@ class TestClusterDetailViewV1(BaseTest):
         self.url = '/{}/clusters/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
-        # Create nodes for the cluster
+        # Create related fields
         for i in range(2):
             ClusterNodeFactory(cluster=self.object)
 
@@ -226,7 +226,7 @@ class TestClusterNodeDetailViewV1(BaseTest):
                                                       self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
-        # Create gpus for the cluster node
+        # Create related fields
         for i in range(2):
             GPUFactory(cluster_node=self.object)
 
