@@ -32,10 +32,15 @@ class ExperimentJobStatusSerializer(serializers.ModelSerializer):
     def get_job(self, obj):
         return obj.job.uuid.hex
 
-    def _add_message(self, validated_data):
+    def _add_message(self, validated_data, instance=None):
         message_data = validated_data.pop('message', None)
         if message_data:
-            message_serializer = ExperimentJobMessageSerializer(data=message_data)
+            if instance.message:
+                message_serializer = ExperimentJobMessageSerializer(instance=instance.message,
+                                                                    data=message_data,
+                                                                    partial=True)
+            else:
+                message_serializer = ExperimentJobMessageSerializer(data=message_data)
             message_serializer.is_valid(raise_exception=True)
             message = message_serializer.save()
             validated_data['message'] = message
@@ -46,7 +51,7 @@ class ExperimentJobStatusSerializer(serializers.ModelSerializer):
         return super(ExperimentJobStatusSerializer, self).create(validated_data)
 
     def update(self, instance, validated_data):
-        validated_data = self._add_message(validated_data)
+        validated_data = self._add_message(validated_data, instance)
         return super(ExperimentJobStatusSerializer, self).update(instance, validated_data)
 
 

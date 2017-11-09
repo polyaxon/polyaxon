@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import datetime
+from rest_framework import status
 
 from polyaxon_k8s.constants import JobLifeCycle
-from rest_framework import status
 
 from api.urls import API_V1
 from clusters.constants import ExperimentLifeCycle
@@ -13,6 +12,7 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentJob,
     ExperimentJobStatus,
+    ExperimentJobMessage,
 )
 from experiments.serializers import (
     ExperimentSerializer,
@@ -455,6 +455,7 @@ class TestExperimentJobStatusDetailViewV1(BaseTest):
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.message.reason == 'new reason'
+        assert ExperimentJobMessage.objects.count() == 1
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1
