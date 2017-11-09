@@ -2,12 +2,12 @@
 from __future__ import absolute_import, division, print_function
 
 from rest_framework.generics import (
-    ListCreateAPIView,
     RetrieveDestroyAPIView,
     RetrieveUpdateDestroyAPIView,
     get_object_or_404,
 )
 
+from libs.views import ListCreateAPIView
 from projects.models import Project, Polyaxonfile
 from projects.serializers import (
     ProjectSerializer,

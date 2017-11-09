@@ -3,10 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from rest_framework.generics import (
     get_object_or_404,
-    ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
 
+from libs.views import ListCreateAPIView
 from clusters.models import Cluster, ClusterNode, GPU
 from clusters.serializers import (
     ClusterSerializer,
