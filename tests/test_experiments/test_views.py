@@ -27,7 +27,109 @@ from tests.factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
 )
+from tests.factories.factory_projects import ProjectFactory, PolyaxonfileFactory
 from tests.utils import BaseTest
+
+
+class TestProjectExperimentListViewV1(BaseTest):
+    serializer_class = ExperimentSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    num_objects = 3
+    HAS_AUTH = False
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory()
+        self.url = '/{}/projects/{}/experiments/'.format(API_V1, self.project.uuid.hex)
+        self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
+        # one object that does not belong to the filter
+        self.factory_class()
+        self.queryset = self.model_class.objects.filter(project=self.project)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next = resp.data.get('next')
+        assert next is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+
+class TestPolyaxonfileExperimentListViewV1(BaseTest):
+    serializer_class = ExperimentSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    num_objects = 3
+    HAS_AUTH = False
+
+    def setUp(self):
+        super().setUp()
+        self.polyaxonfile = PolyaxonfileFactory()
+        self.url = '/{}/polyaxonfiles/{}/experiments/'.format(API_V1, self.polyaxonfile.uuid.hex)
+        self.objects = [self.factory_class(polyaxonfile=self.polyaxonfile)
+                        for _ in range(self.num_objects)]
+        # one object that does not belong to the filter
+        self.factory_class()
+        self.queryset = self.model_class.objects.filter(polyaxonfile=self.polyaxonfile)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next = resp.data.get('next')
+        assert next is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
 class TestExperimentListViewV1(BaseTest):
