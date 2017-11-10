@@ -222,7 +222,7 @@ class Specification(object):
         please use `is_runnable_at(experiment)` instead.""".format(self.matrix_space))
 
     def is_runnable_at(self, experiment):
-        sections = (self.get_validated_data_at(experiment).keys())
+        sections = set(self.get_validated_data_at(experiment).keys())
         if (self.RUN_EXEC in sections or
                 {self.MODEL, self.TRAIN} <= sections or
                 {self.MODEL, self.EVAL} <= sections):
