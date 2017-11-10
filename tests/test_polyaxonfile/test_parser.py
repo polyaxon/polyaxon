@@ -5,6 +5,7 @@ from unittest import TestCase
 
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.parser import Parser
+from polyaxon_schemas.polyaxonfile.specification import Specification
 
 
 class TestParser(TestCase):
@@ -15,12 +16,12 @@ class TestParser(TestCase):
 
         parser = Parser()
         for d in data:
-            assert d == parser.parse_expression(d, {})
+            assert d == parser.parse_expression(Specification, d, {})
 
     def test_parse_context_expression(self):
         parser = Parser()
-        assert parser.parse_expression('{{ something }}', {}) == ''
-        assert parser.parse_expression('{{ something }}', {'something': 1}) == 1
+        assert parser.parse_expression(Specification, '{{ something }}', {}) == ''
+        assert parser.parse_expression(Specification, '{{ something }}', {'something': 1}) == 1
 
     def test_parse_graph_expression(self):
         expression = {
@@ -44,7 +45,7 @@ class TestParser(TestCase):
         }
 
         parser = Parser()
-        assert parser.parse_expression(expression, {}) == expression
+        assert parser.parse_expression(Specification, expression, {}) == expression
 
         expected_expression = {
             'graph': {'input_layers': ['images'],
@@ -71,7 +72,8 @@ class TestParser(TestCase):
                       ],
                       'output_layers': ['Dense_1']}
         }
-        assert parser.parse_expression(expression, {}, check_graph=True) == expected_expression
+        assert parser.parse_expression(
+            Specification, expression, {}, check_graph=True) == expected_expression
 
     def test_parse_graph_with_operators_and_tags(self):
         declarations = {
@@ -113,7 +115,7 @@ class TestParser(TestCase):
 
         parser = Parser()
         result_expression = parser.parse_expression(
-            expression, declarations, check_operators=True, check_graph=True)
+            Specification, expression, declarations, check_operators=True, check_graph=True)
         expected_result = {'graph': {
             'input_layers': ['images'],
             'layers': [
@@ -171,7 +173,7 @@ class TestParser(TestCase):
         }
 
         parser = Parser()
-        assert parser.parse_expression(expression, {}) == expression
+        assert parser.parse_expression(Specification, expression, {}) == expression
 
         expected_expression = {
             'graph': {'input_layers': ['images'],
@@ -198,7 +200,8 @@ class TestParser(TestCase):
                       ],
                       'output_layers': ['Dense_1']}
         }
-        assert parser.parse_expression(expression, {}, check_graph=True) == expected_expression
+        assert parser.parse_expression(
+            Specification, expression, {}, check_graph=True) == expected_expression
 
     def test_parse_graph_with_many_inputs_and_non_used_raises(self):
         expression = {
@@ -225,7 +228,7 @@ class TestParser(TestCase):
 
         parser = Parser()
         with self.assertRaises(PolyaxonfileError):
-            parser.parse_expression(expression, {}, check_graph=True)
+            parser.parse_expression(Specification, expression, {}, check_graph=True)
 
     def test_parse_graph_with_many_inputs_and_some_used_raises(self):
         expression = {
@@ -251,7 +254,7 @@ class TestParser(TestCase):
 
         parser = Parser()
         with self.assertRaises(PolyaxonfileError):
-            parser.parse_expression(expression, {}, check_graph=True)
+            parser.parse_expression(Specification, expression, {}, check_graph=True)
 
     def test_parse_graph_with_orphan_layers_raises(self):
         expression = {
@@ -277,4 +280,4 @@ class TestParser(TestCase):
 
         parser = Parser()
         with self.assertRaises(PolyaxonfileError):
-            parser.parse_expression(expression, {}, check_graph=True)
+            parser.parse_expression(Specification, expression, {}, check_graph=True)

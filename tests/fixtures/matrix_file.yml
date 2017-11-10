@@ -4,6 +4,9 @@ version: 1
 project:
   name: project1
 
+settings:
+  concurrent_experiments: 2
+
 matrix:
   lr:
     logspace: 0.01:0.1:5

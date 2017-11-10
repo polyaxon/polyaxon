@@ -12,7 +12,6 @@ from collections import Mapping, defaultdict
 from polyaxon_schemas.polyaxonfile.utils import deep_update
 from polyaxon_schemas.utils import to_list
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.polyaxonfile.specification import Specification
 
 
 class Parser(object):
@@ -21,121 +20,127 @@ class Parser(object):
     env = jinja2.Environment()
 
     @staticmethod
-    def validate_version(data):
+    def validate_version(spec, data):
         if 'version' not in data:
             raise PolyaxonfileError("The Polyaxonfile version must be specified.")
-        if not (Specification.MIN_VERSION <= data['version'] <= Specification.MAX_VERSION):
+        if not (spec.MIN_VERSION <= data['version'] <= spec.MAX_VERSION):
             raise PolyaxonfileError(
                 "The Polyaxonfile's version specified is not supported by your current CLI."
                 "Your CLI support Polyaxonfile versions between: {} {}."
                 "You can run `polyaxon upgrade` and "
                 "check documentation for the specification.".format(
-                    Specification.MIN_VERSION, Specification.MAX_VERSION))
+                    spec.MIN_VERSION, spec.MAX_VERSION))
 
     @classmethod
-    def check_data(cls, data):
-        cls.validate_version(data)
-        for key in (set(six.iterkeys(data)) - set(Specification.SECTIONS)):
+    def check_data(cls, spec, data):
+        cls.validate_version(spec, data)
+        for key in (set(six.iterkeys(data)) - set(spec.SECTIONS)):
             raise PolyaxonfileError("Unexpected section `{}` in Polyaxonfile version `{}`. "
                                     "Please check the Polyaxonfile specification "
                                     "for this version.".format(key, 'v1'))
 
-        for key in Specification.REQUIRED_SECTIONS:
+        for key in spec.REQUIRED_SECTIONS:
             if key not in data:
                 raise PolyaxonfileError("{} is a required section for a valid Polyaxonfile".format(
                     key
                 ))
 
     @classmethod
-    def get_headers(cls, data):
+    def get_headers(cls, spec, data):
         parsed_data = {
-            section: data[section] for section in Specification.HEADER_SECTIONS
+            section: data[section] for section in spec.HEADER_SECTIONS
             if data.get(section)
         }
         return parsed_data
 
     @classmethod
-    def get_matrix(cls, data):
-        return data.get(Specification.MATRIX)
+    def get_matrix(cls, spec, data):
+        return data.get(spec.MATRIX)
 
     @classmethod
-    def parse(cls, data, matrix_declarations=None):
-        declarations = copy.copy(data.get(Specification.DECLARATIONS, {}))
+    def parse(cls, spec, data, matrix_declarations=None):
+        declarations = copy.copy(data.get(spec.DECLARATIONS, {}))
         matrix_declarations = copy.copy(matrix_declarations)
         if matrix_declarations:
             declarations = deep_update(matrix_declarations, declarations)
 
-        cls.check_data(data)
+        cls.check_data(spec, data)
 
         parsed_data = {}
 
         if declarations:
-            declarations = cls.parse_expression(declarations, declarations)
-            parsed_data[Specification.DECLARATIONS] = declarations
+            declarations = cls.parse_expression(spec, declarations, declarations)
+            parsed_data[spec.DECLARATIONS] = declarations
 
-        if Specification.ENVIRONMENT in data:
-            parsed_data[Specification.ENVIRONMENT] = cls.parse_expression(
-                data[Specification.ENVIRONMENT], declarations)
+        if spec.ENVIRONMENT in data:
+            parsed_data[spec.ENVIRONMENT] = cls.parse_expression(
+                spec, data[spec.ENVIRONMENT], declarations)
 
-        if Specification.SETTINGS in data:
-            parsed_data[Specification.SETTINGS] = cls.parse_expression(
-                data[Specification.SETTINGS], declarations)
+        if spec.SETTINGS in data:
+            parsed_data[spec.SETTINGS] = cls.parse_expression(
+                spec, data[spec.SETTINGS], declarations)
 
-        if Specification.RUN_EXEC in data:
-            parsed_data[Specification.RUN_EXEC] = cls.parse_expression(
-                data[Specification.RUN_EXEC], declarations, True, False)
+        if spec.RUN_EXEC in data:
+            parsed_data[spec.RUN_EXEC] = cls.parse_expression(
+                spec, data[spec.RUN_EXEC], declarations, True, False)
 
-        for section in Specification.GRAPH_SECTIONS:
+        for section in spec.GRAPH_SECTIONS:
             if section in data:
                 parsed_data[section] = cls.parse_expression(
-                    data[section], declarations, True, True)
+                    spec, data[section], declarations, True, True)
 
         return parsed_data
 
     @classmethod
-    def parse_expression(cls, expression, declarations, check_operators=False, check_graph=False):
+    def parse_expression(cls,
+                         spec,
+                         expression,
+                         declarations,
+                         check_operators=False,
+                         check_graph=False):
         if isinstance(expression, (int, float, complex, type(None))):
             return expression
         if isinstance(expression, Mapping):
             if len(expression) == 1:
                 old_key, value = list(six.iteritems(expression))[0]
                 # always parse the keys, they must be base object or evaluate to base objects
-                key = cls.parse_expression(old_key, declarations)
-                if check_operators and cls.is_operator(key):
-                    return cls._parse_operator({key: value}, declarations)
+                key = cls.parse_expression(spec, old_key, declarations)
+                if check_operators and cls.is_operator(spec, key):
+                    return cls._parse_operator(spec, {key: value}, declarations)
                 if check_graph and key in ['graph', 'encoder', 'decoder']:
-                    return {key: cls._parse_graph(value, declarations)}
+                    return {key: cls._parse_graph(spec, value, declarations)}
                 if check_graph and key == 'feature_processors':
                     return {
                         key: {
-                            cls.parse_expression(f_key, declarations):
-                                cls._parse_graph(f_vlaue, declarations)
+                            cls.parse_expression(spec, f_key, declarations):
+                                cls._parse_graph(spec, f_vlaue, declarations)
                             for f_key, f_vlaue in six.iteritems(value)
                         }
                     }
                 else:
                     return {
                         key: cls.parse_expression(
-                            value, declarations, check_operators, check_graph)
+                            spec, value, declarations, check_operators, check_graph)
                     }
 
             new_expression = {}
             for k, v in six.iteritems(expression):
                 new_expression.update(
-                    cls.parse_expression({k: v}, declarations, check_operators, check_graph))
+                    cls.parse_expression(spec, {k: v}, declarations, check_operators, check_graph))
             return new_expression
 
         if isinstance(expression, list):
-            return list(cls.parse_expression(v, declarations, check_operators, check_graph)
+            return list(cls.parse_expression(spec, v, declarations, check_operators, check_graph)
                         for v in expression)
         if isinstance(expression, tuple):
-            return tuple(cls.parse_expression(v, declarations, check_operators, check_graph)
+            return tuple(cls.parse_expression(spec, v, declarations, check_operators, check_graph)
                          for v in expression)
         if isinstance(expression, six.string_types):
-            return cls._evaluate_expression(expression, declarations, check_operators, check_graph)
+            return cls._evaluate_expression(
+                spec, expression, declarations, check_operators, check_graph)
 
     @classmethod
-    def _evaluate_expression(cls, expression, declarations, check_operators, check_graph):
+    def _evaluate_expression(cls, spec, expression, declarations, check_operators, check_graph):
         result = cls.env.from_string(expression).render(**declarations)
         if result == expression:
             try:
@@ -143,20 +148,20 @@ class Parser(object):
             except (ValueError, SyntaxError):
                 pass
             return result
-        return cls.parse_expression(result, declarations, check_operators, check_graph)
+        return cls.parse_expression(spec, result, declarations, check_operators, check_graph)
 
     @classmethod
-    def _parse_operator(cls, expression, declarations):
+    def _parse_operator(cls, spec, expression, declarations):
         k, v = list(six.iteritems(expression))[0]
-        op = Specification.OPERATORS[k].from_dict(v)
-        return op.parse(cls, declarations)
+        op = spec.OPERATORS[k].from_dict(v)
+        return op.parse(spec=spec, parser=cls, declarations=declarations)
 
     @staticmethod
-    def is_operator(key):
-        return key in Specification.OPERATORS
+    def is_operator(spec, key):
+        return key in spec.OPERATORS
 
     @classmethod
-    def _parse_graph(cls, graph, declarations):
+    def _parse_graph(cls, spec, graph, declarations):
         input_layers = to_list(graph['input_layers'])
         layer_names = set(input_layers)
         tags = {}
@@ -188,7 +193,7 @@ class Parser(object):
         last_layer = None
         first_layer = True
         for layer_expression in graph['layers']:
-            parsed_layer = cls.parse_expression(layer_expression, layers_declarations, True)
+            parsed_layer = cls.parse_expression(spec, layer_expression, layers_declarations, True)
             # Gather all tags from the layers
             parsed_layer = to_list(parsed_layer)
             for layer in parsed_layer:

@@ -30,12 +30,26 @@ def read(config_values):
                 "received {} instead".format(type(config_value)))
 
         if isinstance(config_value, Mapping):
-            config = deep_update(config, config_value)
+            config_results = config_value
         elif os.path.isfile(config_value):
-            config = deep_update(config, _read_from_file(config_value))
+            config_results = _read_from_file(config_value)
+        else:
+            # try reading a stream of yaml or json
+            config_results = _read_from_stream(config_value)
+
+        if config_results:
+            config = deep_update(config, config_results)
         else:
             raise PolyaxonConfigurationError('Cannot read config_value: `{}`'.format(config_value))
+
     return config
+
+
+def _read_from_stream(stream):
+    results = _read_from_yml(stream, is_stream=True)
+    if not results:
+        results = _read_from_json(stream, is_stream=True)
+    return results
 
 
 def _read_from_file(f_path):
@@ -49,13 +63,16 @@ def _read_from_file(f_path):
         "received instead `{}`".format(ext))
 
 
-def _read_from_yml(f_path):
+def _read_from_yml(f_path, is_stream=False):
+    if is_stream:
+        return yaml.safe_load(f_path)
     with open(f_path) as f:
-        f_config = yaml.safe_load(f)
-        return f_config
+        return yaml.safe_load(f)
 
 
-def _read_from_json(f_path):
+def _read_from_json(f_path, is_stream=False):
+    if is_stream:
+        return json.load(f_path)
     try:
         return json.loads(open(f_path).read())
     except ValueError as e:

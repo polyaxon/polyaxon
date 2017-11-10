@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 import ast
 import six
 
+import numpy as np
+
 from collections import Mapping
 
 from pytz import timezone
@@ -176,7 +178,7 @@ class UnknownSchemaMixin(object):
 
 
 def to_list(value):
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, (np.ndarray, list, tuple)):
         return list(value)
     return [value]
 

@@ -49,6 +49,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.matrix is None
         assert plxfile.settings is None
         assert plxfile.environment is None
+        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.LOCAL
         assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
         assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
@@ -73,6 +74,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.matrix is None
         assert plxfile.settings is None
         assert plxfile.environment is None
+        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.LOCAL
         assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
         assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
@@ -93,6 +95,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
+        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.MINIKUBE
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
@@ -173,6 +176,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
+        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.MINIKUBE
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
@@ -296,7 +300,8 @@ class TestPolyaxonfile(TestCase):
         assert sorted(
             plxfile.matrix_declarations, key=lambda x: (x['lr'], x['loss'])) == sorted(
             declarations, key=lambda x: (x['lr'], x['loss']))
-        assert plxfile.settings is None
+        assert isinstance(plxfile.settings, SettingsConfig)
+        assert plxfile.settings.concurrent_experiments == 2
         assert plxfile.run_type == RunTypes.LOCAL
         # we cannot access property because the current polyaxonfile has multiple experiments
         with self.assertRaises(AttributeError):
@@ -309,6 +314,7 @@ class TestPolyaxonfile(TestCase):
             plxfile.train
 
         for xp in range(plxfile.matrix_space):
+            assert plxfile.is_runnable_at(xp)
             assert plxfile.get_environment_at(xp) is None
             assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
 
@@ -355,6 +361,7 @@ class TestPolyaxonfile(TestCase):
             plxfile.train
 
         for xp in range(plxfile.matrix_space):
+            assert plxfile.is_runnable_at(xp)
             assert plxfile.get_environment_at(xp) is None
             assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
 
@@ -379,6 +386,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.project.name == 'video_prediction'
         assert plxfile.project_path == "/tmp/plx_logs/video_prediction"
         assert plxfile.settings is None
+        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.LOCAL
         assert plxfile.environment is None
         assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -418,6 +426,7 @@ class TestPolyaxonfile(TestCase):
             plxfile.run_exec
 
         for xp in range(plxfile.matrix_space):
+            assert plxfile.is_runnable_at(xp)
             assert plxfile.get_environment_at(xp) is None
             assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
             assert plxfile.get_model_at(xp) is None
