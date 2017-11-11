@@ -13,4 +13,4 @@ Unipath==1.1
 uWSGI==2.0.15
 
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@1b619e0db6a2eb15d8ff53aaf22b8c2d4eba235d#egg=polyaxon-k8s
--e git+https://github.com/polyaxon/polyaxon-schemas.git@bf355d4d0f06b21a25009b1a9401bff41deb6b4f#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@3cd3ec51fd16311deb1e18ac4a47f2d5dd2e52fe#egg=polyaxon-schemas

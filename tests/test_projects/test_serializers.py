@@ -5,6 +5,7 @@ from django.test import TestCase
 
 from projects.models import Project, PolyaxonSpec
 from projects.serializers import ProjectSerializer, PolyaxonSpecSerializer, ProjectDetailSerializer
+from tests.factories.factory_clusters import ClusterFactory
 
 from tests.factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
 
@@ -17,8 +18,9 @@ class TestPolyaxonSpecSerializer(TestCase):
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory_class()
-        self.obj2 = self.factory_class()
+        cluster = ClusterFactory()
+        self.obj1 = self.factory_class(user=cluster.user)
+        self.obj2 = self.factory_class(user=cluster.user)
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data

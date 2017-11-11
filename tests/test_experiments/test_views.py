@@ -21,6 +21,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
 )
+from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_experiments import (
     ExperimentFactory,
     ExperimentStatusFactory,
@@ -90,10 +91,53 @@ class TestPolyaxonSpecExperimentListViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.spec = PolyaxonSpecFactory()
+        content = """---
+    version: 1
+
+    project:
+      name: project1
+      
+    matrix:
+      lr:
+        linspace: '1:3:3'
+    
+    model:
+      model_type: regressor
+      loss:
+        MeanSquaredError:
+      optimizer:
+        Adam:
+          learning_rate: "{{ lr }}"
+      graph:
+        input_layers: images
+        layers:
+          - Conv2D:
+              filters: 64
+              kernel_size: [3, 3]
+              strides: [1, 1]
+              activation: relu
+              kernel_initializer: Ones
+          - MaxPooling2D:
+              kernels: 2
+          - Flatten:
+          - Dense:
+              units: 10
+              activation: softmax
+            
+    train:
+      data_pipeline:
+        TFRecordImagePipeline:
+          batch_size: 64
+          num_epochs: 1
+          shuffle: true
+          dynamic_pad: false
+          data_files: ["../data/mnist/mnist_train.tfrecord"]
+          meta_data_file: "../data/mnist/meta_data.json"
+"""
+        cluster = ClusterFactory(user=self.auth_client.user)
+        self.spec = PolyaxonSpecFactory(content=content, user=cluster.user)
+        assert self.spec.specification.matrix_space == 3
         self.url = '/{}/specs/{}/experiments/'.format(API_V1, self.spec.uuid.hex)
-        self.objects = [self.factory_class(spec=self.spec)
-                        for _ in range(self.num_objects)]
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(spec=self.spec)
@@ -103,7 +147,7 @@ class TestPolyaxonSpecExperimentListViewV1(BaseTest):
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
-        assert resp.data['count'] == len(self.objects)
+        assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == self.queryset.count()

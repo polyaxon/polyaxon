@@ -15,7 +15,7 @@ from projects.serializers import (
     ProjectDetailSerializer,
     PolyaxonSpecSerializer,
 )
-from tests.factories.factory_experiments import ExperimentFactory
+from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_projects import (
     ProjectFactory,
     PolyaxonSpecFactory,
@@ -87,22 +87,23 @@ class TestProjectDetailViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class()
+        cluster = ClusterFactory()
+        self.object = self.factory_class(user=cluster.user)
         self.url = '/{}/projects/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
         for i in range(2):
-            PolyaxonSpecFactory(project=self.object)
+            PolyaxonSpecFactory(project=self.object, user=cluster.user)
 
-        for i in range(1):
-            ExperimentFactory(project=self.object)
+        # creating the default factory should trigger the creation of one experiment per spec
+        assert Experiment.objects.count() == 2
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
-        assert len(resp.data['experiments']) == 1
+        assert len(resp.data['experiments']) == 2
         assert resp.data['experiments'] == ExperimentSerializer(self.object.experiments.all(),
                                                                 many=True).data
         assert len(resp.data['specs']) == 2
@@ -119,13 +120,13 @@ class TestProjectDetailViewV1(BaseTest):
         assert new_object.user == self.object.user
         assert new_object.name != self.object.name
         assert new_object.name == new_name
-        assert new_object.experiments.count() == 1
+        assert new_object.experiments.count() == 2
         assert new_object.specs.count() == 2
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert PolyaxonSpec.objects.count() == 2
-        assert Experiment.objects.count() == 1
+        assert Experiment.objects.count() == 2
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert self.model_class.objects.count() == 0
@@ -142,9 +143,10 @@ class TestProjectPolyaxonSpecListViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.project = ProjectFactory()
+        cluster = ClusterFactory(user=self.auth_client.user)
+        self.project = ProjectFactory(user=cluster.user)
         self.url = '/{}/projects/{}/specs/'.format(API_V1, self.project.uuid.hex)
-        self.objects = [self.factory_class(project=self.project)
+        self.objects = [self.factory_class(project=self.project, user=cluster.user)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
 
@@ -185,11 +187,25 @@ class TestProjectPolyaxonSpecListViewV1(BaseTest):
         data = {}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        content = """---
+version: 1
+project:
+  name: project1
 
-        data = {'content': """----
-        version: v1
-        model:
-          model_type: classifie"""}
+model:
+  model_type: classifier
+
+  graph:
+    input_layers: images
+    layers:
+      - Conv2D:
+          filters: 64
+          kernel_size: [3, 3]
+          strides: [1, 1]
+          activation: relu
+          kernel_initializer: Ones"""
+
+        data = {'content': content}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 1

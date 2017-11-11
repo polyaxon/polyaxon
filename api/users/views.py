@@ -39,6 +39,6 @@ class TokenView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(TokenView, self).get_context_data(**kwargs)
-        token, created = Token.objects.get_or_create(user=self.request.user)
+        token, _ = Token.objects.get_or_create(user=self.request.user)
         context['token'] = token.key
         return context

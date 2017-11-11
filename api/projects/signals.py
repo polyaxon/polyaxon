@@ -10,11 +10,12 @@ def new_spec(sender, **kwargs):
 
     if created:
         # Parse polyaxonfile content and create the experiments
-        for xp in range(instance.parsed_content.matrix_space):
-            content = instance.parsed_content.get_validated_data_at(xp)
+        specification = instance.specification
+        for xp in range(specification.matrix_space):
+
             cluster = None
-            if content.cluster_id:
-                cluster = Cluster.objects.filter(id=content.cluster_id).first()
+            if specification.settings and specification.settings.cluster_uuid:
+                cluster = Cluster.objects.filter(uuid=specification.settings.cluster_uuid).first()
             if not cluster:
                 # TODO: add logging: using default cluster
                 cluster = Cluster.objects.filter(user=instance.user).last()
@@ -22,6 +23,6 @@ def new_spec(sender, **kwargs):
                                       project=instance.project,
                                       user=instance.user,
                                       spec=instance,
-                                      config=content)
+                                      config=specification.get_parsed_data_at(xp))
 
         start_group_experiments.delay(instance.id)

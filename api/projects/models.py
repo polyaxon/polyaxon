@@ -51,12 +51,12 @@ class PolyaxonSpec(DiffModel):
         help_text='The project this polyaxonfile belongs to.')
 
     @cached_property
-    def parsed_content(self):
+    def specification(self):
         return Specification.read(self.content)
 
     @cached_property
     def concurrency(self):
-        return self.parsed_content.settings.conccurrent_experiments
+        return self.specification.settings.conccurrent_experiments
 
     @property
     def running_experiments(self):
@@ -70,4 +70,4 @@ class PolyaxonSpec(DiffModel):
         return self.concurrency > self.running_experiments.count()
 
 
-# post_save.connect(new_spec, sender=PolyaxonSpec, dispatch_uid="spec_saved")
+post_save.connect(new_spec, sender=PolyaxonSpec, dispatch_uid="spec_saved")
