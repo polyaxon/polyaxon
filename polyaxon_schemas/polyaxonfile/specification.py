@@ -200,16 +200,30 @@ class Specification(object):
         return os.path.join(path, experiment)
 
     @cached_property
+    def parsed_data(self):
+        if self.matrix_space == 1:
+            return self.get_parsed_data_at(0)
+        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
+        please use `get_parsed_data_at(experiment)` instead.""".format(self.matrix_space))
+
+    def get_parsed_data_at(self, experiment):
+        if experiment > self.matrix_space:
+            raise ValueError("""Could not find an experiment at index {},
+            this file has {} experiments""".format(experiment, self.matrix_space))
+
+        return self._parsed_data[experiment]
+
+    @cached_property
     def validated_data(self):
         if self.matrix_space == 1:
             return self.get_validated_data_at(0)
         raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-        please use `get_validated_data_at(experiment)` instead.""".format(self.matrix_space))
+           please use `get_validated_data_at(experiment)` instead.""".format(self.matrix_space))
 
     def get_validated_data_at(self, experiment):
         if experiment > self.matrix_space:
             raise ValueError("""Could not find an experiment at index {},
-            this file has {} experiments""".format(experiment, self.matrix_space))
+               this file has {} experiments""".format(experiment, self.matrix_space))
 
         return self._validated_data[experiment]
 
