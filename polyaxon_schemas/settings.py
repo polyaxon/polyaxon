@@ -185,6 +185,7 @@ class RunConfig(BaseConfig):
 
 
 class EnvironmentSchema(Schema):
+    cluster_uuid = fields.UUID(allow_none=True)
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
@@ -212,6 +213,7 @@ class EnvironmentConfig(BaseConfig):
     SCHEMA = EnvironmentSchema
 
     def __init__(self,
+                 cluster_uuid=None,
                  n_workers=0,
                  n_ps=0,
                  delay_workers_by_global_step=False,
@@ -225,6 +227,7 @@ class EnvironmentConfig(BaseConfig):
                  worker_resources=None,
                  ps_configs=None,
                  ps_resources=None):
+        self.cluster_uuid = cluster_uuid
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.delay_workers_by_global_step = delay_workers_by_global_step
