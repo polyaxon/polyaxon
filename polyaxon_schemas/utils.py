@@ -87,7 +87,7 @@ class Range(fields.Field):
                 "{} accept values formatted as the following:\n"
                 " * str: {}\n"
                 " * dict: {}\n"
-                " * list: {}}".format(
+                " * list: {}".format(
                     self.__class__.__name__,
                     ':'.join(self.REQUIRED_KEYS),
                     dict(zip(self.REQUIRED_KEYS, ['v1', 'v2', 'v3'])),
