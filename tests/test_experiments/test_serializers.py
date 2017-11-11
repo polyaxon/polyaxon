@@ -100,7 +100,7 @@ class TestExperimentDetailSerializer(TestCase):
         'name',
         'last_status',
         'description',
-        'polyaxonfile',
+        'spec',
         'config',
         'original_experiment',
         'jobs',
@@ -124,8 +124,7 @@ class TestExperimentDetailSerializer(TestCase):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('cluster') == self.obj1.cluster.uuid.hex
         assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('polyaxonfile') == (
-            self.obj1.polyaxonfile.uuid.hex if self.obj1.polyaxonfile else None)
+        assert data.pop('spec') == (self.obj1.spec.uuid.hex if self.obj1.spec else None)
         assert len(data.pop('jobs')) == 1
         data.pop('created_at')
         data.pop('updated_at')

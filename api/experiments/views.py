@@ -26,10 +26,10 @@ from experiments.serializers import (
     ExperimentJobStatusSerializer)
 from experiments.tasks import start_experiment, get_experiment_run_status
 from libs.views import BaseNestingFilterMixin, ListCreateAPIView
-from projects.models import Project, Polyaxonfile
+from projects.models import Project, PolyaxonSpec
 
 
-class ProjectOrPolyaxonfileViewFiltersMixin(BaseNestingFilterMixin):
+class ProjectOrSpecViewFiltersMixin(BaseNestingFilterMixin):
     """A mixin to optionally filter by project or polyaxon file uuid."""
 
     def filter_queryset(self, queryset):
@@ -38,13 +38,13 @@ class ProjectOrPolyaxonfileViewFiltersMixin(BaseNestingFilterMixin):
             project_uuid = self.kwargs['project_uuid']
             filters['project'] = get_object_or_404(Project, uuid=project_uuid)
 
-        if 'plxfile_uuid' in self.kwargs:
-            plxfile_uuid = self.kwargs['plxfile_uuid']
-            filters['polyaxonfile'] = get_object_or_404(Polyaxonfile, uuid=plxfile_uuid)
+        if 'spec_uuid' in self.kwargs:
+            spec_uuid = self.kwargs['spec_uuid']
+            filters['spec'] = get_object_or_404(PolyaxonSpec, uuid=spec_uuid)
         return queryset.filter(**filters)
 
 
-class ExperimentListView(ProjectOrPolyaxonfileViewFiltersMixin, ListCreateAPIView):
+class ExperimentListView(ProjectOrSpecViewFiltersMixin, ListCreateAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     create_serializer_class = ExperimentCreateSerializer
@@ -54,13 +54,13 @@ class ExperimentListView(ProjectOrPolyaxonfileViewFiltersMixin, ListCreateAPIVie
         serializer.save(user=self.request.user)
 
 
-class ExperimentDetailView(ProjectOrPolyaxonfileViewFiltersMixin, RetrieveUpdateDestroyAPIView):
+class ExperimentDetailView(ProjectOrSpecViewFiltersMixin, RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentDetailSerializer
     lookup_field = 'uuid'
 
 
-class ExperimentViewMixin(ProjectOrPolyaxonfileViewFiltersMixin):
+class ExperimentViewMixin(ProjectOrSpecViewFiltersMixin):
     """A mixin to filter by experiment."""
     def get_experiment(self):
         experiment_uuid = self.kwargs['experiment_uuid']
@@ -99,7 +99,7 @@ class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView)
     lookup_field = 'uuid'
 
 
-class ExperimentJobViewMixin(ProjectOrPolyaxonfileViewFiltersMixin):
+class ExperimentJobViewMixin(ProjectOrSpecViewFiltersMixin):
     """A mixin to filter by experiment job."""
     def get_experiment_job(self):
         experiment_uuid = self.kwargs['experiment_uuid']

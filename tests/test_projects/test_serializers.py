@@ -3,16 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 from django.test import TestCase
 
-from projects.models import Project, Polyaxonfile
-from projects.serializers import ProjectSerializer, PolyaxonfileSerializer, ProjectDetailSerializer
+from projects.models import Project, PolyaxonSpec
+from projects.serializers import ProjectSerializer, PolyaxonSpecSerializer, ProjectDetailSerializer
 
-from tests.factories.factory_projects import ProjectFactory, PolyaxonfileFactory
+from tests.factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
 
 
-class TestPolyaxonfileSerializer(TestCase):
-    serializer_class = PolyaxonfileSerializer
-    model_class = Polyaxonfile
-    factory_class = PolyaxonfileFactory
+class TestPolyaxonSpecSerializer(TestCase):
+    serializer_class = PolyaxonSpecSerializer
+    model_class = PolyaxonSpec
+    factory_class = PolyaxonSpecFactory
     expected_keys = {'uuid', 'content', 'project', 'user'}
 
     def setUp(self):
@@ -73,7 +73,7 @@ class TestProjectDetailSerializer(TestCase):
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at', 'is_public',
-                     'experiments', 'polyaxonfiles', }
+                     'experiments', 'specs', }
 
     def setUp(self):
         super().setUp()
@@ -89,7 +89,7 @@ class TestProjectDetailSerializer(TestCase):
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
         assert len(data.pop('experiments')) == 0
-        assert len(data.pop('polyaxonfiles')) == 0
+        assert len(data.pop('specs')) == 0
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

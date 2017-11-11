@@ -1,15 +1,16 @@
 celery==4.1.0
-Django==1.11.6
+Django==1.11.7
 django-cors-headers==2.1.0
 djangorestframework==3.7.0
 djangorestframework-camel-case==0.2.0
 django-registration==2.3
 pandas==0.20.3
 pandas-summary==0.0.41
--e git+https://github.com/polyaxon/polyaxon-schemas.git@d7517849e4f085def7afc12ec00e71821e4fe313#egg=polyaxon-schemas
--e git+https://github.com/polyaxon/polyaxon-k8s.git@1b619e0db6a2eb15d8ff53aaf22b8c2d4eba235d#egg=polyaxon-k8s
 psycopg2==2.7.3.1
 redis==2.10.6
 six==1.11.0
 Unipath==1.1
 uWSGI==2.0.15
+
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@1b619e0db6a2eb15d8ff53aaf22b8c2d4eba235d#egg=polyaxon-k8s
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@bf355d4d0f06b21a25009b1a9401bff41deb6b4f#egg=polyaxon-schemas

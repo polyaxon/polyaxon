@@ -27,7 +27,7 @@ from tests.factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
 )
-from tests.factories.factory_projects import ProjectFactory, PolyaxonfileFactory
+from tests.factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
 from tests.utils import BaseTest
 
 
@@ -81,7 +81,7 @@ class TestProjectExperimentListViewV1(BaseTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
-class TestPolyaxonfileExperimentListViewV1(BaseTest):
+class TestPolyaxonSpecExperimentListViewV1(BaseTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -90,13 +90,13 @@ class TestPolyaxonfileExperimentListViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.polyaxonfile = PolyaxonfileFactory()
-        self.url = '/{}/polyaxonfiles/{}/experiments/'.format(API_V1, self.polyaxonfile.uuid.hex)
-        self.objects = [self.factory_class(polyaxonfile=self.polyaxonfile)
+        self.spec = PolyaxonSpecFactory()
+        self.url = '/{}/specs/{}/experiments/'.format(API_V1, self.spec.uuid.hex)
+        self.objects = [self.factory_class(spec=self.spec)
                         for _ in range(self.num_objects)]
         # one object that does not belong to the filter
         self.factory_class()
-        self.queryset = self.model_class.objects.filter(polyaxonfile=self.polyaxonfile)
+        self.queryset = self.model_class.objects.filter(spec=self.spec)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

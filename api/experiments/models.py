@@ -6,13 +6,14 @@ import uuid
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.db.models.signals import post_save
 
 from polyaxon_k8s.constants import JobLifeCycle
 
 from clusters.constants import ExperimentLifeCycle
 from clusters.models import Cluster
+from experiments.signals import new_experiment
 from libs.models import DiffModel
-from projects.models import Polyaxonfile, Project
 
 
 class Experiment(DiffModel):
@@ -27,7 +28,7 @@ class Experiment(DiffModel):
         Cluster,
         related_name='experiments')
     project = models.ForeignKey(
-        Project,
+        'projects.Project',
         related_name='experiments')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -41,14 +42,14 @@ class Experiment(DiffModel):
         blank=True,
         null=True,
         help_text='Description of the experiment.')
-    polyaxonfile = models.ForeignKey(
-        Polyaxonfile,
+    spec = models.ForeignKey(
+        'projects.PolyaxonSpec',
         blank=True,
         null=True,
         related_name='experiments',
-        help_text='The polyaxonfile that generate this experiment.')
+        help_text='The polyaxon_spec that generate this experiment.')
     config = JSONField(
-        # TODO: should be validated by the polyaxonfile validator
+        # TODO: should be validated by the Specification validator
         help_text='The compiled polyaxon with specific values for this experiment.')
     original_experiment = models.ForeignKey(
         'self',
@@ -60,6 +61,10 @@ class Experiment(DiffModel):
     @property
     def last_status(self):
         return self.status.last()
+
+    @property
+    def is_running(self):
+        return ExperimentLifeCycle.is_running(self.last_status.status)
 
     @property
     def finished_at(self):
@@ -78,6 +83,14 @@ class Experiment(DiffModel):
     @property
     def is_clone(self):
         return self.original_experiment is not None
+
+    @property
+    def is_independent(self):
+        """If the experiment belongs to a polyaxon_spec or is independently created."""
+        return not self.spec
+
+
+post_save.connect(new_experiment, sender=Experiment, dispatch_uid="experiment_saved")
 
 
 class ExperimentStatus(models.Model):

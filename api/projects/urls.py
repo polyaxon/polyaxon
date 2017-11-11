@@ -12,10 +12,10 @@ urlpatterns = [
         views.ProjectListView.as_view()),
     url(r'^projects/{}/?$'.format(UUID_PATTERN),
         views.ProjectDetailView.as_view()),
-    url(r'^projects/{}/polyaxonfiles/?$'.format(PROJECT_UUID_PATTERN),
-        views.ProjectPolyaxonfileListView.as_view()),
-    url(r'^projects/{}/polyaxonfiles/{}/?$'.format(PROJECT_UUID_PATTERN, UUID_PATTERN),
-        views.ProjectPolyaxonfileDetailView.as_view()),
+    url(r'^projects/{}/specs/?$'.format(PROJECT_UUID_PATTERN),
+        views.ProjectSpecListView.as_view()),
+    url(r'^projects/{}/specs/{}/?$'.format(PROJECT_UUID_PATTERN, UUID_PATTERN),
+        views.ProjectSpecDetailView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -99,7 +99,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 class ExperimentDetailSerializer(ExperimentSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     cluster = fields.SerializerMethodField()
-    polyaxonfile = fields.SerializerMethodField()
+    spec = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
     jobs = ExperimentJobSerializer(many=True)
 
@@ -107,14 +107,14 @@ class ExperimentDetailSerializer(ExperimentSerializer):
         model = Experiment
         fields = (
             'uuid', 'created_at', 'updated_at', 'cluster', 'project', 'user', 'name', 'last_status',
-            'description', 'polyaxonfile', 'config', 'original_experiment', 'jobs', 'started_at',
+            'description', 'spec', 'config', 'original_experiment', 'jobs', 'started_at',
             'finished_at', 'is_clone')
 
     def get_cluster(self, obj):
         return obj.cluster.uuid.hex
 
-    def get_polyaxonfile(self, obj):
-        return obj.polyaxonfile.uuid.hex if obj.polyaxonfile else None
+    def get_spec(self, obj):
+        return obj.spec.uuid.hex if obj.spec else None
 
     def get_project(self, obj):
         return obj.project.uuid.hex
@@ -126,11 +126,11 @@ class ExperimentCreateSerializer(ExperimentSerializer):
         model = Experiment
         fields = (
             'cluster', 'project', 'user', 'name', 'description',
-            'polyaxonfile', 'config', 'original_experiment')
+            'spec', 'config', 'original_experiment')
         extra_kwargs = {
             'cluster': {'write_only': True},
             'project': {'write_only': True},
-            'polyaxonfile': {'write_only': True}
+            'spec': {'write_only': True}
         }
 
 

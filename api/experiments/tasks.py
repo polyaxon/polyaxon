@@ -5,7 +5,6 @@ import logging
 
 from api.settings import CeleryTasks
 from api.celery_api import app
-from experiments.models import Experiment
 from experiments.task_status import ExperimentStatus
 
 logger = logging.getLogger('polyaxon.api.experiments')
@@ -26,12 +25,14 @@ def start_experiment(experiment):
 
 
 @app.task(name=CeleryTasks.START_EXPERIMENT)
-def execute(experiment_id):
+def start_experiment(experiment_id):
+    from experiments.models import Experiment
+
     try:
         experiment = Experiment.objects.get(id=experiment_id)
     except Experiment.DoesNotExist:
         logger.info('Experiment id `{}` does not exist'.format(experiment_id))
         return
 
-    # TODO: fix me
-    return experiment
+    # Update experiment status to show that its started
+    # Use spawner to start the experiment

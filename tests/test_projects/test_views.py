@@ -8,17 +8,17 @@ from experiments.models import Experiment
 from experiments.serializers import ExperimentSerializer
 from projects.models import (
     Project,
-    Polyaxonfile,
+    PolyaxonSpec,
 )
 from projects.serializers import (
     ProjectSerializer,
     ProjectDetailSerializer,
-    PolyaxonfileSerializer,
+    PolyaxonSpecSerializer,
 )
 from tests.factories.factory_experiments import ExperimentFactory
 from tests.factories.factory_projects import (
     ProjectFactory,
-    PolyaxonfileFactory,
+    PolyaxonSpecFactory,
 )
 from tests.utils import BaseTest
 
@@ -93,7 +93,7 @@ class TestProjectDetailViewV1(BaseTest):
 
         # Create related fields
         for i in range(2):
-            PolyaxonfileFactory(project=self.object)
+            PolyaxonSpecFactory(project=self.object)
 
         for i in range(1):
             ExperimentFactory(project=self.object)
@@ -105,9 +105,9 @@ class TestProjectDetailViewV1(BaseTest):
         assert len(resp.data['experiments']) == 1
         assert resp.data['experiments'] == ExperimentSerializer(self.object.experiments.all(),
                                                                 many=True).data
-        assert len(resp.data['polyaxonfiles']) == 2
-        assert resp.data['polyaxonfiles'] == PolyaxonfileSerializer(self.object.polyaxonfiles.all(),
-                                                                    many=True).data
+        assert len(resp.data['specs']) == 2
+        assert resp.data['specs'] == PolyaxonSpecSerializer(self.object.specs.all(),
+                                                            many=True).data
 
     def test_patch(self):
         new_name = 'updated_project_name'
@@ -120,30 +120,30 @@ class TestProjectDetailViewV1(BaseTest):
         assert new_object.name != self.object.name
         assert new_object.name == new_name
         assert new_object.experiments.count() == 1
-        assert new_object.polyaxonfiles.count() == 2
+        assert new_object.specs.count() == 2
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1
-        assert Polyaxonfile.objects.count() == 2
+        assert PolyaxonSpec.objects.count() == 2
         assert Experiment.objects.count() == 1
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert self.model_class.objects.count() == 0
-        assert Polyaxonfile.objects.count() == 0
+        assert PolyaxonSpec.objects.count() == 0
         assert Experiment.objects.count() == 0
 
 
-class TestProjectPolyaxonfileListViewV1(BaseTest):
-    serializer_class = PolyaxonfileSerializer
-    model_class = Polyaxonfile
-    factory_class = PolyaxonfileFactory
+class TestProjectPolyaxonSpecListViewV1(BaseTest):
+    serializer_class = PolyaxonSpecSerializer
+    model_class = PolyaxonSpec
+    factory_class = PolyaxonSpecFactory
     num_objects = 3
     HAS_AUTH = False
 
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()
-        self.url = '/{}/projects/{}/polyaxonfiles/'.format(API_V1, self.project.uuid.hex)
+        self.url = '/{}/projects/{}/specs/'.format(API_V1, self.project.uuid.hex)
         self.objects = [self.factory_class(project=self.project)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()

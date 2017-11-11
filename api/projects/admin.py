@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from django.contrib import admin
 
-from projects.models import Project, Polyaxonfile
+from projects.models import Project, PolyaxonSpec
 
 admin.site.register(Project)
-admin.site.register(Polyaxonfile)
+admin.site.register(PolyaxonSpec)

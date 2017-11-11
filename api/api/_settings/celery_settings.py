@@ -5,7 +5,6 @@ from api.utils import config
 
 CELERY_TRACK_STARTED = True
 
-BROKER_TRANSPORT = 'redis'
 # BROKER_URL = config.get_string('REDIS_CELERY_BROKER_URL')
 BROKER_URL = config.get_string('AMQP_CELERY_BROKER_URL')
 
@@ -22,13 +21,15 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 
 class CeleryTasks(object):
-    START_EXPERIMENT = 'start_xp'
+    START_EXPERIMENT = 'start_experiment'
+    START_EXPERIMENTS = 'start_experiments'
 
 
 class CeleryQueues(object):
-    EXPERIMENTS = 'api.xps'
+    EXPERIMENTS = 'api.experiments'
 
 
 CELERY_ROUTES = {
     CeleryTasks.START_EXPERIMENT: {'queue': CeleryQueues.EXPERIMENTS},
+    CeleryTasks.START_EXPERIMENTS: {'queue': CeleryQueues.EXPERIMENTS},
 }

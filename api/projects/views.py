@@ -8,11 +8,11 @@ from rest_framework.generics import (
 )
 
 from libs.views import ListCreateAPIView
-from projects.models import Project, Polyaxonfile
+from projects.models import Project, PolyaxonSpec
 from projects.serializers import (
     ProjectSerializer,
     ProjectDetailSerializer,
-    PolyaxonfileSerializer,
+    PolyaxonSpecSerializer,
 )
 
 
@@ -31,7 +31,7 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'uuid'
 
 
-class ProjectPolyaxonfileViewMixin(object):
+class ProjectSpecViewMixin(object):
     def get_project(self):
         project_uuid = self.kwargs['project_uuid']
         return get_object_or_404(Project, uuid=project_uuid)
@@ -40,16 +40,16 @@ class ProjectPolyaxonfileViewMixin(object):
         return queryset.filter(project=self.get_project())
 
 
-class ProjectPolyaxonfileListView(ListCreateAPIView, ProjectPolyaxonfileViewMixin):
-    queryset = Polyaxonfile.objects.all()
-    serializer_class = PolyaxonfileSerializer
+class ProjectSpecListView(ProjectSpecViewMixin, ListCreateAPIView):
+    queryset = PolyaxonSpec.objects.all()
+    serializer_class = PolyaxonSpecSerializer
 
     def perform_create(self, serializer):
         # TODO: update when we allow platform usage without authentication
         serializer.save(user=self.request.user, project=self.get_project())
 
 
-class ProjectPolyaxonfileDetailView(RetrieveDestroyAPIView, ProjectPolyaxonfileViewMixin):
-    queryset = Polyaxonfile.objects.all()
-    serializer_class = PolyaxonfileSerializer
+class ProjectSpecDetailView(ProjectSpecViewMixin, RetrieveDestroyAPIView):
+    queryset = PolyaxonSpec.objects.all()
+    serializer_class = PolyaxonSpecSerializer
     lookup_field = 'uuid'
