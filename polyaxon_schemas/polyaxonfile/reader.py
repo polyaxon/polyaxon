@@ -6,12 +6,12 @@ import os
 
 from collections import Mapping
 
-import numpy as np
 import six
 import yaml
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.utils import deep_update
+from polyaxon_schemas.utils import to_list
 
 
 def read(config_values):
@@ -19,8 +19,7 @@ def read(config_values):
     if not config_values:
         raise PolyaxonConfigurationError('Cannot read config_value: `{}`'.format(config_values))
 
-    if not isinstance(config_values, (np.ndarray, list, tuple)):
-        config_values = [config_values]
+    config_values = to_list(config_values)
 
     config = {}
     for config_value in config_values:
@@ -72,7 +71,7 @@ def _read_from_yml(f_path, is_stream=False):
 
 def _read_from_json(f_path, is_stream=False):
     if is_stream:
-        return json.load(f_path)
+        return json.loads(f_path)
     try:
         return json.loads(open(f_path).read())
     except ValueError as e:
