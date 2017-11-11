@@ -71,7 +71,10 @@ def _read_from_yml(f_path, is_stream=False):
 
 def _read_from_json(f_path, is_stream=False):
     if is_stream:
-        return json.loads(f_path)
+        try:
+            return json.loads(f_path)
+        except ValueError as e:
+            raise PolyaxonConfigurationError(e)
     try:
         return json.loads(open(f_path).read())
     except ValueError as e:
