@@ -191,7 +191,7 @@ class Specification(object):
             if self.run_type == RunTypes.LOCAL:
                 return '/tmp/plx_logs/' + self.project.name
 
-            return get_vol_path(self.project.name, constants.LOGS_VOLUME, self.run_type)
+            return get_vol_path(constants.LOGS_VOLUME, self.run_type) + self.project.name
 
         path = get_path()
         if self.matrix_space == 1 or experiment is None:

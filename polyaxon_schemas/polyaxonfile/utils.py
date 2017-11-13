@@ -45,16 +45,16 @@ class cached_property(object):  # noqa
         return res
 
 
-def get_vol_path(project, volume, run_type):
+def get_vol_path(volume, run_type):
     if run_type == RunTypes.MINIKUBE:
         if volume == constants.LOGS_VOLUME:
             # this is just a hack to allow all pods to write to logs
-            return '/tmp/plx/logs/{project}'.format(project=project)
+            return os.path.join('/tmp/plx/', volume)
 
         # you must run: `minikube mount --v=3 ~/plx/:/plx/`
         # where /plx contains both" /plx/data and /plx/plxfiles
-        return os.path.join('/plx', volume)
+        return os.path.join('/plx/', volume)
     elif run_type == RunTypes.KUBERNETES:
-        return os.path.join('/plx', volume)
+        return os.path.join('/plx/', volume)
     else:
         raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))

@@ -399,9 +399,8 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
-        assert plxfile.project_path == get_vol_path('video_prediction',
-                                                    constants.LOGS_VOLUME,
-                                                    RunTypes.MINIKUBE)
+        assert plxfile.project_path == get_vol_path(constants.LOGS_VOLUME,
+                                                    RunTypes.MINIKUBE) + 'video_prediction'
         assert isinstance(plxfile.matrix['model'], MatrixConfig)
         assert plxfile.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert plxfile.matrix_space == 3

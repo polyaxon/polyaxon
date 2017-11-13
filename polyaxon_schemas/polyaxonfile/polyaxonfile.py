@@ -15,7 +15,7 @@ class PolyaxonFile(Specification):
         filepaths = to_list(filepaths)
         for filepath in filepaths:
             if not os.path.isfile(filepath):
-                raise PolyaxonfileError("`{}` must be a valid file".find(filepath))
+                raise PolyaxonfileError("`{}` must be a valid file".format(filepath))
         self._filenames = [os.path.basename(filepath) for filepath in filepaths]
         try:
             super(PolyaxonFile, self).__init__(filepaths)
