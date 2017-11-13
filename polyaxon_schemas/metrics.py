@@ -11,8 +11,8 @@ class BaseMetricSchema(Schema):
     input_layer = Tensor(allow_none=True)
     output_layer = Tensor(allow_none=True)
     weights = fields.Float(allow_none=True)
-    metrics_collections = fields.List(fields.Str, allow_none=True)
-    updates_collections = fields.List(fields.Str, allow_none=True)
+    metrics_collections = fields.List(fields.Str(), allow_none=True)
+    updates_collections = fields.List(fields.Str(), allow_none=True)
     name = fields.Str(allow_none=True)
 
 
@@ -38,8 +38,8 @@ class BaseMetricConfig(BaseConfig):
 class BaseTensorMetricSchema(Schema):
     values = Tensor()
     weights = fields.Float(allow_none=True)
-    metrics_collections = fields.List(fields.Str, allow_none=True)
-    updates_collections = fields.List(fields.Str, allow_none=True)
+    metrics_collections = fields.List(fields.Str(), allow_none=True)
+    updates_collections = fields.List(fields.Str(), allow_none=True)
     name = fields.Str(allow_none=True)
 
 

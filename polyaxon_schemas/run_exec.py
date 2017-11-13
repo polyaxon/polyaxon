@@ -9,7 +9,7 @@ from polyaxon_schemas.base import BaseConfig
 class RunExecSchema(Schema):
     cmd = fields.Str()
     image = fields.Str()
-    install = fields.List(fields.Str, allow_none=True)
+    install = fields.List(fields.Str(), allow_none=True)
     requirements = fields.Bool(allow_none=True)
     git = fields.Str(allow_none=True)
 

@@ -68,7 +68,7 @@ class MaskingConfig(BaseLayerConfig):
 
 class DropoutSchema(BaseLayerSchema):
     rate = fields.Float(validate=validate.Range(0, 1))
-    noise_shape = fields.List(fields.Int, default=None, missing=None)
+    noise_shape = fields.List(fields.Int(), default=None, missing=None)
     seed = fields.Int(default=None, missing=None)
 
     class Meta:
@@ -320,7 +320,7 @@ class ActivationConfig(BaseLayerConfig):
 
 
 class ReshapeSchema(BaseLayerSchema):
-    target_shape = fields.List(fields.Int)
+    target_shape = fields.List(fields.Int())
 
     class Meta:
         ordered = True
@@ -375,7 +375,7 @@ class ReshapeConfig(BaseLayerConfig):
 
 
 class PermuteSchema(BaseLayerSchema):
-    dims = fields.List(fields.Int)
+    dims = fields.List(fields.Int())
 
     class Meta:
         ordered = True

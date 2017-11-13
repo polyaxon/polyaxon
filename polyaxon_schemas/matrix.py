@@ -11,7 +11,7 @@ from polyaxon_schemas.utils import Range, LinSpace, GeomSpace, LogSpace
 
 
 class MatrixSchema(Schema):
-    values = fields.List(fields.Raw, allow_none=True)
+    values = fields.List(fields.Raw(), allow_none=True)
     range = Range(allow_none=True)
     linspace = LinSpace(allow_none=True)
     logspace = LogSpace(allow_none=True)

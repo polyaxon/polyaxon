@@ -184,8 +184,8 @@ class RandomCropConfig(BaseLayerConfig):
 
 
 class ExtractGlimpseSchema(BaseLayerSchema):
-    size = fields.List(fields.Int, validate=validate.Length(equal=2))
-    offsets = fields.List(fields.Int, validate=validate.Length(equal=2))
+    size = fields.List(fields.Int(), validate=validate.Length(equal=2))
+    offsets = fields.List(fields.Int(), validate=validate.Length(equal=2))
     centered = fields.Bool(allow_none=True)
     normalized = fields.Bool(allow_none=True)
     uniform_noise = fields.Bool(allow_none=True)
@@ -958,7 +958,7 @@ class StandardizationConfig(BaseLayerConfig):
 
 
 class DrawBoundingBoxesSchema(BaseLayerSchema):
-    boxes = fields.List(fields.Float, validate=validate.Length(equal=3))
+    boxes = fields.List(fields.Float(), validate=validate.Length(equal=3))
     name = fields.Str(allow_none=True)
 
     class Meta:

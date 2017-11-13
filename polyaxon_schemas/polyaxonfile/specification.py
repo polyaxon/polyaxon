@@ -337,7 +337,7 @@ class Specification(object):
                                     environment.default_ps_config,
                                     TaskType.PS)
 
-    def _get_resource_at(self, experiment, resources, default_resources, task_type):
+    def _get_resources_at(self, experiment, resources, default_resources, task_type):
         cluster_def, is_distributed = self.get_cluster_def_at(experiment)
 
         if not is_distributed:
@@ -354,16 +354,40 @@ class Specification(object):
         return result_resources
 
     @cached_property
-    def worker_resources(self):
+    def run_resources(self):
         if self.matrix_space == 1:
-            return self.get_worker_resource_at(0)
+            return self.get_run_resources_at(0)
         raise AttributeError(
             "Current polyaxonfile has multiple experiments ({}),"
-            "please use `get_worker_resource_at(experiment)` instead.".format(self.matrix_space))
+            "please use `get_run_resources_at(experiment)` instead.".format(self.matrix_space))
 
-    def get_worker_resource_at(self, experiment):
+    def get_run_resources_at(self, experiment):
         environment = self.get_environment_at(experiment)
-        return self._get_resource_at(experiment,
+        return environment.resources
+
+    @cached_property
+    def master_resources(self):
+        if self.matrix_space == 1:
+            return self.get_master_resources_at(0)
+        raise AttributeError(
+            "Current polyaxonfile has multiple experiments ({}),"
+            "please use `get_master_resources_at(experiment)` instead.".format(self.matrix_space))
+
+    def get_master_resources_at(self, experiment):
+        environment = self.get_environment_at(experiment)
+        return environment.master_resources
+
+    @cached_property
+    def worker_resources(self):
+        if self.matrix_space == 1:
+            return self.get_worker_resources_at(0)
+        raise AttributeError(
+            "Current polyaxonfile has multiple experiments ({}),"
+            "please use `get_worker_resources_at(experiment)` instead.".format(self.matrix_space))
+
+    def get_worker_resources_at(self, experiment):
+        environment = self.get_environment_at(experiment)
+        return self._get_resources_at(experiment,
                                      environment.worker_resources,
                                      environment.default_worker_resources,
                                      TaskType.WORKER)
@@ -371,14 +395,14 @@ class Specification(object):
     @cached_property
     def ps_resources(self):
         if self.matrix_space == 1:
-            return self.get_ps_resource_at(0)
+            return self.get_ps_resources_at(0)
         raise AttributeError(
             "Current polyaxonfile has multiple experiments ({}),"
-            "please use `get_ps_resource_at(experiment)` instead.".format(self.matrix_space))
+            "please use `get_ps_resources_at(experiment)` instead.".format(self.matrix_space))
 
-    def get_ps_resource_at(self, experiment):
+    def get_ps_resources_at(self, experiment):
         environment = self.get_environment_at(experiment)
-        return self._get_resource_at(experiment,
+        return self._get_resources_at(experiment,
                                      environment.ps_resources,
                                      environment.default_ps_resources,
                                      TaskType.PS)

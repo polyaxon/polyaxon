@@ -11,7 +11,9 @@ from polyaxon_schemas.settings import (
     ClusterConfig,
     EnvironmentConfig,
     SettingsConfig,
-    K8SResourcesConfig, PodResourcesConfig)
+    K8SResourcesConfig,
+    PodResourcesConfig,
+)
 from polyaxon_schemas.utils import TaskType
 
 from tests.utils import assert_equal_dict

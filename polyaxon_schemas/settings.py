@@ -120,9 +120,9 @@ class SessionConfig(BaseConfig):
 
 
 class ClusterSchema(Schema):
-    master = fields.List(fields.Str, allow_none=True)
-    worker = fields.List(fields.Str, allow_none=True)
-    ps = fields.List(fields.Str, allow_none=True)
+    master = fields.List(fields.Str(), allow_none=True)
+    worker = fields.List(fields.Str(), allow_none=True)
+    ps = fields.List(fields.Str(), allow_none=True)
 
     class Meta:
         ordered = True
@@ -191,6 +191,7 @@ class EnvironmentSchema(Schema):
     delay_workers_by_global_step = fields.Bool(allow_none=True)
     run_config = fields.Nested(RunSchema, allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    master_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_worker_config = fields.Nested(SessionSchema, allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_ps_config = fields.Nested(SessionSchema, allow_none=True)
@@ -219,6 +220,7 @@ class EnvironmentConfig(BaseConfig):
                  delay_workers_by_global_step=False,
                  run_config=None,
                  resources=None,
+                 master_resources=None,
                  default_worker_config=None,
                  default_worker_resources=None,
                  default_ps_config=None,
@@ -233,6 +235,7 @@ class EnvironmentConfig(BaseConfig):
         self.delay_workers_by_global_step = delay_workers_by_global_step
         self.run_config = run_config
         self.resources = resources
+        self.master_resources = master_resources
         self.default_worker_config = default_worker_config
         self.default_worker_resources = default_worker_resources
         self.default_ps_config = default_ps_config

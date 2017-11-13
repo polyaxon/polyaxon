@@ -13,7 +13,7 @@ class BasePipelineSchema(Schema):
     shuffle = fields.Bool(allow_none=True)
     num_epochs = fields.Int(allow_none=True)
     batch_size = fields.Int(allow_none=True)
-    bucket_boundaries = fields.List(fields.Int, allow_none=True)
+    bucket_boundaries = fields.List(fields.Int(), allow_none=True)
     allow_smaller_final_batch = fields.Bool(allow_none=True)
     dynamic_pad = fields.Bool(allow_none=True)
     min_after_dequeue = fields.Int(allow_none=True)
@@ -84,7 +84,7 @@ class BasePipelineConfig(BaseConfig):
 
 
 class TFRecordImagePipelineSchema(BasePipelineSchema):
-    data_files = fields.List(fields.Str, allow_none=True)
+    data_files = fields.List(fields.Str(), allow_none=True)
     meta_data_file = fields.Str()
 
     class Meta:
@@ -149,7 +149,7 @@ class TFRecordImagePipelineConfig(BasePipelineConfig):
 
 
 class TFRecordSequencePipelineSchema(BasePipelineSchema):
-    data_files = fields.List(fields.Str, allow_none=True)
+    data_files = fields.List(fields.Str(), allow_none=True)
     meta_data_file = fields.Str()
 
     class Meta:
@@ -216,8 +216,8 @@ class TFRecordSequencePipelineConfig(BasePipelineConfig):
 
 
 class ParallelTextPipelineSchema(BasePipelineSchema):
-    source_files = fields.List(fields.Str, allow_none=True)
-    target_files = fields.List(fields.Str, allow_none=True)
+    source_files = fields.List(fields.Str(), allow_none=True)
+    target_files = fields.List(fields.Str(), allow_none=True)
     source_delimiter = fields.Str(allow_none=True)
     target_delimiter = fields.Str(allow_none=True)
 
@@ -278,7 +278,7 @@ class ParallelTextPipelineConfig(BasePipelineConfig):
 
 
 class TFRecordSourceSequencePipelineSchema(BasePipelineSchema):
-    files = fields.List(fields.Str, allow_none=True)
+    files = fields.List(fields.Str(), allow_none=True)
     source_field = fields.Str(allow_none=True)
     target_field = fields.Str(allow_none=True)
     source_delimiter = fields.Str(allow_none=True)
@@ -342,7 +342,7 @@ class TFRecordSourceSequencePipelineConfig(BasePipelineConfig):
 
 
 class ImageCaptioningPipelineSchema(BasePipelineSchema):
-    files = fields.List(fields.Str, allow_none=True)
+    files = fields.List(fields.Str(), allow_none=True)
     image_field = fields.Str(allow_none=True)
     image_format = fields.Str(allow_none=True)
     caption_ids_field = fields.Str(allow_none=True)

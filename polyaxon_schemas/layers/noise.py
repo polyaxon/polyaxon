@@ -104,7 +104,7 @@ class GaussianDropoutConfig(BaseLayerConfig):
 
 class AlphaDropoutSchema(BaseLayerSchema):
     rate = fields.Float(validate=validate.Range(0, 1))
-    noise_shape = fields.List(fields.Int, default=None, missing=None)
+    noise_shape = fields.List(fields.Int(), default=None, missing=None)
     seed = fields.Int(default=None, missing=None)
 
     class Meta:
