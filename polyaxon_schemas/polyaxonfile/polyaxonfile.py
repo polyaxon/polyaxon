@@ -21,3 +21,12 @@ class PolyaxonFile(Specification):
             super(PolyaxonFile, self).__init__(filepaths)
         except PolyaxonConfigurationError as e:
             raise PolyaxonfileError(e)
+
+    @property
+    def filenames(self):
+        return self._filenames
+
+    @property
+    def filepaths(self):
+        return self.values
+
