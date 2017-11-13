@@ -85,8 +85,8 @@ class Specification(object):
         matrix_declarations = self.matrix_declarations if self.matrix_declarations else [{}]
         for matrix_declaration in matrix_declarations:
             parsed_data = Parser.parse(self, self._data, matrix_declaration)
-            self._parsed_data.append(parsed_data)
             self._validated_data.append(validator.validate(spec=self, data=parsed_data))
+            self._parsed_data.append(parsed_data)
 
     @classmethod
     def read(cls, filepaths):

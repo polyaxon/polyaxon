@@ -66,7 +66,10 @@ class Parser(object):
 
         cls.check_data(spec, data)
 
-        parsed_data = {}
+        parsed_data = {
+            spec.VERSION: data[spec.VERSION],
+            spec.PROJECT: data[spec.PROJECT]
+        }
 
         if declarations:
             declarations = cls.parse_expression(spec, declarations, declarations)
