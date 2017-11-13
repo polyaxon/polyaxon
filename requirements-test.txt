@@ -7,6 +7,6 @@ isort==4.2.15
 mock==2.0.0
 prospector==0.12.7
 pyflakes==1.6.0
-pytest==3.2.2
+pytest==3.2.3
 pylint==1.7.2
 tox==2.9.1
