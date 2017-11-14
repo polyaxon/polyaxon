@@ -619,3 +619,24 @@ class TestExperimentJobStatusDetailViewV1(BaseTest):
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
         assert self.model_class.objects.count() == 1
+
+
+class TestRestartExperimentViewV1(BaseTest):
+    serializer_class = ExperimentDetailSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    HAS_AUTH = False
+
+    def setUp(self):
+        super().setUp()
+        self.object = self.factory_class()
+        self.url = '/{}/experiments/{}/restart'.format(API_V1, self.object.uuid.hex)
+        self.queryset = self.model_class.objects.all()
+
+    def test_restart(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('experiments.tasks.start_experiment.delay') as _:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == 2

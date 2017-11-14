@@ -32,9 +32,9 @@ def start_experiment(experiment_id):
 
     # Use spawner to start the experiment
     spawner = K8SExperimentSpawner(project_id=experiment.project.id,
-                                   spec_id=experiment.spec.id,
+                                   spec_id=experiment.spec.id if experiment.spec else '',
                                    experiment_id=experiment.id,
-                                   specification=experiment.spec.content,
+                                   specification=experiment.config,
                                    k8s_config=settings.K8S_CONFIG)
     resp = spawner.start_experiment()
 

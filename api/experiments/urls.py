@@ -31,8 +31,7 @@ patterns = [
                                                        EXPERIMENT_JOB_UUID_PATTERN,
                                                        UUID_PATTERN),
         views.ExperimentJobStatusDetailView.as_view()),
-    # url(r'^experiments/{}/start/?$'.format(UUID_PATTERN), views.ExperimentStartView.as_view()),
-    # url(r'^experiments/{}/status/?$'.format(UUID_PATTERN), views.ExperimentStartView.as_view()),
+    url(r'^experiments/{}/restart/?$'.format(UUID_PATTERN), views.ExperimentRestartView.as_view()),
 ]
 
 urlpatterns = (patterns +

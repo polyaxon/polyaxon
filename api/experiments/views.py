@@ -19,12 +19,10 @@ from experiments.models import (
 from experiments.serializers import (
     ExperimentSerializer,
     ExperimentDetailSerializer,
-    StatusSerializer,
     ExperimentCreateSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer)
-from experiments.tasks import start_experiment, get_experiment_run_status
 from libs.views import BaseNestingFilterMixin, ListCreateAPIView
 from projects.models import Project, PolyaxonSpec
 
@@ -127,19 +125,22 @@ class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIVie
     lookup_field = 'uuid'
 
 
-class ExperimentStartView(CreateAPIView, RetrieveAPIView):
+class ExperimentRestartView(CreateAPIView):
     queryset = Experiment.objects.all()
-    serializer_class = StatusSerializer
+    serializer_class = ExperimentDetailSerializer
     lookup_field = 'uuid'
-
-    def retrieve(self, request, *args, **kwargs):
-        obj = self.get_object()
-        serializer = self.get_serializer(get_experiment_run_status(obj))
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        job_info = start_experiment(obj)
-        if job_info['status'] == 'PENDING':
-            return Response(status=status.HTTP_201_CREATED, data=job_info)
-        return Response(job_info, status=status.HTTP_200_OK)
+        new_obj = Experiment.objects.create(
+            cluster=obj.cluster,
+            project=obj.project,
+            user=self.request.user,
+            name=obj.name,
+            description=obj.description,
+            spec=obj.spec,
+            config=obj.config,
+            original_experiment=obj
+        )
+        serializer = self.get_serializer(new_obj)
+        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
