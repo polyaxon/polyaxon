@@ -29,7 +29,6 @@ def start_experiment(experiment_id):
 
     # Update experiment status to show that its started
     ExperimentStatus.objects.create(experiment=experiment, status=ExperimentLifeCycle.SCHEDULED)
-    RedisExperimentStatus.set_status(experiment_id, ExperimentLifeCycle.SCHEDULED)
 
     # Use spawner to start the experiment
     spawner = K8SExperimentSpawner(project_id=experiment.project.id,
