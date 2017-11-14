@@ -5,7 +5,6 @@ from api.utils import config
 
 CELERY_TRACK_STARTED = True
 
-# BROKER_URL = config.get_string('REDIS_CELERY_BROKER_URL')
 BROKER_URL = config.get_string('AMQP_CELERY_BROKER_URL')
 
 CELERY_RESULT_BACKEND = config.get_string('REDIS_CELERY_RESULT_BACKEND')
@@ -18,6 +17,11 @@ if CELERY_ALWAYS_EAGER:
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+
+# Constants
+EXPERIMENTS_SCHEDULER_INTERVAL_SEC = config.get_int('EXPERIMENTS_SCHEDULER_INTERVAL_SEC',
+                                                    is_optional=True) or 30
 
 
 class CeleryTasks(object):

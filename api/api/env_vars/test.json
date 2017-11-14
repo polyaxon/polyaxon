@@ -3,5 +3,8 @@
   "EMAIL_HOST": "127.0.0.1",
   "EMAIL_PORT": 0,
   "SECRET_KEY": "secret",
-  "CELERY_ALWAYS_EAGER": true
+  "CELERY_ALWAYS_EAGER": true,
+  "REDIS_CELERY_RESULT_BACKEND": "",
+  "K8S_AUTHORISATION": "",
+  "K8S_HOST": "https://192.168.64.2:8443"
 }

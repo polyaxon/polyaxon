@@ -12,3 +12,4 @@ from .rest import *
 from .celery_settings import *
 from .redis_settings import *
 from .email import *
+from .k8s import *

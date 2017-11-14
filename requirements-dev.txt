@@ -12,5 +12,6 @@ six==1.11.0
 Unipath==1.1
 uWSGI==2.0.15
 
--e git+https://github.com/polyaxon/polyaxon-k8s.git@1b619e0db6a2eb15d8ff53aaf22b8c2d4eba235d#egg=polyaxon-k8s
--e git+https://github.com/polyaxon/polyaxon-schemas.git@3cd3ec51fd16311deb1e18ac4a47f2d5dd2e52fe#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-spawner.git@f2fd7b037f1740b5ad839ae23acb6cfe3e6f561b#egg=polyaxon-spawner
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@d404fcb35744356fad6e4d8167f0960feccc4c61#egg=polyaxon-k8s
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@c8c9134013a51afbfeb266db8dbb5160494bf959#egg=polyaxon-schemas
