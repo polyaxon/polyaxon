@@ -5,8 +5,11 @@ from polyaxon_k8s.constants import JobLifeCycle
 
 
 class ExperimentLifeCycle(JobLifeCycle):
+    SCHEDULED = 'Scheduled'
+
     CHOICES = (
-        (JobLifeCycle.CREATED, JobLifeCycle.CREATED),  # XP created/scheduled to be executed
+        (JobLifeCycle.CREATED, JobLifeCycle.CREATED),  # XP created to be executed
+        (SCHEDULED, SCHEDULED),  # XP scheduled to be started
         (JobLifeCycle.BUILDING, JobLifeCycle.BUILDING),  # XP is building containers
         (JobLifeCycle.PENDING, JobLifeCycle.PENDING),  # waiting for all jobs be ready
         (JobLifeCycle.STARTING, JobLifeCycle.STARTING),  # one of the jobs is still starting
