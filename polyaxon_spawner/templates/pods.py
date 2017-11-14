@@ -12,19 +12,40 @@ from polyaxon_spawner.templates.persistent_volumes import get_vol_path
 
 
 def get_cluster_env_var(project, experiment, task_type):
-    cluster_name = constants.CONFIG_MAP_CLUSTER_NAME.format(project=project, experiment=experiment)
+    cluster_name = constants.CONFIG_MAP_NAME.format(project=project,
+                                                    experiment=experiment,
+                                                    role='cluster')
     config_map_key_ref = client.V1ConfigMapKeySelector(name=cluster_name, key=task_type)
     value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-    key_name = constants.CONFIG_MAP_CLUSTER_KEY_NAME.format(project=project.replace("-", "_"),
-                                                            experiment=experiment,
-                                                            task_type=task_type)
+    key_name = constants.CONFIG_MAP_KEY_NAME.format(project=project.replace('-', '_'),
+                                                    experiment=experiment,
+                                                    role='cluster',
+                                                    task_type=task_type)
     return client.V1EnvVar(name=key_name, value_from=value)
 
 
-def get_gpu_resources(gpu_limits=0, gpu_requests=0):
-    # TODO: add cpu and memory resources
-    limits = constants.GPU_RESOURCES.format(gpu_limits) if gpu_limits > 0 else None
-    requests = constants.GPU_RESOURCES.format(gpu_requests) if gpu_requests > 0 else None
+def get_resources(resources):
+    limits = {}
+    requests = {}
+    if resources is None:
+        return None
+    if resources.cpu:
+        if resources.cpu.limits:
+            limits['cpu'] = resources.memory.limits
+        if resources.cpu.request:
+            limits['cpu'] = resources.memory.request
+
+    if resources.cpu:
+        if resources.cpu.limits:
+            limits['memory'] = resources.memory.limits
+        if resources.cpu.request:
+            limits['memory'] = resources.memory.request
+
+    if resources.gpu:
+        if resources.gpu.limits:
+            limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.limits
+        if resources.cpu.request:
+            limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.request
     return client.V1ResourceRequirements(limits=limits, requests=requests)
 
 
@@ -44,15 +65,15 @@ def get_gpu_volumes():
     ]
 
 
-def get_volume_mount(project, volume, run_type):
-    volume_name = constants.VOLUME_NAME.format(project=project, vol_name=volume)
+def get_volume_mount(volume, run_type):
+    volume_name = constants.VOLUME_NAME.format(vol_name=volume)
     return client.V1VolumeMount(name=volume_name,
-                                mount_path=get_vol_path(project, volume, run_type))
+                                mount_path=get_vol_path(volume, run_type))
 
 
-def get_volume(project, volume):
-    vol_name = constants.VOLUME_NAME.format(project=project, vol_name=volume)
-    volc_name = constants.VOLUME_CLAIM_NAME.format(project=project, vol_name=volume)
+def get_volume(volume):
+    vol_name = constants.VOLUME_NAME.format(vol_name=volume)
+    volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
     pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=volc_name)
     return client.V1Volume(name=vol_name, persistent_volume_claim=pv_claim)
 
@@ -64,8 +85,7 @@ def get_project_pod_spec(project,
                          command=None,
                          args=None,
                          ports=None,
-                         gpu_limits=0,
-                         gpu_requests=0,
+                         resources=None,
                          env_vars=None,
                          restart_policy=None):
     """Pod spec to be used to create pods for project side: tensorboard, notebooks."""
@@ -87,7 +107,7 @@ def get_project_pod_spec(project,
                                      args=args,
                                      ports=ports,
                                      env=env_vars,
-                                     resources=get_gpu_resources(gpu_limits, gpu_requests),
+                                     resources=get_resources(resources),
                                      volume_mounts=volume_mounts)]
     return client.V1PodSpec(restart_policy=restart_policy, containers=containers, volumes=volumes)
 
@@ -102,15 +122,20 @@ def get_task_pod_spec(project,
                       command=None,
                       args=None,
                       ports=None,
-                      gpu_limits=0,
-                      gpu_requests=0,
+                      resources=None,
                       restart_policy='OnFailure'):
     """Pod spec to be used to create pods for tasks: master, worker, ps."""
     env_vars = env_vars or []
     env_vars += [
-        get_cluster_env_var(project=project, experiment=experiment, task_type=TaskType.MASTER),
-        get_cluster_env_var(project=project, experiment=experiment, task_type=TaskType.WORKER),
-        get_cluster_env_var(project=project, experiment=experiment, task_type=TaskType.PS),
+        get_cluster_env_var(project=project,
+                            experiment=experiment,
+                            task_type=TaskType.MASTER),
+        get_cluster_env_var(project=project,
+                            experiment=experiment,
+                            task_type=TaskType.WORKER),
+        get_cluster_env_var(project=project,
+                            experiment=experiment,
+                            task_type=TaskType.PS),
     ]
 
     volume_mounts = volume_mounts or []
@@ -131,7 +156,7 @@ def get_task_pod_spec(project,
                                      args=args,
                                      ports=ports,
                                      env=env_vars,
-                                     resources=get_gpu_resources(gpu_limits, gpu_requests),
+                                     resources=get_resources(resources),
                                      volume_mounts=volume_mounts)]
     return client.V1PodSpec(restart_policy=restart_policy, containers=containers, volumes=volumes)
 
@@ -153,25 +178,31 @@ def get_pod(project,
             ports,
             command=None,
             args=None,
+            resources=None,
             restart_policy=None):
     task_name = constants.TASK_NAME.format(project=project,
                                            experiment=experiment,
                                            task_type=task_type,
                                            task_id=task_id)
-    labels = get_labels(project, experiment, task_type, task_id, task_name)
+    labels = get_labels(project=project,
+                        experiment=experiment,
+                        task_type=task_type,
+                        task_id=task_id,
+                        task_name=task_name)
     metadata = client.V1ObjectMeta(name=task_name, labels=labels)
 
-    spec = get_task_pod_spec(project=project,
-                             experiment=experiment,
-                             task_type=task_type,
-                             task_id=task_id,
-                             volume_mounts=volume_mounts,
-                             volumes=volumes,
-                             command=command,
-                             args=args,
-                             ports=ports,
-                             restart_policy=restart_policy)
+    pod_spec = get_task_pod_spec(project=project,
+                                 experiment=experiment,
+                                 task_type=task_type,
+                                 task_id=task_id,
+                                 volume_mounts=volume_mounts,
+                                 volumes=volumes,
+                                 command=command,
+                                 args=args,
+                                 ports=ports,
+                                 resources=resources,
+                                 restart_policy=restart_policy)
     return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
                         kind=k8s_constants.K8S_POD_KIND,
                         metadata=metadata,
-                        spec=spec)
+                        spec=pod_spec)

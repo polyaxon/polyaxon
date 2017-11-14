@@ -12,7 +12,6 @@ def get_labels(name, project, role=None):
     labels = {'app': name, 'project': project}
     if role:
         labels['role'] = role
-
     return labels
 
 
@@ -23,6 +22,7 @@ def get_deployment_spec(name,
                         command,
                         args,
                         ports,
+                        resources=None,
                         role=None,
                         replicas=1):
     labels = get_labels(name, project, role)
@@ -34,6 +34,7 @@ def get_deployment_spec(name,
                                          volumes=volumes,
                                          command=command,
                                          args=args,
+                                         resources=resources,
                                          ports=ports)
     template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
     return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
@@ -46,6 +47,7 @@ def get_deployment(name,
                    command,
                    args,
                    ports,
+                   resources=None,
                    role=None,
                    replicas=1):
     labels = get_labels(name, project, role)
@@ -58,6 +60,7 @@ def get_deployment(name,
                                command=command,
                                args=args,
                                ports=ports,
+                               resources=resources,
                                role=role,
                                replicas=replicas)
     return client.AppsV1beta1Deployment(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
