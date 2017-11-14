@@ -90,9 +90,15 @@ class K8SPolyaxonFileSpawner(K8SSpawner):
     def start_experiment(self, experiment=0):
         self.create_volumes()
         self.create_cluster_config_map(experiment=experiment)
-        self.create_master(experiment, resources=self.spec.get_master_resources_at(experiment))
-        self.create_worker(experiment)
-        self.create_ps(experiment)
+        master_resp = self.create_master(experiment,
+                                         resources=self.spec.get_master_resources_at(experiment))
+        worker_resp = self.create_worker(experiment)
+        ps_resp = self.create_ps(experiment)
+        return {
+            TaskType.MASTER: master_resp,
+            TaskType.WORKER: worker_resp,
+            TaskType.PS: ps_resp
+        }
 
     def delete_experiment(self, experiment=0):
         self.delete_volumes()

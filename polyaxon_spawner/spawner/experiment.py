@@ -74,9 +74,15 @@ class K8SExperimentSpawner(K8SSpawner):
         self.check_data_volume()
         self.check_logs_volume()
         self.create_cluster_config_map(experiment=self.experiment_id)
-        self.create_master(experiment=self.experiment_id, resources=self.spec.master_resources)
-        self.create_worker()
-        self.create_ps()
+        master_resp = self.create_master(experiment=self.experiment_id,
+                                         resources=self.spec.master_resources)
+        worker_resp = self.create_worker()
+        ps_resp = self.create_ps()
+        return {
+            TaskType.MASTER: master_resp,
+            TaskType.WORKER: worker_resp,
+            TaskType.PS: ps_resp
+        }
 
     def delete_experiment(self):
         self.delete_cluster_config_map(experiment=self.experiment_id)
