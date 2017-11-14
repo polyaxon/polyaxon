@@ -10,9 +10,9 @@ from django.db.models.signals import post_save
 
 from polyaxon_k8s.constants import JobLifeCycle
 
-from clusters.constants import ExperimentLifeCycle
 from clusters.models import Cluster
-from experiments.signals import new_experiment
+from experiments.constants import ExperimentLifeCycle
+from experiments.signals import new_experiment, new_experiment_job
 from libs.models import DiffModel
 
 
@@ -140,6 +140,9 @@ class ExperimentJob(DiffModel):
         if status:
             return status.created_at
         return None
+
+
+post_save.connect(new_experiment_job, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
 
 
 class ExperimentJobStatus(models.Model):

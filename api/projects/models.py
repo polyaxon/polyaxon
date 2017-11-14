@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
 
-from clusters.constants import ExperimentLifeCycle
+from experiments.constants import ExperimentLifeCycle
 from libs.models import DiffModel
 from projects.signals import new_spec
 
@@ -56,18 +56,24 @@ class PolyaxonSpec(DiffModel):
 
     @cached_property
     def concurrency(self):
-        return self.specification.settings.conccurrent_experiments
+        if self.specification.settings:
+            return self.specification.settings.conccurrent_experiments
+        return 1
+
+    @property
+    def pending_experiments(self):
+        return self.experiments.filter(status__status=ExperimentLifeCycle.CREATED)
 
     @property
     def running_experiments(self):
         return self.experiments.filter(status__status__in=ExperimentLifeCycle.RUNNING_STATUS)
 
     @property
-    def can_start_new_experiment(self):
+    def n_experiments_to_start(self):
         # We need to check if we are allowed to start the experiment
         # If the polyaxonfile has concurrency
         # we need to need to check how many experiments are running
-        return self.concurrency > self.running_experiments.count()
+        return self.concurrency - self.running_experiments.count()
 
 
 post_save.connect(new_spec, sender=PolyaxonSpec, dispatch_uid="spec_saved")

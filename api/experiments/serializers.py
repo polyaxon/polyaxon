@@ -132,8 +132,3 @@ class ExperimentCreateSerializer(ExperimentSerializer):
             'project': {'write_only': True},
             'spec': {'write_only': True}
         }
-
-
-class StatusSerializer(serializers.Serializer):
-    job_id = serializers.CharField()
-    status = serializers.CharField()
