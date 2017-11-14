@@ -55,7 +55,7 @@ class K8SExperimentSpawner(K8SSpawner):
     def create_worker(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
         resources = self.spec.worker_resources
-        self._create_worker(experiment=self.experiment_id, resources=resources, n_pods=n_pods)
+        return self._create_worker(experiment=self.experiment_id, resources=resources, n_pods=n_pods)
 
     def delete_worker(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
@@ -64,7 +64,7 @@ class K8SExperimentSpawner(K8SSpawner):
     def create_ps(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         resources = self.spec.ps_resources
-        self._create_ps(experiment=self.experiment_id, resources=resources, n_pods=n_pods)
+        return self._create_ps(experiment=self.experiment_id, resources=resources, n_pods=n_pods)
 
     def delete_ps(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)

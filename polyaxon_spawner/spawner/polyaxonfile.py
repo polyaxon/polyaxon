@@ -72,7 +72,7 @@ class K8SPolyaxonFileSpawner(K8SSpawner):
     def create_worker(self, experiment=0):
         n_pods = self.spec.get_cluster_def_at(experiment)[0].get(TaskType.WORKER, 0)
         resources = self.spec.get_worker_resources_at(experiment)
-        self._create_worker(experiment=experiment, resources=resources, n_pods=n_pods)
+        return self._create_worker(experiment=experiment, resources=resources, n_pods=n_pods)
 
     def delete_worker(self, experiment=0):
         n_pods = self.spec.get_cluster_def_at(experiment)[0].get(TaskType.WORKER, 0)
@@ -81,7 +81,7 @@ class K8SPolyaxonFileSpawner(K8SSpawner):
     def create_ps(self, experiment=0):
         n_pods = self.spec.get_cluster_def_at(experiment)[0].get(TaskType.PS, 0)
         resources = self.spec.get_ps_resources_at(experiment)
-        self._create_ps(experiment=experiment, resources=resources, n_pods=n_pods)
+        return self._create_ps(experiment=experiment, resources=resources, n_pods=n_pods)
 
     def delete_ps(self, experiment=0):
         n_pods = self.spec.get_cluster_def_at(experiment)[0].get(TaskType.PS, 0)

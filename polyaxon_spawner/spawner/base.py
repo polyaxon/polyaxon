@@ -70,10 +70,14 @@ class K8SSpawner(K8SManager):
                            args=args,
                            resources=resources,
                            restart_policy=restart_policy)
-        self.create_or_update_pod(name=task_name, data=pod)
+        pod_resp, _ = self.create_or_update_pod(name=task_name, data=pod)
 
         service = services.get_service(name=task_name, labels=labels, ports=ports)
-        self.create_or_update_service(name=task_name, data=service)
+        service_resp, _ = self.create_or_update_service(name=task_name, data=service)
+        return {
+            'pod': pod_resp.to_dict(),
+            'service': service_resp.to_dict()
+        }
 
     def _delete_pod(self, experiment, task_type, task_id):
         task_name = constants.TASK_NAME.format(project=self.project_name,
@@ -104,29 +108,31 @@ class K8SSpawner(K8SManager):
                                  task_id=0,
                                  schedule='train_and_evaluate')
         command = ["python3", "-c"]
-        self._create_pod(experiment=experiment,
-                         task_type=TaskType.MASTER,
-                         task_id=0,
-                         command=command,
-                         args=args,
-                         resources=resources)
+        return self._create_pod(experiment=experiment,
+                                task_type=TaskType.MASTER,
+                                task_id=0,
+                                command=command,
+                                args=args,
+                                resources=resources)
 
     def delete_master(self, experiment=0):
         self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
 
     def _create_worker(self, experiment, resources, n_pods):
         command = ["python3", "-c"]
+        resp = []
         for i in range(n_pods):
             args = self.get_pod_args(experiment=experiment,
                                      task_type=TaskType.WORKER,
                                      task_id=i,
                                      schedule='train')
-            self._create_pod(experiment=experiment,
-                             task_type=TaskType.WORKER,
-                             task_id=i,
-                             command=command,
-                             args=args,
-                             resources=resources.get(i))
+            resp.append(self._create_pod(experiment=experiment,
+                                         task_type=TaskType.WORKER,
+                                         task_id=i,
+                                         command=command,
+                                         args=args,
+                                         resources=resources.get(i)))
+        return resp
 
     def _delete_worker(self, experiment, n_pods):
         for i in range(n_pods):
@@ -134,17 +140,19 @@ class K8SSpawner(K8SManager):
 
     def _create_ps(self, experiment, resources, n_pods):
         command = ["python3", "-c"]
+        resp = []
         for i in range(n_pods):
             args = self.get_pod_args(experiment=experiment,
                                      task_type=TaskType.PS,
                                      task_id=i,
                                      schedule='run_std_server')
-            self._create_pod(experiment=experiment,
-                             task_type=TaskType.PS,
-                             task_id=i,
-                             command=command,
-                             args=args,
-                             resources=resources.get(i))
+            resp.append(self._create_pod(experiment=experiment,
+                                         task_type=TaskType.PS,
+                                         task_id=i,
+                                         command=command,
+                                         args=args,
+                                         resources=resources.get(i)))
+        return resp
 
     def _delete_ps(self, experiment, n_pods):
         for i in range(n_pods):
