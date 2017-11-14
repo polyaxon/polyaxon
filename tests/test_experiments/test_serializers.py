@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from unittest.mock import patch
+
 from django.test import TestCase
 
-from clusters.constants import ExperimentLifeCycle
+from experiments.constants import ExperimentLifeCycle
 from experiments.models import ExperimentStatus, Experiment, ExperimentJob
 from experiments.serializers import (
     ExperimentStatusSerializer,
@@ -11,6 +13,7 @@ from experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobSerializer,
 )
+from experiments.task_status import RedisExperimentStatus
 from tests.factories.factory_experiments import (
     ExperimentStatusFactory,
     ExperimentFactory,
@@ -36,6 +39,7 @@ class TestExperimentSerializer(TestCase):
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
+        assert data.pop('last_status') == self.obj1.last_status.status
         data.pop('created_at')
         data.pop('updated_at')
 
@@ -125,6 +129,7 @@ class TestExperimentDetailSerializer(TestCase):
         assert data.pop('cluster') == self.obj1.cluster.uuid.hex
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('spec') == (self.obj1.spec.uuid.hex if self.obj1.spec else None)
+        assert data.pop('last_status') == self.obj1.last_status.status
         assert len(data.pop('jobs')) == 1
         data.pop('created_at')
         data.pop('updated_at')
@@ -214,8 +219,10 @@ class TestExperimentStatusSerializer(TestCase):
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory_class()
-        self.obj2 = self.factory_class()
+        with patch.object(RedisExperimentStatus, 'set_status') as _:
+            with patch('experiments.tasks.start_experiment.delay') as _:
+                self.obj1 = self.factory_class()
+                self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data

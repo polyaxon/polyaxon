@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from rest_framework import status
 
+from mock import patch
+
 from api.urls import API_V1
 from experiments.models import Experiment
 from experiments.serializers import ExperimentSerializer

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from unittest.mock import patch
+
 from rest_framework import status
 
 from polyaxon_k8s.constants import JobLifeCycle
 
 from api.urls import API_V1
-from clusters.constants import ExperimentLifeCycle
+from experiments.constants import ExperimentLifeCycle
 from experiments.models import (
     Experiment,
     ExperimentStatus,
@@ -21,6 +23,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
 )
+from experiments.task_status import RedisExperimentJobStatus, RedisExperimentStatus
 from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_experiments import (
     ExperimentFactory,
@@ -302,7 +305,9 @@ class TestExperimentStatusListViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.experiment = ExperimentFactory()
+        with patch.object(RedisExperimentStatus, 'set_status') as _:
+            with patch('experiments.tasks.start_experiment.delay') as _:
+                self.experiment = ExperimentFactory()
         self.url = '/{}/experiments/{}/status/'.format(API_V1, self.experiment.uuid.hex)
         self.objects = [self.factory_class(experiment=self.experiment,
                                            status=ExperimentLifeCycle.CHOICES[i][0])
@@ -367,7 +372,9 @@ class TestExperimentStatusDetailViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.experiment = ExperimentFactory()
+        with patch.object(RedisExperimentStatus, 'set_status') as _:
+            with patch('experiments.tasks.start_experiment.delay') as _:
+                self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
         self.url = '/{}/experiments/{}/status/{}/'.format(API_V1,
                                                           self.experiment.uuid.hex,
@@ -505,7 +512,9 @@ class TestExperimentJobStatusListViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.experiment_job = ExperimentJobFactory()
+        with patch('experiments.tasks.start_experiment.delay') as _:
+            with patch.object(RedisExperimentJobStatus, 'set_status') as _:
+                self.experiment_job = ExperimentJobFactory()
         self.url = '/{}/experiments/{}/jobs/{}/status/'.format(
             API_V1,
             self.experiment_job.experiment.uuid.hex,
@@ -573,8 +582,10 @@ class TestExperimentJobStatusDetailViewV1(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.experiment_job = ExperimentJobFactory()
-        self.object = self.factory_class(job=self.experiment_job)
+        with patch('experiments.tasks.start_experiment.delay') as _:
+            with patch.object(RedisExperimentJobStatus, 'set_status') as _:
+                self.experiment_job = ExperimentJobFactory()
+                self.object = self.factory_class(job=self.experiment_job)
         self.url = '/{}/experiments/{}/jobs/{}/status/{}'.format(
             API_V1,
             self.experiment_job.experiment.uuid.hex,

@@ -6,8 +6,12 @@ import json
 import uuid
 from urllib.parse import urlparse
 
+from unittest.mock import patch
+
 from django.test import Client, TestCase
 from django.test.client import FakePayload
+from polyaxon_schemas.utils import TaskType
+from polyaxon_spawner.spawner import K8SExperimentSpawner
 
 from rest_framework.authtoken.models import Token
 
@@ -141,6 +145,14 @@ class BaseTest(TestCase):
 
     def setUp(self):
         assert hasattr(self, 'auth_client') and self.auth_client is not None
+
+        patcher = patch.object(K8SExperimentSpawner, 'start_experiment')
+        self.start_experiment = patcher.start()
+        self.start_experiment.return_value = {TaskType.MASTER: {},
+                                              TaskType.WORKER: [],
+                                              TaskType.PS: []}
+        self.addCleanup(patcher.stop)
+
         super().setUp()
 
     def test_requires_auth(self):
