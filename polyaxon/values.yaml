@@ -8,8 +8,8 @@ service:
   nodePort: 35811
 
 types:
-  core: "core"
-  experiment: "experiment"
+  core: "polyaxon-core"
+  experiment: "polyaxon-experiment"
 
 imagePullPolicy: IfNotPresent
 useRBAC: false
