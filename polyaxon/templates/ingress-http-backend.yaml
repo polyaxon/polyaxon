@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: polyaxon-http-backend
-  namespace: {{ .Values.namespace | quote }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: polyaxon-http-backend
     type: {{ .Values.types.core }}
@@ -15,9 +15,9 @@ spec:
         type: {{ .Values.types.core }}
     spec:
       terminationGracePeriodSeconds: 60
-      {{- if .Values.nodeSelectors.system }}
+      {{- if .Values.nodeSelectors }}
       nodeSelector:
-{{ toYaml .Values.nodeSelectors.system | indent 8 }}
+{{ toYaml .Values.nodeSelectors | indent 8 }}
       {{- end }}
       affinity:
         podAffinity:

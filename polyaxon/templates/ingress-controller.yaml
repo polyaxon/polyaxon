@@ -2,17 +2,17 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: polyaxon-ingress-controller
-  namespace: {{ .Values.namespace | quote }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: polyaxon-ingress-controller
-    type: {{ .Values.types.core | quote }}
+    type: {{ .Values.types.core }}
 spec:
   replicas: 1
   template:
     metadata:
       labels:
         app: polyaxon-ingress-controller
-        type: {{ .Values.types.core | quote }}
+        type: {{ .Values.types.core }}
     spec:
       serviceAccountName: polyaxon-ingress-serviceaccount
       # hostNetwork makes it possible to use ipv6 and to preserve the source IP correctly regardless of docker configuration
@@ -21,9 +21,9 @@ spec:
       # like with kubeadm
       hostNetwork: true
       terminationGracePeriodSeconds: 60
-      {{- if .Values.nodeSelectors.system }}
+      {{- if .Values.nodeSelectors }}
       nodeSelector:
-{{ toYaml .Values.nodeSelectors.system | indent 8 }}
+{{ toYaml .Values.nodeSelectors | indent 8 }}
       {{- end }}
       affinity:
         podAffinity:
@@ -82,29 +82,29 @@ metadata:
   name: polyaxon-ingress
   labels:
     app: polyaxon-ingress
-    type: {{ .Values.types.core | quote }}
+    type: {{ .Values.types.core }}
 spec:
   selector:
     app: polyaxon-ingress-controller
-{{- if .Values.nodePorts }}
+{{- if contains "NodePort" .Values.service.type }}
   ports:
-  - port: 80
-    name: htto
+  - port: {{ .Values.service.externalPort }}
+    name: {{ .Values.service.name }}
     protocol: TCP
-    targetPort: 80
-    nodePort: 31213
-  type: NodePort
+    targetPort: {{ .Values.service.internalPort }}
+    nodePort: {{ .Values.service.nodePort }}
+  type: {{ .Values.service.type }}
 {{- else }}
   ports:
-  - port: 80
-  type: LoadBalancer
+  - port: {{ .Values.service.externalPort }}
+  type: {{ .Values.service.type }}
 {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: polyaxon-ingress-config
-  namespace: {{ .Values.namespace | quote }}
+  namespace: {{ .Values.namespace }}
 data:
   ssl-redirect: "false"
   hsts: "false"

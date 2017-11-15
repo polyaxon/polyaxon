@@ -2,7 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: polyaxon-configmap
-  type: {{ .Values.types.core | quote }}
+  labels:
+    type: {{ .Values.types.core }}
 data:
   admin_password: secret
   db_url: postgresql://polyaxon:polyaxon@{{ .Release.Name }}-postgresql/polyaxon
@@ -13,5 +14,5 @@ data:
   account_key: {{ .Values.accountKey | quote }}
   nvidia_driver_dir: {{ .Values.nvidiaDriverDir | quote }}
   version: {{ .Chart.Version | quote }}
-  system_node_selectors: {{ toYaml .Values.nodeSelectors.system | quote }}
-  gpu_node_selectors: {{ toYaml .Values.nodeSelectors.gpu | quote }}
+  node_selectors: {{ toYaml .Values.nodeSelectors | quote }}
+  gpu_node_selectors: {{ toYaml .Values.nodeSelectorsGPU | quote }}
