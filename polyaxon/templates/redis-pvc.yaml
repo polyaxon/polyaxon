@@ -1,0 +1,24 @@
+{{- if and .Values.redis.persistence.enabled (not .Values.redis.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "redis.fullname" . }}
+  labels:
+    app: {{ template "redis.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - {{ .Values.redis.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.redis.persistence.size | quote }}
+{{- if .Values.redis.persistence.storageClass }}
+{{- if (eq "-" .Values.redis.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.redis.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

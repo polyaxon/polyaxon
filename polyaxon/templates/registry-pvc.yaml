@@ -1,0 +1,23 @@
+{{- if and .Values.registry.persistence.enabled (not .Values.registry.persistence.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "registry.fullname" . }}
+  labels:
+    app: {{ template "registry.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    {{- if .Values.registry.persistence.storageClass }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.registry.persistence.storageClass | quote }}
+    {{- else }}
+    volume.alpha.kubernetes.io/storage-class: default
+    {{- end }}          
+spec:
+  accessModes:
+    - {{ .Values.registry.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.registry.persistence.size | quote }}
+{{- end -}}

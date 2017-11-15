@@ -1,0 +1,24 @@
+{{- if and .Values.postgresql.persistence.enabled (not .Values.postgresql.persistence.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "postgresql.fullname" . }}
+  labels:
+    app: {{ template "postgresql.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - {{ .Values.postgresql.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.postgresql.persistence.size | quote }}
+{{- if .Values.postgresql.persistence.storageClass }}
+{{- if (eq "-" .Values.postgresql.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.postgresql.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end -}}

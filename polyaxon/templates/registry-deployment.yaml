@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "registry.fullname" . }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "registry.fullname" . }}
+        type: polyaxon
+    spec:
+      {{- if .Values.nodeSelectors }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectors | indent 8 }}
+      {{- end }}
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: type
+                  operator: In
+                  values:
+                  - system
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: registry
+        image: registry:2
+        resources:
+          requests:
+            cpu: "300m"
+            memory: "512Mi"
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: /var/lib/registry
+          name: registry-volume
+          subPath: {{ .Values.registry.persistence.subPath }}        
+      volumes:
+      - name: registry-volume
+      {{- if .Values.registry.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.registry.persistence.existingClaim | default (include "registry.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+

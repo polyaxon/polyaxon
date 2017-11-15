@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "registry.fullname" . }}
+  labels:
+    app: {{ template "registry.fullname" . }}
+spec:
+  ports:
+  - port: 5000
+    name: registry-port
+    protocol: TCP
+    nodePort: 31500
+  selector:
+    app: {{ template "registry.fullname" . }}
+  type: NodePort
