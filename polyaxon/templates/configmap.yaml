@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: polyaxon-configmap
+  type: {{ .Values.types.core | quote }}
+data:
+  admin_password: secret
+  db_url: postgresql://polyaxon:polyaxon@{{ .Release.Name }}-postgresql/polyaxon
+  k8s_url: https://kubernetes.default.svc.cluster.local
+  admin_email: {{ .Values.adminEmail | quote }}
+  admin_api_key: {{ .Values.adminApiKey | quote }}
+  cluster_id: ""
+  account_key: {{ .Values.accountKey | quote }}
+  nvidia_driver_dir: {{ .Values.nvidiaDriverDir | quote }}
+  version: {{ .Chart.Version | quote }}
+  system_node_selectors: {{ toYaml .Values.nodeSelectors.system | quote }}
+  gpu_node_selectors: {{ toYaml .Values.nodeSelectors.gpu | quote }}

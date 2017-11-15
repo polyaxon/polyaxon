@@ -1,0 +1,75 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: polyaxon-http-backend
+  namespace: {{ .Values.namespace | quote }}
+  labels:
+    app: polyaxon-http-backend
+    type: {{ .Values.types.core }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: polyaxon-http-backend
+        type: {{ .Values.types.core }}
+    spec:
+      terminationGracePeriodSeconds: 60
+      {{- if .Values.nodeSelectors.system }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectors.system | indent 8 }}
+      {{- end }}
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: type
+                  operator: In
+                  values:
+                  - system
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: default-http-backend
+        # Any image is permissable as long as:
+        # 1. It serves a 404 page at /
+        # 2. It serves 200 on a /healthz endpoint
+        image: gcr.io/google_containers/defaultbackend:1.0
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 10m
+            memory: 20Mi
+          requests:
+            cpu: 10m
+            memory: 20Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: polyaxon-http-backend
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: polyaxon-http-backend
+    type: {{ .Values.types.core }}
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: polyaxon-http-backend
+    type: {{ .Values.types.core }}

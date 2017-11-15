@@ -1,0 +1,40 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: polyaxon-ingress
+  namespace: {{ .Values.namespace | quote }}
+  labels:
+    type: {{ .Values.types.core | quote }}
+  annotations:
+     ingress.kubernetes.io/ssl-redirect: "false"
+     ingress.kubernetes.io/rewrite-target: /
+     ingress.kubernetes.io/add-base-url: "true"
+     kubernetes.io/ingress.class: "polyaxon-ingress"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: polyaxon-api
+          servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: polyaxon-tensorboard
+  labels:
+    type: {{ .Values.types.core | quote }}
+  annotations:
+     ingress.kubernetes.io/ssl-redirect: "false"  
+     ingress.kubernetes.io/rewrite-target: /tensorboard
+     kubernetes.io/ingress.class: "polyaxon-ingress"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /tensorboard/*
+        backend:
+          serviceName: polyaxon-tensorboard
+          servicePort: 80           
