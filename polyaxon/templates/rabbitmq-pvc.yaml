@@ -1,0 +1,19 @@
+{{- if and .Values.rabbitmq.persistence.enabled (not .Values.rabbitmq.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "rabbitmq.fullname" . }}
+spec:
+  accessModes:
+    - {{ .Values.rabbitmq.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.rabbitmq.persistence.size | quote }}
+{{- if .Values.rabbitmq.persistence.storageClass }}
+{{- if (eq "-" .Values.rabbitmq.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.rabbitmq.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

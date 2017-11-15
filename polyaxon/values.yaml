@@ -80,6 +80,28 @@ redis:
     enabled: false
     allowExternal: true
 
+rabbitmq:
+  image: "rabbitmq"
+  imageTag: "3.6.9-management"
+  imagePullPolicy: IfNotPresent
+  rabbitmqUsername: polyaxon
+  rabbitmqNodePort: 5672
+  rabbitmqNodeType: stats
+  rabbitmqNodeName: rabbit
+  rabbitmqVhost: /
+  rabbitmqManagerPort: 15672
+  serviceType: ClusterIP
+  persistence:
+    enabled: true
+
+  accessMode: ReadWriteOnce
+  size: 8Gi
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
 registry:
   persistence:
     enabled: false
