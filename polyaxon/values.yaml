@@ -1,8 +1,15 @@
-namespace: polyaxon
+namespace: "polyaxon"
+
+service:
+  name: polyaxon
+  type: LoadBalancer
+  externalPort: 80
+  internalPort: 80
+  nodePort: 35811
 
 types:
-  core: core
-  experiment: experiment
+  core: "core"
+  experiment: "experiment"
 
 imagePullPolicy: IfNotPresent
 useRBAC: false
@@ -12,6 +19,7 @@ nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
 
 # Default values for polyaxon-chart.
 nodeSelector: {}
+nodeSelectorsGPU: {}
 
 postgresql:
   imageTag: 9.6.1
@@ -57,10 +65,10 @@ redis:
     size: 8Gi
 
   # default
-  image: bitnami/redis:4.0.2-r1
+  image: redis:4.0.2
   imagePullPolicy: IfNotPresent
   serviceType: ClusterIP
-  usePassword: true
+  usePassword: false
   metrics:
     enabled: false
     image: oliver006/redis_exporter
@@ -93,9 +101,8 @@ rabbitmq:
   serviceType: ClusterIP
   persistence:
     enabled: true
-
-  accessMode: ReadWriteOnce
-  size: 8Gi
+    accessMode: ReadWriteOnce
+    size: 8Gi
 
   resources:
     requests:
