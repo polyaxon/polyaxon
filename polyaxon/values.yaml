@@ -1,0 +1,88 @@
+namespace: polyaxon
+
+types:
+  core: core
+  experiment: experiment
+
+imagePullPolicy: IfNotPresent
+useRBAC: false
+adminEmail: "admin@polyaxon.com"
+adminApiKey: "l15uw2p4hitp48felgmmw34dv51ix1s7"
+nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
+
+# Default values for polyaxon-chart.
+nodeSelector: {}
+
+postgresql:
+  imageTag: 9.6.1
+  postgresUser: polyaxon
+  postgresPassword: polyaxon
+  postgresDatabase: polyaxon
+  persistence:
+    enabled: false
+    size: "8Gi"
+    subPath: ""
+
+  # default
+  image: "postgres"
+  persistence:
+    accessMode: ReadWriteOnce
+    subPath: "postgresql-db"
+  metrics:
+    enabled: false
+    image: wrouesnel/postgres_exporter
+    imageTag: v0.1.1
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+  service:
+    type: ClusterIP
+    port: 5432
+    externalIPs: []
+  networkPolicy:
+    enabled: false
+    allowExternal: true
+  tolerations: []
+
+redis:
+  persistence:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
+  # default
+  image: bitnami/redis:4.0.2-r1
+  imagePullPolicy: IfNotPresent
+  serviceType: ClusterIP
+  usePassword: true
+  metrics:
+    enabled: false
+    image: oliver006/redis_exporter
+    imageTag: v0.11
+    imagePullPolicy: IfNotPresent
+    resources: {}
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9121"
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+  tolerations: []
+  podLabels: {}
+  networkPolicy:
+    enabled: false
+    allowExternal: true
+
+registry:
+  persistence:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    subPath: ""

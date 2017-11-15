@@ -1,11 +1,12 @@
 apiVersion: v1
-description: Polyaxon si a platform that helps you build, manage and monitor deep learning models at scale
+description: Polyaxon is a platform that helps you build, manage and monitor deep learning models at scale
 name: polyaxon
 version: 0.0.1
 keywords:
   - deep learning
   - a.i.
   - machine learning
+  - infrastructure
 sources:
   - https://github.com/polyaxon
 home: http://polyaxon.com
