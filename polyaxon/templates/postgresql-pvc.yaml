@@ -8,6 +8,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
 spec:
   accessModes:
     - {{ .Values.postgresql.persistence.accessMode | quote }}

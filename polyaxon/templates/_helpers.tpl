@@ -52,7 +52,7 @@ Redis
 Expand the name of the chart.
 */}}
 {{- define "redis.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- "redis" -}}
 {{- end -}}
 
 {{/*
@@ -80,5 +80,23 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 */}}
 {{- define "registry.fullname" -}}
 {{- $name := "registry" -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+
+{{/*
+Rabbitmq
+Expand the name of the chart.
+*/}}
+{{- define "rabbitmq.name" -}}
+{{- "rabbitmq" -}}
+{{- end -}}
+
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "rabbitmq.fullname" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

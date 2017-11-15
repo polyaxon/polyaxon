@@ -8,6 +8,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
   annotations:
     {{- if .Values.registry.persistence.storageClass }}
     volume.beta.kubernetes.io/storage-class: {{ .Values.registry.persistence.storageClass | quote }}

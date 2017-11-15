@@ -4,6 +4,7 @@ metadata:
   name: {{ template "registry.fullname" . }}
   labels:
     app: {{ template "registry.fullname" . }}
+    type: {{ .Values.types.core }}
 spec:
   ports:
   - port: 5000

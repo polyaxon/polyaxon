@@ -7,6 +7,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
 {{- if .Values.redis.metrics.enabled }}
   annotations:
 {{ toYaml .Values.metrics.annotations | indent 4 }}

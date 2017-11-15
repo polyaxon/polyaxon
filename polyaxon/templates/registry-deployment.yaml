@@ -8,7 +8,7 @@ spec:
     metadata:
       labels:
         app: {{ template "registry.fullname" . }}
-        type: polyaxon
+        type: {{ .Values.types.core }}
     spec:
       {{- if .Values.nodeSelectors }}
       nodeSelector:
