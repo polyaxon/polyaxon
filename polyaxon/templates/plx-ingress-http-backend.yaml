@@ -1,17 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: polyaxon-http-backend
+  name: {{ template "polyaxon.fullname" . }}-http-backend
   namespace: {{ .Values.namespace }}
   labels:
-    app: polyaxon-http-backend
+    app: {{ template "polyaxon.fullname" . }}-http-backend
     type: {{ .Values.types.core }}
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: polyaxon-http-backend
+        app: {{ template "polyaxon.fullname" . }}-http-backend
         type: {{ .Values.types.core }}
     spec:
       terminationGracePeriodSeconds: 60
@@ -61,15 +61,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: polyaxon-http-backend
+  name: {{ template "polyaxon.fullname" . }}-http-backend
   namespace: {{ .Values.namespace }}
   labels:
-    app: polyaxon-http-backend
+    app: {{ template "polyaxon.fullname" . }}-http-backend
     type: {{ .Values.types.core }}
 spec:
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    app: polyaxon-http-backend
+    app: {{ template "polyaxon.fullname" . }}-http-backend
     type: {{ .Values.types.core }}

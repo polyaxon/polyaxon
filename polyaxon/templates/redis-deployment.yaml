@@ -21,9 +21,9 @@ spec:
       securityContext:
         runAsUser: 1001
         fsGroup: 1001
-      {{- if .Values.nodeSelector }}
+      {{- if .Values.nodeSelectors }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+{{ toYaml .Values.nodeSelectors | indent 8 }}
       {{- end }}
       {{- if .Values.redis.tolerations }}
       tolerations:

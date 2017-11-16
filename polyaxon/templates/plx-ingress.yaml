@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: polyaxon-core
+  name: {{ template "polyaxon.fullname" . }}-ingress
   namespace: {{ .Values.namespace }}
   labels:
     type: {{ .Values.types.core }}
@@ -15,15 +15,15 @@ spec:
   rules:
   - http:
       paths:
-      - path: /core
+      - path: /
         backend:
-          serviceName: polyaxon-core
+          serviceName: {{ template "polyaxon.fullname" . }}-api
           servicePort: 80
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: polyaxon-tensorboard
+  name: {{ template "polyaxon.fullname" . }}-tensorboard
   labels:
     type: {{ .Values.types.core }}
   annotations:

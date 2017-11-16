@@ -1,4 +1,10 @@
 namespace: "polyaxon"
+useRBAC: false
+passwordLenght: 6
+debug: false
+celery:
+  always_eager: false
+  celeryd_prefetch_multiplier: 4
 
 service:
   name: polyaxon
@@ -11,14 +17,96 @@ types:
   core: "polyaxon-core"
   experiment: "polyaxon-experiment"
 
-imagePullPolicy: IfNotPresent
-useRBAC: false
-adminEmail: "admin@polyaxon.com"
-adminApiKey: "l15uw2p4hitp48felgmmw34dv51ix1s7"
+roles:
+  api: "polyaxon-api"
+
+k8s: {}
+
+# Initial admin user to create
+user:
+  name: "admins"
+  emailFrom: <admin@polyaxon.local>
+  email: admin@polyaxon.local
+
+email:
+  host: smtp
+  port: 25
+  use_tls: false
+
+queues:
+  experiments_scheduler_interval_sec: 5
+  experiments: 'polyaxon.experiments'
+
 nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
 
-# Default values for polyaxon-chart.
-nodeSelector: {}
+api:
+  image: api
+  imageTag: 0.0.1
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 300m
+      memory: 300Mi
+workers:
+  image: api
+  imageTag: 0.0.1
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+crons:
+  image: api
+  imageTag: 0.0.1
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  resources:
+    limits:
+      cpu: 50m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+events:
+  image: events
+  imageTag: 0.0.1
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 200m
+    requests:
+      cpu: 100m
+      memory: 100Mi
+streams:
+  image: streams
+  imageTag: 0.0.1
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+persistence:
+  enabled: false
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  mountPath: /data/polyaxon
+
+nodeSelectors: {}
 nodeSelectorsGPU: {}
 
 postgresql:

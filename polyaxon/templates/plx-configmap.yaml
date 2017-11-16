@@ -1,18 +1,27 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: polyaxon-configmap
+  name: {{ template "polyaxon.fullname" . }}
   labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
 data:
-  admin_password: secret
+  debug: {{ .Values.debug }}
   db_url: postgresql://polyaxon:polyaxon@{{ .Release.Name }}-postgresql/polyaxon
   k8s_url: https://kubernetes.default.svc.cluster.local
-  admin_email: {{ .Values.adminEmail | quote }}
-  admin_api_key: {{ .Values.adminApiKey | quote }}
   cluster_id: ""
-  account_key: {{ .Values.accountKey | quote }}
   nvidia_driver_dir: {{ .Values.nvidiaDriverDir | quote }}
   version: {{ .Chart.Version | quote }}
   node_selectors: {{ toYaml .Values.nodeSelectors | quote }}
   gpu_node_selectors: {{ toYaml .Values.nodeSelectorsGPU | quote }}
+  amqp_url: amqp://{{ template "rabbitmq.fullname" . }}:5672
+  celery_always_eager: {{ .Values.celery.always_eager | quote }}
+  celeryd_prefetch_multiplier: {{ .Values.celery.celeryd_prefetch_multiplier | quote }}
+  experiments_scheduler_interval_sec: {{ .Values.queues.experiments_scheduler_interval_sec }}
+  experiments_queue: {{ .Values.queues.experiments | quote }}
+  redis_celery_result_backend_url: redis://{{ template "redis.fullname" . }}:6379/0
+  redis_celery_experiments_status_url: redis://{{ template "redis.fullname" . }}:6379/1
+  redis_celery_jobs_status_url: redis://{{ template "redis.fullname" . }}:6379/2

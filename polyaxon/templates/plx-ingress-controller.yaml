@@ -1,20 +1,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: polyaxon-ingress-controller
+  name: {{ template "polyaxon.fullname" . }}-ingress-controller
   namespace: {{ .Values.namespace }}
   labels:
-    app: polyaxon-ingress-controller
+    app: {{ template "polyaxon.fullname" . }}-ingress-controller
     type: {{ .Values.types.core }}
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: polyaxon-ingress-controller
+        app: {{ template "polyaxon.fullname" . }}-ingress-controller
         type: {{ .Values.types.core }}
     spec:
-      serviceAccountName: polyaxon-ingress-serviceaccount
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       # hostNetwork makes it possible to use ipv6 and to preserve the source IP correctly regardless of docker configuration
       # however, it is not a hard dependency of the nginx-ingress-controller itself and it may cause issues if port 10254 already is taken on the host
       # that said, since hostPort is broken on CNI (https://github.com/kubernetes/kubernetes/issues/31307) we have to use hostNetwork where CNI is used
@@ -72,14 +72,14 @@ spec:
                 fieldPath: metadata.namespace
         args:
         - /nginx-ingress-controller
-        - --default-backend-service=$(POD_NAMESPACE)/polyaxon-http-backend
-        - --configmap=$(POD_NAMESPACE)/polyaxon-ingress-config
+        - --default-backend-service=$(POD_NAMESPACE)/{{ template "polyaxon.fullname" . }}-http-backend
+        - --configmap=$(POD_NAMESPACE)/{{ template "polyaxon.fullname" . }}-ingress-config
         - --ingress-class=polyaxon-ingress
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: polyaxon-ingress
+  name: {{ template "polyaxon.fullname" . }}-ingress
   labels:
     app: polyaxon-ingress
     type: {{ .Values.types.core }}
@@ -103,7 +103,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: polyaxon-ingress-config
+  name: {{ template "polyaxon.fullname" . }}-ingress-config
   namespace: {{ .Values.namespace }}
 data:
   ssl-redirect: "false"

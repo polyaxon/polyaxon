@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: polyaxon-ingress-serviceaccount
+  name: {{ template "polyaxon.fullname" . }}-serviceaccount
   namespace: {{ .Values.namespace }}
 
 {{- if .Values.useRBAC }}
