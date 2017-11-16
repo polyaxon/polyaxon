@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "polyaxon.fullname" . }}-api
   labels:
-    app: {{ template "polyaxon.fullname" . }}
+    app: {{ template "polyaxon.fullname" . }}-api
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"

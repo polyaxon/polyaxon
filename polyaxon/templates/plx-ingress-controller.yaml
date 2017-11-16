@@ -14,12 +14,12 @@ spec:
         app: {{ template "polyaxon.fullname" . }}-ingress-controller
         type: {{ .Values.types.core }}
     spec:
-      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-ingress-serviceaccount
       # hostNetwork makes it possible to use ipv6 and to preserve the source IP correctly regardless of docker configuration
       # however, it is not a hard dependency of the nginx-ingress-controller itself and it may cause issues if port 10254 already is taken on the host
       # that said, since hostPort is broken on CNI (https://github.com/kubernetes/kubernetes/issues/31307) we have to use hostNetwork where CNI is used
       # like with kubeadm
-      hostNetwork: true
+#      hostNetwork: true
       terminationGracePeriodSeconds: 60
       {{- if .Values.nodeSelectors }}
       nodeSelector:
@@ -74,18 +74,18 @@ spec:
         - /nginx-ingress-controller
         - --default-backend-service=$(POD_NAMESPACE)/{{ template "polyaxon.fullname" . }}-http-backend
         - --configmap=$(POD_NAMESPACE)/{{ template "polyaxon.fullname" . }}-ingress-config
-        - --ingress-class=polyaxon-ingress
+        - --ingress-class={{ template "polyaxon.fullname" . }}-ingress
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "polyaxon.fullname" . }}-ingress
   labels:
-    app: polyaxon-ingress
+    app: {{ template "polyaxon.fullname" . }}-ingress
     type: {{ .Values.types.core }}
 spec:
   selector:
-    app: polyaxon-ingress-controller
+    app: {{ template "polyaxon.fullname" . }}-ingress-controller
 {{- if contains "NodePort" .Values.service.type }}
   ports:
   - port: {{ .Values.service.externalPort }}
@@ -109,4 +109,3 @@ data:
   ssl-redirect: "false"
   hsts: "false"
   disable-ipv6: "true"
-

@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-ingress
+  name: {{ template "polyaxon.fullname" . }}-api
   namespace: {{ .Values.namespace }}
   labels:
     type: {{ .Values.types.core }}
@@ -15,7 +15,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /api
         backend:
           serviceName: {{ template "polyaxon.fullname" . }}-api
           servicePort: 80

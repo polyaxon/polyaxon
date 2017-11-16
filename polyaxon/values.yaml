@@ -40,7 +40,7 @@ queues:
 nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
 
 api:
-  image: api
+  image: polyaxon/polyaxon-api
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
   replicas: 1
@@ -52,7 +52,7 @@ api:
       cpu: 300m
       memory: 300Mi
 workers:
-  image: api
+  image: polyaxon/polyaxon-api
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
   replicas: 1
@@ -64,7 +64,7 @@ workers:
       cpu: 100m
       memory: 100Mi
 crons:
-  image: api
+  image: polyaxon/polyaxon-api
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
   replicas: 1
@@ -76,7 +76,7 @@ crons:
       cpu: 50m
       memory: 128Mi
 events:
-  image: events
+  image: polyaxon/polyaxon-events
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
   replicas: 1
@@ -88,7 +88,7 @@ events:
       cpu: 100m
       memory: 100Mi
 streams:
-  image: streams
+  image: polyaxon/polyaxon-streams
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
   replicas: 1

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-serviceaccount
+  name: {{ template "polyaxon.fullname" . }}-ingress-serviceaccount
   namespace: {{ .Values.namespace }}
 
 {{- if .Values.useRBAC }}
@@ -9,7 +9,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
-  name: polyaxon-ingress-clusterrole
+  name: {{ template "polyaxon.fullname" . }}-ingress-clusterrole
 rules:
   - apiGroups:
       - ""
@@ -61,7 +61,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
-  name: polyaxon-ingress-role
+  name: {{ template "polyaxon.fullname" . }}-ingress-role
   namespace: {{ .Values.namespace }}
 rules:
   - apiGroups:
@@ -103,27 +103,27 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
-  name: polyaxon-ingress-role-nisa-binding
+  name: {{ template "polyaxon.fullname" . }}-ingress-role-nisa-binding
   namespace: {{ .Values.namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: polyaxon-ingress-role
+  name: {{ template "polyaxon.fullname" . }}-ingress-role
 subjects:
   - kind: ServiceAccount
-    name: polyaxon-ingress-serviceaccount
-    namespace: polyaxon
+    name: {{ template "polyaxon.fullname" . }}-ingress-serviceaccount
+    namespace: {{ .Values.namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: polyaxon-ingress-clusterrole-nisa-binding
+  name: {{ template "polyaxon.fullname" . }}-ingress-clusterrole-nisa-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: polyaxon-ingress-clusterrole
+  name: {{ template "polyaxon.fullname" . }}-ingress-clusterrole
 subjects:
   - kind: ServiceAccount
-    name: polyaxon-ingress-serviceaccount
+    name: {{ template "polyaxon.fullname" . }}-ingress-serviceaccount
     namespace: {{ .Values.namespace }}
 {{- end }}
