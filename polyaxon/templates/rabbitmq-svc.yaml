@@ -9,19 +9,19 @@ metadata:
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
 spec:
-  type: {{ .Values.serviceType }}
+  type: {{ .Values.rabbitmq.serviceType }}
   ports:
   - name: epmd
     port: 4369
     targetPort: epmd
   - name: amqp
-    port: {{ default "5672" .Values.rabbitmqNodePort }}
+    port: {{ default "5672" .Values.rabbitmq.rabbitmqNodePort }}
     targetPort: amqp
   - name: dist
-    port: {{ default "5672" .Values.rabbitmqNodePort | add 20000 }}
+    port: {{ default "5672" .Values.rabbitmq.rabbitmqNodePort | add 20000 }}
     targetPort: dist
   - name: stats
-    port: {{ default "15672" .Values.rabbitmqManagerPort }}
+    port: {{ default "15672" .Values.rabbitmq.rabbitmqManagerPort }}
     targetPort: stats
   selector:
     app: {{ template "rabbitmq.fullname" . }}
