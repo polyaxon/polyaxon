@@ -31,7 +31,7 @@ postgresql:
     size: "8Gi"
     subPath: ""
 
-  # default
+  # ---
   image: "postgres"
   persistence:
     accessMode: ReadWriteOnce
@@ -59,13 +59,14 @@ postgresql:
   tolerations: []
 
 redis:
+  imageTag: 4.0.2
   persistence:
     enabled: false
     accessMode: ReadWriteOnce
     size: 8Gi
 
-  # default
-  image: redis:4.0.2
+  # ---
+  image: redis
   imagePullPolicy: IfNotPresent
   serviceType: ClusterIP
   usePassword: false
@@ -89,8 +90,8 @@ redis:
     allowExternal: true
 
 rabbitmq:
+  imageTag: "3.6.12-management"
   image: "rabbitmq"
-  imageTag: "3.6.9-management"
   imagePullPolicy: IfNotPresent
   rabbitmqUsername: polyaxon
   rabbitmqNodePort: 5672

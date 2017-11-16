@@ -1,0 +1,10 @@
+postgresql:
+  imageTag: 9.6.1-alpine
+
+redis:
+  imageTag: 4.0.2-alpine
+
+
+rabbitmq:
+  imageTag: 3.6.12-management-alpine
+

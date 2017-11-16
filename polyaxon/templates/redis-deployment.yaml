@@ -31,7 +31,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ template "redis.fullname" . }}
-        image: "{{ .Values.redis.image }}"
+        image: "{{ .Values.redis.image }}:{{ .Values.redis.imageTag }}"
         imagePullPolicy: {{ default "" .Values.redis.imagePullPolicy | quote }}
         {{- if .Values.redis.args }}
         args:
