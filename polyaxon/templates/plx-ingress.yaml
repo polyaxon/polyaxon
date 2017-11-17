@@ -1,3 +1,4 @@
+{{- if .Values.ingress.enabled -}}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -27,7 +28,7 @@ metadata:
   labels:
     type: {{ .Values.types.core }}
   annotations:
-     ingress.kubernetes.io/ssl-redirect: "false"  
+     ingress.kubernetes.io/ssl-redirect: "false"
      ingress.kubernetes.io/rewrite-target: /tensorboard
      kubernetes.io/ingress.class: "polyaxon-ingress"
 spec:
@@ -37,4 +38,5 @@ spec:
       - path: /tensorboard/*
         backend:
           serviceName: polyaxon-tensorboard
-          servicePort: 80           
+          servicePort: 80
+{{- end }}

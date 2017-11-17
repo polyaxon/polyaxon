@@ -1,3 +1,4 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -109,3 +110,4 @@ data:
   ssl-redirect: "false"
   hsts: "false"
   disable-ipv6: "true"
+{{- end }}

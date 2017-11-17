@@ -1,5 +1,8 @@
 namespace: "polyaxon"
-useRBAC: false
+ingress:
+  enabled: false
+  rbac: false
+
 passwordLenght: 6
 debug: false
 celery:
