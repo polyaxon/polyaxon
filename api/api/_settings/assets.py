@@ -3,11 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 from api.utils import ROOT_DIR, config
 
-MEDIA_ROOT = config.get_string('MEDIA_ROOT')
-MEDIA_URL = config.get_string('MEDIA_URL')
+MEDIA_ROOT = config.get_string('POLYAXON_MEDIA_ROOT')
+MEDIA_URL = config.get_string('POLYAXON_MEDIA_URL')
 
-STATIC_ROOT = config.get_string('STATIC_ROOT')
-STATIC_URL = config.get_string('STATIC_URL')
+STATIC_ROOT = config.get_string('POLYAXON_STATIC_ROOT')
+STATIC_URL = config.get_string('POLYAXON_STATIC_URL')
 
 
 # Additional locations of static files

@@ -7,7 +7,7 @@ from api.utils import config
 
 from .apps import INSTALLED_APPS, MIDDLEWARE_CLASSES
 
-if config.get_boolean('DJANGO_DEBUG', is_optional=True):
+if config.get_boolean('POLYAXON_DEBUG', is_optional=True):
 
     def show_toolbar(request):
         # debug toolbar makes import take VERY long (because of SQL traces) and can break tests

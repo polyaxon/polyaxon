@@ -117,7 +117,7 @@ class SettingConfig(object):
 
 
 config = SettingConfig.read_configs([
-    os.environ,
     '{}/defaults.json'.format(ENV_VARS_DIR),
     '{}/test.json'.format(ENV_VARS_DIR) if TESTING else '{}/local.json'.format(ENV_VARS_DIR),
+    os.environ,
 ])

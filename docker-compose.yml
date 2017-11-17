@@ -49,12 +49,12 @@ services:
       MEMCACHE_LOCATION: "memcache:11211"
       SETTINGS_ENV_DIR: "dev"
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
-      AMQP_CELERY_BROKER_URL: "amqp://rabbitmq:5672"
-      REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/0"
-      REDIS_EXPERIMENTS_STATUS_URL: "redis://redis:6379/1"
-      REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: mypass
+      POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
+      POLYAXON_REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      POLYAXON_REDIS_EXPERIMENTS_STATUS_URL: "redis://redis:6379/1"
+      POLYAXON_REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
+      POLYAXON_RABBITMQ_DEFAULT_USER: admin
+      POLYAXON_RABBITMQ_DEFAULT_PASS: mypass
 
   worker:
     build:
@@ -63,10 +63,10 @@ services:
     volumes:
       - .:/polyaxon
     environment:
-      AMQP_CELERY_BROKER_URL: "amqp://rabbitmq:5672"
-      REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/0"
-      REDIS_EXPERIMENTS_STATUS_URL: "redis://redis:6379/1"
-      REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
+      POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
+      POLYAXON_REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      POLYAXON_REDIS_EXPERIMENTS_STATUS_URL: "redis://redis:6379/1"
+      POLYAXON_REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
     networks:
       - api
     depends_on:

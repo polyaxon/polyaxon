@@ -15,12 +15,4 @@ VOLUME /polyaxon
 WORKDIR /polyaxon
 copy . /polyaxon
 
-
-# TensorBoard
-EXPOSE 6006
-# IPython
-EXPOSE 8888
-# Django
-EXPOSE 8000
-# npm-dev-server
-EXPOSE 8001
+CMD uwsgi --ini uwsgi.ini

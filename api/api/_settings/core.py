@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from api.utils import config
 
-DEBUG = config.get_boolean('DJANGO_DEBUG')
+DEBUG = config.get_boolean('POLYAXON_DEBUG')
 
 ALLOWED_HOSTS = ['*']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -23,7 +23,7 @@ USE_TZ = True
 INTERNAL_IPS = ('127.0.0.1',)
 APPEND_SLASH = True
 
-USERS_MINIMUM_PASSWORD_LENGTH = config.get_int('PASSWORD_LENGTH')
+USERS_MINIMUM_PASSWORD_LENGTH = config.get_int('POLYAXON_PASSWORD_LENGTH')
 
 ROOT_URLCONF = 'api.urls'
 
@@ -37,14 +37,15 @@ SESSION_COOKIE_AGE = 24 * 60 * 60  # 24 hours
 SESSION_COOKIE_HTTPONLY = True
 
 
+DEFAULT_DB_ENGINE = 'django.db.backends.postgresql_psycopg2'
 DATABASES = {
     'default': {
-        'ENGINE': config.get_string('DB_ENGINE'),
-        'NAME': config.get_string('DB_NAME'),
-        'USER': config.get_string('DB_USER'),
-        'PASSWORD': config.get_string('DB_PASSWORD'),
-        'HOST': config.get_string('DB_HOST'),
-        'PORT': config.get_string('DB_PORT'),
+        'ENGINE': config.get_string('POLYAXON_DB_ENGINE', is_optional=True) or DEFAULT_DB_ENGINE,
+        'NAME': config.get_string('POLYAXON_DB_NAME'),
+        'USER': config.get_string('POLYAXON_DB_USER'),
+        'PASSWORD': config.get_string('POLYAXON_DB_PASSWORD'),
+        'HOST': config.get_string('POLYAXON_DB_HOST'),
+        'PORT': config.get_string('POLYAXON_DB_PORT'),
         'ATOMIC_REQUESTS': True
     }
 }
@@ -59,7 +60,7 @@ LIST_TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.messages.context_processors.messages',
 ]
 
-JS_DEBUG = config.get_boolean('JS_DEBUG')
+JS_DEBUG = config.get_boolean('POLYAXON_JS_DEBUG')
 
 if JS_DEBUG:
     def js_debug_processor(request):
