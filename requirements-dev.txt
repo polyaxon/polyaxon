@@ -1,0 +1,5 @@
+clint==0.5.1
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@c8c9134013a51afbfeb266db8dbb5160494bf959#egg=polyaxon-schemas
+requests==2.18.4
+requests-toolbelt==0.8.0
+six==1.11.0
