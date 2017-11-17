@@ -13,3 +13,6 @@ spec:
     app: {{ template "polyaxon.fullname" . }}-api
   ports:
   - port: 80
+{{- if not .Values.ingress.enabled -}}
+  type: LoadBalancer
+{{- end }}
