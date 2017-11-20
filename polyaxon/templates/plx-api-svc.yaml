@@ -9,10 +9,10 @@ metadata:
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
 spec:
+  {{- if not .Values.ingress.enabled }}
+  type: LoadBalancer
+  {{- end }}
   selector:
     app: {{ template "polyaxon.fullname" . }}-api
   ports:
   - port: 80
-{{- if not .Values.ingress.enabled -}}
-  type: LoadBalancer
-{{- end }}

@@ -151,7 +151,10 @@ spec:
         {{- end }}
         {{- if .Values.k8s.authorisation }}
         - name: POLYAXON_K8S_AUTHORISATION
-          value: {{ .Values.k8s.authorisation | quote }}
+          valueFrom:
+            secretKeyRef:
+              name: polyaxon-cluster-secret
+              key: k8s-authorisation
         {{- end }}
         {{- if .Values.k8s.ssl_ca_cert }}
         - name: POLYAXON_K8S_SSL_CA_CERT
