@@ -10,7 +10,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from api import views
 
 
-API_V1 = 'v1/api'
+API_V1 = 'api/v1'
 
 urlpatterns = [
     url(r'^users/', include('users.urls', namespace='users')),
