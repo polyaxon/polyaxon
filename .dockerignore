@@ -19,3 +19,5 @@ tests_report/
 .tox/
 dist/
 *.egg-info/
+examples/
+data/

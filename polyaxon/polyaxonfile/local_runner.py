@@ -2,18 +2,21 @@
 from __future__ import absolute_import, division, print_function
 
 import atexit
+import json
+
 import os
 import signal
 import subprocess
 import sys
 
 import time
+
+from polyaxon_schemas.polyaxonfile.specification import Specification
 from six.moves import xrange
 from multiprocessing import Process
 
 from tensorflow.python.platform import tf_logging as logging
 
-from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.utils import TaskType
 
 from polyaxon.polyaxonfile.manager import (
@@ -83,7 +86,7 @@ start_experiment_run(
 
 
 def run_experiment(polyaxonfile, xp):
-    plx_file = PolyaxonFile.read(polyaxonfile)
+    plx_file = Specification.read(polyaxonfile)
     logging.info("running Experiment n: {}".format(xp))
     cluster, is_distributed = plx_file.get_cluster_def_at(xp)
     if not is_distributed:
@@ -91,7 +94,7 @@ def run_experiment(polyaxonfile, xp):
         current_run['finished'] = True
     else:
         env = {
-            'polyaxonfile': polyaxonfile.filepath,
+            'polyaxonfile': json.dumps(polyaxonfile.get_parsed_data_at(xp)),
             'task_type': TaskType.MASTER,
             'experiment_id': xp,
             'task_id': 0,
@@ -117,7 +120,7 @@ def run_experiment(polyaxonfile, xp):
 
 
 def run(polyaxonfile):
-    plx_file = PolyaxonFile.read(polyaxonfile)
+    plx_file = Specification.read(polyaxonfile)
     for xp in range(plx_file.matrix_space):
         run_experiment(plx_file, xp)
 
@@ -130,7 +133,7 @@ def run(polyaxonfile):
 
 
 def run_all(polyaxonfile):
-    plx_file = PolyaxonFile.read(polyaxonfile)
+    plx_file = Specification.read(polyaxonfile)
     for xp in range(plx_file.matrix_space):
         xp_runs = prepare_all_experiment_runs(polyaxonfile, xp)
         for i, xp_run in enumerate(xp_runs):

@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 
 from polyaxon_schemas.eval import EvalConfig
-from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.train import TrainConfig
 from polyaxon_schemas.utils import TaskType
 
@@ -47,7 +47,7 @@ def _get_eval(config):
 
 
 def _get_run_configs(polyaxonfile, experiment_id):
-    plx_file = PolyaxonFile.read(polyaxonfile)
+    plx_file = Specification.read(polyaxonfile)
     environment = plx_file.get_environment_at(experiment_id)
     cluster_def, is_distributed = plx_file.get_cluster_def_at(experiment_id)
 
@@ -72,6 +72,7 @@ def _get_run_configs(polyaxonfile, experiment_id):
     if cluster_def.get(TaskType.PS, 0) > 0:
         configs[TaskType.PS] = []
 
+    # TODO: Replace with plxfile.get_worker_configs_at
     worker_session_configs = {}
     for session_config in environment.worker_configs or []:
         worker_session_configs[session_config.index] = session_config
@@ -104,7 +105,7 @@ def _get_run_configs(polyaxonfile, experiment_id):
 
 
 def prepare_experiment_run(polyaxonfile, experiment_id, task_type=TaskType.MASTER, task_id=0):
-    plx_file = PolyaxonFile.read(polyaxonfile)
+    plx_file = Specification.read(polyaxonfile)
     cluster, _ = plx_file.get_cluster_def_at(experiment_id)
 
     if (task_type not in cluster or
@@ -146,14 +147,14 @@ def prepare_experiment_run(polyaxonfile, experiment_id, task_type=TaskType.MASTE
 
 
 def start_experiment_run(polyaxonfile, experiment_id, task_type, task_id, schedule):
-    plx_file = PolyaxonFile.read(polyaxonfile)
+    plx_file = Specification.read(polyaxonfile)
     experiment = prepare_experiment_run(plx_file, int(experiment_id), task_type, int(task_id))
     task = getattr(experiment, schedule)
     return task()
 
 
 def prepare_all_experiment_runs(polyaxonfile, experiment_id):
-    plx_file = PolyaxonFile.read(polyaxonfile)
+    plx_file = Specification.read(polyaxonfile)
     is_distributed = False
 
     if not plx_file.get_environment_at(experiment_id):
