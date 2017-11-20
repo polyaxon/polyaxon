@@ -15,7 +15,8 @@ def get_labels(name, project, role=None):
     return labels
 
 
-def get_deployment_spec(name,
+def get_deployment_spec(namespace,
+                        name,
                         project,
                         volume_mounts,
                         volumes,
@@ -27,7 +28,9 @@ def get_deployment_spec(name,
                         replicas=1):
     labels = get_labels(name, project, role)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(project=project, name=name), labels=labels)
+        name=constants.DEPLOYMENT_NAME.format(project=project, name=name),
+        labels=labels,
+        namespace=namespace)
     pod_spec = pods.get_project_pod_spec(project=project,
                                          name=name,
                                          volume_mounts=volume_mounts,
@@ -40,7 +43,8 @@ def get_deployment_spec(name,
     return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
 
 
-def get_deployment(name,
+def get_deployment(namespace,
+                   name,
                    project,
                    volume_mounts,
                    volumes,
@@ -52,8 +56,11 @@ def get_deployment(name,
                    replicas=1):
     labels = get_labels(name, project, role)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(project=project, name=name), labels=labels)
-    spec = get_deployment_spec(name=name,
+        name=constants.DEPLOYMENT_NAME.format(project=project, name=name),
+        labels=labels,
+        namespace=namespace)
+    spec = get_deployment_spec(namespace=namespace,
+                               name=name,
                                project=project,
                                volume_mounts=volume_mounts,
                                volumes=volumes,

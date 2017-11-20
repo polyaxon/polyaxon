@@ -27,9 +27,9 @@ def get_nfs_pvol(vol_path, server=None):
     return {'nfs': client.V1NFSVolumeSource(path=vol_path, server=server)}
 
 
-def get_persistent_volume_spec(volume,
+def get_persistent_volume_spec(namespace,
+                               volume,
                                run_type,
-                               namespace,
                                access_modes='ReadWriteOnce',
                                persistent_volume_reclaim_policy='Recycle'):
     capacity = {'storage': STORAGE_BY_VOLUME[volume]}
@@ -59,10 +59,10 @@ def get_labels(volume):
     return {'volume': volume}
 
 
-def get_persistent_volume(volume, run_type, namespace):
+def get_persistent_volume(namespace, volume, run_type):
     vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-    metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(volume))
-    spec = get_persistent_volume_spec(volume, run_type, namespace)
+    metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(volume), namespace=namespace)
+    spec = get_persistent_volume_spec(namespace=namespace, volume=volume, run_type=run_type)
 
     return client.V1PersistentVolume(api_version=k8s_constants.K8S_API_VERSION_V1,
                                      kind=k8s_constants.K8S_PERSISTENT_VOLUME_KIND,
@@ -80,9 +80,9 @@ def get_persistent_volume_claim_spec(volume, access_modes='ReadWriteOnce', ):
         selector=selector)
 
 
-def get_persistent_volume_claim(volume):
+def get_persistent_volume_claim(namespace, volume):
     vol_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
-    metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(volume))
+    metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(volume), namespace=namespace)
     spec = get_persistent_volume_claim_spec(volume)
     return client.V1PersistentVolumeClaim(api_version=k8s_constants.K8S_API_VERSION_V1,
                                           kind=k8s_constants.K8S_PERSISTENT_VOLUME_CLAIM_KIND,

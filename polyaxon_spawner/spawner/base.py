@@ -21,12 +21,19 @@ from polyaxon_spawner.templates import services
 
 
 class K8SSpawner(K8SManager):
-    def __init__(self, k8s_config=None, namespace='default', in_cluster=False):
+    def __init__(self,
+                 k8s_config=None,
+                 namespace='default',
+                 in_cluster=False,
+                 docker_job_image=None,
+                 docker_sidecar_image=None):
         super(K8SSpawner, self).__init__(k8s_config=k8s_config,
                                          namespace=namespace,
                                          in_cluster=in_cluster)
         self.has_data_volume = False
         self.has_logs_volume = False
+        self.docker_job_image = docker_job_image or constants.DOCKER_JOB_IMAGE
+        self.docker_sidecar_image = docker_sidecar_image or constants.DOCKER_SIDECAR_IMAGE
 
     @property
     def spec(self):
@@ -46,6 +53,9 @@ class K8SSpawner(K8SManager):
                     command=None,
                     args=None,
                     resources=None,
+                    use_sidecar=False,
+                    amqp_url=None,
+                    log_routing_key=None,
                     restart_policy='Never'):
         task_name = constants.TASK_NAME.format(project=self.project_name,
                                                experiment=experiment,
@@ -59,7 +69,8 @@ class K8SSpawner(K8SManager):
         ports = [constants.DEFAULT_PORT]
 
         volumes, volume_mounts = self.get_pod_volumes()
-        pod = pods.get_pod(project=self.project_name,
+        pod = pods.get_pod(namespace=self.namespace,
+                           project=self.project_name,
                            experiment=experiment,
                            task_type=task_type,
                            task_id=task_id,
@@ -69,11 +80,17 @@ class K8SSpawner(K8SManager):
                            command=command,
                            args=args,
                            resources=resources,
+                           use_sidecar=use_sidecar,
+                           amqp_url=amqp_url,
+                           log_routing_key=log_routing_key,
                            restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=task_name, data=pod)
 
-        service = services.get_service(name=task_name, labels=labels, ports=ports)
-        service_resp, _ = self.create_or_update_service(name=task_name, data=service)
+        service = services.get_service(namespace=self.namespace,
+                                       name=task_name,
+                                       labels=labels,
+                                       ports=ports)
+        service_resp, _ = self.create_or_update_service(name=task_name,  data=service)
         return {
             'pod': pod_resp.to_dict(),
             'service': service_resp.to_dict()
@@ -102,7 +119,12 @@ class K8SSpawner(K8SManager):
 
         self.delete_service(name=task_name)
 
-    def create_master(self, experiment=0, resources=None):
+    def create_master(self,
+                      experiment=0,
+                      resources=None,
+                      use_sidecar=False,
+                      amqp_url=None,
+                      log_routing_key=None):
         args = self.get_pod_args(experiment=experiment,
                                  task_type=TaskType.MASTER,
                                  task_id=0,
@@ -113,12 +135,21 @@ class K8SSpawner(K8SManager):
                                 task_id=0,
                                 command=command,
                                 args=args,
-                                resources=resources)
+                                resources=resources,
+                                use_sidecar=use_sidecar,
+                                amqp_url=amqp_url,
+                                log_routing_key=log_routing_key)
 
     def delete_master(self, experiment=0):
         self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
 
-    def _create_worker(self, experiment, resources, n_pods):
+    def _create_worker(self,
+                       experiment,
+                       resources,
+                       n_pods,
+                       use_sidecar=False,
+                       amqp_url=None,
+                       log_routing_key=None):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
@@ -131,14 +162,23 @@ class K8SSpawner(K8SManager):
                                          task_id=i,
                                          command=command,
                                          args=args,
-                                         resources=resources.get(i)))
+                                         resources=resources.get(i),
+                                         use_sidecar=use_sidecar,
+                                         amqp_url=amqp_url,
+                                         log_routing_key=log_routing_key))
         return resp
 
     def _delete_worker(self, experiment, n_pods):
         for i in range(n_pods):
             self._delete_pod(experiment=experiment, task_type=TaskType.WORKER, task_id=i)
 
-    def _create_ps(self, experiment, resources, n_pods):
+    def _create_ps(self,
+                   experiment,
+                   resources,
+                   n_pods,
+                   use_sidecar=False,
+                   amqp_url=None,
+                   log_routing_key=None):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
@@ -151,7 +191,10 @@ class K8SSpawner(K8SManager):
                                          task_id=i,
                                          command=command,
                                          args=args,
-                                         resources=resources.get(i)))
+                                         resources=resources.get(i),
+                                         use_sidecar=use_sidecar,
+                                         amqp_url=amqp_url,
+                                         log_routing_key=log_routing_key))
         return resp
 
     def _delete_ps(self, experiment, n_pods):
@@ -165,6 +208,7 @@ class K8SSpawner(K8SManager):
         logs_path = persistent_volumes.get_vol_path(volume=constants.LOGS_VOLUME,
                                                     run_type=self.spec.run_type)
         deployment = deployments.get_deployment(
+            namespace=self.namespace,
             name=name,
             project=self.project_name,
             volume_mounts=volume_mounts,
@@ -177,6 +221,7 @@ class K8SSpawner(K8SManager):
 
         self.create_or_update_deployment(name=deployment_name, data=deployment)
         service = services.get_service(
+            namespace=self.namespace,
             name=deployment_name,
             labels=deployments.get_labels(name=name, project=self.project_name, role='dashboard'),
             ports=ports,
@@ -208,7 +253,7 @@ class K8SSpawner(K8SManager):
         vol_name = constants.VOLUME_NAME.format(vol_name=volume)
         persistent_volume = self.get_volume(vol_name)
         volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
-        volume_claime = self.get_volume_claim(volc_name, self.namespace)
+        volume_claime = self.get_volume_claim(volc_name)
         return persistent_volume is not None and volume_claime is not None
 
     def check_data_volume(self):
@@ -219,14 +264,15 @@ class K8SSpawner(K8SManager):
 
     def _create_volume(self, volume):
         vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-        pvol = persistent_volumes.get_persistent_volume(volume=volume,
-                                                        run_type=self.spec.run_type,
-                                                        namespace=self.namespace)
+        pvol = persistent_volumes.get_persistent_volume(namespace=self.namespace,
+                                                        volume=volume,
+                                                        run_type=self.spec.run_type)
 
         self.create_or_update_volume(name=vol_name, data=pvol)
 
         volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
-        pvol_claim = persistent_volumes.get_persistent_volume_claim(volume=volume)
+        pvol_claim = persistent_volumes.get_persistent_volume_claim(namespace=self.namespace,
+                                                                    volume=volume)
 
         self.create_or_update_volume_claim(name=volc_name, data=pvol_claim)
 
@@ -269,6 +315,7 @@ class K8SSpawner(K8SManager):
                                                 experiment=experiment,
                                                 role='cluster')
         config_map = config_maps.get_cluster_config_map(
+            namespace=self.namespace,
             project=self.project_name,
             experiment=experiment,
             cluster_def=self.spec.get_cluster().to_dict())

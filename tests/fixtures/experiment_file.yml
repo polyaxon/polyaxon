@@ -73,7 +73,7 @@ model:
             units: 10
 
 train:
-  steps: 500
+  steps: 1000
   data_pipeline:
     TFRecordImagePipeline:
       batch_size: 64

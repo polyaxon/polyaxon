@@ -8,7 +8,6 @@ from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import TaskType
 
 from polyaxon_spawner.spawner.base import K8SSpawner
-from polyaxon_spawner.templates import constants
 
 
 class K8SExperimentSpawner(K8SSpawner):
@@ -52,19 +51,29 @@ class K8SExperimentSpawner(K8SSpawner):
                 schedule=schedule)]
         return args
 
-    def create_worker(self):
+    def create_worker(self, use_sidecar=False, amqp_url=None, log_routing_key=None):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
         resources = self.spec.worker_resources
-        return self._create_worker(experiment=self.experiment_id, resources=resources, n_pods=n_pods)
+        return self._create_worker(experiment=self.experiment_id,
+                                   resources=resources,
+                                   n_pods=n_pods,
+                                   use_sidecar=use_sidecar,
+                                   amqp_url=amqp_url,
+                                   log_routing_key=log_routing_key)
 
     def delete_worker(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
         self._delete_worker(experiment=self.experiment_id, n_pods=n_pods)
 
-    def create_ps(self):
+    def create_ps(self, use_sidecar=False, amqp_url=None, log_routing_key=None):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         resources = self.spec.ps_resources
-        return self._create_ps(experiment=self.experiment_id, resources=resources, n_pods=n_pods)
+        return self._create_ps(experiment=self.experiment_id,
+                               resources=resources,
+                               n_pods=n_pods,
+                               use_sidecar=use_sidecar,
+                               amqp_url=amqp_url,
+                               log_routing_key=log_routing_key)
 
     def delete_ps(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
