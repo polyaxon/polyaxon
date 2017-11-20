@@ -27,10 +27,21 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
 # Install and Upgrade pip to the latest version
 RUN pip3 install --upgrade setuptools pip
 
+RUN apt-get -y update && \
+    apt-get -y install curl git
+
 # copy requirements.txt
 COPY requirements.txt /setup/
-RUN pip3 install --no-cache-dir -r /setup/requirements.txt
+COPY requirements-dev.txt /setup/
+COPY requirements-test.txt /setup/
+RUN pip3 install --no-cache-dir -r /setup/requirements-test.txt
 
 VOLUME /polyaxon
 WORKDIR /polyaxon
 copy . /polyaxon
+
+
+# TensorBoard
+EXPOSE 6006
+# IPython
+EXPOSE 8888
