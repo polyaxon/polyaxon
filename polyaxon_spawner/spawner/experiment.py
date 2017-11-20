@@ -51,7 +51,11 @@ class K8SExperimentSpawner(K8SSpawner):
                 schedule=schedule)]
         return args
 
-    def create_worker(self, use_sidecar=False, amqp_url=None, log_routing_key=None):
+    def create_worker(self,
+                      use_sidecar=False,
+                      amqp_url=None,
+                      log_routing_key=None,
+                      internal_exchange=None):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
         resources = self.spec.worker_resources
         return self._create_worker(experiment=self.experiment_id,
@@ -59,13 +63,18 @@ class K8SExperimentSpawner(K8SSpawner):
                                    n_pods=n_pods,
                                    use_sidecar=use_sidecar,
                                    amqp_url=amqp_url,
-                                   log_routing_key=log_routing_key)
+                                   log_routing_key=log_routing_key,
+                                   internal_exchange=internal_exchange)
 
     def delete_worker(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
         self._delete_worker(experiment=self.experiment_id, n_pods=n_pods)
 
-    def create_ps(self, use_sidecar=False, amqp_url=None, log_routing_key=None):
+    def create_ps(self,
+                  use_sidecar=False,
+                  amqp_url=None,
+                  log_routing_key=None,
+                  internal_exchange=None):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         resources = self.spec.ps_resources
         return self._create_ps(experiment=self.experiment_id,
@@ -73,20 +82,35 @@ class K8SExperimentSpawner(K8SSpawner):
                                n_pods=n_pods,
                                use_sidecar=use_sidecar,
                                amqp_url=amqp_url,
-                               log_routing_key=log_routing_key)
+                               log_routing_key=log_routing_key,
+                               internal_exchange=internal_exchange)
 
     def delete_ps(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         self._delete_ps(experiment=self.experiment_id, n_pods=n_pods)
 
-    def start_experiment(self):
+    def start_experiment(self,
+                         use_sidecar=False,
+                         amqp_url=None,
+                         log_routing_key=None,
+                         internal_exchange=None):
         self.check_data_volume()
         self.check_logs_volume()
         self.create_cluster_config_map(experiment=self.experiment_id)
         master_resp = self.create_master(experiment=self.experiment_id,
-                                         resources=self.spec.master_resources)
-        worker_resp = self.create_worker()
-        ps_resp = self.create_ps()
+                                         resources=self.spec.master_resources,
+                                         use_sidecar=use_sidecar,
+                                         amqp_url=amqp_url,
+                                         log_routing_key=log_routing_key,
+                                         internal_exchange=internal_exchange)
+        worker_resp = self.create_worker(use_sidecar=use_sidecar,
+                                         amqp_url=amqp_url,
+                                         log_routing_key=log_routing_key,
+                                         internal_exchange=internal_exchange)
+        ps_resp = self.create_ps(use_sidecar=use_sidecar,
+                                 amqp_url=amqp_url,
+                                 log_routing_key=log_routing_key,
+                                 internal_exchange=internal_exchange)
         return {
             TaskType.MASTER: master_resp,
             TaskType.WORKER: worker_resp,

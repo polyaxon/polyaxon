@@ -158,7 +158,7 @@ def get_sidecar_container(namespace,
                           task_id,
                           amqp_url,
                           log_routing_key,
-                          k8s_host=None,
+                          internal_exchange=None,
                           resources=None):
     task_name = constants.TASK_NAME.format(project=project,
                                            experiment=experiment,
@@ -172,17 +172,14 @@ def get_sidecar_container(namespace,
                                                                          experiment=experiment,
                                                                          task_type=task_type,
                                                                          task_id=task_id)
-    secret_ref = client.V1SecretKeySelector(name=constants.CLUSTER_SECRET,
-                                            key='POLYAXON_K8S_AUTHORISATION')
-    auth_secret = client.V1EnvVarSource(secret_key_ref=secret_ref)
+
     env_vars = [
         client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=namespace),
         client.V1EnvVar(name='POLYAXON_POD_ID', value=task_name),
         client.V1EnvVar(name='POLYAXON_JOB_ID', value=job_container_name),
         client.V1EnvVar(name='POLYAXON_AMQP_URL', value=amqp_url),
         client.V1EnvVar(name='POLYAXON_LOG_ROUTING_KEY', value=log_routing_key),
-        client.V1EnvVar(name='POLYAXON_K8S_HOST', value=k8s_host),
-        client.V1EnvVar(name='POLYAXON_K8S_AUTHORISATION', value_from=auth_secret),
+        client.V1EnvVar(name='POLYAXON_INTERNAL_EXCHANGE', value=internal_exchange),
     ]
     return client.V1Container(name=sidecar_container_name,
                               image=constants.DOCKER_SIDECAR_IMAGE,
@@ -204,6 +201,7 @@ def get_task_pod_spec(namespace,
                       resources=None,
                       use_sidecar=False,
                       log_routing_key=None,
+                      internal_exchange=None,
                       amqp_url=None,
                       restart_policy='OnFailure'):
     """Pod spec to be used to create pods for tasks: master, worker, ps."""
@@ -235,6 +233,7 @@ def get_task_pod_spec(namespace,
                                                   task_id=task_id,
                                                   amqp_url=amqp_url,
                                                   log_routing_key=log_routing_key,
+                                                  internal_exchange=internal_exchange,
                                                   resources=resources)
         containers.append(sidecar_container)
     return client.V1PodSpec(restart_policy=restart_policy, containers=containers, volumes=volumes)
@@ -262,6 +261,7 @@ def get_pod(namespace,
             use_sidecar=False,
             amqp_url=None,
             log_routing_key=None,
+            internal_exchange=None,
             restart_policy=None):
     task_name = constants.TASK_NAME.format(project=project,
                                            experiment=experiment,
@@ -288,7 +288,8 @@ def get_pod(namespace,
                                  restart_policy=restart_policy,
                                  use_sidecar=use_sidecar,
                                  amqp_url=amqp_url,
-                                 log_routing_key=log_routing_key)
+                                 log_routing_key=log_routing_key,
+                                 internal_exchange=internal_exchange)
     return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
                         kind=k8s_constants.K8S_POD_KIND,
                         metadata=metadata,

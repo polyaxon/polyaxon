@@ -56,6 +56,7 @@ class K8SSpawner(K8SManager):
                     use_sidecar=False,
                     amqp_url=None,
                     log_routing_key=None,
+                    internal_exchange=None,
                     restart_policy='Never'):
         task_name = constants.TASK_NAME.format(project=self.project_name,
                                                experiment=experiment,
@@ -83,6 +84,7 @@ class K8SSpawner(K8SManager):
                            use_sidecar=use_sidecar,
                            amqp_url=amqp_url,
                            log_routing_key=log_routing_key,
+                           internal_exchange=internal_exchange,
                            restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=task_name, data=pod)
 
@@ -124,7 +126,8 @@ class K8SSpawner(K8SManager):
                       resources=None,
                       use_sidecar=False,
                       amqp_url=None,
-                      log_routing_key=None):
+                      log_routing_key=None,
+                      internal_exchange=None):
         args = self.get_pod_args(experiment=experiment,
                                  task_type=TaskType.MASTER,
                                  task_id=0,
@@ -138,7 +141,8 @@ class K8SSpawner(K8SManager):
                                 resources=resources,
                                 use_sidecar=use_sidecar,
                                 amqp_url=amqp_url,
-                                log_routing_key=log_routing_key)
+                                log_routing_key=log_routing_key,
+                                internal_exchange=internal_exchange)
 
     def delete_master(self, experiment=0):
         self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
@@ -149,7 +153,8 @@ class K8SSpawner(K8SManager):
                        n_pods,
                        use_sidecar=False,
                        amqp_url=None,
-                       log_routing_key=None):
+                       log_routing_key=None,
+                       internal_exchange=None):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
@@ -165,7 +170,8 @@ class K8SSpawner(K8SManager):
                                          resources=resources.get(i),
                                          use_sidecar=use_sidecar,
                                          amqp_url=amqp_url,
-                                         log_routing_key=log_routing_key))
+                                         log_routing_key=log_routing_key,
+                                         internal_exchange=internal_exchange))
         return resp
 
     def _delete_worker(self, experiment, n_pods):
@@ -178,7 +184,8 @@ class K8SSpawner(K8SManager):
                    n_pods,
                    use_sidecar=False,
                    amqp_url=None,
-                   log_routing_key=None):
+                   log_routing_key=None,
+                   internal_exchange=None):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
@@ -194,7 +201,8 @@ class K8SSpawner(K8SManager):
                                          resources=resources.get(i),
                                          use_sidecar=use_sidecar,
                                          amqp_url=amqp_url,
-                                         log_routing_key=log_routing_key))
+                                         log_routing_key=log_routing_key,
+                                         internal_exchange=internal_exchange))
         return resp
 
     def _delete_ps(self, experiment, n_pods):
