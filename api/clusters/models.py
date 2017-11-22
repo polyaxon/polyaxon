@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import uuid
 
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField, ArrayField
 from django.db import models
 
 from polyaxon_k8s.utils import nodes
@@ -94,3 +94,12 @@ class GPU(DiffModel):
     device = models.CharField(max_length=256)
     memory = models.BigIntegerField()
     cluster_node = models.ForeignKey(ClusterNode, related_name='gpus')
+
+
+class ClusterErrors(models.Model):
+    """A model to catch all errors and warning events of the cluster."""
+    cluster = models.ForeignKey(Cluster, related_name='errors')
+    created_at = models.DateTimeField()
+    data = JSONField()
+    meta = JSONField()
+    level = models.CharField(max_length=16)
