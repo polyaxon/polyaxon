@@ -8,6 +8,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
 data:
   debug: {{ .Values.debug | quote }}
   db_url: postgresql://polyaxon:polyaxon@{{ .Release.Name }}-postgresql/polyaxon
@@ -18,10 +19,9 @@ data:
   node-selectors: {{ toYaml .Values.nodeSelectors | quote }}
   gpu-node-selectors: {{ toYaml .Values.nodeSelectorsGPU | quote }}
   amqp-url: amqp://{{ template "rabbitmq.fullname" . }}:5672
-  celery-always-eager: {{ .Values.celery.always_eager | quote }}
-  celeryd-prefetch-multiplier: {{ .Values.celery.celeryd_prefetch_multiplier | quote }}
-  experiments-scheduler-interval-sec: {{ .Values.queues.experiments_scheduler_interval_sec | quote }}
-  experiments-queue: {{ .Values.queues.experiments | quote }}
-  redis-celery-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
-  redis-celery-experiments-status-url: redis://{{ template "redis.fullname" . }}:6379/1
-  redis-celery-jobs-status-url: redis://{{ template "redis.fullname" . }}:6379/2
+  redis-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
+  redis-experiments-status-url: redis://{{ template "redis.fullname" . }}:6379/1
+  redis-jobs-status-url: redis://{{ template "redis.fullname" . }}:6379/2
+  redis-job-containers-url: redis://{{ template "redis.fullname" . }}:6379/3
+  job-container-name: experiment-job
+  sidecar-container-name: experiment-job-sidecar

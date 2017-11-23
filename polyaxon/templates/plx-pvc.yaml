@@ -8,6 +8,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
 spec:
   accessModes:
     - {{ .Values.persistence.accessMode | quote }}

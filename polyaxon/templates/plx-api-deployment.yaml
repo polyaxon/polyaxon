@@ -10,6 +10,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
 spec:
   replicas: {{ .Values.api.replicas }}
   template:
@@ -78,7 +79,7 @@ spec:
           value: {{ template "redis.fullname" . }}
         - name: POLYAXON_REDIS_PORT
           value: "6379"
-        - name: POLYAXON_REDIS_CELERY_RESULT_BACKEND
+        - name: POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL
           valueFrom:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
@@ -87,12 +88,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
-              key: redis-celery-experiments-status-url
+              key: redis-experiments-status-url
         - name: POLYAXON_REDIS_JOBS_STATUS_URL
           valueFrom:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
-              key: redis-celery-jobs-status-url
+              key: redis-jobs-status-url
         - name: POLYAXON_AMQP_URL
           valueFrom:
             configMapKeyRef:
@@ -106,25 +107,13 @@ spec:
               name: {{ template "rabbitmq.fullname" . }}
               key: rabbitmq-password
         - name: POLYAXON_CELERY_ALWAYS_EAGER
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "polyaxon.fullname" . }}
-              key: celery-always-eager
+          value: {{ .Values.celery.always_eager | quote }}
         - name: POLYAXON_CELERYD_PREFETCH_MULTIPLIER
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "polyaxon.fullname" . }}
-              key: celeryd-prefetch-multiplier
+          value: {{ .Values.celery.celeryd_prefetch_multiplier | quote }}
         - name: POLYAXON_EXPERIMENTS_QUEUE
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "polyaxon.fullname" . }}
-              key: experiments-queue
+          value: {{ .Values.queues.experiments | quote }}
         - name: POLYAXON_EXPERIMENTS_SCHEDULER_INTERVAL_SEC
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "polyaxon.fullname" . }}
-              key: experiments-scheduler-interval-sec
+          value: {{ .Values.queues.experiments_scheduler_interval_sec | quote }}
         - name: POLYAXON_PASSWORD_LENGTH
           value: {{ default "6" .Values.passwordLength | quote }}
         - name: POLYAXON_ADMIN_NAME
@@ -167,6 +156,16 @@ spec:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
               key: gpu-node-selectors
+        - name: POLYAXON_JOB_CONTAINER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: job-container-name
+        - name: POLYAXON_JOB_SIDECAR_CONTAINER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: sidecar-container-name
         volumeMounts:
         - mountPath: {{ .Values.persistence.mountPath }}
           name: polyaxon-data

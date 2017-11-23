@@ -22,6 +22,9 @@ types:
 
 roles:
   api: "polyaxon-api"
+  log: "polyaxon-logs"
+  worker: "polyaxon-workers"
+  dashboard: "polyaxon-dashboard"
 
 k8s: {}
 
@@ -39,6 +42,11 @@ email:
 queues:
   experiments_scheduler_interval_sec: 5
   experiments: 'polyaxon.experiments'
+
+routingKeys:
+  eventsStatuses: events.statuses
+  eventsNamespace: events.namespace
+  eventsResources: events.resources
 
 nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
 
@@ -66,7 +74,7 @@ workers:
     requests:
       cpu: 100m
       memory: 100Mi
-crons:
+cron:
   image: polyaxon/polyaxon-api
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
@@ -79,17 +87,45 @@ crons:
       cpu: 50m
       memory: 128Mi
 events:
-  image: polyaxon/polyaxon-events
-  imageTag: 0.0.1
-  imagePullPolicy: IfNotPresent
-  replicas: 1
+  namespace:
+    image: polyaxon/polyaxon-events
+    imageTag: 0.0.1
+    imagePullPolicy: IfNotPresent
+    replicas: 1
+    resources:
+      limits:
+        cpu: 200m
+        memory: 200m
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
+  statuses:
+    image: polyaxon/polyaxon-events
+    imageTag: 0.0.1
+    imagePullPolicy: IfNotPresent
+    replicas: 1
+    resources:
+      limits:
+        cpu: 200m
+        memory: 200m
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
   resources:
-    limits:
-      cpu: 200m
-      memory: 200m
-    requests:
-      cpu: 100m
-      memory: 100Mi
+    image: polyaxon/polyaxon-events
+    imageTag: 0.0.1
+    imagePullPolicy: IfNotPresent
+    replicas: 1
+    resources:
+      limits:
+        cpu: 200m
+        memory: 200m
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
 streams:
   image: polyaxon/polyaxon-streams
   imageTag: 0.0.1
