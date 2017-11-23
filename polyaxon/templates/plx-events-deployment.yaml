@@ -1,0 +1,244 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-events
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/plx-configmap.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-events
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.log }}
+spec:
+  replicas: {{ .Values.events.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-events
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.log }}
+    spec:
+    {{- if .Values.nodeSelectors }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectors | indent 8 }}
+      {{- end }}
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: type
+                  operator: In
+                  values:
+                  - system
+              topologyKey: "kubernetes.io/hostname"
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+      containers:
+      # events
+      - name: {{ .Chart.Name }}-events
+        image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
+        imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
+        args: ["python3", "polyaxon_events/events/namespace.py"]
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        env:
+        - name: POLYAXON_DEBUG
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: debug
+        - name: POLYAXON_K8S_NAMESPACE
+          value: {{ .Values.namespace }}
+        - name: POLYAXON_AMQP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: amqp-url
+        - name: POLYAXON_RABBITMQ_USER
+          value: {{ default "" .Values.rabbitmq.rabbitmqUsername | quote }}
+        - name: POLYAXON_RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rabbitmq.fullname" . }}
+              key: rabbitmq-password
+        - name: POLYAXON_INTERNAL_EXCHANGE
+          value: {{ .Values.events.namespace.internalExchange | quote }}
+        - name: POLYAXON_EVENTS_NAMESPACE_ROUTING_KEY
+          value: {{ .Values.routingKeys.eventsNamespace | quote }}
+        - name: POLYAXON_AMQP_RECONNECT_INTERVAL
+          value: {{ default 1 .Values.events.namespace.amqpReconnectInterval | quote }}
+        - name: POLYAXON_LOG_SLEEP_INTERVAL
+          value: {{ default 1 .Values.events.namespace.logSleepInterval | quote }}
+        {{- if .Values.k8s.authorisation }}
+        - name: POLYAXON_K8S_AUTHORISATION
+          valueFrom:
+            secretKeyRef:
+              name: polyaxon-cluster-secret
+              key: k8s-authorisation
+        {{- end }}
+        {{- if .Values.k8s.ssl_ca_cert }}
+        - name: POLYAXON_K8S_SSL_CA_CERT
+          value: {{ .Values.k8s.ssl_ca_cert | quote }}
+        {{- end }}
+        - name: POLYAXON_K8S_HOST
+          value: {{ .Values.k8s.host | quote }}
+        - name: POLYAXON_GPU_NODE_SELECTORS
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: gpu-node-selectors
+        volumeMounts:
+        - mountPath: {{ .Values.persistence.mountPath }}
+          name: polyaxon-data
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /_health/
+            port: {{ .Values.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: 100
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /_health/
+            port: {{ .Values.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: 100
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        resources:
+{{ toYaml .Values.events.resources | indent 12 }}
+      volumes:
+      - name: polyaxon-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ template "polyaxon.fullname" . }}
+      {{- else }}
+        emptyDir: {}
+      {{ end }}
+      # statues
+      - name: {{ .Chart.Name }}-statuses
+        image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"
+        imagePullPolicy: {{ .Values.events.statuses.imagePullPolicy }}
+        args: ["python3", "polyaxon_events/events/statuses.py"]
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        env:
+        - name: POLYAXON_DEBUG
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: debug
+        - name: POLYAXON_K8S_NAMESPACE
+          value: {{ .Values.namespace }}
+        {{- if .Values.redis.usePassword }}
+        - name: POLYAXON_REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "redis.fullname" . }}
+              key: redis-password
+        {{- end }}
+        - name: POLYAXON_REDIS_HOST
+          value: {{ template "redis.fullname" . }}
+        - name: POLYAXON_REDIS_PORT
+          value: "6379"
+        - name: POLYAXON_JOB_CONTAINERS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: redis-job-containers-url
+        - name: POLYAXON_AMQP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: amqp-url
+        - name: POLYAXON_RABBITMQ_USER
+          value: {{ default "" .Values.rabbitmq.rabbitmqUsername | quote }}
+        - name: POLYAXON_RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rabbitmq.fullname" . }}
+              key: rabbitmq-password
+        - name: POLYAXON_INTERNAL_EXCHANGE
+          value: {{ .Values.events.statuses.internalExchange | quote }}
+        - name: POLYAXON_EVENTS_JOB_STATUS_ROUTING_KEY
+          value: {{ .Values.routingKeys.eventsStatuses | quote }}
+        - name: POLYAXON_AMQP_RECONNECT_INTERVAL
+          value: {{ default 1 .Values.events.statuses.amqpReconnectInterval | quote }}
+        - name: POLYAXON_LOG_SLEEP_INTERVAL
+          value: {{ default 1 .Values.events.statuses.logSleepInterval | quote }}
+        {{- if .Values.k8s.authorisation }}
+        - name: POLYAXON_K8S_AUTHORISATION
+          valueFrom:
+            secretKeyRef:
+              name: polyaxon-cluster-secret
+              key: k8s-authorisation
+        {{- end }}
+        {{- if .Values.k8s.ssl_ca_cert }}
+        - name: POLYAXON_K8S_SSL_CA_CERT
+          value: {{ .Values.k8s.ssl_ca_cert | quote }}
+        {{- end }}
+        - name: POLYAXON_K8S_HOST
+          value: {{ .Values.k8s.host | quote }}
+        - name: POLYAXON_GPU_NODE_SELECTORS
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: gpu-node-selectors
+        - name: POLYAXON_JOB_CONTAINER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: job-container-name
+        - name: POLYAXON_JOB_SIDECAR_CONTAINER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ template "polyaxon.fullname" . }}
+              key: sidecar-container-name
+        - name: POLYAXON_WORKER_ROLE_LABEL
+          value: {{ .Values.roles.worker }}
+        - name: POLYAXON_EXPERIMENT_TYPE_LABEL
+          value: {{ .Values.types.experiment }}
+          value:
+        volumeMounts:
+        - mountPath: {{ .Values.persistence.mountPath }}
+          name: polyaxon-data
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /_health/
+            port: {{ .Values.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: 100
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /_health/
+            port: {{ .Values.service.internalPort }}
+            scheme: HTTP
+          initialDelaySeconds: 100
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        resources:
+{{ toYaml .Values.events.statuses.resources | indent 12 }}
+      volumes:
+      - name: polyaxon-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ template "polyaxon.fullname" . }}
+      {{- else }}
+        emptyDir: {}
+      {{ end }}
