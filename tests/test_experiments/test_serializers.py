@@ -61,7 +61,7 @@ class TestExperimentSerializer(TestCase):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.FINISHED)
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
@@ -152,7 +152,7 @@ class TestExperimentDetailSerializer(TestCase):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.FINISHED)
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys

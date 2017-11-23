@@ -355,7 +355,7 @@ class TestExperimentStatusListViewV1(BaseTest):
         last_object = self.model_class.objects.last()
         assert last_object.status == ExperimentLifeCycle.CREATED
 
-        data = {'status': ExperimentLifeCycle.FINISHED}
+        data = {'status': ExperimentLifeCycle.SUCCEEDED}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 2
@@ -387,7 +387,7 @@ class TestExperimentStatusDetailViewV1(BaseTest):
         assert resp.data == self.serializer_class(self.object).data
 
     def test_patch(self):
-        data = {'status': ExperimentLifeCycle.FINISHED}
+        data = {'status': ExperimentLifeCycle.SUCCEEDED}
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
@@ -565,7 +565,7 @@ class TestExperimentJobStatusListViewV1(BaseTest):
         last_object = self.model_class.objects.last()
         assert last_object.status == JobLifeCycle.CREATED
 
-        data = {'status': JobLifeCycle.FINISHED}
+        data = {'status': JobLifeCycle.SUCCEEDED}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 2

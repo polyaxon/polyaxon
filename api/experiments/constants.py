@@ -6,15 +6,15 @@ from polyaxon_k8s.constants import JobLifeCycle
 
 class ExperimentLifeCycle(JobLifeCycle):
     SCHEDULED = 'Scheduled'
+    STARTING = 'Starting'
 
     CHOICES = (
         (JobLifeCycle.CREATED, JobLifeCycle.CREATED),  # XP created to be executed
         (SCHEDULED, SCHEDULED),  # XP scheduled to be started
-        (JobLifeCycle.BUILDING, JobLifeCycle.BUILDING),  # XP is building containers
-        (JobLifeCycle.PENDING, JobLifeCycle.PENDING),  # waiting for all jobs be ready
-        (JobLifeCycle.STARTING, JobLifeCycle.STARTING),  # one of the jobs is still starting
+        (STARTING, STARTING),  # one of the jobs is still not running
+        (JobLifeCycle.PENDING, JobLifeCycle.PENDING),  # one of the jobs is still pending
         (JobLifeCycle.RUNNING, JobLifeCycle.RUNNING),  # one of the jobs is still running
-        (JobLifeCycle.FINISHED, JobLifeCycle.FINISHED),  # master and workers have finished
+        (JobLifeCycle.SUCCEEDED, JobLifeCycle.SUCCEEDED),  # master and workers have finished
         (JobLifeCycle.FAILED, JobLifeCycle.FAILED),  # one of the jobs has failed
-        (JobLifeCycle.KILLED, JobLifeCycle.KILLED),  # XP was killed
+        (JobLifeCycle.DELETED, JobLifeCycle.DELETED),  # XP was killed
     )
