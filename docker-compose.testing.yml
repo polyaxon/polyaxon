@@ -2,7 +2,9 @@ version: "3"
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: ./DockerfileDev
     environment:
       WAIT_FOR_PORTS: "postgres:5432"
       TESTING: 1

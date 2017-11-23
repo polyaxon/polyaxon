@@ -11,5 +11,5 @@ else
 fi
 
 if [ $? -eq 0 ]; then
-    docker-compose -p web_testing -f docker-compose.yml -f docker-compose.testing.yml run web py.test $PYTESTOPT $*
+    docker-compose -p web-testing -f docker-compose.yml -f docker-compose.testing.yml run web py.test $PYTESTOPT $*
 fi

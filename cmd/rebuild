@@ -4,7 +4,7 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker pull polyaxon/polyaxon:api-cpu-3-121
-    docker-compose -p web_testing -f docker-compose.yml -f docker-compose.testing.yml build web $*
+    docker pull polyaxon/polyaxon-npm-base
+    docker-compose -p web-testing -f docker-compose.yml -f docker-compose.testing.yml build web $*
     docker-compose build web $*
 fi
