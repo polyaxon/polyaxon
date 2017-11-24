@@ -165,12 +165,13 @@ def get_sidecar_container(namespace,
         client.V1EnvVar(name='POLYAXON_POD_ID', value=task_name),
         client.V1EnvVar(name='POLYAXON_JOB_ID', value=constants.POD_CONTAINER_JOB_NAME),
         client.V1EnvVar(name='POLYAXON_AMQP_URL', value=amqp_url),
-        client.V1EnvVar(name='POLYAXON_LOG_ROUTING_KEY', value=log_routing_key),
+        client.V1EnvVar(name='POLYAXON_LOG_SIDECAR_ROUTING_KEY', value=log_routing_key),
         client.V1EnvVar(name='POLYAXON_INTERNAL_EXCHANGE', value=internal_exchange),
     ]
     return client.V1Container(name=constants.POD_CONTAINER_SIDECAR_NAME,
                               image=constants.DOCKER_SIDECAR_IMAGE,
                               env=env_vars,
+                              args=constants.SIDECAR_ARGS,
                               resources=resources)
 
 
