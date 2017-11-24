@@ -43,7 +43,7 @@ spec:
         image: "{{ .Values.cron.image }}:{{ .Values.cron.imageTag }}"
         imagePullPolicy: {{ .Values.cron.imagePullPolicy }}
         workingDir: /polyaxon/api
-        args: ["celery beat --app api"]
+        args: ["celery", "-A", "api", "beat"]
         env:
         - name: POLYAXON_DEBUG
           valueFrom:
@@ -167,35 +167,5 @@ spec:
               name: {{ template "polyaxon.fullname" . }}
               key: sidecar-container-name
         volumeMounts:
-        - mountPath: {{ .Values.persistence.mountPath }}
-          name: polyaxon-data
-        livenessProbe:
-          failureThreshold: 5
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        readinessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
         resources:
-{{ toYaml .Values.cron.resources | indent 12 }}
-      volumes:
-      - name: polyaxon-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ template "polyaxon.fullname" . }}
-      {{- else }}
-        emptyDir: {}
-      {{ end }}
+{{ toYaml .Values.cron.resources | indent 10 }}

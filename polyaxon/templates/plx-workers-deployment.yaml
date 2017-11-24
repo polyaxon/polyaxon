@@ -43,7 +43,7 @@ spec:
         image: "{{ .Values.workers.image }}:{{ .Values.workers.imageTag }}"
         imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
         workingDir: /polyaxon/api
-        args: ["celery worker --loglevel=INFO --app api -Q {{ .Values.queues.experiments }} --concurrency=4 -n default@%h"]
+        args: ["celery", "-A", "api", "worker" , "--loglevel=INFO", "-Q {{ .Values.queues.experiments }}", "--concurrency=4", "-n default@%h"]
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         env:
@@ -168,36 +168,5 @@ spec:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
               key: sidecar-container-name
-        volumeMounts:
-        - mountPath: {{ .Values.persistence.mountPath }}
-          name: polyaxon-data
-        livenessProbe:
-          failureThreshold: 5
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        readinessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
         resources:
-{{ toYaml .Values.workers.resources | indent 12 }}
-      volumes:
-      - name: polyaxon-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ template "polyaxon.fullname" . }}
-      {{- else }}
-        emptyDir: {}
-      {{ end }}
+{{ toYaml .Values.workers.resources | indent 10 }}
