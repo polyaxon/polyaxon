@@ -42,6 +42,7 @@ spec:
       - name: {{ .Chart.Name }}-api
         image: "{{ .Values.api.image }}:{{ .Values.api.imageTag }}"
         imagePullPolicy: {{ .Values.api.imagePullPolicy }}
+        command: ["uwsgi", "--ini", "uwsgi.ini"]
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         env:
@@ -190,7 +191,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 2
         resources:
-{{ toYaml .Values.api.resources | indent 12 }}
+{{ toYaml .Values.api.resources | indent 10 }}
       volumes:
       - name: polyaxon-data
       {{- if .Values.persistence.enabled }}
