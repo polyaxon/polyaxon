@@ -48,6 +48,9 @@ routingKeys:
   eventsNamespace: events.namespace
   eventsResources: events.resources
 
+exchanges:
+  internalExchange: 'internal'
+
 nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
 
 api:
@@ -86,8 +89,10 @@ cron:
     requests:
       cpu: 50m
       memory: 128Mi
+
 events:
   namespace:
+    enabled: false
     image: polyaxon/polyaxon-events
     imageTag: 0.0.1
     imagePullPolicy: IfNotPresent
@@ -95,12 +100,15 @@ events:
     resources:
       limits:
         cpu: 50m
-        memory: 100m
+        memory: 128Mi
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 50m
+        memory: 128Mi
+    amqpReconnectInterval: 1
+    logSleepInterval: 1
 
   statuses:
+    enabled: true
     image: polyaxon/polyaxon-events
     imageTag: 0.0.1
     imagePullPolicy: IfNotPresent
@@ -108,12 +116,15 @@ events:
     resources:
       limits:
         cpu: 50m
-        memory: 100m
+        memory: 128Mi
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 50m
+        memory: 128Mi
+    amqpReconnectInterval: 1
+    logSleepInterval: 1
 
   resources:
+    enabled: true
     image: polyaxon/polyaxon-events
     imageTag: 0.0.1
     imagePullPolicy: IfNotPresent
@@ -121,10 +132,12 @@ events:
     resources:
       limits:
         cpu: 50m
-        memory: 100m
+        memory: 128Mi
       requests:
         cpu: 50m
-        memory: 100Mi
+        memory: 128Mi
+    amqpReconnectInterval: 1
+    logSleepInterval: 1
 
 streams:
   image: polyaxon/polyaxon-streams

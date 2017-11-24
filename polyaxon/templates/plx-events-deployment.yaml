@@ -39,11 +39,12 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      # events
+      {{- if .Values.events.namespace.enabled }}
+      # namespace events
       - name: {{ .Chart.Name }}-events
         image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
         imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
-        args: ["python3 polyaxon_events/events/namespace.py"]
+        args: ["python3",  "polyaxon_events/events/namespace.py"]
         env:
         - name: POLYAXON_DEBUG
           valueFrom:
@@ -65,7 +66,7 @@ spec:
               name: {{ template "rabbitmq.fullname" . }}
               key: rabbitmq-password
         - name: POLYAXON_INTERNAL_EXCHANGE
-          value: {{ .Values.events.namespace.internalExchange | quote }}
+          value: {{ .Values.exchanges.internalExchange | quote }}
         - name: POLYAXON_EVENTS_NAMESPACE_ROUTING_KEY
           value: {{ .Values.routingKeys.eventsNamespace | quote }}
         - name: POLYAXON_AMQP_RECONNECT_INTERVAL
@@ -90,32 +91,11 @@ spec:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
               key: gpu-node-selectors
-        volumeMounts:
-        - mountPath: {{ .Values.persistence.mountPath }}
-          name: polyaxon-data
-        livenessProbe:
-          failureThreshold: 5
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        readinessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
         resources:
-{{ toYaml .Values.events.namespace.resources | indent 12 }}
-      # statues
+{{ toYaml .Values.events.namespace.resources | indent 10 }}
+      {{- end }}
+      # statues events
+      {{- if .Values.events.statuses.enabled }}
       - name: {{ .Chart.Name }}-statuses
         image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"
         imagePullPolicy: {{ .Values.events.statuses.imagePullPolicy }}
@@ -159,7 +139,7 @@ spec:
               name: {{ template "rabbitmq.fullname" . }}
               key: rabbitmq-password
         - name: POLYAXON_INTERNAL_EXCHANGE
-          value: {{ .Values.events.statuses.internalExchange | quote }}
+          value: {{ .Values.exchanges.internalExchange | quote }}
         - name: POLYAXON_EVENTS_JOB_STATUS_ROUTING_KEY
           value: {{ .Values.routingKeys.eventsStatuses | quote }}
         - name: POLYAXON_AMQP_RECONNECT_INTERVAL
@@ -198,37 +178,6 @@ spec:
           value: {{ .Values.roles.worker }}
         - name: POLYAXON_EXPERIMENT_TYPE_LABEL
           value: {{ .Values.types.experiment }}
-          value:
-        volumeMounts:
-        - mountPath: {{ .Values.persistence.mountPath }}
-          name: polyaxon-data
-        livenessProbe:
-          failureThreshold: 5
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        readinessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /_health/
-            port: {{ .Values.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
         resources:
-{{ toYaml .Values.events.statuses.resources | indent 12 }}
-      volumes:
-      - name: polyaxon-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ template "polyaxon.fullname" . }}
-      {{- else }}
-        emptyDir: {}
-      {{ end }}
+{{ toYaml .Values.events.statuses.resources | indent 10 }}
+      {{- end }}
