@@ -43,9 +43,7 @@ spec:
       - name: {{ .Chart.Name }}-events
         image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
         imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
-        args: ["python3", "polyaxon_events/events/namespace.py"]
-        ports:
-        - containerPort: {{ .Values.service.internalPort }}
+        args: ["python3 polyaxon_events/events/namespace.py"]
         env:
         - name: POLYAXON_DEBUG
           valueFrom:
@@ -116,15 +114,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 2
         resources:
-{{ toYaml .Values.events.resources | indent 12 }}
-      volumes:
-      - name: polyaxon-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ template "polyaxon.fullname" . }}
-      {{- else }}
-        emptyDir: {}
-      {{ end }}
+{{ toYaml .Values.events.namespace.resources | indent 12 }}
       # statues
       - name: {{ .Chart.Name }}-statuses
         image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"

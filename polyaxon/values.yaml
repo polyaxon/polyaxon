@@ -94,8 +94,8 @@ events:
     replicas: 1
     resources:
       limits:
-        cpu: 200m
-        memory: 200m
+        cpu: 50m
+        memory: 100m
       requests:
         cpu: 100m
         memory: 100Mi
@@ -107,8 +107,8 @@ events:
     replicas: 1
     resources:
       limits:
-        cpu: 200m
-        memory: 200m
+        cpu: 50m
+        memory: 100m
       requests:
         cpu: 100m
         memory: 100Mi
@@ -120,10 +120,10 @@ events:
     replicas: 1
     resources:
       limits:
-        cpu: 200m
-        memory: 200m
+        cpu: 50m
+        memory: 100m
       requests:
-        cpu: 100m
+        cpu: 50m
         memory: 100Mi
 
 streams:
