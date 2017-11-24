@@ -1,4 +1,4 @@
--e git+https://github.com/polyaxon/polyaxon-k8s.git@214fcbe6ca380c8c07b7cf3cef960e9204cc48f4#egg=polyaxon-k8s
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@b095c1b815ed1499de2d9f767df2e4ac92f3057f#egg=polyaxon-k8s
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@c8c9134013a51afbfeb266db8dbb5160494bf959#egg=polyaxon-schemas
 PyYAML==3.12
 six==1.11.0

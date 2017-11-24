@@ -24,16 +24,12 @@ class K8SSpawner(K8SManager):
     def __init__(self,
                  k8s_config=None,
                  namespace='default',
-                 in_cluster=False,
-                 docker_job_image=None,
-                 docker_sidecar_image=None):
+                 in_cluster=False):
         super(K8SSpawner, self).__init__(k8s_config=k8s_config,
                                          namespace=namespace,
                                          in_cluster=in_cluster)
         self.has_data_volume = False
         self.has_logs_volume = False
-        self.docker_job_image = docker_job_image or constants.DOCKER_JOB_IMAGE
-        self.docker_sidecar_image = docker_sidecar_image or constants.DOCKER_SIDECAR_IMAGE
 
     @property
     def spec(self):

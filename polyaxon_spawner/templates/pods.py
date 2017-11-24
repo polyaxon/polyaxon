@@ -136,12 +136,7 @@ def get_pod_container(project,
     ]
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
-
-    container_name = constants.POD_CONTAINER_JOB_NAME.format(project=project,
-                                                             experiment=experiment,
-                                                             task_type=task_type,
-                                                             task_id=task_id)
-    return client.V1Container(name=container_name,
+    return client.V1Container(name=constants.POD_CONTAINER_JOB_NAME,
                               image=constants.DOCKER_JOB_IMAGE,
                               command=command,
                               args=args,
@@ -164,24 +159,16 @@ def get_sidecar_container(namespace,
                                            experiment=experiment,
                                            task_type=task_type,
                                            task_id=task_id)
-    job_container_name = constants.POD_CONTAINER_JOB_NAME.format(project=project,
-                                                                 experiment=experiment,
-                                                                 task_type=task_type,
-                                                                 task_id=task_id)
-    sidecar_container_name = constants.POD_CONTAINER_SIDECAR_NAME.format(project=project,
-                                                                         experiment=experiment,
-                                                                         task_type=task_type,
-                                                                         task_id=task_id)
 
     env_vars = [
         client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=namespace),
         client.V1EnvVar(name='POLYAXON_POD_ID', value=task_name),
-        client.V1EnvVar(name='POLYAXON_JOB_ID', value=job_container_name),
+        client.V1EnvVar(name='POLYAXON_JOB_ID', value=constants.POD_CONTAINER_JOB_NAME),
         client.V1EnvVar(name='POLYAXON_AMQP_URL', value=amqp_url),
         client.V1EnvVar(name='POLYAXON_LOG_ROUTING_KEY', value=log_routing_key),
         client.V1EnvVar(name='POLYAXON_INTERNAL_EXCHANGE', value=internal_exchange),
     ]
-    return client.V1Container(name=sidecar_container_name,
+    return client.V1Container(name=constants.POD_CONTAINER_SIDECAR_NAME,
                               image=constants.DOCKER_SIDECAR_IMAGE,
                               env=env_vars,
                               resources=resources)
@@ -244,7 +231,9 @@ def get_labels(project, experiment, task_type, task_id, task_name):
             'experiment': '{}'.format(experiment),
             'task_type': task_type,
             'task_id': '{}'.format(task_id),
-            'task': task_name}
+            'task': task_name,
+            'role': constants.WORKER_ROLE_LABEL,
+            'type': constants.EXPERIMENT_TYPE_LABEL}
 
 
 def get_pod(namespace,
