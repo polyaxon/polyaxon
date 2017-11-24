@@ -9,4 +9,5 @@ VOLUME /polyaxon
 WORKDIR /polyaxon
 copy . /polyaxon
 
-CMD uwsgi --ini uwsgi.ini
+# Set up when using the container
+# CMD uwsgi --ini uwsgi.ini

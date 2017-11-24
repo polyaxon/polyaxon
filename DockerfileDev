@@ -14,4 +14,4 @@ VOLUME /polyaxon
 WORKDIR /polyaxon
 copy . /polyaxon
 
-CMD uwsgi --ini uwsgi.ini
+# CMD uwsgi --ini uwsgi.ini

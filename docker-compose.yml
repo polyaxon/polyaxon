@@ -17,6 +17,8 @@ services:
     image: rabbitmq:3.6.12-management-alpine
     networks:
       - api
+    ports:
+      - "5673:5672"
 
   redis:
     image: redis:3.0-alpine
@@ -50,7 +52,7 @@ services:
       SETTINGS_ENV_DIR: "dev"
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
       POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
-      POLYAXON_REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
       POLYAXON_REDIS_EXPERIMENTS_STATUS_URL: "redis://redis:6379/1"
       POLYAXON_REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
       POLYAXON_RABBITMQ_DEFAULT_USER: admin
@@ -59,12 +61,12 @@ services:
   worker:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./DockerfileDev
     volumes:
       - .:/polyaxon
     environment:
       POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
-      POLYAXON_REDIS_CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
       POLYAXON_REDIS_EXPERIMENTS_STATUS_URL: "redis://redis:6379/1"
       POLYAXON_REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
     networks:
