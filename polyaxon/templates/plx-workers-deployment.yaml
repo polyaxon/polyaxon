@@ -43,7 +43,7 @@ spec:
         image: "{{ .Values.workers.image }}:{{ .Values.workers.imageTag }}"
         imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
         workingDir: /polyaxon/api
-        args: ["celery", "worker --loglevel=INFO --app api -Q {{ .Values.queues.experiments }} --concurrency=4 -n default@%h"]
+        args: ["celery worker --loglevel=INFO --app api -Q {{ .Values.queues.experiments }} --concurrency=4 -n default@%h"]
         ports:
         - containerPort: {{ .Values.service.internalPort }}
         env:
@@ -81,11 +81,11 @@ spec:
           value: {{ template "redis.fullname" . }}
         - name: POLYAXON_REDIS_PORT
           value: "6379"
-        - name: POLYAXON_REDIS_CELERY_RESULT_BACKEND
+        - name: POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL
           valueFrom:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
-              key: redis-celery-result-backend-url
+              key: redis-result-backend-url
         - name: POLYAXON_REDIS_EXPERIMENTS_STATUS_URL
           valueFrom:
             configMapKeyRef:

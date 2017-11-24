@@ -43,7 +43,7 @@ spec:
         image: "{{ .Values.cron.image }}:{{ .Values.cron.imageTag }}"
         imagePullPolicy: {{ .Values.cron.imagePullPolicy }}
         workingDir: /polyaxon/api
-        args: ["celery", "beat --app api"]
+        args: ["celery beat --app api"]
         env:
         - name: POLYAXON_DEBUG
           valueFrom:
@@ -79,7 +79,7 @@ spec:
           value: {{ template "redis.fullname" . }}
         - name: POLYAXON_REDIS_PORT
           value: "6379"
-        - name: POLYAXON_REDIS_CELERY_RESULT_BACKEND
+        - name: POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL
           valueFrom:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}

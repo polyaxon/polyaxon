@@ -83,7 +83,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: {{ template "polyaxon.fullname" . }}
-              key: redis-celery-result-backend-url
+              key: redis-result-backend-url
         - name: POLYAXON_REDIS_EXPERIMENTS_STATUS_URL
           valueFrom:
             configMapKeyRef:
