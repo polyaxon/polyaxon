@@ -1,5 +1,5 @@
 numpy==1.13.3
-Pillow==4.2.1
+Pillow==4.3.0
 -e git+https://github.com/polyaxon/polyaxon-spawner.git@211c9e6e37c506d08c7cccd8931b70e255417851#egg=polyaxon-spawner
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@0fe4d0311dfd49bfd4c3a8a62d3b99e22bac31a0#egg=polyaxon-schemas
 scipy==0.19.1
