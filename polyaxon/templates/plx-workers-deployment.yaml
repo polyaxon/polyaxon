@@ -44,8 +44,6 @@ spec:
         imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
         workingDir: /polyaxon/api
         args: ["celery", "-A", "api", "worker" , "--loglevel=INFO", "-Q {{ .Values.queues.experiments }}", "--concurrency=4", "-n default@%h"]
-        ports:
-        - containerPort: {{ .Values.service.internalPort }}
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
