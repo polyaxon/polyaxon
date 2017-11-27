@@ -270,3 +270,20 @@ amqp config
       name: {{ template "rabbitmq.fullname" . }}
       key: rabbitmq-password
 {{- end -}}
+
+
+{{/*
+Routing keys config
+*/}}
+{{- define "config.routingKeys" }}
+- name: POLYAXON_EVENTS_NAMESPACE_ROUTING_KEY
+  value: {{ .Values.routingKeys.eventsNamespace | quote }}
+- name: POLYAXON_EVENTS_RESOURCES_ROUTING_KEY
+  value: {{ .Values.routingKeys.resources | quote }}
+- name: POLYAXON_EVENTS_RESOURCES_ROUTING_KEY
+  value: {{ .Values.routingKeys.eventsResources | quote }}
+- name: POLYAXON_AMQP_RECONNECT_INTERVAL
+  value: {{ default 1 .Values.events.namespace.amqpReconnectInterval | quote }}
+- name: POLYAXON_INTERNAL_EXCHANGE
+  value: {{ .Values.exchanges.internalExchange | quote }}
+{{- end -}}

@@ -87,18 +87,18 @@ metadata:
 spec:
   selector:
     app: {{ template "polyaxon.fullname" . }}-ingress-controller
-{{- if contains "NodePort" .Values.service.type }}
+{{- if contains "NodePort" .Values.api.service.type }}
   ports:
-  - port: {{ .Values.service.externalPort }}
-    name: {{ .Values.service.name }}
+  - port: {{ .Values.api.service.externalPort }}
+    name: {{ .Values.api.service.name }}
     protocol: TCP
-    targetPort: {{ .Values.service.internalPort }}
-    nodePort: {{ .Values.service.nodePort }}
-  type: {{ .Values.service.type }}
+    targetPort: {{ .Values.api.service.internalPort }}
+    nodePort: {{ .Values.api.service.nodePort }}
+  type: {{ .Values.api.service.type }}
 {{- else }}
   ports:
-  - port: {{ .Values.service.externalPort }}
-  type: {{ .Values.service.type }}
+  - port: {{ .Values.api.service.externalPort }}
+  type: {{ .Values.api.service.type }}
 {{- end }}
 ---
 apiVersion: v1

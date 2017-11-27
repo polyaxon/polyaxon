@@ -16,4 +16,26 @@ spec:
   selector:
     app: {{ template "polyaxon.fullname" . }}-api
   ports:
-  - port: 80
+  - port: {{ .Values.api.service.externalPort }}
+    targetPort: {{ .Values.api.service.internalPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-api-events
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-api-events
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.api }}
+spec:
+  {{- if not .Values.ingress.enabled }}
+  type: LoadBalancer
+  {{- end }}
+  selector:
+    app: {{ template "polyaxon.fullname" . }}-api-events
+  ports:
+  - port: {{ .Values.apiEvents.service.externalPort }}
+    targetPort: {{ .Values.apiEvents.service.internalPort }}

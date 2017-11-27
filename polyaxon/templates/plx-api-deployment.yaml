@@ -44,13 +44,14 @@ spec:
         imagePullPolicy: {{ .Values.api.imagePullPolicy }}
         command: ["uwsgi", "--ini", "uwsgi.ini"]
         ports:
-        - containerPort: {{ .Values.service.internalPort }}
+        - containerPort: {{ .Values.api.service.internalPort }}
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
         volumeMounts:
         - mountPath: {{ .Values.persistence.mountPath }}
           name: polyaxon-data
@@ -58,7 +59,7 @@ spec:
           failureThreshold: 5
           httpGet:
             path: /_health/
-            port: {{ .Values.service.internalPort }}
+            port: {{ .Values.api.service.internalPort }}
             scheme: HTTP
           initialDelaySeconds: 100
           periodSeconds: 10
@@ -68,7 +69,7 @@ spec:
           failureThreshold: 10
           httpGet:
             path: /_health/
-            port: {{ .Values.service.internalPort }}
+            port: {{ .Values.api.service.internalPort }}
             scheme: HTTP
           initialDelaySeconds: 100
           periodSeconds: 10
@@ -76,6 +77,22 @@ spec:
           timeoutSeconds: 2
         resources:
 {{ toYaml .Values.api.resources | indent 10 }}
+      - name: {{ .Chart.Name }}-api-events
+        image: "{{ .Values.apiEvents.image }}:{{ .Values.apiEvents.imageTag }}"
+        imagePullPolicy: {{ .Values.api.imagePullPolicy }}
+        workingDir: /polyaxon/api
+        command: ["python3", "-m", "sanic", "events.api.app", "--host=0.0.0.0", "--port={{ .Values.apiEvents.service.internalPort }}"]
+        ports:
+        - containerPort: {{ .Values.apiEvents.service.internalPort }}
+        env:
+        {{ include "config.global" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
+        resources:
+{{ toYaml .Values.apiEvents.resources | indent 10 }}
       volumes:
       - name: polyaxon-data
       {{- if .Values.persistence.enabled }}

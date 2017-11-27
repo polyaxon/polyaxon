@@ -9,13 +9,6 @@ celery:
   always_eager: false
   celeryd_prefetch_multiplier: 4
 
-service:
-  name: polyaxon
-  type: LoadBalancer
-  externalPort: 80
-  internalPort: 80
-  nodePort: 35811
-
 types:
   core: "polyaxon-core"
   experiment: "polyaxon-experiment"
@@ -65,6 +58,36 @@ api:
     requests:
       cpu: 300m
       memory: 300Mi
+
+  service:
+    name: api
+    type: LoadBalancer
+    externalPort: 80
+    internalPort: 80
+    nodePort: 35811
+
+apiEvents:
+  image: polyaxon/polyaxon-api
+  imageTag: 0.0.1
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  resources:
+    limits:
+      cpu: 50m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  amqpReconnectInterval: 1
+  logSleepInterval: 1
+
+  service:
+    name: api-events
+    type: LoadBalancer
+    internalPort: 1337
+    externalPort: 80
+    nodePort: 35812
+
 workers:
   image: polyaxon/polyaxon-api
   imageTag: 0.0.1
@@ -92,7 +115,7 @@ cron:
 
 events:
   namespace:
-    enabled: false
+    enabled: true
     image: polyaxon/polyaxon-events
     imageTag: 0.0.1
     imagePullPolicy: IfNotPresent
@@ -138,19 +161,6 @@ events:
         memory: 128Mi
     amqpReconnectInterval: 1
     logSleepInterval: 1
-
-streams:
-  image: polyaxon/polyaxon-streams
-  imageTag: 0.0.1
-  imagePullPolicy: IfNotPresent
-  replicas: 1
-  resources:
-    limits:
-      cpu: 300m
-      memory: 256Mi
-    requests:
-      cpu: 100m
-      memory: 100Mi
 
 persistence:
   enabled: false
