@@ -134,6 +134,8 @@ global config
 {{- end }}
 - name: POLYAXON_K8S_HOST
   value: {{ .Values.k8s.host | quote }}
+- name: POLYAXON_K8S_NAMESPACE
+  value: {{ .Values.namespace | quote }}
 - name: POLYAXON_GPU_NODE_SELECTORS
   valueFrom:
     configMapKeyRef:
