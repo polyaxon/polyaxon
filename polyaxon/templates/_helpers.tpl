@@ -141,17 +141,17 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}
       key: gpu-node-selectors
-- name: POLYAXON_API_ROLE_LABEL
+- name: POLYAXON_ROLE_LABELS_API
   value: {{ .Values.roles.api }}
-- name: POLYAXON_LOG_ROLE_LABEL
+- name: POLYAXON_ROLE_LABELS_LOG
   value: {{ .Values.roles.log }}
-- name: POLYAXON_WORKER_ROLE_LABEL
+- name: POLYAXON_ROLE_LABELS_WORKER
   value: {{ .Values.roles.worker }}
-- name: POLYAXON_DASHBOARD_ROLE_LABEL
+- name: POLYAXON_ROLE_LABELS_DASHBOARD
   value: {{ .Values.roles.dashboard }}
-- name: POLYAXON_CORE_TYPE_LABEL
+- name: POLYAXON_TYPE_LABELS_CORE
   value: {{ .Values.types.core }}
-- name: POLYAXON_EXPERIMENT_TYPE_LABEL
+- name: POLYAXON_TYPE_LABELS_EXPERIMENT
   value: {{ .Values.types.experiment }}
 {{- end -}}
 
@@ -169,10 +169,6 @@ django config
   value: {{ .Values.celery.always_eager | quote }}
 - name: POLYAXON_CELERYD_PREFETCH_MULTIPLIER
   value: {{ .Values.celery.celeryd_prefetch_multiplier | quote }}
-- name: POLYAXON_EXPERIMENTS_QUEUE
-  value: {{ .Values.queues.experiments | quote }}
-- name: POLYAXON_EXPERIMENTS_SCHEDULER_INTERVAL_SEC
-  value: {{ .Values.queues.experiments_scheduler_interval_sec | quote }}
 - name: POLYAXON_PASSWORD_LENGTH
   value: {{ default "6" .Values.passwordLength | quote }}
 - name: POLYAXON_ADMIN_NAME
@@ -250,6 +246,11 @@ redis config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}
       key: redis-jobs-status-url
+- name: POLYAXON_REDIS_JOB_CONTAINERS_URL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}
+      key: redis-job-containers-url
 {{- end }}
 
 
@@ -276,14 +277,47 @@ amqp config
 Routing keys config
 */}}
 {{- define "config.routingKeys" }}
-- name: POLYAXON_EVENTS_NAMESPACE_ROUTING_KEY
+- name: POLYAXON_ROUTING_KEYS_EVENTS_NAMESPACE
   value: {{ .Values.routingKeys.eventsNamespace | quote }}
-- name: POLYAXON_EVENTS_RESOURCES_ROUTING_KEY
-  value: {{ .Values.routingKeys.resources | quote }}
-- name: POLYAXON_EVENTS_RESOURCES_ROUTING_KEY
+- name: POLYAXON_ROUTING_KEYS_EVENTS_RESOURCES
   value: {{ .Values.routingKeys.eventsResources | quote }}
-- name: POLYAXON_AMQP_RECONNECT_INTERVAL
-  value: {{ default 1 .Values.events.namespace.amqpReconnectInterval | quote }}
+- name: POLYAXON_ROUTING_KEYS_EVENTS_JOB_STATUSES
+  value: {{ .Values.routingKeys.eventsStatuses | quote }}
+- name: POLYAXON_ROUTING_KEYS_LOGS_SIDECARS
+  value: {{ .Values.routingKeys.logsSidecars | quote }}
+#  other infos
 - name: POLYAXON_INTERNAL_EXCHANGE
-  value: {{ .Values.exchanges.internalExchange | quote }}
+  value: {{ .Values.exchanges.internal | quote }}
+{{- end -}}
+
+
+{{/*
+queues config
+*/}}
+{{- define "config.queues" }}
+- name: POLYAXON_QUEUES_API_EXPERIMENTS
+  value: {{ .Values.queues.apiExperiments | quote }}
+- name: POLYAXON_QUEUES_API_CLUSTERS
+  value: {{ .Values.queues.apiClusters | quote }}
+- name: POLYAXON_QUEUES_EVENTS_NAMESPACE
+  value: {{ .Values.queues.eventsNamespace | quote }}
+- name: POLYAXON_QUEUES_EVENTS_RESOURCES
+  value: {{ .Values.queues.eventsResources | quote }}
+- name: POLYAXON_QUEUES_EVENTS_JOBS_STATUSES
+  value: {{ .Values.queues.eventsStatuses | quote }}
+- name: POLYAXON_QUEUES_LOGS_SIDECARS
+  value: {{ .Values.queues.logsSidecars | quote }}
+{{- end -}}
+
+
+{{/*
+intervals config
+*/}}
+{{- define "config.intervals" }}
+- name: POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER
+  value: {{ .Values.intervals.experiments_scheduler | quote }}
+- name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO
+  value: {{ .Values.intervals.clusters_update_system_info | quote }}
+- name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES
+  value: {{ .Values.intervals.clusters_update_system_nodes | quote }}
 {{- end -}}

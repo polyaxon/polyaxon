@@ -50,5 +50,8 @@ spec:
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
         resources:
 {{ toYaml .Values.workers.resources | indent 10 }}

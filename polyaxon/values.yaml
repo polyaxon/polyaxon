@@ -32,17 +32,25 @@ email:
   port: 25
   use_tls: false
 
+intervals:
+  experiments_scheduler: 5  # in seconds
+
 queues:
-  experiments_scheduler_interval_sec: 5
-  experiments: 'polyaxon.experiments'
+  apiExperiments: 'api.experiments'
+  apiClusters: 'api.clusters'
+  eventsNamespace: 'events.namespace'
+  eventsResources: 'events.resources'
+  eventsStatuses: 'events.statuses'
+  logsSidecars: 'logs.sidecars'
 
 routingKeys:
   eventsStatuses: events.statuses
   eventsNamespace: events.namespace
   eventsResources: events.resources
+  logsSidecars: logs.sidecars
 
 exchanges:
-  internalExchange: 'internal'
+  internal: 'internal'
 
 nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
 
@@ -79,7 +87,6 @@ apiEvents:
       cpu: 50m
       memory: 128Mi
   amqpReconnectInterval: 1
-  logSleepInterval: 1
 
   service:
     name: api-events

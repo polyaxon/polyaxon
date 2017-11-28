@@ -48,10 +48,7 @@ spec:
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
-        - name: POLYAXON_INTERNAL_EXCHANGE
-          value: {{ .Values.exchanges.internalExchange | quote }}
-        - name: POLYAXON_EVENTS_NAMESPACE_ROUTING_KEY
-          value: {{ .Values.routingKeys.eventsNamespace | quote }}
+        {{ include "config.routingKeys" . | indent 8 }}
         - name: POLYAXON_AMQP_RECONNECT_INTERVAL
           value: {{ default 1 .Values.events.namespace.amqpReconnectInterval | quote }}
         - name: POLYAXON_LOG_SLEEP_INTERVAL
@@ -69,15 +66,7 @@ spec:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
-        - name: POLYAXON_JOB_CONTAINERS_URL
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "polyaxon.fullname" . }}
-              key: redis-job-containers-url
-        - name: POLYAXON_INTERNAL_EXCHANGE
-          value: {{ .Values.exchanges.internalExchange | quote }}
-        - name: POLYAXON_EVENTS_JOB_STATUS_ROUTING_KEY
-          value: {{ .Values.routingKeys.eventsStatuses | quote }}
+        {{ include "config.routingKeys" . | indent 8 }}
         - name: POLYAXON_AMQP_RECONNECT_INTERVAL
           value: {{ default 1 .Values.events.statuses.amqpReconnectInterval | quote }}
         - name: POLYAXON_LOG_SLEEP_INTERVAL
@@ -95,15 +84,7 @@ spec:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
-        - name: POLYAXON_JOB_CONTAINERS_URL
-          valueFrom:
-            configMapKeyRef:
-              name: {{ template "polyaxon.fullname" . }}
-              key: redis-job-containers-url
-        - name: POLYAXON_INTERNAL_EXCHANGE
-          value: {{ .Values.exchanges.internalExchange | quote }}
-        - name: POLYAXON_EVENTS_RESOURCES_ROUTING_KEY
-          value: {{ .Values.routingKeys.eventsResources | quote }}
+        {{ include "config.routingKeys" . | indent 8 }}
         - name: POLYAXON_AMQP_RECONNECT_INTERVAL
           value: {{ default 1 .Values.events.statuses.amqpReconnectInterval | quote }}
         - name: POLYAXON_LOG_SLEEP_INTERVAL

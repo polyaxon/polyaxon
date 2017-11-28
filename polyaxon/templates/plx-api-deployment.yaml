@@ -52,6 +52,8 @@ spec:
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
         volumeMounts:
         - mountPath: {{ .Values.persistence.mountPath }}
           name: polyaxon-data
@@ -91,6 +93,8 @@ spec:
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
         resources:
 {{ toYaml .Values.apiEvents.resources | indent 10 }}
       volumes:

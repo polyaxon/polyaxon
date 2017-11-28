@@ -50,6 +50,9 @@ spec:
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
         volumeMounts:
         resources:
 {{ toYaml .Values.cron.resources | indent 10 }}
