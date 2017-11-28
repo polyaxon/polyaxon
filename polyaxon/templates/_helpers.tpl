@@ -111,6 +111,11 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}
       key: debug
+- name: POLYAXON_CLUSTER_ID
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}
+      key: cluster_id
 - name: POLYAXON_JOB_CONTAINER_NAME
   valueFrom:
     configMapKeyRef:
