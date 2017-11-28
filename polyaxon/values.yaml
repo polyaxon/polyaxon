@@ -42,6 +42,10 @@ queues:
   eventsResources: 'events.resources'
   eventsStatuses: 'events.statuses'
   logsSidecars: 'logs.sidecars'
+  streamEventsNamespace: 'stream.events.namespace'
+  streamEventsResources: 'stream.events.resources'
+  streamEventsStatuses: 'stream.events.statuses'
+  streamLogsSidecars: 'stream.logs.sidecars'
 
 routingKeys:
   eventsStatuses: events.statuses

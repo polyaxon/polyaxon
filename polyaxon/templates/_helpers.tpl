@@ -307,6 +307,14 @@ queues config
   value: {{ .Values.queues.eventsStatuses | quote }}
 - name: POLYAXON_QUEUES_LOGS_SIDECARS
   value: {{ .Values.queues.logsSidecars | quote }}
+- name: POLYAXON_QUEUES_STREAM_EVENTS_NAMESPACE
+  value: {{ .Values.queues.streamEventsNamespace | quote }}
+- name: POLYAXON_QUEUES_STREAM_EVENTS_RESOURCES
+  value: {{ .Values.queues.streamEventsResources | quote }}
+- name: POLYAXON_QUEUES_STREAM_EVENTS_JOBS_STATUSES
+  value: {{ .Values.queues.streamEventsStatuses | quote }}
+- name: POLYAXON_QUEUES_STREAM_LOGS_SIDECARS
+  value: {{ .Values.queues.streamLogsSidecars | quote }}
 {{- end -}}
 
 
