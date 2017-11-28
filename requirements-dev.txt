@@ -6,12 +6,15 @@ djangorestframework-camel-case==0.2.0
 django-registration==2.3
 pandas==0.20.3
 pandas-summary==0.0.41
+pika==0.11.0
 psycopg2==2.7.3.1
 redis==2.10.6
+sanic==0.6.0
 six==1.11.0
 Unipath==1.1
 uWSGI==2.0.15
+websockets==3.4
 
--e git+https://github.com/polyaxon/polyaxon-spawner.git@211c9e6e37c506d08c7cccd8931b70e255417851#egg=polyaxon-spawner
+-e git+https://github.com/polyaxon/polyaxon-spawner.git@00c678cf30e879cf9cc24c35f9db01175926e52e#egg=polyaxon-spawner
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@b095c1b815ed1499de2d9f767df2e4ac92f3057f#egg=polyaxon-k8s
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@0fe4d0311dfd49bfd4c3a8a62d3b99e22bac31a0#egg=polyaxon-schemas
