@@ -1,29 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import os
-
 import asyncio
+
 from sanic import Sanic
-from sanic.response import text
 
 from websockets import ConnectionClosed
 
+from api.config_settings import StreamQueues
+from api.config_settings.routing_keys import RoutingKeys
 from events.consumers import Consumer
 
 app = Sanic(__name__)
-
-
-@app.route('/')
-async def index(request):
-    return text('Hello world!')
 
 
 @app.websocket('/stream/namespace')
 async def namespace(request, ws):
     if request.app.namespace_consumer is None:
         request.app.namespace_consumer = Consumer(
-            routing_key=os.environ['POLYAXON_EVENTS_NAMESPACE_ROUTING_KEY'], queue='namespace')
+            routing_key=RoutingKeys.EVENTS_NAMESPACE, queue=StreamQueues.EVENTS_NAMESPACE)
         request.app.namespace_consumer.run()
 
     request.app.namespace_consumer.add_socket(ws)
@@ -43,7 +38,7 @@ async def namespace(request, ws):
 async def resources(request, ws):
     if request.app.resources_consumer is None:
         request.app.resources_consumer = Consumer(
-            routing_key=os.environ['POLYAXON_EVENTS_RESOURCES_ROUTING_KEY'], queue='namespace')
+            routing_key=RoutingKeys.EVENTS_RESOURCES, queue=StreamQueues.EVENTS_RESOURCES)
         request.app.resources_consumer.run()
 
     request.app.resources_consumer.add_socket(ws)
@@ -64,7 +59,7 @@ async def resources(request, ws):
 async def logs(request, ws):
     if request.app.logs_consumer is None:
         request.app.logs_consumer = Consumer(
-            routing_key=os.environ['POLYAXON_JOB_RESOURCES_ROUTING_KEY'], queue='namespace')
+            routing_key=RoutingKeys.LOGS_SIDECARS, queue=StreamQueues.LOGS_SIDECARS)
         request.app.logs_consumer.run()
 
     request.app.logs_consumer.add_socket(ws)
