@@ -17,7 +17,7 @@ from experiments.task_status import (
 logger = logging.getLogger('polyaxon.api.experiments')
 
 
-@celery_app.task(name=CeleryTasks.START_EXPERIMENT)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_START)
 def start_experiment(experiment_id):
     from experiments.models import Experiment, ExperimentStatus, ExperimentLifeCycle
 

@@ -3,16 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from django.conf import settings
-
-from api.settings import CeleryTasks
+from api.settings import CeleryTasks, Intervals
 from api.celery_api import app as celery_app
 from experiments.tasks import start_experiment
 
 logger = logging.getLogger('polyaxon.api.experiments')
 
 
-@celery_app.task(name=CeleryTasks.START_EXPERIMENTS, bind=True)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_START_GROUP, bind=True)
 def start_group_experiments(task, spec_id):
     from projects.models import PolyaxonSpec
 
@@ -30,5 +28,5 @@ def start_group_experiments(task, spec_id):
 
     if pending_experiments:
         # Schedule another task
-        task.apply_async(spec_id, countdown=settings.EXPERIMENTS_SCHEDULER_INTERVAL_SEC)
+        task.apply_async(spec_id, countdown=Intervals.EXPERIMENTS_SCHEDULER_INTERVAL_SEC)
 
