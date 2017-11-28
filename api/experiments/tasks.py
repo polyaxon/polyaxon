@@ -8,7 +8,7 @@ from polyaxon_schemas.utils import TaskType
 from polyaxon_spawner.spawner import K8SExperimentSpawner
 
 from api.settings import CeleryTasks
-from api.celery_api import app
+from api.celery_api import app as celery_app
 from experiments.models import ExperimentJob
 from experiments.task_status import (
     RedisExperimentStatus,
@@ -17,7 +17,7 @@ from experiments.task_status import (
 logger = logging.getLogger('polyaxon.api.experiments')
 
 
-@app.task(name=CeleryTasks.START_EXPERIMENT)
+@celery_app.task(name=CeleryTasks.START_EXPERIMENT)
 def start_experiment(experiment_id):
     from experiments.models import Experiment, ExperimentStatus, ExperimentLifeCycle
 

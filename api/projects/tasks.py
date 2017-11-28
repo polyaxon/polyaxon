@@ -6,13 +6,13 @@ import logging
 from django.conf import settings
 
 from api.settings import CeleryTasks
-from api.celery_api import app
+from api.celery_api import app as celery_app
 from experiments.tasks import start_experiment
 
 logger = logging.getLogger('polyaxon.api.experiments')
 
 
-@app.task(name=CeleryTasks.START_EXPERIMENTS, bind=True)
+@celery_app.task(name=CeleryTasks.START_EXPERIMENTS, bind=True)
 def start_group_experiments(task, spec_id):
     from projects.models import PolyaxonSpec
 
