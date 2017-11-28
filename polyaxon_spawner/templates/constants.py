@@ -16,8 +16,8 @@ CLUSTER_SECRET = 'polyaxon-cluster-secret'
 DOCKER_JOB_IMAGE = 'polyaxon/polyaxon-lib:0.0.1'
 DOCKER_SIDECAR_IMAGE = 'polyaxon/polyaxon-events:0.0.1'
 SIDECAR_ARGS = ["python3", "polyaxon_events/events/sidecar.py"]
-WORKER_ROLE_LABEL = 'polyaxon-workers'
-EXPERIMENT_TYPE_LABEL = 'polyaxon-experiment'
+ROLE_LABELS_WORKER = 'polyaxon-workers'
+TYPE_LABELS_EXPERIMENT = 'polyaxon-experiment'
 POD_CONTAINER_JOB_NAME = 'experiment-job'
 POD_CONTAINER_SIDECAR_NAME = 'experiment-job-sidecar'
 

@@ -233,8 +233,8 @@ def get_labels(project, experiment, task_type, task_id, task_name):
             'task_type': task_type,
             'task_id': '{}'.format(task_id),
             'task': task_name,
-            'role': constants.WORKER_ROLE_LABEL,
-            'type': constants.EXPERIMENT_TYPE_LABEL}
+            'role': constants.ROLE_LABELS_WORKER,
+            'type': constants.TYPE_LABELS_EXPERIMENT}
 
 
 def get_pod(namespace,

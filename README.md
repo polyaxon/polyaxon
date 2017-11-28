@@ -5,4 +5,4 @@
 
 # Polyaxon-spawner
 
-Polyaxon resources and charts for running and monitoring experiments on kubernetes clusters.
+Polyaxon spawner for spinning experiments on kubernetes clusters.
