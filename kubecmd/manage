@@ -1,1 +1,1 @@
-kubectl exec -n polyaxon $(kubectl get pods -n polyaxon | grep api | awk '{print $1}') -- python3 ./api/manage.py
+kubectl exec -it -n polyaxon $(kubectl get pods -n polyaxon | grep api | awk '{print $1}') -- python3 ./api/manage.py $*
