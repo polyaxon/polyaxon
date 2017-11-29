@@ -7,8 +7,7 @@ from sanic import Sanic
 
 from websockets import ConnectionClosed
 
-from api.config_settings import StreamQueues
-from api.config_settings.routing_keys import RoutingKeys
+from api.config_settings.celery_settings import RoutingKeys, StreamQueues
 from events.consumers import Consumer
 
 app = Sanic(__name__)

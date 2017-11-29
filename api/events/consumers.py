@@ -25,7 +25,7 @@ class Consumer(object):
     If the channel is closed, it will indicate a problem with one of the
     commands that were issued and that should surface in the output as well.
     """
-    AMQP_URL = settings.BROKER_URL
+    AMQP_URL = settings.CELERY_BROKER_URL
     EXCHANGE = settings.INTERNAL_EXCHANGE
     EXCHANGE_TYPE = 'topic'
 
