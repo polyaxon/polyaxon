@@ -7,7 +7,7 @@ from api.settings import CeleryTasks, Intervals
 from api.celery_api import app as celery_app
 from experiments.tasks import start_experiment
 
-logger = logging.getLogger('polyaxon.api.experiments')
+logger = logging.getLogger('polyaxon.tasks.projects')
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START_GROUP, bind=True)
