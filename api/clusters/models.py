@@ -45,7 +45,7 @@ class ClusterNode(models.Model):
     role = models.CharField(
         max_length=6,
         choices=nodes.NodeRoles.CHOICES,
-        help_text='The rolde of the node')
+        help_text='The role of the node')
     docker_version = models.CharField(
         max_length=128,
         blank=True,
@@ -62,6 +62,7 @@ class ClusterNode(models.Model):
         max_length=24,
         default=nodes.NodeLifeCycle.UNKNOWN,
         choices=nodes.NodeLifeCycle.CHOICES)
+    is_current = models.BooleanField(default=True)
 
     @classmethod
     def from_node_item(cls, node):
