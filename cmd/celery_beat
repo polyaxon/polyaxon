@@ -4,5 +4,5 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose run -w /polyaxon/api --rm --name=polyaxon_beat worker celery beat --app api
+    docker-compose run -w /polyaxon/api --rm --name=polyaxon_beat web celery -A api beat --loglevel=DEBUG
 fi
