@@ -23,7 +23,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
 )
-from experiments.task_status import RedisExperimentJobStatus, RedisExperimentStatus
+from libs.redis_db import RedisExperimentJobStatus, RedisExperimentStatus
 from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_experiments import (
     ExperimentFactory,

@@ -13,7 +13,7 @@ from experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobSerializer,
 )
-from experiments.task_status import RedisExperimentStatus
+from libs.redis_db import RedisExperimentStatus
 from tests.factories.factory_experiments import (
     ExperimentStatusFactory,
     ExperimentFactory,

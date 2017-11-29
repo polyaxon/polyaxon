@@ -9,7 +9,7 @@ def new_experiment(sender, **kwargs):
 
     # Check if the experiment is newly created and that we can start it independently
     if created:
-        from experiments.task_status import RedisExperimentStatus
+        from libs.redis_db import RedisExperimentStatus
         from experiments.tasks import start_experiment
 
         RedisExperimentStatus.set_status(instance.id, ExperimentLifeCycle.CREATED)
@@ -24,7 +24,7 @@ def new_experiment_job(sender, **kwargs):
 
     # Check if the experiment is newly created and that we can start it independently
     if created:
-        from experiments.task_status import RedisExperimentJobStatus
+        from libs.redis_db import RedisExperimentJobStatus
 
         RedisExperimentJobStatus.set_status(instance.id, JobLifeCycle.CREATED)
         RedisExperimentJobStatus.monitor(instance.id)

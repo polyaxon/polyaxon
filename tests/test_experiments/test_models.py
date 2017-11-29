@@ -6,8 +6,8 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from experiments.constants import ExperimentLifeCycle
-from experiments.models import Experiment, ExperimentStatus
-from experiments.task_status import RedisExperimentStatus
+from experiments.models import ExperimentStatus
+from libs.redis_db import RedisExperimentStatus
 from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_experiments import ExperimentFactory
 from tests.factories.factory_projects import PolyaxonSpecFactory
