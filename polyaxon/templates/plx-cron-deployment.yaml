@@ -43,7 +43,7 @@ spec:
         image: "{{ .Values.cron.image }}:{{ .Values.cron.imageTag }}"
         imagePullPolicy: {{ .Values.cron.imagePullPolicy }}
         workingDir: /polyaxon/api
-        args: ["celery", "-A", "api", "beat"]
+        args: ["celery", "-A", "api", "beat", "--loglevel=DEBUG"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}

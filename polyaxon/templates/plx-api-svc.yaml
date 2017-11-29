@@ -35,7 +35,7 @@ spec:
   type: LoadBalancer
   {{- end }}
   selector:
-    app: {{ template "polyaxon.fullname" . }}-api-events
+    app: {{ template "polyaxon.fullname" . }}-api
   ports:
   - port: {{ .Values.apiEvents.service.externalPort }}
     targetPort: {{ .Values.apiEvents.service.internalPort }}

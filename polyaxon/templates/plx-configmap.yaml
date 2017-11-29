@@ -11,9 +11,7 @@ metadata:
     role: {{ .Values.roles.api }}
 data:
   debug: {{ .Values.debug | quote }}
-  db_url: postgresql://polyaxon:polyaxon@{{ .Release.Name }}-postgresql/polyaxon
-  k8s_url: https://kubernetes.default.svc.cluster.local
-  cluster_id: ""
+  cluster-id: ""
   nvidia_driver_dir: {{ .Values.nvidiaDriverDir | quote }}
   version: {{ .Chart.Version | quote }}
   node-selectors: {{ toYaml .Values.nodeSelectors | quote }}

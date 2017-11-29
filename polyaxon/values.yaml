@@ -32,8 +32,10 @@ email:
   port: 25
   use_tls: false
 
-intervals:
-  experiments_scheduler: 5  # in seconds
+intervals:  # in seconds
+  experiments_scheduler: 5
+  clusters_update_system_info: 150
+  clusters_update_system_nodes: 150
 
 queues:
   apiExperiments: 'api.experiments'
@@ -111,6 +113,7 @@ workers:
     requests:
       cpu: 100m
       memory: 100Mi
+
 cron:
   image: polyaxon/polyaxon-api
   imageTag: 0.0.1

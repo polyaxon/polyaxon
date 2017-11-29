@@ -3,8 +3,25 @@ postgresql:
 
 redis:
   imageTag: 4.0.2-alpine
+  persistence:
+    size: 1Gi
 
+  resources:
+    requests:
+      memory: 106Mi
+      cpu: 80m
 
 rabbitmq:
   imageTag: 3.6.12-management-alpine
+  persistence:
+    size: 1Gi
+
+  resources:
+    requests:
+      memory: 206Mi
+      cpu: 120m
+
+registry:
+  persistence:
+    size: 1Gi
 
