@@ -38,6 +38,6 @@ class Command(BaseMonitorCommand):
             except ApiException as e:
                 statuses.logger.error(
                     "Exception when calling CoreV1Api->list_namespaced_pod: %s\n" % e)
-                time.sleep(settings.LOG_SLEEP_INTERVAL)
+                time.sleep(log_sleep_interval)
             except Exception as e:
                 statuses.logger.exception("Unhandled exception occurred %s\n" % e)

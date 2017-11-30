@@ -38,6 +38,6 @@ class Command(BaseMonitorCommand):
                                                                 persist),
             ending='\n')
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-        sidecar.can_log(k8s_manager, pod_id)
-        sidecar.run(k8s_manager, pod_id, job_id)
+        sidecar.can_log(k8s_manager, pod_id, log_sleep_interval)
+        sidecar.run(k8s_manager, pod_id, job_id, persist)
         sidecar.logger.debug('Finished logging')
