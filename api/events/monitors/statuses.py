@@ -2,15 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import logging
-import os
-import time
 
 from kubernetes import watch
-from kubernetes.client.rest import ApiException
 
-from django.conf import settings
-
-from polyaxon_k8s.manager import K8SManager
 from polyaxon_k8s.constants import PodConditions, PodLifeCycle, JobLifeCycle
 
 from libs.redis_db import RedisJobContainers
@@ -97,7 +91,7 @@ def parse_event(raw_event, experiment_type_label, job_container_name):
     }
 
 
-def run(k8s_manager, experiment_type_label, job_container_name, label_selector=None):
+def run(k8s_manager, experiment_type_label, job_container_name, persist, label_selector=None):
     w = watch.Watch()
 
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
@@ -110,27 +104,4 @@ def run(k8s_manager, experiment_type_label, job_container_name, label_selector=N
         if parsed_event:
             logger.info("Publishing event: {}".format(parsed_event))
             handle_events_job_statues.delay(payload=parsed_event,
-                                            persist=settings.PERSIST_EVENTS)
-
-
-def main():
-    k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-    while True:
-        try:
-            role_label = settings.ROLE_LABELS_WORKER
-            type_label = settings.TYPE_LABELS_EXPERIMENT
-            label_selector = 'role={},type={}'.format(role_label, type_label)
-            run(k8s_manager,
-                job_container_name=os.environ['POLYAXON_JOB_CONTAINER_NAME'],
-                experiment_type_label=type_label,
-                label_selector=label_selector)
-        except ApiException as e:
-            logger.error(
-                "Exception when calling CoreV1Api->list_namespaced_pod: %s\n" % e)
-            time.sleep(settings.LOG_SLEEP_INTERVAL)
-        except Exception as e:
-            logger.exception("Unhandled exception occurred %s\n" % e)
-
-
-if __name__ == '__main__':
-    main()
+                                            persist=persist)

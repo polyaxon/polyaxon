@@ -4,16 +4,15 @@ from __future__ import absolute_import, division, print_function
 import logging
 
 import re
-import time
 
 import docker
-import polyaxon_gpustat
-from django.conf import settings
 from docker.errors import NotFound
+
+import polyaxon_gpustat
 from polyaxon_k8s.constants import ContainerStatuses
 
-from experiments.tasks import handle_events_resources
 from libs.redis_db import RedisJobContainers, RedisToStream
+from events.tasks import handle_events_resources
 
 logger = logging.getLogger('polyaxon.monitors.resources')
 docker_client = docker.from_env(version="auto", timeout=10)
@@ -112,7 +111,7 @@ def get_container_resources(container, gpu_resources):
     }
 
 
-def run(containers):
+def run(containers, persist):
     container_ids = RedisJobContainers.get_containers()
     gpu_resources = get_gpu_resources()
     if gpu_resources:
@@ -124,24 +123,7 @@ def run(containers):
         payload = get_container_resources(containers[container_id], gpu_resources)
         if payload:
             logger.info("Publishing event: {}".format(payload))
-            handle_events_resources.delay(persist=settings.PERSIST_EVENTS,
-                                          payload=payload)
+            handle_events_resources.delay(payload=payload, persist=persist)
             # Check if we should stream the payload
             if RedisToStream.is_monitored_job_resources(payload['job_id']):
                 RedisToStream.set_latest_job_resources(payload['job_id'], payload)
-
-
-def main():
-    # publisher = Publisher(os.environ['POLYAXON_ROUTING_KEYS_EVENTS_RESOURCES'])
-    containers = {}
-    while True:
-        try:
-            run(containers)
-        except Exception as e:
-            logger.exception("Unhandled exception occurred %s\n" % e)
-
-        time.sleep(settings.LOG_SLEEP_INTERVAL)
-
-
-if __name__ == '__main__':
-    main()

@@ -2,16 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import logging
-import time
 
-from django.conf import settings
 from kubernetes import watch
-from kubernetes.client.rest import ApiException
 
-from polyaxon_k8s.manager import K8SManager
-
-from clusters.tasks import handle_events_namespace
-from clusters.utils import get_cluster
+from events.tasks import handle_events_namespace
 
 logger = logging.getLogger('polyaxon.monitors.namespace')
 
@@ -20,7 +14,7 @@ LEVEL_MAPPING = {
 }
 
 
-def run(k8s_manager, cluster):
+def run(k8s_manager, cluster, persist):
     w = watch.Watch()
 
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_event,
@@ -106,23 +100,5 @@ def run(k8s_manager, cluster):
 
             logger.info("Publishing event: {}".format(data))
             handle_events_namespace.delay(cluster_id=cluster.id,
-                                          persist=settings.PERSIST_EVENTS,
-                                          payload=payload)
-
-
-def main():
-    k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-    cluster = get_cluster()
-    while True:
-        try:
-            run(k8s_manager, cluster)
-        except ApiException as e:
-            logger.error(
-                "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n" % e)
-            time.sleep(settings.LOG_SLEEP_INTERVAL)
-        except Exception as e:
-            logger.exception("Unhandled exception occurred: %s\n" % e)
-
-
-if __name__ == '__main__':
-    main()
+                                          payload=payload,
+                                          persist=persist)
