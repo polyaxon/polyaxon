@@ -41,27 +41,32 @@ spec:
       containers:
       {{- if .Values.events.namespace.enabled }}
       # namespace events
-      - name: {{ .Chart.Name }}-events
+      - name: {{ .Chart.Name }}-namespace
         image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
         imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
-        args: ["python3",  "polyaxon_events/events/namespace.py"]
+        args: ["python3", "api/manage.py",  "monitor_namespace",
+        "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
+        "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
         env:
         {{ include "config.global" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.routingKeys" . | indent 8 }}
-        - name: POLYAXON_AMQP_RECONNECT_INTERVAL
-          value: {{ default 1 .Values.events.namespace.amqpReconnectInterval | quote }}
-        - name: POLYAXON_LOG_SLEEP_INTERVAL
-          value: {{ default 1 .Values.events.namespace.logSleepInterval | quote }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
         resources:
 {{ toYaml .Values.events.namespace.resources | indent 10 }}
       {{- end }}
-      # statues events
+      # statuses events
       {{- if .Values.events.statuses.enabled }}
       - name: {{ .Chart.Name }}-statuses
         image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"
         imagePullPolicy: {{ .Values.events.statuses.imagePullPolicy }}
-        args: ["python3", "polyaxon_events/events/statuses.py"]
+        args: ["python3", "api/manage.py",  "monitor_statuses",
+        "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
+        "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
@@ -79,7 +84,9 @@ spec:
       - name: {{ .Chart.Name }}-resources
         image: "{{ .Values.events.resources.image }}:{{ .Values.events.resources.imageTag }}"
         imagePullPolicy: {{ .Values.events.resources.imagePullPolicy }}
-        args: ["python3", "polyaxon_events/events/resources.py"]
+        args: ["python3", "api/manage.py",  "monitor_resources",
+        "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
+        "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}

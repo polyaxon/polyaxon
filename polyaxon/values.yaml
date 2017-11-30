@@ -114,7 +114,7 @@ workers:
       cpu: 100m
       memory: 100Mi
 
-cron:
+beat:
   image: polyaxon/polyaxon-api
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
@@ -130,7 +130,7 @@ cron:
 events:
   namespace:
     enabled: true
-    image: polyaxon/polyaxon-events
+    image: polyaxon/polyaxon-api
     imageTag: 0.0.1
     imagePullPolicy: IfNotPresent
     replicas: 1
@@ -146,7 +146,7 @@ events:
 
   statuses:
     enabled: true
-    image: polyaxon/polyaxon-events
+    image: polyaxon/polyaxon-api
     imageTag: 0.0.1
     imagePullPolicy: IfNotPresent
     replicas: 1
@@ -162,7 +162,7 @@ events:
 
   resources:
     enabled: true
-    image: polyaxon/polyaxon-events
+    image: polyaxon/polyaxon-api
     imageTag: 0.0.1
     imagePullPolicy: IfNotPresent
     replicas: 1
