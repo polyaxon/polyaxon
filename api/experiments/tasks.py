@@ -7,14 +7,12 @@ from django.conf import settings
 from polyaxon_schemas.utils import TaskType
 from polyaxon_spawner.spawner import K8SExperimentSpawner
 
-from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
+from api.settings import CeleryTasks
 from experiments.models import ExperimentJob
-from experiments.task_status import (
-    RedisExperimentStatus,
-)
+from libs.redis_db import RedisExperimentStatus
 
-logger = logging.getLogger('polyaxon.api.experiments')
+logger = logging.getLogger('polyaxon.tasks.experiments')
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START)
@@ -47,4 +45,3 @@ def start_experiment(experiment_id):
 
     # Add the experiment to the list of experiments to monitor
     RedisExperimentStatus.monitor(experiment_id)
-
