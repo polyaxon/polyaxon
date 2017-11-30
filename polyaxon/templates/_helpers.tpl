@@ -256,6 +256,11 @@ redis config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}
       key: redis-job-containers-url
+- name: POLYAXON_REDIS_TO_STREAM_URL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}
+      key: redis-to-stream-url
 {{- end }}
 
 
