@@ -1,22 +1,22 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-cron
+  name: {{ template "polyaxon.fullname" . }}-beat
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/plx-configmap.yaml") . | sha256sum }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-cron
+    app: {{ template "polyaxon.fullname" . }}-beat
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.worker }}
 spec:
-  replicas: {{ .Values.cron.replicas }}
+  replicas: {{ .Values.beat.replicas }}
   template:
     metadata:
       labels:
-        app: {{ template "polyaxon.fullname" . }}-cron
+        app: {{ template "polyaxon.fullname" . }}-beat
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.worker }}
@@ -39,9 +39,9 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      - name: {{ .Chart.Name }}-cron
-        image: "{{ .Values.cron.image }}:{{ .Values.cron.imageTag }}"
-        imagePullPolicy: {{ .Values.cron.imagePullPolicy }}
+      - name: {{ .Chart.Name }}-beat
+        image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
+        imagePullPolicy: {{ .Values.beat.imagePullPolicy }}
         workingDir: /polyaxon/api
         args: ["celery", "-A", "api", "beat", "--loglevel=DEBUG"]
         env:
@@ -55,4 +55,4 @@ spec:
         {{ include "config.intervals" . | indent 8 }}
         volumeMounts:
         resources:
-{{ toYaml .Values.cron.resources | indent 10 }}
+{{ toYaml .Values.beat.resources | indent 10 }}
