@@ -39,13 +39,13 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      - name: {{ .Chart.Name }}-workers
+      - name: {{ .Chart.Name }}-workers1
         image: "{{ .Values.workers.image }}:{{ .Values.workers.imageTag }}"
         imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
         workingDir: /polyaxon/api
         args: [
         "celery", "-A", "api", "worker" , "--loglevel=INFO", "--without-mingle", "--without-gossip",
-        "-Q {{ .Values.queues.apiExperiments }},{{ .Values.queues.apiClusters }},{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsStatuses }},{{ .Values.queues.logsSidecars }}",
+        "-Q", "{{ .Values.queues.apiExperiments }},{{ .Values.queues.apiClusters }}",
         "--concurrency=4", "-n default@%h"]
         env:
         {{ include "config.global" . | indent 8 }}
