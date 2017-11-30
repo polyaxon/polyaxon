@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from clusters.models import Cluster
 
@@ -13,6 +17,5 @@ def get_cluster():
     if cluster:
         return cluster
 
-    cluster = Cluster.objects.create(user=settings.AUTH_USER_MODEL.objects.fist(),
-                                     version_api={})
+    cluster = Cluster.objects.create(user=get_user_model().objects.first(), version_api={})
     return cluster
