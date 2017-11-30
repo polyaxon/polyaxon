@@ -4,7 +4,7 @@ ingress:
   rbac: false
 
 passwordLenght: 6
-debug: false
+debug: 0
 celery:
   always_eager: false
   celeryd_prefetch_multiplier: 4
