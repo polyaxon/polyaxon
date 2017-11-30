@@ -11,10 +11,34 @@ from polyaxon_spawner.templates import constants
 
 
 class K8SPolyaxonFileSpawner(K8SSpawner):
-    def __init__(self, polyaxonfile, k8s_config=None, namespace='default', in_cluster=False):
+    def __init__(self,
+                 polyaxonfile,
+                 k8s_config=None,
+                 namespace='default',
+                 in_cluster=False,
+                 job_container_name=None,
+                 job_docker_image=None,
+                 sidecar_container_name=None,
+                 sidecar_docker_image=None,
+                 role_label=None,
+                 type_label=None,
+                 ports=None,
+                 use_sidecar=False,
+                 sidecar_config=None,
+                 sidecar_args_fn=None):
         super(K8SPolyaxonFileSpawner, self).__init__(k8s_config=k8s_config,
                                                      namespace=namespace,
-                                                     in_cluster=in_cluster)
+                                                     in_cluster=in_cluster,
+                                                     job_container_name=job_container_name,
+                                                     job_docker_image=job_docker_image,
+                                                     sidecar_container_name=sidecar_container_name,
+                                                     sidecar_docker_image=sidecar_docker_image,
+                                                     role_label=role_label,
+                                                     type_label=type_label,
+                                                     ports=ports,
+                                                     use_sidecar=use_sidecar,
+                                                     sidecar_config=sidecar_config,
+                                                     sidecar_args_fn=sidecar_args_fn)
         self._polyaxonfile = PolyaxonFile.read(polyaxonfile)
 
     @property

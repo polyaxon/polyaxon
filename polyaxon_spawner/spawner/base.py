@@ -24,12 +24,34 @@ class K8SSpawner(K8SManager):
     def __init__(self,
                  k8s_config=None,
                  namespace='default',
-                 in_cluster=False):
+                 in_cluster=False,
+                 job_container_name=None,
+                 job_docker_image=None,
+                 sidecar_container_name=None,
+                 sidecar_docker_image=None,
+                 role_label=None,
+                 type_label=None,
+                 ports=None,
+                 use_sidecar=False,
+                 sidecar_config=None,
+                 sidecar_args_fn=None):  # must accept args: container_job_name, pod_id
         super(K8SSpawner, self).__init__(k8s_config=k8s_config,
                                          namespace=namespace,
                                          in_cluster=in_cluster)
         self.has_data_volume = False
         self.has_logs_volume = False
+        self.pod_manager = pods.PodManager(namespace=namespace,
+                                           project=self.project_name,
+                                           job_container_name=job_container_name,
+                                           job_docker_image=job_docker_image,
+                                           sidecar_container_name=sidecar_container_name,
+                                           sidecar_docker_image=sidecar_docker_image,
+                                           role_label=role_label,
+                                           type_label=type_label,
+                                           ports=ports,
+                                           use_sidecar=use_sidecar,
+                                           sidecar_config=sidecar_config)
+        self.sidecar_args_fn = sidecar_args_fn or constants.SIDECAR_ARGS_FN
 
     @property
     def spec(self):
@@ -48,82 +70,46 @@ class K8SSpawner(K8SManager):
                     task_id,
                     command=None,
                     args=None,
+                    sidecar_args_fn=None,
                     resources=None,
-                    use_sidecar=False,
-                    amqp_url=None,
-                    log_routing_key=None,
-                    internal_exchange=None,
                     restart_policy='Never'):
-        task_name = constants.TASK_NAME.format(project=self.project_name,
-                                               experiment=experiment,
-                                               task_type=task_type,
-                                               task_id=task_id)
-        labels = pods.get_labels(project=self.project_name,
-                                 experiment=experiment,
-                                 task_type=task_type,
-                                 task_id=task_id,
-                                 task_name=task_name)
-        ports = [constants.DEFAULT_PORT]
+        self.pod_manager.set_experiment(experiment)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
+        sidecar_args = sidecar_args_fn(container_job_name=self.pod_manager.job_container_name,
+                                       pod_id=task_name)
+        labels = self.pod_manager.get_labels(task_type=task_type,
+                                             task_id=task_id,
+                                             task_name=task_name)
 
         volumes, volume_mounts = self.get_pod_volumes()
-        pod = pods.get_pod(namespace=self.namespace,
-                           project=self.project_name,
-                           experiment=experiment,
-                           task_type=task_type,
-                           task_id=task_id,
-                           volume_mounts=volume_mounts,
-                           volumes=volumes,
-                           ports=ports,
-                           command=command,
-                           args=args,
-                           resources=resources,
-                           use_sidecar=use_sidecar,
-                           amqp_url=amqp_url,
-                           log_routing_key=log_routing_key,
-                           internal_exchange=internal_exchange,
-                           restart_policy=restart_policy)
+        pod = self.pod_manager.get_pod(task_type=task_type,
+                                       task_id=task_id,
+                                       volume_mounts=volume_mounts,
+                                       volumes=volumes,
+                                       command=command,
+                                       args=args,
+                                       sidecar_args=sidecar_args,
+                                       resources=resources,
+                                       restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=task_name, data=pod)
 
         service = services.get_service(namespace=self.namespace,
                                        name=task_name,
                                        labels=labels,
-                                       ports=ports)
-        service_resp, _ = self.create_or_update_service(name=task_name,  data=service)
+                                       ports=self.pod_manager.ports)
+        service_resp, _ = self.create_or_update_service(name=task_name, data=service)
         return {
             'pod': pod_resp.to_dict(),
             'service': service_resp.to_dict()
         }
 
     def _delete_pod(self, experiment, task_type, task_id):
-        task_name = constants.TASK_NAME.format(project=self.project_name,
-                                               experiment=experiment,
-                                               task_type=task_type,
-                                               task_id=task_id)
-        pod_found = False
-        try:
-            self.k8s_api.read_namespaced_pod(task_name, self.namespace)
-            pod_found = True
-            self.k8s_api.delete_namespaced_pod(
-                task_name,
-                self.namespace,
-                client.V1DeleteOptions(api_version=k8s_constants.K8S_API_VERSION_V1))
-            logger.debug('Pod `{}` deleted'.format(task_name))
-        except ApiException as e:
-            if pod_found:
-                logger.warning('Could not delete pod `{}`'.format(task_name))
-                raise PolyaxonK8SError(e)
-            else:
-                logger.debug('Pod `{}` was not found'.format(task_name))
-
+        self.pod_manager.set_experiment(experiment)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
+        self.delete_pod(name=task_name)
         self.delete_service(name=task_name)
 
-    def create_master(self,
-                      experiment=0,
-                      resources=None,
-                      use_sidecar=False,
-                      amqp_url=None,
-                      log_routing_key=None,
-                      internal_exchange=None):
+    def create_master(self, experiment=0, resources=None):
         args = self.get_pod_args(experiment=experiment,
                                  task_type=TaskType.MASTER,
                                  task_id=0,
@@ -134,23 +120,13 @@ class K8SSpawner(K8SManager):
                                 task_id=0,
                                 command=command,
                                 args=args,
-                                resources=resources,
-                                use_sidecar=use_sidecar,
-                                amqp_url=amqp_url,
-                                log_routing_key=log_routing_key,
-                                internal_exchange=internal_exchange)
+                                sidecar_args_fn=self.sidecar_args_fn,
+                                resources=resources)
 
     def delete_master(self, experiment=0):
         self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
 
-    def _create_worker(self,
-                       experiment,
-                       resources,
-                       n_pods,
-                       use_sidecar=False,
-                       amqp_url=None,
-                       log_routing_key=None,
-                       internal_exchange=None):
+    def _create_worker(self, experiment, resources, n_pods):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
@@ -163,25 +139,15 @@ class K8SSpawner(K8SManager):
                                          task_id=i,
                                          command=command,
                                          args=args,
-                                         resources=resources.get(i),
-                                         use_sidecar=use_sidecar,
-                                         amqp_url=amqp_url,
-                                         log_routing_key=log_routing_key,
-                                         internal_exchange=internal_exchange))
+                                         sidecar_args_fn=self.sidecar_args_fn,
+                                         resources=resources.get(i)))
         return resp
 
     def _delete_worker(self, experiment, n_pods):
         for i in range(n_pods):
             self._delete_pod(experiment=experiment, task_type=TaskType.WORKER, task_id=i)
 
-    def _create_ps(self,
-                   experiment,
-                   resources,
-                   n_pods,
-                   use_sidecar=False,
-                   amqp_url=None,
-                   log_routing_key=None,
-                   internal_exchange=None):
+    def _create_ps(self, experiment, resources, n_pods):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
@@ -194,11 +160,8 @@ class K8SSpawner(K8SManager):
                                          task_id=i,
                                          command=command,
                                          args=args,
-                                         resources=resources.get(i),
-                                         use_sidecar=use_sidecar,
-                                         amqp_url=amqp_url,
-                                         log_routing_key=log_routing_key,
-                                         internal_exchange=internal_exchange))
+                                         sidecar_args_fn=self.sidecar_args_fn,
+                                         resources=resources.get(i)))
         return resp
 
     def _delete_ps(self, experiment, n_pods):
@@ -333,17 +296,13 @@ class K8SSpawner(K8SManager):
         self.delete_config_map(name, reraise=True)
 
     def get_task_status(self, experiment, task_type, task_id):
-        task_name = constants.TASK_NAME.format(project=self.project_name,
-                                               experiment=experiment,
-                                               task_type=task_type,
-                                               task_id=task_id)
+        self.pod_manager.set_experiment(experiment)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
         return self.k8s_api.read_namespaced_pod_status(task_name, self.namespace).status.phase
 
     def get_task_log(self, experiment, task_type, task_id, **kwargs):
-        task_name = constants.TASK_NAME.format(project=self.project_name,
-                                               experiment=experiment,
-                                               task_type=task_type,
-                                               task_id=task_id)
+        self.pod_manager.set_experiment(experiment)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
         return self.k8s_api.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
 
     def get_experiment_status(self, experiment=0):
