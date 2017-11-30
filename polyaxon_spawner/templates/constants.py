@@ -18,7 +18,7 @@ SIDECAR_DOCKER_IMAGE = 'polyaxon/polyaxon-api:0.0.1'
 
 
 def SIDECAR_ARGS_FN(container_job_name, pod_id):
-    return ["python3", "api/manage.py", "monitor_resources", container_job_name, pod_id,
+    return ["python3", "api/manage.py", "start_sidecar", container_job_name, pod_id,
             "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
             "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
 
