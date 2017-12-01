@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from experiments.constants import ExperimentLifeCycle
+from polyaxon_k8s.constants import ExperimentLifeCycle
+
 from experiments.models import ExperimentStatus, Experiment, ExperimentJob
 from experiments.serializers import (
     ExperimentStatusSerializer,

@@ -5,16 +5,14 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from polyaxon_k8s.constants import JobLifeCycle
+from polyaxon_k8s.constants import JobLifeCycle, ExperimentLifeCycle
 
 from api.urls import API_V1
-from experiments.constants import ExperimentLifeCycle
 from experiments.models import (
     Experiment,
     ExperimentStatus,
     ExperimentJob,
     ExperimentJobStatus,
-    ExperimentJobMessage,
 )
 from experiments.serializers import (
     ExperimentSerializer,
@@ -599,20 +597,19 @@ class TestExperimentJobStatusDetailViewV1(BaseTest):
         assert resp.data == self.serializer_class(self.object).data
 
     def test_patch(self):
-        data = {'message': {'reason': 'some reason'}}
+        data = {'details': {'message': 'bla', 'reason': 'some reason'}}
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
-        assert self.object.message is None
+        assert self.object.details == {}
         new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.message is not None
-        assert new_object.message.reason == 'some reason'
+        assert new_object.details == {'message': 'bla', 'reason': 'some reason'}
 
-        data = {'message': {'reason': 'new reason'}}
+        data = {'message': 'new reason', 'details': {'message': 'bla2', 'reason': 'some reason3'}}
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.message.reason == 'new reason'
-        assert ExperimentJobMessage.objects.count() == 1
+        assert new_object.message == 'new reason'
+        assert new_object.details == {'message': 'bla2', 'reason': 'some reason3'}
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1

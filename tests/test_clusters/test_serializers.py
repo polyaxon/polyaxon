@@ -77,8 +77,9 @@ class TestClusterNodeDetailsSerializer(TestCase):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
     expected_keys = {'uuid', 'name', 'cluster', 'hostname', 'role', 'docker_version',
-                     'kubelet_version', 'os_image', 'kernel_version', 'is_schedulable', 'memory',
-                     'n_cpus', 'n_gpus', 'status', 'gpus'}
+                     'kubelet_version', 'os_image', 'kernel_version',
+                     'schedulable_taints', 'schedulable_state', 'is_current',
+                     'memory', 'n_cpus', 'n_gpus', 'status', 'gpus'}
 
     def setUp(self):
         super().setUp()

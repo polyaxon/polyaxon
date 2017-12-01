@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import datetime
 
-from polyaxon_k8s.utils import nodes
+from polyaxon_k8s import constants as k8s_constants
 from rest_framework import status
 
 from api.urls import API_V1
@@ -193,7 +193,7 @@ class TestClusterNodeListViewV1(BaseTest):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {
-            'role': nodes.NodeRoles.MASTER,
+            'role': k8s_constants.NodeRoles.MASTER,
             'kubelet_version': 'v1.7.5',
             'os_image': 'Buildroot 2017.02',
             'kernel_version': '4.9.13',

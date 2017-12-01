@@ -8,7 +8,6 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentJob,
     ExperimentJobStatus,
-    ExperimentJobMessage,
 )
 from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_projects import ProjectFactory
@@ -48,10 +47,3 @@ class ExperimentJobStatusFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = ExperimentJobStatus
-
-
-class ExperimentJobMessageFactory(factory.DjangoModelFactory):
-    reason = factory.Sequence(lambda x: "reason-{}".format(x))
-
-    class Meta:
-        model = ExperimentJobMessage

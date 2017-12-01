@@ -6,7 +6,7 @@ import datetime
 import factory
 from faker import Factory as FakerFactory
 
-from polyaxon_k8s.utils.nodes import NodeRoles
+from polyaxon_k8s.constants import NodeRoles
 
 from clusters.models import Cluster, GPU, ClusterNode
 from tests.factories.factory_users import UserFactory

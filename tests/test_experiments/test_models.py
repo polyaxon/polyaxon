@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from experiments.constants import ExperimentLifeCycle
+from polyaxon_k8s.constants import ExperimentLifeCycle
+
 from experiments.models import ExperimentStatus
 from libs.redis_db import RedisExperimentStatus
 from tests.factories.factory_clusters import ClusterFactory
@@ -47,6 +48,7 @@ class TestExperimentModel(TestCase):
 
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
         experiment = ExperimentFactory()
+        assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 2
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
