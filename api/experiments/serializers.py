@@ -8,21 +8,11 @@ from experiments.models import (
     ExperimentJob,
     ExperimentStatus,
     ExperimentJobStatus,
-    ExperimentJobMessage,
 )
-
-
-class ExperimentJobMessageSerializer(serializers.ModelSerializer):
-    uuid = fields.UUIDField(format='hex', read_only=True)
-
-    class Meta:
-        model = ExperimentJobMessage
-        exclude = ('id',)
 
 
 class ExperimentJobStatusSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    message = ExperimentJobMessageSerializer(required=False)
     job = fields.SerializerMethodField()
 
     class Meta:
@@ -31,28 +21,6 @@ class ExperimentJobStatusSerializer(serializers.ModelSerializer):
 
     def get_job(self, obj):
         return obj.job.uuid.hex
-
-    def _add_message(self, validated_data, instance=None):
-        message_data = validated_data.pop('message', None)
-        if message_data:
-            if instance.message:
-                message_serializer = ExperimentJobMessageSerializer(instance=instance.message,
-                                                                    data=message_data,
-                                                                    partial=True)
-            else:
-                message_serializer = ExperimentJobMessageSerializer(data=message_data)
-            message_serializer.is_valid(raise_exception=True)
-            message = message_serializer.save()
-            validated_data['message'] = message
-        return validated_data
-
-    def create(self, validated_data):
-        validated_data = self._add_message(validated_data)
-        return super(ExperimentJobStatusSerializer, self).create(validated_data)
-
-    def update(self, instance, validated_data):
-        validated_data = self._add_message(validated_data, instance)
-        return super(ExperimentJobStatusSerializer, self).update(instance, validated_data)
 
 
 class ExperimentJobSerializer(serializers.ModelSerializer):

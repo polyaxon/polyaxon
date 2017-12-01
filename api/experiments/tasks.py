@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 import logging
 
 from django.conf import settings
+
+from polyaxon_k8s.constants import ExperimentLifeCycle
 from polyaxon_schemas.utils import TaskType
 from polyaxon_spawner.spawner import K8SExperimentSpawner
 
@@ -17,7 +19,7 @@ logger = logging.getLogger('polyaxon.tasks.experiments')
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START)
 def start_experiment(experiment_id):
-    from experiments.models import Experiment, ExperimentStatus, ExperimentLifeCycle
+    from experiments.models import Experiment, ExperimentStatus
 
     try:
         experiment = Experiment.objects.get(id=experiment_id)

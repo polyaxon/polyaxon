@@ -8,10 +8,9 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models.signals import post_save
 
-from polyaxon_k8s.constants import JobLifeCycle
+from polyaxon_k8s.constants import JobLifeCycle, ExperimentLifeCycle
 
 from clusters.models import Cluster
-from experiments.constants import ExperimentLifeCycle
 from experiments.signals import new_experiment, new_experiment_job
 from libs.models import DiffModel
 
@@ -161,16 +160,5 @@ class ExperimentJobStatus(models.Model):
         default=JobLifeCycle.CREATED,
         choices=JobLifeCycle.CHOICES)
 
-    message = models.ForeignKey('ExperimentJobMessage', null=True, blank=True)
-
-
-class ExperimentJobMessage(models.Model):
-    """A model to represent the extend the job status with information about the job."""
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        editable=False,
-        unique=True,
-        null=False)
-    reason = models.CharField(max_length=256, null=True, blank=True)
-    message = models.TextField(null=True, blank=True)
-    exit_code = models.IntegerField(null=True, blank=True)
+    message = models.CharField(max_length=256, null=True, blank=True)
+    details = JSONField(null=True, blank=True, default={})

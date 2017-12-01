@@ -1,6 +1,7 @@
-from polyaxon_k8s.constants import JobLifeCycle
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
-from experiments.constants import ExperimentLifeCycle
+from polyaxon_k8s.constants import JobLifeCycle, ExperimentLifeCycle
 
 
 def new_experiment(sender, **kwargs):
