@@ -114,8 +114,8 @@ class PodManager(object):
                                           task_type=task_type,
                                           task_idx=task_idx)
 
-    def get_task_idx(self, task_name):
-        return uuid.uuid5(uuid.NAMESPACE_DNS, 'polyaxon')
+    def get_task_id(self, task_name):
+        return uuid.uuid5(uuid.NAMESPACE_DNS, task_name).hex
 
     def set_experiment(self, experiment):
         self.experiment = experiment
@@ -215,6 +215,7 @@ class PodManager(object):
                 'task_type': task_type,
                 'task_idx': '{}'.format(task_idx),
                 'task': task_name,
+                'task_id': self.get_task_id(task_name),
                 'role': self.role_label,
                 'type': self.type_label}
 
