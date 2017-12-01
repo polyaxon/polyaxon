@@ -295,7 +295,7 @@ class K8SSpawner(K8SManager):
                                                 role='cluster')
         self.delete_config_map(name, reraise=True)
 
-    def get_task_status(self, experiment, task_type, task_id):
+    def get_task_phase(self, experiment, task_type, task_id):
         self.pod_manager.set_experiment(experiment)
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
         return self.k8s_api.read_namespaced_pod_status(task_name, self.namespace).status.phase
@@ -305,7 +305,7 @@ class K8SSpawner(K8SManager):
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
         return self.k8s_api.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
 
-    def get_experiment_status(self, experiment=0):
-        return self.get_task_status(experiment=experiment,
-                                    task_type=TaskType.MASTER,
-                                    task_id=0)
+    def get_experiment_phase(self, experiment=0):
+        return self.get_task_phase(experiment=experiment,
+                                   task_type=TaskType.MASTER,
+                                   task_id=0)
