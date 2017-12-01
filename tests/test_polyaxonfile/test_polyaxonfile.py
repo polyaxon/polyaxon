@@ -128,11 +128,11 @@ class TestPolyaxonfile(TestCase):
                                         TaskType.WORKER: 5,
                                         TaskType.PS: 10}, True)
 
-        def task_name(task_type, task_id):
+        def task_name(task_type, task_idx):
             return constants.TASK_NAME.format(project=plxfile.project.name,
                                               experiment=0,
                                               task_type=task_type,
-                                              task_id=task_id)
+                                              task_idx=task_idx)
 
         assert_equal_dict(plxfile.get_cluster().to_dict(),
                           {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],
@@ -240,11 +240,11 @@ class TestPolyaxonfile(TestCase):
                                         TaskType.WORKER: 5,
                                         TaskType.PS: 10}, True)
 
-        def task_name(task_type, task_id):
+        def task_name(task_type, task_idx):
             return constants.TASK_NAME.format(project=plxfile.project.name,
                                               experiment=0,
                                               task_type=task_type,
-                                              task_id=task_id)
+                                              task_idx=task_idx)
 
         assert_equal_dict(plxfile.get_cluster().to_dict(),
                           {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],

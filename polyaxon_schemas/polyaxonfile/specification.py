@@ -438,7 +438,7 @@ class Specification(object):
         task_name = constants.TASK_NAME.format(project=self.project.name,
                                                experiment=experiment,
                                                task_type=TaskType.MASTER,
-                                               task_id=0)
+                                               task_idx=0)
         cluster_config = {
             TaskType.MASTER: [get_address(task_name)]
         }
@@ -449,7 +449,7 @@ class Specification(object):
                 project=self.project.name,
                 experiment=experiment,
                 task_type=TaskType.WORKER,
-                task_id=i)
+                task_idx=i)
             workers.append(get_address(task_name))
 
         cluster_config[TaskType.WORKER] = workers
@@ -460,7 +460,7 @@ class Specification(object):
                 project=self.project.name,
                 experiment=experiment,
                 task_type=TaskType.PS,
-                task_id=i)
+                task_idx=i)
             ps.append(get_address(task_name))
 
         cluster_config[TaskType.PS] = ps
