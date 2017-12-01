@@ -5,35 +5,12 @@ import logging
 
 from kubernetes import watch
 
-from polyaxon_k8s.constants import PodConditions, PodLifeCycle, JobLifeCycle
+from polyaxon_k8s.utils.jobs import get_job_state
 
 from libs.redis_db import RedisJobContainers
 from events.tasks import handle_events_job_statues
 
 logger = logging.getLogger('polyaxon.monitors.statuses')
-
-
-def get_pod_status(event):
-    # For terminated pods that failed and successfully terminated pods
-    if event.status.phase == PodLifeCycle.FAILED:
-        return JobLifeCycle.FAILED
-
-    if event.status.phase == PodLifeCycle.SUCCEEDED:
-        return JobLifeCycle.SUCCEEDED
-
-    if event.metadata.deletion_timestamp:
-        return JobLifeCycle.DELETED
-
-    if not event.status.conditions:
-        return JobLifeCycle.UNKNOWN
-
-    conditions = {c.type: c.status for c in event.status.conditions}
-
-    if not (conditions[PodConditions.SCHEDULED] or conditions[PodConditions.READY]):
-        return JobLifeCycle.BUILDING
-
-    # Unknown?
-    return PodLifeCycle.UNKNOWN
 
 
 def update_job_containers(event, job_container_name):
@@ -59,49 +36,18 @@ def update_job_containers(event, job_container_name):
                 RedisJobContainers.monitor(container_id, job_id)
 
 
-def parse_event(raw_event, experiment_type_label, job_container_name):
-    event_type = raw_event['type']
-    event = raw_event['object']
-    labels = event.metadata.labels
-    if labels['type'] != experiment_type_label:  # 2 type: core and experiment
-        return
-
-    update_job_containers(event, job_container_name)
-    pod_phase = event.status.phase
-    deletion_timestamp = event.metadata.deletion_timestamp
-    pod_conditions = event.status.conditions
-    container_statuses = event.status.container_statuses
-    container_statuses_by_name = {}
-    if container_statuses:
-        container_statuses_by_name = {
-            container_status.name: {
-                'ready': container_status.ready,
-                'state': container_status.state.to_dict(),
-            } for container_status in container_statuses
-        }
-
-    return {
-        'event_type': event_type,
-        'labels': labels,
-        'pod_phase': pod_phase,
-        'pod_status': get_pod_status(event),
-        'deletion_timestamp': deletion_timestamp,
-        'pod_conditions': [pod_condition.to_dict() for pod_condition in pod_conditions],
-        'container_statuses': container_statuses_by_name
-    }
-
-
 def run(k8s_manager, experiment_type_label, job_container_name, persist, label_selector=None):
     w = watch.Watch()
 
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
                           namespace=k8s_manager.namespace,
                           label_selector=label_selector):
-        logger.debug("event: %s" % event)
+        logger.info("Received event: %s" % event)
+        job_state = get_job_state(event, job_container_name, experiment_type_label)
 
-        parsed_event = parse_event(event, experiment_type_label, job_container_name)
-
-        if parsed_event:
-            logger.info("Publishing event: {}".format(parsed_event))
-            handle_events_job_statues.delay(payload=parsed_event,
+        if job_state:
+            logger.info("Updating job container: {}".format(event['object']))
+            update_job_containers(event['object'], job_container_name)
+            logger.info("Publishing event: {}".format(job_state))
+            handle_events_job_statues.delay(payload=job_state,
                                             persist=persist)
