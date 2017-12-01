@@ -57,7 +57,7 @@ class K8SSpawner(K8SManager):
     def spec(self):
         raise NotImplementedError()
 
-    def get_pods_args(self, experiment, task_type, task_id, schedule):
+    def get_pods_args(self, experiment, task_type, task_idx, schedule):
         raise NotImplementedError()
 
     @cached_property
@@ -67,23 +67,23 @@ class K8SSpawner(K8SManager):
     def _create_pod(self,
                     experiment,
                     task_type,
-                    task_id,
+                    task_idx,
                     command=None,
                     args=None,
                     sidecar_args_fn=None,
                     resources=None,
                     restart_policy='Never'):
         self.pod_manager.set_experiment(experiment)
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         sidecar_args = sidecar_args_fn(container_job_name=self.pod_manager.job_container_name,
                                        pod_id=task_name)
         labels = self.pod_manager.get_labels(task_type=task_type,
-                                             task_id=task_id,
+                                             task_idx=task_idx,
                                              task_name=task_name)
 
         volumes, volume_mounts = self.get_pod_volumes()
         pod = self.pod_manager.get_pod(task_type=task_type,
-                                       task_id=task_id,
+                                       task_idx=task_idx,
                                        volume_mounts=volume_mounts,
                                        volumes=volumes,
                                        command=command,
@@ -103,28 +103,28 @@ class K8SSpawner(K8SManager):
             'service': service_resp.to_dict()
         }
 
-    def _delete_pod(self, experiment, task_type, task_id):
+    def _delete_pod(self, experiment, task_type, task_idx):
         self.pod_manager.set_experiment(experiment)
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         self.delete_pod(name=task_name)
         self.delete_service(name=task_name)
 
     def create_master(self, experiment=0, resources=None):
         args = self.get_pod_args(experiment=experiment,
                                  task_type=TaskType.MASTER,
-                                 task_id=0,
+                                 task_idx=0,
                                  schedule='train_and_evaluate')
         command = ["python3", "-c"]
         return self._create_pod(experiment=experiment,
                                 task_type=TaskType.MASTER,
-                                task_id=0,
+                                task_idx=0,
                                 command=command,
                                 args=args,
                                 sidecar_args_fn=self.sidecar_args_fn,
                                 resources=resources)
 
     def delete_master(self, experiment=0):
-        self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_id=0)
+        self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_idx=0)
 
     def _create_worker(self, experiment, resources, n_pods):
         command = ["python3", "-c"]
@@ -132,11 +132,11 @@ class K8SSpawner(K8SManager):
         for i in range(n_pods):
             args = self.get_pod_args(experiment=experiment,
                                      task_type=TaskType.WORKER,
-                                     task_id=i,
+                                     task_idx=i,
                                      schedule='train')
             resp.append(self._create_pod(experiment=experiment,
                                          task_type=TaskType.WORKER,
-                                         task_id=i,
+                                         task_idx=i,
                                          command=command,
                                          args=args,
                                          sidecar_args_fn=self.sidecar_args_fn,
@@ -145,7 +145,7 @@ class K8SSpawner(K8SManager):
 
     def _delete_worker(self, experiment, n_pods):
         for i in range(n_pods):
-            self._delete_pod(experiment=experiment, task_type=TaskType.WORKER, task_id=i)
+            self._delete_pod(experiment=experiment, task_type=TaskType.WORKER, task_idx=i)
 
     def _create_ps(self, experiment, resources, n_pods):
         command = ["python3", "-c"]
@@ -153,11 +153,11 @@ class K8SSpawner(K8SManager):
         for i in range(n_pods):
             args = self.get_pod_args(experiment=experiment,
                                      task_type=TaskType.PS,
-                                     task_id=i,
+                                     task_idx=i,
                                      schedule='run_std_server')
             resp.append(self._create_pod(experiment=experiment,
                                          task_type=TaskType.PS,
-                                         task_id=i,
+                                         task_idx=i,
                                          command=command,
                                          args=args,
                                          sidecar_args_fn=self.sidecar_args_fn,
@@ -166,7 +166,7 @@ class K8SSpawner(K8SManager):
 
     def _delete_ps(self, experiment, n_pods):
         for i in range(n_pods):
-            self._delete_pod(experiment=experiment, task_type=TaskType.PS, task_id=i)
+            self._delete_pod(experiment=experiment, task_type=TaskType.PS, task_idx=i)
 
     def create_tensorboard_deployment(self):
         name = 'tensorboard'
@@ -295,17 +295,17 @@ class K8SSpawner(K8SManager):
                                                 role='cluster')
         self.delete_config_map(name, reraise=True)
 
-    def get_task_phase(self, experiment, task_type, task_id):
+    def get_task_phase(self, experiment, task_type, task_idx):
         self.pod_manager.set_experiment(experiment)
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         return self.k8s_api.read_namespaced_pod_status(task_name, self.namespace).status.phase
 
-    def get_task_log(self, experiment, task_type, task_id, **kwargs):
+    def get_task_log(self, experiment, task_type, task_idx, **kwargs):
         self.pod_manager.set_experiment(experiment)
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_id=task_id)
+        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         return self.k8s_api.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
 
     def get_experiment_phase(self, experiment=0):
         return self.get_task_phase(experiment=experiment,
                                    task_type=TaskType.MASTER,
-                                   task_id=0)
+                                   task_idx=0)

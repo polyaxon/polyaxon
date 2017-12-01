@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import six
+import uuid
+
 from kubernetes import client
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
@@ -92,7 +94,7 @@ class PodManager(object):
         self.namespace = namespace
         self.project = project
         self.experiment = experiment
-        self.job_container_name = job_container_name or constants.JOB_CONTAINER_NAME,
+        self.job_container_name = job_container_name or constants.JOB_CONTAINER_NAME
         self.job_docker_image = job_docker_image or constants.JOB_DOCKER_NAME
         self.sidecar_container_name = sidecar_container_name or constants.SIDECAR_CONTAINER_NAME
         self.sidecar_docker_image = sidecar_docker_image or constants.SIDECAR_DOCKER_IMAGE
@@ -106,11 +108,14 @@ class PodManager(object):
                 'The `sidecar_config` must correspond to the sidecar docker image used.')
         self.sidecar_config = sidecar_config
 
-    def get_task_name(self, task_type, task_id):
+    def get_task_name(self, task_type, task_idx):
         return constants.TASK_NAME.format(project=self.project,
                                           experiment=self.experiment,
                                           task_type=task_type,
-                                          task_id=task_id)
+                                          task_idx=task_idx)
+
+    def get_task_idx(self, task_name):
+        return uuid.uuid5(uuid.NAMESPACE_DNS, 'polyaxon')
 
     def set_experiment(self, experiment):
         self.experiment = experiment
@@ -151,9 +156,9 @@ class PodManager(object):
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
 
-    def get_sidecar_container(self, task_type, task_id, args, resources=None):
+    def get_sidecar_container(self, task_type, task_idx, args, resources=None):
         """Pod sidecar container for task logs."""
-        task_name = self.get_task_name(task_type=task_type, task_id=task_id)
+        task_name = self.get_task_name(task_type=task_type, task_idx=task_idx)
 
         env_vars = [
             client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
@@ -170,7 +175,7 @@ class PodManager(object):
 
     def get_task_pod_spec(self,
                           task_type,
-                          task_id,
+                          task_idx,
                           volume_mounts,
                           volumes,
                           env_vars=None,
@@ -183,7 +188,7 @@ class PodManager(object):
         volume_mounts = volume_mounts or []
         volumes = volumes or []
 
-        if resources.gpu:
+        if resources and resources.gpu:
             volume_mounts += get_gpu_volume_mounts()
             volumes += get_gpu_volumes()
 
@@ -196,7 +201,7 @@ class PodManager(object):
         containers = [pod_container]
         if self.use_sidecar:
             sidecar_container = self.get_sidecar_container(task_type=task_type,
-                                                           task_id=task_id,
+                                                           task_idx=task_idx,
                                                            args=sidecar_args,
                                                            resources=resources)
             containers.append(sidecar_container)
@@ -204,18 +209,18 @@ class PodManager(object):
                                 containers=containers,
                                 volumes=volumes)
 
-    def get_labels(self, task_type, task_id, task_name):
+    def get_labels(self, task_type, task_idx, task_name):
         return {'project': self.project,
                 'experiment': '{}'.format(self.experiment),
                 'task_type': task_type,
-                'task_id': '{}'.format(task_id),
+                'task_idx': '{}'.format(task_idx),
                 'task': task_name,
                 'role': self.role_label,
                 'type': self.type_label}
 
     def get_pod(self,
                 task_type,
-                task_id,
+                task_idx,
                 volume_mounts,
                 volumes,
                 command=None,
@@ -223,15 +228,15 @@ class PodManager(object):
                 sidecar_args=None,
                 resources=None,
                 restart_policy=None):
-        task_name = self.get_task_name(task_type=task_type, task_id=task_id)
+        task_name = self.get_task_name(task_type=task_type, task_idx=task_idx)
         labels = self.get_labels(task_type=task_type,
-                                 task_id=task_id,
+                                 task_idx=task_idx,
                                  task_name=task_name)
         metadata = client.V1ObjectMeta(name=task_name, labels=labels, namespace=self.namespace)
 
         pod_spec = self.get_task_pod_spec(
             task_type=task_type,
-            task_id=task_id,
+            task_idx=task_idx,
             volume_mounts=volume_mounts,
             volumes=volumes,
             command=command,

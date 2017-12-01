@@ -29,6 +29,10 @@ class K8SExperimentSpawner(K8SSpawner):
                  use_sidecar=False,
                  sidecar_config=None,
                  sidecar_args_fn=None):
+        self.specification = Specification.read(specification)
+        self.project_id = project_id
+        self.spec_id = spec_id
+        self.experiment_id = experiment_id
         super(K8SExperimentSpawner, self).__init__(k8s_config=k8s_config,
                                                    namespace=namespace,
                                                    in_cluster=in_cluster,
@@ -42,10 +46,6 @@ class K8SExperimentSpawner(K8SSpawner):
                                                    use_sidecar=use_sidecar,
                                                    sidecar_config=sidecar_config,
                                                    sidecar_args_fn=sidecar_args_fn)
-        self.specification = Specification.read(specification)
-        self.project_id = project_id
-        self.spec_id = spec_id
-        self.experiment_id = experiment_id
 
     @cached_property
     def project_name(self):
@@ -61,17 +61,17 @@ class K8SExperimentSpawner(K8SSpawner):
     def spec(self):
         return self.specification
 
-    def get_pod_args(self, experiment, task_type, task_id, schedule):
+    def get_pod_args(self, experiment, task_type, task_idx, schedule):
         spec_data = json.dumps(self.spec.parsed_data)
 
         args = [
             "from polyaxon.polyaxonfile.local_runner import start_experiment_run; "
             "start_experiment_run('{polyaxonfile}', '{experiment_id}', "
-            "'{task_type}', {task_id}, '{schedule}')".format(
+            "'{task_type}', {task_idx}, '{schedule}')".format(
                 polyaxonfile=spec_data,
                 experiment_id=0,
                 task_type=task_type,
-                task_id=task_id,
+                task_idx=task_idx,
                 schedule=schedule)]
         return args
 
@@ -117,16 +117,16 @@ class K8SExperimentSpawner(K8SSpawner):
         self.delete_worker()
         self.delete_ps()
 
-    def get_task_status(self, task_type, task_id):
-        return super(K8SExperimentSpawner, self).get_task_status(experiment=self.experiment_id,
-                                                                 task_type=task_type,
-                                                                 task_id=task_id)
+    def get_task_phase(self, task_type, task_idx):
+        return super(K8SExperimentSpawner, self).get_task_phase(experiment=self.experiment_id,
+                                                                task_type=task_type,
+                                                                task_idx=task_idx)
 
-    def get_task_log(self, task_type, task_id, **kwargs):
+    def get_task_log(self, task_type, task_idx, **kwargs):
         return super(K8SExperimentSpawner, self).get_task_log(experiment=self.experiment_id,
                                                               task_type=task_type,
-                                                              task_id=task_id,
+                                                              task_idx=task_idx,
                                                               **kwargs)
 
-    def get_experiment_status(self):
-        self.get_task_log(task_type=TaskType.MASTER, task_id=0)
+    def get_experiment_phase(self):
+        return super(K8SExperimentSpawner, self).get_experiment_phase(experiment=self.experiment_id)

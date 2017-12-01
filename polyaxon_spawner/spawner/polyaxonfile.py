@@ -26,6 +26,7 @@ class K8SPolyaxonFileSpawner(K8SSpawner):
                  use_sidecar=False,
                  sidecar_config=None,
                  sidecar_args_fn=None):
+        self._polyaxonfile = PolyaxonFile.read(polyaxonfile)
         super(K8SPolyaxonFileSpawner, self).__init__(k8s_config=k8s_config,
                                                      namespace=namespace,
                                                      in_cluster=in_cluster,
@@ -39,23 +40,22 @@ class K8SPolyaxonFileSpawner(K8SSpawner):
                                                      use_sidecar=use_sidecar,
                                                      sidecar_config=sidecar_config,
                                                      sidecar_args_fn=sidecar_args_fn)
-        self._polyaxonfile = PolyaxonFile.read(polyaxonfile)
 
     @property
     def spec(self):
         return self._polyaxonfile
 
-    def get_pod_args(self, experiment, task_type, task_id, schedule):
+    def get_pod_args(self, experiment, task_type, task_idx, schedule):
         spec_data = json.dumps(self.spec.get_parsed_data_at(experiment))
 
         args = [
             "from polyaxon.polyaxonfile.local_runner import start_experiment_run; "
             "start_experiment_run('{polyaxonfile}', '{experiment_id}', "
-            "'{task_type}', {task_id}, '{schedule}')".format(
+            "'{task_type}', {task_idx}, '{schedule}')".format(
                 polyaxonfile=spec_data,
                 experiment_id=experiment,
                 task_type=task_type,
-                task_id=task_id,
+                task_idx=task_idx,
                 schedule=schedule)]
         return args
 
