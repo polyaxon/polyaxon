@@ -9,8 +9,8 @@ from django.db.models.signals import post_save
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_k8s.constants import ExperimentLifeCycle
 
-from experiments.constants import ExperimentLifeCycle
 from libs.models import DiffModel
 from projects.signals import new_spec
 

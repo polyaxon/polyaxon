@@ -28,5 +28,5 @@ def start_group_experiments(task, spec_id):
 
     if pending_experiments:
         # Schedule another task
-        task.apply_async(spec_id, countdown=Intervals.EXPERIMENTS_SCHEDULER_INTERVAL_SEC)
+        task.apply_async(spec_id, countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
