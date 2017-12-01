@@ -4,10 +4,11 @@ from __future__ import absolute_import, division, print_function
 import uuid
 
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField, ArrayField
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from polyaxon_k8s.utils import nodes
+from polyaxon_k8s import constants as k8s_constants
 
 from libs.models import DiffModel
 
@@ -44,7 +45,7 @@ class ClusterNode(models.Model):
         null=True)
     role = models.CharField(
         max_length=6,
-        choices=nodes.NodeRoles.CHOICES,
+        choices=k8s_constants.NodeRoles.CHOICES,
         help_text='The role of the node')
     docker_version = models.CharField(
         max_length=128,
@@ -54,14 +55,15 @@ class ClusterNode(models.Model):
         max_length=10)
     os_image = models.CharField(max_length=128)
     kernel_version = models.CharField(max_length=128)
-    is_schedulable = models.BooleanField(default=False)
+    schedulable_taints = models.BooleanField(default=False)
+    schedulable_state = models.BooleanField(default=False)
     memory = models.BigIntegerField()
     n_cpus = models.SmallIntegerField()
     n_gpus = models.SmallIntegerField()
     status = models.CharField(
         max_length=24,
-        default=nodes.NodeLifeCycle.UNKNOWN,
-        choices=nodes.NodeLifeCycle.CHOICES)
+        default=k8s_constants.NodeLifeCycle.UNKNOWN,
+        choices=k8s_constants.NodeLifeCycle.CHOICES)
     is_current = models.BooleanField(default=True)
 
     @classmethod
@@ -74,7 +76,8 @@ class ClusterNode(models.Model):
             'kubelet_version': node.status.node_info.kubelet_version,
             'os_image': node.status.node_info.os_image,
             'kernel_version': node.status.node_info.kernel_version,
-            'is_schedulable': nodes.is_schedulable(node),
+            'schedulable_taints': nodes.is_schedulable(node),
+            'schedulable_state': nodes.get_schedulable_state(node),
             'mem': nodes.get_memory_size(node),
             'n_cpus': nodes.get_n_cpus(node),
             'n_gpus': nodes.get_n_gpus(node),
