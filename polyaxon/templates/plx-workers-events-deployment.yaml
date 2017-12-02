@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-workers-events
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/plx-configmap.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-workers-events
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.worker }}
+spec:
+  replicas: {{ .Values.workers.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-workers-events
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.worker }}
+    spec:
+    {{- if .Values.nodeSelectors }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectors | indent 8 }}
+      {{- end }}
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: type
+                  operator: In
+                  values:
+                  - system
+              topologyKey: "kubernetes.io/hostname"
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+      containers:
+      - name: {{ .Chart.Name }}-workers-events
+        image: "{{ .Values.workers.image }}:{{ .Values.workers.imageTag }}"
+        imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
+        workingDir: /polyaxon/api
+        args: [
+        "celery", "-A", "api", "worker" , "--loglevel=DEBUG", "--without-mingle", "--without-gossip",
+        "-Q", "{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsStatuses }},{{ .Values.queues.logsSidecars }}",
+        "--concurrency=4", "-n default@%h"]
+        env:
+        {{ include "config.global" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
+        resources:
+{{ toYaml .Values.workers.resources | indent 10 }}
