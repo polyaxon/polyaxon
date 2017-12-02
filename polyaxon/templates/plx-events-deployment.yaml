@@ -98,6 +98,7 @@ spec:
           value: {{ default 1 .Values.events.statuses.logSleepInterval | quote }}
         resources:
 {{ toYaml .Values.events.resources.resources | indent 10 }}
+      {{- end }}
         volumeMounts:
         - name: docker-sock
           mountPath: /var/run/docker.sock
@@ -105,4 +106,3 @@ spec:
       - name: docker-sock
         hostPath:
           path: /var/run/docker.sock
-      {{- end }}
