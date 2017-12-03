@@ -5,8 +5,6 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from polyaxon_k8s.constants import JobLifeCycle, ExperimentLifeCycle
-
 from api.urls import API_V1
 from experiments.models import (
     Experiment,
@@ -22,6 +20,8 @@ from experiments.serializers import (
     ExperimentJobStatusSerializer,
 )
 from libs.redis_db import RedisExperimentJobStatus, RedisExperimentStatus
+from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
+
 from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_experiments import (
     ExperimentFactory,

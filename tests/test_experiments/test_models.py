@@ -5,10 +5,10 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from polyaxon_k8s.constants import ExperimentLifeCycle
-
 from experiments.models import ExperimentStatus
 from libs.redis_db import RedisExperimentStatus
+from spawner.utils.constants import ExperimentLifeCycle
+
 from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_experiments import ExperimentFactory
 from tests.factories.factory_projects import PolyaxonSpecFactory

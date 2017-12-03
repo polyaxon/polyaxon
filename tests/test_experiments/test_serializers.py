@@ -5,8 +5,6 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from polyaxon_k8s.constants import ExperimentLifeCycle
-
 from experiments.models import ExperimentStatus, Experiment, ExperimentJob
 from experiments.serializers import (
     ExperimentStatusSerializer,
@@ -15,6 +13,8 @@ from experiments.serializers import (
     ExperimentJobSerializer,
 )
 from libs.redis_db import RedisExperimentStatus
+from spawner.utils.constants import ExperimentLifeCycle
+
 from tests.factories.factory_experiments import (
     ExperimentStatusFactory,
     ExperimentFactory,
