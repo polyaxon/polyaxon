@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from django.test import TestCase
 
-from clusters.models import Cluster, GPU, ClusterNode
+from clusters.models import Cluster, NodeGPU, ClusterNode
 from clusters.serializers import (
     ClusterSerializer,
     GPUSerializer,
@@ -17,7 +17,7 @@ from tests.factories.factory_clusters import ClusterFactory, GPUFactory, Cluster
 
 class TestGPUSerializer(TestCase):
     serializer_class = GPUSerializer
-    model_class = GPU
+    model_class = NodeGPU
     factory_class = GPUFactory
     expected_keys = {'uuid', 'cluster_node', 'serial', 'name', 'device', 'memory', 'updated_at',
                      'created_at', }

@@ -86,7 +86,7 @@ class ClusterNode(models.Model):
         return cls(**params)
 
 
-class GPU(DiffModel):
+class NodeGPU(DiffModel):
     """A model that represents the node's gpu."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -100,7 +100,7 @@ class GPU(DiffModel):
     cluster_node = models.ForeignKey(ClusterNode, related_name='gpus')
 
 
-class ClusterErrors(models.Model):
+class ClusterEvents(models.Model):
     """A model to catch all errors and warning events of the cluster."""
     cluster = models.ForeignKey(Cluster, related_name='errors')
     created_at = models.DateTimeField()

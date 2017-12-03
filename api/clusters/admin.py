@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from django.contrib import admin
 
-from clusters.models import Cluster, ClusterNode, GPU
+from clusters.models import Cluster, ClusterNode, NodeGPU
 
 admin.site.register(Cluster)
 admin.site.register(ClusterNode)
-admin.site.register(GPU)
+admin.site.register(NodeGPU)

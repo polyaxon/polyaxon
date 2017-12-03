@@ -8,7 +8,7 @@ from faker import Factory as FakerFactory
 
 from polyaxon_k8s.constants import NodeRoles
 
-from clusters.models import Cluster, GPU, ClusterNode
+from clusters.models import Cluster, NodeGPU, ClusterNode
 from tests.factories.factory_users import UserFactory
 
 fake = FakerFactory.create()
@@ -55,4 +55,4 @@ class GPUFactory(factory.DjangoModelFactory):
     cluster_node = factory.SubFactory(ClusterNodeFactory)
 
     class Meta:
-        model = GPU
+        model = NodeGPU

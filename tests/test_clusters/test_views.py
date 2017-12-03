@@ -7,7 +7,7 @@ from polyaxon_k8s import constants as k8s_constants
 from rest_framework import status
 
 from api.urls import API_V1
-from clusters.models import Cluster, ClusterNode, GPU
+from clusters.models import Cluster, ClusterNode, NodeGPU
 from clusters.serializers import (
     ClusterSerializer,
     ClusterDetailSerializer,
@@ -252,16 +252,16 @@ class TestClusterNodeDetailViewV1(BaseTest):
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1
-        assert GPU.objects.count() == 2
+        assert NodeGPU.objects.count() == 2
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert self.model_class.objects.count() == 0
-        assert GPU.objects.count() == 0
+        assert NodeGPU.objects.count() == 0
 
 
 class TestClusterNodeGPUListViewV1(BaseTest):
     serializer_class = GPUSerializer
-    model_class = GPU
+    model_class = NodeGPU
     factory_class = GPUFactory
     num_objects = 3
     HAS_AUTH = False
@@ -333,7 +333,7 @@ class TestClusterNodeGPUListViewV1(BaseTest):
 
 class TestClusterNodeGPUDetailViewV1(BaseTest):
     serializer_class = GPUSerializer
-    model_class = GPU
+    model_class = NodeGPU
     factory_class = GPUFactory
     HAS_AUTH = False
 

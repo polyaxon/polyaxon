@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from rest_framework import fields, serializers
 
-from clusters.models import Cluster, ClusterNode, GPU
+from clusters.models import Cluster, ClusterNode, NodeGPU
 
 
 class GPUSerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class GPUSerializer(serializers.ModelSerializer):
     cluster_node = fields.SerializerMethodField()
 
     class Meta:
-        model = GPU
+        model = NodeGPU
         exclude = ('id', )
 
     def get_cluster_node(self, obj):

@@ -7,7 +7,7 @@ from rest_framework.generics import (
 )
 
 from libs.views import ListCreateAPIView
-from clusters.models import Cluster, ClusterNode, GPU
+from clusters.models import Cluster, ClusterNode, NodeGPU
 from clusters.serializers import (
     ClusterSerializer,
     ClusterDetailSerializer,
@@ -65,7 +65,7 @@ class ClusterNodeGPUViewMixin(object):
 
 
 class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
-    queryset = GPU.objects.all()
+    queryset = NodeGPU.objects.all()
     serializer_class = GPUSerializer
 
     def perform_create(self, serializer):
@@ -73,6 +73,6 @@ class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
 
 
 class ClusterNodeGPUDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeGPUViewMixin):
-    queryset = GPU.objects.all()
+    queryset = NodeGPU.objects.all()
     serializer_class = GPUSerializer
     lookup_field = 'uuid'
