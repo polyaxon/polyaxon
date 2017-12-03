@@ -11,9 +11,10 @@ from unittest.mock import patch
 from django.test import Client, TestCase
 from django.test.client import FakePayload
 from polyaxon_schemas.utils import TaskType
-from polyaxon_spawner.spawner import K8SExperimentSpawner
 
 from rest_framework.authtoken.models import Token
+
+from spawner import K8SSpawner
 
 from tests.factories.factory_users import UserFactory
 
@@ -146,7 +147,7 @@ class BaseTest(TestCase):
     def setUp(self):
         assert hasattr(self, 'auth_client') and self.auth_client is not None
 
-        patcher = patch.object(K8SExperimentSpawner, 'start_experiment')
+        patcher = patch.object(K8SSpawner, 'start_experiment')
         self.start_experiment = patcher.start()
         self.start_experiment.return_value = {TaskType.MASTER: {},
                                               TaskType.WORKER: [],
