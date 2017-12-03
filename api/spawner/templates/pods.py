@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import six
 import uuid
 
+from django.conf import settings
 from kubernetes import client
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
@@ -94,12 +95,12 @@ class PodManager(object):
         self.namespace = namespace
         self.project = project
         self.experiment = experiment
-        self.job_container_name = job_container_name or constants.JOB_CONTAINER_NAME
-        self.job_docker_image = job_docker_image or constants.JOB_DOCKER_NAME
-        self.sidecar_container_name = sidecar_container_name or constants.SIDECAR_CONTAINER_NAME
-        self.sidecar_docker_image = sidecar_docker_image or constants.SIDECAR_DOCKER_IMAGE
-        self.role_label = role_label or constants.ROLE_LABELS_WORKER
-        self.type_label = type_label or constants.TYPE_LABELS_EXPERIMENT
+        self.job_container_name = job_container_name or settings.JOB_CONTAINER_NAME
+        self.job_docker_image = job_docker_image or settings.JOB_DOCKER_NAME
+        self.sidecar_container_name = sidecar_container_name or settings.JOB_SIDECAR_CONTAINER_NAME
+        self.sidecar_docker_image = sidecar_docker_image or settings.SIDECAR_DOCKER_IMAGE
+        self.role_label = role_label or settings.ROLE_LABELS_WORKER
+        self.type_label = type_label or settings.TYPE_LABELS_EXPERIMENT
         self.ports = ports or [constants.DEFAULT_PORT]
         self.use_sidecar = use_sidecar
         if use_sidecar and not sidecar_config:
