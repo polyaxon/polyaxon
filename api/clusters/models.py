@@ -7,10 +7,9 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-from polyaxon_k8s.utils import nodes
-from polyaxon_k8s import constants as k8s_constants
-
 from libs.models import DiffModel
+from spawner.utils import nodes
+from spawner.utils.constants import NodeLifeCycle, NodeRoles
 
 
 class Cluster(DiffModel):
@@ -45,7 +44,7 @@ class ClusterNode(models.Model):
         null=True)
     role = models.CharField(
         max_length=6,
-        choices=k8s_constants.NodeRoles.CHOICES,
+        choices=NodeRoles.CHOICES,
         help_text='The role of the node')
     docker_version = models.CharField(
         max_length=128,
@@ -62,8 +61,8 @@ class ClusterNode(models.Model):
     n_gpus = models.SmallIntegerField()
     status = models.CharField(
         max_length=24,
-        default=k8s_constants.NodeLifeCycle.UNKNOWN,
-        choices=k8s_constants.NodeLifeCycle.CHOICES)
+        default=NodeLifeCycle.UNKNOWN,
+        choices=NodeLifeCycle.CHOICES)
     is_current = models.BooleanField(default=True)
 
     @classmethod
