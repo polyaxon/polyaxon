@@ -44,9 +44,7 @@ spec:
       - name: {{ .Chart.Name }}-namespace
         image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
         imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
-        args: ["python3", "api/manage.py",  "monitor_namespace",
-        "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
-        "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
+        args: ["python3", "api/manage.py",  "monitor_namespace", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
@@ -64,9 +62,7 @@ spec:
       - name: {{ .Chart.Name }}-statuses
         image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"
         imagePullPolicy: {{ .Values.events.statuses.imagePullPolicy }}
-        args: ["python3", "api/manage.py",  "monitor_statuses",
-        "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
-        "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
+        args: ["python3", "api/manage.py",  "monitor_statuses", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
@@ -84,9 +80,7 @@ spec:
       - name: {{ .Chart.Name }}-resources
         image: "{{ .Values.events.resources.image }}:{{ .Values.events.resources.imageTag }}"
         imagePullPolicy: {{ .Values.events.resources.imagePullPolicy }}
-        args: ["python3", "api/manage.py",  "monitor_resources",
-        "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
-        "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
+        args: ["python3", "api/manage.py",  "monitor_resources", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
