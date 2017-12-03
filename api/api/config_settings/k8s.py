@@ -6,11 +6,6 @@ from kubernetes import client
 
 from api.utils import config
 
-ROLE_LABELS_WORKER = config.get_string('POLYAXON_ROLE_LABELS_WORKER')
-TYPE_LABELS_EXPERIMENT = config.get_string('POLYAXON_TYPE_LABELS_EXPERIMENT')
-JOB_CONTAINER_NAME = config.get_string('POLYAXON_JOB_CONTAINER_NAME')
-JOB_SIDECAR_CONTAINER_NAME = config.get_string('POLYAXON_JOB_SIDECAR_CONTAINER_NAME')
-
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
 CLUSTER_ID = config.get_string('POLYAXON_CLUSTER_ID', is_optional=True)
 
