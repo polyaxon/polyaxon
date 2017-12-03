@@ -2,8 +2,8 @@ esudo: required
 dist: trusty
 language: python
 python:
-  - "2.7"
   - "3.5"
+  - "3.6"
 
 env:
   global:
@@ -37,14 +37,10 @@ install:
 
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy six pytest-cov h5py
   - source activate test-environment
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      conda install pil;
-    elif [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
-      conda install Pillow;
-    fi
-  - pip install -q tensorflow==$TENSORFLOW_VERSION
+  - conda install Pillow
+  - pip install kubernetes==3.0.0  # otherwise the build breaks
   - python setup.py -q install
-  - pip install -r requirements-test.txt
+  - pip install codecov
 
 before_script:
   - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
