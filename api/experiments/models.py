@@ -8,11 +8,10 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models.signals import post_save
 
-from polyaxon_k8s.constants import JobLifeCycle, ExperimentLifeCycle
-
 from clusters.models import Cluster
-from experiments.signals import new_experiment, new_experiment_job
+from experiments.signals import new_experiment, new_experiment_job, new_experiment_job_status
 from libs.models import DiffModel
+from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 
 class Experiment(DiffModel):
@@ -58,12 +57,31 @@ class Experiment(DiffModel):
         help_text='The original experiment that was cloned from.')
 
     @property
+    def last_job_statuses(self):
+        """The statuses of the job in this experiment."""
+        from libs.redis_db import RedisExperimentJobStatus
+
+        statuses = []
+        for job_uuid in self.jobs.object.values_list('uuid', flat=True):
+            status = RedisExperimentJobStatus.get_status(job_uuid=job_uuid)
+            statuses.append(status)
+        return statuses
+
+    @property
+    def calculated_status(self):
+        return ExperimentLifeCycle.jobs_status(self.last_job_statuses)
+
+    @property
     def last_status(self):
         return self.status.last()
 
     @property
     def is_running(self):
         return ExperimentLifeCycle.is_running(self.last_status.status)
+
+    @property
+    def is_done(self):
+        return ExperimentLifeCycle.is_done(self.last_status.status)
 
     @property
     def finished_at(self):
@@ -93,7 +111,7 @@ post_save.connect(new_experiment, sender=Experiment, dispatch_uid="experiment_sa
 
 
 class ExperimentStatus(models.Model):
-    """A model that represents experiment status at certain time."""
+    """A model that represents an experiment status at certain time."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
@@ -107,6 +125,16 @@ class ExperimentStatus(models.Model):
         null=True,
         default=ExperimentLifeCycle.CREATED,
         choices=ExperimentLifeCycle.CHOICES)
+
+    class Meta:
+        ordering = ['created_at']
+
+
+class ExperimentMetric(models.Model):
+    """A model that represents an experiment metric at certain time."""
+    experiment = models.ForeignKey(Experiment, related_name='metrics')
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+    values = JSONField()
 
     class Meta:
         ordering = ['created_at']
@@ -128,7 +156,7 @@ class ExperimentJob(DiffModel):
 
     @property
     def started_at(self):
-        status = self.status.filter(status=JobLifeCycle.STARTING).first()
+        status = self.status.filter(status=JobLifeCycle.BUILDING).first()
         if status:
             return status.created_at
         return None
@@ -162,3 +190,8 @@ class ExperimentJobStatus(models.Model):
 
     message = models.CharField(max_length=256, null=True, blank=True)
     details = JSONField(null=True, blank=True, default={})
+
+
+post_save.connect(new_experiment_job_status,
+                  sender=ExperimentJobStatus,
+                  dispatch_uid="experiment_job_status_saved")
