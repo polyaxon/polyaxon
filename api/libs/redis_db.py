@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_k8s.constants import ExperimentLifeCycle
+from polyaxon_k8s.constants import JobLifeCycle, ExperimentLifeCycle
 
 from api.settings import RedisPools, redis
 from experiments.models import ExperimentStatus, ExperimentJobStatus
@@ -72,16 +72,20 @@ class RedisExperimentJobStatus(BaseRedisDb):
         return red.hget(cls.KEY_JOBS_TO_EXPERIMENTS, object_id)
 
     @classmethod
-    def set_status(cls, object_id, status, message=None):
+    def set_status(cls, object_id, status, message=None, details=None):
         red = cls._get_redis()
         current_status = cls.get_status(object_id=object_id)
         if status != current_status:
             red.hset(cls.KEY_JOBS_STATUS, object_id, status)
             # Add new status to the job
-            ExperimentJobStatus.objects.create(job_id=object_id, status=status, message=message)
+            ExperimentJobStatus.objects.create(job_id=object_id,
+                                               status=status,
+                                               message=message,
+                                               details=details)
             # Check if we need to remove this job from the set to monitor
-            if ExperimentLifeCycle.is_done(status):
+            if JobLifeCycle.is_done(status):
                 red.srem(cls.KEY_JOBS, object_id)
+                check_experiment_status.delay(experiment_id)
             return True
         return False
 

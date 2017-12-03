@@ -7,34 +7,15 @@ from sanic import Sanic
 
 from websockets import ConnectionClosed
 
-from api.config_settings.celery_settings import RoutingKeys, StreamQueues
+from api.config_settings.celery_settings import RoutingKeys, CeleryQueues
 from events.consumers import Consumer
 
 app = Sanic(__name__)
 
 
-@app.websocket('/stream/namespace')
-async def namespace(request, ws):
-    if request.app.namespace_consumer is None:
-        request.app.namespace_consumer = Consumer(
-            routing_key=RoutingKeys.EVENTS_NAMESPACE, queue=StreamQueues.EVENTS_NAMESPACE)
-        request.app.namespace_consumer.run()
-
-    request.app.namespace_consumer.add_socket(ws)
-    while True:
-        for message in request.app.namespace_consumer.get_messages():
-            disconnected_ws = set()
-            for ws in request.app.namespace_consumer.ws:
-                try:
-                    await ws.send(message)
-                except ConnectionClosed:
-                    disconnected_ws.add(ws)
-            request.app.namespace_consumer.remove_sockets(disconnected_ws)
-        await asyncio.sleep(1)
-
-
 @app.websocket('/stream/resources')
 async def resources(request, ws):
+    # TODO get data from redis
     if request.app.resources_consumer is None:
         request.app.resources_consumer = Consumer(
             routing_key=RoutingKeys.EVENTS_RESOURCES, queue=StreamQueues.EVENTS_RESOURCES)
@@ -58,7 +39,7 @@ async def resources(request, ws):
 async def logs(request, ws):
     if request.app.logs_consumer is None:
         request.app.logs_consumer = Consumer(
-            routing_key=RoutingKeys.LOGS_SIDECARS, queue=StreamQueues.LOGS_SIDECARS)
+            routing_key=RoutingKeys.LOGS_SIDECARS, queue=CeleryQueues.STREAM_LOGS_SIDECARS)
         request.app.logs_consumer.run()
 
     request.app.logs_consumer.add_socket(ws)
