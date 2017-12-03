@@ -38,7 +38,7 @@ class JobLabelSchema(Schema):
     task_type = fields.Str()
     task_idx = fields.Str()
     task = fields.Str()
-    task_id = fields.Str()
+    job_id = fields.Str()
     role = fields.Str()
     type = fields.Str()
 
@@ -54,13 +54,13 @@ class JobLabelConfig(BaseConfig):
     SCHEMA = JobLabelSchema
     IDENTIFIER = 'JobLabel'
 
-    def __init__(self, project, experiment, task_type, task_idx, task, task_id, role, type):
+    def __init__(self, project, experiment, task_type, task_idx, task, job_id, role, type):
         self.project = project
         self.experiment = experiment
         self.task_type = task_type
         self.task_idx = task_idx
         self.task = task
-        self.task_id = task_id
+        self.job_id = job_id
         self.role = role
         self.type = type
 

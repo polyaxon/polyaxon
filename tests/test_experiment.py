@@ -34,7 +34,7 @@ class TestExperimentConfigs(TestCase):
                                          experiment=experiment,
                                          task_type=task_type,
                                          task_idx='0'),
-                'task_id': str(uuid.uuid4()),
+                'job_id': str(uuid.uuid4()),
                 'role': 'polyaxon-worker',
                 'type': 'polyaxon-experiment'
                 }
