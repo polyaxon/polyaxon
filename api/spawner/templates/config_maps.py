@@ -7,7 +7,7 @@ from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
 
-from polyaxon_spawner.templates import constants
+from spawner.templates import constants
 
 
 def get_cluster_config_map_labels(project, experiment, role):

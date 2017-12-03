@@ -4,8 +4,9 @@ from __future__ import absolute_import, division, print_function
 from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
-from polyaxon_spawner.templates import constants
-from polyaxon_spawner.templates import pods
+
+from spawner.templates import constants
+from spawner.templates import pods
 
 
 def get_labels(name, project, role=None):

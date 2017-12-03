@@ -11,8 +11,8 @@ from polyaxon_schemas.utils import TaskType
 
 from polyaxon_k8s import constants as k8s_constants
 
-from polyaxon_spawner.templates import constants
-from polyaxon_spawner.templates.persistent_volumes import get_vol_path
+from spawner.templates import constants
+from spawner.templates.persistent_volumes import get_vol_path
 
 
 def get_gpu_volume_mounts():

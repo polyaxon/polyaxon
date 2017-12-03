@@ -1,27 +1,36 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
+import logging
+
 from kubernetes import client
 from kubernetes.client.rest import ApiException
-from polyaxon_schemas.polyaxonfile.utils import cached_property
-
-from polyaxon_schemas.utils import TaskType
 
 from polyaxon_k8s import constants as k8s_constants
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 
-from polyaxon_spawner.logger import logger
-from polyaxon_spawner.templates import config_maps
-from polyaxon_spawner.templates import constants
-from polyaxon_spawner.templates import deployments
-from polyaxon_spawner.templates import persistent_volumes
-from polyaxon_spawner.templates import pods
-from polyaxon_spawner.templates import services
+from polyaxon_schemas.polyaxonfile.polyaxonfile import Specification
+from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.utils import TaskType
+
+from spawner.templates import config_maps
+from spawner.templates import constants
+from spawner.templates import deployments
+from spawner.templates import persistent_volumes
+from spawner.templates import pods
+from spawner.templates import services
+
+logger = logging.getLogger('polyaxon.tasks.projects')
 
 
 class K8SSpawner(K8SManager):
     def __init__(self,
+                 project_id,
+                 experiment_id,
+                 specification,
+                 spec_id=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -34,10 +43,11 @@ class K8SSpawner(K8SManager):
                  ports=None,
                  use_sidecar=False,
                  sidecar_config=None,
-                 sidecar_args_fn=None):  # must accept args: container_job_name, pod_id
-        super(K8SSpawner, self).__init__(k8s_config=k8s_config,
-                                         namespace=namespace,
-                                         in_cluster=in_cluster)
+                 sidecar_args_fn=None):
+        self.specification = Specification.read(specification)
+        self.project_id = project_id
+        self.spec_id = spec_id
+        self.experiment_id = experiment_id
         self.has_data_volume = False
         self.has_logs_volume = False
         self.pod_manager = pods.PodManager(namespace=namespace,
@@ -52,6 +62,10 @@ class K8SSpawner(K8SManager):
                                            use_sidecar=use_sidecar,
                                            sidecar_config=sidecar_config)
         self.sidecar_args_fn = sidecar_args_fn or constants.SIDECAR_ARGS_FN
+
+        super(K8SSpawner, self).__init__(k8s_config=k8s_config,
+                                         namespace=namespace,
+                                         in_cluster=in_cluster)
 
     @property
     def spec(self):
@@ -295,17 +309,85 @@ class K8SSpawner(K8SManager):
                                                 role='cluster')
         self.delete_config_map(name, reraise=True)
 
-    def get_task_phase(self, experiment, task_type, task_idx):
-        self.pod_manager.set_experiment(experiment)
+    @cached_property
+    def project_name(self):
+        if self.spec_id:
+            return '{}-id{}-spec{}'.format(self.spec.project.name.replace('_', '-'),
+                                           self.project_id,
+                                           self.spec_id)
+        else:
+            return '{}-id{}'.format(self.spec.project.name.replace('_', '-'),
+                                    self.project_id)
+
+    @property
+    def spec(self):
+        return self.specification
+
+    def get_pod_args(self, experiment, task_type, task_idx, schedule):
+        spec_data = json.dumps(self.spec.parsed_data)
+
+        args = [
+            "from polyaxon.polyaxonfile.local_runner import start_experiment_run; "
+            "start_experiment_run('{polyaxonfile}', '{experiment_id}', "
+            "'{task_type}', {task_idx}, '{schedule}')".format(
+                polyaxonfile=spec_data,
+                experiment_id=0,
+                task_type=task_type,
+                task_idx=task_idx,
+                schedule=schedule)]
+        return args
+
+    def create_worker(self):
+        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
+        resources = self.spec.worker_resources
+        return self._create_worker(experiment=self.experiment_id,
+                                   resources=resources,
+                                   n_pods=n_pods)
+
+    def delete_worker(self):
+        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
+        self._delete_worker(experiment=self.experiment_id, n_pods=n_pods)
+
+    def create_ps(self):
+        n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
+        resources = self.spec.ps_resources
+        return self._create_ps(experiment=self.experiment_id,
+                               resources=resources,
+                               n_pods=n_pods)
+
+    def delete_ps(self):
+        n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
+        self._delete_ps(experiment=self.experiment_id, n_pods=n_pods)
+
+    def start_experiment(self):
+        self.check_data_volume()
+        self.check_logs_volume()
+        self.create_cluster_config_map(experiment=self.experiment_id)
+        master_resp = self.create_master(experiment=self.experiment_id,
+                                         resources=self.spec.master_resources)
+        worker_resp = self.create_worker()
+        ps_resp = self.create_ps()
+        return {
+            TaskType.MASTER: master_resp,
+            TaskType.WORKER: worker_resp,
+            TaskType.PS: ps_resp
+        }
+
+    def delete_experiment(self):
+        self.delete_cluster_config_map(experiment=self.experiment_id)
+        self.delete_master(experiment=self.experiment_id)
+        self.delete_worker()
+        self.delete_ps()
+
+    def get_task_phase(self, task_type, task_idx):
+        self.pod_manager.set_experiment(self.experiment_id)
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         return self.k8s_api.read_namespaced_pod_status(task_name, self.namespace).status.phase
 
-    def get_task_log(self, experiment, task_type, task_idx, **kwargs):
-        self.pod_manager.set_experiment(experiment)
+    def get_task_log(self, task_type, task_idx, **kwargs):
+        self.pod_manager.set_experiment(self.experiment_id)
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         return self.k8s_api.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
 
-    def get_experiment_phase(self, experiment=0):
-        return self.get_task_phase(experiment=experiment,
-                                   task_type=TaskType.MASTER,
-                                   task_idx=0)
+    def get_experiment_phase(self):
+        return self.get_task_phase(task_type=TaskType.MASTER, task_idx=0)
