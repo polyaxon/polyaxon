@@ -17,7 +17,7 @@ def start_group_experiments(task, spec_id):
     try:
         polyaxon_spec = PolyaxonSpec.objects.get(id=spec_id)
     except PolyaxonSpec.DoesNotExist:
-        # TODO : log
+        logger.info('PolyaxonSpec `{}` does not exist anymore.'.format(spec_id))
         return
 
     pending_experiments = list(polyaxon_spec.pending_experiments.values_list('id', flat=True))
@@ -25,6 +25,7 @@ def start_group_experiments(task, spec_id):
     while experiment_to_start > 0 and pending_experiments:
         experiment_id = pending_experiments.pop()
         start_experiment.delay(experiment_id=experiment_id)
+        experiment_to_start -= 1
 
     if pending_experiments:
         # Schedule another task
