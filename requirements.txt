@@ -1,7 +1,6 @@
 numpy==1.13.1
 Pillow==4.2.1
 polyaxon-schemas==0.0.16
-polyaxon-spawner==0.0.11
 scipy==0.19.1
 six==1.11.0
 tensorflow>=1.3.0
