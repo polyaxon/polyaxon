@@ -14,7 +14,7 @@ LEVEL_MAPPING = {
 }
 
 
-def run(k8s_manager, cluster, persist):
+def run(k8s_manager, cluster):
     w = watch.Watch()
 
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_event,
@@ -99,6 +99,4 @@ def run(k8s_manager, cluster, persist):
             )
 
             logger.info("Publishing event: {}".format(data))
-            handle_events_namespace.delay(cluster_id=cluster.id,
-                                          payload=payload,
-                                          persist=persist)
+            handle_events_namespace.delay(cluster_id=cluster.id, payload=payload)

@@ -9,7 +9,6 @@ from kubernetes.client.rest import ApiException
 
 from polyaxon_k8s.manager import K8SManager
 
-from libs.utils import to_bool
 from events.management.commands._base_monitor import BaseMonitorCommand
 from events.monitors import statuses
 
@@ -19,10 +18,9 @@ class Command(BaseMonitorCommand):
 
     def handle(self, *args, **options):
         log_sleep_interval = options['log_sleep_interval']
-        persist = to_bool(options['persist'])
         self.stdout.write(
             "Started a new statuses monitor with, "
-            "log sleep interval: `{}` and persist: `{}`".format(log_sleep_interval, persist),
+            "log sleep interval: `{}`.".format(log_sleep_interval),
             ending='\n')
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
         while True:
@@ -33,8 +31,7 @@ class Command(BaseMonitorCommand):
                 statuses.run(k8s_manager,
                              job_container_name=settings.JOB_CONTAINER_NAME,
                              experiment_type_label=type_label,
-                             label_selector=label_selector,
-                             persist=persist)
+                             label_selector=label_selector)
             except ApiException as e:
                 statuses.logger.error(
                     "Exception when calling CoreV1Api->list_namespaced_pod: %s\n" % e)
