@@ -7,7 +7,7 @@ from polyaxon_schemas.experiment import JobStateConfig
 
 from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
-from clusters.models import ClusterEvents
+from clusters.models import ClusterEvent
 from libs.redis_db import RedisExperimentJobStatus
 
 logger = logging.getLogger('polyaxon.tasks.events')
@@ -16,11 +16,11 @@ logger = logging.getLogger('polyaxon.tasks.events')
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_NAMESPACE)
 def handle_events_namespace(cluster_id, payload):
     logger.info('handling events namespace for cluster: {}'.format(cluster_id))
-    ClusterEvents.objects.create(cluster_id=cluster_id,
-                                 created_at=payload['creation_timestamp'],
-                                 data=payload['data'],
-                                 meta=payload['meta'],
-                                 level=payload['level'])
+    ClusterEvent.objects.create(cluster_id=cluster_id,
+                                created_at=payload['creation_timestamp'],
+                                data=payload['data'],
+                                meta=payload['meta'],
+                                level=payload['level'])
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_RESOURCES)
