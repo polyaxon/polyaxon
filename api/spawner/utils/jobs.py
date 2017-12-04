@@ -48,7 +48,7 @@ def get_job_status(pod_state, job_container_name):
         return JobLifeCycle.BUILDING, job_container_status_waiting['reason']
     job_container_status_running = job_container_status['state'][ContainerStatuses.RUNNING]
     if job_container_status['state'][ContainerStatuses.RUNNING]:
-        return JobLifeCycle.RUNNING, job_container_status_running['reason']
+        return JobLifeCycle.RUNNING, job_container_status_running.get('reason')
 
     # Unknown?
     return PodLifeCycle.UNKNOWN, None

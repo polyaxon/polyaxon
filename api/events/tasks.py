@@ -16,11 +16,7 @@ logger = logging.getLogger('polyaxon.tasks.events')
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_NAMESPACE)
 def handle_events_namespace(cluster_id, payload):
     logger.info('handling events namespace for cluster: {}'.format(cluster_id))
-    ClusterEvent.objects.create(cluster_id=cluster_id,
-                                created_at=payload['creation_timestamp'],
-                                data=payload['data'],
-                                meta=payload['meta'],
-                                level=payload['level'])
+    ClusterEvent.objects.create(cluster_id=cluster_id, **payload)
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_RESOURCES)

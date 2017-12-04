@@ -77,7 +77,7 @@ class ClusterNode(models.Model):
             'kernel_version': node.status.node_info.kernel_version,
             'schedulable_taints': nodes.is_schedulable(node),
             'schedulable_state': nodes.get_schedulable_state(node),
-            'mem': nodes.get_memory_size(node),
+            'memory': nodes.get_memory_size(node),
             'n_cpus': nodes.get_n_cpus(node),
             'n_gpus': nodes.get_n_gpus(node),
             'status': nodes.get_status(node)}

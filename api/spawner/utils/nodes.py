@@ -5,7 +5,7 @@ from spawner.utils import constants
 
 
 def get_status(node):
-    status = [c.status for c in node.status.conditions if c.tyep == 'Ready'][0]
+    status = [c.status for c in node.status.conditions if c.type == 'Ready'][0]
     if status == 'True':
         return constants.NodeLifeCycle.READY
     if status == 'FALSE':
@@ -27,7 +27,7 @@ def get_memory_size(node):
 
 def is_master(node):
     if ('node-role.kubernetes.io/master' in node.metadata.labels or
-                node.metadata.labels('kubernetes.io/hostname') == 'minikube'):
+                node.metadata.labels.get('kubernetes.io/hostname') == 'minikube'):
         return True
     return False
 
