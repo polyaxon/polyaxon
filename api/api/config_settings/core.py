@@ -43,7 +43,7 @@ DATABASES = {
         'ENGINE': config.get_string('POLYAXON_DB_ENGINE', is_optional=True) or DEFAULT_DB_ENGINE,
         'NAME': config.get_string('POLYAXON_DB_NAME'),
         'USER': config.get_string('POLYAXON_DB_USER'),
-        'PASSWORD': config.get_string('POLYAXON_DB_PASSWORD'),
+        'PASSWORD': config.get_string('POLYAXON_DB_PASSWORD', is_secret=True),
         'HOST': config.get_string('POLYAXON_DB_HOST'),
         'PORT': config.get_string('POLYAXON_DB_PORT'),
         'ATOMIC_REQUESTS': True

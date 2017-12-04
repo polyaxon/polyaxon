@@ -23,13 +23,23 @@ TESTING = bool(strtobool(os.getenv("TESTING", "0")))
 class SettingConfig(object):
     def __init__(self, **params):
         self._params = params
+        self._requested_keys = set()
+        self._secret_keys = set()
 
     @classmethod
     def read_configs(cls, config_values):
         config = reader.read(config_values)
         return cls(**config) if config else None
 
-    def get_int(self, key, is_optional=False):
+    def get_requested_params(self, include_secrets=False):
+        params = {}
+        for key in self._requested_keys:
+            if not include_secrets and key in self._secret_keys:
+                continue
+            params[key] = self._params[key]
+        return params
+
+    def get_int(self, key, is_optional=False, is_secret=False):
         """Get a the value corresponding to the key and converts it to `int`.
 
         Args:
@@ -38,9 +48,13 @@ class SettingConfig(object):
         Return:
             `int`: value corresponding to the key.
         """
-        return self._get_typed_value(key, int, lambda x: int(x), is_optional)
+        return self._get_typed_value(key=key,
+                                     target_type=int,
+                                     type_convert=lambda x: int(x),
+                                     is_optional=is_optional,
+                                     is_secret=is_secret)
 
-    def get_float(self, key, is_optional=False):
+    def get_float(self, key, is_optional=False, is_secret=False):
         """Get a the value corresponding to the key and converts it to `float`.
 
         Args:
@@ -49,9 +63,13 @@ class SettingConfig(object):
         Return:
             `float`: value corresponding to the key.
         """
-        return self._get_typed_value(key, float, lambda x: float(x), is_optional)
+        return self._get_typed_value(key=key,
+                                     target_type=float,
+                                     type_convert=lambda x: float(x),
+                                     is_optional=is_optional,
+                                     is_secret=is_secret)
 
-    def get_boolean(self, key, is_optional=False):
+    def get_boolean(self, key, is_optional=False, is_secret=False):
         """Get a the value corresponding to the key and converts it to `bool`.
 
         Args:
@@ -60,9 +78,13 @@ class SettingConfig(object):
         Return:
             `bool`: value corresponding to the key.
         """
-        return self._get_typed_value(key, bool, lambda x: bool(strtobool(x)), is_optional)
+        return self._get_typed_value(key=key,
+                                     target_type=bool,
+                                     type_convert=lambda x: bool(strtobool(x)),
+                                     is_optional=is_optional,
+                                     is_secret=is_secret)
 
-    def get_string(self, key, is_optional=False):
+    def get_string(self, key, is_optional=False, is_secret=False):
         """Get a the value corresponding to the key and converts it to `str`.
 
         Args:
@@ -71,7 +93,11 @@ class SettingConfig(object):
         Return:
             `str`: value corresponding to the key.
         """
-        return self._get_typed_value(key, str, lambda x: str(x), is_optional)
+        return self._get_typed_value(key=key,
+                                     target_type=str,
+                                     type_convert=lambda x: str(x),
+                                     is_optional=is_optional,
+                                     is_secret=is_secret)
 
     def _get(self, key):
         """Gets key from the dictionary made out of the configs passed.
@@ -85,7 +111,12 @@ class SettingConfig(object):
         """
         return self._params[key]
 
-    def _get_typed_value(self, key, target_type, type_convert, is_optional=False):
+    def _add_key(self, key, is_secret=False):
+        self._requested_keys.add(key)
+        if is_secret:
+            self._secret_keys.add(key)
+
+    def _get_typed_value(self, key, target_type, type_convert, is_optional=False, is_secret=False):
         """Returns the value corresponding to the key converted to the given type.
 
         Args:
@@ -106,12 +137,14 @@ class SettingConfig(object):
 
         if isinstance(value, six.string_types):
             try:
+                self._add_key(key, is_secret)
                 return type_convert(value)
             except ValueError:
                 raise ValueError("Cannot convert value `{}` (key: `{}`) "
                                  "to `{}`".format(value, key, target_type))
 
         if isinstance(value, target_type):
+            self._add_key(key, is_secret)
             return value
         raise TypeError(key, value, target_type)
 

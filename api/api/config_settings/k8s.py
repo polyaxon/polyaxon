@@ -9,7 +9,9 @@ from api.utils import config
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
 CLUSTER_ID = config.get_string('POLYAXON_CLUSTER_ID', is_optional=True)
 
-K8S_AUTHORISATION = config.get_string('POLYAXON_K8S_AUTHORISATION', is_optional=True)
+K8S_AUTHORISATION = config.get_string('POLYAXON_K8S_AUTHORISATION',
+                                      is_optional=True,
+                                      is_secret=True)
 K8S_HOST = config.get_string('POLYAXON_K8S_HOST', is_optional=True)
 SSL_CA_CERT = config.get_string('POLYAXON_K8S_SSL_CA_CERT', is_optional=True)
 
