@@ -46,20 +46,7 @@ class Intervals(object):
 
 
 class RoutingKeys(object):
-    # TODO: remove
-    # EVENTS_NAMESPACE = config.get_string('POLYAXON_ROUTING_KEYS_EVENTS_NAMESPACE')
-    # EVENTS_RESOURCES = config.get_string('POLYAXON_ROUTING_KEYS_EVENTS_RESOURCES')
-    # EVENTS_JOB_STATUSES = config.get_string('POLYAXON_ROUTING_KEYS_EVENTS_JOB_STATUSES')
     LOGS_SIDECARS = config.get_string('POLYAXON_ROUTING_KEYS_LOGS_SIDECARS')
-
-
-class CeleryRoutedTasks(object):
-    """Tasks that handles exchanges messages."""
-    # TODO: remove
-    # EVENTS_NAMESPACE = RoutingKeys.EVENTS_NAMESPACE.replace('.', '_')
-    # EVENTS_RESOURCES = RoutingKeys.EVENTS_RESOURCES.replace('.', '_')
-    # EVENTS_JOB_STATUSES = RoutingKeys.EVENTS_JOB_STATUSES.replace('.', '_')
-    # LOGS_SIDECARS = RoutingKeys.LOGS_SIDECARS.replace('.', '_')
 
 
 class CeleryPublishTask(object):
@@ -71,6 +58,7 @@ class CeleryTasks(object):
     """Normal celery tasks."""
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_START_GROUP = 'experiments_start_group'
+    EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_UPDATE_SYSTEM_NODES_GPUS = 'clusters_update_system_nodes'
@@ -106,15 +94,6 @@ class CeleryQueues(object):
 
 # Queues on non default exchange
 CELERY_TASK_QUEUES = (
-    # Queue(CeleryQueues.EVENTS_NAMESPACE,
-    #       exchange=Exchange(INTERNAL_EXCHANGE, 'topic', no_declare=True),
-    #       routing_key=RoutingKeys.EVENTS_NAMESPACE),
-    # Queue(CeleryQueues.EVENTS_RESOURCES,
-    #       exchange=Exchange(INTERNAL_EXCHANGE, 'topic', no_declare=True),
-    #       routing_key=RoutingKeys.EVENTS_RESOURCES),
-    # Queue(CeleryQueues.EVENTS_JOB_STATUSES,
-    #       exchange=Exchange(INTERNAL_EXCHANGE, 'topic', no_declare=True),
-    #       routing_key=RoutingKeys.EVENTS_JOB_STATUSES),
     Queue(CeleryQueues.LOGS_SIDECARS,
           exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
           routing_key=RoutingKeys.LOGS_SIDECARS),
@@ -123,6 +102,7 @@ CELERY_TASK_QUEUES = (
 CELERY_TASK_ROUTES = {
     CeleryTasks.EXPERIMENTS_START: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_START_GROUP: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},

@@ -17,6 +17,5 @@ uWSGI==2.0.15
 websockets==3.4
 
 polyaxon-gpustat==0.0.11
--e git+https://github.com/polyaxon/polyaxon-spawner.git@d04096f72ac2425b9ccee57816961c7fff0a6d97#egg=polyaxon-spawner
--e git+https://github.com/polyaxon/polyaxon-k8s.git@7423bc2e1488b64e5b485121e82ca1e9e41accb8#egg=polyaxon-k8s
--e git+https://github.com/polyaxon/polyaxon-schemas.git@6b75637f74475785b20b54e3713fa17a96580415#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@b0974c7603e0b314d9e233d51222f4dfbfc420bf#egg=polyaxon-k8s
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@a187e730fda53a4dd46684c547b7961d34e23a00#egg=polyaxon-schemas
