@@ -27,10 +27,10 @@ logger = logging.getLogger('polyaxon.tasks.projects')
 
 class K8SSpawner(K8SManager):
     def __init__(self,
-                 project_id,
-                 experiment_id,
-                 specification,
-                 spec_id=None,
+                 project_uuid,
+                 experiment_uuid,
+                 spec_config,
+                 spec_uuid=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -44,14 +44,15 @@ class K8SSpawner(K8SManager):
                  use_sidecar=False,
                  sidecar_config=None,
                  sidecar_args_fn=None):
-        self.specification = Specification.read(specification)
-        self.project_id = project_id
-        self.spec_id = spec_id
-        self.experiment_id = experiment_id
+        self.specification = Specification.read(spec_config)
+        self.project_uuid = project_uuid
+        self.spec_uuid = spec_uuid
+        self.experiment_uuid = experiment_uuid
         self.has_data_volume = False
         self.has_logs_volume = False
         self.pod_manager = pods.PodManager(namespace=namespace,
                                            project=self.project_name,
+                                           experiment=experiment_uuid,
                                            job_container_name=job_container_name,
                                            job_docker_image=job_docker_image,
                                            sidecar_container_name=sidecar_container_name,
@@ -69,17 +70,13 @@ class K8SSpawner(K8SManager):
 
     @property
     def spec(self):
-        raise NotImplementedError()
-
-    def get_pods_args(self, experiment, task_type, task_idx, schedule):
-        raise NotImplementedError()
+        return self.specification
 
     @cached_property
     def project_name(self):
         return self.spec.project.name.replace('_', '-')
 
     def _create_pod(self,
-                    experiment,
                     task_type,
                     task_idx,
                     command=None,
@@ -87,7 +84,6 @@ class K8SSpawner(K8SManager):
                     sidecar_args_fn=None,
                     resources=None,
                     restart_policy='Never'):
-        self.pod_manager.set_experiment(experiment)
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         sidecar_args = sidecar_args_fn(container_job_name=self.pod_manager.job_container_name,
                                        pod_id=task_name)
@@ -117,39 +113,34 @@ class K8SSpawner(K8SManager):
             'service': service_resp.to_dict()
         }
 
-    def _delete_pod(self, experiment, task_type, task_idx):
-        self.pod_manager.set_experiment(experiment)
+    def _delete_pod(self, task_type, task_idx):
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         self.delete_pod(name=task_name)
         self.delete_service(name=task_name)
 
-    def create_master(self, experiment=0, resources=None):
-        args = self.get_pod_args(experiment=experiment,
-                                 task_type=TaskType.MASTER,
+    def create_master(self, resources=None):
+        args = self.get_pod_args(task_type=TaskType.MASTER,
                                  task_idx=0,
                                  schedule='train_and_evaluate')
         command = ["python3", "-c"]
-        return self._create_pod(experiment=experiment,
-                                task_type=TaskType.MASTER,
+        return self._create_pod(task_type=TaskType.MASTER,
                                 task_idx=0,
                                 command=command,
                                 args=args,
                                 sidecar_args_fn=self.sidecar_args_fn,
                                 resources=resources)
 
-    def delete_master(self, experiment=0):
-        self._delete_pod(experiment=experiment, task_type=TaskType.MASTER, task_idx=0)
+    def delete_master(self):
+        self._delete_pod(task_type=TaskType.MASTER, task_idx=0)
 
-    def _create_worker(self, experiment, resources, n_pods):
+    def _create_worker(self, resources, n_pods):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
-            args = self.get_pod_args(experiment=experiment,
-                                     task_type=TaskType.WORKER,
+            args = self.get_pod_args(task_type=TaskType.WORKER,
                                      task_idx=i,
                                      schedule='train')
-            resp.append(self._create_pod(experiment=experiment,
-                                         task_type=TaskType.WORKER,
+            resp.append(self._create_pod(task_type=TaskType.WORKER,
                                          task_idx=i,
                                          command=command,
                                          args=args,
@@ -157,20 +148,18 @@ class K8SSpawner(K8SManager):
                                          resources=resources.get(i)))
         return resp
 
-    def _delete_worker(self, experiment, n_pods):
+    def _delete_worker(self, n_pods):
         for i in range(n_pods):
-            self._delete_pod(experiment=experiment, task_type=TaskType.WORKER, task_idx=i)
+            self._delete_pod(task_type=TaskType.WORKER, task_idx=i)
 
-    def _create_ps(self, experiment, resources, n_pods):
+    def _create_ps(self, resources, n_pods):
         command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
-            args = self.get_pod_args(experiment=experiment,
-                                     task_type=TaskType.PS,
+            args = self.get_pod_args(task_type=TaskType.PS,
                                      task_idx=i,
                                      schedule='run_std_server')
-            resp.append(self._create_pod(experiment=experiment,
-                                         task_type=TaskType.PS,
+            resp.append(self._create_pod(task_type=TaskType.PS,
                                          task_idx=i,
                                          command=command,
                                          args=args,
@@ -178,9 +167,9 @@ class K8SSpawner(K8SManager):
                                          resources=resources.get(i)))
         return resp
 
-    def _delete_ps(self, experiment, n_pods):
+    def _delete_ps(self, n_pods):
         for i in range(n_pods):
-            self._delete_pod(experiment=experiment, task_type=TaskType.PS, task_idx=i)
+            self._delete_pod(task_type=TaskType.PS, task_idx=i)
 
     def create_tensorboard_deployment(self):
         name = 'tensorboard'
@@ -291,39 +280,35 @@ class K8SSpawner(K8SManager):
             else:
                 logger.debug('Volume claim `{}` was not found'.format(volc_name))
 
-    def create_cluster_config_map(self, experiment=0):
+    def create_cluster_config_map(self):
         name = constants.CONFIG_MAP_NAME.format(project=self.project_name,
-                                                experiment=experiment,
+                                                experiment=self.experiment_uuid,
                                                 role='cluster')
         config_map = config_maps.get_cluster_config_map(
             namespace=self.namespace,
             project=self.project_name,
-            experiment=experiment,
+            experiment=self.experiment_uuid,
             cluster_def=self.spec.get_cluster().to_dict())
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)
 
-    def delete_cluster_config_map(self, experiment=0):
+    def delete_cluster_config_map(self):
         name = constants.CONFIG_MAP_NAME.format(project=self.project_name,
-                                                experiment=experiment,
+                                                experiment=self.experiment_uuid,
                                                 role='cluster')
         self.delete_config_map(name, reraise=True)
 
     @cached_property
     def project_name(self):
-        if self.spec_id:
+        if self.spec_uuid:
             return '{}-id{}-spec{}'.format(self.spec.project.name.replace('_', '-'),
-                                           self.project_id,
-                                           self.spec_id)
+                                           self.project_uuid,
+                                           self.spec_uuid)
         else:
             return '{}-id{}'.format(self.spec.project.name.replace('_', '-'),
-                                    self.project_id)
+                                    self.project_uuid)
 
-    @property
-    def spec(self):
-        return self.specification
-
-    def get_pod_args(self, experiment, task_type, task_idx, schedule):
+    def get_pod_args(self, task_type, task_idx, schedule):
         spec_data = json.dumps(self.spec.parsed_data)
 
         args = [
@@ -340,31 +325,26 @@ class K8SSpawner(K8SManager):
     def create_worker(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
         resources = self.spec.worker_resources
-        return self._create_worker(experiment=self.experiment_id,
-                                   resources=resources,
-                                   n_pods=n_pods)
+        return self._create_worker(resources=resources, n_pods=n_pods)
 
     def delete_worker(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
-        self._delete_worker(experiment=self.experiment_id, n_pods=n_pods)
+        self._delete_worker(n_pods=n_pods)
 
     def create_ps(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         resources = self.spec.ps_resources
-        return self._create_ps(experiment=self.experiment_id,
-                               resources=resources,
-                               n_pods=n_pods)
+        return self._create_ps(resources=resources, n_pods=n_pods)
 
     def delete_ps(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
-        self._delete_ps(experiment=self.experiment_id, n_pods=n_pods)
+        self._delete_ps(n_pods=n_pods)
 
     def start_experiment(self):
         self.check_data_volume()
         self.check_logs_volume()
-        self.create_cluster_config_map(experiment=self.experiment_id)
-        master_resp = self.create_master(experiment=self.experiment_id,
-                                         resources=self.spec.master_resources)
+        self.create_cluster_config_map()
+        master_resp = self.create_master(resources=self.spec.master_resources)
         worker_resp = self.create_worker()
         ps_resp = self.create_ps()
         return {
@@ -374,18 +354,18 @@ class K8SSpawner(K8SManager):
         }
 
     def delete_experiment(self):
-        self.delete_cluster_config_map(experiment=self.experiment_id)
-        self.delete_master(experiment=self.experiment_id)
+        self.delete_cluster_config_map()
+        self.delete_master()
         self.delete_worker()
         self.delete_ps()
 
     def get_task_phase(self, task_type, task_idx):
-        self.pod_manager.set_experiment(self.experiment_id)
+        self.pod_manager.set_experiment(self.experiment_uuid)
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         return self.k8s_api.read_namespaced_pod_status(task_name, self.namespace).status.phase
 
     def get_task_log(self, task_type, task_idx, **kwargs):
-        self.pod_manager.set_experiment(self.experiment_id)
+        self.pod_manager.set_experiment(self.experiment_uuid)
         task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
         return self.k8s_api.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
 
