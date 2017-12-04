@@ -70,9 +70,9 @@ class PolyaxonSpec(DiffModel):
 
     @property
     def n_experiments_to_start(self):
-        # We need to check if we are allowed to start the experiment
-        # If the polyaxonfile has concurrency
-        # we need to need to check how many experiments are running
+        """ We need to check if we are allowed to start the experiment
+        If the polyaxonfile has concurrency we need to check how many experiments are running.
+        """
         return self.concurrency - self.running_experiments.count()
 
 

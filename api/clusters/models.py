@@ -99,7 +99,7 @@ class NodeGPU(DiffModel):
     cluster_node = models.ForeignKey(ClusterNode, related_name='gpus')
 
 
-class ClusterEvents(models.Model):
+class ClusterEvent(models.Model):
     """A model to catch all errors and warning events of the cluster."""
     cluster = models.ForeignKey(Cluster, related_name='errors')
     created_at = models.DateTimeField()

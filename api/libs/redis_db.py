@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 
 from api.settings import RedisPools, redis
-from experiments.models import ExperimentStatus, ExperimentJobStatus
+from experiments.models import ExperimentStatus, ExperimentJobStatus, Experiment, ExperimentJob
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 
@@ -38,7 +38,8 @@ class RedisExperimentStatus(BaseRedisDb):
         if status != current_status:
             red.hset(cls.KEY_EXPERIMENTS_STATUS, experiment_uuid, status)
             # Add new status to the experiment
-            ExperimentStatus.objects.create(experiment__uuid=experiment_uuid, status=status)
+            experiment = Experiment.objects.get(uuid=experiment_uuid)
+            ExperimentStatus.objects.create(experiment=experiment, status=status)
             # Check if we need to remove this experiment from the set to monitor
             if ExperimentLifeCycle.is_done(status):
                 red.srem(cls.KEY_EXPERIMENTS, experiment_uuid)
@@ -82,7 +83,8 @@ class RedisExperimentJobStatus(BaseRedisDb):
         if status != current_status:
             red.hset(cls.KEY_JOBS_STATUS, job_uuid, status)
             # Add new status to the job
-            ExperimentJobStatus.objects.create(job__uuid=job_uuid,
+            job = ExperimentJob.objects.get(uuid=job_uuid)
+            ExperimentJobStatus.objects.create(job=job,
                                                status=status,
                                                message=message,
                                                details=details)

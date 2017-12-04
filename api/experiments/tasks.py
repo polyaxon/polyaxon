@@ -33,7 +33,7 @@ def start_experiment(experiment_id):
     spawner = K8SSpawner(project_uuid=experiment.project.uuid.hex,
                          spec_uuid=experiment.spec.uuid.hex if experiment.spec else '',
                          experiment_uuid=experiment.uuid.hex,
-                         specification=experiment.config,
+                         spec_config=experiment.config,
                          k8s_config=settings.K8S_CONFIG,
                          namespace=settings.K8S_NAMESPACE,
                          in_cluster=True,
@@ -57,10 +57,10 @@ def start_experiment(experiment_id):
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)
-def check_experiment_status(experiment_id):
+def check_experiment_status(experiment_uuid):
     from experiments.models import Experiment
     from libs.redis_db import RedisExperimentStatus
 
-    experiment = Experiment.objects.get(id=experiment_id)
+    experiment = Experiment.objects.get(uuid=experiment_uuid)
     status = experiment.calculated_status
     RedisExperimentStatus.set_status(experiment_uuid=experiment.uuid.hex, status=status)
