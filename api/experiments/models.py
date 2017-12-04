@@ -110,6 +110,18 @@ class Experiment(DiffModel):
         """If the experiment belongs to a polyaxon_spec or is independently created."""
         return not self.spec
 
+    def update_status(self):
+        current_status = self.last_status.status
+        calculated_status = self.calculated_status
+        if calculated_status != current_status:
+            # Add new status to the experiment
+            self.set_status(calculated_status)
+            return calculated_status, True
+        return calculated_status, False
+
+    def set_status(self, status):
+        ExperimentStatus.objects.create(experiment=self, status=status)
+
 
 post_save.connect(new_experiment, sender=Experiment, dispatch_uid="experiment_saved")
 

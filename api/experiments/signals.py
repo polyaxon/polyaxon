@@ -12,10 +12,9 @@ def new_experiment(sender, **kwargs):
     if not created:
         return
 
-    from libs.redis_db import RedisExperimentStatus
     from experiments.tasks import start_experiment
 
-    RedisExperimentStatus.set_status(instance.uuid.hex, ExperimentLifeCycle.CREATED)
+    instance.set_status(ExperimentLifeCycle.CREATED)
     if instance.is_independent:
         # Schedule the new experiment to be picked by the spawner
         start_experiment.delay(experiment_id=instance.id)

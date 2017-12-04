@@ -10,7 +10,6 @@ from experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobSerializer,
 )
-from libs.redis_db import RedisExperimentStatus
 from spawner.utils.constants import ExperimentLifeCycle
 
 from tests.factories.factory_experiments import (
@@ -218,7 +217,7 @@ class TestExperimentStatusSerializer(BaseTest):
 
     def setUp(self):
         super().setUp()
-        with patch.object(RedisExperimentStatus, 'set_status') as _:
+        with patch.object(Experiment, 'set_status') as _:
             with patch('experiments.tasks.start_experiment.delay') as _:
                 self.obj1 = self.factory_class()
                 self.obj2 = self.factory_class()

@@ -7,8 +7,8 @@ import mock
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
 
-from experiments.models import ExperimentStatus, ExperimentJob
-from libs.redis_db import RedisExperimentStatus, RedisExperimentJobStatus
+from experiments.models import ExperimentStatus, ExperimentJob, Experiment
+from libs.redis_db import RedisExperimentJobStatus
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 from tests.factories.factory_clusters import ClusterFactory
@@ -25,7 +25,7 @@ class TestExperimentModel(BaseTest):
             spec = PolyaxonSpecFactory(user=cluster.user)
 
         with patch('experiments.tasks.start_experiment.delay') as mock_fct:
-            with patch.object(RedisExperimentStatus, 'set_status') as mock_fct2:
+            with patch.object(Experiment, 'set_status') as mock_fct2:
                 ExperimentFactory(spec=spec)
 
         assert mock_fct.call_count == 0
@@ -44,7 +44,7 @@ class TestExperimentModel(BaseTest):
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
         with patch('projects.tasks.start_group_experiments.delay') as _:
             with patch('experiments.tasks.start_experiment.delay') as mock_fct:
-                with patch.object(RedisExperimentStatus, 'set_status') as mock_fct2:
+                with patch.object(Experiment, 'set_status') as mock_fct2:
                     ExperimentFactory()
 
         assert mock_fct.call_count == 1
@@ -60,8 +60,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status.status == ExperimentLifeCycle.SCHEDULED
 
         # Assert also that experiment is monitored
-        assert RedisExperimentStatus.get_status(
-            experiment_uuid=experiment.uuid.hex) == ExperimentLifeCycle.SCHEDULED
+        assert experiment.last_status.status == ExperimentLifeCycle.SCHEDULED
 
     @mock.patch('experiments.tasks.K8SSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
@@ -80,11 +79,9 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status.status == ExperimentLifeCycle.STARTING
 
         # Assert also that experiment is monitored
-        assert RedisExperimentStatus.get_status(
-            experiment_uuid=experiment.uuid.hex) == ExperimentLifeCycle.STARTING
+        assert experiment.last_status.status == ExperimentLifeCycle.STARTING
         # Assert also that experiment is monitored
-        assert RedisExperimentStatus.get_status(
-            experiment_uuid=experiment.uuid.hex) == ExperimentLifeCycle.STARTING
+        assert experiment.last_status.status == ExperimentLifeCycle.STARTING
 
         # Assert 3 job were created
         assert ExperimentJob.objects.filter(experiment=experiment).count() == 3

@@ -11,7 +11,6 @@ from polyaxon_schemas.utils import TaskType
 from api.utils import config
 from api.celery_api import app as celery_app
 from api.settings import CeleryTasks
-from libs.redis_db import RedisExperimentStatus
 from spawner import K8SSpawner
 from spawner.utils.constants import ExperimentLifeCycle
 
@@ -29,9 +28,7 @@ def start_experiment(experiment_id):
         return
 
     # Update experiment status to show that its started
-    RedisExperimentStatus.set_status(experiment.uuid.hex, ExperimentLifeCycle.SCHEDULED)
-    # Add the experiment to the list of experiments to monitor
-    RedisExperimentStatus.monitor(experiment.uuid.hex)
+    experiment.set_status(ExperimentLifeCycle.SCHEDULED)
 
     # Use spawner to start the experiment
     spawner = K8SSpawner(project_uuid=experiment.project.uuid.hex,
@@ -63,8 +60,6 @@ def start_experiment(experiment_id):
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)
 def check_experiment_status(experiment_uuid):
     from experiments.models import Experiment
-    from libs.redis_db import RedisExperimentStatus
 
     experiment = Experiment.objects.get(uuid=experiment_uuid)
-    status = experiment.calculated_status
-    RedisExperimentStatus.set_status(experiment_uuid=experiment.uuid.hex, status=status)
+    experiment.update_status()

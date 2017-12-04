@@ -19,32 +19,13 @@ class RedisExperimentStatus(BaseRedisDb):
     """The `ExperimentStatus` class holds information about the experiment run status."""
 
     KEY_EXPERIMENTS = 'EXPERIMENTS'  # Redis set: experiments to monitor the status
-    KEY_EXPERIMENTS_STATUS = 'EXPERIMENTS_STATUS'  # Redis Hash: maps experiments to status
 
     REDIS_POOL = RedisPools.EXPERIMENTS_STATUS  # Redis pool
 
     @classmethod
-    def get_status(cls, experiment_uuid):
-        """Return the status for an experiment given the id."""
+    def unmonitor(cls, experiment_uuid):
         red = cls._get_redis()
-        if red.sismember(cls.KEY_EXPERIMENTS, experiment_uuid):
-            status = red.hget(cls.KEY_EXPERIMENTS_STATUS, experiment_uuid)
-            return status.decode('utf-8')
-
-    @classmethod
-    def set_status(cls, experiment_uuid, status):
-        red = cls._get_redis()
-        current_status = cls.get_status(experiment_uuid=experiment_uuid)
-        if status != current_status:
-            red.hset(cls.KEY_EXPERIMENTS_STATUS, experiment_uuid, status)
-            # Add new status to the experiment
-            experiment = Experiment.objects.get(uuid=experiment_uuid)
-            ExperimentStatus.objects.create(experiment=experiment, status=status)
-            # Check if we need to remove this experiment from the set to monitor
-            if ExperimentLifeCycle.is_done(status):
-                red.srem(cls.KEY_EXPERIMENTS, experiment_uuid)
-            return True
-        return False
+        red.srem(cls.KEY_EXPERIMENTS, experiment_uuid)
 
     @classmethod
     def monitor(cls, experiment_uuid):
