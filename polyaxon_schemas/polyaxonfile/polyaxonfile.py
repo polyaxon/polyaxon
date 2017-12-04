@@ -4,11 +4,11 @@ from __future__ import absolute_import, division, print_function
 import os
 
 from polyaxon_schemas.exceptions import PolyaxonfileError, PolyaxonConfigurationError
-from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.polyaxonfile.specification import MultiSpecification
 from polyaxon_schemas.utils import to_list
 
 
-class PolyaxonFile(Specification):
+class PolyaxonFile(MultiSpecification):
     """Parses Polyaxonfiles, and validate that it respects the current file specification"""
 
     def __init__(self, filepaths):

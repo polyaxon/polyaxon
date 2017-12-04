@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import abc
 import itertools
 import six
 import os
@@ -18,17 +19,10 @@ from polyaxon_schemas.settings import ClusterConfig, RunTypes
 from polyaxon_schemas.utils import TaskType, to_list
 
 
-class Specification(object):
-    """The polyaxonfile specification (parsing and validation of Polyaxonfiles/Configurations).
+@six.add_metaclass(abc.ABCMeta)
+class BaseSpecification(object):
+    """Base abstract specification for plyaxonfiles and configurations."""
 
-    HEADERS:
-        version: the version of the file to be parsed and validated.
-        matrix: hyper parameters matrix definition.
-        declarations: variables/modules that can be reused.
-
-    SECTIONS:
-
-    """
     MAX_VERSION = 1.0  # Min Polyaxonfile specification version this CLI supports
     MIN_VERSION = 1.0  # Max Polyaxonfile specification version this CLI supports
 
@@ -70,23 +64,13 @@ class Specification(object):
         self._data = reader.read(self._values)
         Parser.check_data(spec=self, data=self._data)
         headers = Parser.get_headers(spec=self, data=self._data)
-        matrix = Parser.get_matrix(spec=self, data=self._data)
-        try:
-            self._matrix = validator.validate_matrix(matrix)
-        except ValidationError as e:
-            raise PolyaxonConfigurationError(e)
         try:
             self._headers = validator.validate_headers(spec=self, data=headers)
         except ValidationError as e:
             raise PolyaxonConfigurationError(e)
-        self._parsed_data = []
-        self._validated_data = []
-
-        matrix_declarations = self.matrix_declarations if self.matrix_declarations else [{}]
-        for matrix_declaration in matrix_declarations:
-            parsed_data = Parser.parse(self, self._data, matrix_declaration)
-            self._validated_data.append(validator.validate(spec=self, data=parsed_data))
-            self._parsed_data.append(parsed_data)
+        parsed_data = Parser.parse(self, self._data, None)
+        self._validated_data = validator.validate(spec=self, data=parsed_data)
+        self._parsed_data = parsed_data
 
     @classmethod
     def read(cls, filepaths):
@@ -101,43 +85,6 @@ class Specification(object):
     @cached_property
     def data(self):
         return self._data
-
-    @cached_property
-    def matrix(self):
-        return self._matrix
-
-    @cached_property
-    def matrix_space(self):
-        if not self.matrix:
-            return 1
-
-        space_size = 1
-        for value in six.itervalues(self.matrix):
-            space_size *= len(value.to_numpy())
-        return space_size
-
-    @cached_property
-    def experiments_def(self):
-        concurrent_experiments = self.settings.concurrent_experiments if self.settings else 1
-        return self.matrix_space, concurrent_experiments
-
-    @cached_property
-    def matrix_declarations(self):
-        if not self.matrix:
-            return []
-
-        declarations = []
-        keys = list(six.iterkeys(self.matrix))
-        values = [v.to_numpy() for v in six.itervalues(self.matrix)]
-        for v in itertools.product(*values):
-            declarations.append(dict(zip(keys, v)))
-
-        if len(declarations) != self.matrix_space:
-            raise PolyaxonConfigurationError('The matrix declaration is not valid.')
-        return declarations
-
-    def get_declarations_at(self, experiment):
-        return self.matrix_declarations[experiment]
 
     @cached_property
     def headers(self):
@@ -177,9 +124,6 @@ class Specification(object):
 
     @cached_property
     def project_path(self):
-        return self.get_project_path_at()
-
-    def get_project_path_at(self, experiment=None):
         def get_path():
             project_path = None
             if self.settings:
@@ -193,108 +137,93 @@ class Specification(object):
 
             return get_vol_path(constants.LOGS_VOLUME, self.run_type) + self.project.name
 
-        path = get_path()
-        if self.matrix_space == 1 or experiment is None:
-            return path
+        return get_path()
 
-        return os.path.join(path, experiment)
+
+class Specification(BaseSpecification):
+    """The Base polyaxonfile specification (parsing and validation of Polyaxonfiles/Configurations).
+
+    SECTIONS:
+        VERSION: defines the version of the file to be parsed and validated.
+        PROJECT: defines the project name this specification belongs to (must be unique).
+        SETTINGS: defines the logging, run type and concurrent runs.
+        ENVIRONMENT: defines the run environment for experiment.
+        MATRIX: hyper parameters matrix definition.
+        DECLARATIONS: variables/modules that can be reused.
+        RUN_EXEC: defines the run step where the user can set a docker image to execute
+        MODEL: defines the model to use based on the declarative API.
+        TRAIN: defines how to train a model and how to read the data.
+        EVAL: defines how to evaluate a modela how to read the data
+    """
+
+    def __init__(self, experiment, values):
+        self._experiment = experiment
+        super(Specification, self).__init__(values=values)
+
+    @property
+    def experiment(self):
+        return self._experiment
+
+    @cached_property
+    def experiment_path(self):
+        return os.path.join(self.project_path, '{}'.format(self.experiment))
 
     @cached_property
     def parsed_data(self):
-        if self.matrix_space == 1:
-            return self.get_parsed_data_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-        please use `get_parsed_data_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_parsed_data_at(self, experiment):
-        if experiment > self.matrix_space:
-            raise ValueError("""Could not find an experiment at index {},
-            this file has {} experiments""".format(experiment, self.matrix_space))
-
-        return self._parsed_data[experiment]
+        return self._parsed_data
 
     @cached_property
     def validated_data(self):
-        if self.matrix_space == 1:
-            return self.get_validated_data_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-           please use `get_validated_data_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_validated_data_at(self, experiment):
-        if experiment > self.matrix_space:
-            raise ValueError("""Could not find an experiment at index {},
-               this file has {} experiments""".format(experiment, self.matrix_space))
-
-        return self._validated_data[experiment]
+        return self._validated_data
 
     @cached_property
     def is_runnable(self):
         """Checks of the sections required to run experiment exist."""
-        if self.matrix_space == 1:
-            return self.is_runnable_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-        please use `is_runnable_at(experiment)` instead.""".format(self.matrix_space))
-
-    def is_runnable_at(self, experiment):
-        sections = set(self.get_validated_data_at(experiment).keys())
+        sections = set(self.validated_data.keys())
         if (self.RUN_EXEC in sections or
-                {self.MODEL, self.TRAIN} <= sections or
-                {self.MODEL, self.EVAL} <= sections):
+                    {self.MODEL, self.TRAIN} <= sections or
+                    {self.MODEL, self.EVAL} <= sections):
             return True
         return False
 
     @cached_property
     def run_exec(self):
-        if self.matrix_space == 1:
-            return self.get_run_exec_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-            please use `get_run_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_run_exec_at(self, experiment):
-        return self.get_validated_data_at(experiment).get(self.RUN_EXEC, None)
+        return self.validated_data.get(self.RUN_EXEC, None)
 
     @cached_property
     def model(self):
-        if self.matrix_space == 1:
-            return self.get_model_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-        please use `get_model_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_model_at(self, experiment):
-        return self.get_validated_data_at(experiment).get(self.MODEL, None)
+        return self.validated_data.get(self.MODEL, None)
 
     @cached_property
     def environment(self):
-        if self.matrix_space == 1:
-            return self.get_environment_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-        please use `get_environment_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_environment_at(self, experiment):
-        return self.get_validated_data_at(experiment).get(self.ENVIRONMENT, None)
+        return self.validated_data.get(self.ENVIRONMENT, None)
 
     @cached_property
     def train(self):
-        if self.matrix_space == 1:
-            return self.get_train_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-                please use `get_train_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_train_at(self, experiment):
-        return self.get_validated_data_at(experiment).get(self.TRAIN, None)
+        return self.validated_data.get(self.TRAIN, None)
 
     @cached_property
     def eval(self):
-        if self.matrix_space == 1:
-            return self.get_eval_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-        please use `get_eval_at(experiment)` instead.""".format(self.matrix_space))
+        return self.validated_data.get(self.EVAL, None)
 
-    def get_eval_at(self, experiment):
-        return self.get_validated_data_at(experiment).get(self.EVAL, None)
+    @cached_property
+    def cluster_def(self):
+        cluster = {
+            TaskType.MASTER: 1,
+        }
+        is_distributed = False
+        environment = self.environment
 
-    def _get_configs_at(self, experiment, configs, default_config, task_type):
-        cluster_def, is_distributed = self.get_cluster_def_at(experiment)
+        if environment:
+            cluster[TaskType.WORKER] = environment.n_workers
+            cluster[TaskType.PS] = environment.n_ps
+            if environment.n_workers != 0 or environment.n_ps != 0:
+                is_distributed = True
+
+        return cluster, is_distributed
+
+    def _get_configs(self, configs, default_config, task_type):
+        cluster_def, is_distributed = self.cluster_def
 
         result_configs = {}
         if not is_distributed:
@@ -311,34 +240,20 @@ class Specification(object):
 
     @cached_property
     def worker_configs(self):
-        if self.matrix_space == 1:
-            return self.get_worker_configs_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-           please use `get_worker_configs_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_worker_configs_at(self, experiment):
-        environment = self.get_environment_at(experiment)
-        return self._get_configs_at(experiment,
-                                    environment.worker_configs,
-                                    environment.default_worker_config,
-                                    TaskType.WORKER)
+        environment = self.environment
+        return self._get_configs(configs=environment.worker_configs,
+                                 default_config=environment.default_worker_config,
+                                 task_type=TaskType.WORKER)
 
     @cached_property
     def ps_configs(self):
-        if self.matrix_space == 1:
-            return self.get_ps_configs_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-               please use `get_ps_configs_at(experiment)` instead.""".format(self.matrix_space))
+        environment = self.environment
+        return self._get_configs(configs=environment.ps_configs,
+                                 default_config=environment.default_ps_config,
+                                 task_type=TaskType.PS)
 
-    def get_ps_configs_at(self, experiment):
-        environment = self.get_environment_at(experiment)
-        return self._get_configs_at(experiment,
-                                    environment.ps_configs,
-                                    environment.default_ps_config,
-                                    TaskType.PS)
-
-    def _get_resources_at(self, experiment, resources, default_resources, task_type):
-        cluster_def, is_distributed = self.get_cluster_def_at(experiment)
+    def _get_resources(self, resources, default_resources, task_type):
+        cluster_def, is_distributed = self.cluster_def
 
         if not is_distributed:
             return None
@@ -355,88 +270,34 @@ class Specification(object):
 
     @cached_property
     def run_resources(self):
-        if self.matrix_space == 1:
-            return self.get_run_resources_at(0)
-        raise AttributeError(
-            "Current polyaxonfile has multiple experiments ({}),"
-            "please use `get_run_resources_at(experiment)` instead.".format(self.matrix_space))
-
-    def get_run_resources_at(self, experiment):
-        environment = self.get_environment_at(experiment)
-        return environment.resources
+        return self.environment.resources
 
     @cached_property
     def master_resources(self):
-        if self.matrix_space == 1:
-            return self.get_master_resources_at(0)
-        raise AttributeError(
-            "Current polyaxonfile has multiple experiments ({}),"
-            "please use `get_master_resources_at(experiment)` instead.".format(self.matrix_space))
-
-    def get_master_resources_at(self, experiment):
-        environment = self.get_environment_at(experiment)
-        return environment.master_resources
+        return self.environment.master_resources
 
     @cached_property
     def worker_resources(self):
-        if self.matrix_space == 1:
-            return self.get_worker_resources_at(0)
-        raise AttributeError(
-            "Current polyaxonfile has multiple experiments ({}),"
-            "please use `get_worker_resources_at(experiment)` instead.".format(self.matrix_space))
-
-    def get_worker_resources_at(self, experiment):
-        environment = self.get_environment_at(experiment)
-        return self._get_resources_at(experiment,
-                                     environment.worker_resources,
-                                     environment.default_worker_resources,
-                                     TaskType.WORKER)
+        environment = self.environment
+        return self._get_resources(resources=environment.worker_resources,
+                                   default_resources=environment.default_worker_resources,
+                                   task_type=TaskType.WORKER)
 
     @cached_property
     def ps_resources(self):
-        if self.matrix_space == 1:
-            return self.get_ps_resources_at(0)
-        raise AttributeError(
-            "Current polyaxonfile has multiple experiments ({}),"
-            "please use `get_ps_resources_at(experiment)` instead.".format(self.matrix_space))
+        environment = self.environment
+        return self._get_resources(resources=environment.ps_resources,
+                                   default_resources=environment.default_ps_resources,
+                                   task_type=TaskType.PS)
 
-    def get_ps_resources_at(self, experiment):
-        environment = self.get_environment_at(experiment)
-        return self._get_resources_at(experiment,
-                                     environment.ps_resources,
-                                     environment.default_ps_resources,
-                                     TaskType.PS)
-
-    @cached_property
-    def cluster_def(self):
-        if self.matrix_space == 1:
-            return self.get_cluster_def_at(0)
-        raise AttributeError("""Current polyaxonfile has multiple experiments ({}),
-        please use `get_train_at(experiment)` instead.""".format(self.matrix_space))
-
-    def get_cluster_def_at(self, experiment):
-        cluster = {
-            TaskType.MASTER: 1,
-        }
-        is_distributed = False
-        environment = self.get_environment_at(experiment)
-
-        if environment:
-            cluster[TaskType.WORKER] = environment.n_workers
-            cluster[TaskType.PS] = environment.n_ps
-            if environment.n_workers != 0 or environment.n_ps != 0:
-                is_distributed = True
-
-        return cluster, is_distributed
-
-    def get_k8s_cluster(self, experiment=0, port=constants.DEFAULT_PORT):
-        cluster_def, is_distributed = self.get_cluster_def_at(experiment)
+    def get_k8s_cluster(self, port=constants.DEFAULT_PORT):
+        cluster_def, is_distributed = self.cluster_def
 
         def get_address(host):
             return '{}:{}'.format(host, port)
 
         task_name = constants.TASK_NAME.format(project=self.project.name,
-                                               experiment=experiment,
+                                               experiment=self.experiment,
                                                task_type=TaskType.MASTER,
                                                task_idx=0)
         cluster_config = {
@@ -447,7 +308,7 @@ class Specification(object):
         for i in range(cluster_def.get(TaskType.WORKER, 0)):
             task_name = constants.TASK_NAME.format(
                 project=self.project.name,
-                experiment=experiment,
+                experiment=self.experiment,
                 task_type=TaskType.WORKER,
                 task_idx=i)
             workers.append(get_address(task_name))
@@ -458,7 +319,7 @@ class Specification(object):
         for i in range(cluster_def.get(TaskType.PS, 0)):
             task_name = constants.TASK_NAME.format(
                 project=self.project.name,
-                experiment=experiment,
+                experiment=self.experiment,
                 task_type=TaskType.PS,
                 task_idx=i)
             ps.append(get_address(task_name))
@@ -467,7 +328,7 @@ class Specification(object):
 
         return ClusterConfig.from_dict(cluster_config)
 
-    def get_local_cluster(self, experiment=0,
+    def get_local_cluster(self,
                           host='127.0.0.1',
                           master_port=10000,
                           worker_port=11000,
@@ -475,7 +336,7 @@ class Specification(object):
         def get_address(port):
             return '{}:{}'.format(host, port)
 
-        cluster_def, is_distributed = self.get_cluster_def_at(experiment)
+        cluster_def, is_distributed = self.cluster_def
 
         cluster_config = {
             TaskType.MASTER: [get_address(master_port)]
@@ -497,8 +358,88 @@ class Specification(object):
 
         return ClusterConfig.from_dict(cluster_config)
 
-    def get_cluster(self, experiment=0):
+    def get_cluster(self, **kwargs):
         if self.is_local:
-            return self.get_local_cluster(experiment)
+            return self.get_local_cluster(**kwargs)
         elif self.run_type in (RunTypes.MINIKUBE, RunTypes.KUBERNETES):
-            return self.get_k8s_cluster(experiment)
+            return self.get_k8s_cluster(**kwargs)
+
+
+class MultiSpecification(BaseSpecification):
+    """Parses Polyaxonfiles/Configuration, with matrix section definition."""
+
+    def __init__(self, values):
+        self._values = to_list(values)
+
+        self._data = reader.read(self._values)
+        Parser.check_data(spec=self, data=self._data)
+        headers = Parser.get_headers(spec=self, data=self._data)
+        matrix = Parser.get_matrix(spec=self, data=self._data)
+        try:
+            self._matrix = validator.validate_matrix(matrix)
+        except ValidationError as e:
+            raise PolyaxonConfigurationError(e)
+        try:
+            self._headers = validator.validate_headers(spec=self, data=headers)
+        except ValidationError as e:
+            raise PolyaxonConfigurationError(e)
+        self._parsed_data = []
+        self._validated_data = []
+        self._experiment_specs = []
+
+        matrix_declarations = self.matrix_declarations if self.matrix_declarations else [{}]
+        for i, matrix_declaration in enumerate(matrix_declarations):
+            parsed_data = Parser.parse(self, self._data, matrix_declaration)
+            self._validated_data.append(validator.validate(spec=self, data=parsed_data))
+            self._parsed_data.append(parsed_data)
+            self._experiment_specs.append(Specification(experiment=i, values=parsed_data))
+
+    @cached_property
+    def experiment_specs(self):
+        return self._experiment_specs
+
+    @cached_property
+    def matrix(self):
+        return self._matrix
+
+    @cached_property
+    def matrix_space(self):
+        if not self.matrix:
+            return 1
+
+        space_size = 1
+        for value in six.itervalues(self.matrix):
+            space_size *= len(value.to_numpy())
+        return space_size
+
+    @cached_property
+    def experiments_def(self):
+        concurrent_experiments = self.settings.concurrent_experiments if self.settings else 1
+        return self.matrix_space, concurrent_experiments
+
+    @cached_property
+    def matrix_declarations(self):
+        if not self.matrix:
+            return []
+
+        declarations = []
+        keys = list(six.iterkeys(self.matrix))
+        values = [v.to_numpy() for v in six.itervalues(self.matrix)]
+        for v in itertools.product(*values):
+            declarations.append(dict(zip(keys, v)))
+
+        if len(declarations) != self.matrix_space:
+            raise PolyaxonConfigurationError('The matrix declaration is not valid.')
+        return declarations
+
+    def get_declarations_at(self, experiment):
+        if experiment > self.matrix_space:
+            raise ValueError("""Could not find an experiment at index {},
+               this file has {} experiments""".format(experiment, self.matrix_space))
+        return self.matrix_declarations[experiment]
+
+    def experiment_spec_at(self, experiment):
+        if experiment > self.matrix_space:
+            raise ValueError("""Could not find an experiment at index {},
+               this file has {} experiments""".format(experiment, self.matrix_space))
+        return self.experiment_specs[experiment]

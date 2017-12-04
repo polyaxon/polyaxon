@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import copy
+
 import six
 
 from polyaxon_schemas.eval import EvalConfig
@@ -39,6 +41,7 @@ def validate_matrix(data):
 
 def validate(spec, data):
     """Validates the data and creates the config objects"""
+    data = copy.deepcopy(data)
     validated_data = {}
 
     def add_validated_section(section, config):

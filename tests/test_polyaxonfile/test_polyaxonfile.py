@@ -43,51 +43,55 @@ class TestPolyaxonfile(TestCase):
 
     def test_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file.yml'))
+        spec = plxfile.experiment_spec_at(0)
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/tmp/plx_logs/project1'
         assert plxfile.matrix is None
         assert plxfile.settings is None
-        assert plxfile.environment is None
-        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.LOCAL
-        assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
-                                                            TaskType.PS: [],
-                                                            TaskType.WORKER: []})
-        assert isinstance(plxfile.model, RegressorConfig)
-        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(plxfile.model.optimizer, AdamConfig)
-        assert isinstance(plxfile.model.graph, GraphConfig)
-        assert len(plxfile.model.graph.layers) == 4
-        assert plxfile.model.graph.input_layers == [['images', 0, 0]]
-        last_layer = plxfile.model.graph.layers[-1].name
-        assert plxfile.model.graph.output_layers == [[last_layer, 0, 0]]
-        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert plxfile.eval is None
+        assert spec.environment is None
+        assert spec.experiment_path == '/tmp/plx_logs/project1/0'
+        assert spec.is_runnable
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert_equal_dict(spec.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
+                                                         TaskType.PS: [],
+                                                         TaskType.WORKER: []})
+        assert isinstance(spec.model, RegressorConfig)
+        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
+        assert isinstance(spec.model.optimizer, AdamConfig)
+        assert isinstance(spec.model.graph, GraphConfig)
+        assert len(spec.model.graph.layers) == 4
+        assert spec.model.graph.input_layers == [['images', 0, 0]]
+        last_layer = spec.model.graph.layers[-1].name
+        assert spec.model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.eval is None
 
     def test_simple_generator_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_generator_file.yml'))
+        spec = plxfile.experiment_spec_at(0)
+        assert plxfile.matrix is None
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/tmp/plx_logs/project1'
-        assert plxfile.matrix is None
         assert plxfile.settings is None
-        assert plxfile.environment is None
-        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.LOCAL
-        assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert_equal_dict(plxfile.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
-                                                            TaskType.PS: [],
-                                                            TaskType.WORKER: []})
-        assert isinstance(plxfile.model, GeneratorConfig)
-        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(plxfile.model.optimizer, AdamConfig)
-        assert isinstance(plxfile.model.encoder, GraphConfig)
-        assert isinstance(plxfile.model.decoder, GraphConfig)
-        assert isinstance(plxfile.model.bridge, NoOpBridgeConfig)
-        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert plxfile.eval is None
+        assert spec.experiment_path == '/tmp/plx_logs/project1/0'
+        assert spec.environment is None
+        assert spec.is_runnable
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert_equal_dict(spec.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
+                                                         TaskType.PS: [],
+                                                         TaskType.WORKER: []})
+        assert isinstance(spec.model, GeneratorConfig)
+        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
+        assert isinstance(spec.model.optimizer, AdamConfig)
+        assert isinstance(spec.model.encoder, GraphConfig)
+        assert isinstance(spec.model.decoder, GraphConfig)
+        assert isinstance(spec.model.bridge, NoOpBridgeConfig)
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.eval is None
 
     def test_advanced_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/advanced_file.yml'))
@@ -95,36 +99,37 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
-        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.MINIKUBE
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        assert isinstance(plxfile.environment, EnvironmentConfig)
-        assert plxfile.environment.n_workers == 5
-        assert plxfile.environment.n_ps == 10
-        assert plxfile.environment.delay_workers_by_global_step is True
-        assert isinstance(plxfile.environment.run_config, RunConfig)
-        assert plxfile.environment.run_config.tf_random_seed == 100
-        assert plxfile.environment.run_config.save_summary_steps == 100
-        assert plxfile.environment.run_config.save_checkpoints_secs == 60
-        assert isinstance(plxfile.environment.run_config.session, SessionConfig)
-        assert plxfile.environment.run_config.session.allow_soft_placement is True
-        assert plxfile.environment.run_config.session.intra_op_parallelism_threads == 2
-        assert plxfile.environment.run_config.session.inter_op_parallelism_threads == 2
+        spec = plxfile.experiment_spec_at(0)
+        assert spec.is_runnable
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.environment.n_workers == 5
+        assert spec.environment.n_ps == 10
+        assert spec.environment.delay_workers_by_global_step is True
+        assert isinstance(spec.environment.run_config, RunConfig)
+        assert spec.environment.run_config.tf_random_seed == 100
+        assert spec.environment.run_config.save_summary_steps == 100
+        assert spec.environment.run_config.save_checkpoints_secs == 60
+        assert isinstance(spec.environment.run_config.session, SessionConfig)
+        assert spec.environment.run_config.session.allow_soft_placement is True
+        assert spec.environment.run_config.session.intra_op_parallelism_threads == 2
+        assert spec.environment.run_config.session.inter_op_parallelism_threads == 2
 
         # check properties for returning worker configs and resources
-        assert plxfile.environment.worker_configs is None
-        assert plxfile.environment.ps_configs is None
-        assert plxfile.environment.resources is None
-        assert plxfile.environment.worker_resources is None
-        assert plxfile.environment.ps_resources is None
+        assert spec.environment.worker_configs is None
+        assert spec.environment.ps_configs is None
+        assert spec.environment.resources is None
+        assert spec.environment.worker_resources is None
+        assert spec.environment.ps_resources is None
 
-        assert plxfile.worker_configs == {}
-        assert plxfile.ps_configs == {}
-        assert plxfile.worker_resources == {}
-        assert plxfile.ps_resources == {}
+        assert spec.worker_configs == {}
+        assert spec.ps_configs == {}
+        assert spec.worker_resources == {}
+        assert spec.ps_resources == {}
 
-        assert plxfile.cluster_def == ({TaskType.MASTER: 1,
+        assert spec.cluster_def == ({TaskType.MASTER: 1,
                                         TaskType.WORKER: 5,
                                         TaskType.PS: 10}, True)
 
@@ -134,7 +139,7 @@ class TestPolyaxonfile(TestCase):
                                               task_type=task_type,
                                               task_idx=task_idx)
 
-        assert_equal_dict(plxfile.get_cluster().to_dict(),
+        assert_equal_dict(spec.get_cluster().to_dict(),
                           {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],
                            TaskType.WORKER: [
                                '{}:2222'.format(task_name(TaskType.WORKER, 0)),
@@ -155,19 +160,19 @@ class TestPolyaxonfile(TestCase):
                                '{}:2222'.format(task_name(TaskType.PS, 8)),
                                '{}:2222'.format(task_name(TaskType.PS, 9)),
                            ]})
-        assert isinstance(plxfile.model, ClassifierConfig)
-        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(plxfile.model.optimizer, AdamConfig)
-        assert plxfile.model.optimizer.learning_rate == 0.21
-        assert isinstance(plxfile.model.graph, GraphConfig)
-        assert len(plxfile.model.graph.layers) == 7
-        assert plxfile.model.graph.input_layers == [['images', 0, 0]]
-        assert len(plxfile.model.graph.output_layers) == 3
-        assert ['super_dense', 0, 0] in plxfile.model.graph.output_layers
-        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert len(plxfile.train.data_pipeline.feature_processors.feature_processors) == 1
-        assert isinstance(plxfile.eval.data_pipeline, TFRecordImagePipelineConfig)
-        assert plxfile.eval.data_pipeline.feature_processors is None
+        assert isinstance(spec.model, ClassifierConfig)
+        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
+        assert isinstance(spec.model.optimizer, AdamConfig)
+        assert spec.model.optimizer.learning_rate == 0.21
+        assert isinstance(spec.model.graph, GraphConfig)
+        assert len(spec.model.graph.layers) == 7
+        assert spec.model.graph.input_layers == [['images', 0, 0]]
+        assert len(spec.model.graph.output_layers) == 3
+        assert ['super_dense', 0, 0] in spec.model.graph.output_layers
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert len(spec.train.data_pipeline.feature_processors.feature_processors) == 1
+        assert isinstance(spec.eval.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.eval.data_pipeline.feature_processors is None
 
     def test_advanced_file_with_custom_configs_and_resources_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
@@ -176,69 +181,70 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
-        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.MINIKUBE
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        assert isinstance(plxfile.environment, EnvironmentConfig)
-        assert plxfile.environment.n_workers == 5
-        assert plxfile.environment.n_ps == 10
-        assert plxfile.environment.delay_workers_by_global_step is True
-        assert isinstance(plxfile.environment.run_config, RunConfig)
-        assert plxfile.environment.run_config.tf_random_seed == 100
-        assert plxfile.environment.run_config.save_summary_steps == 100
-        assert plxfile.environment.run_config.save_checkpoints_secs == 60
+        spec = plxfile.experiment_spec_at(0)
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.is_runnable
+        assert spec.environment.n_workers == 5
+        assert spec.environment.n_ps == 10
+        assert spec.environment.delay_workers_by_global_step is True
+        assert isinstance(spec.environment.run_config, RunConfig)
+        assert spec.environment.run_config.tf_random_seed == 100
+        assert spec.environment.run_config.save_summary_steps == 100
+        assert spec.environment.run_config.save_checkpoints_secs == 60
 
-        assert isinstance(plxfile.environment.resources, PodResourcesConfig)
-        assert isinstance(plxfile.environment.resources.cpu, K8SResourcesConfig)
-        assert plxfile.environment.resources.cpu.requests == 1
-        assert plxfile.environment.resources.cpu.limits == 2
+        assert isinstance(spec.environment.resources, PodResourcesConfig)
+        assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
+        assert spec.environment.resources.cpu.requests == 1
+        assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(plxfile.environment.run_config.session, SessionConfig)
-        assert plxfile.environment.run_config.session.allow_soft_placement is True
-        assert plxfile.environment.run_config.session.intra_op_parallelism_threads == 2
-        assert plxfile.environment.run_config.session.inter_op_parallelism_threads == 2
+        assert isinstance(spec.environment.run_config.session, SessionConfig)
+        assert spec.environment.run_config.session.allow_soft_placement is True
+        assert spec.environment.run_config.session.intra_op_parallelism_threads == 2
+        assert spec.environment.run_config.session.inter_op_parallelism_threads == 2
 
-        assert isinstance(plxfile.environment.default_worker_config, SessionConfig)
-        assert plxfile.environment.default_worker_config.allow_soft_placement is True
-        assert plxfile.environment.default_worker_config.intra_op_parallelism_threads == 1
-        assert plxfile.environment.default_worker_config.inter_op_parallelism_threads == 1
+        assert isinstance(spec.environment.default_worker_config, SessionConfig)
+        assert spec.environment.default_worker_config.allow_soft_placement is True
+        assert spec.environment.default_worker_config.intra_op_parallelism_threads == 1
+        assert spec.environment.default_worker_config.inter_op_parallelism_threads == 1
 
-        assert isinstance(plxfile.environment.worker_configs[0], SessionConfig)
-        assert plxfile.environment.worker_configs[0].index == 3
-        assert plxfile.environment.worker_configs[0].allow_soft_placement is False
-        assert plxfile.environment.worker_configs[0].intra_op_parallelism_threads == 5
-        assert plxfile.environment.worker_configs[0].inter_op_parallelism_threads == 5
+        assert isinstance(spec.environment.worker_configs[0], SessionConfig)
+        assert spec.environment.worker_configs[0].index == 3
+        assert spec.environment.worker_configs[0].allow_soft_placement is False
+        assert spec.environment.worker_configs[0].intra_op_parallelism_threads == 5
+        assert spec.environment.worker_configs[0].inter_op_parallelism_threads == 5
 
-        assert plxfile.environment.ps_configs is None
+        assert spec.environment.ps_configs is None
 
-        assert plxfile.environment.worker_resources is None
+        assert spec.environment.worker_resources is None
 
-        assert isinstance(plxfile.environment.default_ps_resources, PodResourcesConfig)
-        assert isinstance(plxfile.environment.default_ps_resources.cpu, K8SResourcesConfig)
-        assert plxfile.environment.default_ps_resources.cpu.requests == 2
-        assert plxfile.environment.default_ps_resources.cpu.limits == 4
+        assert isinstance(spec.environment.default_ps_resources, PodResourcesConfig)
+        assert isinstance(spec.environment.default_ps_resources.cpu, K8SResourcesConfig)
+        assert spec.environment.default_ps_resources.cpu.requests == 2
+        assert spec.environment.default_ps_resources.cpu.limits == 4
 
-        assert isinstance(plxfile.environment.ps_resources[0], PodResourcesConfig)
-        assert isinstance(plxfile.environment.ps_resources[0].memory, K8SResourcesConfig)
-        assert plxfile.environment.ps_resources[0].index == 9
-        assert plxfile.environment.ps_resources[0].memory.requests == 512
-        assert plxfile.environment.ps_resources[0].memory.limits == 1024
+        assert isinstance(spec.environment.ps_resources[0], PodResourcesConfig)
+        assert isinstance(spec.environment.ps_resources[0].memory, K8SResourcesConfig)
+        assert spec.environment.ps_resources[0].index == 9
+        assert spec.environment.ps_resources[0].memory.requests == 512
+        assert spec.environment.ps_resources[0].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
-        assert len(plxfile.worker_configs) == plxfile.environment.n_workers
-        assert set(plxfile.worker_configs.values()) == {
-            plxfile.environment.default_worker_config, plxfile.environment.worker_configs[0]}
-        assert plxfile.ps_configs == {}
+        assert len(spec.worker_configs) == spec.environment.n_workers
+        assert set(spec.worker_configs.values()) == {
+            spec.environment.default_worker_config, spec.environment.worker_configs[0]}
+        assert spec.ps_configs == {}
 
-        assert plxfile.worker_resources == {}
-        assert len(plxfile.ps_resources) == plxfile.environment.n_ps
-        assert set(plxfile.ps_resources.values()) == {
-            plxfile.environment.default_ps_resources, plxfile.environment.ps_resources[0]}
+        assert spec.worker_resources == {}
+        assert len(spec.ps_resources) == spec.environment.n_ps
+        assert set(spec.ps_resources.values()) == {
+            spec.environment.default_ps_resources, spec.environment.ps_resources[0]}
 
-        assert plxfile.cluster_def == ({TaskType.MASTER: 1,
-                                        TaskType.WORKER: 5,
-                                        TaskType.PS: 10}, True)
+        assert spec.cluster_def == ({TaskType.MASTER: 1,
+                                     TaskType.WORKER: 5,
+                                     TaskType.PS: 10}, True)
 
         def task_name(task_type, task_idx):
             return constants.TASK_NAME.format(project=plxfile.project.name,
@@ -246,7 +252,7 @@ class TestPolyaxonfile(TestCase):
                                               task_type=task_type,
                                               task_idx=task_idx)
 
-        assert_equal_dict(plxfile.get_cluster().to_dict(),
+        assert_equal_dict(spec.get_cluster().to_dict(),
                           {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],
                            TaskType.WORKER: [
                                '{}:2222'.format(task_name(TaskType.WORKER, 0)),
@@ -267,19 +273,19 @@ class TestPolyaxonfile(TestCase):
                                '{}:2222'.format(task_name(TaskType.PS, 8)),
                                '{}:2222'.format(task_name(TaskType.PS, 9)),
                            ]})
-        assert isinstance(plxfile.model, ClassifierConfig)
-        assert isinstance(plxfile.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(plxfile.model.optimizer, AdamConfig)
-        assert plxfile.model.optimizer.learning_rate == 0.21
-        assert isinstance(plxfile.model.graph, GraphConfig)
-        assert len(plxfile.model.graph.layers) == 7
-        assert plxfile.model.graph.input_layers == [['images', 0, 0]]
-        assert len(plxfile.model.graph.output_layers) == 3
-        assert ['super_dense', 0, 0] in plxfile.model.graph.output_layers
-        assert isinstance(plxfile.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert len(plxfile.train.data_pipeline.feature_processors.feature_processors) == 1
-        assert isinstance(plxfile.eval.data_pipeline, TFRecordImagePipelineConfig)
-        assert plxfile.eval.data_pipeline.feature_processors is None
+        assert isinstance(spec.model, ClassifierConfig)
+        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
+        assert isinstance(spec.model.optimizer, AdamConfig)
+        assert spec.model.optimizer.learning_rate == 0.21
+        assert isinstance(spec.model.graph, GraphConfig)
+        assert len(spec.model.graph.layers) == 7
+        assert spec.model.graph.input_layers == [['images', 0, 0]]
+        assert len(spec.model.graph.output_layers) == 3
+        assert ['super_dense', 0, 0] in spec.model.graph.output_layers
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert len(spec.train.data_pipeline.feature_processors.feature_processors) == 1
+        assert isinstance(spec.eval.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.eval.data_pipeline.feature_processors is None
 
     def test_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
@@ -303,26 +309,18 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.settings.concurrent_experiments == 2
         assert plxfile.run_type == RunTypes.LOCAL
-        # we cannot access property because the current polyaxonfile has multiple experiments
-        with self.assertRaises(AttributeError):
-            plxfile.environment
-        with self.assertRaises(AttributeError):
-            plxfile.cluster_def
-        with self.assertRaises(AttributeError):
-            plxfile.model
-        with self.assertRaises(AttributeError):
-            plxfile.train
 
         for xp in range(plxfile.matrix_space):
-            assert plxfile.is_runnable_at(xp)
-            assert plxfile.get_environment_at(xp) is None
-            assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
+            spec = plxfile.experiment_spec_at(xp)
+            assert spec.is_runnable
+            assert spec.environment is None
+            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-            assert_equal_dict(plxfile.get_cluster(xp).to_dict(),
+            assert_equal_dict(spec.get_cluster().to_dict(),
                               {TaskType.MASTER: ['127.0.0.1:10000'],
                                TaskType.PS: [],
                                TaskType.WORKER: []})
-            model = plxfile.get_model_at(xp)
+            model = spec.model
             assert isinstance(model, RegressorConfig)
             assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
             assert isinstance(model.optimizer, AdamConfig)
@@ -331,7 +329,7 @@ class TestPolyaxonfile(TestCase):
             assert model.graph.input_layers == [['images', 0, 0]]
             last_layer = model.graph.layers[-1].name
             assert model.graph.output_layers == [[last_layer, 0, 0]]
-            assert isinstance(plxfile.get_train_at(xp).data_pipeline, TFRecordImagePipelineConfig)
+            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
     def test_one_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
@@ -350,26 +348,18 @@ class TestPolyaxonfile(TestCase):
             declarations, key=lambda x: (x['loss']))
         assert plxfile.settings is None
         assert plxfile.run_type == RunTypes.LOCAL
-        # we cannot access property because the current polyaxonfile has multiple experiments
-        with self.assertRaises(AttributeError):
-            plxfile.environment
-        with self.assertRaises(AttributeError):
-            plxfile.cluster_def
-        with self.assertRaises(AttributeError):
-            plxfile.model
-        with self.assertRaises(AttributeError):
-            plxfile.train
 
         for xp in range(plxfile.matrix_space):
-            assert plxfile.is_runnable_at(xp)
-            assert plxfile.get_environment_at(xp) is None
-            assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
+            spec = plxfile.experiment_spec_at(xp)
+            assert spec.is_runnable
+            assert spec.environment is None
+            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-            assert_equal_dict(plxfile.get_cluster(xp).to_dict(),
+            assert_equal_dict(spec.get_cluster().to_dict(),
                               {TaskType.MASTER: ['127.0.0.1:10000'],
                                TaskType.PS: [],
                                TaskType.WORKER: []})
-            model = plxfile.get_model_at(xp)
+            model = spec.model
             assert isinstance(model, RegressorConfig)
             assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
             assert isinstance(model.optimizer, AdamConfig)
@@ -378,20 +368,22 @@ class TestPolyaxonfile(TestCase):
             assert model.graph.input_layers == [['images', 0, 0]]
             last_layer = model.graph.layers[-1].name
             assert model.graph.output_layers == [[last_layer, 0, 0]]
-            assert isinstance(plxfile.get_train_at(xp).data_pipeline, TFRecordImagePipelineConfig)
+            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
     def test_run_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file.yml'))
+        spec = plxfile.experiment_spec_at(0)
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
-        assert plxfile.project_path == "/tmp/plx_logs/video_prediction"
         assert plxfile.settings is None
-        assert plxfile.is_runnable
         assert plxfile.run_type == RunTypes.LOCAL
-        assert plxfile.environment is None
-        assert plxfile.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert plxfile.model is None
-        run_exec = plxfile.run_exec
+        assert plxfile.project_path == "/tmp/plx_logs/video_prediction"
+        assert spec.experiment_path == "/tmp/plx_logs/video_prediction/0"
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.model is None
+        run_exec = spec.run_exec
         assert isinstance(run_exec, RunExecConfig)
         assert run_exec.cmd == "video_prediction_train --model=DNA --num_masks=1"
 
@@ -412,24 +404,15 @@ class TestPolyaxonfile(TestCase):
             declarations, key=lambda x: (x['model']))
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.run_type == RunTypes.MINIKUBE
-        # we cannot access property because the current polyaxonfile has multiple experiments
-        with self.assertRaises(AttributeError):
-            plxfile.environment
-        with self.assertRaises(AttributeError):
-            plxfile.cluster_def
-        with self.assertRaises(AttributeError):
-            plxfile.model
-        with self.assertRaises(AttributeError):
-            plxfile.train
-        with self.assertRaises(AttributeError):
-            plxfile.run_exec
+        assert len(plxfile.experiment_specs) == plxfile.matrix_space
 
         for xp in range(plxfile.matrix_space):
-            assert plxfile.is_runnable_at(xp)
-            assert plxfile.get_environment_at(xp) is None
-            assert plxfile.get_cluster_def_at(xp) == ({TaskType.MASTER: 1}, False)
-            assert plxfile.get_model_at(xp) is None
-            run_exec = plxfile.get_run_exec_at(xp)
+            spec = plxfile.experiment_spec_at(xp)
+            assert spec.is_runnable
+            assert spec.environment is None
+            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+            assert spec.model is None
+            run_exec = spec.run_exec
             assert isinstance(run_exec, RunExecConfig)
             declarations = plxfile.get_declarations_at(xp)
             declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
