@@ -160,6 +160,12 @@ class Specification(BaseSpecification):
         self._experiment = experiment
         super(Specification, self).__init__(values=values)
 
+    @classmethod
+    def read(cls, values, experiment=None):
+        if isinstance(values, cls):
+            return values
+        return cls(experiment=experiment, values=values)
+
     @property
     def experiment(self):
         return self._experiment
