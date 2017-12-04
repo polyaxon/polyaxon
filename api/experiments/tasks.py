@@ -44,15 +44,15 @@ def start_experiment(experiment_id):
 
     # Get the number of jobs this experiment started
     master = resp[TaskType.MASTER]
-    job_uuid = master['pod']['metadata']['labels']['task_id']
+    job_uuid = master['pod']['metadata']['labels']['job_id']
     job_uuid = uuid.UUID(job_uuid)
     ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=master)
     for worker in resp[TaskType.WORKER]:
-        job_uuid = worker['pod']['metadata']['labels']['task_id']
+        job_uuid = worker['pod']['metadata']['labels']['job_id']
         job_uuid = uuid.UUID(job_uuid)
         ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=worker)
     for ps in resp[TaskType.PS]:
-        job_uuid = ps['pod']['metadata']['labels']['task_id']
+        job_uuid = ps['pod']['metadata']['labels']['job_id']
         job_uuid = uuid.UUID(job_uuid)
         ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=ps)
 

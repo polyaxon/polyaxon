@@ -59,5 +59,3 @@ def update_system_nodes():
 @celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES_GPUS, time_limit=150)
 def update_system_node_gpus():
     pass
-
-

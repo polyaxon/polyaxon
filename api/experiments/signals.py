@@ -36,10 +36,11 @@ def new_experiment_job_status(sender, **kwargs):
     created = kwargs.get('created', False)
 
     # check if the new status is done to remove the containers from the monitors
-    if instance.job.is_done:
+    job = instance.job
+    if job.is_done:
         from libs.redis_db import RedisJobContainers
 
-        RedisJobContainers.remove_job_containers(instance.uuid.hex)
+        RedisJobContainers.remove_job(job.uuid.hex)
 
     # Check if the experiment job status
     if not created:

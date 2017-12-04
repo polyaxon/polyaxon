@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from api.settings import RedisPools, redis
+from experiments.models import ExperimentJob
 
 
 class BaseRedisDb(object):
@@ -18,6 +19,7 @@ class RedisJobContainers(BaseRedisDb):
     KEY_CONTAINERS = 'CONTAINERS'  # Redis set: container ids
     KEY_CONTAINERS_TO_JOBS = 'CONTAINERS_TO_JOBS'  # Redis hash, maps container id to jobs
     KEYF_JOBS_TO_CONTAINERS = 'JOBS_TO_CONTAINERS:{}'  # Redis set, maps jobs to containers
+    KEY_JOBS_TO_EXPERIMENTS = 'JOBS_TO_EXPERIMENTS:'  # Redis hash, maps jobs to experiments
 
     REDIS_POOL = RedisPools.JOB_CONTAINERS
 
@@ -30,38 +32,51 @@ class RedisJobContainers(BaseRedisDb):
     @classmethod
     def get_job(cls, container_id):
         red = cls._get_redis()
-        job_uuid = None
         if red.sismember(cls.KEY_CONTAINERS, container_id):
             job_uuid = red.hget(cls.KEY_CONTAINERS_TO_JOBS, container_id)
-        return job_uuid.decode('utf-8') if job_uuid else None
+            if not job_uuid:
+                return None, None
 
-    @classmethod
-    def add_container_for_job(cls, job_uuid, container_id):
-        red = cls._get_redis()
-        red.sadd(cls.KEYF_JOBS_TO_CONTAINERS.format(job_uuid), container_id)
-
-    @classmethod
-    def remove_job_containers(cls, job_uuid):
-        red = cls._get_redis()
-        key_jobs_to_containers = cls.KEYF_JOBS_TO_CONTAINERS.format(job_uuid)
-        containers = red.smembers(key_jobs_to_containers)
-        for container_id in containers:
-            container_id = container_id.decode('utf-8')
-            red.srem(key_jobs_to_containers, container_id)
-            RedisJobContainers.remove_container(container_id=container_id)
-
-    @classmethod
-    def monitor(cls, container_id, job_uuid):
-        red = cls._get_redis()
-        red.sadd(cls.KEY_CONTAINERS, container_id)
-        red.hset(cls.KEY_CONTAINERS_TO_JOBS, container_id, job_uuid)
-        cls.add_container_for_job(job_uuid=job_uuid, container_id=container_id)
+            job_uuid = job_uuid.decode('utf-8')
+            experiment_uuid = red.hget(cls.KEY_JOBS_TO_EXPERIMENTS, job_uuid)
+            experiment_uuid = experiment_uuid.decode('utf-8') if experiment_uuid else None
+            return job_uuid, experiment_uuid
+        return None, None
 
     @classmethod
     def remove_container(cls, container_id):
         red = cls._get_redis()
         red.srem(cls.KEY_CONTAINERS, container_id)
         red.hdel(cls.KEY_CONTAINERS_TO_JOBS, container_id)
+
+    @classmethod
+    def remove_job(cls, job_uuid):
+        red = cls._get_redis()
+        key_jobs_to_containers = cls.KEYF_JOBS_TO_CONTAINERS.format(job_uuid)
+        containers = red.smembers(key_jobs_to_containers)
+        for container_id in containers:
+            container_id = container_id.decode('utf-8')
+            red.srem(key_jobs_to_containers, container_id)
+            cls.remove_container(container_id=container_id)
+
+        # Remove the experiment too
+        red.hdel(cls.KEY_CONTAINERS_TO_JOBS, job_uuid)
+
+    @classmethod
+    def monitor(cls, container_id, job_uuid):
+        red = cls._get_redis()
+        if not red.sismember(cls.KEY_CONTAINERS, container_id):
+            try:
+                job = ExperimentJob.objects.get(uuid=job_uuid)
+            except ExperimentJob.DoesNotExist:
+                return
+
+            red.sadd(cls.KEY_CONTAINERS, container_id)
+            red.hset(cls.KEY_CONTAINERS_TO_JOBS, container_id, job_uuid)
+            # Add container for job
+            red.sadd(cls.KEYF_JOBS_TO_CONTAINERS.format(job_uuid), container_id)
+            # Add job to experiment
+            red.hset(cls.KEY_JOBS_TO_EXPERIMENTS, job_uuid, job.experiment.uuid.hex)
 
 
 class RedisToStream(BaseRedisDb):
@@ -159,4 +174,4 @@ class RedisToStream(BaseRedisDb):
     def set_latest_job_resources(cls, job, payload):
         red = cls._get_redis()
         key = '{}:{}'.format(cls.KEY_JOB_LATEST_STATS, job)
-        red.hmset(key, payload)
+        red.hmset(key, payload.to_dict())

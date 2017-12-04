@@ -9,6 +9,7 @@ import docker
 from docker.errors import NotFound
 
 import polyaxon_gpustat
+from polyaxon_schemas.experiment import ContainerResourcesConfig
 
 from libs.redis_db import RedisJobContainers, RedisToStream
 from events.tasks import handle_events_resources
@@ -62,12 +63,16 @@ def get_container_resources(container, gpu_resources):
         RedisJobContainers.remove_container(container.id)
         return
 
-    job_id = RedisJobContainers.get_job(container.id)
-    if not job_id:
+    job_uuid, experiment_uuid = RedisJobContainers.get_job(container.id)
+
+    if not job_uuid:
         logger.info("`{}` container is not recognised".format(container.name))
         return
 
-    logger.info("Streaming resources for container {} in job `{}` ".format(container.id, job_id))
+    logger.info("Streaming resources for container {} "
+                "in (job, experiment) (`{}`, `{}`) ".format(container.id,
+                                                            job_uuid,
+                                                            experiment_uuid))
 
     stats = container.stats(decode=True, stream=False)
     precpu_stats = stats['precpu_stats']
@@ -97,18 +102,16 @@ def get_container_resources(container, gpu_resources):
         gpu_indices = get_container_gpu_indices(container)
         container_gpu_resources = [gpu_resources[gpu_indice] for gpu_indice in gpu_indices]
 
-    # TODO: extract experiment_id from job_id
-    experiemnt_id = 0
-    return {
-        'job_id': job_id,
-        'experiment_id': experiemnt_id,
+    return ContainerResourcesConfig.from_dict({
+        'job_uuid': job_uuid,
+        'experiment_uuid': experiment_uuid,
         'container_id': container.id,
         'cpu_percentage': cpu_percentage,
         'percpu_percentage': percpu_percentage,
         'memory_used': memory_used,
         'memory_limit': memory_limit,
         'gpu_resources': container_gpu_resources
-    }
+    })
 
 
 def run(containers, persist):
@@ -125,5 +128,5 @@ def run(containers, persist):
             logger.info("Publishing event: {}".format(payload))
             handle_events_resources.delay(payload=payload, persist=persist)
             # Check if we should stream the payload
-            if RedisToStream.is_monitored_job_resources(payload['job_id']):
-                RedisToStream.set_latest_job_resources(payload['job_id'], payload)
+            if RedisToStream.is_monitored_job_resources(payload['job_uuid']):
+                RedisToStream.set_latest_job_resources(payload['job_uuid'], payload)

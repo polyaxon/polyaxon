@@ -37,7 +37,7 @@ class Command(BaseMonitorCommand):
         sidecar.run(k8s_manager=k8s_manager,
                     pod_id=pod_id,
                     experiment_uuid=labels['experiment'],
-                    job_uuid=labels['task_id'],
+                    job_uuid=labels['job_id'],
                     container_job_name=container_job_name,
                     persist=persist)
         sidecar.logger.debug('Finished logging')

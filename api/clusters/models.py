@@ -67,7 +67,7 @@ class ClusterNode(models.Model):
 
     @classmethod
     def from_node_item(cls, node):
-        params = {
+        return {
             'name': node.metadata.name,
             'hostname': nodes.get_hostname(node),
             'role': nodes.get_role(node),
@@ -81,9 +81,6 @@ class ClusterNode(models.Model):
             'n_cpus': nodes.get_n_cpus(node),
             'n_gpus': nodes.get_n_gpus(node),
             'status': nodes.get_status(node)}
-
-        return cls(**params)
-
 
 class NodeGPU(DiffModel):
     """A model that represents the node's gpu."""
