@@ -19,7 +19,6 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
 )
-from libs.redis_db import RedisExperimentJobStatus
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 from tests.factories.factory_clusters import ClusterFactory
@@ -511,7 +510,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch('experiments.tasks.start_experiment.delay') as _:
-            with patch.object(RedisExperimentJobStatus, 'set_status') as _:
+            with patch.object(ExperimentJob, 'set_status') as _:
                 self.experiment_job = ExperimentJobFactory()
         self.url = '/{}/experiments/{}/jobs/{}/status/'.format(
             API_V1,
@@ -581,7 +580,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch('experiments.tasks.start_experiment.delay') as _:
-            with patch.object(RedisExperimentJobStatus, 'set_status') as _:
+            with patch.object(ExperimentJob, 'set_status') as _:
                 self.experiment_job = ExperimentJobFactory()
                 self.object = self.factory_class(job=self.experiment_job)
         self.url = '/{}/experiments/{}/jobs/{}/status/{}'.format(

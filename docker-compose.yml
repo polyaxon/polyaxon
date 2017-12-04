@@ -53,7 +53,6 @@ services:
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
       POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
-      POLYAXON_REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis://redis:6379/3"
       POLYAXON_REDIS_TO_STREAM_URL: "redis://redis:6379/4"
       POLYAXON_RABBITMQ_DEFAULT_USER: admin
@@ -68,7 +67,6 @@ services:
     environment:
       POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
-      POLYAXON_REDIS_JOBS_STATUS_URL: "redis://redis:6379/2"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis://redis:6379/3"
       POLYAXON_REDIS_TO_STREAM_URL: "redis://redis:6379/4"
     networks:

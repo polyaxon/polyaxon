@@ -49,16 +49,12 @@ class ExperimentStatusSerializer(serializers.ModelSerializer):
 
 class ExperimentSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
-    last_status = serializers.SerializerMethodField()
     user = fields.SerializerMethodField()
 
     class Meta:
         model = Experiment
         fields = ('uuid', 'user', 'name', 'created_at', 'updated_at',
                   'last_status', 'started_at', 'finished_at', 'is_clone',)
-
-    def get_last_status(self, obj):
-        return obj.last_status.status if obj.last_status else None
 
     def get_user(self, obj):
         return obj.user.username

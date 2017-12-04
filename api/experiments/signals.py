@@ -28,16 +28,18 @@ def new_experiment_job(sender, **kwargs):
     if not created:
         return
 
-    from libs.redis_db import RedisExperimentJobStatus
-
-    uuid = instance.uuid.hex
-    RedisExperimentJobStatus.set_status(job_uuid=uuid, status=JobLifeCycle.CREATED)
-    RedisExperimentJobStatus.monitor(uuid, instance.experiment.uuid.hex)
+    instance.set_status(status=JobLifeCycle.CREATED)
 
 
 def new_experiment_job_status(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
+
+    # check if the new status is done to remove the containers from the monitors
+    if instance.job.is_done:
+        from libs.redis_db import RedisJobContainers
+
+        RedisJobContainers.remove_job_containers(instance.uuid.hex)
 
     # Check if the experiment job status
     if not created:

@@ -8,7 +8,7 @@ from polyaxon_schemas.experiment import JobStateConfig
 from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
 from clusters.models import ClusterEvent
-from libs.redis_db import RedisExperimentJobStatus
+from experiments.models import ExperimentJob
 
 logger = logging.getLogger('polyaxon.tasks.events')
 
@@ -35,11 +35,14 @@ def handle_events_job_statues(payload):
     details = job_state.details.to_dict()
     logger.info('handling events status for job_uuid: {}, details: {} '.format(job_uuid, details))
 
+    try:
+        job = ExperimentJob.objects.get(uuid=job_uuid)
+    except ExperimentJob.DoesNotExist:
+        logger.info('Job uuid`{}` does not exist'.format(job_uuid))
+        return
+
     # Set the new status
-    RedisExperimentJobStatus.set_status(job_uuid=job_uuid,
-                                        status=job_state.status,
-                                        message=job_state.message,
-                                        details=details)
+    job.set_status(status=job_state.status, message=job_state.message, details=details)
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)

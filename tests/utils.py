@@ -131,7 +131,6 @@ class AuthorizedClient(Client):
 class BaseTest(TestCase):
     def setUp(self):
         # Flushing all redis databases
-        redis.Redis(connection_pool=RedisPools.EXPERIMENTS_STATUS).flushall()
         redis.Redis(connection_pool=RedisPools.JOBS_STATUS).flushall()
         redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
         redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()

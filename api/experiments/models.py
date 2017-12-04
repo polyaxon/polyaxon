@@ -59,11 +59,9 @@ class Experiment(DiffModel):
     @property
     def last_job_statuses(self):
         """The statuses of the job in this experiment."""
-        from libs.redis_db import RedisExperimentJobStatus
-
         statuses = []
-        for job_uuid in self.jobs.values_list('uuid', flat=True):
-            status = RedisExperimentJobStatus.get_status(job_uuid=job_uuid.hex)
+        for job in self.jobs.all():
+            status = job.last_status
             if status is not None:
                 statuses.append(status)
         return statuses
@@ -72,20 +70,21 @@ class Experiment(DiffModel):
     def calculated_status(self):
         calculated_status = ExperimentLifeCycle.jobs_status(self.last_job_statuses)
         if calculated_status is None:
-            return self.last_status.status
+            return self.last_status
         return calculated_status
 
     @property
     def last_status(self):
-        return self.statuses.last()
+        status = self.statuses.last()
+        return status.status if status else None
 
     @property
     def is_running(self):
-        return ExperimentLifeCycle.is_running(self.last_status.status)
+        return ExperimentLifeCycle.is_running(self.last_status)
 
     @property
     def is_done(self):
-        return ExperimentLifeCycle.is_done(self.last_status.status)
+        return ExperimentLifeCycle.is_done(self.last_status)
 
     @property
     def finished_at(self):
@@ -111,13 +110,13 @@ class Experiment(DiffModel):
         return not self.spec
 
     def update_status(self):
-        current_status = self.last_status.status
+        current_status = self.last_status
         calculated_status = self.calculated_status
         if calculated_status != current_status:
             # Add new status to the experiment
             self.set_status(calculated_status)
-            return calculated_status, True
-        return calculated_status, False
+            return True
+        return False
 
     def set_status(self, status):
         ExperimentStatus.objects.create(experiment=self, status=status)
@@ -168,7 +167,12 @@ class ExperimentJob(DiffModel):
 
     @property
     def last_status(self):
-        return self.statuses.last()
+        status = self.statuses.last()
+        return status.status if status else None
+
+    @property
+    def is_done(self):
+        return JobLifeCycle.is_done(self.last_status)
 
     @property
     def started_at(self):
@@ -183,6 +187,17 @@ class ExperimentJob(DiffModel):
         if status:
             return status.created_at
         return None
+
+    def set_status(self, status, message=None, details=None):
+        current_status = self.last_status
+        if status != current_status:
+            # Add new status to the job
+            ExperimentJobStatus.objects.create(job=self,
+                                               status=status,
+                                               message=message,
+                                               details=details)
+            return True
+        return False
 
 
 post_save.connect(new_experiment_job, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
