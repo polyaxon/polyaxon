@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.test import TestCase
-
 from clusters.models import Cluster, NodeGPU, ClusterNode
 from clusters.serializers import (
     ClusterSerializer,
@@ -13,9 +11,10 @@ from clusters.serializers import (
 )
 
 from tests.factories.factory_clusters import ClusterFactory, GPUFactory, ClusterNodeFactory
+from tests.utils import BaseTest
 
 
-class TestGPUSerializer(TestCase):
+class TestGPUSerializer(BaseTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
     factory_class = GPUFactory
@@ -46,7 +45,7 @@ class TestGPUSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestClusterNodeSerializer(TestCase):
+class TestClusterNodeSerializer(BaseTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
     factory_class = ClusterNodeFactory
@@ -73,7 +72,7 @@ class TestClusterNodeSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestClusterNodeDetailsSerializer(TestCase):
+class TestClusterNodeDetailsSerializer(BaseTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
     expected_keys = {'uuid', 'name', 'cluster', 'hostname', 'role', 'docker_version',
@@ -106,7 +105,7 @@ class TestClusterNodeDetailsSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestClusterSerializer(TestCase):
+class TestClusterSerializer(BaseTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
     factory_class = ClusterFactory
@@ -136,7 +135,7 @@ class TestClusterSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestClusterDetailSerializer(TestCase):
+class TestClusterDetailSerializer(BaseTest):
     serializer_class = ClusterDetailSerializer
     model_class = Cluster
     expected_keys = {'uuid', 'user', 'version_api', 'created_at', 'updated_at', 'nodes', }

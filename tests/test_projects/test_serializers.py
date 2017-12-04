@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.test import TestCase
-
 from projects.models import Project, PolyaxonSpec
 from projects.serializers import ProjectSerializer, PolyaxonSpecSerializer, ProjectDetailSerializer
 from tests.factories.factory_clusters import ClusterFactory
 
 from tests.factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
+from tests.utils import BaseTest
 
 
-class TestPolyaxonSpecSerializer(TestCase):
+class TestPolyaxonSpecSerializer(BaseTest):
     serializer_class = PolyaxonSpecSerializer
     model_class = PolyaxonSpec
     factory_class = PolyaxonSpecFactory
@@ -40,7 +39,7 @@ class TestPolyaxonSpecSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestProjectSerializer(TestCase):
+class TestProjectSerializer(BaseTest):
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
@@ -70,7 +69,7 @@ class TestProjectSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestProjectDetailSerializer(TestCase):
+class TestProjectDetailSerializer(BaseTest):
     serializer_class = ProjectDetailSerializer
     model_class = Project
     factory_class = ProjectFactory

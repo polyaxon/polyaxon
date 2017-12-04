@@ -9,10 +9,10 @@ import docker
 from docker.errors import NotFound
 
 import polyaxon_gpustat
-from polyaxon_k8s.constants import ContainerStatuses
 
 from libs.redis_db import RedisJobContainers, RedisToStream
 from events.tasks import handle_events_resources
+from spawner.utils.constants import ContainerStatuses
 
 logger = logging.getLogger('polyaxon.monitors.resources')
 docker_client = docker.from_env(version="auto", timeout=10)

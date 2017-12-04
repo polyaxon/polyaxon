@@ -11,7 +11,7 @@ from polyaxon_k8s import constants as k8s_constants
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 
-from polyaxon_schemas.polyaxonfile.polyaxonfile import Specification
+from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import TaskType
 

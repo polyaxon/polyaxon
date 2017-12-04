@@ -30,10 +30,10 @@ from tests.factories.factory_experiments import (
     ExperimentJobStatusFactory,
 )
 from tests.factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
-from tests.utils import BaseTest
+from tests.utils import BaseViewTest
 
 
-class TestProjectExperimentListViewV1(BaseTest):
+class TestProjectExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -83,7 +83,7 @@ class TestProjectExperimentListViewV1(BaseTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
-class TestPolyaxonSpecExperimentListViewV1(BaseTest):
+class TestPolyaxonSpecExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -100,7 +100,7 @@ class TestPolyaxonSpecExperimentListViewV1(BaseTest):
       
     matrix:
       lr:
-        linspace: '1:3:3'
+        linspace: '1.:3.:3'
     
     model:
       model_type: regressor
@@ -177,7 +177,7 @@ class TestPolyaxonSpecExperimentListViewV1(BaseTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
-class TestExperimentListViewV1(BaseTest):
+class TestExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -237,7 +237,7 @@ class TestExperimentListViewV1(BaseTest):
         assert self.model_class.objects.count() == self.num_objects + 1
 
 
-class TestExperimentDetailViewV1(BaseTest):
+class TestExperimentDetailViewV1(BaseViewTest):
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -294,7 +294,7 @@ class TestExperimentDetailViewV1(BaseTest):
         assert ExperimentJob.objects.count() == 0
 
 
-class TestExperimentStatusListViewV1(BaseTest):
+class TestExperimentStatusListViewV1(BaseViewTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory
@@ -362,7 +362,7 @@ class TestExperimentStatusListViewV1(BaseTest):
         assert last_object.status == data['status']
 
 
-class TestExperimentStatusDetailViewV1(BaseTest):
+class TestExperimentStatusDetailViewV1(BaseViewTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory
@@ -396,7 +396,7 @@ class TestExperimentStatusDetailViewV1(BaseTest):
         assert self.model_class.objects.count() == 1
 
 
-class TestExperimentJobListViewV1(BaseTest):
+class TestExperimentJobListViewV1(BaseViewTest):
     serializer_class = ExperimentJobSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
@@ -458,7 +458,7 @@ class TestExperimentJobListViewV1(BaseTest):
         assert last_object.definition == data['definition']
 
 
-class TestExperimentJobDetailViewV1(BaseTest):
+class TestExperimentJobDetailViewV1(BaseViewTest):
     serializer_class = ExperimentJobSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
@@ -501,7 +501,7 @@ class TestExperimentJobDetailViewV1(BaseTest):
         assert self.model_class.objects.count() == 0
 
 
-class TestExperimentJobStatusListViewV1(BaseTest):
+class TestExperimentJobStatusListViewV1(BaseViewTest):
     serializer_class = ExperimentJobStatusSerializer
     model_class = ExperimentJobStatus
     factory_class = ExperimentJobStatusFactory
@@ -572,7 +572,7 @@ class TestExperimentJobStatusListViewV1(BaseTest):
         assert last_object.status == data['status']
 
 
-class TestExperimentJobStatusDetailViewV1(BaseTest):
+class TestExperimentJobStatusDetailViewV1(BaseViewTest):
     serializer_class = ExperimentJobStatusSerializer
     model_class = ExperimentJobStatus
     factory_class = ExperimentJobStatusFactory
@@ -618,7 +618,7 @@ class TestExperimentJobStatusDetailViewV1(BaseTest):
         assert self.model_class.objects.count() == 1
 
 
-class TestRestartExperimentViewV1(BaseTest):
+class TestRestartExperimentViewV1(BaseViewTest):
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
     factory_class = ExperimentFactory

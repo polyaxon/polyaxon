@@ -26,6 +26,6 @@ def new_spec(sender, **kwargs):
                                   project=instance.project,
                                   user=instance.user,
                                   spec=instance,
-                                  config=specification.get_parsed_data_at(xp))
+                                  config=specification.parsed_data[xp])
 
     start_group_experiments.delay(instance.id)

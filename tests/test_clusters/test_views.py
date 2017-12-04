@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import datetime
 
-from polyaxon_k8s import constants as k8s_constants
 from rest_framework import status
 
 from api.urls import API_V1
@@ -15,11 +14,12 @@ from clusters.serializers import (
     ClusterNodeDetailSerializer,
     GPUSerializer,
 )
+from spawner.utils.constants import NodeRoles
 from tests.factories.factory_clusters import ClusterFactory, ClusterNodeFactory, GPUFactory
-from tests.utils import BaseTest
+from tests.utils import BaseViewTest
 
 
-class TestClusterListViewV1(BaseTest):
+class TestClusterListViewV1(BaseViewTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
     factory_class = ClusterFactory
@@ -85,7 +85,7 @@ class TestClusterListViewV1(BaseTest):
         assert self.model_class.objects.count() == self.num_objects + 1
 
 
-class TestClusterDetailViewV1(BaseTest):
+class TestClusterDetailViewV1(BaseViewTest):
     serializer_class = ClusterDetailSerializer
     model_class = Cluster
     factory_class = ClusterFactory
@@ -140,7 +140,7 @@ class TestClusterDetailViewV1(BaseTest):
         assert ClusterNode.objects.count() == 0
 
 
-class TestClusterNodeListViewV1(BaseTest):
+class TestClusterNodeListViewV1(BaseViewTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
     factory_class = ClusterNodeFactory
@@ -193,7 +193,7 @@ class TestClusterNodeListViewV1(BaseTest):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {
-            'role': k8s_constants.NodeRoles.MASTER,
+            'role': NodeRoles.MASTER,
             'kubelet_version': 'v1.7.5',
             'os_image': 'Buildroot 2017.02',
             'kernel_version': '4.9.13',
@@ -211,7 +211,7 @@ class TestClusterNodeListViewV1(BaseTest):
         assert last_object.n_gpus == 0
 
 
-class TestClusterNodeDetailViewV1(BaseTest):
+class TestClusterNodeDetailViewV1(BaseViewTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
     factory_class = ClusterNodeFactory
@@ -259,7 +259,7 @@ class TestClusterNodeDetailViewV1(BaseTest):
         assert NodeGPU.objects.count() == 0
 
 
-class TestClusterNodeGPUListViewV1(BaseTest):
+class TestClusterNodeGPUListViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
     factory_class = GPUFactory
@@ -331,7 +331,7 @@ class TestClusterNodeGPUListViewV1(BaseTest):
         assert last_object.device == data['device']
 
 
-class TestClusterNodeGPUDetailViewV1(BaseTest):
+class TestClusterNodeGPUDetailViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
     factory_class = GPUFactory

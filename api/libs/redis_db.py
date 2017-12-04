@@ -29,7 +29,7 @@ class RedisExperimentStatus(BaseRedisDb):
         red = cls._get_redis()
         if red.sismember(cls.KEY_EXPERIMENTS, experiment_uuid):
             status = red.hget(cls.KEY_EXPERIMENTS_STATUS, experiment_uuid)
-            return status
+            return status.decode('utf-8')
 
     @classmethod
     def set_status(cls, experiment_uuid, status):

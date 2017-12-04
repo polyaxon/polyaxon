@@ -6,16 +6,13 @@ import json
 import uuid
 from urllib.parse import urlparse
 
-from unittest.mock import patch
-
+import redis
 from django.test import Client, TestCase
 from django.test.client import FakePayload
-from polyaxon_schemas.utils import TaskType
 
 from rest_framework.authtoken.models import Token
 
-from spawner import K8SSpawner
-
+from api.config_settings import RedisPools
 from tests.factories.factory_users import UserFactory
 
 # Stores the currently valid tokens to check against
@@ -132,6 +129,16 @@ class AuthorizedClient(Client):
 
 
 class BaseTest(TestCase):
+    def setUp(self):
+        # Flushing all redis databases
+        redis.Redis(connection_pool=RedisPools.EXPERIMENTS_STATUS).flushall()
+        redis.Redis(connection_pool=RedisPools.JOBS_STATUS).flushall()
+        redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
+        redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
+        return super().setUp()
+
+
+class BaseViewTest(BaseTest):
     """This is the base test for all tests.
 
     Also mocks common external calls, e.g. for tracking or related to auth.
@@ -146,13 +153,6 @@ class BaseTest(TestCase):
 
     def setUp(self):
         assert hasattr(self, 'auth_client') and self.auth_client is not None
-
-        patcher = patch.object(K8SSpawner, 'start_experiment')
-        self.start_experiment = patcher.start()
-        self.start_experiment.return_value = {TaskType.MASTER: {},
-                                              TaskType.WORKER: [],
-                                              TaskType.PS: []}
-        self.addCleanup(patcher.stop)
 
         super().setUp()
 

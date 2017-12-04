@@ -3,14 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 from unittest.mock import patch
 
-from django.test import TestCase
-
 from experiments.models import Experiment
 from tests.factories.factory_clusters import ClusterFactory
 from tests.factories.factory_projects import PolyaxonSpecFactory
+from tests.utils import BaseTest
 
-
-class TestPolyaxonSpecModel(TestCase):
+class TestPolyaxonSpecModel(BaseTest):
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
         with patch('projects.tasks.start_group_experiments.delay') as mock_fct:
             cluster = ClusterFactory()

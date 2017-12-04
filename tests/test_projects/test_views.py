@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from rest_framework import status
 
-from mock import patch
-
 from api.urls import API_V1
 from experiments.models import Experiment
 from experiments.serializers import ExperimentSerializer
@@ -22,10 +20,10 @@ from tests.factories.factory_projects import (
     ProjectFactory,
     PolyaxonSpecFactory,
 )
-from tests.utils import BaseTest
+from tests.utils import BaseViewTest
 
 
-class TestProjectListViewV1(BaseTest):
+class TestProjectListViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
@@ -81,7 +79,7 @@ class TestProjectListViewV1(BaseTest):
         assert self.model_class.objects.count() == self.num_objects + 1
 
 
-class TestProjectDetailViewV1(BaseTest):
+class TestProjectDetailViewV1(BaseViewTest):
     serializer_class = ProjectDetailSerializer
     model_class = Project
     factory_class = ProjectFactory
@@ -136,7 +134,7 @@ class TestProjectDetailViewV1(BaseTest):
         assert Experiment.objects.count() == 0
 
 
-class TestProjectPolyaxonSpecListViewV1(BaseTest):
+class TestProjectPolyaxonSpecListViewV1(BaseViewTest):
     serializer_class = PolyaxonSpecSerializer
     model_class = PolyaxonSpec
     factory_class = PolyaxonSpecFactory

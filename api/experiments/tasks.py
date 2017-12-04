@@ -2,11 +2,13 @@
 from __future__ import absolute_import, division, print_function
 
 import logging
+import uuid
 
 from django.conf import settings
 
 from polyaxon_schemas.utils import TaskType
 
+from api.utils import config
 from api.celery_api import app as celery_app
 from api.settings import CeleryTasks
 from libs.redis_db import RedisExperimentStatus
@@ -18,7 +20,7 @@ logger = logging.getLogger('polyaxon.tasks.experiments')
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START)
 def start_experiment(experiment_id):
-    from experiments.models import Experiment, ExperimentStatus, ExperimentJob
+    from experiments.models import Experiment, ExperimentJob
 
     try:
         experiment = Experiment.objects.get(id=experiment_id)
@@ -27,7 +29,9 @@ def start_experiment(experiment_id):
         return
 
     # Update experiment status to show that its started
-    ExperimentStatus.objects.create(experiment=experiment, status=ExperimentLifeCycle.SCHEDULED)
+    RedisExperimentStatus.set_status(experiment.uuid.hex, ExperimentLifeCycle.SCHEDULED)
+    # Add the experiment to the list of experiments to monitor
+    RedisExperimentStatus.monitor(experiment.uuid.hex)
 
     # Use spawner to start the experiment
     spawner = K8SSpawner(project_uuid=experiment.project.uuid.hex,
@@ -38,22 +42,22 @@ def start_experiment(experiment_id):
                          namespace=settings.K8S_NAMESPACE,
                          in_cluster=True,
                          use_sidecar=True,
-                         sidecar_config='')  # Use current settings config
+                         sidecar_config=config.get_requested_params())
     resp = spawner.start_experiment()
 
     # Get the number of jobs this experiment started
     master = resp[TaskType.MASTER]
-    job_uuid = master['labels']['task_id']
+    job_uuid = master['pod']['metadata']['labels']['task_id']
+    job_uuid = uuid.UUID(job_uuid)
     ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=master)
     for worker in resp[TaskType.WORKER]:
-        job_uuid = worker['labels']['task_id']
+        job_uuid = worker['pod']['metadata']['labels']['task_id']
+        job_uuid = uuid.UUID(job_uuid)
         ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=worker)
     for ps in resp[TaskType.PS]:
-        job_uuid = ps['labels']['task_id']
+        job_uuid = ps['pod']['metadata']['labels']['task_id']
+        job_uuid = uuid.UUID(job_uuid)
         ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=ps)
-
-    # Add the experiment to the list of experiments to monitor
-    RedisExperimentStatus.monitor(experiment.uuid.hex)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)

@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from unittest.mock import patch
 
-from django.test import TestCase
-
 from experiments.models import ExperimentStatus, Experiment, ExperimentJob
 from experiments.serializers import (
     ExperimentStatusSerializer,
@@ -20,9 +18,9 @@ from tests.factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
 )
+from tests.utils import BaseTest
 
-
-class TestExperimentSerializer(TestCase):
+class TestExperimentSerializer(BaseTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -91,7 +89,7 @@ class TestExperimentSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestExperimentDetailSerializer(TestCase):
+class TestExperimentDetailSerializer(BaseTest):
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -182,7 +180,7 @@ class TestExperimentDetailSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestExperimentJobSerializer(TestCase):
+class TestExperimentJobSerializer(BaseTest):
     serializer_class = ExperimentJobSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
@@ -212,7 +210,7 @@ class TestExperimentJobSerializer(TestCase):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestExperimentStatusSerializer(TestCase):
+class TestExperimentStatusSerializer(BaseTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory

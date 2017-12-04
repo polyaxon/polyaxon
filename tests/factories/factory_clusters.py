@@ -6,9 +6,9 @@ import datetime
 import factory
 from faker import Factory as FakerFactory
 
-from polyaxon_k8s.constants import NodeRoles
+from spawner.utils.constants import NodeRoles
 
-from clusters.models import Cluster, NodeGPU, ClusterNode
+from clusters.models import Cluster, NodeGPU, ClusterNode, ClusterEvent
 from tests.factories.factory_users import UserFactory
 
 fake = FakerFactory.create()
@@ -56,3 +56,14 @@ class GPUFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = NodeGPU
+
+
+class ClusterEventFactory(factory.DjangoModelFactory):
+    level = 'error'
+    data = factory.Sequence(lambda i: {'data': i})
+    meta = factory.Sequence(lambda i: {'meta': i})
+
+    cluster = factory.SubFactory(ClusterFactory)
+
+    class Meta:
+        model = ClusterEvent
