@@ -4,12 +4,13 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import Schema, fields, post_load
 
 from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.utils import UUID
 
 
 class ExperimentSchema(Schema):
     name = fields.Str()
-    uuid = fields.UUID()
-    project = fields.UUID()
+    uuid = UUID()
+    project = UUID()
     description = fields.Str(allow_none=True)
 
     class Meta:
@@ -121,3 +122,106 @@ class JobStateConfig(BaseConfig):
         self.status = status
         self.message = message
         self.details = details
+
+
+class ContainerGPUResourcesSchema(Schema):
+    index = fields.Int()
+    uuid = fields.Str()
+    name = fields.Str()
+    minor = fields.Int()
+    bus_id = fields.Str()
+    serial = fields.Str()
+    temperature_gpu = fields.Int()
+    utilization_gpu = fields.Int()
+    power_draw = fields.Int()
+    power_limit = fields.Int()
+    memory_free = fields.Int()
+    memory_used = fields.Int()
+    memory_total = fields.Int()
+    memory_utilization = fields.Int()
+    processes = fields.List(fields.Dict(), allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return ContainerGPUResourcesConfig(**data)
+
+
+class ContainerGPUResourcesConfig(BaseConfig):
+    SCHEMA = ContainerGPUResourcesSchema
+    IDENTIFIER = 'ContainerGPUResources'
+
+    def __init__(self,
+                 index,
+                 uuid,
+                 name,
+                 minor,
+                 bus_id,
+                 serial,
+                 temperature_gpu,
+                 utilization_gpu,
+                 power_draw,
+                 power_limit,
+                 memory_free,
+                 memory_used,
+                 memory_total,
+                 memory_utilization,
+                 processes=None):
+        self.index = index
+        self.uuid = uuid
+        self.name = name
+        self.minor = minor
+        self.bus_id = bus_id
+        self.serial = serial
+        self.temperature_gpu = temperature_gpu
+        self.utilization_gpu = utilization_gpu
+        self.power_draw = power_draw
+        self.power_limit = power_limit
+        self.memory_free = memory_free
+        self.memory_used = memory_used
+        self.memory_total = memory_total
+        self.memory_utilization = memory_utilization
+        self.processes = processes
+
+
+class ContainerResourcesSchema(Schema):
+    job_uuid = UUID()
+    experiment_uuid = UUID()
+    container_id = fields.Str()
+    cpu_percentage = fields.Float()
+    percpu_percentage = fields.List(fields.Float(), allow_none=True)
+    memory_used = fields.Int()
+    memory_limit = fields.Int()
+    gpu_resources = fields.Nested(ContainerGPUResourcesSchema, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return ContainerResourcesConfig(**data)
+
+
+class ContainerResourcesConfig(BaseConfig):
+    SCHEMA = ContainerResourcesSchema
+    IDENTIFIER = 'ContainerResources'
+
+    def __init__(self,
+                 job_uuid,
+                 experiment_uuid,
+                 container_id,
+                 cpu_percentage,
+                 percpu_percentage,
+                 memory_used,
+                 memory_limit,
+                 gpu_resources=None):
+        self.job_uuid = job_uuid
+        self.experiment_uuid = experiment_uuid
+        self.container_id = container_id
+        self.cpu_percentage = cpu_percentage
+        self.percpu_percentage = percpu_percentage
+        self.memory_used = memory_used
+        self.memory_limit = memory_limit
+        self.gpu_resources = gpu_resources

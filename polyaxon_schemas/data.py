@@ -5,7 +5,7 @@ from marshmallow import Schema, fields, post_load
 from marshmallow.utils import utc
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import TIME_ZONE
+from polyaxon_schemas.utils import TIME_ZONE, UUID
 
 
 class DataDetailsSchema(Schema):
@@ -32,7 +32,7 @@ class DataDetailsConfig(BaseConfig):
 
 
 class DataSchema(Schema):
-    uuid = fields.UUID()
+    uuid = UUID()
     name = fields.Str()
     created_at = fields.DateTime()
     description = fields.Str(allow_none=True)
@@ -76,7 +76,7 @@ class DataConfig(BaseConfig):
 
 
 class DatasetSchema(Schema):
-    uuid = fields.UUID()
+    uuid = UUID()
     name = fields.Str()
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean()

@@ -11,20 +11,21 @@ from polyaxon_schemas.experiment import (
     JobLabelConfig,
     PodStateConfig,
     JobStateConfig,
-)
+    ContainerGPUResourcesConfig,
+    ContainerResourcesConfig)
 from polyaxon_schemas.polyaxonfile.constants import TASK_NAME
 
 
 class TestExperimentConfigs(TestCase):
     def test_experiment_config(self):
-        config_dict = {'name': 'test', 'uuid': str(uuid.uuid4()), 'project': str(uuid.uuid4())}
+        config_dict = {'name': 'test', 'uuid': uuid.uuid4().hex, 'project': uuid.uuid4().hex}
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
     @staticmethod
     def create_pod_labels():
         project = 'test-id1'
-        experiment = str(uuid.uuid4())
+        experiment = uuid.uuid4().hex
         task_type = 'master'
         return {'project': project,
                 'experiment': experiment,
@@ -34,7 +35,7 @@ class TestExperimentConfigs(TestCase):
                                          experiment=experiment,
                                          task_type=task_type,
                                          task_idx='0'),
-                'job_id': str(uuid.uuid4()),
+                'job_id': uuid.uuid4().hex,
                 'role': 'polyaxon-worker',
                 'type': 'polyaxon-experiment'
                 }
@@ -69,7 +70,7 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('deletion_timestamp')
         assert config_to_dict == config_dict
 
-    def test_jpn_state_config(self):
+    def test_job_state_config(self):
         config_dict = {
             'status': 'Running',
             'message': 'something',
@@ -79,4 +80,73 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_dict()
         config_to_dict['details'].pop('deletion_timestamp')
         config_dict['details'].pop('deletion_timestamp')
+        assert config_to_dict == config_dict
+
+    def test_container_gpu_resources(self):
+        config_dict = {
+            'index': 0,
+            'bus_id': '0000:00:1E.1',
+            'memory_free': 1000,
+            'memory_total': 12883853312,
+            'memory_used': 8388608000,
+            'memory_utilization': 0,
+            'minor': 1,
+            'name': 'GeForce GTX TITAN 0',
+            'power_draw': 125,
+            'power_limit': 250,
+            'processes': [{'command': 'python',
+                           'gpu_memory_usage': 4000,
+                           'pid': 48448,
+                           'username': 'user1'},
+                          {'command': 'python',
+                           'gpu_memory_usage': 4000,
+                           'pid': 153223,
+                           'username': 'user2'}],
+            'serial': '0322917092147',
+            'temperature_gpu': 80,
+            'utilization_gpu': 76,
+            'uuid': 'GPU-10fb0fbd-2696-43f3-467f-d280d906a107'
+        }
+        config = ContainerGPUResourcesConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        assert config_to_dict == config_dict
+
+    def test_container_resources(self):
+        gpu_resources = {
+            'index': 0,
+            'bus_id': '0000:00:1E.1',
+            'memory_free': 1000,
+            'memory_total': 12883853312,
+            'memory_used': 8388608000,
+            'memory_utilization': 0,
+            'minor': 1,
+            'name': 'GeForce GTX TITAN 0',
+            'power_draw': 125,
+            'power_limit': 250,
+            'processes': [{'command': 'python',
+                           'gpu_memory_usage': 4000,
+                           'pid': 48448,
+                           'username': 'user1'},
+                          {'command': 'python',
+                           'gpu_memory_usage': 4000,
+                           'pid': 153223,
+                           'username': 'user2'}],
+            'serial': '0322917092147',
+            'temperature_gpu': 80,
+            'utilization_gpu': 76,
+            'uuid': 'GPU-10fb0fbd-2696-43f3-467f-d280d906a107'
+        }
+
+        config_dict = {
+            'job_uuid': uuid.uuid4().hex,
+            'experiment_uuid': uuid.uuid4().hex,
+            'container_id': '3175e88873af9077688cee20eaadc0c07746efb84d01ae696d6d17ed9bcdfbc4',
+            'cpu_percentage': 0.6947691836734693,
+            'percpu_percentage': [0.4564075715616173, 0.23836161211185192],
+            'memory_used': 84467712,
+            'memory_limit': 2096160768,
+            'gpu_resources': gpu_resources
+        }
+        config = ContainerResourcesConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
         assert config_to_dict == config_dict

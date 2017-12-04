@@ -31,6 +31,14 @@ def get_obj_or_list_obj(container, value, min_length=None, max_length=None):
         raise ValidationError("This field expects an int or a list of ints.")
 
 
+class UUID(fields.UUID):
+    """A UUID field."""
+
+    def _serialize(self, value, attr, obj):
+        validated = str(self._validated(value).hex) if value is not None else None
+        return super(fields.String, self)._serialize(validated, attr, obj)
+
+
 class ObjectOrListObject(fields.Field):
     def __init__(self, cls_or_instance, min=None, max=None, **kwargs):  # noqa
         self.min = min

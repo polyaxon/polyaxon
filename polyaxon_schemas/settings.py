@@ -5,7 +5,7 @@ from marshmallow import Schema, fields, post_load, validate
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
-from polyaxon_schemas.utils import RunTypes
+from polyaxon_schemas.utils import RunTypes, UUID
 
 
 class K8SResourcesSchema(Schema):
@@ -185,7 +185,7 @@ class RunConfig(BaseConfig):
 
 
 class EnvironmentSchema(Schema):
-    cluster_uuid = fields.UUID(allow_none=True)
+    cluster_uuid = UUID(allow_none=True)
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)

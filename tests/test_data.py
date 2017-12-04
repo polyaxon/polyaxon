@@ -20,7 +20,7 @@ class TestDataConfigs(TestCase):
 
     def test_data_config(self):
         config_dict = {
-            'uuid': str(uuid.uuid4()),
+            'uuid': uuid.uuid4().hex,
             'name': 'foo',
             'created_at': datetime.now().isoformat(),
             'description': 'foo data',
@@ -38,7 +38,7 @@ class TestDataConfigs(TestCase):
 
     def test_dataset_config(self):
         config_dict = {
-            'uuid': str(uuid.uuid4()),
+            'uuid': uuid.uuid4().hex,
             'name': 'foo',
             'description': 'foo data',
             'is_public': True
