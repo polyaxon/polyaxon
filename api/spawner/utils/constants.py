@@ -169,31 +169,38 @@ class ExperimentLifeCycle(object):
 
     @staticmethod
     def jobs_starting(job_statuses):
-        return any([True for job_status in job_statuses if JobLifeCycle.is_starting(job_status)])
+        return any([True if JobLifeCycle.is_starting(job_status) else False
+                    for job_status in job_statuses])
 
     @staticmethod
     def jobs_running(job_statuses):
-        return any([True for job_status in job_statuses if JobLifeCycle.is_running(job_status)])
+        return any([True if JobLifeCycle.is_running(job_status) else False
+                    for job_status in job_statuses])
 
     @staticmethod
     def jobs_succeeded(job_statuses):
-        return all([True for job_status in job_statuses if job_status == JobLifeCycle.SUCCEEDED])
+        return all([True if job_status == JobLifeCycle.SUCCEEDED else False
+                    for job_status in job_statuses])
 
     @staticmethod
     def jobs_failed(job_statuses):
-        return any([True for job_status in job_statuses if job_status == JobLifeCycle.FAILED])
+        return any([True if job_status == JobLifeCycle.FAILED else False
+                    for job_status in job_statuses])
 
     @staticmethod
     def jobs_deleted(job_statuses):
-        return any([True for job_status in job_statuses if job_status == JobLifeCycle.DELETED])
+        return any([True if job_status == JobLifeCycle.DELETED else False
+                    for job_status in job_statuses])
 
     @classmethod
     def jobs_unknown(cls, job_statuses):
-        return any([True for job_status in job_statuses if job_status == JobLifeCycle.UNKNOWN])
+        return any([True if job_status == JobLifeCycle.UNKNOWN else False
+                    for job_status in job_statuses])
 
     @staticmethod
     def jobs_deletable(job_statuses):
-        return all([True for job_status in job_statuses if JobLifeCycle.is_deletable(job_status)])
+        return all([True if JobLifeCycle.is_deletable(job_status) else False
+                    for job_status in job_statuses])
 
     @classmethod
     def is_running(cls, status):
@@ -205,6 +212,9 @@ class ExperimentLifeCycle(object):
 
     @classmethod
     def jobs_status(cls, job_statuses):
+        if not job_statuses:
+            return None
+
         if cls.jobs_unknown(job_statuses):
             return cls.UNKNOWN
 
