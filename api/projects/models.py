@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.functional import cached_property
 
-from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.polyaxonfile.specification import MultiSpecification
 
 from libs.models import DiffModel
 from projects.signals import new_spec
@@ -52,7 +52,7 @@ class PolyaxonSpec(DiffModel):
 
     @cached_property
     def specification(self):
-        return Specification.read(self.content)
+        return MultiSpecification.read(self.content)
 
     @cached_property
     def concurrency(self):

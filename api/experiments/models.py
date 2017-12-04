@@ -62,18 +62,22 @@ class Experiment(DiffModel):
         from libs.redis_db import RedisExperimentJobStatus
 
         statuses = []
-        for job_uuid in self.jobs.object.values_list('uuid', flat=True):
-            status = RedisExperimentJobStatus.get_status(job_uuid=job_uuid)
-            statuses.append(status)
+        for job_uuid in self.jobs.values_list('uuid', flat=True):
+            status = RedisExperimentJobStatus.get_status(job_uuid=job_uuid.hex)
+            if status is not None:
+                statuses.append(status)
         return statuses
 
     @property
     def calculated_status(self):
-        return ExperimentLifeCycle.jobs_status(self.last_job_statuses)
+        calculated_status = ExperimentLifeCycle.jobs_status(self.last_job_statuses)
+        if calculated_status is None:
+            return self.last_status.status
+        return calculated_status
 
     @property
     def last_status(self):
-        return self.status.last()
+        return self.statuses.last()
 
     @property
     def is_running(self):
@@ -85,14 +89,14 @@ class Experiment(DiffModel):
 
     @property
     def finished_at(self):
-        status = self.status.filter(status__in=ExperimentLifeCycle.DONE_STATUS).first()
+        status = self.statuses.filter(status__in=ExperimentLifeCycle.DONE_STATUS).first()
         if status:
             return status.created_at
         return None
 
     @property
     def started_at(self):
-        status = self.status.filter(status=ExperimentLifeCycle.STARTING).first()
+        status = self.statuses.filter(status=ExperimentLifeCycle.STARTING).first()
         if status:
             return status.created_at
         return None
@@ -117,7 +121,7 @@ class ExperimentStatus(models.Model):
         editable=False,
         unique=True,
         null=False)
-    experiment = models.ForeignKey(Experiment, related_name='status')
+    experiment = models.ForeignKey(Experiment, related_name='statuses')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(
         max_length=64,
@@ -152,18 +156,18 @@ class ExperimentJob(DiffModel):
 
     @property
     def last_status(self):
-        return self.status.last()
+        return self.statuses.last()
 
     @property
     def started_at(self):
-        status = self.status.filter(status=JobLifeCycle.BUILDING).first()
+        status = self.statuses.filter(status=JobLifeCycle.BUILDING).first()
         if status:
             return status.created_at
         return None
 
     @property
     def finished_at(self):
-        status = self.status.filter(status__in=JobLifeCycle.DONE_STATUS).last()
+        status = self.statuses.filter(status__in=JobLifeCycle.DONE_STATUS).last()
         if status:
             return status.created_at
         return None
@@ -179,7 +183,7 @@ class ExperimentJobStatus(models.Model):
         editable=False,
         unique=True,
         null=False)
-    job = models.ForeignKey(ExperimentJob, related_name='status')
+    job = models.ForeignKey(ExperimentJob, related_name='statuses')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(
         max_length=64,
