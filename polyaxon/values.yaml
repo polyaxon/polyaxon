@@ -58,7 +58,9 @@ routingKeys:
 exchanges:
   internal: 'internal'
 
-nvidiaDriverDir: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
+dirs:
+  nvidia: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
+  docker: "/var/run/docker.sock"
 
 api:
   image: polyaxon/polyaxon-api

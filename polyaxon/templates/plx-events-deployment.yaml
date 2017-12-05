@@ -101,7 +101,7 @@ spec:
       volumes:
       - name: docker
         hostPath:
-          path: {{ dirs.docker }}
+          path: {{ .Values.dirs.docker }}
       - name: nvidia
         hostPath:
-          path: {{ dirs.nvidia }}
+          path: {{ .Values.dirs.nvidia }}

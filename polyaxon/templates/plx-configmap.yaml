@@ -12,7 +12,8 @@ metadata:
 data:
   debug: {{ .Values.debug | quote }}
   cluster-id: ""
-  nvidia_driver_dir: {{ .Values.nvidiaDriverDir | quote }}
+  dirs_nvidia: {{ .Values.dirs.nvidia | quote }}
+  dirs_docker: {{ .Values.dirs.nvidia | quote }}
   version: {{ .Chart.Version | quote }}
   node-selectors: {{ toYaml .Values.nodeSelectors | quote }}
   gpu-node-selectors: {{ toYaml .Values.nodeSelectorsGPU | quote }}
