@@ -32,6 +32,7 @@ def run(k8s_manager, pod_id, experiment_uuid, job_uuid, container_job_name, pers
                 RedisToStream.is_monitored_experiment_logs(experiment_uuid)):
             celery_app.send_task(CeleryPublishTask.PUBLISH_LOGS_SIDECAR,
                                  kwargs={'experiment_uuid': experiment_uuid,
+                                         'job_uuid': job_uuid,
                                          'log_line': log_line})
 
 

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
+
 from api.settings import RedisPools, redis
 
 
@@ -161,8 +163,8 @@ class RedisToStream(BaseRedisDb):
     @classmethod
     def get_latest_job_resources(cls, job):
         red = cls._get_redis()
-        key = '{}:{}'.format(cls.KEY_JOB_LATEST_STATS, job)
-        return red.hgetall(key)
+        resources = red.hget(cls.KEY_JOB_LATEST_STATS, job)
+        return json.loads(resources.decode('utf-8'))
 
     @classmethod
     def get_latest_experiment_resources(cls, jobs):
@@ -174,5 +176,4 @@ class RedisToStream(BaseRedisDb):
     @classmethod
     def set_latest_job_resources(cls, job, payload):
         red = cls._get_redis()
-        key = '{}:{}'.format(cls.KEY_JOB_LATEST_STATS, job)
-        red.hmset(key, payload.to_dict())
+        red.hset(cls.KEY_JOB_LATEST_STATS, job, json.dumps(payload))

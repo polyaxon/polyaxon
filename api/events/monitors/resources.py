@@ -129,4 +129,4 @@ def run(containers, persist):
             handle_events_resources.delay(payload=payload, persist=persist)
             # Check if we should stream the payload
             if RedisToStream.is_monitored_job_resources(payload['job_uuid']):
-                RedisToStream.set_latest_job_resources(payload['job_uuid'], payload)
+                RedisToStream.set_latest_job_resources(payload['job_uuid'], payload.to_dict())
