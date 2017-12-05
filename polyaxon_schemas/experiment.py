@@ -71,8 +71,8 @@ class PodStateSchema(Schema):
     labels = fields.Nested(JobLabelSchema)
     phase = fields.Str()
     deletion_timestamp = fields.DateTime(allow_none=True)
-    pod_conditions = fields.Dict()
-    container_statuses = fields.Dict()
+    pod_conditions = fields.Dict(allow_none=True)
+    container_statuses = fields.Dict(allow_none=True)
 
     class Meta:
         ordered = True
@@ -90,9 +90,9 @@ class PodStateConfig(BaseConfig):
                  event_type,
                  labels,
                  phase,
-                 pod_conditions,
-                 container_statuses,
-                 deletion_timestamp=None):
+                 deletion_timestamp=None,
+                 pod_conditions=None,
+                 container_statuses=None):
         self.event_type = event_type
         self.labels = labels
         self.phase = phase
