@@ -66,6 +66,7 @@ class CeleryTasks(object):
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
     EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
+    REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
 
 
 class CeleryQueues(object):

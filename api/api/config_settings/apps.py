@@ -15,6 +15,7 @@ PROJECT_APPS = (
     'experiments',
     'api',
     'events',
+    'repos',
 )
 
 INSTALLED_APPS = (

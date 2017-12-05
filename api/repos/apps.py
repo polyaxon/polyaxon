@@ -5,5 +5,5 @@ from django.apps import AppConfig
 
 
 class ProjectsConfig(AppConfig):
-    name = 'Code'
-    verbose_name = 'Code'
+    name = 'Repos'
+    verbose_name = 'Repos'
