@@ -65,13 +65,13 @@ spec:
         args: ["python3", "api/manage.py",  "monitor_statuses", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
-        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
         {{ include "config.routingKeys" . | indent 8 }}
-        - name: POLYAXON_AMQP_RECONNECT_INTERVAL
-          value: {{ default 1 .Values.events.statuses.amqpReconnectInterval | quote }}
-        - name: POLYAXON_LOG_SLEEP_INTERVAL
-          value: {{ default 1 .Values.events.statuses.logSleepInterval | quote }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
         resources:
 {{ toYaml .Values.events.statuses.resources | indent 10 }}
       {{- end }}
@@ -83,13 +83,13 @@ spec:
         args: ["python3", "api/manage.py",  "monitor_resources", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
-        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
         {{ include "config.routingKeys" . | indent 8 }}
-        - name: POLYAXON_AMQP_RECONNECT_INTERVAL
-          value: {{ default 1 .Values.events.statuses.amqpReconnectInterval | quote }}
-        - name: POLYAXON_LOG_SLEEP_INTERVAL
-          value: {{ default 1 .Values.events.statuses.logSleepInterval | quote }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
         resources:
 {{ toYaml .Values.events.resources.resources | indent 10 }}
       {{- end }}
