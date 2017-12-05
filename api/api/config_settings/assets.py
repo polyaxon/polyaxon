@@ -9,6 +9,10 @@ MEDIA_URL = config.get_string('POLYAXON_MEDIA_URL')
 STATIC_ROOT = config.get_string('POLYAXON_STATIC_ROOT')
 STATIC_URL = config.get_string('POLYAXON_STATIC_URL')
 
+UPLOAD_ROOT = config.get_string('POLYAXON_DIRS_UPLOAD')
+DATA_ROOT = config.get_string('POLYAXON_DIRS_DATA')
+LOGS_ROOT = config.get_string('POLYAXON_DIRS_LOGS')
+OUTPUTS_ROOT = config.get_string('POLYAXON_DIRS_OUTPUTS')
 
 # Additional locations of static files
 STATICFILES_DIRS = (
