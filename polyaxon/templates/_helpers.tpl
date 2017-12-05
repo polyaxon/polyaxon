@@ -241,16 +241,6 @@ redis config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}
       key: redis-result-backend-url
-- name: POLYAXON_REDIS_EXPERIMENTS_STATUS_URL
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
-      key: redis-experiments-status-url
-- name: POLYAXON_REDIS_JOBS_STATUS_URL
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
-      key: redis-jobs-status-url
 - name: POLYAXON_REDIS_JOB_CONTAINERS_URL
   valueFrom:
     configMapKeyRef:

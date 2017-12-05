@@ -18,8 +18,6 @@ data:
   gpu-node-selectors: {{ toYaml .Values.nodeSelectorsGPU | quote }}
   amqp-url: amqp://{{ template "rabbitmq.fullname" . }}:5672
   redis-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
-  redis-experiments-status-url: redis://{{ template "redis.fullname" . }}:6379/1
-  redis-jobs-status-url: redis://{{ template "redis.fullname" . }}:6379/2
   redis-job-containers-url: redis://{{ template "redis.fullname" . }}:6379/3
   redis-to-stream-url: redis://{{ template "redis.fullname" . }}:6379/4
   job-container-name: experiment-job
