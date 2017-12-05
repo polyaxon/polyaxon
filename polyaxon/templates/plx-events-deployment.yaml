@@ -94,9 +94,14 @@ spec:
 {{ toYaml .Values.events.resources.resources | indent 10 }}
       {{- end }}
         volumeMounts:
-        - name: docker-sock
+        - name: docker
           mountPath: /var/run/docker.sock
+        - name: nvidia
+          mountPath: /usr/local/nvidia
       volumes:
-      - name: docker-sock
+      - name: docker
         hostPath:
-          path: /var/run/docker.sock
+          path: {{ dirs.docker }}
+      - name: nvidia
+        hostPath:
+          path: {{ dirs.nvidia }}
