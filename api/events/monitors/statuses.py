@@ -13,7 +13,7 @@ logger = logging.getLogger('polyaxon.monitors.statuses')
 
 
 def update_job_containers(event, job_container_name):
-    if event.status.container_statuses is None:
+    if event['status']['container_statuses'] is None:
         return
 
     def get_container_id(container_id):
@@ -23,14 +23,14 @@ def update_job_containers(event, job_container_name):
             return container_id[len('docker://'):]
         return container_id
 
-    for container_status in event.status.container_statuses:
-        if container_status.name != job_container_name:
+    for container_status in event['status']['container_statuses']:
+        if container_status['name'] != job_container_name:
             continue
 
-        container_id = get_container_id(container_status.container_id)
+        container_id = get_container_id(container_status['container_id'])
         if container_id:
-            job_uuid = event.metadata.labels['job_id']
-            if container_status.state.running is not None:
+            job_uuid = event['metadata']['labels']['job_id']
+            if container_status['state']['running'] is not None:
                 logger.info('Monitoring (container_id, job_uuid): ({}, {})'.format(container_id,
                                                                                    job_uuid))
                 RedisJobContainers.monitor(container_id=container_id, job_uuid=job_uuid)
@@ -43,10 +43,14 @@ def run(k8s_manager, experiment_type_label, job_container_name, label_selector=N
                           namespace=k8s_manager.namespace,
                           label_selector=label_selector):
         logger.info("Received event: %s" % event)
-        job_state = get_job_state(event, job_container_name, experiment_type_label)
+        event_object = event['object'].to_dict()
+        job_state = get_job_state(event_type=event['type'],
+                                  event=event_object,
+                                  job_container_name=job_container_name,
+                                  experiment_type_label=experiment_type_label)
 
         if job_state:
-            logger.info("Updating job container: {}".format(event['object']))
-            update_job_containers(event['object'], job_container_name)
+            logger.info("Updating job container: {}".format(event_object))
+            update_job_containers(event_object, job_container_name)
             logger.info("Publishing event: {}".format(job_state))
             handle_events_job_statues.delay(payload=job_state)

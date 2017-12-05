@@ -57,6 +57,8 @@ class PodConditions(object):
     INITIALIZED = 'Initialized'
     SCHEDULED = 'PodScheduled'
 
+    VALUES = [READY, INITIALIZED, SCHEDULED]
+
 
 class PodLifeCycle(object):
     CONTAINER_CREATING = 'ContainerCreating'

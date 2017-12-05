@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from polyaxon_schemas.experiment import JobStateConfig
-
 from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
 from clusters.models import ClusterEvent
@@ -22,17 +20,15 @@ def handle_events_namespace(cluster_id, payload):
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_RESOURCES)
 def handle_events_resources(payload, persist):
     # here we must persist resources if requested
-    logger.info('handling events resources')
+    logger.info('handling events resources:\npersist:{}\npayload:{}'.format(persist, payload))
     print('persist:{}\npayload:{}'.format(persist, payload))
     logger.info(payload)
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
 def handle_events_job_statues(payload):
-    # Validate the job state
-    job_state = JobStateConfig.from_dict(payload)
-    job_uuid = job_state.details.labels.job_id
-    details = job_state.details.to_dict()
+    job_uuid = payload.details.labels.job_id
+    details = payload.details.to_dict()
     logger.info('handling events status for job_uuid: {}, details: {} '.format(job_uuid, details))
 
     try:
@@ -42,12 +38,11 @@ def handle_events_job_statues(payload):
         return
 
     # Set the new status
-    job.set_status(status=job_state.status, message=job_state.message, details=details)
+    job.set_status(status=payload.status, message=payload.message, details=details)
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)
-def handle_events_job_logs(payload, persist):
+def handle_events_job_logs(experiment_uuid, job_uuid, log_line, persist):
     # must persist resources if logs according to the config
     logger.info('handling events job logs')
-    print('persist:{}\npayload:{}'.format(persist, payload))
-    logger.info(payload)
+    logger.info('{} {} {} {}'.format(experiment_uuid, job_uuid, log_line, persist))

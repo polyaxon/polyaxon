@@ -5,6 +5,8 @@ import logging
 
 import time
 
+from polyaxon_schemas.experiment import JobLabelConfig
+
 from api.config_settings import CeleryPublishTask
 from api.celery_api import app as celery_app
 from libs.redis_db import RedisToStream
@@ -23,14 +25,13 @@ def run(k8s_manager, pod_id, experiment_uuid, job_uuid, container_job_name, pers
     for log_line in raw.stream():
         logger.info("Publishing event: {}".format(log_line))
         handle_events_job_logs.delay(experiment_uuid=experiment_uuid,
-                                     container_job_name=container_job_name,
+                                     job_uuid=job_uuid,
                                      log_line=log_line,
                                      persist=persist)
         if (RedisToStream.is_monitored_job_logs(job_uuid) or
                 RedisToStream.is_monitored_experiment_logs(experiment_uuid)):
             celery_app.send_task(CeleryPublishTask.PUBLISH_LOGS_SIDECAR,
                                  kwargs={'experiment_uuid': experiment_uuid,
-                                         'container_job_name': container_job_name,
                                          'log_line': log_line})
 
 
@@ -45,4 +46,4 @@ def can_log(k8s_manager, pod_id, log_sleep_interval):
                                                                 k8s_manager.namespace)
         labels = status.metadata.labels
 
-    return labels
+    return JobLabelConfig.from_dict(labels)

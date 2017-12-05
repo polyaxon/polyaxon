@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 from api.settings import RedisPools, redis
-from experiments.models import ExperimentJob
 
 
 class BaseRedisDb(object):
@@ -66,6 +65,8 @@ class RedisJobContainers(BaseRedisDb):
     def monitor(cls, container_id, job_uuid):
         red = cls._get_redis()
         if not red.sismember(cls.KEY_CONTAINERS, container_id):
+            from experiments.models import ExperimentJob
+
             try:
                 job = ExperimentJob.objects.get(uuid=job_uuid)
             except ExperimentJob.DoesNotExist:
