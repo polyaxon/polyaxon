@@ -82,6 +82,7 @@ class ClusterNode(models.Model):
             'n_gpus': nodes.get_n_gpus(node),
             'status': nodes.get_status(node)}
 
+
 class NodeGPU(DiffModel):
     """A model that represents the node's gpu."""
     uuid = models.UUIDField(
@@ -99,7 +100,7 @@ class NodeGPU(DiffModel):
 class ClusterEvent(models.Model):
     """A model to catch all errors and warning events of the cluster."""
     cluster = models.ForeignKey(Cluster, related_name='errors')
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     data = JSONField()
     meta = JSONField()
     level = models.CharField(max_length=16)
