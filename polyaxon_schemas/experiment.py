@@ -103,8 +103,8 @@ class PodStateConfig(BaseConfig):
 
 class JobStateSchema(Schema):
     status = fields.Str()
-    message = fields.Str()
-    details = fields.Nested(PodStateSchema)
+    message = fields.Str(allow_none=True)
+    details = fields.Nested(PodStateSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -118,7 +118,7 @@ class JobStateConfig(BaseConfig):
     SCHEMA = JobStateSchema
     IDENTIFIER = 'JobState'
 
-    def __init__(self, status, message, details):
+    def __init__(self, status, message=None, details=None):
         self.status = status
         self.message = message
         self.details = details
