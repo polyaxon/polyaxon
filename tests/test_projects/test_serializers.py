@@ -43,7 +43,8 @@ class TestProjectSerializer(BaseTest):
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
-    expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at', 'is_public', }
+    expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at',
+                     'is_public', }
 
     def setUp(self):
         super().setUp()

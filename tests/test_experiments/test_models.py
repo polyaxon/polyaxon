@@ -85,7 +85,7 @@ class TestExperimentModel(BaseTest):
         # Assert 3 job were created
         assert ExperimentJob.objects.filter(experiment=experiment).count() == 3
         jobs_statuses = ExperimentJob.objects.values_list('statuses__status', flat=True)
-        assert set(jobs_statuses) == {JobLifeCycle.CREATED,}
+        assert set(jobs_statuses) == {JobLifeCycle.CREATED, }
         jobs = ExperimentJob.objects.filter(experiment=experiment)
         assert experiment.calculated_status == ExperimentLifeCycle.STARTING
 

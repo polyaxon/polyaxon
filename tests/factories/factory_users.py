@@ -6,7 +6,6 @@ from faker import Factory as FakerFactory
 
 from django.conf import settings
 
-
 fake = FakerFactory.create()
 
 

@@ -19,6 +19,7 @@ from tests.factories.factory_experiments import (
 )
 from tests.utils import BaseTest
 
+
 class TestExperimentSerializer(BaseTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
