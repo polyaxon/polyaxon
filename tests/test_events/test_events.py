@@ -20,7 +20,7 @@ class TestEventsHandling(BaseTest):
                                   event=status_raw_event['object'],
                                   job_container_name=settings.JOB_CONTAINER_NAME,
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
-        handle_events_job_statues(job_state)
+        handle_events_job_statues(job_state.to_dict())
         assert ExperimentJobStatus.objects.count() == 0
 
     def test_handle_events_job_statues_for_existing_job_with_unknown_conditions(self):
@@ -31,7 +31,7 @@ class TestEventsHandling(BaseTest):
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
         job_uuid = job_state.details.labels.job_id
         job = ExperimentJobFactory(uuid=job_uuid)
-        handle_events_job_statues(job_state)
+        handle_events_job_statues(job_state.to_dict())
         assert ExperimentJobStatus.objects.count() == 2
         statuses = ExperimentJobStatus.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.UNKNOWN}
@@ -44,7 +44,7 @@ class TestEventsHandling(BaseTest):
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
         job_uuid = job_state.details.labels.job_id
         job = ExperimentJobFactory(uuid=job_uuid)
-        handle_events_job_statues(job_state)
+        handle_events_job_statues(job_state.to_dict())
         assert ExperimentJobStatus.objects.count() == 2
         statuses = ExperimentJobStatus.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.FAILED}

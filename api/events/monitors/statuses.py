@@ -50,6 +50,7 @@ def run(k8s_manager, experiment_type_label, job_container_name, label_selector=N
                                   experiment_type_label=experiment_type_label)
 
         if job_state:
+            job_state = job_state.to_dict()
             logger.info("Updating job container: {}".format(event_object))
             update_job_containers(event_object, job_container_name)
             logger.info("Publishing event: {}".format(job_state))

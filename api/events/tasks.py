@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from polyaxon_schemas.experiment import JobStateConfig
+
 from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
 from clusters.models import ClusterEvent
@@ -27,8 +29,8 @@ def handle_events_resources(payload, persist):
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
 def handle_events_job_statues(payload):
-    job_uuid = payload.details.labels.job_id
-    details = payload.details.to_dict()
+    details = payload['details']
+    job_uuid = details['labels']['job_id']
     logger.info('handling events status for job_uuid: {}, details: {} '.format(job_uuid, details))
 
     try:
@@ -38,7 +40,7 @@ def handle_events_job_statues(payload):
         return
 
     # Set the new status
-    job.set_status(status=payload.status, message=payload.message, details=details)
+    job.set_status(status=payload['status'], message=payload['message'], details=details)
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)

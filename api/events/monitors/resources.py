@@ -125,8 +125,9 @@ def run(containers, persist):
             RedisJobContainers.remove_container(container_id)
         payload = get_container_resources(containers[container_id], gpu_resources)
         if payload:
+            payload = payload.to_dict()
             logger.info("Publishing event: {}".format(payload))
             handle_events_resources.delay(payload=payload, persist=persist)
             # Check if we should stream the payload
             if RedisToStream.is_monitored_job_resources(payload['job_uuid']):
-                RedisToStream.set_latest_job_resources(payload['job_uuid'], payload.to_dict())
+                RedisToStream.set_latest_job_resources(payload['job_uuid'], payload)
