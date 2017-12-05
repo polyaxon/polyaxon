@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 celery==4.1.0
 Django==1.11.7
 django-cors-headers==2.1.0
@@ -6,6 +5,7 @@ djangorestframework==3.7.0
 djangorestframework-camel-case==0.2.0
 django-registration==2.3
 docker==2.6.1
+GitPython==2.1.7
 pandas==0.20.3
 pandas-summary==0.0.41
 pika==0.11.0
