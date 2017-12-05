@@ -332,6 +332,23 @@ intervals config
 
 
 {{/*
+Config dirs
+*/}}
+{{- define "config.dirs" }}
+- name: POLYAXON_DIRS_UPLOAD
+  value: {{ default "/tmp" .Values.dirs.upload | quote }}
+- name: POLYAXON_DIRS_DATA
+  value: {{ .Values.persistence.data.mountPath | quote }}
+- name: POLYAXON_DIRS_LOGS
+  value: {{ .Values.persistence.logs.mountPath | quote }}
+- name: POLYAXON_DIRS_OUTPUT
+  value: {{ .Values.persistence.outputs.mountPath | quote }}
+- name: POLYAXON_DIRS_REPOS
+  value: {{ .Values.persistence.repos.mountPath | quote }}
+{{- end -}}
+
+
+{{/*
 Volume mounts
 */}}
 {{- define "volumes.volumeMounts" }}
