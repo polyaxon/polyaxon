@@ -53,6 +53,5 @@ spec:
         {{ include "config.routingKeys" . | indent 8 }}
         {{ include "config.queues" . | indent 8 }}
         {{ include "config.intervals" . | indent 8 }}
-        volumeMounts:
         resources:
 {{ toYaml .Values.beat.resources | indent 10 }}

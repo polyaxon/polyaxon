@@ -1,0 +1,25 @@
+{{- if .Values.persistence.repos.enabled -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-repos
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.repos.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.repos.size | quote }}
+{{- if .Values.persistence.repos.storageClass }}
+{{- if (eq "-" .Values.persistence.repos.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.repos.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end -}}

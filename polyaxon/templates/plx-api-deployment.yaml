@@ -55,8 +55,7 @@ spec:
         {{ include "config.queues" . | indent 8 }}
         {{ include "config.intervals" . | indent 8 }}
         volumeMounts:
-        - mountPath: {{ .Values.persistence.mountPath }}
-          name: polyaxon-data
+        {{ include "volumes.volumeMounts" . | indent 8}}
         livenessProbe:
           failureThreshold: 5
           httpGet:
@@ -98,10 +97,4 @@ spec:
         resources:
 {{ toYaml .Values.apiEvents.resources | indent 10 }}
       volumes:
-      - name: polyaxon-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ template "polyaxon.fullname" . }}
-      {{- else }}
-        emptyDir: {}
-      {{ end }}
+      {{ include "volumes.volumes" . | indent 6 }}

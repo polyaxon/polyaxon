@@ -329,3 +329,73 @@ intervals config
 - name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES
   value: {{ .Values.intervals.clusters_update_system_nodes | quote }}
 {{- end -}}
+
+
+{{/*
+Volume mounts
+*/}}
+{{- define "volumes.volumeMounts" }}
+{{ if .Values.persistence.data.enabled }}
+- mountPath: {{ .Values.persistence.data.mountPath }}
+  name: {{ template "polyaxon.fullname" . }}-data
+  {{ if .Values.persistence.data.subPath -}}
+  subPath: {{ .Values.persistence.data.subPath | quote }}
+  {{- end }}
+{{- end }}
+{{ if .Values.persistence.logs.enabled }}
+- mountPath: {{ .Values.persistence.logs.mountPath }}
+  name: {{ template "polyaxon.fullname" . }}-logs
+  {{ if .Values.persistence.logs.subPath -}}
+  subPath: {{ .Values.persistence.logs.subPath | quote }}
+  {{- end }}
+{{- end }}
+{{ if .Values.persistence.outputs.enabled }}
+- mountPath: {{ .Values.persistence.outputs.mountPath }}
+  name: {{ template "polyaxon.fullname" . }}-outputs
+  {{ if .Values.persistence.outputs.subPath -}}
+  subPath: {{ .Values.persistence.outputs.subPath | quote }}
+  {{- end }}
+{{- end }}
+{{ if .Values.persistence.repos.enabled }}
+- mountPath: {{ .Values.persistence.repos.mountPath }}
+  name: {{ template "polyaxon.fullname" . }}-repos
+  {{ if .Values.persistence.repos.subPath -}}
+  subPath: {{ .Values.persistence.repos.subPath | quote }}
+  {{- end }}
+{{- end }}
+{{- end -}}
+
+
+{{/*
+Volumes
+*/}}
+{{- define "volumes.volumes" }}
+- name: polyaxon-logs
+{{- if .Values.persistence.logs.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ template "polyaxon.fullname" . }}-logs
+{{- else }}
+  emptyDir: {}
+{{ end }}
+- name: polyaxon-data
+{{- if .Values.persistence.data.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ template "polyaxon.fullname" . }}-data
+{{- else }}
+  emptyDir: {}
+{{ end }}
+- name: polyaxon-outputs
+{{- if .Values.persistence.outputs.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ template "polyaxon.fullname" . }}-outputs
+{{- else }}
+  emptyDir: {}
+{{ end }}
+- name: polyaxon-repos
+{{- if .Values.persistence.repos.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ template "polyaxon.fullname" . }}-repos
+{{- else }}
+  emptyDir: {}
+{{ end }}
+{{- end -}}

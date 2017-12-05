@@ -177,10 +177,30 @@ events:
     logSleepInterval: 1
 
 persistence:
-  enabled: false
-  accessMode: ReadWriteOnce
-  size: 10Gi
-  mountPath: /data/polyaxon
+  data:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: /data
+    subPath: ""
+  logs:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: /logs
+    subPath: ""
+  outputs:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: /outputs
+    subPath: ""
+  repos:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: /repos
+    subPath: ""
 
 nodeSelectors: {}
 nodeSelectorsGPU: {}

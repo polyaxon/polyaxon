@@ -56,5 +56,9 @@ spec:
         {{ include "config.routingKeys" . | indent 8 }}
         {{ include "config.queues" . | indent 8 }}
         {{ include "config.intervals" . | indent 8 }}
+        volumeMounts:
+        {{ include "volumes.volumeMounts" . | indent 8}}
         resources:
 {{ toYaml .Values.workers.resources | indent 10 }}
+      volumes:
+      {{ include "volumes.volumes" . | indent 6 }}
