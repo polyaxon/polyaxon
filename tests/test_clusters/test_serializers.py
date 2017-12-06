@@ -10,7 +10,7 @@ from clusters.serializers import (
     ClusterDetailSerializer,
 )
 
-from tests.factories.factory_clusters import ClusterFactory, GPUFactory, ClusterNodeFactory
+from factories.factory_clusters import ClusterFactory, GPUFactory, ClusterNodeFactory
 from tests.utils import BaseTest
 
 

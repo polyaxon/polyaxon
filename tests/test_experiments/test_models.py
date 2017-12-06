@@ -10,9 +10,9 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
-from tests.factories.factory_clusters import ClusterFactory
-from tests.factories.factory_experiments import ExperimentFactory
-from tests.factories.factory_projects import PolyaxonSpecFactory
+from factories.factory_clusters import ClusterFactory
+from factories.factory_experiments import ExperimentFactory
+from factories.factory_projects import PolyaxonSpecFactory
 from tests.fixtures import experiment_spec_content, start_experiment_value
 from tests.utils import BaseTest
 

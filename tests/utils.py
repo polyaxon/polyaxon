@@ -15,7 +15,7 @@ from django.test.client import FakePayload
 from rest_framework.authtoken.models import Token
 
 from api.config_settings import RedisPools
-from tests.factories.factory_users import UserFactory
+from factories.factory_users import UserFactory
 
 # Stores the currently valid tokens to check against
 _valid_tokens = dict()

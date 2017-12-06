@@ -9,10 +9,10 @@ from experiments.models import (
     ExperimentJob,
     ExperimentJobStatus,
 )
-from tests.factories.factory_clusters import ClusterFactory
-from tests.factories.factory_projects import ProjectFactory
+from factories.factory_clusters import ClusterFactory
+from factories.factory_projects import ProjectFactory
 
-from tests.factories.factory_users import UserFactory
+from factories.factory_users import UserFactory
 
 
 class ExperimentFactory(factory.DjangoModelFactory):

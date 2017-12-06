@@ -66,6 +66,25 @@ def get_committed_files(repo_path, commit):
     return [f for f in files_committed if f]
 
 
+def fetch(self, url, ref, checkout_path):
+    try:
+        for line in execute_cmd(['git', 'clone', url, checkout_path],
+                                capture=self.json_logs):
+            self.log.info(line, extra=dict(phase='fetching'))
+    except subprocess.CalledProcessError:
+        self.log.error('Failed to clone repository!', extra=dict(phase='failed'))
+        sys.exit(1)
+
+    if ref:
+        try:
+            for line in execute_cmd(['git', 'reset', '--hard', ref], cwd=checkout_path,
+                                    capture=self.json_logs):
+                self.log.info(line, extra=dict(phase='fetching'))
+        except subprocess.CalledProcessError:
+            self.log.error('Failed to check out ref %s', ref, extra=dict(phase='failed'))
+            sys.exit(1)
+
+
 def archive_repo(repo, repo_name):
     with open(os.path.join(settings.REPOS_ARCHIVE_ROOT, '{}.tar'.format(repo_name)), 'wb') as fp:
         repo.archive(fp)

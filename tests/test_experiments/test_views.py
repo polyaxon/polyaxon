@@ -21,14 +21,14 @@ from experiments.serializers import (
 )
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
-from tests.factories.factory_clusters import ClusterFactory
-from tests.factories.factory_experiments import (
+from factories.factory_clusters import ClusterFactory
+from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentStatusFactory,
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
 )
-from tests.factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
+from factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
 from tests.utils import BaseViewTest
 
 

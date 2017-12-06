@@ -3,9 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from projects.models import Project, PolyaxonSpec
 from projects.serializers import ProjectSerializer, PolyaxonSpecSerializer, ProjectDetailSerializer
-from tests.factories.factory_clusters import ClusterFactory
+from factories.factory_clusters import ClusterFactory
+from factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
 
-from tests.factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
 from tests.utils import BaseTest
 
 

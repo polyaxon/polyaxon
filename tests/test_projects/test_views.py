@@ -15,8 +15,8 @@ from projects.serializers import (
     ProjectDetailSerializer,
     PolyaxonSpecSerializer,
 )
-from tests.factories.factory_clusters import ClusterFactory
-from tests.factories.factory_projects import (
+from factories.factory_clusters import ClusterFactory
+from factories.factory_projects import (
     ProjectFactory,
     PolyaxonSpecFactory,
 )

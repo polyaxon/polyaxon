@@ -3,8 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from repos.models import Repo
 from repos.serializers import RepoSerializer
-
-from tests.factories.factory_repos import RepoFactory
+from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 

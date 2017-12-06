@@ -5,7 +5,7 @@ import factory
 
 from projects.models import Project, PolyaxonSpec
 
-from tests.factories.factory_users import UserFactory
+from factories.factory_users import UserFactory
 
 
 class ProjectFactory(factory.DjangoModelFactory):

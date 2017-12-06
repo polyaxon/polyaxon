@@ -4,9 +4,9 @@ from __future__ import absolute_import, division, print_function
 from unittest.mock import patch
 
 from experiments.models import Experiment
-from tests.factories.factory_clusters import ClusterFactory
-from tests.factories.factory_projects import PolyaxonSpecFactory, ProjectFactory
-from tests.factories.factory_repos import RepoFactory
+from factories.factory_clusters import ClusterFactory
+from factories.factory_projects import PolyaxonSpecFactory, ProjectFactory
+from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 

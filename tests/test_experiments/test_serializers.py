@@ -12,7 +12,7 @@ from experiments.serializers import (
 )
 from spawner.utils.constants import ExperimentLifeCycle
 
-from tests.factories.factory_experiments import (
+from factories.factory_experiments import (
     ExperimentStatusFactory,
     ExperimentFactory,
     ExperimentJobFactory,

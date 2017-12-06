@@ -10,7 +10,8 @@ from libs.redis_db import RedisJobContainers
 from spawner.utils.constants import JobLifeCycle, EventTypes, PodLifeCycle, PodConditions
 from spawner.utils.jobs import get_job_state
 
-from tests.factories.factory_experiments import ExperimentJobFactory
+from factories.factory_experiments import ExperimentJobFactory
+
 from tests.fixtures import status_raw_event, status_raw_event_with_conditions
 from tests.utils import BaseTest
 

@@ -20,10 +20,11 @@ from repos import git
 from repos.models import Repo, RepoRevision
 from repos.serializers import RepoSerializer
 
-from tests.factories.factory_clusters import ClusterFactory
-from tests.factories.factory_projects import ProjectFactory
-from tests.factories.factory_repos import RepoFactory
-from tests.factories.factory_users import UserFactory
+from factories.factory_clusters import ClusterFactory
+from factories.factory_projects import ProjectFactory
+from factories.factory_repos import RepoFactory
+from factories.factory_users import UserFactory
+
 from tests.utils import BaseViewTest
 
 
@@ -210,7 +211,6 @@ class TestUploadFilesView(BaseViewTest):
         assert commit.author.name == new_user.username
         # Assert that we committed 3 files
         # (1 file updated 1 deleted, and one folder with 1 file added)
-        import pdb; pdb.set_trace()
         assert len(git.get_committed_files(code_file_path, commit_hash)) == 3
         assert repo.revisions.count() == 3
 

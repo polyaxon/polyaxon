@@ -9,7 +9,7 @@ from faker import Factory as FakerFactory
 from spawner.utils.constants import NodeRoles
 
 from clusters.models import Cluster, NodeGPU, ClusterNode, ClusterEvent
-from tests.factories.factory_users import UserFactory
+from factories.factory_users import UserFactory
 
 fake = FakerFactory.create()
 
