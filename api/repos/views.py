@@ -64,7 +64,7 @@ class UploadFilesView(APIView):
         if not os.path.exists(path):
             os.makedirs(path)
         try:
-            tar_file_name = self._handle_posted_data(request, repo, path)
+            tar_file_name, n_files = self._handle_posted_data(request, repo, path)
         except (IOError, os.error) as e:  # pragma: no cover
             logger.warning(
                 'IOError while trying to save posted data ({}): {}'.format(e.errno, e.strerror))
