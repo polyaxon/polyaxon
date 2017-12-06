@@ -16,7 +16,7 @@ def get_repos(user):
     return [repo for repo in repos if not (repo is None)]
 
 
-def get_git_repo(repo_path, init=False):
+def get_git_repo(repo_path, init=False, retry=True):
     if os.path.isdir(repo_path):
         try:
             return GitRepo(repo_path)
@@ -24,20 +24,27 @@ def get_git_repo(repo_path, init=False):
             if init:
                 return GitRepo.init(repo_path)
     elif init:
-        os.mkdir(repo_path)
-        return GitRepo.init(repo_path)
+        try:
+            os.mkdir(repo_path)
+            return GitRepo.init(repo_path)
+        except FileNotFoundError:
+            if retry:
+                # The use has no dir for repos
+                os.mkdir('/'.join(repo_path.split('/')[:-1]))
+                # try again
+                return get_git_repo(repo_path, init, retry=False)
     return None
 
 
 def get_status(repo_path):
-    return run_command(cmd='git status --porcelain', data=None, location=repo_path, chw=True)
+    return run_command(cmd='git status -s', data=None, location=repo_path, chw=True)
 
 
 def commit(repo_path, user_email, user_name, message='updated'):
     run_command(cmd='git add -A', data=None, location=repo_path, chw=True)
     run_command(cmd='git -c user.email=<{}> -c user.name={} commit -m "{}"'.format(
         user_email, user_name, message),
-                data=None, location=repo_path, chw=True)
+        data=None, location=repo_path, chw=True)
 
 
 def get_last_commit(repo_path):
@@ -50,6 +57,13 @@ def get_commit(repo_path, commit):
     repo = get_git_repo(repo_path)
     commit = repo.commit(commit)
     return commit
+
+
+def get_committed_files(repo_path, commit):
+    files_committed = run_command(
+        cmd='git diff-tree --no-commit-id --name-only -r {}'.format(commit),
+        data=None, location=repo_path, chw=True).split('\n')
+    return [f for f in files_committed if f]
 
 
 def archive_repo(repo, repo_name):
