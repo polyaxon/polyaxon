@@ -7,7 +7,6 @@ import tarfile
 import os
 import shutil
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from api.settings import CeleryTasks
@@ -37,14 +36,14 @@ def handle_new_files(user_id, repo_id, tar_file_name):
         return
 
     # Destination files
-    repo_name = repo.project
-    repo_path = os.path.join(settings.REPOS_ROOT, user.username, repo_name)
-    new_repo_path = os.path.join(repo_path, '{}_new.tar.gz'.format(repo_name))
+    new_repo_path = repo.get_tmp_tar_path()
 
     # clean the current path from all files
-    for member in os.listdir(repo_path):
+    path_files = os.listdir(repo.path)
+    for member in path_files:
         if member == '.git':
             continue
+        member = os.path.join(repo.path, member)
         if os.path.isfile(member):
             os.remove(member)
         else:
@@ -55,19 +54,18 @@ def handle_new_files(user_id, repo_id, tar_file_name):
 
     # Untar the file
     with tarfile.open(new_repo_path) as tar:
-        files = [f.name for f in tar]
-        tar.extractall()
+        tar.extractall(repo.path)
 
     # Delete the current tar
     os.remove(new_repo_path)
 
     # Get the git repo
-    if not git.get_status(repo_path):
+    if not git.get_status(repo.path):
         return
 
     # commit changes
-    git.commit(repo_path, user.email, user.name)
+    git.commit(repo.path, user.email, user.username)
     # add new revision to repo
-    hash, commit = git.get_last_commit(repo_path=repo_path)
+    hash, commit = git.get_last_commit(repo_path=repo.path)
     message = commit.summary
     RepoRevision(repo=repo, user=user, commit=hash, message=message).save()

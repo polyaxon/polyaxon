@@ -3,10 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 import datetime
 import json
+import tempfile
 import uuid
 from urllib.parse import urlparse
 
 import redis
+from django.conf import settings
 from django.test import Client, TestCase
 from django.test.client import FakePayload
 
@@ -28,7 +30,11 @@ class AuthorizedClient(Client):
 
     def __init__(self, access_token='', authentication_type='Token', **defaults):
         super().__init__(**defaults)
-        self.user = defaults.get('user', UserFactory())
+        user = defaults.get('user', UserFactory())
+        self.login_user(user, access_token, authentication_type)
+
+    def login_user(self, user, access_token=None, authentication_type='Token'):
+        self.user = user
         self.expires = datetime.datetime.now() + datetime.timedelta(days=1)
         if not access_token:
             token, _ = Token.objects.get_or_create(user=self.user)
@@ -133,6 +139,8 @@ class BaseTest(TestCase):
         # Flushing all redis databases
         redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
         redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
+        settings.REPOS_ROOT = tempfile.mkdtemp()
+        settings.UPLOAD_ROOT = tempfile.mkdtemp()
         return super().setUp()
 
 
@@ -151,7 +159,6 @@ class BaseViewTest(BaseTest):
 
     def setUp(self):
         assert hasattr(self, 'auth_client') and self.auth_client is not None
-
         super().setUp()
 
     def test_requires_auth(self):
