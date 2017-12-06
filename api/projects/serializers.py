@@ -29,7 +29,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('uuid', 'user', 'name', 'description', 'created_at', 'updated_at', 'is_public', )
+        fields = ('uuid', 'user', 'name', 'description', 'created_at', 'updated_at',
+                  'is_public', 'has_code')
 
     def get_user(self, obj):
         return obj.user.username
@@ -39,6 +40,5 @@ class ProjectDetailSerializer(ProjectSerializer):
     experiments = ExperimentSerializer(many=True)
     specs = PolyaxonSpecSerializer(many=True)
 
-    class Meta:
-        model = Project
-        exclude = ('id',)
+    class Meta(ProjectSerializer.Meta):
+        fields = ProjectSerializer.Meta.fields + ('experiments', 'specs', )

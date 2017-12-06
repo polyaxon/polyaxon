@@ -61,18 +61,14 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
 
 class ExperimentDetailSerializer(ExperimentSerializer):
-    uuid = fields.UUIDField(format='hex', read_only=True)
     cluster = fields.SerializerMethodField()
     spec = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
     jobs = ExperimentJobSerializer(many=True)
 
-    class Meta:
-        model = Experiment
-        fields = (
-            'uuid', 'created_at', 'updated_at', 'cluster', 'project', 'user', 'name', 'last_status',
-            'description', 'spec', 'config', 'original_experiment', 'jobs', 'started_at',
-            'finished_at', 'is_clone')
+    class Meta(ExperimentSerializer.Meta):
+        fields = ExperimentSerializer.Meta.fields + (
+            'cluster', 'project',  'description', 'spec', 'config', 'original_experiment', 'jobs',)
 
     def get_cluster(self, obj):
         return obj.cluster.uuid.hex

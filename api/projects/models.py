@@ -35,6 +35,10 @@ class Project(DiffModel):
     def __str__(self):
         return self.name
 
+    @property
+    def has_code(self):
+        return hasattr(self, 'repo')
+
 
 class PolyaxonSpec(DiffModel):
     """A model that saves PolyaxonSpec/Polyaxonfiles."""

@@ -44,7 +44,7 @@ class TestProjectSerializer(BaseTest):
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at',
-                     'is_public', }
+                     'is_public', 'has_code', }
 
     def setUp(self):
         super().setUp()
@@ -75,7 +75,7 @@ class TestProjectDetailSerializer(BaseTest):
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at', 'is_public',
-                     'experiments', 'specs', }
+                     'experiments', 'specs', 'has_code', }
 
     def setUp(self):
         super().setUp()

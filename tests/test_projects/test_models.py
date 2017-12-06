@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 from experiments.models import Experiment
 from tests.factories.factory_clusters import ClusterFactory
-from tests.factories.factory_projects import PolyaxonSpecFactory
+from tests.factories.factory_projects import PolyaxonSpecFactory, ProjectFactory
+from tests.factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 
@@ -17,3 +18,12 @@ class TestPolyaxonSpecModel(BaseTest):
 
         assert Experiment.objects.filter(spec=spec).count() == 1
         assert mock_fct.call_count == 1
+
+
+class TestProjectModel(BaseTest):
+    def test_has_code(self):
+        project = ProjectFactory()
+        assert project.has_code is False
+
+        RepoFactory(project=project)
+        assert project.has_code is True
