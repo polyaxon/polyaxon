@@ -37,8 +37,9 @@ def handle_new_files(user_id, repo_id, tar_file_name):
         return
 
     # Destination files
-    repo_path = os.path.join(settings.REPOS_ROOT, user.username, repo.name)
-    new_repo_path = os.path.join(repo_path, '{}_new.tar.gz'.format(repo.name))
+    repo_name = repo.project
+    repo_path = os.path.join(settings.REPOS_ROOT, user.username, repo_name)
+    new_repo_path = os.path.join(repo_path, '{}_new.tar.gz'.format(repo_name))
 
     # clean the current path from all files
     for member in os.listdir(repo_path):

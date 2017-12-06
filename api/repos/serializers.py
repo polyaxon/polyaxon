@@ -7,12 +7,15 @@ from repos.models import Repo
 
 
 class RepoSerializer(serializers.ModelSerializer):
-    uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
+    project = fields.SerializerMethodField()
 
     class Meta:
         model = Repo
-        fields = ('uuid', 'user', 'name', 'created_at', 'updated_at', 'is_public', )
+        fields = ('user', 'project', 'created_at', 'updated_at', 'is_public', )
 
     def get_user(self, obj):
         return obj.user.username
+
+    def get_project(self, obj):
+        return obj.project.name

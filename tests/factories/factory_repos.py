@@ -5,6 +5,7 @@ import factory
 from faker import Factory as FakerFactory
 
 from repos.models import Repo
+from tests.factories.factory_projects import ProjectFactory
 from tests.factories.factory_users import UserFactory
 
 fake = FakerFactory.create()
@@ -14,5 +15,5 @@ class RepoFactory(factory.DjangoModelFactory):
     class Meta:
         model = Repo
 
-    name = factory.Sequence(lambda x: "repo-{}".format(x))
     user = factory.SubFactory(UserFactory)
+    project = factory.SubFactory(ProjectFactory)

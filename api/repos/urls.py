@@ -8,11 +8,9 @@ from libs.urls import UUID_PATTERN
 from repos import views
 
 urlpatterns = [
-    url(r'^repos/?$',
-        views.RepoListView.as_view()),
-    url(r'^repos/{}/?$'.format(UUID_PATTERN),
+    url(r'^projects/{}/repo?$'.format(UUID_PATTERN),
         views.RepoDetailView.as_view()),
-    url(r'^repos/{}/upload/?$'.format(UUID_PATTERN),
+    url(r'^projects/{}/repo/upload/?$'.format(UUID_PATTERN),
         views.UploadFilesView.as_view()),
 ]
 
