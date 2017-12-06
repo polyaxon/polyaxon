@@ -32,7 +32,7 @@ class TestRunExecConfigs(TestCase):
                    '--hparams_set=transformer_base_single_gpu '
                    '--output_dir=~/t2t_train/base',
             'image': 'tensorflow:1.3.0',
-            'install': ['pip install tensor2tensor'],
+            'steps': ['pip install tensor2tensor'],
             'git': 'https://github.com/tensorflow/tensor2tensor.git'
         }
         config = RunExecConfig.from_dict(config_dict)
