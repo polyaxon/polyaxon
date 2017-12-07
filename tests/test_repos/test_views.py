@@ -54,7 +54,7 @@ class TestRepoDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         assert RepoRevision.objects.count() == 2
         resp = self.auth_client.delete(self.url)
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert RepoRevision.objects.count() == 0
 
@@ -82,7 +82,7 @@ class TestUploadFilesView(BaseViewTest):
 
         # No repo was created yet
         assert self.model_class.objects.count() == 0
-        repo_path = '{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name)
+        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
 
         uploaded_file = self.get_upload_file()
@@ -101,7 +101,7 @@ class TestUploadFilesView(BaseViewTest):
         user = self.auth_client.user
         repo_name = self.project.name
 
-        repo_path = '{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name)
+        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
 
         repo = self.factory_class(project=self.project, user=user)
@@ -145,7 +145,10 @@ class TestUploadFilesView(BaseViewTest):
         repo = self.model_class.objects.first()
 
         # Assert new git repo was created in the repos root and that also the tar file was deleted
-        code_file_path = '{}/{}/{}'.format(settings.REPOS_ROOT, user.username, self.project.name)
+        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+                                              user.username,
+                                              self.project.name,
+                                              self.project.name)
         tar_code_file_path = repo.get_tmp_tar_path()
         self.assertFalse(os.path.exists(tar_code_file_path))
         self.assertTrue(os.path.exists(code_file_path))

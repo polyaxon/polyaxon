@@ -128,7 +128,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert PolyaxonSpec.objects.count() == 2
         assert Experiment.objects.count() == 2
         resp = self.auth_client.delete(self.url)
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert PolyaxonSpec.objects.count() == 0
         assert Experiment.objects.count() == 0

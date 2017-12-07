@@ -135,7 +135,7 @@ class TestClusterDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         assert ClusterNode.objects.count() == 2
         resp = self.auth_client.delete(self.url)
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert ClusterNode.objects.count() == 0
 
@@ -254,7 +254,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         assert NodeGPU.objects.count() == 2
         resp = self.auth_client.delete(self.url)
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert NodeGPU.objects.count() == 0
 
@@ -368,6 +368,6 @@ class TestClusterNodeGPUDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         assert ClusterNode.objects.count() == 1
         resp = self.auth_client.delete(self.url)
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert ClusterNode.objects.count() == 1
