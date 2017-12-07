@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^{}/'.format(API_V1), include('experiments.urls', namespace='v1')),
     url(r'^{}/'.format(API_V1), include('projects.urls', namespace='v1')),
     url(r'^{}/'.format(API_V1), include('repos.urls', namespace='v1')),
+    url(r'^{}/'.format(API_V1), include('versions.urls', namespace='v1')),
     url(r'^_health/?$', views.HealthView.as_view(), name='health_check'),
     url(r'^$', views.IndexView.as_view(), name='index'),
 ]
