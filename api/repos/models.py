@@ -9,6 +9,7 @@ from django.db.models.signals import post_save, post_delete
 
 from libs.models import DiffModel
 from projects.models import Project
+from repos import git
 from repos.signals import new_repo, repo_deleted
 
 
@@ -31,6 +32,15 @@ class Repo(DiffModel):
         """We need to nest the git path inside the project path to mke it easier
         to create docker images."""
         return os.path.join(self.project_path, self.project.name)
+
+    @property
+    def git(self):
+        return git.get_git_repo(repo_path=self.path)
+
+    @property
+    def last_commit(self):
+        """Returns a tuple (hash, and commit object)"""
+        return git.get_last_commit(repo_path=self.path)
 
     def get_tmp_tar_path(self):
         return os.path.join(self.path, '{}_new.tar.gz'.format(self.project.name))
