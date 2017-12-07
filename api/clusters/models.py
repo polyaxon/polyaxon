@@ -24,6 +24,9 @@ class Cluster(DiffModel):
         related_name='clusters')
     version_api = JSONField(help_text='The cluster version api infos')
 
+    def __str__(self):
+        return '{}/{}'.format(self.user, self.uuid.hex)
+
 
 class ClusterNode(models.Model):
     """A model that represents the cluster node."""
@@ -65,6 +68,9 @@ class ClusterNode(models.Model):
         choices=NodeLifeCycle.CHOICES)
     is_current = models.BooleanField(default=True)
 
+    def __str__(self):
+        return '{}/{}'.format(self.cluster, self.name)
+
     @classmethod
     def from_node_item(cls, node):
         return {
@@ -96,10 +102,13 @@ class NodeGPU(DiffModel):
     memory = models.BigIntegerField()
     cluster_node = models.ForeignKey(ClusterNode, related_name='gpus')
 
+    def __str__(self):
+        return self.serial
+
 
 class ClusterEvent(models.Model):
     """A model to catch all errors and warning events of the cluster."""
-    cluster = models.ForeignKey(Cluster, related_name='errors')
+    cluster = models.ForeignKey(Cluster, related_name='events')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     data = JSONField()
     meta = JSONField()

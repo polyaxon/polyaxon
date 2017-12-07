@@ -7,6 +7,9 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models.signals import post_save
+from django.utils.functional import cached_property
+
+from polyaxon_schemas.polyaxonfile.specification import Specification
 
 from clusters.models import Cluster
 from experiments.signals import new_experiment, new_experiment_job, new_experiment_job_status
@@ -55,6 +58,10 @@ class Experiment(DiffModel):
         blank=True,
         related_name='clones',
         help_text='The original experiment that was cloned from.')
+
+    @cached_property
+    def compiled_spec(self):
+        return Specification(experiment=self.uuid, values=self.config)
 
     @property
     def last_job_statuses(self):
@@ -144,6 +151,9 @@ class ExperimentStatus(models.Model):
     class Meta:
         ordering = ['created_at']
 
+    def __str__(self):
+        return self.status
+
 
 class ExperimentMetric(models.Model):
     """A model that represents an experiment metric at certain time."""
@@ -221,6 +231,9 @@ class ExperimentJobStatus(models.Model):
 
     message = models.CharField(max_length=256, null=True, blank=True)
     details = JSONField(null=True, blank=True, default={})
+
+    def __str__(self):
+        return self.status
 
 
 post_save.connect(new_experiment_job_status,
