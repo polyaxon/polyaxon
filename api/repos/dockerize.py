@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
 import json
 import logging
 import time
-import sys
 import os
 import stat
 
@@ -32,7 +34,7 @@ COPY {{ polyaxon_setup_path }} {{ workdir }}
 
 {% if steps -%}
 {% for step in steps -%}
-RUN step
+RUN {{ step }}
 {% endfor -%}
 {% endif -%}
 
@@ -46,14 +48,11 @@ COPY {{ folder_name }} {{ workdir }}
 """
 
 
-class Builder(object):
+class DockerBuilder(object):
     def __init__(self,
                  repo_path,
                  from_image,
                  image_tag,
-                 registry_user,
-                 registry_password,
-                 registry_host,
                  steps=None,
                  env_vars=None,
                  workdir='/code',
@@ -69,8 +68,14 @@ class Builder(object):
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()
+        self.docker = None
 
-        self.docker = APIClient(version='auto')
+    def connect(self):
+        if not self.docker:
+            self.docker = APIClient(version='auto')
+
+    def login(self, registry_user, registry_password, registry_host):
+        self.connect()
         try:
             self.docker.login(username=registry_user,
                               password=registry_password,
@@ -78,6 +83,8 @@ class Builder(object):
                               reauth=True)
         except DockerException as e:
             logger.exception('Failed to connect to registry %s\n' % e)
+
+        return
 
     def _get_requirements_path(self):
         requirements_path = os.path.join(self.repo_path, 'polyaxon_requirements.txt')
@@ -119,6 +126,7 @@ class Builder(object):
         with open(self.dockerfile_path, 'w') as dockerfile:
             dockerfile.write(self.render())
 
+        self.connect()
         for line in self.docker.build(
             path=self.build_path,
             tag=self.image_tag,
@@ -136,6 +144,7 @@ class Builder(object):
         # Build a progress setup for each layer, and only emit per-layer info every 1.5s
         layers = {}
         last_emit_time = time.time()
+        self.connect()
         for line in self.docker.push(self.image_tag, stream=True):
             lines = [l for l in line.decode('utf-8').split('\r\n') if l]
             lines = [json.loads(l) for l in lines]
