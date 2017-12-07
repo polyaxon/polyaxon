@@ -23,7 +23,7 @@ export interface CreateUpdateReceiveProjectAction extends Action {
 
 export interface DeleteProjectAction extends Action {
   type: actionTypes.DELETE_PROJECT;
-  projectId: number
+  projectUuid: string
 }
 
 export interface ReceiveProjects extends Action {
@@ -44,10 +44,10 @@ export function createProject(project: ProjectModel): CreateUpdateReceiveProject
     }
 }
 
-export function deleteProject(projectId: number): DeleteProjectAction {
+export function deleteProject(projectUuid: string): DeleteProjectAction {
     return {
       type: actionTypes.DELETE_PROJECT,
-      projectId
+      projectUuid
     }
 }
 
@@ -91,7 +91,7 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
     dispatch(requestProjects());
     return fetch(PROJECTS_URL)
       .then(response => response.json())
-      .then(json => json.map((project: ProjectModel) => {
+      .then(json => json.results.map((project: ProjectModel) => {
           return {
             ...project,
             createdAt: new Date(_.toString(project.createdAt)),
@@ -103,10 +103,10 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
 }
 
 
-export function fetchProject(projectId: number): Dispatch<ProjectModel> {
+export function fetchProject(projectUuid: string): Dispatch<ProjectModel> {
   return (dispatch: any) => {
     dispatch(requestProject());
-    return fetch(PROJECTS_URL + projectId)
+    return fetch(PROJECTS_URL + projectUuid)
       .then(response => response.json())
       .then(json => {
           return {

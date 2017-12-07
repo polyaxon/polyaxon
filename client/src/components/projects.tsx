@@ -9,7 +9,7 @@ import {ProjectModel} from "../models/project";
 export interface Props {
   projects: ProjectModel[];
   onUpdate: (project: ProjectModel) => any;
-  onDelete: (projectId: number) => any;
+  onDelete: (projectUuid: string) => any;
   fetchData: () => any;
   showModal: () => any;
   hideModal: () => any;
@@ -36,7 +36,7 @@ export default class Projects extends React.Component<Props, Object> {
           {projects.filter(
             (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
           ).map(
-            (project: ProjectModel) => <li className="list-item" key={project.id}><Project project={project} onDelete={() => onDelete(project.id)}/></li>)}
+            (project: ProjectModel) => <li className="list-item" key={Math.random()}><Project project={project} onDelete={() => onDelete(project.uuid)}/></li>)}
         </ul>
       </div>
     );

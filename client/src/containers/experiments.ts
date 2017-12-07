@@ -7,22 +7,22 @@ import {ExperimentModel} from "../models/experiment";
 import * as actions from "../actions/experiment";
 
 interface OwnProps {
-  projectId?: number;
+  projectUuid?: string;
   fetchData?: () => any;
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  let experimentIds: any = [];
-  if (!_.isNil(ownProps.projectId) && !_.isEmpty(state.projects.byIds)){
-    experimentIds = state.projects.byIds[ownProps.projectId].experiments
+  let experimentUuids: any = [];
+  if (!_.isNil(ownProps.projectUuid) && !_.isEmpty(state.projects.byUuids)){
+    experimentUuids = state.projects.byUuids[ownProps.projectUuid].experiments
   }
 
   if (state.experiments) {
-    if (_.isEmpty(experimentIds)) {
-      return {experiments: (<any>Object).values(state.experiments.byIds)};
+    if (_.isEmpty(experimentUuids)) {
+      return {experiments: (<any>Object).values(state.experiments.byUuids)};
     } else {
-      return {experiments: state.experiments.ids.filter(
-        (k: number) => _.includes(experimentIds, k)).map((k: number) => state.experiments.byIds[k])};
+      return {experiments: state.experiments.uuids.filter(
+        (k: string) => _.includes(experimentUuids, k)).map((k: string) => state.experiments.byUuids[k])};
     }
   }
   return [];
@@ -30,7 +30,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
 export interface DispatchProps {
   onCreate?: (experiment: ExperimentModel) => any;
-  onDelete?: (experimentId: number) => any;
+  onDelete?: (experimentUuid: string) => any;
   onUpdate?: (experiment: ExperimentModel) => any;
   fetchData?: () => any;
 }
@@ -38,7 +38,7 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
   return {
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperiment(experiment)),
-    onDelete: (experimentId: number) => dispatch(actions.deleteExperiment(experimentId)),
+    onDelete: (experimentUuid: string) => dispatch(actions.deleteExperiment(experimentUuid)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperiment(experiment)),
     fetchData: () => dispatch(ownProps.fetchData? ownProps.fetchData : actions.fetchExperiments())
   }

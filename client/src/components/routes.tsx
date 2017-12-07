@@ -23,7 +23,7 @@ function Routes() {
     <Switch>
         <Route exact path="/" component={Home}/>
         <Route exact path="/projects" component={Projects}/>
-        <Route path="/projects/:projectId(\\d+)" component={ProjectDetail} />
+        <Route path="/projects/:projectUuid(\\w+)" component={ProjectDetail} />
         <Route exact path="/experiments" component={Experiments}/>
         <Route path="/about" component={About}/>
         <Redirect from="*" to="/"/>

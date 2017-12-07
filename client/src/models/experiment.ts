@@ -1,16 +1,16 @@
 export class ExperimentModel {
-	public id: number;
+	public uuid: string;
 	public name: string;
 	public deleted?: boolean;
-  public project?: number;
+  public project?: string;
   public status?: string;
 	public createdAt: Date;
 	public updatedAt: Date;
 }
 
 export class ExperimentStateSchema {
-	byIds: {[id: number]: ExperimentModel};
-	ids: number[];
+	byUuids: {[uuid: string]: ExperimentModel};
+	uuids: string[];
 }
 
-export const ExperimentsEmptyState = {byIds: {}, ids: []};
+export const ExperimentsEmptyState = {byUuids: {}, uuids: []};

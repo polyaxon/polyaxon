@@ -18,7 +18,7 @@ function Project({project, onDelete}: Props) {
         <div>{ project.description }</div>
         <div className="meta">{ project.createdAt.toLocaleTimeString() }</div>
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={`/projects/${project.id}`}><Button>View</Button></LinkContainer>
+          <LinkContainer to={`/projects/${project.uuid}`}><Button>View</Button></LinkContainer>
           <Button bsStyle="danger" className="pull-right" onClick={onDelete}>delete</Button>
         </ButtonToolbar>
       </div>

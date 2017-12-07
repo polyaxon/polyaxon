@@ -20,7 +20,7 @@ export interface CreateUpdateExperimentAction extends Action {
 
 export interface DeleteExperimentAction extends Action {
   type: actionTypes.DELETE_EXPERIMENT;
-  experimentId: number
+  experimentUuid: string
 }
 
 export interface ReceiveExperiments extends Action {
@@ -48,10 +48,10 @@ export function updateExperiment(experiment: ExperimentModel): CreateUpdateExper
     }
 }
 
-export function deleteExperiment(experimentId: number): DeleteExperimentAction {
+export function deleteExperiment(experimentUuid: string): DeleteExperimentAction {
     return {
       type: actionTypes.DELETE_EXPERIMENT,
-      experimentId
+      experimentUuid
     }
 }
 
@@ -73,7 +73,7 @@ export function fetchExperiments(): Dispatch<ExperimentModel[]> {
     dispatch(requestExperiments());
     return fetch(EXPERIMENTS_URL)
       .then(response => response.json())
-      .then(json => json.map((xp: ExperimentModel)=> {
+      .then(json => json.results.map((xp: ExperimentModel)=> {
           return {
             ...xp,
             createdAt: new Date(_.toString(xp.createdAt)),
