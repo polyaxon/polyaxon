@@ -62,6 +62,9 @@ class TestRepoModels(BaseTest):
         # Test query model works
         assert repo == ExternalRepo.objects.get(project=self.project, git_url=git_url)
 
+        # Check last commit
+        assert repo.last_commit is None
+
         # Delete repo
         repo.delete()
         self.assertFalse(os.path.exists(repo_path))

@@ -53,9 +53,10 @@ def commit(repo_path, user_email, user_name, message='updated'):
 
 
 def get_last_commit(repo_path):
-    hash = run_command(cmd='git --no-pager log --pretty=oneline -1', data=None,
-                       location=repo_path, chw=True).split(' ')[0]
-    return hash, get_commit(repo_path, hash)
+    commit_hash = run_command(cmd='git --no-pager log --pretty=oneline -1', data=None,
+                              location=repo_path, chw=True).split(' ')[0]
+
+    return (commit_hash, get_commit(repo_path, commit_hash)) if commit_hash else None
 
 
 def get_commit(repo_path, commit):

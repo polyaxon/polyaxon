@@ -12,6 +12,8 @@ from django.conf import settings
 from docker import APIClient
 from docker.errors import DockerException
 
+from repos import git
+
 logger = logging.getLogger('polyaxon.repos.dockerize')
 
 POLYAXON_DOCKER_TEMPLATE = """
@@ -168,14 +170,20 @@ class DockerBuilder(object):
 
 def build_experiment(experiment):
     """Build necessary code for an experiment to run"""
-    repo_path = None
-    repo_name = None
-    repo_last_commit = None
     project_name = experiment.project.name
     experiment_spec = experiment.compiled_spec
     if experiment_spec.run_exec.git:  # We need to fetch the repo first
-        # TODO : Add handling for git repos later
-        pass
+        from repos.models import ExternalRepo
+
+        repo, is_created = ExternalRepo.objects.get_or_create(project=experiment.project,
+                                                              git_url=experiment_spec.run_exec.git)
+        if not is_created:
+            # If the repo already exist, we just need to refetch it
+            git.fetch(git_url=repo.git_url, repo_path=repo.path)
+
+        repo_path = repo.path
+        repo_name = repo.name
+        repo_last_commit = repo.last_commit
     else:
         repo_path = experiment.project.repo.path
         repo_name = project_name
