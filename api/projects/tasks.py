@@ -5,7 +5,7 @@ import logging
 
 from api.settings import CeleryTasks, Intervals
 from api.celery_api import app as celery_app
-from experiments.tasks import start_experiment
+from experiments.tasks import build_experiment
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 
@@ -24,7 +24,7 @@ def start_group_experiments(task, spec_id):
     experiment_to_start = polyaxon_spec.n_experiments_to_start
     while experiment_to_start > 0 and pending_experiments:
         experiment_id = pending_experiments.pop()
-        start_experiment.delay(experiment_id=experiment_id)
+        build_experiment.delay(experiment_id=experiment_id)
         experiment_to_start -= 1
 
     if pending_experiments:

@@ -8,6 +8,7 @@ import os
 import stat
 
 import jinja2
+from django.conf import settings
 from docker import APIClient
 from docker.errors import DockerException
 
@@ -135,6 +136,7 @@ class DockerBuilder(object):
             forcerm=True,
             rm=True,
             pull=True,
+            nocache=False,
             container_limits=limits,
             stream=True,
         ):
@@ -162,3 +164,33 @@ class DockerBuilder(object):
                 if time.time() - last_emit_time > 1.5:
                     logger.info('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
                     last_emit_time = time.time()
+
+
+def build_experiment(experiment):
+    """Build necessary code for an experiment to run"""
+    repo_path = None
+    repo_name = None
+    repo_last_commit = None
+    project_name = experiment.project.name
+    experiment_spec = experiment.compiled_spec
+    if experiment_spec.run_exec.git:  # We need to fetch the repo first
+        # TODO : Add handling for git repos later
+        pass
+    else:
+        repo_path = experiment.project.repo.path
+        repo_name = project_name
+        repo_last_commit = experiment.project.repo.last_commit
+
+    image_tag = '{}/{}:{}'.format(project_name, repo_name, repo_last_commit)
+
+    # Build the image
+    docker_builder = DockerBuilder(repo_path=repo_path,
+                                   from_image=experiment_spec.run_exec.image,
+                                   image_tag=image_tag,
+                                   steps=experiment_spec.run_exec.steps,
+                                   env_vars=experiment_spec.run_exec.env_vars)
+    docker_builder.login(registry_user=settings.REGISTRY_USER,
+                         registry_password=settings.REGISTRY_PASSWORD,
+                         registry_host=settings.REGISTRY_HOST)
+    docker_builder.build()
+    docker_builder.push()

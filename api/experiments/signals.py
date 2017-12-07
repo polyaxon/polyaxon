@@ -12,12 +12,12 @@ def new_experiment(sender, **kwargs):
     if not created:
         return
 
-    from experiments.tasks import start_experiment
+    from experiments.tasks import build_experiment
 
     instance.set_status(ExperimentLifeCycle.CREATED)
     if instance.is_independent:
-        # Schedule the new experiment to be picked by the spawner
-        start_experiment.delay(experiment_id=instance.id)
+        # Start building the experiment and then Schedule it to be picked by the spawner
+        build_experiment.delay(experiment_id=instance.id)
 
 
 def new_experiment_job(sender, **kwargs):
