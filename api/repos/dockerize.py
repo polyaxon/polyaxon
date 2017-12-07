@@ -140,7 +140,7 @@ class DockerBuilder(object):
         ):
             yield line
 
-    def push_image(self):
+    def push(self):
         # Build a progress setup for each layer, and only emit per-layer info every 1.5s
         layers = {}
         last_emit_time = time.time()
