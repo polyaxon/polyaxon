@@ -138,6 +138,7 @@ class ExperimentLifeCycle(object):
 
     Props:
         * CREATED: created and waiting to be scheduled
+        * BUILDING: started building imagesif necessary
         * SCHEDULED: scheduled waiting to be picked
         * STARTING: picked and is starting (jobs are created/building/pending)
         * RUNNING: one or all jobs is still running
@@ -147,6 +148,7 @@ class ExperimentLifeCycle(object):
         * UNKNOWN: unknown state
     """
     CREATED = 'Created'
+    BUILDING = 'Building'
     SCHEDULED = 'Scheduled'
     STARTING = 'Starting'
     RUNNING = 'Running'
@@ -157,6 +159,7 @@ class ExperimentLifeCycle(object):
 
     CHOICES = (
         (CREATED, CREATED),
+        (BUILDING, BUILDING),
         (SCHEDULED, SCHEDULED),
         (STARTING, STARTING),
         (RUNNING, RUNNING),
@@ -166,7 +169,7 @@ class ExperimentLifeCycle(object):
         (UNKNOWN, UNKNOWN),
     )
 
-    RUNNING_STATUS = [STARTING, RUNNING]
+    RUNNING_STATUS = [BUILDING, STARTING, RUNNING]
     DONE_STATUS = [FAILED, DELETED, SUCCEEDED]
 
     @staticmethod
