@@ -19,8 +19,18 @@ class Repo(DiffModel):
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 
     @property
+    def user_path(self):
+        return os.path.join(settings.REPOS_ROOT, self.user.username)
+
+    @property
+    def project_path(self):
+        return os.path.join(self.user_path, self.project.name)
+
+    @property
     def path(self):
-        return os.path.join(settings.REPOS_ROOT, self.user.username, self.project.name)
+        """We need to nest the git path inside the project path to mke it easier
+        to create docker images."""
+        return os.path.join(self.project_path, self.project.name)
 
     def get_tmp_tar_path(self):
         return os.path.join(self.path, '{}_new.tar.gz'.format(self.project.name))
