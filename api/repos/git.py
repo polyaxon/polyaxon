@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import logging
 import os
 import shlex
+import shutil
 from subprocess import PIPE
 
 from django.conf import settings
 from git import Repo as GitRepo, InvalidGitRepositoryError
 from psutil import Popen
+
+logger = logging.getLogger('polyaxon.repos.git')
 
 
 def get_repos(user):
@@ -16,7 +20,7 @@ def get_repos(user):
     return [repo for repo in repos if not (repo is None)]
 
 
-def get_git_repo(repo_path, init=False, retry=True):
+def get_git_repo(repo_path, init=False):
     if os.path.isdir(repo_path):
         try:
             return GitRepo(repo_path)
@@ -26,13 +30,9 @@ def get_git_repo(repo_path, init=False, retry=True):
     elif init:
         try:
             os.mkdir(repo_path)
-            return GitRepo.init(repo_path)
+            return get_git_repo(repo_path, init=init)
         except FileNotFoundError:
-            if retry:
-                # The use has no dir for repos
-                os.mkdir('/'.join(repo_path.split('/')[:-1]))
-                # try again
-                return get_git_repo(repo_path, init, retry=False)
+            raise ValueError('Could not create a repo on this path {}'.format(repo_path))
     return None
 
 
@@ -66,23 +66,17 @@ def get_committed_files(repo_path, commit):
     return [f for f in files_committed if f]
 
 
-def fetch(self, url, ref, checkout_path):
-    try:
-        for line in execute_cmd(['git', 'clone', url, checkout_path],
-                                capture=self.json_logs):
-            self.log.info(line, extra=dict(phase='fetching'))
-    except subprocess.CalledProcessError:
-        self.log.error('Failed to clone repository!', extra=dict(phase='failed'))
-        sys.exit(1)
-
-    if ref:
-        try:
-            for line in execute_cmd(['git', 'reset', '--hard', ref], cwd=checkout_path,
-                                    capture=self.json_logs):
-                self.log.info(line, extra=dict(phase='fetching'))
-        except subprocess.CalledProcessError:
-            self.log.error('Failed to check out ref %s', ref, extra=dict(phase='failed'))
-            sys.exit(1)
+def fetch(url, checkout_path, overwrite=True):
+    if os.path.isdir(checkout_path):
+        logger.info('Current checkout path has content.')
+        if overwrite:
+            logger.info('Overwriting current checkout path.')
+            shutil.rmtree(checkout_path)
+        else:
+            logger.info('Existing without changing current checkout path.')
+            return
+    return run_command('git clone {} {}'.format(url, checkout_path),
+                       data=None, location=checkout_path, chw=True)
 
 
 def archive_repo(repo, repo_name):
