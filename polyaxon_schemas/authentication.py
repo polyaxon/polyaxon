@@ -25,3 +25,21 @@ class AccessTokenConfig(BaseConfig):
     def __init__(self, username, token):
         self.username = username
         self.token = token
+
+
+class CredentialsSchema(Schema):
+    username = fields.Str()
+    password = fields.Str()
+
+    @post_load
+    def make(self, data):
+        return CredentialsConfig(**data)
+
+
+class CredentialsConfig(BaseConfig):
+    SCHEMA = CredentialsSchema
+    IDENTIFIER = 'credentials'
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
