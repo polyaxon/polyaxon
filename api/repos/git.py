@@ -32,8 +32,13 @@ def get_git_repo(repo_path, init=False):
             os.mkdir(repo_path)
             return get_git_repo(repo_path, init=init)
         except FileNotFoundError:
-            raise ValueError('Could not create a repo on this path {}'.format(repo_path))
-    return None
+            pass
+
+    raise ValueError('Could not create a repo on this path {}'.format(repo_path))
+
+
+def clone_git_repo(repo_path, git_url):
+    return GitRepo.clone_from(url=git_url, to_path=repo_path)
 
 
 def get_status(repo_path):
@@ -66,17 +71,18 @@ def get_committed_files(repo_path, commit):
     return [f for f in files_committed if f]
 
 
-def fetch(url, checkout_path, overwrite=True):
-    if os.path.isdir(checkout_path):
+def fetch(git_url, repo_path, overwrite=False):
+    if os.path.isdir(repo_path):
         logger.info('Current checkout path has content.')
         if overwrite:
             logger.info('Overwriting current checkout path.')
-            shutil.rmtree(checkout_path)
+            shutil.rmtree(repo_path)
         else:
-            logger.info('Existing without changing current checkout path.')
+            run_command(cmd='git fetch origin master', data=None, location=repo_path, chw=True)
+            run_command(cmd='git reset --hard FETCH_HEAD', data=None, location=repo_path, chw=True)
+            run_command(cmd='git clean -df', data=None, location=repo_path, chw=True)
             return
-    return run_command('git clone {} {}'.format(url, checkout_path),
-                       data=None, location=checkout_path, chw=True)
+    return clone_git_repo(repo_path=repo_path, git_url=git_url)
 
 
 def archive_repo(repo, repo_name):
