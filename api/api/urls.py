@@ -12,16 +12,20 @@ from api import views
 
 API_V1 = 'api/v1'
 
+api_patterns = [
+    url(r'^token/', obtain_auth_token),
+    url(r'', include('clusters.urls', namespace='clusters')),
+    url(r'', include('experiments.urls', namespace='experiments')),
+    url(r'', include('projects.urls', namespace='projects')),
+    url(r'', include('repos.urls', namespace='repos')),
+    url(r'', include('versions.urls', namespace='versions')),
+]
+
 urlpatterns = [
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/token/', obtain_auth_token),
-    url(r'^{}/'.format(API_V1), include('clusters.urls', namespace='v1')),
-    url(r'^{}/'.format(API_V1), include('experiments.urls', namespace='v1')),
-    url(r'^{}/'.format(API_V1), include('projects.urls', namespace='v1')),
-    url(r'^{}/'.format(API_V1), include('repos.urls', namespace='v1')),
-    url(r'^{}/'.format(API_V1), include('versions.urls', namespace='v1')),
     url(r'^_health/?$', views.HealthView.as_view(), name='health_check'),
+    url(r'^{}/'.format(API_V1), include(api_patterns, namespace='v1')),
     url(r'^$', views.IndexView.as_view(), name='index'),
 ]
 
