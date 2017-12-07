@@ -1,17 +1,17 @@
 export class ProjectModel {
-	public id: number;
+	public uuid: string;
 	public name: string;
 	public deleted?: boolean;
 	public description?: string;
 	public isPrivate?: boolean = false;
-	public experiments?: Array<number> = [];
+	public experiments?: Array<string> = [];
 	public createdAt: Date;
 	public updatedAt: Date;
 }
 
 export class ProjectStateSchema {
-	byIds: {[id: number]: ProjectModel};
-	ids: number[];
+	byUuids: {[uuid: string]: ProjectModel};
+	uuids: string[];
 }
 
-export const ProjectsEmptyState = {byIds: {}, ids: []};
+export const ProjectsEmptyState = {byUuids: {}, uuids: []};

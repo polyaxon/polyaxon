@@ -8,9 +8,9 @@ import * as actions from "../actions/project";
 
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let projectId = parseInt(params.match.params.projectId);
-  if (_.includes(state.projects.ids, projectId)) {
-    return {project: state.projects.byIds[projectId]};
+  let projectUuid = params.match.params.projectUuid;
+  if (_.includes(state.projects.uuids, projectUuid)) {
+    return {project: state.projects.byUuids[projectUuid]};
   }
   return {project: null};
 }
@@ -23,8 +23,8 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
-    onDelete: () => dispatch(actions.deleteProject(params.match.params.projectId)),
-    fetchData: () => dispatch(actions.fetchProject(params.match.params.projectId))
+    onDelete: () => dispatch(actions.deleteProject(params.match.params.projectUuid)),
+    fetchData: () => dispatch(actions.fetchProject(params.match.params.projectUuid))
   }
 }
 

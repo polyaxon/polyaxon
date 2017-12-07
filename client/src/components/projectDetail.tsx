@@ -33,7 +33,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
           <ButtonToolbar className="pull-right">
             <Button bsStyle="danger" className="pull-right" onClick={() => onDelete()}>delete</Button>
           </ButtonToolbar>
-          <Experiments fetchData={() => null} projectId={project.id}></Experiments>
+          <Experiments fetchData={() => null} projectUuid={project.uuid}></Experiments>
         </div>
       </div>
     );

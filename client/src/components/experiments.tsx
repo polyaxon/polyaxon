@@ -8,20 +8,20 @@ export interface Props {
   experiments: ExperimentModel[];
   onCreate: (experiment: ExperimentModel) => any;
   onUpdate: (experiment: ExperimentModel) => any;
-  onDelete: (experimentId: number) => any;
+  onDelete: (experimentUuid: string) => any;
   fetchData: () => any
-  projectId?: number;
+  projectUuid?: string;
 }
 
 
 export default class Experiments extends React.Component<Props, Object> {
   componentDidMount() {
-    const {experiments, onCreate, onUpdate, onDelete, fetchData, projectId} = this.props;
+    const {experiments, onCreate, onUpdate, onDelete, fetchData, projectUuid} = this.props;
     fetchData();
   }
 
   public render() {
-    const {experiments, onCreate, onUpdate, onDelete, fetchData, projectId} = this.props;
+    const {experiments, onCreate, onUpdate, onDelete, fetchData, projectUuid} = this.props;
     return (
       <div className="row">
         <div className="col-md-12">
@@ -29,7 +29,7 @@ export default class Experiments extends React.Component<Props, Object> {
             {experiments.filter(
               (xp: ExperimentModel) => _.isNil(xp.deleted) || !xp.deleted
             ).map(
-              (xp: ExperimentModel) => <li className="list-item" key={xp.id}><Experiment experiment={xp} onDelete={() => onDelete(xp.id)}/></li>)}
+              (xp: ExperimentModel) => <li className="list-item" key={Math.random()}><Experiment experiment={xp} onDelete={() => onDelete(xp.uuid)}/></li>)}
           </ul>
         </div>
       </div>
