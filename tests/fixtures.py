@@ -38,6 +38,17 @@ experiment_spec_content = """---
           meta_data_file: "../data/mnist/meta_data.json"
 """
 
+exec_experiment_spec_content = """---
+    version: 1
+
+    project:
+      name: project1
+
+    run:
+      image: my_image
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
 start_experiment_value = {
     'master':
         {'pod': {'api_version': 'v1', 'kind': 'Pod',

@@ -8,12 +8,17 @@ import mock
 from polyaxon_schemas.polyaxonfile.specification import Specification
 
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
+from factories.factory_repos import RepoFactory
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 from factories.factory_clusters import ClusterFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import PolyaxonSpecFactory
-from tests.fixtures import experiment_spec_content, start_experiment_value
+from tests.fixtures import (
+    experiment_spec_content,
+    exec_experiment_spec_content,
+    start_experiment_value,
+)
 from tests.utils import BaseTest
 
 
@@ -42,7 +47,7 @@ class TestExperimentModel(BaseTest):
 
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
         with patch('projects.tasks.start_group_experiments.delay') as _:
-            with patch('experiments.tasks.start_experiment.delay') as mock_fct:
+            with patch('experiments.tasks.build_experiment.delay') as mock_fct:
                 with patch.object(Experiment, 'set_status') as mock_fct2:
                     ExperimentFactory()
 
@@ -50,7 +55,8 @@ class TestExperimentModel(BaseTest):
         assert mock_fct2.call_count == 1
 
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
-        experiment = ExperimentFactory()
+        content = Specification.read(experiment_spec_content)
+        experiment = ExperimentFactory(config=content.parsed_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 2
@@ -59,6 +65,25 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
         # Assert also that experiment is monitored
+        assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
+
+    def test_independent_experiment_creation_with_run_triggers_experiment_building_scheduling(self):
+        content = Specification.read(exec_experiment_spec_content)
+        # Create a repo for the project
+        repo = RepoFactory()
+
+        with patch('repos.dockerize.build_experiment') as mock_docker_build:
+            experiment = ExperimentFactory(config=content.parsed_data, project=repo.project)
+
+        assert mock_docker_build.call_count == 1
+        assert experiment.project.repo is not None
+        assert experiment.is_independent is True
+
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED,
+                                      ExperimentLifeCycle.BUILDING,
+                                      ExperimentLifeCycle.SCHEDULED]
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
     @mock.patch('experiments.tasks.K8SSpawner')
