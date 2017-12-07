@@ -17,7 +17,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 from api.urls import API_V1
 from repos import git
-from repos.models import Repo, RepoRevision
+from repos.models import Repo
 from repos.serializers import RepoSerializer
 
 from factories.factory_clusters import ClusterFactory
@@ -37,13 +37,9 @@ class TestRepoDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         cluster = ClusterFactory()
-        self.object = self.factory_class(user=cluster.user)
+        self.object = self.factory_class()
         self.url = '/{}/projects/{}/repo'.format(API_V1, self.object.project.uuid.hex)
         self.queryset = self.model_class.objects.all()
-
-        # Create related fields
-        for i in range(2):
-            RepoRevision(repo=self.object, user=cluster.user, commit=uuid.uuid4().hex).save()
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -52,11 +48,9 @@ class TestRepoDetailViewV1(BaseViewTest):
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1
-        assert RepoRevision.objects.count() == 2
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
-        assert RepoRevision.objects.count() == 0
 
 
 class TestUploadFilesView(BaseViewTest):
@@ -104,7 +98,7 @@ class TestUploadFilesView(BaseViewTest):
         repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
 
-        repo = self.factory_class(project=self.project, user=user)
+        repo = self.factory_class(project=self.project)
         assert self.model_class.objects.count() == 1
         self.assertTrue(os.path.exists(repo_path))
 
@@ -186,7 +180,6 @@ class TestUploadFilesView(BaseViewTest):
         assert commit.author.name == new_user.username
         # Assert that we committed 3 files (2 files in new_repo.tar.gz one file was deleted)
         assert len(git.get_committed_files(code_file_path, commit_hash)) == 3
-        assert repo.revisions.count() == 2
 
         # Make a new upload with repo_with_folder.tar.gz containing 1 file one dir with file
         new_user = UserFactory()
@@ -215,7 +208,6 @@ class TestUploadFilesView(BaseViewTest):
         # Assert that we committed 3 files
         # (1 file updated 1 deleted, and one folder with 1 file added)
         assert len(git.get_committed_files(code_file_path, commit_hash)) == 3
-        assert repo.revisions.count() == 3
 
         # login old user
         self.auth_client.login_user(user)

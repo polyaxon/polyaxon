@@ -11,7 +11,7 @@ class TestRepoSerializer(BaseTest):
     serializer_class = RepoSerializer
     model_class = Repo
     factory_class = RepoFactory
-    expected_keys = {'project', 'user', 'created_at', 'updated_at', 'is_public', }
+    expected_keys = {'project', 'created_at', 'updated_at', 'is_public', }
 
     def setUp(self):
         super().setUp()
@@ -24,7 +24,6 @@ class TestRepoSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         data.pop('created_at')
         data.pop('updated_at')
-        assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.name
 
         for k, v in data.items():

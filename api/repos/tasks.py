@@ -12,7 +12,7 @@ from django.contrib.auth import get_user_model
 from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
 from repos import git
-from repos.models import Repo, RepoRevision
+from repos.models import Repo
 
 logger = logging.getLogger('polyaxon.tasks.repos')
 
@@ -65,7 +65,3 @@ def handle_new_files(user_id, repo_id, tar_file_name):
 
     # commit changes
     git.commit(repo.path, user.email, user.username)
-    # add new revision to repo
-    hash, commit = git.get_last_commit(repo_path=repo.path)
-    message = commit.summary
-    RepoRevision(repo=repo, user=user, commit=hash, message=message).save()

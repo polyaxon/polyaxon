@@ -7,12 +7,11 @@ from repos.models import Repo
 
 
 class RepoSerializer(serializers.ModelSerializer):
-    user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
 
     class Meta:
         model = Repo
-        fields = ('user', 'project', 'created_at', 'updated_at', 'is_public', )
+        fields = ('project', 'created_at', 'updated_at', 'is_public', )
 
     def get_user(self, obj):
         return obj.user.username

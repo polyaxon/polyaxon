@@ -37,10 +37,8 @@ class UploadFilesView(APIView):
     def get_object(self):
         project_uuid = self.kwargs['uuid']
         project = get_object_or_404(Project, uuid=project_uuid)
-        try:
-            return Repo.objects.get(project=project)
-        except Repo.DoesNotExist:
-            return Repo.objects.create(user=self.request.user, project=project)
+        repo, _ = Repo.objects.get_or_create(project=project)
+        return repo
 
     @staticmethod
     def _handle_posted_data(request, repo, directory):
