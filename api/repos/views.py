@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
 import logging
 import os
 
@@ -5,7 +8,6 @@ from django.conf import settings
 from django.http import HttpResponseServerError
 
 from rest_framework.generics import (
-    CreateAPIView,
     RetrieveUpdateDestroyAPIView,
     get_object_or_404)
 from rest_framework.parsers import MultiPartParser
