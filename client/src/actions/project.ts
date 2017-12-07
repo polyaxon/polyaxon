@@ -86,6 +86,31 @@ export function receiveProjects(projects: ProjectModel[]): ReceiveProjects {
 }
 
 
+export function generateProject(project: ProjectModel) {
+  return (dispatch: any) => {
+    dispatch(createProject(project));
+    return fetch(PROJECTS_URL, {
+        method: 'POST',
+        body: JSON.stringify(project),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    })
+  }
+}
+
+
+export function removeProject(projectUuid: string) {
+  return (dispatch: any) => {
+    dispatch(deleteProject(projectUuid));
+    return fetch(PROJECTS_URL + projectUuid, {
+        method: 'DELETE'
+     })
+  }
+}
+
+
 export function fetchProjects(): Dispatch<ProjectModel[]> {
   return (dispatch: any) => {
     dispatch(requestProjects());
@@ -96,11 +121,11 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
             ...project,
             createdAt: new Date(_.toString(project.createdAt)),
             updatedAt: new Date(_.toString(project.updatedAt))};
-        })
-      )
+      }))
       .then(json => dispatch(receiveProjects(json)))
   }
 }
+
 
 
 export function fetchProject(projectUuid: string): Dispatch<ProjectModel> {

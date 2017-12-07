@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
+from django.contrib.auth.models import User
 
 from rest_framework.generics import (
     RetrieveDestroyAPIView,
@@ -22,7 +23,10 @@ class ProjectListView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         # TODO: update when we allow platform usage without authentication
-        serializer.save(user=self.request.user)
+        user, _ = User.objects.get_or_create(username='owner',
+                                             email='onwer@polyaxon.com',
+                                             password='glass onion')
+        serializer.save(user=user)
 
 
 class ProjectDetailView(RetrieveUpdateDestroyAPIView):
