@@ -4,11 +4,12 @@ from __future__ import absolute_import, division, print_function
 import os
 
 from django.conf import settings
+from django.db import IntegrityError
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from repos import git
-from repos.models import Repo, ExternalRepo
+from repos.models import ExternalRepo
 from tests.utils import BaseTest
 
 
@@ -43,8 +44,10 @@ class TestRepoModels(BaseTest):
                                          'empty')
         self.assertFalse(os.path.exists(repo_path))
 
+        git_url = 'https://github.com/polyaxon/empty.git'
+
         # Create repo
-        repo = ExternalRepo(project=self.project, git_url='https://github.com/polyaxon/empty.git')
+        repo = ExternalRepo(project=self.project, git_url=git_url)
         repo.save()
         assert repo.path == repo_path
         assert repo.name == 'empty'
@@ -55,6 +58,9 @@ class TestRepoModels(BaseTest):
 
         # Test fetch works correctly
         git.fetch(repo.git_url, repo.path)
+
+        # Test query model works
+        assert repo == ExternalRepo.objects.get(project=self.project, git_url=git_url)
 
         # Delete repo
         repo.delete()

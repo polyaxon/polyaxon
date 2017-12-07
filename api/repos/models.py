@@ -57,6 +57,9 @@ class ExternalRepo(DiffModel, RepoMixin):
     git_url = models.URLField()
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 
+    class Meta:
+        unique_together = (('project', 'git_url'),)
+
     @property
     def name(self):
         git_name = self.git_url.split('/')[-1]
