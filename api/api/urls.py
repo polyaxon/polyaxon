@@ -13,12 +13,12 @@ from api import views
 API_V1 = 'api/v1'
 
 api_patterns = [
-    url(r'^token/', obtain_auth_token),
     url(r'', include('clusters.urls', namespace='clusters')),
     url(r'', include('experiments.urls', namespace='experiments')),
     url(r'', include('projects.urls', namespace='projects')),
     url(r'', include('repos.urls', namespace='repos')),
     url(r'', include('versions.urls', namespace='versions')),
+    url(r'', include('users.api_urls', namespace='users')),
 ]
 
 urlpatterns = [

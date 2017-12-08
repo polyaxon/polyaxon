@@ -4,10 +4,13 @@ from __future__ import absolute_import, division, print_function
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
+from polyaxon_schemas.user import UserConfig
 
 from rest_framework.authtoken.models import Token
 
 from registration.backends.hmac import views as hmac_views
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
 
 from users.forms import RegistrationForm
 
@@ -42,3 +45,10 @@ class TokenView(TemplateView):
         token, _ = Token.objects.get_or_create(user=self.request.user)
         context['token'] = token.key
         return context
+
+
+class UserView(RetrieveAPIView):
+
+    def retrieve(self, request, *args, **kwargs):
+        user = request.user
+        return Response(UserConfig.obj_to_dict(user))
