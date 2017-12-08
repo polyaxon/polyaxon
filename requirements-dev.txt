@@ -20,4 +20,4 @@ websockets==3.4
 
 polyaxon-gpustat==0.0.11
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@b0974c7603e0b314d9e233d51222f4dfbfc420bf#egg=polyaxon-k8s
--e git+https://github.com/polyaxon/polyaxon-schemas.git@da3173913c08e92e173d14dba543c23a239f84a7#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@5447b79701958a0a0ee81c8898539c56c5dbea72#egg=polyaxon-schemas
