@@ -9,7 +9,7 @@ from polyaxon_schemas.version import CliVersionConfig
 
 class VersionClient(PolyaxonClient):
     """Client to get API version from the server."""
-    ENDPOINT = "/cli_version"
+    ENDPOINT = "/versions/cli"
 
     def get_cli_version(self):
         response = self.get(self._get_url())
