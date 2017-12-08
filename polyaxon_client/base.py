@@ -21,7 +21,7 @@ class PolyaxonClient(object):
                  host,
                  token=None,
                  version='v1',
-                 authentication_type='Token',
+                 authentication_type='token',
                  errors_mapping=ERRORS_MAPPING):
         self.base_url = self.BASE_URL.format(host, version)
         self.token = token
@@ -165,7 +165,7 @@ class PolyaxonClient(object):
 
         logger.error(
             "Request to {} failed with status code {}".format(endpoint, response.status_code),
-            text=response.text)
+            response.text)
 
         exception = self.errors_mapping.get(response.status_code, self.errors_mapping['http'])
         raise exception(endpoint=endpoint,
