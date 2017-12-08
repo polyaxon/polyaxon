@@ -8,15 +8,15 @@ THIRD_PARTY_APPS = (
 )
 
 PROJECT_APPS = (
-    'libs',
-    'users',
-    'clusters',
-    'projects',
-    'experiments',
     'api',
-    'events',
-    'repos',
-    'versions',
+    'libs.apps.LibsConfig',
+    'users.apps.UsersConfig',
+    'clusters.apps.ClustersConfig',
+    'projects.apps.ProjectsConfig',
+    'experiments.apps.ExperimentsConfig',
+    'events.apps.EventsConfig',
+    'repos.apps.ReposConfig',
+    'versions.apps.VersionsConfig',
 )
 
 INSTALLED_APPS = (

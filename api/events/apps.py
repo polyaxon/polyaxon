@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ProjectsConfig(AppConfig):
-    name = 'Events'
+class EventsConfig(AppConfig):
+    name = 'events'
     verbose_name = 'Events'

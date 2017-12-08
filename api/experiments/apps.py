@@ -5,5 +5,5 @@ from django.apps import AppConfig
 
 
 class ExperimentsConfig(AppConfig):
-    name = 'Experiments'
+    name = 'experiments'
     verbose_name = "Experiments"

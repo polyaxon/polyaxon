@@ -4,6 +4,6 @@ from __future__ import absolute_import, division, print_function
 from django.apps import AppConfig
 
 
-class ProjectsConfig(AppConfig):
-    name = 'Versions'
+class VersionsConfig(AppConfig):
+    name = 'versions'
     verbose_name = 'Versions'

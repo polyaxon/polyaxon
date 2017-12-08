@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ProjectsConfig(AppConfig):
-    name = 'Libs'
+class LibsConfig(AppConfig):
+    name = 'libs'
     verbose_name = 'Libs'
