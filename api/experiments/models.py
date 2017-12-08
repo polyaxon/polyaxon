@@ -176,6 +176,10 @@ class ExperimentJob(DiffModel):
         return status.status if status else None
 
     @property
+    def is_running(self):
+        return JobLifeCycle.is_running(self.last_status)
+
+    @property
     def is_done(self):
         return JobLifeCycle.is_done(self.last_status)
 
