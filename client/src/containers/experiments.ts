@@ -37,9 +37,9 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
   return {
-    onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperiment(experiment)),
-    onDelete: (experimentUuid: string) => dispatch(actions.deleteExperiment(experimentUuid)),
-    onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperiment(experiment)),
+    onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
+    onDelete: (experimentUuid: string) => dispatch(actions.deleteExperimentActionCreator(experimentUuid)),
+    onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
     fetchData: () => dispatch(ownProps.fetchData? ownProps.fetchData : actions.fetchExperiments())
   }
 }

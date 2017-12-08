@@ -26,32 +26,32 @@ export interface DeleteProjectAction extends Action {
   projectUuid: string
 }
 
-export interface ReceiveProjects extends Action {
+export interface ReceiveProjectsAction extends Action {
   type: actionTypes.RECEIVE_PROJECTS;
   projects: ProjectModel[]
 }
 
-export interface RequestProjects extends Action {
+export interface RequestProjectsAction extends Action {
   type: actionTypes.REQUEST_PROJECTS | actionTypes.REQUEST_PROJECT;
 }
 
-export type ProjectAction = CreateUpdateReceiveProjectAction | DeleteProjectAction | ReceiveProjects | RequestProjects;
+export type ProjectAction = CreateUpdateReceiveProjectAction | DeleteProjectAction | ReceiveProjectsAction | RequestProjectsAction;
 
-export function createProject(project: ProjectModel): CreateUpdateReceiveProjectAction {
+export function createProjectActionCreator(project: ProjectModel): CreateUpdateReceiveProjectAction {
     return {
       type: actionTypes.CREATE_PROJECT,
       project
     }
 }
 
-export function deleteProject(projectUuid: string): DeleteProjectAction {
+export function deleteProjectActionCreator(projectUuid: string): DeleteProjectAction {
     return {
       type: actionTypes.DELETE_PROJECT,
       projectUuid
     }
 }
 
-export function updateProject(project: ProjectModel): CreateUpdateReceiveProjectAction {
+export function updateProjectActionCreator(project: ProjectModel): CreateUpdateReceiveProjectAction {
     return {
       type: actionTypes.UPDATE_PROJECT,
       project
@@ -59,26 +59,26 @@ export function updateProject(project: ProjectModel): CreateUpdateReceiveProject
 }
 
 
-export function requestProject(): RequestProjects {
+export function requestProjectActionCreator(): RequestProjectsAction {
   return {
     type: actionTypes.REQUEST_PROJECT,
   }
 }
 
-export function requestProjects(): RequestProjects {
+export function requestProjectsActionCreator(): RequestProjectsAction {
   return {
     type: actionTypes.REQUEST_PROJECTS,
   }
 }
 
-export function receiveProject(project: ProjectModel): CreateUpdateReceiveProjectAction {
+export function receiveProjectActionCreator(project: ProjectModel): CreateUpdateReceiveProjectAction {
   return {
     type: actionTypes.RECEIVE_PROJECT,
     project
   }
 }
 
-export function receiveProjects(projects: ProjectModel[]): ReceiveProjects {
+export function receiveProjectsActionCreator(projects: ProjectModel[]): ReceiveProjectsAction {
   return {
     type: actionTypes.RECEIVE_PROJECTS,
     projects
@@ -86,34 +86,40 @@ export function receiveProjects(projects: ProjectModel[]): ReceiveProjects {
 }
 
 
-export function generateProject(project: ProjectModel) {
+export function createProject(project: ProjectModel): Dispatch<ProjectModel> {
   return (dispatch: any) => {
-    dispatch(createProject(project));
+    dispatch(createProjectActionCreator(project));
     return fetch(PROJECTS_URL, {
         method: 'POST',
         body: JSON.stringify(project),
         headers: {
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
         }
     })
+    .then(() => dispatch(receiveProjectActionCreator(project)))
   }
 }
 
 
-export function removeProject(projectUuid: string) {
+export function deleteProject(projectUuid: string): Dispatch<ProjectModel[]> {
   return (dispatch: any) => {
-    dispatch(deleteProject(projectUuid));
+    dispatch(deleteProjectActionCreator(projectUuid));
     return fetch(PROJECTS_URL + projectUuid, {
-        method: 'DELETE'
-     })
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+        }
+    })
+    .then(() => dispatch(receiveProjectsActionCreator([])))
   }
 }
 
 
 export function fetchProjects(): Dispatch<ProjectModel[]> {
   return (dispatch: any) => {
-    dispatch(requestProjects());
+    dispatch(requestProjectsActionCreator());
     return fetch(PROJECTS_URL)
       .then(response => response.json())
       .then(json => json.results.map((project: ProjectModel) => {
@@ -122,15 +128,14 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
             createdAt: new Date(_.toString(project.createdAt)),
             updatedAt: new Date(_.toString(project.updatedAt))};
       }))
-      .then(json => dispatch(receiveProjects(json)))
+      .then(json => dispatch(receiveProjectsActionCreator(json)))
   }
 }
 
 
-
 export function fetchProject(projectUuid: string): Dispatch<ProjectModel> {
   return (dispatch: any) => {
-    dispatch(requestProject());
+    dispatch(requestProjectActionCreator());
     return fetch(PROJECTS_URL + projectUuid)
       .then(response => response.json())
       .then(json => {
@@ -140,7 +145,7 @@ export function fetchProject(projectUuid: string): Dispatch<ProjectModel> {
             updatedAt: new Date(_.toString(json.updatedAt))};
         }
       )
-      .then(json => dispatch(receiveProject(json)))
+      .then(json => dispatch(receiveProjectActionCreator(json)))
   }
 }
 

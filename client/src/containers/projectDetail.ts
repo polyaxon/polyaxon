@@ -23,7 +23,7 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
-    onDelete: () => dispatch(actions.removeProject(params.match.params.projectUuid)),
+    onDelete: () => dispatch(actions.deleteProject(params.match.params.projectUuid)),
     fetchData: () => dispatch(actions.fetchProject(params.match.params.projectUuid))
   }
 }

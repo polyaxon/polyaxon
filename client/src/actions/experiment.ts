@@ -23,45 +23,45 @@ export interface DeleteExperimentAction extends Action {
   experimentUuid: string
 }
 
-export interface ReceiveExperiments extends Action {
+export interface ReceiveExperimentsAction extends Action {
   type: actionTypes.RECEIVE_EXPERIMENTS;
   experiments: ExperimentModel[]
 }
 
-export interface RequestExperiments extends Action {
+export interface RequestExperimentsAction extends Action {
   type: actionTypes.REQUEST_EXPERIMENTS;
 }
 
-export type ExperimentAction = CreateUpdateExperimentAction | DeleteExperimentAction | ReceiveExperiments | RequestExperiments;
+export type ExperimentAction = CreateUpdateExperimentAction | DeleteExperimentAction | ReceiveExperimentsAction | RequestExperimentsAction;
 
-export function createExperiment(experiment: ExperimentModel): CreateUpdateExperimentAction {
+export function createExperimentActionCreator(experiment: ExperimentModel): CreateUpdateExperimentAction {
     return {
       type: actionTypes.CREATE_EXPERIMENT,
       experiment
     }
 }
 
-export function updateExperiment(experiment: ExperimentModel): CreateUpdateExperimentAction {
+export function updateExperimentActionCreator(experiment: ExperimentModel): CreateUpdateExperimentAction {
     return {
       type: actionTypes.UPDATE_EXPERIMENT,
       experiment
     }
 }
 
-export function deleteExperiment(experimentUuid: string): DeleteExperimentAction {
+export function deleteExperimentActionCreator(experimentUuid: string): DeleteExperimentAction {
     return {
       type: actionTypes.DELETE_EXPERIMENT,
       experimentUuid
     }
 }
 
-export function requestExperiments(): RequestExperiments {
+export function requestExperimentsActionCreator(): RequestExperimentsAction {
   return {
     type: actionTypes.REQUEST_EXPERIMENTS,
   }
 }
 
-export function receiveExperiments(experiments: ExperimentModel[]): ReceiveExperiments {
+export function receiveExperimentsActionCreator(experiments: ExperimentModel[]): ReceiveExperimentsAction {
   return {
     type: actionTypes.RECEIVE_EXPERIMENTS,
     experiments
@@ -70,7 +70,7 @@ export function receiveExperiments(experiments: ExperimentModel[]): ReceiveExper
 
 export function fetchExperiments(): Dispatch<ExperimentModel[]> {
   return (dispatch: any)=> {
-    dispatch(requestExperiments());
+    dispatch(requestExperimentsActionCreator());
     return fetch(EXPERIMENTS_URL)
       .then(response => response.json())
       .then(json => json.results.map((xp: ExperimentModel)=> {
@@ -80,6 +80,6 @@ export function fetchExperiments(): Dispatch<ExperimentModel[]> {
             updatedAt: new Date(_.toString(xp.updatedAt))};
         })
       )
-      .then(json => dispatch(receiveExperiments(json)))
+      .then(json => dispatch(receiveExperimentsActionCreator(json)))
   }
 }
