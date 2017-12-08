@@ -45,12 +45,11 @@ class PolyaxonClient(object):
         return self._build_url(self.base_url, endpoint)
 
     def _get_headers(self, headers=None):
+        request_headers = headers or {}
         # Auth headers if access_token is present
-        request_headers = {"Authorization": "{} {}".format(self.authentication_type, self.token)}
-        # Add any additional headers
-        if headers:
-            request_headers.update(headers)
-
+        if self.token:
+            request_headers.update({"Authorization": "{} {}".format(self.authentication_type,
+                                                                    self.token)})
         return request_headers
 
     def request(self,
