@@ -7,6 +7,9 @@ import sys
 import tarfile
 
 from clint.textui import progress
+from clint.textui.progress import Bar
+from polyaxon_schemas.utils import to_list
+from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon_client.logger import logger
 from polyaxon_client.exceptions import ERRORS_MAPPING
@@ -16,6 +19,8 @@ class PolyaxonClient(object):
     """Base client for all HTTP operations."""
     ENDPOINT = None
     BASE_URL = "{}/api/{}/"
+    MAX_UPLOAD_SIZE = 1024 * 1024 * 150
+    PAGE_SIZE = 30
 
     def __init__(self,
                  host,
@@ -27,6 +32,33 @@ class PolyaxonClient(object):
         self.token = token
         self.authentication_type = authentication_type
         self.errors_mapping = errors_mapping
+
+    @classmethod
+    def get_page(cls, page=1):
+        if page < 1:
+            return ''
+        return 'offset={}'.format((page - 1) * cls.PAGE_SIZE)
+
+    @staticmethod
+    def create_progress_callback(encoder):
+        encoder_len = encoder.len
+        bar = Bar(expected_size=encoder_len, filled_char='=')
+
+        def callback(monitor):
+            bar.show(monitor.bytes_read)
+
+        return callback
+
+    @staticmethod
+    def sizeof_fmt(num, suffix='B'):
+        """
+        Print in human friendly format
+        """
+        for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
+            if abs(num) < 1024.0:
+                return "%3.1f%s%s" % (num, unit, suffix)
+            num /= 1024.0
+        return "%.1f%s%s" % (num, 'Yi', suffix)
 
     @staticmethod
     def _build_url(*parts):
@@ -99,6 +131,39 @@ class PolyaxonClient(object):
 
         logger.debug("Response Content: %s, Headers: %s" % (response.content, response.headers))
         self.check_response_status(response, url)
+        return response
+
+    def upload(self, url, files, files_size, params=None, json=None, timeout=3600):
+        if files_size > self.MAX_UPLOAD_SIZE:
+            sys.exit((
+                "Files too large to sync, please keep it under {}.\n"
+                "If you have data files in the current directory, "
+                "please add them directly to your data volume, or upload them "
+                "separately using `polyxon data` command and remove them from here.\n".format(
+                    self.sizeof_fmt(self.MAX_UPLOAD_SIZE)
+                )))
+
+        files = to_list(files)
+        if json:
+            files.append(('json', json.dumps(json)))
+
+        multipart_encoder = MultipartEncoder(
+            fields=files
+        )
+
+        # Attach progress bar
+        progress_callback, bar = self.create_progress_callback(multipart_encoder)
+        multipart_encoder_monitor = MultipartEncoderMonitor(multipart_encoder, progress_callback)
+        try:
+            response = self.post(url=url,
+                                 params=params,
+                                 data=multipart_encoder_monitor,
+                                 headers={"Content-Type": multipart_encoder.content_type},
+                                 timeout=timeout)
+        finally:
+            # always make sure we clear the console
+            bar.done()
+
         return response
 
     def download(self, url, filename, relative=False, headers=None, timeout=5):
