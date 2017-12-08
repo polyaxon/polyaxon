@@ -14,12 +14,12 @@ from api.settings import CeleryTasks
 from repos import dockerize
 from spawner import K8SSpawner
 from spawner.utils.constants import ExperimentLifeCycle
+from experiments.models import Experiment, ExperimentJob
 
 logger = logging.getLogger('polyaxon.tasks.experiments')
 
 
 def get_valid_experiment(experiment_id):
-    from experiments.models import Experiment
 
     try:
         experiment = Experiment.objects.get(id=experiment_id)
@@ -57,7 +57,6 @@ def build_experiment(experiment_id):
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START)
 def start_experiment(experiment_id):
-    from experiments.models import ExperimentJob
 
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -95,7 +94,5 @@ def start_experiment(experiment_id):
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)
 def check_experiment_status(experiment_uuid):
-    from experiments.models import Experiment
-
     experiment = Experiment.objects.get(uuid=experiment_uuid)
     experiment.update_status()

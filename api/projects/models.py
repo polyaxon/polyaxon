@@ -5,13 +5,11 @@ import uuid
 
 from django.conf import settings
 from django.db import models
-from django.db.models.signals import post_save
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import MultiSpecification
 
 from libs.models import DiffModel
-from projects.signals import new_spec
 from spawner.utils.constants import ExperimentLifeCycle
 
 
@@ -81,6 +79,3 @@ class PolyaxonSpec(DiffModel):
         If the polyaxonfile has concurrency we need to check how many experiments are running.
         """
         return self.concurrency - self.running_experiments.count()
-
-
-post_save.connect(new_spec, sender=PolyaxonSpec, dispatch_uid="spec_saved")

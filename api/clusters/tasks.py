@@ -7,13 +7,14 @@ from polyaxon_k8s.manager import K8SManager
 
 from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
+from clusters.utils import get_cluster
+from clusters.models import ClusterNode
 
 logger = logging.getLogger('polyaxon.tasks.clusters')
 
 
 @celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO, time_limit=150)
 def update_system_info():
-    from clusters.utils import get_cluster
 
     k8s_manager = K8SManager(in_cluster=True)
     version_api = k8s_manager.get_version()
@@ -25,8 +26,6 @@ def update_system_info():
 
 @celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES, time_limit=150)
 def update_system_nodes():
-    from clusters.models import ClusterNode
-    from clusters.utils import get_cluster
 
     k8s_manager = K8SManager(in_cluster=True)
     nodes = k8s_manager.list_nodes()

@@ -5,9 +5,14 @@ import shutil
 
 import os
 
+from django.dispatch import receiver
+from django.db.models.signals import post_save, post_delete
+
 from repos import git
+from repos.models import ExternalRepo, Repo
 
 
+@receiver(post_save, sender=Repo, dispatch_uid="repo_saved")
 def new_repo(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
@@ -28,6 +33,7 @@ def new_repo(sender, **kwargs):
     git.get_git_repo(repo_path=instance.path, init=True)
 
 
+@receiver(post_delete, sender=ExternalRepo, dispatch_uid="repo_deleted")
 def repo_deleted(sender, **kwargs):
     instance = kwargs['instance']
 
@@ -35,6 +41,7 @@ def repo_deleted(sender, **kwargs):
     shutil.rmtree(instance.path)
 
 
+@receiver(post_save, sender=ExternalRepo, dispatch_uid="external_repo_saved")
 def new_external_repo(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
@@ -55,6 +62,7 @@ def new_external_repo(sender, **kwargs):
     git.clone_git_repo(repo_path=instance.path, git_url=instance.git_url)
 
 
+@receiver(post_delete, sender=Repo, dispatch_uid="external_repo_deleted")
 def external_repo_deleted(sender, **kwargs):
     instance = kwargs['instance']
 

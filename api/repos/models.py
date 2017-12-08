@@ -5,12 +5,10 @@ import os
 
 from django.conf import settings
 from django.db import models
-from django.db.models.signals import post_save, post_delete
 
 from libs.models import DiffModel
 from projects.models import Project
 from repos import git
-from repos.signals import new_external_repo, new_repo, external_repo_deleted, repo_deleted
 
 
 class RepoMixin(object):
@@ -47,10 +45,6 @@ class Repo(DiffModel, RepoMixin):
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 
 
-post_save.connect(new_repo, sender=Repo, dispatch_uid="repo_saved")
-post_delete.connect(repo_deleted, sender=Repo, dispatch_uid="repo_deleted")
-
-
 class ExternalRepo(DiffModel, RepoMixin):
     """A model that represents a an external repository containing code."""
     project = models.ForeignKey(Project, related_name='external_repos')
@@ -70,7 +64,3 @@ class ExternalRepo(DiffModel, RepoMixin):
         """We need to nest the git path inside the project path to mke it easier
         to create docker images."""
         return os.path.join(self.project_path, self.name)
-
-
-post_save.connect(new_external_repo, sender=ExternalRepo, dispatch_uid="repo_saved")
-post_delete.connect(external_repo_deleted, sender=ExternalRepo, dispatch_uid="repo_deleted")

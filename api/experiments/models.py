@@ -6,13 +6,11 @@ import uuid
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.db.models.signals import post_save
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
 
 from clusters.models import Cluster
-from experiments.signals import new_experiment, new_experiment_job, new_experiment_job_status
 from libs.models import DiffModel
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
@@ -129,9 +127,6 @@ class Experiment(DiffModel):
         ExperimentStatus.objects.create(experiment=self, status=status)
 
 
-post_save.connect(new_experiment, sender=Experiment, dispatch_uid="experiment_saved")
-
-
 class ExperimentStatus(models.Model):
     """A model that represents an experiment status at certain time."""
     uuid = models.UUIDField(
@@ -210,9 +205,6 @@ class ExperimentJob(DiffModel):
         return False
 
 
-post_save.connect(new_experiment_job, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
-
-
 class ExperimentJobStatus(models.Model):
     """A model that represents job status at certain time."""
     uuid = models.UUIDField(
@@ -234,8 +226,3 @@ class ExperimentJobStatus(models.Model):
 
     def __str__(self):
         return self.status
-
-
-post_save.connect(new_experiment_job_status,
-                  sender=ExperimentJobStatus,
-                  dispatch_uid="experiment_job_status_saved")

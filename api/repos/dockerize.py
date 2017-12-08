@@ -13,6 +13,7 @@ from docker import APIClient
 from docker.errors import DockerException
 
 from repos import git
+from repos.models import ExternalRepo
 
 logger = logging.getLogger('polyaxon.repos.dockerize')
 
@@ -173,7 +174,6 @@ def build_experiment(experiment):
     project_name = experiment.project.name
     experiment_spec = experiment.compiled_spec
     if experiment_spec.run_exec.git:  # We need to fetch the repo first
-        from repos.models import ExternalRepo
 
         repo, is_created = ExternalRepo.objects.get_or_create(project=experiment.project,
                                                               git_url=experiment_spec.run_exec.git)

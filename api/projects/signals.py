@@ -1,10 +1,15 @@
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from clusters.models import Cluster
+from projects.models import PolyaxonSpec
 from projects.tasks import start_group_experiments
+from experiments.models import Experiment
 
 
+@receiver(post_save, sender=PolyaxonSpec, dispatch_uid="spec_saved")
 def new_spec(sender, **kwargs):
     """"""
-    from experiments.models import Experiment
 
     instance = kwargs['instance']
     created = kwargs.get('created', False)

@@ -6,13 +6,13 @@ import logging
 from api.settings import CeleryTasks, Intervals
 from api.celery_api import app as celery_app
 from experiments.tasks import build_experiment
+from projects.models import PolyaxonSpec
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START_GROUP, bind=True)
 def start_group_experiments(task, spec_id):
-    from projects.models import PolyaxonSpec
 
     try:
         polyaxon_spec = PolyaxonSpec.objects.get(id=spec_id)

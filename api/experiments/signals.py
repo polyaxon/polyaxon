@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
+from experiments.tasks import check_experiment_status, build_experiment
 
+
+@receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")
 def new_experiment(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
@@ -12,14 +19,13 @@ def new_experiment(sender, **kwargs):
     if not created:
         return
 
-    from experiments.tasks import build_experiment
-
     instance.set_status(ExperimentLifeCycle.CREATED)
     if instance.is_independent:
         # Start building the experiment and then Schedule it to be picked by the spawner
         build_experiment.delay(experiment_id=instance.id)
 
 
+@receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
 def new_experiment_job(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
@@ -31,6 +37,7 @@ def new_experiment_job(sender, **kwargs):
     instance.set_status(status=JobLifeCycle.CREATED)
 
 
+@receiver(post_save, sender=ExperimentJobStatus, dispatch_uid="experiment_job_status_saved")
 def new_experiment_job_status(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
@@ -50,7 +57,5 @@ def new_experiment_job_status(sender, **kwargs):
     experiment = instance.job.experiment
     if experiment.is_done:
         return
-
-    from experiments.tasks import check_experiment_status
 
     check_experiment_status.delay(experiment_uuid=experiment.uuid.hex)
