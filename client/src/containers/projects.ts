@@ -26,7 +26,7 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>): DispatchProps {
   return {
     onDelete: (projectUuid: string) => dispatch(actions.deleteProject(projectUuid)),
-    onUpdate: (project: ProjectModel) => dispatch(actions.updateProject(project)),
+    onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
     fetchData: () => dispatch(actions.fetchProjects()),
     showModal: () => dispatch(modalActions.showModal(
       {
