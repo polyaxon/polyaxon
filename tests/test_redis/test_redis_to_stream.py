@@ -75,4 +75,33 @@ class TestRedisToStream(BaseTest):
         }
 
         RedisToStream.set_latest_job_resources(config_dict['job_uuid'], config_dict)
-        assert config_dict == RedisToStream.get_latest_job_resources(config_dict['job_uuid'])
+        assert config_dict == RedisToStream.get_latest_job_resources(config_dict['job_uuid'], True)
+
+    def test_job_monitoring(self):
+        job_uuid = uuid.uuid4().hex
+        assert RedisToStream.is_monitored_job_resources(job_uuid) is False
+        RedisToStream.monitor_job_resources(job_uuid)
+        assert RedisToStream.is_monitored_job_resources(job_uuid) is True
+        RedisToStream.remove_job_resources(job_uuid)
+        assert RedisToStream.is_monitored_job_resources(job_uuid) is False
+
+        assert RedisToStream.is_monitored_job_logs(job_uuid) is False
+        RedisToStream.monitor_job_logs(job_uuid)
+        assert RedisToStream.is_monitored_job_logs(job_uuid) is True
+        RedisToStream.remove_job_logs(job_uuid)
+        assert RedisToStream.is_monitored_job_logs(job_uuid) is False
+
+    def test_experiment_monitoring(self):
+        experiment_uuid = uuid.uuid4().hex
+        assert RedisToStream.is_monitored_experiment_resources(experiment_uuid) is False
+        RedisToStream.monitor_experiment_resources(experiment_uuid)
+        assert RedisToStream.is_monitored_experiment_resources(experiment_uuid) is True
+        RedisToStream.remove_experiment_resources(experiment_uuid)
+        assert RedisToStream.is_monitored_experiment_resources(experiment_uuid) is False
+
+        assert RedisToStream.is_monitored_experiment_logs(experiment_uuid) is False
+        RedisToStream.monitor_experiment_logs(experiment_uuid)
+        assert RedisToStream.is_monitored_experiment_logs(experiment_uuid) is True
+        RedisToStream.remove_experiment_logs(experiment_uuid)
+        assert RedisToStream.is_monitored_experiment_logs(experiment_uuid) is False
+
