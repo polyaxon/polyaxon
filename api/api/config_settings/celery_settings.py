@@ -98,7 +98,7 @@ class CeleryQueues(object):
 CELERY_TASK_QUEUES = (
     Queue(CeleryQueues.LOGS_SIDECARS,
           exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
-          routing_key=RoutingKeys.LOGS_SIDECARS),
+          routing_key=RoutingKeys.LOGS_SIDECARS + '.#'),
 )
 
 CELERY_TASK_ROUTES = {
@@ -113,8 +113,6 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR: {'queue': CeleryQueues.LOGS_SIDECARS},
 
-    # TODO: remove
-    # CeleryRoutedTasks.EVENTS_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
     CeleryPublishTask.PUBLISH_LOGS_SIDECAR: {'exchange': INTERNAL_EXCHANGE,
                                              'routing_key': RoutingKeys.LOGS_SIDECARS,
                                              'exchange_type': 'topic'},
