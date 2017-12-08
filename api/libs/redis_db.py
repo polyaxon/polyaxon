@@ -161,17 +161,20 @@ class RedisToStream(BaseRedisDb):
         cls._remove_object(cls.KEY_EXPERIMENT_LOGS, experiment_uuid)
 
     @classmethod
-    def get_latest_job_resources(cls, job):
+    def get_latest_job_resources(cls, job, as_json=False):
         red = cls._get_redis()
         resources = red.hget(cls.KEY_JOB_LATEST_STATS, job)
-        return json.loads(resources.decode('utf-8'))
+        if resources:
+            resources = resources.decode('utf-8')
+            return json.loads(resources) if as_json else resources
+        return None
 
     @classmethod
-    def get_latest_experiment_resources(cls, jobs):
+    def get_latest_experiment_resources(cls, jobs, as_json=False):
         stats = []
         for job in jobs:
-            stats.append(cls.get_latest_job_resources(job))
-        return stats
+            stats.append(cls.get_latest_job_resources(job, True))
+        return stats if as_json else json.dumps(stats)
 
     @classmethod
     def set_latest_job_resources(cls, job, payload):
