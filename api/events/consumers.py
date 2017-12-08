@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import asyncio
+import json
 import logging
 import pika
 
@@ -10,10 +11,12 @@ from pika.exceptions import AMQPConnectionError
 
 from django.conf import settings
 
+from events.socket_manager import SocketManager
+
 logger = logging.getLogger("polyaxon.events")
 
 
-class Consumer(object):
+class Consumer(SocketManager):
     """This is a consumer that will handle unexpected interactions
     with RabbitMQ such as channel and connection closures.
 
@@ -38,18 +41,12 @@ class Consumer(object):
         self._queue = queue
         self._loop = loop
         self.messages = []
-        self.ws = set()
+        super(Consumer, self).__init__()
 
     def get_messages(self):
         messages = self.messages[:]
         self.messages = []
         return messages
-
-    def add_socket(self, ws):
-        self.ws.add(ws)
-
-    def remove_sockets(self, disconnected_ws):
-        self.ws -= disconnected_ws
 
     def connect(self):
         """This method connects to RabbitMQ, returning the connection handle.
@@ -225,8 +222,9 @@ class Consumer(object):
         """
         logger.info('Received message # %s from %s: %s',
                     basic_deliver.delivery_tag, properties.app_id, body)
-        if self.ws:
-            self.messages.append(body)
+        if self.ws and body:
+            body = json.loads(body.decode('utf-8'))
+            self.messages.append(json.dumps(body[1]))
         logger.info('out ws : {}'.format(len(self.ws)))
         logger.info('out messages : {}'.format(len(self.messages)))
         self.acknowledge_message(basic_deliver.delivery_tag)
