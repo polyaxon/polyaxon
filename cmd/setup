@@ -35,5 +35,5 @@ if [ $? -eq 0 ]; then
     $DIR/manage migrate
     $DIR/manage migrate
 
-    $DIR/manage loaddata api/fixtures/users.json api/fixtures/authtoken.json
+    $DIR/manage loaddata api/fixtures/users.json api/fixtures/authtoken.json api/fixtures/clusters.json api/fixtures/projects.json api/fixtures/experiments.json
 fi

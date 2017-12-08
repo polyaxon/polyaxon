@@ -1,28 +1,54 @@
 [
-{
-    "model": "projects.project",
-    "pk": 1,
-    "fields": {
-        "created_at": "2017-08-07T13:06:21.248Z",
-        "updated_at": "2017-08-07T13:06:21.248Z",
-        "name": "project1",
-        "description": "First project",
-        "experiments": [
-            1
-        ]
+    {
+        "model":"projects.project",
+        "pk":1,
+        "fields":{
+            "created_at":"2017-12-08T22:18:28.458Z",
+            "updated_at":"2017-12-08T22:18:28.458Z",
+            "uuid":"ac6a3340-b926-422a-a449-6e8b8e9dc77f",
+            "user":1,
+            "name":"Cats vs Dogs",
+            "description":"Classify pictures of cats and dogs",
+            "is_public":true
+        }
+    },
+    {
+        "model":"projects.project",
+        "pk":2,
+        "fields":{
+            "created_at":"2017-12-08T22:41:18.125Z",
+            "updated_at":"2017-12-08T22:41:18.125Z",
+            "uuid":"66494475-143e-4ae9-ae68-041a11e979b6",
+            "user":1,
+            "name":"Mnist",
+            "description":"Classic dataset of handwritten images",
+            "is_public":true
+        }
+    },
+    {
+        "model":"projects.project",
+        "pk":3,
+        "fields":{
+            "created_at":"2017-12-08T22:41:26.144Z",
+            "updated_at":"2017-12-08T22:41:26.144Z",
+            "uuid":"1ab20fe4-6d14-4e16-bf8e-986deee470d0",
+            "user":1,
+            "name":"Titanic: Machine Learning from Disaster",
+            "description":"Predict survival on the Titanic and get familiar with ML basics",
+            "is_public":true
+        }
+    },
+    {
+        "model":"projects.project",
+        "pk":4,
+        "fields":{
+            "created_at":"2017-12-08T22:41:33.173Z",
+            "updated_at":"2017-12-08T22:41:33.173Z",
+            "uuid":"2a5a5b51-ba31-46b4-a672-ea5d460502a0",
+            "user":1,
+            "name":"House Prices: Advanced Regression Tecniques",
+            "description":"Predict sales prices and practice feature engineering, RFs, and gradient boosting",
+            "is_public":true
+        }
     }
-},
-{
-    "model": "projects.project",
-    "pk": 2,
-    "fields": {
-        "created_at": "2017-08-07T13:07:21.685Z",
-        "updated_at": "2017-08-07T13:07:21.686Z",
-        "name": "project2",
-        "description": "Second project",
-        "experiments": [
-            2
-        ]
-    }
-}
 ]
