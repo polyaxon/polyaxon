@@ -7,7 +7,7 @@ from polyaxon_schemas.user import UserConfig
 
 
 class TestUserConfigs(TestCase):
-    def test_project_config(self):
+    def test_user_config(self):
         config_dict = {'username': 'username',
                        'email': 'user@domain.com'}
         config = UserConfig.from_dict(config_dict)
