@@ -50,25 +50,18 @@ class ExperimentStatusSerializer(serializers.ModelSerializer):
 class ExperimentSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
+    cluster = fields.SerializerMethodField()
+    spec = fields.SerializerMethodField()
+    project = fields.SerializerMethodField()
 
     class Meta:
         model = Experiment
         fields = ('uuid', 'user', 'name', 'created_at', 'updated_at',
-                  'last_status', 'started_at', 'finished_at', 'is_clone',)
+                  'last_status', 'started_at', 'finished_at', 'is_clone',
+                  'cluster', 'project', 'spec',)
 
     def get_user(self, obj):
         return obj.user.username
-
-
-class ExperimentDetailSerializer(ExperimentSerializer):
-    cluster = fields.SerializerMethodField()
-    spec = fields.SerializerMethodField()
-    project = fields.SerializerMethodField()
-    jobs = ExperimentJobSerializer(many=True)
-
-    class Meta(ExperimentSerializer.Meta):
-        fields = ExperimentSerializer.Meta.fields + (
-            'cluster', 'project',  'description', 'spec', 'config', 'original_experiment', 'jobs',)
 
     def get_cluster(self, obj):
         return obj.cluster.uuid.hex
@@ -80,8 +73,17 @@ class ExperimentDetailSerializer(ExperimentSerializer):
         return obj.project.uuid.hex
 
 
-class ExperimentCreateSerializer(ExperimentSerializer):
+class ExperimentDetailSerializer(ExperimentSerializer):
+    jobs = ExperimentJobSerializer(many=True)
 
+    class Meta(ExperimentSerializer.Meta):
+        fields = ExperimentSerializer.Meta.fields + (
+            'description', 'config', 'original_experiment', 'jobs',)
+
+
+class ExperimentCreateSerializer(serializers.ModelSerializer):
+    user = fields.SerializerMethodField()
+    
     class Meta:
         model = Experiment
         fields = (
@@ -92,3 +94,6 @@ class ExperimentCreateSerializer(ExperimentSerializer):
             'project': {'write_only': True},
             'spec': {'write_only': True}
         }
+
+    def get_user(self, obj):
+        return obj.user.username
