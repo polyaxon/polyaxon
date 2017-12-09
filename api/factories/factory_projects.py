@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import factory
 
-from projects.models import Project, PolyaxonSpec
+from projects.models import Project, ExperimentGroup
 
 from factories.factory_users import UserFactory
 
@@ -17,7 +17,7 @@ class ProjectFactory(factory.DjangoModelFactory):
         model = Project
 
 
-class PolyaxonSpecFactory(factory.DjangoModelFactory):
+class ExperimentGroupFactory(factory.DjangoModelFactory):
     project = factory.SubFactory(ProjectFactory)
     user = factory.SubFactory(UserFactory)
     content = """---
@@ -60,4 +60,4 @@ class PolyaxonSpecFactory(factory.DjangoModelFactory):
 """
 
     class Meta:
-        model = PolyaxonSpec
+        model = ExperimentGroup

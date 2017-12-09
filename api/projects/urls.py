@@ -12,9 +12,9 @@ urlpatterns = [
         views.ProjectListView.as_view()),
     url(r'^projects/{}/?$'.format(UUID_PATTERN),
         views.ProjectDetailView.as_view()),
-    url(r'^projects/{}/specs/?$'.format(PROJECT_UUID_PATTERN),
+    url(r'^projects/{}/experiment_groups/?$'.format(PROJECT_UUID_PATTERN),
         views.ProjectSpecListView.as_view()),
-    url(r'^projects/{}/specs/{}/?$'.format(PROJECT_UUID_PATTERN, UUID_PATTERN),
+    url(r'^projects/{}/experiment_groups/{}/?$'.format(PROJECT_UUID_PATTERN, UUID_PATTERN),
         views.ProjectSpecDetailView.as_view()),
 ]
 

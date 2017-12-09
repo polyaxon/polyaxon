@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.functional import cached_property
 
-from polyaxon_schemas.polyaxonfile.specification import MultiSpecification
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 
 from libs.models import DiffModel
 from spawner.utils.constants import ExperimentLifeCycle
@@ -41,23 +41,23 @@ class Project(DiffModel):
         return hasattr(self, 'repo')
 
 
-class PolyaxonSpec(DiffModel):
-    """A model that saves PolyaxonSpec/Polyaxonfiles."""
+class ExperimentGroup(DiffModel):
+    """A model that saves Specification/Polyaxonfiles."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
         unique=True,
         null=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='specs')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='experiment_groups')
     content = models.TextField(help_text='The yaml content of the polyaxonfile/specification.')
     project = models.ForeignKey(
         Project,
-        related_name='specs',
+        related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
 
     @cached_property
     def specification(self):
-        return MultiSpecification.read(self.content)
+        return GroupSpecification.read(self.content)
 
     @cached_property
     def concurrency(self):

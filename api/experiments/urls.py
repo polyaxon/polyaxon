@@ -10,7 +10,7 @@ from libs.urls import (
     EXPERIMENT_UUID_PATTERN,
     EXPERIMENT_JOB_UUID_PATTERN,
     PROJECT_UUID_PATTERN,
-    POLYAXON_SPEC_UUID_PATTERN,
+    POLYAXON_EXPERIMENT_GROUP_UUID_PATTERN,
 )
 
 patterns = [
@@ -37,7 +37,7 @@ patterns = [
 urlpatterns = (patterns +
                [url(r'^projects/{}/'.format(PROJECT_UUID_PATTERN),
                     include(patterns))] +
-               [url(r'^specs/{}/'.format(POLYAXON_SPEC_UUID_PATTERN),
+               [url(r'^experiment_groups/{}/'.format(POLYAXON_EXPERIMENT_GROUP_UUID_PATTERN),
                     include(patterns))]
                )
 

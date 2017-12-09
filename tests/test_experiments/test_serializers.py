@@ -26,7 +26,7 @@ class TestExperimentSerializer(BaseTest):
     factory_class = ExperimentFactory
     expected_keys = {'uuid', 'user', 'name', 'created_at', 'updated_at',
                      'last_status', 'started_at', 'finished_at', 'is_clone',
-                     'cluster', 'project', 'spec', }
+                     'cluster', 'project', 'experiment_group', }
 
     def setUp(self):
         super().setUp()
@@ -41,7 +41,8 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('cluster') == self.obj1.cluster.uuid.hex
         assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('spec') == (self.obj1.spec.uuid.hex if self.obj1.spec else None)
+        assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
+                                                if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
         data.pop('created_at')
         data.pop('updated_at')
@@ -107,7 +108,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'name',
         'last_status',
         'description',
-        'spec',
+        'experiment_group',
         'config',
         'original_experiment',
         'jobs',
@@ -131,7 +132,8 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('cluster') == self.obj1.cluster.uuid.hex
         assert data.pop('project') == self.obj1.project.uuid.hex
-        assert data.pop('spec') == (self.obj1.spec.uuid.hex if self.obj1.spec else None)
+        assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
+                                                if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
         assert len(data.pop('jobs')) == 1
         data.pop('created_at')

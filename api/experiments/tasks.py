@@ -67,7 +67,7 @@ def start_experiment(experiment_id):
 
     # Use spawner to start the experiment
     spawner = K8SSpawner(project_uuid=experiment.project.uuid.hex,
-                         spec_uuid=experiment.spec.uuid.hex if experiment.spec else '',
+                         experiment_group_uuid=experiment.experiment_group.uuid.hex if experiment.experiment_group else '',
                          experiment_uuid=experiment.uuid.hex,
                          spec_config=experiment.config,
                          k8s_config=settings.K8S_CONFIG,

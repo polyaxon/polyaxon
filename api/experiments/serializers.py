@@ -51,14 +51,14 @@ class ExperimentSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     cluster = fields.SerializerMethodField()
-    spec = fields.SerializerMethodField()
+    experiment_group = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
 
     class Meta:
         model = Experiment
         fields = ('uuid', 'user', 'name', 'created_at', 'updated_at',
                   'last_status', 'started_at', 'finished_at', 'is_clone',
-                  'cluster', 'project', 'spec',)
+                  'cluster', 'project', 'experiment_group',)
 
     def get_user(self, obj):
         return obj.user.username
@@ -66,8 +66,8 @@ class ExperimentSerializer(serializers.ModelSerializer):
     def get_cluster(self, obj):
         return obj.cluster.uuid.hex
 
-    def get_spec(self, obj):
-        return obj.spec.uuid.hex if obj.spec else None
+    def get_experiment_group(self, obj):
+        return obj.experiment_group.uuid.hex if obj.experiment_group else None
 
     def get_project(self, obj):
         return obj.project.uuid.hex
@@ -88,11 +88,11 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = (
             'cluster', 'project', 'user', 'name', 'description',
-            'spec', 'config', 'original_experiment')
+            'experiment_group', 'config', 'original_experiment')
         extra_kwargs = {
             'cluster': {'write_only': True},
             'project': {'write_only': True},
-            'spec': {'write_only': True}
+            'experiment_group': {'write_only': True}
         }
 
     def get_user(self, obj):

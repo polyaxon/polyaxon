@@ -8,11 +8,11 @@ from rest_framework.generics import (
 )
 
 from libs.views import ListCreateAPIView
-from projects.models import Project, PolyaxonSpec
+from projects.models import Project, ExperimentGroup
 from projects.serializers import (
     ProjectSerializer,
     ProjectDetailSerializer,
-    PolyaxonSpecSerializer,
+    ExperimentGroupSerializer,
 )
 
 
@@ -41,8 +41,8 @@ class ProjectSpecViewMixin(object):
 
 
 class ProjectSpecListView(ProjectSpecViewMixin, ListCreateAPIView):
-    queryset = PolyaxonSpec.objects.all()
-    serializer_class = PolyaxonSpecSerializer
+    queryset = ExperimentGroup.objects.all()
+    serializer_class = ExperimentGroupSerializer
 
     def perform_create(self, serializer):
         # TODO: update when we allow platform usage without authentication
@@ -50,6 +50,6 @@ class ProjectSpecListView(ProjectSpecViewMixin, ListCreateAPIView):
 
 
 class ProjectSpecDetailView(ProjectSpecViewMixin, RetrieveDestroyAPIView):
-    queryset = PolyaxonSpec.objects.all()
-    serializer_class = PolyaxonSpecSerializer
+    queryset = ExperimentGroup.objects.all()
+    serializer_class = ExperimentGroupSerializer
     lookup_field = 'uuid'

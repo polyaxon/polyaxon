@@ -30,7 +30,7 @@ class K8SSpawner(K8SManager):
                  project_uuid,
                  experiment_uuid,
                  spec_config,
-                 spec_uuid=None,
+                 experiment_group_uuid=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -46,7 +46,7 @@ class K8SSpawner(K8SManager):
                  sidecar_args_fn=None):
         self.specification = Specification.read(spec_config)
         self.project_uuid = project_uuid
-        self.spec_uuid = spec_uuid
+        self.experiment_group_uuid = experiment_group_uuid
         self.experiment_uuid = experiment_uuid
         self.has_data_volume = False
         self.has_logs_volume = False
@@ -300,10 +300,10 @@ class K8SSpawner(K8SManager):
 
     @cached_property
     def project_name(self):
-        if self.spec_uuid:
-            return '{}-id{}-spec{}'.format(self.spec.project.name.replace('_', '-'),
-                                           self.project_uuid,
-                                           self.spec_uuid)
+        if self.experiment_group_uuid:
+            return '{}-id{}-group{}'.format(self.spec.project.name.replace('_', '-'),
+                                            self.project_uuid,
+                                            self.experiment_group_uuid)
         else:
             return '{}-id{}'.format(self.spec.project.name.replace('_', '-'),
                                     self.project_uuid)

@@ -8,17 +8,17 @@ from experiments.models import Experiment
 from experiments.serializers import ExperimentSerializer
 from projects.models import (
     Project,
-    PolyaxonSpec,
+    ExperimentGroup,
 )
 from projects.serializers import (
     ProjectSerializer,
     ProjectDetailSerializer,
-    PolyaxonSpecSerializer,
+    ExperimentGroupSerializer,
 )
 from factories.factory_clusters import ClusterFactory
 from factories.factory_projects import (
     ProjectFactory,
-    PolyaxonSpecFactory,
+    ExperimentGroupFactory,
 )
 from tests.utils import BaseViewTest
 
@@ -94,9 +94,9 @@ class TestProjectDetailViewV1(BaseViewTest):
 
         # Create related fields
         for i in range(2):
-            PolyaxonSpecFactory(project=self.object, user=cluster.user)
+            ExperimentGroupFactory(project=self.object, user=cluster.user)
 
-        # creating the default factory should trigger the creation of one experiment per spec
+        # creating the default factory should trigger the creation of one experiment per group
         assert Experiment.objects.count() == 2
 
     def test_get(self):
@@ -106,9 +106,9 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert len(resp.data['experiments']) == 2
         assert resp.data['experiments'] == ExperimentSerializer(self.object.experiments.all(),
                                                                 many=True).data
-        assert len(resp.data['specs']) == 2
-        assert resp.data['specs'] == PolyaxonSpecSerializer(self.object.specs.all(),
-                                                            many=True).data
+        assert len(resp.data['experiment_groups']) == 2
+        assert resp.data['experiment_groups'] == ExperimentGroupSerializer(
+            self.object.experiment_groups.all(), many=True).data
 
     def test_patch(self):
         new_name = 'updated_project_name'
@@ -121,23 +121,23 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert new_object.name != self.object.name
         assert new_object.name == new_name
         assert new_object.experiments.count() == 2
-        assert new_object.specs.count() == 2
+        assert new_object.experiment_groups.count() == 2
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1
-        assert PolyaxonSpec.objects.count() == 2
+        assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 2
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
-        assert PolyaxonSpec.objects.count() == 0
+        assert ExperimentGroup.objects.count() == 0
         assert Experiment.objects.count() == 0
 
 
-class TestProjectPolyaxonSpecListViewV1(BaseViewTest):
-    serializer_class = PolyaxonSpecSerializer
-    model_class = PolyaxonSpec
-    factory_class = PolyaxonSpecFactory
+class TestProjectExperimentGroupListViewV1(BaseViewTest):
+    serializer_class = ExperimentGroupSerializer
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
     num_objects = 3
     HAS_AUTH = False
 
@@ -145,7 +145,7 @@ class TestProjectPolyaxonSpecListViewV1(BaseViewTest):
         super().setUp()
         cluster = ClusterFactory(user=self.auth_client.user)
         self.project = ProjectFactory(user=cluster.user)
-        self.url = '/{}/projects/{}/specs/'.format(API_V1, self.project.uuid.hex)
+        self.url = '/{}/projects/{}/experiment_groups/'.format(API_V1, self.project.uuid.hex)
         self.objects = [self.factory_class(project=self.project, user=cluster.user)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()

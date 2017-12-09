@@ -28,7 +28,7 @@ from factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
 )
-from factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
+from factories.factory_projects import ProjectFactory, ExperimentGroupFactory
 from tests.utils import BaseViewTest
 
 
@@ -82,7 +82,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
-class TestPolyaxonSpecExperimentListViewV1(BaseViewTest):
+class TestExperimentGroupExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -135,12 +135,13 @@ class TestPolyaxonSpecExperimentListViewV1(BaseViewTest):
           meta_data_file: "../data/mnist/meta_data.json"
 """
         cluster = ClusterFactory(user=self.auth_client.user)
-        self.spec = PolyaxonSpecFactory(content=content, user=cluster.user)
-        assert self.spec.specification.matrix_space == 3
-        self.url = '/{}/specs/{}/experiments/'.format(API_V1, self.spec.uuid.hex)
+        self.experiment_group = ExperimentGroupFactory(content=content, user=cluster.user)
+        assert self.experiment_group.specification.matrix_space == 3
+        self.url = '/{}/experiment_groups/{}/experiments/'.format(API_V1,
+                                                                  self.experiment_group.uuid.hex)
         # one object that does not belong to the filter
         self.factory_class()
-        self.queryset = self.model_class.objects.filter(spec=self.spec)
+        self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

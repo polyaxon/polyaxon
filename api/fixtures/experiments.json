@@ -11,7 +11,7 @@
             "user":1,
             "name":"experiment-1",
             "description":null,
-            "spec":null,
+            "experiment_group":null,
             "config":{
 
             },
@@ -30,7 +30,7 @@
             "user":1,
             "name":"experiment-2",
             "description":null,
-            "spec":null,
+            "experiment_group":null,
             "config":{
 
             },
@@ -49,7 +49,7 @@
             "user":1,
             "name":"experiment-3",
             "description":null,
-            "spec":null,
+            "experiment_group":null,
             "config":{
 
             },
@@ -68,7 +68,7 @@
             "user":1,
             "name":"experiment-4",
             "description":null,
-            "spec":null,
+            "experiment_group":null,
             "config":{
 
             },
@@ -87,7 +87,7 @@
             "user":1,
             "name":"experiment-5",
             "description":null,
-            "spec":null,
+            "experiment_group":null,
             "config":{
 
             },

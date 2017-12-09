@@ -14,9 +14,10 @@ PROJECT_APPS = (
     'clusters.apps.ClustersConfig',
     'projects.apps.ProjectsConfig',
     'experiments.apps.ExperimentsConfig',
-    'events.apps.EventsConfig',
     'repos.apps.ReposConfig',
     'versions.apps.VersionsConfig',
+    'events.apps.EventsConfig',
+    'spawner.apps.SpawnerConfig',
 )
 
 INSTALLED_APPS = (

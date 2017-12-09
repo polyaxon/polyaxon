@@ -13,7 +13,7 @@ from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 from factories.factory_clusters import ClusterFactory
 from factories.factory_experiments import ExperimentFactory
-from factories.factory_projects import PolyaxonSpecFactory
+from factories.factory_projects import ExperimentGroupFactory
 from tests.fixtures import (
     experiment_spec_content,
     exec_experiment_spec_content,
@@ -26,11 +26,11 @@ class TestExperimentModel(BaseTest):
     def test_experiment_creation_triggers_status_creation_mocks(self):
         with patch('projects.tasks.start_group_experiments.delay') as _:
             cluster = ClusterFactory()
-            spec = PolyaxonSpecFactory(user=cluster.user)
+            experiment_group = ExperimentGroupFactory(user=cluster.user)
 
         with patch('experiments.tasks.start_experiment.delay') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
-                ExperimentFactory(spec=spec)
+                ExperimentFactory(experiment_group=experiment_group)
 
         assert mock_fct.call_count == 0
         assert mock_fct2.call_count == 1
@@ -38,9 +38,9 @@ class TestExperimentModel(BaseTest):
     def test_experiment_creation_triggers_status_creation(self):
         with patch('projects.tasks.start_group_experiments.delay') as _:
             cluster = ClusterFactory()
-            spec = PolyaxonSpecFactory(user=cluster.user)
+            experiment_group = ExperimentGroupFactory(user=cluster.user)
 
-        experiment = ExperimentFactory(spec=spec)
+        experiment = ExperimentFactory(experiment_group=experiment_group)
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
         assert experiment.last_status == ExperimentLifeCycle.CREATED

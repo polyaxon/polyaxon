@@ -41,12 +41,12 @@ class Experiment(DiffModel):
         blank=True,
         null=True,
         help_text='Description of the experiment.')
-    spec = models.ForeignKey(
-        'projects.PolyaxonSpec',
+    experiment_group = models.ForeignKey(
+        'projects.ExperimentGroup',
         blank=True,
         null=True,
         related_name='experiments',
-        help_text='The polyaxon_spec that generate this experiment.')
+        help_text='The experiment group that generate this experiment.')
     config = JSONField(
         # TODO: should be validated by the Specification validator
         help_text='The compiled polyaxon with specific values for this experiment.')
@@ -111,8 +111,8 @@ class Experiment(DiffModel):
 
     @property
     def is_independent(self):
-        """If the experiment belongs to a polyaxon_spec or is independently created."""
-        return not self.spec
+        """If the experiment belongs to a experiment_group or is independently created."""
+        return self.experiment_group is None
 
     def update_status(self):
         current_status = self.last_status

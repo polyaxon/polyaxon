@@ -4,17 +4,17 @@ from __future__ import absolute_import, division, print_function
 from rest_framework import fields, serializers
 
 from experiments.serializers import ExperimentSerializer
-from projects.models import Project, PolyaxonSpec
+from projects.models import Project, ExperimentGroup
 
 
-class PolyaxonSpecSerializer(serializers.ModelSerializer):
+class ExperimentGroupSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     project = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
 
     class Meta:
-        model = PolyaxonSpec
-        fields = ('uuid', 'user', 'content', 'project', )
+        model = ExperimentGroup
+        fields = ('uuid', 'user', 'content', 'project',)
 
     def get_project(self, obj):
         return obj.project.uuid.hex
@@ -38,7 +38,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectDetailSerializer(ProjectSerializer):
     experiments = ExperimentSerializer(many=True)
-    specs = PolyaxonSpecSerializer(many=True)
+    experiment_groups = ExperimentGroupSerializer(many=True)
 
     class Meta(ProjectSerializer.Meta):
-        fields = ProjectSerializer.Meta.fields + ('experiments', 'specs', )
+        fields = ProjectSerializer.Meta.fields + ('experiments', 'experiment_groups',)

@@ -2,13 +2,13 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from clusters.models import Cluster
-from projects.models import PolyaxonSpec
+from projects.models import ExperimentGroup
 from projects.tasks import start_group_experiments
 from experiments.models import Experiment
 
 
-@receiver(post_save, sender=PolyaxonSpec, dispatch_uid="spec_saved")
-def new_spec(sender, **kwargs):
+@receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
+def new_experiment_group(sender, **kwargs):
     """"""
 
     instance = kwargs['instance']
@@ -30,7 +30,7 @@ def new_spec(sender, **kwargs):
         Experiment.objects.create(cluster=cluster,
                                   project=instance.project,
                                   user=instance.user,
-                                  spec=instance,
+                                  experiment_group=instance,
                                   config=specification.parsed_data[xp])
 
     start_group_experiments.delay(instance.id)

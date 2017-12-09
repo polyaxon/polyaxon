@@ -24,7 +24,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer)
 from libs.views import BaseNestingFilterMixin, ListCreateAPIView
-from projects.models import Project, PolyaxonSpec
+from projects.models import Project, ExperimentGroup
 
 
 class ProjectOrSpecViewFiltersMixin(BaseNestingFilterMixin):
@@ -36,9 +36,10 @@ class ProjectOrSpecViewFiltersMixin(BaseNestingFilterMixin):
             project_uuid = self.kwargs['project_uuid']
             filters['project'] = get_object_or_404(Project, uuid=project_uuid)
 
-        if 'spec_uuid' in self.kwargs:
-            spec_uuid = self.kwargs['spec_uuid']
-            filters['spec'] = get_object_or_404(PolyaxonSpec, uuid=spec_uuid)
+        if 'experiment_group_uuid' in self.kwargs:
+            experiment_group_uuid = self.kwargs['experiment_group_uuid']
+            filters['experiment_group'] = get_object_or_404(ExperimentGroup,
+                                                            uuid=experiment_group_uuid)
         return queryset.filter(**filters)
 
 
@@ -138,7 +139,7 @@ class ExperimentRestartView(CreateAPIView):
             user=self.request.user,
             name=obj.name,
             description=obj.description,
-            spec=obj.spec,
+            experiment_group=obj.experiment_group,
             config=obj.config,
             original_experiment=obj
         )

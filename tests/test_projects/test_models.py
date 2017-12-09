@@ -5,18 +5,18 @@ from unittest.mock import patch
 
 from experiments.models import Experiment
 from factories.factory_clusters import ClusterFactory
-from factories.factory_projects import PolyaxonSpecFactory, ProjectFactory
+from factories.factory_projects import ExperimentGroupFactory, ProjectFactory
 from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 
-class TestPolyaxonSpecModel(BaseTest):
+class TestExperimentGroupModel(BaseTest):
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
         with patch('projects.tasks.start_group_experiments.delay') as mock_fct:
             cluster = ClusterFactory()
-            spec = PolyaxonSpecFactory(user=cluster.user)
+            experiment_group = ExperimentGroupFactory(user=cluster.user)
 
-        assert Experiment.objects.filter(spec=spec).count() == 1
+        assert Experiment.objects.filter(experiment_group=experiment_group).count() == 1
         assert mock_fct.call_count == 1
 
 

@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from projects.models import Project, PolyaxonSpec
-from projects.serializers import ProjectSerializer, PolyaxonSpecSerializer, ProjectDetailSerializer
+from projects.models import Project, ExperimentGroup
+from projects.serializers import ProjectSerializer, ExperimentGroupSerializer, ProjectDetailSerializer
 from factories.factory_clusters import ClusterFactory
-from factories.factory_projects import ProjectFactory, PolyaxonSpecFactory
+from factories.factory_projects import ProjectFactory, ExperimentGroupFactory
 
 from tests.utils import BaseTest
 
 
-class TestPolyaxonSpecSerializer(BaseTest):
-    serializer_class = PolyaxonSpecSerializer
-    model_class = PolyaxonSpec
-    factory_class = PolyaxonSpecFactory
+class TestExperimentGroupSerializer(BaseTest):
+    serializer_class = ExperimentGroupSerializer
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
     expected_keys = {'uuid', 'content', 'project', 'user'}
 
     def setUp(self):
@@ -75,7 +75,7 @@ class TestProjectDetailSerializer(BaseTest):
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at', 'is_public',
-                     'experiments', 'specs', 'has_code', }
+                     'experiments', 'experiment_groups', 'has_code', }
 
     def setUp(self):
         super().setUp()
@@ -91,7 +91,7 @@ class TestProjectDetailSerializer(BaseTest):
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
         assert len(data.pop('experiments')) == 0
-        assert len(data.pop('specs')) == 0
+        assert len(data.pop('experiment_groups')) == 0
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
