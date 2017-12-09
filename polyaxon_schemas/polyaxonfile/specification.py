@@ -371,7 +371,7 @@ class Specification(BaseSpecification):
             return self.get_k8s_cluster(**kwargs)
 
 
-class MultiSpecification(BaseSpecification):
+class GroupSpecification(BaseSpecification):
     """Parses Polyaxonfiles/Configuration, with matrix section definition."""
 
     def __init__(self, values):
