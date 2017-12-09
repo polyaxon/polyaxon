@@ -139,9 +139,9 @@ class ProjectClient(PolyaxonClient):
                 sys.exit(1)
             return None
 
-    def list_experiments(self, uuid, page=1):
+    def list_experiments(self, project_uuid, page=1):
         """Fetch list of specs related to this project."""
-        request_url = self._build_url(self._get_url(), uuid, 'experiments')
+        request_url = self._build_url(self._get_url(), project_uuid, 'experiments')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -154,3 +154,7 @@ class ProjectClient(PolyaxonClient):
                 # exit now since there is nothing we can do without login
                 sys.exit(1)
             return []
+
+    def add_tensorboard(self, uuid):
+        # TODO
+        pass
