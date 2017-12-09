@@ -87,4 +87,4 @@ class TestProjectClient(TestCase):
                 project_uuid),
             content_type='application/json', status=204)
         result = self.client.delete_project(project_uuid)
-        assert result is None
+        assert result.status_code == 204

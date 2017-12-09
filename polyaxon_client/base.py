@@ -155,11 +155,11 @@ class PolyaxonClient(object):
         progress_callback, bar = self.create_progress_callback(multipart_encoder)
         multipart_encoder_monitor = MultipartEncoderMonitor(multipart_encoder, progress_callback)
         try:
-            response = self.post(url=url,
-                                 params=params,
-                                 data=multipart_encoder_monitor,
-                                 headers={"Content-Type": multipart_encoder.content_type},
-                                 timeout=timeout)
+            response = self.put(url=url,
+                                params=params,
+                                data=multipart_encoder_monitor,
+                                headers={"Content-Type": multipart_encoder.content_type},
+                                timeout=timeout)
         finally:
             # always make sure we clear the console
             bar.done()
