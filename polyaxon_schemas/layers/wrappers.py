@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load
+from marshmallow import fields, post_load, post_dump
 
 from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
 
@@ -13,8 +13,12 @@ class WrapperSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return WrapperConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return WrapperConfig.remove_reduced_attrs(data)
 
 
 class WrapperConfig(BaseLayerConfig):
@@ -40,8 +44,12 @@ class TimeDistributedSchema(WrapperSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TimeDistributedConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TimeDistributedConfig.remove_reduced_attrs(data)
 
 
 class TimeDistributedConfig(WrapperConfig):
@@ -103,8 +111,12 @@ class BidirectionalSchema(WrapperSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return BidirectionalConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return BidirectionalConfig.remove_reduced_attrs(data)
 
 
 class BidirectionalConfig(WrapperConfig):

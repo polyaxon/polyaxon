@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, validate
+from marshmallow import fields, post_load, validate, post_dump
 
 from polyaxon_schemas.utils import ObjectOrListObject, StrOrFct, ACTIVATION_VALUES
 from polyaxon_schemas.initializations import (
@@ -35,8 +35,12 @@ class LocallyConnected1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return LocallyConnected1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LocallyConnected1DConfig.remove_reduced_attrs(data)
 
 
 class LocallyConnected1DConfig(BaseLayerConfig):
@@ -157,8 +161,12 @@ class LocallyConnected2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return LocallyConnected2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LocallyConnected2DConfig.remove_reduced_attrs(data)
 
 
 class LocallyConnected2DConfig(BaseLayerConfig):

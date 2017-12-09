@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import six
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import Range, LinSpace, GeomSpace, LogSpace
@@ -23,6 +23,10 @@ class MatrixSchema(Schema):
     @post_load
     def make(self, data):
         return MatrixConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MatrixConfig.remove_reduced_attrs(data)
 
 
 class MatrixConfig(BaseConfig):

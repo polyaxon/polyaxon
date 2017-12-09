@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load
+from marshmallow import fields, post_load, post_dump
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import (
@@ -32,8 +32,12 @@ class BatchNormalizationSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return BatchNormalizationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return BatchNormalizationConfig.remove_reduced_attrs(data)
 
 
 class BatchNormalizationConfig(BaseLayerConfig):

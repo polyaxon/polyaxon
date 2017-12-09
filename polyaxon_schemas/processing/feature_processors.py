@@ -15,7 +15,7 @@ from polyaxon_schemas.graph import GraphConfig
 class FeatureProcessorsSchema(Schema):
 
     @post_dump(pass_original=True)
-    def make_dump(self, data, original):
+    def make(self, data, original):
         if isinstance(original.feature_processors, Mapping):
             feature_processors = {}
             for key, val in six.iteritems(original.feature_processors):
@@ -25,7 +25,7 @@ class FeatureProcessorsSchema(Schema):
         raise ValidationError("Feature processor is not valid for, `{}`".format(original))
 
     @post_load(pass_original=True)
-    def make_load(self, data, original):
+    def unmake(self, data, original):
         if isinstance(original, Mapping):
             feature_processors = {}
             for key, val in six.iteritems(original):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, validate
+from marshmallow import Schema, fields, post_load, validate, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.utils import DType
@@ -14,8 +14,12 @@ class ZerosInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ZerosInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ZerosInitializerConfig.remove_reduced_attrs(data)
 
 
 class ZerosInitializerConfig(BaseConfig):
@@ -65,8 +69,12 @@ class OnesInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return OnesInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return OnesInitializerConfig.remove_reduced_attrs(data)
 
 
 class OnesInitializerConfig(BaseConfig):
@@ -117,8 +125,12 @@ class ConstantInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ConstantInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ConstantInitializerConfig.remove_reduced_attrs(data)
 
 
 class ConstantInitializerConfig(BaseConfig):
@@ -183,8 +195,12 @@ class UniformInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return UniformInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return UniformInitializerConfig.remove_reduced_attrs(data)
 
 
 class UniformInitializerConfig(BaseConfig):
@@ -250,8 +266,12 @@ class NormalInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return NormalInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return NormalInitializerConfig.remove_reduced_attrs(data)
 
 
 class NormalInitializerConfig(BaseConfig):
@@ -314,8 +334,12 @@ class TruncatedNormalInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TruncatedNormalInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TruncatedNormalInitializerConfig.remove_reduced_attrs(data)
 
 
 class TruncatedNormalInitializerConfig(BaseConfig):
@@ -385,8 +409,12 @@ class VarianceScalingInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return VarianceScalingInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return VarianceScalingInitializerConfig.remove_reduced_attrs(data)
 
 
 class VarianceScalingInitializerConfig(BaseConfig):
@@ -461,8 +489,12 @@ class IdentityInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return IdentityInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return IdentityInitializerConfig.remove_reduced_attrs(data)
 
 
 class IdentityInitializerConfig(BaseConfig):
@@ -520,8 +552,12 @@ class OrthogonalInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return OrthogonalInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return OrthogonalInitializerConfig.remove_reduced_attrs(data)
 
 
 class OrthogonalInitializerConfig(BaseConfig):
@@ -590,8 +626,12 @@ class GlorotUniformInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlorotUniformInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlorotUniformInitializerConfig.remove_reduced_attrs(data)
 
 
 class GlorotUniformInitializerConfig(BaseConfig):
@@ -650,8 +690,12 @@ class GlorotNormalInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlorotNormalInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlorotNormalInitializerConfig.remove_reduced_attrs(data)
 
 
 class GlorotNormalInitializerConfig(BaseConfig):
@@ -710,8 +754,12 @@ class HeUniformInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return HeUniformInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HeUniformInitializerConfig.remove_reduced_attrs(data)
 
 
 class HeUniformInitializerConfig(BaseConfig):
@@ -768,8 +816,12 @@ class HeNormalInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return HeNormalInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HeNormalInitializerConfig.remove_reduced_attrs(data)
 
 
 class HeNormalInitializerConfig(BaseConfig):
@@ -826,8 +878,12 @@ class LecunUniformInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return LecunUniformInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LecunUniformInitializerConfig.remove_reduced_attrs(data)
 
 
 class LecunUniformInitializerConfig(BaseConfig):
@@ -885,8 +941,12 @@ class LecunNormalInitializerSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return LecunNormalInitializerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LecunNormalInitializerConfig.remove_reduced_attrs(data)
 
 
 class LecunNormalInitializerConfig(BaseConfig):

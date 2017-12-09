@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, validate
+from marshmallow import fields, post_load, validate, post_dump
 
 from polyaxon_schemas.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.utils import DType
@@ -18,8 +18,12 @@ class ResizeSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ResizeConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ResizeConfig.remove_reduced_attrs(data)
 
 
 class ResizeConfig(BaseLayerConfig):
@@ -92,8 +96,12 @@ class CentralCropSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return CentralCropConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return CentralCropConfig.remove_reduced_attrs(data)
 
 
 class CentralCropConfig(BaseLayerConfig):
@@ -149,8 +157,12 @@ class RandomCropSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RandomCropConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RandomCropConfig.remove_reduced_attrs(data)
 
 
 class RandomCropConfig(BaseLayerConfig):
@@ -195,8 +207,12 @@ class ExtractGlimpseSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ExtractGlimpseConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ExtractGlimpseConfig.remove_reduced_attrs(data)
 
 
 class ExtractGlimpseConfig(BaseLayerConfig):
@@ -274,8 +290,12 @@ class ToBoundingBoxSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ToBoundingBoxConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ToBoundingBoxConfig.remove_reduced_attrs(data)
 
 
 class ToBoundingBoxConfig(BaseLayerConfig):
@@ -356,8 +376,12 @@ class FlipSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return FlipConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return FlipConfig.remove_reduced_attrs(data)
 
 
 class FlipConfig(BaseLayerConfig):
@@ -410,8 +434,12 @@ class TransposeSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TransposeConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TransposeConfig.remove_reduced_attrs(data)
 
 
 class TransposeConfig(BaseLayerConfig):
@@ -447,8 +475,12 @@ class Rotate90Schema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Rotate90Config(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Rotate90Config.remove_reduced_attrs(data)
 
 
 class Rotate90Config(BaseLayerConfig):
@@ -496,8 +528,12 @@ class ConvertColorSpaceSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ConvertColorSpaceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ConvertColorSpaceConfig.remove_reduced_attrs(data)
 
 
 class ConvertColorSpaceConfig(BaseLayerConfig):
@@ -554,8 +590,12 @@ class ConvertImagesDtypeSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ConvertImagesDtypeConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ConvertImagesDtypeConfig.remove_reduced_attrs(data)
 
 
 class ConvertImagesDtypeConfig(BaseLayerConfig):
@@ -612,8 +652,12 @@ class AdjustBrightnessSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdjustBrightnessConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdjustBrightnessConfig.remove_reduced_attrs(data)
 
 
 class AdjustBrightnessConfig(BaseLayerConfig):
@@ -672,8 +716,12 @@ class AdjustContrastSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdjustContrastConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdjustContrastConfig.remove_reduced_attrs(data)
 
 
 class AdjustContrastConfig(BaseLayerConfig):
@@ -747,8 +795,12 @@ class AdjustHueSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdjustHueConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdjustHueConfig.remove_reduced_attrs(data)
 
 
 class AdjustHueConfig(BaseLayerConfig):
@@ -807,8 +859,12 @@ class AdjustSaturationSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdjustSaturationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdjustSaturationConfig.remove_reduced_attrs(data)
 
 
 class AdjustSaturationConfig(BaseLayerConfig):
@@ -876,8 +932,12 @@ class AdjustGammaSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdjustGammaConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdjustGammaConfig.remove_reduced_attrs(data)
 
 
 class AdjustGammaConfig(BaseLayerConfig):
@@ -926,8 +986,12 @@ class StandardizationSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return StandardizationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return StandardizationConfig.remove_reduced_attrs(data)
 
 
 class StandardizationConfig(BaseLayerConfig):
@@ -965,8 +1029,12 @@ class DrawBoundingBoxesSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return DrawBoundingBoxesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DrawBoundingBoxesConfig.remove_reduced_attrs(data)
 
 
 class DrawBoundingBoxesConfig(BaseLayerConfig):
@@ -1017,8 +1085,12 @@ class TotalVariationSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TotalVariationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TotalVariationConfig.remove_reduced_attrs(data)
 
 
 class TotalVariationConfig(BaseLayerConfig):

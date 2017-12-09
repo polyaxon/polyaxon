@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, validate
+from marshmallow import Schema, fields, post_load, validate, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 
@@ -22,8 +22,12 @@ class ConstantExplorationSchema(BaseExplorationSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ConstantExplorationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ConstantExplorationConfig.remove_reduced_attrs(data)
 
 
 class ConstantExplorationConfig(BaseExplorationConfig):
@@ -40,8 +44,12 @@ class GreedyExplorationSchema(BaseExplorationSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GreedyExplorationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GreedyExplorationConfig.remove_reduced_attrs(data)
 
 
 class GreedyExplorationConfig(BaseExplorationConfig):
@@ -54,8 +62,12 @@ class RandomExplorationSchema(BaseExplorationSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RandomExplorationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RandomExplorationConfig.remove_reduced_attrs(data)
 
 
 class RandomExplorationConfig(BaseExplorationConfig):
@@ -79,8 +91,12 @@ class DecayExplorationSchema(BaseExplorationSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return DecayExplorationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DecayExplorationConfig.remove_reduced_attrs(data)
 
 
 class DecayExplorationConfig(BaseExplorationConfig):
@@ -124,8 +140,12 @@ class RandomDecayExplorationSchema(BaseExplorationSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RandomDecayExplorationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RandomDecayExplorationConfig.remove_reduced_attrs(data)
 
 
 class RandomDecayExplorationConfig(BaseExplorationConfig):
@@ -163,8 +183,12 @@ class OrnsteinUhlenbeckExplorationSchema(BaseExplorationSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return OrnsteinUhlenbeckExplorationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return OrnsteinUhlenbeckExplorationConfig.remove_reduced_attrs(data)
 
 
 class OrnsteinUhlenbeckExplorationConfig(BaseExplorationConfig):

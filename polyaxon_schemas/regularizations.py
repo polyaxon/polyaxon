@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 
@@ -26,8 +26,12 @@ class L1RegularizerSchema(BaseRegularizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return L1RegularizerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return L1RegularizerConfig.remove_reduced_attrs(data)
 
 
 class L1RegularizerConfig(BaseRegularizerConfig):
@@ -78,8 +82,12 @@ class L2RegularizerSchema(BaseRegularizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return L2RegularizerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return L2RegularizerConfig.remove_reduced_attrs(data)
 
 
 class L2RegularizerConfig(BaseRegularizerConfig):
@@ -131,8 +139,12 @@ class L1L2RegularizerSchema(BaseRegularizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return L1L2RegularizerConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return L1L2RegularizerConfig.remove_reduced_attrs(data)
 
 
 class L1L2RegularizerConfig(BaseRegularizerConfig):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.utils import ObjectOrListObject
@@ -14,8 +14,12 @@ class GlobalStepWaiterHookSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlobalStepWaiterHookConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalStepWaiterHookConfig.remove_reduced_attrs(data)
 
 
 class GlobalStepWaiterHookConfig(BaseConfig):
@@ -33,8 +37,12 @@ class FinalOpsHookSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return FinalOpsHookConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return FinalOpsHookConfig.remove_reduced_attrs(data)
 
 
 class FinalOpsHookConfig(BaseConfig):
@@ -54,8 +62,12 @@ class StepLoggingTensorHookSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return StepLoggingTensorHookConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return StepLoggingTensorHookConfig.remove_reduced_attrs(data)
 
 
 class StepLoggingTensorHookConfig(BaseConfig):
@@ -76,8 +88,12 @@ class EpisodeLoggingTensorHookSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return EpisodeLoggingTensorHookConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return EpisodeLoggingTensorHookConfig.remove_reduced_attrs(data)
 
 
 class EpisodeLoggingTensorHookConfig(BaseConfig):

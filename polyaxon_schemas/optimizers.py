@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 
@@ -53,8 +53,12 @@ class SGDSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SGDConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SGDConfig.remove_reduced_attrs(data)
 
 
 class SGDConfig(BaseOptimizerConfig):
@@ -130,8 +134,12 @@ class MomentumSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MomentumConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MomentumConfig.remove_reduced_attrs(data)
 
 
 class MomentumConfig(BaseOptimizerConfig):
@@ -219,8 +227,12 @@ class NestrovSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return NestrovConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return NestrovConfig.remove_reduced_attrs(data)
 
 
 class NestrovConfig(BaseOptimizerConfig):
@@ -307,8 +319,12 @@ class RMSPropSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RMSPropConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RMSPropConfig.remove_reduced_attrs(data)
 
 
 class RMSPropConfig(BaseOptimizerConfig):
@@ -398,8 +414,12 @@ class AdamSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdamConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdamConfig.remove_reduced_attrs(data)
 
 
 class AdamConfig(BaseOptimizerConfig):
@@ -489,8 +509,12 @@ class AdagradSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdagradConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdagradConfig.remove_reduced_attrs(data)
 
 
 class AdagradConfig(BaseOptimizerConfig):
@@ -571,8 +595,12 @@ class AdadeltaSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AdadeltaConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AdadeltaConfig.remove_reduced_attrs(data)
 
 
 class AdadeltaConfig(BaseOptimizerConfig):
@@ -669,8 +697,12 @@ class FtrlSchema(BaseOptimizerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return FtrlConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return FtrlConfig.remove_reduced_attrs(data)
 
 
 class FtrlConfig(BaseOptimizerConfig):

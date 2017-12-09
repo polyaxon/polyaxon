@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load
+from marshmallow import fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseMultiSchema
 from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
@@ -14,8 +14,12 @@ class AddSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AddConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AddConfig.remove_reduced_attrs(data)
 
 
 class AddConfig(BaseLayerConfig):
@@ -53,8 +57,12 @@ class SubtractSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SubtractConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SubtractConfig.remove_reduced_attrs(data)
 
 
 class SubtractConfig(BaseLayerConfig):
@@ -102,8 +110,12 @@ class MultiplySchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MultiplyConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MultiplyConfig.remove_reduced_attrs(data)
 
 
 class MultiplyConfig(BaseLayerConfig):
@@ -141,8 +153,12 @@ class AverageSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AverageConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AverageConfig.remove_reduced_attrs(data)
 
 
 class AverageConfig(BaseLayerConfig):
@@ -180,8 +196,12 @@ class MaximumSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MaximumConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MaximumConfig.remove_reduced_attrs(data)
 
 
 class MaximumConfig(BaseLayerConfig):
@@ -220,8 +240,12 @@ class ConcatenateSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ConcatenateConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ConcatenateConfig.remove_reduced_attrs(data)
 
 
 class ConcatenateConfig(BaseLayerConfig):
@@ -270,8 +294,12 @@ class DotSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return DotConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DotConfig.remove_reduced_attrs(data)
 
 
 class DotConfig(BaseLayerConfig):

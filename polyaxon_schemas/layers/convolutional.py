@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, validate
+from marshmallow import fields, post_load, validate, post_dump
 
 from polyaxon_schemas.utils import ObjectOrListObject, StrOrFct, ACTIVATION_VALUES
 from polyaxon_schemas.constraints import ConstraintSchema
@@ -35,8 +35,12 @@ class Conv1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Conv1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Conv1DConfig.remove_reduced_attrs(data)
 
 
 class Conv1DConfig(BaseLayerConfig):
@@ -164,8 +168,12 @@ class Conv2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Conv2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Conv2DConfig.remove_reduced_attrs(data)
 
 
 class Conv2DConfig(BaseLayerConfig):
@@ -341,8 +349,12 @@ class Conv3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Conv3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Conv3DConfig.remove_reduced_attrs(data)
 
 
 class Conv3DConfig(BaseLayerConfig):
@@ -497,8 +509,12 @@ class Conv2DTransposeSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Conv2DTransposeConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Conv2DTransposeConfig.remove_reduced_attrs(data)
 
 
 class Conv2DTransposeConfig(BaseLayerConfig):
@@ -650,8 +666,12 @@ class Conv3DTransposeSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Conv3DTransposeConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Conv3DTransposeConfig.remove_reduced_attrs(data)
 
 
 class Conv3DTransposeConfig(BaseLayerConfig):
@@ -816,8 +836,12 @@ class SeparableConv2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SeparableConv2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SeparableConv2DConfig.remove_reduced_attrs(data)
 
 
 class SeparableConv2DConfig(BaseLayerConfig):
@@ -954,8 +978,12 @@ class UpSampling1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return UpSampling1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return UpSampling1DConfig.remove_reduced_attrs(data)
 
 
 class UpSampling1DConfig(BaseLayerConfig):
@@ -1008,8 +1036,12 @@ class UpSampling2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return UpSampling2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return UpSampling2DConfig.remove_reduced_attrs(data)
 
 
 class UpSampling2DConfig(BaseLayerConfig):
@@ -1077,8 +1109,12 @@ class UpSampling3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return UpSampling3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return UpSampling3DConfig.remove_reduced_attrs(data)
 
 
 class UpSampling3DConfig(BaseLayerConfig):
@@ -1144,8 +1180,12 @@ class ZeroPadding1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ZeroPadding1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ZeroPadding1DConfig.remove_reduced_attrs(data)
 
 
 class ZeroPadding1DConfig(BaseLayerConfig):
@@ -1196,8 +1236,12 @@ class ZeroPadding2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ZeroPadding2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ZeroPadding2DConfig.remove_reduced_attrs(data)
 
 
 class ZeroPadding2DConfig(BaseLayerConfig):
@@ -1273,8 +1317,12 @@ class ZeroPadding3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ZeroPadding3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ZeroPadding3DConfig.remove_reduced_attrs(data)
 
 
 class ZeroPadding3DConfig(BaseLayerConfig):
@@ -1350,8 +1398,12 @@ class Cropping1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Cropping1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Cropping1DConfig.remove_reduced_attrs(data)
 
 
 class Cropping1DConfig(BaseLayerConfig):
@@ -1403,8 +1455,12 @@ class Cropping2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Cropping2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Cropping2DConfig.remove_reduced_attrs(data)
 
 
 class Cropping2DConfig(BaseLayerConfig):
@@ -1486,8 +1542,12 @@ class Cropping3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return Cropping3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return Cropping3DConfig.remove_reduced_attrs(data)
 
 
 class Cropping3DConfig(BaseLayerConfig):

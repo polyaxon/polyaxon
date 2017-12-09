@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate, post_load
+from marshmallow import fields, validate, post_load, post_dump
 
 from polyaxon_schemas.utils import ObjectOrListObject
 from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
@@ -17,8 +17,12 @@ class MaxPooling1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MaxPooling1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MaxPooling1DConfig.remove_reduced_attrs(data)
 
 
 class MaxPooling1DConfig(BaseLayerConfig):
@@ -64,8 +68,12 @@ class AveragePooling1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AveragePooling1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AveragePooling1DConfig.remove_reduced_attrs(data)
 
 
 class AveragePooling1DConfig(BaseLayerConfig):
@@ -113,8 +121,12 @@ class MaxPooling2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MaxPooling2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MaxPooling2DConfig.remove_reduced_attrs(data)
 
 
 class MaxPooling2DConfig(BaseLayerConfig):
@@ -187,8 +199,12 @@ class AveragePooling2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AveragePooling2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AveragePooling2DConfig.remove_reduced_attrs(data)
 
 
 class AveragePooling2DConfig(BaseLayerConfig):
@@ -261,8 +277,12 @@ class MaxPooling3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MaxPooling3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MaxPooling3DConfig.remove_reduced_attrs(data)
 
 
 class MaxPooling3DConfig(BaseLayerConfig):
@@ -332,8 +352,12 @@ class AveragePooling3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AveragePooling3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AveragePooling3DConfig.remove_reduced_attrs(data)
 
 
 class AveragePooling3DConfig(BaseLayerConfig):
@@ -396,8 +420,12 @@ class GlobalAveragePooling1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlobalAveragePooling1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalAveragePooling1DConfig.remove_reduced_attrs(data)
 
 
 class GlobalAveragePooling1DConfig(BaseLayerConfig):
@@ -425,8 +453,12 @@ class GlobalMaxPooling1DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlobalMaxPooling1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalMaxPooling1DConfig.remove_reduced_attrs(data)
 
 
 class GlobalMaxPooling1DConfig(BaseLayerConfig):
@@ -457,8 +489,12 @@ class GlobalAveragePooling2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlobalAveragePooling2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalAveragePooling2DConfig.remove_reduced_attrs(data)
 
 
 class GlobalAveragePooling2DConfig(BaseLayerConfig):
@@ -510,8 +546,12 @@ class GlobalMaxPooling2DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlobalMaxPooling2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalMaxPooling2DConfig.remove_reduced_attrs(data)
 
 
 class GlobalMaxPooling2DConfig(BaseLayerConfig):
@@ -563,8 +603,12 @@ class GlobalAveragePooling3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlobalAveragePooling3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalAveragePooling3DConfig.remove_reduced_attrs(data)
 
 
 class GlobalAveragePooling3DConfig(BaseLayerConfig):
@@ -616,8 +660,12 @@ class GlobalMaxPooling3DSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GlobalMaxPooling3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalMaxPooling3DConfig.remove_reduced_attrs(data)
 
 
 class GlobalMaxPooling3DConfig(BaseLayerConfig):

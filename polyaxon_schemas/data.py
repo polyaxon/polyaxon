@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 from marshmallow.utils import utc
 
 from polyaxon_schemas.base import BaseConfig
@@ -19,6 +19,10 @@ class DataDetailsSchema(Schema):
     @post_load
     def make(self, data):
         return DataDetailsConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DataDetailsConfig.remove_reduced_attrs(data)
 
 
 class DataDetailsConfig(BaseConfig):
@@ -46,6 +50,10 @@ class DataSchema(Schema):
     @post_load
     def make_data(self, data):
         return DataConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DataConfig.remove_reduced_attrs(data)
 
 
 class DataConfig(BaseConfig):
@@ -87,6 +95,10 @@ class DatasetSchema(Schema):
     @post_load
     def make(self, data):
         return DatasetConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DatasetConfig.remove_reduced_attrs(data)
 
 
 class DatasetConfig(BaseConfig):

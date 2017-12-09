@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load
+from marshmallow import fields, post_load, post_dump
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import InitializerSchema, UniformInitializerConfig
@@ -23,8 +23,12 @@ class EmbeddingSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return EmbeddingConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return EmbeddingConfig.remove_reduced_attrs(data)
 
 
 class EmbeddingConfig(BaseLayerConfig):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load
+from marshmallow import fields, post_load, post_dump
 
 from polyaxon_schemas.utils import ObjectOrListObject
 from polyaxon_schemas.constraints import ConstraintSchema
@@ -17,8 +17,12 @@ class LeakyReLUSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return LeakyReLUConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LeakyReLUConfig.remove_reduced_attrs(data)
 
 
 class LeakyReLUConfig(BaseLayerConfig):
@@ -64,8 +68,12 @@ class PReLUSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return PReLUConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PReLUConfig.remove_reduced_attrs(data)
 
 
 class PReLUConfig(BaseLayerConfig):
@@ -132,8 +140,12 @@ class ELUSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ELUConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ELUConfig.remove_reduced_attrs(data)
 
 
 class ELUConfig(BaseLayerConfig):
@@ -176,8 +188,12 @@ class ThresholdedReLUSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ThresholdedReLUConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ThresholdedReLUConfig.remove_reduced_attrs(data)
 
 
 class ThresholdedReLUConfig(BaseLayerConfig):

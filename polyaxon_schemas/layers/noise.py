@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate, post_load
+from marshmallow import fields, validate, post_load, post_dump
 
 from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
 
@@ -13,8 +13,12 @@ class GaussianNoiseSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GaussianNoiseConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GaussianNoiseConfig.remove_reduced_attrs(data)
 
 
 class GaussianNoiseConfig(BaseLayerConfig):
@@ -60,8 +64,12 @@ class GaussianDropoutSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GaussianDropoutConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GaussianDropoutConfig.remove_reduced_attrs(data)
 
 
 class GaussianDropoutConfig(BaseLayerConfig):
@@ -111,8 +119,12 @@ class AlphaDropoutSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AlphaDropoutConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AlphaDropoutConfig.remove_reduced_attrs(data)
 
 
 class AlphaDropoutConfig(BaseLayerConfig):

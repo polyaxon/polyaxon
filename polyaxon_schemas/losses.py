@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.utils import Tensor
@@ -31,8 +31,12 @@ class AbsoluteDifferenceSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AbsoluteDifferenceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AbsoluteDifferenceConfig.remove_reduced_attrs(data)
 
 
 class AbsoluteDifferenceConfig(BaseLossConfig):
@@ -90,8 +94,12 @@ class MeanSquaredErrorSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanSquaredErrorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanSquaredErrorConfig.remove_reduced_attrs(data)
 
 
 class MeanSquaredErrorConfig(BaseLossConfig):
@@ -146,8 +154,12 @@ class LogLossSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return LogLossConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LogLossConfig.remove_reduced_attrs(data)
 
 
 class LogLossConfig(BaseLossConfig):
@@ -213,8 +225,12 @@ class HuberLossSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return HuberLossConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HuberLossConfig.remove_reduced_attrs(data)
 
 
 class HuberLossConfig(BaseLossConfig):
@@ -282,8 +298,12 @@ class ClippedDeltaLossSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ClippedDeltaLossConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ClippedDeltaLossConfig.remove_reduced_attrs(data)
 
 
 class ClippedDeltaLossConfig(BaseLossConfig):
@@ -355,8 +375,12 @@ class SoftmaxCrossEntropySchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SoftmaxCrossEntropyConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SoftmaxCrossEntropyConfig.remove_reduced_attrs(data)
 
 
 class SoftmaxCrossEntropyConfig(BaseLossConfig):
@@ -439,8 +463,12 @@ class SigmoidCrossEntropySchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SigmoidCrossEntropyConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SigmoidCrossEntropyConfig.remove_reduced_attrs(data)
 
 
 class SigmoidCrossEntropyConfig(BaseLossConfig):
@@ -522,8 +550,12 @@ class HingeLossSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return HingeLossConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HingeLossConfig.remove_reduced_attrs(data)
 
 
 class HingeLossConfig(BaseLossConfig):
@@ -566,8 +598,12 @@ class CosineDistanceSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return CosineDistanceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return CosineDistanceConfig.remove_reduced_attrs(data)
 
 
 class CosineDistanceConfig(BaseLossConfig):
@@ -627,8 +663,12 @@ class PoissonLossSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return PoissonLossConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PoissonLossConfig.remove_reduced_attrs(data)
 
 
 class PoissonLossConfig(BaseLossConfig):
@@ -671,8 +711,12 @@ class KullbackLeiberDivergenceSchema(BaseLossSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return KullbackLeiberDivergenceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return KullbackLeiberDivergenceConfig.remove_reduced_attrs(data)
 
 
 class KullbackLeiberDivergenceConfig(BaseLossConfig):

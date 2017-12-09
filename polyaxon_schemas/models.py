@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.bridges import BridgeSchema
@@ -26,8 +26,12 @@ class BaseModelSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return BaseModelConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return BaseModelConfig.remove_reduced_attrs(data)
 
 
 class BaseModelConfig(BaseConfig):
@@ -62,8 +66,12 @@ class ClassifierSchema(BaseModelSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ClassifierConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ClassifierConfig.remove_reduced_attrs(data)
 
 
 class ClassifierConfig(BaseModelConfig):
@@ -210,8 +218,12 @@ class RegressorSchema(BaseModelSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RegressorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RegressorConfig.remove_reduced_attrs(data)
 
 
 class RegressorConfig(BaseModelConfig):
@@ -316,8 +328,12 @@ class GeneratorSchema(BaseModelSchema):
         exclude = ('graph',)
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GeneratorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GeneratorConfig.remove_reduced_attrs(data)
 
 
 class GeneratorConfig(BaseModelConfig):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, validate
+from marshmallow import Schema, fields, post_load, validate, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
@@ -18,6 +18,10 @@ class K8SResourcesSchema(Schema):
     @post_load
     def make(self, data):
         return K8SResourcesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return K8SResourcesConfig.remove_reduced_attrs(data)
 
 
 class K8SResourcesConfig(BaseConfig):
@@ -43,6 +47,10 @@ class PodResourcesSchema(Schema):
     def make(self, data):
         return PodResourcesConfig(**data)
 
+    @post_dump
+    def unmake(self, data):
+        return PodResourcesConfig.remove_reduced_attrs(data)
+
 
 class PodResourcesConfig(BaseConfig):
     IDENTIFIER = 'pod_resources'
@@ -67,6 +75,10 @@ class GPUOptionsSchema(Schema):
     @post_load
     def make(self, data):
         return GPUOptionsConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GPUOptionsConfig.remove_reduced_attrs(data)
 
 
 class GPUOptionsConfig(BaseConfig):
@@ -97,6 +109,10 @@ class SessionSchema(Schema):
     @post_load
     def make(self, data):
         return SessionConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SessionConfig.remove_reduced_attrs(data)
 
 
 class SessionConfig(BaseConfig):
@@ -131,6 +147,10 @@ class ClusterSchema(Schema):
     def make(self, data):
         return ClusterConfig(**data)
 
+    @post_dump
+    def unmake(self, data):
+        return ClusterConfig.remove_reduced_attrs(data)
+
 
 class ClusterConfig(BaseConfig):
     IDENTIFIER = 'cluster'
@@ -159,6 +179,10 @@ class RunSchema(Schema):
     @post_load
     def make(self, data):
         return RunConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RunConfig.remove_reduced_attrs(data)
 
 
 class RunConfig(BaseConfig):
@@ -207,6 +231,10 @@ class EnvironmentSchema(Schema):
     @post_load
     def make(self, data):
         return EnvironmentConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return EnvironmentConfig.remove_reduced_attrs(data)
 
 
 class EnvironmentConfig(BaseConfig):
@@ -259,6 +287,10 @@ class SettingsSchema(Schema):
     @post_load
     def make(self, data):
         return SettingsConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SettingsConfig.remove_reduced_attrs(data)
 
 
 class SettingsConfig(BaseConfig):

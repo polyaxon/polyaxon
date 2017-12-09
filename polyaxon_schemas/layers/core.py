@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, validate
+from marshmallow import fields, post_load, validate, post_dump
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import (
@@ -21,8 +21,12 @@ class MaskingSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MaskingConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MaskingConfig.remove_reduced_attrs(data)
 
 
 class MaskingConfig(BaseLayerConfig):
@@ -75,8 +79,12 @@ class DropoutSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return DropoutConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DropoutConfig.remove_reduced_attrs(data)
 
 
 class DropoutConfig(BaseLayerConfig):
@@ -118,8 +126,12 @@ class SpatialDropout1DSchema(DropoutSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SpatialDropout1DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SpatialDropout1DConfig.remove_reduced_attrs(data)
 
 
 class SpatialDropout1DConfig(DropoutConfig):
@@ -166,8 +178,12 @@ class SpatialDropout2DSchema(DropoutSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SpatialDropout2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SpatialDropout2DConfig.remove_reduced_attrs(data)
 
 
 class SpatialDropout2DConfig(DropoutConfig):
@@ -227,8 +243,12 @@ class SpatialDropout3DSchema(DropoutSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SpatialDropout3DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SpatialDropout3DConfig.remove_reduced_attrs(data)
 
 
 class SpatialDropout3DConfig(DropoutConfig):
@@ -286,8 +306,12 @@ class ActivationSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ActivationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ActivationConfig.remove_reduced_attrs(data)
 
 
 class ActivationConfig(BaseLayerConfig):
@@ -326,8 +350,12 @@ class ReshapeSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ReshapeConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ReshapeConfig.remove_reduced_attrs(data)
 
 
 class ReshapeConfig(BaseLayerConfig):
@@ -381,8 +409,12 @@ class PermuteSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return PermuteConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PermuteConfig.remove_reduced_attrs(data)
 
 
 class PermuteConfig(BaseLayerConfig):
@@ -433,8 +465,12 @@ class FlattenSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return FlattenConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return FlattenConfig.remove_reduced_attrs(data)
 
 
 class FlattenConfig(BaseLayerConfig):
@@ -469,8 +505,12 @@ class RepeatVectorSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RepeatVectorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RepeatVectorConfig.remove_reduced_attrs(data)
 
 
 class RepeatVectorConfig(BaseLayerConfig):
@@ -530,8 +570,12 @@ class DenseSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return DenseConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return DenseConfig.remove_reduced_attrs(data)
 
 
 class DenseConfig(BaseLayerConfig):
@@ -627,8 +671,12 @@ class ActivityRegularizationSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ActivityRegularizationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ActivityRegularizationConfig.remove_reduced_attrs(data)
 
 
 class ActivityRegularizationConfig(BaseLayerConfig):
@@ -670,8 +718,12 @@ class CastSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return CastConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return CastConfig.remove_reduced_attrs(data)
 
 
 class CastConfig(BaseLayerConfig):

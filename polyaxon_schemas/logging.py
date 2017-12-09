@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, validate
+from marshmallow import Schema, fields, post_load, validate, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 
@@ -18,6 +18,10 @@ class LoggingSchema(Schema):
     @post_load
     def make(self, data):
         return LoggingConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LoggingConfig.remove_reduced_attrs(data)
 
 
 class LoggingConfig(BaseConfig):

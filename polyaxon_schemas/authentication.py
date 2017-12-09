@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 
@@ -16,6 +16,10 @@ class AccessTokenSchema(Schema):
     @post_load
     def make(self, data):
         return AccessTokenConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AccessTokenConfig.remove_reduced_attrs(data)
 
 
 class AccessTokenConfig(BaseConfig):
@@ -34,6 +38,10 @@ class CredentialsSchema(Schema):
     @post_load
     def make(self, data):
         return CredentialsConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return CredentialsConfig.remove_reduced_attrs(data)
 
 
 class CredentialsConfig(BaseConfig):

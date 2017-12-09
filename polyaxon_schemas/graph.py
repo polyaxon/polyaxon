@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.layers import LayerSchema
@@ -20,6 +20,10 @@ class GraphSchema(Schema):
     @post_load
     def make(self, data):
         return GraphConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GraphConfig.remove_reduced_attrs(data)
 
 
 class GraphConfig(BaseConfig):

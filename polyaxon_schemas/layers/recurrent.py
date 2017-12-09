@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate, post_load
+from marshmallow import fields, validate, post_load, post_dump
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import (
@@ -27,8 +27,12 @@ class RecurrentSchema(BaseLayerSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RecurrentConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RecurrentConfig.remove_reduced_attrs(data)
 
 
 class RecurrentConfig(BaseLayerConfig):
@@ -199,8 +203,12 @@ class SimpleRNNSchema(RecurrentSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SimpleRNNConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SimpleRNNConfig.remove_reduced_attrs(data)
 
 
 class SimpleRNNConfig(RecurrentConfig):
@@ -310,8 +318,12 @@ class GRUSchema(RecurrentSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GRUConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GRUConfig.remove_reduced_attrs(data)
 
 
 class GRUConfig(RecurrentConfig):
@@ -431,8 +443,12 @@ class LSTMSchema(RecurrentSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return LSTMConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LSTMConfig.remove_reduced_attrs(data)
 
 
 class LSTMConfig(RecurrentConfig):

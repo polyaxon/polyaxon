@@ -25,7 +25,10 @@ class BaseConfig(object):
 
     @classmethod
     def obj_to_dict(cls, obj):
-        data = cls.SCHEMA(strict=True).dump(obj).data  # pylint: disable=not-callable
+        return cls.SCHEMA(strict=True).dump(obj).data  # pylint: disable=not-callable
+
+    @classmethod
+    def remove_reduced_attrs(cls, data):
         obj_dict = {key: value for (key, value) in six.iteritems(data)}
         for attr in cls.REDUCED_ATTRIBUTES:
             if obj_dict[attr] is None:

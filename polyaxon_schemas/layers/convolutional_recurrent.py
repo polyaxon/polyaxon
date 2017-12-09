@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, validate
+from marshmallow import fields, post_load, validate, post_dump
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import InitializerSchema
@@ -27,8 +27,12 @@ class ConvRecurrent2DSchema(RecurrentSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ConvRecurrent2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ConvRecurrent2DConfig.remove_reduced_attrs(data)
 
 
 class ConvRecurrent2DConfig(RecurrentConfig):
@@ -149,8 +153,12 @@ class ConvLSTM2DSchema(ConvRecurrent2DSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ConvLSTM2DConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ConvLSTM2DConfig.remove_reduced_attrs(data)
 
 
 class ConvLSTM2DConfig(ConvRecurrent2DConfig):

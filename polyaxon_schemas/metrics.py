@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, validate, post_load
+from marshmallow import Schema, fields, validate, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.utils import Tensor
@@ -64,8 +64,12 @@ class TruePositivesSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TruePositivesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TruePositivesConfig.remove_reduced_attrs(data)
 
 
 class TruePositivesConfig(BaseMetricConfig):
@@ -116,8 +120,12 @@ class TrueNegativesSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TrueNegativesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TrueNegativesConfig.remove_reduced_attrs(data)
 
 
 class TrueNegativesConfig(BaseMetricConfig):
@@ -171,8 +179,12 @@ class FalsePositivesSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return FalsePositivesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return FalsePositivesConfig.remove_reduced_attrs(data)
 
 
 class FalsePositivesConfig(BaseMetricConfig):
@@ -222,8 +234,12 @@ class FalseNegativesSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return FalseNegativesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return FalseNegativesConfig.remove_reduced_attrs(data)
 
 
 class FalseNegativesConfig(BaseMetricConfig):
@@ -278,8 +294,12 @@ class MeanSchema(BaseTensorMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanConfig.remove_reduced_attrs(data)
 
 
 class MeanConfig(BaseTensorMetricConfig):
@@ -339,8 +359,12 @@ class MeanTensorSchema(BaseTensorMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanTensorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanTensorConfig.remove_reduced_attrs(data)
 
 
 class MeanTensorConfig(BaseTensorMetricConfig):
@@ -403,8 +427,12 @@ class AccuracySchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AccuracyConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AccuracyConfig.remove_reduced_attrs(data)
 
 
 class AccuracyConfig(BaseMetricConfig):
@@ -472,8 +500,12 @@ class PrecisionSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return PrecisionConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PrecisionConfig.remove_reduced_attrs(data)
 
 
 class PrecisionConfig(BaseMetricConfig):
@@ -538,8 +570,12 @@ class RecallSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RecallConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RecallConfig.remove_reduced_attrs(data)
 
 
 class RecallConfig(BaseMetricConfig):
@@ -606,8 +642,12 @@ class AUCSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return AUCConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return AUCConfig.remove_reduced_attrs(data)
 
 
 class AUCConfig(BaseMetricConfig):
@@ -693,8 +733,12 @@ class SpecificityAtSensitivitySchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SpecificityAtSensitivityConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SpecificityAtSensitivityConfig.remove_reduced_attrs(data)
 
 
 class SpecificityAtSensitivityConfig(BaseMetricConfig):
@@ -774,8 +818,12 @@ class SensitivityAtSpecificitySchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SensitivityAtSpecificityConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SensitivityAtSpecificityConfig.remove_reduced_attrs(data)
 
 
 class SensitivityAtSpecificityConfig(BaseMetricConfig):
@@ -854,8 +902,12 @@ class PrecisionAtThresholdsSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return PrecisionAtThresholdsConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PrecisionAtThresholdsConfig.remove_reduced_attrs(data)
 
 
 class PrecisionAtThresholdsConfig(BaseMetricConfig):
@@ -927,8 +979,12 @@ class RecallAtThresholdsSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RecallAtThresholdsConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RecallAtThresholdsConfig.remove_reduced_attrs(data)
 
 
 class RecallAtThresholdsConfig(BaseMetricConfig):
@@ -999,8 +1055,12 @@ class SparseRecallAtKSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SparseRecallAtKConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SparseRecallAtKConfig.remove_reduced_attrs(data)
 
 
 class SparseRecallAtKConfig(BaseMetricConfig):
@@ -1093,8 +1153,12 @@ class SparsePrecisionAtKSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return SparsePrecisionAtKConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SparsePrecisionAtKConfig.remove_reduced_attrs(data)
 
 
 class SparsePrecisionAtKConfig(BaseMetricConfig):
@@ -1187,8 +1251,12 @@ class MeanAbsoluteErrorSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanAbsoluteErrorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanAbsoluteErrorConfig.remove_reduced_attrs(data)
 
 
 class MeanAbsoluteErrorConfig(BaseMetricConfig):
@@ -1254,8 +1322,12 @@ class MeanRelativeErrorSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanRelativeErrorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanRelativeErrorConfig.remove_reduced_attrs(data)
 
 
 class MeanRelativeErrorConfig(BaseMetricConfig):
@@ -1324,8 +1396,12 @@ class MeanSquaredErrorSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanSquaredErrorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanSquaredErrorConfig.remove_reduced_attrs(data)
 
 
 class MeanSquaredErrorConfig(BaseMetricConfig):
@@ -1390,8 +1466,12 @@ class RootMeanSquaredErrorSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return RootMeanSquaredErrorConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RootMeanSquaredErrorConfig.remove_reduced_attrs(data)
 
 
 class RootMeanSquaredErrorConfig(BaseMetricConfig):
@@ -1455,8 +1535,12 @@ class CovarianceSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return CovarianceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return CovarianceConfig.remove_reduced_attrs(data)
 
 
 class CovarianceConfig(BaseMetricConfig):
@@ -1525,8 +1609,12 @@ class PearsonCorrelationSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return PearsonCorrelationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PearsonCorrelationConfig.remove_reduced_attrs(data)
 
 
 class PearsonCorrelationConfig(BaseMetricConfig):
@@ -1594,8 +1682,12 @@ class MeanCosineDistanceSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanCosineDistanceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanCosineDistanceConfig.remove_reduced_attrs(data)
 
 
 class MeanCosineDistanceConfig(BaseMetricConfig):
@@ -1660,8 +1752,12 @@ class PercentageLessSchema(BaseTensorMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return PercentageLessConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PercentageLessConfig.remove_reduced_attrs(data)
 
 
 class PercentageLessConfig(BaseTensorMetricConfig):
@@ -1725,8 +1821,12 @@ class MeanIOUSchema(BaseMetricSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return MeanIOUConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MeanIOUConfig.remove_reduced_attrs(data)
 
 
 class MeanIOUConfig(BaseMetricConfig):

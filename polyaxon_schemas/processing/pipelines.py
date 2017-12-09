@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.processing.feature_processors import FeatureProcessorsSchema
@@ -24,8 +24,12 @@ class BasePipelineSchema(Schema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return BasePipelineConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return BasePipelineConfig.remove_reduced_attrs(data)
 
 
 class BasePipelineConfig(BaseConfig):
@@ -91,8 +95,12 @@ class TFRecordImagePipelineSchema(BasePipelineSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TFRecordImagePipelineConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TFRecordImagePipelineConfig.remove_reduced_attrs(data)
 
 
 class TFRecordImagePipelineConfig(BasePipelineConfig):
@@ -156,8 +164,12 @@ class TFRecordSequencePipelineSchema(BasePipelineSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TFRecordSequencePipelineConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TFRecordSequencePipelineConfig.remove_reduced_attrs(data)
 
 
 class TFRecordSequencePipelineConfig(BasePipelineConfig):
@@ -225,8 +237,12 @@ class ParallelTextPipelineSchema(BasePipelineSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ParallelTextPipelineConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ParallelTextPipelineConfig.remove_reduced_attrs(data)
 
 
 class ParallelTextPipelineConfig(BasePipelineConfig):
@@ -288,8 +304,12 @@ class TFRecordSourceSequencePipelineSchema(BasePipelineSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return TFRecordSourceSequencePipelineConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TFRecordSourceSequencePipelineConfig.remove_reduced_attrs(data)
 
 
 class TFRecordSourceSequencePipelineConfig(BasePipelineConfig):
@@ -352,8 +372,12 @@ class ImageCaptioningPipelineSchema(BasePipelineSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return ImageCaptioningPipelineConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ImageCaptioningPipelineConfig.remove_reduced_attrs(data)
 
 
 class ImageCaptioningPipelineConfig(BasePipelineConfig):

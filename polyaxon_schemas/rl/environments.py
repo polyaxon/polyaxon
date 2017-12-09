@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 
@@ -20,8 +20,12 @@ class GymEnvironmentSchema(BaseEnvironmentSchema):
         ordered = True
 
     @post_load
-    def make_load(self, data):
+    def make(self, data):
         return GymEnvironmentConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GymEnvironmentConfig.remove_reduced_attrs(data)
 
 
 class GymEnvironmentConfig(BaseEnvironmentConfig):

@@ -6,7 +6,9 @@ from unittest import TestCase
 
 from marshmallow import ValidationError
 
-from polyaxon_schemas.project import ProjectConfig, PolyaxonSpecConfig
+from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
+from tests.utils import assert_equal_dict
 
 
 class TestProjectConfigs(TestCase):
@@ -20,9 +22,31 @@ class TestProjectConfigs(TestCase):
         config = ProjectConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
-    def test_spec_config(self):
+    def test_project_experiments_and_groups_config(self):
+        uuid_value = uuid.uuid4().hex
+        config_dict = {'name': 'test',
+                       'description': '',
+                       'is_public': True,
+                       'experiment_groups': [
+                           ExperimentGroupConfig(content='name',
+                                                 uuid=uuid_value,
+                                                 project=uuid_value).to_dict()],
+                       'experiments': [
+                           ExperimentConfig(name='name',
+                                            uuid=uuid_value,
+                                            project=uuid_value).to_dict()]}
+        config = ProjectConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_experiment_group_config(self):
+        uuid_value = uuid.uuid4().hex
         config_dict = {'content': 'some content',
-                       'uuid': uuid.uuid4().hex,
-                       'project': uuid.uuid4().hex}
-        config = PolyaxonSpecConfig.from_dict(config_dict)
+                       'uuid': uuid_value,
+                       'project': uuid_value,
+                       'experiments': [
+                           ExperimentConfig(name='name',
+                                            uuid=uuid_value,
+                                            group=uuid_value,
+                                            project=uuid_value).to_dict()]}
+        config = ExperimentGroupConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
