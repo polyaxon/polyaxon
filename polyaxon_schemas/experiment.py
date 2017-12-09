@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import UUID
@@ -9,8 +9,9 @@ from polyaxon_schemas.utils import UUID
 
 class ExperimentSchema(Schema):
     name = fields.Str()
-    uuid = UUID()
-    project = UUID()
+    uuid = UUID(allow_none=True)
+    project = UUID(allow_none=True)
+    group = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
 
     class Meta:
@@ -20,16 +21,21 @@ class ExperimentSchema(Schema):
     def make(self, data):
         return ExperimentConfig(**data)
 
+    @post_dump
+    def unmake(self, data):
+        return ExperimentConfig.remove_reduced_attrs(data)
+
 
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = ['description']
+    REDUCED_ATTRIBUTES = ['description', 'group']
 
-    def __init__(self, name, uuid, project, description=None):
+    def __init__(self, name, uuid=None, project=None, group=None, description=None):
         self.name = name
         self.uuid = uuid
         self.project = project
+        self.group = group
         self.description = description
 
 
@@ -49,6 +55,10 @@ class JobLabelSchema(Schema):
     @post_load
     def make(self, data):
         return JobLabelConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return JobLabelConfig.remove_reduced_attrs(data)
 
 
 class JobLabelConfig(BaseConfig):
@@ -81,6 +91,10 @@ class PodStateSchema(Schema):
     def make(self, data):
         return PodStateConfig(**data)
 
+    @post_dump
+    def unmake(self, data):
+        return PodStateConfig.remove_reduced_attrs(data)
+
 
 class PodStateConfig(BaseConfig):
     SCHEMA = PodStateSchema
@@ -112,6 +126,10 @@ class JobStateSchema(Schema):
     @post_load
     def make(self, data):
         return JobStateConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return JobStateConfig.remove_reduced_attrs(data)
 
 
 class JobStateConfig(BaseConfig):
@@ -147,6 +165,10 @@ class ContainerGPUResourcesSchema(Schema):
     @post_load
     def make(self, data):
         return ContainerGPUResourcesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ContainerGPUResourcesConfig.remove_reduced_attrs(data)
 
 
 class ContainerGPUResourcesConfig(BaseConfig):
@@ -202,6 +224,10 @@ class ContainerResourcesSchema(Schema):
     @post_load
     def make(self, data):
         return ContainerResourcesConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ContainerResourcesConfig.remove_reduced_attrs(data)
 
 
 class ContainerResourcesConfig(BaseConfig):
