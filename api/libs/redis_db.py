@@ -31,6 +31,12 @@ class RedisJobContainers(BaseRedisDb):
         return [container_id.decode('utf-8') for container_id in container_ids]
 
     @classmethod
+    def get_experiment_for_job(cls, job_uuid, red=None):
+        red = red or cls._get_redis()
+        experiment_uuid = red.hget(cls.KEY_JOBS_TO_EXPERIMENTS, job_uuid)
+        return experiment_uuid.decode('utf-8') if experiment_uuid else None
+
+    @classmethod
     def get_job(cls, container_id):
         red = cls._get_redis()
         if red.sismember(cls.KEY_CONTAINERS, container_id):
@@ -39,14 +45,13 @@ class RedisJobContainers(BaseRedisDb):
                 return None, None
 
             job_uuid = job_uuid.decode('utf-8')
-            experiment_uuid = red.hget(cls.KEY_JOBS_TO_EXPERIMENTS, job_uuid)
-            experiment_uuid = experiment_uuid.decode('utf-8') if experiment_uuid else None
+            experiment_uuid = cls.get_experiment_for_job(job_uuid=job_uuid, red=red)
             return job_uuid, experiment_uuid
         return None, None
 
     @classmethod
-    def remove_container(cls, container_id):
-        red = cls._get_redis()
+    def remove_container(cls, container_id, red=None):
+        red = red or cls._get_redis()
         red.srem(cls.KEY_CONTAINERS, container_id)
         red.hdel(cls.KEY_CONTAINERS_TO_JOBS, container_id)
 
@@ -58,7 +63,7 @@ class RedisJobContainers(BaseRedisDb):
         for container_id in containers:
             container_id = container_id.decode('utf-8')
             red.srem(key_jobs_to_containers, container_id)
-            cls.remove_container(container_id=container_id)
+            cls.remove_container(container_id=container_id, red=red)
 
         # Remove the experiment too
         red.hdel(cls.KEY_CONTAINERS_TO_JOBS, job_uuid)

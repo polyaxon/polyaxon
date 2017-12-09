@@ -128,6 +128,11 @@ def run(containers, persist):
             payload = payload.to_dict()
             logger.info("Publishing event: {}".format(payload))
             handle_events_resources.delay(payload=payload, persist=persist)
+
+            job_uuid = payload['job_uuid']
             # Check if we should stream the payload
-            if RedisToStream.is_monitored_job_resources(payload['job_uuid']):
-                RedisToStream.set_latest_job_resources(payload['job_uuid'], payload)
+            # Check if we have this container already in place
+            experiment_uuid = RedisJobContainers.get_experiment_for_job(job_uuid)
+            if (RedisToStream.is_monitored_job_resources(job_uuid) or
+                    RedisToStream.is_monitored_experiment_resources(experiment_uuid)):
+                RedisToStream.set_latest_job_resources(job_uuid, payload)
