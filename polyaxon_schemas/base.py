@@ -6,8 +6,9 @@ from collections import Mapping
 import six
 
 from marshmallow import Schema, ValidationError, post_load, post_dump
+from marshmallow.utils import utc
 
-from polyaxon_schemas.utils import to_camel_case
+from polyaxon_schemas.utils import to_camel_case, TIME_ZONE
 
 
 class BaseConfig(object):
@@ -43,6 +44,12 @@ class BaseConfig(object):
     @classmethod
     def from_dict(cls, value):
         return cls.SCHEMA(strict=True).load(value).data  # pylint: disable=not-callable
+
+    @staticmethod
+    def localize_date(dt):
+        if not dt.tzinfo:
+            dt = utc.localize(dt)
+        return dt.astimezone(TIME_ZONE)
 
 
 class BaseMultiSchema(Schema):

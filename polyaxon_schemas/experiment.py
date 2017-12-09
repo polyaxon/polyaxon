@@ -7,11 +7,41 @@ from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import UUID
 
 
+class ExperimentJobSchema(Schema):
+    uuid = UUID()
+    experiment = UUID()
+    created_at = fields.DateTime()
+    definition = fields.Str()
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return ExperimentJobConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ExperimentJobConfig.remove_reduced_attrs(data)
+
+
+class ExperimentJobConfig(BaseConfig):
+    SCHEMA = ExperimentJobSchema
+    IDENTIFIER = 'ExperimentJob'
+
+    def __init__(self, uuid, experiment, created_at, definition):
+        self.uuid = uuid
+        self.experiment = experiment
+        self.created_at = self.localize_date(created_at)
+        self.definition = definition
+
+
 class ExperimentSchema(Schema):
     name = fields.Str()
     uuid = UUID(allow_none=True)
     project = UUID(allow_none=True)
     group = UUID(allow_none=True)
+    jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
     description = fields.Str(allow_none=True)
 
     class Meta:
@@ -29,14 +59,78 @@ class ExperimentSchema(Schema):
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = ['description', 'group']
+    REDUCED_ATTRIBUTES = ['description', 'group', 'jobs']
 
-    def __init__(self, name, uuid=None, project=None, group=None, description=None):
+    def __init__(self, name, uuid=None, project=None, group=None, jobs=None, description=None):
         self.name = name
         self.uuid = uuid
         self.project = project
         self.group = group
+        self.jobs = jobs
         self.description = description
+
+
+class ExperimentStatusSchema(Schema):
+    uuid = UUID()
+    experiment = UUID()
+    created_at = fields.DateTime()
+    status = fields.Str()
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return ExperimentStatusConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ExperimentStatusConfig.remove_reduced_attrs(data)
+
+
+class ExperimentStatusConfig(BaseConfig):
+    SCHEMA = ExperimentStatusSchema
+    IDENTIFIER = 'ExperimentStatus'
+
+    def __init__(self, uuid, experiment, created_at, status):
+        self.uuid = uuid
+        self.experiment = experiment
+        self.created_at = self.localize_date(created_at)
+        self.status = status
+
+
+class ExperimentJobStatusSchema(Schema):
+    uuid = UUID()
+    job = UUID()
+    created_at = fields.DateTime()
+    status = fields.Str()
+    message = fields.Str(allow_none=True)
+    details = fields.Dict(allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return ExperimentJobStatusConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ExperimentJobStatusConfig.remove_reduced_attrs(data)
+
+
+class ExperimentJobStatusConfig(BaseConfig):
+    SCHEMA = ExperimentJobStatusSchema
+    IDENTIFIER = 'ExperimentJobStatus'
+    REDUCED_ATTRIBUTES = ['message', 'details']
+
+    def __init__(self, uuid, job, created_at, status, message=None, details=None):
+        self.uuid = uuid
+        self.job = job
+        self.created_at = self.localize_date(created_at)
+        self.status = status
+        self.message = message
+        self.details = details
 
 
 class JobLabelSchema(Schema):

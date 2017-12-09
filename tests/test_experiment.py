@@ -12,7 +12,8 @@ from polyaxon_schemas.experiment import (
     PodStateConfig,
     JobStateConfig,
     ContainerGPUResourcesConfig,
-    ContainerResourcesConfig)
+    ContainerResourcesConfig, ExperimentJobConfig, ExperimentStatusConfig,
+    ExperimentJobStatusConfig)
 from polyaxon_schemas.polyaxonfile.constants import TASK_NAME
 
 
@@ -21,6 +22,51 @@ class TestExperimentConfigs(TestCase):
         config_dict = {'name': 'test', 'uuid': uuid.uuid4().hex, 'project': uuid.uuid4().hex}
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+    def test_experiment_with_jobs_config(self):
+        config_dict = {'name': 'test',
+                       'uuid': uuid.uuid4().hex,
+                       'project': uuid.uuid4().hex,
+                       'group': uuid.uuid4().hex,
+                       'jobs': [ExperimentJobConfig(uuid.uuid4().hex,
+                                                    uuid.uuid4().hex,
+                                                    datetime.now(),
+                                                    definition='').to_dict()]}
+        config = ExperimentConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
+    def test_experiment_job_config(self):
+        config_dict = {'uuid': uuid.uuid4().hex,
+                       'experiment': uuid.uuid4().hex,
+                       'created_at': datetime.now().isoformat(),
+                       'definition': ''}
+        config = ExperimentJobConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        config_to_dict.pop('created_at')
+        config_dict.pop('created_at')
+        assert config_to_dict == config_dict
+
+    def test_experiment_status_config(self):
+        config_dict = {'uuid': uuid.uuid4().hex,
+                       'experiment': uuid.uuid4().hex,
+                       'created_at': datetime.now().isoformat(),
+                       'status': 'Running'}
+        config = ExperimentStatusConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        config_to_dict.pop('created_at')
+        config_dict.pop('created_at')
+        assert config_to_dict == config_dict
+
+    def test_experiment_status_config(self):
+        config_dict = {'uuid': uuid.uuid4().hex,
+                       'job': uuid.uuid4().hex,
+                       'created_at': datetime.now().isoformat(),
+                       'status': 'Running'}
+        config = ExperimentJobStatusConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        config_to_dict.pop('created_at')
+        config_dict.pop('created_at')
+        assert config_to_dict == config_dict
 
     @staticmethod
     def create_pod_labels():

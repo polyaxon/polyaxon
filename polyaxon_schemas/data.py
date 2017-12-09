@@ -2,10 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import Schema, fields, post_load, post_dump
-from marshmallow.utils import utc
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import TIME_ZONE, UUID
+from polyaxon_schemas.utils import UUID
 
 
 class DataDetailsSchema(Schema):
@@ -75,12 +74,6 @@ class DataConfig(BaseConfig):
         self.details = details
         self.version = int(float(version)) if version else None
         self.resource_id = resource_id
-
-    @staticmethod
-    def localize_date(dt):
-        if not dt.tzinfo:
-            dt = utc.localize(dt)
-        return dt.astimezone(TIME_ZONE)
 
 
 class DatasetSchema(Schema):
