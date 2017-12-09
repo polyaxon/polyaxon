@@ -47,7 +47,7 @@ class PolyaxonClient(object):
         def callback(monitor):
             bar.show(monitor.bytes_read)
 
-        return callback
+        return callback, bar
 
     @staticmethod
     def sizeof_fmt(num, suffix='B'):
