@@ -11,6 +11,7 @@ from sanic import Sanic
 from websockets import ConnectionClosed
 
 from api.config_settings.celery_settings import RoutingKeys, CeleryQueues
+from events.authentication import authorized
 from events.consumers import Consumer
 from events.socket_manager import SocketManager
 from experiments.models import ExperimentJob, Experiment
@@ -61,6 +62,7 @@ def handle_disconnected_ws(ws_manager, ws, job_uuid):
 
 
 @app.websocket('/stream/v1/resources/job/<job_uuid>')
+@authorized()
 async def job_resources(request, ws, job_uuid):
     job = _get_job(job_uuid=job_uuid)
 
@@ -93,6 +95,7 @@ async def job_resources(request, ws, job_uuid):
 
 
 @app.websocket('/stream/v1/resources/experiment/<experiment_uuid>')
+@authorized()
 async def experiment_resources(request, ws, experiment_uuid):
     experiment = _get_experiment(experiment_uuid=experiment_uuid)
 
@@ -126,6 +129,7 @@ async def experiment_resources(request, ws, experiment_uuid):
 
 
 @app.websocket('/stream/v1/logs/job/<job_uuid>')
+@authorized()
 async def job_logs(request, ws, job_uuid):
     job = _get_job(job_uuid=job_uuid)
 
@@ -179,6 +183,7 @@ async def job_logs(request, ws, job_uuid):
 
 
 @app.websocket('/stream/v1/logs/experiment/<experiment_uuid>')
+@authorized()
 async def experiment_logs(request, ws, experiment_uuid):
     experiment = _get_experiment(experiment_uuid=experiment_uuid)
 
