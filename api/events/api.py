@@ -137,39 +137,91 @@ async def job_logs(request, ws, job_uuid):
         RedisToStream.monitor_job_logs(job_uuid=job_uuid)
 
     # start consumer
-    if request.app.logs_consumer is None:
-        logger.info('Add log consumer'.format(job_uuid))
-        request.app.logs_consumer = Consumer(
+    if request.app.job_logs_consumer is None:
+        logger.info('Add job log consumer for {}'.format(job_uuid))
+        request.app.job_logs_consumer = Consumer(
             routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
                                           job.experiment.uuid.hex,
                                           job_uuid),
-            queue=CeleryQueues.STREAM_LOGS_SIDECARS)
-        request.app.logs_consumer.run()
+            queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
+        request.app.job_logs_consumer.run()
 
     # add socket manager
-    request.app.logs_consumer.add_socket(ws)
+    request.app.job_logs_consumer.add_socket(ws)
     should_quite = False
     while True:
-        for message in request.app.logs_consumer.get_messages():
+        for message in request.app.job_logs_consumer.get_messages():
             disconnected_ws = set()
-            for _ws in request.app.logs_consumer.ws:
+            for _ws in request.app.job_logs_consumer.ws:
                 try:
                     await _ws.send(message)
                 except ConnectionClosed:
                     disconnected_ws.add(_ws)
-            request.app.logs_consumer.remove_sockets(disconnected_ws)
+            request.app.job_logs_consumer.remove_sockets(disconnected_ws)
 
         # Just to check if connection closed
         try:
             await ws.recv()
         except ConnectionClosed:
             logger.info('Quitting logs socket for job uuid {}'.format(job_uuid))
-            request.app.logs_consumer.remove_sockets({ws, })
+            request.app.job_logs_consumer.remove_sockets({ws, })
             should_quite = True
 
-        if len(request.app.logs_consumer.ws) == 0:
+        if len(request.app.job_logs_consumer.ws) == 0:
             RedisToStream.remove_job_logs(job_uuid=job_uuid)
             logger.info('Stopping logs monitor for job uuid {}'.format(job_uuid))
+            should_quite = True
+
+        if should_quite:
+            return
+
+        await asyncio.sleep(SOCKET_SLEEP)
+
+
+@app.websocket('/stream/v1/logs/experiment/<experiment_uuid>')
+async def experiment_logs(request, ws, experiment_uuid):
+    experiment = _get_experiment(experiment_uuid=experiment_uuid)
+
+    if experiment is None:
+        return
+
+    if not RedisToStream.is_monitored_experiment_logs(experiment_uuid=experiment_uuid):
+        logger.info('Experiment uuid `{}` logs is now being monitored'.format(experiment_uuid))
+        RedisToStream.monitor_experiment_logs(experiment_uuid=experiment_uuid)
+
+    # start consumer
+    if request.app.experiment_logs_consumer is None:
+        logger.info('Add experiment log consumer for {}'.format(experiment_uuid))
+        request.app.experiment_logs_consumer = Consumer(
+            routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS,
+                                         experiment.uuid.hex),
+            queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, experiment_uuid))
+        request.app.experiment_logs_consumer.run()
+
+    # add socket manager
+    request.app.experiment_logs_consumer.add_socket(ws)
+    should_quite = False
+    while True:
+        for message in request.app.experiment_logs_consumer.get_messages():
+            disconnected_ws = set()
+            for _ws in request.app.experiment_logs_consumer.ws:
+                try:
+                    await _ws.send(message)
+                except ConnectionClosed:
+                    disconnected_ws.add(_ws)
+            request.app.experiment_logs_consumer.remove_sockets(disconnected_ws)
+
+        # Just to check if connection closed
+        try:
+            await ws.recv()
+        except ConnectionClosed:
+            logger.info('Quitting logs socket for experiment uuid {}'.format(experiment_uuid))
+            request.app.experiment_logs_consumer.remove_sockets({ws, })
+            should_quite = True
+
+        if len(request.app.experiment_logs_consumer.ws) == 0:
+            RedisToStream.remove_experiment_logs(experiment_uuid=experiment_uuid)
+            logger.info('Stopping logs monitor for experiment uuid {}'.format(experiment_uuid))
             should_quite = True
 
         if should_quite:
@@ -182,12 +234,15 @@ async def job_logs(request, ws, job_uuid):
 async def notify_server_started(app, loop):
     app.job_resources_ws_manger = SocketManager()
     app.experiment_resources_ws_manger = SocketManager()
-    app.logs_consumer = None
+    app.job_logs_consumer = None
+    app.experiment_logs_consumer = None
 
 
 @app.listener('after_server_stop')
 async def notifiy_server_stoped(app, loop):
     del app.job_resources_ws_manger
     del app.experiment_resources_ws_manger
-    if app.logs_consumer:
-        app.logs_consumer.stop()
+    if app.job_logs_consumer:
+        app.job_logs_consumer.stop()
+    if app.experiment_logs_consumer:
+        app.experiment_logs_consumer.stop()
