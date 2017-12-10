@@ -20,16 +20,18 @@ if [ $? -eq 0 ]; then
     echo "Deleting docker containers..."
     $DIR/down
 
-    echo "Installing npm dependencies..."
-    # $DIR/npm install
+    if [ "$1" = "npm" ]; then
+        echo "Installing npm dependencies..."
+        $DIR/npm install
 
-    echo "Compiling ts to js..."
-    # $DIR/npm run build
+        echo "Compiling ts to js..."
+        $DIR/npm run build
+
+        # echo "Collecting static assets..."
+        $DIR/manage collectstatic --noinput
+    fi
 
     rm -f $LOG_FILE || true
-
-    # echo "Collecting static assets..."
-    # $DIR/manage collectstatic --noinput
 
     echo "Initialising database schema..."
     $DIR/manage migrate

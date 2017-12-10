@@ -2,8 +2,8 @@ export class ExperimentModel {
 	public uuid: string;
 	public name: string;
 	public deleted?: boolean;
-  public project?: string;
-  public status?: string;
+    public project?: string;
+    public status?: string;
 	public createdAt: Date;
 	public updatedAt: Date;
 }
