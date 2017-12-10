@@ -17,10 +17,12 @@ faker = Faker()
 
 class TestProjectClient(TestCase):
     def setUp(self):
-        self.client = ProjectClient(host='http://localhost',
+        self.client = ProjectClient(host='localhost',
+                                    http_port=8000,
+                                    ws_port=1337,
                                     version='v1',
+                                    token=faker.uuid4(),
                                     reraise=True)
-        self.base_url = ProjectClient.BASE_URL.format('http://localhost', 'v1')
 
     @httpretty.activate
     def test_get_projects(self):
@@ -28,7 +30,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT),
             body=json.dumps({'results': projects, 'count': 10, 'next': None}),
             content_type='application/json',
@@ -43,7 +45,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 'uuid'),
             body=json.dumps(object),
@@ -58,7 +60,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
@@ -73,7 +75,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.PATCH,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid),
             body=json.dumps(object.to_dict()),
@@ -88,7 +90,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.DELETE,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid),
             content_type='application/json',
@@ -102,7 +104,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.PUT,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'repo',
@@ -124,7 +126,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'experiment_groups'),
@@ -142,7 +144,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'experiment_groups'),
@@ -162,7 +164,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.PATCH,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'experiment_groups',
@@ -182,7 +184,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.DELETE,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'experiment_groups',
@@ -201,7 +203,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'experiments'),
@@ -217,7 +219,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'experiments') + '?offset=2',
@@ -235,7 +237,7 @@ class TestProjectClient(TestCase):
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
                 'experiments'),

@@ -18,10 +18,12 @@ faker = Faker()
 
 class TestExperimentClient(TestCase):
     def setUp(self):
-        self.client = ExperimentClient(host='http://localhost',
+        self.client = ExperimentClient(host='localhost',
+                                       http_port=8000,
+                                       ws_port=1337,
                                        version='v1',
+                                       token=faker.uuid4(),
                                        reraise=True)
-        self.base_url = ExperimentClient.BASE_URL.format('http://localhost', 'v1')
 
     @httpretty.activate
     def test_list_experiments(self):
@@ -29,7 +31,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT),
             body=json.dumps({'results': experiments, 'count': 10, 'next': None}),
             content_type='application/json',
@@ -44,7 +46,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 'uuid'),
             body=json.dumps(object),
@@ -60,7 +62,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.PATCH,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 experiment_uuid),
             body=json.dumps(object.to_dict()),
@@ -75,7 +77,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.DELETE,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 experiment_uuid),
             content_type='application/json',
@@ -93,7 +95,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 'uuid',
                 'status'),
@@ -114,7 +116,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 experiment_uuid,
                 'jobs',
@@ -131,7 +133,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 experiment_uuid,
                 'experiments') + '?offset=2',
@@ -153,7 +155,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 experiment_uuid,
                 'jobs',
@@ -172,7 +174,7 @@ class TestExperimentClient(TestCase):
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 experimnt_uuid,
                 'restart'),

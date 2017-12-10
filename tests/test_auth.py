@@ -18,11 +18,12 @@ faker = Faker()
 class TestAuthClient(TestCase):
 
     def setUp(self):
-        self.client = AuthClient(host='http://localhost',
+        self.client = AuthClient(host='localhost',
+                                 http_port=8000,
+                                 ws_port=1337,
                                  version='v1',
                                  token=faker.uuid4(),
                                  reraise=True)
-        self.base_url = AuthClient.BASE_URL.format('http://localhost', 'v1')
 
     @httpretty.activate
     def test_get_user(self):
@@ -30,7 +31,7 @@ class TestAuthClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             AuthClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 AuthClient.ENDPOINT),
             body=json.dumps(user),
             content_type='application/json', status=200)
@@ -44,7 +45,7 @@ class TestAuthClient(TestCase):
         httpretty.register_uri(
             httpretty.POST,
             AuthClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 AuthClient.ENDPOINT,
                 'token'
             ),

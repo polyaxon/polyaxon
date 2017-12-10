@@ -15,10 +15,12 @@ faker = Faker()
 
 class TestExperimentGroupClient(TestCase):
     def setUp(self):
-        self.client = ExperimentGroupClient(host='http://localhost',
+        self.client = ExperimentGroupClient(host='localhost',
+                                            http_port=8000,
+                                            ws_port=1337,
                                             version='v1',
+                                            token=faker.uuid4(),
                                             reraise=True)
-        self.base_url = ExperimentGroupClient.BASE_URL.format('http://localhost', 'v1')
 
     @httpretty.activate
     def test_list_experiments(self):
@@ -33,7 +35,7 @@ class TestExperimentGroupClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentGroupClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentGroupClient.ENDPOINT,
                 group_uuid,
                 'experiments'),
@@ -49,7 +51,7 @@ class TestExperimentGroupClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             ExperimentGroupClient._build_url(
-                self.base_url,
+                self.client.base_url,
                 ExperimentGroupClient.ENDPOINT,
                 group_uuid,
                 'experiments') + '?offset=2',

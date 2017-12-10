@@ -14,10 +14,12 @@ faker = Faker()
 
 
 class TestVersionClient(TestCase):
-
     def setUp(self):
-        self.client = VersionClient(host='http://localhost',
+        self.client = VersionClient(host='localhost',
+                                    http_port=8000,
+                                    ws_port=1337,
                                     version='v1',
+                                    token=faker.uuid4(),
                                     reraise=True)
 
     @httpretty.activate
@@ -26,7 +28,7 @@ class TestVersionClient(TestCase):
         httpretty.register_uri(
             httpretty.GET,
             VersionClient._build_url(
-                VersionClient.BASE_URL.format('http://localhost', 'v1'),
+                self.client.base_url,
                 VersionClient.ENDPOINT),
             body=json.dumps(object),
             content_type='application/json', status=200)
