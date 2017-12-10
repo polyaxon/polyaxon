@@ -63,8 +63,8 @@ export const ProjectExperiments: Reducer<ExperimentStateSchema> =
           let xp = projectExperiments[xpUuid];
           newState.byUuids[xpUuid] = {
             ...xp,
-            createdAt: new Date(_.toString(xp.createdAt)),
-            updatedAt: new Date(_.toString(xp.updatedAt))
+            createdAt: new Date(_.toString(xp.created_at)),
+            updatedAt: new Date(_.toString(xp.updated_at))
           };
         }
       }

@@ -122,11 +122,11 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
     dispatch(requestProjectsActionCreator());
     return fetch(PROJECTS_URL)
       .then(response => response.json())
-      .then(json => json.results.map((project: ProjectModel) => {
+      .then(json => json.results.map((project: {[key: string]: any}) => {
           return {
             ...project,
-            createdAt: new Date(_.toString(project.createdAt)),
-            updatedAt: new Date(_.toString(project.updatedAt))};
+            createdAt: new Date(_.toString(project.created_at)),
+            updatedAt: new Date(_.toString(project.updated_at))};
       }))
       .then(json => dispatch(receiveProjectsActionCreator(json)))
   }
