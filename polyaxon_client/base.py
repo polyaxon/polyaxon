@@ -1,34 +1,46 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
+
 import requests
 import os
 import tarfile
 
+import websocket
 from clint.textui import progress
 from clint.textui.progress import Bar
 from polyaxon_schemas.utils import to_list
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon_client.logger import logger
-from polyaxon_client.exceptions import ERRORS_MAPPING, ShouldExistExit, AuthenticationError
+from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError, AuthenticationError
 
 
 class PolyaxonClient(object):
     """Base client for all HTTP operations."""
     ENDPOINT = None
+    USE_HTTPS = False
     BASE_URL = "{}/api/{}/"
+    BASE_WS_URL = "{}/ws/{}"
     MAX_UPLOAD_SIZE = 1024 * 1024 * 150
     PAGE_SIZE = 30
 
     def __init__(self,
                  host,
+                 http_port,
+                 ws_port,
                  token=None,
                  version='v1',
                  authentication_type='token',
                  errors_mapping=ERRORS_MAPPING,
                  reraise=False):
-        self.base_url = self.BASE_URL.format(host, version)
+        http_protocol = 'https' if self.USE_HTTPS else 'http'
+        ws_protocol = 'wss' if self.USE_HTTPS else 'ws'
+        http_host = '{}://{}:{}'.format(http_protocol, host, http_port)
+        ws_host = '{}://{}:{}'.format(ws_protocol, host, ws_port)
+        self.base_url = self.BASE_URL.format(http_host, version)
+        self.base_ws_url = self.BASE_WS_URL.format(ws_host, version)
         self.token = token
         self.authentication_type = authentication_type
         self.errors_mapping = errors_mapping
@@ -69,13 +81,19 @@ class PolyaxonClient(object):
 
         return url
 
-    def _get_url(self, endpoint=None):
+    def _get_url(self, base_url, endpoint=None):
         if not (endpoint or self.ENDPOINT):
             raise self.errors_mapping['base'](
                 "This function expects `ENDPOINT` attribute to be set, "
                 "or an `endpoint` argument to be passed.")
         endpoint = endpoint or self.ENDPOINT
-        return self._build_url(self.base_url, endpoint)
+        return self._build_url(base_url, endpoint)
+
+    def _get_http_url(self, endpoint=None):
+        return self._get_url(self.base_url, endpoint)
+
+    def _get_ws_url(self, endpoint=None):
+        return self._get_url(self.base_ws_url, endpoint)
 
     def _get_headers(self, headers=None):
         request_headers = headers or {}
@@ -128,7 +146,7 @@ class PolyaxonClient(object):
                                         timeout=timeout)
         except requests.exceptions.ConnectionError as exception:
             logger.debug("Exception: %s", exception, exc_info=True)
-            raise ShouldExistExit(
+            raise PolyaxonShouldExitError(
                 "Cannot connect to the Polyaxon server. Check your internet connection.")
 
         logger.debug("Response Content: %s, Headers: %s" % (response.content, response.headers))
@@ -137,7 +155,7 @@ class PolyaxonClient(object):
 
     def upload(self, url, files, files_size, params=None, json=None, timeout=3600):
         if files_size > self.MAX_UPLOAD_SIZE:
-            raise ShouldExistExit(
+            raise PolyaxonShouldExitError(
                 "Files too large to sync, please keep it under {}.\n"
                 "If you have data files in the current directory, "
                 "please add them directly to your data volume, or upload them "
@@ -200,7 +218,7 @@ class PolyaxonClient(object):
             return filename
         except requests.exceptions.ConnectionError as exception:
             logger.debug("Exception: {}".format(exception))
-            raise ShouldExistExit(
+            raise PolyaxonShouldExitError(
                 "Cannot connect to the Polyaxon server. Check your internet connection.")
 
     def download_tar(self, url, untar=True, delete_after_untar=False):
@@ -303,3 +321,26 @@ class PolyaxonClient(object):
                             json=json,
                             timeout=timeout,
                             headers=headers)
+
+    def socket(self, url, message_handler, headers=None):
+        wes = websocket.WebSocketApp(
+            url,
+            on_message=lambda ws, message: self._on_message(message_handler, message),
+            on_error=self._on_error,
+            on_close=self._on_close,
+            header=self._get_headers(headers)
+        )
+        wes.run_forever()
+
+    def _on_message(self, message_handler, message):
+        message_handler(json.loads(message))
+
+    def _on_error(self, ws, error):
+        print('error')
+        if isinstance(error, (KeyboardInterrupt, SystemExit)):
+            logger.info('Quitting session, will be running in the background.')
+        else:
+            self.handle_exception(error, 'End session')
+
+    def _on_close(self, ws):
+        raise PolyaxonShouldExitError
