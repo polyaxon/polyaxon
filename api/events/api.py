@@ -61,7 +61,7 @@ def handle_disconnected_ws(ws_manager, ws, job_uuid):
     logger.info('Quitting resources socket for uuid {}'.format(job_uuid))
 
 
-@app.websocket('/stream/v1/resources/job/<job_uuid>')
+@app.websocket('/ws/v1/resources/job/<job_uuid>')
 @authorized()
 async def job_resources(request, ws, job_uuid):
     job = _get_job(job_uuid=job_uuid)
@@ -94,7 +94,7 @@ async def job_resources(request, ws, job_uuid):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/stream/v1/resources/experiment/<experiment_uuid>')
+@app.websocket('/ws/v1/resources/experiment/<experiment_uuid>')
 @authorized()
 async def experiment_resources(request, ws, experiment_uuid):
     experiment = _get_experiment(experiment_uuid=experiment_uuid)
@@ -128,7 +128,7 @@ async def experiment_resources(request, ws, experiment_uuid):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/stream/v1/logs/job/<job_uuid>')
+@app.websocket('/ws/v1/logs/job/<job_uuid>')
 @authorized()
 async def job_logs(request, ws, job_uuid):
     job = _get_job(job_uuid=job_uuid)
@@ -182,7 +182,7 @@ async def job_logs(request, ws, job_uuid):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/stream/v1/logs/experiment/<experiment_uuid>')
+@app.websocket('/ws/v1/logs/experiment/<experiment_uuid>')
 @authorized()
 async def experiment_logs(request, ws, experiment_uuid):
     experiment = _get_experiment(experiment_uuid=experiment_uuid)
