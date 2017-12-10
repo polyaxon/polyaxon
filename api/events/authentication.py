@@ -9,8 +9,21 @@ from sanic.response import json
 
 
 class SanicTokenAuthentication(TokenAuthentication):
+    AUTHORIZATION_HEADER = 'Authorization'
+
     def authenticate(self, request):
-        token = request.args.get(self.keyword) or request.args.get(self.keyword.lower())
+        # Check headers
+        token = request.headers.get(self.AUTHORIZATION_HEADER) or request.headers.get(self.AUTHORIZATION_HEADER.lower())
+        if token:
+            token = token.split(' ')
+            if len(token) == 2 and (token[0] == self.keyword or token[0] == self.keyword.lower()):
+                token = token[1]
+            else:
+                token = None
+
+        # Check args
+        if not token:
+            token = request.args.get(self.keyword) or request.args.get(self.keyword.lower())
 
         if not token:
             return None
