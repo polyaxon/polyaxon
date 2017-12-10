@@ -19,7 +19,7 @@ class ExperimentClient(PolyaxonClient):
     def list_experiments(self, page=1):
         """This gets all experiments visible to the user from the server."""
         try:
-            response = self.get(self._get_url(), params=self.get_page(page=page))
+            response = self.get(self._get_http_url(), params=self.get_page(page=page))
             experiments_dict = response.json()
             return [ExperimentConfig.from_dict(experiment)
                     for experiment in experiments_dict.get("results", [])]
@@ -28,7 +28,7 @@ class ExperimentClient(PolyaxonClient):
             return []
 
     def get_experiment(self, experiment_uuid):
-        request_url = self._build_url(self._get_url(), experiment_uuid)
+        request_url = self._build_url(self._get_http_url(), experiment_uuid)
         try:
             response = self.get(request_url)
             return ExperimentConfig.from_dict(response.json())
@@ -37,7 +37,7 @@ class ExperimentClient(PolyaxonClient):
             return None
 
     def update_experiment(self, experiment_uuid, patch_dict):
-        request_url = self._build_url(self._get_url(), experiment_uuid)
+        request_url = self._build_url(self._get_http_url(), experiment_uuid)
         try:
             response = self.patch(request_url, json=patch_dict)
             return ExperimentConfig.from_dict(response.json())
@@ -46,7 +46,7 @@ class ExperimentClient(PolyaxonClient):
             return None
 
     def delete_experiment(self, experiment_uuid):
-        request_url = self._build_url(self._get_url(), experiment_uuid)
+        request_url = self._build_url(self._get_http_url(), experiment_uuid)
         try:
             response = self.delete(request_url)
             return response
@@ -55,7 +55,7 @@ class ExperimentClient(PolyaxonClient):
             return None
 
     def get_status(self, experiment_uuid):
-        request_url = self._build_url(self._get_url(), experiment_uuid, 'status')
+        request_url = self._build_url(self._get_http_url(), experiment_uuid, 'status')
         try:
             response = self.get(request_url)
             return ExperimentStatusConfig.from_dict(response.json())
@@ -65,7 +65,7 @@ class ExperimentClient(PolyaxonClient):
 
     def list_jobs(self, experiment_uuid, page=1):
         """Fetch list of jobs related to this experiment."""
-        request_url = self._build_url(self._get_url(), experiment_uuid, 'jobs')
+        request_url = self._build_url(self._get_http_url(), experiment_uuid, 'jobs')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -76,7 +76,11 @@ class ExperimentClient(PolyaxonClient):
             return []
 
     def get_job_status(self, experiment_uuid, job_uuid):
-        request_url = self._build_url(self._get_url(), experiment_uuid, 'jobs', job_uuid, 'status')
+        request_url = self._build_url(self._get_http_url(),
+                                      experiment_uuid,
+                                      'jobs',
+                                      job_uuid,
+                                      'status')
 
         try:
             response = self.get(request_url)
@@ -87,7 +91,7 @@ class ExperimentClient(PolyaxonClient):
 
     def restart(self, experiment_uuid):
         """Restart an experiment."""
-        request_url = self._build_url(self._get_url(), experiment_uuid, 'restart')
+        request_url = self._build_url(self._get_http_url(), experiment_uuid, 'restart')
 
         try:
             response = self.post(request_url)
@@ -95,3 +99,21 @@ class ExperimentClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while restarting experiment')
             return None
+
+    def resources(self, experiment_uuid, message_handler=None):
+        """Streams experiments resources using websockets.
+
+        message_handler: handles the messages received from server.
+            e.g. def f(x): print(x)
+        """
+        request_url = self._build_url(self._get_ws_url(), experiment_uuid, 'resources')
+        self.socket(request_url, message_handler=message_handler)
+
+    def logs(self, experiment_uuid, message_handler=None):
+        """Streams experiments logs using websockets.
+
+        message_handler: handles the messages received from server.
+            e.g. def f(x): print(x)
+        """
+        request_url = self._build_url(self._get_ws_url(), experiment_uuid, 'logs')
+        self.socket(request_url, message_handler=message_handler)
