@@ -81,6 +81,18 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        object1 = self.objects[0]
+        data = {'cluster': object1.cluster.id,
+                'config': {'run': 'something'}}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 1
+
 
 class TestExperimentGroupExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
@@ -222,19 +234,6 @@ class TestExperimentListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
-
-    def test_create(self):
-        data = {}
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-
-        object1 = self.objects[0]
-        data = {'project': object1.project.id,
-                'cluster': object1.cluster.id,
-                'config': {'run': 'something'}}
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_201_CREATED
-        assert self.model_class.objects.count() == self.num_objects + 1
 
 
 class TestExperimentDetailViewV1(BaseViewTest):
@@ -468,10 +467,8 @@ class TestExperimentJobDetailViewV1(BaseViewTest):
         super().setUp()
         self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
-        self.url = '/{}/experiments/{}/jobs/{}/'.format(API_V1,
-                                                        self.experiment.uuid.hex,
-                                                        self.object.uuid.hex)
-        self.queryset = self.model_class.objects.all()
+        self.url = '/{}/jobs/{}/'.format(API_V1, self.object.uuid.hex)
+        self.queryset = self.model_class.objects.filter(experiment=self.experiment)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -513,14 +510,13 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
         with patch('experiments.tasks.start_experiment.delay') as _:
             with patch.object(ExperimentJob, 'set_status') as _:
                 self.experiment_job = ExperimentJobFactory()
-        self.url = '/{}/experiments/{}/jobs/{}/status/'.format(
+        self.url = '/{}/jobs/{}/status/'.format(
             API_V1,
-            self.experiment_job.experiment.uuid.hex,
             self.experiment_job.uuid.hex)
         self.objects = [self.factory_class(job=self.experiment_job,
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
-        self.queryset = self.model_class.objects.all()
+        self.queryset = self.model_class.objects.filter(job=self.experiment_job)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -584,12 +580,11 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
             with patch.object(ExperimentJob, 'set_status') as _:
                 self.experiment_job = ExperimentJobFactory()
                 self.object = self.factory_class(job=self.experiment_job)
-        self.url = '/{}/experiments/{}/jobs/{}/status/{}'.format(
+        self.url = '/{}/jobs/{}/status/{}'.format(
             API_V1,
-            self.experiment_job.experiment.uuid.hex,
             self.experiment_job.uuid.hex,
             self.object.uuid.hex)
-        self.queryset = self.model_class.objects.all()
+        self.queryset = self.model_class.objects.filter(job=self.experiment_job)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

@@ -83,16 +83,13 @@ class ExperimentDetailSerializer(ExperimentSerializer):
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):
     user = fields.SerializerMethodField()
-    
+
     class Meta:
         model = Experiment
         fields = (
-            'cluster', 'project', 'user', 'name', 'description',
-            'experiment_group', 'config', 'original_experiment')
+            'cluster', 'user', 'name', 'description', 'config', 'original_experiment')
         extra_kwargs = {
             'cluster': {'write_only': True},
-            'project': {'write_only': True},
-            'experiment_group': {'write_only': True}
         }
 
     def get_user(self, obj):

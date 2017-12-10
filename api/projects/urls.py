@@ -4,18 +4,21 @@ from __future__ import absolute_import, division, print_function
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from libs.urls import UUID_PATTERN, PROJECT_UUID_PATTERN
+from libs.urls import UUID_PATTERN
 from projects import views
 
-urlpatterns = [
+projects_urlpatterns = [
     url(r'^projects/?$',
         views.ProjectListView.as_view()),
     url(r'^projects/{}/?$'.format(UUID_PATTERN),
         views.ProjectDetailView.as_view()),
-    url(r'^projects/{}/experiment_groups/?$'.format(PROJECT_UUID_PATTERN),
-        views.ProjectSpecListView.as_view()),
-    url(r'^projects/{}/experiment_groups/{}/?$'.format(PROJECT_UUID_PATTERN, UUID_PATTERN),
-        views.ProjectSpecDetailView.as_view()),
+    url(r'^projects/{}/experiment_groups/?$'.format(UUID_PATTERN),
+        views.ExperimentGroupListView.as_view()),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+experiment_groups_urlpatterns = [
+    url(r'^/experiment_groups/{}/?$'.format(UUID_PATTERN),
+        views.ExperimentGroupDetailView.as_view()),
+]
+
+urlpatterns = format_suffix_patterns(projects_urlpatterns + experiment_groups_urlpatterns)

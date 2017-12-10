@@ -8,12 +8,11 @@ from experiments import views
 from libs.urls import (
     UUID_PATTERN,
     EXPERIMENT_UUID_PATTERN,
-    EXPERIMENT_JOB_UUID_PATTERN,
-    PROJECT_UUID_PATTERN,
-    POLYAXON_EXPERIMENT_GROUP_UUID_PATTERN,
+    JOB_UUID_PATTERN,
 )
 
-patterns = [
+experiments_urlpatterns = [
+    # Get all experiments
     url(r'^experiments/?$', views.ExperimentListView.as_view()),
     url(r'^experiments/{}/?$'.format(UUID_PATTERN), views.ExperimentDetailView.as_view()),
     url(r'^experiments/{}/status/?$'.format(EXPERIMENT_UUID_PATTERN),
@@ -22,23 +21,28 @@ patterns = [
         views.ExperimentStatusDetailView.as_view()),
     url(r'^experiments/{}/jobs/?$'.format(EXPERIMENT_UUID_PATTERN),
         views.ExperimentJobListView.as_view()),
-    url(r'^experiments/{}/jobs/{}/?$'.format(EXPERIMENT_UUID_PATTERN, UUID_PATTERN),
-        views.ExperimentJobDetailView.as_view()),
-    url(r'^experiments/{}/jobs/{}/status/?$'.format(EXPERIMENT_UUID_PATTERN,
-                                                    EXPERIMENT_JOB_UUID_PATTERN),
-        views.ExperimentJobStatusListView.as_view()),
-    url(r'^experiments/{}/jobs/{}/status/{}/?$'.format(EXPERIMENT_UUID_PATTERN,
-                                                       EXPERIMENT_JOB_UUID_PATTERN,
-                                                       UUID_PATTERN),
-        views.ExperimentJobStatusDetailView.as_view()),
+    # url(r'^experiments/{}/stop/?$'.format(UUID_PATTERN), views.ExperimentStopView.as_view()),
     url(r'^experiments/{}/restart/?$'.format(UUID_PATTERN), views.ExperimentRestartView.as_view()),
 ]
 
-urlpatterns = (patterns +
-               [url(r'^projects/{}/'.format(PROJECT_UUID_PATTERN),
-                    include(patterns))] +
-               [url(r'^experiment_groups/{}/'.format(POLYAXON_EXPERIMENT_GROUP_UUID_PATTERN),
-                    include(patterns))]
-               )
+jobs_urlpatterns = [
+    url(r'^jobs/{}/?$'.format(UUID_PATTERN), views.ExperimentJobDetailView.as_view()),
+    url(r'^jobs/{}/status/?$'.format(JOB_UUID_PATTERN), views.ExperimentJobStatusListView.as_view()),
+    url(r'^jobs/{}/status/{}/?$'.format(JOB_UUID_PATTERN, UUID_PATTERN),
+        views.ExperimentJobStatusDetailView.as_view()),
+]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+nested_experiments_urlpatterns = [
+    # Get all experiment under a project
+    url(r'^projects/{}/experiments/?$'.format(UUID_PATTERN),
+        views.ProjectExperimentListView.as_view()),
+
+    # Get all experiments under a group
+    url(r'^experiment_groups/{}/experiments/?$'.format(UUID_PATTERN),
+        views.GroupExperimentListView.as_view()),
+]
+
+urlpatterns = format_suffix_patterns(
+    experiments_urlpatterns +
+    jobs_urlpatterns +
+    nested_experiments_urlpatterns)

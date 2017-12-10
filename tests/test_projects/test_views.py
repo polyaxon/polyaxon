@@ -148,7 +148,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         self.url = '/{}/projects/{}/experiment_groups/'.format(API_V1, self.project.uuid.hex)
         self.objects = [self.factory_class(project=self.project, user=cluster.user)
                         for _ in range(self.num_objects)]
-        self.queryset = self.model_class.objects.all()
+        self.queryset = self.model_class.objects.filter(project=self.project)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)

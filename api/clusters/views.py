@@ -31,24 +31,22 @@ class ClusterDetailView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'uuid'
 
 
-class ClusterNodeViewMixin(object):
+class ClusterNodeListView(ListCreateAPIView):
+    queryset = ClusterNode.objects.all()
+    serializer_class = ClusterNodeSerializer
+
     def get_cluster(self):
-        cluster_uuid = self.kwargs['cluster_uuid']
+        cluster_uuid = self.kwargs['uuid']
         return get_object_or_404(Cluster, uuid=cluster_uuid)
 
     def filter_queryset(self, queryset):
         return queryset.filter(cluster=self.get_cluster())
 
-
-class ClusterNodeListView(ListCreateAPIView, ClusterNodeViewMixin):
-    queryset = ClusterNode.objects.all()
-    serializer_class = ClusterNodeSerializer
-
     def perform_create(self, serializer):
         serializer.save(cluster=self.get_cluster())
 
 
-class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeViewMixin):
+class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):
     queryset = ClusterNode.objects.all()
     serializer_class = ClusterNodeDetailSerializer
     lookup_field = 'uuid'
@@ -56,9 +54,8 @@ class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeViewMixin):
 
 class ClusterNodeGPUViewMixin(object):
     def get_cluster_node(self):
-        cluster_uuid = self.kwargs['cluster_uuid']
-        cluster_node_uuid = self.kwargs['cluster_node_uuid']
-        return get_object_or_404(ClusterNode, uuid=cluster_node_uuid, cluster__uuid=cluster_uuid)
+        node_uuid = self.kwargs['node_uuid']
+        return get_object_or_404(ClusterNode, uuid=node_uuid)
 
     def filter_queryset(self, queryset):
         return queryset.filter(cluster_node=self.get_cluster_node())

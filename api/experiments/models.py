@@ -230,3 +230,6 @@ class ExperimentJobStatus(models.Model):
 
     def __str__(self):
         return self.status
+
+    class Meta:
+        ordering = ['created_at']

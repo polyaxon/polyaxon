@@ -8,7 +8,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView,
     get_object_or_404,
-)
+    ListAPIView)
 from rest_framework.response import Response
 
 from experiments.models import (
@@ -23,44 +23,77 @@ from experiments.serializers import (
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer)
-from libs.views import BaseNestingFilterMixin, ListCreateAPIView
+from libs.views import ListCreateAPIView
 from projects.models import Project, ExperimentGroup
 
 
-class ProjectOrSpecViewFiltersMixin(BaseNestingFilterMixin):
-    """A mixin to optionally filter by project or polyaxon file uuid."""
-
-    def filter_queryset(self, queryset):
-        filters = {}
-        if 'project_uuid' in self.kwargs:
-            project_uuid = self.kwargs['project_uuid']
-            filters['project'] = get_object_or_404(Project, uuid=project_uuid)
-
-        if 'experiment_group_uuid' in self.kwargs:
-            experiment_group_uuid = self.kwargs['experiment_group_uuid']
-            filters['experiment_group'] = get_object_or_404(ExperimentGroup,
-                                                            uuid=experiment_group_uuid)
-        return queryset.filter(**filters)
+class ExperimentListView(ListAPIView):
+    """List all experiments"""
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentSerializer
 
 
-class ExperimentListView(ProjectOrSpecViewFiltersMixin, ListCreateAPIView):
+class ProjectExperimentListView(ListCreateAPIView):
+    """List/Create an experiment under a project"""
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     create_serializer_class = ExperimentCreateSerializer
 
+    def get_project(self):
+        project_uuid = self.kwargs['uuid']
+        return get_object_or_404(Project, uuid=project_uuid)
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(project=self.get_project())
+
     def perform_create(self, serializer):
         # TODO: update when we allow platform usage without authentication
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user, project=self.get_project())
 
 
-class ExperimentDetailView(ProjectOrSpecViewFiltersMixin, RetrieveUpdateDestroyAPIView):
+class GroupExperimentListView(ListAPIView):
+    """List all experiments under a group"""
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentSerializer
+
+    def get_group(self):
+        group_uuid = self.kwargs['uuid']
+        return get_object_or_404(ExperimentGroup, uuid=group_uuid)
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(experiment_group=self.get_group())
+
+
+class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentDetailSerializer
     lookup_field = 'uuid'
 
 
-class ExperimentViewMixin(ProjectOrSpecViewFiltersMixin):
+class ExperimentRestartView(CreateAPIView):
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentDetailSerializer
+    lookup_field = 'uuid'
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        new_obj = Experiment.objects.create(
+            cluster=obj.cluster,
+            project=obj.project,
+            user=self.request.user,
+            name=obj.name,
+            description=obj.description,
+            experiment_group=obj.experiment_group,
+            config=obj.config,
+            original_experiment=obj
+        )
+        serializer = self.get_serializer(new_obj)
+        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+
+class ExperimentViewMixin(object):
     """A mixin to filter by experiment."""
+
     def get_experiment(self):
         experiment_uuid = self.kwargs['experiment_uuid']
         return get_object_or_404(Experiment, uuid=experiment_uuid)
@@ -84,7 +117,7 @@ class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
     lookup_field = 'uuid'
 
 
-class ExperimentJobListView(ListCreateAPIView, ExperimentViewMixin):
+class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
 
@@ -92,24 +125,22 @@ class ExperimentJobListView(ListCreateAPIView, ExperimentViewMixin):
         serializer.save(experiment=self.get_experiment())
 
 
-class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
+class ExperimentJobDetailView(RetrieveUpdateDestroyAPIView):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
     lookup_field = 'uuid'
 
 
-class ExperimentJobViewMixin(ProjectOrSpecViewFiltersMixin):
+class ExperimentJobViewMixin(object):
     """A mixin to filter by experiment job."""
-    def get_experiment_job(self):
-        experiment_uuid = self.kwargs['experiment_uuid']
-        experiment_job_uuid = self.kwargs['experiment_job_uuid']
-        return get_object_or_404(ExperimentJob,
-                                 uuid=experiment_job_uuid,
-                                 experiment__uuid=experiment_uuid)
+
+    def get_job(self):
+        job_uuid = self.kwargs['job_uuid']
+        return get_object_or_404(ExperimentJob, uuid=job_uuid)
 
     def filter_queryset(self, queryset):
         queryset = super(ExperimentJobViewMixin, self).filter_queryset(queryset)
-        return queryset.filter(job=self.get_experiment_job())
+        return queryset.filter(job=self.get_job())
 
 
 class ExperimentJobStatusListView(ListCreateAPIView, ExperimentJobViewMixin):
@@ -117,31 +148,10 @@ class ExperimentJobStatusListView(ListCreateAPIView, ExperimentJobViewMixin):
     serializer_class = ExperimentJobStatusSerializer
 
     def perform_create(self, serializer):
-        serializer.save(job=self.get_experiment_job())
+        serializer.save(job=self.get_job())
 
 
 class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIView):
     queryset = ExperimentJobStatus.objects.all()
     serializer_class = ExperimentJobStatusSerializer
     lookup_field = 'uuid'
-
-
-class ExperimentRestartView(CreateAPIView):
-    queryset = Experiment.objects.all()
-    serializer_class = ExperimentDetailSerializer
-    lookup_field = 'uuid'
-
-    def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        new_obj = Experiment.objects.create(
-            cluster=obj.cluster,
-            project=obj.project,
-            user=self.request.user,
-            name=obj.name,
-            description=obj.description,
-            experiment_group=obj.experiment_group,
-            config=obj.config,
-            original_experiment=obj
-        )
-        serializer = self.get_serializer(new_obj)
-        return Response(status=status.HTTP_201_CREATED, data=serializer.data)

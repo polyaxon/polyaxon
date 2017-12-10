@@ -31,25 +31,23 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'uuid'
 
 
-class ProjectSpecViewMixin(object):
+class ExperimentGroupListView(ListCreateAPIView):
+    queryset = ExperimentGroup.objects.all()
+    serializer_class = ExperimentGroupSerializer
+
     def get_project(self):
-        project_uuid = self.kwargs['project_uuid']
+        project_uuid = self.kwargs['uuid']
         return get_object_or_404(Project, uuid=project_uuid)
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=self.get_project())
-
-
-class ProjectSpecListView(ProjectSpecViewMixin, ListCreateAPIView):
-    queryset = ExperimentGroup.objects.all()
-    serializer_class = ExperimentGroupSerializer
 
     def perform_create(self, serializer):
         # TODO: update when we allow platform usage without authentication
         serializer.save(user=self.request.user, project=self.get_project())
 
 
-class ProjectSpecDetailView(ProjectSpecViewMixin, RetrieveDestroyAPIView):
+class ExperimentGroupDetailView(RetrieveDestroyAPIView):
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
     lookup_field = 'uuid'

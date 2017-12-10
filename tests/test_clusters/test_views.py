@@ -152,7 +152,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
         self.cluster = ClusterFactory()
         self.url = '/{}/clusters/{}/nodes/'.format(API_V1, self.cluster.uuid.hex)
         self.objects = [self.factory_class(cluster=self.cluster) for _ in range(self.num_objects)]
-        self.queryset = self.model_class.objects.all()
+        self.queryset = self.model_class.objects.filter(cluster=self.cluster)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -221,9 +221,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         super().setUp()
         self.cluster = ClusterFactory()
         self.object = self.factory_class(cluster=self.cluster)
-        self.url = '/{}/clusters/{}/nodes/{}/'.format(API_V1,
-                                                      self.cluster.uuid.hex,
-                                                      self.object.uuid.hex)
+        self.url = '/{}/nodes/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
@@ -269,9 +267,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.cluster_node = ClusterNodeFactory()
-        self.url = '/{}/clusters/{}/nodes/{}/gpus'.format(API_V1,
-                                                          self.cluster_node.cluster.uuid.hex,
-                                                          self.cluster_node.uuid.hex)
+        self.url = '/{}/nodes/{}/gpus'.format(API_V1, self.cluster_node.uuid.hex)
         self.objects = [self.factory_class(cluster_node=self.cluster_node)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
@@ -341,10 +337,9 @@ class TestClusterNodeGPUDetailViewV1(BaseViewTest):
         super().setUp()
         self.object = self.factory_class()
         self.cluster_node = self.object.cluster_node
-        self.url = '/{}/clusters/{}/nodes/{}/gpus/{}'.format(API_V1,
-                                                             self.cluster_node.cluster.uuid.hex,
-                                                             self.cluster_node.uuid.hex,
-                                                             self.object.uuid.hex)
+        self.url = '/{}/nodes/{}/gpus/{}'.format(API_V1,
+                                                 self.cluster_node.uuid.hex,
+                                                 self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
