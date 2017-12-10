@@ -24,7 +24,6 @@ export default class Projects extends React.Component<Props, Object> {
 
   public render() {
     const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
-
     return (
       <div>
         <Button bsStyle="success" className="pull-right" onClick={showModal}>

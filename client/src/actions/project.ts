@@ -88,7 +88,8 @@ export function receiveProjectsActionCreator(projects: ProjectModel[]): ReceiveP
 
 export function createProject(project: ProjectModel): Dispatch<ProjectModel> {
   return (dispatch: any) => {
-    dispatch(createProjectActionCreator(project));
+    // FIX ME: We need to add a first dispatch here so we show it to the user before
+    // sending it to the backend: dispatch(createProjectActionCreator(project))
     return fetch(PROJECTS_URL, {
         method: 'POST',
         body: JSON.stringify(project),
@@ -98,7 +99,14 @@ export function createProject(project: ProjectModel): Dispatch<ProjectModel> {
             'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
         }
     })
-    .then(() => dispatch(receiveProjectActionCreator(project)))
+    .then(response => response.json())
+    .then(json => {
+      return {
+            ...json,
+            createdAt: new Date(_.toString(json.created_at)),
+            updatedAt: new Date(_.toString(json.updated_at))};
+      })
+    .then(json => dispatch(receiveProjectActionCreator(json)))
   }
 }
 

@@ -57,6 +57,9 @@ export const ProjectExperiments: Reducer<ExperimentStateSchema> =
       var newState = {...state};
       let normalized_project = normalize(action.project, ProjectSchema);
       let projectExperiments = normalized_project.entities.experiments;
+      if (_.isNil(projectExperiments)) {
+        return {byUuids: {}, uuids: []};
+      }
       for (let xpUuid of Object.keys(projectExperiments)) {
         if (!_.includes(newState.uuids, xpUuid)) {
           newState.uuids.push(xpUuid);

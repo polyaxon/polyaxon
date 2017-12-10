@@ -22,7 +22,6 @@ function Header() {
         <Navbar.Collapse>
           <Nav>
             <LinkContainer to="/projects"><NavItem eventKey={1}>Projects</NavItem></LinkContainer>
-            <LinkContainer to="/experiments"><NavItem eventKey={2} href="/experiments">Experiments</NavItem></LinkContainer>
             <LinkContainer to="/about"><NavItem eventKey={2} href="/about">About</NavItem></LinkContainer>
           </Nav>
           <Nav pullRight>
