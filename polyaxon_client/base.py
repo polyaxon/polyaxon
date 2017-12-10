@@ -20,8 +20,7 @@ from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError, 
 class PolyaxonClient(object):
     """Base client for all HTTP operations."""
     ENDPOINT = None
-    USE_HTTPS = False
-    BASE_URL = "{}/api/{}/"
+    BASE_URL = "{}/api/{}"
     BASE_WS_URL = "{}/ws/{}"
     MAX_UPLOAD_SIZE = 1024 * 1024 * 150
     PAGE_SIZE = 30
@@ -34,9 +33,10 @@ class PolyaxonClient(object):
                  version='v1',
                  authentication_type='token',
                  errors_mapping=ERRORS_MAPPING,
-                 reraise=False):
-        http_protocol = 'https' if self.USE_HTTPS else 'http'
-        ws_protocol = 'wss' if self.USE_HTTPS else 'ws'
+                 reraise=False,
+                 use_https=False):
+        http_protocol = 'https' if use_https else 'http'
+        ws_protocol = 'wss' if use_https else 'ws'
         http_host = '{}://{}:{}'.format(http_protocol, host, http_port)
         ws_host = '{}://{}:{}'.format(ws_protocol, host, ws_port)
         self.base_url = self.BASE_URL.format(http_host, version)
@@ -48,7 +48,7 @@ class PolyaxonClient(object):
 
     @classmethod
     def get_page(cls, page=1):
-        if page < 1:
+        if page <= 1:
             return ''
         return 'offset={}'.format((page - 1) * cls.PAGE_SIZE)
 
@@ -82,11 +82,11 @@ class PolyaxonClient(object):
         return url
 
     def _get_url(self, base_url, endpoint=None):
-        if not (endpoint or self.ENDPOINT):
+        endpoint = endpoint or self.ENDPOINT
+        if not endpoint:
             raise self.errors_mapping['base'](
                 "This function expects `ENDPOINT` attribute to be set, "
                 "or an `endpoint` argument to be passed.")
-        endpoint = endpoint or self.ENDPOINT
         return self._build_url(base_url, endpoint)
 
     def _get_http_url(self, endpoint=None):
