@@ -8,6 +8,10 @@ class PolyaxonException(Exception):
         self.message = message
 
 
+class ShouldExistExit(PolyaxonException):
+    pass
+
+
 class PolyaxonHTTPError(PolyaxonException):
     def __init__(self, endpoint, response, message=None, status_code=None):
         super().__init__()

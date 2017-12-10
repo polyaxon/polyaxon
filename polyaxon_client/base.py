@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import requests
 import os
-import sys
 import tarfile
 
 from clint.textui import progress
@@ -12,7 +11,7 @@ from polyaxon_schemas.utils import to_list
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon_client.logger import logger
-from polyaxon_client.exceptions import ERRORS_MAPPING
+from polyaxon_client.exceptions import ERRORS_MAPPING, ShouldExistExit, AuthenticationError
 
 
 class PolyaxonClient(object):
@@ -27,11 +26,13 @@ class PolyaxonClient(object):
                  token=None,
                  version='v1',
                  authentication_type='token',
-                 errors_mapping=ERRORS_MAPPING):
+                 errors_mapping=ERRORS_MAPPING,
+                 reraise=False):
         self.base_url = self.BASE_URL.format(host, version)
         self.token = token
         self.authentication_type = authentication_type
         self.errors_mapping = errors_mapping
+        self.reraise = reraise
 
     @classmethod
     def get_page(cls, page=1):
@@ -127,7 +128,8 @@ class PolyaxonClient(object):
                                         timeout=timeout)
         except requests.exceptions.ConnectionError as exception:
             logger.debug("Exception: %s", exception, exc_info=True)
-            sys.exit("Cannot connect to the Polyaxon server. Check your internet connection.")
+            raise ShouldExistExit(
+                "Cannot connect to the Polyaxon server. Check your internet connection.")
 
         logger.debug("Response Content: %s, Headers: %s" % (response.content, response.headers))
         self.check_response_status(response, url)
@@ -135,13 +137,12 @@ class PolyaxonClient(object):
 
     def upload(self, url, files, files_size, params=None, json=None, timeout=3600):
         if files_size > self.MAX_UPLOAD_SIZE:
-            sys.exit((
+            raise ShouldExistExit(
                 "Files too large to sync, please keep it under {}.\n"
                 "If you have data files in the current directory, "
                 "please add them directly to your data volume, or upload them "
                 "separately using `polyxon data` command and remove them from here.\n".format(
-                    self.sizeof_fmt(self.MAX_UPLOAD_SIZE)
-                )))
+                    self.sizeof_fmt(self.MAX_UPLOAD_SIZE)))
 
         files = to_list(files)
         if json:
@@ -199,7 +200,8 @@ class PolyaxonClient(object):
             return filename
         except requests.exceptions.ConnectionError as exception:
             logger.debug("Exception: {}".format(exception))
-            sys.exit("Cannot connect to the Polyaxon server. Check your internet connection.")
+            raise ShouldExistExit(
+                "Cannot connect to the Polyaxon server. Check your internet connection.")
 
     def download_tar(self, url, untar=True, delete_after_untar=False):
         """
@@ -236,6 +238,16 @@ class PolyaxonClient(object):
                         response=response,
                         message=response.text,
                         status_code=response.status_code)
+
+    def handle_exception(self, e, log_message=None):
+        logger.info("{}: {}".format(log_message, e.message))
+
+        if self.reraise:
+            raise e
+
+        if isinstance(e, AuthenticationError):
+            # exit now since there is nothing we can do without login
+            raise e
 
     def get(self, url, params=None, data=None, files=None, json=None, timeout=5, headers=None):
         """Call request with a get."""

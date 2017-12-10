@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import sys
-
 from polyaxon_schemas.experiment import ExperimentConfig
 from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
-from polyaxon_schemas.polyaxonfile.logger import logger
 
 from polyaxon_client.base import PolyaxonClient
-from polyaxon_client.exceptions import PolyaxonException, AuthenticationError, NotFoundError
+from polyaxon_client.exceptions import PolyaxonException, NotFoundError
 
 
 class ProjectClient(PolyaxonClient):
@@ -19,13 +16,10 @@ class ProjectClient(PolyaxonClient):
         try:
             response = self.get(self._get_url(), params=self.get_page(page=page))
             projects_dict = response.json()
-            return [ProjectConfig.from_dict(project) 
+            return [ProjectConfig.from_dict(project)
                     for project in projects_dict.get("results", [])]
         except PolyaxonException as e:
-            logger.info("Error while retrieving projects: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while retrieving projects')
             return []
 
     def get_project(self, project_uuid):
@@ -41,10 +35,7 @@ class ProjectClient(PolyaxonClient):
             response = self.post(self._get_url(), json=project_config.to_dict())
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
-            logger.info("Error while creating project: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while creating project')
             return None
 
     def update_project(self, project_uuid, patch_dict):
@@ -53,10 +44,7 @@ class ProjectClient(PolyaxonClient):
             response = self.patch(request_url, json=patch_dict)
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
-            logger.info("Error while updating project: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while updating project')
             return None
 
     def delete_project(self, project_uuid):
@@ -65,10 +53,7 @@ class ProjectClient(PolyaxonClient):
             response = self.delete(request_url)
             return response
         except PolyaxonException as e:
-            logger.info("Error while updating project: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while deleting project')
             return None
 
     def upload_repo(self, project_uuid, files, files_size=None):
@@ -79,10 +64,7 @@ class ProjectClient(PolyaxonClient):
             response = self.upload(request_url, files=files, files_size=files_size)
             return response
         except PolyaxonException as e:
-            logger.info("Error while updating project: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while updating project repo')
             return None
 
     def list_experiment_groups(self, project_uuid, page=1):
@@ -91,14 +73,11 @@ class ProjectClient(PolyaxonClient):
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
-            projects_dict = response.json()
+            experiment_group_dicts = response.json()
             return [ExperimentGroupConfig.from_dict(experiment_group)
-                    for experiment_group in projects_dict.get("results", [])]
+                    for experiment_group in experiment_group_dicts.get("results", [])]
         except PolyaxonException as e:
-            logger.info("Error while retrieving projects: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while retrieving experiment groups')
             return []
 
     def create_experiment_group(self, project_uuid, experiment_group_config):
@@ -108,10 +87,7 @@ class ProjectClient(PolyaxonClient):
             response = self.post(request_url, json=experiment_group_config.to_dict())
             return ExperimentGroupConfig.from_dict(response.json())
         except PolyaxonException as e:
-            logger.info("Error while creating project: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while creating experiment group')
             return None
 
     def update_experiment_group(self, project_uuid, experiment_group_uuid, patch_dict):
@@ -124,10 +100,7 @@ class ProjectClient(PolyaxonClient):
             response = self.patch(request_url, json=patch_dict)
             return ExperimentGroupConfig.from_dict(response.json())
         except PolyaxonException as e:
-            logger.info("Error while updating project: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while updating project')
             return None
 
     def delete_experiment_group(self, project_uuid, experiment_group_uuid):
@@ -139,10 +112,7 @@ class ProjectClient(PolyaxonClient):
             response = self.delete(request_url)
             return response
         except PolyaxonException as e:
-            logger.info("Error while updating project: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while deleting experiment group')
             return None
 
     def list_experiments(self, project_uuid, page=1):
@@ -151,14 +121,11 @@ class ProjectClient(PolyaxonClient):
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
-            projects_dict = response.json()
+            experiment_dicts = response.json()
             return [ExperimentConfig.from_dict(experiment_group)
-                    for experiment_group in projects_dict.get("results", [])]
+                    for experiment_group in experiment_dicts.get("results", [])]
         except PolyaxonException as e:
-            logger.info("Error while retrieving projects: {}".format(e.message))
-            if isinstance(e, AuthenticationError):
-                # exit now since there is nothing we can do without login
-                sys.exit(1)
+            self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
 
     def add_tensorboard(self, uuid):
