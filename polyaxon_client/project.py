@@ -14,7 +14,7 @@ class ProjectClient(PolyaxonClient):
 
     def list_projects(self, page=1):
         try:
-            response = self.get(self._get_url(), params=self.get_page(page=page))
+            response = self.get(self._get_http_url(), params=self.get_page(page=page))
             projects_dict = response.json()
             return [ProjectConfig.from_dict(project)
                     for project in projects_dict.get("results", [])]
@@ -23,7 +23,7 @@ class ProjectClient(PolyaxonClient):
             return []
 
     def get_project(self, project_uuid):
-        request_url = self._build_url(self._get_url(), project_uuid)
+        request_url = self._build_url(self._get_http_url(), project_uuid)
         try:
             response = self.get(request_url)
             return ProjectConfig.from_dict(response.json())
@@ -32,14 +32,14 @@ class ProjectClient(PolyaxonClient):
 
     def create_project(self, project_config):
         try:
-            response = self.post(self._get_url(), json=project_config.to_dict())
+            response = self.post(self._get_http_url(), json=project_config.to_dict())
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while creating project')
             return None
 
     def update_project(self, project_uuid, patch_dict):
-        request_url = self._build_url(self._get_url(), project_uuid)
+        request_url = self._build_url(self._get_http_url(), project_uuid)
         try:
             response = self.patch(request_url, json=patch_dict)
             return ProjectConfig.from_dict(response.json())
@@ -48,7 +48,7 @@ class ProjectClient(PolyaxonClient):
             return None
 
     def delete_project(self, project_uuid):
-        request_url = self._build_url(self._get_url(), project_uuid)
+        request_url = self._build_url(self._get_http_url(), project_uuid)
         try:
             response = self.delete(request_url)
             return response
@@ -58,7 +58,7 @@ class ProjectClient(PolyaxonClient):
 
     def upload_repo(self, project_uuid, files, files_size=None):
         """Uploads code data related for this project from the current dir."""
-        request_url = self._build_url(self._get_url(), project_uuid, 'repo', 'upload')
+        request_url = self._build_url(self._get_http_url(), project_uuid, 'repo', 'upload')
 
         try:
             response = self.upload(request_url, files=files, files_size=files_size)
@@ -69,7 +69,7 @@ class ProjectClient(PolyaxonClient):
 
     def list_experiment_groups(self, project_uuid, page=1):
         """Fetch list of experiment groups related to this project."""
-        request_url = self._build_url(self._get_url(), project_uuid, 'experiment_groups')
+        request_url = self._build_url(self._get_http_url(), project_uuid, 'experiment_groups')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -81,7 +81,7 @@ class ProjectClient(PolyaxonClient):
             return []
 
     def create_experiment_group(self, project_uuid, experiment_group_config):
-        request_url = self._build_url(self._get_url(), project_uuid, 'experiment_groups')
+        request_url = self._build_url(self._get_http_url(), project_uuid, 'experiment_groups')
 
         try:
             response = self.post(request_url, json=experiment_group_config.to_dict())
@@ -91,7 +91,7 @@ class ProjectClient(PolyaxonClient):
             return None
 
     def update_experiment_group(self, project_uuid, experiment_group_uuid, patch_dict):
-        request_url = self._build_url(self._get_url(),
+        request_url = self._build_url(self._get_http_url(),
                                       project_uuid,
                                       'experiment_groups',
                                       experiment_group_uuid)
@@ -104,7 +104,7 @@ class ProjectClient(PolyaxonClient):
             return None
 
     def delete_experiment_group(self, project_uuid, experiment_group_uuid):
-        request_url = self._build_url(self._get_url(),
+        request_url = self._build_url(self._get_http_url(),
                                       project_uuid,
                                       'experiment_groups',
                                       experiment_group_uuid)
@@ -117,7 +117,7 @@ class ProjectClient(PolyaxonClient):
 
     def list_experiments(self, project_uuid, page=1):
         """Fetch list of experiments related to this project."""
-        request_url = self._build_url(self._get_url(), project_uuid, 'experiments')
+        request_url = self._build_url(self._get_http_url(), project_uuid, 'experiments')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -129,7 +129,7 @@ class ProjectClient(PolyaxonClient):
             return []
 
     def create_experiment(self, project_uuid, experiment_config):
-        request_url = self._build_url(self._get_url(), project_uuid, 'experiments')
+        request_url = self._build_url(self._get_http_url(), project_uuid, 'experiments')
 
         try:
             response = self.post(request_url, json=experiment_config.to_dict())

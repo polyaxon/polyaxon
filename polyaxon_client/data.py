@@ -18,7 +18,7 @@ class DatasetClient(PolyaxonClient):
 
     def get_datasets(self):
         try:
-            response = self.get(self._get_url())
+            response = self.get(self._get_http_url())
             datasets_dict = response.json()
             return [DatasetConfig.from_dict(dataset)
                     for dataset in datasets_dict.get("datasets", [])]
@@ -31,7 +31,7 @@ class DatasetClient(PolyaxonClient):
 
     def get_by_name(self, username, datasetname):
         request_url = self._build_url(username, datasetname)
-        request_url = self._get_url(request_url)
+        request_url = self._get_http_url(request_url)
         try:
             response = self.get(request_url)
             return DatasetConfig.from_dict(response.json())
@@ -47,7 +47,7 @@ class DatasetClient(PolyaxonClient):
             logger.info("Making create request to server...")
             post_body = data.to_dict()
             post_body["resumable"] = True
-            response = self.post(self._get_url(), json=post_body)
+            response = self.post(self._get_http_url(), json=post_body)
             return response.json()
         except BadRequestError as e:
             if 'Dataset not found, ID' in e.message:
@@ -62,7 +62,7 @@ class DatasetClient(PolyaxonClient):
             return None
 
     def delete_dataset(self, data_uuid):
-        request_url = self._get_url(data_uuid)
+        request_url = self._get_http_url(data_uuid)
         try:
             # data delete is a synchronous process, it can take a long time
             self.delete(request_url, timeout=60)

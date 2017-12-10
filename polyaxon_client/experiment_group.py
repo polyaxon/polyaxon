@@ -12,7 +12,7 @@ class ExperimentGroupClient(PolyaxonClient):
 
     def list_experiments(self, experiment_group_uuid, page=1):
         """Fetch list of experiments related to this experiment group."""
-        request_url = self._build_url(self._get_url(), experiment_group_uuid, 'experiments')
+        request_url = self._build_url(self._get_http_url(), experiment_group_uuid, 'experiments')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))

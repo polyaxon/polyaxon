@@ -17,7 +17,7 @@ class AuthClient(PolyaxonClient):
     ENDPOINT = "/users"
 
     def get_user(self):
-        request_url = self._get_url()
+        request_url = self._get_http_url()
         response = self.get(request_url,
                             headers={"Authorization": "{} {}".format(
                                 self.authentication_type, self.token)})
@@ -40,7 +40,7 @@ class AuthClient(PolyaxonClient):
         return UserConfig.from_dict(user_dict)
 
     def login(self, credentials):
-        request_url = self._build_url(self._get_url(), 'token')
+        request_url = self._build_url(self._get_http_url(), 'token')
         response = requests.post(request_url, json=credentials.to_dict())
         try:
             token_dict = response.json()

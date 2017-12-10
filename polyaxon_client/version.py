@@ -12,7 +12,7 @@ class VersionClient(PolyaxonClient):
     ENDPOINT = "/versions/cli"
 
     def get_cli_version(self):
-        response = self.get(self._get_url())
+        response = self.get(self._get_http_url())
         data_dict = response.json()
         logger.debug("CLI Version info :{}".format(data_dict))
         return CliVersionConfig.from_dict(data_dict)
