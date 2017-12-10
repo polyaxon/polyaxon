@@ -61,7 +61,7 @@ def handle_disconnected_ws(ws_manager, ws, job_uuid):
     logger.info('Quitting resources socket for uuid {}'.format(job_uuid))
 
 
-@app.websocket('/ws/v1/resources/job/<job_uuid>')
+@app.websocket('/ws/v1/jobs/<job_uuid>/resources')
 @authorized()
 async def job_resources(request, ws, job_uuid):
     job = _get_job(job_uuid=job_uuid)
@@ -86,15 +86,13 @@ async def job_resources(request, ws, job_uuid):
                 return
 
         # Just to check if connection closed
-        try:
-            await ws.recv()
-        except ConnectionClosed:
+        if ws._connection_lost:
             handle_disconnected_ws(ws_manager, ws, job_uuid)
             return
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/ws/v1/resources/experiment/<experiment_uuid>')
+@app.websocket('/ws/v1/experiments/<experiment_uuid>/resources')
 @authorized()
 async def experiment_resources(request, ws, experiment_uuid):
     experiment = _get_experiment(experiment_uuid=experiment_uuid)
@@ -120,15 +118,13 @@ async def experiment_resources(request, ws, experiment_uuid):
                 return
 
         # Just to check if connection closed
-        try:
-            await ws.recv()
-        except ConnectionClosed:
+        if ws._connection_lost:
             handle_disconnected_ws(ws_manager, ws, experiment_uuid)
             return
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/ws/v1/logs/job/<job_uuid>')
+@app.websocket('/ws/v1/jobs/<job_uuid>/logs')
 @authorized()
 async def job_logs(request, ws, job_uuid):
     job = _get_job(job_uuid=job_uuid)
@@ -164,9 +160,7 @@ async def job_logs(request, ws, job_uuid):
             request.app.job_logs_consumer.remove_sockets(disconnected_ws)
 
         # Just to check if connection closed
-        try:
-            await ws.recv()
-        except ConnectionClosed:
+        if ws._connection_lost:
             logger.info('Quitting logs socket for job uuid {}'.format(job_uuid))
             request.app.job_logs_consumer.remove_sockets({ws, })
             should_quite = True
@@ -182,7 +176,7 @@ async def job_logs(request, ws, job_uuid):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/ws/v1/logs/experiment/<experiment_uuid>')
+@app.websocket('/ws/v1/experiments/<experiment_uuid>/logs')
 @authorized()
 async def experiment_logs(request, ws, experiment_uuid):
     experiment = _get_experiment(experiment_uuid=experiment_uuid)
@@ -217,9 +211,7 @@ async def experiment_logs(request, ws, experiment_uuid):
             request.app.experiment_logs_consumer.remove_sockets(disconnected_ws)
 
         # Just to check if connection closed
-        try:
-            await ws.recv()
-        except ConnectionClosed:
+        if ws._connection_lost:
             logger.info('Quitting logs socket for experiment uuid {}'.format(experiment_uuid))
             request.app.experiment_logs_consumer.remove_sockets({ws, })
             should_quite = True
