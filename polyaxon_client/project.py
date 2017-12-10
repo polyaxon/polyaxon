@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ProjectConfig, PolyaxonSpecConfig
+from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
 from polyaxon_schemas.polyaxonfile.logger import logger
 
 from polyaxon_client.base import PolyaxonClient
@@ -85,15 +85,15 @@ class ProjectClient(PolyaxonClient):
                 sys.exit(1)
             return None
 
-    def list_specs(self, project_uuid, page=1):
-        """Fetch list of specs related to this project."""
-        request_url = self._build_url(self._get_url(), project_uuid, 'specs')
+    def list_experiment_groups(self, project_uuid, page=1):
+        """Fetch list of experiment groups related to this project."""
+        request_url = self._build_url(self._get_url(), project_uuid, 'experiment_groups')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
             projects_dict = response.json()
-            return [PolyaxonSpecConfig.from_dict(spec)
-                    for spec in projects_dict.get("results", [])]
+            return [ExperimentGroupConfig.from_dict(experiment_group)
+                    for experiment_group in projects_dict.get("results", [])]
         except PolyaxonException as e:
             logger.info("Error while retrieving projects: {}".format(e.message))
             if isinstance(e, AuthenticationError):
@@ -101,12 +101,12 @@ class ProjectClient(PolyaxonClient):
                 sys.exit(1)
             return []
 
-    def create_spec(self, project_uuid, spec_config):
-        request_url = self._build_url(self._get_url(), project_uuid, 'specs')
+    def create_experiment_group(self, project_uuid, experiment_group_config):
+        request_url = self._build_url(self._get_url(), project_uuid, 'experiment_groups')
 
         try:
-            response = self.post(request_url, json=spec_config.to_dict())
-            return PolyaxonSpecConfig.from_dict(response.json())
+            response = self.post(request_url, json=experiment_group_config.to_dict())
+            return ExperimentGroupConfig.from_dict(response.json())
         except PolyaxonException as e:
             logger.info("Error while creating project: {}".format(e.message))
             if isinstance(e, AuthenticationError):
@@ -114,12 +114,15 @@ class ProjectClient(PolyaxonClient):
                 sys.exit(1)
             return None
 
-    def update_spec(self, project_uuid, spec_uuid, patch_dict):
-        request_url = self._build_url(self._get_url(), project_uuid, 'specs', spec_uuid)
+    def update_experiment_group(self, project_uuid, experiment_group_uuid, patch_dict):
+        request_url = self._build_url(self._get_url(),
+                                      project_uuid,
+                                      'experiment_groups',
+                                      experiment_group_uuid)
 
         try:
             response = self.patch(request_url, json=patch_dict)
-            return PolyaxonSpecConfig.from_dict(response.json())
+            return ExperimentGroupConfig.from_dict(response.json())
         except PolyaxonException as e:
             logger.info("Error while updating project: {}".format(e.message))
             if isinstance(e, AuthenticationError):
@@ -127,8 +130,11 @@ class ProjectClient(PolyaxonClient):
                 sys.exit(1)
             return None
 
-    def delete_spec(self, project_uuid, spec_uuid):
-        request_url = self._build_url(self._get_url(), project_uuid, 'specs', spec_uuid)
+    def delete_experiment_group(self, project_uuid, experiment_group_uuid):
+        request_url = self._build_url(self._get_url(),
+                                      project_uuid,
+                                      'experiment_groups',
+                                      experiment_group_uuid)
         try:
             response = self.delete(request_url)
             return response
@@ -140,14 +146,14 @@ class ProjectClient(PolyaxonClient):
             return None
 
     def list_experiments(self, project_uuid, page=1):
-        """Fetch list of specs related to this project."""
+        """Fetch list of experiments related to this project."""
         request_url = self._build_url(self._get_url(), project_uuid, 'experiments')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
             projects_dict = response.json()
-            return [ExperimentConfig.from_dict(spec)
-                    for spec in projects_dict.get("results", [])]
+            return [ExperimentConfig.from_dict(experiment_group)
+                    for experiment_group in projects_dict.get("results", [])]
         except PolyaxonException as e:
             logger.info("Error while retrieving projects: {}".format(e.message))
             if isinstance(e, AuthenticationError):

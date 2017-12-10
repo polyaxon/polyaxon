@@ -2,14 +2,13 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-import tempfile
 import uuid
 from unittest import TestCase
 import httpretty
 from faker import Faker
 from polyaxon_schemas.experiment import ExperimentConfig
 
-from polyaxon_schemas.project import ProjectConfig, PolyaxonSpecConfig
+from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
 
 from polyaxon_client.project import ProjectClient
 
@@ -115,45 +114,48 @@ class TestProjectClient(TestCase):
         assert result.status_code == 204
 
     @httpretty.activate
-    def test_list_specs(self):
+    def test_list_experiment_groups(self):
         project_uuid = uuid.uuid4().hex
-        specs = [PolyaxonSpecConfig(content=faker.word, project=project_uuid).to_dict()
-                 for _ in range(10)]
+        experiment_groups = [
+            ExperimentGroupConfig(content=faker.word, project=project_uuid).to_dict()
+            for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
                 self.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
-                'specs'),
-            body=json.dumps({'results': specs, 'count': 10, 'next': None}),
+                'experiment_groups'),
+            body=json.dumps({'results': experiment_groups, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        specs = self.client.list_specs(project_uuid)
-        assert len(specs) == 10
+        experiment_groups = self.client.list_experiment_groups(project_uuid)
+        assert len(experiment_groups) == 10
 
     @httpretty.activate
-    def test_create_spec(self):
+    def test_create_experiment_group(self):
         project_uuid = uuid.uuid4().hex
-        object = PolyaxonSpecConfig(content=faker.word(), project=project_uuid)
+        object = ExperimentGroupConfig(content=faker.word(), project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
                 self.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
-                'specs'),
+                'experiment_groups'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_spec(project_uuid, object)
+        result = self.client.create_experiment_group(project_uuid, object)
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
-    def test_update_project(self):
-        object = PolyaxonSpecConfig(faker.word(), uuid=uuid.uuid4().hex, project=uuid.uuid4().hex)
-        spec_uuid = object.uuid
+    def test_update_experiment_group(self):
+        object = ExperimentGroupConfig(faker.word(),
+                                       uuid=uuid.uuid4().hex,
+                                       project=uuid.uuid4().hex)
+        experiment_group_uuid = object.uuid
         project_uuid = object.project
         httpretty.register_uri(
             httpretty.PATCH,
@@ -161,29 +163,31 @@ class TestProjectClient(TestCase):
                 self.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
-                'specs',
-                spec_uuid),
+                'experiment_groups',
+                experiment_group_uuid),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_spec(project_uuid, spec_uuid, {'content': 'new'})
+        result = self.client.update_experiment_group(project_uuid,
+                                                     experiment_group_uuid,
+                                                     {'content': 'new'})
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
-    def test_delete_spec(self):
+    def test_delete_experiment_group(self):
         project_uuid = uuid.uuid4().hex
-        spec_uuid = uuid.uuid4().hex
+        experiment_group_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.DELETE,
             ProjectClient._build_url(
                 self.base_url,
                 ProjectClient.ENDPOINT,
                 project_uuid,
-                'specs',
-                spec_uuid),
+                'experiment_groups',
+                experiment_group_uuid),
             content_type='application/json',
             status=204)
-        result = self.client.delete_spec(project_uuid, spec_uuid)
+        result = self.client.delete_experiment_group(project_uuid, experiment_group_uuid)
         assert result.status_code == 204
 
     @httpretty.activate

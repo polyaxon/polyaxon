@@ -3,4 +3,4 @@ requests==2.18.4
 requests-toolbelt==0.8.0
 six==1.11.0
 
--e git+https://github.com/polyaxon/polyaxon-schemas.git@5447b79701958a0a0ee81c8898539c56c5dbea72#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@e1e9b038d59950c8bb452cdc48b3bd4b737d0beb#egg=polyaxon-schemas
