@@ -16,7 +16,9 @@ faker = Faker()
 class TestVersionClient(TestCase):
 
     def setUp(self):
-        self.client = VersionClient(host='http://localhost', version='v1')
+        self.client = VersionClient(host='http://localhost',
+                                    version='v1',
+                                    reraise=True)
 
     @httpretty.activate
     def test_get_cli_version(self):

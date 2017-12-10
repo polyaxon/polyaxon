@@ -128,6 +128,16 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
 
+    def create_experiment(self, project_uuid, experiment_config):
+        request_url = self._build_url(self._get_url(), project_uuid, 'experiments')
+
+        try:
+            response = self.post(request_url, json=experiment_config.to_dict())
+            return ExperimentConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while creating experiment group')
+            return None
+
     def add_tensorboard(self, uuid):
         # TODO
         pass

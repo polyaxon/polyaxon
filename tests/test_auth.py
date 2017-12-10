@@ -18,7 +18,10 @@ faker = Faker()
 class TestAuthClient(TestCase):
 
     def setUp(self):
-        self.client = AuthClient(host='http://localhost', version='v1', token=faker.uuid4())
+        self.client = AuthClient(host='http://localhost',
+                                 version='v1',
+                                 token=faker.uuid4(),
+                                 reraise=True)
         self.base_url = AuthClient.BASE_URL.format('http://localhost', 'v1')
 
     @httpretty.activate

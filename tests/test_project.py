@@ -17,7 +17,9 @@ faker = Faker()
 
 class TestProjectClient(TestCase):
     def setUp(self):
-        self.client = ProjectClient(host='http://localhost', version='v1')
+        self.client = ProjectClient(host='http://localhost',
+                                    version='v1',
+                                    reraise=True)
         self.base_url = ProjectClient.BASE_URL.format('http://localhost', 'v1')
 
     @httpretty.activate
@@ -225,3 +227,20 @@ class TestProjectClient(TestCase):
 
         xps_results = self.client.list_experiments(project_uuid, page=2)
         assert len(xps_results) == 10
+
+    @httpretty.activate
+    def test_create_experiment(self):
+        project_uuid = uuid.uuid4().hex
+        object = ExperimentConfig(name=faker.word(), project=project_uuid)
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.base_url,
+                ProjectClient.ENDPOINT,
+                project_uuid,
+                'experiments'),
+            body=json.dumps(object.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.create_experiment(project_uuid, object)
+        assert result.to_dict() == object.to_dict()
