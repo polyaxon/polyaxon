@@ -8,7 +8,7 @@ class PolyaxonException(Exception):
         self.message = message
 
 
-class ShouldExistExit(PolyaxonException):
+class PolyaxonShouldExitError(PolyaxonException):
     pass
 
 
