@@ -33,6 +33,7 @@ class TestProjectConfigs(TestCase):
                                                  project=uuid_value).to_dict()],
                        'experiments': [
                            ExperimentConfig(name='name',
+                                            config={},
                                             uuid=uuid_value,
                                             project=uuid_value).to_dict()]}
         config = ProjectConfig.from_dict(config_dict)
@@ -45,6 +46,7 @@ class TestProjectConfigs(TestCase):
                        'project': uuid_value,
                        'experiments': [
                            ExperimentConfig(name='name',
+                                            config={},
                                             uuid=uuid_value,
                                             group=uuid_value,
                                             project=uuid_value).to_dict()]}

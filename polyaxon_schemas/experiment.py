@@ -38,6 +38,8 @@ class ExperimentJobConfig(BaseConfig):
 
 class ExperimentSchema(Schema):
     name = fields.Str()
+    config = fields.Dict()
+    content = fields.Str(allow_none=True)
     uuid = UUID(allow_none=True)
     project = UUID(allow_none=True)
     group = UUID(allow_none=True)
@@ -59,10 +61,20 @@ class ExperimentSchema(Schema):
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = ['description', 'group', 'jobs']
+    REDUCED_ATTRIBUTES = ['description', 'group', 'jobs', 'content']
 
-    def __init__(self, name, uuid=None, project=None, group=None, jobs=None, description=None):
+    def __init__(self,
+                 name,
+                 config,
+                 content=None,
+                 uuid=None,
+                 project=None,
+                 group=None,
+                 jobs=None,
+                 description=None):
         self.name = name
+        self.config = config  # The json compiled content of this experiment
+        self.content = content  # The yaml content when the experiment is independent
         self.uuid = uuid
         self.project = project
         self.group = group

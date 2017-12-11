@@ -19,12 +19,17 @@ from polyaxon_schemas.polyaxonfile.constants import TASK_NAME
 
 class TestExperimentConfigs(TestCase):
     def test_experiment_config(self):
-        config_dict = {'name': 'test', 'uuid': uuid.uuid4().hex, 'project': uuid.uuid4().hex}
+        config_dict = {'name': 'test',
+                       'config': {},
+                       'uuid': uuid.uuid4().hex,
+                       'project': uuid.uuid4().hex}
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
     def test_experiment_with_jobs_config(self):
         config_dict = {'name': 'test',
+                       'config': {},
+                       'content': '',
                        'uuid': uuid.uuid4().hex,
                        'project': uuid.uuid4().hex,
                        'group': uuid.uuid4().hex,
