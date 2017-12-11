@@ -1,6 +1,6 @@
 -r requirements-dev.txt
 
-coverage==4.4.1
+coverage==4.4.2
 flaky==3.4.0
 gym==0.9.3
 isort==4.2.15
