@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 
@@ -17,6 +17,10 @@ class GlobalConfigurationSchema(Schema):
     @post_load
     def make(self, data):
         return GlobalConfigurationConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GlobalConfigurationConfig.remove_reduced_attrs(data)
 
 
 class GlobalConfigurationConfig(BaseConfig):
