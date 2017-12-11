@@ -38,6 +38,10 @@ class Experiment(DiffModel, DescribableModel):
         null=True,
         related_name='experiments',
         help_text='The experiment group that generate this experiment.')
+    content = models.TextField(
+        blank=True,
+        null=True,
+        help_text='The yaml content of the polyaxonfile/specification.')
     config = JSONField(
         # TODO: should be validated by the Specification validator
         help_text='The compiled polyaxon with specific values for this experiment.')

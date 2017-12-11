@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from rest_framework import fields, serializers
+from rest_framework.exceptions import ValidationError
 
 from experiments.models import (
     Experiment,
@@ -87,10 +89,31 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'cluster', 'user', 'name', 'description', 'config', 'original_experiment')
+            'cluster', 'user', 'name', 'description', 'content', 'config', 'original_experiment')
         extra_kwargs = {
             'cluster': {'write_only': True},
         }
 
     def get_user(self, obj):
         return obj.user.username
+
+    def validate_content(self, content):
+        """We only validate the content if passed.
+
+        Also we use the GroupSpecification to check if this content was
+        intended as Group experiments.
+        """
+        # content is optional
+        if not content:
+            return content
+
+        spec = GroupSpecification.read(content)
+        if spec.matrix_space == 1:
+            # Resume normal creation
+            return content
+
+        # Raise an error to tell the use to use experiment creation instead
+        raise ValidationError('Current experiment creation could not be performed.\n'
+                              'The reason is that the specification sent correspond '
+                              'to a group experiment.\n'
+                              'Please use `create group experiment endpoint`.')

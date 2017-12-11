@@ -31,7 +31,7 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
             return content
 
         # Raise an error to tell the use to use experiment creation instead
-        raise ValidationError('Current experiment group creation could not be peroformed.\n'
+        raise ValidationError('Current experiment group creation could not be performed.\n'
                               'The reason is that the specification sent correspond '
                               'to an independent experiment.\n'
                               'Please use `create experiment endpoint`.')
