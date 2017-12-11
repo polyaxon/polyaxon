@@ -107,7 +107,7 @@ class PolyaxonClusterSchema(Schema):
     uuid = UUID()
     user = UUID()
     version_api = fields.Dict()
-    nodes = fields.Nested(ClusterNodeSchema, many=True)
+    nodes = fields.Nested(ClusterNodeSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
