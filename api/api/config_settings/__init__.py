@@ -15,3 +15,4 @@ from .email import *
 from .k8s import *
 from .registry import *
 from .spawner import *
+from .versions import *
