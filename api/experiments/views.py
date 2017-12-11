@@ -78,7 +78,6 @@ class ExperimentRestartView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
         new_obj = Experiment.objects.create(
-            cluster=obj.cluster,
             project=obj.project,
             user=self.request.user,
             name=obj.name,

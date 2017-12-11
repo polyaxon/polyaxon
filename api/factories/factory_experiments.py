@@ -9,7 +9,6 @@ from experiments.models import (
     ExperimentJob,
     ExperimentJobStatus,
 )
-from factories.factory_clusters import ClusterFactory
 from factories.factory_projects import ProjectFactory
 
 from factories.factory_users import UserFactory
@@ -20,7 +19,6 @@ class ExperimentFactory(factory.DjangoModelFactory):
     config = {}  # TODO this should be a valid config
 
     user = factory.SubFactory(UserFactory)
-    cluster = factory.SubFactory(ClusterFactory)
     project = factory.SubFactory(ProjectFactory)
 
     class Meta:

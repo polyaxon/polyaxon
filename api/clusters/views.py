@@ -4,46 +4,31 @@ from __future__ import absolute_import, division, print_function
 from rest_framework.generics import (
     get_object_or_404,
     RetrieveUpdateDestroyAPIView,
-)
+    RetrieveAPIView)
 
 from libs.views import ListCreateAPIView
 from clusters.models import Cluster, ClusterNode, NodeGPU
 from clusters.serializers import (
     ClusterSerializer,
-    ClusterDetailSerializer,
     ClusterNodeSerializer,
     ClusterNodeDetailSerializer,
     GPUSerializer)
 
 
-class ClusterListView(ListCreateAPIView):
+class ClusterDetailView(RetrieveAPIView):
     queryset = Cluster.objects.all()
     serializer_class = ClusterSerializer
 
-    def perform_create(self, serializer):
-        # TODO: update when we allow platform usage without authentication
-        serializer.save(user=self.request.user)
-
-
-class ClusterDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = Cluster.objects.all()
-    serializer_class = ClusterDetailSerializer
-    lookup_field = 'uuid'
+    def get_object(self):
+        return Cluster.load()
 
 
 class ClusterNodeListView(ListCreateAPIView):
     queryset = ClusterNode.objects.all()
     serializer_class = ClusterNodeSerializer
 
-    def get_cluster(self):
-        cluster_uuid = self.kwargs['uuid']
-        return get_object_or_404(Cluster, uuid=cluster_uuid)
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(cluster=self.get_cluster())
-
     def perform_create(self, serializer):
-        serializer.save(cluster=self.get_cluster())
+        serializer.save(cluster=Cluster.load())
 
 
 class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):

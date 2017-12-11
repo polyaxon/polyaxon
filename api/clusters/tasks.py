@@ -7,8 +7,7 @@ from polyaxon_k8s.manager import K8SManager
 
 from api.settings import CeleryTasks
 from api.celery_api import app as celery_app
-from clusters.utils import get_cluster
-from clusters.models import ClusterNode
+from clusters.models import Cluster, ClusterNode
 
 logger = logging.getLogger('polyaxon.tasks.clusters')
 
@@ -18,7 +17,7 @@ def update_system_info():
 
     k8s_manager = K8SManager(in_cluster=True)
     version_api = k8s_manager.get_version()
-    cluster = get_cluster()
+    cluster = Cluster.load()
     if cluster.version_api != version_api:
         cluster.version_api = version_api
         cluster.save()
@@ -29,7 +28,7 @@ def update_system_nodes():
 
     k8s_manager = K8SManager(in_cluster=True)
     nodes = k8s_manager.list_nodes()
-    cluster = get_cluster()
+    cluster = Cluster.load()
     nodes_to_update = {}
     nodes_to_create = {node.metadata.name: node for node in nodes}
     deprecated_nodes = []

@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from projects.models import Project, ExperimentGroup
 from projects.serializers import ProjectSerializer, ExperimentGroupSerializer, ProjectDetailSerializer
-from factories.factory_clusters import ClusterFactory
 from factories.factory_projects import ProjectFactory, ExperimentGroupFactory
 
 from tests.utils import BaseTest
@@ -17,9 +16,8 @@ class TestExperimentGroupSerializer(BaseTest):
 
     def setUp(self):
         super().setUp()
-        cluster = ClusterFactory()
-        self.obj1 = self.factory_class(user=cluster.user)
-        self.obj2 = self.factory_class(user=cluster.user)
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data

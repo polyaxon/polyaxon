@@ -15,7 +15,6 @@ from projects.serializers import (
     ProjectDetailSerializer,
     ExperimentGroupSerializer,
 )
-from factories.factory_clusters import ClusterFactory
 from factories.factory_projects import (
     ProjectFactory,
     ExperimentGroupFactory,
@@ -87,14 +86,13 @@ class TestProjectDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        cluster = ClusterFactory()
-        self.object = self.factory_class(user=cluster.user)
+        self.object = self.factory_class()
         self.url = '/{}/projects/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
         for i in range(2):
-            ExperimentGroupFactory(project=self.object, user=cluster.user)
+            ExperimentGroupFactory(project=self.object)
 
         # creating the default factory should trigger the creation of one experiment per group
         assert Experiment.objects.count() == 2
@@ -143,10 +141,9 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        cluster = ClusterFactory(user=self.auth_client.user)
-        self.project = ProjectFactory(user=cluster.user)
+        self.project = ProjectFactory()
         self.url = '/{}/projects/{}/experiment_groups/'.format(API_V1, self.project.uuid.hex)
-        self.objects = [self.factory_class(project=self.project, user=cluster.user)
+        self.objects = [self.factory_class(project=self.project)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
 

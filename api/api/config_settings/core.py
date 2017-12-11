@@ -59,6 +59,7 @@ LIST_TEMPLATE_CONTEXT_PROCESSORS = [
     'django.template.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'versions.context_processors.versions',
+    'clusters.context_processors.cluster',
 ]
 
 JS_DEBUG = config.get_boolean('POLYAXON_JS_DEBUG')

@@ -28,31 +28,16 @@ class ClusterNodeSerializer(serializers.ModelSerializer):
 
 class ClusterNodeDetailSerializer(ClusterNodeSerializer):
     gpus = GPUSerializer(many=True)
-    cluster = fields.SerializerMethodField()
 
     class Meta:
         model = ClusterNode
         exclude = ('id',)
 
-    def get_cluster(self, obj):
-        return obj.cluster.uuid.hex
-
 
 class ClusterSerializer(serializers.ModelSerializer):
-    uuid = fields.UUIDField(format='hex', read_only=True)
-    user = fields.SerializerMethodField()
+    nodes = ClusterNodeSerializer(many=True)
 
     class Meta:
         model = Cluster
-        fields = ('uuid', 'user', 'version_api', 'created_at', 'updated_at', )
-
-    def get_user(self, obj):
-        return obj.user.username
-
-
-class ClusterDetailSerializer(ClusterSerializer):
-    nodes = ClusterNodeSerializer(many=True)
-
-    class Meta(ClusterSerializer.Meta):
-        fields = ClusterSerializer.Meta.fields + ('nodes', )
+        fields = ('version_api', 'created_at', 'updated_at', 'nodes', )
 

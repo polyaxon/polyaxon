@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 from unittest.mock import patch
 
 from experiments.models import Experiment
-from factories.factory_clusters import ClusterFactory
 from factories.factory_projects import ExperimentGroupFactory, ProjectFactory
 from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
@@ -13,8 +12,7 @@ from tests.utils import BaseTest
 class TestExperimentGroupModel(BaseTest):
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
         with patch('projects.tasks.start_group_experiments.delay') as mock_fct:
-            cluster = ClusterFactory()
-            experiment_group = ExperimentGroupFactory(user=cluster.user)
+            experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 1
         assert mock_fct.call_count == 1

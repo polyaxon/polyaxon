@@ -8,11 +8,9 @@ from libs.urls import UUID_PATTERN, CLUSTER_NODE_UUID_PATTERN
 from clusters import views
 
 clusters_urlpatterns = [
-    url(r'^clusters/?$',
-        views.ClusterListView.as_view()),
-    url(r'^clusters/{}/?$'.format(UUID_PATTERN),
+    url(r'^cluster/?$',
         views.ClusterDetailView.as_view()),
-    url(r'^clusters/{}/nodes/?$'.format(UUID_PATTERN),
+    url(r'^cluster/nodes/?$',
         views.ClusterNodeListView.as_view()),
 ]
 

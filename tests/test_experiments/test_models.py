@@ -11,7 +11,6 @@ from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from factories.factory_repos import RepoFactory
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
-from factories.factory_clusters import ClusterFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ExperimentGroupFactory
 from tests.fixtures import (
@@ -25,8 +24,7 @@ from tests.utils import BaseTest
 class TestExperimentModel(BaseTest):
     def test_experiment_creation_triggers_status_creation_mocks(self):
         with patch('projects.tasks.start_group_experiments.delay') as _:
-            cluster = ClusterFactory()
-            experiment_group = ExperimentGroupFactory(user=cluster.user)
+            experiment_group = ExperimentGroupFactory()
 
         with patch('experiments.tasks.start_experiment.delay') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
@@ -37,8 +35,7 @@ class TestExperimentModel(BaseTest):
 
     def test_experiment_creation_triggers_status_creation(self):
         with patch('projects.tasks.start_group_experiments.delay') as _:
-            cluster = ClusterFactory()
-            experiment_group = ExperimentGroupFactory(user=cluster.user)
+            experiment_group = ExperimentGroupFactory()
 
         experiment = ExperimentFactory(experiment_group=experiment_group)
 

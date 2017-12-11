@@ -10,8 +10,7 @@ from kubernetes.client.rest import ApiException
 
 from polyaxon_k8s.manager import K8SManager
 
-from clusters.utils import get_cluster
-
+from clusters.models import Cluster
 from events.management.commands._base_monitor import BaseMonitorCommand
 from events.monitors import namespace
 
@@ -26,7 +25,7 @@ class Command(BaseMonitorCommand):
             "log sleep interval: `{}`.".format(log_sleep_interval),
             ending='\n')
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-        cluster = get_cluster()
+        cluster = Cluster.load()
         while True:
             try:
                 namespace.run(k8s_manager, cluster)

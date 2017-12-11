@@ -7,10 +7,9 @@ from clusters.serializers import (
     GPUSerializer,
     ClusterNodeSerializer,
     ClusterNodeDetailSerializer,
-    ClusterDetailSerializer,
 )
 
-from factories.factory_clusters import ClusterFactory, GPUFactory, ClusterNodeFactory
+from factories.factory_clusters import GPUFactory, ClusterNodeFactory
 from tests.utils import BaseTest
 
 
@@ -23,8 +22,9 @@ class TestGPUSerializer(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory_class()
-        self.obj2 = self.factory_class()
+        node = ClusterNodeFactory(cluster=Cluster.load())
+        self.obj1 = self.factory_class(cluster_node=node)
+        self.obj2 = self.factory_class(cluster_node=node)
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -53,8 +53,8 @@ class TestClusterNodeSerializer(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory_class()
-        self.obj2 = self.factory_class()
+        self.obj1 = self.factory_class(cluster=Cluster.load())
+        self.obj2 = self.factory_class(cluster=Cluster.load())
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
@@ -82,17 +82,18 @@ class TestClusterNodeDetailsSerializer(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.gpu_obj1 = GPUFactory()
-        self.obj1 = self.gpu_obj1.cluster_node
-        self.gpu_obj2 = GPUFactory()
-        self.obj2 = self.gpu_obj2.cluster_node
+        self.cluster = Cluster.load()
+        self.obj1 = ClusterNodeFactory(cluster=self.cluster)
+        self.obj2 = ClusterNodeFactory(cluster=self.cluster)
+        self.gpu_obj1 = GPUFactory(cluster_node=self.obj1)
+        self.gpu_obj2 = GPUFactory(cluster_node=self.obj2)
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('cluster') == self.obj1.cluster.uuid.hex
+        assert data.pop('cluster') == self.obj1.cluster.id
         assert len(data.pop('gpus')) == 1
 
         for k, v in data.items():
@@ -105,63 +106,24 @@ class TestClusterNodeDetailsSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-class TestClusterSerializer(BaseTest):
+class TestClusterDetailSerializer(BaseTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
-    factory_class = ClusterFactory
-    expected_keys = {'uuid', 'user', 'version_api', 'created_at', 'updated_at', }
+    expected_keys = {'version_api', 'created_at', 'updated_at', 'nodes', }
 
     def setUp(self):
         super().setUp()
-        self.obj1 = self.factory_class()
-        self.obj2 = self.factory_class()
+        self.cluster = Cluster.load()
+        ClusterNodeFactory(cluster=self.cluster)
+        ClusterNodeFactory(cluster=self.cluster)
 
     def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
+        data = self.serializer_class(self.cluster).data
 
         assert set(data.keys()) == self.expected_keys
-        assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('user') == self.obj1.user.username
+        assert len(data.pop('nodes')) == 2
         data.pop('created_at')
         data.pop('updated_at')
 
         for k, v in data.items():
-            assert getattr(self.obj1, k) == v
-
-    def test_serialize_many(self):
-        data = self.serializer_class(self.model_class.objects.all(), many=True).data
-        assert len(data) == 2
-        for d in data:
-            assert set(d.keys()) == self.expected_keys
-
-
-class TestClusterDetailSerializer(BaseTest):
-    serializer_class = ClusterDetailSerializer
-    model_class = Cluster
-    expected_keys = {'uuid', 'user', 'version_api', 'created_at', 'updated_at', 'nodes', }
-
-    def setUp(self):
-        super().setUp()
-        self.node_obj1 = ClusterNodeFactory()
-        self.obj1 = self.node_obj1.cluster
-        self.node_obj2 = ClusterNodeFactory()
-        self.obj2 = self.node_obj2.cluster
-
-    def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('user') == self.obj1.user.username
-        assert len(data.pop('nodes')) == 1
-        data.pop('created_at')
-        data.pop('updated_at')
-
-        for k, v in data.items():
-            assert getattr(self.obj1, k) == v
-
-    def test_serialize_many(self):
-        data = self.serializer_class(self.model_class.objects.all(), many=True).data
-        assert len(data) == 2
-        for d in data:
-            assert set(d.keys()) == self.expected_keys
+            assert getattr(self.cluster, k) == v

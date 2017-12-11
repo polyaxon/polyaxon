@@ -21,7 +21,6 @@ from experiments.serializers import (
 )
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
-from factories.factory_clusters import ClusterFactory
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentStatusFactory,
@@ -88,7 +87,6 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
         object1 = self.objects[0]
         data = {'name': 'my-xp',
-                'cluster': object1.cluster.id,
                 'config': {'run': 'something'}}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
@@ -147,8 +145,7 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        cluster = ClusterFactory(user=self.auth_client.user)
-        self.experiment_group = ExperimentGroupFactory(content=content, user=cluster.user)
+        self.experiment_group = ExperimentGroupFactory(content=content)
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/experiment_groups/{}/experiments/'.format(API_V1,
                                                                   self.experiment_group.uuid.hex)

@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import tempfile
-import uuid
 
 from unittest.mock import patch
 
@@ -20,7 +19,6 @@ from repos import git
 from repos.models import Repo
 from repos.serializers import RepoSerializer
 
-from factories.factory_clusters import ClusterFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.factory_users import UserFactory
@@ -36,7 +34,6 @@ class TestRepoDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        cluster = ClusterFactory()
         self.object = self.factory_class()
         self.url = '/{}/projects/{}/repo'.format(API_V1, self.object.project.uuid.hex)
         self.queryset = self.model_class.objects.all()

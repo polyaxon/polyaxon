@@ -8,7 +8,9 @@ import uuid
 from urllib.parse import urlparse
 
 import redis
+
 from django.conf import settings
+from django.core.cache import cache
 from django.test import Client, TestCase
 from django.test.client import FakePayload
 
@@ -141,6 +143,7 @@ class BaseTest(TestCase):
         redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
         settings.REPOS_ROOT = tempfile.mkdtemp()
         settings.UPLOAD_ROOT = tempfile.mkdtemp()
+        cache.clear()
         return super().setUp()
 
 

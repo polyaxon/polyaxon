@@ -23,9 +23,6 @@ class Experiment(DiffModel, DescribableModel):
         editable=False,
         unique=True,
         null=False)
-    cluster = models.ForeignKey(
-        Cluster,
-        related_name='experiments')
     project = models.ForeignKey(
         'projects.Project',
         related_name='experiments')
