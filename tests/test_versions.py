@@ -6,7 +6,7 @@ from unittest import TestCase
 import httpretty
 from faker import Faker
 
-from polyaxon_schemas.version import CliVersionConfig
+from polyaxon_schemas.version import CliVersionConfig, PlatformVersionConfig
 
 from polyaxon_client.version import VersionClient
 
@@ -29,8 +29,23 @@ class TestVersionClient(TestCase):
             httpretty.GET,
             VersionClient._build_url(
                 self.client.base_url,
-                VersionClient.ENDPOINT),
+                VersionClient.ENDPOINT,
+                'cli'),
             body=json.dumps(object),
             content_type='application/json', status=200)
         result = self.client.get_cli_version()
+        assert object == result.to_dict()
+
+    @httpretty.activate
+    def test_get_platform_version(self):
+        object = PlatformVersionConfig(latest_version='1.0', min_version='0.5').to_dict()
+        httpretty.register_uri(
+            httpretty.GET,
+            VersionClient._build_url(
+                self.client.base_url,
+                VersionClient.ENDPOINT,
+                'platform'),
+            body=json.dumps(object),
+            content_type='application/json', status=200)
+        result = self.client.get_platform_version()
         assert object == result.to_dict()

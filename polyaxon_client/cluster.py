@@ -9,24 +9,11 @@ from polyaxon_client.exceptions import PolyaxonException
 
 class ClusterClient(PolyaxonClient):
     """Client to get clusters from the server"""
-    ENDPOINT = "/clusters"
+    ENDPOINT = "/cluster"
     ENDPOINT_NODES = "/nodes"
 
-    def list_clusters(self, page=1):
-        """Fetch list of clusters related to authenticate user."""
+    def get_cluster(self):
         request_url = self._build_url(self._get_http_url())
-
-        try:
-            response = self.get(request_url, params=self.get_page(page=page))
-            clusters_dict = response.json()
-            return [PolyaxonClusterConfig.from_dict(cluster)
-                    for cluster in clusters_dict.get("results", [])]
-        except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving clusters')
-            return []
-
-    def get_cluster(self, cluster_uuid='default'):
-        request_url = self._build_url(self._get_http_url(), cluster_uuid)
         try:
             response = self.get(request_url)
             return PolyaxonClusterConfig.from_dict(response.json())

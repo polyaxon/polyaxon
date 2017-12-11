@@ -24,55 +24,17 @@ class TestClusterClient(TestCase):
                                     reraise=True)
 
     @httpretty.activate
-    def test_list_clusters(self):
-        cluster_uuid = uuid.uuid4().hex
-        user_uuid = uuid.uuid4().hex
-        xps = [PolyaxonClusterConfig(uuid=cluster_uuid,
-                                     user=user_uuid,
-                                     version_api={}).to_dict()
-               for _ in range(10)]
+    def test_get_cluster(self):
+        object = PolyaxonClusterConfig(version_api={})
         httpretty.register_uri(
             httpretty.GET,
             ClusterClient._build_url(
                 self.client.base_url,
                 ClusterClient.ENDPOINT),
-            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
-            content_type='application/json',
-            status=200)
-
-        xps_results = self.client.list_clusters()
-        assert len(xps_results) == 10
-
-        # pagination
-        httpretty.register_uri(
-            httpretty.GET,
-            ClusterClient._build_url(
-                self.client.base_url,
-                ClusterClient.ENDPOINT) + '?offset=2',
-            body=json.dumps({'results': xps, 'count': 10, 'next': None}),
-            content_type='application/json',
-            status=200)
-
-        xps_results = self.client.list_clusters(page=2)
-        assert len(xps_results) == 10
-
-    @httpretty.activate
-    def test_get_cluster(self):
-        cluster_uuid = uuid.uuid4().hex
-        user_uuid = uuid.uuid4().hex
-        object = PolyaxonClusterConfig(uuid=cluster_uuid,
-                                       user=user_uuid,
-                                       version_api={})
-        httpretty.register_uri(
-            httpretty.GET,
-            ClusterClient._build_url(
-                self.client.base_url,
-                ClusterClient.ENDPOINT,
-                cluster_uuid),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.get_cluster(cluster_uuid)
+        result = self.client.get_cluster()
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
