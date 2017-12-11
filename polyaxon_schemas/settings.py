@@ -153,6 +153,7 @@ class ClusterSchema(Schema):
 
 
 class ClusterConfig(BaseConfig):
+    """Tensorfow cluster definition"""
     IDENTIFIER = 'cluster'
     SCHEMA = ClusterSchema
 
