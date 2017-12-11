@@ -46,6 +46,7 @@ setup(name='polyaxon-client',
           "requests==2.18.4",
           "requests-toolbelt==0.8.0",
           "six==1.11.0",
+          "websocket-client==0.44.0",
       ],
       classifiers=[
           'Programming Language :: Python',
