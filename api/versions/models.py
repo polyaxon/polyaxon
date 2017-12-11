@@ -42,11 +42,11 @@ class BaseVersion(DiffModel):
     @classmethod
     def load(cls):
         if cache.get(cls.__name__) is None:
-            obj, created = cls.objects.get_or_create(
+            obj, is_created = cls.objects.get_or_create(
                 pk=1,
                 min_version=settings.CLI_MIN_VERSION,
-                latest_version=settings.CLI_LATEST_VERSION_VERSION)
-            if not created:
+                latest_version=settings.CLI_LATEST_VERSION)
+            if not is_created:
                 cls.may_be_update(obj)
 
         obj = cache.get(cls.__name__)
