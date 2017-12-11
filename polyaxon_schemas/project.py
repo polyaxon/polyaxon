@@ -11,6 +11,8 @@ from polyaxon_schemas.utils import UUID
 
 class ExperimentGroupSchema(Schema):
     uuid = UUID(allow_none=True)
+    name = fields.Str()
+    description = fields.Str(allow_none=True)
     content = fields.Str()
     project = UUID(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
@@ -30,9 +32,17 @@ class ExperimentGroupSchema(Schema):
 class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
-    REDUCED_ATTRIBUTES = ['uuid', 'project', 'experiments']
+    REDUCED_ATTRIBUTES = ['uuid', 'project', 'experiments', 'description']
 
-    def __init__(self, content=None, uuid=None, project=None, experiments=None,):
+    def __init__(self,
+                 name,
+                 description=None,
+                 content=None,
+                 uuid=None,
+                 project=None,
+                 experiments=None,):
+        self.name = name
+        self.description = description
         self.content = content
         self.uuid = uuid
         self.project = project

@@ -28,7 +28,8 @@ class TestProjectConfigs(TestCase):
                        'description': '',
                        'is_public': True,
                        'experiment_groups': [
-                           ExperimentGroupConfig(content='name',
+                           ExperimentGroupConfig(name='name',
+                                                 content='content',
                                                  uuid=uuid_value,
                                                  project=uuid_value).to_dict()],
                        'experiments': [
@@ -41,7 +42,8 @@ class TestProjectConfigs(TestCase):
 
     def test_experiment_group_config(self):
         uuid_value = uuid.uuid4().hex
-        config_dict = {'content': 'some content',
+        config_dict = {'name': 'name',
+                       'content': 'some content',
                        'uuid': uuid_value,
                        'project': uuid_value,
                        'experiments': [
