@@ -24,13 +24,13 @@ class JobClient(PolyaxonClient):
             return None
 
     def get_job_status(self, job_uuid):
-        request_url = self._build_url(self._get_http_url(), job_uuid, 'status')
+        request_url = self._build_url(self._get_http_url(), job_uuid, 'statuses')
 
         try:
             response = self.get(request_url)
             return ExperimentJobStatusConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job status')
+            self.handle_exception(e=e, log_message='Error while retrieving job statuses')
             return []
 
     def resources(self, job_uuid, message_handler=None):

@@ -54,7 +54,7 @@ class ExperimentClient(PolyaxonClient):
             return None
 
     def get_status(self, experiment_uuid):
-        request_url = self._build_url(self._get_http_url(), experiment_uuid, 'status')
+        request_url = self._build_url(self._get_http_url(), experiment_uuid, 'statuses')
         try:
             response = self.get(request_url)
             return ExperimentStatusConfig.from_dict(response.json())

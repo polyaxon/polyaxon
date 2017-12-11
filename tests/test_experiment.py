@@ -101,7 +101,7 @@ class TestExperimentClient(TestCase):
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
                 'uuid',
-                'status'),
+                'statuses'),
             body=json.dumps(object),
             content_type='application/json',
             status=200)

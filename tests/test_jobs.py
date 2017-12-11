@@ -55,7 +55,7 @@ class TestJobClient(TestCase):
                 self.client.base_url,
                 JobClient.ENDPOINT,
                 job_uuid,
-                'status'),
+                'statuses'),
             body=json.dumps(object),
             content_type='application/json',
             status=200)
