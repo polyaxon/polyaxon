@@ -306,7 +306,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
         with patch.object(Experiment, 'set_status') as _:
             with patch('experiments.tasks.start_experiment.delay') as _:
                 self.experiment = ExperimentFactory()
-        self.url = '/{}/experiments/{}/status/'.format(API_V1, self.experiment.uuid.hex)
+        self.url = '/{}/experiments/{}/statuses/'.format(API_V1, self.experiment.uuid.hex)
         self.objects = [self.factory_class(experiment=self.experiment,
                                            status=ExperimentLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -374,7 +374,7 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
             with patch('experiments.tasks.start_experiment.delay') as _:
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
-        self.url = '/{}/experiments/{}/status/{}/'.format(API_V1,
+        self.url = '/{}/experiments/{}/statuses/{}/'.format(API_V1,
                                                           self.experiment.uuid.hex,
                                                           self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
@@ -511,7 +511,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
         with patch('experiments.tasks.start_experiment.delay') as _:
             with patch.object(ExperimentJob, 'set_status') as _:
                 self.experiment_job = ExperimentJobFactory()
-        self.url = '/{}/jobs/{}/status/'.format(
+        self.url = '/{}/jobs/{}/statuses/'.format(
             API_V1,
             self.experiment_job.uuid.hex)
         self.objects = [self.factory_class(job=self.experiment_job,
@@ -581,7 +581,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
             with patch.object(ExperimentJob, 'set_status') as _:
                 self.experiment_job = ExperimentJobFactory()
                 self.object = self.factory_class(job=self.experiment_job)
-        self.url = '/{}/jobs/{}/status/{}'.format(
+        self.url = '/{}/jobs/{}/statuses/{}'.format(
             API_V1,
             self.experiment_job.uuid.hex,
             self.object.uuid.hex)
