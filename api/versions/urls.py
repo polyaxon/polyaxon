@@ -8,6 +8,7 @@ from versions import views
 
 urlpatterns = [
     url(r'^versions/cli/?$', views.CliVersionView.as_view()),
+    url(r'^versions/platform/?$', views.PlatformVersionView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

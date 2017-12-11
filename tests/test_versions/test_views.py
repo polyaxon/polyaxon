@@ -16,16 +16,17 @@ class TestCliVersionViewV1(BaseViewTest):
         super().setUp()
         self.cli_version = CliVersion.load()
         self.platform_version = PlatformVersion.load()
-        self.url = '/{}/versions/cli'.format(API_V1)
+        self.cli_url = '/{}/versions/cli'.format(API_V1)
+        self.platform_url = '/{}/versions/platform'.format(API_V1)
 
     def test_get_cli_version(self):
-        resp = self.auth_client.get(self.url)
+        resp = self.auth_client.get(self.cli_url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['min_version'] == self.cli_version.min_version
         assert resp.data['latest_version'] == self.cli_version.latest_version
 
     def test_get_platform_version(self):
-        resp = self.auth_client.get(self.url)
+        resp = self.auth_client.get(self.platform_url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['min_version'] == self.platform_version.min_version
         assert resp.data['latest_version'] == self.platform_version.latest_version
