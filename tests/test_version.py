@@ -3,11 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.version import CliVersionConfig
+from polyaxon_schemas.version import CliVersionConfig, PlatformVersionConfig
 
 
-class TestProjectConfigs(TestCase):
-    def test_project_config(self):
+class TestVersionConfigs(TestCase):
+    def test_cli_version_config(self):
         config_dict = {'latest_version': '2.2.2', 'min_version': '1.1.0'}
         config = CliVersionConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
+    def test_platform_version_config(self):
+        config_dict = {'latest_version': '2.2.2', 'min_version': '1.1.0'}
+        config = PlatformVersionConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
