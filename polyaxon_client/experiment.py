@@ -4,8 +4,7 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_schemas.experiment import (
     ExperimentConfig,
     ExperimentJobConfig,
-    ExperimentStatusConfig,
-    ExperimentJobStatusConfig
+    ExperimentStatusConfig
 )
 
 from polyaxon_client.base import PolyaxonClient
@@ -75,20 +74,6 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving jobs')
             return []
 
-    def get_job_status(self, experiment_uuid, job_uuid):
-        request_url = self._build_url(self._get_http_url(),
-                                      experiment_uuid,
-                                      'jobs',
-                                      job_uuid,
-                                      'status')
-
-        try:
-            response = self.get(request_url)
-            return ExperimentJobStatusConfig.from_dict(response.json())
-        except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while retrieving job status')
-            return []
-
     def restart(self, experiment_uuid):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(), experiment_uuid, 'restart')
@@ -98,6 +83,15 @@ class ExperimentClient(PolyaxonClient):
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while restarting experiment')
+            return None
+
+    def stop(self, experiment_uuid):
+        request_url = self._build_url(self._get_http_url(), experiment_uuid, 'stop')
+        try:
+            response = self.post(request_url)
+            return ExperimentConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while deleting experiment')
             return None
 
     def resources(self, experiment_uuid, message_handler=None):

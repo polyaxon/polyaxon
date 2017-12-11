@@ -8,8 +8,11 @@ from unittest import TestCase
 import datetime
 import httpretty
 from faker import Faker
-from polyaxon_schemas.experiment import ExperimentConfig, ExperimentStatusConfig, \
-    ExperimentJobConfig, ExperimentJobStatusConfig
+from polyaxon_schemas.experiment import (
+    ExperimentConfig,
+    ExperimentStatusConfig,
+    ExperimentJobConfig,
+)
 
 from polyaxon_client.experiment import ExperimentClient
 
@@ -145,41 +148,35 @@ class TestExperimentClient(TestCase):
         assert len(xps_results) == 10
 
     @httpretty.activate
-    def test_get_experiment_job_status(self):
-        experiment_uuid = uuid.uuid4().hex
-        job_uuid = uuid.uuid4().hex
-        object = ExperimentJobStatusConfig(uuid=uuid.uuid4().hex,
-                                           job=job_uuid,
-                                           created_at=datetime.datetime.now(),
-                                           status='Running').to_dict()
-        httpretty.register_uri(
-            httpretty.GET,
-            ExperimentClient._build_url(
-                self.client.base_url,
-                ExperimentClient.ENDPOINT,
-                experiment_uuid,
-                'jobs',
-                job_uuid,
-                'status'),
-            body=json.dumps(object),
-            content_type='application/json',
-            status=200)
-        result = self.client.get_job_status(experiment_uuid, job_uuid)
-        assert object == result.to_dict()
-
-    @httpretty.activate
     def test_restart_experiment(self):
         object = ExperimentConfig(name=faker.word())
-        experimnt_uuid = uuid.uuid4().hex
+        experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                experimnt_uuid,
+                experiment_uuid,
                 'restart'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.restart(experimnt_uuid)
+        result = self.client.restart(experiment_uuid)
+        assert result.to_dict() == object.to_dict()
+
+    @httpretty.activate
+    def test_stop_experiment(self):
+        object = ExperimentConfig(name=faker.word())
+        experiment_uuid = uuid.uuid4().hex
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                experiment_uuid,
+                'stop'),
+            body=json.dumps(object.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.stop(experiment_uuid)
         assert result.to_dict() == object.to_dict()
