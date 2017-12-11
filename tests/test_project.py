@@ -25,7 +25,7 @@ class TestProjectClient(TestCase):
                                     reraise=True)
 
     @httpretty.activate
-    def test_get_projects(self):
+    def test_list_projects(self):
         projects = [ProjectConfig(faker.word).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -40,7 +40,7 @@ class TestProjectClient(TestCase):
         assert len(projects) == 10
 
     @httpretty.activate
-    def test_get_by_name(self):
+    def test_get_project(self):
         object = ProjectConfig(faker.word()).to_dict()
         httpretty.register_uri(
             httpretty.GET,
@@ -153,46 +153,6 @@ class TestProjectClient(TestCase):
             status=200)
         result = self.client.create_experiment_group(project_uuid, object)
         assert result.to_dict() == object.to_dict()
-
-    @httpretty.activate
-    def test_update_experiment_group(self):
-        object = ExperimentGroupConfig(faker.word(),
-                                       uuid=uuid.uuid4().hex,
-                                       project=uuid.uuid4().hex)
-        experiment_group_uuid = object.uuid
-        project_uuid = object.project
-        httpretty.register_uri(
-            httpretty.PATCH,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
-                project_uuid,
-                'experiment_groups',
-                experiment_group_uuid),
-            body=json.dumps(object.to_dict()),
-            content_type='application/json',
-            status=200)
-        result = self.client.update_experiment_group(project_uuid,
-                                                     experiment_group_uuid,
-                                                     {'content': 'new'})
-        assert result.to_dict() == object.to_dict()
-
-    @httpretty.activate
-    def test_delete_experiment_group(self):
-        project_uuid = uuid.uuid4().hex
-        experiment_group_uuid = uuid.uuid4().hex
-        httpretty.register_uri(
-            httpretty.DELETE,
-            ProjectClient._build_url(
-                self.client.base_url,
-                ProjectClient.ENDPOINT,
-                project_uuid,
-                'experiment_groups',
-                experiment_group_uuid),
-            content_type='application/json',
-            status=204)
-        result = self.client.delete_experiment_group(project_uuid, experiment_group_uuid)
-        assert result.status_code == 204
 
     @httpretty.activate
     def test_list_experiments(self):

@@ -90,31 +90,6 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while creating experiment group')
             return None
 
-    def update_experiment_group(self, project_uuid, experiment_group_uuid, patch_dict):
-        request_url = self._build_url(self._get_http_url(),
-                                      project_uuid,
-                                      'experiment_groups',
-                                      experiment_group_uuid)
-
-        try:
-            response = self.patch(request_url, json=patch_dict)
-            return ExperimentGroupConfig.from_dict(response.json())
-        except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while updating project')
-            return None
-
-    def delete_experiment_group(self, project_uuid, experiment_group_uuid):
-        request_url = self._build_url(self._get_http_url(),
-                                      project_uuid,
-                                      'experiment_groups',
-                                      experiment_group_uuid)
-        try:
-            response = self.delete(request_url)
-            return response
-        except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting experiment group')
-            return None
-
     def list_experiments(self, project_uuid, page=1):
         """Fetch list of experiments related to this project."""
         request_url = self._build_url(self._get_http_url(), project_uuid, 'experiments')
