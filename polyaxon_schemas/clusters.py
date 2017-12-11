@@ -53,7 +53,7 @@ class ClusterNodeSchema(Schema):
     n_cpus = fields.Int()
     n_gpus = fields.Int()
     status = fields.Str()
-    gpus = fields.Nested(NodeGPUSchema, many=True)
+    gpus = fields.Nested(NodeGPUSchema, many=True, allow_none=True)
 
     @post_load
     def make(self, data):
