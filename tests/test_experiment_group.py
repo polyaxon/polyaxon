@@ -31,6 +31,7 @@ class TestExperimentGroupClient(TestCase):
         xp_uuid = uuid.uuid4().hex
         xps = [ExperimentConfig(name='xp',
                                 uuid=xp_uuid,
+                                config={},
                                 project=project_uuid,
                                 group=group_uuid).to_dict()
                for _ in range(10)]
@@ -66,7 +67,8 @@ class TestExperimentGroupClient(TestCase):
 
     @httpretty.activate
     def test_update_experiment_group(self):
-        object = ExperimentGroupConfig(faker.word(),
+        object = ExperimentGroupConfig(name='group',
+                                       content=faker.word(),
                                        uuid=uuid.uuid4().hex,
                                        project=uuid.uuid4().hex)
         experiment_group_uuid = object.uuid

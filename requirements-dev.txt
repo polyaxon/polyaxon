@@ -4,4 +4,4 @@ requests-toolbelt==0.8.0
 six==1.11.0
 websocket-client==0.44.0
 
--e git+https://github.com/polyaxon/polyaxon-schemas.git@60cf6cdc15f189f747a2f538ab12208a52c2a84f#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@afc5e832e990b4d341992263af5ba57c05a3ba55#egg=polyaxon-schemas

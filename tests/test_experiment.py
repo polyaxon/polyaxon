@@ -30,7 +30,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_list_experiments(self):
-        experiments = [ExperimentConfig(faker.word).to_dict() for _ in range(10)]
+        experiments = [ExperimentConfig(name=faker.word, config={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -45,7 +45,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment(self):
-        object = ExperimentConfig(faker.word()).to_dict()
+        object = ExperimentConfig(name=faker.word(), config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -60,7 +60,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_update_project(self):
-        object = ExperimentConfig(faker.word())
+        object = ExperimentConfig(name=faker.word(), config={})
         experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.PATCH,
@@ -149,7 +149,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_restart_experiment(self):
-        object = ExperimentConfig(name=faker.word())
+        object = ExperimentConfig(name=faker.word(), config={})
         experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,
@@ -166,7 +166,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_stop_experiment(self):
-        object = ExperimentConfig(name=faker.word())
+        object = ExperimentConfig(name=faker.word(), config={})
         experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,

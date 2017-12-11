@@ -121,7 +121,7 @@ class TestProjectClient(TestCase):
     def test_list_experiment_groups(self):
         project_uuid = uuid.uuid4().hex
         experiment_groups = [
-            ExperimentGroupConfig(content=faker.word, project=project_uuid).to_dict()
+            ExperimentGroupConfig(name='group', content=faker.word, project=project_uuid).to_dict()
             for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -140,7 +140,7 @@ class TestProjectClient(TestCase):
     @httpretty.activate
     def test_create_experiment_group(self):
         project_uuid = uuid.uuid4().hex
-        object = ExperimentGroupConfig(content=faker.word(), project=project_uuid)
+        object = ExperimentGroupConfig(name='group', content=faker.word(), project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
@@ -158,7 +158,7 @@ class TestProjectClient(TestCase):
     def test_list_experiments(self):
         project_uuid = uuid.uuid4().hex
         xp_uuid = uuid.uuid4().hex
-        xps = [ExperimentConfig(name='xp', uuid=xp_uuid, project=project_uuid).to_dict()
+        xps = [ExperimentConfig(name='xp', config={}, uuid=xp_uuid, project=project_uuid).to_dict()
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -193,7 +193,7 @@ class TestProjectClient(TestCase):
     @httpretty.activate
     def test_create_experiment(self):
         project_uuid = uuid.uuid4().hex
-        object = ExperimentConfig(name=faker.word(), project=project_uuid)
+        object = ExperimentConfig(name=faker.word(), project=project_uuid, config={})
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
