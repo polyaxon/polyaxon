@@ -183,7 +183,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
-    def test_create(self):
+    def test_create_raises_with_content_for_independent_experiment(self):
         data = {}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
@@ -205,10 +205,41 @@ model:
           activation: relu
           kernel_initializer: Ones"""
 
-        data = {'content': content, 'name': 'new deep'}
+        data = {'content': content, 'name': 'new-deep'}
         resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_201_CREATED
-        assert self.model_class.objects.count() == self.num_objects + 1
-        last_object = self.model_class.objects.last()
-        assert last_object.project == self.project
-        assert last_object.content == data['content']
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert self.model_class.objects.count() == self.num_objects
+
+    def test_create_with_valid_group(self):
+            data = {}
+            resp = self.auth_client.post(self.url, data)
+            assert resp.status_code == status.HTTP_400_BAD_REQUEST
+            content = """---
+version: 1
+project:
+  name: project1
+  
+matrix:
+  lr:
+    values: [0.1, 0.2, 0.3]
+
+model:
+  model_type: classifier
+
+  graph:
+    input_layers: images
+    layers:
+      - Conv2D:
+          filters: 64
+          kernel_size: [3, 3]
+          strides: [1, 1]
+          activation: relu
+          kernel_initializer: Ones"""
+
+            data = {'content': content, 'name': 'new-deep'}
+            resp = self.auth_client.post(self.url, data)
+            assert resp.status_code == status.HTTP_201_CREATED
+            assert self.model_class.objects.count() == self.num_objects + 1
+            last_object = self.model_class.objects.last()
+            assert last_object.project == self.project
+            assert last_object.content == data['content']

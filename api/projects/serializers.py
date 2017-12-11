@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from rest_framework import fields, serializers
+from rest_framework.exceptions import ValidationError
 
 from experiments.serializers import ExperimentSerializer
 from projects.models import Project, ExperimentGroup
@@ -21,6 +23,18 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         return obj.user.username
+
+    def validate_content(self, content):
+        spec = GroupSpecification.read(content)
+        if spec.matrix_space > 1:
+            # Resume normal creation
+            return content
+
+        # Raise an error to tell the use to use experiment creation instead
+        raise ValidationError('Current experiment group creation could not be peroformed.\n'
+                              'The reason is that the specification sent correspond '
+                              'to an independent experiment.\n'
+                              'Please use `create experiment endpoint`.')
 
 
 class ProjectSerializer(serializers.ModelSerializer):
