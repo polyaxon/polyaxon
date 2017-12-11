@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.project import ExperimentGroupConfig
+
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
 
@@ -22,3 +24,22 @@ class ExperimentGroupClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
+
+    def update_experiment_group(self, experiment_group_uuid, patch_dict):
+        request_url = self._build_url(self._get_http_url(), experiment_group_uuid)
+
+        try:
+            response = self.patch(request_url, json=patch_dict)
+            return ExperimentGroupConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while updating project')
+            return None
+
+    def delete_experiment_group(self, experiment_group_uuid):
+        request_url = self._build_url(self._get_http_url(), experiment_group_uuid)
+        try:
+            response = self.delete(request_url)
+            return response
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while deleting experiment group')
+            return None
