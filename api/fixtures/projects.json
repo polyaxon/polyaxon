@@ -7,7 +7,7 @@
             "updated_at":"2017-12-08T22:18:28.458Z",
             "uuid":"ac6a3340-b926-422a-a449-6e8b8e9dc77f",
             "user":1,
-            "name":"Cats vs Dogs",
+            "name":"cats-vs-dogs",
             "description":"Classify pictures of cats and dogs",
             "is_public":true
         }
@@ -20,7 +20,7 @@
             "updated_at":"2017-12-08T22:41:18.125Z",
             "uuid":"66494475-143e-4ae9-ae68-041a11e979b6",
             "user":1,
-            "name":"Mnist",
+            "name":"mnist",
             "description":"Classic dataset of handwritten images",
             "is_public":true
         }
@@ -33,8 +33,8 @@
             "updated_at":"2017-12-08T22:41:26.144Z",
             "uuid":"1ab20fe4-6d14-4e16-bf8e-986deee470d0",
             "user":1,
-            "name":"Titanic: Machine Learning from Disaster",
-            "description":"Predict survival on the Titanic and get familiar with ML basics",
+            "name":"titanic-machinelearning-from-disaster",
+            "description":"Titanic: Machine Learning from Disaster. Predict survival on the Titanic and get familiar with ML basics",
             "is_public":true
         }
     },
@@ -46,7 +46,7 @@
             "updated_at":"2017-12-08T22:41:33.173Z",
             "uuid":"2a5a5b51-ba31-46b4-a672-ea5d460502a0",
             "user":1,
-            "name":"House Prices: Advanced Regression Tecniques",
+            "name":"house-prices-advanced-regression-tecniques",
             "description":"Predict sales prices and practice feature engineering, RFs, and gradient boosting",
             "is_public":true
         }

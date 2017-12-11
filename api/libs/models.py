@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from django.core.validators import validate_slug
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 
 
 class DescribableModel(models.Model):
-    name = models.CharField(
-        verbose_name=_('name'),
-        max_length=128)
-    description = models.TextField(
-        verbose_name=_('description'),
-        blank=True,
-        null=True)
+    name = models.CharField(max_length=256, validators=[validate_slug])
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         abstract = True

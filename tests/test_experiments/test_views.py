@@ -87,7 +87,8 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         object1 = self.objects[0]
-        data = {'cluster': object1.cluster.id,
+        data = {'name': 'my xp',
+                'cluster': object1.cluster.id,
                 'config': {'run': 'something'}}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED

@@ -13,7 +13,7 @@ class TestExperimentGroupSerializer(BaseTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
-    expected_keys = {'uuid', 'content', 'project', 'user'}
+    expected_keys = {'uuid', 'name', 'description', 'content', 'project', 'user', }
 
     def setUp(self):
         super().setUp()
@@ -43,8 +43,8 @@ class TestProjectSerializer(BaseTest):
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
-    expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at',
-                     'is_public', 'has_code', }
+    expected_keys = {'uuid', 'name', 'description', 'user', 'description', 'created_at',
+                     'updated_at', 'is_public', 'has_code', }
 
     def setUp(self):
         super().setUp()
@@ -74,8 +74,8 @@ class TestProjectDetailSerializer(BaseTest):
     serializer_class = ProjectDetailSerializer
     model_class = Project
     factory_class = ProjectFactory
-    expected_keys = {'uuid', 'name', 'user', 'description', 'created_at', 'updated_at', 'is_public',
-                     'experiments', 'experiment_groups', 'has_code', }
+    expected_keys = {'uuid', 'name', 'description', 'user', 'description', 'created_at',
+                     'updated_at', 'is_public', 'experiments', 'experiment_groups', 'has_code', }
 
     def setUp(self):
         super().setUp()

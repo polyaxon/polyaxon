@@ -205,7 +205,7 @@ model:
           activation: relu
           kernel_initializer: Ones"""
 
-        data = {'content': content}
+        data = {'content': content, 'name': 'new deep'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 1

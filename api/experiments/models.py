@@ -11,11 +11,11 @@ from django.utils.functional import cached_property
 from polyaxon_schemas.polyaxonfile.specification import Specification
 
 from clusters.models import Cluster
-from libs.models import DiffModel
+from libs.models import DiffModel, DescribableModel
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 
-class Experiment(DiffModel):
+class Experiment(DiffModel, DescribableModel):
     """A model that represents experiments."""
 
     uuid = models.UUIDField(
@@ -32,15 +32,6 @@ class Experiment(DiffModel):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='experiments')
-    name = models.CharField(
-        max_length=256,
-        blank=True,
-        null=True,
-        help_text='Name of the experiment')
-    description = models.TextField(
-        blank=True,
-        null=True,
-        help_text='Description of the experiment.')
     experiment_group = models.ForeignKey(
         'projects.ExperimentGroup',
         blank=True,

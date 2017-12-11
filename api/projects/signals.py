@@ -28,6 +28,7 @@ def new_experiment_group(sender, **kwargs):
             # TODO: add logging: using default cluster
             cluster = Cluster.objects.filter(user=instance.user).last()
         Experiment.objects.create(cluster=cluster,
+                                  name='{}-n{}'.format(instance.name, xp),
                                   project=instance.project,
                                   user=instance.user,
                                   experiment_group=instance,

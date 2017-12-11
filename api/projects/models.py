@@ -9,11 +9,11 @@ from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 
-from libs.models import DiffModel
+from libs.models import DiffModel, DescribableModel
 from spawner.utils.constants import ExperimentLifeCycle
 
 
-class Project(DiffModel):
+class Project(DiffModel, DescribableModel):
     """A model that represents a set of experiments to solve a specific problem."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -21,13 +21,6 @@ class Project(DiffModel):
         unique=True,
         null=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='projects')
-    name = models.CharField(
-        max_length=256,
-        help_text='Name of the project.')
-    description = models.TextField(
-        blank=True,
-        null=True,
-        help_text='Description of the project.')
     is_public = models.BooleanField(default=True, help_text='If project is public or private.')
 
     def __str__(self):
@@ -41,7 +34,7 @@ class Project(DiffModel):
         return hasattr(self, 'repo')
 
 
-class ExperimentGroup(DiffModel):
+class ExperimentGroup(DiffModel, DescribableModel):
     """A model that saves Specification/Polyaxonfiles."""
     uuid = models.UUIDField(
         default=uuid.uuid4,

@@ -17,7 +17,7 @@ projects_urlpatterns = [
 ]
 
 experiment_groups_urlpatterns = [
-    url(r'^/experiment_groups/{}/?$'.format(UUID_PATTERN),
+    url(r'^experiment_groups/{}/?$'.format(UUID_PATTERN),
         views.ExperimentGroupDetailView.as_view()),
 ]
 
