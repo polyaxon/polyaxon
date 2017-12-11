@@ -63,7 +63,7 @@ class PolyaxonClient(object):
         return callback, bar
 
     @staticmethod
-    def sizeof_fmt(num, suffix='B'):
+    def format_sizeof(num, suffix='B'):
         """
         Print in human friendly format
         """
@@ -160,7 +160,7 @@ class PolyaxonClient(object):
                 "If you have data files in the current directory, "
                 "please add them directly to your data volume, or upload them "
                 "separately using `polyxon data` command and remove them from here.\n".format(
-                    self.sizeof_fmt(self.MAX_UPLOAD_SIZE)))
+                    self.format_sizeof(self.MAX_UPLOAD_SIZE)))
 
         files = to_list(files)
         if json:
