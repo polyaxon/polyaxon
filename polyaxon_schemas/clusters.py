@@ -104,8 +104,6 @@ class ClusterNodeConfig(BaseConfig):
 
 
 class PolyaxonClusterSchema(Schema):
-    uuid = UUID()
-    user = UUID()
     version_api = fields.Dict()
     nodes = fields.Nested(ClusterNodeSchema, many=True, allow_none=True)
 
@@ -126,8 +124,6 @@ class PolyaxonClusterConfig(BaseConfig):
     SCHEMA = PolyaxonClusterSchema
     IDENTIFIER = 'PolyaxonCluster'
 
-    def __init__(self, uuid, user, version_api, nodes=None):
-        self.uuid = uuid
-        self.user = user
+    def __init__(self, version_api, nodes=None):
         self.version_api = version_api
         self.nodes = nodes

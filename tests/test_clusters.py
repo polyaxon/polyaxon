@@ -53,8 +53,6 @@ class TestClusterConfigs(TestCase):
 
     def test_plx_cluster_config(self):
         config_dict = {
-            'uuid': uuid.uuid4().hex,
-            'user': uuid.uuid4().hex,
             'version_api': {},
             'nodes': [self.create_cluster_node(), self.create_cluster_node()]
         }
