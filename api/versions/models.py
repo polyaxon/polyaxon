@@ -63,3 +63,9 @@ class PlatformVersion(BaseVersion):
     """A model that represents the polyaxon platfom version."""
     LATEST_VERSION = settings.PLATFORM_LATEST_VERSION
     MIN_VERSION = settings.PLATFORM_MIN_VERSION
+
+
+class LibVersion(BaseVersion):
+    """A model that represents the polyaxon lib version."""
+    LATEST_VERSION = settings.LIB_LATEST_VERSION
+    MIN_VERSION = settings.LIB_MIN_VERSION

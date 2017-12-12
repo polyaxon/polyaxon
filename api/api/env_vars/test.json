@@ -21,9 +21,5 @@
   "POLYAXON_DIRS_DATA": "/tmp/plx/data",
   "POLYAXON_DIRS_LOGS": "/tmp/plx/logs",
   "POLYAXON_DIRS_OUTPUTS": "/tmp/plx/outputs",
-  "POLYAXON_DIRS_REPOS": "/tmp/plx/repos",
-  "POLYAXON_CLI_MIN_VERSION": "0.0.1",
-  "POLYAXON_CLI_LATEST_VERSION": "0.0.1",
-  "POLYAXON_PLATFORM_MIN_VERSION": "0.0.1",
-  "POLYAXON_PLATFORM_LATEST_VERSION": "0.0.1"
+  "POLYAXON_DIRS_REPOS": "/tmp/plx/repos"
 }
