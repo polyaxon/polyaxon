@@ -15,3 +15,5 @@ LIB_MIN_VERSION = config.get_string('POLYAXON_LIB_MIN_VERSION',
                                     is_optional=True) or '0.0.0'
 LIB_LATEST_VERSION = config.get_string('POLYAXON_LIB_LATEST_VERSION',
                                        is_optional=True) or '0.0.0'
+CHART_VERSION = config.get_string('POLYAXON_CHART_VERSION',
+                                  is_optional=True) or '0.0.0'

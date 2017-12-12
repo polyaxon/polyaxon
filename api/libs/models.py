@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from django.core.validators import validate_slug
 from django.db import models
+from django.core.cache import cache
 
 
 class DescribableModel(models.Model):
@@ -30,3 +31,29 @@ class TypeModel(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Singleton(DiffModel):
+    """A base model to represents a singleton."""
+
+    class Meta:
+        abstract = True
+
+    def set_cache(self):
+        cache.set(self.__class__.__name__, self)
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(Singleton, self).save(*args, **kwargs)
+        self.set_cache()
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def may_be_update(cls, obj):
+        raise NotImplementedError
+
+    @classmethod
+    def load(cls):
+        raise NotImplementedError

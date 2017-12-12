@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^versions/cli/?$', views.CliVersionView.as_view()),
     url(r'^versions/platform/?$', views.PlatformVersionView.as_view()),
     url(r'^versions/lib/?$', views.LibVersionView.as_view()),
+    url(r'^versions/chart/?$', views.ChartVersionView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
