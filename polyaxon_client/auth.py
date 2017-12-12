@@ -16,11 +16,11 @@ class AuthClient(PolyaxonClient):
     """
     ENDPOINT = "/users"
 
-    def get_user(self):
+    def get_user(self, token):
         request_url = self._get_http_url()
         response = self.get(request_url,
                             headers={"Authorization": "{} {}".format(
-                                self.authentication_type, self.token)})
+                                self.authentication_type, token)})
         try:
             user_dict = response.json()
             response.raise_for_status()

@@ -36,7 +36,7 @@ class TestAuthClient(TestCase):
             body=json.dumps(user),
             content_type='application/json', status=200)
 
-        user_result = self.client.get_user()
+        user_result = self.client.get_user('token_value')
         assert user == user_result.to_dict()
 
     @httpretty.activate
