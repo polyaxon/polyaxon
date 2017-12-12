@@ -15,7 +15,7 @@ from polyaxon_schemas.polyaxonfile.logger import logger
 from polyaxon_cli.utils.clients import PolyaxonClients
 
 PROJECT_CLI_NAME = "polyaxon-cli"
-PROJECT_NAME = "polyaxon"
+PROJECT_LIB_NAME = "polyaxon-lib"
 
 
 def pip_upgrade(project_name=PROJECT_CLI_NAME):
@@ -38,7 +38,7 @@ def check_cli_version():
         logger.info(e)
         sys.exit(0)
 
-    current_version = pkg_resources.get_distribution('polyaxon-cli').version
+    current_version = pkg_resources.get_distribution(PROJECT_CLI_NAME).version
     if LooseVersion(current_version) < LooseVersion(server_version.min_version):
         click.echo("""Your version of CLI ({}) is no longer compatible with server.""".format(
             current_version))
@@ -63,24 +63,41 @@ def check_cli_version():
 
 
 @click.command()
-@click.option('--all', '-a', is_flag=True, default=False,
-              help='Version of the project, if True the version of the cli '
-                   'otherwise the version the polyaxon library.')
-def version(all):
+@click.option('--cli', is_flag=True, default=False, help='Version of the Polyaxon cli.')
+@click.option('--platform', is_flag=True, default=False, help='Version of the Polyaxon cli.')
+@click.option('--lib', is_flag=True, default=False, help='Version of the Polyaxon cli.')
+def version(cli, platform, lib):
     """Prints the current version of the CLI."""
-    project_name = PROJECT_NAME if all else PROJECT_CLI_NAME
-    version = get_version(project_name)
-    logger.info(version)
+    version_client = PolyaxonClients().version
+    cli = cli or not any([cli, platform, lib])
+    if cli:
+        server_version = version_client.get_cli_version()
+        version = get_version(PROJECT_CLI_NAME)
+        click.echo('Current cli version: {}. \n'
+                   'supported cli version {}'.format(version, server_version.to_dict()))
+
+    if lib:
+        server_version = version_client.get_lib_version()
+        version = get_version(PROJECT_LIB_NAME)
+        click.echo('Current lib version: {}. \n'
+                   'supported lib version {}'.format(version, server_version.to_dict()))
+
+    if platform:
+        platform_version = version_client.get_platform_version()
+        chart_version = version_client.get_chart_version()
+        click.echo('You platform version: {}. \n'
+                   'supported lib version {}'.format(chart_version.to_dict(),
+                                                     platform_version.to_dict()))
 
 
 @click.command()
-@click.option('--all', '-a', is_flag=True, default=False,
+@click.option('--lib', '-a', is_flag=True, default=False,
               help='Upgrade the project, if True upgrade the cli '
                    'otherwise upgrade the polyaxon library.')
-def upgrade(all):
+def upgrade(lib):
     """Install/Upgrade polyaxon or polyxon-cli."""
     try:
-        project_name = PROJECT_NAME if all else PROJECT_CLI_NAME
+        project_name = PROJECT_LIB_NAME if lib else PROJECT_CLI_NAME
         pip_upgrade(project_name)
     except Exception as e:
         logger.error(e)
