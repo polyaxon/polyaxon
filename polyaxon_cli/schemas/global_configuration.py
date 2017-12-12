@@ -9,7 +9,9 @@ from polyaxon_schemas.base import BaseConfig
 class GlobalConfigurationSchema(Schema):
     verbose = fields.Bool(allow_none=True)
     host = fields.Str(allow_none=True)
-    working_directory = fields.Str(allow_none=True)
+    http_port = fields.Str(allow_none=True)
+    ws_port = fields.Str(allow_none=True)
+    use_https = fields.Bool(allow_none=True)
 
     class Meta:
         ordered = True
@@ -27,7 +29,14 @@ class GlobalConfigurationConfig(BaseConfig):
     SCHEMA = GlobalConfigurationSchema
     IDENTIFIER = 'global'
 
-    def __init__(self, verbose=False, host='localhost', working_directory='.'):
+    def __init__(self,
+                 verbose=False,
+                 host='localhost',
+                 http_port=8000,
+                 ws_port=1337,
+                 use_https=False):
         self.verbose = verbose
         self.host = host
-        self.working_directory = working_directory
+        self.http_port = http_port
+        self.ws_port = ws_port
+        self.use_https = use_https
