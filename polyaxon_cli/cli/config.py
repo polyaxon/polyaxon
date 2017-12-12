@@ -7,7 +7,7 @@ from polyaxon_cli.managers.config import GlobalConfigManager
 
 
 def validate_options(ctx, param, value):
-    possible_values = ['verbose', 'host', 'working_directory']
+    possible_values = ['verbose', 'host']
     if value and value not in possible_values:
         raise click.BadParameter(
             "Value `{}` is not supported, must one of the value {}".format(value, possible_values))
@@ -16,9 +16,7 @@ def validate_options(ctx, param, value):
 
 @click.group(invoke_without_command=True)
 @click.option('--list', '-l', is_flag=True, help='List all global config values.')
-@click.option('--get', callback=validate_options,
-              help='Get a specific global config value, e.g. polyaxon config --get host')
-def config(list, get):
+def config(list):
     """Command for setting and getting global configurations.
 
     Example:
@@ -35,26 +33,54 @@ def config(list, get):
         config = GlobalConfigManager.get_config()
         click.echo(config.to_dict())
 
-    if get:
-        v = GlobalConfigManager.get_value(get)
-        click.echo(v)
+
+@config.command()
+@click.argument('keys', type=str, nargs=-1)
+def get(keys):
+    """Command for getting global config values by keys.
+
+    e.g. polyaxon config get host http_port
+    """
+    config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
+    if len(keys) == 0:
+        return
+
+    print_values = {}
+    for key in keys:
+        if hasattr(config, key):
+            print_values[key] = getattr(config, key)
+        else:
+            click.echo('Key `{}` is not recognised.'.format(key))
+
+    click.echo(print_values)
 
 
 @config.command()
 @click.option('--verbose', type=bool, help='To set the verbosity of the client')
 @click.option('--host', type=str, help='To set the server endpoint')
-@click.option('--working_directory', type=click.Path(exists=True),
-              help='To set the working directory')
-def set(verbose, host, working_directory):
-    """Command for setting global config values."""
+@click.option('--http_port', type=int, help='To set the http port')
+@click.option('--ws_port', type=int, help='To set the stream port')
+@click.option('--use_https', type=bool, help='To set the https')
+def set(verbose, host, http_port, ws_port, use_https):
+    """Command for setting global config values.
+
+    e.g. polyaxon config set --hots=localhost http_port=80
+    """
     config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
+
     if verbose is not None:
         config.verbose = verbose
 
     if host is not None:
         config.host = host
 
-    if working_directory is not None:
-        config.working_directory = working_directory
+    if http_port is not None:
+        config.http_port = http_port
+
+    if ws_port is not None:
+        config.ws_port = ws_port
+
+    if use_https is not None:
+        config.use_https = use_https
 
     GlobalConfigManager.set_config(config)
