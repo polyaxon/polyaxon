@@ -12,7 +12,7 @@ User = get_user_model()
 
 class RegistrationForm(UserCreationForm):
 
-    username = forms.EmailField(
+    email = forms.EmailField(
         help_text='email address',
         required=True,
         validators=[
@@ -26,10 +26,3 @@ class RegistrationForm(UserCreationForm):
             'required': validators.TOS_REQUIRED,
         }
     )
-
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.email = user.username
-        if commit:
-            user.save()
-        return user
