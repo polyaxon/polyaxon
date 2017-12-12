@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import click
+from polyaxon_client.logger import logger
 
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
@@ -13,7 +14,7 @@ def check_polyaxonfile(file):
         return plx_file
     except Exception as e:
         click.secho("Polyaxonfile is not valid", fg='red')
-        raise PolyaxonFile(e)
+        logger.exception(e)
 
 
 @click.command()
@@ -29,34 +30,44 @@ def check_polyaxonfile(file):
               help='Checks and prints the matrix space of experiments.')
 @click.option('--matrix', '-m', is_flag=True, default=False,
               help='Checks and prints the matrix def.')
-def check(file, all, version, cluster, run_type, project, log_path, matrix, experiments):
+def check(file, all, version, run_type, project, log_path, matrix, experiments):
     """Command for checking a polyaxonfile."""
     plx_file = check_polyaxonfile(file)
 
+    def get_result(value):
+        return click.style('{}'.format(value), fg='yellow')
+
     if version:
-        click.echo('The version is: {}'.format(plx_file.version))
+        click.echo('The version is: {}'.format(get_result(plx_file.version)))
 
     if run_type:
-        click.echo("The run-type is: {}".format(plx_file.run_type))
+        click.echo("The run-type is: {}".format(get_result(plx_file.run_type)))
 
     if project:
-        click.echo("The project definition is: {}".format(plx_file.project.to_dict()))
+        click.echo("The project definition is: {}".format(get_result(plx_file.project.to_dict())))
 
     if log_path:
-        click.echo("The project logging path is: {}".format(plx_file.project_path))
+        click.echo("The project logging path is: {}".format(get_result(plx_file.project_path)))
 
     if matrix:
         declarations = [str(d) for d in plx_file.matrix_declarations]
-        click.echo("The matrix definition is:\n{}".format('\n'.join(declarations)))
+        declarations = get_result('\n'.join(declarations))
+        click.echo("The matrix definition is:\n{}".format(declarations))
 
     if experiments:
-        experiments_def = plx_file.experiments_def
-        if experiments_def[0] == 1:
-            click.echo("One experiment")
-        elif experiments_def[1] == 1:
-            click.echo("The matrix-space is: {} running sequentially".format(experiments_def[0]))
+        num_experiments, concurrency = plx_file.experiments_def
+        if num_experiments == 1:
+            result = get_result('One experiment')
+            click.echo("This polyaxon specification has {}".format(result))
+        elif concurrency == 1:
+            num_experiments = get_result(num_experiments)
+            concurrency = get_result('sequential')
+            click.echo("The matrix-space has {} experiments, "
+                       "with {} runs".format(num_experiments, concurrency))
         else:
-            click.echo("The matrix-space is: {} with {} concurrent runs".format(*experiments_def))
+            num_experiments, concurrency = get_result(num_experiments), get_result(concurrency)
+            click.echo("The matrix-space has {} experiments,"
+                       "with {} concurrent runs".format(num_experiments, concurrency))
 
     if all:
         click.echo("Validated file:\n{}".format(plx_file.parsed_data))
