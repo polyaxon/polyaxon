@@ -42,7 +42,6 @@ class TestClusterClient(TestCase):
         node_uuid = uuid.uuid4().hex
         object = ClusterNodeConfig(uuid=node_uuid,
                                    name='name',
-                                   cluster=uuid.uuid4().hex,
                                    hostname='hostname',
                                    role='Master',
                                    docker_version='v1',
