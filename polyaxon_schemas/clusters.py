@@ -40,19 +40,18 @@ class NodeGPUConfig(BaseConfig):
 class ClusterNodeSchema(Schema):
     uuid = UUID()
     name = fields.Str(allow_none=True)
-    cluster = UUID()
     hostname = fields.Str(allow_none=True)
-    role = fields.Str()
+    role = fields.Str(allow_none=True)
     docker_version = fields.Str(allow_none=True)
-    kubelet_version = fields.Str()
-    os_image = fields.Str()
-    kernel_version = fields.Str()
-    schedulable_taints = fields.Bool()
-    schedulable_state = fields.Bool()
-    memory = fields.Int()
-    n_cpus = fields.Int()
-    n_gpus = fields.Int()
-    status = fields.Str()
+    kubelet_version = fields.Str(allow_none=True)
+    os_image = fields.Str(allow_none=True)
+    kernel_version = fields.Str(allow_none=True)
+    schedulable_taints = fields.Bool(allow_none=True)
+    schedulable_state = fields.Bool(allow_none=True)
+    memory = fields.Int(allow_none=True)
+    n_cpus = fields.Int(allow_none=True)
+    n_gpus = fields.Int(allow_none=True)
+    status = fields.Str(allow_none=True)
     gpus = fields.Nested(NodeGPUSchema, many=True, allow_none=True)
 
     @post_load
@@ -70,24 +69,22 @@ class ClusterNodeConfig(BaseConfig):
 
     def __init__(self,
                  uuid,
-                 name,
-                 cluster,
-                 hostname,
-                 role,
-                 docker_version,
-                 kubelet_version,
-                 os_image,
-                 kernel_version,
-                 schedulable_taints,
-                 schedulable_state,
-                 memory,
-                 n_cpus,
-                 n_gpus,
-                 status,
+                 name=None,
+                 hostname=None,
+                 role=None,
+                 docker_version=None,
+                 kubelet_version=None,
+                 os_image=None,
+                 kernel_version=None,
+                 schedulable_taints=None,
+                 schedulable_state=None,
+                 memory=None,
+                 n_cpus=None,
+                 n_gpus=None,
+                 status=None,
                  gpus=None):
         self.uuid = uuid
         self.name = name
-        self.cluster = cluster
         self.hostname = hostname
         self.role = role
         self.docker_version = docker_version

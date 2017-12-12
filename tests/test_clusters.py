@@ -25,7 +25,6 @@ class TestClusterConfigs(TestCase):
         return {
             'uuid': uuid.uuid4().hex,
             'name': 'node',
-            'cluster': uuid.uuid4().hex,
             'hostname': 'hostname',
             'role': 'master',
             'docker_version': 'v1',
