@@ -1,9 +1,18 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+from distutils.version import LooseVersion
+
+import clint
 import pip
 import pkg_resources
 import click
+import sys
 
+from polyaxon_client.exceptions import PolyaxonShouldExitError
 from polyaxon_schemas.polyaxonfile.logger import logger
 
+from polyaxon_cli.utils.clients import PolyaxonClients
 
 PROJECT_CLI_NAME = "polyaxon-cli"
 PROJECT_NAME = "polyaxon"
@@ -19,6 +28,38 @@ def get_version(pkg):
         return version
     except pkg_resources.DistributionNotFound:
         logger.error('`{}` is not installed'.format(pkg))
+
+
+def check_cli_version():
+    """Check if the current cli version satisfies the server requirements"""
+    try:
+        server_version = PolyaxonClients().version.get_cli_version()
+    except PolyaxonShouldExitError as e:
+        logger.info(e)
+        sys.exit(0)
+
+    current_version = pkg_resources.get_distribution('polyaxon-cli').version
+    if LooseVersion(current_version) < LooseVersion(server_version.min_version):
+        click.echo("""Your version of CLI ({}) is no longer compatible with server.""".format(
+            current_version))
+        if click.confirm("Do you want to upgrade to "
+                         "version {} now?".format(server_version.latest_version)):
+            pip_upgrade()
+            sys.exit(0)
+        else:
+            clint.textui.puts("Your can manually run:")
+            with clint.textui.indent(4):
+                clint.textui.puts("pip install -U polyaxon-cli")
+            clint.textui.puts(
+                "to upgrade to the latest version `{}`".format(server_version.latest_version))
+
+            sys.exit(0)
+    elif LooseVersion(current_version) < LooseVersion(server_version.latest_version):
+        clint.textui.puts("New version of CLI ({}) is now available. To upgrade run:".format(
+            server_version.latest_version
+        ))
+        with clint.textui.indent(4):
+            clint.textui.puts("pip install -U polyaxon-cli")
 
 
 @click.command()
