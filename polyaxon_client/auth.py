@@ -16,7 +16,8 @@ class AuthClient(PolyaxonClient):
     """
     ENDPOINT = "/users"
 
-    def get_user(self, token):
+    def get_user(self, token=None):
+        token = token or self.token
         request_url = self._get_http_url()
         response = self.get(request_url,
                             headers={"Authorization": "{} {}".format(
