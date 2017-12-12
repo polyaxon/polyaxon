@@ -64,3 +64,10 @@ def logout():
     """Logout of Polyaxon."""
     AuthConfigManager.purge()
     logger.info("You are logged out")
+
+
+@click.command()
+def whoami():
+    """Show current logged Polyaxon user."""
+    user = PolyaxonClients().auth.get_user()
+    click.echo("Username: {username}, Email: {email}".format(**user.to_dict()))
