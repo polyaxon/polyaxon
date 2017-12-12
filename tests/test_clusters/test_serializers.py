@@ -75,7 +75,7 @@ class TestClusterNodeSerializer(BaseTest):
 class TestClusterNodeDetailsSerializer(BaseTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
-    expected_keys = {'uuid', 'name', 'cluster', 'hostname', 'role', 'docker_version',
+    expected_keys = {'uuid', 'name', 'hostname', 'role', 'docker_version',
                      'kubelet_version', 'os_image', 'kernel_version',
                      'schedulable_taints', 'schedulable_state', 'is_current',
                      'memory', 'n_cpus', 'n_gpus', 'status', 'gpus'}
@@ -93,7 +93,6 @@ class TestClusterNodeDetailsSerializer(BaseTest):
 
         assert set(data.keys()) == self.expected_keys
         assert data.pop('uuid') == self.obj1.uuid.hex
-        assert data.pop('cluster') == self.obj1.cluster.id
         assert len(data.pop('gpus')) == 1
 
         for k, v in data.items():

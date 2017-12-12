@@ -31,7 +31,7 @@ class ClusterNodeDetailSerializer(ClusterNodeSerializer):
 
     class Meta:
         model = ClusterNode
-        exclude = ('id',)
+        exclude = ('id', 'cluster',)
 
 
 class ClusterSerializer(serializers.ModelSerializer):
