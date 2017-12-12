@@ -21,7 +21,7 @@ experiments_urlpatterns = [
         views.ExperimentStatusDetailView.as_view()),
     url(r'^experiments/{}/jobs/?$'.format(EXPERIMENT_UUID_PATTERN),
         views.ExperimentJobListView.as_view()),
-    # url(r'^experiments/{}/stop/?$'.format(UUID_PATTERN), views.ExperimentStopView.as_view()),
+    url(r'^experiments/{}/stop/?$'.format(UUID_PATTERN), views.ExperimentStopView.as_view()),
     url(r'^experiments/{}/restart/?$'.format(UUID_PATTERN), views.ExperimentRestartView.as_view()),
 ]
 

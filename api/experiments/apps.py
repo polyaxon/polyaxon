@@ -11,6 +11,7 @@ class ExperimentsConfig(AppConfig):
     def ready(self):
         from experiments.signals import (
             new_experiment,
+            experiment_deleted,
             new_experiment_job,
             new_experiment_job_status,
         )

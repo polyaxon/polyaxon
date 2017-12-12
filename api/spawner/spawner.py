@@ -353,7 +353,7 @@ class K8SSpawner(K8SManager):
             TaskType.PS: ps_resp
         }
 
-    def delete_experiment(self):
+    def stop_experiment(self):
         self.delete_cluster_config_map()
         self.delete_master()
         self.delete_worker()

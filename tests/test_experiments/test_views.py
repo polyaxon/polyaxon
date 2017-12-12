@@ -630,3 +630,24 @@ class TestRestartExperimentViewV1(BaseViewTest):
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 2
+
+
+class TestStopExperimentViewV1(BaseViewTest):
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    HAS_AUTH = False
+
+    def setUp(self):
+        super().setUp()
+        self.object = self.factory_class()
+        self.url = '/{}/experiments/{}/stop'.format(API_V1, self.object.uuid.hex)
+        self.queryset = self.model_class.objects.all()
+
+    def test_restart(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('experiments.tasks.stop_experiment.delay') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1

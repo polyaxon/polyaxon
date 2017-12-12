@@ -58,6 +58,7 @@ class CeleryTasks(object):
     """Normal celery tasks."""
     EXPERIMENTS_BUILD = 'experiments_build'
     EXPERIMENTS_START = 'experiments_start'
+    EXPERIMENTS_STOP = 'experiments_stop'
     EXPERIMENTS_START_GROUP = 'experiments_start_group'
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
@@ -103,6 +104,7 @@ CELERY_TASK_QUEUES = (
 
 CELERY_TASK_ROUTES = {
     CeleryTasks.EXPERIMENTS_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.EXPERIMENTS_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_START_GROUP: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},

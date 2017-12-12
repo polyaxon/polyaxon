@@ -23,6 +23,7 @@ from experiments.serializers import (
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer)
+from experiments.tasks import stop_experiment
 from libs.views import ListCreateAPIView
 from projects.models import Project, ExperimentGroup
 
@@ -88,6 +89,17 @@ class ExperimentRestartView(CreateAPIView):
         )
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+
+class ExperimentStopView(CreateAPIView):
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentDetailSerializer
+    lookup_field = 'uuid'
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        stop_experiment.delay(epxermet_id=obj.id)
+        return Response(status=status.HTTP_200_OK)
 
 
 class ExperimentViewMixin(object):

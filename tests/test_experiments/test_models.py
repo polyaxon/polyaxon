@@ -114,3 +114,10 @@ class TestExperimentModel(BaseTest):
         for job in jobs:
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
+
+    def test_delete_experiment_triggers_experiment_stop_mocks(self):
+        experiment = ExperimentFactory()
+        with patch('experiments.tasks.stop_experiment.delay') as mock_fct:
+            experiment.delete()
+
+        assert mock_fct.call_count == 1

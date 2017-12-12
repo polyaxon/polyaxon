@@ -20,7 +20,6 @@ logger = logging.getLogger('polyaxon.tasks.experiments')
 
 
 def get_valid_experiment(experiment_id):
-
     try:
         experiment = Experiment.objects.get(id=experiment_id)
     except Experiment.DoesNotExist:
@@ -57,7 +56,6 @@ def build_experiment(experiment_id):
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START)
 def start_experiment(experiment_id):
-
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         return
@@ -67,7 +65,8 @@ def start_experiment(experiment_id):
 
     # Use spawner to start the experiment
     spawner = K8SSpawner(project_uuid=experiment.project.uuid.hex,
-                         experiment_group_uuid=experiment.experiment_group.uuid.hex if experiment.experiment_group else '',
+                         experiment_group_uuid=(experiment.experiment_group.uuid.hex if
+                                                experiment.experiment_group else ''),
                          experiment_uuid=experiment.uuid.hex,
                          spec_config=experiment.config,
                          k8s_config=settings.K8S_CONFIG,
@@ -90,6 +89,22 @@ def start_experiment(experiment_id):
         job_uuid = ps['pod']['metadata']['labels']['job_id']
         job_uuid = uuid.UUID(job_uuid)
         ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=ps)
+
+
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_STOP)
+def stop_experiment(experiment_id):
+    experiment = get_valid_experiment(experiment_id=experiment_id)
+    spawner = K8SSpawner(project_uuid=experiment.project.uuid.hex,
+                         experiment_group_uuid=(experiment.experiment_group.uuid.hex if
+                                                experiment.experiment_group else ''),
+                         experiment_uuid=experiment.uuid.hex,
+                         spec_config=experiment.config,
+                         k8s_config=settings.K8S_CONFIG,
+                         namespace=settings.K8S_NAMESPACE,
+                         in_cluster=True,
+                         use_sidecar=True,
+                         sidecar_config=config.get_requested_params())
+    spawner.stop_experiment()
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)

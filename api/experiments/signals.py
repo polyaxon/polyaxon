@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
-from experiments.tasks import check_experiment_status, build_experiment
+from experiments.tasks import check_experiment_status, build_experiment, stop_experiment
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")
@@ -23,6 +23,12 @@ def new_experiment(sender, **kwargs):
     if instance.is_independent:
         # Start building the experiment and then Schedule it to be picked by the spawner
         build_experiment.delay(experiment_id=instance.id)
+
+
+@receiver(post_delete, sender=Experiment, dispatch_uid="experiment_deleted")
+def experiment_deleted(sender, **kwargs):
+    instance = kwargs['instance']
+    stop_experiment.delay(experiment_id=instance.id)
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
