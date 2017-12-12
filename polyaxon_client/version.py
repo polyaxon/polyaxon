@@ -22,5 +22,12 @@ class VersionClient(PolyaxonClient):
         request_url = self._build_url(self._get_http_url(), 'platform')
         response = self.get(request_url)
         data_dict = response.json()
-        logger.debug("CLI Version info :{}".format(data_dict))
+        logger.debug("Platform Version info :{}".format(data_dict))
+        return CliVersionConfig.from_dict(data_dict)
+
+    def get_lib_version(self):
+        request_url = self._build_url(self._get_http_url(), 'lib')
+        response = self.get(request_url)
+        data_dict = response.json()
+        logger.debug("Lib Version info :{}".format(data_dict))
         return CliVersionConfig.from_dict(data_dict)
