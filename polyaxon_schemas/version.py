@@ -12,14 +12,12 @@ class BaseVersionSchema(Schema):
 
 
 class BaseVersionConfig(BaseConfig):
-
     def __init__(self, latest_version, min_version):
         self.latest_version = latest_version
         self.min_version = min_version
 
 
 class CliVersionSchema(BaseVersionSchema):
-
     @post_load
     def make(self, data):
         return CliVersionConfig(**data)
@@ -33,7 +31,7 @@ class CliVersionConfig(BaseVersionConfig):
     """
     Args:
         latest_version: the newest cli available on PIP.
-        min_version: the version below which CLI should fail.
+        min_version: the version below which cli should fail.
     """
     SCHEMA = CliVersionSchema
     IDENTIFIER = 'cli_version'
@@ -52,8 +50,28 @@ class PlatformVersionSchema(BaseVersionSchema):
 class PlatformVersionConfig(BaseVersionConfig):
     """
     Args:
-        latest_version: the newest cli available on PIP.
-        min_version: the version below which CLI should fail.
+        latest_version: the newest platform available on helm.
+        min_version: the version below which platform should fail.
     """
     SCHEMA = PlatformVersionSchema
     IDENTIFIER = 'platform_version'
+
+
+class LibVersionSchema(BaseVersionSchema):
+    @post_load
+    def make(self, data):
+        return LibVersionConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return LibVersionConfig.remove_reduced_attrs(data)
+
+
+class LibVersionConfig(BaseVersionConfig):
+    """
+    Args:
+        latest_version: the newest lib available on PIP.
+        min_version: the version below which lib should fail.
+    """
+    SCHEMA = LibVersionSchema
+    IDENTIFIER = 'lib_version'
