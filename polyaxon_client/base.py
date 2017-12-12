@@ -147,7 +147,8 @@ class PolyaxonClient(object):
         except requests.exceptions.ConnectionError as exception:
             logger.debug("Exception: %s", exception, exc_info=True)
             raise PolyaxonShouldExitError(
-                "Cannot connect to the Polyaxon server. Check your internet connection.")
+                "Cannot connect to the Polyaxon server on `{}`.\n"
+                "Check your host and ports configuration and your internet connection.".format(url))
 
         logger.debug("Response Content: %s, Headers: %s" % (response.content, response.headers))
         self.check_response_status(response, url)
@@ -219,7 +220,8 @@ class PolyaxonClient(object):
         except requests.exceptions.ConnectionError as exception:
             logger.debug("Exception: {}".format(exception))
             raise PolyaxonShouldExitError(
-                "Cannot connect to the Polyaxon server. Check your internet connection.")
+                "Cannot connect to the Polyaxon server on `{}`.\n"
+                "Check your host and ports configuration and your internet connection.".format(url))
 
     def download_tar(self, url, untar=True, delete_after_untar=False):
         """
