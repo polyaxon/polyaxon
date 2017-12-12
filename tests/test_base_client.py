@@ -24,6 +24,8 @@ class TestBaseClient(TestCase):
                                      use_https=False)
 
     def test_base_urls(self):
+        assert self.client.http_host == 'http://{}:{}'.format(self.host, self.http_port)
+        assert self.client.ws_host == 'ws://{}:{}'.format(self.host, self.ws_port)
         assert self.client.base_url == 'http://{}:{}/api/v1'.format(self.host, self.http_port)
         assert self.client.base_ws_url == 'ws://{}:{}/ws/v1'.format(self.host, self.ws_port)
 
