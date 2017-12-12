@@ -109,7 +109,7 @@ class TestClusterNodeDetailsSerializer(BaseTest):
 class TestClusterDetailSerializer(BaseTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
-    expected_keys = {'version_api', 'created_at', 'updated_at', 'nodes', }
+    expected_keys = {'uuid', 'version_api', 'created_at', 'updated_at', 'nodes', }
 
     def setUp(self):
         super().setUp()
@@ -122,6 +122,7 @@ class TestClusterDetailSerializer(BaseTest):
 
         assert set(data.keys()) == self.expected_keys
         assert len(data.pop('nodes')) == 2
+        assert data.pop('uuid') == self.cluster.uuid.hex
         data.pop('created_at')
         data.pop('updated_at')
 

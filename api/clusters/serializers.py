@@ -35,9 +35,10 @@ class ClusterNodeDetailSerializer(ClusterNodeSerializer):
 
 
 class ClusterSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
     nodes = ClusterNodeSerializer(many=True)
 
     class Meta:
         model = Cluster
-        fields = ('version_api', 'created_at', 'updated_at', 'nodes', )
+        fields = ('uuid', 'version_api', 'created_at', 'updated_at', 'nodes', )
 

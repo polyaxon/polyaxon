@@ -3,28 +3,27 @@ from __future__ import absolute_import, division, print_function
 
 import uuid
 
+from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.core.cache import cache
 from django.db import models
 
-from libs.models import DiffModel
+from libs.models import DiffModel, Singleton
 from spawner.utils import nodes
 from spawner.utils.constants import NodeLifeCycle, NodeRoles
 
 
-class Cluster(DiffModel):
+class Cluster(Singleton):
     """A model that represents the cluster api version."""
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     version_api = JSONField(help_text='The cluster version api infos')
 
-    def set_cache(self):
-        cache.set(self.__class__.__name__, self)
-
-    def save(self, *args, **kwargs):
-        self.pk = 1
-        super(Cluster, self).save(*args, **kwargs)
-        self.set_cache()
-
-    def delete(self, *args, **kwargs):
+    @classmethod
+    def may_be_update(cls, obj):
         pass
 
     @classmethod
@@ -33,7 +32,10 @@ class Cluster(DiffModel):
             try:
                 obj = cls.objects.get(pk=1)
             except cls.DoesNotExist:
-                obj = cls.objects.create(pk=1, version_api={})
+                params = {'version_api': {}}
+                if settings.CLUSTER_ID:
+                    params['uuid'] = settings.CLUSTER_ID
+                obj = cls.objects.create(pk=1, **params)
                 obj.set_cache()
         else:
             obj = cache.get(cls.__name__)

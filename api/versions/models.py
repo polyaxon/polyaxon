@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.core.cache import cache
 
-from libs.models import DiffModel, Singleton
+from libs.models import Singleton
 
 
 class BaseValidationVersion(Singleton):
@@ -24,7 +24,7 @@ class BaseValidationVersion(Singleton):
             obj.min_version = cls.MIN_VERSION
             obj.latest_version = cls.LATEST_VERSION
             obj.save()
-        obj.set_cache()
+            obj.set_cache()
 
     @classmethod
     def load(cls):
@@ -36,6 +36,7 @@ class BaseValidationVersion(Singleton):
                     pk=1,
                     min_version=settings.CLI_MIN_VERSION,
                     latest_version=settings.CLI_LATEST_VERSION)
+                obj.set_cache()
         else:
             obj = cache.get(cls.__name__)
 
