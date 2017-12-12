@@ -47,6 +47,7 @@ spec:
         args: ["python3", "api/manage.py",  "monitor_namespace", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
@@ -66,6 +67,7 @@ spec:
         args: ["python3", "api/manage.py",  "monitor_statuses", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
@@ -85,6 +87,7 @@ spec:
         args: ["python3", "api/manage.py",  "monitor_resources", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
         env:
         {{ include "config.global" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}

@@ -160,6 +160,16 @@ global config
   value: {{ .Values.types.experiment }}
 {{- end -}}
 
+{{/*
+versions config
+*/}}
+{{- define "config.versions" }}
+- name: POLYAXON_CHART_VERSION
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}
+      key: chart-version
+{{- end -}}
 
 {{/*
 django config

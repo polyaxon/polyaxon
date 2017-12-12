@@ -46,6 +46,7 @@ spec:
         args: ["celery", "-A", "api", "beat", "--loglevel=DEBUG"]
         env:
         {{ include "config.global" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
