@@ -21,7 +21,6 @@ def check_polyaxonfile(file):
 @click.option('--all', '-a', is_flag=True, default=False,
               help='Checks and prints the validated file.')
 @click.option('--version', '-v', is_flag=True, default=False, help='Checks and prints the version.')
-@click.option('--cluster', is_flag=True, default=False, help='Checks and prints the cluster def.')
 @click.option('--run-type', is_flag=True, default=False, help='Checks and prints the run_type.')
 @click.option('--project', '-p', is_flag=True, default=False,
               help='Checks and prints the project def.')
@@ -36,14 +35,6 @@ def check(file, all, version, cluster, run_type, project, log_path, matrix, expe
 
     if version:
         click.echo('The version is: {}'.format(plx_file.version))
-
-    if cluster:
-        for xp in range(plx_file.matrix_space):
-            cluster_def, is_distributed = plx_file.get_cluster_def_at(xp)
-            click.echo('The cluster definition for experiment {} is {} with config: {}'.format(
-                xp + 1,
-                'distributed' if is_distributed else 'not distributed',
-                cluster_def))
 
     if run_type:
         click.echo("The run-type is: {}".format(plx_file.run_type))
