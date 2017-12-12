@@ -2,11 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 import click
-import webbrowser
 
 import sys
 
-from polyaxon_client.auth import AuthClient
 from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 from polyaxon_schemas.polyaxonfile.logger import logger
 
@@ -42,8 +40,7 @@ def login(token, username, password):
         click.confirm('Authentication token page will now open in your browser. Continue?',
                       abort=True, default=True)
 
-        webbrowser.open(cli_info_url)
-
+        click.launch(cli_info_url)
     logger.info("Please copy and paste the authentication token.")
     access_code = click.prompt('This is an invisible field. Paste token and press ENTER',
                                type=str, hide_input=True)
