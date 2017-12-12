@@ -75,3 +75,27 @@ class LibVersionConfig(BaseVersionConfig):
     """
     SCHEMA = LibVersionSchema
     IDENTIFIER = 'lib_version'
+
+
+class ChartVersionSchema(Schema):
+    version = fields.Str()
+
+    @post_load
+    def make(self, data):
+        return ChartVersionConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ChartVersionConfig.remove_reduced_attrs(data)
+
+
+class ChartVersionConfig(BaseConfig):
+    """
+    Args:
+        version: the current installed chart version.
+    """
+    SCHEMA = ChartVersionSchema
+    IDENTIFIER = 'chart_version'
+
+    def __init__(self, version):
+        self.version = version
