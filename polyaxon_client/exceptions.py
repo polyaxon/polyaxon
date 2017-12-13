@@ -14,7 +14,7 @@ class PolyaxonShouldExitError(PolyaxonException):
 
 class PolyaxonHTTPError(PolyaxonException):
     def __init__(self, endpoint, response, message=None, status_code=None):
-        super().__init__()
+        super(PolyaxonHTTPError, self).__init__()
         self.endpoint = endpoint
         self.response = response
         self.message = getattr(self, 'message', message)
