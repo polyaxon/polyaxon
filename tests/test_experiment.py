@@ -19,10 +19,14 @@ from polyaxon_schemas.polyaxonfile.constants import TASK_NAME
 
 class TestExperimentConfigs(TestCase):
     def test_experiment_config(self):
-        config_dict = {'name': 'test',
-                       'config': {},
-                       'uuid': uuid.uuid4().hex,
-                       'project': uuid.uuid4().hex}
+        config_dict = {
+            'name': 'test',
+            'uuid': uuid.uuid4().hex,
+            'project': uuid.uuid4().hex,
+            'group': uuid.uuid4().hex,
+            'last_status': 'Running',
+            'num_jobs': 1,
+        }
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
@@ -33,11 +37,14 @@ class TestExperimentConfigs(TestCase):
                        'uuid': uuid.uuid4().hex,
                        'project': uuid.uuid4().hex,
                        'group': uuid.uuid4().hex,
+                       'last_status': 'Running',
+                       'num_jobs': 1,
                        'jobs': [ExperimentJobConfig(uuid.uuid4().hex,
                                                     uuid.uuid4().hex,
                                                     datetime.now(),
                                                     definition='').to_dict()]}
         config = ExperimentConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
         assert config.to_dict() == config_dict
 
     def test_experiment_job_config(self):

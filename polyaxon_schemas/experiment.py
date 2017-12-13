@@ -42,8 +42,13 @@ class ExperimentSchema(Schema):
     project = UUID(allow_none=True)
     group = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
+    last_status = fields.Str(allow_none=True)
+    started_at = fields.DateTime(allow_none=True)
+    finished_at = fields.DateTime(allow_none=True)
+    is_clone = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
     content = fields.Str(allow_none=True)
+    num_jobs = fields.Int(allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
     class Meta:
@@ -61,25 +66,36 @@ class ExperimentSchema(Schema):
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = ['description', 'group', 'jobs', 'content']
+    REDUCED_ATTRIBUTES = ['description', 'config', 'jobs', 'content',
+                          'started_at', 'finished_at', 'is_clone']
 
     def __init__(self,
                  name,
-                 config=None,
-                 content=None,
                  uuid=None,
                  project=None,
                  group=None,
-                 jobs=None,
-                 description=None):
+                 description=None,
+                 last_status=None,
+                 started_at=None,
+                 finished_at=None,
+                 is_clone=None,
+                 config=None,
+                 content=None,
+                 num_jobs=0,
+                 jobs=None):
         self.name = name
-        self.config = config  # The json compiled content of this experiment
-        self.content = content  # The yaml content when the experiment is independent
         self.uuid = uuid
         self.project = project
         self.group = group
-        self.jobs = jobs
         self.description = description
+        self.last_status = last_status
+        self.started_at = started_at
+        self.finished_at = finished_at
+        self.is_clone = is_clone
+        self.config = config  # The json compiled content of this experiment
+        self.content = content  # The yaml content when the experiment is independent
+        self.num_jobs = num_jobs
+        self.jobs = jobs
 
 
 class ExperimentStatusSchema(Schema):

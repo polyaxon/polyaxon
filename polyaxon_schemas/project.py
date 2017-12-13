@@ -15,6 +15,7 @@ class ExperimentGroupSchema(Schema):
     description = fields.Str(allow_none=True)
     content = fields.Str()
     project = UUID(allow_none=True)
+    num_experiments = fields.Int(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
     class Meta:
@@ -40,12 +41,14 @@ class ExperimentGroupConfig(BaseConfig):
                  content=None,
                  uuid=None,
                  project=None,
+                 num_experiments=0,
                  experiments=None,):
         self.name = name
         self.description = description
         self.content = content
         self.uuid = uuid
         self.project = project
+        self.num_experiments = num_experiments
         self.experiments = experiments
 
 
@@ -54,6 +57,8 @@ class ProjectSchema(Schema):
     uuid = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)
+    num_experiments = fields.Int(allow_none=True)
+    num_experiment_groups = fields.Int(allow_none=True)
     experiment_groups = fields.Nested(ExperimentGroupSchema, many=True, allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
@@ -79,11 +84,15 @@ class ProjectConfig(BaseConfig):
                  uuid=None,
                  description=None,
                  is_public=True,
+                 num_experiments=0,
+                 num_experiment_groups=0,
                  experiments=None,
                  experiment_groups=None):
         self.name = name
         self.uuid = uuid
         self.description = description
         self.is_public = is_public
+        self.num_experiments = num_experiments
+        self.num_experiment_groups = num_experiment_groups
         self.experiments = experiments
         self.experiment_groups = experiment_groups

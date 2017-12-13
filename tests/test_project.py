@@ -18,7 +18,13 @@ class TestProjectConfigs(TestCase):
             ProjectConfig.from_dict(config_dict)
 
     def test_project_config(self):
-        config_dict = {'name': 'test', 'description': '', 'is_public': True}
+        config_dict = {
+            'name': 'test',
+            'description': '',
+            'is_public': True,
+            'num_experiments': 0,
+            'num_experiment_groups': 0,
+        }
         config = ProjectConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
@@ -46,6 +52,7 @@ class TestProjectConfigs(TestCase):
                        'content': 'some content',
                        'uuid': uuid_value,
                        'project': uuid_value,
+                       'num_experiments': 0,
                        'experiments': [
                            ExperimentConfig(name='name',
                                             config={},
