@@ -9,5 +9,5 @@ class AuthConfigManager(BaseConfigManager):
     """Manages access token configuration .plxauthconfig file."""
 
     IS_GLOBAL = True
-    CONFIG_FILE_NAME = '.plxauthconfig'
+    CONFIG_FILE_NAME = '.plxauth'
     CONFIG = AccessTokenConfig

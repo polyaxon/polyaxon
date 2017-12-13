@@ -6,10 +6,9 @@ from polyaxon_schemas.project import ProjectConfig
 from polyaxon_cli.managers.base import BaseConfigManager
 
 
-class ProjectConfigManager(BaseConfigManager):
+class ProjectManager(BaseConfigManager):
     """Manages access token configuration .plxprojectconfig file."""
 
     IS_GLOBAL = False
-    CONFIG_FILE_NAME = '.plxprojectconfig'
+    CONFIG_FILE_NAME = '.plxproject'
     CONFIG = ProjectConfig
-    INIT_COMMAND = True

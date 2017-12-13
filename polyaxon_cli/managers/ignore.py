@@ -3,8 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon_schemas.polyaxonfile.logger import logger
-
+from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.base import BaseConfigManager
 from polyaxon_cli.utils.constants import DEFAULT_IGNORE_LIST
 from polyaxon_cli.utils.files import matches_glob_list, unix_style_path
@@ -16,24 +15,12 @@ class IgnoreManager(BaseConfigManager):
     CONFIG_FILE_NAME = '.plxignore'
 
     @classmethod
-    def set_config(cls, config=None):
-        config_file_path = cls.get_config_file_path()
-        if os.path.isfile(config_file_path):
-            logger.debug("{} file already present at {}".format(
-                cls.CONFIG_FILE_NAME, config_file_path))
-            return
-
-        logger.debug("Setting default {} in the file {}".format(
-            cls.CONFIG_FILE_NAME, config_file_path))
-
-        with open(config_file_path, "w") as config_file:
-            config_file.write(config or DEFAULT_IGNORE_LIST)
+    def init_config(cls):
+        cls.set_config(DEFAULT_IGNORE_LIST)
 
     @classmethod
     def get_config(cls):
-        # Remove a preceding '/'. The glob matcher we use will interpret a
-        # pattern starging with a '/' as an absolute path, so we remove the
-        # '/'. For details on the glob matcher, see:
+        # For details on the glob matcher, see:
         # https://docs.python.org/3/library/pathlib.html#pathlib.PurePath.match
         def trim_slash_prefix(path):
             if path.startswith('/'):
