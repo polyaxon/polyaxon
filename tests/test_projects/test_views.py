@@ -103,7 +103,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert resp.data['num_experiment_groups'] == 2
 
     def test_get_with_project_name(self):
-        url = '/{}/projects/{}/'.format(API_V1, self.object.name)
+        url = '/{}/project_names/{}/'.format(API_V1, self.object.name)
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data

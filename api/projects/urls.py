@@ -12,7 +12,7 @@ projects_urlpatterns = [
         views.ProjectListView.as_view()),
     url(r'^projects/{}/?$'.format(UUID_PATTERN),
         views.ProjectDetailView.as_view()),
-    url(r'^projects/{}/?$'.format(SLUG_NAME_PATTERN),
+    url(r'^project_names/{}/?$'.format(SLUG_NAME_PATTERN),
         views.ProjectDetailByNameView.as_view()),
     url(r'^projects/{}/experiment_groups/?$'.format(UUID_PATTERN),
         views.ExperimentGroupListView.as_view()),
