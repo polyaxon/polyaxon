@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import sys
 from polyaxon_client.auth import AuthClient
 from polyaxon_client.cluster import ClusterClient
 from polyaxon_client.experiment import ExperimentClient
@@ -11,6 +12,7 @@ from polyaxon_client.version import VersionClient
 
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.config import GlobalConfigManager
+from polyaxon_cli.utils.formatting import Printer
 
 
 class PolyaxonClients(object):
@@ -55,3 +57,9 @@ class PolyaxonClients(object):
     @property
     def job(self):
         return JobClient(**self.params)
+
+    @staticmethod
+    def handle_response(response, error_message):
+        if not response:
+            Printer.print_error(error_message)
+            sys.exit(0)
