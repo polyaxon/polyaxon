@@ -167,16 +167,10 @@ def resources(experiment):
     ```
     """
     try:
-        response = PolyaxonClients().experiment.resources(experiment)
-        PolyaxonClients.handle_response(
-            response, error_message='no resources for experiment `{}`'.format(experiment))
+        PolyaxonClients().experiment.resources(experiment)
     except PolyaxonShouldExitError as e:
         logger.exception(e)
         sys.exit(0)
-
-    response = response.to_dict()
-    Printer.print_header("Streaming experiment status:")
-    dict_tabulate(response)
 
 
 @experiment.command()
@@ -190,13 +184,7 @@ def logs(experiment):
     ```
     """
     try:
-        response = PolyaxonClients().experiment.logs(experiment)
-        PolyaxonClients.handle_response(
-            response, error_message='no logs for experiment `{}`'.format(experiment))
+        PolyaxonClients().experiment.logs(experiment)
     except PolyaxonShouldExitError as e:
         logger.exception(e)
         sys.exit(0)
-
-    response = response.to_dict()
-    Printer.print_header("Streamin experiment logs:")
-    dict_tabulate(response)
