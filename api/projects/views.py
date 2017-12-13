@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import uuid
-
-from django.http import Http404
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     RetrieveDestroyAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -24,7 +22,11 @@ class ProjectListView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         # TODO: update when we allow platform usage without authentication
-        serializer.save(user=self.request.user)
+        project = serializer.validated_data['name']
+        user = self.request.user
+        if self.queryset.filter(user=user, name=project).count() > 0:
+            raise ValidationError('A project with name `{}` already exists.'.format(project))
+        serializer.save(user=user)
 
 
 class ProjectDetailView(RetrieveUpdateDestroyAPIView):
