@@ -10,8 +10,8 @@ import click
 import sys
 
 from polyaxon_client.exceptions import PolyaxonShouldExitError
-from polyaxon_schemas.polyaxonfile.logger import logger
 
+from polyaxon_cli.logger import logger
 from polyaxon_cli.utils.clients import PolyaxonClients
 
 PROJECT_CLI_NAME = "polyaxon-cli"
@@ -35,7 +35,7 @@ def check_cli_version():
     try:
         server_version = PolyaxonClients().version.get_cli_version()
     except PolyaxonShouldExitError as e:
-        logger.info(e)
+        logger.exception(e)
         sys.exit(0)
 
     current_version = pkg_resources.get_distribution(PROJECT_CLI_NAME).version

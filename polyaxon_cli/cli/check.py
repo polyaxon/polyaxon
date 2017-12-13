@@ -2,9 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import click
-from polyaxon_client.logger import logger
 
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
+
+from polyaxon_client.logger import logger
 
 
 def check_polyaxonfile(file):

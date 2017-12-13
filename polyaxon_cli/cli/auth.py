@@ -7,8 +7,8 @@ import sys
 
 from polyaxon_client.exceptions import PolyaxonShouldExitError
 from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
-from polyaxon_schemas.polyaxonfile.logger import logger
 
+from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 
@@ -34,7 +34,7 @@ def login(token, username, password):
         try:
             access_code = auth_client.login(credentials=credentials)
         except PolyaxonShouldExitError as e:
-            logger.info(e)
+            logger.exception(e)
             sys.exit(0)
 
         if not access_code:
@@ -64,7 +64,7 @@ def login(token, username, password):
     try:
         AuthConfigManager.set_config(access_token)
     except PolyaxonShouldExitError as e:
-        logger.info(e)
+        logger.exception(e)
         sys.exit(0)
 
     click.secho("Login Successful", fg='green')
