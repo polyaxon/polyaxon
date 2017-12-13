@@ -18,7 +18,6 @@ from experiments.models import (
     ExperimentJobStatus)
 from experiments.serializers import (
     ExperimentSerializer,
-    ExperimentDetailSerializer,
     ExperimentCreateSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
@@ -67,13 +66,13 @@ class GroupExperimentListView(ListAPIView):
 
 class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
-    serializer_class = ExperimentDetailSerializer
+    serializer_class = ExperimentSerializer
     lookup_field = 'uuid'
 
 
 class ExperimentRestartView(CreateAPIView):
     queryset = Experiment.objects.all()
-    serializer_class = ExperimentDetailSerializer
+    serializer_class = ExperimentSerializer
     lookup_field = 'uuid'
 
     def post(self, request, *args, **kwargs):
@@ -93,7 +92,7 @@ class ExperimentRestartView(CreateAPIView):
 
 class ExperimentStopView(CreateAPIView):
     queryset = Experiment.objects.all()
-    serializer_class = ExperimentDetailSerializer
+    serializer_class = ExperimentSerializer
     lookup_field = 'uuid'
 
     def post(self, request, *args, **kwargs):

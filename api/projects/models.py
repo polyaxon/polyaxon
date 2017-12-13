@@ -60,15 +60,26 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     @property
     def pending_experiments(self):
-        return self.experiments.filter(status__status=ExperimentLifeCycle.CREATED)
+        experiments = []
+        for experiment in self.experiments.filter(statuses__status=ExperimentLifeCycle.CREATED):
+            if experiment.last_status == ExperimentLifeCycle.CREATED:
+                experiments.append(experiment)
+
+        return experiments
 
     @property
     def running_experiments(self):
-        return self.experiments.filter(status__status__in=ExperimentLifeCycle.RUNNING_STATUS)
+        experiments = []
+        for experiment in self.experiments.filter(
+                statuses__status__in=ExperimentLifeCycle.RUNNING_STATUS):
+            if experiment.last_status in ExperimentLifeCycle.RUNNING_STATUS:
+                experiments.append(experiment)
+
+        return experiments
 
     @property
     def n_experiments_to_start(self):
         """ We need to check if we are allowed to start the experiment
         If the polyaxonfile has concurrency we need to check how many experiments are running.
         """
-        return self.concurrency - self.running_experiments.count()
+        return self.concurrency - len(self.running_experiments)

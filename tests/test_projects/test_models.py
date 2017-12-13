@@ -3,9 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 from unittest.mock import patch
 
-from experiments.models import Experiment
+from factories.factory_experiments import ExperimentStatusFactory
 from factories.factory_projects import ExperimentGroupFactory, ProjectFactory
 from factories.factory_repos import RepoFactory
+
+from spawner.utils.constants import ExperimentLifeCycle
+from experiments.models import Experiment
+
 from tests.utils import BaseTest
 
 
@@ -16,6 +20,12 @@ class TestExperimentGroupModel(BaseTest):
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 1
         assert mock_fct.call_count == 1
+        assert len(experiment_group.pending_experiments) == 1
+        assert len(experiment_group.running_experiments) == 0
+        experiment = Experiment.objects.get(experiment_group=experiment_group)
+        ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
+        assert len(experiment_group.pending_experiments) == 0
+        assert len(experiment_group.running_experiments) == 1
 
 
 class TestProjectModel(BaseTest):

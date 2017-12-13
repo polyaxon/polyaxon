@@ -25,8 +25,8 @@ class TestExperimentSerializer(BaseTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     expected_keys = {'uuid', 'user', 'name', 'created_at', 'updated_at',
-                     'last_status', 'started_at', 'finished_at', 'is_clone',
-                     'project', 'experiment_group', }
+                     'last_status', 'started_at', 'finished_at', 'is_clone', 'original',
+                     'project', 'experiment_group', 'num_jobs', }
 
     def setUp(self):
         super().setUp()
@@ -40,9 +40,12 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.uuid.hex
+        assert data.pop('original') == (self.obj1.original_experiment.uuid.hex if
+                                        self.obj1.original_experiment else None)
         assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
                                                 if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('num_jobs') == self.obj1.jobs.count()
         data.pop('created_at')
         data.pop('updated_at')
 
@@ -108,11 +111,12 @@ class TestExperimentDetailSerializer(BaseTest):
         'description',
         'experiment_group',
         'config',
-        'original_experiment',
         'jobs',
         'started_at',
         'finished_at',
-        'is_clone'
+        'is_clone',
+        'original',
+        'num_jobs',
     }
 
     def setUp(self):
@@ -129,9 +133,12 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.uuid.hex
+        assert data.pop('original') == (self.obj1.original_experiment.uuid.hex if
+                                        self.obj1.original_experiment else None)
         assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
                                                 if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('num_jobs') == self.obj1.jobs.count()
         assert len(data.pop('jobs')) == 1
         data.pop('created_at')
         data.pop('updated_at')

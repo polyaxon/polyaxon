@@ -19,11 +19,11 @@ def start_group_experiments(task, experiment_group_id):
         logger.info('ExperimentGroup `{}` does not exist anymore.'.format(experiment_group_id))
         return
 
-    pending_experiments = list(experiment_group.pending_experiments.values_list('id', flat=True))
+    pending_experiments = experiment_group.pending_experiments
     experiment_to_start = experiment_group.n_experiments_to_start
     while experiment_to_start > 0 and pending_experiments:
-        experiment_id = pending_experiments.pop()
-        build_experiment.delay(experiment_id=experiment_id)
+        experiment = pending_experiments.pop()
+        build_experiment.delay(experiment_id=experiment.id)
         experiment_to_start -= 1
 
     if pending_experiments:

@@ -5,14 +5,12 @@ from rest_framework import status
 
 from api.urls import API_V1
 from experiments.models import Experiment
-from experiments.serializers import ExperimentSerializer
 from projects.models import (
     Project,
     ExperimentGroup,
 )
 from projects.serializers import (
     ProjectSerializer,
-    ProjectDetailSerializer,
     ExperimentGroupSerializer,
 )
 from factories.factory_projects import (
@@ -79,7 +77,7 @@ class TestProjectListViewV1(BaseViewTest):
 
 
 class TestProjectDetailViewV1(BaseViewTest):
-    serializer_class = ProjectDetailSerializer
+    serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
     HAS_AUTH = False
@@ -101,12 +99,8 @@ class TestProjectDetailViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
-        assert len(resp.data['experiments']) == 2
-        assert resp.data['experiments'] == ExperimentSerializer(self.object.experiments.all(),
-                                                                many=True).data
-        assert len(resp.data['experiment_groups']) == 2
-        assert resp.data['experiment_groups'] == ExperimentGroupSerializer(
-            self.object.experiment_groups.all(), many=True).data
+        assert resp.data['num_experiments'] == 2
+        assert resp.data['num_experiment_groups'] == 2
 
     def test_patch(self):
         new_name = 'updated_project_name'

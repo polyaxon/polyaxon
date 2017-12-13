@@ -54,22 +54,31 @@ class ExperimentSerializer(serializers.ModelSerializer):
     user = fields.SerializerMethodField()
     experiment_group = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
+    num_jobs = fields.SerializerMethodField()
+    original = fields.SerializerMethodField()
 
     class Meta:
         model = Experiment
         fields = ('uuid', 'user', 'name', 'created_at', 'updated_at',
                   'last_status', 'started_at', 'finished_at', 'is_clone',
-                  'project', 'experiment_group',)
+                  'project', 'experiment_group', 'original', 'original_experiment', 'num_jobs',)
+
+        extra_kwargs = {'original_experiment': {'write_only': True}}
 
     def get_user(self, obj):
         return obj.user.username
-
 
     def get_experiment_group(self, obj):
         return obj.experiment_group.uuid.hex if obj.experiment_group else None
 
     def get_project(self, obj):
         return obj.project.uuid.hex
+
+    def get_num_jobs(self, obj):
+        return obj.jobs.count()
+
+    def get_original(self, obj):
+        return obj.original_experiment.uuid.hex if obj.original_experiment else None
 
 
 class ExperimentDetailSerializer(ExperimentSerializer):

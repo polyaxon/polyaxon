@@ -12,7 +12,7 @@ class TestExperimentGroupSerializer(BaseTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
-    expected_keys = {'uuid', 'name', 'description', 'content', 'project', 'user', }
+    expected_keys = {'uuid', 'name', 'description', 'content', 'project', 'user', 'num_experiments'}
 
     def setUp(self):
         super().setUp()
@@ -26,6 +26,7 @@ class TestExperimentGroupSerializer(BaseTest):
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('user') == self.obj1.user.username
+        assert data.pop('num_experiments') == self.obj1.experiments.count()
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -42,7 +43,8 @@ class TestProjectSerializer(BaseTest):
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'description', 'user', 'description', 'created_at',
-                     'updated_at', 'is_public', 'has_code', }
+                     'updated_at', 'is_public', 'has_code',
+                     'num_experiment_groups', 'num_experiments'}
 
     def setUp(self):
         super().setUp()
@@ -55,6 +57,8 @@ class TestProjectSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         data.pop('created_at')
         data.pop('updated_at')
+        assert data.pop('num_experiments') == self.obj1.experiments.count()
+        assert data.pop('num_experiment_groups') == self.obj1.experiment_groups.count()
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
 
@@ -73,7 +77,8 @@ class TestProjectDetailSerializer(BaseTest):
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {'uuid', 'name', 'description', 'user', 'description', 'created_at',
-                     'updated_at', 'is_public', 'experiments', 'experiment_groups', 'has_code', }
+                     'updated_at', 'is_public', 'experiments', 'experiment_groups', 'has_code',
+                     'num_experiment_groups', 'num_experiments'}
 
     def setUp(self):
         super().setUp()
@@ -88,8 +93,10 @@ class TestProjectDetailSerializer(BaseTest):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert len(data.pop('experiments')) == 0
-        assert len(data.pop('experiment_groups')) == 0
+        assert len(data.pop('experiments')) == self.obj1.experiments.count()
+        assert len(data.pop('experiment_groups')) == self.obj1.experiment_groups.count()
+        assert data.pop('num_experiments') == self.obj1.experiments.count()
+        assert data.pop('num_experiment_groups') == self.obj1.experiment_groups.count()
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

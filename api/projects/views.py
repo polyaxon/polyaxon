@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
-from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     RetrieveDestroyAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -13,7 +11,6 @@ from libs.views import ListCreateAPIView
 from projects.models import Project, ExperimentGroup
 from projects.serializers import (
     ProjectSerializer,
-    ProjectDetailSerializer,
     ExperimentGroupSerializer,
 )
 
@@ -29,7 +26,7 @@ class ProjectListView(ListCreateAPIView):
 
 class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
-    serializer_class = ProjectDetailSerializer
+    serializer_class = ProjectSerializer
     lookup_field = 'uuid'
 
 

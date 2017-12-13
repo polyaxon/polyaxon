@@ -14,7 +14,6 @@ from experiments.models import (
 )
 from experiments.serializers import (
     ExperimentSerializer,
-    ExperimentDetailSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
@@ -235,7 +234,7 @@ class TestExperimentListViewV1(BaseViewTest):
 
 
 class TestExperimentDetailViewV1(BaseViewTest):
-    serializer_class = ExperimentDetailSerializer
+    serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     HAS_AUTH = False
@@ -254,8 +253,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
-        assert len(resp.data['jobs']) == 2
-        assert resp.data['jobs'] == ExperimentJobSerializer(self.object.jobs.all(), many=True).data
+        assert resp.data['num_jobs'] == 2
 
     def test_patch(self):
         new_name = 'updated_xp_name'
@@ -612,7 +610,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
 
 
 class TestRestartExperimentViewV1(BaseViewTest):
-    serializer_class = ExperimentDetailSerializer
+    serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     HAS_AUTH = False
