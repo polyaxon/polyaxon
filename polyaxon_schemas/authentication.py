@@ -35,6 +35,9 @@ class CredentialsSchema(Schema):
     username = fields.Str()
     password = fields.Str()
 
+    class Meta:
+        ordered = True
+
     @post_load
     def make(self, data):
         return CredentialsConfig(**data)

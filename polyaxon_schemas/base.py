@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
+from collections import Mapping, OrderedDict
 
 import six
 
@@ -30,7 +30,7 @@ class BaseConfig(object):
 
     @classmethod
     def remove_reduced_attrs(cls, data):
-        obj_dict = {key: value for (key, value) in six.iteritems(data)}
+        obj_dict = OrderedDict((key, value) for (key, value) in six.iteritems(data))
         for attr in cls.REDUCED_ATTRIBUTES:
             if obj_dict[attr] is None:
                 del obj_dict[attr]

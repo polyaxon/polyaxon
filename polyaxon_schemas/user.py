@@ -10,6 +10,9 @@ class UserSchema(Schema):
     username = fields.Str()
     email = fields.Email()
 
+    class Meta:
+        ordered = True
+
     @post_load
     def make(self, data):
         return UserConfig(**data)

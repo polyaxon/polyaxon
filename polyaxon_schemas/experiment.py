@@ -38,13 +38,13 @@ class ExperimentJobConfig(BaseConfig):
 
 class ExperimentSchema(Schema):
     name = fields.Str()
-    config = fields.Dict()
-    content = fields.Str(allow_none=True)
     uuid = UUID(allow_none=True)
     project = UUID(allow_none=True)
     group = UUID(allow_none=True)
-    jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
     description = fields.Str(allow_none=True)
+    config = fields.Dict()
+    content = fields.Str(allow_none=True)
+    jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True

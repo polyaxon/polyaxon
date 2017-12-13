@@ -18,6 +18,9 @@ class BaseVersionConfig(BaseConfig):
 
 
 class CliVersionSchema(BaseVersionSchema):
+    class Meta:
+        ordered = True
+
     @post_load
     def make(self, data):
         return CliVersionConfig(**data)
@@ -38,6 +41,9 @@ class CliVersionConfig(BaseVersionConfig):
 
 
 class PlatformVersionSchema(BaseVersionSchema):
+    class Meta:
+        ordered = True
+
     @post_load
     def make(self, data):
         return PlatformVersionConfig(**data)
@@ -58,6 +64,9 @@ class PlatformVersionConfig(BaseVersionConfig):
 
 
 class LibVersionSchema(BaseVersionSchema):
+    class Meta:
+        ordered = True
+
     @post_load
     def make(self, data):
         return LibVersionConfig(**data)
@@ -79,6 +88,9 @@ class LibVersionConfig(BaseVersionConfig):
 
 class ChartVersionSchema(Schema):
     version = fields.Str()
+
+    class Meta:
+        ordered = True
 
     @post_load
     def make(self, data):

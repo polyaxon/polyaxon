@@ -8,12 +8,15 @@ from polyaxon_schemas.utils import UUID
 
 
 class NodeGPUSchema(Schema):
-    uuid = UUID()
-    serial = fields.Str()
     name = fields.Str()
-    device = fields.Str()
+    uuid = UUID()
     memory = fields.Int()
+    device = fields.Str()
+    serial = fields.Str()
     cluster_node = UUID()
+
+    class Meta:
+        ordered = True
 
     @post_load
     def make(self, data):
@@ -28,7 +31,7 @@ class NodeGPUConfig(BaseConfig):
     SCHEMA = NodeGPUSchema
     IDENTIFIER = 'NodeGPU'
 
-    def __init__(self, uuid, serial, name, device, memory, cluster_node):
+    def __init__(self, name, uuid, memory, device, serial, cluster_node):
         self.uuid = uuid
         self.serial = serial
         self.name = name
@@ -38,21 +41,24 @@ class NodeGPUConfig(BaseConfig):
 
 
 class ClusterNodeSchema(Schema):
-    uuid = UUID()
     name = fields.Str(allow_none=True)
+    uuid = UUID()
+    status = fields.Str(allow_none=True)
     hostname = fields.Str(allow_none=True)
     role = fields.Str(allow_none=True)
-    docker_version = fields.Str(allow_none=True)
+    memory = fields.Int(allow_none=True)
+    n_cpus = fields.Int(allow_none=True)
+    n_gpus = fields.Int(allow_none=True)
     kubelet_version = fields.Str(allow_none=True)
+    docker_version = fields.Str(allow_none=True)
     os_image = fields.Str(allow_none=True)
     kernel_version = fields.Str(allow_none=True)
     schedulable_taints = fields.Bool(allow_none=True)
     schedulable_state = fields.Bool(allow_none=True)
-    memory = fields.Int(allow_none=True)
-    n_cpus = fields.Int(allow_none=True)
-    n_gpus = fields.Int(allow_none=True)
-    status = fields.Str(allow_none=True)
     gpus = fields.Nested(NodeGPUSchema, many=True, allow_none=True)
+
+    class Meta:
+        ordered = True
 
     @post_load
     def make(self, data):
