@@ -5,6 +5,7 @@ import click
 
 import sys
 
+from polyaxon_client.exceptions import PolyaxonShouldExitError
 from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 from polyaxon_schemas.polyaxonfile.logger import logger
 
@@ -30,9 +31,14 @@ def login(token, username, password):
                 sys.exit(1)
 
         credentials = CredentialsConfig(username=username, password=password)
-        access_code = auth_client.login(credentials=credentials)
+        try:
+            access_code = auth_client.login(credentials=credentials)
+        except PolyaxonShouldExitError as e:
+            logger.info(e)
+            sys.exit(0)
+
         if not access_code:
-            logger.info("Failed to login")
+            click.secho("Failed to login", fg='red')
             return
     else:
         if not token:
@@ -55,8 +61,13 @@ def login(token, username, password):
 
     user = PolyaxonClients().auth.get_user(token=access_code)
     access_token = AccessTokenConfig(username=user.username, token=access_code)
-    AuthConfigManager.set_config(access_token)
-    logger.info("Login Successful")
+    try:
+        AuthConfigManager.set_config(access_token)
+    except PolyaxonShouldExitError as e:
+        logger.info(e)
+        sys.exit(0)
+
+    click.secho("Login Successful", fg='green')
 
 
 @click.command()
