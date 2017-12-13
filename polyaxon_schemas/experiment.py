@@ -89,8 +89,8 @@ class ExperimentConfig(BaseConfig):
         self.group = group
         self.description = description
         self.last_status = last_status
-        self.started_at = started_at
-        self.finished_at = finished_at
+        self.started_at = self.localize_date(started_at)
+        self.finished_at = self.localize_date(finished_at)
         self.is_clone = is_clone
         self.config = config  # The json compiled content of this experiment
         self.content = content  # The yaml content when the experiment is independent
@@ -202,7 +202,8 @@ class PodStateSchema(Schema):
     event_type = fields.Str()
     labels = fields.Nested(JobLabelSchema)
     phase = fields.Str()
-    deletion_timestamp = fields.DateTime(allow_none=True)
+    deletion_timestamp = \
+        fields.DateTime(allow_none=True)
     pod_conditions = fields.Dict(allow_none=True)
     container_statuses = fields.Dict(allow_none=True)
 
@@ -232,7 +233,7 @@ class PodStateConfig(BaseConfig):
         self.event_type = event_type
         self.labels = labels
         self.phase = phase
-        self.deletion_timestamp = deletion_timestamp
+        self.deletion_timestamp = self.localize_date(deletion_timestamp)
         self.pod_conditions = pod_conditions
         self.container_statuses = container_statuses
 

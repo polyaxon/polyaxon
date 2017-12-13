@@ -15,6 +15,7 @@ class ExperimentGroupSchema(Schema):
     description = fields.Str(allow_none=True)
     content = fields.Str()
     project = UUID(allow_none=True)
+    created_at = fields.DateTime(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
@@ -33,7 +34,7 @@ class ExperimentGroupSchema(Schema):
 class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
-    REDUCED_ATTRIBUTES = ['uuid', 'project', 'experiments', 'description']
+    REDUCED_ATTRIBUTES = ['uuid', 'project', 'experiments', 'description', 'created_at']
 
     def __init__(self,
                  name,
@@ -42,6 +43,7 @@ class ExperimentGroupConfig(BaseConfig):
                  uuid=None,
                  project=None,
                  num_experiments=0,
+                 created_at=None,
                  experiments=None,):
         self.name = name
         self.description = description
@@ -49,6 +51,7 @@ class ExperimentGroupConfig(BaseConfig):
         self.uuid = uuid
         self.project = project
         self.num_experiments = num_experiments
+        self.created_at = self.localize_date(created_at)
         self.experiments = experiments
 
 
@@ -57,6 +60,8 @@ class ProjectSchema(Schema):
     uuid = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)
+    has_code = fields.Bool(allow_none=True)
+    created_at = fields.DateTime(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
     num_experiment_groups = fields.Int(allow_none=True)
     experiment_groups = fields.Nested(ExperimentGroupSchema, many=True, allow_none=True)
@@ -77,13 +82,15 @@ class ProjectSchema(Schema):
 class ProjectConfig(BaseConfig):
     SCHEMA = ProjectSchema
     IDENTIFIER = 'project'
-    REDUCED_ATTRIBUTES = ['uuid', 'description', 'experiments', 'experiment_groups']
+    REDUCED_ATTRIBUTES = ['uuid', 'description', 'experiments', 'experiment_groups', 'created_at']
 
     def __init__(self,
                  name,
                  uuid=None,
                  description=None,
                  is_public=True,
+                 has_code=False,
+                 created_at=None,
                  num_experiments=0,
                  num_experiment_groups=0,
                  experiments=None,
@@ -92,6 +99,8 @@ class ProjectConfig(BaseConfig):
         self.uuid = uuid
         self.description = description
         self.is_public = is_public
+        self.has_code = has_code
+        self.created_at = self.localize_date(created_at)
         self.num_experiments = num_experiments
         self.num_experiment_groups = num_experiment_groups
         self.experiments = experiments

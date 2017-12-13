@@ -22,6 +22,7 @@ class TestProjectConfigs(TestCase):
             'name': 'test',
             'description': '',
             'is_public': True,
+            'has_code': True,
             'num_experiments': 0,
             'num_experiment_groups': 0,
         }

@@ -47,6 +47,8 @@ class BaseConfig(object):
 
     @staticmethod
     def localize_date(dt):
+        if not dt:
+            return dt
         if not dt.tzinfo:
             dt = utc.localize(dt)
         return dt.astimezone(TIME_ZONE)
