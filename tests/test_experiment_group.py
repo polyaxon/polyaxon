@@ -46,8 +46,11 @@ class TestExperimentGroupClient(TestCase):
             content_type='application/json',
             status=200)
 
-        xps_results = self.client.list_experiments(group_uuid)
-        assert len(xps_results) == 10
+        response = self.client.list_experiments(group_uuid)
+        assert len(response['results']) == 10
+        assert response['count'] == 10
+        assert response['next'] is None
+        assert response['previous'] is None
 
         # pagination
 
@@ -62,8 +65,8 @@ class TestExperimentGroupClient(TestCase):
             content_type='application/json',
             status=200)
 
-        xps_results = self.client.list_experiments(group_uuid, page=2)
-        assert len(xps_results) == 10
+        response = self.client.list_experiments(group_uuid, page=2)
+        assert len(response['results']) == 10
 
     @httpretty.activate
     def test_update_experiment_group(self):

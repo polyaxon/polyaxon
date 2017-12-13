@@ -15,9 +15,7 @@ class ProjectClient(PolyaxonClient):
     def list_projects(self, page=1):
         try:
             response = self.get(self._get_http_url(), params=self.get_page(page=page))
-            projects_dict = response.json()
-            return [ProjectConfig.from_dict(project)
-                    for project in projects_dict.get("results", [])]
+            return self.prepare_list_results(response.json(), page, ProjectConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving projects')
             return []
@@ -73,9 +71,7 @@ class ProjectClient(PolyaxonClient):
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
-            experiment_group_dicts = response.json()
-            return [ExperimentGroupConfig.from_dict(experiment_group)
-                    for experiment_group in experiment_group_dicts.get("results", [])]
+            return self.prepare_list_results(response.json(), page, ExperimentGroupConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiment groups')
             return []
@@ -96,9 +92,7 @@ class ProjectClient(PolyaxonClient):
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
-            experiment_dicts = response.json()
-            return [ExperimentConfig.from_dict(experiment_group)
-                    for experiment_group in experiment_dicts.get("results", [])]
+            return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []

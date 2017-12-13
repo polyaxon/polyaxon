@@ -46,6 +46,16 @@ class PolyaxonClient(object):
         self.errors_mapping = errors_mapping
         self.reraise = reraise
 
+    @staticmethod
+    def prepare_list_results(response_json, current_page, config):
+        return {
+            'count': response_json.get("count", 0),
+            'next': current_page + 1 if response_json.get("next") else None,
+            'previous': current_page - 1 if response_json.get("previoustest_list_experiments") else None,
+            "results": [config.from_dict(obj)
+                        for obj in response_json.get("results", [])]
+        }
+
     @classmethod
     def get_page(cls, page=1):
         if page <= 1:

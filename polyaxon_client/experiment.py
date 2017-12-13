@@ -19,9 +19,7 @@ class ExperimentClient(PolyaxonClient):
         """This gets all experiments visible to the user from the server."""
         try:
             response = self.get(self._get_http_url(), params=self.get_page(page=page))
-            experiments_dict = response.json()
-            return [ExperimentConfig.from_dict(experiment)
-                    for experiment in experiments_dict.get("results", [])]
+            return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
@@ -68,8 +66,7 @@ class ExperimentClient(PolyaxonClient):
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
-            jobs = response.json()
-            return [ExperimentJobConfig.from_dict(job) for job in jobs.get("results", [])]
+            return self.prepare_list_results(response.json(), page, ExperimentJobConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving jobs')
             return []

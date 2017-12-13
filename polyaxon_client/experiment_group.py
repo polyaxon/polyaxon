@@ -18,9 +18,7 @@ class ExperimentGroupClient(PolyaxonClient):
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
-            experiments_dict = response.json()
-            return [ExperimentConfig.from_dict(experiment)
-                    for experiment in experiments_dict.get("results", [])]
+            return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []

@@ -40,8 +40,8 @@ class TestExperimentClient(TestCase):
             content_type='application/json',
             status=200)
 
-        experiments = self.client.list_experiments()
-        assert len(experiments) == 10
+        response = self.client.list_experiments()
+        assert len(response['results']) == 10
 
     @httpretty.activate
     def test_get_experiment(self):
@@ -128,8 +128,8 @@ class TestExperimentClient(TestCase):
             content_type='application/json',
             status=200)
 
-        xps_results = self.client.list_jobs(experiment_uuid)
-        assert len(xps_results) == 10
+        response = self.client.list_jobs(experiment_uuid)
+        assert len(response['results']) == 10
 
         # pagination
 
@@ -144,8 +144,8 @@ class TestExperimentClient(TestCase):
             content_type='application/json',
             status=200)
 
-        xps_results = self.client.list_jobs(experiment_uuid, page=2)
-        assert len(xps_results) == 10
+        response = self.client.list_jobs(experiment_uuid, page=2)
+        assert len(response['results']) == 10
 
     @httpretty.activate
     def test_restart_experiment(self):
