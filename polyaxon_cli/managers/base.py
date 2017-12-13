@@ -4,11 +4,7 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-import six
-
-from polyaxon_schemas.polyaxonfile.logger import logger
-
-from polyaxon_cli.exceptions import PolyaxonConfigurationError
+from polyaxon_cli.logger import logger
 
 
 class BaseConfigManager(object):
@@ -23,11 +19,12 @@ class BaseConfigManager(object):
     def get_config_file_path(cls):
         if not cls.IS_GLOBAL:
             # local to this directory
-            return os.path.join('.', cls.CONFIG_FILE_NAME)
+            base_path = os.path.join('.', cls.CONFIG_FILE_NAME)
+        else:
+            base_path = os.path.expanduser('~')
+            if not os.access(base_path, os.W_OK):
+                base_path = '/tmp'
 
-        base_path = os.path.expanduser('~')
-        if not os.access(base_path, os.W_OK):
-            base_path = '/tmp'
         base_path = os.path.join(base_path, '.polyaxon')
 
         if not os.path.exists(base_path):
@@ -41,6 +38,11 @@ class BaseConfigManager(object):
         return os.path.join(base_path, cls.CONFIG_FILE_NAME)
 
     @classmethod
+    def init_config(cls):
+        config = cls.get_config()
+        cls.set_config(config)
+
+    @classmethod
     def set_config(cls, config):
         config_file_path = cls.get_config_file_path()
         logger.debug("Setting {} in the file {}".format(config.to_dict(), cls.CONFIG_FILE_NAME))
@@ -52,13 +54,10 @@ class BaseConfigManager(object):
         config_file_path = cls.get_config_file_path()
 
         if not os.path.isfile(config_file_path):
-            if cls.INIT_COMMAND:
-                if isinstance(cls.INIT_COMMAND, six.string_types):
-                    raise PolyaxonConfigurationError(
-                        "Missing `{}` file, run: `` first".format(cls.INIT_COMMAND))
+            try:
+                return cls.CONFIG()
+            except TypeError:
                 return None
-
-            return cls.CONFIG()
 
         with open(config_file_path, "r") as config_file:
             config_str = config_file.read()
@@ -83,4 +82,3 @@ class BaseConfigManager(object):
             return True
 
         os.remove(config_file_path)
-
