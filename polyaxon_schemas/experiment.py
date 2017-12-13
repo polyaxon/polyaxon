@@ -42,7 +42,7 @@ class ExperimentSchema(Schema):
     project = UUID(allow_none=True)
     group = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
-    config = fields.Dict()
+    config = fields.Dict(allow_none=True)
     content = fields.Str(allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
@@ -65,7 +65,7 @@ class ExperimentConfig(BaseConfig):
 
     def __init__(self,
                  name,
-                 config,
+                 config=None,
                  content=None,
                  uuid=None,
                  project=None,
