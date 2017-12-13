@@ -31,7 +31,7 @@ def check_polyaxonfile(file):
 @click.option('--matrix', '-m', is_flag=True, default=False,
               help='Checks and prints the matrix def.')
 def check(file, all, version, run_type, project, log_path, matrix, experiments):
-    """Command for checking a polyaxonfile."""
+    """Check a polyaxonfile."""
     plx_file = check_polyaxonfile(file)
 
     def get_result(value):

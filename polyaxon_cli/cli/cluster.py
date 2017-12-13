@@ -57,7 +57,7 @@ def get_node_info(node_config):
 @click.command()
 @click.option('--node', type=str)
 def cluster(node):
-    """Command for getting cluster info."""
+    """Get cluster and nodes info."""
     cluster_client = PolyaxonClients().cluster
     if node:
         node_config = cluster_client.get_node(node)

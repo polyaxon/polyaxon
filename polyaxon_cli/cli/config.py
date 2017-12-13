@@ -17,18 +17,7 @@ def validate_options(ctx, param, value):
 @click.group(invoke_without_command=True)
 @click.option('--list', '-l', is_flag=True, help='List all global config values.')
 def config(list):
-    """Command for setting and getting global configurations.
-
-    Example:
-
-    ```
-    polyaxon config --get host
-    ```
-
-    ```
-    polyaxon set --host http://...
-    ```
-    """
+    """Set and get global configurations."""
     if list:
         config = GlobalConfigManager.get_config()
         click.echo(config.to_dict())
@@ -37,9 +26,13 @@ def config(list):
 @config.command()
 @click.argument('keys', type=str, nargs=-1)
 def get(keys):
-    """Command for getting global config values by keys.
+    """Get global config values by keys.
 
-    e.g. polyaxon config get host http_port
+    Example:
+
+    ```
+    polyaxon config get host http_port
+    ```
     """
     config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
     if len(keys) == 0:
@@ -62,9 +55,13 @@ def get(keys):
 @click.option('--ws_port', type=int, help='To set the stream port')
 @click.option('--use_https', type=bool, help='To set the https')
 def set(verbose, host, http_port, ws_port, use_https):
-    """Command for setting global config values.
+    """Set global config values.
 
-    e.g. polyaxon config set --hots=localhost http_port=80
+    Example:
+
+    ```
+    polyaxon config set --hots=localhost http_port=80
+    ```
     """
     config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
 

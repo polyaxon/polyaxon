@@ -67,7 +67,7 @@ def check_cli_version():
 @click.option('--platform', is_flag=True, default=False, help='Version of the Polyaxon cli.')
 @click.option('--lib', is_flag=True, default=False, help='Version of the Polyaxon cli.')
 def version(cli, platform, lib):
-    """Prints the current version of the CLI."""
+    """Print the current version of the cli, platform, and lib."""
     version_client = PolyaxonClients().version
     cli = cli or not any([cli, platform, lib])
     if cli:
@@ -95,7 +95,7 @@ def version(cli, platform, lib):
               help='Upgrade the project, if True upgrade the cli '
                    'otherwise upgrade the polyaxon library.')
 def upgrade(lib):
-    """Install/Upgrade polyaxon or polyxon-cli."""
+    """Install/Upgrade polyxon-cli or polyaxon-lib."""
     try:
         project_name = PROJECT_LIB_NAME if lib else PROJECT_CLI_NAME
         pip_upgrade(project_name)
