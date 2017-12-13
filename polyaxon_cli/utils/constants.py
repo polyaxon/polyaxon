@@ -16,12 +16,13 @@ var
 """
 
 INIT_FILE = 'polyaxonfile.yml'
+INIT_FILE_PROJECT_SECTION = "# set you project name or uuid here. If you don't have project please create one first."
 
 INIT_FILE_MODEL_TEMPLATE = """---
 version: 1
 
 project:
-  name: # set you project name
+  name: {}
 
 settings:
   logging:
@@ -35,7 +36,7 @@ INIT_FILE_RUN_TEMPLATE = """---
 version: 1
 
 project:
-  name: # set you project name
+  name: {}
 
 run:
   # add you executable here
