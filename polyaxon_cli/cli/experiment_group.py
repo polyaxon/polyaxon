@@ -17,7 +17,7 @@ from polyaxon_cli.utils.formatting import (
 
 @click.group()
 def group():
-    """CRUD operations for experiment groups."""
+    """Commands for experiment groups."""
     pass
 
 
@@ -105,9 +105,9 @@ def update(group, name, description):
 
 @group.command()
 @click.argument('group', type=str)
-@click.option('--page', type=int, help='To paginate through the list of projects.')
+@click.option('--page', type=int, help='To paginate through the list of experiments.')
 def experiments(group, page):
-    """List experiments for this project"""
+    """List experiments for this experiment group"""
     page = page or 1
     try:
         response = PolyaxonClients().experiment_group.list_experiments(group, page=page)

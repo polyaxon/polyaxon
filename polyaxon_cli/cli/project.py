@@ -30,7 +30,7 @@ def get_project_local(project):
 
 @click.group()
 def project():
-    """CRUD operations for projects."""
+    """Commands for projects."""
     pass
 
 
