@@ -25,6 +25,24 @@ class TestExperimentGroupClient(TestCase):
                                             reraise=True)
 
     @httpretty.activate
+    def test_get_experiment_group(self):
+        object = ExperimentGroupConfig(name=faker.word(),
+                                       content=faker.word(),
+                                       uuid=uuid.uuid4().hex,
+                                       project=uuid.uuid4().hex).to_dict()
+        httpretty.register_uri(
+            httpretty.GET,
+            ExperimentGroupClient._build_url(
+                self.client.base_url,
+                ExperimentGroupClient.ENDPOINT,
+                'uuid'),
+            body=json.dumps(object),
+            content_type='application/json',
+            status=200)
+        result = self.client.get_experiment_group('uuid')
+        assert object == result.to_dict()
+
+    @httpretty.activate
     def test_list_experiments(self):
         group_uuid = uuid.uuid4().hex
         project_uuid = uuid.uuid4().hex

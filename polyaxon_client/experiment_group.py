@@ -12,6 +12,15 @@ class ExperimentGroupClient(PolyaxonClient):
     """Client to get experiments for a group from the server"""
     ENDPOINT = "/experiment_groups"
 
+    def get_experiment_group(self, experiment_group_uuid):
+        request_url = self._build_url(self._get_http_url(), experiment_group_uuid)
+        try:
+            response = self.get(request_url)
+            return ExperimentGroupConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving project')
+            return None
+
     def list_experiments(self, experiment_group_uuid, page=1):
         """Fetch list of experiments related to this experiment group."""
         request_url = self._build_url(self._get_http_url(), experiment_group_uuid, 'experiments')

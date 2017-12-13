@@ -58,7 +58,7 @@ class TestProjectClient(TestCase):
         assert object == result.to_dict()
 
     @httpretty.activate
-    def test_get_project(self):
+    def test_get_project_by_name(self):
         object = ProjectConfig(faker.word()).to_dict()
         httpretty.register_uri(
             httpretty.GET,
