@@ -1,11 +1,18 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
 import click
 import sys
 from polyaxon_client.exceptions import PolyaxonShouldExitError
 
 from polyaxon_cli.logger import logger
 from polyaxon_cli.utils.clients import PolyaxonClients
-from polyaxon_cli.utils.formatting import get_meta_response, Printer, dict_tabulate, \
-    list_dicts_to_tabulate
+from polyaxon_cli.utils.formatting import (
+    Printer,
+    get_meta_response,
+    dict_tabulate,
+    list_dicts_to_tabulate,
+)
 
 
 @click.group()
@@ -25,7 +32,7 @@ def get(group):
     ```
     """
     try:
-        response = PolyaxonClients().experiment_group.get(group)
+        response = PolyaxonClients().experiment_group.get_experiment_group(group)
         PolyaxonClients.handle_response(
             response, error_message='no project was found with `{}`'.format(group))
     except PolyaxonShouldExitError as e:
