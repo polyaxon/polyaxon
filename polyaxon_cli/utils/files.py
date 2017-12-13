@@ -5,8 +5,6 @@ import os
 
 from pathlib import PurePath
 
-from clint.textui.progress import Bar
-
 from polyaxon_cli.utils import constants
 
 
@@ -22,7 +20,7 @@ def get_files_in_current_directory(file_type, file_paths):
                             (unix_style_path(file_path), open(file_path, 'rb'), 'text/plain')))
         total_file_size += os.path.getsize(file_path)
 
-    return local_files, sizeof_fmt(total_file_size)
+    return local_files, total_file_size
 
 
 def unix_style_path(path):
@@ -42,31 +40,12 @@ def matches_glob_list(path, glob_list):
     return False
 
 
-def sizeof_fmt(num, suffix='B'):
-    """
-    Print in human friendly format
-    """
-    for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
-        if abs(num) < 1024.0:
-            return "%3.1f%s%s" % (num, unit, suffix)
-        num /= 1024.0
-    return "%.1f%s%s" % (num, 'Yi', suffix)
-
-
-def create_progress_callback(encoder):
-    encoder_len = encoder.len
-    bar = Bar(expected_size=encoder_len, filled_char='=')
-
-    def callback(monitor):
-        bar.show(monitor.bytes_read)
-    return callback
-
-
-def create_init_file(init_file_type):
+def create_init_file(init_file_type, project=None):
+    project = project or constants.INIT_FILE_PROJECT_SECTION
     if os.path.exists(constants.INIT_FILE):
         return False
 
     with open(constants.INIT_FILE, 'w') as f:
-        f.write(constants.INIT_FILE_TEMPLATES[init_file_type])
+        f.write(constants.INIT_FILE_TEMPLATES[init_file_type].format(project))
 
     return True
