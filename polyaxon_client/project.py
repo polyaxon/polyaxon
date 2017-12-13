@@ -29,6 +29,15 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving project')
             return None
 
+    def get_project_by_name(self, project_name):
+        request_url = self._build_url(self._get_http_url('project_names'), project_name)
+        try:
+            response = self.get(request_url)
+            return ProjectConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving project')
+            return None
+
     def create_project(self, project_config):
         try:
             response = self.post(self._get_http_url(), json=project_config.to_dict())
