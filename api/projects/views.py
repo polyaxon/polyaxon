@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import uuid
+
+from django.http import Http404
 from rest_framework.generics import (
     RetrieveDestroyAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -28,6 +31,13 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     lookup_field = 'uuid'
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(user=self.request.user)
+
+
+class ProjectDetailByNameView(ProjectDetailView):
+    lookup_field = 'name'
 
 
 class ExperimentGroupListView(ListCreateAPIView):

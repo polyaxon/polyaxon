@@ -84,7 +84,7 @@ class TestProjectDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class()
+        self.object = self.factory_class(user=self.auth_client.user)
         self.url = '/{}/projects/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
@@ -97,6 +97,14 @@ class TestProjectDetailViewV1(BaseViewTest):
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data['num_experiments'] == 2
+        assert resp.data['num_experiment_groups'] == 2
+
+    def test_get_with_project_name(self):
+        url = '/{}/projects/{}/'.format(API_V1, self.object.name)
+        resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
         assert resp.data['num_experiments'] == 2
