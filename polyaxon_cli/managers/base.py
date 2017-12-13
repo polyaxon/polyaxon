@@ -19,21 +19,21 @@ class BaseConfigManager(object):
     def get_config_file_path(cls):
         if not cls.IS_GLOBAL:
             # local to this directory
-            base_path = os.path.join('.', cls.CONFIG_FILE_NAME)
+            base_path = os.path.join('.')
         else:
             base_path = os.path.expanduser('~')
             if not os.access(base_path, os.W_OK):
                 base_path = '/tmp'
 
-        base_path = os.path.join(base_path, '.polyaxon')
+            base_path = os.path.join(base_path, '.polyaxon')
 
-        if not os.path.exists(base_path):
-            try:
-                os.makedirs(base_path)
-            except OSError:
-                # Except permission denied and potential race conditions
-                # in multi-threaded environments.
-                logger.error('Could not create config directory `{}`'.format(base_path))
+            if not os.path.exists(base_path):
+                try:
+                    os.makedirs(base_path)
+                except OSError:
+                    # Except permission denied and potential race conditions
+                    # in multi-threaded environments.
+                    logger.error('Could not create config directory `{}`'.format(base_path))
 
         return os.path.join(base_path, cls.CONFIG_FILE_NAME)
 
@@ -45,9 +45,21 @@ class BaseConfigManager(object):
     @classmethod
     def set_config(cls, config):
         config_file_path = cls.get_config_file_path()
-        logger.debug("Setting {} in the file {}".format(config.to_dict(), cls.CONFIG_FILE_NAME))
+
+        if os.path.isfile(config_file_path):
+            logger.debug("{} file already present at {}".format(
+                cls.CONFIG_FILE_NAME, config_file_path))
+            return
+
         with open(config_file_path, "w") as config_file:
-            config_file.write(json.dumps(config.to_dict()))
+            if hasattr(config, 'to_dict'):
+                logger.debug(
+                    "Setting {} in the file {}".format(config.to_dict(), cls.CONFIG_FILE_NAME))
+                config_file.write(json.dumps(config.to_dict()))
+            else:
+                logger.debug(
+                    "Setting {} in the file {}".format(config, cls.CONFIG_FILE_NAME))
+                config_file.write(config)
 
     @classmethod
     def get_config(cls):
