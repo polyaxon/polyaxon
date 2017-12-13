@@ -1,57 +1,41 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import OrderedDict
-
 import click
-import six
-
-from tabulate import tabulate
+import sys
 
 from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.formatting import Printer, list_dicts_to_tabulate, dict_tabulate
 
 
 def get_cluster_info(cluster_config):
-    click.secho("Cluster info:", fg='yellow')
-    cluster_info = cluster_config.version_api
-    items = six.iteritems(cluster_info)
-    click.echo(tabulate(items))
+    Printer.print_header("Cluster info:")
+    cluster_dict = cluster_config.to_dict()
+    cluster_info = cluster_dict['version_api']
+    dict_tabulate(cluster_info)
 
-    nodes = OrderedDict()
-    for node in cluster_config.nodes:
-        node = node.to_dict()
-        for k, v in six.iteritems(node):
-            if k in nodes:
-                nodes[k].append(v)
-            else:
-                nodes[k] = [v]
+    nodes = list_dicts_to_tabulate(cluster_dict['nodes'])
 
     if nodes:
-        click.secho("Cluster Nodes:", fg='yellow')
-        click.echo(tabulate(nodes, headers="keys"))
+        Printer.print_header("Cluster Nodes:")
+        dict_tabulate(nodes, is_list_dict=True)
 
 
 def get_node_info(node_config):
+    if not node_config:
+        Printer.print_error('No node was found.')
+        sys.exit(0)
     node = node_config.to_dict()
     gpus = node.pop('gpus', [])
-    click.secho("Node info:", fg='yellow')
-    items = six.iteritems(node)
-    click.echo(tabulate(list(items)))
+    Printer.print_header("Node info:")
+    dict_tabulate(node)
 
-    click.secho("Node GPUs:", fg='yellow')
-    gpus_items = OrderedDict()
-    for gpu in gpus:
-        for k, v in six.iteritems(gpu):
-            if k in gpus_items:
-                gpus_items[k].append(v)
-            else:
-                gpus_items[k] = [v]
+    gpus_items = list_dicts_to_tabulate(gpus)
 
     if gpus_items:
-        headers = six.iterkeys(gpu)
-        # remove the cluster_node uuid
+        Printer.print_header("Node GPUs:")
         gpus_items.pop('cluster_node')
-        click.echo(tabulate(gpus_items, headers=headers))
+        dict_tabulate(gpus_items, is_list_dict=True)
 
 
 @click.command()

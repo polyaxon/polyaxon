@@ -11,6 +11,7 @@ from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.formatting import Printer
 
 
 @click.command()
@@ -38,7 +39,7 @@ def login(token, username, password):
             sys.exit(0)
 
         if not access_code:
-            click.secho("Failed to login", fg='red')
+            Printer.print_error("Failed to login")
             return
     else:
         if not token:
@@ -67,7 +68,7 @@ def login(token, username, password):
         logger.exception(e)
         sys.exit(0)
 
-    click.secho("Login Successful", fg='green')
+    Printer.print_success("Login Successful")
 
 
 @click.command()
