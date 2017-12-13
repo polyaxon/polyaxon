@@ -7,14 +7,16 @@ from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
 from polyaxon_client.logger import logger
 
+from polyaxon_cli.utils.formatting import Printer
+
 
 def check_polyaxonfile(file):
     try:
         plx_file = PolyaxonFile.read(file)
-        click.secho("Polyaxonfile valid", fg='green')
+        Printer.print_success("Polyaxonfile valid")
         return plx_file
     except Exception as e:
-        click.secho("Polyaxonfile is not valid", fg='red')
+        Printer.print_error("Polyaxonfile is not valid")
         logger.exception(e)
 
 
