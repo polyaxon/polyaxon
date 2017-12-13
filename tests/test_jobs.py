@@ -59,5 +59,5 @@ class TestJobClient(TestCase):
             body=json.dumps(object),
             content_type='application/json',
             status=200)
-        result = self.client.get_job_status(job_uuid)
+        result = self.client.get_status(job_uuid)
         assert object == result.to_dict()
