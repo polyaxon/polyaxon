@@ -270,7 +270,7 @@ class PolyaxonClient(object):
                         status_code=response.status_code)
 
     def handle_exception(self, e, log_message=None):
-        logger.info("{}: {}".format(log_message, e.message))
+        logger.info("{}: {}".format(log_message, e))
 
         if self.reraise:
             raise e

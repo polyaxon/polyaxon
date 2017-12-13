@@ -25,7 +25,8 @@ class ProjectClient(PolyaxonClient):
         try:
             response = self.get(request_url)
             return ProjectConfig.from_dict(response.json())
-        except NotFoundError:
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving project')
             return None
 
     def create_project(self, project_config):
