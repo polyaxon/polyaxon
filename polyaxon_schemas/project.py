@@ -12,6 +12,7 @@ from polyaxon_schemas.utils import UUID
 class ExperimentGroupSchema(Schema):
     uuid = UUID(allow_none=True)
     name = fields.Str()
+    user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     description = fields.Str(allow_none=True)
     content = fields.Str()
     project = UUID(allow_none=True)
@@ -34,10 +35,11 @@ class ExperimentGroupSchema(Schema):
 class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
-    REDUCED_ATTRIBUTES = ['uuid', 'project', 'experiments', 'description', 'created_at']
+    REDUCED_ATTRIBUTES = ['uuid', 'user', 'project', 'experiments', 'description', 'created_at']
 
     def __init__(self,
                  name,
+                 user=None,
                  description=None,
                  content=None,
                  uuid=None,
@@ -46,6 +48,7 @@ class ExperimentGroupConfig(BaseConfig):
                  created_at=None,
                  experiments=None,):
         self.name = name
+        self.user = user
         self.description = description
         self.content = content
         self.uuid = uuid
@@ -56,7 +59,8 @@ class ExperimentGroupConfig(BaseConfig):
 
 
 class ProjectSchema(Schema):
-    name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))  # TODO: must be slug
+    name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))
+    user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     uuid = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)
@@ -82,10 +86,12 @@ class ProjectSchema(Schema):
 class ProjectConfig(BaseConfig):
     SCHEMA = ProjectSchema
     IDENTIFIER = 'project'
-    REDUCED_ATTRIBUTES = ['uuid', 'description', 'experiments', 'experiment_groups', 'created_at']
+    REDUCED_ATTRIBUTES = [
+        'user', 'uuid', 'description', 'experiments', 'experiment_groups', 'created_at']
 
     def __init__(self,
                  name,
+                 user=None,
                  uuid=None,
                  description=None,
                  is_public=True,
@@ -96,6 +102,7 @@ class ProjectConfig(BaseConfig):
                  experiments=None,
                  experiment_groups=None):
         self.name = name
+        self.user = user
         self.uuid = uuid
         self.description = description
         self.is_public = is_public
@@ -105,3 +112,7 @@ class ProjectConfig(BaseConfig):
         self.num_experiment_groups = num_experiment_groups
         self.experiments = experiments
         self.experiment_groups = experiment_groups
+
+    @property
+    def api_url(self):
+        return '{}/{}'.format(self.user, self.name)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, post_dump
+from marshmallow import Schema, fields, post_load, post_dump, validate
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import UUID
@@ -39,6 +39,7 @@ class ExperimentJobConfig(BaseConfig):
 class ExperimentSchema(Schema):
     name = fields.Str()
     uuid = UUID(allow_none=True)
+    user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = UUID(allow_none=True)
     group = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
@@ -66,11 +67,12 @@ class ExperimentSchema(Schema):
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = ['description', 'config', 'jobs', 'content',
+    REDUCED_ATTRIBUTES = ['user', 'description', 'config', 'jobs', 'content',
                           'started_at', 'finished_at', 'is_clone']
 
     def __init__(self,
                  name,
+                 user=None,
                  uuid=None,
                  project=None,
                  group=None,
@@ -84,6 +86,7 @@ class ExperimentConfig(BaseConfig):
                  num_jobs=0,
                  jobs=None):
         self.name = name
+        self.user = user
         self.uuid = uuid
         self.project = project
         self.group = group
