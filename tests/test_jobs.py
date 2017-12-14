@@ -56,8 +56,8 @@ class TestJobClient(TestCase):
                 JobClient.ENDPOINT,
                 job_uuid,
                 'statuses'),
-            body=json.dumps(object),
+            body=json.dumps({'results': [object], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        result = self.client.get_status(job_uuid)
-        assert object == result.to_dict()
+        response = self.client.get_statuses(job_uuid)
+        assert len(response['results']) == 1

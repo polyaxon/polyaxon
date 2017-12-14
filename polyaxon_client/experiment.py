@@ -51,11 +51,11 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while deleting experiment')
             return None
 
-    def get_status(self, experiment_uuid):
+    def get_statuses(self, experiment_uuid, page=1):
         request_url = self._build_url(self._get_http_url(), experiment_uuid, 'statuses')
         try:
-            response = self.get(request_url)
-            return ExperimentStatusConfig.from_dict(response.json())
+            response = self.get(request_url, params=self.get_page(page=page))
+            return self.prepare_list_results(response.json(), page, ExperimentStatusConfig)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiment status')
             return None
@@ -86,7 +86,7 @@ class ExperimentClient(PolyaxonClient):
         request_url = self._build_url(self._get_http_url(), experiment_uuid, 'stop')
         try:
             response = self.post(request_url)
-            return ExperimentConfig.from_dict(response.json())
+            return response
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while deleting experiment')
             return None

@@ -102,11 +102,11 @@ class TestExperimentClient(TestCase):
                 ExperimentClient.ENDPOINT,
                 'uuid',
                 'statuses'),
-            body=json.dumps(object),
+            body=json.dumps({'results': [object], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        result = self.client.get_status('uuid')
-        assert object == result.to_dict()
+        response = self.client.get_statuses('uuid')
+        assert len(response['results']) == 1
 
     @httpretty.activate
     def test_list_experiment_jobs(self):
@@ -166,7 +166,6 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_stop_experiment(self):
-        object = ExperimentConfig(name=faker.word(), config={})
         experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,
@@ -175,8 +174,7 @@ class TestExperimentClient(TestCase):
                 ExperimentClient.ENDPOINT,
                 experiment_uuid,
                 'stop'),
-            body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
         result = self.client.stop(experiment_uuid)
-        assert result.to_dict() == object.to_dict()
+        assert result.status_code == 200
