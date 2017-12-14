@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 import click
 import six
+from polyaxon_schemas.utils import to_list
 from tabulate import tabulate
 
 
@@ -55,3 +56,13 @@ class Printer(object):
     @staticmethod
     def print_error(text):
         click.secho('\n{}\n'.format(text), fg='red')
+
+    @staticmethod
+    def add_color(value, color):
+        return click.style('{}'.format(value), fg=color)
+
+    @classmethod
+    def decorate_format_value(cls, text_format, values, color):
+        values = to_list(values)
+        values = [cls.add_color(value, color) for value in values]
+        click.echo(text_format.format(*values))

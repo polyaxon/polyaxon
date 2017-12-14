@@ -38,41 +38,45 @@ def check(file, all, version, run_type, project, log_path, matrix, experiments):
     """Check a polyaxonfile."""
     plx_file = check_polyaxonfile(file)
 
-    def get_result(value):
-        return click.style('{}'.format(value), fg='yellow')
-
     if version:
-        click.echo('The version is: {}'.format(get_result(plx_file.version)))
+        Printer.decorate_format_value('The version is: {}',
+                                      plx_file.version,
+                                      'yellow')
 
     if run_type:
-        click.echo("The run-type is: {}".format(get_result(plx_file.run_type)))
+        Printer.decorate_format_value('The run-type is: {}',
+                                      plx_file.run_type,
+                                      'yellow')
 
     if project:
-        click.echo("The project definition is: {}".format(get_result(plx_file.project.to_dict())))
-
+        Printer.decorate_format_value('The project is: {}',
+                                      plx_file.project.name,
+                                      'yellow')
     if log_path:
-        click.echo("The project logging path is: {}".format(get_result(plx_file.project_path)))
-
+        Printer.decorate_format_value('The project logging path is: {}',
+                                      plx_file.project_path,
+                                      'yellow')
     if matrix:
-        declarations = [str(d) for d in plx_file.matrix_declarations]
-        declarations = get_result('\n'.join(declarations))
-        click.echo("The matrix definition is:\n{}".format(declarations))
+        declarations = '\n'.join([str(d) for d in plx_file.matrix_declarations])
+        Printer.decorate_format_value('The matrix definition is:\n{}',
+                                      declarations,
+                                      'yellow')
 
     if experiments:
         num_experiments, concurrency = plx_file.experiments_def
         if num_experiments == 1:
-            result = get_result('One experiment')
-            click.echo("This polyaxon specification has {}".format(result))
+            Printer.decorate_format_value('This polyaxon specification has {}',
+                                          'One experiment',
+                                          'yellow')
         elif concurrency == 1:
-            num_experiments = get_result(num_experiments)
-            concurrency = get_result('sequential')
-            click.echo("The matrix-space has {} experiments, "
-                       "with {} runs".format(num_experiments, concurrency))
+            Printer.decorate_format_value('he matrix-space has {} experiments, with {} runs',
+                                          [num_experiments, 'sequential'],
+                                          'yellow')
         else:
-            num_experiments, concurrency = get_result(num_experiments), get_result(concurrency)
-            click.echo("The matrix-space has {} experiments,"
-                       "with {} concurrent runs".format(num_experiments, concurrency))
-
+            Printer.decorate_format_value('he matrix-space has {} experiments, '
+                                          'with {} concurrent runs',
+                                          [num_experiments, concurrency],
+                                          'yellow')
     if all:
         click.echo("Validated file:\n{}".format(plx_file.parsed_data))
 
