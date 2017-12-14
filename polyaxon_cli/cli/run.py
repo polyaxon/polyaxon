@@ -1,54 +1,55 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
-import sys
+import uuid
 
-import clint
-from polyaxon_schemas.polyaxonfile.logger import logger
-from polyaxon_schemas.settings import RunTypes
+import click
+from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.project import ExperimentGroupConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile
-from polyaxon_cli.cli.version import get_version, PROJECT_NAME
+from polyaxon_cli.cli.project import get_current_project
+from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
 
 @click.command()
-@click.option('--file', '-f', type=click.Path(exists=True), help='The polyaxon file to check.')
-@click.option('--experiment', '-x', type=int,
-              help='Run specific experiment, if nothing passed all experiments will be run.')
-def run(file, experiment):
-    """Command for running polyaxonfile experiments."""
+@click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
+              help='The polyaxon files to run.')
+@click.option('--name', '-n', type=click.Path(exists=True),
+              help='The name to give to this run.')
+@click.option('--description', '-n', type=click.Path(exists=True),
+              help='The description to give to this run.')
+def run(file, name, description):
+    """Command for running polyaxonfile specification.
+
+    Example:
+
+    ```
+    polyaxon run -f file -f file_override ...
+    ```
+    """
+    name = name or uuid.uuid4().hex
+    file = file or 'polyaxonfile.yml'
+    project = get_current_project()
     plx_file = check_polyaxonfile(file)
-    if plx_file.run_type == RunTypes.LOCAL:
-        # check that polyaxon is installed
-        version = get_version(PROJECT_NAME)
-        if version is None:
-            click.echo("""In order to run locally, polyaxon must be installed.""")
-            if click.confirm("Do you want to install polyaxon now?"):
-                from polyaxon_cli.cli.version import pip_upgrade
-                pip_upgrade(PROJECT_NAME)
-            else:
-                clint.textui.puts("Your can manually run:")
-                with clint.textui.indent(4):
-                    clint.textui.puts("pip install -U polyaxon")
-                clint.textui.puts("to install to the latest version of polyaxon")
-                sys.exit(0)
-
-        logger.info('Running polyaxonfile locally')
-        from polyaxon.polyaxonfile.local_runner import run, run_experiment
-        if experiment:
-            run_experiment(file, experiment)
-        else:
-            run(file)
-
+    num_experiments, concurrency = plx_file.experiments_def
+    project_client = PolyaxonClients().project
+    if num_experiments == 1:
+        click.echo('Creating an independent experiment.')
+        experiment = ExperimentConfig(name=name,
+                                      description=description,
+                                      content=plx_file._data,
+                                      config=plx_file.experiment_specs[0].parsed_data)
+        response = project_client.create_experiment(project.uuid.hex, experiment)
+        Printer.print_success('Experiment was created')
     else:
-        from polyaxon_k8s.k8s.spawner import K8SSpawner
-        spawner = K8SSpawner(polyaxonfile=plx_file)
-        if experiment is not None:
-            logger.info('Running experiment {} polyaxonfile on {}'.format(experiment,
-                                                                          plx_file.run_type))
-            spawner.create_experiment(experiment)
-        else:
-            logger.info('Running experiment all polyaxonfile on {}'.format(plx_file.run_type))
-            spawner.create_all_experiments()
+        click.echo('Creating an experiment group with {} experiments.'.format(num_experiments))
+        experiment_group = ExperimentGroupConfig(name=name,
+                                                 description=description,
+                                                 content=plx_file._data)
+        response = project_client.create_experiment_group(project.uuid.hex, experiment_group)
+        Printer.print_success('Experiment group was created')
 
+    response = response.to_dict()
+    dict_tabulate(response)
