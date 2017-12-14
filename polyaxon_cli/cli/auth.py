@@ -75,7 +75,7 @@ def login(token, username, password):
 def logout():
     """Logout of Polyaxon."""
     AuthConfigManager.purge()
-    logger.info("You are logged out")
+    Printer.print_success("You are logged out")
 
 
 @click.command()
