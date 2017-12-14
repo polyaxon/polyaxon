@@ -175,7 +175,7 @@ def resources(experiment):
     ```
     """
     try:
-        PolyaxonClients().experiment.resources(experiment)
+        PolyaxonClients().experiment.resources(experiment, message_handler=click.echo)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get resources for experiment `{}`.'.format(experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -193,10 +193,10 @@ def logs(experiment):
     ```
     """
     try:
-        PolyaxonClients().experiment.logs(experiment)
+        PolyaxonClients().experiment.logs(experiment, message_handler=click.echo)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for experiment `{}`.'.format(experiment))
-        Printer.print_error('Error message `{}`.'.format(e))
+        # Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
 

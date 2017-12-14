@@ -84,7 +84,7 @@ def resources(job):
     ```
     """
     try:
-        PolyaxonClients().job.resources(job)
+        PolyaxonClients().job.resources(job, message_handler=lambda x: click.echo)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get resources for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -102,7 +102,7 @@ def logs(job):
     ```
     """
     try:
-        PolyaxonClients().job.logs(job)
+        PolyaxonClients().job.logs(job, message_handler=click.echo)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
