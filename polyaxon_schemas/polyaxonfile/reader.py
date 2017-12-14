@@ -36,7 +36,7 @@ def read(config_values):
             # try reading a stream of yaml or json
             config_results = _read_from_stream(config_value)
 
-        if config_results:
+        if config_results and isinstance(config_results, Mapping):
             config = deep_update(config, config_results)
         else:
             raise PolyaxonConfigurationError('Cannot read config_value: `{}`'.format(config_value))
