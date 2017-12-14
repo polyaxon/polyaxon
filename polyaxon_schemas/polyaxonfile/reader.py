@@ -8,6 +8,7 @@ from collections import Mapping
 
 import six
 import yaml
+from yaml.scanner import ScannerError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.utils import deep_update
@@ -34,7 +35,11 @@ def read(config_values):
             config_results = _read_from_file(config_value)
         else:
             # try reading a stream of yaml or json
-            config_results = _read_from_stream(config_value)
+            try:
+                config_results = _read_from_stream(config_value)
+            except ScannerError:
+                raise PolyaxonConfigurationError(
+                    'Received non valid yaml stream: `{}`'.format(config_value))
 
         if config_results and isinstance(config_results, Mapping):
             config = deep_update(config, config_results)
