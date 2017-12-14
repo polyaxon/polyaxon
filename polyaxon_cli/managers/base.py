@@ -43,6 +43,11 @@ class BaseConfigManager(object):
         cls.set_config(config)
 
     @classmethod
+    def is_initialized(cls):
+        config_file_path = cls.get_config_file_path()
+        return os.path.isfile(config_file_path)
+
+    @classmethod
     def set_config(cls, config):
         config_file_path = cls.get_config_file_path()
 
