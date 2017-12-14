@@ -13,10 +13,10 @@ API_V1 = 'api/v1'
 api_patterns = [
     url(r'', include('clusters.urls', namespace='clusters')),
     url(r'', include('experiments.urls', namespace='experiments')),
-    url(r'', include('repos.urls', namespace='repos')),
     url(r'', include('versions.urls', namespace='versions')),
     url(r'', include('users.api_urls', namespace='users')),
     # always include project last because of it's patterns
+    url(r'', include('repos.urls', namespace='repos')),
     url(r'', include('projects.urls', namespace='projects')),
 ]
 

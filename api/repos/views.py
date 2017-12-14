@@ -25,21 +25,26 @@ logger = logging.getLogger(__name__)
 class RepoDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Repo.objects.all()
     serializer_class = RepoSerializer
-    lookup_field = 'uuid'
+
+    def get_project(self):
+        username = self.kwargs['username']
+        project_name = self.kwargs['name']
+        return get_object_or_404(Project, name=project_name, user__username=username)
 
     def get_object(self):
-        project_uuid = self.kwargs['uuid']
-        project = get_object_or_404(Project, uuid=project_uuid)
-        return get_object_or_404(Repo, project=project)
+        return get_object_or_404(Repo, project=self.get_project())
 
 
 class UploadFilesView(APIView):
     parser_classes = (MultiPartParser,)
 
+    def get_project(self):
+        username = self.kwargs['username']
+        project_name = self.kwargs['name']
+        return get_object_or_404(Project, name=project_name, user__username=username)
+
     def get_object(self):
-        project_uuid = self.kwargs['uuid']
-        project = get_object_or_404(Project, uuid=project_uuid)
-        repo, _ = Repo.objects.get_or_create(project=project)
+        repo, _ = Repo.objects.get_or_create(project=self.get_project())
         return repo
 
     @staticmethod

@@ -35,7 +35,9 @@ class TestRepoDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.object = self.factory_class()
-        self.url = '/{}/projects/{}/repo'.format(API_V1, self.object.project.uuid.hex)
+        self.url = '/{}/{}/{}/repo'.format(API_V1,
+                                           self.object.project.user.username,
+                                           self.object.project.name)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -58,7 +60,9 @@ class TestUploadFilesView(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
-        self.url = '/{}/projects/{}/repo/upload'.format(API_V1, self.project.uuid.hex)
+        self.url = '/{}/{}/{}/repo/upload'.format(API_V1,
+                                                  self.project.user.username,
+                                                  self.project.name)
         settings.REPOS_ROOT = tempfile.mkdtemp()
         settings.UPLOAD_ROOT = tempfile.mkdtemp()
 
