@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+import tarfile
 
 from polyaxon_cli.utils import constants
 
@@ -33,3 +34,13 @@ def create_init_file(init_file_type, project=None):
         f.write(constants.INIT_FILE_TEMPLATES[init_file_type].format(project))
 
     return True
+
+
+def create_tarfile(files, project_name):
+    """Create a tar file based on the list of files passed"""
+    filename = "/tmp/{}.tar.gz".format(project_name)
+    with tarfile.open(filename, "w:gz") as tar:
+        for f in files:
+            tar.add(f)
+
+    return filename
