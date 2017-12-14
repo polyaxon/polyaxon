@@ -87,13 +87,15 @@ class PolyaxonClient(object):
     def _build_url(*parts):
         url = ''
         for part in parts:
-            url += '{}/'.format(part.rstrip('/').lstrip('/'))
+            part = part.rstrip('/').lstrip('/')
+            if part:
+                url += '{}/'.format(part)
 
         return url
 
     def _get_url(self, base_url, endpoint=None):
         endpoint = endpoint or self.ENDPOINT
-        if not endpoint:
+        if endpoint is None:
             raise self.errors_mapping['base'](
                 "This function expects `ENDPOINT` attribute to be set, "
                 "or an `endpoint` argument to be passed.")

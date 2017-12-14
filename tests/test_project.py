@@ -31,12 +31,14 @@ class TestProjectClient(TestCase):
             httpretty.GET,
             ProjectClient._build_url(
                 self.client.base_url,
-                ProjectClient.ENDPOINT),
+                ProjectClient.ENDPOINT,
+                'user'
+            ),
             body=json.dumps({'results': projects, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_projects()
+        response = self.client.list_projects('user')
         assert len(response['results']) == 10
         assert response['count'] == 10
         assert response['next'] is None
@@ -50,26 +52,12 @@ class TestProjectClient(TestCase):
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                'uuid'),
+                'user',
+                'project'),
             body=json.dumps(object),
             content_type='application/json',
             status=200)
-        result = self.client.get_project('uuid')
-        assert object == result.to_dict()
-
-    @httpretty.activate
-    def test_get_project_by_name(self):
-        object = ProjectConfig(faker.word()).to_dict()
-        httpretty.register_uri(
-            httpretty.GET,
-            ProjectClient._build_url(
-                self.client.base_url,
-                'project_names',
-                'name'),
-            body=json.dumps(object),
-            content_type='application/json',
-            status=200)
-        result = self.client.get_project_by_name('name')
+        result = self.client.get_project('user', 'project')
         assert object == result.to_dict()
 
     @httpretty.activate
@@ -79,7 +67,7 @@ class TestProjectClient(TestCase):
             httpretty.POST,
             ProjectClient._build_url(
                 self.client.base_url,
-                ProjectClient.ENDPOINT),
+                'projects'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
@@ -89,17 +77,17 @@ class TestProjectClient(TestCase):
     @httpretty.activate
     def test_update_project(self):
         object = ProjectConfig(faker.word())
-        project_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.PATCH,
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid),
+                'user',
+                'project'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_project(project_uuid, {'name': 'new'})
+        result = self.client.update_project('user', 'project', {'name': 'new'})
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
@@ -110,21 +98,22 @@ class TestProjectClient(TestCase):
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid),
+                'user',
+                'project'),
             content_type='application/json',
             status=204)
-        result = self.client.delete_project(project_uuid)
+        result = self.client.delete_project('user', 'project')
         assert result.status_code == 204
 
     @httpretty.activate
     def test_upload_repo(self):
-        project_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.PUT,
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid,
+                'user',
+                'project',
                 'repo',
                 'upload'),
             content_type='application/json',
@@ -132,7 +121,7 @@ class TestProjectClient(TestCase):
         files = [('code', ('repo',
                            open('./tests/fixtures_static/repo.tar.gz', 'rb'),
                            'text/plain'))]
-        result = self.client.upload_repo(project_uuid, files=files, files_size=10)
+        result = self.client.upload_repo('user', 'project', files=files, files_size=10)
         assert result.status_code == 204
 
     @httpretty.activate
@@ -146,13 +135,14 @@ class TestProjectClient(TestCase):
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid,
+                'user',
+                'project',
                 'experiment_groups'),
             body=json.dumps({'results': experiment_groups, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiment_groups(project_uuid)
+        response = self.client.list_experiment_groups('user', 'project')
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -164,12 +154,13 @@ class TestProjectClient(TestCase):
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid,
+                'user',
+                'project',
                 'experiment_groups'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment_group(project_uuid, object)
+        result = self.client.create_experiment_group('user', 'project', object)
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
@@ -183,13 +174,14 @@ class TestProjectClient(TestCase):
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid,
+                'user',
+                'project',
                 'experiments'),
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments(project_uuid)
+        response = self.client.list_experiments('user', 'project')
         assert len(response['results']) == 10
 
         # pagination
@@ -199,13 +191,14 @@ class TestProjectClient(TestCase):
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid,
+                'user',
+                'project',
                 'experiments') + '?offset=2',
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments(project_uuid, page=2)
+        response = self.client.list_experiments('user', 'project', page=2)
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -217,10 +210,11 @@ class TestProjectClient(TestCase):
             ProjectClient._build_url(
                 self.client.base_url,
                 ProjectClient.ENDPOINT,
-                project_uuid,
+                'user',
+                'project',
                 'experiments'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment(project_uuid, object)
+        result = self.client.create_experiment('user', 'project', object)
         assert result.to_dict() == object.to_dict()
