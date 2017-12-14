@@ -32,8 +32,12 @@ def get_project_or_local(project=None):
                             '`polyaxon init PROJECT_NAME [--run|--model]`')
         sys.exit(0)
 
-    project = project or ProjectManager.get_value('uuid').hex
-    return project
+    if project:
+        user, project_name = project.split('/')
+    else:
+        project = ProjectManager.get_config()
+        user, project_name = project.user, project.name
+    return user, project_name
 
 
 @click.group()
@@ -119,10 +123,10 @@ def get(project):
     polyaxon project get 50c62372137940ca8c456d8596946dd7
     ```
     """
-    project = get_project_or_local(project)
+    user, project_name = get_project_or_local(project)
 
     try:
-        response = PolyaxonClients().project.get_project(project)
+        response = PolyaxonClients().project.get_project(user, project_name)
         PolyaxonClients.handle_response(
             response, error_message='no project was found with `{}`'.format(project))
     except PolyaxonShouldExitError as e:
@@ -138,9 +142,9 @@ def get(project):
 @click.argument('project', type=str)
 def delete(project):
     """Delete project."""
-    project = get_project_or_local(project)
+    user, project_name = get_project_or_local(project)
 
-    if not click.confirm("Are sure you want to delete project `{}`".format(project)):
+    if not click.confirm("Are sure you want to delete project `{}/{}`".format(user, project_name)):
         click.echo('Existing without deleting project.')
         sys.exit(0)
 
@@ -170,7 +174,7 @@ def update(project, name, description):
     polyaxon update 50c62372137940ca8c456d8596946dd7 --description=Image Classification with Deep Learning using TensorFlow
     ```
     """
-    project = get_project_or_local(project)
+    user, project_name = get_project_or_local(project)
 
     update_dict = {}
     if name:
@@ -184,9 +188,9 @@ def update(project, name, description):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().project.update_project(project, update_dict)
+        response = PolyaxonClients().project.update_project(user, project_name, update_dict)
         PolyaxonClients.handle_response(
-            project, error_message='The project was not updated.')
+            response, error_message='The project was not updated.')
     except PolyaxonShouldExitError as e:
         logger.exception(e)
         sys.exit(0)
@@ -202,22 +206,23 @@ def update(project, name, description):
 @click.option('--page', type=int, help='To paginate through the list of projects.')
 def experiment_groups(project, page):
     """List experiment groups for this project"""
-    project = get_project_or_local(project)
+    user, project_name = get_project_or_local(project)
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_experiment_groups(project, page=page)
+        response = PolyaxonClients().project.list_experiment_groups(user, project_name, page=page)
     except PolyaxonShouldExitError as e:
         logger.exception(e)
         sys.exit(0)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Experiment groups for project `{}`.'.format(project))
+        Printer.print_header('Experiment groups for project `{}/{}`.'.format(user, project_name))
         Printer.print_header('Navigation:')
         dict_tabulate(meta)
     else:
-        Printer.print_header('No experiment groups found for project `{}`.'.format(project))
+        Printer.print_header('No experiment groups found for project `{}/{}`.'.format(
+            user, project_name))
 
     objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
     if objects:
@@ -231,22 +236,22 @@ def experiment_groups(project, page):
 @click.option('--page', type=int, help='To paginate through the list of projects.')
 def experiments(project, page):
     """List experiments for this project"""
-    project = get_project_or_local(project)
+    user, project_name = get_project_or_local(project)
 
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_experiments(project, page=page)
+        response = PolyaxonClients().project.list_experiments(user, project_name, page=page)
     except PolyaxonShouldExitError as e:
         logger.exception(e)
         sys.exit(0)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Experiments for project `{}`.'.format(project))
+        Printer.print_header('Experiments for project `{}/{}`.'.format(user, project_name))
         Printer.print_header('Navigation:')
         dict_tabulate(meta)
     else:
-        Printer.print_header('No experiments found for project `{}`.'.format(project))
+        Printer.print_header('No experiments found for project `{}/{}`.'.format(user, project_name))
 
     objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
     if objects:
