@@ -19,12 +19,20 @@ from polyaxon_cli.utils.formatting import (
 )
 
 
-def get_project_local(project):
-    project = project or ProjectManager.get_value('uuid').hex
-    if not project:
-        Printer.print_error('Please provide a valid project uuid, or init a new project.')
+def get_current_project():
+    if not ProjectManager.is_initialized():
+        Printer.print_error('Please initialize your project before uploading any code.'
+                            '`polyaxon init PROJECT_NAME [--run|--model]`')
+    return ProjectManager.get_config()
+
+
+def get_project_or_local(project=None):
+    if not project and not ProjectManager.is_initialized():
+        Printer.print_error('Please provide a valid project uuid, or init a new project.'
+                            '`polyaxon init PROJECT_NAME [--run|--model]`')
         sys.exit(0)
 
+    project = project or ProjectManager.get_value('uuid').hex
     return project
 
 
@@ -111,7 +119,7 @@ def get(project):
     polyaxon project get 50c62372137940ca8c456d8596946dd7
     ```
     """
-    project = get_project_local(project)
+    project = get_project_or_local(project)
 
     try:
         response = PolyaxonClients().project.get_project(project)
@@ -130,7 +138,7 @@ def get(project):
 @click.argument('project', type=str)
 def delete(project):
     """Delete project."""
-    project = get_project_local(project)
+    project = get_project_or_local(project)
 
     if not click.confirm("Are sure you want to delete project `{}`".format(project)):
         click.echo('Existing without deleting project.')
@@ -162,7 +170,7 @@ def update(project, name, description):
     polyaxon update 50c62372137940ca8c456d8596946dd7 --description=Image Classification with Deep Learning using TensorFlow
     ```
     """
-    project = get_project_local(project)
+    project = get_project_or_local(project)
 
     update_dict = {}
     if name:
@@ -190,11 +198,11 @@ def update(project, name, description):
 
 
 @project.command()
-@click.argument('project', type=str, required=True)
+@click.argument('project', type=str, required=False)
 @click.option('--page', type=int, help='To paginate through the list of projects.')
 def experiment_groups(project, page):
     """List experiment groups for this project"""
-    project = get_project_local(project)
+    project = get_project_or_local(project)
 
     page = page or 1
     try:
@@ -219,11 +227,11 @@ def experiment_groups(project, page):
 
 
 @project.command()
-@click.argument('project', type=str, required=True)
+@click.argument('project', type=str, required=False)
 @click.option('--page', type=int, help='To paginate through the list of projects.')
 def experiments(project, page):
     """List experiments for this project"""
-    project = get_project_local(project)
+    project = get_project_or_local(project)
 
     page = page or 1
     try:
@@ -245,3 +253,21 @@ def experiments(project, page):
         Printer.print_header("Experiments:")
         objects.pop('project')
         dict_tabulate(objects, is_list_dict=True)
+
+
+@project.command()
+@click.argument('project', type=str, required=False)
+def clone(project):
+    pass
+
+
+@project.command()
+@click.argument('project', type=str, required=False)
+def tensorboard(project):
+    pass
+
+
+@project.command()
+@click.argument('project', type=str, required=False)
+def notebook(project):
+    pass

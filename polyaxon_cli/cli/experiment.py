@@ -188,3 +188,9 @@ def logs(experiment):
     except PolyaxonShouldExitError as e:
         logger.exception(e)
         sys.exit(0)
+
+
+@experiment.command()
+@click.argument('experiment', type=str)
+def outputs(experiment):
+    pass

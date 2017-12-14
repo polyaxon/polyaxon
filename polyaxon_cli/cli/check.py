@@ -21,7 +21,8 @@ def check_polyaxonfile(file):
 
 
 @click.command()
-@click.option('--file', '-f', type=click.Path(exists=True), help='The polyaxon file to check.')
+@click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
+              help='The polyaxon file to check.')
 @click.option('--all', '-a', is_flag=True, default=False,
               help='Checks and prints the validated file.')
 @click.option('--version', '-v', is_flag=True, default=False, help='Checks and prints the version.')

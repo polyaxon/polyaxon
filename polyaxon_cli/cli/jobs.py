@@ -10,8 +10,6 @@ from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
-    get_meta_response,
-    list_dicts_to_tabulate,
 )
 
 
