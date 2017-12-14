@@ -9,5 +9,5 @@ class GlobalConfigManager(BaseConfigManager):
     """Manages global configuration .plxconfig file."""
 
     IS_GLOBAL = True
-    CONFIG_FILE_NAME = '.plxconfig'
+    CONFIG_FILE_NAME = '.polyaxonconfig'
     CONFIG = GlobalConfigurationConfig

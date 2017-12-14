@@ -14,7 +14,7 @@ from polyaxon_cli.utils.files import unix_style_path
 class IgnoreManager(BaseConfigManager):
     """Manages .plxignore file in the current directory"""
     IS_GLOBAL = False
-    CONFIG_FILE_NAME = '.plxignore'
+    CONFIG_FILE_NAME = '.polyaxonignore'
 
     @classmethod
     def init_config(cls):

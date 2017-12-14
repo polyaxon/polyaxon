@@ -10,5 +10,5 @@ class ProjectManager(BaseConfigManager):
     """Manages access token configuration .plxprojectconfig file."""
 
     IS_GLOBAL = False
-    CONFIG_FILE_NAME = '.plxproject'
+    CONFIG_FILE_NAME = '.polyaxonproject'
     CONFIG = ProjectConfig

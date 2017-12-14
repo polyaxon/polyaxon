@@ -40,7 +40,7 @@ class BaseConfigManager(object):
     @classmethod
     def init_config(cls):
         config = cls.get_config()
-        cls.set_config(config)
+        cls.set_config(config, init=True)
 
     @classmethod
     def is_initialized(cls):
@@ -48,10 +48,10 @@ class BaseConfigManager(object):
         return os.path.isfile(config_file_path)
 
     @classmethod
-    def set_config(cls, config):
+    def set_config(cls, config, init=False):
         config_file_path = cls.get_config_file_path()
 
-        if os.path.isfile(config_file_path):
+        if os.path.isfile(config_file_path) and init:
             logger.debug("{} file already present at {}".format(
                 cls.CONFIG_FILE_NAME, config_file_path))
             return
