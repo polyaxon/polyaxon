@@ -1,5 +1,5 @@
 click==6.7
 pathlib==1.0.1
 tabulate==0.8.2
--e git+https://github.com/polyaxon/polyaxon-client.git@21b3a4d5996cf7e7d5d892e0c15c824af6999330#egg=polyaxon-client
--e git+https://github.com/polyaxon/polyaxon-schemas.git@867071de03993308aa75839525e4e6f16f133db0#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-client.git@870257ff3bbd7b852173c0ba1ed3a435a92e0a3b#egg=polyaxon-client
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@a0fb59f3c22f6fc94f58d36b8964c2d1ef05fc22#egg=polyaxon-schemas

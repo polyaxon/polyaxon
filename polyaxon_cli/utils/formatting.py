@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 import click
 import six
+
 from polyaxon_schemas.utils import to_list
 from tabulate import tabulate
 

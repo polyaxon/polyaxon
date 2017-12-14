@@ -5,13 +5,14 @@ import click
 import sys
 
 from marshmallow import ValidationError
+
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.project import ProjectConfig
 
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
-from polyaxon_cli.utils.constants import INIT_COMMAND
+from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import (
     Printer,
     get_meta_response,
@@ -39,7 +40,7 @@ def get_current_project_or_exit():
 def get_project_or_local(project=None):
     if not project and not ProjectManager.is_initialized():
         Printer.print_error('Please provide a valid project, or init a new project.'
-                            '{}'.format(INIT_COMMAND))
+                            '{}'.format(constants.INIT_COMMAND))
         sys.exit(1)
 
     if project:
@@ -55,7 +56,7 @@ def get_project_or_local(project=None):
 
     if not all([user, project_name]):
         Printer.print_error('Please provide a valid project, or init a new project.'
-                            '{}'.format(INIT_COMMAND))
+                            '{}'.format(constants.INIT_COMMAND))
         sys.exit(1)
     return user, project_name
 

@@ -8,7 +8,7 @@ import os
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.utils import to_list
 
-from polyaxon_cli.utils.constants import INIT_COMMAND
+from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer
 
 
@@ -17,7 +17,8 @@ def check_polyaxonfile(file):
     exists = [os.path.isfile(f) for f in file]
 
     if not any(exists):
-        Printer.print_error('Polyaxonfile is not present, please run {}'.format(INIT_COMMAND))
+        Printer.print_error('Polyaxonfile is not present, '
+                            'please run {}'.format(constants.INIT_COMMAND))
         sys.exit(1)
 
     try:

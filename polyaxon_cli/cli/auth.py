@@ -6,6 +6,7 @@ import click
 import sys
 
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+
 from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 
 from polyaxon_cli.logger import logger

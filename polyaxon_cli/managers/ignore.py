@@ -7,7 +7,7 @@ from pathlib import PurePath
 
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.base import BaseConfigManager
-from polyaxon_cli.utils.constants import DEFAULT_IGNORE_LIST
+from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.files import unix_style_path
 
 
@@ -18,7 +18,7 @@ class IgnoreManager(BaseConfigManager):
 
     @classmethod
     def init_config(cls):
-        cls.set_config(DEFAULT_IGNORE_LIST)
+        cls.set_config(constants.DEFAULT_IGNORE_LIST)
 
     @staticmethod
     def _is_empty_or_comment(line):

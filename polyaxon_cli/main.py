@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_cli.cli.jobs import job
 from polyaxon_cli.cli.run import run
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.cli.cluster import cluster
@@ -50,5 +51,6 @@ cli.add_command(cluster)
 cli.add_command(project)
 cli.add_command(group)
 cli.add_command(experiment)
+cli.add_command(job)
 cli.add_command(upload)
 cli.add_command(run)
