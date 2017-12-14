@@ -58,7 +58,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     @cached_property
     def concurrency(self):
         if self.specification.settings:
-            return self.specification.settings.conccurrent_experiments
+            return self.specification.settings.concurrent_experiments
         return 1
 
     @property
