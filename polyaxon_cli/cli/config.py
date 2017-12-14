@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import click
 
 from polyaxon_cli.managers.config import GlobalConfigManager
+from polyaxon_cli.utils.formatting import dict_tabulate, Printer
 
 
 def validate_options(ctx, param, value):
@@ -20,7 +21,8 @@ def config(list):
     """Set and get global configurations."""
     if list:
         config = GlobalConfigManager.get_config()
-        click.echo(config.to_dict())
+        Printer.print_header('Current config:')
+        dict_tabulate(config.to_dict())
 
 
 @config.command()
@@ -35,6 +37,7 @@ def get(keys):
     ```
     """
     config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
+
     if len(keys) == 0:
         return
 
@@ -45,7 +48,7 @@ def get(keys):
         else:
             click.echo('Key `{}` is not recognised.'.format(key))
 
-    click.echo(print_values)
+    dict_tabulate(print_values, )
 
 
 @config.command()
@@ -81,3 +84,4 @@ def set(verbose, host, http_port, ws_port, use_https):
         config.use_https = use_https
 
     GlobalConfigManager.set_config(config)
+    Printer.print_success('Config was update.')

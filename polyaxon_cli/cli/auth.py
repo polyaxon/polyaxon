@@ -5,7 +5,7 @@ import click
 
 import sys
 
-from polyaxon_client.exceptions import PolyaxonShouldExitError
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 
 from polyaxon_cli.logger import logger
@@ -34,9 +34,10 @@ def login(token, username, password):
         credentials = CredentialsConfig(username=username, password=password)
         try:
             access_code = auth_client.login(credentials=credentials)
-        except PolyaxonShouldExitError as e:
-            logger.exception(e)
-            sys.exit(0)
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not login.')
+            Printer.print_error(e)
+            sys.exit(1)
 
         if not access_code:
             Printer.print_error("Failed to login")
@@ -60,13 +61,14 @@ def login(token, username, password):
 
         access_code = access_code.strip(" ")
 
-    user = PolyaxonClients().auth.get_user(token=access_code)
-    access_token = AccessTokenConfig(username=user.username, token=access_code)
     try:
-        AuthConfigManager.set_config(access_token)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+        user = PolyaxonClients().auth.get_user(token=access_code)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not load user info.')
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+    access_token = AccessTokenConfig(username=user.username, token=access_code)
+    AuthConfigManager.set_config(access_token)
 
     Printer.print_success("Login Successful")
 

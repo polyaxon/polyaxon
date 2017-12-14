@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 import click
 import sys
 
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer, list_dicts_to_tabulate, dict_tabulate
 
@@ -24,7 +26,7 @@ def get_cluster_info(cluster_config):
 def get_node_info(node_config):
     if not node_config:
         Printer.print_error('No node was found.')
-        sys.exit(0)
+        sys.exit(1)
     node = node_config.to_dict()
     gpus = node.pop('gpus', [])
     Printer.print_header("Node info:")
@@ -44,8 +46,18 @@ def cluster(node):
     """Get cluster and nodes info."""
     cluster_client = PolyaxonClients().cluster
     if node:
-        node_config = cluster_client.get_node(node)
+        try:
+            node_config = cluster_client.get_node(node)
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not load node `{}` info.'.format(node))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
         get_node_info(node_config)
     else:
-        cluster_config = cluster_client.get_cluster()
+        try:
+            cluster_config = cluster_client.get_cluster()
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not load cluster info.'.format(node))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
         get_cluster_info(cluster_config)

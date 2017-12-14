@@ -3,14 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 import click
 import sys
-from polyaxon_client.exceptions import PolyaxonShouldExitError
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
-from polyaxon_cli.logger import logger
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
-)
+    get_meta_response, list_dicts_to_tabulate)
 
 
 @click.group()
@@ -31,11 +30,10 @@ def get(job):
     """
     try:
         response = PolyaxonClients().job.get_job(job)
-        PolyaxonClients.handle_response(
-            response, error_message='no job was found with `{}`'.format(job))
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get job `{}`.'.format(job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     response = response.to_dict()
     Printer.print_header("Job info:")
@@ -44,7 +42,7 @@ def get(job):
 
 @job.command()
 @click.argument('job', type=str)
-def status(job):
+def statuses(job):
     """Get job status.
 
     Examples:
@@ -53,16 +51,25 @@ def status(job):
     ```
     """
     try:
-        response = PolyaxonClients().job.get_status(job)
-        PolyaxonClients.handle_response(
-            response, error_message='no job was found for `{}`'.format(job))
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+        response = PolyaxonClients().job.get_statuses(job)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get status for job `{}`.'.format(job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
-    response = response.to_dict()
-    Printer.print_header("Job status:")
-    dict_tabulate(response)
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header('Statuses for Job `{}`.'.format(job))
+        Printer.print_header('Navigation:')
+        dict_tabulate(meta)
+    else:
+        Printer.print_header('No statuses found for job `{}`.'.format(job))
+
+    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    if objects:
+        Printer.print_header("Statuses:")
+        objects.pop('job')
+        dict_tabulate(objects, is_list_dict=True)
 
 
 @job.command()
@@ -77,9 +84,10 @@ def resources(job):
     """
     try:
         PolyaxonClients().job.resources(job)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get resources for job `{}`.'.format(job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
 
 @job.command()
@@ -94,6 +102,7 @@ def logs(job):
     """
     try:
         PolyaxonClients().job.logs(job)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get logs for job `{}`.'.format(job))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)

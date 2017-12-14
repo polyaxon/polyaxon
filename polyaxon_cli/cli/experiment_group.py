@@ -3,9 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import click
 import sys
-from polyaxon_client.exceptions import PolyaxonShouldExitError
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
-from polyaxon_cli.logger import logger
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -33,11 +32,10 @@ def get(group):
     """
     try:
         response = PolyaxonClients().experiment_group.get_experiment_group(group)
-        PolyaxonClients.handle_response(
-            response, error_message='no project was found with `{}`'.format(group))
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get experiment group `{}`.'.format(group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     response = response.to_dict()
     Printer.print_header("Experiment group info:")
@@ -54,11 +52,10 @@ def delete(group):
 
     try:
         response = PolyaxonClients().experiment_group.delete_experiment_group(group)
-        PolyaxonClients.handle_response(
-            group, error_message='The experiment group was not deleted.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not delete experiment group `{}`.'.format(group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     if response.status_code == 204:
         Printer.print_success("Experiment group `{}` was delete successfully".format(group))
@@ -91,11 +88,10 @@ def update(group, name, description):
 
     try:
         response = PolyaxonClients().experiment_group.update_experiment_group(group, update_dict)
-        PolyaxonClients.handle_response(
-            group, error_message='The experiment group was not updated.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not update experiment group `{}`.'.format(group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     Printer.print_success("Experiment group updated.")
     response = response.to_dict()
@@ -111,9 +107,10 @@ def experiments(group, page):
     page = page or 1
     try:
         response = PolyaxonClients().experiment_group.list_experiments(group, page=page)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get experiments for group `{}`.'.format(group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
@@ -126,5 +123,5 @@ def experiments(group, page):
     objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
     if objects:
         Printer.print_header("Experiments:")
-        objects.pop('experiment_group')
+        objects.pop('group')
         dict_tabulate(objects, is_list_dict=True)

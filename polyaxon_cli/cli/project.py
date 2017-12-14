@@ -5,12 +5,13 @@ import click
 import sys
 
 from marshmallow import ValidationError
-from polyaxon_client.exceptions import PolyaxonShouldExitError
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.project import ProjectConfig
 
-from polyaxon_cli.logger import logger
+from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.constants import INIT_COMMAND
 from polyaxon_cli.utils.formatting import (
     Printer,
     get_meta_response,
@@ -21,22 +22,41 @@ from polyaxon_cli.utils.formatting import (
 
 def get_current_project():
     if not ProjectManager.is_initialized():
+        return None
+    return ProjectManager.get_config()
+
+
+def get_current_project_or_exit():
+    project = get_current_project()
+    if not project:
         Printer.print_error('Please initialize your project before uploading any code.'
                             '`polyaxon init PROJECT_NAME [--run|--model]`')
-    return ProjectManager.get_config()
+        sys.exit(1)
+
+    return project
 
 
 def get_project_or_local(project=None):
     if not project and not ProjectManager.is_initialized():
-        Printer.print_error('Please provide a valid project uuid, or init a new project.'
-                            '`polyaxon init PROJECT_NAME [--run|--model]`')
-        sys.exit(0)
+        Printer.print_error('Please provide a valid project, or init a new project.'
+                            '{}'.format(INIT_COMMAND))
+        sys.exit(1)
 
     if project:
-        user, project_name = project.split('/')
+        parts = project.split('/')
+        if len(parts) == 2:
+            user, project_name = parts
+        else:
+            user = AuthConfigManager.get_value('username')
+            project_name = project
     else:
         project = ProjectManager.get_config()
         user, project_name = project.user, project.name
+
+    if not all([user, project_name]):
+        Printer.print_error('Please provide a valid project, or init a new project.'
+                            '{}'.format(INIT_COMMAND))
+        sys.exit(1)
     return user, project_name
 
 
@@ -62,17 +82,15 @@ def create(name, description):
     try:
         project_config = ProjectConfig.from_dict(dict(name=name, description=description))
     except ValidationError:
-        Printer.print_error('Project name should contain only alpha numericals, "-", and "_".')
-        sys.exit(0)
+        Printer.print_error('Project name should contain only alpha numerical, "-", and "_".')
+        sys.exit(1)
 
     try:
         project = PolyaxonClients().project.create_project(project_config)
-        PolyaxonClients.handle_response(
-            project, error_message='The project was not created, '
-                                   'may be a project with same name already exists.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not create project `{}`.'.format(name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     Printer.print_success("Project `{}` was created successfully with uuid `{}`.".format(
         project.name, project.uuid.hex))
@@ -82,15 +100,17 @@ def create(name, description):
 @click.option('--page', type=int, help='To paginate through the list of projects.')
 def list(page):
     """List projects."""
+    user = AuthConfigManager.get_value('username')
+    if not user:
+        Printer.print_error('Please login first. `polyaxon login --help`')
+
     page = page or 1
     try:
-        response = PolyaxonClients().project.list_projects(page=page)
-        PolyaxonClients.handle_response(
-            project, error_message='The project was not created, '
-                                   'may be a project with same name already exists.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+        response = PolyaxonClients().project.list_projects(user, page=page)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get list of projects.')
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
@@ -109,7 +129,7 @@ def list(page):
 @project.command()
 @click.argument('project', type=str, required=False)
 def get(project):
-    """Get project by uuid, default to the current project.
+    """Get info for current project, by project_name, or user/project_name.
 
     Examples:
 
@@ -120,18 +140,17 @@ def get(project):
 
         To get a project by uuid
     ```
-    polyaxon project get 50c62372137940ca8c456d8596946dd7
+    polyaxon project get user/project
     ```
     """
     user, project_name = get_project_or_local(project)
 
     try:
         response = PolyaxonClients().project.get_project(user, project_name)
-        PolyaxonClients.handle_response(
-            response, error_message='no project was found with `{}`'.format(project))
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get project `{}`.'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     response = response.to_dict()
     Printer.print_header("Project info:")
@@ -146,15 +165,14 @@ def delete(project):
 
     if not click.confirm("Are sure you want to delete project `{}/{}`".format(user, project_name)):
         click.echo('Existing without deleting project.')
-        sys.exit(0)
+        sys.exit(1)
 
     try:
-        response = PolyaxonClients().project.delete_project(project)
-        PolyaxonClients.handle_response(
-            project, error_message='The project was not deleted.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+        response = PolyaxonClients().project.delete_project(user, project_name)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not delete project `{}`.'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     if response.status_code == 204:
         Printer.print_success("Project `{}` was delete successfully".format(project))
@@ -171,7 +189,11 @@ def update(project, name, description):
     Example:
 
     ```
-    polyaxon update 50c62372137940ca8c456d8596946dd7 --description=Image Classification with Deep Learning using TensorFlow
+    polyaxon update foobar --description=Image Classification with Deep Learning using TensorFlow
+    ```
+
+    ```
+    polyaxon update mike1/foobar --description=Image Classification with Deep Learning using TensorFlow
     ```
     """
     user, project_name = get_project_or_local(project)
@@ -185,15 +207,14 @@ def update(project, name, description):
 
     if not update_dict:
         Printer.print_warning('No argument was provided to update the project.')
-        sys.exit(0)
+        sys.exit(1)
 
     try:
         response = PolyaxonClients().project.update_project(user, project_name, update_dict)
-        PolyaxonClients.handle_response(
-            response, error_message='The project was not updated.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not update project `{}`.'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     Printer.print_success("Project updated.")
     response = response.to_dict()
@@ -211,9 +232,10 @@ def experiment_groups(project, page):
     page = page or 1
     try:
         response = PolyaxonClients().project.list_experiment_groups(user, project_name, page=page)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get experiment groups for project `{}`.'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
@@ -241,9 +263,10 @@ def experiments(project, page):
     page = page or 1
     try:
         response = PolyaxonClients().project.list_experiments(user, project_name, page=page)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get experiments for project `{}`.'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:

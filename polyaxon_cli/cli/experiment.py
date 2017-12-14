@@ -3,9 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import click
 import sys
-from polyaxon_client.exceptions import PolyaxonShouldExitError
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
-from polyaxon_cli.logger import logger
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -33,11 +32,10 @@ def get(experiment):
     """
     try:
         response = PolyaxonClients().experiment.get_experiment(experiment)
-        PolyaxonClients.handle_response(
-            response, error_message='no experiment was found with `{}`'.format(experiment))
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not load experiment `{}` info.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     response = response.to_dict()
     Printer.print_header("Experiment info:")
@@ -50,15 +48,14 @@ def delete(experiment):
     """Delete experiment group."""
     if not click.confirm("Are sure you want to delete experiment `{}`".format(experiment)):
         click.echo('Existing without deleting experiment.')
-        sys.exit(0)
+        sys.exit(1)
 
     try:
         response = PolyaxonClients().experiment.delete_experiment(experiment)
-        PolyaxonClients.handle_response(
-            experiment, error_message='The experiment was not deleted.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not delete experiment `{}`.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     if response.status_code == 204:
         Printer.print_success("Experiment `{}` was delete successfully".format(experiment))
@@ -80,11 +77,10 @@ def stop(experiment):
 
     try:
         response = PolyaxonClients().experiment.stop(experiment)
-        PolyaxonClients.handle_response(
-            response, error_message='no experiment was found with `{}`'.format(experiment))
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not stop experiment `{}`.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     Printer.print_success("Experiment is being stopped.")
 
@@ -95,11 +91,10 @@ def restart(experiment):
     """Delete experiment group."""
     try:
         response = PolyaxonClients().experiment.restart(experiment)
-        PolyaxonClients.handle_response(
-            experiment, error_message='The experiment was not restarted.')
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not restart experiment `{}`.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     response = response.to_dict()
     Printer.print_header("Experiment info:")
@@ -114,9 +109,10 @@ def jobs(experiment, page):
     page = page or 1
     try:
         response = PolyaxonClients().experiment.list_jobs(experiment, page=page)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get jobs for experiment `{}`.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
@@ -135,7 +131,8 @@ def jobs(experiment, page):
 
 @experiment.command()
 @click.argument('experiment', type=str)
-def status(experiment):
+@click.option('--page', type=int, help='To paginate through the list of experiments.')
+def statuses(experiment, page):
     """Get experiment status.
 
     Examples:
@@ -143,17 +140,27 @@ def status(experiment):
     polyaxon experiment status 50c62372137940ca8c456d8596946dd7
     ```
     """
+    page = page or 1
     try:
-        response = PolyaxonClients().experiment.get_status(experiment)
-        PolyaxonClients.handle_response(
-            response, error_message='no experiment was found for `{}`'.format(experiment))
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+        response = PolyaxonClients().experiment.get_statuses(experiment, page=page)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could get status for experiment `{}`.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
-    response = response.to_dict()
-    Printer.print_header("Experiment status:")
-    dict_tabulate(response)
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header('Statuses for experiment `{}`.'.format(experiment))
+        Printer.print_header('Navigation:')
+        dict_tabulate(meta)
+    else:
+        Printer.print_header('No statuses found for experiment `{}`.'.format(experiment))
+
+    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    if objects:
+        Printer.print_header("Statuses:")
+        objects.pop('experiment')
+        dict_tabulate(objects, is_list_dict=True)
 
 
 @experiment.command()
@@ -168,9 +175,10 @@ def resources(experiment):
     """
     try:
         PolyaxonClients().experiment.resources(experiment)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get resources for experiment `{}`.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
 
 @experiment.command()
@@ -185,9 +193,10 @@ def logs(experiment):
     """
     try:
         PolyaxonClients().experiment.logs(experiment)
-    except PolyaxonShouldExitError as e:
-        logger.exception(e)
-        sys.exit(0)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get logs for experiment `{}`.'.format(experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
 
 @experiment.command()
