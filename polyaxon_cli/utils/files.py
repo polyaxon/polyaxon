@@ -3,15 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from pathlib import PurePath
-
 from polyaxon_cli.utils import constants
 
 
 def get_files_in_current_directory(file_type, file_paths):
-    """Gets the list of files in the current directory and subdirectories.
-    Respects .plxignore file if present
-    """
     local_files = []
     total_file_size = 0
 
@@ -27,17 +22,6 @@ def unix_style_path(path):
     if os.path.sep != '/':
         return path.replace(os.path.sep, '/')
     return path
-
-
-def matches_glob_list(path, glob_list):
-    """Given a list of glob patterns, returns a if a path matches any glob in the list."""
-    for glob in glob_list:
-        try:
-            if PurePath(path).match(glob):
-                return True
-        except TypeError:
-            pass
-    return False
 
 
 def create_init_file(init_file_type, project=None):
