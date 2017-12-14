@@ -11,7 +11,7 @@ class ExperimentJobSchema(Schema):
     uuid = UUID()
     experiment = UUID()
     created_at = fields.DateTime()
-    definition = fields.Str()
+    definition = fields.Dict()
 
     class Meta:
         ordered = True

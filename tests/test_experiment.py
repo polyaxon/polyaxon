@@ -42,16 +42,15 @@ class TestExperimentConfigs(TestCase):
                        'jobs': [ExperimentJobConfig(uuid.uuid4().hex,
                                                     uuid.uuid4().hex,
                                                     datetime.now(),
-                                                    definition='').to_dict()]}
+                                                    definition={}).to_dict()]}
         config = ExperimentConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
         assert config.to_dict() == config_dict
 
     def test_experiment_job_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
                        'created_at': datetime.now().isoformat(),
-                       'definition': ''}
+                       'definition': {}}
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         config_to_dict.pop('created_at')
