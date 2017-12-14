@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from experiments.serializers import ExperimentSerializer
+from libs.spec_validation import validate_spec_content
 from projects.models import Project, ExperimentGroup
 
 
@@ -29,7 +29,8 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
         return obj.experiments.count()
 
     def validate_content(self, content):
-        spec = GroupSpecification.read(content)
+        spec = validate_spec_content(content)
+
         if spec.matrix_space > 1:
             # Resume normal creation
             return content

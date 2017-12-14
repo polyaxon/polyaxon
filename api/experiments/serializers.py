@@ -11,6 +11,7 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentJobStatus,
 )
+from libs.spec_validation import validate_spec_content
 
 
 class ExperimentJobStatusSerializer(serializers.ModelSerializer):
@@ -59,7 +60,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields = ('uuid', 'user', 'name', 'created_at', 'updated_at',
+        fields = ('uuid', 'user', 'name', 'description', 'created_at', 'updated_at',
                   'last_status', 'started_at', 'finished_at', 'is_clone',
                   'project', 'experiment_group', 'original', 'original_experiment', 'num_jobs',)
 
@@ -110,7 +111,8 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
         if not content:
             return content
 
-        spec = GroupSpecification.read(content)
+        spec = validate_spec_content(content)
+
         if spec.matrix_space == 1:
             # Resume normal creation
             return content

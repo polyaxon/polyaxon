@@ -12,6 +12,7 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 
 from clusters.models import Cluster
 from libs.models import DiffModel, DescribableModel
+from libs.spec_validation import validate_spec_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 
@@ -38,10 +39,11 @@ class Experiment(DiffModel, DescribableModel):
     content = models.TextField(
         blank=True,
         null=True,
-        help_text='The yaml content of the polyaxonfile/specification.')
+        help_text='The yaml content of the polyaxonfile/specification.',
+        validators=[validate_spec_content])
     config = JSONField(
-        # TODO: should be validated by the Specification validator
-        help_text='The compiled polyaxon with specific values for this experiment.')
+        help_text='The compiled polyaxon with specific values for this experiment.',
+        validators=[validate_spec_content])
     original_experiment = models.ForeignKey(
         'self',
         null=True,

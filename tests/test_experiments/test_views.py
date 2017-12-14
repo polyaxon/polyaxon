@@ -18,6 +18,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
 )
+from factories.fixtures import exec_experiment_spec_parsed_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 from factories.factory_experiments import (
@@ -86,9 +87,8 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        object1 = self.objects[0]
         data = {'name': 'my-xp',
-                'config': {'run': 'something'}}
+                'config': exec_experiment_spec_parsed_content.parsed_data}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1

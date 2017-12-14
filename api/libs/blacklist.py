@@ -41,4 +41,4 @@ def validate_blacklist_name(name):
         raise ValidationError(_('A short name must be supplied.'))
 
     if name in NAME_BLACKLIST:
-        raise ValidationError(_('The short name is a reserved word or already taken.'))
+        raise ValidationError('The short name is a reserved word or already taken.')

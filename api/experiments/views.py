@@ -98,7 +98,7 @@ class ExperimentStopView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        stop_experiment.delay(epxermet_id=obj.id)
+        stop_experiment.delay(experiment_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
 

@@ -9,13 +9,12 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from factories.factory_repos import RepoFactory
+from factories.fixtures import experiment_spec_content, exec_experiment_spec_content
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ExperimentGroupFactory
 from tests.fixtures import (
-    experiment_spec_content,
-    exec_experiment_spec_content,
     start_experiment_value,
 )
 from tests.utils import BaseTest

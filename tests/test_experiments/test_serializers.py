@@ -24,7 +24,7 @@ class TestExperimentSerializer(BaseTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
-    expected_keys = {'uuid', 'user', 'name', 'created_at', 'updated_at',
+    expected_keys = {'uuid', 'user', 'name', 'description', 'created_at', 'updated_at',
                      'last_status', 'started_at', 'finished_at', 'is_clone', 'original',
                      'project', 'experiment_group', 'num_jobs', }
 

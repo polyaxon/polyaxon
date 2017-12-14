@@ -65,7 +65,7 @@ class ExperimentGroupListView(ListCreateAPIView):
         serializer.save(user=self.request.user, project=self.get_project())
 
 
-class ExperimentGroupDetailView(RetrieveDestroyAPIView):
+class ExperimentGroupDetailView(RetrieveUpdateDestroyAPIView):
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
     lookup_field = 'uuid'

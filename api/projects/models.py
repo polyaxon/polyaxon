@@ -10,6 +10,7 @@ from django.utils.functional import cached_property
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 
 from libs.models import DiffModel, DescribableModel
+from libs.spec_validation import validate_spec_content
 from spawner.utils.constants import ExperimentLifeCycle
 
 
@@ -42,7 +43,9 @@ class ExperimentGroup(DiffModel, DescribableModel):
         unique=True,
         null=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='experiment_groups')
-    content = models.TextField(help_text='The yaml content of the polyaxonfile/specification.')
+    content = models.TextField(
+        help_text='The yaml content of the polyaxonfile/specification.',
+        validators=[validate_spec_content])
     project = models.ForeignKey(
         Project,
         related_name='experiment_groups',

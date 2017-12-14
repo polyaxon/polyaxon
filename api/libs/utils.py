@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+
 def to_bool(value):
     if value in ('false', 'False', 'no', False, 0, '0'):
         return False

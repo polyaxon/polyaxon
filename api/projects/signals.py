@@ -8,7 +8,6 @@ from experiments.models import Experiment
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
 def new_experiment_group(sender, **kwargs):
-    """"""
 
     instance = kwargs['instance']
     created = kwargs.get('created', False)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from unittest.mock import patch
+
 from rest_framework import status
 
 from api.urls import API_V1
@@ -109,14 +111,14 @@ class TestProjectDetailViewV1(BaseViewTest):
         for i in range(2):
             ExperimentGroupFactory(project=self.object)
 
-        # creating the default factory should trigger the creation of one experiment per group
-        assert Experiment.objects.count() == 2
+        # creating the default factory should trigger the creation of 2 experiments per group
+        assert Experiment.objects.count() == 4
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
-        assert resp.data['num_experiments'] == 2
+        assert resp.data['num_experiments'] == 4
         assert resp.data['num_experiment_groups'] == 2
 
     def test_patch(self):
@@ -129,13 +131,13 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert new_object.user == self.object.user
         assert new_object.name != self.object.name
         assert new_object.name == new_name
-        assert new_object.experiments.count() == 2
+        assert new_object.experiments.count() == 4
         assert new_object.experiment_groups.count() == 2
 
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentGroup.objects.count() == 2
-        assert Experiment.objects.count() == 2
+        assert Experiment.objects.count() == 4
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
