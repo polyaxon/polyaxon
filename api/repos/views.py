@@ -45,7 +45,7 @@ class UploadFilesView(APIView):
     @staticmethod
     def _handle_posted_data(request, repo, directory):
         filename = os.path.join(directory, '{}.tar.gz'.format(repo.project.name))
-        file_data = request.data['file']
+        file_data = request.data['repo']
 
         # filename might already exist, if uploads are done in quick succession
         # we just delete the previous one and assume that its changes are already committed

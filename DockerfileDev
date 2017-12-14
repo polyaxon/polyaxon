@@ -10,6 +10,7 @@ COPY requirements-dev.txt /setup/
 COPY requirements-test.txt /setup/
 RUN pip3 install --no-cache-dir -r /setup/requirements-test.txt
 
+VOLUME /tmp/plx/repos
 VOLUME /polyaxon
 WORKDIR /polyaxon
 copy . /polyaxon

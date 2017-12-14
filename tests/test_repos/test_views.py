@@ -80,7 +80,7 @@ class TestUploadFilesView(BaseViewTest):
 
         with patch('repos.tasks.handle_new_files.delay') as mock_task:
             self.auth_client.put(self.url,
-                                 data={'file': uploaded_file},
+                                 data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
         file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT, user.username, repo_name)
         self.assertTrue(os.path.exists(file_path))
@@ -103,7 +103,7 @@ class TestUploadFilesView(BaseViewTest):
 
         with patch('repos.tasks.handle_new_files.delay') as mock_task:
             self.auth_client.put(self.url,
-                                 data={'file': uploaded_file},
+                                 data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
         file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT, user.username, repo_name)
         self.assertTrue(os.path.exists(file_path))
@@ -123,7 +123,7 @@ class TestUploadFilesView(BaseViewTest):
         uploaded_file = self.get_upload_file()
 
         self.auth_client.put(self.url,
-                             data={'file': uploaded_file},
+                             data={'repo': uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
         upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT, user.username, repo_name)
@@ -156,7 +156,7 @@ class TestUploadFilesView(BaseViewTest):
         self.auth_client.login_user(new_user)
         new_uploaded_file = self.get_upload_file('updated_repo')
         self.auth_client.put(self.url,
-                             data={'file': new_uploaded_file},
+                             data={'repo': new_uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
         upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT,
@@ -183,7 +183,7 @@ class TestUploadFilesView(BaseViewTest):
         self.auth_client.login_user(new_user)
         new_uploaded_file = self.get_upload_file('repo_with_folder')
         self.auth_client.put(self.url,
-                             data={'file': new_uploaded_file},
+                             data={'repo': new_uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
         upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT,
