@@ -40,7 +40,9 @@ class TestProjectExperimentListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()
-        self.url = '/{}/projects/{}/experiments/'.format(API_V1, self.project.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/'.format(API_V1,
+                                                   self.project.user.username,
+                                                   self.project.name)
         self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         # one object that does not belong to the filter
         self.factory_class()

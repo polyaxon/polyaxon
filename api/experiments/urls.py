@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.conf.urls import url, include
+from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from experiments import views
@@ -32,17 +32,4 @@ jobs_urlpatterns = [
         views.ExperimentJobStatusDetailView.as_view()),
 ]
 
-nested_experiments_urlpatterns = [
-    # Get all experiment under a project
-    url(r'^projects/{}/experiments/?$'.format(UUID_PATTERN),
-        views.ProjectExperimentListView.as_view()),
-
-    # Get all experiments under a group
-    url(r'^experiment_groups/{}/experiments/?$'.format(UUID_PATTERN),
-        views.GroupExperimentListView.as_view()),
-]
-
-urlpatterns = format_suffix_patterns(
-    experiments_urlpatterns +
-    jobs_urlpatterns +
-    nested_experiments_urlpatterns)
+urlpatterns = format_suffix_patterns(experiments_urlpatterns + jobs_urlpatterns)

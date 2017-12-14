@@ -20,7 +20,7 @@ from factories.factory_projects import (
 from tests.utils import BaseViewTest
 
 
-class TestProjectListViewV1(BaseViewTest):
+class TestProjectCreateViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
@@ -32,6 +32,32 @@ class TestProjectListViewV1(BaseViewTest):
         self.url = '/{}/projects/'.format(API_V1)
         self.objects = [self.factory_class() for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        data = {'name': 'new_project'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+
+
+class TestProjectListViewV1(BaseViewTest):
+    serializer_class = ProjectSerializer
+    model_class = Project
+    factory_class = ProjectFactory
+    num_objects = 3
+    HAS_AUTH = False
+
+    def setUp(self):
+        super().setUp()
+        self.user = self.auth_client.user
+        self.url = '/{}/{}'.format(API_V1, self.user.username)
+        self.objects = [self.factory_class(user=self.user) for _ in range(self.num_objects)]
+        # One more object that does not belong to the user
+        self.factory_class()
+        self.queryset = self.model_class.objects.filter(user=self.user)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -66,15 +92,6 @@ class TestProjectListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
-    def test_create(self):
-        data = {}
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-        data = {'name': 'new_project'}
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_201_CREATED
-        assert self.model_class.objects.count() == self.num_objects + 1
-
 
 class TestProjectDetailViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
@@ -85,7 +102,7 @@ class TestProjectDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.object = self.factory_class(user=self.auth_client.user)
-        self.url = '/{}/projects/{}/'.format(API_V1, self.object.uuid.hex)
+        self.url = '/{}/{}/{}/'.format(API_V1, self.object.user.username, self.object.name)
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
@@ -97,14 +114,6 @@ class TestProjectDetailViewV1(BaseViewTest):
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
-        assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == self.serializer_class(self.object).data
-        assert resp.data['num_experiments'] == 2
-        assert resp.data['num_experiment_groups'] == 2
-
-    def test_get_with_project_name(self):
-        url = '/{}/project_names/{}/'.format(API_V1, self.object.name)
-        resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
         assert resp.data['num_experiments'] == 2
@@ -144,7 +153,9 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()
-        self.url = '/{}/projects/{}/experiment_groups/'.format(API_V1, self.project.uuid.hex)
+        self.url = '/{}/{}/{}/experiment_groups/'.format(API_V1,
+                                                         self.project.user.username,
+                                                         self.project.name)
         self.objects = [self.factory_class(project=self.project)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
@@ -210,10 +221,10 @@ model:
         assert self.model_class.objects.count() == self.num_objects
 
     def test_create_with_valid_group(self):
-            data = {}
-            resp = self.auth_client.post(self.url, data)
-            assert resp.status_code == status.HTTP_400_BAD_REQUEST
-            content = """---
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        content = """---
 version: 1
 project:
   name: project1
@@ -235,10 +246,10 @@ model:
           activation: relu
           kernel_initializer: Ones"""
 
-            data = {'content': content, 'name': 'new-deep'}
-            resp = self.auth_client.post(self.url, data)
-            assert resp.status_code == status.HTTP_201_CREATED
-            assert self.model_class.objects.count() == self.num_objects + 1
-            last_object = self.model_class.objects.last()
-            assert last_object.project == self.project
-            assert last_object.content == data['content']
+        data = {'content': content, 'name': 'new-deep'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.project == self.project
+        assert last_object.content == data['content']

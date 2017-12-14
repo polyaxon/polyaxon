@@ -40,8 +40,9 @@ class ProjectExperimentListView(ListCreateAPIView):
     create_serializer_class = ExperimentCreateSerializer
 
     def get_project(self):
-        project_uuid = self.kwargs['uuid']
-        return get_object_or_404(Project, uuid=project_uuid)
+        username = self.kwargs['username']
+        project_name = self.kwargs['name']
+        return get_object_or_404(Project, name=project_name, user__username=username)
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=self.get_project())

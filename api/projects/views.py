@@ -6,7 +6,7 @@ from rest_framework.generics import (
     RetrieveDestroyAPIView,
     RetrieveUpdateDestroyAPIView,
     get_object_or_404,
-)
+    CreateAPIView, ListAPIView)
 
 from libs.views import ListCreateAPIView
 from projects.models import Project, ExperimentGroup
@@ -16,7 +16,7 @@ from projects.serializers import (
 )
 
 
-class ProjectListView(ListCreateAPIView):
+class ProjectCreateView(CreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
@@ -29,17 +29,23 @@ class ProjectListView(ListCreateAPIView):
         serializer.save(user=user)
 
 
+class ProjectListView(ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+    def filter_queryset(self, queryset):
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
+
+
 class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    lookup_field = 'uuid'
+    lookup_field = 'name'
 
     def filter_queryset(self, queryset):
-        return queryset.filter(user=self.request.user)
-
-
-class ProjectDetailByNameView(ProjectDetailView):
-    lookup_field = 'name'
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
 
 
 class ExperimentGroupListView(ListCreateAPIView):
@@ -47,8 +53,9 @@ class ExperimentGroupListView(ListCreateAPIView):
     serializer_class = ExperimentGroupSerializer
 
     def get_project(self):
-        project_uuid = self.kwargs['uuid']
-        return get_object_or_404(Project, uuid=project_uuid)
+        username = self.kwargs['username']
+        project_name = self.kwargs['name']
+        return get_object_or_404(Project, name=project_name, user__username=username)
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=self.get_project())
