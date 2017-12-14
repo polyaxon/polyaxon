@@ -5,9 +5,11 @@ from django.core.validators import validate_slug
 from django.db import models
 from django.core.cache import cache
 
+from libs.blacklist import validate_blacklist_name
+
 
 class DescribableModel(models.Model):
-    name = models.CharField(max_length=256, validators=[validate_slug])
+    name = models.CharField(max_length=256, validators=[validate_slug, validate_blacklist_name])
     description = models.TextField(blank=True, null=True)
 
     class Meta:
