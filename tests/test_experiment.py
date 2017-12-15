@@ -67,7 +67,6 @@ class TestExperimentClient(TestCase):
     @httpretty.activate
     def test_update_project(self):
         object = ExperimentConfig(config={})
-        experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.PATCH,
             ExperimentClient._build_url(
@@ -85,7 +84,6 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_delete_experiment(self):
-        experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.DELETE,
             ExperimentClient._build_url(
@@ -171,7 +169,6 @@ class TestExperimentClient(TestCase):
     @httpretty.activate
     def test_restart_experiment(self):
         object = ExperimentConfig(config={})
-        experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
@@ -190,7 +187,6 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_stop_experiment(self):
-        experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
