@@ -35,13 +35,11 @@ class TestProjectConfigs(TestCase):
                        'description': '',
                        'is_public': True,
                        'experiment_groups': [
-                           ExperimentGroupConfig(name='name',
-                                                 content='content',
+                           ExperimentGroupConfig(content='content',
                                                  uuid=uuid_value,
                                                  project=uuid_value).to_dict()],
                        'experiments': [
-                           ExperimentConfig(name='name',
-                                            config={},
+                           ExperimentConfig(config={},
                                             uuid=uuid_value,
                                             project=uuid_value).to_dict()]}
         config = ProjectConfig.from_dict(config_dict)
@@ -49,14 +47,13 @@ class TestProjectConfigs(TestCase):
 
     def test_experiment_group_config(self):
         uuid_value = uuid.uuid4().hex
-        config_dict = {'name': 'name',
+        config_dict = {'sequence': 1,
                        'content': 'some content',
                        'uuid': uuid_value,
                        'project': uuid_value,
                        'num_experiments': 0,
                        'experiments': [
-                           ExperimentConfig(name='name',
-                                            config={},
+                           ExperimentConfig(config={},
                                             uuid=uuid_value,
                                             group=uuid_value,
                                             project=uuid_value).to_dict()]}

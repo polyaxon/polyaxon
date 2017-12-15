@@ -37,7 +37,7 @@ class ExperimentJobConfig(BaseConfig):
 
 
 class ExperimentSchema(Schema):
-    name = fields.Str()
+    sequence = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = UUID(allow_none=True)
@@ -67,11 +67,11 @@ class ExperimentSchema(Schema):
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = ['user', 'description', 'config', 'jobs', 'content',
+    REDUCED_ATTRIBUTES = ['user', 'sequence', 'description', 'config', 'jobs', 'content',
                           'started_at', 'finished_at', 'is_clone']
 
     def __init__(self,
-                 name,
+                 sequence=None,
                  user=None,
                  uuid=None,
                  project=None,
@@ -85,7 +85,7 @@ class ExperimentConfig(BaseConfig):
                  content=None,
                  num_jobs=0,
                  jobs=None):
-        self.name = name
+        self.sequence = sequence
         self.user = user
         self.uuid = uuid
         self.project = project

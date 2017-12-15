@@ -11,7 +11,7 @@ from polyaxon_schemas.utils import UUID
 
 class ExperimentGroupSchema(Schema):
     uuid = UUID(allow_none=True)
-    name = fields.Str()
+    sequence = fields.Int(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     description = fields.Str(allow_none=True)
     content = fields.Str()
@@ -35,10 +35,11 @@ class ExperimentGroupSchema(Schema):
 class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
-    REDUCED_ATTRIBUTES = ['uuid', 'user', 'project', 'experiments', 'description', 'created_at']
+    REDUCED_ATTRIBUTES = [
+        'uuid', 'sequence', 'user', 'project', 'experiments', 'description', 'created_at']
 
     def __init__(self,
-                 name,
+                 sequence=None,
                  user=None,
                  description=None,
                  content=None,
@@ -47,7 +48,7 @@ class ExperimentGroupConfig(BaseConfig):
                  num_experiments=0,
                  created_at=None,
                  experiments=None,):
-        self.name = name
+        self.sequence = sequence
         self.user = user
         self.description = description
         self.content = content

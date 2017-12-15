@@ -12,7 +12,9 @@ from polyaxon_schemas.experiment import (
     PodStateConfig,
     JobStateConfig,
     ContainerGPUResourcesConfig,
-    ContainerResourcesConfig, ExperimentJobConfig, ExperimentStatusConfig,
+    ContainerResourcesConfig,
+    ExperimentJobConfig,
+    ExperimentStatusConfig,
     ExperimentJobStatusConfig)
 from polyaxon_schemas.polyaxonfile.constants import TASK_NAME
 
@@ -20,7 +22,6 @@ from polyaxon_schemas.polyaxonfile.constants import TASK_NAME
 class TestExperimentConfigs(TestCase):
     def test_experiment_config(self):
         config_dict = {
-            'name': 'test',
             'uuid': uuid.uuid4().hex,
             'project': uuid.uuid4().hex,
             'group': uuid.uuid4().hex,
@@ -31,7 +32,7 @@ class TestExperimentConfigs(TestCase):
         assert config.to_dict() == config_dict
 
     def test_experiment_with_jobs_config(self):
-        config_dict = {'name': 'test',
+        config_dict = {'sequence': 2,
                        'config': {},
                        'content': '',
                        'uuid': uuid.uuid4().hex,
