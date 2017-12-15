@@ -6,6 +6,7 @@ import sys
 
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
+from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -22,17 +23,20 @@ def group():
 
 
 @group.command()
-@click.argument('group', type=str)
-def get(group):
+@click.argument('group', type=int)
+@click.option('--project', '-p', type=str)
+def get(group, project):
     """Get experiment group by uuid.
 
     Examples:
     ```
-    polyaxon group get 50c62372137940ca8c456d8596946dd7
+    polyaxon group get 13
     ```
     """
+    user, project_name = get_project_or_local(project)
     try:
-        response = PolyaxonClients().experiment_group.get_experiment_group(group)
+        response = PolyaxonClients().experiment_group.get_experiment_group(
+            user, project_name, group)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiment group `{}`.'.format(group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -44,15 +48,18 @@ def get(group):
 
 
 @group.command()
-@click.argument('group', type=str)
-def delete(group):
+@click.argument('group', type=int)
+@click.option('--project', '-p', type=str)
+def delete(group, project):
     """Delete experiment group."""
+    user, project_name = get_project_or_local(project)
     if not click.confirm("Are sure you want to delete experiment group `{}`".format(group)):
         click.echo('Existing without deleting experiment group.')
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().experiment_group.delete_experiment_group(group)
+        response = PolyaxonClients().experiment_group.delete_experiment_group(
+            user, project_name, group)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not delete experiment group `{}`.'.format(group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -63,22 +70,20 @@ def delete(group):
 
 
 @group.command()
-@click.argument('group', type=str)
-@click.option('--name', type=str,
-              help='Name of the project, must be unique for the same user,')
+@click.argument('group', type=int)
+@click.option('--project', '-p', type=str)
 @click.option('--description', type=str, help='Description of the project,')
-def update(group, name, description):
+def update(group, project, description):
     """Update experiement group.
 
     Example:
 
     ```
-    polyaxon group update 50c62372137940ca8c456d8596946dd7 --description=new description for my experiments
+    polyaxon group update 2 --description="new description for my experiments"
     ```
     """
+    user, project_name = get_project_or_local(project)
     update_dict = {}
-    if name:
-        update_dict['name'] = name
 
     if description:
         update_dict['description'] = description
@@ -88,7 +93,8 @@ def update(group, name, description):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().experiment_group.update_experiment_group(group, update_dict)
+        response = PolyaxonClients().experiment_group.update_experiment_group(
+            user, project_name, group, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not update experiment group `{}`.'.format(group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -101,13 +107,16 @@ def update(group, name, description):
 
 
 @group.command()
-@click.argument('group', type=str)
+@click.argument('group', type=int)
+@click.option('--project', '-p', type=str)
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
-def experiments(group, page):
+def experiments(group, project, page):
     """List experiments for this experiment group"""
+    user, project_name = get_project_or_local(project)
     page = page or 1
     try:
-        response = PolyaxonClients().experiment_group.list_experiments(group, page=page)
+        response = PolyaxonClients().experiment_group.list_experiments(
+            user, project_name, group, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiments for group `{}`.'.format(group))
         Printer.print_error('Error message `{}`.'.format(e))
