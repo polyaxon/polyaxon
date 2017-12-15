@@ -19,11 +19,9 @@ from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 @click.command()
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to run.')
-@click.option('--name', type=str,
-              help='The name to give to this run.')
 @click.option('--description', type=str,
               help='The description to give to this run.')
-def run(file, name, description):
+def run(file, description):
     """Command for running polyaxonfile specification.
 
     Example:
@@ -32,12 +30,6 @@ def run(file, name, description):
     polyaxon run -f file -f file_override ...
     ```
     """
-    if not name:
-        if not click.confirm(
-                'You did not provide a name for your run (--name arg), '
-                'should we generate a value. Continue?',
-                abort=True):
-            name = uuid.uuid4().hex
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file)
     num_experiments, concurrency = plx_file.experiments_def
@@ -45,8 +37,7 @@ def run(file, name, description):
     project_client = PolyaxonClients().project
     if num_experiments == 1:
         click.echo('Creating an independent experiment.')
-        experiment = ExperimentConfig(name=name,
-                                      description=description,
+        experiment = ExperimentConfig(description=description,
                                       content=plx_file._data,
                                       config=plx_file.experiment_specs[0].parsed_data)
         try:
@@ -60,8 +51,7 @@ def run(file, name, description):
         Printer.print_success('Experiment was created')
     else:
         click.echo('Creating an experiment group with {} experiments.'.format(num_experiments))
-        experiment_group = ExperimentGroupConfig(name=name,
-                                                 description=description,
+        experiment_group = ExperimentGroupConfig(description=description,
                                                  content=plx_file._data)
         try:
             response = project_client.create_experiment_group(project.user,
