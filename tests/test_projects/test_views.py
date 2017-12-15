@@ -27,7 +27,7 @@ class TestProjectCreateViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
@@ -50,15 +50,19 @@ class TestProjectListViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
         self.user = self.auth_client.user
         self.url = '/{}/{}'.format(API_V1, self.user.username)
         self.objects = [self.factory_class(user=self.user) for _ in range(self.num_objects)]
-        # One more object that does not belong to the user
-        self.factory_class()
+        # Other user objetcs
+        self.other_object = self.factory_class()
+        # One private project
+        self.private = self.factory_class(user=self.other_object.user, is_public=False)
+        self.url_other = '/{}/{}'.format(API_V1, self.other_object.user)
+
         self.queryset = self.model_class.objects.filter(user=self.user)
 
     def test_get(self):
@@ -71,6 +75,17 @@ class TestProjectListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_get_others(self):
+        resp = self.auth_client.get(self.url_other)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 1
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data[0] == self.serializer_class(self.other_object).data
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -99,13 +114,13 @@ class TestProjectDetailViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
     model_class = Project
     factory_class = ProjectFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
         self.object = self.factory_class(user=self.auth_client.user)
         self.url = '/{}/{}/{}/'.format(API_V1, self.object.user.username, self.object.name)
-        self.queryset = self.model_class.objects.all()
+        self.queryset = self.model_class.objects.filter(user=self.object.user)
 
         # Create related fields
         for i in range(2):
@@ -114,12 +129,32 @@ class TestProjectDetailViewV1(BaseViewTest):
         # creating the default factory should trigger the creation of 2 experiments per group
         assert Experiment.objects.count() == 4
 
+        # Other user objects
+        self.other_object = self.factory_class()
+        self.url_other = '/{}/{}/{}/'.format(API_V1,
+                                             self.other_object.user.username,
+                                             self.other_object.name)
+        # One private project
+        self.private = self.factory_class(is_public=False)
+        self.url_private = '/{}/{}/{}/'.format(API_V1,
+                                               self.private.user.username,
+                                               self.private.name)
+
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
         assert resp.data['num_experiments'] == 4
         assert resp.data['num_experiment_groups'] == 2
+
+        # Get other public project works
+        resp = self.auth_client.get(self.url_other)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.other_object).data
+
+        # Get other private project does not work
+        resp = self.auth_client.get(self.url_private)
+        assert resp.status_code in (401, 403)
 
     def test_patch(self):
         new_name = 'updated_project_name'
@@ -134,15 +169,27 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert new_object.experiments.count() == 4
         assert new_object.experiment_groups.count() == 2
 
+        # Patch does not work for other project public and private
+        resp = self.auth_client.delete(self.url_other)
+        assert resp.status_code in (401, 403)
+        resp = self.auth_client.delete(self.url_private)
+        assert resp.status_code in (401, 403)
+
     def test_delete(self):
-        assert self.model_class.objects.count() == 1
+        assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
-        assert self.model_class.objects.count() == 0
+        assert self.queryset.count() == 0
         assert ExperimentGroup.objects.count() == 0
         assert Experiment.objects.count() == 0
+
+        # Delete does not work for other project public and private
+        resp = self.auth_client.delete(self.url_other)
+        assert resp.status_code in (401, 403)
+        resp = self.auth_client.delete(self.url_private)
+        assert resp.status_code in (401, 403)
 
 
 class TestProjectExperimentGroupListViewV1(BaseViewTest):
@@ -150,17 +197,23 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.project = ProjectFactory()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.other_project = ProjectFactory()
         self.url = '/{}/{}/{}/experiment_groups/'.format(API_V1,
                                                          self.project.user.username,
                                                          self.project.name)
+        self.other_url = '/{}/{}/{}/experiment_groups/'.format(API_V1,
+                                                               self.other_project.user.username,
+                                                               self.other_project.name)
         self.objects = [self.factory_class(project=self.project)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
+        # Other objects
+        self.other_object = self.factory_class(project=self.other_project)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -172,6 +225,11 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
+
+        resp = self.auth_client.get(self.other_url)
+        assert resp.status_code == status.HTTP_200_OK
+        data = resp.data['results']
+        assert data[0] == self.serializer_class(self.other_object).data
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -220,7 +278,7 @@ model:
         data = {'content': content, 'name': 'new-deep'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
-        assert self.model_class.objects.count() == self.num_objects
+        assert self.queryset.count() == self.num_objects
 
     def test_create_with_valid_group(self):
         data = {}
@@ -251,7 +309,7 @@ model:
         data = {'content': content, 'name': 'new-deep'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
-        assert self.model_class.objects.count() == self.num_objects + 1
+        assert self.queryset.count() == self.num_objects + 1
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content == data['content']

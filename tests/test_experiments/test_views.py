@@ -36,18 +36,23 @@ class TestProjectExperimentListViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.project = ProjectFactory()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.other_project = ProjectFactory()
         self.url = '/{}/{}/{}/experiments/'.format(API_V1,
                                                    self.project.user.username,
                                                    self.project.name)
+        self.other_url = '/{}/{}/{}/experiments/'.format(API_V1,
+                                                         self.other_project.user.username,
+                                                         self.other_project.name)
         self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(project=self.project)
+        self.other_object = self.factory_class(project=self.other_project)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -59,6 +64,10 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
+
+        # Test other
+        resp = self.auth_client.get(self.other_url)
+        assert resp.status_code == status.HTTP_200_OK
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -93,13 +102,17 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1
 
+        # Test other
+        resp = self.auth_client.post(self.other_url, data)
+        assert resp.status_code in (401, 403)
+
 
 class TestExperimentGroupExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
@@ -193,7 +206,7 @@ class TestExperimentListViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
@@ -239,11 +252,12 @@ class TestExperimentDetailViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=project)
         self.url = '/{}/experiments/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
@@ -296,13 +310,14 @@ class TestExperimentStatusListViewV1(BaseViewTest):
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
             with patch('experiments.tasks.start_experiment.delay') as _:
-                self.experiment = ExperimentFactory()
+                project = ProjectFactory(user=self.auth_client.user)
+                self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/experiments/{}/statuses/'.format(API_V1, self.experiment.uuid.hex)
         self.objects = [self.factory_class(experiment=self.experiment,
                                            status=ExperimentLifeCycle.CHOICES[i][0])
@@ -363,7 +378,7 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
@@ -372,8 +387,8 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
         self.url = '/{}/experiments/{}/statuses/{}/'.format(API_V1,
-                                                          self.experiment.uuid.hex,
-                                                          self.object.uuid.hex)
+                                                            self.experiment.uuid.hex,
+                                                            self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -398,11 +413,12 @@ class TestExperimentJobListViewV1(BaseViewTest):
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.experiment = ExperimentFactory()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/experiments/{}/jobs/'.format(API_V1, self.experiment.uuid.hex)
         self.objects = [self.factory_class(experiment=self.experiment)
                         for _ in range(self.num_objects)]
@@ -459,11 +475,12 @@ class TestExperimentJobDetailViewV1(BaseViewTest):
     serializer_class = ExperimentJobSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.experiment = ExperimentFactory()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
         self.object = self.factory_class(experiment=self.experiment)
         self.url = '/{}/jobs/{}/'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.filter(experiment=self.experiment)
@@ -501,13 +518,15 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
     model_class = ExperimentJobStatus
     factory_class = ExperimentJobStatusFactory
     num_objects = 3
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
         with patch('experiments.tasks.start_experiment.delay') as _:
             with patch.object(ExperimentJob, 'set_status') as _:
-                self.experiment_job = ExperimentJobFactory()
+                project = ProjectFactory(user=self.auth_client.user)
+                experiment = ExperimentFactory(project=project)
+                self.experiment_job = ExperimentJobFactory(experiment=experiment)
         self.url = '/{}/jobs/{}/statuses/'.format(
             API_V1,
             self.experiment_job.uuid.hex)
@@ -570,13 +589,15 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
     serializer_class = ExperimentJobStatusSerializer
     model_class = ExperimentJobStatus
     factory_class = ExperimentJobStatusFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
         with patch('experiments.tasks.start_experiment.delay') as _:
             with patch.object(ExperimentJob, 'set_status') as _:
-                self.experiment_job = ExperimentJobFactory()
+                project = ProjectFactory(user=self.auth_client.user)
+                experiment = ExperimentFactory(project=project)
+                self.experiment_job = ExperimentJobFactory(experiment=experiment)
                 self.object = self.factory_class(job=self.experiment_job)
         self.url = '/{}/jobs/{}/statuses/{}'.format(
             API_V1,
@@ -615,11 +636,12 @@ class TestRestartExperimentViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=project)
         self.url = '/{}/experiments/{}/restart'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
@@ -635,11 +657,12 @@ class TestRestartExperimentViewV1(BaseViewTest):
 class TestStopExperimentViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=project)
         self.url = '/{}/experiments/{}/stop'.format(API_V1, self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 

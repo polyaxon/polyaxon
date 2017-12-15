@@ -168,4 +168,4 @@ class BaseViewTest(BaseTest):
         # Test unauthorized access to view
         if type(self).HAS_AUTH:
             assert hasattr(self, 'url'), 'Cannot check auth if url is not set.'
-            assert self.client.get(self.url).status_code == 401
+            assert self.client.get(self.url).status_code in (401, 403)

@@ -11,10 +11,11 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     get_object_or_404)
 from rest_framework.parsers import MultiPartParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from projects.models import Project
+from projects.permissions import get_permissible_project
 from repos.serializers import RepoSerializer
 from repos.tasks import handle_new_files
 from repos.models import Repo
@@ -25,26 +26,19 @@ logger = logging.getLogger(__name__)
 class RepoDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Repo.objects.all()
     serializer_class = RepoSerializer
-
-    def get_project(self):
-        username = self.kwargs['username']
-        project_name = self.kwargs['name']
-        return get_object_or_404(Project, name=project_name, user__username=username)
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self):
-        return get_object_or_404(Repo, project=self.get_project())
+        return get_object_or_404(Repo, project=get_permissible_project(view=self))
 
 
 class UploadFilesView(APIView):
     parser_classes = (MultiPartParser,)
-
-    def get_project(self):
-        username = self.kwargs['username']
-        project_name = self.kwargs['name']
-        return get_object_or_404(Project, name=project_name, user__username=username)
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self):
-        repo, _ = Repo.objects.get_or_create(project=self.get_project())
+        project = get_permissible_project(view=self)
+        repo, _ = Repo.objects.get_or_create(project=project)
         return repo
 
     @staticmethod

@@ -30,32 +30,46 @@ class TestRepoDetailViewV1(BaseViewTest):
     serializer_class = RepoSerializer
     model_class = Repo
     factory_class = RepoFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=self.project)
+        self.unauthorised_object = self.factory_class()
         self.url = '/{}/{}/{}/repo'.format(API_V1,
-                                           self.object.project.user.username,
-                                           self.object.project.name)
-        self.queryset = self.model_class.objects.all()
+                                           self.project.user.username,
+                                           self.project.name)
+        self.unauthorised_url = '/{}/{}/{}/repo'.format(
+            API_V1,
+            self.unauthorised_object.project.user.username,
+            self.unauthorised_object.project.name)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
 
+        # unauthorised object get works
+        resp = self.auth_client.get(self.unauthorised_url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.unauthorised_object).data
+
     def test_delete(self):
-        assert self.model_class.objects.count() == 1
+        assert self.model_class.objects.count() == 2
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
-        assert self.model_class.objects.count() == 0
+        assert self.model_class.objects.count() == 1
+
+        # unauthorised object delete not working
+        resp = self.auth_client.delete(self.unauthorised_url)
+        assert resp.status_code in (401, 403)
 
 
 class TestUploadFilesView(BaseViewTest):
     model_class = Repo
     factory_class = RepoFactory
-    HAS_AUTH = False
+    HAS_AUTH = True
 
     def setUp(self):
         super().setUp()
@@ -156,15 +170,13 @@ class TestUploadFilesView(BaseViewTest):
         assert commit.author.name == user.username
 
         # Make a new upload with repo_new.tar.gz containing 2 files
-        new_user = UserFactory()
-        self.auth_client.login_user(new_user)
         new_uploaded_file = self.get_upload_file('updated_repo')
         self.auth_client.put(self.url,
                              data={'repo': new_uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
         upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT,
-                                                    new_user.username,
+                                                    user.username,
                                                     repo_name)
         # Assert the the task handler takes care of cleaning the upload root after
         # committing changes
@@ -177,19 +189,46 @@ class TestUploadFilesView(BaseViewTest):
         self.assertTrue(os.path.exists(git_file_path))
         # Get last commit
         commit_hash, commit = git.get_last_commit(code_file_path)
-        assert commit.author.email == new_user.email
-        assert commit.author.name == new_user.username
+        assert commit.author.email == user.email
+        assert commit.author.name == user.username
         # Assert that we committed 3 files (2 files in new_repo.tar.gz one file was deleted)
         assert len(git.get_committed_files(code_file_path, commit_hash)) == 3
 
-        # Make a new upload with repo_with_folder.tar.gz containing 1 file one dir with file
-        new_user = UserFactory()
-        self.auth_client.login_user(new_user)
+        # Make a new upload with repo_with_folder.tar.gz containing 1 file one dir with fil
         new_uploaded_file = self.get_upload_file('repo_with_folder')
         self.auth_client.put(self.url,
                              data={'repo': new_uploaded_file},
                              content_type=MULTIPART_CONTENT)
 
+        upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT,
+                                                    user.username,
+                                                    repo_name)
+        # Assert the the task handler takes care of cleaning the upload root after
+        # committing changes
+        self.assertFalse(os.path.exists(upload_file_path))
+
+        # Assert same git repo was used in the repos root and that also the tar file was deleted
+        self.assertFalse(os.path.exists(tar_code_file_path))
+        self.assertTrue(os.path.exists(code_file_path))
+        # Assert that the code_file_path is a git repo
+        self.assertTrue(os.path.exists(git_file_path))
+        # Get last commit
+        commit_hash, commit = git.get_last_commit(code_file_path)
+        assert commit.author.email == user.email
+        assert commit.author.name == user.username
+        # Assert that we committed 3 files
+        # (1 file updated 1 deleted, and one folder with 1 file added)
+        assert len(git.get_committed_files(code_file_path, commit_hash)) == 3
+
+        # Check that other user cannot commit to this repo
+        new_user = UserFactory()
+        self.auth_client.login_user(new_user)
+        new_uploaded_file = self.get_upload_file('updated_repo')
+        response = self.auth_client.put(self.url,
+                                        data={'repo': new_uploaded_file},
+                                        content_type=MULTIPART_CONTENT)
+
+        assert response.status_code in (401, 403)
         upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT,
                                                     new_user.username,
                                                     repo_name)
@@ -202,13 +241,11 @@ class TestUploadFilesView(BaseViewTest):
         self.assertTrue(os.path.exists(code_file_path))
         # Assert that the code_file_path is a git repo
         self.assertTrue(os.path.exists(git_file_path))
-        # Get last commit
-        commit_hash, commit = git.get_last_commit(code_file_path)
-        assert commit.author.email == new_user.email
-        assert commit.author.name == new_user.username
-        # Assert that we committed 3 files
-        # (1 file updated 1 deleted, and one folder with 1 file added)
-        assert len(git.get_committed_files(code_file_path, commit_hash)) == 3
+        # Get last commit and check it did not change
+        new_commit_hash, new_commit = git.get_last_commit(code_file_path)
+        assert commit.author.email == new_commit.author.email
+        assert commit.author.name == new_commit.author.name
+        assert new_commit_hash == commit_hash
 
-        # login old user
+        # Log old user, otherwise other tests will crash
         self.auth_client.login_user(user)
