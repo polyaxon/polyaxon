@@ -160,8 +160,10 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
 """
         self.experiment_group = ExperimentGroupFactory(content=content)
         assert self.experiment_group.specification.matrix_space == 3
-        self.url = '/{}/experiment_groups/{}/experiments/'.format(API_V1,
-                                                                  self.experiment_group.uuid.hex)
+        self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
+                                                             self.experiment_group.project.user,
+                                                             self.experiment_group.project.name,
+                                                             self.experiment_group.sequence)
         # one object that does not belong to the filter
         self.factory_class()
         self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
@@ -209,8 +211,11 @@ class TestExperimentListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.url = '/{}/experiments/'.format(API_V1)
-        self.objects = [self.factory_class() for _ in range(self.num_objects)]
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.url = '/{}/{}/{}/experiments/'.format(API_V1,
+                                                   self.project.user,
+                                                   self.project.name)
+        self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -257,7 +262,10 @@ class TestExperimentDetailViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.object = self.factory_class(project=project)
-        self.url = '/{}/experiments/{}/'.format(API_V1, self.object.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
+                                                      project.user.username,
+                                                      project.name,
+                                                      self.object.sequence)
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
@@ -317,7 +325,10 @@ class TestExperimentStatusListViewV1(BaseViewTest):
             with patch('experiments.tasks.start_experiment.delay') as _:
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
-        self.url = '/{}/experiments/{}/statuses/'.format(API_V1, self.experiment.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/{}/statuses/'.format(API_V1,
+                                                               project.user.username,
+                                                               project.name,
+                                                               self.experiment.sequence)
         self.objects = [self.factory_class(experiment=self.experiment,
                                            status=ExperimentLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -385,9 +396,12 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
             with patch('experiments.tasks.start_experiment.delay') as _:
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
-        self.url = '/{}/experiments/{}/statuses/{}/'.format(API_V1,
-                                                            self.experiment.uuid.hex,
-                                                            self.object.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/{}/statuses/{}/'.format(
+            API_V1,
+            self.experiment.project.user.username,
+            self.experiment.project.name,
+            self.experiment.sequence,
+            self.object.uuid.hex)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -418,7 +432,11 @@ class TestExperimentJobListViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.experiment = ExperimentFactory(project=project)
-        self.url = '/{}/experiments/{}/jobs/'.format(API_V1, self.experiment.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/{}/jobs/'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.experiment.sequence)
         self.objects = [self.factory_class(experiment=self.experiment)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
@@ -481,7 +499,12 @@ class TestExperimentJobDetailViewV1(BaseViewTest):
         project = ProjectFactory(user=self.auth_client.user)
         self.experiment = ExperimentFactory(project=project)
         self.object = self.factory_class(experiment=self.experiment)
-        self.url = '/{}/jobs/{}/'.format(API_V1, self.object.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.experiment.sequence,
+            self.object.uuid.hex)
         self.queryset = self.model_class.objects.filter(experiment=self.experiment)
 
     def test_get(self):
@@ -526,8 +549,11 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
-        self.url = '/{}/jobs/{}/statuses/'.format(
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/statuses/'.format(
             API_V1,
+            project.user.username,
+            project.name,
+            experiment.sequence,
             self.experiment_job.uuid.hex)
         self.objects = [self.factory_class(job=self.experiment_job,
                                            status=JobLifeCycle.CHOICES[i][0])
@@ -598,8 +624,11 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
                 self.object = self.factory_class(job=self.experiment_job)
-        self.url = '/{}/jobs/{}/statuses/{}'.format(
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/statuses/{}'.format(
             API_V1,
+            project.user.username,
+            project.name,
+            experiment.sequence,
             self.experiment_job.uuid.hex,
             self.object.uuid.hex)
         self.queryset = self.model_class.objects.filter(job=self.experiment_job)
@@ -641,7 +670,11 @@ class TestRestartExperimentViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.object = self.factory_class(project=project)
-        self.url = '/{}/experiments/{}/restart'.format(API_V1, self.object.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/{}/restart'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.object.sequence)
         self.queryset = self.model_class.objects.all()
 
     def test_restart(self):
@@ -662,7 +695,11 @@ class TestStopExperimentViewV1(BaseViewTest):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
         self.object = self.factory_class(project=project)
-        self.url = '/{}/experiments/{}/stop'.format(API_V1, self.object.uuid.hex)
+        self.url = '/{}/{}/{}/experiments/{}/stop'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.object.sequence)
         self.queryset = self.model_class.objects.all()
 
     def test_restart(self):

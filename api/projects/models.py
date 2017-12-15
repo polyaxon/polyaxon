@@ -59,6 +59,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         help_text='The project this polyaxonfile belongs to.')
 
     class Meta:
+        ordering = ['sequence']
         unique_together = (('project', 'sequence'),)
 
     def save(self, *args, **kwargs):

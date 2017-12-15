@@ -64,6 +64,10 @@ class Experiment(DiffModel, DescribableModel):
 
         super(Experiment, self).save(*args, **kwargs)
 
+    class Meta:
+        ordering = ['sequence']
+        unique_together = (('project', 'sequence'),)
+
     @cached_property
     def compiled_spec(self):
         return Specification(experiment=self.uuid, values=self.config)

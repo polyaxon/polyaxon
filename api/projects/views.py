@@ -76,7 +76,7 @@ class ExperimentGroupDetailView(RetrieveUpdateDestroyAPIView):
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
     permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
-    lookup_field = 'uuid'
+    lookup_field = 'sequence'
 
     def get_object(self):
         obj = super(ExperimentGroupDetailView, self).get_object()

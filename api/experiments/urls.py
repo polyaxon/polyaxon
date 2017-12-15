@@ -7,28 +7,40 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from experiments import views
 from libs.urls import (
     UUID_PATTERN,
-    EXPERIMENT_UUID_PATTERN,
     JOB_UUID_PATTERN,
-)
+    USERNAME_PATTERN,
+    NAME_PATTERN,
+    SEQUENCE_PATTERN)
 
 experiments_urlpatterns = [
     # Get all experiments
     url(r'^experiments/?$', views.ExperimentListView.as_view()),
-    url(r'^experiments/{}/?$'.format(UUID_PATTERN), views.ExperimentDetailView.as_view()),
-    url(r'^experiments/{}/statuses/?$'.format(EXPERIMENT_UUID_PATTERN),
+    url(r'^{}/{}/experiments/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
+        views.ExperimentDetailView.as_view()),
+    url(r'^{}/{}/experiments/{}/statuses/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentStatusListView.as_view()),
-    url(r'^experiments/{}/statuses/{}/?$'.format(EXPERIMENT_UUID_PATTERN, UUID_PATTERN),
+    url(r'^{}/{}/experiments/{}/statuses/{}/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN, UUID_PATTERN),
         views.ExperimentStatusDetailView.as_view()),
-    url(r'^experiments/{}/jobs/?$'.format(EXPERIMENT_UUID_PATTERN),
+    url(r'^{}/{}/experiments/{}/jobs/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentJobListView.as_view()),
-    url(r'^experiments/{}/stop/?$'.format(UUID_PATTERN), views.ExperimentStopView.as_view()),
-    url(r'^experiments/{}/restart/?$'.format(UUID_PATTERN), views.ExperimentRestartView.as_view()),
+    url(r'^{}/{}/experiments/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
+        views.ExperimentStopView.as_view()),
+    url(r'^{}/{}/experiments/{}/restart/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
+        views.ExperimentRestartView.as_view()),
 ]
 
 jobs_urlpatterns = [
-    url(r'^jobs/{}/?$'.format(UUID_PATTERN), views.ExperimentJobDetailView.as_view()),
-    url(r'^jobs/{}/statuses/?$'.format(JOB_UUID_PATTERN), views.ExperimentJobStatusListView.as_view()),
-    url(r'^jobs/{}/statuses/{}/?$'.format(JOB_UUID_PATTERN, UUID_PATTERN),
+    url(r'^{}/{}/experiments/{}/jobs/{}/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN, UUID_PATTERN),
+        views.ExperimentJobDetailView.as_view()),
+    url(r'^{}/{}/experiments/{}/jobs/{}/statuses/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN, JOB_UUID_PATTERN),
+        views.ExperimentJobStatusListView.as_view()),
+    url(r'^{}/{}/experiments/{}/jobs/{}/statuses/{}/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN, JOB_UUID_PATTERN, UUID_PATTERN),
         views.ExperimentJobStatusDetailView.as_view()),
 ]
 

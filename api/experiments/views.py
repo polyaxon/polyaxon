@@ -58,11 +58,10 @@ class GroupExperimentListView(ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_group(self):
-        group_uuid = self.kwargs['uuid']
-        group = get_object_or_404(ExperimentGroup, uuid=group_uuid)
-
-        # Check project permissions
-        check_access_project_item(view=self, request=self.request, project=group.project)
+        sequence = self.kwargs['sequence']
+        # Get project and check permissions
+        project = get_permissible_project(view=self)
+        group = get_object_or_404(ExperimentGroup, project=project, sequence=sequence)
 
         return group
 
@@ -73,15 +72,21 @@ class GroupExperimentListView(ListAPIView):
 class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
-    lookup_field = 'uuid'
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'sequence'
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(project=get_permissible_project(view=self))
 
 
 class ExperimentRestartView(CreateAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
-    lookup_field = 'uuid'
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'sequence'
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(project=get_permissible_project(view=self))
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -100,8 +105,11 @@ class ExperimentRestartView(CreateAPIView):
 class ExperimentStopView(CreateAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
-    lookup_field = 'uuid'
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'sequence'
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(project=get_permissible_project(view=self))
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -113,12 +121,10 @@ class ExperimentViewMixin(object):
     """A mixin to filter by experiment."""
 
     def get_experiment(self):
-        experiment_uuid = self.kwargs['experiment_uuid']
-        experiment = get_object_or_404(Experiment, uuid=experiment_uuid)
-
-        # Check project permissions
-        check_access_project_item(view=self, request=self.request, project=experiment.project)
-
+        # Get project and check access
+        project = get_permissible_project(view=self)
+        sequence = self.kwargs['sequence']
+        experiment = get_object_or_404(Experiment, project=project, sequence=sequence)
         return experiment
 
     def filter_queryset(self, queryset):
@@ -126,7 +132,7 @@ class ExperimentViewMixin(object):
         return queryset.filter(experiment=self.get_experiment())
 
 
-class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
+class ExperimentStatusListView(ListCreateAPIView, ExperimentViewMixin):
     queryset = ExperimentStatus.objects.all()
     serializer_class = ExperimentStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -135,14 +141,14 @@ class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
         serializer.save(experiment=self.get_experiment())
 
 
-class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
+class ExperimentStatusDetailView(RetrieveAPIView, ExperimentViewMixin):
     queryset = ExperimentStatus.objects.all()
     serializer_class = ExperimentStatusSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
 
 
-class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
+class ExperimentJobListView(ListCreateAPIView, ExperimentViewMixin):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
     permission_classes = (IsAuthenticated,)
@@ -151,31 +157,26 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
         serializer.save(experiment=self.get_experiment())
 
 
-class ExperimentJobDetailView(RetrieveUpdateDestroyAPIView):
+class ExperimentJobDetailView(RetrieveUpdateDestroyAPIView, ExperimentViewMixin):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
-
-    def get_object(self):
-        obj = super(ExperimentJobDetailView, self).get_object()
-
-        # Check project permissions
-        check_access_project_item(view=self, request=self.request, project=obj.experiment.project)
-
-        return obj
 
 
 class ExperimentJobViewMixin(object):
     """A mixin to filter by experiment job."""
 
+    def get_experiment(self):
+        # Get project and check access
+        project = get_permissible_project(view=self)
+        sequence = self.kwargs['sequence']
+        experiment = get_object_or_404(Experiment, project=project, sequence=sequence)
+        return experiment
+
     def get_job(self):
         job_uuid = self.kwargs['job_uuid']
-        job = get_object_or_404(ExperimentJob, uuid=job_uuid)
-
-        # Check project permissions
-        check_access_project_item(view=self, request=self.request, project=job.experiment.project)
-
+        job = get_object_or_404(ExperimentJob, uuid=job_uuid, experiment=self.get_experiment())
         return job
 
     def filter_queryset(self, queryset):
@@ -192,7 +193,7 @@ class ExperimentJobStatusListView(ListCreateAPIView, ExperimentJobViewMixin):
         serializer.save(job=self.get_job())
 
 
-class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIView):
+class ExperimentJobStatusDetailView(RetrieveUpdateAPIView, ExperimentJobViewMixin):
     queryset = ExperimentJobStatus.objects.all()
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)

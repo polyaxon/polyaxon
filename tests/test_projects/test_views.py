@@ -203,12 +203,12 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.other_project = ProjectFactory()
-        self.url = '/{}/{}/{}/experiment_groups/'.format(API_V1,
-                                                         self.project.user.username,
-                                                         self.project.name)
-        self.other_url = '/{}/{}/{}/experiment_groups/'.format(API_V1,
-                                                               self.other_project.user.username,
-                                                               self.other_project.name)
+        self.url = '/{}/{}/{}/groups/'.format(API_V1,
+                                              self.project.user.username,
+                                              self.project.name)
+        self.other_url = '/{}/{}/{}/groups/'.format(API_V1,
+                                                    self.other_project.user.username,
+                                                    self.other_project.name)
         self.objects = [self.factory_class(project=self.project)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
