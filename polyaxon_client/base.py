@@ -6,6 +6,7 @@ import json
 import requests
 import os
 import tarfile
+import six
 
 import websocket
 from clint.textui import progress
@@ -87,7 +88,7 @@ class PolyaxonClient(object):
     def _build_url(*parts):
         url = ''
         for part in parts:
-            part = part.rstrip('/').lstrip('/')
+            part = part.rstrip('/').lstrip('/') if isinstance(part, six.string_types) else part
             if part:
                 url += '{}/'.format(part)
 

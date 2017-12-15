@@ -10,10 +10,14 @@ from polyaxon_client.exceptions import PolyaxonException
 
 class ExperimentGroupClient(PolyaxonClient):
     """Client to get experiments for a group from the server"""
-    ENDPOINT = "/experiment_groups"
+    ENDPOINT = "/"
 
-    def get_experiment_group(self, experiment_group_uuid):
-        request_url = self._build_url(self._get_http_url(), experiment_group_uuid)
+    def get_experiment_group(self, username, project_name, group_sequence):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_sequence)
         try:
             response = self.get(request_url)
             return ExperimentGroupConfig.from_dict(response.json())
@@ -21,9 +25,14 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving project')
             return None
 
-    def list_experiments(self, experiment_group_uuid, page=1):
+    def list_experiments(self, username, project_name, group_sequence, page=1):
         """Fetch list of experiments related to this experiment group."""
-        request_url = self._build_url(self._get_http_url(), experiment_group_uuid, 'experiments')
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_sequence,
+                                      'experiments')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -32,8 +41,12 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving experiments')
             return []
 
-    def update_experiment_group(self, experiment_group_uuid, patch_dict):
-        request_url = self._build_url(self._get_http_url(), experiment_group_uuid)
+    def update_experiment_group(self, username, project_name, group_sequence, patch_dict):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_sequence)
 
         try:
             response = self.patch(request_url, json=patch_dict)
@@ -42,8 +55,12 @@ class ExperimentGroupClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while updating project')
             return None
 
-    def delete_experiment_group(self, experiment_group_uuid):
-        request_url = self._build_url(self._get_http_url(), experiment_group_uuid)
+    def delete_experiment_group(self, username, project_name, group_sequence):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_sequence)
         try:
             response = self.delete(request_url)
             return response

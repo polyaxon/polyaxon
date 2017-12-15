@@ -71,7 +71,7 @@ class ProjectClient(PolyaxonClient):
     def list_experiment_groups(self, username, project_name, page=1):
         """Fetch list of experiment groups related to this project."""
         request_url = self._build_url(
-            self._get_http_url(), username, project_name, 'experiment_groups')
+            self._get_http_url(), username, project_name, 'groups')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -82,7 +82,7 @@ class ProjectClient(PolyaxonClient):
 
     def create_experiment_group(self, username, project_name, experiment_group_config):
         request_url = self._build_url(
-            self._get_http_url(), username, project_name, 'experiment_groups')
+            self._get_http_url(), username, project_name, 'groups')
 
         try:
             response = self.post(request_url, json=experiment_group_config.to_dict())

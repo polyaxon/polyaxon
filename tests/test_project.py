@@ -137,7 +137,7 @@ class TestProjectClient(TestCase):
                 ProjectClient.ENDPOINT,
                 'user',
                 'project',
-                'experiment_groups'),
+                'groups'),
             body=json.dumps({'results': experiment_groups, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
@@ -156,7 +156,7 @@ class TestProjectClient(TestCase):
                 ProjectClient.ENDPOINT,
                 'user',
                 'project',
-                'experiment_groups'),
+                'groups'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)

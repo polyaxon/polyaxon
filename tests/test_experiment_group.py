@@ -34,11 +34,14 @@ class TestExperimentGroupClient(TestCase):
             ExperimentGroupClient._build_url(
                 self.client.base_url,
                 ExperimentGroupClient.ENDPOINT,
-                'uuid'),
+                'username',
+                'project_name',
+                'groups',
+                1),
             body=json.dumps(object),
             content_type='application/json',
             status=200)
-        result = self.client.get_experiment_group('uuid')
+        result = self.client.get_experiment_group('username', 'project_name', 1)
         assert object == result.to_dict()
 
     @httpretty.activate
@@ -56,13 +59,16 @@ class TestExperimentGroupClient(TestCase):
             ExperimentGroupClient._build_url(
                 self.client.base_url,
                 ExperimentGroupClient.ENDPOINT,
-                group_uuid,
+                'username',
+                'project_name',
+                'groups',
+                1,
                 'experiments'),
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments(group_uuid)
+        response = self.client.list_experiments('username', 'project_name', 1)
         assert len(response['results']) == 10
         assert response['count'] == 10
         assert response['next'] is None
@@ -75,13 +81,16 @@ class TestExperimentGroupClient(TestCase):
             ExperimentGroupClient._build_url(
                 self.client.base_url,
                 ExperimentGroupClient.ENDPOINT,
-                group_uuid,
+                'username',
+                'project_name',
+                'groups',
+                1,
                 'experiments') + '?offset=2',
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_experiments(group_uuid, page=2)
+        response = self.client.list_experiments('username', 'project_name', 1, page=2)
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -89,29 +98,34 @@ class TestExperimentGroupClient(TestCase):
         object = ExperimentGroupConfig(content=faker.word(),
                                        uuid=uuid.uuid4().hex,
                                        project=uuid.uuid4().hex)
-        experiment_group_uuid = object.uuid
         httpretty.register_uri(
             httpretty.PATCH,
             ExperimentGroupClient._build_url(
                 self.client.base_url,
                 ExperimentGroupClient.ENDPOINT,
-                experiment_group_uuid),
+                'username',
+                'project_name',
+                'groups',
+                1),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_experiment_group(experiment_group_uuid, {'content': 'new'})
+        result = self.client.update_experiment_group(
+            'username', 'project_name', 1, {'content': 'new'})
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
     def test_delete_experiment_group(self):
-        experiment_group_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.DELETE,
             ExperimentGroupClient._build_url(
                 self.client.base_url,
                 ExperimentGroupClient.ENDPOINT,
-                experiment_group_uuid),
+                'username',
+                'project_name',
+                'groups',
+                1),
             content_type='application/json',
             status=204)
-        result = self.client.delete_experiment_group(experiment_group_uuid)
+        result = self.client.delete_experiment_group( 'username', 'project_name', 1)
         assert result.status_code == 204

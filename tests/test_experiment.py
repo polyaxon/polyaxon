@@ -35,7 +35,9 @@ class TestExperimentClient(TestCase):
             httpretty.GET,
             ExperimentClient._build_url(
                 self.client.base_url,
-                ExperimentClient.ENDPOINT),
+                ExperimentClient.ENDPOINT,
+                'experiments'
+            ),
             body=json.dumps({'results': experiments, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
@@ -51,11 +53,15 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                'uuid'),
+                'username',
+                'project_name',
+                'experiments',
+                1
+            ),
             body=json.dumps(object),
             content_type='application/json',
             status=200)
-        result = self.client.get_experiment('uuid')
+        result = self.client.get_experiment('username', 'project_name', 1)
         assert object == result.to_dict()
 
     @httpretty.activate
@@ -67,11 +73,14 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                experiment_uuid),
+                'username',
+                'project_name',
+                'experiments',
+                1),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.update_experiment(experiment_uuid, {'name': 'new'})
+        result = self.client.update_experiment('username', 'project_name', 1, {'name': 'new'})
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
@@ -82,10 +91,13 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                experiment_uuid),
+                'username',
+                'project_name',
+                'experiments',
+                1),
             content_type='application/json',
             status=204)
-        result = self.client.delete_experiment(experiment_uuid)
+        result = self.client.delete_experiment('username', 'project_name', 1)
         assert result.status_code == 204
 
     @httpretty.activate
@@ -100,12 +112,15 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                'uuid',
+                'username',
+                'project_name',
+                'experiments',
+                1,
                 'statuses'),
             body=json.dumps({'results': [object], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        response = self.client.get_statuses('uuid')
+        response = self.client.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
 
     @httpretty.activate
@@ -121,14 +136,17 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                experiment_uuid,
+                'username',
+                'project_name',
+                'experiments',
+                1,
                 'jobs',
             ),
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_jobs(experiment_uuid)
+        response = self.client.list_jobs('username', 'project_name', 1)
         assert len(response['results']) == 10
 
         # pagination
@@ -138,13 +156,16 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                experiment_uuid,
-                'experiments') + '?offset=2',
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'jobs') + '?offset=2',
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.client.list_jobs(experiment_uuid, page=2)
+        response = self.client.list_jobs('username', 'project_name', 1, page=2)
         assert len(response['results']) == 10
 
     @httpretty.activate
@@ -156,12 +177,15 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                experiment_uuid,
+                'username',
+                'project_name',
+                'experiments',
+                1,
                 'restart'),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.restart(experiment_uuid)
+        result = self.client.restart('username', 'project_name', 1)
         assert result.to_dict() == object.to_dict()
 
     @httpretty.activate
@@ -172,9 +196,12 @@ class TestExperimentClient(TestCase):
             ExperimentClient._build_url(
                 self.client.base_url,
                 ExperimentClient.ENDPOINT,
-                experiment_uuid,
+                'username',
+                'project_name',
+                'experiments',
+                1,
                 'stop'),
             content_type='application/json',
             status=200)
-        result = self.client.stop(experiment_uuid)
+        result = self.client.stop('username', 'project_name', 1)
         assert result.status_code == 200
