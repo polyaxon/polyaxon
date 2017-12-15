@@ -26,8 +26,7 @@ class TestExperimentGroupClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment_group(self):
-        object = ExperimentGroupConfig(name=faker.word(),
-                                       content=faker.word(),
+        object = ExperimentGroupConfig(content=faker.word(),
                                        uuid=uuid.uuid4().hex,
                                        project=uuid.uuid4().hex).to_dict()
         httpretty.register_uri(
@@ -47,8 +46,7 @@ class TestExperimentGroupClient(TestCase):
         group_uuid = uuid.uuid4().hex
         project_uuid = uuid.uuid4().hex
         xp_uuid = uuid.uuid4().hex
-        xps = [ExperimentConfig(name='xp',
-                                uuid=xp_uuid,
+        xps = [ExperimentConfig(uuid=xp_uuid,
                                 config={},
                                 project=project_uuid,
                                 group=group_uuid).to_dict()
@@ -88,8 +86,7 @@ class TestExperimentGroupClient(TestCase):
 
     @httpretty.activate
     def test_update_experiment_group(self):
-        object = ExperimentGroupConfig(name='group',
-                                       content=faker.word(),
+        object = ExperimentGroupConfig(content=faker.word(),
                                        uuid=uuid.uuid4().hex,
                                        project=uuid.uuid4().hex)
         experiment_group_uuid = object.uuid

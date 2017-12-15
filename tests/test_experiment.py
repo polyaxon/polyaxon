@@ -30,7 +30,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_list_experiments(self):
-        experiments = [ExperimentConfig(name=faker.word, config={}).to_dict() for _ in range(10)]
+        experiments = [ExperimentConfig(config={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -45,7 +45,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment(self):
-        object = ExperimentConfig(name=faker.word(), config={}).to_dict()
+        object = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -60,7 +60,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_update_project(self):
-        object = ExperimentConfig(name=faker.word(), config={})
+        object = ExperimentConfig(config={})
         experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.PATCH,
@@ -115,7 +115,7 @@ class TestExperimentClient(TestCase):
         xps = [ExperimentJobConfig(uuid=job_uuid,
                                    experiment=experiment_uuid,
                                    created_at=datetime.datetime.now(),
-                                   definition='').to_dict() for _ in range(10)]
+                                   definition={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -149,7 +149,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_restart_experiment(self):
-        object = ExperimentConfig(name=faker.word(), config={})
+        object = ExperimentConfig(config={})
         experiment_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,

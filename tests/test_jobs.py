@@ -29,7 +29,7 @@ class TestJobClient(TestCase):
         object = ExperimentJobConfig(uuid=uuid.uuid4().hex,
                                      experiment=experiment_uuid,
                                      created_at=datetime.datetime.now(),
-                                     definition='').to_dict()
+                                     definition={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             JobClient._build_url(
