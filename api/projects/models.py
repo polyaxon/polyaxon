@@ -4,11 +4,13 @@ from __future__ import absolute_import, division, print_function
 import uuid
 
 from django.conf import settings
+from django.core.validators import validate_slug
 from django.db import models
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 
+from libs.blacklist import validate_blacklist_name
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
 from spawner.utils.constants import ExperimentLifeCycle
@@ -21,6 +23,7 @@ class Project(DiffModel, DescribableModel):
         editable=False,
         unique=True,
         null=False)
+    name = models.CharField(max_length=256, validators=[validate_slug, validate_blacklist_name])
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='projects')
     is_public = models.BooleanField(default=True, help_text='If project is public or private.')
 
@@ -43,6 +46,10 @@ class ExperimentGroup(DiffModel, DescribableModel):
         unique=True,
         null=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='experiment_groups')
+    sequence = models.IntegerField(
+        editable=False,
+        null=False,
+        help_text='The sequence number of this group within the project.',)
     content = models.TextField(
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_spec_content])
@@ -50,6 +57,18 @@ class ExperimentGroup(DiffModel, DescribableModel):
         Project,
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
+
+    class Meta:
+        unique_together = (('project', 'sequence'),)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            last = ExperimentGroup.objects.filter(project=self.project).last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
+
+        super(ExperimentGroup, self).save(*args, **kwargs)
 
     @cached_property
     def specification(self):

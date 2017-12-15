@@ -60,7 +60,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields = ('uuid', 'user', 'name', 'description', 'created_at', 'updated_at',
+        fields = ('uuid', 'user', 'sequence', 'description', 'created_at', 'updated_at',
                   'last_status', 'started_at', 'finished_at', 'is_clone',
                   'project', 'experiment_group', 'original', 'original_experiment', 'num_jobs',)
 
@@ -96,7 +96,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'user', 'name', 'description', 'content', 'config', 'original_experiment')
+            'user', 'description', 'content', 'config', 'original_experiment')
 
     def get_user(self, obj):
         return obj.user.username

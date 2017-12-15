@@ -24,6 +24,10 @@ class Experiment(DiffModel, DescribableModel):
         editable=False,
         unique=True,
         null=False)
+    sequence = models.IntegerField(
+        editable=False,
+        null=False,
+        help_text='The sequence number of this experiment within the project.', )
     project = models.ForeignKey(
         'projects.Project',
         related_name='experiments')
@@ -50,6 +54,15 @@ class Experiment(DiffModel, DescribableModel):
         blank=True,
         related_name='clones',
         help_text='The original experiment that was cloned from.')
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            last = Experiment.objects.filter(project=self.project).last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
+
+        super(Experiment, self).save(*args, **kwargs)
 
     @cached_property
     def compiled_spec(self):

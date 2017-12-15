@@ -19,8 +19,7 @@ def new_experiment_group(sender, **kwargs):
     specification = instance.specification
     for xp in range(specification.matrix_space):
 
-        Experiment.objects.create(name='{}-n{}'.format(instance.name, xp),
-                                  project=instance.project,
+        Experiment.objects.create(project=instance.project,
                                   user=instance.user,
                                   experiment_group=instance,
                                   config=specification.parsed_data[xp])

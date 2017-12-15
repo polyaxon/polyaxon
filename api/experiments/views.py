@@ -88,7 +88,6 @@ class ExperimentRestartView(CreateAPIView):
         new_obj = Experiment.objects.create(
             project=obj.project,
             user=self.request.user,
-            name=obj.name,
             description=obj.description,
             experiment_group=obj.experiment_group,
             config=obj.config,

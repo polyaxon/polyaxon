@@ -96,8 +96,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        data = {'name': 'my-xp',
-                'config': exec_experiment_spec_parsed_content.parsed_data}
+        data = {'config': exec_experiment_spec_parsed_content.parsed_data}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1
@@ -272,15 +271,15 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert resp.data['num_jobs'] == 2
 
     def test_patch(self):
-        new_name = 'updated_xp_name'
-        data = {'name': new_name}
-        assert self.object.name != data['name']
+        new_description = 'updated_xp_name'
+        data = {'description': new_description}
+        assert self.object.description != data['description']
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.user == self.object.user
-        assert new_object.name != self.object.name
-        assert new_object.name == new_name
+        assert new_object.description != self.object.description
+        assert new_object.description == new_description
         assert new_object.jobs.count() == 2
 
         # Update original experiment
@@ -291,7 +290,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.user == self.object.user
-        assert new_object.name == new_name
+        assert new_object.description == new_description
         assert new_object.jobs.count() == 2
         assert new_object.is_clone is True
         assert new_object.original_experiment == new_experiment

@@ -21,7 +21,6 @@ class ProjectFactory(factory.DjangoModelFactory):
 class ExperimentGroupFactory(factory.DjangoModelFactory):
     project = factory.SubFactory(ProjectFactory)
     user = factory.SubFactory(UserFactory)
-    name = factory.Sequence(lambda x: "group-{}".format(x))
     content = experiment_group_spec_content_2_xps
 
     class Meta:

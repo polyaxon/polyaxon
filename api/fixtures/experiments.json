@@ -8,7 +8,7 @@
             "uuid":"559294aa-29a3-400a-a87d-9ad60405d60e",
             "project":1,
             "user":1,
-            "name":"experiment-1",
+            "sequence":1,
             "description":null,
             "experiment_group":null,
             "config":{
@@ -26,7 +26,7 @@
             "uuid":"d03efb31-7857-45cc-9c58-829840a83827",
             "project":1,
             "user":1,
-            "name":"experiment-2",
+            "sequence":2,
             "description":null,
             "experiment_group":null,
             "config":{
@@ -44,7 +44,7 @@
             "uuid":"375324ad-86a6-44bb-b054-2f268d479e3e",
             "project":1,
             "user":1,
-            "name":"experiment-3",
+            "sequence":3,
             "description":null,
             "experiment_group":null,
             "config":{
@@ -62,7 +62,7 @@
             "uuid":"6822476d-f379-499a-a7b3-b474590d406e",
             "project":2,
             "user":1,
-            "name":"experiment-4",
+            "sequence":1,
             "description":null,
             "experiment_group":null,
             "config":{
@@ -80,7 +80,7 @@
             "uuid":"c441ff3d-e6b5-4442-a2d7-09468761d47e",
             "project":2,
             "user":1,
-            "name":"experiment-5",
+            "sequence":2,
             "description":null,
             "experiment_group":null,
             "config":{

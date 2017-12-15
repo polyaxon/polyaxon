@@ -16,7 +16,6 @@ from factories.fixtures import exec_experiment_spec_parsed_content
 
 
 class ExperimentFactory(factory.DjangoModelFactory):
-    name = factory.Sequence(lambda x: "experiment-{}".format(x))
     config = exec_experiment_spec_parsed_content.parsed_data
 
     user = factory.SubFactory(UserFactory)

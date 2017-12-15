@@ -12,7 +12,8 @@ class TestExperimentGroupSerializer(BaseTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
-    expected_keys = {'uuid', 'name', 'description', 'content', 'project', 'user', 'num_experiments'}
+    expected_keys = {
+        'uuid', 'sequence', 'description', 'content', 'project', 'user', 'num_experiments'}
 
     def setUp(self):
         super().setUp()
