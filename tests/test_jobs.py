@@ -35,11 +35,16 @@ class TestJobClient(TestCase):
             JobClient._build_url(
                 self.client.base_url,
                 JobClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'jobs',
                 'uuid'),
             body=json.dumps(object),
             content_type='application/json',
             status=200)
-        result = self.client.get_job('uuid')
+        result = self.client.get_job('username', 'project_name', 1, 'uuid')
         assert object == result.to_dict()
 
     @httpretty.activate
@@ -54,10 +59,15 @@ class TestJobClient(TestCase):
             JobClient._build_url(
                 self.client.base_url,
                 JobClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'jobs',
                 job_uuid,
                 'statuses'),
             body=json.dumps({'results': [object], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
-        response = self.client.get_statuses(job_uuid)
+        response = self.client.get_statuses('username', 'project_name', 1, job_uuid)
         assert len(response['results']) == 1

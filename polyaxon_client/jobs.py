@@ -12,10 +12,16 @@ from polyaxon_client.exceptions import PolyaxonException
 
 class JobClient(PolyaxonClient):
     """Client to get jobs from the server"""
-    ENDPOINT = "/jobs"
+    ENDPOINT = "/"
 
-    def get_job(self, job_uuid):
-        request_url = self._build_url(self._get_http_url(), job_uuid)
+    def get_job(self, username, project_name, experiment_sequence, job_uuid):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'jobs',
+                                      job_uuid)
         try:
             response = self.get(request_url)
             return ExperimentJobConfig.from_dict(response.json())
@@ -23,8 +29,15 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving job')
             return None
 
-    def get_statuses(self, job_uuid, page=1):
-        request_url = self._build_url(self._get_http_url(), job_uuid, 'statuses')
+    def get_statuses(self, username, project_name, experiment_sequence, job_uuid, page=1):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'jobs',
+                                      job_uuid,
+                                      'statuses')
 
         try:
             response = self.get(request_url, params=self.get_page(page=page))
@@ -33,20 +46,35 @@ class JobClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving job statuses')
             return []
 
-    def resources(self, job_uuid, message_handler=None):
+    def resources(self, username, project_name, experiment_sequence, job_uuid,
+                  message_handler=None):
         """Streams job resources using websockets.
 
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
-        request_url = self._build_url(self._get_ws_url(), job_uuid, 'resources')
+        request_url = self._build_url(self._get_ws_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'jobs',
+                                      job_uuid,
+                                      'resources')
         self.socket(request_url, message_handler=message_handler)
 
-    def logs(self, job_uuid, message_handler=None):
+    def logs(self, username, project_name, experiment_sequence, job_uuid, message_handler=None):
         """Streams job logs using websockets.
 
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
-        request_url = self._build_url(self._get_ws_url(), job_uuid, 'logs')
+        request_url = self._build_url(self._get_ws_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'jobs',
+                                      job_uuid,
+                                      'logs')
         self.socket(request_url, message_handler=message_handler)
