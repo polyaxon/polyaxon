@@ -6,6 +6,7 @@ import sys
 
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
+from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -20,8 +21,10 @@ def job():
 
 
 @job.command()
+@click.argument('experiment', type=int)
 @click.argument('job', type=str)
-def get(job):
+@click.option('--project', '-p', type=str)
+def get(experiment, job, project):
     """Get job by uuid.
 
     Examples:
@@ -29,8 +32,9 @@ def get(job):
     polyaxon job get 50c62372137940ca8c456d8596946dd7
     ```
     """
+    user, project_name = get_project_or_local(project)
     try:
-        response = PolyaxonClients().job.get_job(job)
+        response = PolyaxonClients().job.get_job(user, project_name, experiment, job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -42,8 +46,10 @@ def get(job):
 
 
 @job.command()
+@click.argument('experiment', type=int)
 @click.argument('job', type=str)
-def statuses(job):
+@click.option('--project', '-p', type=str)
+def statuses(experiment, job, project):
     """Get job status.
 
     Examples:
@@ -51,8 +57,9 @@ def statuses(job):
     polyaxon job status 50c62372137940ca8c456d8596946dd7
     ```
     """
+    user, project_name = get_project_or_local(project)
     try:
-        response = PolyaxonClients().job.get_statuses(job)
+        response = PolyaxonClients().job.get_statuses(user, project_name, experiment, job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get status for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -74,8 +81,10 @@ def statuses(job):
 
 
 @job.command()
+@click.argument('experiment', type=int)
 @click.argument('job', type=str)
-def resources(job):
+@click.option('--project', '-p', type=str)
+def resources(experiment, job, project):
     """Get job resources.
 
     Examples:
@@ -83,8 +92,13 @@ def resources(job):
     polyaxon job resources 50c62372137940ca8c456d8596946dd7
     ```
     """
+    user, project_name = get_project_or_local(project)
     try:
-        PolyaxonClients().job.resources(job, message_handler=lambda x: click.echo)
+        PolyaxonClients().job.resources(user,
+                                        project_name,
+                                        experiment,
+                                        job,
+                                        message_handler=lambda x: click.echo)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get resources for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -92,8 +106,10 @@ def resources(job):
 
 
 @job.command()
+@click.argument('experiment', type=int)
 @click.argument('job', type=str)
-def logs(job):
+@click.option('--project', '-p', type=str)
+def logs(experiment, job, project):
     """Get job logs.
 
     Examples:
@@ -101,8 +117,13 @@ def logs(job):
     polyaxon job logs 50c62372137940ca8c456d8596946dd7
     ```
     """
+    user, project_name = get_project_or_local(project)
     try:
-        PolyaxonClients().job.logs(job, message_handler=click.echo)
+        PolyaxonClients().job.logs(job,
+                                   user,
+                                   project_name,
+                                   experiment,
+                                   message_handler=click.echo)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
