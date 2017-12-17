@@ -119,10 +119,10 @@ def logs(experiment, job, project):
     """
     user, project_name = get_project_or_local(project)
     try:
-        PolyaxonClients().job.logs(job,
-                                   user,
+        PolyaxonClients().job.logs(user,
                                    project_name,
                                    experiment,
+                                   job,
                                    message_handler=click.echo)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for job `{}`.'.format(job))
