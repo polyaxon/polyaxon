@@ -11,6 +11,16 @@ from projects.models import Project
 logger = logging.getLogger("polyaxon.projects.permissions")
 
 
+def has_project_permissions(user, project, request_method):
+    """This logic is extracted here to be used also with Sanic api."""
+    # The creator is allowed to do everything
+    if project.user == user:
+        return True
+
+    # Other user
+    return request_method in permissions.SAFE_METHODS and project.is_public
+
+
 class IsProjectOwnerOrPublicReadOnly(permissions.BasePermission):
     """Custom permission to only allow owner to update/delete project.
 
@@ -23,12 +33,9 @@ class IsProjectOwnerOrPublicReadOnly(permissions.BasePermission):
                 obj.__class__.__name__))
             return False
 
-        # The creator is allowed to do everything
-        if obj.user == request.user:
-            return True
-
-        # Other user
-        return request.method in permissions.SAFE_METHODS and obj.is_public
+        return has_project_permissions(user=request.user,
+                                       project=obj,
+                                       request_method=request.method)
 
 
 class IsItemProjectOwnerOrPublicReadOnly(permissions.BasePermission):
@@ -43,12 +50,9 @@ class IsItemProjectOwnerOrPublicReadOnly(permissions.BasePermission):
                 obj.__class__.__name__))
             return False
 
-        # The creator is allowed to do everything
-        if obj.project.user == request.user:
-            return True
-
-        # Other user
-        return request.method in permissions.SAFE_METHODS and obj.project.is_public
+        return has_project_permissions(user=request.user,
+                                       project=obj.project,
+                                       request_method=request.method)
 
 
 def check_access_project_item(view, request, project):

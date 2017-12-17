@@ -40,6 +40,7 @@ def authorized():
             if authorization is not None:
                 # the user is authorized.
                 # run the handler method and return the response
+                request.app.user = authorization[0]
                 response = await f(request, *args, **kwargs)
                 return response
             else:

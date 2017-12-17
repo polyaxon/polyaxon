@@ -7,6 +7,7 @@ import logging
 from django.core.exceptions import ValidationError
 
 from sanic import Sanic
+from sanic import exceptions
 
 from websockets import ConnectionClosed
 
@@ -16,6 +17,8 @@ from events.consumers import Consumer
 from events.socket_manager import SocketManager
 from experiments.models import ExperimentJob, Experiment
 from libs.redis_db import RedisToStream
+from projects.models import Project
+from projects.permissions import has_project_permissions
 
 logger = logging.getLogger('polyaxon.monitors.api')
 
@@ -24,30 +27,41 @@ SOCKET_SLEEP = 1
 app = Sanic(__name__)
 
 
-def _get_job(job_uuid):
+def _get_project(username, project_name):
     try:
-        job = ExperimentJob.objects.get(uuid=job_uuid)
+        return Project.objects.get(name=project_name, user__username=username)
+    except Project.DoesNotExist:
+        raise exceptions.NotFound('Project was not found')
+
+
+def _get_experiment(project, experiment_sequence):
+    try:
+        return Experiment.objects.get(project=project, sequence=experiment_sequence)
+    except (Experiment.DoesNotExist, ValidationError):
+        raise exceptions.NotFound('Experiment was not found')
+
+
+def _get_job(experiment, job_uuid):
+    try:
+        job = ExperimentJob.objects.get(uuid=job_uuid, experiment=experiment)
     except (ExperimentJob.DoesNotExist, ValidationError):
         logger.info('Job with uuid `{}` does not exist'.format(job_uuid))
-        return None
+        raise exceptions.NotFound('Experiment was not found')
 
     if not job.is_running:
         logger.info('Job with uuid `{}` is not currently running'.format(job_uuid))
-        return None
+        raise exceptions.NotFound('Job was not running')
 
     return job
 
 
-def _get_experiment(experiment_uuid):
-    try:
-        experiment = Experiment.objects.get(uuid=experiment_uuid)
-    except (Experiment.DoesNotExist, ValidationError):
-        logger.info('Experiment with uuid `{}` does not exist'.format(experiment_uuid))
-        return None
-
+def _get_validated_experiment(project, experiment_sequence):
+    experiment = _get_experiment(project, experiment_sequence)
     if not experiment.is_running:
-        logger.info('Experiment with uuid `{}` is not currently running'.format(experiment_uuid))
-        return None
+        logger.info('Experiment project `{}` num `{}` is not currently running'.format(
+            project.name, experiment.sequence
+        ))
+        raise exceptions.NotFound('Experiment was not running')
 
     return experiment
 
@@ -61,13 +75,14 @@ def handle_disconnected_ws(ws_manager, ws, job_uuid):
     logger.info('Quitting resources socket for uuid {}'.format(job_uuid))
 
 
-@app.websocket('/ws/v1/jobs/<job_uuid>/resources')
+@app.websocket(
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_uuid>/resources')
 @authorized()
-async def job_resources(request, ws, job_uuid):
-    job = _get_job(job_uuid=job_uuid)
-
-    if job is None:
-        return
+async def job_resources(request, ws, username, project_name, experiment_sequence, job_uuid):
+    project = _get_project(username, project_name)
+    has_project_permissions(request.app.user, project, 'GET')
+    experiment = _get_validated_experiment(project, experiment_sequence)
+    _get_job(experiment, job_uuid)
 
     if not RedisToStream.is_monitored_job_resources(job_uuid=job_uuid):
         logger.info(
@@ -92,13 +107,14 @@ async def job_resources(request, ws, job_uuid):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/ws/v1/experiments/<experiment_uuid>/resources')
+@app.websocket(
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/resources')
 @authorized()
-async def experiment_resources(request, ws, experiment_uuid):
-    experiment = _get_experiment(experiment_uuid=experiment_uuid)
-
-    if experiment is None:
-        return
+async def experiment_resources(request, ws, username, project_name, experiment_sequence):
+    project = _get_project(username, project_name)
+    has_project_permissions(request.app.user, project, 'GET')
+    experiment = _get_validated_experiment(project, experiment_sequence)
+    experiment_uuid = experiment.uuid.hex
 
     if not RedisToStream.is_monitored_experiment_resources(experiment_uuid=experiment_uuid):
         logger.info(
@@ -124,13 +140,14 @@ async def experiment_resources(request, ws, experiment_uuid):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/ws/v1/jobs/<job_uuid>/logs')
+@app.websocket(
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_uuid>/logs')
 @authorized()
-async def job_logs(request, ws, job_uuid):
-    job = _get_job(job_uuid=job_uuid)
-
-    if job is None:
-        return
+async def job_logs(request, ws, username, project_name, experiment_sequence, job_uuid):
+    project = _get_project(username, project_name)
+    has_project_permissions(request.app.user, project, 'GET')
+    experiment = _get_validated_experiment(project, experiment_sequence)
+    _get_job(experiment, job_uuid)
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
         logger.info('Job uuid `{}` logs is now being monitored'.format(job_uuid))
@@ -141,7 +158,7 @@ async def job_logs(request, ws, job_uuid):
         logger.info('Add job log consumer for {}'.format(job_uuid))
         request.app.job_logs_consumer = Consumer(
             routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
-                                          job.experiment.uuid.hex,
+                                          experiment.uuid.hex,
                                           job_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
         request.app.job_logs_consumer.run()
@@ -176,13 +193,13 @@ async def job_logs(request, ws, job_uuid):
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/ws/v1/experiments/<experiment_uuid>/logs')
+@app.websocket('/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/logs')
 @authorized()
-async def experiment_logs(request, ws, experiment_uuid):
-    experiment = _get_experiment(experiment_uuid=experiment_uuid)
-
-    if experiment is None:
-        return
+async def experiment_logs(request, ws, username, project_name, experiment_sequence):
+    project = _get_project(username, project_name)
+    has_project_permissions(request.app.user, project, 'GET')
+    experiment = _get_validated_experiment(project, experiment_sequence)
+    experiment_uuid = experiment.uuid.hex
 
     if not RedisToStream.is_monitored_experiment_logs(experiment_uuid=experiment_uuid):
         logger.info('Experiment uuid `{}` logs is now being monitored'.format(experiment_uuid))
