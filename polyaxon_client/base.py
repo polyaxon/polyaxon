@@ -354,7 +354,7 @@ class PolyaxonClient(object):
         if isinstance(error, (KeyboardInterrupt, SystemExit)):
             logger.info('Quitting... The session will be running in the background.')
         else:
-            logger.info('An error occurred, session ended.')
+            logger.info('An error occurred.')
 
     def _on_close(self, ws):
-        logger.info('Stream ended')
+        logger.info('Session ended')
