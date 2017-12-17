@@ -80,7 +80,8 @@ def handle_disconnected_ws(ws_manager, ws, job_uuid):
 @authorized()
 async def job_resources(request, ws, username, project_name, experiment_sequence, job_uuid):
     project = _get_project(username, project_name)
-    has_project_permissions(request.app.user, project, 'GET')
+    if not has_project_permissions(request.app.user, project, 'GET'):
+        exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
     _get_job(experiment, job_uuid)
 
@@ -112,7 +113,8 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
 @authorized()
 async def experiment_resources(request, ws, username, project_name, experiment_sequence):
     project = _get_project(username, project_name)
-    has_project_permissions(request.app.user, project, 'GET')
+    if not has_project_permissions(request.app.user, project, 'GET'):
+        exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
     experiment_uuid = experiment.uuid.hex
 
@@ -145,7 +147,8 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
 @authorized()
 async def job_logs(request, ws, username, project_name, experiment_sequence, job_uuid):
     project = _get_project(username, project_name)
-    has_project_permissions(request.app.user, project, 'GET')
+    if not has_project_permissions(request.app.user, project, 'GET'):
+        exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
     _get_job(experiment, job_uuid)
 
@@ -197,7 +200,8 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
 @authorized()
 async def experiment_logs(request, ws, username, project_name, experiment_sequence):
     project = _get_project(username, project_name)
-    has_project_permissions(request.app.user, project, 'GET')
+    if not has_project_permissions(request.app.user, project, 'GET'):
+        exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
     experiment_uuid = experiment.uuid.hex
 
