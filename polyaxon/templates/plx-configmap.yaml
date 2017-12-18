@@ -13,8 +13,7 @@ data:
   debug: {{ .Values.debug | quote }}
   cluster-id: ""
   dirs-nvidia: {{ .Values.dirs.nvidia | quote }}
-  dirs-docker: {{ .Values.dirs.nvidia | quote }}
-  chart-version: {{ .Chart.Version | quote }}
+  dirs-docker: {{ .Values.dirs.docker | quote }}
   node-selectors: {{ toYaml .Values.nodeSelectors | quote }}
   gpu-node-selectors: {{ toYaml .Values.nodeSelectorsGPU | quote }}
   amqp-url: amqp://{{ template "rabbitmq.fullname" . }}:5672

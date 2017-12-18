@@ -44,8 +44,8 @@ spec:
         imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
         workingDir: /polyaxon/api
         args: [
-        "celery", "-A", "api", "worker" , "--loglevel=DEBUG", "--without-mingle", "--without-gossip",
-        "-Q", "{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsStatuses }},{{ .Values.queues.logsSidecars }}",
+        "celery", "-A", "api", "worker" , "--loglevel=INFO", "--without-mingle", "--without-gossip",
+        "-Q", "{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsStatuses }},{{ .Values.queues.logsSidecars }},{{ .Values.queues.streamLogsSidecars }}",
         "--concurrency=4", "-n default@%h"]
         env:
         {{ include "config.global" . | indent 8 }}

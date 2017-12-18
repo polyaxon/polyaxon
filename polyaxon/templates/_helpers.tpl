@@ -164,11 +164,20 @@ global config
 versions config
 */}}
 {{- define "config.versions" }}
+- name: POLYAXON_CLI_MIN_VERSION
+  value: {{ .Values.versions.cli.min | quote }}
+- name: POLYAXON_CLI_LATEST_VERSION
+  value: {{ .Values.versions.cli.latest | quote }}
+- name: POLYAXON_PLATFORM_MIN_VERSION
+  value: {{ .Values.versions.platform.min | quote }}
+- name: POLYAXON_PLATFORM_LATEST_VERSION
+  value: {{ .Values.versions.platform.latest | quote }}
+- name: POLYAXON_LIB_MIN_VERSION
+  value: {{ .Values.versions.lib.min | quote }}
+- name: POLYAXON_LIB_LATEST_VERSION
+  value: {{ .Values.versions.lib.latest | quote }}
 - name: POLYAXON_CHART_VERSION
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
-      key: chart-version
+  value: {{ .Chart.Version | quote }}
 {{- end -}}
 
 {{/*

@@ -1,11 +1,11 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-workers
+  name: {{ template "polyaxon.fullname" . }}-workers-scheduler
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/plx-configmap.yaml") . | sha256sum }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-workers
+    app: {{ template "polyaxon.fullname" . }}-workers-scheduler
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "polyaxon.fullname" . }}-workers
+        app: {{ template "polyaxon.fullname" . }}-workers-scheduler
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.worker }}
@@ -39,7 +39,7 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      - name: {{ .Chart.Name }}-workers1
+      - name: {{ .Chart.Name }}-workers-scheduler
         image: "{{ .Values.workers.image }}:{{ .Values.workers.imageTag }}"
         imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
         workingDir: /polyaxon/api
