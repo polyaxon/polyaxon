@@ -97,7 +97,7 @@ def run(k8s_manager, cluster):
                 level=level,
             )
             if creation_timestamp:
-                payload['create_at'] = creation_timestamp
+                payload['created_at'] = creation_timestamp
 
             logger.info("Publishing event: {}".format(data))
             handle_events_namespace.delay(cluster_id=cluster.id, payload=payload)

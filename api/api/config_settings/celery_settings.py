@@ -63,7 +63,7 @@ class CeleryTasks(object):
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
-    CLUSTERS_UPDATE_SYSTEM_NODES_GPUS = 'clusters_update_system_nodes'
+    CLUSTERS_UPDATE_SYSTEM_NODES_GPUS = 'clusters_update_system_nodes_gpus'
     EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
@@ -97,7 +97,7 @@ class CeleryQueues(object):
 
 # Queues on non default exchange
 CELERY_TASK_QUEUES = (
-    Queue(CeleryQueues.LOGS_SIDECARS,
+    Queue(CeleryQueues.STREAM_LOGS_SIDECARS,
           exchange=Exchange(INTERNAL_EXCHANGE, 'topic'),
           routing_key=RoutingKeys.LOGS_SIDECARS + '.#'),
 )
@@ -108,6 +108,7 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.EXPERIMENTS_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_START_GROUP: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.REPOS_HANDLE_FILE_UPLOAD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},

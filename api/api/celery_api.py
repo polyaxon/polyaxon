@@ -6,7 +6,7 @@ import os
 
 from celery import Celery, Task
 
-from django.conf import settings
+from django.apps import apps
 
 logger = logging.getLogger("polyaxon.tasks")
 
@@ -42,4 +42,4 @@ app.Task = PolyaxonTask  # Custom base class for logging
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Load task modules from all registered Django app configs.
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
