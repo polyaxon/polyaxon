@@ -15,7 +15,7 @@ from polyaxon_cli.utils.formatting import Printer
 
 @click.command()
 def upload():
-    """Upload code for current set project."""
+    """Upload code of the current directory while respecting the .polyaxonignore file."""
     project = get_current_project_or_exit()
     files = IgnoreManager.get_unignored_file_paths()
     filepath = create_tarfile(files, project.name)
