@@ -166,10 +166,10 @@ class ExperimentJobStatusConfig(BaseConfig):
 
 class JobLabelSchema(Schema):
     project_name = fields.Str()
-    experiment_group_name = fields.Str()
+    experiment_group_name = fields.Str(allow_none=True)
     experiment_name = fields.Str()
     project_uuid = UUID()
-    experiment_group_uuid = UUID()
+    experiment_group_uuid = UUID(allow_none=True)
     experiment_uuid = UUID()
     task_type = fields.Str()
     task_idx = fields.Str()
@@ -193,19 +193,20 @@ class JobLabelSchema(Schema):
 class JobLabelConfig(BaseConfig):
     SCHEMA = JobLabelSchema
     IDENTIFIER = 'JobLabel'
+    REDUCED_ATTRIBUTES = ['experiment_group_name', 'experiment_group_uuid']
 
     def __init__(self,
                  project_name,
-                 experiment_group_name,
                  experiment_name,
                  project_uuid,
-                 experiment_group_uuid,
                  experiment_uuid,
                  task_type,
                  task_idx,
                  job_uuid,
                  role,
-                 type):
+                 type,
+                 experiment_group_name=None,
+                 experiment_group_uuid=None):
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
         self.experiment_name = experiment_name
