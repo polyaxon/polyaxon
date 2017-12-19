@@ -238,7 +238,7 @@ def update(project, name, description):
 @project.command()
 @click.argument('project', type=str, required=False)
 @click.option('--page', type=int, help='To paginate through the list of projects.')
-def experiment_groups(project, page):
+def groups(project, page):
     """List experiment groups for this project"""
     user, project_name = get_project_or_local(project)
 
