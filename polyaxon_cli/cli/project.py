@@ -37,6 +37,23 @@ def get_current_project_or_exit():
     return project
 
 
+def get_project_info(project):
+    parts = project.split('/')
+    if len(parts) == 2:
+        user, project_name = parts
+    else:
+        user = AuthConfigManager.get_value('username')
+        project_name = project
+
+    return user, project_name
+
+
+def equal_projects(project1, project2):
+    project1_info = get_project_info(project1)
+    project2_info = get_project_info(project2)
+    return project1_info == project2_info
+
+
 def get_project_or_local(project=None):
     if not project and not ProjectManager.is_initialized():
         Printer.print_error('Please provide a valid project, or init a new project.'
@@ -44,12 +61,7 @@ def get_project_or_local(project=None):
         sys.exit(1)
 
     if project:
-        parts = project.split('/')
-        if len(parts) == 2:
-            user, project_name = parts
-        else:
-            user = AuthConfigManager.get_value('username')
-            project_name = project
+        user, project_name = get_project_info(project)
     else:
         project = ProjectManager.get_config()
         user, project_name = project.user, project.name

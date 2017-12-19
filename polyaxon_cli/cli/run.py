@@ -11,7 +11,7 @@ from polyaxon_schemas.experiment import ExperimentConfig
 from polyaxon_schemas.project import ExperimentGroupConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile
-from polyaxon_cli.cli.project import get_current_project_or_exit
+from polyaxon_cli.cli.project import get_current_project_or_exit, equal_projects
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
@@ -35,6 +35,11 @@ def run(file, description):
     num_experiments, concurrency = plx_file.experiments_def
     project = get_current_project_or_exit()
     project_client = PolyaxonClients().project
+    print(project.api_url)
+    if not equal_projects(plx_file.project.name, project.api_url):
+        Printer.print_error('Your polyaxonfile defined a different project '
+                            'than the one set in this repo.')
+        sys.exit(1)
     if num_experiments == 1:
         click.echo('Creating an independent experiment.')
         experiment = ExperimentConfig(description=description,
