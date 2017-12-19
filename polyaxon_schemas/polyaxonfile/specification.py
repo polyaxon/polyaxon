@@ -247,6 +247,8 @@ class Specification(BaseSpecification):
     @cached_property
     def worker_configs(self):
         environment = self.environment
+        if environment is None:
+            return {}
         return self._get_configs(configs=environment.worker_configs,
                                  default_config=environment.default_worker_config,
                                  task_type=TaskType.WORKER)
@@ -254,6 +256,8 @@ class Specification(BaseSpecification):
     @cached_property
     def ps_configs(self):
         environment = self.environment
+        if environment is None:
+            return {}
         return self._get_configs(configs=environment.ps_configs,
                                  default_config=environment.default_ps_config,
                                  task_type=TaskType.PS)
@@ -276,15 +280,17 @@ class Specification(BaseSpecification):
 
     @cached_property
     def run_resources(self):
-        return self.environment.resources
+        return self.environment.resources if self.environment else None
 
     @cached_property
     def master_resources(self):
-        return self.environment.master_resources
+        return self.environment.master_resources if self.environment else None
 
     @cached_property
     def worker_resources(self):
         environment = self.environment
+        if environment is None:
+            return None
         return self._get_resources(resources=environment.worker_resources,
                                    default_resources=environment.default_worker_resources,
                                    task_type=TaskType.WORKER)
@@ -292,6 +298,8 @@ class Specification(BaseSpecification):
     @cached_property
     def ps_resources(self):
         environment = self.environment
+        if environment is None:
+            return None
         return self._get_resources(resources=environment.ps_resources,
                                    default_resources=environment.default_ps_resources,
                                    task_type=TaskType.PS)
