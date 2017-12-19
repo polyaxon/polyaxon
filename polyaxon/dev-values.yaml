@@ -25,3 +25,37 @@ registry:
   persistence:
     size: 1Gi
 
+
+
+
+persistence:
+  data:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/tmp/plx/data"
+    subPath: ""
+  logs:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/tmp/plx/logs"
+    subPath: ""
+  outputs:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/tmp/plx/outputs"
+    subPath: ""
+  repos:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/tmp/plx/repos"
+    subPath: ""
+  upload:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/tmp/plx/upload"
+    subPath: ""
