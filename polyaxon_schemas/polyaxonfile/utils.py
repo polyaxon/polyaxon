@@ -53,8 +53,8 @@ def get_vol_path(volume, run_type):
 
         # you must run: `minikube mount --v=3 ~/plx/:/plx/`
         # where /plx contains both" /plx/data and /plx/plxfiles
-        return os.path.join('/plx/', volume)
+        return os.path.join('/', volume)
     elif run_type == RunTypes.KUBERNETES:
-        return os.path.join('/plx/', volume)
+        return os.path.join('/', volume)
     else:
         raise PolyaxonConfigurationError('Run type `{}` is not allowed.'.format(run_type))

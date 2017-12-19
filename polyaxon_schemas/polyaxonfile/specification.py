@@ -108,7 +108,7 @@ class BaseSpecification(object):
 
     @cached_property
     def run_type(self):
-        return self.settings.run_type if self.settings else RunTypes.LOCAL
+        return self.settings.run_type if self.settings else RunTypes.KUBERNETES
 
     @cached_property
     def is_local(self):
@@ -135,7 +135,8 @@ class BaseSpecification(object):
             if self.run_type == RunTypes.LOCAL:
                 return '/tmp/plx_logs/' + self.project.name
 
-            return get_vol_path(constants.LOGS_VOLUME, self.run_type) + self.project.name
+            return os.path.join(get_vol_path(constants.LOGS_VOLUME, self.run_type),
+                                self.project.name)
 
         return get_path()
 

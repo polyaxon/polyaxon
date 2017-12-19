@@ -48,7 +48,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/tmp/plx_logs/project1'
         assert plxfile.matrix is None
-        assert plxfile.settings is None
+        assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
         assert spec.environment is None
         assert spec.experiment_path == '/tmp/plx_logs/project1/0'
@@ -75,7 +75,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
         assert plxfile.project_path == '/tmp/plx_logs/project1'
-        assert plxfile.settings is None
+        assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
         assert spec.experiment_path == '/tmp/plx_logs/project1/0'
         assert spec.environment is None
@@ -292,7 +292,7 @@ class TestPolyaxonfile(TestCase):
         assert sorted(
             plxfile.matrix_declarations, key=lambda x: (x['loss'])) == sorted(
             declarations, key=lambda x: (x['loss']))
-        assert plxfile.settings is None
+        assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
 
         for xp in range(plxfile.matrix_space):
@@ -321,7 +321,7 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.experiment_spec_at(0)
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
-        assert plxfile.settings is None
+        assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
         assert plxfile.project_path == "/tmp/plx_logs/video_prediction"
         assert spec.experiment_path == "/tmp/plx_logs/video_prediction/0"
@@ -338,7 +338,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
         assert plxfile.project_path == get_vol_path(constants.LOGS_VOLUME,
-                                                    RunTypes.MINIKUBE) + 'video_prediction'
+                                                    RunTypes.MINIKUBE) + '/video_prediction'
         assert isinstance(plxfile.matrix['model'], MatrixConfig)
         assert plxfile.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert plxfile.matrix_space == 3
