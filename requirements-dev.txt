@@ -1,6 +1,6 @@
 numpy==1.13.1
 Pillow==4.2.1
--e git+https://github.com/polyaxon/polyaxon-schemas.git@248a26cc126cf2c8374d9434ec4c6889f970f1b6#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@b5c2b120a5b1593dae0c8673ce87434f232441cd#egg=polyaxon-schemas
 scipy==0.19.1
 six==1.11.0
 tensorflow==1.3.0

@@ -13,6 +13,7 @@ matrix:
 settings:
   logging:
     level: INFO
+  run_type: local
 
 environment:
   delay_workers_by_global_step: true

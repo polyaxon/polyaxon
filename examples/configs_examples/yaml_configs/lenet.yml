@@ -7,6 +7,7 @@ project:
 settings:
   logging:
     level: INFO
+  run_type: local
 
 environment:
   run_config:
