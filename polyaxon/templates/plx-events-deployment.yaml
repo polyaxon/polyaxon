@@ -49,6 +49,7 @@ spec:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
@@ -69,6 +70,7 @@ spec:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
@@ -89,6 +91,7 @@ spec:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
@@ -100,14 +103,6 @@ spec:
 {{ toYaml .Values.events.resources.resources | indent 10 }}
       {{- end }}
         volumeMounts:
-        - name: docker
-          mountPath: /var/run/docker.sock
-        - name: nvidia
-          mountPath: /usr/local/nvidia
+        {{ include "volumes.volumeMounts" . | indent 8}}
       volumes:
-      - name: docker
-        hostPath:
-          path: {{ .Values.dirs.docker }}
-      - name: nvidia
-        hostPath:
-          path: {{ .Values.dirs.nvidia }}
+      {{ include "volumes.volumes" . | indent 6 }}

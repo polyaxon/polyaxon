@@ -49,12 +49,14 @@ spec:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
         {{ include "config.routingKeys" . | indent 8 }}
         {{ include "config.queues" . | indent 8 }}
         {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
         volumeMounts:
         {{ include "volumes.volumeMounts" . | indent 8}}
         livenessProbe:
@@ -90,6 +92,7 @@ spec:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
         {{ include "config.db" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
