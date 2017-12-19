@@ -3,8 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 from api.utils import config
 
+# Roles
 ROLE_LABELS_WORKER = config.get_string('POLYAXON_ROLE_LABELS_WORKER')
+ROLE_LABELS_DASHBOARD = config.get_string('POLYAXON_ROLE_LABELS_DASHBOARD')
+ROLE_LABELS_LOG = config.get_string('POLYAXON_ROLE_LABELS_LOG')
+ROLE_LABELS_API = config.get_string('POLYAXON_ROLE_LABELS_API')
+
+# Types
+TYPE_LABELS_CORE = config.get_string('POLYAXON_TYPE_LABELS_CORE')
 TYPE_LABELS_EXPERIMENT = config.get_string('POLYAXON_TYPE_LABELS_EXPERIMENT')
+
 JOB_CONTAINER_NAME = config.get_string('POLYAXON_JOB_CONTAINER_NAME')
 JOB_SIDECAR_CONTAINER_NAME = config.get_string('POLYAXON_JOB_SIDECAR_CONTAINER_NAME')
 JOB_DOCKER_NAME = config.get_string('POLYAXON_JOB_DOCKER_NAME',
