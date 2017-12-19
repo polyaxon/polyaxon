@@ -16,7 +16,6 @@ from polyaxon_schemas.experiment import (
     ExperimentJobConfig,
     ExperimentStatusConfig,
     ExperimentJobStatusConfig)
-from polyaxon_schemas.polyaxonfile.constants import TASK_NAME
 
 
 class TestExperimentConfigs(TestCase):
@@ -82,18 +81,23 @@ class TestExperimentConfigs(TestCase):
 
     @staticmethod
     def create_pod_labels():
-        project = 'test-id1'
-        experiment = uuid.uuid4().hex
+        project_name = 'user/test-id1'
+        experiment_group_name = 'user/test-id1/1'
+        experiment_name = 'user/test-id1/1/2'
+        project_uuid = uuid.uuid4().hex
+        experiment_group_uuid = uuid.uuid4().hex
+        experiment_uuid = uuid.uuid4().hex
+        job_uuid = uuid.uuid4().hex
         task_type = 'master'
-        return {'project': project,
-                'experiment': experiment,
+        return {'project_name': project_name,
+                'experiment_group_name': experiment_group_name,
+                'experiment_name': experiment_name,
+                'project_uuid': project_uuid,
+                'experiment_group_uuid': experiment_group_uuid,
+                'experiment_uuid': experiment_uuid,
                 'task_type': task_type,
                 'task_idx': '0',
-                'task': TASK_NAME.format(project='test-id1',
-                                         experiment=experiment,
-                                         task_type=task_type,
-                                         task_idx='0'),
-                'job_id': uuid.uuid4().hex,
+                'job_uuid': job_uuid,
                 'role': 'polyaxon-worker',
                 'type': 'polyaxon-experiment'
                 }

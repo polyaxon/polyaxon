@@ -304,44 +304,6 @@ class Specification(BaseSpecification):
                                    default_resources=environment.default_ps_resources,
                                    task_type=TaskType.PS)
 
-    def get_k8s_cluster(self, port=constants.DEFAULT_PORT):
-        cluster_def, is_distributed = self.cluster_def
-
-        def get_address(host):
-            return '{}:{}'.format(host, port)
-
-        task_name = constants.TASK_NAME.format(project=self.project.name,
-                                               experiment=self.experiment,
-                                               task_type=TaskType.MASTER,
-                                               task_idx=0)
-        cluster_config = {
-            TaskType.MASTER: [get_address(task_name)]
-        }
-
-        workers = []
-        for i in range(cluster_def.get(TaskType.WORKER, 0)):
-            task_name = constants.TASK_NAME.format(
-                project=self.project.name,
-                experiment=self.experiment,
-                task_type=TaskType.WORKER,
-                task_idx=i)
-            workers.append(get_address(task_name))
-
-        cluster_config[TaskType.WORKER] = workers
-
-        ps = []
-        for i in range(cluster_def.get(TaskType.PS, 0)):
-            task_name = constants.TASK_NAME.format(
-                project=self.project.name,
-                experiment=self.experiment,
-                task_type=TaskType.PS,
-                task_idx=i)
-            ps.append(get_address(task_name))
-
-        cluster_config[TaskType.PS] = ps
-
-        return ClusterConfig.from_dict(cluster_config)
-
     def get_local_cluster(self,
                           host='127.0.0.1',
                           master_port=10000,
@@ -375,8 +337,6 @@ class Specification(BaseSpecification):
     def get_cluster(self, **kwargs):
         if self.is_local:
             return self.get_local_cluster(**kwargs)
-        elif self.run_type in (RunTypes.MINIKUBE, RunTypes.KUBERNETES):
-            return self.get_k8s_cluster(**kwargs)
 
 
 class GroupSpecification(BaseSpecification):

@@ -165,12 +165,16 @@ class ExperimentJobStatusConfig(BaseConfig):
 
 
 class JobLabelSchema(Schema):
-    project = fields.Str()
-    experiment = fields.Str()
+    project_name = fields.Str()
+    experiment_group_name = fields.Str()
+    experiment_name = fields.Str()
+    project_uuid = UUID()
+    experiment_group_uuid = UUID()
+    experiment_uuid = UUID()
     task_type = fields.Str()
     task_idx = fields.Str()
     task = fields.Str()
-    job_id = fields.Str()
+    job_uuid = UUID()
     role = fields.Str()
     type = fields.Str()
 
@@ -190,13 +194,27 @@ class JobLabelConfig(BaseConfig):
     SCHEMA = JobLabelSchema
     IDENTIFIER = 'JobLabel'
 
-    def __init__(self, project, experiment, task_type, task_idx, task, job_id, role, type):
-        self.project = project
-        self.experiment = experiment
+    def __init__(self,
+                 project_name,
+                 experiment_group_name,
+                 experiment_name,
+                 project_uuid,
+                 experiment_group_uuid,
+                 experiment_uuid,
+                 task_type,
+                 task_idx,
+                 job_uuid,
+                 role,
+                 type):
+        self.project_name = project_name
+        self.experiment_group_name = experiment_group_name
+        self.experiment_name = experiment_name
+        self.project_uuid = project_uuid
+        self.experiment_group_uuid = experiment_group_uuid
+        self.experiment_uuid = experiment_uuid
         self.task_type = task_type
         self.task_idx = task_idx
-        self.task = task
-        self.job_id = job_id
+        self.job_uuid = job_uuid
         self.role = role
         self.type = type
 

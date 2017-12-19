@@ -130,36 +130,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.ps_resources == {}
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
-                                        TaskType.WORKER: 5,
-                                        TaskType.PS: 10}, True)
+                                     TaskType.WORKER: 5,
+                                     TaskType.PS: 10}, True)
 
-        def task_name(task_type, task_idx):
-            return constants.TASK_NAME.format(project=plxfile.project.name,
-                                              experiment=0,
-                                              task_type=task_type,
-                                              task_idx=task_idx)
-
-        assert_equal_dict(spec.get_cluster().to_dict(),
-                          {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],
-                           TaskType.WORKER: [
-                               '{}:2222'.format(task_name(TaskType.WORKER, 0)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 1)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 2)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 3)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 4)),
-                           ],
-                           TaskType.PS: [
-                               '{}:2222'.format(task_name(TaskType.PS, 0)),
-                               '{}:2222'.format(task_name(TaskType.PS, 1)),
-                               '{}:2222'.format(task_name(TaskType.PS, 2)),
-                               '{}:2222'.format(task_name(TaskType.PS, 3)),
-                               '{}:2222'.format(task_name(TaskType.PS, 4)),
-                               '{}:2222'.format(task_name(TaskType.PS, 5)),
-                               '{}:2222'.format(task_name(TaskType.PS, 6)),
-                               '{}:2222'.format(task_name(TaskType.PS, 7)),
-                               '{}:2222'.format(task_name(TaskType.PS, 8)),
-                               '{}:2222'.format(task_name(TaskType.PS, 9)),
-                           ]})
         assert isinstance(spec.model, ClassifierConfig)
         assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
         assert isinstance(spec.model.optimizer, AdamConfig)
@@ -246,33 +219,6 @@ class TestPolyaxonfile(TestCase):
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)
 
-        def task_name(task_type, task_idx):
-            return constants.TASK_NAME.format(project=plxfile.project.name,
-                                              experiment=0,
-                                              task_type=task_type,
-                                              task_idx=task_idx)
-
-        assert_equal_dict(spec.get_cluster().to_dict(),
-                          {TaskType.MASTER: ['{}:2222'.format(task_name(TaskType.MASTER, 0))],
-                           TaskType.WORKER: [
-                               '{}:2222'.format(task_name(TaskType.WORKER, 0)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 1)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 2)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 3)),
-                               '{}:2222'.format(task_name(TaskType.WORKER, 4)),
-                           ],
-                           TaskType.PS: [
-                               '{}:2222'.format(task_name(TaskType.PS, 0)),
-                               '{}:2222'.format(task_name(TaskType.PS, 1)),
-                               '{}:2222'.format(task_name(TaskType.PS, 2)),
-                               '{}:2222'.format(task_name(TaskType.PS, 3)),
-                               '{}:2222'.format(task_name(TaskType.PS, 4)),
-                               '{}:2222'.format(task_name(TaskType.PS, 5)),
-                               '{}:2222'.format(task_name(TaskType.PS, 6)),
-                               '{}:2222'.format(task_name(TaskType.PS, 7)),
-                               '{}:2222'.format(task_name(TaskType.PS, 8)),
-                               '{}:2222'.format(task_name(TaskType.PS, 9)),
-                           ]})
         assert isinstance(spec.model, ClassifierConfig)
         assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
         assert isinstance(spec.model.optimizer, AdamConfig)
