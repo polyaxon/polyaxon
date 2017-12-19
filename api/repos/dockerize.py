@@ -56,6 +56,7 @@ class DockerBuilder(object):
     def __init__(self,
                  repo_path,
                  from_image,
+                 image_name,
                  image_tag,
                  steps=None,
                  env_vars=None,
@@ -65,6 +66,7 @@ class DockerBuilder(object):
         self.build_path = '/'.join(repo_path.split('/')[:-1])
         self.folder_name = repo_path.split('/')[-1]
         self.from_image = from_image
+        self.image_name = image_name
         self.image_tag = image_tag
         self.steps = steps or []
         self.env_vars = env_vars or []
@@ -133,7 +135,7 @@ class DockerBuilder(object):
         self.connect()
         for line in self.docker.build(
             path=self.build_path,
-            tag=self.image_tag,
+            tag='{}:{}'.format(self.image_name, self.image_tag),
             buildargs={},
             decode=True,
             forcerm=True,
@@ -143,18 +145,18 @@ class DockerBuilder(object):
             container_limits=limits,
             stream=True,
         ):
-            yield line
+            # TODO: push stream to experiment exchange
+            pass
 
     def push(self):
         # Build a progress setup for each layer, and only emit per-layer info every 1.5s
         layers = {}
         last_emit_time = time.time()
         self.connect()
-        for line in self.docker.push(self.image_tag, stream=True):
+        for line in self.docker.push(self.image_name, tag=self.image_tag, stream=True):
             lines = [l for l in line.decode('utf-8').split('\r\n') if l]
             lines = [json.loads(l) for l in lines]
             for progress in lines:
-                print(progress)
                 if 'error' in progress:
                     logger.error(progress['error'], extra=dict(phase='failed'))
                     return
@@ -167,6 +169,7 @@ class DockerBuilder(object):
                 if time.time() - last_emit_time > 1.5:
                     logger.info('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
                     last_emit_time = time.time()
+                # TODO: push stream to experiment exchange
 
 
 def build_experiment(experiment):
@@ -183,17 +186,19 @@ def build_experiment(experiment):
 
         repo_path = repo.path
         repo_name = repo.name
-        repo_last_commit = repo.last_commit
+        repo_last_commit = repo.last_commit[0]
     else:
         repo_path = experiment.project.repo.path
         repo_name = project_name
-        repo_last_commit = experiment.project.repo.last_commit
+        repo_last_commit = experiment.project.repo.last_commit[0]
 
-    image_tag = '{}/{}:{}'.format(project_name, repo_name, repo_last_commit)
+    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_tag = repo_last_commit
 
     # Build the image
     docker_builder = DockerBuilder(repo_path=repo_path,
                                    from_image=experiment_spec.run_exec.image,
+                                   image_name=image_name,
                                    image_tag=image_tag,
                                    steps=experiment_spec.run_exec.steps,
                                    env_vars=experiment_spec.run_exec.env_vars)
