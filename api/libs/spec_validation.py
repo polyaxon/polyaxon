@@ -8,6 +8,11 @@ from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 
 def validate_spec_content(content):
     try:
-        return GroupSpecification.read(content)
+        spec = GroupSpecification.read(content)
     except (PolyaxonfileError, PolyaxonConfigurationError):
         raise ValidationError('Received non valid specification content.')
+
+    if spec.is_local:
+        raise ValidationError('Received specification content for a local environment run.')
+
+    return spec
