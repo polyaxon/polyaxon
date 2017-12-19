@@ -243,6 +243,14 @@ db config
 {{/*
 redis config
 */}}
+{{- define "config.registry" }}
+- name: POLYAXON_REGISTRY_HOST
+  value: "localhost:{{ .Values.registry.service.nodePort }}"
+{{- end }}
+
+{{/*
+redis config
+*/}}
 {{- define "config.redis" }}
 {{- if .Values.redis.usePassword }}
 - name: POLYAXON_REDIS_PASSWORD
@@ -355,7 +363,7 @@ Config dirs
 */}}
 {{- define "config.dirs" }}
 - name: POLYAXON_DIRS_UPLOAD
-  value: {{ default "/tmp" .Values.dirs.upload | quote }}
+  value: {{ .Values.persistence.upload.mountPath | quote }}
 - name: POLYAXON_DIRS_DATA
   value: {{ .Values.persistence.data.mountPath | quote }}
 - name: POLYAXON_DIRS_LOGS
@@ -371,6 +379,11 @@ Config dirs
 Volume mounts
 */}}
 {{- define "volumes.volumeMounts" }}
+- mountPath: {{ .Values.persistence.upload.mountPath }}
+  name: {{ template "polyaxon.fullname" . }}-upload
+  {{ if .Values.persistence.upload.subPath -}}
+  subPath: {{ .Values.persistence.upload.subPath | quote }}
+  {{- end }}
 - mountPath: {{ .Values.persistence.data.mountPath }}
   name: {{ template "polyaxon.fullname" . }}-data
   {{ if .Values.persistence.data.subPath -}}
@@ -391,6 +404,10 @@ Volume mounts
   {{ if .Values.persistence.repos.subPath -}}
   subPath: {{ .Values.persistence.repos.subPath | quote }}
   {{- end }}
+- name: docker
+  mountPath: {{ .Values.dirs.docker }}
+- name: nvidia
+  mountPath: {{ .Values.dirs.nvidia }}
 {{- end -}}
 
 
@@ -398,6 +415,22 @@ Volume mounts
 Volumes
 */}}
 {{- define "volumes.volumes" }}
+- name: {{ template "polyaxon.fullname" . }}-upload
+{{- if .Values.persistence.upload.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ template "polyaxon.fullname" . }}-upload
+{{- else }}
+  hostPath:
+    path: /tmp/plx/upload
+{{ end }}
+- name: {{ template "polyaxon.fullname" . }}-repos
+{{- if .Values.persistence.repos.enabled }}
+  persistentVolumeClaim:
+    claimName: {{ template "polyaxon.fullname" . }}-repos
+{{- else }}
+  hostPath:
+    path: /tmp/plx/upload
+{{ end }}
 - name: {{ template "polyaxon.fullname" . }}-logs
 {{- if .Values.persistence.logs.enabled }}
   persistentVolumeClaim:
@@ -419,11 +452,10 @@ Volumes
 {{- else }}
   emptyDir: {}
 {{ end }}
-- name: {{ template "polyaxon.fullname" . }}-repos
-{{- if .Values.persistence.repos.enabled }}
-  persistentVolumeClaim:
-    claimName: {{ template "polyaxon.fullname" . }}-repos
-{{- else }}
-  emptyDir: {}
-{{ end }}
+- name: docker
+  hostPath:
+    path: {{ .Values.dirs.docker }}
+- name: nvidia
+  hostPath:
+    path: {{ .Values.dirs.nvidia }}
 {{- end -}}

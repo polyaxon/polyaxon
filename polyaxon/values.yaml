@@ -91,7 +91,7 @@ api:
     type: LoadBalancer
     externalPort: 80
     internalPort: 80
-    nodePort: 35811
+    nodePort: 31811
 
 apiEvents:
   image: polyaxon/polyaxon-api
@@ -112,7 +112,7 @@ apiEvents:
     type: LoadBalancer
     internalPort: 1337
     externalPort: 80
-    nodePort: 35812
+    nodePort: 31812
 
 workers:
   image: polyaxon/polyaxon-api
@@ -194,25 +194,31 @@ persistence:
     enabled: false
     accessMode: ReadWriteOnce
     size: 10Gi
-    mountPath: /data
+    mountPath: "/data"
     subPath: ""
   logs:
     enabled: false
     accessMode: ReadWriteOnce
     size: 10Gi
-    mountPath: /logs
+    mountPath: "/logs"
     subPath: ""
   outputs:
     enabled: false
     accessMode: ReadWriteOnce
     size: 10Gi
-    mountPath: /outputs
+    mountPath: "/outputs"
     subPath: ""
   repos:
     enabled: false
     accessMode: ReadWriteOnce
     size: 10Gi
-    mountPath: /repos
+    mountPath: "/repos"
+    subPath: ""
+  upload:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/tmp/plx"
     subPath: ""
 
 nodeSelectors: {}
@@ -308,6 +314,20 @@ rabbitmq:
       cpu: 100m
 
 registry:
+  replicaCount: 1
+  image:
+    repository: registry
+    tag: 2.6.2
+    pullPolicy: IfNotPresent
+  service:
+    name: registry
+    type: NodePort
+    port: 5000
+    nodePort: 31813
+  resources:
+    requests:
+      cpu: "300m"
+      memory: "512Mi"
   persistence:
     enabled: false
     accessMode: ReadWriteOnce

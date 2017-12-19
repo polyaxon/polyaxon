@@ -4,13 +4,16 @@ metadata:
   name: {{ template "registry.fullname" . }}
   labels:
     app: {{ template "registry.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
 spec:
+  type: {{ .Values.registry.service.type }}
   ports:
-  - port: 5000
-    name: registry-port
+  - port: {{ .Values.registry.service.port }}
+    name: {{ .Values.registry.service.name }}
     protocol: TCP
-    nodePort: 31500
+    nodePort: {{ .Values.registry.service.nodePort }}
   selector:
     app: {{ template "registry.fullname" . }}
-  type: NodePort

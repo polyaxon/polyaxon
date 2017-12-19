@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "registry.fullname" . }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.registry.replicaCount }}
   template:
     metadata:
       labels:
@@ -27,14 +27,13 @@ spec:
                   - system
               topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: registry
-        image: registry:2
+      - name:  {{ template "registry.fullname" . }}
+        image: "{{ .Values.registry.image.repository }}:{{ .Values.registry.image.tag }}"
+        imagePullPolicy: {{ default "" .Values.registry.image.pullPolicy | quote }}
         resources:
-          requests:
-            cpu: "300m"
-            memory: "512Mi"
+{{ toYaml .Values.registry.resources | indent 10 }}
         ports:
-        - containerPort: 5000
+        - containerPort: {{ .Values.registry.service.port }}
         volumeMounts:
         - mountPath: /var/lib/registry
           name: registry-volume
