@@ -18,7 +18,8 @@ class TestRepoDockerize(BaseTest):
 
         builder = DockerBuilder(repo_path=repo_path,
                                 from_image='busybox',
-                                image_tag='busycube/busycube:1')
+                                image_name='busycube/busycube',
+                                image_tag='1')
         assert builder.polyaxon_requirements_path is None
         assert builder.polyaxon_setup_path is None
 
@@ -28,7 +29,8 @@ class TestRepoDockerize(BaseTest):
 
         builder = DockerBuilder(repo_path=repo_path,
                                 from_image='busybox',
-                                image_tag='busycube/busycube:1')
+                                image_name='busycube/busycube',
+                                image_tag='1')
         assert builder.polyaxon_requirements_path == 'repo/polyaxon_requirements.txt'
         assert builder.polyaxon_setup_path == 'repo/polyaxon_setup.sh'
 
@@ -40,7 +42,8 @@ class TestRepoDockerize(BaseTest):
         # By default it should user FROM image declare WORKDIR and COPY code
         builder = DockerBuilder(repo_path=repo_path,
                                 from_image='busybox',
-                                image_tag='busycube/busycube:1')
+                                image_name='busycube/tets',
+                                image_tag='1.0.0')
 
         dockerfile = builder.render()
 
@@ -51,7 +54,8 @@ class TestRepoDockerize(BaseTest):
         # Add env vars
         builder = DockerBuilder(repo_path=repo_path,
                                 from_image='busybox',
-                                image_tag='busycube/busycube:1',
+                                image_name='busycube/tets',
+                                image_tag='0.1.1',
                                 env_vars=[('BLA', 'BLA')])
 
         dockerfile = builder.render()
@@ -68,7 +72,8 @@ class TestRepoDockerize(BaseTest):
 
         builder = DockerBuilder(repo_path=repo_path,
                                 from_image='busybox',
-                                image_tag='busycube/busycube:1',
+                                image_name='busycube/tets',
+                                image_tag='alpha.1',
                                 steps=steps)
 
         dockerfile = builder.render()
