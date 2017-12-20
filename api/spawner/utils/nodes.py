@@ -27,7 +27,7 @@ def get_memory_size(node):
 
 def is_master(node):
     if ('node-role.kubernetes.io/master' in node.metadata.labels or
-                node.metadata.labels.get('kubernetes.io/hostname') == 'minikube'):
+            node.metadata.labels.get('kubernetes.io/hostname') == 'minikube'):
         return True
     return False
 

@@ -34,7 +34,7 @@ class Command(BaseMonitorCommand):
         labels = sidecar.can_log(k8s_manager, pod_id, log_sleep_interval)
         sidecar.run(k8s_manager=k8s_manager,
                     pod_id=pod_id,
-                    experiment_uuid=labels.experiment,
+                    experiment_uuid=labels.experiment_uuid,
                     job_uuid=labels.job_uuid,
                     container_job_name=settings.JOB_CONTAINER_NAME,
                     persist=persist)
