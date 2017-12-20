@@ -1,27 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from django.conf import settings
 from polyaxon_schemas.polyaxonfile import constants
 
+JOB_NAME = 'plxjob-{task_type}{task_idx}-{experiment_uuid}'
+DEFAULT_PORT = 2222
 ENV_VAR_TEMPLATE = '{name: "{var_name}", value: "{var_value}"}'
 VOLUME_NAME = 'pv-{vol_name}'
 VOLUME_CLAIM_NAME = 'pvc-{vol_name}'
-CONFIG_MAP_NAME = '{project}-xp{experiment}-{role}'
-CONFIG_MAP_LABELS = ()
-CONFIG_MAP_KEY_NAME = 'CM_{project}_xp{experiment}_{role}_{task_type}'
-POD_CONTAINER_PROJECT_NAME = '{project}-{name}'
-DEPLOYMENT_NAME = '{project}-{name}'
-CLUSTER_SECRET = 'polyaxon-cluster-secret'
+CLUSTER_CONFIG_MAP_NAME = 'plxcluster-{experiment_uuid}'
+CLUSTER_CONFIG_MAP_KEY_NAME = 'plxcluster_{experiment_uuid}_{task_type}'
+POD_CONTAINER_PROJECT_NAME = 'plxproject-{project_uuid}-{name}'
+DEPLOYMENT_NAME = 'plxproject-{project_uuid}-{name}'
 
 
 def SIDECAR_ARGS_FN(container_job_name, pod_id):
-    return ["python3", "api/manage.py", "start_sidecar", container_job_name, pod_id,
-            "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval | quote }}",
-            "--persist={{ .Values.events.namespace.amqpReconnectInterval | quote }}"]
+    return ["python3", "api/manage.py", "start_sidecar", pod_id,
+            "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
+            "--persist={}".format(settings.JOB_SIDECAR_PERSIST)]
 
 
-DATA_VOLUME = constants.DATA_VOLUME
-LOGS_VOLUME = constants.LOGS_VOLUME
-POLYAXON_FILES_VOLUME = constants.POLYAXON_FILES_VOLUME
-TASK_NAME = constants.TASK_NAME
-DEFAULT_PORT = constants.DEFAULT_PORT
+DATA_VOLUME = 'data'
+OUTPUTS_VOLUME = 'outputs'
