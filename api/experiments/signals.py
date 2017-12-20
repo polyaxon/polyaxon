@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus
+from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus, ExperimentStatus
 from projects.models import ExperimentGroup
 from spawner import scheduler
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
@@ -32,7 +32,7 @@ def experiment_deleted(sender, **kwargs):
     instance = kwargs['instance']
     try:
         _ = instance.experiment_group
-        scheduler.stop_experiment(instance, is_delete=True)
+        scheduler.stop_experiment(instance, update_status=False)
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass
@@ -72,3 +72,12 @@ def new_experiment_job_status(sender, **kwargs):
         return
 
     check_experiment_status.delay(experiment_uuid=experiment.uuid.hex)
+
+
+@receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_saved")
+def new_experiment_status(sender, **kwargs):
+    instance = kwargs['instance']
+
+    if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
+        # Schedule stop for this experiment because other jobs may be still running
+        scheduler.stop_experiment(instance.experiment, update_status=False)
