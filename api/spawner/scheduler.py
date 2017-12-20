@@ -33,7 +33,7 @@ def start_experiment(experiment):
                          namespace=settings.K8S_NAMESPACE,
                          in_cluster=True,
                          use_sidecar=True,
-                         sidecar_config=config.get_requested_params())
+                         sidecar_config=config.get_requested_params(to_str=True))
     resp = spawner.start_experiment()
 
     # Get the number of jobs this experiment started
@@ -65,7 +65,7 @@ def stop_experiment(experiment, is_delete=False):
                          namespace=settings.K8S_NAMESPACE,
                          in_cluster=True,
                          use_sidecar=True,
-                         sidecar_config=config.get_requested_params())
+                         sidecar_config=config.get_requested_params(to_str=True))
     spawner.stop_experiment()
     if not is_delete:
         # Update experiment status to show that its started
