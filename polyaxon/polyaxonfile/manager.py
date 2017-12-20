@@ -158,7 +158,7 @@ def prepare_experiment_run(spec_config, experiment_uuid, task_type=TaskType.MAST
 
 def start_experiment_run(spec_config, experiment_uuid, task_type, task_id, schedule):
     spec = Specification.read(spec_config)
-    experiment = prepare_experiment_run(spec, int(experiment_uuid), task_type, int(task_id))
+    experiment = prepare_experiment_run(spec, experiment_uuid, task_type, int(task_id))
     task = getattr(experiment, schedule)
     return task()
 
