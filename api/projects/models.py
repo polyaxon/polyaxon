@@ -28,10 +28,14 @@ class Project(DiffModel, DescribableModel):
     is_public = models.BooleanField(default=True, help_text='If project is public or private.')
 
     def __str__(self):
-        return self.name
+        return self.unique_name
 
     class Meta:
         unique_together = (('user', 'name'),)
+
+    @property
+    def unique_name(self):
+        return '{}.{}'.format(self.user.username, self.name)
 
     @property
     def has_code(self):
@@ -70,6 +74,13 @@ class ExperimentGroup(DiffModel, DescribableModel):
                 self.sequence = last.sequence + 1
 
         super(ExperimentGroup, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.unique_name
+
+    @property
+    def unique_name(self):
+        return '{}.{}'.format(self.project.unique_name, self.sequence)
 
     @cached_property
     def specification(self):

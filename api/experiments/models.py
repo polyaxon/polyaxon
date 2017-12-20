@@ -68,6 +68,15 @@ class Experiment(DiffModel, DescribableModel):
         ordering = ['sequence']
         unique_together = (('project', 'sequence'),)
 
+    def __str__(self):
+        return self.unique_name
+
+    @property
+    def unique_name(self):
+        if self.experiment_group:
+            return '{}.{}'.format(self.experiment_group.unique_name, self.sequence)
+        return '{}.{}'.format(self.project.unique_name, self.sequence)
+
     @cached_property
     def compiled_spec(self):
         return Specification(experiment=self.uuid, values=self.config)
