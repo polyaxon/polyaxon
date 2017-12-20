@@ -1,3 +1,5 @@
+debug: 1
+
 postgresql:
   imageTag: 9.6.1-alpine
 
