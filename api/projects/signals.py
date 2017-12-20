@@ -1,9 +1,10 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from projects.models import ExperimentGroup
 from projects.tasks import start_group_experiments
 from experiments.models import Experiment
+from spawner import scheduler
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
@@ -25,3 +26,11 @@ def new_experiment_group(sender, **kwargs):
                                   config=specification.parsed_data[xp])
 
     start_group_experiments.delay(instance.id)
+
+
+@receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
+def experiment_group_deleted(sender, **kwargs):
+    """Stop all experiments before deleting the group."""
+    instance = kwargs['instance']
+    for experiment in instance.running_experiments:
+        scheduler.schedule_stop_experiment(experiment, is_delete=True)
