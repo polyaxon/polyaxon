@@ -29,7 +29,7 @@ class TestEventsHandling(BaseTest):
                                   event=status_raw_event['object'],
                                   job_container_name=settings.JOB_CONTAINER_NAME,
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
-        job_uuid = job_state.details.labels.job_id
+        job_uuid = job_state.details.labels.job_uuid
         job = ExperimentJobFactory(uuid=job_uuid)
         handle_events_job_statues(job_state.to_dict())
         assert ExperimentJobStatus.objects.count() == 2
@@ -42,7 +42,7 @@ class TestEventsHandling(BaseTest):
                                   event=status_raw_event_with_conditions['object'],
                                   job_container_name=settings.JOB_CONTAINER_NAME,
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
-        job_uuid = job_state.details.labels.job_id
+        job_uuid = job_state.details.labels.job_uuid
         job = ExperimentJobFactory(uuid=job_uuid)
         handle_events_job_statues(job_state.to_dict())
         assert ExperimentJobStatus.objects.count() == 2

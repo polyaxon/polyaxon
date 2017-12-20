@@ -66,8 +66,8 @@ class TestSpawner(BaseTest):
 
         # Create a job with a specific uuid
         labels = status_raw_event_with_conditions['object']['metadata']['labels']
-        ExperimentJobFactory(uuid=labels['job_id'])
-        job = ExperimentJob.objects.get(uuid=labels['job_id'])
+        ExperimentJobFactory(uuid=labels['job_uuid'])
+        job = ExperimentJob.objects.get(uuid=labels['job_uuid'])
         update_job_containers(status_raw_event_with_conditions['object'],
                               settings.JOB_CONTAINER_NAME)
         # Assert now it has started monitoring the container
