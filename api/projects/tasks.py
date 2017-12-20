@@ -28,4 +28,4 @@ def start_group_experiments(self, experiment_group_id):
 
     if pending_experiments:
         # Schedule another task
-        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER, max_retries=None)
