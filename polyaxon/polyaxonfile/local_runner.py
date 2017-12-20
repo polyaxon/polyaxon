@@ -11,16 +11,18 @@ import sys
 
 import time
 
-from polyaxon_schemas.polyaxonfile.specification import Specification
 from six.moves import xrange
+
 from multiprocessing import Process
 
 from tensorflow.python.platform import tf_logging as logging
 
+from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
 from polyaxon.polyaxonfile.manager import (
-    prepare_all_experiment_runs,
+    prepare_all_experiment_jobs,
     start_experiment_run,
 )
 
@@ -85,16 +87,16 @@ start_experiment_run(
         current_run[TaskType.MASTER] = p
 
 
-def run_experiment(polyaxonfile, xp):
-    plx_file = Specification.read(polyaxonfile)
+def run_experiment(spec_config, xp):
+    spec = Specification.read(spec_config)
     logging.info("running Experiment n: {}".format(xp))
-    cluster, is_distributed = plx_file.get_cluster_def_at(xp)
+    cluster, is_distributed = spec.cluster_def
     if not is_distributed:
-        start_experiment_run(plx_file, xp, TaskType.MASTER, 0, 'continuous_train_and_eval')
+        start_experiment_run(spec, xp, TaskType.MASTER, 0, 'continuous_train_and_eval')
         current_run['finished'] = True
     else:
         env = {
-            'polyaxonfile': json.dumps(polyaxonfile.get_parsed_data_at(xp)),
+            'polyaxonfile': json.dumps(spec.parsed_data),
             'task_type': TaskType.MASTER,
             'experiment_id': xp,
             'task_id': 0,
@@ -120,9 +122,9 @@ def run_experiment(polyaxonfile, xp):
 
 
 def run(polyaxonfile):
-    plx_file = Specification.read(polyaxonfile)
+    plx_file = PolyaxonFile.read(polyaxonfile)
     for xp in range(plx_file.matrix_space):
-        run_experiment(plx_file, xp)
+        run_experiment(plx_file.experiment_specs[xp], xp)
 
         while not current_run['finished']:
             check_master_process()
@@ -133,15 +135,15 @@ def run(polyaxonfile):
 
 
 def run_all(polyaxonfile):
-    plx_file = Specification.read(polyaxonfile)
+    plx_file = PolyaxonFile.read(polyaxonfile)
     for xp in range(plx_file.matrix_space):
-        xp_runs = prepare_all_experiment_runs(polyaxonfile, xp)
-        for i, xp_run in enumerate(xp_runs):
+        xp_jobs = prepare_all_experiment_jobs(plx_file.experiment_specs[xp], xp)
+        for i, xp_job in enumerate(xp_jobs):
             if i == 0:
                 schedule = 'train_and_evaluate'
             else:
                 schedule = 'train'
-            p = Process(target=getattr(xp_run, schedule))
+            p = Process(target=getattr(xp_job, schedule))
             p.start()
             jobs.append(p)
 
