@@ -28,7 +28,7 @@ def handle_events_resources(payload, persist):
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
 def handle_events_job_statues(payload):
     details = payload['details']
-    job_uuid = details['labels']['job_id']
+    job_uuid = details['labels']['job_uuid']
     logger.info('handling events status for job_uuid: {}, details: {} '.format(job_uuid, details))
 
     try:

@@ -29,7 +29,7 @@ def update_job_containers(event, job_container_name):
 
         container_id = get_container_id(container_status['container_id'])
         if container_id:
-            job_uuid = event['metadata']['labels']['job_id']
+            job_uuid = event['metadata']['labels']['job_uuid']
             if container_status['state']['running'] is not None:
                 logger.info('Monitoring (container_id, job_uuid): ({}, {})'.format(container_id,
                                                                                    job_uuid))
