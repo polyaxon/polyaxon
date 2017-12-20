@@ -126,6 +126,16 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}
       key: sidecar-container-name
+- name: POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}
+      key: sidecar-log-sleep-interval
+- name: POLYAXON_JOB_SIDECAR_PERSIST
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}
+      key: sidecar-persist
 {{- if .Values.k8s.authorisation }}
 - name: POLYAXON_K8S_AUTHORISATION
   valueFrom:

@@ -44,7 +44,7 @@ spec:
       - name: {{ .Chart.Name }}-namespace
         image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
         imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
-        args: ["python3", "api/manage.py",  "monitor_namespace", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
+        args: ["python3", "api/manage.py",  "monitor_namespace", "--log_sleep_interval={{ .Values.events.namespace.logSleepInterval }}", "--persist={{ .Values.events.namespace.persists }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -65,7 +65,7 @@ spec:
       - name: {{ .Chart.Name }}-statuses
         image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"
         imagePullPolicy: {{ .Values.events.statuses.imagePullPolicy }}
-        args: ["python3", "api/manage.py",  "monitor_statuses", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
+        args: ["python3", "api/manage.py",  "monitor_statuses", "--log_sleep_interval={{ .Values.events.statuses.logSleepInterval }}", "--persist={{ .Values.events.statuses.persists }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -86,7 +86,7 @@ spec:
       - name: {{ .Chart.Name }}-resources
         image: "{{ .Values.events.resources.image }}:{{ .Values.events.resources.imageTag }}"
         imagePullPolicy: {{ .Values.events.resources.imagePullPolicy }}
-        args: ["python3", "api/manage.py",  "monitor_resources", "--log_sleep_interval={{ .Values.events.namespace.amqpReconnectInterval }}", "--persist={{ .Values.events.namespace.amqpReconnectInterval }}"]
+        args: ["python3", "api/manage.py",  "monitor_resources", "--log_sleep_interval={{ .Values.events.resources.logSleepInterval }}", "--persist={{ .Values.events.resources.persists }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
