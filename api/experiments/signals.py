@@ -32,7 +32,7 @@ def experiment_deleted(sender, **kwargs):
     instance = kwargs['instance']
     try:
         _ = instance.experiment_group
-        scheduler.schedule_stop_experiment(instance, is_delete=True)
+        scheduler.stop_experiment(instance, is_delete=True)
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass

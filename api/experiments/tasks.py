@@ -55,7 +55,7 @@ def start_experiment(experiment_id):
     if not experiment:
         return
 
-    scheduler.schedule_start_experiment(experiment)
+    scheduler.start_experiment(experiment)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_STOP)
@@ -64,7 +64,7 @@ def stop_experiment(experiment_id):
     if not experiment:
         return
 
-    scheduler.schedule_stop_experiment(experiment)
+    scheduler.stop_experiment(experiment)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)

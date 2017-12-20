@@ -14,7 +14,7 @@ from experiments.models import ExperimentJob
 from spawner.utils.constants import ExperimentLifeCycle
 
 
-def schedule_start_experiment(experiment):
+def start_experiment(experiment):
     # Update experiment status to show that its started
     experiment.set_status(ExperimentLifeCycle.SCHEDULED)
 
@@ -32,7 +32,7 @@ def schedule_start_experiment(experiment):
                          k8s_config=settings.K8S_CONFIG,
                          namespace=settings.K8S_NAMESPACE,
                          in_cluster=True,
-                         use_sidecar=False,
+                         use_sidecar=True,
                          sidecar_config=config.get_requested_params())
     resp = spawner.start_experiment()
 
@@ -51,7 +51,7 @@ def schedule_start_experiment(experiment):
         ExperimentJob.objects.create(uuid=job_uuid, experiment=experiment, definition=ps)
 
 
-def schedule_stop_experiment(experiment, is_delete=False):
+def stop_experiment(experiment, is_delete=False):
     project = experiment.project
     group = experiment.experiment_group
     spawner = K8SSpawner(project_name=project.unique_name,
