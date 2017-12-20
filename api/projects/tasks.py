@@ -12,7 +12,7 @@ logger = logging.getLogger('polyaxon.tasks.projects')
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_START_GROUP, bind=True)
-def start_group_experiments(task, experiment_group_id):
+def start_group_experiments(self, experiment_group_id):
     try:
         experiment_group = ExperimentGroup.objects.get(id=experiment_group_id)
     except ExperimentGroup.DoesNotExist:
@@ -28,4 +28,4 @@ def start_group_experiments(task, experiment_group_id):
 
     if pending_experiments:
         # Schedule another task
-        task.apply_async(experiment_group_id, countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
