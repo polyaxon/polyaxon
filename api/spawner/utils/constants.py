@@ -169,7 +169,7 @@ class ExperimentLifeCycle(object):
         (UNKNOWN, UNKNOWN),
     )
 
-    RUNNING_STATUS = [BUILDING, STARTING, RUNNING]
+    RUNNING_STATUS = [SCHEDULED, BUILDING, STARTING, RUNNING]
     DONE_STATUS = [FAILED, DELETED, SUCCEEDED]
 
     @staticmethod
