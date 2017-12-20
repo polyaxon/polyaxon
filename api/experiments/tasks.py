@@ -64,7 +64,7 @@ def stop_experiment(experiment_id):
     if not experiment:
         return
 
-    scheduler.stop_experiment(experiment)
+    scheduler.stop_experiment(experiment, update_status=True)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)

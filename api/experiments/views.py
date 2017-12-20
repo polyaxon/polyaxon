@@ -26,8 +26,7 @@ from experiments.serializers import (
 from experiments.tasks import stop_experiment
 from libs.views import ListCreateAPIView
 from projects.models import ExperimentGroup
-from projects.permissions import check_access_project_item, get_permissible_project, \
-    IsItemProjectOwnerOrPublicReadOnly
+from projects.permissions import get_permissible_project
 
 
 class ExperimentListView(ListAPIView):

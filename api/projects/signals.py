@@ -33,4 +33,4 @@ def experiment_group_deleted(sender, **kwargs):
     """Stop all experiments before deleting the group."""
     instance = kwargs['instance']
     for experiment in instance.running_experiments:
-        scheduler.stop_experiment(experiment, is_delete=True)
+        scheduler.stop_experiment(experiment, update_status=False)
