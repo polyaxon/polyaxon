@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.db.models.signals import post_save, post_delete, pre_delete
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus
 from projects.models import ExperimentGroup
-from spawner.scheduling import schedule_stop_experiment
+from spawner import scheduler
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 from experiments.tasks import check_experiment_status, build_experiment
@@ -32,10 +32,11 @@ def experiment_deleted(sender, **kwargs):
     instance = kwargs['instance']
     try:
         _ = instance.experiment_group
-        schedule_stop_experiment(instance, is_delete=True)
+        scheduler.schedule_stop_experiment(instance, is_delete=True)
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass
+
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
 def new_experiment_job(sender, **kwargs):
