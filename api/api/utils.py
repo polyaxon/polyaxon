@@ -31,12 +31,13 @@ class SettingConfig(object):
         config = reader.read(config_values)
         return cls(**config) if config else None
 
-    def get_requested_params(self, include_secrets=False):
+    def get_requested_params(self, include_secrets=False, to_str=False):
         params = {}
         for key in self._requested_keys:
             if not include_secrets and key in self._secret_keys:
                 continue
-            params[key] = self._params[key]
+            value = self._params[key]
+            params[key] = '{}'.format(value) if to_str else value
         return params
 
     def get_int(self, key, is_optional=False, is_secret=False):
