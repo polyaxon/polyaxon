@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from django.conf import settings
 from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
@@ -9,14 +10,16 @@ from spawner.templates import constants
 from spawner.templates import pods
 
 
-def get_labels(name, project, role=None):
-    labels = {'app': name, 'project': project}
+def get_labels(name, project_name, project_uuid, role=None, type=None):
+    labels = {'app': name, 'project_name': project_name, 'project_uuid': project_uuid}
     if role:
         labels['role'] = role
+    if type:
+        labels['type'] = type
     return labels
 
 
-def get_project_pod_spec(project,
+def get_project_pod_spec(project_uuid,
                          name,
                          volume_mounts,
                          volumes,
@@ -39,22 +42,23 @@ def get_project_pod_spec(project,
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
 
-    container_name = constants.POD_CONTAINER_PROJECT_NAME.format(project=project, name=name)
+    container_name = constants.POD_CONTAINER_PROJECT_NAME.format(
+        project_uuid=project_uuid, name=name)
     containers = [client.V1Container(name=container_name,
-                                     image=constants.JOB_DOCKER_NAME,
+                                     image=settings.JOB_DOCKER_NAME,
                                      command=command,
                                      args=args,
                                      ports=ports,
                                      env=env_vars,
                                      resources=pods.get_resources(resources),
                                      volume_mounts=volume_mounts)]
-    return client.V1PodSpec(restart_policy=restart_policy, containers=containers,
-                            volumes=volumes)
+    return client.V1PodSpec(restart_policy=restart_policy, containers=containers, volumes=volumes)
 
 
 def get_deployment_spec(namespace,
                         name,
-                        project,
+                        project_name,
+                        project_uuid,
                         volume_mounts,
                         volumes,
                         command,
@@ -62,13 +66,18 @@ def get_deployment_spec(namespace,
                         ports,
                         resources=None,
                         role=None,
+                        type=None,
                         replicas=1):
-    labels = get_labels(name, project, role)
+    labels = get_labels(name=name,
+                        project_name=project_name,
+                        project_uuid=project_uuid,
+                        role=role,
+                        type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(project=project, name=name),
+        name=constants.DEPLOYMENT_NAME.format(name=name, project_uuid=project_uuid),
         labels=labels,
         namespace=namespace)
-    pod_spec = get_project_pod_spec(project=project,
+    pod_spec = get_project_pod_spec(project_uuid=project_uuid,
                                     name=name,
                                     volume_mounts=volume_mounts,
                                     volumes=volumes,
@@ -82,7 +91,8 @@ def get_deployment_spec(namespace,
 
 def get_deployment(namespace,
                    name,
-                   project,
+                   project_name,
+                   project_uuid,
                    volume_mounts,
                    volumes,
                    command,
@@ -90,15 +100,21 @@ def get_deployment(namespace,
                    ports,
                    resources=None,
                    role=None,
+                   type=None,
                    replicas=1):
-    labels = get_labels(name, project, role)
+    labels = get_labels(name=name,
+                        project_name=project_name,
+                        project_uuid=project_uuid,
+                        role=role,
+                        type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(project=project, name=name),
+        name=constants.DEPLOYMENT_NAME.format(project_uuid=project_uuid, name=name),
         labels=labels,
         namespace=namespace)
     spec = get_deployment_spec(namespace=namespace,
                                name=name,
-                               project=project,
+                               project_name=project_name,
+                               project_uuid=project_uuid,
                                volume_mounts=volume_mounts,
                                volumes=volumes,
                                command=command,
@@ -106,6 +122,7 @@ def get_deployment(namespace,
                                ports=ports,
                                resources=resources,
                                role=role,
+                               type=type,
                                replicas=replicas)
     return client.AppsV1beta1Deployment(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
                                         kind=k8s_constants.K8S_DEPLOYMENT_KIND,
