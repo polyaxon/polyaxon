@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import json
 import logging
 
+from django.conf import settings
 from kubernetes import client
 from kubernetes.client.rest import ApiException
 
@@ -12,7 +13,7 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.settings import ClusterConfig
 from polyaxon_schemas.utils import TaskType
 
 from spawner.templates import config_maps
@@ -27,10 +28,13 @@ logger = logging.getLogger('polyaxon.tasks.projects')
 
 class K8SSpawner(K8SManager):
     def __init__(self,
+                 project_name,
+                 experiment_name,
                  project_uuid,
                  experiment_uuid,
                  spec_config,
                  experiment_group_uuid=None,
+                 experiment_group_name=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -43,16 +47,22 @@ class K8SSpawner(K8SManager):
                  ports=None,
                  use_sidecar=False,
                  sidecar_config=None,
-                 sidecar_args_fn=None):
+                 sidecar_args_fn=None,
+                 persist=False):
         self.specification = Specification.read(spec_config)
+        self.project_name = project_name
+        self.experiment_group_name = experiment_group_name
+        self.experiment_name = experiment_name
         self.project_uuid = project_uuid
         self.experiment_group_uuid = experiment_group_uuid
         self.experiment_uuid = experiment_uuid
-        self.has_data_volume = False
-        self.has_logs_volume = False
         self.pod_manager = pods.PodManager(namespace=namespace,
-                                           project=self.project_name,
-                                           experiment=experiment_uuid,
+                                           project_name=self.project_name,
+                                           experiment_group_name=self.experiment_group_name,
+                                           experiment_name=self.experiment_name,
+                                           project_uuid=self.project_uuid,
+                                           experiment_group_uuid=self.experiment_group_uuid,
+                                           experiment_uuid=experiment_uuid,
                                            job_container_name=job_container_name,
                                            job_docker_image=job_docker_image,
                                            sidecar_container_name=sidecar_container_name,
@@ -63,6 +73,7 @@ class K8SSpawner(K8SManager):
                                            use_sidecar=use_sidecar,
                                            sidecar_config=sidecar_config)
         self.sidecar_args_fn = sidecar_args_fn or constants.SIDECAR_ARGS_FN
+        self.persist = persist
 
         super(K8SSpawner, self).__init__(k8s_config=k8s_config,
                                          namespace=namespace,
@@ -72,10 +83,6 @@ class K8SSpawner(K8SManager):
     def spec(self):
         return self.specification
 
-    @cached_property
-    def project_name(self):
-        return self.spec.project.name.replace('_', '-')
-
     def _create_pod(self,
                     task_type,
                     task_idx,
@@ -84,12 +91,9 @@ class K8SSpawner(K8SManager):
                     sidecar_args_fn=None,
                     resources=None,
                     restart_policy='Never'):
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
-        sidecar_args = sidecar_args_fn(container_job_name=self.pod_manager.job_container_name,
-                                       pod_id=task_name)
-        labels = self.pod_manager.get_labels(task_type=task_type,
-                                             task_idx=task_idx,
-                                             task_name=task_name)
+        job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
+        sidecar_args = sidecar_args_fn(pod_id=job_name)
+        labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
         volumes, volume_mounts = self.get_pod_volumes()
         pod = self.pod_manager.get_pod(task_type=task_type,
@@ -101,22 +105,22 @@ class K8SSpawner(K8SManager):
                                        sidecar_args=sidecar_args,
                                        resources=resources,
                                        restart_policy=restart_policy)
-        pod_resp, _ = self.create_or_update_pod(name=task_name, data=pod)
+        pod_resp, _ = self.create_or_update_pod(name=job_name, data=pod)
 
         service = services.get_service(namespace=self.namespace,
-                                       name=task_name,
+                                       name=job_name,
                                        labels=labels,
                                        ports=self.pod_manager.ports)
-        service_resp, _ = self.create_or_update_service(name=task_name, data=service)
+        service_resp, _ = self.create_or_update_service(name=job_name, data=service)
         return {
             'pod': pod_resp.to_dict(),
             'service': service_resp.to_dict()
         }
 
     def _delete_pod(self, task_type, task_idx):
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
-        self.delete_pod(name=task_name)
-        self.delete_service(name=task_name)
+        job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
+        self.delete_pod(name=job_name)
+        self.delete_service(name=job_name)
 
     def create_master(self, resources=None):
         args = self.get_pod_args(task_type=TaskType.MASTER,
@@ -175,25 +179,31 @@ class K8SSpawner(K8SManager):
         name = 'tensorboard'
         ports = [6006]
         volumes, volume_mounts = self.get_pod_volumes()
-        logs_path = persistent_volumes.get_vol_path(volume=constants.LOGS_VOLUME,
+        logs_path = persistent_volumes.get_vol_path(volume=constants.OUTPUTS_VOLUME,
                                                     run_type=self.spec.run_type)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             name=name,
-            project=self.project_name,
+            project_name=self.project_name,
+            project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
             volumes=volumes,
             command=["/bin/sh", "-c"],
             args=["tensorboard --logdir={} --port=6006".format(logs_path)],
             ports=ports,
             role='dashboard')
-        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.project_name, name=name)
+        deployment_name = constants.DEPLOYMENT_NAME.format(
+            project_uuid=self.project_uuid, name=name)
 
         self.create_or_update_deployment(name=deployment_name, data=deployment)
         service = services.get_service(
             namespace=self.namespace,
             name=deployment_name,
-            labels=deployments.get_labels(name=name, project=self.project_name, role='dashboard'),
+            labels=deployments.get_labels(name=name,
+                                          project_name=self.project_name,
+                                          project_uuid=self.project_uuid,
+                                          role=settings.ROLE_LABELS_DASHBOARD,
+                                          type=settings.TYPE_LABELS_EXPERIMENT),
             ports=ports,
             service_type='LoadBalancer')
 
@@ -201,22 +211,25 @@ class K8SSpawner(K8SManager):
 
     def delete_tensorboard_deployment(self):
         name = 'tensorboard'
-        deployment_name = constants.DEPLOYMENT_NAME.format(project=self.project_name, name=name)
+        deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
+                                                           name=name)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
 
     def get_pod_volumes(self):
         volumes = []
         volume_mounts = []
-        if self.has_data_volume:
-            volumes.append(pods.get_volume(volume=constants.DATA_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(volume=constants.DATA_VOLUME,
-                                                       run_type=self.spec.run_type))
+        volumes.append(pods.get_volume(volume=constants.DATA_VOLUME,
+                                       persist=self.persist,
+                                       volume_mount=settings.DATA_ROOT))
+        volume_mounts.append(pods.get_volume_mount(volume=constants.DATA_VOLUME,
+                                                   volume_mount=settings.DATA_ROOT))
 
-        if self.has_logs_volume:
-            volumes.append(pods.get_volume(volume=constants.LOGS_VOLUME))
-            volume_mounts.append(pods.get_volume_mount(volume=constants.LOGS_VOLUME,
-                                                       run_type=self.spec.run_type))
+        volumes.append(pods.get_volume(volume=constants.OUTPUTS_VOLUME,
+                                       persist=self.persist,
+                                       volume_mount=settings.OUTPUTS_ROOT))
+        volume_mounts.append(pods.get_volume_mount(volume=constants.OUTPUTS_VOLUME,
+                                                   volume_mount=settings.OUTPUTS_ROOT))
         return volumes, volume_mounts
 
     def has_volume(self, volume):
@@ -227,10 +240,12 @@ class K8SSpawner(K8SManager):
         return persistent_volume is not None and volume_claime is not None
 
     def check_data_volume(self):
-        self.has_data_volume = self.has_volume(constants.DATA_VOLUME)
+        if not self.has_volume(constants.DATA_VOLUME):
+            logger.warning('Unable to find a data volume to mount to job.')
 
-    def check_logs_volume(self):
-        self.has_data_volume = self.has_volume(constants.LOGS_VOLUME)
+    def check_outputs_volume(self):
+        if not self.has_volume(constants.OUTPUTS_VOLUME):
+            logger.warning('Unable to find a outputs volume to mount to job.')
 
     def _create_volume(self, volume):
         vol_name = constants.VOLUME_NAME.format(vol_name=volume)
@@ -281,32 +296,22 @@ class K8SSpawner(K8SManager):
                 logger.debug('Volume claim `{}` was not found'.format(volc_name))
 
     def create_cluster_config_map(self):
-        name = constants.CONFIG_MAP_NAME.format(project=self.project_name,
-                                                experiment=self.experiment_uuid,
-                                                role='cluster')
+        name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         config_map = config_maps.get_cluster_config_map(
             namespace=self.namespace,
-            project=self.project_name,
-            experiment=self.experiment_uuid,
-            cluster_def=self.spec.get_cluster().to_dict())
+            project_name=self.project_name,
+            experiment_group_name=self.experiment_group_name,
+            experiment_name=self.experiment_name,
+            project_uuid=self.project_uuid,
+            experiment_group_uuid=self.experiment_group_uuid,
+            experiment_uuid=self.experiment_uuid,
+            cluster_def=self.get_cluster().to_dict())
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)
 
     def delete_cluster_config_map(self):
-        name = constants.CONFIG_MAP_NAME.format(project=self.project_name,
-                                                experiment=self.experiment_uuid,
-                                                role='cluster')
+        name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         self.delete_config_map(name, reraise=True)
-
-    @cached_property
-    def project_name(self):
-        if self.experiment_group_uuid:
-            return '{}-id{}-group{}'.format(self.spec.project.name.replace('_', '-'),
-                                            self.project_uuid,
-                                            self.experiment_group_uuid)
-        else:
-            return '{}-id{}'.format(self.spec.project.name.replace('_', '-'),
-                                    self.project_uuid)
 
     def get_pod_args(self, task_type, task_idx, schedule):
         spec_data = json.dumps(self.spec.parsed_data)
@@ -342,7 +347,7 @@ class K8SSpawner(K8SManager):
 
     def start_experiment(self):
         self.check_data_volume()
-        self.check_logs_volume()
+        self.check_outputs_volume()
         self.create_cluster_config_map()
         master_resp = self.create_master(resources=self.spec.master_resources)
         worker_resp = self.create_worker()
@@ -360,14 +365,39 @@ class K8SSpawner(K8SManager):
         self.delete_ps()
 
     def get_task_phase(self, task_type, task_idx):
-        self.pod_manager.set_experiment(self.experiment_uuid)
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
-        return self.k8s_api.read_namespaced_pod_status(task_name, self.namespace).status.phase
+        job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
+        return self.k8s_api.read_namespaced_pod_status(job_name, self.namespace).status.phase
 
     def get_task_log(self, task_type, task_idx, **kwargs):
-        self.pod_manager.set_experiment(self.experiment_uuid)
-        task_name = self.pod_manager.get_task_name(task_type=task_type, task_idx=task_idx)
-        return self.k8s_api.read_namespaced_pod_log(task_name, self.namespace, **kwargs)
+        job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
+        return self.k8s_api.read_namespaced_pod_log(job_name, self.namespace, **kwargs)
 
     def get_experiment_phase(self):
         return self.get_task_phase(task_type=TaskType.MASTER, task_idx=0)
+
+    def get_cluster(self, port=constants.DEFAULT_PORT):
+        cluster_def, is_distributed = self.spec.cluster_def
+
+        def get_address(host):
+            return '{}:{}'.format(host, port)
+
+        job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
+        cluster_config = {
+            TaskType.MASTER: [get_address(job_name)]
+        }
+
+        workers = []
+        for i in range(cluster_def.get(TaskType.WORKER, 0)):
+            job_name = self.pod_manager.get_job_name(task_type=TaskType.WORKER, task_idx=i)
+            workers.append(get_address(job_name))
+
+        cluster_config[TaskType.WORKER] = workers
+
+        ps = []
+        for i in range(cluster_def.get(TaskType.PS, 0)):
+            job_name = self.pod_manager.get_job_name(task_type=TaskType.PS, task_idx=i)
+            ps.append(get_address(job_name))
+
+        cluster_config[TaskType.PS] = ps
+
+        return ClusterConfig.from_dict(cluster_config)
