@@ -14,8 +14,7 @@ from spawner.templates import constants
 
 STORAGE_BY_VOLUME = {
     constants.DATA_VOLUME: '1Gi',
-    constants.POLYAXON_FILES_VOLUME: '1Mi',
-    constants.LOGS_VOLUME: '1Mi',
+    constants.OUTPUTS_VOLUME: '1Gi',
 }
 
 

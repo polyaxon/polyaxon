@@ -32,17 +32,24 @@ def get_gpu_volumes():
     ]
 
 
-def get_volume_mount(volume, run_type):
+def get_volume_mount(volume, volume_mount=None):
     volume_name = constants.VOLUME_NAME.format(vol_name=volume)
-    return client.V1VolumeMount(name=volume_name,
-                                mount_path=get_vol_path(volume, run_type))
+    return client.V1VolumeMount(name=volume_name, mount_path=volume_mount)
 
 
-def get_volume(volume):
+def get_volume(volume, persist=False, volume_mount=None):
     vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-    volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
-    pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=volc_name)
-    return client.V1Volume(name=vol_name, persistent_volume_claim=pv_claim)
+    if persist:
+        volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
+        pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=volc_name)
+        return client.V1Volume(name=vol_name, persistent_volume_claim=pv_claim)
+    elif volume_mount:
+        return client.V1Volume(
+            name=vol_name,
+            host_path=client.V1HostPathVolumeSource(path=volume_mount))
+    else:
+        empty_dir = client.V1EmptyDirVolumeSource()
+        return client.V1Volume(name=vol_name, empty_dir=empty_dir)
 
 
 def get_resources(resources):
@@ -81,8 +88,12 @@ def get_resources(resources):
 class PodManager(object):
     def __init__(self,
                  namespace,
-                 project,
-                 experiment=None,
+                 project_name,
+                 experiment_group_name,
+                 experiment_name,
+                 project_uuid,
+                 experiment_group_uuid,
+                 experiment_uuid,
                  job_container_name=None,
                  job_docker_image=None,
                  sidecar_container_name=None,
@@ -93,8 +104,12 @@ class PodManager(object):
                  use_sidecar=False,
                  sidecar_config=None):
         self.namespace = namespace
-        self.project = project
-        self.experiment = experiment
+        self.project_name = project_name
+        self.experiment_group_name = experiment_group_name
+        self.experiment_name = experiment_name
+        self.project_uuid = project_uuid
+        self.experiment_group_uuid = experiment_group_uuid
+        self.experiment_uuid = experiment_uuid
         self.job_container_name = job_container_name or settings.JOB_CONTAINER_NAME
         self.job_docker_image = job_docker_image or settings.JOB_DOCKER_NAME
         self.sidecar_container_name = sidecar_container_name or settings.JOB_SIDECAR_CONTAINER_NAME
@@ -109,28 +124,21 @@ class PodManager(object):
                 'The `sidecar_config` must correspond to the sidecar docker image used.')
         self.sidecar_config = sidecar_config
 
-    def get_task_name(self, task_type, task_idx):
-        return constants.TASK_NAME.format(project=self.project,
-                                          experiment=self.experiment,
-                                          task_type=task_type,
-                                          task_idx=task_idx)
+    def get_job_name(self, task_type, task_idx):
+        return constants.JOB_NAME.format(task_type=task_type,
+                                         task_idx=task_idx,
+                                         experiment_uuid=self.experiment_uuid)
 
-    def get_job_id(self, task_name):
-        return uuid.uuid5(uuid.NAMESPACE_DNS, task_name).hex
-
-    def set_experiment(self, experiment):
-        self.experiment = experiment
+    def get_job_uuid(self, task_type, task_idx):
+        name = self.get_job_name(task_type, task_idx)
+        return uuid.uuid5(uuid.NAMESPACE_DNS, name).hex
 
     def get_cluster_env_var(self, task_type):
-        name = constants.CONFIG_MAP_NAME.format(project=self.project,
-                                                experiment=self.experiment,
-                                                role='cluster')
+        name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         config_map_key_ref = client.V1ConfigMapKeySelector(name=name, key=task_type)
         value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-        key_name = constants.CONFIG_MAP_KEY_NAME.format(project=self.project.replace('-', '_'),
-                                                        experiment=self.experiment,
-                                                        role='cluster',
-                                                        task_type=task_type)
+        key_name = constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(
+            experiment_uuid=self.experiment_uuid, task_type=task_type)
         return client.V1EnvVar(name=key_name, value_from=value)
 
     def get_pod_container(self,
@@ -159,11 +167,11 @@ class PodManager(object):
 
     def get_sidecar_container(self, task_type, task_idx, args, resources=None):
         """Pod sidecar container for task logs."""
-        task_name = self.get_task_name(task_type=task_type, task_idx=task_idx)
+        job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
 
         env_vars = [
             client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
-            client.V1EnvVar(name='POLYAXON_POD_ID', value=task_name),
+            client.V1EnvVar(name='POLYAXON_POD_ID', value=job_name),
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
         ]
         for k, v in six.iteritems(self.sidecar_config):
@@ -210,15 +218,20 @@ class PodManager(object):
                                 containers=containers,
                                 volumes=volumes)
 
-    def get_labels(self, task_type, task_idx, task_name):
-        return {'project': self.project,
-                'experiment': '{}'.format(self.experiment),
-                'task_type': task_type,
-                'task_idx': '{}'.format(task_idx),
-                'task': task_name,
-                'job_id': self.get_job_id(task_name),
-                'role': self.role_label,
-                'type': self.type_label}
+    def get_labels(self, task_type, task_idx):
+        labels = {'project_name': self.project_name,
+                  'experiment_group_name': self.experiment_group_name,
+                  'experiment_name': self.experiment_name,
+                  'project_uuid': self.project_uuid,
+                  'experiment_uuid': self.experiment_uuid,
+                  'task_type': task_type,
+                  'task_idx': '{}'.format(task_idx),
+                  'job_uuid': self.get_job_uuid(task_type, task_idx),
+                  'role': self.role_label,
+                  'type': self.type_label}
+        if self.experiment_group_uuid:
+            labels['experiment_group_uuid'] = self.experiment_group_uuid
+        return labels
 
     def get_pod(self,
                 task_type,
@@ -230,11 +243,9 @@ class PodManager(object):
                 sidecar_args=None,
                 resources=None,
                 restart_policy=None):
-        task_name = self.get_task_name(task_type=task_type, task_idx=task_idx)
-        labels = self.get_labels(task_type=task_type,
-                                 task_idx=task_idx,
-                                 task_name=task_name)
-        metadata = client.V1ObjectMeta(name=task_name, labels=labels, namespace=self.namespace)
+        job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
+        labels = self.get_labels(task_type=task_type, task_idx=task_idx)
+        metadata = client.V1ObjectMeta(name=job_name, labels=labels, namespace=self.namespace)
 
         pod_spec = self.get_task_pod_spec(
             task_type=task_type,
