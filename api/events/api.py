@@ -23,6 +23,7 @@ from projects.permissions import has_project_permissions
 logger = logging.getLogger('monitors.api')
 
 SOCKET_SLEEP = 1
+MAX_RETRIES = 15
 
 app = Sanic(__name__)
 
@@ -150,7 +151,7 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
-    _get_job(experiment, job_uuid)
+    job = _get_job(experiment, job_uuid)
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
         logger.info('Job uuid `{}` logs is now being monitored'.format(job_uuid))
@@ -169,8 +170,11 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
     # add socket manager
     request.app.job_logs_consumer.add_socket(ws)
     should_quite = False
+    no_message_retries = 0
     while True:
+        no_message_retries += 1
         for message in request.app.job_logs_consumer.get_messages():
+            no_message_retries = 0
             disconnected_ws = set()
             for _ws in request.app.job_logs_consumer.ws:
                 try:
@@ -178,6 +182,12 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
                 except ConnectionClosed:
                     disconnected_ws.add(_ws)
             request.app.job_logs_consumer.remove_sockets(disconnected_ws)
+
+        # After trying a couple of time, we must check the status of the experiment
+        if no_message_retries > MAX_RETRIES and job.is_done:
+            logger.info('removing all socket because the job `{}` is done'.format(
+                job_uuid))
+            request.app.job_logs_consumer.ws = set([])
 
         # Just to check if connection closed
         if ws._connection_lost:
@@ -220,8 +230,11 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
     # add socket manager
     request.app.experiment_logs_consumer.add_socket(ws)
     should_quite = False
+    no_message_retries = 0
     while True:
+        no_message_retries += 1
         for message in request.app.experiment_logs_consumer.get_messages():
+            no_message_retries = 0
             disconnected_ws = set()
             for _ws in request.app.experiment_logs_consumer.ws:
                 try:
@@ -229,6 +242,12 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
                 except ConnectionClosed:
                     disconnected_ws.add(_ws)
             request.app.experiment_logs_consumer.remove_sockets(disconnected_ws)
+
+        # After trying a couple of time, we must check the status of the experiment
+        if no_message_retries > MAX_RETRIES and experiment.is_done:
+            logger.info('removing all socket because the experiment `{}` is done'.format(
+                experiment_uuid))
+            request.app.experiment_logs_consumer.ws = set([])
 
         # Just to check if connection closed
         if ws._connection_lost:
