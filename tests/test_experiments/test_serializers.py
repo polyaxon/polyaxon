@@ -24,9 +24,10 @@ class TestExperimentSerializer(BaseTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
-    expected_keys = {'uuid', 'user', 'sequence', 'description', 'created_at', 'updated_at',
-                     'last_status', 'started_at', 'finished_at', 'content', 'config',
-                     'is_clone', 'original', 'project', 'experiment_group', 'num_jobs', }
+    expected_keys = {
+        'uuid', 'user', 'unique_name', 'sequence', 'description', 'created_at', 'updated_at',
+        'last_status', 'started_at', 'finished_at', 'content', 'config',
+        'is_clone', 'original', 'project', 'experiment_group', 'num_jobs', }
 
     def setUp(self):
         super().setUp()
@@ -104,6 +105,7 @@ class TestExperimentDetailSerializer(BaseTest):
     factory_class = ExperimentFactory
     expected_keys = {
         'uuid',
+        'unique_name',
         'created_at',
         'updated_at',
         'project',

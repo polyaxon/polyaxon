@@ -18,7 +18,8 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentGroup
         fields = (
-            'uuid', 'user', 'sequence', 'description', 'content', 'project', 'num_experiments',)
+            'uuid', 'unique_name', 'user', 'sequence', 'description', 'content', 'project',
+            'num_experiments',)
 
     def get_project(self, obj):
         return obj.project.uuid.hex
@@ -51,8 +52,9 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('uuid', 'user', 'name', 'description', 'created_at', 'updated_at',
-                  'is_public', 'has_code', 'num_experiment_groups', 'num_experiments')
+        fields = (
+            'uuid', 'user', 'name', 'unique_name', 'description', 'created_at', 'updated_at',
+            'is_public', 'has_code', 'num_experiment_groups', 'num_experiments')
 
     def get_user(self, obj):
         return obj.user.username
