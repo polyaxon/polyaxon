@@ -29,6 +29,9 @@ class TestProjectConfigs(TestCase):
         config = ProjectConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
+        config_dict.pop('description')
+        assert config.to_light_dict() == config_dict
+
     def test_project_experiments_and_groups_config(self):
         uuid_value = uuid.uuid4().hex
         config_dict = {'name': 'test',
@@ -45,6 +48,9 @@ class TestProjectConfigs(TestCase):
         config = ProjectConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        config_dict.pop('description')
+        assert_equal_dict(config_dict, config.to_light_dict())
+
     def test_experiment_group_config(self):
         uuid_value = uuid.uuid4().hex
         config_dict = {'sequence': 1,
@@ -59,3 +65,6 @@ class TestProjectConfigs(TestCase):
                                             project=uuid_value).to_dict()]}
         config = ExperimentGroupConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+        config_dict.pop('content')
+        assert_equal_dict(config_dict, config.to_light_dict())

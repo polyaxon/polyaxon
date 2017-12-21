@@ -28,6 +28,7 @@ class ExperimentJobSchema(Schema):
 class ExperimentJobConfig(BaseConfig):
     SCHEMA = ExperimentJobSchema
     IDENTIFIER = 'ExperimentJob'
+    REDUCED_LIGHT_ATTRIBUTES = ['definition']
 
     def __init__(self, uuid, experiment, created_at, definition):
         self.uuid = uuid
@@ -69,6 +70,7 @@ class ExperimentConfig(BaseConfig):
     IDENTIFIER = 'Experiment'
     REDUCED_ATTRIBUTES = ['user', 'sequence', 'description', 'config', 'jobs', 'content',
                           'started_at', 'finished_at', 'is_clone']
+    REDUCED_LIGHT_ATTRIBUTES = ['description', 'config', 'content']
 
     def __init__(self,
                  sequence=None,
@@ -154,6 +156,7 @@ class ExperimentJobStatusConfig(BaseConfig):
     SCHEMA = ExperimentJobStatusSchema
     IDENTIFIER = 'ExperimentJobStatus'
     REDUCED_ATTRIBUTES = ['message', 'details']
+    REDUCED_LIGHT_ATTRIBUTES = ['details']
 
     def __init__(self, uuid, job, created_at, status, message=None, details=None):
         self.uuid = uuid

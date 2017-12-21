@@ -17,6 +17,14 @@ class BaseConfig(object):
     SCHEMA = None
     IDENTIFIER = None
     REDUCED_ATTRIBUTES = []  # Attribute to remove in the reduced form if they are null.
+    REDUCED_LIGHT_ATTRIBUTES = []
+
+    def to_light_dict(self):
+        obj_dict = self.to_dict()
+        for attr in self.REDUCED_LIGHT_ATTRIBUTES:
+            obj_dict.pop(attr, None)
+
+        return obj_dict
 
     def to_dict(self):
         return self.obj_to_dict(self)

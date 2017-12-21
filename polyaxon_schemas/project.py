@@ -37,6 +37,7 @@ class ExperimentGroupConfig(BaseConfig):
     IDENTIFIER = 'experiment_group'
     REDUCED_ATTRIBUTES = [
         'uuid', 'sequence', 'user', 'project', 'experiments', 'description', 'created_at']
+    REDUCED_LIGHT_ATTRIBUTES = ['description', 'content']
 
     def __init__(self,
                  sequence=None,
@@ -89,6 +90,7 @@ class ProjectConfig(BaseConfig):
     IDENTIFIER = 'project'
     REDUCED_ATTRIBUTES = [
         'user', 'uuid', 'description', 'experiments', 'experiment_groups', 'created_at']
+    REDUCED_LIGHT_ATTRIBUTES = ['description']
 
     def __init__(self,
                  name,

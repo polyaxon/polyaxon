@@ -25,10 +25,18 @@ class TestExperimentConfigs(TestCase):
             'project': uuid.uuid4().hex,
             'group': uuid.uuid4().hex,
             'last_status': 'Running',
+            'description': 'description',
+            'content': 'content',
+            'config': {'k': 'v'},
             'num_jobs': 1,
         }
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+        config_dict.pop('description')
+        config_dict.pop('content')
+        config_dict.pop('config')
+        assert config.to_light_dict() == config_dict
 
     def test_experiment_with_jobs_config(self):
         config_dict = {'sequence': 2,
@@ -57,6 +65,11 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('created_at')
         assert config_to_dict == config_dict
 
+        config_dict.pop('definition')
+        config_to_dict = config.to_light_dict()
+        config_to_dict.pop('created_at')
+        assert config_to_dict == config_dict
+
     def test_experiment_status_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
@@ -77,6 +90,11 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_dict()
         config_to_dict.pop('created_at')
         config_dict.pop('created_at')
+        assert config_to_dict == config_dict
+
+        config_to_dict = config.to_light_dict()
+        config_to_dict.pop('created_at')
+        config_dict.pop('details', '')
         assert config_to_dict == config_dict
 
     @staticmethod
