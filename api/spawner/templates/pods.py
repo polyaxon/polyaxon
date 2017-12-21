@@ -137,8 +137,7 @@ class PodManager(object):
         name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         config_map_key_ref = client.V1ConfigMapKeySelector(name=name, key=task_type)
         value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-        key_name = constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(
-            experiment_uuid=self.experiment_uuid, task_type=task_type)
+        key_name = constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(task_type=task_type)
         return client.V1EnvVar(name=key_name, value_from=value)
 
     def get_pod_container(self,
