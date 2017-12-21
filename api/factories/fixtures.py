@@ -54,6 +54,9 @@ experiment_group_spec_content_2_xps = """---
     project:
       name: project1
       
+    settings:
+      concurrent_experiments: 2
+      
     matrix:
       lr:
         values: [0.01, 0.1]

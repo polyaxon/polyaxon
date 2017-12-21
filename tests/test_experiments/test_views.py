@@ -158,7 +158,8 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        self.experiment_group = ExperimentGroupFactory(content=content)
+        with patch('projects.tasks.start_group_experiments.retry') as _:
+            self.experiment_group = ExperimentGroupFactory(content=content)
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
                                                              self.experiment_group.project.user,
@@ -306,7 +307,9 @@ class TestExperimentDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
-        resp = self.auth_client.delete(self.url)
+        with patch('spawner.scheduler.stop_experiment') as mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert ExperimentJob.objects.count() == 0
@@ -375,7 +378,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
         last_object = self.model_class.objects.last()
         assert last_object.status == ExperimentLifeCycle.CREATED
 
-        data = {'status': ExperimentLifeCycle.SUCCEEDED}
+        data = {'status': ExperimentLifeCycle.RUNNING}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 2

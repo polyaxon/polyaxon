@@ -179,7 +179,9 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
-        resp = self.auth_client.delete(self.url)
+        with patch('spawner.scheduler.stop_experiment') as mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert mock_stop.call_count == 4
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert ExperimentGroup.objects.count() == 0
@@ -209,8 +211,11 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         self.other_url = '/{}/{}/{}/groups/'.format(API_V1,
                                                     self.other_project.user.username,
                                                     self.other_project.name)
-        self.objects = [self.factory_class(project=self.project)
-                        for _ in range(self.num_objects)]
+
+        with patch('repos.dockerize.build_experiment') as _:
+            with patch('spawner.scheduler.start_experiment') as _:
+                self.objects = [self.factory_class(project=self.project)
+                                for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
         # Other objects
         self.other_object = self.factory_class(project=self.other_project)
@@ -275,7 +280,7 @@ model:
           activation: relu
           kernel_initializer: Ones"""
 
-        data = {'content': content, 'name': 'new-deep'}
+        data = {'content': content, 'description': 'new-deep'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         assert self.queryset.count() == self.num_objects
@@ -289,6 +294,9 @@ version: 1
 project:
   name: project1
   
+settings:
+    concurrent_experiments: 3
+    
 matrix:
   lr:
     values: [0.1, 0.2, 0.3]
@@ -306,7 +314,7 @@ model:
           activation: relu
           kernel_initializer: Ones"""
 
-        data = {'content': content, 'name': 'new-deep'}
+        data = {'content': content, 'description': 'new-deep'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1
