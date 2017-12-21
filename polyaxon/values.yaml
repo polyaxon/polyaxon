@@ -33,7 +33,7 @@ email:
   use_tls: false
 
 intervals:  # in seconds
-  experiments_scheduler: 5
+  experiments_scheduler: 60
   clusters_update_system_info: 150
   clusters_update_system_nodes: 150
 
