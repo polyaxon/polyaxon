@@ -25,8 +25,8 @@ class TestExperimentSerializer(BaseTest):
     model_class = Experiment
     factory_class = ExperimentFactory
     expected_keys = {'uuid', 'user', 'sequence', 'description', 'created_at', 'updated_at',
-                     'last_status', 'started_at', 'finished_at', 'is_clone', 'original',
-                     'project', 'experiment_group', 'num_jobs', }
+                     'last_status', 'started_at', 'finished_at', 'content', 'config',
+                     'is_clone', 'original', 'project', 'experiment_group', 'num_jobs', }
 
     def setUp(self):
         super().setUp()
@@ -67,7 +67,8 @@ class TestExperimentSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
+        with patch('spawner.scheduler.stop_experiment') as _:
+            ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
@@ -110,6 +111,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'last_status',
         'description',
         'experiment_group',
+        'content',
         'config',
         'jobs',
         'started_at',
@@ -161,7 +163,8 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
+        with patch('spawner.scheduler.stop_experiment') as _:
+            ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
