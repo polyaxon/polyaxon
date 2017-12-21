@@ -14,7 +14,7 @@ from libs.redis_db import RedisToStream
 from events.tasks import handle_events_job_logs
 from spawner.utils.constants import PodLifeCycle
 
-logger = logging.getLogger('monitors.sidecar')
+logger = logging.getLogger('polyaxon.monitors.sidecar')
 
 
 def run(k8s_manager, pod_id, experiment_uuid, job_uuid, container_job_name, persist):

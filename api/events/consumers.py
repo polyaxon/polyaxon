@@ -13,7 +13,7 @@ from django.conf import settings
 
 from events.socket_manager import SocketManager
 
-logger = logging.getLogger("monitors.events")
+logger = logging.getLogger("polyaxon.monitors.events")
 
 
 class Consumer(SocketManager):

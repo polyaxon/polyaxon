@@ -53,7 +53,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'monitors': {
+        'polyaxon.monitors': {
             'handlers': ['console', ],
             'propagate': True,
             'level': 'INFO',

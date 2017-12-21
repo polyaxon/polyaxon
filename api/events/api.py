@@ -20,7 +20,7 @@ from libs.redis_db import RedisToStream
 from projects.models import Project
 from projects.permissions import has_project_permissions
 
-logger = logging.getLogger('monitors.api')
+logger = logging.getLogger('polyaxon.monitors.api')
 
 SOCKET_SLEEP = 1
 MAX_RETRIES = 15

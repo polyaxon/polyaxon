@@ -15,7 +15,7 @@ from libs.redis_db import RedisJobContainers, RedisToStream
 from events.tasks import handle_events_resources
 from spawner.utils.constants import ContainerStatuses
 
-logger = logging.getLogger('monitors.resources')
+logger = logging.getLogger('polyaxon.monitors.resources')
 
 docker_client = docker.from_env(version="auto", timeout=10)
 
