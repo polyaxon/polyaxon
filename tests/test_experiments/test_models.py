@@ -82,7 +82,7 @@ class TestExperimentModel(BaseTest):
                                       ExperimentLifeCycle.SCHEDULED]
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
-    @mock.patch('experiments.tasks.K8SSpawner')
+    @mock.patch('spawner.scheduler.K8SSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
@@ -116,7 +116,7 @@ class TestExperimentModel(BaseTest):
 
     def test_delete_experiment_triggers_experiment_stop_mocks(self):
         experiment = ExperimentFactory()
-        with patch('experiments.tasks.stop_experiment.delay') as mock_fct:
+        with patch('spawner.scheduler.stop_experiment') as mock_fct:
             experiment.delete()
 
         assert mock_fct.call_count == 1
