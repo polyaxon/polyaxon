@@ -9,7 +9,7 @@ ENV_VAR_TEMPLATE = '{name: "{var_name}", value: "{var_value}"}'
 VOLUME_NAME = 'pv-{vol_name}'
 VOLUME_CLAIM_NAME = 'pvc-{vol_name}'
 CLUSTER_CONFIG_MAP_NAME = 'plxcluster-{experiment_uuid}'
-CLUSTER_CONFIG_MAP_KEY_NAME = 'plxcluster_{experiment_uuid}_{task_type}'
+CLUSTER_CONFIG_MAP_KEY_NAME = 'plxcluster_{task_type}'
 POD_CONTAINER_PROJECT_NAME = 'plxproject-{project_uuid}-{name}'
 DEPLOYMENT_NAME = 'plxproject-{project_uuid}-{name}'
 
