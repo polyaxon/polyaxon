@@ -301,7 +301,7 @@ class SettingsConfig(BaseConfig):
     def __init__(self,
                  logging=LoggingConfig(),
                  export_strategies=None,
-                 run_type=RunTypes.LOCAL,
+                 run_type=RunTypes.KUBERNETES,
                  concurrent_experiments=1):
         self.logging = logging
         self.export_strategies = export_strategies

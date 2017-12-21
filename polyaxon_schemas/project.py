@@ -11,6 +11,7 @@ from polyaxon_schemas.utils import UUID
 
 class ExperimentGroupSchema(Schema):
     uuid = UUID(allow_none=True)
+    unique_name = fields.Str(allow_none=True)
     sequence = fields.Int(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     description = fields.Str(allow_none=True)
@@ -36,19 +37,22 @@ class ExperimentGroupConfig(BaseConfig):
     SCHEMA = ExperimentGroupSchema
     IDENTIFIER = 'experiment_group'
     REDUCED_ATTRIBUTES = [
-        'uuid', 'sequence', 'user', 'project', 'experiments', 'description', 'created_at']
+        'uuid', 'unique_name', 'sequence', 'user', 'project', 'experiments', 'description',
+        'created_at', 'num_experiments']
     REDUCED_LIGHT_ATTRIBUTES = ['description', 'content']
 
     def __init__(self,
+                 unique_name=None,
                  sequence=None,
                  user=None,
                  description=None,
                  content=None,
                  uuid=None,
                  project=None,
-                 num_experiments=0,
+                 num_experiments=None,
                  created_at=None,
-                 experiments=None,):
+                 experiments=None):
+        self.unique_name = unique_name
         self.sequence = sequence
         self.user = user
         self.description = description
@@ -63,6 +67,7 @@ class ExperimentGroupConfig(BaseConfig):
 class ProjectSchema(Schema):
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
+    unique_name = fields.Str(allow_none=True)
     uuid = UUID(allow_none=True)
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)
@@ -89,12 +94,14 @@ class ProjectConfig(BaseConfig):
     SCHEMA = ProjectSchema
     IDENTIFIER = 'project'
     REDUCED_ATTRIBUTES = [
-        'user', 'uuid', 'description', 'experiments', 'experiment_groups', 'created_at']
+        'user', 'unique_name', 'uuid', 'description', 'experiments',
+        'experiment_groups', 'created_at']
     REDUCED_LIGHT_ATTRIBUTES = ['description']
 
     def __init__(self,
                  name,
                  user=None,
+                 unique_name=None,
                  uuid=None,
                  description=None,
                  is_public=True,
@@ -106,6 +113,7 @@ class ProjectConfig(BaseConfig):
                  experiment_groups=None):
         self.name = name
         self.user = user
+        self.unique_name = unique_name
         self.uuid = uuid
         self.description = description
         self.is_public = is_public
@@ -115,7 +123,3 @@ class ProjectConfig(BaseConfig):
         self.num_experiment_groups = num_experiment_groups
         self.experiments = experiments
         self.experiment_groups = experiment_groups
-
-    @property
-    def api_url(self):
-        return '{}/{}'.format(self.user, self.name)

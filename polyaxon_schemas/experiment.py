@@ -40,6 +40,7 @@ class ExperimentJobConfig(BaseConfig):
 class ExperimentSchema(Schema):
     sequence = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
+    unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = UUID(allow_none=True)
     group = UUID(allow_none=True)
@@ -76,6 +77,7 @@ class ExperimentConfig(BaseConfig):
                  sequence=None,
                  user=None,
                  uuid=None,
+                 unique_name=None,
                  project=None,
                  group=None,
                  description=None,
@@ -90,6 +92,7 @@ class ExperimentConfig(BaseConfig):
         self.sequence = sequence
         self.user = user
         self.uuid = uuid
+        self.unique_name = unique_name
         self.project = project
         self.group = group
         self.description = description
@@ -227,8 +230,7 @@ class PodStateSchema(Schema):
     event_type = fields.Str()
     labels = fields.Nested(JobLabelSchema)
     phase = fields.Str()
-    deletion_timestamp = \
-        fields.DateTime(allow_none=True)
+    deletion_timestamp = fields.DateTime(allow_none=True)
     pod_conditions = fields.Dict(allow_none=True)
     container_statuses = fields.Dict(allow_none=True)
 
