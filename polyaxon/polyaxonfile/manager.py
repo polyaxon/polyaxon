@@ -49,7 +49,7 @@ def _get_eval(config):
             config.continuous_eval_throttle_secs)
 
 
-def _get_run_configs(spec_config, experiment_uuid):
+def _get_run_configs(spec_config, experiment_idx):
     spec = Specification.read(spec_config)
     environment = spec.environment
     cluster_def, is_distributed = spec.cluster_def
@@ -70,15 +70,15 @@ def _get_run_configs(spec_config, experiment_uuid):
     else:
         # Get value from env
         master = os.getenv(constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(
-            experiment_uuid=experiment_uuid, task_type=TaskType.MASTER), '')
+            task_type=TaskType.MASTER), '')
         worker = os.getenv(constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(
-            experiment_uuid=experiment_uuid, task_type=TaskType.WORKER), '')
+            task_type=TaskType.WORKER), '')
         ps = os.getenv(constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(
-            experiment_uuid=experiment_uuid, task_type=TaskType.PS), '')
+            task_type=TaskType.PS), '')
         cluster_dict = {
-            TaskType.MASTER: master,
-            TaskType.WORKER: worker,
-            TaskType.PS: ps
+            TaskType.MASTER: master.split(','),
+            TaskType.WORKER: worker.split(','),
+            TaskType.PS: ps.split(',')
         }
         config.cluster = ClusterConfig.from_dict(cluster_dict)
 
@@ -114,7 +114,7 @@ def _get_run_configs(spec_config, experiment_uuid):
     return configs, True
 
 
-def prepare_experiment_run(spec_config, experiment_uuid, task_type=TaskType.MASTER, task_id=0):
+def prepare_experiment_run(spec_config, experiment_idx, task_type=TaskType.MASTER, task_id=0):
     spec = Specification.read(spec_config)
     cluster, _ = spec.cluster_def
 
@@ -131,7 +131,7 @@ def prepare_experiment_run(spec_config, experiment_uuid, task_type=TaskType.MAST
         delay_workers_by_global_step = False
     else:
         tf.logging.set_verbosity(LOGGING_LEVEL[spec.settings.logging.level])
-        configs, _ = _get_run_configs(spec, experiment_uuid)
+        configs, _ = _get_run_configs(spec, experiment_idx)
         delay_workers_by_global_step = env.delay_workers_by_global_step
 
     train_input_fn, train_steps, train_hooks = _get_train(spec.train)
@@ -156,14 +156,14 @@ def prepare_experiment_run(spec_config, experiment_uuid, task_type=TaskType.MAST
         export_strategies=spec.settings.export_strategies)
 
 
-def start_experiment_run(spec_config, experiment_uuid, task_type, task_id, schedule):
+def start_experiment_run(spec_config, experiment_idx, task_type, task_id, schedule):
     spec = Specification.read(spec_config)
-    experiment = prepare_experiment_run(spec, experiment_uuid, task_type, int(task_id))
+    experiment = prepare_experiment_run(spec, experiment_idx, task_type, int(task_id))
     task = getattr(experiment, schedule)
     return task()
 
 
-def prepare_all_experiment_jobs(spec_config, experiment_uuid):
+def prepare_all_experiment_jobs(spec_config, experiment_idx):
     spec = Specification.read(spec_config)
     is_distributed = False
 
@@ -173,7 +173,7 @@ def prepare_all_experiment_jobs(spec_config, experiment_uuid):
         delay_workers_by_global_step = False
     else:
         tf.logging.set_verbosity(LOGGING_LEVEL[spec.settings.logging.level])
-        configs, is_distributed = _get_run_configs(spec, experiment_uuid)
+        configs, is_distributed = _get_run_configs(spec, experiment_idx)
         delay_workers_by_global_step = spec.environment.delay_workers_by_global_step
 
     train_input_fn, train_steps, train_hooks = _get_train(spec.train)
