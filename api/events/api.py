@@ -20,7 +20,7 @@ from libs.redis_db import RedisToStream
 from projects.models import Project
 from projects.permissions import has_project_permissions
 
-logger = logging.getLogger('polyaxon.monitors.api')
+logger = logging.getLogger('monitors.api')
 
 SOCKET_SLEEP = 1
 
@@ -213,8 +213,7 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
     if request.app.experiment_logs_consumer is None:
         logger.info('Add experiment log consumer for {}'.format(experiment_uuid))
         request.app.experiment_logs_consumer = Consumer(
-            routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS,
-                                         experiment.uuid.hex),
+            routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS, experiment_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, experiment_uuid))
         request.app.experiment_logs_consumer.run()
 
