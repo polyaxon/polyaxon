@@ -14,7 +14,7 @@ from polyaxon.experiments import Experiment
 from polyaxon import Modes, getters
 from polyaxon.estimators.run_config import RunConfig
 from polyaxon.processing.input_data import create_input_data_fn
-from polyaxonfile import constants
+from polyaxon.polyaxonfile import constants
 
 LOGGING_LEVEL = {
     'INFO': tf.logging.INFO,
@@ -69,7 +69,7 @@ def _get_run_configs(spec_config, experiment_uuid):
         config.cluster = spec.get_local_cluster()
     else:
         # Get value from env
-        master = os.getenv(constants.CLUSTER_CONFIG_MAP_KEY_NAME(
+        master = os.getenv(constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(
             experiment_uuid=experiment_uuid, task_type=TaskType.MASTER), '')
         worker = os.getenv(constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(
             experiment_uuid=experiment_uuid, task_type=TaskType.WORKER), '')
