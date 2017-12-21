@@ -9,7 +9,7 @@ from libs.redis_db import RedisJobContainers
 from events.tasks import handle_events_job_statues
 from spawner.utils.jobs import get_job_state
 
-logger = logging.getLogger('polyaxon.monitors.statuses')
+logger = logging.getLogger('monitors.statuses')
 
 
 def update_job_containers(event, job_container_name):
@@ -42,7 +42,7 @@ def run(k8s_manager, experiment_type_label, job_container_name, label_selector=N
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
                           namespace=k8s_manager.namespace,
                           label_selector=label_selector):
-        logger.info("Received event: %s" % event)
+        logger.debug("Received event: {}".format(event['type']))
         event_object = event['object'].to_dict()
         job_state = get_job_state(event_type=event['type'],
                                   event=event_object,
@@ -51,7 +51,9 @@ def run(k8s_manager, experiment_type_label, job_container_name, label_selector=N
 
         if job_state:
             job_state = job_state.to_dict()
-            logger.info("Updating job container: {}".format(event_object))
+            logger.info("Updating job container")
+            logger.debug(event_object)
             update_job_containers(event_object, job_container_name)
-            logger.info("Publishing event: {}".format(job_state))
+            logger.info("Publishing event")
+            logger.debug(job_state)
             handle_events_job_statues.delay(payload=job_state)

@@ -42,7 +42,7 @@ LOGGING = {
             'formatter': 'standard',
         },
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
@@ -53,6 +53,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        'monitors': {
+            'handlers': ['console', ],
+            'propagate': True,
+            'level': 'INFO',
+        },
         'django.request': {
             'level': 'DEBUG',
             'propagate': True,

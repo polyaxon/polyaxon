@@ -20,8 +20,7 @@ def handle_events_namespace(cluster_id, payload):
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_RESOURCES)
 def handle_events_resources(payload, persist):
     # here we must persist resources if requested
-    logger.info('handling events resources:\npersist:{}\npayload:{}'.format(persist, payload))
-    print('persist:{}\npayload:{}'.format(persist, payload))
+    logger.info('handling events resources with persist:{}'.format(persist))
     logger.info(payload)
 
 
@@ -29,7 +28,7 @@ def handle_events_resources(payload, persist):
 def handle_events_job_statues(payload):
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
-    logger.info('handling events status for job_uuid: {}, details: {} '.format(job_uuid, details))
+    logger.info('handling events status for job_uuid: {}'.format(job_uuid))
 
     try:
         job = ExperimentJob.objects.get(uuid=job_uuid)
@@ -44,5 +43,5 @@ def handle_events_job_statues(payload):
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)
 def handle_events_job_logs(experiment_uuid, job_uuid, log_line, persist):
     # must persist resources if logs according to the config
-    logger.info('handling events job logs')
-    logger.info('{} {} {} {}'.format(experiment_uuid, job_uuid, log_line, persist))
+    logger.info('handling log event for {} {} {}'.format(
+        experiment_uuid, job_uuid, persist))

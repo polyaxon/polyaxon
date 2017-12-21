@@ -15,7 +15,8 @@ from libs.redis_db import RedisJobContainers, RedisToStream
 from events.tasks import handle_events_resources
 from spawner.utils.constants import ContainerStatuses
 
-logger = logging.getLogger('polyaxon.monitors.resources')
+logger = logging.getLogger('monitors.resources')
+
 docker_client = docker.from_env(version="auto", timeout=10)
 
 
@@ -126,7 +127,7 @@ def run(containers, persist):
         payload = get_container_resources(containers[container_id], gpu_resources)
         if payload:
             payload = payload.to_dict()
-            logger.info("Publishing event: {}".format(payload))
+            logger.info("Publishing resourecs event")
             handle_events_resources.delay(payload=payload, persist=persist)
 
             job_uuid = payload['job_uuid']
