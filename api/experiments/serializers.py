@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
@@ -61,7 +60,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = ('uuid', 'user', 'sequence', 'description', 'created_at', 'updated_at',
-                  'last_status', 'started_at', 'finished_at', 'is_clone',
+                  'last_status', 'started_at', 'finished_at', 'is_clone', 'content', 'config',
                   'project', 'experiment_group', 'original', 'original_experiment', 'num_jobs',)
 
         extra_kwargs = {'original_experiment': {'write_only': True}}
