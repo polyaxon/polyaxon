@@ -71,7 +71,7 @@ class Consumer(SocketManager):
         """This method adds an on close callback that will be invoked by pika
         when RabbitMQ closes the connection to the publisher unexpectedly.
         """
-        logger.info('Adding connection close callback')
+        logger.debug('Adding connection close callback')
         self._connection.add_on_close_callback(self.on_connection_closed)
 
     def on_connection_closed(self, connection, reply_code, reply_text):
@@ -98,7 +98,7 @@ class Consumer(SocketManager):
 
         :type unused_connection: pika.SelectConnection
         """
-        logger.info('Connection opened')
+        logger.debug('Connection opened')
         self.add_on_connection_close_callback()
         self.open_channel()
 
@@ -114,7 +114,7 @@ class Consumer(SocketManager):
         """This method tells pika to call the on_channel_closed method if
         RabbitMQ unexpectedly closes the channel.
         """
-        logger.info('Adding channel close callback')
+        logger.debug('Adding channel close callback')
         self._channel.add_on_close_callback(self.on_channel_closed)
 
     def on_channel_closed(self, channel, reply_code, reply_text):
@@ -141,7 +141,7 @@ class Consumer(SocketManager):
 
         :param str|unicode exchange_name: The name of the exchange to declare
         """
-        logger.info('Declaring exchange %s', exchange_name)
+        logger.debug('Declaring exchange %s', exchange_name)
         self._channel.exchange_declare(self.on_exchange_declareok,
                                        exchange_name,
                                        self.EXCHANGE_TYPE,
@@ -163,7 +163,7 @@ class Consumer(SocketManager):
 
         :param str|unicode queue_name: The name of the queue to declare.
         """
-        logger.info('Declaring queue %s', queue_name)
+        logger.debug('Declaring queue %s', queue_name)
         self._channel.queue_declare(self.on_queue_declareok, queue_name)
 
     def on_queue_declareok(self, method_frame):
@@ -185,7 +185,7 @@ class Consumer(SocketManager):
         for some reason. If RabbitMQ does cancel the consumer,
         on_consumer_cancelled will be invoked by pika.
         """
-        logger.info('Adding consumer cancellation callback')
+        logger.debug('Adding consumer cancellation callback')
         self._channel.add_on_cancel_callback(self.on_consumer_cancelled)
 
     def on_consumer_cancelled(self, method_frame):
@@ -205,7 +205,7 @@ class Consumer(SocketManager):
 
         :param int delivery_tag: The delivery tag from the Basic.Deliver frame
         """
-        logger.info('Acknowledging message %s', delivery_tag)
+        logger.debug('Acknowledging message %s', delivery_tag)
         self._channel.basic_ack(delivery_tag)
 
     def on_message(self, unused_channel, basic_deliver, properties, body):
@@ -221,13 +221,13 @@ class Consumer(SocketManager):
         :param pika.Spec.BasicProperties: properties
         :param str|unicode body: The message body
         """
-        logger.info('Received message # %s from %s: %s',
+        logger.debug('Received message # %s from %s: %s',
                     basic_deliver.delivery_tag, properties.app_id, body)
         if self.ws and body:
             body = json.loads(body.decode('utf-8'))
             self.messages.append(json.dumps(body))
-        logger.info('out ws : {}'.format(len(self.ws)))
-        logger.info('out messages : {}'.format(len(self.messages)))
+        logger.debug('out ws : {}'.format(len(self.ws)))
+        logger.debug('out messages : {}'.format(len(self.messages)))
         self.acknowledge_message(basic_deliver.delivery_tag)
 
     def on_cancelok(self, unused_frame):
@@ -238,7 +238,7 @@ class Consumer(SocketManager):
 
         :param pika.frame.Method unused_frame: The Basic.CancelOk frame
         """
-        logger.info('RabbitMQ acknowledged the cancellation of the consumer')
+        logger.debug('RabbitMQ acknowledged the cancellation of the consumer')
         self.close_channel()
 
     def stop_consuming(self):
@@ -246,7 +246,7 @@ class Consumer(SocketManager):
         Basic.Cancel RPC command.
         """
         if self._channel:
-            logger.info('Sending a Basic.Cancel RPC command to RabbitMQ')
+            logger.debug('Sending a Basic.Cancel RPC command to RabbitMQ')
             self._channel.basic_cancel(self.on_cancelok, self._consumer_tag)
 
     def start_consuming(self):
@@ -258,7 +258,7 @@ class Consumer(SocketManager):
         cancel consuming. The on_message method is passed in as a callback pika
         will invoke when a message is fully received.
         """
-        logger.info('Issuing consumer related RPC commands')
+        logger.debug('Issuing consumer related RPC commands')
         self.add_on_cancel_callback()
         self._consumer_tag = self._channel.basic_consume(self.on_message,
                                                          self._queue)
@@ -270,7 +270,7 @@ class Consumer(SocketManager):
 
         :param pika.frame.Method unused_frame: The Queue.BindOk response frame
         """
-        logger.info('Queue bound')
+        logger.debug('Queue bound')
         self.start_consuming()
 
     def close_channel(self):
@@ -306,7 +306,7 @@ class Consumer(SocketManager):
         communicate with RabbitMQ. All of the commands issued prior to starting
         the IOLoop will be buffered but not processed.
         """
-        logger.info('Stopping')
+        logger.debug('Stopping')
         self._closing = True
         self.stop_consuming()
         self._connection.ioloop.start()
