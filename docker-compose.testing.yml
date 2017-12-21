@@ -1,6 +1,9 @@
 version: "3"
 
 services:
+  rabbitmq:
+    ports:
+      - 5673
   web:
     build:
       context: .
