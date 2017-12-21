@@ -23,7 +23,6 @@ def run(k8s_manager, pod_id, experiment_uuid, job_uuid, container_job_name, pers
                                                       container=container_job_name,
                                                       follow=True,
                                                       _preload_content=False)
-    P = None
     for log_line in raw.stream():
         log_line = log_line.decode('utf-8')
         logger.info("Publishing log event for experiment: {}, {}".format(job_uuid, experiment_uuid))
@@ -35,8 +34,8 @@ def run(k8s_manager, pod_id, experiment_uuid, job_uuid, container_job_name, pers
                 RedisToStream.is_monitored_experiment_logs(experiment_uuid)):
             logger.info("Streaming new log event for experiment: {}".format(experiment_uuid))
 
-            with celery_app.producer_or_acquire(P) as P:
-                P.publish(
+            with celery_app.producer_or_acquire(None) as producer:
+                producer.publish(
                     {
                         'experiment_uuid': experiment_uuid,
                         'job_uuid': job_uuid,
