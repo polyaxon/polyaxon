@@ -13,7 +13,7 @@ from django.conf import settings
 
 from events.socket_manager import SocketManager
 
-logger = logging.getLogger("polyaxon.events")
+logger = logging.getLogger("monitors.events")
 
 
 class Consumer(SocketManager):
@@ -144,7 +144,8 @@ class Consumer(SocketManager):
         logger.info('Declaring exchange %s', exchange_name)
         self._channel.exchange_declare(self.on_exchange_declareok,
                                        exchange_name,
-                                       self.EXCHANGE_TYPE)
+                                       self.EXCHANGE_TYPE,
+                                       durable=True)
 
     def on_exchange_declareok(self, unused_frame):
         """Invoked by pika when RabbitMQ has finished the Exchange.Declare RPC
@@ -224,7 +225,7 @@ class Consumer(SocketManager):
                     basic_deliver.delivery_tag, properties.app_id, body)
         if self.ws and body:
             body = json.loads(body.decode('utf-8'))
-            self.messages.append(json.dumps(body[1]))
+            self.messages.append(json.dumps(body))
         logger.info('out ws : {}'.format(len(self.ws)))
         logger.info('out messages : {}'.format(len(self.messages)))
         self.acknowledge_message(basic_deliver.delivery_tag)
