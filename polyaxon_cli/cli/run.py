@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import uuid
 
 import click
 import sys
@@ -35,8 +34,7 @@ def run(file, description):
     num_experiments, concurrency = plx_file.experiments_def
     project = get_current_project_or_exit()
     project_client = PolyaxonClients().project
-    print(project.api_url)
-    if not equal_projects(plx_file.project.name, project.api_url):
+    if not equal_projects(plx_file.project.name, project.unique_name):
         Printer.print_error('Your polyaxonfile defined a different project '
                             'than the one set in this repo.')
         sys.exit(1)
@@ -67,5 +65,5 @@ def run(file, description):
             Printer.print_error('Could not create experiment group.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
-    response = response.to_dict()
+    response = response.to_light_dict()
     dict_tabulate(response)
