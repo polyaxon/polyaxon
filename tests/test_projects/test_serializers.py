@@ -13,8 +13,9 @@ class TestExperimentGroupSerializer(BaseTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     expected_keys = {
-        'uuid', 'sequence', 'unique_name', 'description', 'content', 'project', 'user',
-        'num_experiments'}
+        'uuid', 'sequence', 'unique_name', 'description', 'content', 'project', 'project_name',
+        'user', 'created_at',  'updated_at', 'concurrency', 'num_experiments',
+        'num_pending_experiments', 'num_running_experiments', }
 
     def setUp(self):
         super().setUp()
@@ -25,10 +26,15 @@ class TestExperimentGroupSerializer(BaseTest):
         data = self.serializer_class(self.obj1).data
 
         assert set(data.keys()) == self.expected_keys
+        data.pop('created_at')
+        data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('project') == self.obj1.project.uuid.hex
+        assert data.pop('project_name') == self.obj1.project.unique_name
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('num_experiments') == self.obj1.experiments.count()
+        assert data.pop('num_pending_experiments') == len(self.obj1.pending_experiments)
+        assert data.pop('num_running_experiments') == len(self.obj1.running_experiments)
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

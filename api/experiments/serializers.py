@@ -28,13 +28,19 @@ class ExperimentJobStatusSerializer(serializers.ModelSerializer):
 class ExperimentJobSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     experiment = fields.SerializerMethodField()
+    experiment_name = fields.SerializerMethodField()
 
     class Meta:
         model = ExperimentJob
-        exclude = ('id',)
+        fields = (
+            'uuid', 'experiment', 'experiment_name', 'definition', 'last_status', 'is_running',
+            'is_done', 'created_at', 'updated_at', 'started_at', 'finished_at')
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex
+
+    def get_experiment_name(self, obj):
+        return obj.experiment.unique_name
 
 
 class ExperimentStatusSerializer(serializers.ModelSerializer):
@@ -53,7 +59,9 @@ class ExperimentSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     experiment_group = fields.SerializerMethodField()
+    experiment_group_name = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
+    project_name = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     original = fields.SerializerMethodField()
 
@@ -61,8 +69,9 @@ class ExperimentSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = (
             'uuid', 'unique_name', 'user', 'sequence', 'description', 'created_at', 'updated_at',
-            'last_status', 'started_at', 'finished_at', 'is_clone', 'content', 'config',
-            'project', 'experiment_group', 'original', 'original_experiment', 'num_jobs',)
+            'last_status', 'started_at', 'finished_at', 'is_running', 'is_done', 'is_clone',
+            'content', 'config', 'project', 'project_name', 'experiment_group',
+            'experiment_group_name', 'original', 'original_experiment', 'num_jobs',)
 
         extra_kwargs = {'original_experiment': {'write_only': True}}
 
@@ -72,8 +81,14 @@ class ExperimentSerializer(serializers.ModelSerializer):
     def get_experiment_group(self, obj):
         return obj.experiment_group.uuid.hex if obj.experiment_group else None
 
+    def get_experiment_group_name(self, obj):
+        return obj.experiment_group.unique_name if obj.experiment_group else None
+
     def get_project(self, obj):
         return obj.project.uuid.hex
+
+    def get_project_name(self, obj):
+        return obj.project.unique_name
 
     def get_num_jobs(self, obj):
         return obj.jobs.count()
