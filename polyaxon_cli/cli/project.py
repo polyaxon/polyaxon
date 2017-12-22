@@ -38,7 +38,7 @@ def get_current_project_or_exit():
 
 
 def get_project_info(project):
-    parts = project.split('/')
+    parts = project.replace('.', '/').split('/')
     if len(parts) == 2:
         user, project_name = parts
     else:
@@ -293,7 +293,6 @@ def experiments(project, page):
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")
-        objects.pop('project')
         dict_tabulate(objects, is_list_dict=True)
 
 
