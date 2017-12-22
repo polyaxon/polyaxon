@@ -9,7 +9,7 @@ import os
 from polyaxon_client.exceptions import PolyaxonHTTPError
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
-from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.cli.project import get_project_or_local, equal_projects
 from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils import constants
@@ -63,8 +63,7 @@ def init(project, model, run):
 
     # file was already there, let's check if the project passed correspond to this file
     spec = PolyaxonFile.read(constants.INIT_FILE)
-    print(spec.project.name)
-    if project_config.api_url != spec.project.name:
+    if not equal_projects(spec.project.name, project_config.unique_name):
         Printer.print_error(
             "Something went wrong, init command did not create a file.\n"
             "Anothor file already exist with different "
