@@ -23,7 +23,9 @@ class TestExperimentConfigs(TestCase):
         config_dict = {
             'uuid': uuid.uuid4().hex,
             'project': uuid.uuid4().hex,
+            'project_name': 'name.name',
             'group': uuid.uuid4().hex,
+            'group_name': 'name.name.1',
             'unique_name': 'user.proj.1',
             'last_status': 'Running',
             'description': 'description',
@@ -37,6 +39,8 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('description')
         config_dict.pop('content')
         config_dict.pop('config')
+        config_dict.pop('project')
+        config_dict.pop('group')
         assert config.to_light_dict() == config_dict
 
     def test_experiment_with_jobs_config(self):
@@ -46,12 +50,16 @@ class TestExperimentConfigs(TestCase):
                        'unique_name': 'adam.proj.1',
                        'uuid': uuid.uuid4().hex,
                        'project': uuid.uuid4().hex,
+                       'project_name': 'user.name',
                        'group': uuid.uuid4().hex,
+                       'group_name': 'user.name.1',
                        'last_status': 'Running',
                        'num_jobs': 1,
-                       'jobs': [ExperimentJobConfig(uuid.uuid4().hex,
-                                                    uuid.uuid4().hex,
-                                                    datetime.now(),
+                       'jobs': [ExperimentJobConfig(uuid=uuid.uuid4().hex,
+                                                    experiment=uuid.uuid4().hex,
+                                                    experiment_name='name.name.1',
+                                                    created_at=datetime.now(),
+                                                    updated_at=datetime.now(),
                                                     definition={}).to_dict()]}
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
@@ -59,17 +67,22 @@ class TestExperimentConfigs(TestCase):
     def test_experiment_job_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
+                       'experiment_name': 'name.name',
                        'created_at': datetime.now().isoformat(),
+                       'updated_at': datetime.now().isoformat(),
                        'definition': {}}
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         config_to_dict.pop('created_at')
+        config_to_dict.pop('updated_at')
         config_dict.pop('created_at')
+        config_dict.pop('updated_at')
         assert config_to_dict == config_dict
 
         config_dict.pop('definition')
         config_to_dict = config.to_light_dict()
         config_to_dict.pop('created_at')
+        config_to_dict.pop('updated_at')
         assert config_to_dict == config_dict
 
     def test_experiment_status_config(self):

@@ -10,7 +10,14 @@ from polyaxon_schemas.utils import UUID
 class ExperimentJobSchema(Schema):
     uuid = UUID()
     experiment = UUID()
+    experiment_name = fields.Str()
+    last_status = fields.Str(allow_none=True)
+    is_running = fields.Bool(allow_none=True)
+    is_done = fields.Bool(allow_none=True)
     created_at = fields.DateTime()
+    updated_at = fields.DateTime()
+    started_at = fields.DateTime(allow_none=True)
+    finished_at = fields.DateTime(allow_none=True)
     definition = fields.Dict()
 
     class Meta:
@@ -28,13 +35,32 @@ class ExperimentJobSchema(Schema):
 class ExperimentJobConfig(BaseConfig):
     SCHEMA = ExperimentJobSchema
     IDENTIFIER = 'ExperimentJob'
+    REDUCED_ATTRIBUTES = ['last_status', 'is_running', 'is_done', 'started_at', 'finished_at']
     REDUCED_LIGHT_ATTRIBUTES = ['definition']
 
-    def __init__(self, uuid, experiment, created_at, definition):
+    def __init__(self,
+                 uuid,
+                 experiment,
+                 experiment_name,
+                 created_at,
+                 updated_at,
+                 definition,
+                 last_status=None,
+                 is_running=None,
+                 is_done=None,
+                 started_at=None,
+                 finished_at=None):
         self.uuid = uuid
         self.experiment = experiment
+        self.experiment_name = experiment_name
         self.created_at = self.localize_date(created_at)
+        self.updated_at = self.localize_date(updated_at)
+        self.started_at = self.localize_date(started_at)
+        self.finished_at = self.localize_date(finished_at)
         self.definition = definition
+        self.last_status = last_status
+        self.is_running = is_running
+        self.is_done = is_done
 
 
 class ExperimentSchema(Schema):
@@ -43,11 +69,17 @@ class ExperimentSchema(Schema):
     unique_name = fields.Str(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = UUID(allow_none=True)
+    project_name = fields.Str(allow_none=True)
     group = UUID(allow_none=True)
+    group_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     last_status = fields.Str(allow_none=True)
+    created_at = fields.DateTime(allow_none=True)
+    updated_at = fields.DateTime(allow_none=True)
     started_at = fields.DateTime(allow_none=True)
     finished_at = fields.DateTime(allow_none=True)
+    is_running = fields.Bool(allow_none=True)
+    is_done = fields.Bool(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
     content = fields.Str(allow_none=True)
@@ -69,9 +101,11 @@ class ExperimentSchema(Schema):
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = ['user', 'sequence', 'description', 'config', 'jobs', 'content',
-                          'started_at', 'finished_at', 'is_clone']
-    REDUCED_LIGHT_ATTRIBUTES = ['description', 'config', 'content']
+    REDUCED_ATTRIBUTES = [
+        'user', 'sequence', 'description', 'config', 'jobs', 'content',
+        'created_at', 'updated_at', 'started_at', 'finished_at',
+        'is_clone', 'is_running', 'is_done']
+    REDUCED_LIGHT_ATTRIBUTES = ['project', 'group', 'description', 'config', 'content', 'jobs']
 
     def __init__(self,
                  sequence=None,
@@ -79,12 +113,18 @@ class ExperimentConfig(BaseConfig):
                  uuid=None,
                  unique_name=None,
                  project=None,
+                 project_name=None,
                  group=None,
+                 group_name=None,
                  description=None,
                  last_status=None,
+                 created_at=None,
+                 updated_at=None,
                  started_at=None,
                  finished_at=None,
                  is_clone=None,
+                 is_running=None,
+                 is_done=None,
                  config=None,
                  content=None,
                  num_jobs=0,
@@ -94,11 +134,17 @@ class ExperimentConfig(BaseConfig):
         self.uuid = uuid
         self.unique_name = unique_name
         self.project = project
+        self.project_name = project_name
         self.group = group
+        self.group_name = group_name
         self.description = description
         self.last_status = last_status
         self.started_at = self.localize_date(started_at)
         self.finished_at = self.localize_date(finished_at)
+        self.created_at = self.localize_date(created_at)
+        self.updated_at = self.localize_date(updated_at)
+        self.is_running = is_running
+        self.is_done = is_done
         self.is_clone = is_clone
         self.config = config  # The json compiled content of this experiment
         self.content = content  # The yaml content when the experiment is independent

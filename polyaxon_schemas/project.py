@@ -14,11 +14,16 @@ class ExperimentGroupSchema(Schema):
     unique_name = fields.Str(allow_none=True)
     sequence = fields.Int(allow_none=True)
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
+    project = UUID(allow_none=True)
+    project_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     content = fields.Str()
-    project = UUID(allow_none=True)
     created_at = fields.DateTime(allow_none=True)
+    updated_at = fields.DateTime(allow_none=True)
+    concurrency = fields.Int(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
+    num_pending_experiments = fields.Int(allow_none=True)
+    num_running_experiments = fields.Int(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
     class Meta:
@@ -38,7 +43,9 @@ class ExperimentGroupConfig(BaseConfig):
     IDENTIFIER = 'experiment_group'
     REDUCED_ATTRIBUTES = [
         'uuid', 'unique_name', 'sequence', 'user', 'project', 'experiments', 'description',
-        'created_at', 'num_experiments']
+        'created_at', 'updated_at', 'concurrency',
+        'num_experiments', 'num_pending_experiments', 'num_running_experiments',
+    ]
     REDUCED_LIGHT_ATTRIBUTES = ['description', 'content']
 
     def __init__(self,
@@ -49,8 +56,13 @@ class ExperimentGroupConfig(BaseConfig):
                  content=None,
                  uuid=None,
                  project=None,
+                 project_name=None,
                  num_experiments=None,
+                 num_pending_experiments=None,
+                 num_running_experiments=None,
                  created_at=None,
+                 updated_at=None,
+                 concurrency=None,
                  experiments=None):
         self.unique_name = unique_name
         self.sequence = sequence
@@ -59,8 +71,13 @@ class ExperimentGroupConfig(BaseConfig):
         self.content = content
         self.uuid = uuid
         self.project = project
+        self.project_name = project_name
         self.num_experiments = num_experiments
+        self.num_pending_experiments = num_pending_experiments
+        self.num_running_experiments = num_running_experiments
         self.created_at = self.localize_date(created_at)
+        self.updated_at = self.localize_date(updated_at)
+        self.concurrency = concurrency
         self.experiments = experiments
 
 

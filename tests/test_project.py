@@ -57,6 +57,7 @@ class TestProjectConfigs(TestCase):
                        'content': 'some content',
                        'uuid': uuid_value,
                        'project': uuid_value,
+                       'project_name': 'user.name',
                        'num_experiments': 0,
                        'experiments': [
                            ExperimentConfig(config={},
