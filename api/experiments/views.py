@@ -131,7 +131,7 @@ class ExperimentViewMixin(object):
         return queryset.filter(experiment=self.get_experiment())
 
 
-class ExperimentStatusListView(ListCreateAPIView, ExperimentViewMixin):
+class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
     queryset = ExperimentStatus.objects.all()
     serializer_class = ExperimentStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -140,14 +140,14 @@ class ExperimentStatusListView(ListCreateAPIView, ExperimentViewMixin):
         serializer.save(experiment=self.get_experiment())
 
 
-class ExperimentStatusDetailView(RetrieveAPIView, ExperimentViewMixin):
+class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
     queryset = ExperimentStatus.objects.all()
     serializer_class = ExperimentStatusSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
 
 
-class ExperimentJobListView(ListCreateAPIView, ExperimentViewMixin):
+class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
     permission_classes = (IsAuthenticated,)
@@ -156,7 +156,7 @@ class ExperimentJobListView(ListCreateAPIView, ExperimentViewMixin):
         serializer.save(experiment=self.get_experiment())
 
 
-class ExperimentJobDetailView(RetrieveUpdateDestroyAPIView, ExperimentViewMixin):
+class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
     permission_classes = (IsAuthenticated,)
@@ -183,7 +183,7 @@ class ExperimentJobViewMixin(object):
         return queryset.filter(job=self.get_job())
 
 
-class ExperimentJobStatusListView(ListCreateAPIView, ExperimentJobViewMixin):
+class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
     queryset = ExperimentJobStatus.objects.all()
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)
@@ -192,7 +192,7 @@ class ExperimentJobStatusListView(ListCreateAPIView, ExperimentJobViewMixin):
         serializer.save(job=self.get_job())
 
 
-class ExperimentJobStatusDetailView(RetrieveUpdateAPIView, ExperimentJobViewMixin):
+class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIView):
     queryset = ExperimentJobStatus.objects.all()
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)

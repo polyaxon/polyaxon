@@ -95,7 +95,8 @@ class ExperimentGroup(DiffModel, DescribableModel):
     @property
     def pending_experiments(self):
         experiments = []
-        for experiment in self.experiments.filter(statuses__status=ExperimentLifeCycle.CREATED):
+        for experiment in self.experiments.filter(
+                statuses__status=ExperimentLifeCycle.CREATED).distinct():
             if experiment.last_status == ExperimentLifeCycle.CREATED:
                 experiments.append(experiment)
 
@@ -105,7 +106,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     def running_experiments(self):
         experiments = []
         for experiment in self.experiments.filter(
-                statuses__status__in=ExperimentLifeCycle.RUNNING_STATUS):
+                statuses__status__in=ExperimentLifeCycle.RUNNING_STATUS).distinct():
             if experiment.last_status in ExperimentLifeCycle.RUNNING_STATUS:
                 experiments.append(experiment)
 

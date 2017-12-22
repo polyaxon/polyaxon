@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import logging
+
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
@@ -10,6 +12,9 @@ from spawner import scheduler
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 from experiments.tasks import check_experiment_status, build_experiment
+
+
+logger = logging.getLogger('polyaxon.experiments')
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")
@@ -79,5 +84,7 @@ def new_experiment_status(sender, **kwargs):
     instance = kwargs['instance']
 
     if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
+        logger.info('Master worker for experiment `{}` is done, '
+                    'send signal to other workers to stop.'.format(instance.uuid.hex))
         # Schedule stop for this experiment because other jobs may be still running
         scheduler.stop_experiment(instance.experiment, update_status=False)
