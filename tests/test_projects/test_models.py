@@ -15,7 +15,7 @@ from tests.utils import BaseTest
 
 class TestExperimentGroupModel(BaseTest):
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
-        with patch('projects.tasks.start_group_experiments.delay') as mock_fct:
+        with patch('projects.tasks.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2

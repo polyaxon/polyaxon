@@ -222,10 +222,12 @@ class Consumer(SocketManager):
         :param str|unicode body: The message body
         """
         logger.debug('Received message # %s from %s: %s',
-                    basic_deliver.delivery_tag, properties.app_id, body)
+                     basic_deliver.delivery_tag, properties.app_id, body)
         if self.ws and body:
             body = json.loads(body.decode('utf-8'))
-            self.messages.append(json.dumps(body))
+            body = json.dumps(body)
+            logger.info('Received new message, for {} ws.'.format(len(self.ws)))
+            self.messages.append(body)
         logger.debug('out ws : {}'.format(len(self.ws)))
         logger.debug('out messages : {}'.format(len(self.messages)))
         self.acknowledge_message(basic_deliver.delivery_tag)

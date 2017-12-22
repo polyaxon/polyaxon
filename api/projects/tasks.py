@@ -17,7 +17,7 @@ def start_group_experiments(self, experiment_group_id):
         experiment_group = ExperimentGroup.objects.get(id=experiment_group_id)
     except ExperimentGroup.DoesNotExist:
         logger.info('ExperimentGroup `{}` was not found.'.format(experiment_group_id))
-        if self.request.retries < 3:
+        if self.request.retries < 2:
             logger.info('Trying again for ExperimentGroup `{}`.'.format(experiment_group_id))
             self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
