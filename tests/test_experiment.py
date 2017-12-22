@@ -127,7 +127,9 @@ class TestExperimentClient(TestCase):
         job_uuid = uuid.uuid4().hex
         xps = [ExperimentJobConfig(uuid=job_uuid,
                                    experiment=experiment_uuid,
+                                   experiment_name='user.project.1',
                                    created_at=datetime.datetime.now(),
+                                   updated_at=datetime.datetime.now(),
                                    definition={}).to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,

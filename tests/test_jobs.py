@@ -28,7 +28,9 @@ class TestJobClient(TestCase):
         experiment_uuid = uuid.uuid4().hex
         object = ExperimentJobConfig(uuid=uuid.uuid4().hex,
                                      experiment=experiment_uuid,
+                                     experiment_name='user.project.1',
                                      created_at=datetime.datetime.now(),
+                                     updated_at=datetime.datetime.now(),
                                      definition={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
