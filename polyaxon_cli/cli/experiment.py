@@ -24,7 +24,7 @@ def experiment():
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def get(experiment, project):
     """Get experiment by uuid.
 
@@ -49,14 +49,14 @@ def get(experiment, project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = response.to_dict()
+    response = Printer.add_status_color(response.to_light_dict())
     Printer.print_header("Experiment info:")
     dict_tabulate(response)
 
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def delete(experiment, project):
     """Delete experiment group."""
     user, project_name = get_project_or_local(project)
@@ -78,7 +78,7 @@ def delete(experiment, project):
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def stop(experiment, project):
     """Get experiment by uuid.
 
@@ -93,8 +93,7 @@ def stop(experiment, project):
         sys.exit(0)
 
     try:
-        response = PolyaxonClients().experiment.stop(
-            user, project_name, experiment)
+        PolyaxonClients().experiment.stop(user, project_name, experiment)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not stop experiment `{}`.'.format(experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -105,7 +104,7 @@ def stop(experiment, project):
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def restart(experiment, project):
     """Delete experiment group."""
     user, project_name = get_project_or_local(project)
@@ -117,14 +116,14 @@ def restart(experiment, project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = response.to_dict()
+    response = Printer.add_status_color(response.to_light_dict())
     Printer.print_header("Experiment info:")
     dict_tabulate(response)
 
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 def jobs(experiment, project, page):
     """List jobs for this experiment"""
@@ -145,7 +144,8 @@ def jobs(experiment, project, page):
     else:
         Printer.print_header('No jobs found for experiment `{}`.'.format(experiment))
 
-    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    objects = [Printer.add_status_color(o.to_dict()) for o in response['results']]
+    objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Jobs:")
         objects.pop('experiment')
@@ -154,7 +154,7 @@ def jobs(experiment, project, page):
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 def statuses(experiment, project, page):
     """Get experiment status.
@@ -191,7 +191,7 @@ def statuses(experiment, project, page):
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def resources(experiment, project):
     """Get experiment resources.
 
@@ -212,7 +212,7 @@ def resources(experiment, project):
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def logs(experiment, project):
     """Get experiment logs.
 
@@ -233,6 +233,6 @@ def logs(experiment, project):
 
 @experiment.command()
 @click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str)
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def outputs(experiment, project):
     pass

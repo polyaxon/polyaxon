@@ -133,7 +133,7 @@ def list(page):
     else:
         Printer.print_header('No projects found for current user')
 
-    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    objects = list_dicts_to_tabulate([o.to_light_dict() for o in response['results']])
     if objects:
         Printer.print_header("Projects:")
         dict_tabulate(objects, is_list_dict=True)
@@ -165,7 +165,7 @@ def get(project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = response.to_dict()
+    response = response.to_light_dict()
     Printer.print_header("Project info:")
     dict_tabulate(response)
 
@@ -230,7 +230,7 @@ def update(project, name, description):
         sys.exit(1)
 
     Printer.print_success("Project updated.")
-    response = response.to_dict()
+    response = response.to_light_dict()
     Printer.print_header("Project info:")
     dict_tabulate(response)
 
@@ -259,7 +259,7 @@ def groups(project, page):
         Printer.print_header('No experiment groups found for project `{}/{}`.'.format(
             user, project_name))
 
-    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    objects = list_dicts_to_tabulate([o.to_light_dict() for o in response['results']])
     if objects:
         Printer.print_header("Experiment groups:")
         objects.pop('project')
@@ -289,7 +289,8 @@ def experiments(project, page):
     else:
         Printer.print_header('No experiments found for project `{}/{}`.'.format(user, project_name))
 
-    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    objects = [Printer.add_status_color(o.to_light_dict()) for o in response['results']]
+    objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")
         objects.pop('project')

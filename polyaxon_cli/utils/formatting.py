@@ -63,6 +63,17 @@ class Printer(object):
         return click.style('{}'.format(value), fg=color)
 
     @classmethod
+    def add_status_color(cls, obj_dict):
+        if obj_dict.get('is_running'):
+            obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color='yellow')
+        elif obj_dict.get('is_done'):
+            color = 'green' if obj_dict['last_status'] == 'Succeeded' else 'red'
+            obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color=color)
+        elif obj_dict.get('last_status'):
+            obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color='cyan')
+        return obj_dict
+
+    @classmethod
     def decorate_format_value(cls, text_format, values, color):
         values = to_list(values)
         values = [cls.add_color(value, color) for value in values]
