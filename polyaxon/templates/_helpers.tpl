@@ -140,7 +140,7 @@ global config
 - name: POLYAXON_K8S_AUTHORISATION
   valueFrom:
     secretKeyRef:
-      name: polyaxon-cluster-secret
+      name: {{ template "polyaxon.fullname" . }}-secret
       key: k8s-authorisation
 {{- end }}
 {{- if .Values.k8s.ssl_ca_cert }}
@@ -211,6 +211,11 @@ django config
   value: {{ .Values.user.email | quote }}
 - name: POLYAXON_EMAIL_FROM
   value: {{ .Values.user.emailFrom | quote }}
+- name: POLYAXON_ADMIN_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: user-password
 - name: POLYAXON_EMAIL_HOST
   value: {{ .Values.email.host | quote }}
 - name: POLYAXON_EMAIL_PORT
