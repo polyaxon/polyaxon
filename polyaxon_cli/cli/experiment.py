@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 import click
 import sys
 
+from collections import deque
+
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 from polyaxon_cli.cli.project import get_project_or_local
@@ -144,7 +146,7 @@ def jobs(experiment, project, page):
     else:
         Printer.print_header('No jobs found for experiment `{}`.'.format(experiment))
 
-    objects = [Printer.add_status_color(o.to_dict()) for o in response['results']]
+    objects = [Printer.add_status_color(o.to_light_dict()) for o in response['results']]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Jobs:")
@@ -182,7 +184,7 @@ def statuses(experiment, project, page):
     else:
         Printer.print_header('No statuses found for experiment `{}`.'.format(experiment))
 
-    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    objects = list_dicts_to_tabulate([o.to_light_dict() for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
         objects.pop('experiment')
@@ -222,12 +224,26 @@ def logs(experiment, project):
     ```
     """
     user, project_name = get_project_or_local(project)
+    colors = deque(Printer.COLORS)
+    job_to_color = {}
+
+    def message_handler(log_line):
+        job_uuid = log_line['job_uuid']
+        if job_uuid in job_to_color:
+            color = job_to_color[job_uuid]
+        else:
+            color = colors[0]
+            colors.rotate(-1)
+            job_to_color[job_uuid] = color
+
+        log_line = 'job: {} -- {}'.format(Printer.add_color(job_uuid, color), log_line['log_line'])
+        click.echo(log_line)
+
     try:
         PolyaxonClients().experiment.logs(
-            user, project_name, experiment, message_handler=click.echo)
+            user, project_name, experiment, message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for experiment `{}`.'.format(experiment))
-        # Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
 

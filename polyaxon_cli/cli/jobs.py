@@ -73,7 +73,7 @@ def statuses(experiment, job, project):
     else:
         Printer.print_header('No statuses found for job `{}`.'.format(job))
 
-    objects = list_dicts_to_tabulate([o.to_dict() for o in response['results']])
+    objects = list_dicts_to_tabulate([o.to_light_dict() for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
         objects.pop('job')
@@ -118,13 +118,16 @@ def logs(experiment, job, project):
     ```
     """
     user, project_name = get_project_or_local(project)
+
+    def message_handler(log_line):
+        click.echo(log_line['log_line'])
+
     try:
         PolyaxonClients().job.logs(user,
                                    project_name,
                                    experiment,
                                    job,
-                                   message_handler=click.echo)
+                                   message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get logs for job `{}`.'.format(job))
-        Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
