@@ -23,9 +23,10 @@ k8s: {}
 
 # Initial admin user to create
 user:
-  name: "admins"
-  emailFrom: <admin@polyaxon.local>
-  email: admin@polyaxon.local
+  username: "root"
+  emailFrom: <root@polyaxon.local>
+  email: "root@polyaxon.local"
+  password: "root"
 
 email:
   host: smtp
@@ -187,6 +188,11 @@ events:
         memory: 128Mi
     persists: false
     logSleepInterval: 1
+
+hooks:
+  image: polyaxon/polyaxon-api
+  imageTag: 0.0.1
+  imagePullPolicy: IfNotPresent
 
 persistence:
   data:

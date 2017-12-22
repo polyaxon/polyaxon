@@ -1,5 +1,8 @@
 debug: 1
 
+hooks:
+  loadFixtures: true
+
 postgresql:
   imageTag: 9.6.1-alpine
 

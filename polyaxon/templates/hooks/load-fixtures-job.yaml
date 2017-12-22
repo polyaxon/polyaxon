@@ -1,0 +1,43 @@
+{{- if .Values.hooks.loadFixtures -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-load-fixtures"
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}-load-fixtures"
+      labels:
+        app: {{ template "polyaxon.fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: load-fixtures-job
+        image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
+        imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
+        command: ["python3", "api/manage.py", "loaddata", "api/fixtures/users.json", "api/fixtures/authtoken.json", "api/fixtures/projects.json"]
+        env:
+        {{ include "config.global" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+{{- end }}
