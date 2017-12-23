@@ -109,8 +109,8 @@ apiEvents:
 
   service:  # service type is the same as api
     name: api-events
+    externalPort: 1337
     internalPort: 1337
-    externalPort: 80
     nodePort: 31812
 
 workers:

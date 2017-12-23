@@ -37,5 +37,5 @@ spec:
   selector:
     app: {{ template "polyaxon.fullname" . }}-api
   ports:
-  - port: {{ .Values.apiEvents.service.externalPort }}
-    targetPort: {{ .Values.apiEvents.service.internalPort }}
+  - port: {{ .Values.apiEvents.service.internalPort }}
+    targetPort: {{ .Values.apiEvents.service.externalPort }}
