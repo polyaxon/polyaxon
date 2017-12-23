@@ -1,3 +1,4 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -73,3 +74,4 @@ spec:
   selector:
     app: {{ template "polyaxon.fullname" . }}-http-backend
     type: {{ .Values.types.core }}
+{{- end }}
