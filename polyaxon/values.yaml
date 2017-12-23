@@ -107,9 +107,8 @@ apiEvents:
       cpu: 50m
       memory: 128Mi
 
-  service:
+  service:  # service type is the same as api
     name: api-events
-    type: LoadBalancer
     internalPort: 1337
     externalPort: 80
     nodePort: 31812
