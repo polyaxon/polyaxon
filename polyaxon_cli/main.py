@@ -35,7 +35,7 @@ def cli(context, verbose):
     Check the help available for each command listed below.
     """
     configure_logger(verbose or GlobalConfigManager.get_value('verbose'))
-    if context.invoked_subcommand not in ['config', 'version']:
+    if context.invoked_subcommand not in ['config', 'version', 'login', 'logout']:
         check_cli_version()
 
 
