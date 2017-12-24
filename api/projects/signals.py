@@ -9,6 +9,9 @@ from spawner import scheduler
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
 def new_experiment_group(sender, **kwargs):
+    if kwargs.get('raw'):
+        # Ignore signal handling for fixture loading
+        return
 
     instance = kwargs['instance']
     created = kwargs.get('created', False)
@@ -31,6 +34,10 @@ def new_experiment_group(sender, **kwargs):
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
 def experiment_group_deleted(sender, **kwargs):
     """Stop all experiments before deleting the group."""
+    if kwargs.get('raw'):
+        # Ignore signal handling for fixture loading
+        return
+
     instance = kwargs['instance']
     for experiment in instance.running_experiments:
         scheduler.stop_experiment(experiment, update_status=False)

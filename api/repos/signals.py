@@ -14,6 +14,10 @@ from repos.models import ExternalRepo, Repo
 
 @receiver(post_save, sender=Repo, dispatch_uid="repo_saved")
 def new_repo(sender, **kwargs):
+    if kwargs.get('raw'):
+        # Ignore signal handling for fixture loading
+        return
+
     instance = kwargs['instance']
     created = kwargs.get('created', False)
 
@@ -35,6 +39,10 @@ def new_repo(sender, **kwargs):
 
 @receiver(post_delete, sender=ExternalRepo, dispatch_uid="repo_deleted")
 def repo_deleted(sender, **kwargs):
+    if kwargs.get('raw'):
+        # Ignore signal handling for fixture loading
+        return
+
     instance = kwargs['instance']
 
     # Clean repo
@@ -43,6 +51,10 @@ def repo_deleted(sender, **kwargs):
 
 @receiver(post_save, sender=ExternalRepo, dispatch_uid="external_repo_saved")
 def new_external_repo(sender, **kwargs):
+    if kwargs.get('raw'):
+        # Ignore signal handling for fixture loading
+        return
+
     instance = kwargs['instance']
     created = kwargs.get('created', False)
 
@@ -64,6 +76,10 @@ def new_external_repo(sender, **kwargs):
 
 @receiver(post_delete, sender=Repo, dispatch_uid="external_repo_deleted")
 def external_repo_deleted(sender, **kwargs):
+    if kwargs.get('raw'):
+        # Ignore signal handling for fixture loading
+        return
+
     instance = kwargs['instance']
 
     # Clean repo
