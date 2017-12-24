@@ -12,8 +12,10 @@ from django.conf import settings
 from docker import APIClient
 from docker.errors import DockerException
 
+from events import publisher
 from repos import git
 from repos.models import ExternalRepo
+from spawner.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.repos.dockerize')
 
@@ -54,6 +56,7 @@ COPY {{ folder_name }} {{ workdir }}
 
 class DockerBuilder(object):
     def __init__(self,
+                 experiment_uuid,
                  repo_path,
                  from_image,
                  image_name,
@@ -62,6 +65,7 @@ class DockerBuilder(object):
                  env_vars=None,
                  workdir='/code',
                  dockerfile_name='Dockerfile'):
+        self.experiment_uuid = experiment_uuid
         self.repo_path = repo_path
         self.build_path = '/'.join(repo_path.split('/')[:-1])
         self.folder_name = repo_path.split('/')[-1]
@@ -133,7 +137,7 @@ class DockerBuilder(object):
             dockerfile.write(self.render())
 
         self.connect()
-        for line in self.docker.build(
+        for log_line in self.docker.build(
             path=self.build_path,
             tag='{}:{}'.format(self.image_name, self.image_tag),
             buildargs={},
@@ -145,16 +149,21 @@ class DockerBuilder(object):
             container_limits=limits,
             stream=True,
         ):
-            # TODO: push stream to experiment exchange
-            pass
+            publisher.publish_log(
+                log_line=log_line,
+                status=ExperimentLifeCycle.RUNNING,
+                experiment_uuid=self.experiment_uuid,
+                job_uuid='all',
+                persist=False  # TODO: ADD log persistence
+            )
 
     def push(self):
         # Build a progress setup for each layer, and only emit per-layer info every 1.5s
         layers = {}
         last_emit_time = time.time()
         self.connect()
-        for line in self.docker.push(self.image_name, tag=self.image_tag, stream=True):
-            lines = [l for l in line.decode('utf-8').split('\r\n') if l]
+        for log_line in self.docker.push(self.image_name, tag=self.image_tag, stream=True):
+            lines = [l for l in log_line.decode('utf-8').split('\r\n') if l]
             lines = [json.loads(l) for l in lines]
             for progress in lines:
                 if 'error' in progress:
@@ -167,9 +176,41 @@ class DockerBuilder(object):
                 else:
                     layers[progress['id']] = progress['status']
                 if time.time() - last_emit_time > 1.5:
-                    logger.info('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
+                    logger.debug('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
                     last_emit_time = time.time()
-                # TODO: push stream to experiment exchange
+
+                publisher.publish_log(
+                    log_line=log_line,
+                    status=ExperimentLifeCycle.RUNNING,
+                    experiment_uuid=self.experiment_uuid,
+                    job_uuid='all',
+                    persist=False  # TODO: ADD log persistence
+                )
+
+
+def get_image_info(experiment):
+    """Return the image name and image tag for an experiment"""
+    project_name = experiment.project.name
+    experiment_spec = experiment.compiled_spec
+    if experiment_spec.run_exec.git:
+
+        try:
+            repo = ExternalRepo.objects.get(project=experiment.project,
+                                            git_url=experiment_spec.run_exec.git)
+        except ExternalRepo:
+            logger.error(
+                'Something went wrong, '
+                'the external repo `{}` was not found'.format(experiment_spec.run_exec.git))
+
+        repo_name = repo.name
+        repo_last_commit = repo.last_commit[0]
+    else:
+        repo_name = project_name
+        repo_last_commit = experiment.project.repo.last_commit[0]
+
+    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_tag = repo_last_commit
+    return image_name, image_tag
 
 
 def build_experiment(experiment):
@@ -196,7 +237,8 @@ def build_experiment(experiment):
     image_tag = repo_last_commit
 
     # Build the image
-    docker_builder = DockerBuilder(repo_path=repo_path,
+    docker_builder = DockerBuilder(experiment_uuid=experiment.uuid.hex,
+                                   repo_path=repo_path,
                                    from_image=experiment_spec.run_exec.image,
                                    image_name=image_name,
                                    image_tag=image_tag,
