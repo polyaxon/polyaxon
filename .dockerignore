@@ -19,6 +19,4 @@ tests_report/
 .tox/
 dist/
 *.egg-info/
-api/env_vars/local
-docker/*
 celerybeat.pid
