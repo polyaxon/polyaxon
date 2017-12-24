@@ -123,10 +123,9 @@ class K8SSpawner(K8SManager):
         self.delete_service(name=job_name)
 
     def create_master(self, resources=None):
-        args = self.get_pod_args(task_type=TaskType.MASTER,
-                                 task_idx=0,
-                                 schedule='train_and_evaluate')
-        command = ["python3", "-c"]
+        command, args = self.get_pod_cmd_args(task_type=TaskType.MASTER,
+                                              task_idx=0,
+                                              schedule='train_and_evaluate')
         return self._create_pod(task_type=TaskType.MASTER,
                                 task_idx=0,
                                 command=command,
@@ -138,12 +137,11 @@ class K8SSpawner(K8SManager):
         self._delete_pod(task_type=TaskType.MASTER, task_idx=0)
 
     def _create_worker(self, resources, n_pods):
-        command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
-            args = self.get_pod_args(task_type=TaskType.WORKER,
-                                     task_idx=i,
-                                     schedule='train')
+            command, args = self.get_pod_cmd_args(task_type=TaskType.WORKER,
+                                                  task_idx=i,
+                                                  schedule='train')
             resp.append(self._create_pod(task_type=TaskType.WORKER,
                                          task_idx=i,
                                          command=command,
@@ -157,12 +155,11 @@ class K8SSpawner(K8SManager):
             self._delete_pod(task_type=TaskType.WORKER, task_idx=i)
 
     def _create_ps(self, resources, n_pods):
-        command = ["python3", "-c"]
         resp = []
         for i in range(n_pods):
-            args = self.get_pod_args(task_type=TaskType.PS,
-                                     task_idx=i,
-                                     schedule='run_std_server')
+            command, args = self.get_pod_cmd_args(task_type=TaskType.PS,
+                                                  task_idx=i,
+                                                  schedule='run_std_server')
             resp.append(self._create_pod(task_type=TaskType.PS,
                                          task_idx=i,
                                          command=command,
@@ -313,7 +310,10 @@ class K8SSpawner(K8SManager):
         name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         self.delete_config_map(name, reraise=True)
 
-    def get_pod_args(self, task_type, task_idx, schedule):
+    def get_pod_cmd_args(self, task_type, task_idx, schedule):
+        if self.spec.run_exec:
+            return self.spec.run_exec.cmd.split(' '), []
+
         spec_data = json.dumps(self.spec.parsed_data)
 
         args = [
@@ -325,7 +325,7 @@ class K8SSpawner(K8SManager):
                 task_type=task_type,
                 task_idx=task_idx,
                 schedule=schedule)]
-        return args
+        return ["python3", "-c"], args
 
     def create_worker(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
