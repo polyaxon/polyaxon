@@ -2,19 +2,24 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+import logging
 import uuid
 
 from django.conf import settings
+from kubernetes.client.rest import ApiException
 
 from polyaxon_schemas.utils import TaskType
 from rest_framework import fields
 
 from api.utils import config
 from experiments.serializers import ExperimentJobSerializer
+from repos.dockerize import get_image_info
 
 from spawner import K8SSpawner
 from experiments.models import ExperimentJob
 from spawner.utils.constants import ExperimentLifeCycle
+
+logger = logging.getLogger('polyaxon.scheduler')
 
 
 def start_experiment(experiment):
@@ -23,6 +28,14 @@ def start_experiment(experiment):
 
     project = experiment.project
     group = experiment.experiment_group
+
+    job_docker_image = None  # This will force the spawner to use the default docker image
+    if experiment.compiled_spec.run_exec:
+        image_name, image_tag = get_image_info(experiment=experiment)
+        job_docker_image = '{}:{}'.format(image_name, image_tag)
+        logger.info('Start experiment with built image `{}`'.format(job_docker_image))
+    else:
+        logger.info('Start experiment with default image.')
 
     # Use spawner to start the experiment
     spawner = K8SSpawner(project_name=project.unique_name,
@@ -35,9 +48,15 @@ def start_experiment(experiment):
                          k8s_config=settings.K8S_CONFIG,
                          namespace=settings.K8S_NAMESPACE,
                          in_cluster=True,
+                         job_docker_image=job_docker_image,
                          use_sidecar=True,
                          sidecar_config=config.get_requested_params(to_str=True))
-    resp = spawner.start_experiment()
+    try:
+        resp = spawner.start_experiment()
+    except ApiException:
+        logger.warning('Could not start the experiment, please check your polyaxon spec.')
+        experiment.set_status(ExperimentLifeCycle.FAILED)
+        return
 
     # Get the number of jobs this experiment started
     master = resp[TaskType.MASTER]
