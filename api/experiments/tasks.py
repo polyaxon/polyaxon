@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from docker.errors import DockerException
+
 from api.celery_api import app as celery_app
 from api.settings import CeleryTasks
 from repos import dockerize
@@ -43,7 +45,12 @@ def build_experiment(experiment_id):
     experiment.set_status(ExperimentLifeCycle.BUILDING)
 
     # docker image
-    dockerize.build_experiment(experiment)
+    try:
+        dockerize.build_experiment(experiment)
+    except DockerException as e:
+        logger.warning('Failed to build experiment %s\n' % e)
+        experiment.set_status(ExperimentLifeCycle.FAILED)
+        return
 
     # Now we can start the experiment
     start_experiment.delay(experiment_id=experiment_id)
