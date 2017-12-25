@@ -88,7 +88,7 @@ def stop(experiment, project):
 
     Examples:
     ```
-    polyaxon group stop 2
+    polyaxon experiment stop 2
     ```
     """
     user, project_name = get_project_or_local(project)
@@ -110,7 +110,7 @@ def stop(experiment, project):
 @click.argument('experiment', type=int)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def restart(experiment, project):
-    """Delete experiment group."""
+    """Delete experiment."""
     user, project_name = get_project_or_local(project)
     try:
         response = PolyaxonClients().experiment.restart(
@@ -165,7 +165,7 @@ def statuses(experiment, project, page):
 
     Examples:
     ```
-    polyaxon experiment status 3
+    polyaxon experiment statuses 3
     ```
     """
     user, project_name = get_project_or_local(project)
@@ -207,7 +207,7 @@ def resources(experiment, project):
     user, project_name = get_project_or_local(project)
     try:
         PolyaxonClients().experiment.resources(
-            user, project_name, experiment, message_handler=click.echo)
+            user, project_name, experiment, message_handler=Printer.resources)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get resources for experiment `{}`.'.format(experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -242,7 +242,7 @@ def logs(experiment, project):
                 job_to_color[job_info] = color
 
             log_line = '{} -- {}'.format(Printer.add_color(job_info, color), message['log_line'])
-            click.echo(log_line)
+            Printer.log(log_line)
         elif status == 'Building':
             status = Printer.add_color(status, 'yellow')
             try:
@@ -252,12 +252,16 @@ def logs(experiment, project):
                         status,
                         log_line['id'],
                         log_line['progress'])
-                    click.echo(log_line, nl=False)
+                    Printer.log(log_line)
+                    sys.stdout.flush()
                 else:
-                    click.echo(
-                        '{} -- {}'.format(status, log_line))
+                    click.echo('--')
+                    Printer.log('{} -- {}'.format(status, log_line))
             except json.JSONDecodeError:
-                click.echo('{} -- {}'.format(status, log_line))
+                click.echo('--')
+                Printer.log('{} -- {}'.format(status, log_line))
+        else:
+            Printer.log('{} -- {}'.format(status, log_line))
     try:
         PolyaxonClients().experiment.logs(
             user, project_name, experiment, message_handler=message_handler)
