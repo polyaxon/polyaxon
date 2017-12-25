@@ -14,10 +14,10 @@ class ExperimentJobSchema(Schema):
     last_status = fields.Str(allow_none=True)
     is_running = fields.Bool(allow_none=True)
     is_done = fields.Bool(allow_none=True)
-    created_at = fields.DateTime()
-    updated_at = fields.DateTime()
-    started_at = fields.DateTime(allow_none=True)
-    finished_at = fields.DateTime(allow_none=True)
+    created_at = fields.LocalDateTime()
+    updated_at = fields.LocalDateTime()
+    started_at = fields.LocalDateTime(allow_none=True)
+    finished_at = fields.LocalDateTime(allow_none=True)
     definition = fields.Dict()
 
     class Meta:
@@ -74,10 +74,10 @@ class ExperimentSchema(Schema):
     group_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     last_status = fields.Str(allow_none=True)
-    created_at = fields.DateTime(allow_none=True)
-    updated_at = fields.DateTime(allow_none=True)
-    started_at = fields.DateTime(allow_none=True)
-    finished_at = fields.DateTime(allow_none=True)
+    created_at = fields.LocalDateTime(allow_none=True)
+    updated_at = fields.LocalDateTime(allow_none=True)
+    started_at = fields.LocalDateTime(allow_none=True)
+    finished_at = fields.LocalDateTime(allow_none=True)
     is_running = fields.Bool(allow_none=True)
     is_done = fields.Bool(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
@@ -155,7 +155,7 @@ class ExperimentConfig(BaseConfig):
 class ExperimentStatusSchema(Schema):
     uuid = UUID()
     experiment = UUID()
-    created_at = fields.DateTime()
+    created_at = fields.LocalDateTime()
     status = fields.Str()
 
     class Meta:
@@ -184,7 +184,7 @@ class ExperimentStatusConfig(BaseConfig):
 class ExperimentJobStatusSchema(Schema):
     uuid = UUID()
     job = UUID()
-    created_at = fields.DateTime()
+    created_at = fields.LocalDateTime()
     status = fields.Str()
     message = fields.Str(allow_none=True)
     details = fields.Dict(allow_none=True)
@@ -276,7 +276,7 @@ class PodStateSchema(Schema):
     event_type = fields.Str()
     labels = fields.Nested(JobLabelSchema)
     phase = fields.Str()
-    deletion_timestamp = fields.DateTime(allow_none=True)
+    deletion_timestamp = fields.LocalDateTime(allow_none=True)
     pod_conditions = fields.Dict(allow_none=True)
     container_statuses = fields.Dict(allow_none=True)
 

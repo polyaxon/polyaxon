@@ -18,8 +18,8 @@ class ExperimentGroupSchema(Schema):
     project_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     content = fields.Str()
-    created_at = fields.DateTime(allow_none=True)
-    updated_at = fields.DateTime(allow_none=True)
+    created_at = fields.LocalDateTime(allow_none=True)
+    updated_at = fields.LocalDateTime(allow_none=True)
     concurrency = fields.Int(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
     num_pending_experiments = fields.Int(allow_none=True)
@@ -89,7 +89,8 @@ class ProjectSchema(Schema):
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)
     has_code = fields.Bool(allow_none=True)
-    created_at = fields.DateTime(allow_none=True)
+    created_at = fields.LocalDateTime(allow_none=True)
+    updated_at = fields.LocalDateTime(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
     num_experiment_groups = fields.Int(allow_none=True)
     experiment_groups = fields.Nested(ExperimentGroupSchema, many=True, allow_none=True)
@@ -112,7 +113,7 @@ class ProjectConfig(BaseConfig):
     IDENTIFIER = 'project'
     REDUCED_ATTRIBUTES = [
         'user', 'unique_name', 'uuid', 'description', 'experiments',
-        'experiment_groups', 'created_at']
+        'experiment_groups', 'created_at', 'updated_at']
     REDUCED_LIGHT_ATTRIBUTES = ['description']
 
     def __init__(self,
@@ -124,6 +125,7 @@ class ProjectConfig(BaseConfig):
                  is_public=True,
                  has_code=False,
                  created_at=None,
+                 updated_at=None,
                  num_experiments=0,
                  num_experiment_groups=0,
                  experiments=None,
@@ -136,6 +138,7 @@ class ProjectConfig(BaseConfig):
         self.is_public = is_public
         self.has_code = has_code
         self.created_at = self.localize_date(created_at)
+        self.updated_at = self.localize_date(updated_at)
         self.num_experiments = num_experiments
         self.num_experiment_groups = num_experiment_groups
         self.experiments = experiments

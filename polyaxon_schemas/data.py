@@ -37,7 +37,7 @@ class DataDetailsConfig(BaseConfig):
 class DataSchema(Schema):
     uuid = UUID()
     name = fields.Str()
-    created_at = fields.DateTime()
+    created_at = fields.LocalDateTime()
     description = fields.Str(allow_none=True)
     details = fields.Nested(DataDetailsSchema)
     version = fields.Str(allow_none=True)
