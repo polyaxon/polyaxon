@@ -22,6 +22,9 @@ class Cluster(Singleton):
         null=False)
     version_api = JSONField(help_text='The cluster version api infos')
 
+    def __str__(self):
+        return 'Cluster: {}'.format(self.uuid.hex)
+
     @classmethod
     def may_be_update(cls, obj):
         pass
@@ -127,3 +130,6 @@ class ClusterEvent(models.Model):
     data = JSONField()
     meta = JSONField()
     level = models.CharField(max_length=16)
+
+    def __str__(self):
+        return 'Event {} at {}'.format(self.level, self.created_at)

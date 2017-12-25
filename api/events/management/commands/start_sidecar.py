@@ -31,11 +31,15 @@ class Command(BaseMonitorCommand):
                                                                 persist),
             ending='\n')
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-        labels = sidecar.can_log(k8s_manager, pod_id, log_sleep_interval)
+        is_running, labels = sidecar.can_log(k8s_manager, pod_id, log_sleep_interval)
+        if not is_running:
+            sidecar.logger.info('Jobs is not running anymore.')
+            return 
+
         sidecar.run(k8s_manager=k8s_manager,
                     pod_id=pod_id,
                     experiment_uuid=labels.experiment_uuid.hex,
                     job_uuid=labels.job_uuid.hex,
                     container_job_name=settings.JOB_CONTAINER_NAME,
                     persist=persist)
-        sidecar.logger.debug('Finished logging')
+        sidecar.logger.info('Finished logging')

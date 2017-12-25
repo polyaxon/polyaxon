@@ -76,6 +76,8 @@ class PodLifeCycle(object):
         (FAILED, FAILED),
     )
 
+    DONE_STATUS = [FAILED, SUCCEEDED]
+
 
 class JobLifeCycle(object):
     """Experiment lifecycle
