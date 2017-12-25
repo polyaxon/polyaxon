@@ -33,8 +33,9 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentJob
         fields = (
-            'uuid', 'experiment', 'experiment_name', 'definition', 'last_status', 'is_running',
-            'is_done', 'created_at', 'updated_at', 'started_at', 'finished_at')
+            'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
+            'definition', 'last_status',  'is_running', 'is_done', 'created_at', 'updated_at',
+            'started_at', 'finished_at')
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex

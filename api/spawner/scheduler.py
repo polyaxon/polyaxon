@@ -78,13 +78,15 @@ def start_experiment(experiment):
         job_uuid = uuid.UUID(job_uuid)
         ExperimentJob.objects.create(uuid=job_uuid,
                                      experiment=experiment,
-                                     definition=get_definition(worker))
+                                     definition=get_definition(worker),
+                                     role=TaskType.WORKER)
     for ps in resp[TaskType.PS]:
         job_uuid = ps['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         ExperimentJob.objects.create(uuid=job_uuid,
                                      experiment=experiment,
-                                     definition=get_definition(ps))
+                                     definition=get_definition(ps),
+                                     role=TaskType.PS)
 
 
 def stop_experiment(experiment, update_status=False):

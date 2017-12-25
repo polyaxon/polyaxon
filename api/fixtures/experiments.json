@@ -1025,6 +1025,8 @@
         "updated_at": "2017-12-24T17:21:10.529Z",
         "uuid": "5c88c60c-4fe1-5266-8113-a70528d64e79",
         "experiment": 1,
+        "sequence": 1,
+        "role": "master",
         "definition": {
             "service": {
                 "status": {
@@ -1732,6 +1734,8 @@
         "updated_at": "2017-12-24T17:49:54.812Z",
         "uuid": "b4a18d57-9cca-59e7-858a-11c6cc9fcf41",
         "experiment": 2,
+        "sequence": 1,
+        "role": "master",
         "definition": {
             "service": {
                 "status": {
@@ -2439,6 +2443,8 @@
         "updated_at": "2017-12-24T18:12:45.742Z",
         "uuid": "d866e3e3-c968-570a-86f4-8735bcf43bea",
         "experiment": 3,
+        "sequence": 1,
+        "role": "master",
         "definition": {
             "service": {
                 "status": {
@@ -3146,6 +3152,8 @@
         "updated_at": "2017-12-24T18:16:03.251Z",
         "uuid": "024d2b1a-51b7-50a7-8381-32213e89f08b",
         "experiment": 4,
+        "sequence": 1,
+        "role": "master",
         "definition": {
             "service": {
                 "status": {
@@ -3853,6 +3861,8 @@
         "updated_at": "2017-12-24T18:53:54.770Z",
         "uuid": "ecade1b4-9f4d-5893-a35f-73ec79eba718",
         "experiment": 6,
+        "sequence": 1,
+        "role": "master",
         "definition": {
             "service": {
                 "status": {
@@ -4565,6 +4575,8 @@
         "updated_at": "2017-12-24T18:53:54.811Z",
         "uuid": "5cfe5603-7641-5ca3-aed8-c61fe647df69",
         "experiment": 6,
+        "sequence": 2,
+        "role": "worker",
         "definition": {
             "service": {
                 "status": {
@@ -5277,6 +5289,8 @@
         "updated_at": "2017-12-24T18:53:54.916Z",
         "uuid": "b1b816f0-6c65-52fc-8f6d-03ee2fc976c9",
         "experiment": 6,
+        "sequence": 3,
+        "role": "ps",
         "definition": {
             "service": {
                 "status": {
@@ -5989,6 +6003,8 @@
         "updated_at": "2017-12-24T19:02:11.048Z",
         "uuid": "40465c7c-ca4f-55bc-a1f9-8abc2bf8c770",
         "experiment": 5,
+        "sequence": 1,
+        "role": "master",
         "definition": {
             "service": {
                 "status": {
@@ -6701,6 +6717,8 @@
         "updated_at": "2017-12-24T19:02:11.146Z",
         "uuid": "de32c613-b1c7-5294-8cbb-92ce7a33f0b6",
         "experiment": 5,
+        "sequence": 2,
+        "role": "worker",
         "definition": {
             "service": {
                 "status": {
@@ -7413,6 +7431,8 @@
         "updated_at": "2017-12-24T19:02:11.231Z",
         "uuid": "027ac27d-7f57-54ff-baf6-081e6b657e93",
         "experiment": 5,
+        "sequence": 3,
+        "role": "ps",
         "definition": {
             "service": {
                 "status": {

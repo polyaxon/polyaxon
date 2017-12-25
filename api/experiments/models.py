@@ -9,6 +9,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.utils import TaskType
 
 from clusters.models import Cluster
 from libs.models import DiffModel, DescribableModel
@@ -55,6 +56,10 @@ class Experiment(DiffModel, DescribableModel):
         related_name='clones',
         help_text='The original experiment that was cloned from.')
 
+    class Meta:
+        ordering = ['sequence']
+        unique_together = (('project', 'sequence'),)
+
     def save(self, *args, **kwargs):
         if self.pk is None:
             last = Experiment.objects.filter(project=self.project).last()
@@ -63,10 +68,6 @@ class Experiment(DiffModel, DescribableModel):
                 self.sequence = last.sequence + 1
 
         super(Experiment, self).save(*args, **kwargs)
-
-    class Meta:
-        ordering = ['sequence']
-        unique_together = (('project', 'sequence'),)
 
     def __str__(self):
         return self.unique_name
@@ -189,6 +190,28 @@ class ExperimentJob(DiffModel):
         null=False)
     experiment = models.ForeignKey(Experiment, related_name='jobs')
     definition = JSONField(help_text='The specific values for this job.')
+    role = models.CharField(max_length=64, default=TaskType.MASTER)
+    sequence = models.IntegerField(
+        editable=False,
+        null=False,
+        help_text='The sequence number of this job within the experiment.', )
+
+    class Meta:
+        ordering = ['sequence']
+        unique_together = (('experiment', 'sequence'),)
+
+    @property
+    def unique_name(self):
+        return '{}.{}.{}'.format(self.experiment.unique_name, self.sequence, self.role)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            last = ExperimentJob.objects.filter(experiment=self.experiment).last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
+
+        super(ExperimentJob, self).save(*args, **kwargs)
 
     @property
     def last_status(self):
