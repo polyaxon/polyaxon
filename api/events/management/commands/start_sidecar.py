@@ -40,6 +40,8 @@ class Command(BaseMonitorCommand):
                     pod_id=pod_id,
                     experiment_uuid=labels.experiment_uuid.hex,
                     job_uuid=labels.job_uuid.hex,
+                    task_type=labels.task_type,
+                    task_idx=labels.task_idx,
                     container_job_name=settings.JOB_CONTAINER_NAME,
                     persist=persist)
         sidecar.logger.info('Finished logging')

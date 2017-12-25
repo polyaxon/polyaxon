@@ -13,7 +13,13 @@ from events.tasks import handle_events_job_logs
 logger = logging.getLogger('polyaxon.monitors.publisher')
 
 
-def publish_log(log_line, status, experiment_uuid, job_uuid, persist=False):
+def publish_log(log_line,
+                status,
+                experiment_uuid,
+                job_uuid,
+                persist=False,
+                task_type=None,
+                task_idx=None):
     try:
         log_line = log_line.decode('utf-8')
     except AttributeError:
@@ -34,7 +40,9 @@ def publish_log(log_line, status, experiment_uuid, job_uuid, persist=False):
                     'experiment_uuid': experiment_uuid,
                     'job_uuid': job_uuid,
                     'log_line': log_line,
-                    'status': status
+                    'status': status,
+                    'task_type': task_type,
+                    'task_idx': task_idx
                 },
                 routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
                                               experiment_uuid,

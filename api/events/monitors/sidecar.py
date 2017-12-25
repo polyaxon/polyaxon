@@ -14,7 +14,14 @@ from spawner.utils.constants import PodLifeCycle, ExperimentLifeCycle
 logger = logging.getLogger('polyaxon.monitors.sidecar')
 
 
-def run(k8s_manager, pod_id, experiment_uuid, job_uuid, container_job_name, persist):
+def run(k8s_manager,
+        pod_id,
+        experiment_uuid,
+        job_uuid,
+        task_type,
+        task_idx,
+        container_job_name,
+        persist):
     raw = k8s_manager.k8s_api.read_namespaced_pod_log(pod_id,
                                                       k8s_manager.namespace,
                                                       container=container_job_name,
@@ -25,7 +32,9 @@ def run(k8s_manager, pod_id, experiment_uuid, job_uuid, container_job_name, pers
                               status=ExperimentLifeCycle.RUNNING,
                               experiment_uuid=experiment_uuid,
                               job_uuid=job_uuid,
-                              persist=persist)
+                              persist=persist,
+                              task_type=task_type,
+                              task_idx=task_idx)
 
 
 def can_log(k8s_manager, pod_id, log_sleep_interval):
