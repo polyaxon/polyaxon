@@ -29,7 +29,7 @@ def get(experiment, job, project):
 
     Examples:
     ```
-    polyaxon job get 50c62372137940ca8c456d8596946dd7
+    polyaxon job get 1 50c62372137940ca8c456d8596946dd7
     ```
     """
     user, project_name = get_project_or_local(project)
@@ -40,7 +40,7 @@ def get(experiment, job, project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = response.to_dict()
+    response = Printer.add_status_color(response.to_light_dict())
     Printer.print_header("Job info:")
     dict_tabulate(response)
 
@@ -54,7 +54,7 @@ def statuses(experiment, job, project):
 
     Examples:
     ```
-    polyaxon job status 50c62372137940ca8c456d8596946dd7
+    polyaxon job statuses 1 50c62372137940ca8c456d8596946dd7
     ```
     """
     user, project_name = get_project_or_local(project)
@@ -89,7 +89,7 @@ def resources(experiment, job, project):
 
     Examples:
     ```
-    polyaxon job resources 50c62372137940ca8c456d8596946dd7
+    polyaxon job resources 1 50c62372137940ca8c456d8596946dd7
     ```
     """
     user, project_name = get_project_or_local(project)
@@ -98,7 +98,7 @@ def resources(experiment, job, project):
                                         project_name,
                                         experiment,
                                         job,
-                                        message_handler=lambda x: click.echo)
+                                        message_handler=Printer.resources)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get resources for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -114,13 +114,13 @@ def logs(experiment, job, project):
 
     Examples:
     ```
-    polyaxon job logs 50c62372137940ca8c456d8596946dd7
+    polyaxon job logs 1 50c62372137940ca8c456d8596946dd7
     ```
     """
     user, project_name = get_project_or_local(project)
 
     def message_handler(log_line):
-        click.echo(log_line['log_line'])
+        Printer.log(log_line['log_line'])
 
     try:
         PolyaxonClients().job.logs(user,
