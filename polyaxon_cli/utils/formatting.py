@@ -5,7 +5,9 @@ from collections import OrderedDict
 
 import click
 import six
+import sys
 
+from polyaxon_schemas.experiment import ContainerResourcesConfig
 from polyaxon_schemas.utils import to_list
 from tabulate import tabulate
 
@@ -80,3 +82,26 @@ class Printer(object):
         values = to_list(values)
         values = [cls.add_color(value, color) for value in values]
         click.echo(text_format.format(*values))
+
+    @staticmethod
+    def log(value):
+        click.echo(value, nl=False)
+
+    @classmethod
+    def resources(cls, jobs_resources):
+        jobs_resources = to_list(jobs_resources)
+        click.clear()
+        data = [['Job', 'Mem Usage/Limit', 'CPU%-CPUs', 'GPU Mem', 'GPU Usage']]
+        for job_resources in jobs_resources:
+            job_resources = ContainerResourcesConfig.from_dict(job_resources)
+            line = [
+                job_resources.job_uuid.hex,
+                '{} / {}'.format(job_resources.memory_used / (1024 ** 3),
+                                 job_resources.memory_limit / (1024 ** 3)),
+                '{} - {}'.format(job_resources.cpu_percentage,
+                                 len(job_resources.percpu_percentage))]
+            if job_resources.gpu_resources:
+                pass
+            data.append(line)
+        click.echo(tabulate(data, headers="firstrow"))
+        sys.stdout.flush()
