@@ -8,6 +8,7 @@ from docker.errors import DockerException
 from api.celery_api import app as celery_app
 from api.settings import CeleryTasks
 from repos import dockerize
+from repos.models import Repo
 
 from spawner import scheduler
 from spawner.utils.constants import ExperimentLifeCycle
@@ -24,7 +25,8 @@ def get_valid_experiment(experiment_id):
         return None
 
     if experiment.is_done:
-        logger.info('Experiment id `{}` was {}.'.format(experiment_id, experiment.last_status))
+        logger.info('Experiment id `{}` stopped with status `{}`.'.format(experiment_id,
+                                                                          experiment.last_status))
         return None
 
     return experiment
@@ -46,10 +48,17 @@ def build_experiment(experiment_id):
 
     # docker image
     try:
-        dockerize.build_experiment(experiment)
+        status = dockerize.build_experiment(experiment)
     except DockerException as e:
         logger.warning('Failed to build experiment %s\n' % e)
         experiment.set_status(ExperimentLifeCycle.FAILED)
+        return
+    except Repo.DoesNotExist:
+        logger.warning('No code was found for this project')
+        experiment.set_status(ExperimentLifeCycle.FAILED)
+        return
+
+    if not status:
         return
 
     # Now we can start the experiment

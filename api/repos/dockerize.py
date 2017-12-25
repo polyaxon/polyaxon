@@ -13,6 +13,7 @@ from docker import APIClient
 from docker.errors import DockerException
 
 from events import publisher
+from experiments.models import Experiment
 from repos import git
 from repos.models import ExternalRepo
 from spawner.utils.constants import ExperimentLifeCycle
@@ -54,7 +55,21 @@ COPY {{ folder_name }} {{ workdir }}
 """
 
 
+def experiment_still_running(experiment_uuid):
+    try:
+        experiment = Experiment.objects.get(uuid=experiment_uuid)
+    except Experiment.DoesNotExist:
+        return False
+
+    if experiment.is_done:
+        return False
+
+    return True
+
+
 class DockerBuilder(object):
+    CHECK_INTERVAL = 10
+
     def __init__(self,
                  experiment_uuid,
                  repo_path,
@@ -93,8 +108,6 @@ class DockerBuilder(object):
                               reauth=True)
         except DockerException as e:
             logger.exception('Failed to connect to registry %s\n' % e)
-
-        return
 
     def _get_requirements_path(self):
         requirements_path = os.path.join(self.repo_path, 'polyaxon_requirements.txt')
@@ -137,6 +150,7 @@ class DockerBuilder(object):
             dockerfile.write(self.render())
 
         self.connect()
+        check_pulse = 0
         for log_line in self.docker.build(
             path=self.build_path,
             tag='{}:{}'.format(self.image_name, self.image_tag),
@@ -149,19 +163,30 @@ class DockerBuilder(object):
             container_limits=limits,
             stream=True,
         ):
+            check_pulse += 1
             publisher.publish_log(
                 log_line=log_line,
-                status=ExperimentLifeCycle.RUNNING,
+                status=ExperimentLifeCycle.BUILDING,
                 experiment_uuid=self.experiment_uuid,
                 job_uuid='all',
                 persist=False  # TODO: ADD log persistence
             )
+            # Check if experiment is not stopped in the meanwhile
+            if check_pulse > self.CHECK_INTERVAL:
+                if not experiment_still_running(self.experiment_uuid):
+                    logger.info('Experiment `{}` is not running, stopping build'.format(
+                        self.experiment_uuid))
+                    return False
+                else:
+                    check_pulse = 0
+        return True
 
     def push(self):
         # Build a progress setup for each layer, and only emit per-layer info every 1.5s
         layers = {}
         last_emit_time = time.time()
         self.connect()
+        check_pulse = 0
         for log_line in self.docker.push(self.image_name, tag=self.image_tag, stream=True):
             lines = [l for l in log_line.decode('utf-8').split('\r\n') if l]
             lines = [json.loads(l) for l in lines]
@@ -181,11 +206,23 @@ class DockerBuilder(object):
 
                 publisher.publish_log(
                     log_line=log_line,
-                    status=ExperimentLifeCycle.RUNNING,
+                    status=ExperimentLifeCycle.BUILDING,
                     experiment_uuid=self.experiment_uuid,
                     job_uuid='all',
                     persist=False  # TODO: ADD log persistence
                 )
+
+            # Check if experiment is not stopped in the meanwhile
+            check_pulse += 1
+            if check_pulse > self.CHECK_INTERVAL:
+                if not experiment_still_running(self.experiment_uuid):
+                    logger.info('Experiment `{}` is not running, stopping build'.format(
+                        self.experiment_uuid))
+                    return False
+                else:
+                    check_pulse = 0
+
+        return True
 
 
 def get_image_info(experiment):
@@ -247,5 +284,8 @@ def build_experiment(experiment):
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
                          registry_host=settings.REGISTRY_HOST)
-    docker_builder.build()
-    docker_builder.push()
+    if not docker_builder.build():
+        return False
+    if not docker_builder.push():
+        return False
+    return True
