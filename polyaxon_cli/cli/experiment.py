@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
+
 import click
 import sys
 
 from collections import deque
 
-import time
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 from polyaxon_cli.cli.project import get_project_or_local
@@ -228,9 +229,11 @@ def logs(experiment, project):
     colors = deque(Printer.COLORS)
     job_to_color = {}
 
-    def message_handler(log_line):
-        if log_line['status'] == 'Running':
-            job_info = '{}.{}'.format(log_line['task_type'], log_line['job_uuid'])
+    def message_handler(message):
+        status = message['status']
+        log_line = message['log_line']
+        if status == 'Running':
+            job_info = '{}.{}'.format(message['task_type'], message['job_uuid'])
             if job_info in job_to_color:
                 color = job_to_color[job_info]
             else:
@@ -238,13 +241,23 @@ def logs(experiment, project):
                 colors.rotate(-1)
                 job_to_color[job_info] = color
 
-            log_line = '{} -- {}'.format(Printer.add_color(job_info, color), log_line['log_line'])
+            log_line = '{} -- {}'.format(Printer.add_color(job_info, color), message['log_line'])
             click.echo(log_line)
-        else:
-            log_line = '{} -- {}'.format(Printer.add_color(log_line['status'], 'yellow'),
-                                         log_line['log_line'])
-            click.echo(log_line)
-
+        elif status == 'Building':
+            status = Printer.add_color(status, 'yellow')
+            try:
+                log_line = json.loads(log_line)
+                if log_line.get('id') and log_line.get('progress'):
+                    log_line = '{} -- container: {}, progress: {}\r'.format(
+                        status,
+                        log_line['id'],
+                        log_line['progress'])
+                    click.echo(log_line, nl=False)
+                else:
+                    click.echo(
+                        '{} -- {}'.format(status, log_line))
+            except json.JSONDecodeError:
+                click.echo('{} -- {}'.format(status, log_line))
     try:
         PolyaxonClients().experiment.logs(
             user, project_name, experiment, message_handler=message_handler)
