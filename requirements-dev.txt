@@ -1,4 +1,4 @@
-numpy==1.13.1
+numpy==1.13.3
 Pillow==4.2.1
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@b5c2b120a5b1593dae0c8673ce87434f232441cd#egg=polyaxon-schemas
 scipy==0.19.1
