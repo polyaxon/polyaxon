@@ -7,6 +7,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus, ExperimentStatus
+from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
 from spawner import scheduler
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
@@ -18,11 +19,8 @@ logger = logging.getLogger('polyaxon.experiments')
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")
+@ignore_raw
 def new_experiment(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
     created = kwargs.get('created', False)
 
@@ -37,11 +35,8 @@ def new_experiment(sender, **kwargs):
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_deleted")
+@ignore_raw
 def experiment_deleted(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
     try:
         _ = instance.experiment_group
@@ -52,11 +47,8 @@ def experiment_deleted(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
+@ignore_raw
 def new_experiment_job(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
     created = kwargs.get('created', False)
 
@@ -68,11 +60,8 @@ def new_experiment_job(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentJobStatus, dispatch_uid="experiment_job_status_saved")
+@ignore_raw
 def new_experiment_job_status(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
     created = kwargs.get('created', False)
 
@@ -96,11 +85,8 @@ def new_experiment_job_status(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_saved")
+@ignore_raw
 def new_experiment_status(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
 
     if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):

@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
+from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
 from projects.tasks import start_group_experiments
 from experiments.models import Experiment
@@ -8,11 +9,8 @@ from spawner import scheduler
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
+@ignore_raw
 def new_experiment_group(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
     created = kwargs.get('created', False)
 
@@ -32,11 +30,9 @@ def new_experiment_group(sender, **kwargs):
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
+@ignore_raw
 def experiment_group_deleted(sender, **kwargs):
     """Stop all experiments before deleting the group."""
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
 
     instance = kwargs['instance']
     for experiment in instance.running_experiments:
