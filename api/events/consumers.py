@@ -145,7 +145,8 @@ class Consumer(SocketManager):
         self._channel.exchange_declare(self.on_exchange_declareok,
                                        exchange_name,
                                        self.EXCHANGE_TYPE,
-                                       durable=True)
+                                       durable=True,
+                                       passive=True)
 
     def on_exchange_declareok(self, unused_frame):
         """Invoked by pika when RabbitMQ has finished the Exchange.Declare RPC
@@ -194,8 +195,7 @@ class Consumer(SocketManager):
 
         :param pika.frame.Method method_frame: The Basic.Cancel frame
         """
-        logger.info('Consumer was cancelled remotely, shutting down: %r',
-                    method_frame)
+        logger.info('Consumer was cancelled remotely, shutting down: %r', method_frame)
         if self._channel:
             self._channel.close()
 
@@ -226,7 +226,6 @@ class Consumer(SocketManager):
         if self.ws and body:
             body = json.loads(body.decode('utf-8'))
             body = json.dumps(body)
-            logger.info('Received new message, for {} ws.'.format(len(self.ws)))
             self.messages.append(body)
         logger.debug('out ws : {}'.format(len(self.ws)))
         logger.debug('out messages : {}'.format(len(self.messages)))

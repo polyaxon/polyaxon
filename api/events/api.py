@@ -24,6 +24,7 @@ logger = logging.getLogger('polyaxon.monitors.api')
 
 SOCKET_SLEEP = 1
 MAX_RETRIES = 15
+RESOURCES_CHECK = 15
 
 app = Sanic(__name__)
 
@@ -67,15 +68,6 @@ def _get_validated_experiment(project, experiment_sequence):
     return experiment
 
 
-def handle_disconnected_ws(ws_manager, ws, job_uuid):
-    ws_manager.remove_sockets(ws)
-    if len(ws_manager.ws) == 0:
-        RedisToStream.remove_job_resources(job_uuid=job_uuid)
-        logger.info('Stopping resources monitor for uuid {}'.format(job_uuid))
-
-    logger.info('Quitting resources socket for uuid {}'.format(job_uuid))
-
-
 @app.websocket(
     '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_uuid>/resources')
 @authorized()
@@ -91,20 +83,48 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
             'Job resources with uuid `{}` is now being monitored'.format(job_uuid))
         RedisToStream.monitor_job_resources(job_uuid=job_uuid)
 
-    ws_manager = request.app.job_resources_ws_manger
+    if job_uuid in request.app.job_resources_ws_mangers:
+        ws_manager = request.app.job_resources_ws_mangers[job_uuid]
+    else:
+        ws_manager = SocketManager()
+        request.app.job_resources_ws_mangers[job_uuid] = ws_manager
+
+    def handle_job_disconnected_ws(ws):
+        ws_manager.remove_sockets(ws)
+        if len(ws_manager.ws) == 0:
+            logger.info('Stopping resources monitor for uuid {}'.format(job_uuid))
+            RedisToStream.remove_job_resources(job_uuid=job_uuid)
+            request.app.job_resources_ws_mangers.pop(job_uuid, None)
+
+        logger.info('Quitting resources socket for uuid {}'.format(job_uuid))
+
     ws_manager.add_socket(ws)
+    should_check = 0
     while True:
         resources = RedisToStream.get_latest_job_resources(job_uuid)
+        should_check += 1
+
+        # After trying a couple of time, we must check the status of the experiment
+        if should_check > RESOURCES_CHECK:
+            if experiment.is_done:
+                logger.info('removing all socket because the job `{}` is done'.format(
+                    job_uuid))
+                ws_manager.ws = set([])
+                handle_job_disconnected_ws(ws)
+                return
+            else:
+                should_check = 0
+
         if resources:
             try:
                 await ws.send(resources)
             except ConnectionClosed:
-                handle_disconnected_ws(ws_manager, ws, job_uuid)
+                handle_job_disconnected_ws(ws)
                 return
 
         # Just to check if connection closed
         if ws._connection_lost:
-            handle_disconnected_ws(ws_manager, ws, job_uuid)
+            handle_job_disconnected_ws(ws)
             return
         await asyncio.sleep(SOCKET_SLEEP)
 
@@ -124,22 +144,51 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
             'Experiment resource with uuid `{}` is now being monitored'.format(experiment_uuid))
         RedisToStream.monitor_experiment_resources(experiment_uuid=experiment_uuid)
 
+    if experiment_uuid in request.app.experiment_resources_ws_mangers:
+        ws_manager = request.app.experiment_resources_ws_mangers[experiment_uuid]
+    else:
+        ws_manager = SocketManager()
+        request.app.experiment_resources_ws_mangers[experiment_uuid] = ws_manager
+
+    def handle_experiment_disconnected_ws(ws):
+        ws_manager.remove_sockets(ws)
+        if len(ws_manager.ws) == 0:
+            logger.info('Stopping resources monitor for uuid {}'.format(experiment_uuid))
+            RedisToStream.remove_experiment_resources(experiment_uuid=experiment_uuid)
+            request.app.experiment_resources_ws_mangers.pop(experiment_uuid, None)
+
+        logger.info('Quitting resources socket for uuid {}'.format(experiment_uuid))
+
     job_uuids = [job_uuid.hex for job_uuid in experiment.jobs.values_list('uuid', flat=True)]
-    ws_manager = request.app.experiment_resources_ws_manger
     ws_manager.add_socket(ws)
+    should_check = 0
     while True:
         resources = RedisToStream.get_latest_experiment_resources(job_uuids)
+        should_check += 1
+
+        # After trying a couple of time, we must check the status of the experiment
+        if should_check > RESOURCES_CHECK:
+            if experiment.is_done:
+                logger.info('removing all socket because the experiment `{}` is done'.format(
+                    experiment_uuid))
+                ws_manager.ws = set([])
+                handle_experiment_disconnected_ws(ws)
+                return
+            else:
+                should_check = 0
+
         if resources:
             try:
                 await ws.send(resources)
             except ConnectionClosed:
-                handle_disconnected_ws(ws_manager, ws, experiment_uuid)
+                handle_experiment_disconnected_ws(ws)
                 return
 
         # Just to check if connection closed
         if ws._connection_lost:
-            handle_disconnected_ws(ws_manager, ws, experiment_uuid)
+            handle_experiment_disconnected_ws(ws)
             return
+
         await asyncio.sleep(SOCKET_SLEEP)
 
 
@@ -158,46 +207,53 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
         RedisToStream.monitor_job_logs(job_uuid=job_uuid)
 
     # start consumer
-    if request.app.job_logs_consumer is None:
+    if job_uuid in request.app.job_logs_consumers:
+        consumer = request.app.job_logs_consumers[job_uuid]
+    else:
         logger.info('Add job log consumer for {}'.format(job_uuid))
-        request.app.job_logs_consumer = Consumer(
+        consumer = Consumer(
             routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
                                           experiment.uuid.hex,
                                           job_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, job_uuid))
-        request.app.job_logs_consumer.run()
+        request.app.job_logs_consumers[job_uuid] = consumer
+        consumer.run()
 
     # add socket manager
-    request.app.job_logs_consumer.add_socket(ws)
+    consumer.add_socket(ws)
     should_quite = False
-    no_message_retries = 0
+    num_message_retries = 0
     while True:
-        no_message_retries += 1
-        for message in request.app.job_logs_consumer.get_messages():
-            no_message_retries = 0
+        num_message_retries += 1
+        for message in consumer.get_messages():
+            num_message_retries = 0
             disconnected_ws = set()
-            for _ws in request.app.job_logs_consumer.ws:
+            for _ws in consumer.ws:
                 try:
                     await _ws.send(message)
                 except ConnectionClosed:
                     disconnected_ws.add(_ws)
-            request.app.job_logs_consumer.remove_sockets(disconnected_ws)
+            consumer.remove_sockets(disconnected_ws)
 
         # After trying a couple of time, we must check the status of the experiment
-        if no_message_retries > MAX_RETRIES and job.is_done:
+        if num_message_retries > MAX_RETRIES and job.is_done:
             logger.info('removing all socket because the job `{}` is done'.format(
                 job_uuid))
-            request.app.job_logs_consumer.ws = set([])
+            consumer.ws = set([])
 
         # Just to check if connection closed
         if ws._connection_lost:
             logger.info('Quitting logs socket for job uuid {}'.format(job_uuid))
-            request.app.job_logs_consumer.remove_sockets({ws, })
+            consumer.remove_sockets({ws, })
             should_quite = True
 
-        if len(request.app.job_logs_consumer.ws) == 0:
-            RedisToStream.remove_job_logs(job_uuid=job_uuid)
+        if len(consumer.ws) == 0:
             logger.info('Stopping logs monitor for job uuid {}'.format(job_uuid))
+            RedisToStream.remove_job_logs(job_uuid=job_uuid)
+            # if job_uuid in request.app.job_logs_consumers:
+            #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
+            #     if consumer:
+            #         consumer.stop()
             should_quite = True
 
         if should_quite:
@@ -220,44 +276,51 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
         RedisToStream.monitor_experiment_logs(experiment_uuid=experiment_uuid)
 
     # start consumer
-    if request.app.experiment_logs_consumer is None:
+    if experiment_uuid in request.app.experiment_logs_consumers:
+        consumer = request.app.experiment_logs_consumers[experiment_uuid]
+    else:
         logger.info('Add experiment log consumer for {}'.format(experiment_uuid))
-        request.app.experiment_logs_consumer = Consumer(
+        consumer = Consumer(
             routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS, experiment_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, experiment_uuid))
-        request.app.experiment_logs_consumer.run()
+        request.app.experiment_logs_consumers[experiment_uuid] = consumer
+        consumer.run()
 
     # add socket manager
-    request.app.experiment_logs_consumer.add_socket(ws)
+    consumer.add_socket(ws)
     should_quite = False
-    no_message_retries = 0
+    num_message_retries = 0
     while True:
-        no_message_retries += 1
-        for message in request.app.experiment_logs_consumer.get_messages():
-            no_message_retries = 0
+        num_message_retries += 1
+        for message in consumer.get_messages():
+            num_message_retries = 0
             disconnected_ws = set()
-            for _ws in request.app.experiment_logs_consumer.ws:
+            for _ws in consumer.ws:
                 try:
                     await _ws.send(message)
                 except ConnectionClosed:
                     disconnected_ws.add(_ws)
-            request.app.experiment_logs_consumer.remove_sockets(disconnected_ws)
+            consumer.remove_sockets(disconnected_ws)
 
         # After trying a couple of time, we must check the status of the experiment
-        if no_message_retries > MAX_RETRIES and experiment.is_done:
+        if num_message_retries > MAX_RETRIES and experiment.is_done:
             logger.info('removing all socket because the experiment `{}` is done'.format(
                 experiment_uuid))
-            request.app.experiment_logs_consumer.ws = set([])
+            consumer.ws = set([])
 
         # Just to check if connection closed
         if ws._connection_lost:
             logger.info('Quitting logs socket for experiment uuid {}'.format(experiment_uuid))
-            request.app.experiment_logs_consumer.remove_sockets({ws, })
+            consumer.remove_sockets({ws, })
             should_quite = True
 
-        if len(request.app.experiment_logs_consumer.ws) == 0:
-            RedisToStream.remove_experiment_logs(experiment_uuid=experiment_uuid)
+        if len(consumer.ws) == 0:
             logger.info('Stopping logs monitor for experiment uuid {}'.format(experiment_uuid))
+            RedisToStream.remove_experiment_logs(experiment_uuid=experiment_uuid)
+            # if experiment_uuid in request.app.experiment_logs_consumers:
+            #     consumer = request.app.experiment_logs_consumers.pop(experiment_uuid, None)
+            #     if consumer:
+            #         consumer.stop()
             should_quite = True
 
         if should_quite:
@@ -268,17 +331,23 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
 
 @app.listener('after_server_start')
 async def notify_server_started(app, loop):
-    app.job_resources_ws_manger = SocketManager()
-    app.experiment_resources_ws_manger = SocketManager()
-    app.job_logs_consumer = None
-    app.experiment_logs_consumer = None
+    app.job_resources_ws_mangers = {}
+    app.experiment_resources_ws_mangers = {}
+    app.job_logs_consumers = {}
+    app.experiment_logs_consumers = {}
 
 
 @app.listener('after_server_stop')
-async def notifiy_server_stoped(app, loop):
-    del app.job_resources_ws_manger
-    del app.experiment_resources_ws_manger
-    if app.job_logs_consumer:
-        app.job_logs_consumer.stop()
-    if app.experiment_logs_consumer:
-        app.experiment_logs_consumer.stop()
+async def notify_server_stopped(app, loop):
+    app.job_resources_ws_mangers = {}
+    app.experiment_resources_ws_manger = {}
+
+    consumer_keys = list(app.job_logs_consumers.keys())
+    for consumer_key in consumer_keys:
+        consumer = app.job_logs_consumers.pop(consumer_key, None)
+        consumer.stop()
+
+    consumer_keys = list(app.experiment_logs_consumers.keys())
+    for consumer_key in consumer_keys:
+        consumer = app.experiment_logs_consumers.pop(consumer_key, None)
+        consumer.stop()
