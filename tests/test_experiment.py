@@ -70,7 +70,10 @@ class TestExperimentConfigs(TestCase):
                        'experiment_name': 'name.name',
                        'created_at': datetime.now().isoformat(),
                        'updated_at': datetime.now().isoformat(),
-                       'definition': {}}
+                       'definition': {},
+                       'role': 'master',
+                       'sequence': 1,
+                       'unique_name': 'project.1.1.master'}
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         config_to_dict.pop('created_at')
@@ -83,6 +86,8 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         config_to_dict.pop('created_at')
         config_to_dict.pop('updated_at')
+        config_dict.pop('sequence')
+        config_dict.pop('unique_name')
         assert config_to_dict == config_dict
 
     def test_experiment_status_config(self):

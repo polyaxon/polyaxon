@@ -9,6 +9,9 @@ from polyaxon_schemas.utils import UUID
 
 class ExperimentJobSchema(Schema):
     uuid = UUID()
+    unique_name = fields.Str(allow_none=True)
+    sequence = fields.Int(allow_none=True)
+    role = fields.Str(allow_none=True)
     experiment = UUID()
     experiment_name = fields.Str()
     last_status = fields.Str(allow_none=True)
@@ -35,8 +38,8 @@ class ExperimentJobSchema(Schema):
 class ExperimentJobConfig(BaseConfig):
     SCHEMA = ExperimentJobSchema
     IDENTIFIER = 'ExperimentJob'
-    REDUCED_ATTRIBUTES = ['last_status', 'is_running', 'is_done', 'started_at', 'finished_at']
-    REDUCED_LIGHT_ATTRIBUTES = ['definition']
+    REDUCED_ATTRIBUTES = ['last_status', 'is_running', 'is_done', 'started_at', 'finished_at',]
+    REDUCED_LIGHT_ATTRIBUTES = ['definition', 'sequence', 'unique_name']
 
     def __init__(self,
                  uuid,
@@ -45,12 +48,18 @@ class ExperimentJobConfig(BaseConfig):
                  created_at,
                  updated_at,
                  definition,
+                 unique_name=None,
+                 sequence=None,
+                 role=None,
                  last_status=None,
                  is_running=None,
                  is_done=None,
                  started_at=None,
                  finished_at=None):
         self.uuid = uuid
+        self.unique_name = unique_name
+        self.sequence = sequence
+        self.role = role
         self.experiment = experiment
         self.experiment_name = experiment_name
         self.created_at = self.localize_date(created_at)
