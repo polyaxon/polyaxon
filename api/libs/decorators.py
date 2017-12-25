@@ -17,7 +17,7 @@ class IgnoreRawDecorator(object):
             # Ignore signal handling for fixture loading
             return
 
-        return self.f(*args)
+        return self.f(*args, **kwargs)
 
 
 ignore_raw = IgnoreRawDecorator
