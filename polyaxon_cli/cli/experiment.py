@@ -6,6 +6,7 @@ import sys
 
 from collections import deque
 
+import time
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 from polyaxon_cli.cli.project import get_project_or_local
@@ -240,7 +241,8 @@ def logs(experiment, project):
             log_line = '{} -- {}'.format(Printer.add_color(job_info, color), log_line['log_line'])
             click.echo(log_line)
         else:
-            log_line = '{} -- {}'.format(log_line['status'], log_line['log_line'])
+            log_line = '{} -- {}'.format(Printer.add_color(log_line['status'], 'yellow'),
+                                         log_line['log_line'])
             click.echo(log_line)
 
     try:
