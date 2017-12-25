@@ -228,16 +228,20 @@ def logs(experiment, project):
     job_to_color = {}
 
     def message_handler(log_line):
-        job_uuid = log_line['job_uuid']
-        if job_uuid in job_to_color:
-            color = job_to_color[job_uuid]
-        else:
-            color = colors[0]
-            colors.rotate(-1)
-            job_to_color[job_uuid] = color
+        if log_line['status'] == 'Running':
+            job_info = '{}.{}'.format(log_line['task_type'], log_line['job_uuid'])
+            if job_info in job_to_color:
+                color = job_to_color[job_info]
+            else:
+                color = colors[0]
+                colors.rotate(-1)
+                job_to_color[job_info] = color
 
-        log_line = 'job: {} -- {}'.format(Printer.add_color(job_uuid, color), log_line['log_line'])
-        click.echo(log_line)
+            log_line = '{} -- {}'.format(Printer.add_color(job_info, color), log_line['log_line'])
+            click.echo(log_line)
+        else:
+            log_line = '{} -- {}'.format(log_line['status'], log_line['log_line'])
+            click.echo(log_line)
 
     try:
         PolyaxonClients().experiment.logs(
