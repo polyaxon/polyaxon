@@ -75,7 +75,13 @@ def get_container_resources(container, gpu_resources):
                                                             job_uuid,
                                                             experiment_uuid))
 
-    stats = container.stats(decode=True, stream=False)
+    try:
+        stats = container.stats(decode=True, stream=False)
+    except NotFound:
+        logger.info("`{}` was not found".format(container.name))
+        RedisJobContainers.remove_container(container.id)
+        return
+
     precpu_stats = stats['precpu_stats']
     cpu_stats = stats['cpu_stats']
 
