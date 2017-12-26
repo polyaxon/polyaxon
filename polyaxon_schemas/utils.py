@@ -3,11 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import ast
 import six
-
-import numpy as np
-
+from datetime import datetime
 from collections import Mapping
 
+import numpy as np
 from pytz import timezone
 
 from marshmallow import fields, validate, ValidationError, post_dump, post_load
@@ -254,3 +253,56 @@ class RunTypes(object):
     AWS = 'aws'
 
     VALUES = [LOCAL, MINIKUBE, KUBERNETES, AWS]
+
+
+def local_now():
+    return datetime.utcnow().replace(tzinfo=TIME_ZONE)
+
+
+def humanize_timesince(start_time):
+    """Creates a string representation of time since the given `start_time`."""
+    delta = local_now() - start_time
+
+    # assumption: negative delta values originate from clock
+    #             differences on different app server machines
+    if delta.total_seconds() < 0:
+        return 'a few seconds ago'
+
+    num_years = delta.days // 365
+    if num_years > 0:
+        return '{} year{} ago'.format(
+            *((num_years, 's') if num_years > 1 else (num_years, '')))
+
+    num_weeks = delta.days // 7
+    if num_weeks > 0:
+        return '{} week{} ago'.format(
+            *((num_weeks, 's') if num_weeks > 1 else (num_weeks, '')))
+
+    num_days = delta.days
+    if num_days > 0:
+        return '{} day{} ago'.format(
+            *((num_days, 's') if num_days > 1 else (num_days, '')))
+
+    num_hours = delta.seconds // 3600
+    if num_hours > 0:
+        return '{} hour{} ago'.format(*((num_hours, 's') if num_hours > 1 else (num_hours, '')))
+
+    num_minutes = delta.seconds // 60
+    if num_minutes > 0:
+        return '{} minute{} ago'.format(
+            *((num_minutes, 's') if num_minutes > 1 else (num_minutes, '')))
+
+    return 'a few seconds ago'
+
+
+def to_percentage(number, rounding=2):
+    """Creates a percentage string representation from the given `number`. The
+    number is multiplied by 100 before adding a '%' character.
+
+    Raises `ValueError` if `number` cannot be converted to a number.
+    """
+    number = float(number) * 100
+    number_as_int = int(number)
+    rounded = round(number, rounding)
+
+    return '{}%'.format(number_as_int if number_as_int == rounded else rounded)
