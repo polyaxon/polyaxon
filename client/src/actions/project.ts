@@ -128,7 +128,11 @@ export function deleteProject(projectUuid: string): Dispatch<ProjectModel[]> {
 export function fetchProjects(): Dispatch<ProjectModel[]> {
   return (dispatch: any) => {
     dispatch(requestProjectsActionCreator());
-    return fetch(PROJECTS_URL)
+    return fetch(PROJECTS_URL, {
+        headers: {
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+        }
+    })
       .then(response => response.json())
       .then(json => json.results.map((project: {[key: string]: any}) => {
           return {
@@ -144,13 +148,17 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
 export function fetchProject(projectUuid: string): Dispatch<ProjectModel> {
   return (dispatch: any) => {
     dispatch(requestProjectActionCreator());
-    return fetch(PROJECTS_URL + projectUuid)
+    return fetch(PROJECTS_URL + projectUuid, {
+        headers: {
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+        }
+    })
       .then(response => response.json())
       .then(json => {
           return {
             ...json,
-            createdAt: new Date(_.toString(json.createdAt)),
-            updatedAt: new Date(_.toString(json.updatedAt))};
+            createdAt: new Date(_.toString(json.created_at)),
+            updatedAt: new Date(_.toString(json.updated_at))};
         }
       )
       .then(json => dispatch(receiveProjectActionCreator(json)))

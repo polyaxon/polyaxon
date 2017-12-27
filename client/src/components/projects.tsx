@@ -26,10 +26,7 @@ export default class Projects extends React.Component<Props, Object> {
     const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
     return (
       <div>
-        <Button bsStyle="success" className="pull-right" onClick={showModal}>
-          New Project
-        </Button>
-
+        <h3>Projects ({projects.length} found)</h3>
         <RootModal hideModal={hideModal} />
         <ul>
           {projects.filter(

@@ -15,7 +15,7 @@ export function mapStateToProps(state: AppState)  {
 }
 
 export interface DispatchProps {
-  onDelete?: (projectUuid: string) => any;
+  onDelete?: (projectName: string) => any;
   onUpdate?: (project: ProjectModel) => any;
   fetchData?: () => any;
   showModal: () => any;
@@ -25,7 +25,7 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>): DispatchProps {
   return {
-    onDelete: (projectUuid: string) => dispatch(actions.deleteProject(projectUuid)),
+    onDelete: (projectName: string) => dispatch(actions.deleteProject(projectName)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
     fetchData: () => dispatch(actions.fetchProjects()),
     showModal: () => dispatch(modalActions.showModal(

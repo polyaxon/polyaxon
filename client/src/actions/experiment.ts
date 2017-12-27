@@ -2,7 +2,7 @@ import {Action, Dispatch} from "redux";
 import * as _ from "lodash";
 
 import {ExperimentModel} from "../models/experiment";
-import {EXPERIMENTS_URL} from "../constants/api";
+import {EXPERIMENTS_URL, PROJECTS_URL} from "../constants/api";
 
 
 export enum actionTypes {
@@ -71,7 +71,11 @@ export function receiveExperimentsActionCreator(experiments: ExperimentModel[]):
 export function fetchExperiments(): Dispatch<ExperimentModel[]> {
   return (dispatch: any)=> {
     dispatch(requestExperimentsActionCreator());
-    return fetch(EXPERIMENTS_URL)
+    return fetch(EXPERIMENTS_URL, {
+        headers: {
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+        }
+      })
       .then(response => response.json())
       .then(json => json.results.map((xp: {[key: string]: any})=> {
           return {
