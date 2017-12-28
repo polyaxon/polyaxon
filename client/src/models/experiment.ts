@@ -5,6 +5,7 @@ export class ExperimentModel {
 	public experiment_group_name: string;
 	public user: string;
 	public content: string;
+	public num_jobs: number;
 	public project_name: string;
 	public deleted?: boolean;
     public project?: string;

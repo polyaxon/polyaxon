@@ -8,30 +8,29 @@ import * as modalActions from "../actions/modal"
 import {modalTypes, modalPropsByTypes} from "../models/modal";
 
 
-export function mapStateToProps(state: AppState)  {
+export function mapStateToProps(state: AppState, params: any)  {
   if (state.projects)
     return {projects: (<any>Object).values(state.projects.byUuids)};
   return {projects: []};
 }
 
 export interface DispatchProps {
-  onDelete?: (projectName: string) => any;
+  onDelete?: (project: ProjectModel) => any;
   onUpdate?: (project: ProjectModel) => any;
   fetchData?: () => any;
   showModal: () => any;
   hideModal: () => any;
 }
 
-
-export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, params: any): DispatchProps {
   return {
-    onDelete: (projectName: string) => dispatch(actions.deleteProject(projectName)),
+    onDelete: (project: ProjectModel) => dispatch(actions.deleteProject(project)),
     onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
-    fetchData: () => dispatch(actions.fetchProjects()),
+    fetchData: () => dispatch(actions.fetchProjects(params.match.params.user)),
     showModal: () => dispatch(modalActions.showModal(
       {
         type: modalTypes.CREATE_PROJECT,
-        props: {...modalPropsByTypes[modalTypes.CREATE_PROJECT], show: true, submitCb: (project: ProjectModel) => dispatch(actions.createProject(project))}
+        props: {...modalPropsByTypes[modalTypes.CREATE_PROJECT], show: true, submitCb: (project: ProjectModel) => dispatch(actions.createProject(params.match.params.user, project))}
       })),
     hideModal: () => dispatch(modalActions.hideModal(
       {

@@ -16,10 +16,9 @@ function Project({project, onDelete}: Props) {
     <div className="row">
       <div className="col-md-12 project">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={`/admin/${project.name}/experiments`}><Button>View experiments</Button></LinkContainer>
+          <LinkContainer to={`/${project.user}/${project.name}/experiments`}><Button>View experiments</Button></LinkContainer>
         </ButtonToolbar>
         <h4 className="title"><a>{ project.name }</a></h4>
-        <div>{ project.description }</div>
         <div className="meta"><b>Number of Experiments: </b>{ project.num_experiments }</div>
         <div className="meta"><b>Created at: </b>{ project.createdAt.toLocaleTimeString("en-US", dateOptions) }</div>
       </div>

@@ -20,8 +20,8 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
     case actionTypes.DELETE_PROJECT:
       return {
         ...state,
-        byUuids: {...state.byUuids, [action.projectUuid] : {...state.byUuids[action.projectUuid], deleted:true}},
-        uuids: state.uuids.filter(uuid => uuid != action.projectUuid),
+        byUuids: {...state.byUuids, [action.project.uuid] : {...state.byUuids[action.project.uuid], deleted:true}},
+        uuids: state.uuids.filter(uuid => uuid != action.project.uuid),
       };
     case actionTypes.UPDATE_PROJECT:
       return {

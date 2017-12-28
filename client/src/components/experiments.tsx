@@ -10,36 +10,29 @@ import {ProjectModel} from "../models/project";
 
 export interface Props {
   experiments: ExperimentModel[];
-  project: ProjectModel;
   onCreate: (experiment: ExperimentModel) => any;
   onUpdate: (experiment: ExperimentModel) => any;
-  onDelete: (experimentUuid: string) => any;
-  fetchProjectsData: () => any
-  fetchExperimentsData: () => any
+  onDelete: (experiment: ExperimentModel) => any;
+  fetchData: () => any
 }
 
 
 export default class Experiments extends React.Component<Props, Object> {
   componentDidMount() {
-    const {experiments, project, onCreate, onUpdate, onDelete, fetchProjectsData, fetchExperimentsData} = this.props;
-    fetchProjectsData();
-    fetchExperimentsData();
+    const {experiments, onCreate, onUpdate, onDelete, fetchData} = this.props;
+    fetchData();
   }
 
   public render() {
-    const {experiments, project, onCreate, onUpdate, onDelete, fetchProjectsData, fetchExperimentsData} = this.props;
+    const {experiments, onCreate, onUpdate, onDelete, fetchData} = this.props;
     return (
       <div className="row">
         <div className="col-md-12">
-          <h3>
-            <Button bsStyle="primary" onClick={() => {window.history.back()}}>Back</Button>
-            &nbsp;{project.name}: Experiments ({experiments.length} found)
-          </h3>
           <ul>
             {experiments.filter(
               (xp: ExperimentModel) => _.isNil(xp.deleted) || !xp.deleted
             ).map(
-              (xp: ExperimentModel) => <li className="list-item" key={xp.uuid}><Experiment experiment={xp} onDelete={() => onDelete(xp.uuid)}/></li>)}
+              (xp: ExperimentModel) => <li className="list-item" key={xp.uuid}><Experiment experiment={xp} onDelete={() => onDelete(xp)}/></li>)}
           </ul>
         </div>
       </div>

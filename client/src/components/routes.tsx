@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Switch, Redirect, Route} from "react-router-dom";
 
-import Experiments from "../containers/experiments";
-import Jobs from "../containers/jobs";
+import ProjectDetail from "../containers/projectDetail";
+import ExperimentDetail from "../containers/experimentDetail";
 
 import Projects from "../containers/projects";
 
@@ -10,9 +10,9 @@ import Projects from "../containers/projects";
 function Routes() {
   return (
     <Switch>
-        <Route exact path="/admin" component={Projects}/>
-        <Route path="/admin/:projectName/experiments/:experimentSequence/jobs" component={Jobs} />
-        <Route path="/admin/:projectName/experiments" component={Experiments} />
+        <Route path="/:user/:projectName/experiments/:experimentSequence" component={ExperimentDetail} />
+        <Route path="/:user/:projectName" component={ProjectDetail} />
+        <Route path="/:user" component={Projects}/>
         <Redirect from="*" to="/admin"/>
     </Switch>
   )

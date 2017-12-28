@@ -10,32 +10,25 @@ import {ProjectModel} from "../models/project";
 
 
 export interface Props {
-  experiment: ExperimentModel;
   jobs: JobModel[];
   onCreate: (job: JobModel) => any;
   onUpdate: (job: JobModel) => any;
   onDelete: (jobUuid: string) => any;
-  fetchExperimentsData: () => any
-  fetchJobsData: () => any
+  fetchData: () => any
 }
 
 
 export default class Jobs extends React.Component<Props, Object> {
   componentDidMount() {
-    const {jobs, experiment, onCreate, onUpdate, onDelete, fetchExperimentsData, fetchJobsData} = this.props;
-    fetchExperimentsData();
-    fetchJobsData();
+    const {jobs, onCreate, onUpdate, onDelete, fetchData} = this.props;
+    fetchData();
   }
 
   public render() {
-    const {jobs, experiment, onCreate, onUpdate, onDelete, fetchExperimentsData, fetchJobsData} = this.props;
+    const {jobs, onCreate, onUpdate, onDelete, fetchData} = this.props;
     return (
         <div className="row">
           <div className="col-md-12">
-            <h3>
-              <Button bsStyle="primary" onClick={() => {window.history.back()}}>Back</Button>
-              &nbsp;{experiment.unique_name}: Jobs ({jobs.length} found)
-            </h3>
             <ul>
               {jobs.filter(
                 (job: JobModel) => _.isNil(job.deleted) || !job.deleted

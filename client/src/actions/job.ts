@@ -1,8 +1,9 @@
 import {Action, Dispatch} from "redux";
 import * as _ from "lodash";
 
+import {urlifyProjectName} from "../constants/utils"
 import {JobModel} from "../models/job";
-import {PROJECTS_URL} from "../constants/api";
+import {BASE_URL} from "../constants/api";
 
 
 export enum actionTypes {
@@ -68,10 +69,10 @@ export function receiveJobsActionCreator(jobs: JobModel[]): ReceiveJobsAction {
   }
 }
 
-export function fetchJobs(projectName: string, experimentSequence: number): Dispatch<JobModel[]> {
+export function fetchJobs(projectUniqueName: string, experimentSequence: number): Dispatch<JobModel[]> {
   return (dispatch: any)=> {
     dispatch(requestJobsActionCreator());
-    return fetch(PROJECTS_URL + projectName + '/experiments/' + experimentSequence + '/jobs', {
+    return fetch(BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs', {
         headers: {
             'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
         }
