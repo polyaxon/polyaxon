@@ -6,33 +6,16 @@ import os.path
 import re
 import shutil
 
-from polyaxon_schemas.processing import pipelines as pipelines_schemas
-
-from polyaxon import (
-    activations,
+from polyaxon_schemas import (
     constraints,
     initializations,
     metrics,
     losses,
     regularizations,
-    optimizers,
-    explorations,
-    variables)
-from polyaxon import bridges
+    optimizers, bridges)
 
-from polyaxon import models
-from polyaxon.datasets import cifar10, flowers17, mnist
-from polyaxon.datasets.converters import (
-    ImageReader,
-    PNGImageReader,
-    PNGNumpyImageReader,
-    JPGNumpyImageReader,
-    JPEGImageReader,
-    ImagesToTFExampleConverter
-)
-from polyaxon.estimators import estimator, agents, hooks
-from polyaxon.experiments import experiment, rl_experiment, utils as experiment_utils
-from polyaxon.layers import (
+from polyaxon_schemas import models
+from polyaxon_schemas.layers import (
     advanced_activations,
     convolutional,
     convolutional_recurrent,
@@ -41,37 +24,39 @@ from polyaxon.layers import (
     local,
     merge,
     noise,
-    normalizations,
+    normalization,
     pooling,
     recurrent,
     wrappers,
 )
-from polyaxon.libs import getters, utils
-from polyaxon.models import summarizer
-from polyaxon.processing import (
-    CategoricalVocabulary,
-    CategoricalProcessor,
-    create_input_data_fn,
-    image,
-    pipelines,
-    VocabularyProcessor,
+from polyaxon_schemas.processing.image import (
+    ResizeConfig,
+    CentralCropConfig,
+    RandomCropConfig,
+    ExtractGlimpseConfig,
+    ToBoundingBoxConfig,
+    FlipConfig,
+    TransposeConfig,
+    Rotate90Config,
+    ConvertColorSpaceConfig,
+    ConvertImagesDtypeConfig,
+    AdjustBrightnessConfig,
+    AdjustContrastConfig,
+    AdjustHueConfig,
+    AdjustSaturationConfig,
+    AdjustGammaConfig,
+    StandardizationConfig,
+    DrawBoundingBoxesConfig,
+    TotalVariationConfig,
 )
-from polyaxon.processing.data_decoders import (
-    DataDecoder,
-    TFExampleDecoder,
-    SplitTokensDecoder,
-    TFSequenceExampleDecoder
+from polyaxon_schemas.processing.pipelines import (
+    TFRecordImagePipelineConfig,
+    TFRecordSequencePipelineConfig,
+    ParallelTextPipelineConfig,
+    TFRecordSourceSequencePipelineConfig,
+    ImageCaptioningPipelineConfig,
 )
-from polyaxon.processing.data_providers import (
-    Dataset,
-    DataProvider,
-    DatasetDataProvider,
-    ParallelDatasetProvider
-)
-from polyaxon.rl.environments import EnvSpec, GymEnvironment
-from polyaxon.rl.environments import Environment
-from polyaxon.rl.memories import Memory, BatchMemory
-from polyaxon.rl import utils as rl_utils
+
 ROOT = 'http://docs.polyaxon.com/'
 
 LIB_URL = 'https://github.com/polyaxon/polyaxon/blob/master/'
@@ -82,479 +67,282 @@ PAGES = []
 
 PAGES.append(
     (LIB_URL, [
-        # Experiments
-        {
-            'page': 'experiments/experiment.md',
-            'classes': [experiment.Experiment],
-            'classes_functions': [
-                experiment.Experiment.reset_export_strategies,
-                experiment.Experiment.train,
-                experiment.Experiment.evaluate,
-                experiment.Experiment.continuous_eval,
-                experiment.Experiment.continuous_eval_on_train_data,
-                experiment.Experiment.train_and_evaluate,
-                experiment.Experiment.continuous_train_and_eval,
-                experiment.Experiment.run_std_server,
-                experiment.Experiment.test
-            ],
-        },
-        {
-            'page': 'experiments/rl_experiment.md',
-            'classes': [rl_experiment.RLExperiment],
-            'classes_functions': [
-                rl_experiment.RLExperiment.reset_export_strategies,
-                rl_experiment.RLExperiment.train,
-                rl_experiment.RLExperiment.evaluate,
-                rl_experiment.RLExperiment.continuous_eval,
-                rl_experiment.RLExperiment.continuous_eval_on_train_data,
-                rl_experiment.RLExperiment.train_and_evaluate,
-                rl_experiment.RLExperiment.continuous_train_and_eval,
-                rl_experiment.RLExperiment.run_std_server,
-                rl_experiment.RLExperiment.test
-            ],
-        },
-        {
-            'page': 'experiments/utils.md',
-            'functions': [experiment_utils.run_experiment]
-        },
-
-        # Estimators
-        {
-            'page': 'estimators/estimator.md',
-            'classes': [estimator.Estimator],
-            'classes_functions': [
-                estimator.Estimator.export_savedmodel,
-                estimator.Estimator.train,
-                estimator.Estimator.evaluate,
-                estimator.Estimator.predict,
-                estimator.Estimator.get_variable_value,
-                estimator.Estimator.get_variable_names,
-            ]
-        },
-        # Agents
-        {
-            'page': 'agents/agent.md',
-            'classes': [agents.Agent],
-            'classes_functions': [
-                agents.Agent.train,
-                agents.Agent.run_episode,
-            ]
-        },
-        {
-            'page': 'agents/pg_agent.md',
-            'classes': [agents.PGAgent],
-            'classes_functions': [
-                agents.PGAgent.train,
-                agents.PGAgent.run_episode,
-            ]
-        },
-        {
-            'page': 'agents/trpo_agent.md',
-            'classes': [agents.TRPOAgent],
-            'classes_functions': [
-                agents.TRPOAgent.train,
-                agents.TRPOAgent.run_episode,
-            ]
-        },
-
-        # Hooks
-        {
-            'page': 'hooks/general_hooks.md',
-            'classes': hooks.GENERAL_HOOKS.values()
-        },
-        {
-            'page': 'hooks/step_hooks.md',
-            'classes': hooks.STEP_HOOKS.values()
-        },
-        {
-            'page': 'hooks/episode_hooks.md',
-            'classes': hooks.EPISODE_HOOKS.values()
-        },
-
         # Models
         {
-            'page': 'models/base_model.md',
-            'classes': [(models.BaseModel, models.BaseModel.CONFIG)],
-            'classes_functions': [
-                models.BaseModel._clip_gradients_fn,
-                models.BaseModel._build_optimizer,
-                models.BaseModel._build_summary_op,
-                models.BaseModel._build_loss,
-                models.BaseModel._build_eval_metrics,
-                models.BaseModel._build_train_op,
-                models.BaseModel._preprocess,
-                models.BaseModel._build_predictions,
-                models.BaseModel._build,
-                models.BaseModel.batch_size
-            ]
+            'page': 'polyaxon_lib/models.md',
+            'classes': [models.ClassifierConfig, models.RegressorConfig, models.GeneratorConfig],
         },
-        # RL Models
-        {
-            'page': 'models/base_rl_q_model.md',
-            'classes': [models.BaseQModel],
-            'classes_functions': [
-                models.BaseQModel._build_exploration,
-                models.BaseQModel._build_actions,
-                models.BaseQModel._build_graph_fn,
-                models.BaseQModel._call_graph_fn,
-                models.BaseQModel._build_update_target_graph,
-                models.BaseQModel._build_train_op,
-                models.BaseQModel._preprocess,
-            ]
-        },
-        {
-            'page': 'models/base_rl_pg_model.md',
-            'classes': [models.BasePGModel],
-            'classes_functions': [
-                models.BasePGModel._build_actions,
-                models.BasePGModel._build_distribution,
-                models.BasePGModel._build_graph_fn,
-                models.BasePGModel._call_graph_fn,
-                models.BasePGModel._preprocess,
-            ]
-        },
-        {
-            'page': 'models/models.md',
-            'classes': [
-                (models.Regressor, models.Regressor.CONFIG),
-                (models.Classifier, models.Classifier.CONFIG),
-                (models.Generator, models.Generator.CONFIG),
-            ],
-        },
-        {
-            'page': 'models/rl_q_models.md',
-            'classes': [
-                models.DQNModel,
-                models.DDQNModel,
-                models.NAFModel,
-            ],
-        },
-        {
-            'page': 'models/rl_pg_models.md',
-            'classes': [
-                models.VPGModel,
-                models.TRPOModel,
-            ],
-        },
-        {
-            'page': 'models/summarizer.md',
-            'classes': [summarizer.SummaryOptions, summarizer.SummaryTypes],
-            'functions': [
-                summarizer.add_learning_rate_summaries,
-                summarizer.add_loss_summaries,
-                summarizer.add_activations_summary,
-                summarizer.add_gradients_summary,
-                summarizer.add_trainable_vars_summary,
-            ],
-        },
-
         # Layers
         {
-            'page': 'layers/advanced_activations.md',
+            'page': 'polyaxon_lib/layers/advanced_activations.md',
             'classes': [
-                (advanced_activations.LeakyReLU, advanced_activations.LeakyReLU.CONFIG),
-                (advanced_activations.PReLU, advanced_activations.PReLU.CONFIG),
-                (advanced_activations.ELU, advanced_activations.ELU.CONFIG),
-                (advanced_activations.ThresholdedReLU, advanced_activations.ThresholdedReLU.CONFIG),
+                advanced_activations.LeakyReLUConfig,
+                advanced_activations.PReLUConfig,
+                advanced_activations.ELUConfig,
+                advanced_activations.ThresholdedReLUConfig,
             ],
         },
         {
-            'page': 'layers/core.md',
+            'page': 'polyaxon_lib/layers/core.md',
             'classes': [
-                (core.Masking, core.Masking.CONFIG),
-                (core.Dropout, core.Dropout.CONFIG),
-                (core.SpatialDropout1D, core.SpatialDropout1D.CONFIG),
-                (core.SpatialDropout2D, core.SpatialDropout2D.CONFIG),
-                (core.SpatialDropout3D, core.SpatialDropout3D.CONFIG),
-                (core.Activation, core.Activation.CONFIG),
-                (core.Reshape, core.Reshape.CONFIG),
-                (core.Permute, core.Permute.CONFIG),
-                (core.Flatten, core.Flatten.CONFIG),
-                (core.RepeatVector, core.RepeatVector.CONFIG),
-                (core.Dense, core.Dense.CONFIG),
-                (core.ActivityRegularization, core.ActivityRegularization.CONFIG),
-                (core.Cast, core.Cast.CONFIG),
+                core.MaskingConfig,
+                core.DropoutConfig,
+                core.SpatialDropout1DConfig,
+                core.SpatialDropout2DConfig,
+                core.SpatialDropout3DConfig,
+                core.ActivationConfig,
+                core.ReshapeConfig,
+                core.PermuteConfig,
+                core.FlattenConfig,
+                core.RepeatVectorConfig,
+                core.DenseConfig,
+                core.ActivityRegularizationConfig,
+                core.CastConfig,
             ],
         },
         {
-            'page': 'layers/convolutional.md',
+            'page': 'polyaxon_lib/layers/convolutional.md',
             'classes': [
-                (convolutional.Conv1D, convolutional.Conv1D.CONFIG),
-                (convolutional.Conv2D, convolutional.Conv2D.CONFIG),
-                (convolutional.Conv3D, convolutional.Conv3D.CONFIG),
-                (convolutional.Conv2DTranspose, convolutional.Conv2DTranspose.CONFIG),
-                (convolutional.Conv3DTranspose, convolutional.Conv3DTranspose.CONFIG),
-                (convolutional.SeparableConv2D, convolutional.SeparableConv2D.CONFIG),
-                (convolutional.UpSampling1D, convolutional.UpSampling1D.CONFIG),
-                (convolutional.UpSampling2D, convolutional.UpSampling2D.CONFIG),
-                (convolutional.UpSampling3D, convolutional.UpSampling3D.CONFIG),
-                (convolutional.ZeroPadding1D, convolutional.ZeroPadding1D.CONFIG),
-                (convolutional.ZeroPadding2D, convolutional.ZeroPadding2D.CONFIG),
-                (convolutional.ZeroPadding3D, convolutional.ZeroPadding3D.CONFIG),
-                (convolutional.Cropping1D, convolutional.Cropping1D.CONFIG),
-                (convolutional.Cropping2D, convolutional.Cropping2D.CONFIG),
-                (convolutional.Cropping3D, convolutional.Cropping3D.CONFIG),
+                convolutional.Conv1DConfig,
+                convolutional.Conv2DConfig,
+                convolutional.Conv3DConfig,
+                convolutional.Conv2DTransposeConfig,
+                convolutional.Conv3DTransposeConfig,
+                convolutional.SeparableConv2DConfig,
+                convolutional.UpSampling1DConfig,
+                convolutional.UpSampling2DConfig,
+                convolutional.UpSampling3DConfig,
+                convolutional.ZeroPadding1DConfig,
+                convolutional.ZeroPadding2DConfig,
+                convolutional.ZeroPadding3DConfig,
+                convolutional.Cropping1DConfig,
+                convolutional.Cropping2DConfig,
+                convolutional.Cropping3DConfig,
             ],
         },
         {
-            'page': 'layers/convolutional_recurrent.md',
+            'page': 'polyaxon_lib/layers/convolutional_recurrent.md',
             'classes': [
-                (convolutional_recurrent.ConvRecurrent2D, convolutional_recurrent.ConvRecurrent2D),
-                (convolutional_recurrent.ConvLSTM2D, convolutional_recurrent.ConvLSTM2D),
+                convolutional_recurrent.ConvRecurrent2DConfig,
+                convolutional_recurrent.ConvLSTM2DConfig,
             ]
         },
         {
-            'page': 'layers/local.md',
+            'page': 'polyaxon_lib/layers/local.md',
             'classes': [
-                (local.LocallyConnected1D, local.LocallyConnected1D),
-                (local.LocallyConnected2D, local.LocallyConnected2D),
+                local.LocallyConnected1DConfig,
+                local.LocallyConnected2DConfig,
             ]
         },
         {
-            'page': 'layers/merge.md',
+            'page': 'polyaxon_lib/layers/merge.md',
             'classes': [
-                (merge.Add, merge.Add),
-                (merge.Multiply, merge.Multiply),
-                (merge.Average, merge.Average),
-                (merge.Maximum, merge.Maximum),
-                (merge.Concatenate, merge.Concatenate),
-                (merge.Dot, merge.Dot),
+                merge.AddConfig,
+                merge.MultiplyConfig,
+                merge.AverageConfig,
+                merge.MaximumConfig,
+                merge.ConcatenateConfig,
+                merge.DotConfig,
             ]
         },
         {
-            'page': 'layers/noise.md',
+            'page': 'polyaxon_lib/layers/noise.md',
             'classes': [
-                (noise.GaussianNoise, noise.GaussianNoise.CONFIG),
-                (noise.GaussianDropout, noise.GaussianDropout.CONFIG),
-                (noise.AlphaDropout, noise.AlphaDropout.CONFIG),
+                noise.GaussianNoiseConfig,
+                noise.GaussianDropoutConfig,
+                noise.AlphaDropoutConfig,
             ]
         },
         {
-            'page': 'layers/pooling.md',
+            'page': 'polyaxon_lib/layers/pooling.md',
             'classes': [
-                (pooling.AveragePooling1D, pooling.AveragePooling1D.CONFIG),
-                (pooling.MaxPooling1D, pooling.MaxPooling1D.CONFIG),
-                (pooling.AveragePooling2D, pooling.AveragePooling2D.CONFIG),
-                (pooling.MaxPooling2D, pooling.MaxPooling2D.CONFIG),
-                (pooling.AveragePooling3D, pooling.AveragePooling3D.CONFIG),
-                (pooling.MaxPooling3D, pooling.MaxPooling3D.CONFIG),
-                (pooling.GlobalAveragePooling1D, pooling.GlobalAveragePooling1D.CONFIG),
-                (pooling.GlobalMaxPooling1D, pooling.GlobalMaxPooling1D.CONFIG),
-                (pooling.GlobalAveragePooling2D, pooling.GlobalAveragePooling2D.CONFIG),
-                (pooling.GlobalMaxPooling2D, pooling.GlobalMaxPooling2D.CONFIG),
-                (pooling.GlobalAveragePooling3D, pooling.GlobalAveragePooling3D.CONFIG),
-                (pooling.GlobalMaxPooling3D, pooling.GlobalMaxPooling3D.CONFIG),
+                pooling.AveragePooling1DConfig,
+                pooling.MaxPooling1DConfig,
+                pooling.AveragePooling2DConfig,
+                pooling.MaxPooling2DConfig,
+                pooling.AveragePooling3DConfig,
+                pooling.MaxPooling3DConfig,
+                pooling.GlobalAveragePooling1DConfig,
+                pooling.GlobalMaxPooling1DConfig,
+                pooling.GlobalAveragePooling2DConfig,
+                pooling.GlobalMaxPooling2DConfig,
+                pooling.GlobalAveragePooling3DConfig,
+                pooling.GlobalMaxPooling3DConfig,
             ]
         },
         {
-            'page': 'layers/recurrent.md',
+            'page': 'polyaxon_lib/layers/recurrent.md',
             'classes': [
-                (recurrent.Recurrent, recurrent.Recurrent.CONFIG),
-                (recurrent.SimpleRNN, recurrent.SimpleRNN.CONFIG),
-                (recurrent.LSTM, recurrent.LSTM.CONFIG),
-                (recurrent.GRU, recurrent.GRU.CONFIG),
+                recurrent.RecurrentConfig,
+                recurrent.SimpleRNNConfig,
+                recurrent.LSTMConfig,
+                recurrent.GRUConfig,
             ],
         },
         {
-            'page': 'layers/embeddings.md',
+            'page': 'polyaxon_lib/layers/embeddings.md',
             'classes': [
-                (embeddings.Embedding, embeddings.Embedding.CONFIG),
+                embeddings.EmbeddingConfig,
             ],
         },
         {
-            'page': 'layers/normalizations.md',
+            'page': 'polyaxon_lib/layers/normalizations.md',
             'classes': [
-                (normalizations.BatchNormalization, normalizations.BatchNormalization.CONFIG),
+                normalization.BatchNormalizationConfig,
                 # normalizations.LocalResponseNormalization,
                 # normalizations.L2Normalization
             ],
         },
         {
-            'page': 'layers/wrappers.md',
+            'page': 'polyaxon_lib/layers/wrappers.md',
             'classes': [
-                (wrappers.Wrapper, wrappers.Wrapper.CONFIG),
-                (wrappers.TimeDistributed, wrappers.TimeDistributed.CONFIG),
-                (wrappers.Bidirectional, wrappers.Bidirectional.CONFIG),
+                wrappers.WrapperConfig,
+                wrappers.TimeDistributedConfig,
+                wrappers.BidirectionalConfig,
             ]
         },
 
         # Bridges
         {
-            'page': 'bridges/base_bridge.md',
-            'classes': [bridges.BaseBridge],
-            'classes_functions': [
-                bridges.BaseBridge.encode,
-                bridges.BaseBridge.decode,
-                bridges.BaseBridge._get_decoder_shape,
-                bridges.BaseBridge._build
+            'page': 'polyaxon_lib/bridges.md',
+            'classes': [
+                bridges.NoOpBridgeConfig,
+                bridges.LatentBridgeConfig,
             ]
-        },
-        {
-            'page': 'bridges/bridges.md',
-            'classes': [(bridges.NoOpBridge, bridges.NoOpBridge.CONFIG),
-                        (bridges.LatentBridge, bridges.LatentBridge.CONFIG),]
         },
 
         # Processing
         {
-            'page': 'processing/categorical_vocabulary.md',
-            'classes': [CategoricalVocabulary],
-            'classes_functions': [
-                CategoricalVocabulary.freeze,
-                CategoricalVocabulary.get,
-                CategoricalVocabulary.add,
-                CategoricalVocabulary.trim,
-                CategoricalVocabulary.reverse
-
-            ]
-        },
-        {
-            'page': 'processing/categorical_processor.md',
-            'classes': [CategoricalProcessor],
-            'classes_functions': [
-                CategoricalProcessor.freeze,
-                CategoricalProcessor.fit,
-                CategoricalProcessor.transform,
-                CategoricalProcessor.fit_transform,
-
-            ]
-        },
-        {
-            'page': 'processing/vocabulary_processor.md',
-            'classes': [VocabularyProcessor],
-            'classes_functions': [
-                VocabularyProcessor.fit,
-                VocabularyProcessor.transform,
-                VocabularyProcessor.fit_transform,
-                VocabularyProcessor.reverse,
-                VocabularyProcessor.save,
-                VocabularyProcessor.restore,
-            ]
-        },
-        {
-            'page': 'processing/image.md',
-            'all_module_functions': [image],
-            'all_module_classes': [image],
-        },
-        {
-            'page': 'processing/input_fn.md',
-            'functions': [create_input_data_fn]
-        },
-        {
-            'page': 'processing/pipelines.md',
+            'page': 'polyaxon_lib/processing/image.md',
             'classes': [
-                (pipelines.Pipeline, pipelines_schemas.PipelineConfig),
-                (pipelines.TFRecordImagePipeline, pipelines_schemas.TFRecordImagePipelineConfig),
-                (pipelines.ParallelTextPipeline, pipelines_schemas.ParallelTextPipelineConfig),
-                (pipelines.TFRecordSourceSequencePipeline,
-                 pipelines_schemas.TFRecordSequencePipelineConfig),
-                (pipelines.ImageCaptioningPipeline, pipelines_schemas.ImageCaptioningPipelineConfig),
-            ]
-        },
-        {
-            'page': 'processing/data_decoders.md',
-            'classes': [
-                DataDecoder,
-                TFExampleDecoder,
-                SplitTokensDecoder,
-                TFSequenceExampleDecoder
-            ]
-        },
-        {
-            'page': 'processing/data_providers.md',
-            'classes': [
-                Dataset,
-                DataProvider,
-                DatasetDataProvider,
-                ParallelDatasetProvider
-            ]
-        },
-
-        # Libs
-        {
-            'page': 'libs/getters.md',
-            'all_module_functions': [getters]
-        },
-        {
-            'page': 'libs/utils.md',
-            'all_module_functions': [utils]
-        },
-
-        # Other modules
-        {
-            'page': 'activations.md',
-            'all_module_functions': [activations],
-        },
-        {
-            'page': 'initializers.md',
-            'all_module_classes': [initializations],
-        },
-        {
-            'page': 'constraints.md',
-            'classes': list(constraints.CONSTRAINTS.values()),
-        },
-        {
-            'page': 'metrics.md',
-            'functions': list(metrics.METRICS.values()),
-        },
-        {
-            'page': 'losses.md',
-            'all_module_functions': [losses],
-        },
-        {
-            'page': 'regularizers.md',
-            'functions': list(regularizations.REGULARIZERS.values()),
-        },
-        {
-            'page': 'optimizers.md',
-            'all_module_functions': [optimizers],
-        },
-        {
-            'page': 'variables.md',
-            'functions': [variables.variable],
-        },
-
-        # RL
-        {
-            'page': 'rl/environments.md',
-            'classes': [EnvSpec, Environment, GymEnvironment],
-        },
-        {
-            'page': 'rl/explorations.md',
-            'all_module_functions': [explorations],
-        },
-        {
-            'page': 'rl/memories.md',
-            'classes': [Memory, BatchMemory],
-        },
-        {
-            'page': 'rl/utils.md',
-            'all_module_functions': [rl_utils],
-        },
-
-        # Datasets
-        {
-            'page': 'datasets/converters.md',
-            'classes': [
-                ImageReader,
-                PNGImageReader,
-                PNGNumpyImageReader,
-                JPGNumpyImageReader,
-                JPEGImageReader,
-                ImagesToTFExampleConverter
+                ResizeConfig,
+                CentralCropConfig,
+                RandomCropConfig,
+                ExtractGlimpseConfig,
+                ToBoundingBoxConfig,
+                FlipConfig,
+                TransposeConfig,
+                Rotate90Config,
+                ConvertColorSpaceConfig,
+                ConvertImagesDtypeConfig,
+                AdjustBrightnessConfig,
+                AdjustContrastConfig,
+                AdjustHueConfig,
+                AdjustSaturationConfig,
+                AdjustGammaConfig,
+                StandardizationConfig,
+                DrawBoundingBoxesConfig,
+                TotalVariationConfig,
             ],
         },
         {
-            'page': 'datasets/cifar10.md',
-            'all_module_functions': [cifar10],
+            'page': 'polyaxon_lib/processing/pipelines.md',
+            'classes': [
+                TFRecordImagePipelineConfig,
+                TFRecordSequencePipelineConfig,
+                ParallelTextPipelineConfig,
+                TFRecordSourceSequencePipelineConfig,
+                ImageCaptioningPipelineConfig,
+            ]
         },
         {
-            'page': 'datasets/flowers17.md',
-            'all_module_functions': [flowers17],
+            'page': 'polyaxon_lib/initializations.md',
+            'classes': [
+                initializations.ZerosInitializerConfig,
+                initializations.OnesInitializerConfig,
+                initializations.ConstantInitializerConfig,
+                initializations.UniformInitializerConfig,
+                initializations.NormalInitializerConfig,
+                initializations.TruncatedNormalInitializerConfig,
+                initializations.VarianceScalingInitializerConfig,
+                initializations.IdentityInitializerConfig,
+                initializations.OrthogonalInitializerConfig,
+                initializations.GlorotUniformInitializerConfig,
+                initializations.GlorotNormalInitializerConfig,
+                initializations.HeUniformInitializerConfig,
+                initializations.HeNormalInitializerConfig,
+                initializations.LecunUniformInitializerConfig,
+                initializations.LecunNormalInitializerConfig
+
+            ],
         },
         {
-            'page': 'datasets/mnist.md',
-            'all_module_functions': [mnist],
+            'page': 'polyaxon_lib/constraints.md',
+            'classes': [
+                constraints.MaxNormConfig,
+                constraints.NonNegConfig,
+                constraints.UnitNormConfig,
+                constraints.MinMaxNormConfig,
+            ],
+        },
+        {
+            'page': 'polyaxon_lib/metrics.md',
+            'classes': [
+                metrics.TruePositivesConfig,
+                metrics.TruePositivesConfig,
+                metrics.TruePositivesConfig,
+                metrics.TrueNegativesConfig,
+                metrics.FalsePositivesConfig,
+                metrics.FalseNegativesConfig,
+                metrics.MeanConfig,
+                metrics.MeanTensorConfig,
+                metrics.AccuracyConfig,
+                metrics.PrecisionConfig,
+                metrics.RecallConfig,
+                metrics.AUCConfig,
+                metrics.SpecificityAtSensitivityConfig,
+                metrics.SensitivityAtSpecificityConfig,
+                metrics.PrecisionAtThresholdsConfig,
+                metrics.RecallAtThresholdsConfig,
+                metrics.SparseRecallAtKConfig,
+                metrics.SparsePrecisionAtKConfig,
+                metrics.MeanAbsoluteErrorConfig,
+                metrics.MeanRelativeErrorConfig,
+                metrics.MeanSquaredErrorConfig,
+                metrics.RootMeanSquaredErrorConfig,
+                metrics.CovarianceConfig,
+                metrics.PearsonCorrelationConfig,
+                metrics.MeanCosineDistanceConfig,
+                metrics.PercentageLessConfig,
+                metrics.MeanIOUConfig,
+            ],
+        },
+        {
+            'page': 'polyaxon_lib/losses.md',
+            'classes': [
+                losses.AbsoluteDifferenceConfig,
+                losses.AbsoluteDifferenceConfig,
+                losses.MeanSquaredErrorConfig,
+                losses.LogLossConfig,
+                losses.HuberLossConfig,
+                losses.ClippedDeltaLossConfig,
+                losses.SoftmaxCrossEntropyConfig,
+                losses.SigmoidCrossEntropyConfig,
+                losses.HingeLossConfig,
+                losses.CosineDistanceConfig,
+                losses.KullbackLeiberDivergenceConfig,
+            ],
+        },
+        {
+            'page': 'polyaxon_lib/regularizers.md',
+            'classes': [
+                regularizations.L1RegularizerConfig,
+                regularizations.L2RegularizerConfig,
+                regularizations.L1L2RegularizerConfig,
+            ],
+        },
+        {
+            'page': 'polyaxon_lib/optimizers.md',
+            'classes': [
+                optimizers.SGDConfig,
+                optimizers.MomentumConfig,
+                optimizers.NestrovConfig,
+                optimizers.RMSPropConfig,
+                optimizers.AdamConfig,
+                optimizers.AdagradConfig,
+                optimizers.AdadeltaConfig,
+                optimizers.FtrlConfig,
+            ],
         },
     ]))
 
@@ -706,7 +494,7 @@ def process_docstring(docstring, line_processor):
 
         for keyword in KEYWORDS:
             line_string = re.sub(r'    ({})(\(.*\)):'.format(keyword),
-                                 r'    - __\__\2\n\n', line_string)
+                                 r'    - __\1__\2\n\n', line_string)
 
         if not inside_snippet:
             line_string = re.sub(r'    ([^\s\\\(]+):(.*)', r'    - __\1__:\2\n', line_string)
