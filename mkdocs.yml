@@ -66,6 +66,7 @@ pages:
   - Model File: polyaxonfile_specification/model_file.md
 - Reference Polyaxon Helm: reference_polyaxon_helm.md
 - Reference Polyaxon Lib:
+  - Introduction: polyaxon_lib/introduction.md
   - Models: polyaxon_lib/models.md
   - Layers:
     - Introduction: polyaxon_lib/layers/introduction.md
