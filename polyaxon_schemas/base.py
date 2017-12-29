@@ -8,7 +8,7 @@ import six
 from marshmallow import Schema, ValidationError, post_load, post_dump
 from marshmallow.utils import utc
 
-from polyaxon_schemas.utils import to_camel_case, TIME_ZONE
+from polyaxon_schemas.utils import to_camel_case, TIME_ZONE, humanize_timesince, to_percentage
 
 
 class BaseConfig(object):
@@ -18,23 +18,40 @@ class BaseConfig(object):
     IDENTIFIER = None
     REDUCED_ATTRIBUTES = []  # Attribute to remove in the reduced form if they are null.
     REDUCED_LIGHT_ATTRIBUTES = []
+    DATETIME_ATTRIBUTES = []
+    PERCENT_ATTRIBUTES = []
+    ROUNDING = 2
 
-    def to_light_dict(self):
-        obj_dict = self.to_dict()
+    def to_light_dict(self, humanize_values=False):
+        obj_dict = self.to_dict(humanize_values=humanize_values)
         for attr in self.REDUCED_LIGHT_ATTRIBUTES:
             obj_dict.pop(attr, None)
 
         return obj_dict
 
-    def to_dict(self):
-        return self.obj_to_dict(self)
+    def to_dict(self, humanize_values=False):
+        return self.obj_to_dict(self, humanize_values=humanize_values)
 
     def to_schema(self):
         return self.obj_to_schema(self)
 
     @classmethod
-    def obj_to_dict(cls, obj):
-        return cls.SCHEMA(strict=True).dump(obj).data  # pylint: disable=not-callable
+    def humanize_attrs(cls, obj):
+        humanized_attrs = {}
+        for attr in cls.DATETIME_ATTRIBUTES:
+            humanized_attrs[attr] = humanize_timesince(getattr(obj, attr))
+        for attr in cls.PERCENT_ATTRIBUTES:
+            humanized_attrs[attr] = to_percentage(getattr(obj, attr), cls.ROUNDING)
+        return humanized_attrs
+
+    @classmethod
+    def obj_to_dict(cls, obj, humanize_values=False):
+        humanized_attrs = cls.humanize_attrs(obj) if humanize_values else {}
+        data_dict = cls.SCHEMA(strict=True).dump(obj).data  # pylint: disable=not-callable
+
+        for k, v in six.iteritems(humanized_attrs):
+            data_dict[k] = v
+        return data_dict
 
     @classmethod
     def remove_reduced_attrs(cls, data):

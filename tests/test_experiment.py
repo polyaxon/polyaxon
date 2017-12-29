@@ -4,8 +4,6 @@ from __future__ import absolute_import, division, print_function
 import uuid
 from unittest import TestCase
 
-from datetime import datetime
-
 from polyaxon_schemas.experiment import (
     ExperimentConfig,
     JobLabelConfig,
@@ -16,6 +14,7 @@ from polyaxon_schemas.experiment import (
     ExperimentJobConfig,
     ExperimentStatusConfig,
     ExperimentJobStatusConfig)
+from polyaxon_schemas.utils import local_now
 
 
 class TestExperimentConfigs(TestCase):
@@ -32,6 +31,8 @@ class TestExperimentConfigs(TestCase):
             'content': 'content',
             'config': {'k': 'v'},
             'num_jobs': 1,
+            'created_at': local_now().isoformat(),
+            'updated_at': local_now().isoformat(),
         }
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
@@ -42,6 +43,11 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('project')
         config_dict.pop('group')
         assert config.to_light_dict() == config_dict
+
+        config_to_dict = config.to_light_dict(humanize_values=True)
+        assert config_to_dict.pop('created_at') == 'a few seconds ago'
+        assert config_to_dict.pop('updated_at') == 'a few seconds ago'
+        assert config_to_dict.pop('started_at') is None
 
     def test_experiment_with_jobs_config(self):
         config_dict = {'sequence': 2,
@@ -55,67 +61,80 @@ class TestExperimentConfigs(TestCase):
                        'group_name': 'user.name.1',
                        'last_status': 'Running',
                        'num_jobs': 1,
+                       'created_at': local_now().isoformat(),
+                       'updated_at': local_now().isoformat(),
+                       'started_at': local_now().isoformat(),
+                       'finished_at': local_now().isoformat(),
                        'jobs': [ExperimentJobConfig(uuid=uuid.uuid4().hex,
                                                     experiment=uuid.uuid4().hex,
                                                     experiment_name='name.name.1',
-                                                    created_at=datetime.now(),
-                                                    updated_at=datetime.now(),
+                                                    created_at=local_now(),
+                                                    updated_at=local_now(),
                                                     definition={}).to_dict()]}
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
+
+        config_to_dict = config.to_light_dict(humanize_values=True)
+        assert config_to_dict.pop('created_at') == 'a few seconds ago'
+        assert config_to_dict.pop('updated_at') == 'a few seconds ago'
+        assert config_to_dict.pop('started_at') == 'a few seconds ago'
+        assert config_to_dict.pop('finished_at') == 'a few seconds ago'
 
     def test_experiment_job_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
                        'experiment_name': 'name.name',
-                       'created_at': datetime.now().isoformat(),
-                       'updated_at': datetime.now().isoformat(),
+                       'created_at': local_now().isoformat(),
+                       'updated_at': local_now().isoformat(),
+                       'started_at': local_now().isoformat(),
+                       'finished_at': local_now().isoformat(),
                        'definition': {},
                        'role': 'master',
                        'sequence': 1,
                        'unique_name': 'project.1.1.master'}
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        config_to_dict.pop('created_at')
-        config_to_dict.pop('updated_at')
-        config_dict.pop('created_at')
-        config_dict.pop('updated_at')
         assert config_to_dict == config_dict
 
         config_dict.pop('definition')
         config_to_dict = config.to_light_dict()
-        config_to_dict.pop('created_at')
-        config_to_dict.pop('updated_at')
         config_dict.pop('sequence')
         config_dict.pop('unique_name')
         assert config_to_dict == config_dict
 
+        config_to_dict = config.to_light_dict(humanize_values=True)
+        assert config_to_dict.pop('created_at') == 'a few seconds ago'
+        assert config_to_dict.pop('updated_at') == 'a few seconds ago'
+        assert config_to_dict.pop('started_at') == 'a few seconds ago'
+        assert config_to_dict.pop('finished_at') == 'a few seconds ago'
+
     def test_experiment_status_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
-                       'created_at': datetime.now().isoformat(),
+                       'created_at': local_now().isoformat(),
                        'status': 'Running'}
         config = ExperimentStatusConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        config_to_dict.pop('created_at')
-        config_dict.pop('created_at')
         assert config_to_dict == config_dict
 
-    def test_experiment_status_config(self):
+        config_to_dict = config.to_dict(humanize_values=True)
+        assert config_to_dict.pop('created_at') == 'a few seconds ago'
+
+    def test_experiment_job_status_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'job': uuid.uuid4().hex,
-                       'created_at': datetime.now().isoformat(),
+                       'created_at': local_now().isoformat(),
                        'status': 'Running'}
         config = ExperimentJobStatusConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        config_to_dict.pop('created_at')
-        config_dict.pop('created_at')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict()
-        config_to_dict.pop('created_at')
         config_dict.pop('details', '')
         assert config_to_dict == config_dict
+
+        config_to_dict = config.to_light_dict(humanize_values=True)
+        assert config_to_dict.pop('created_at') == 'a few seconds ago'
 
     @staticmethod
     def create_pod_labels():
@@ -145,7 +164,7 @@ class TestExperimentConfigs(TestCase):
         event_type = 'ADDED'
         phase = 'Running'
         labels = cls.create_pod_labels()
-        deletion_timestamp = datetime.now().isoformat()
+        deletion_timestamp = local_now().isoformat()
         pod_conditions = {}
         container_statuses = {}
         return {
@@ -166,9 +185,10 @@ class TestExperimentConfigs(TestCase):
         config_dict = self.create_pod_state()
         config = PodStateConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        config_to_dict.pop('deletion_timestamp')
-        config_dict.pop('deletion_timestamp')
         assert config_to_dict == config_dict
+
+        config_to_dict = config.to_dict(humanize_values=True)
+        assert config_to_dict.pop('deletion_timestamp') == 'a few seconds ago'
 
     def test_job_state_config(self):
         config_dict = {
@@ -178,8 +198,6 @@ class TestExperimentConfigs(TestCase):
         }
         config = JobStateConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        config_to_dict['details'].pop('deletion_timestamp')
-        config_dict['details'].pop('deletion_timestamp')
         assert config_to_dict == config_dict
 
     def test_container_gpu_resources(self):
@@ -250,3 +268,6 @@ class TestExperimentConfigs(TestCase):
         config = ContainerResourcesConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict == config_dict
+
+        config_to_dict = config.to_dict(humanize_values=True)
+        assert config_to_dict.pop('cpu_percentage') == '69.48%'

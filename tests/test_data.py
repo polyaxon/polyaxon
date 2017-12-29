@@ -6,6 +6,7 @@ from datetime import datetime
 from unittest import TestCase
 
 from polyaxon_schemas.data import DataDetailsConfig, DataConfig, DatasetConfig
+from polyaxon_schemas.utils import local_now
 
 
 class TestDataConfigs(TestCase):
@@ -22,7 +23,7 @@ class TestDataConfigs(TestCase):
         config_dict = {
             'uuid': uuid.uuid4().hex,
             'name': 'foo',
-            'created_at': datetime.now().isoformat(),
+            'created_at': local_now().isoformat(),
             'description': 'foo data',
             'details': DataDetailsConfig(
                 state='state', size=1.4, uri='http://www.foo.com/data').to_dict(),
@@ -31,9 +32,6 @@ class TestDataConfigs(TestCase):
         }
         config = DataConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        # assert config_to_dict.pop('created_at') == config_dict.pop('created_at')
-        config_to_dict.pop('created_at')
-        config_dict.pop('created_at')
         assert config_to_dict == config_dict
 
     def test_dataset_config(self):

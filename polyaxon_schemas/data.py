@@ -58,6 +58,7 @@ class DataSchema(Schema):
 class DataConfig(BaseConfig):
     SCHEMA = DataSchema
     IDENTIFIER = 'data'
+    DATETIME_ATTRIBUTES = ['created_at']
 
     def __init__(self,
                  uuid,

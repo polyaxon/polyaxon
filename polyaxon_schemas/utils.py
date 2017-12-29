@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import ast
+
+import pytz
 import six
 from datetime import datetime
 from collections import Mapping
@@ -256,11 +258,14 @@ class RunTypes(object):
 
 
 def local_now():
-    return datetime.utcnow().replace(tzinfo=TIME_ZONE)
+    return TIME_ZONE.localize(datetime.utcnow())
 
 
 def humanize_timesince(start_time):
     """Creates a string representation of time since the given `start_time`."""
+    if not start_time:
+        return start_time
+
     delta = local_now() - start_time
 
     # assumption: negative delta values originate from clock

@@ -40,6 +40,7 @@ class ExperimentJobConfig(BaseConfig):
     IDENTIFIER = 'ExperimentJob'
     REDUCED_ATTRIBUTES = ['last_status', 'is_running', 'is_done', 'started_at', 'finished_at',]
     REDUCED_LIGHT_ATTRIBUTES = ['definition', 'sequence', 'unique_name']
+    DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
                  uuid,
@@ -115,6 +116,7 @@ class ExperimentConfig(BaseConfig):
         'created_at', 'updated_at', 'started_at', 'finished_at',
         'is_clone', 'is_running', 'is_done']
     REDUCED_LIGHT_ATTRIBUTES = ['project', 'group', 'description', 'config', 'content', 'jobs']
+    DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
                  sequence=None,
@@ -182,6 +184,7 @@ class ExperimentStatusSchema(Schema):
 class ExperimentStatusConfig(BaseConfig):
     SCHEMA = ExperimentStatusSchema
     IDENTIFIER = 'ExperimentStatus'
+    DATETIME_ATTRIBUTES = ['created_at']
 
     def __init__(self, uuid, experiment, created_at, status):
         self.uuid = uuid
@@ -215,6 +218,7 @@ class ExperimentJobStatusConfig(BaseConfig):
     IDENTIFIER = 'ExperimentJobStatus'
     REDUCED_ATTRIBUTES = ['message', 'details']
     REDUCED_LIGHT_ATTRIBUTES = ['details']
+    DATETIME_ATTRIBUTES = ['created_at']
 
     def __init__(self, uuid, job, created_at, status, message=None, details=None):
         self.uuid = uuid
@@ -304,6 +308,7 @@ class PodStateSchema(Schema):
 class PodStateConfig(BaseConfig):
     SCHEMA = PodStateSchema
     IDENTIFIER = 'PodState'
+    DATETIME_ATTRIBUTES = ['deletion_timestamp']
 
     def __init__(self,
                  event_type,
@@ -438,6 +443,7 @@ class ContainerResourcesSchema(Schema):
 class ContainerResourcesConfig(BaseConfig):
     SCHEMA = ContainerResourcesSchema
     IDENTIFIER = 'ContainerResources'
+    PERCENT_ATTRIBUTES = ['cpu_percentage']
 
     def __init__(self,
                  job_uuid,
