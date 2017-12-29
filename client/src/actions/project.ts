@@ -2,7 +2,7 @@ import {Action, Dispatch} from "redux";
 import * as _ from "lodash";
 
 import {ProjectModel} from "../models/project";
-import {PROJECTS_URL} from "../constants/api";
+import {BASE_URL} from "../constants/api";
 
 
 export enum actionTypes {
@@ -23,7 +23,7 @@ export interface CreateUpdateReceiveProjectAction extends Action {
 
 export interface DeleteProjectAction extends Action {
   type: actionTypes.DELETE_PROJECT;
-  projectUuid: string
+  project: ProjectModel
 }
 
 export interface ReceiveProjectsAction extends Action {
@@ -44,10 +44,10 @@ export function createProjectActionCreator(project: ProjectModel): CreateUpdateR
     }
 }
 
-export function deleteProjectActionCreator(projectUuid: string): DeleteProjectAction {
+export function deleteProjectActionCreator(project: ProjectModel): DeleteProjectAction {
     return {
       type: actionTypes.DELETE_PROJECT,
-      projectUuid
+      project
     }
 }
 
@@ -86,11 +86,11 @@ export function receiveProjectsActionCreator(projects: ProjectModel[]): ReceiveP
 }
 
 
-export function createProject(project: ProjectModel): Dispatch<ProjectModel> {
+export function createProject(user: string, project: ProjectModel): Dispatch<ProjectModel> {
   return (dispatch: any) => {
     // FIX ME: We need to add a first dispatch here so we show it to the user before
     // sending it to the backend: dispatch(createProjectActionCreator(project))
-    return fetch(PROJECTS_URL, {
+    return fetch(BASE_URL + `/${user}`, {
         method: 'POST',
         body: JSON.stringify(project),
         headers: {
@@ -110,11 +110,10 @@ export function createProject(project: ProjectModel): Dispatch<ProjectModel> {
   }
 }
 
-
-export function deleteProject(projectUuid: string): Dispatch<ProjectModel[]> {
+export function deleteProject(project: ProjectModel): Dispatch<ProjectModel[]> {
   return (dispatch: any) => {
-    dispatch(deleteProjectActionCreator(projectUuid));
-    return fetch(PROJECTS_URL + projectUuid, {
+    dispatch(deleteProjectActionCreator(project));
+    return fetch(BASE_URL + `/${project.user}` + `/${project.name}`, {
         method: 'DELETE',
         headers: {
             'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
@@ -125,10 +124,14 @@ export function deleteProject(projectUuid: string): Dispatch<ProjectModel[]> {
 }
 
 
-export function fetchProjects(): Dispatch<ProjectModel[]> {
+export function fetchProjects(user: string): Dispatch<ProjectModel[]> {
   return (dispatch: any) => {
     dispatch(requestProjectsActionCreator());
-    return fetch(PROJECTS_URL)
+    return fetch(BASE_URL + `/${user}`, {
+        headers: {
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+        }
+    })
       .then(response => response.json())
       .then(json => json.results.map((project: {[key: string]: any}) => {
           return {
@@ -141,16 +144,20 @@ export function fetchProjects(): Dispatch<ProjectModel[]> {
 }
 
 
-export function fetchProject(projectUuid: string): Dispatch<ProjectModel> {
+export function fetchProject(user: string, projectName: string): Dispatch<ProjectModel> {
   return (dispatch: any) => {
     dispatch(requestProjectActionCreator());
-    return fetch(PROJECTS_URL + projectUuid)
+    return fetch(BASE_URL + `/${user}` + `/${projectName}`, {
+        headers: {
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+        }
+    })
       .then(response => response.json())
       .then(json => {
           return {
             ...json,
-            createdAt: new Date(_.toString(json.createdAt)),
-            updatedAt: new Date(_.toString(json.updatedAt))};
+            createdAt: new Date(_.toString(json.created_at)),
+            updatedAt: new Date(_.toString(json.updated_at))};
         }
       )
       .then(json => dispatch(receiveProjectActionCreator(json)))

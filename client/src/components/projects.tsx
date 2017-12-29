@@ -9,7 +9,7 @@ import {ProjectModel} from "../models/project";
 export interface Props {
   projects: ProjectModel[];
   onUpdate: (project: ProjectModel) => any;
-  onDelete: (projectUuid: string) => any;
+  onDelete: (project: ProjectModel) => any;
   fetchData: () => any;
   showModal: () => any;
   hideModal: () => any;
@@ -26,16 +26,13 @@ export default class Projects extends React.Component<Props, Object> {
     const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
     return (
       <div>
-        <Button bsStyle="success" className="pull-right" onClick={showModal}>
-          New Project
-        </Button>
-
+        <h3>Projects ({projects.length} found)</h3>
         <RootModal hideModal={hideModal} />
         <ul>
           {projects.filter(
             (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
           ).map(
-            (project: ProjectModel) => <li className="list-item" key={project.uuid}><Project project={project} onDelete={() => onDelete(project.uuid)}/></li>)}
+            (project: ProjectModel) => <li className="list-item" key={project.uuid}><Project project={project} onDelete={() => onDelete(project)}/></li>)}
         </ul>
       </div>
     );

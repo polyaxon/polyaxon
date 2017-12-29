@@ -1,6 +1,12 @@
 export class ExperimentModel {
 	public uuid: string;
-	public name: string;
+	public unique_name: string;
+	public sequence: number;
+	public experiment_group_name: string;
+	public user: string;
+	public content: string;
+	public num_jobs: number;
+	public project_name: string;
 	public deleted?: boolean;
     public project?: string;
     public status?: string;

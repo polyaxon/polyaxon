@@ -1,5 +1,8 @@
 import {Reducer} from "redux";
 import * as _ from "lodash";
+import {normalize} from 'normalizr';
+
+import {ExperimentSchema} from "../constants/schemas"
 
 import {ExperimentAction, actionTypes} from "../actions/experiment";
 import {ExperimentStateSchema, ExperimentsEmptyState} from "../models/experiment";
@@ -17,8 +20,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
     case actionTypes.DELETE_EXPERIMENT:
       return {
         ...state,
-        byUuids: {...state.byUuids, [action.experimentUuid]: {...state.byUuids[action.experimentUuid], deleted: true}},
-        uuids: state.uuids.filter(uuid => uuid != action.experimentUuid),
+        byUuids: {...state.byUuids, [action.experiment.uuid]: {...state.byUuids[action.experiment.uuid], deleted: true}},
+        uuids: state.uuids.filter(uuid => uuid != action.experiment.uuid),
       };
     case actionTypes.UPDATE_EXPERIMENT:
       return {
@@ -34,6 +37,14 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
         }
         newState.byUuids[xp.uuid] = xp;
       }
+      return newState;
+    case actionTypes.RECEIVE_EXPERIMENT:
+      var newState = {...state};
+      if (!_.includes(newState.uuids, action.experiment.uuid)) {
+        newState.uuids.push(action.experiment.uuid);
+      }
+      let normalized_experiments = normalize(action.experiment, ExperimentSchema).entities.experiments;
+      newState.byUuids[action.experiment.uuid] = normalized_experiments[action.experiment.uuid];
       return newState;
   }
   return state;

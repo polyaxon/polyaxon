@@ -8,7 +8,7 @@ import Experiments from "../containers/experiments";
 
 export interface Props {
   project: ProjectModel;
-  onDelete: () => any;
+  onDelete: (project: ProjectModel) => any;
   fetchData: () => any;
 }
 
@@ -27,13 +27,11 @@ export default class ProjectDetail extends React.Component<Props, Object> {
     return (
       <div className="row">
         <div className="col-md-12 project">
-          <h4 className="title"><a>{ project.name }</a></h4>
-          <div>{ project.description }</div>
-          <div className="meta">{ project.createdAt.toLocaleTimeString() }</div>
-          <ButtonToolbar className="pull-right">
-            <Button bsStyle="danger" className="pull-right" onClick={() => onDelete()}>delete</Button>
-          </ButtonToolbar>
-          <Experiments fetchData={() => null} projectUuid={project.uuid}></Experiments>
+          <h3>
+            <Button bsStyle="primary" onClick={() => {window.history.back()}}>Back</Button>
+            &nbsp;{project.name}: Experiments ({project.num_experiments} found)
+          </h3>
+          <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name}></Experiments>
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {NavItem} from "react-bootstrap";
+import {MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 import "./footer.less";
@@ -11,7 +11,7 @@ function Footer() {
             &copy; 2017 Polyaxon
 
             <nav>
-                <LinkContainer to="/about"><NavItem eventKey={2} href="/about">About</NavItem></LinkContainer>
+                <MenuItem href="https://polyaxon.com/about">About</MenuItem>
             </nav>
 
             <nav className="social">

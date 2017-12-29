@@ -1,27 +1,30 @@
 import * as React from "react";
 import * as _ from "lodash";
+import {Button, ButtonToolbar} from "react-bootstrap";
+import {LinkContainer} from "react-router-bootstrap";
 
 import Experiment from "./experiment";
 import {ExperimentModel} from "../models/experiment";
+import {ProjectModel} from "../models/project";
+
 
 export interface Props {
   experiments: ExperimentModel[];
   onCreate: (experiment: ExperimentModel) => any;
   onUpdate: (experiment: ExperimentModel) => any;
-  onDelete: (experimentUuid: string) => any;
+  onDelete: (experiment: ExperimentModel) => any;
   fetchData: () => any
-  projectUuid?: string;
 }
 
 
 export default class Experiments extends React.Component<Props, Object> {
   componentDidMount() {
-    const {experiments, onCreate, onUpdate, onDelete, fetchData, projectUuid} = this.props;
+    const {experiments, onCreate, onUpdate, onDelete, fetchData} = this.props;
     fetchData();
   }
 
   public render() {
-    const {experiments, onCreate, onUpdate, onDelete, fetchData, projectUuid} = this.props;
+    const {experiments, onCreate, onUpdate, onDelete, fetchData} = this.props;
     return (
       <div className="row">
         <div className="col-md-12">
@@ -29,7 +32,7 @@ export default class Experiments extends React.Component<Props, Object> {
             {experiments.filter(
               (xp: ExperimentModel) => _.isNil(xp.deleted) || !xp.deleted
             ).map(
-              (xp: ExperimentModel) => <li className="list-item" key={xp.uuid}><Experiment experiment={xp} onDelete={() => onDelete(xp.uuid)}/></li>)}
+              (xp: ExperimentModel) => <li className="list-item" key={xp.uuid}><Experiment experiment={xp} onDelete={() => onDelete(xp)}/></li>)}
           </ul>
         </div>
       </div>
