@@ -57,8 +57,6 @@ class ConvRecurrent2DConfig(RecurrentConfig):
             `(batch, time, ..., channels)`
             while `channels_first` corresponds to
             inputs with shape `(batch, time, channels, ...)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         dilation_rate: An integer or tuple/list of n integers, specifying
             the dilation rate to use for dilated convolution.
@@ -184,8 +182,6 @@ class ConvLSTM2DConfig(ConvRecurrent2DConfig):
             `(batch, time, ..., channels)`
             while `channels_first` corresponds to
             inputs with shape `(batch, time, channels, ...)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         dilation_rate: An integer or tuple/list of n integers, specifying
             the dilation rate to use for dilated convolution.

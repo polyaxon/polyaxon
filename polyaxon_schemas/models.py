@@ -87,7 +87,7 @@ class ClassifierConfig(BaseModelConfig):
     Args(polyaxonfile):
         graph: Graph definition. see [Graph]()
 
-    Args(commun):
+    Args(shared):
         loss: An instance of `LossConfig`. Default value `SigmoidCrossEntropyConfig`.
         optimizer: An instance of `OptimizerConfig`.
             Default value `AdamConfig(learning_rate=0.001)`.
@@ -207,8 +207,26 @@ class ClassifierConfig(BaseModelConfig):
     SCHEMA = ClassifierSchema
     IDENTIFIER = 'Classifier'
 
-    def __init__(self, graph, one_hot_encode=None, n_classes=None, **kwargs):
-        super(ClassifierConfig, self).__init__(graph, **kwargs)
+    def __init__(self,
+                 graph,
+                 loss=None,
+                 optimizer=None,
+                 metrics=None,
+                 summaries=None,
+                 clip_gradients=0.5,
+                 clip_embed_gradients=0.,
+                 one_hot_encode=None,
+                 n_classes=None,
+                 name=None,):
+        super(ClassifierConfig, self).__init__(
+            graph=graph,
+            loss=loss,
+            optimizer=optimizer,
+            metrics=metrics,
+            summaries=summaries,
+            clip_gradients=clip_gradients,
+            clip_embed_gradients=clip_embed_gradients,
+            name=name)
         self.one_hot_encode = one_hot_encode
         self.n_classes = n_classes
 
@@ -239,7 +257,7 @@ class RegressorConfig(BaseModelConfig):
     Args(polyaxonfile):
         graph: Graph definition. see [Graph]()
 
-    Args(commun):
+    Args(both):
         loss: An instance of `LossConfig`. Default value `MeanSquaredErrorConfig`.
         optimizer: An instance of `OptimizerConfig`.
             Default value `AdamConfig(learning_rate=0.001)`.
@@ -360,7 +378,7 @@ class GeneratorConfig(BaseModelConfig):
         decoder: Graph definition. see [Graph]()
         bridge: Graph definition. see [Graph]()
 
-    Args(commun):
+    Args(shared):
         loss: An instance of `LossConfig`. Default value `SigmoidCrossEntropyConfig`.
         optimizer: An instance of `OptimizerConfig`.
             Default value `AdadeltaConfig(learning_rate=0.4)`.
@@ -466,8 +484,27 @@ class GeneratorConfig(BaseModelConfig):
     SCHEMA = GeneratorSchema
     IDENTIFIER = 'Generator'
 
-    def __init__(self, encoder, decoder, bridge, **kwargs):
-        super(GeneratorConfig, self).__init__(graph=None, **kwargs)
+    def __init__(self,
+                 encoder,
+                 decoder,
+                 bridge,
+                 loss=None,
+                 optimizer=None,
+                 metrics=None,
+                 summaries=None,
+                 clip_gradients=0.5,
+                 clip_embed_gradients=0.,
+                 name=None,):
+        super(GeneratorConfig, self).__init__(
+            graph=None,
+            loss=loss,
+            optimizer=optimizer,
+            metrics=metrics,
+            summaries=summaries,
+            clip_gradients=clip_gradients,
+            clip_embed_gradients=clip_embed_gradients,
+            name=name)
+
         self.encoder = encoder
         self.decoder = decoder
         self.bridge = bridge

@@ -213,8 +213,6 @@ class LocallyConnected2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         activation: Activation function to use.
             If you don't specify anything, no activation is applied

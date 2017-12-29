@@ -149,8 +149,6 @@ class MaxPooling2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -227,8 +225,6 @@ class AveragePooling2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -301,8 +297,6 @@ class MaxPooling3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -376,8 +370,6 @@ class AveragePooling3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -508,8 +500,6 @@ class GlobalAveragePooling2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -565,8 +555,6 @@ class GlobalMaxPooling2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -622,8 +610,6 @@ class GlobalAveragePooling3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -679,8 +665,6 @@ class GlobalMaxPooling3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:

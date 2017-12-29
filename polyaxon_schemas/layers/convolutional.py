@@ -212,8 +212,6 @@ class Conv2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         dilation_rate: an integer or tuple/list of 2 integers, specifying
             the dilation rate to use for dilated convolution.
@@ -395,8 +393,6 @@ class Conv3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         dilation_rate: an integer or tuple/list of 3 integers, specifying
             the dilation rate to use for dilated convolution.
@@ -554,8 +550,6 @@ class Conv2DTransposeConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         dilation_rate: an integer or tuple/list of 2 integers, specifying
             the dilation rate to use for dilated convolution.
@@ -712,8 +706,6 @@ class Conv3DTransposeConfig(BaseLayerConfig):
             `(batch, depth, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, depth, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         dilation_rate: an integer or tuple/list of 3 integers, specifying
             the dilation rate to use for dilated convolution.
@@ -727,21 +719,14 @@ class Conv3DTransposeConfig(BaseLayerConfig):
             (ie. "linear" activation: `a(x) = x`).
         use_bias: Boolean, whether the layer uses a bias vector.
         kernel_initializer: Initializer for the `kernel` weights matrix
-            (see [initializers](../initializers.md)).
         bias_initializer: Initializer for the bias vector
-            (see [initializers](../initializers.md)).
         kernel_regularizer: Regularizer function applied to
             the `kernel` weights matrix
-            (see [regularizer](../regularizers.md)).
         bias_regularizer: Regularizer function applied to the bias vector
-            (see [regularizer](../regularizers.md)).
         activity_regularizer: Regularizer function applied to
             the output of the layer (its "activation").
-            (see [regularizer](../regularizers.md)).
         kernel_constraint: Constraint function applied to the kernel matrix
-            (see [constraints](../constraints.md)).
         bias_constraint: Constraint function applied to the bias vector
-            (see [constraints](../constraints.md)).
 
     Input shape:
         5D tensor with shape:
@@ -879,8 +864,6 @@ class SeparableConv2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
         depth_multiplier: The number of depthwise convolution output channels
             for each input channel.
@@ -1060,8 +1043,6 @@ class UpSampling2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -1133,8 +1114,6 @@ class UpSampling3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -1268,8 +1247,6 @@ class ZeroPadding2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -1347,8 +1324,6 @@ class ZeroPadding3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -1486,8 +1461,6 @@ class Cropping2DConfig(BaseLayerConfig):
             `(batch, height, width, channels)` while `channels_first`
             corresponds to inputs with shape
             `(batch, channels, height, width)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -1574,8 +1547,6 @@ class Cropping3DConfig(BaseLayerConfig):
             `(batch, spatial_dim1, spatial_dim2, spatial_dim3, channels)`
             while `channels_first` corresponds to inputs with shape
             `(batch, channels, spatial_dim1, spatial_dim2, spatial_dim3)`.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:

@@ -203,8 +203,6 @@ class SpatialDropout2DConfig(DropoutConfig):
             In 'channels_first' mode, the channels dimension
             (the depth) is at index 1,
             in 'channels_last' mode is it at index 3.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
@@ -267,8 +265,6 @@ class SpatialDropout3DConfig(DropoutConfig):
         data_format: 'channels_first' or 'channels_last'.
             In 'channels_first' mode, the channels dimension (the depth)
             is at index 1, in 'channels_last' mode is it at index 4.
-            It defaults to the `image_data_format` value found in your
-            Keras config file at `~/.keras/keras.json`.
             If you never set it, then it will be "channels_last".
 
     Input shape:
