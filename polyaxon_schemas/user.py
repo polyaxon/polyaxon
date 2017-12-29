@@ -9,6 +9,7 @@ from polyaxon_schemas.base import BaseConfig
 class UserSchema(Schema):
     username = fields.Str()
     email = fields.Email()
+    is_superuser = fields.Bool(allow_none=True)
 
     class Meta:
         ordered = True
@@ -26,6 +27,7 @@ class UserConfig(BaseConfig):
     SCHEMA = UserSchema
     IDENTIFIER = 'user'
 
-    def __init__(self, username, email, is_stuff=None):
+    def __init__(self, username, email, is_superuser=False):
         self.username = username
         self.email = email
+        self.is_superuser = is_superuser
