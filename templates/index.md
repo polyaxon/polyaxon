@@ -19,7 +19,7 @@ To get started, go to [Quick start with Polyaxon]() to start your first experime
 
 To setup a Polyaxon deployment, go to [Installation requirements and setup]()
 
-Once you have a Polyaxon deployment, you can learn how to organize you [experimentation workflow]()
+Once you have a Polyaxon deployment, you can check some important [concepts]() and learn how to organize you [experimentation workflow]()
 
 
 # Customization

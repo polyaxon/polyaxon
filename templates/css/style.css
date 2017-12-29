@@ -1,3 +1,8 @@
 [data-md-color-primary=blue-grey] .md-header {
+    background: -webkit-linear-gradient(to left, #485563, #29323c);
     background: linear-gradient(to left, #485563, #29323c);
+}
+
+[data-md-color-primary=blue-grey] .md-typeset a {
+    color: #5f8fa5eb;
 }
