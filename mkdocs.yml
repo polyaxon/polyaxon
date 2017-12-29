@@ -26,81 +26,69 @@ google_analytics: ['UA-89493331-1', 'polyaxon.com']
 copyright: Copyright &copy; 2017 Polyaxon
 
 markdown_extensions:
-  - codehilite
   - admonition
-  - codehilite
+  - codehilite:
+      guess_lang: False
   - footnotes
 
 pages:
 - Home: index.md
-- Getting started: getting_started.md
-- Experiments:
-  - Introduction: experiments/introduction.md
-  - Expermient: experiments/experiment.md
-  - RLExpermient: experiments/rl_experiment.md
-  - Utils: experiments/utils.md
-- Estimators:
-  - Estimator: estimators/estimator.md
-- Agents:
-  - Agent: agents/agent.md
-  - PGAgent: agents/pg_agent.md
-  - TRPOAgent: agents/trpo_agent.md
-- Hooks:
-  - GeneralHooks: hooks/general_hooks.md
-  - StepHooks: hooks/step_hooks.md
-  - EpisodeHooks: hooks/episode_hooks.md
-- Models:
-  - Base Model: models/base_model.md
-  - Base RL Q Model: models/base_rl_q_model.md
-  - Base RL PG Model: models/base_rl_pg_model.md
-  - Models: models/models.md
-  - RLQModels: models/rl_q_models.md
-  - RLPGModels: models/rl_pg_models.md
-  - Summerizer: models/summarizer.md
-- Layers:
-  - Introduction: layers/introduction.md
-  - Advanced Actications: layers/advanced_activations.md
-  - Convolutional: layers/convolutional.md
-  - Convolutional Reccurent: layers/convolutional_recurrent.md
-  - Core: layers/core.md
-  - Embedding: layers/embeddings.md
-  - Local: layers/local.md
-  - Merge: layers/merge.md
-  - Moise: layers/noise.md
-  - Normalizations: layers/normalizations.md
-  - Pooling: layers/pooling.md
-  - Recurrent: layers/recurrent.md
-  - Wrappers: layers/wrappers.md
-- Bridges:
-  - Base Bridge: bridges/base_bridge.md
-  - Bridges: bridges/bridges.md
-- Processing:
-  - Categorical Vocabulary: processing/categorical_vocabulary.md
-  - Vocabulary Processor: processing/vocabulary_processor.md
-  - Image: processing/image.md
-  - Input function: processing/input_fn.md
-  - Pipelines: processing/pipelines.md
-  - Data Decoders: processing/data_decoders.md
-  - Data Providers: processing/data_providers.md
-- Activations: activations.md
-- Losses: losses.md
-- Metrics: metrics.md
-- Optimizers: optimizers.md
-- Initializations: initializers.md
-- Constraints: constraints.md
-- Regularizations: regularizers.md
-- Variables: variables.md
-- RL:
-  - Environments: rl/environments.md
-  - Explorations: rl/explorations.md
-  - Memories: rl/memories.md
-  - utils: rl/utils.md
-- Libs:
-  - Getters: libs/getters.md
-  - Utils: libs/utils.md
-- Datasets:
-  - Converters: datasets/converters.md
-  - Cifar10: datasets/cifar10.md
-  - Flowers17: datasets/flowers17.md
-  - Mnist: datasets/mnist.md
+- Quick Start With Polyaxon: quick_start.md
+- Polyaxon Concepts: polyaxon_concepts.md
+- Installation Requirements & Setup:
+  - Introduction: installation/introduction.md
+  - Tools & Requirements: installation/tools_and_requirements.md
+  - Instal Kuberenetes: installation/install_kubernetes.md
+  - Configure Kuberenetes & Helm: installation/configure_kubernetes.md
+  - Install Polyaxon Helm Chart: installation/polyaxon_helm.md
+  - Install Polyaxon CLI: installation/polyaxon_cli.md
+  - Turn Off Polyaxon: installation/turn_off_polyaxon.md
+- Experimentation Workflow:
+  - Introduction: experimentation/introduction.md
+  - Projects: experimentation/projects.md
+  - Experiment Groups & Hyperparams Search: experimentation/experiment_groups.md
+  - Experiments & Distributed Runs: experimentation/experiments.md
+  - Jobs: experimentation/jobs.md
+- Management:
+  - Intorduction: management/introduction.md
+  - Admin Users: management/admins.md
+  - Users Management: management/users.md
+- Customization:
+  - Extend Polyaxon Deployments: customization/extend_deployments.md
+  - Customize Run Environment: customization/customize_run_environment.md  # settings, resources,
+- Reference Polyaxon CLI:
+  - CLI Assumptions: polyaxon_cli/assumptions.md
+  - CLI Commnands: polyaxon_cli/commands.md
+- Reference Polyaxonfile Specification:
+  - Introduction: polyaxonfile_specification/introduction.md
+  - Sections: polyaxonfile_specification/sections.md
+  - Exec File: polyaxonfile_specification/exec_file.md
+  - Model File: polyaxonfile_specification/model_file.md
+- Reference Polyaxon Helm: reference_polyaxon_helm.md
+- Reference Polyaxon Lib:
+  - Models: polyaxon_lib/models.md
+  - Layers:
+    - Introduction: polyaxon_lib/layers/introduction.md
+    - Advanced Actications: polyaxon_lib/layers/advanced_activations.md
+    - Convolutional: polyaxon_lib/layers/convolutional.md
+    - Convolutional Reccurent: polyaxon_lib/layers/convolutional_recurrent.md
+    - Core: polyaxon_lib/layers/core.md
+    - Embedding: polyaxon_lib/layers/embeddings.md
+    - Local: polyaxon_lib/layers/local.md
+    - Merge: polyaxon_lib/layers/merge.md
+    - Moise: polyaxon_lib/layers/noise.md
+    - Normalizations: polyaxon_lib/layers/normalizations.md
+    - Pooling: polyaxon_lib/layers/pooling.md
+    - Recurrent: polyaxon_lib/layers/recurrent.md
+    - Wrappers: polyaxon_lib/layers/wrappers.md
+  - Bridges: polyaxon_lib/bridges.md
+  - Processing:
+    - Image: polyaxon_lib/processing/image.md
+    - Pipelines: polyaxon_lib/processing/pipelines.md
+  - Losses: polyaxon_lib/losses.md
+  - Metrics: polyaxon_lib/metrics.md
+  - Optimizers: polyaxon_lib/optimizers.md
+  - Initializations: polyaxon_lib/initializations.md
+  - Constraints: polyaxon_lib/constraints.md
+  - Regularizations: polyaxon_lib/regularizers.md
 - Contributing: CONTRIBUTING.md
