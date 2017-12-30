@@ -46,7 +46,7 @@ A `User` is the entity that creates project, starts experiments, manages organiz
 A `User` has a set of permissions, and can be an normal user or superuser.
 
 !!! note
-    Please refer to the [management section](management/introduction) for more details.
+    Please refer to the [management section](/management/introduction) for more details.
 
 ### Organization
 
@@ -62,21 +62,21 @@ it aims at organizing your efforts to solve a specific problem.
 A project consist of a name and a description, the code to execute, the data, and a polyaxon.yaml.
 
 !!! note
-    Please refer to the [projects section](experimentation/project) for more details.
+    Please refer to the [projects section](projects) for more details.
 
 ### Experiment Group
 
 An `Experiment Group` is a way to try a version of code and data with different hyper parameters.
 
 !!! note
-    Please refer to the [experiment groups and hyper parameters search section](experimentation/experiment_group) for more details.
+    Please refer to the [experiment groups and hyper parameters search section](experiment_groups) for more details.
 
 ### Experiment
 
 An `Experiment` is the execution of your model with data and the provided parameters on the cluster.
 
 !!! note
-    Please refer to the [experiments and distributed runs section](experimentation/experiment) for more details.
+    Please refer to the [experiments and distributed runs section](experiments) for more details.
 
 ### Job
 
@@ -84,4 +84,4 @@ A `Job` is the pod running on the cluster for a specific experiment,
 if an experiment run in a distributed way it will create multiple instances of `Job`.
 
 !!! note
-    Please refer to the [jobs section](experimentation/job) for more details.
+    Please refer to the [jobs section](jobs) for more details.
