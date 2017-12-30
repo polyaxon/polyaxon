@@ -17,9 +17,9 @@ This documentation start with quick start example, and then walks through the st
 
 To get started, go to [Quick start with Polyaxon](quick_start) to start your first experiment.
 
-To setup a Polyaxon deployment, go to [Installation requirements and setup](installation/introduction)
+To setup a Polyaxon deployment, go to [Installation requirements and setup](installation/introduction).
 
-Once you have a Polyaxon deployment, you can check some important [concepts](polyaxon_concepts) and learn how to organize you [experimentation workflow](experimentation/introduction)
+Once you have a Polyaxon deployment, you can how to organize your [experimentation workflow](experimentation/concepts).
 
 
 ## Management

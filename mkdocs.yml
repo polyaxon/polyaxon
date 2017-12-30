@@ -34,7 +34,6 @@ markdown_extensions:
 pages:
 - Home: index.md
 - Quick Start With Polyaxon: quick_start.md
-- Polyaxon Concepts: polyaxon_concepts.md
 - Installation Requirements & Setup:
   - Introduction: installation/introduction.md
   - Tools & Requirements: installation/tools_and_requirements.md
@@ -44,7 +43,7 @@ pages:
   - Install Polyaxon CLI: installation/polyaxon_cli.md
   - Turn Off Polyaxon: installation/turn_off_polyaxon.md
 - Experimentation Workflow:
-  - Introduction: experimentation/introduction.md
+  - Polyaxon Concepts: experimentation/concepts.md
   - Projects: experimentation/projects.md
   - Experiment Groups & Hyperparams Search: experimentation/experiment_groups.md
   - Experiments & Distributed Runs: experimentation/experiments.md

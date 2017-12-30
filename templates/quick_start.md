@@ -96,4 +96,4 @@ Congratulations! You've trained your first experiment with Polyaxon. Behind the 
  * You persisted your logs and outputs to your volume claims
 
 To gain a deeper understanding on how polyaxon can help you iterate faster with your experiments,
-familiarize yourself with [concepts](polyaxon_concepts) and the [experimentation workflow](experimentation/introduction)
+familiarize yourself with the [experimentation workflow](experimentation/concepts)
