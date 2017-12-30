@@ -8,9 +8,9 @@ from polyaxon_schemas.utils import UUID, humanize_timedelta
 
 
 class ExperimentJobSchema(Schema):
+    sequence = fields.Int(allow_none=True)
     uuid = UUID()
     unique_name = fields.Str(allow_none=True)
-    sequence = fields.Int(allow_none=True)
     role = fields.Str(allow_none=True)
     experiment = UUID()
     experiment_name = fields.Str()
@@ -41,7 +41,7 @@ class ExperimentJobConfig(BaseConfig):
     IDENTIFIER = 'ExperimentJob'
     REDUCED_ATTRIBUTES = [
         'last_status', 'is_running', 'is_done', 'started_at', 'finished_at', 'total_run']
-    REDUCED_LIGHT_ATTRIBUTES = ['definition', 'sequence', 'unique_name']
+    REDUCED_LIGHT_ATTRIBUTES = ['definition', 'experiment', 'sequence', 'unique_name']
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
@@ -121,7 +121,9 @@ class ExperimentConfig(BaseConfig):
         'user', 'sequence', 'description', 'config', 'jobs', 'content',
         'created_at', 'updated_at', 'started_at', 'finished_at',
         'is_clone', 'is_running', 'is_done', 'total_run']
-    REDUCED_LIGHT_ATTRIBUTES = ['project', 'group', 'description', 'config', 'content', 'jobs']
+    REDUCED_LIGHT_ATTRIBUTES = [
+        'uuid', 'project', 'group', 'description', 'config', 'content', 'jobs'
+    ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
@@ -194,6 +196,7 @@ class ExperimentStatusConfig(BaseConfig):
     SCHEMA = ExperimentStatusSchema
     IDENTIFIER = 'ExperimentStatus'
     DATETIME_ATTRIBUTES = ['created_at']
+    REDUCED_LIGHT_ATTRIBUTES = ['experiment']
 
     def __init__(self, uuid, experiment, created_at, status):
         self.uuid = uuid
@@ -226,7 +229,7 @@ class ExperimentJobStatusConfig(BaseConfig):
     SCHEMA = ExperimentJobStatusSchema
     IDENTIFIER = 'ExperimentJobStatus'
     REDUCED_ATTRIBUTES = ['message', 'details']
-    REDUCED_LIGHT_ATTRIBUTES = ['details']
+    REDUCED_LIGHT_ATTRIBUTES = ['job', 'details']
     DATETIME_ATTRIBUTES = ['created_at']
 
     def __init__(self, uuid, job, created_at, status, message=None, details=None):

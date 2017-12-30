@@ -37,6 +37,7 @@ class TestExperimentConfigs(TestCase):
         config = ExperimentConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
+        config_dict.pop('uuid')
         config_dict.pop('description')
         config_dict.pop('content')
         config_dict.pop('config')
@@ -101,6 +102,7 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict == config_dict
 
         config_dict.pop('definition')
+        config_dict.pop('experiment')
         config_to_dict = config.to_light_dict()
         assert config_to_dict.pop('total_run') == '0s'
         config_dict.pop('sequence')
@@ -123,6 +125,10 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_dict()
         assert config_to_dict == config_dict
 
+        config_dict.pop('experiment', None)
+        config_to_dict = config.to_light_dict()
+        assert config_to_dict == config_dict
+
         config_to_dict = config.to_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
 
@@ -136,7 +142,8 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict()
-        config_dict.pop('details', '')
+        config_dict.pop('details', None)
+        config_dict.pop('job', None)
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)

@@ -80,6 +80,8 @@ class TestProjectConfigs(TestCase):
         assert config.to_dict() == config_dict
 
         config_dict.pop('content')
+        config_dict.pop('uuid')
+        config_dict.pop('project')
         assert_equal_dict(config_dict, config.to_light_dict())
 
         config_to_dict = config.to_dict(humanize_values=True)
