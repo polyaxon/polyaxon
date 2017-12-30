@@ -24,6 +24,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer)
 from experiments.tasks import stop_experiment
+from libs.utils import to_bool
 from libs.views import ListCreateAPIView
 from projects.models import ExperimentGroup
 from projects.permissions import get_permissible_project
@@ -44,7 +45,11 @@ class ProjectExperimentListView(ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
+        independent = self.request.query_params.get('independent', None)
+        filters = {}
+        if independent is not None and to_bool(independent):
+            filters['experiment_group__isnull'] = True
+        return queryset.filter(project=get_permissible_project(view=self), **filters)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, project=get_permissible_project(view=self))

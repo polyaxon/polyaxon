@@ -69,6 +69,22 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.get(self.other_url)
         assert resp.status_code == status.HTTP_200_OK
 
+        independent_count = self.queryset.count()
+        # Create group to test independent filter
+        group = ExperimentGroupFactory(project=self.project)
+        all_experiment_count = self.queryset.all().count()
+        assert all_experiment_count == independent_count + group.experiments.count()
+
+        # Getting all experiments
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == all_experiment_count
+
+        # Getting only independent experiments
+        resp = self.auth_client.get(self.url + '?independent=true')
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == independent_count
+
     def test_pagination(self):
         limit = self.num_objects - 1
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
