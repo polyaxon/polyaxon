@@ -4,6 +4,7 @@ export class ProjectModel {
 	public user: string;
 	public num_experiments: number;
 	public unique_name: string;
+	public is_public: boolean;
 	public deleted?: boolean;
 	public description?: string;
 	public isPrivate?: boolean = false;
