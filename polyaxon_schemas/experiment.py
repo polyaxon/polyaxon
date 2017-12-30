@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import Schema, fields, post_load, post_dump, validate
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import UUID
+from polyaxon_schemas.utils import UUID, humanize_timedelta
 
 
 class ExperimentJobSchema(Schema):
@@ -21,6 +21,7 @@ class ExperimentJobSchema(Schema):
     updated_at = fields.LocalDateTime()
     started_at = fields.LocalDateTime(allow_none=True)
     finished_at = fields.LocalDateTime(allow_none=True)
+    total_run = fields.Str(allow_none=True)
     definition = fields.Dict()
 
     class Meta:
@@ -38,7 +39,8 @@ class ExperimentJobSchema(Schema):
 class ExperimentJobConfig(BaseConfig):
     SCHEMA = ExperimentJobSchema
     IDENTIFIER = 'ExperimentJob'
-    REDUCED_ATTRIBUTES = ['last_status', 'is_running', 'is_done', 'started_at', 'finished_at',]
+    REDUCED_ATTRIBUTES = [
+        'last_status', 'is_running', 'is_done', 'started_at', 'finished_at', 'total_run']
     REDUCED_LIGHT_ATTRIBUTES = ['definition', 'sequence', 'unique_name']
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -71,6 +73,9 @@ class ExperimentJobConfig(BaseConfig):
         self.last_status = last_status
         self.is_running = is_running
         self.is_done = is_done
+        self.total_run = None
+        if all([self.started_at, self.finished_at]):
+            self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
 class ExperimentSchema(Schema):
@@ -88,6 +93,7 @@ class ExperimentSchema(Schema):
     updated_at = fields.LocalDateTime(allow_none=True)
     started_at = fields.LocalDateTime(allow_none=True)
     finished_at = fields.LocalDateTime(allow_none=True)
+    total_run = fields.Str(allow_none=True)
     is_running = fields.Bool(allow_none=True)
     is_done = fields.Bool(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
@@ -114,7 +120,7 @@ class ExperimentConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         'user', 'sequence', 'description', 'config', 'jobs', 'content',
         'created_at', 'updated_at', 'started_at', 'finished_at',
-        'is_clone', 'is_running', 'is_done']
+        'is_clone', 'is_running', 'is_done', 'total_run']
     REDUCED_LIGHT_ATTRIBUTES = ['project', 'group', 'description', 'config', 'content', 'jobs']
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -161,6 +167,9 @@ class ExperimentConfig(BaseConfig):
         self.content = content  # The yaml content when the experiment is independent
         self.num_jobs = num_jobs
         self.jobs = jobs
+        self.total_run = None
+        if all([self.started_at, self.finished_at]):
+            self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
 class ExperimentStatusSchema(Schema):

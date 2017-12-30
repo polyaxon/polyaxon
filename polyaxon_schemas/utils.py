@@ -300,6 +300,35 @@ def humanize_timesince(start_time):
     return 'a few seconds ago'
 
 
+def humanize_timedelta(seconds):
+    """Creates a string representation of timedelta."""
+    hours, remainder = divmod(seconds, 3600)
+    days, hours = divmod(hours, 24)
+    minutes, seconds = divmod(remainder, 60)
+
+    if days:
+        result = '{}d'.format(days)
+        if hours:
+            result += ' {}h'.format(hours)
+        if minutes:
+            result += ' {}m'.format(minutes)
+        return result
+
+    if hours:
+        result = '{}h'.format(hours)
+        if minutes:
+            result += ' {}m'.format(minutes)
+        return result
+
+    if minutes:
+        result = '{}m'.format(minutes)
+        if seconds:
+            result += ' {}s'.format(seconds)
+        return result
+
+    return '{}s'.format(seconds)
+
+
 def to_percentage(number, rounding=2):
     """Creates a percentage string representation from the given `number`. The
     number is multiplied by 100 before adding a '%' character.
@@ -314,6 +343,7 @@ def to_percentage(number, rounding=2):
 
 
 def to_unit_memory(number):
+    """Creates a string representation of memory size given `number`."""
     Kb = 1024
 
     number /= Kb

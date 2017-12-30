@@ -72,9 +72,12 @@ class TestExperimentConfigs(TestCase):
                                                     updated_at=local_now(),
                                                     definition={}).to_dict()]}
         config = ExperimentConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        assert config_to_dict.pop('total_run') == '0s'
+        assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
+        assert config_to_dict.pop('total_run') == '0s'
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
         assert config_to_dict.pop('updated_at') == 'a few seconds ago'
         assert config_to_dict.pop('started_at') == 'a few seconds ago'
@@ -94,15 +97,18 @@ class TestExperimentConfigs(TestCase):
                        'unique_name': 'project.1.1.master'}
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
+        assert config_to_dict.pop('total_run') == '0s'
         assert config_to_dict == config_dict
 
         config_dict.pop('definition')
         config_to_dict = config.to_light_dict()
+        assert config_to_dict.pop('total_run') == '0s'
         config_dict.pop('sequence')
         config_dict.pop('unique_name')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
+        assert config_to_dict.pop('total_run') == '0s'
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
         assert config_to_dict.pop('updated_at') == 'a few seconds ago'
         assert config_to_dict.pop('started_at') == 'a few seconds ago'

@@ -5,7 +5,7 @@ import datetime
 
 from unittest import TestCase
 
-from polyaxon_schemas.utils import humanize_timesince, local_now, to_percentage
+from polyaxon_schemas.utils import humanize_timesince, local_now, to_percentage, humanize_timedelta
 
 
 class HumanizeTimesinceTest(TestCase):
@@ -45,6 +45,23 @@ class HumanizeTimesinceTest(TestCase):
     def test_humanize_timesince_few_seconds(self):
         self.assertEqual(u'Last update: ' + humanize_timesince(local_now()),
                          u'Last update: a few seconds ago')
+
+
+class HumanizeTimeDeltaTest(TestCase):
+    """A test case for the `humanize_timedelta`."""
+    def test_works_as_expected_for_valid_values(self):
+        test_data = [
+            (7200, '2h'),
+            (36, '36s'),
+            (3600, '1h'),
+            (3800, '1h 3m'),
+            (33000, '9h 10m'),
+            (720000, '8d 8h'),
+            (1000000, '11d 13h 46m'),
+        ]
+        for value, expected in test_data:
+            result = humanize_timedelta(value)
+            self.assertEqual(result, expected)
 
 
 class ToPercentageTest(TestCase):
