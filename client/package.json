@@ -53,6 +53,7 @@
     "redux-form": "^7.0.3",
     "redux-thunk": "^2.2.0",
     "sprintf-js": "^1.1.1",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "fontawesome": "^4.7.2"
   }
 }

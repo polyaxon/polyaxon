@@ -21,7 +21,6 @@ function Header() {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to="/projects"><NavItem eventKey={1}>Projects</NavItem></LinkContainer>
           </Nav>
           <Nav pullRight>
             <NavDropdown eventKey={3} title="Profile" id="basic-nav-dropdown">

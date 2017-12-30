@@ -1,3 +1,5 @@
+@import "../../node_modules/font-awesome/less/font-awesome.less";
+
 @gray-lightest: #fdfdfd;
 @gray-darker: #eee;
 @gray-darkest: #c9c9c9;
@@ -54,4 +56,73 @@ body {
 .list-item .meta {
   color: #7e7c7c;
   font-size: 12px;
+}
+
+.entity-details {
+  padding-bottom: 20px;
+  .title {
+    font-size: 25px;
+    padding-bottom:10px;
+    
+    .icon {
+      padding-right: 8px;
+    }
+  }
+
+  .results-info {
+    font-size: 17px;
+    padding-left: 10px;
+    font-style: italic;
+  }
+  .back-button {
+    margin-right: 10px;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  .description {
+    display: block;
+    margin: 10px 0 0 67px;
+    font-size: 15px;
+    font-style: italic;
+  }
+  .experiment-content {
+    display: block;
+    margin: 10px 0 0 55px;
+    font-size: 15px;
+    font-style: italic;
+  }
+  
+}
+
+.block {
+  .status {
+    padding-left: 5px;
+    font-style: italic;
+    color: @layout-link-gray;
+    font-size: 15px;
+  }
+  .button {
+    min-width: 100px;
+    .icon {
+      padding-left: 5px;
+    }
+  }
+  .title {
+    font-size: 18px;
+    .icon {
+      padding-right: 5px;
+    }
+  }
+  .meta {
+    .icon {
+      padding-right: 3px;
+    }
+    .title {
+      font-size: 12px;
+      padding-right: 3px;
+      color: @layout-link-gray;
+      font-weight: 500;
+    }
+  }
 }

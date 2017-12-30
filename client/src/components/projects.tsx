@@ -26,7 +26,10 @@ export default class Projects extends React.Component<Props, Object> {
     const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
     return (
       <div>
-        <h3>Projects ({projects.length} found)</h3>
+        <div className="entity-details">
+          <span className="title">Projects</span>
+          <span className="results-info">({projects.length} found)</span>
+        </div>
         <RootModal hideModal={hideModal} />
         <ul>
           {projects.filter(

@@ -26,11 +26,18 @@ export default class ProjectDetail extends React.Component<Props, Object> {
     }
     return (
       <div className="row">
-        <div className="col-md-12 project">
-          <h3>
-            <Button bsStyle="primary" onClick={() => {window.history.back()}}>Back</Button>
-            &nbsp;{project.name}: Experiments ({project.num_experiments} found)
-          </h3>
+        <div className="col-md-12">
+          <div className="entity-details">
+            <a className="back-button" onClick={() => {window.history.back()}}>&#060;</a>
+            <span className="title">
+              <i className="fa fa-cubes icon" aria-hidden="true"></i>
+              {project.name}
+            </span>
+            <span className="results-info">({project.num_experiments} experiments found)</span>
+            <span className="description">
+              {project.description}
+            </span>
+          </div>
           <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name}></Experiments>
         </div>
       </div>
