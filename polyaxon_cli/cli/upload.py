@@ -26,4 +26,4 @@ def upload():
         Printer.print_error('Could not upload code for project `{}`.'.format(project))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
-    Printer.print_success('Files upload.')
+    Printer.print_success('Files uploaded.')

@@ -65,5 +65,3 @@ def run(file, description):
             Printer.print_error('Could not create experiment group.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
-    response = response.to_light_dict()
-    dict_tabulate(response)

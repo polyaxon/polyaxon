@@ -42,7 +42,7 @@ def get(group, project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = response.to_light_dict()
+    response = response.to_light_dict(humanize_values=True)
     Printer.print_header("Experiment group info:")
     dict_tabulate(response)
 
@@ -101,7 +101,7 @@ def update(group, project, description):
         sys.exit(1)
 
     Printer.print_success("Experiment group updated.")
-    response = response.to_light_dict()
+    response = response.to_light_dict(humanize_values=True)
     Printer.print_header("Experiment group info:")
     dict_tabulate(response)
 
@@ -130,10 +130,12 @@ def experiments(group, project, page):
     else:
         Printer.print_header('No experiments found for experiment group `{}`.'.format(group))
 
-    objects = [Printer.add_status_color(o.to_light_dict()) for o in response['results']]
+    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+               for o in response['results']]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")
         objects.pop('group', None)
         objects.pop('group_name', None)
+        objects.pop('project_name', None)
         dict_tabulate(objects, is_list_dict=True)

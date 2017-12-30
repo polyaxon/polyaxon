@@ -75,6 +75,9 @@ class Printer(object):
             obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color=color)
         elif obj_dict.get('last_status'):
             obj_dict['last_status'] = cls.add_color(obj_dict['last_status'], color='cyan')
+
+        obj_dict.pop('is_done', None)
+        obj_dict.pop('is_running', None)
         return obj_dict
 
     @classmethod

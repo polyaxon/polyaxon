@@ -53,7 +53,7 @@ def get(experiment, project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = Printer.add_status_color(response.to_light_dict())
+    response = Printer.add_status_color(response.to_light_dict(humanize_values=True))
     Printer.print_header("Experiment info:")
     dict_tabulate(response)
 
@@ -120,7 +120,7 @@ def restart(experiment, project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = Printer.add_status_color(response.to_light_dict())
+    response = Printer.add_status_color(response.to_light_dict(humanized_values=True))
     Printer.print_header("Experiment info:")
     dict_tabulate(response)
 
@@ -148,7 +148,8 @@ def jobs(experiment, project, page):
     else:
         Printer.print_header('No jobs found for experiment `{}`.'.format(experiment))
 
-    objects = [Printer.add_status_color(o.to_light_dict()) for o in response['results']]
+    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+               for o in response['results']]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Jobs:")
@@ -186,7 +187,8 @@ def statuses(experiment, project, page):
     else:
         Printer.print_header('No statuses found for experiment `{}`.'.format(experiment))
 
-    objects = list_dicts_to_tabulate([o.to_light_dict() for o in response['results']])
+    objects = list_dicts_to_tabulate([o.to_light_dict(humanize_values=True)
+                                      for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
         objects.pop('experiment')

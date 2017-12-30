@@ -40,7 +40,7 @@ def get(experiment, job, project):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = Printer.add_status_color(response.to_light_dict())
+    response = Printer.add_status_color(response.to_light_dict(humanize_values=True))
     Printer.print_header("Job info:")
     dict_tabulate(response)
 
@@ -73,7 +73,8 @@ def statuses(experiment, job, project):
     else:
         Printer.print_header('No statuses found for job `{}`.'.format(job))
 
-    objects = list_dicts_to_tabulate([o.to_light_dict() for o in response['results']])
+    objects = list_dicts_to_tabulate([o.to_light_dict(humanize_values=True)
+                                      for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
         objects.pop('job')
