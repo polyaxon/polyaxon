@@ -16,11 +16,12 @@ export interface Props {
 function Experiment({experiment, onDelete}: Props) {
   let disabled = experiment.num_jobs == 0 ? true : false;
   let statusCssClass = getCssClassForStatus(experiment.last_status);
+  let jobsUrl = experiment.experiment_group ? `../../experiments/${experiment.sequence}/` : `experiments/${experiment.sequence}/`
   return (
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ `experiments/${experiment.sequence}/` }>
+          <LinkContainer to={ jobsUrl }>
             <Button className="button" disabled={disabled}>
               { experiment.num_jobs } Job{ experiment.num_jobs != 1 && 's' }
               <i className="fa fa-cube icon" aria-hidden="true"></i>

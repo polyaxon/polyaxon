@@ -8,6 +8,7 @@ export class ExperimentModel {
 	public num_jobs: number;
 	public last_status: string;
 	public project_name: string;
+	public experiment_group: string;
 	public deleted?: boolean;
     public project?: string;
     public status?: string;

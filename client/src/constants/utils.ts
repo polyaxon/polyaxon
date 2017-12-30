@@ -22,9 +22,9 @@ export let getCssClassForStatus = function (status?: string): string {
     } else if (status === 'Created') {
         return 'light-blue';
     } else if (status === 'Running') {
-        return 'dark-blue';
+        return 'orange';
     } else if (status === 'Starting') {
-        return 'dark-blue';
+        return 'orange';
     }
     return '';
 }
