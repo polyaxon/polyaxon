@@ -16,7 +16,7 @@ function Project({project, onDelete}: Props) {
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={`/${project.user}/${project.name}/experiments/`}>
+          <LinkContainer to={`/${project.user}/${project.name}/`}>
             <Button className="button">
               { project.num_experiments } Experiment{ project.num_experiments != 1 && 's' }
               <i className="fa fa-sliders icon" aria-hidden="true"></i>

@@ -14,13 +14,13 @@ export interface Props {
 
 
 function Experiment({experiment, onDelete}: Props) {
-  
+  let disabled = experiment.num_jobs == 0 ? true : false;
   return (
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ `${experiment.sequence}/` }>
-            <Button className="button">
+          <LinkContainer to={ `experiments/${experiment.sequence}/` }>
+            <Button className="button" disabled={disabled}>
               { experiment.num_jobs } Job{ experiment.num_jobs != 1 && 's' }
               <i className="fa fa-cube icon" aria-hidden="true"></i>
             </Button>
