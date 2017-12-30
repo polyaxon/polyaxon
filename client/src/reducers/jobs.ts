@@ -1,6 +1,9 @@
 import {Reducer} from "redux";
+import {normalize} from 'normalizr';
+
 import * as _ from "lodash";
 
+import {JobSchema} from "../constants/schemas"
 import {JobAction, actionTypes} from "../actions/job";
 import {JobStateSchema, JobsEmptyState} from "../models/job";
 
@@ -34,6 +37,14 @@ export const jobsReducer: Reducer<JobStateSchema> =
         }
         newState.byUuids[xp.uuid] = xp;
       }
+      return newState;
+    case actionTypes.RECEIVE_JOB:
+      var newState = {...state};
+      if (!_.includes(newState.uuids, action.job.uuid)) {
+        newState.uuids.push(action.job.uuid);
+      }
+      let normalized_jobs = normalize(action.job, JobSchema).entities.jobs;
+      newState.byUuids[action.job.uuid] = normalized_jobs[action.job.uuid];
       return newState;
   }
   return state;

@@ -10,12 +10,14 @@ export enum actionTypes {
   CREATE_JOB='CREATE_JOB',
   DELETE_JOB='DELETE_JOB',
   UPDATE_JOB='UPDATE_JOB',
+  RECEIVE_JOB='RECEIVE_JOB',
   RECEIVE_JOBS='RECEIVE_JOBS',
+  REQUEST_JOB='REQUEST_JOB',
   REQUEST_JOBS='REQUEST_JOBS',
 }
 
-export interface CreateUpdateJobAction extends Action {
-  type: actionTypes.CREATE_JOB | actionTypes.UPDATE_JOB;
+export interface CreateUpdateReceiveJobAction extends Action {
+  type: actionTypes.CREATE_JOB | actionTypes.UPDATE_JOB | actionTypes.RECEIVE_JOB;
   job: JobModel
 }
 
@@ -30,19 +32,19 @@ export interface ReceiveJobsAction extends Action {
 }
 
 export interface RequestJobsAction extends Action {
-  type: actionTypes.REQUEST_JOBS;
+  type: actionTypes.REQUEST_JOBS | actionTypes.REQUEST_JOB;
 }
 
-export type JobAction = CreateUpdateJobAction | DeleteJobAction | ReceiveJobsAction | RequestJobsAction;
+export type JobAction = CreateUpdateReceiveJobAction | DeleteJobAction | ReceiveJobsAction | RequestJobsAction;
 
-export function createJobActionCreator(job: JobModel): CreateUpdateJobAction {
+export function createJobActionCreator(job: JobModel): CreateUpdateReceiveJobAction {
     return {
       type: actionTypes.CREATE_JOB,
       job
     }
 }
 
-export function updateJobActionCreator(job: JobModel): CreateUpdateJobAction {
+export function updateJobActionCreator(job: JobModel): CreateUpdateReceiveJobAction {
     return {
       type: actionTypes.UPDATE_JOB,
       job
@@ -56,9 +58,23 @@ export function deleteJobActionCreator(jobUuid: string): DeleteJobAction {
     }
 }
 
+export function requestJobActionCreator(): RequestJobsAction {
+  return {
+    type: actionTypes.REQUEST_JOB,
+  }
+}
+
 export function requestJobsActionCreator(): RequestJobsAction {
   return {
     type: actionTypes.REQUEST_JOBS,
+  }
+}
+
+
+export function receiveJobActionCreator(job: JobModel): CreateUpdateReceiveJobAction {
+  return {
+    type: actionTypes.RECEIVE_JOB,
+    job
   }
 }
 
@@ -88,3 +104,24 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number)
       .then(json => dispatch(receiveJobsActionCreator(json)))
   }
 }
+
+export function fetchJob(user: string, projectName: string, experimentSequence: number, jobUuid: string): Dispatch<JobModel> {
+  return (dispatch: any) => {
+    dispatch(requestJobActionCreator());
+    return fetch(BASE_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobUuid, {
+        headers: {
+            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+        }
+    })
+      .then(response => response.json())
+      .then(json => {
+          return {
+            ...json,
+            createdAt: new Date(_.toString(json.created_at)),
+            updatedAt: new Date(_.toString(json.updated_at))};
+        }
+      )
+      .then(json => dispatch(receiveJobActionCreator(json)))
+  }
+}
+

@@ -15,18 +15,41 @@ export interface Props {
 
 function Experiment({experiment, onDelete}: Props) {
   
-  let buildJobsUrl = function (experiment: ExperimentModel) {
-    let projectNameAndUser = urlifyProjectName(experiment.project_name)
-    return `/${projectNameAndUser}/experiments/${experiment.sequence}`
-  }
-  
   return (
     <div className="row">
-      <div className="col-md-12 experiment">
+      <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ buildJobsUrl(experiment) }><Button>View experiment details</Button></LinkContainer>
+          <LinkContainer to={ `${experiment.sequence}/` }>
+            <Button className="button">
+              { experiment.num_jobs } Job{ experiment.num_jobs != 1 && 's' }
+              <i className="fa fa-cube icon" aria-hidden="true"></i>
+            </Button>
+          </LinkContainer>
         </ButtonToolbar>
-        <h4 className="title"><a>{ experiment.unique_name}</a></h4>
+        <span className="title">
+          <i className="fa fa-sliders icon" aria-hidden="true"></i>
+          { experiment.unique_name}
+          <span className="status">({ experiment.last_status})</span>
+        </span>
+        <div className="meta">
+          <i className="fa fa-user-o icon" aria-hidden="true"></i>
+          <span className="title">User:</span>
+          { experiment.user }
+        </div>
+        { experiment.started_at &&
+        <div className="meta">
+          <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+          <span className="title">Started at:</span>
+          { experiment.started_at }
+        </div>
+        }
+        { experiment.finished_at &&
+        <div className="meta">
+          <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+          <span className="title">Finished at:</span>
+          { experiment.finished_at }
+        </div>
+        }
       </div>
     </div>
   );
