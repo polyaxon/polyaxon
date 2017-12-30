@@ -714,7 +714,6 @@ class Conv3DTransposeConfig(BaseLayerConfig):
             Currently, specifying any `dilation_rate` value != 1 is
             incompatible with specifying any stride value != 1.
         activation: Activation function to use
-            (see [activations](../activations.md)).
             If you don't specify anything, no activation is applied
             (ie. "linear" activation: `a(x) = x`).
         use_bias: Boolean, whether the layer uses a bias vector.
