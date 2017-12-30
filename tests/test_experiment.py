@@ -204,7 +204,7 @@ class TestExperimentConfigs(TestCase):
         config_dict = {
             'index': 0,
             'bus_id': '0000:00:1E.1',
-            'memory_free': 1000,
+            'memory_free': 10000,
             'memory_total': 12883853312,
             'memory_used': 8388608000,
             'memory_utilization': 0,
@@ -229,11 +229,16 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_dict()
         assert config_to_dict == config_dict
 
+        config_to_dict = config.to_dict(humanize_values=True)
+        assert config_to_dict.pop('memory_free') == '9.77 Kb'
+        assert config_to_dict.pop('memory_total') == '12.0 Gb'
+        assert config_to_dict.pop('memory_used') == '7.81 Gb'
+
     def test_container_resources(self):
         gpu_resources = {
             'index': 0,
             'bus_id': '0000:00:1E.1',
-            'memory_free': 1000,
+            'memory_free': 10000,
             'memory_total': 12883853312,
             'memory_used': 8388608000,
             'memory_utilization': 0,
@@ -271,3 +276,5 @@ class TestExperimentConfigs(TestCase):
 
         config_to_dict = config.to_dict(humanize_values=True)
         assert config_to_dict.pop('cpu_percentage') == '69.48%'
+        assert config_to_dict.pop('memory_limit') == '1.95 Gb'
+        assert config_to_dict.pop('memory_used') == '80.55 Mb'

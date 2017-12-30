@@ -384,6 +384,7 @@ class ContainerGPUResourcesSchema(Schema):
 class ContainerGPUResourcesConfig(BaseConfig):
     SCHEMA = ContainerGPUResourcesSchema
     IDENTIFIER = 'ContainerGPUResources'
+    MEM_SIZE_ATTRIBUTES = ['memory_free', 'memory_used', 'memory_total']
 
     def __init__(self,
                  index,
@@ -444,6 +445,7 @@ class ContainerResourcesConfig(BaseConfig):
     SCHEMA = ContainerResourcesSchema
     IDENTIFIER = 'ContainerResources'
     PERCENT_ATTRIBUTES = ['cpu_percentage']
+    MEM_SIZE_ATTRIBUTES = ['memory_used', 'memory_limit']
 
     def __init__(self,
                  job_uuid,

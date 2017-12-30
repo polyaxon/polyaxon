@@ -311,3 +311,20 @@ def to_percentage(number, rounding=2):
     rounded = round(number, rounding)
 
     return '{}%'.format(number_as_int if number_as_int == rounded else rounded)
+
+
+def to_unit_memory(number):
+    Kb = 1024
+
+    number /= Kb
+
+    if number < 100:
+        return '{} Kb'.format(round(number, 2))
+
+    number /= Kb
+    if number < 300:
+        return '{} Mb'.format(round(number, 2))
+
+    number /= Kb
+
+    return '{} Gb'.format(round(number, 2))

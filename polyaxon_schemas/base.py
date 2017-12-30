@@ -8,7 +8,8 @@ import six
 from marshmallow import Schema, ValidationError, post_load, post_dump
 from marshmallow.utils import utc
 
-from polyaxon_schemas.utils import to_camel_case, TIME_ZONE, humanize_timesince, to_percentage
+from polyaxon_schemas.utils import to_camel_case, TIME_ZONE, humanize_timesince, to_percentage, \
+    to_unit_memory
 
 
 class BaseConfig(object):
@@ -19,6 +20,7 @@ class BaseConfig(object):
     REDUCED_ATTRIBUTES = []  # Attribute to remove in the reduced form if they are null.
     REDUCED_LIGHT_ATTRIBUTES = []
     DATETIME_ATTRIBUTES = []
+    MEM_SIZE_ATTRIBUTES = []
     PERCENT_ATTRIBUTES = []
     ROUNDING = 2
 
@@ -42,6 +44,8 @@ class BaseConfig(object):
             humanized_attrs[attr] = humanize_timesince(getattr(obj, attr))
         for attr in cls.PERCENT_ATTRIBUTES:
             humanized_attrs[attr] = to_percentage(getattr(obj, attr), cls.ROUNDING)
+        for attr in cls.MEM_SIZE_ATTRIBUTES:
+            humanized_attrs[attr] = to_unit_memory(getattr(obj, attr))
         return humanized_attrs
 
     @classmethod
