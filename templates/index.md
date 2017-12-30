@@ -11,7 +11,7 @@ Here  you will find a comprehensive guides for setting up Polyaxon on your clust
 We do our best to make this documentation clear and user friendly, but If you see anything that is incorrect or have any questions, feel free to reach out at the [issues page](https://github.com/polyaxon/polyaxon/issues), [forum](https://gitter.im/polyaxon/polyaxon) or [contact us](mailto:contact@polyaxon.com).
 
 
-# Get Started
+## Get Started
 
 This documentation start with quick start example, and then walks through the steps required to install and configure a complete Polyaxon deployment in the cloud or on your own infrastructure. Using Kubernetes and the JupyterHub Helm chart provides sensible defaults for an initial deployment.
 
