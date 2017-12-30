@@ -74,7 +74,7 @@ class TestProjectConfigs(TestCase):
                        'experiments': [
                            ExperimentConfig(config={},
                                             uuid=uuid_value,
-                                            group=uuid_value,
+                                            experiment_group=uuid_value,
                                             project=uuid_value).to_dict()]}
         config = ExperimentGroupConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

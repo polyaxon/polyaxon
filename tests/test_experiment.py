@@ -23,8 +23,8 @@ class TestExperimentConfigs(TestCase):
             'uuid': uuid.uuid4().hex,
             'project': uuid.uuid4().hex,
             'project_name': 'name.name',
-            'group': uuid.uuid4().hex,
-            'group_name': 'name.name.1',
+            'experiment_group': uuid.uuid4().hex,
+            'experiment_group_name': 'name.name.1',
             'unique_name': 'user.proj.1',
             'last_status': 'Running',
             'description': 'description',
@@ -42,7 +42,7 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('content')
         config_dict.pop('config')
         config_dict.pop('project')
-        config_dict.pop('group')
+        config_dict.pop('experiment_group')
         assert config.to_light_dict() == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
@@ -58,8 +58,8 @@ class TestExperimentConfigs(TestCase):
                        'uuid': uuid.uuid4().hex,
                        'project': uuid.uuid4().hex,
                        'project_name': 'user.name',
-                       'group': uuid.uuid4().hex,
-                       'group_name': 'user.name.1',
+                       'experiment_group': uuid.uuid4().hex,
+                       'experiment_group_name': 'user.name.1',
                        'last_status': 'Running',
                        'num_jobs': 1,
                        'created_at': local_now().isoformat(),

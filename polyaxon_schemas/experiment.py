@@ -85,8 +85,8 @@ class ExperimentSchema(Schema):
     user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
     project = UUID(allow_none=True)
     project_name = fields.Str(allow_none=True)
-    group = UUID(allow_none=True)
-    group_name = fields.Str(allow_none=True)
+    experiment_group = UUID(allow_none=True)
+    experiment_group_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     last_status = fields.Str(allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
@@ -122,7 +122,7 @@ class ExperimentConfig(BaseConfig):
         'created_at', 'updated_at', 'started_at', 'finished_at',
         'is_clone', 'is_running', 'is_done', 'total_run']
     REDUCED_LIGHT_ATTRIBUTES = [
-        'uuid', 'project', 'group', 'description', 'config', 'content', 'jobs'
+        'uuid', 'project', 'experiment_group', 'description', 'config', 'content', 'jobs'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -133,8 +133,8 @@ class ExperimentConfig(BaseConfig):
                  unique_name=None,
                  project=None,
                  project_name=None,
-                 group=None,
-                 group_name=None,
+                 experiment_group=None,
+                 experiment_group_name=None,
                  description=None,
                  last_status=None,
                  created_at=None,
@@ -154,8 +154,8 @@ class ExperimentConfig(BaseConfig):
         self.unique_name = unique_name
         self.project = project
         self.project_name = project_name
-        self.group = group
-        self.group_name = group_name
+        self.experiment_group = experiment_group
+        self.experiment_group_name = experiment_group_name
         self.description = description
         self.last_status = last_status
         self.started_at = self.localize_date(started_at)
