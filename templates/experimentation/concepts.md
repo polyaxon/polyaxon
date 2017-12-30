@@ -1,4 +1,4 @@
-# Polyaxon Architecture
+## Polyaxon Architecture
 
 In order to understand how to organize your workflow,
 we need to understand how Polyaxon abstract the best practices of a data scientist job.
@@ -33,14 +33,14 @@ to fit the requirements and dependencies needed for the experiments.
 ![Screenshot](/images/polyaxon_architecture.png)
 
 
-# Concepts
+## Concepts
 
 Polyaxon relies on a set of concepts to manage an experimentation workflow,
 in this section we provide a high level introduction to these concepts,
 with more details in page dedicated to each concept.
 
 
-## User
+### User
 
 A `User` is the entity that creates project, starts experiments, manages organizations and clusters.
 A `User` has a set of permissions, and can be an normal user or superuser.
@@ -48,14 +48,14 @@ A `User` has a set of permissions, and can be an normal user or superuser.
 !!! note
     Please refer to the [management section](management/introduction) for more details.
 
-## Organization
+### Organization
 
 An `Organization` provides a way to manage team/group of users, their access roles, and resources quotas.
 
 !!! caution
     This is still a work in progress.
 
-## Project
+### Project
 
 A `Project` in Polyaxon is very similar to a project in github,
 it aims at organizing your efforts to solve a specific problem.
@@ -64,21 +64,21 @@ A project consist of a name and a description, the code to execute, the data, an
 !!! note
     Please refer to the [projects section](experimentation/project) for more details.
 
-## Experiment Group
+### Experiment Group
 
 An `Experiment Group` is a way to try a version of code and data with different hyper parameters.
 
 !!! note
     Please refer to the [experiment groups and hyper parameters search section](experimentation/experiment_group) for more details.
 
-## Experiment
+### Experiment
 
 An `Experiment` is the execution of your model with data and the provided parameters on the cluster.
 
 !!! note
     Please refer to the [experiments and distributed runs section](experimentation/experiment) for more details.
 
-## Job
+### Job
 
 A `Job` is the pod running on the cluster for a specific experiment,
 if an experiment run in a distributed way it will create multiple instances of `Job`.
