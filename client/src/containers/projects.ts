@@ -3,6 +3,8 @@ import { connect, Dispatch } from "react-redux";
 import { AppState } from "../constants/types";
 import Projects from "../components/projects";
 import {ProjectModel} from "../models/project";
+import {sortByCreatedAt} from "../constants/utils";
+
 import * as actions from "../actions/project";
 import * as modalActions from "../actions/modal"
 import {modalTypes, modalPropsByTypes} from "../models/modal";
@@ -10,7 +12,7 @@ import {modalTypes, modalPropsByTypes} from "../models/modal";
 
 export function mapStateToProps(state: AppState, params: any)  {
   if (state.projects)
-    return {projects: (<any>Object).values(state.projects.byUuids)};
+    return {projects: (<any>Object).values(state.projects.byUuids).sort(sortByCreatedAt)};
   return {projects: []};
 }
 

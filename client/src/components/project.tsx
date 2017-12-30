@@ -12,6 +12,7 @@ export interface Props {
 }
 
 function Project({project, onDelete}: Props) {
+  let visibility = project.is_public ? 'Public' : 'Private';
   return (
     <div className="row">
       <div className="col-md-12 block">
@@ -28,9 +29,9 @@ function Project({project, onDelete}: Props) {
           { project.name }
         </span>
         <div className="meta">
-          <i className="fa fa-sliders icon" aria-hidden="true"></i>
-          <span className="title">Number of Experiments:</span>
-          { project.num_experiments }
+          <i className="fa fa-lock icon" aria-hidden="true"></i>
+          <span className="title">Visibility:</span>
+          { visibility }
         </div>
         <div className="meta">
           <i className="fa fa-clock-o icon" aria-hidden="true"></i>

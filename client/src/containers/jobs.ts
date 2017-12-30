@@ -1,7 +1,7 @@
 import { connect, Dispatch } from "react-redux";
 import * as _ from "lodash";
 
-import {urlifyProjectName} from "../constants/utils"
+import {urlifyProjectName, sortByCreatedAt} from "../constants/utils"
 import { AppState } from "../constants/types";
 import Jobs from "../components/jobs";
 import {JobModel} from "../models/job";
@@ -24,7 +24,7 @@ export function mapStateToProps(state: AppState, params: any) {
     });
   }
 
-  return {jobs: jobs}
+  return {jobs: jobs.sort(sortByCreatedAt)}
 }
 
 export interface DispatchProps {
