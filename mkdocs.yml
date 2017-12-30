@@ -3,33 +3,61 @@ site_url: http://polyaxon.com
 site_author: Polyaxon Team
 repo_url: https://github.com/polyaxon/polyaxon
 repo_name: polyaxon/polyaxon
-site_favicon: 'images/favicon.ico'
 docs_dir: docs
 site_description: 'Documentation for polyaxon, a Deep Learning Platform.'
-theme: material
-extra:
+theme:
+  name: material
+  favicon: 'images/favicon.ico'
   logo: 'images/logo_white.svg'
   palette:
     primary: 'blue grey'
     accent: 'light blue'
+
+extra:
   social:
     - type: 'github'
       link: 'https://github.com/polyaxon'
+    - type: 'cubes'
+      link: 'https://hub.docker.com/r/polyaxon'
     - type: 'twitter'
       link: 'https://twitter.com/polyaxonai'
+    - type: 'linkedin'
+      link: 'https://linkedin.com/company/polyaxon'
+    - type: 'medium'
+      link: 'https://medium.com/@polyaxon'
+    - type: 'angellist'
+      link: 'https://angel.co/polyaxon'
 
 extra_css:
     - css/style.css
 
-dev_addr: '0.0.0.0:8000'
+dev_addr: '0.0.0.0:8003'
 google_analytics: ['UA-89493331-1', 'polyaxon.com']
-copyright: Copyright &copy; 2017 Polyaxon
+copyright: Copyright &copy; 2018 Polyaxon
 
 markdown_extensions:
   - admonition
-  - codehilite:
-      guess_lang: False
+  - codehilite
   - footnotes
+  - pymdownx.inlinehilite
+  - footnotes
+  - toc(permalink=true)
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
 
 pages:
 - Home: index.md
