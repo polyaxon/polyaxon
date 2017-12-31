@@ -7,13 +7,13 @@ export class GroupModel {
 	public user: string;
 	public concurrency: number;
 	public content: number;
-	public num_pending_experiments: number;
-	public num_running_experiments: number;
+	public num_pending_experiments?: number;
+	public num_running_experiments?: number;
 	public deleted?: boolean;
 	public createdAt: Date;
 	public updatedAt: Date;
-	public started_at: Date;
-	public finished_at: Date;
+	public started_at?: Date;
+	public finished_at?: Date;
 }
 
 export class GroupStateSchema {
