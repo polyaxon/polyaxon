@@ -65,10 +65,10 @@ pages:
 - Installation Requirements & Setup:
   - Introduction: installation/introduction.md
   - Tools & Requirements: installation/tools_and_requirements.md
-  - Instal Kuberenetes: installation/install_kubernetes.md
-  - Configure Kuberenetes & Helm: installation/configure_kubernetes.md
-  - Install Polyaxon Helm Chart: installation/polyaxon_helm.md
-  - Install Polyaxon CLI: installation/polyaxon_cli.md
+  - Install Kuberenetes: installation/install_kubernetes.md
+  - Stup Kuberenetes: installation/setup_helm.md
+  - Deploy Polyaxon: installation/deploy_polyaxon.md
+  - Install Polyaxon CLI: installation/install_polyaxon_cli.md
   - Turn Off Polyaxon: installation/turn_off_polyaxon.md
 - Experimentation Workflow:
   - Polyaxon Concepts: experimentation/concepts.md
