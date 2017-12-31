@@ -17,14 +17,14 @@ the polyaxonfile.yml `run` section should look something like this
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
-  install:
+  steps:
     - pip install scikit-learn
   cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
 ```
 
 If the code requires many python dependencies, Polyaxon provides an elegant way to install these requirements,
-instead of specifying every single library in the `install` step of the `run` section,
-we can create a requirements file with the name `polyaxon_requirements.txt` and just create one command in the install `pip install -r polyaxon_requirements.txt`
+instead of specifying every single library in the `steps` part of the `run` section,
+we can create a requirements file with the name `polyaxon_requirements.txt` and just create one command in the steps `pip install -r polyaxon_requirements.txt`
 and Polyaxon will automatically detect it and install the requirements.
 
 Polyaxon also allows you to specify a `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
@@ -52,7 +52,7 @@ declarations:
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
-  install:
+  steps:
     - pip install -r polyaxon_requirements.txt
   cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
 ```
