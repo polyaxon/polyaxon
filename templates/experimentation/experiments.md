@@ -185,7 +185,13 @@ polyaxon experiment stop 2
 After modifying our `train.py` we want to run the experiment with 1 master 4 workers and 1 parameter server.
 We also want to customize the resources of the each node.
 
-In that case we need to introduce a new [environment section](), in order to that.
+First let's upload the new version of the code
+
+```bash
+$ polyaxon upload
+```
+
+In order to customize the resources of our jobs we need to introduce a new [environment section]().
 
 Let's create a new `polyaxonfile_resources.yml` override file that will allow us to achieve that
 
