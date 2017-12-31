@@ -40,4 +40,4 @@ $ helm version
 
 Make sure you have at least version 2.5!
 
-If your Helm version is compatible, the  it is time to [deploy polyaxon](deploy_polyaxon)
+If your Helm version is compatible, then it is time to [deploy polyaxon](deploy_polyaxon)
