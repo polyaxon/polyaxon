@@ -49,9 +49,9 @@ and scaling deep learning applications on Kubernetes clusters.
 
 ## Requirements
 
-In order to run Polyaxon on top of Kubernetes, we recommend to have:
+In order to run Polyaxon on top of Kubernetes, we need:
 
- * Access to internet to Pull images, unless you have all the images you need.
+ * Access to internet to Pull images, unless you have all the images you need
    for running your experiments accessible to Kubernetes through a locally deployed registry.
  * Kubernetes with a version >= 1.8.0. Polyaxon might work with previous versions, but we recommend recent versions.
  * Helm with a version ≥ 2.5. Polyaxon might work with previous versions, but we recommend recent versions.
