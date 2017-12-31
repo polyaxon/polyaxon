@@ -41,7 +41,7 @@ class ExperimentJobConfig(BaseConfig):
     IDENTIFIER = 'ExperimentJob'
     REDUCED_ATTRIBUTES = [
         'last_status', 'is_running', 'is_done', 'started_at', 'finished_at', 'total_run']
-    REDUCED_LIGHT_ATTRIBUTES = ['definition', 'experiment', 'sequence', 'unique_name']
+    REDUCED_LIGHT_ATTRIBUTES = ['definition', 'experiment', 'sequence', 'unique_name', 'updated_at']
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
@@ -122,7 +122,8 @@ class ExperimentConfig(BaseConfig):
         'created_at', 'updated_at', 'started_at', 'finished_at',
         'is_clone', 'is_running', 'is_done', 'total_run']
     REDUCED_LIGHT_ATTRIBUTES = [
-        'uuid', 'project', 'experiment_group', 'description', 'config', 'content', 'jobs'
+        'uuid', 'project', 'experiment_group', 'description', 'config', 'content',
+        'jobs', 'updated_at'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 

@@ -32,6 +32,7 @@ class TestProjectConfigs(TestCase):
         config = ProjectConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         config_dict.pop('description')
+        config_dict.pop('updated_at')
         assert config.to_light_dict() == config_dict
 
         config_to_dict = config.to_dict(humanize_values=True)
@@ -40,7 +41,6 @@ class TestProjectConfigs(TestCase):
 
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
-        assert config_to_dict.pop('updated_at') == 'a few seconds ago'
 
     def test_project_experiments_and_groups_config(self):
         uuid_value = uuid.uuid4().hex
@@ -82,6 +82,7 @@ class TestProjectConfigs(TestCase):
         config_dict.pop('content')
         config_dict.pop('uuid')
         config_dict.pop('project')
+        config_dict.pop('updated_at')
         assert_equal_dict(config_dict, config.to_light_dict())
 
         config_to_dict = config.to_dict(humanize_values=True)
@@ -90,4 +91,3 @@ class TestProjectConfigs(TestCase):
 
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
-        assert config_to_dict.pop('updated_at') == 'a few seconds ago'

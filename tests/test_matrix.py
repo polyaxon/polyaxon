@@ -14,7 +14,7 @@ class TestMatrixConfigs(TestCase):
         with self.assertRaises(ValueError):
             MatrixConfig.from_dict(config_dict)
 
-    def test_matrix_accespt_only_one_option(self):
+    def test_matrix_accept_only_one_option(self):
         config_dict = {
             'values': [1, 2, 3],
             'linspace': '1:2:1'

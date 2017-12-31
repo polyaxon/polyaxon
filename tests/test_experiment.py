@@ -43,11 +43,11 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('config')
         config_dict.pop('project')
         config_dict.pop('experiment_group')
+        config_dict.pop('updated_at')
         assert config.to_light_dict() == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
-        assert config_to_dict.pop('updated_at') == 'a few seconds ago'
         assert config_to_dict.pop('started_at') is None
 
     def test_experiment_with_jobs_config(self):
@@ -80,7 +80,6 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop('total_run') == '0s'
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
-        assert config_to_dict.pop('updated_at') == 'a few seconds ago'
         assert config_to_dict.pop('started_at') == 'a few seconds ago'
         assert config_to_dict.pop('finished_at') == 'a few seconds ago'
 
@@ -103,6 +102,7 @@ class TestExperimentConfigs(TestCase):
 
         config_dict.pop('definition')
         config_dict.pop('experiment')
+        config_dict.pop('updated_at')
         config_to_dict = config.to_light_dict()
         assert config_to_dict.pop('total_run') == '0s'
         config_dict.pop('sequence')
@@ -112,7 +112,6 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop('total_run') == '0s'
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
-        assert config_to_dict.pop('updated_at') == 'a few seconds ago'
         assert config_to_dict.pop('started_at') == 'a few seconds ago'
         assert config_to_dict.pop('finished_at') == 'a few seconds ago'
 

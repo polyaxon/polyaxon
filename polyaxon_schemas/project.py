@@ -46,7 +46,7 @@ class ExperimentGroupConfig(BaseConfig):
         'created_at', 'updated_at', 'concurrency',
         'num_experiments', 'num_pending_experiments', 'num_running_experiments',
     ]
-    REDUCED_LIGHT_ATTRIBUTES = ['uuid', 'project', 'description', 'content']
+    REDUCED_LIGHT_ATTRIBUTES = ['uuid', 'project', 'description', 'content', 'updated_at']
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
     def __init__(self,
@@ -115,7 +115,7 @@ class ProjectConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         'user', 'unique_name', 'uuid', 'description', 'experiments',
         'experiment_groups', 'created_at', 'updated_at']
-    REDUCED_LIGHT_ATTRIBUTES = ['uuid', 'description']
+    REDUCED_LIGHT_ATTRIBUTES = ['uuid', 'description', 'updated_at']
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
 
     def __init__(self,
