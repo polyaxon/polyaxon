@@ -73,11 +73,11 @@ def statuses(experiment, job, project):
     else:
         Printer.print_header('No statuses found for job `{}`.'.format(job))
 
-    objects = list_dicts_to_tabulate([o.to_light_dict(humanize_values=True)
+    objects = list_dicts_to_tabulate([Printer.handle_statuses(o.to_light_dict(humanize_values=True))
                                       for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
-        objects.pop('job')
+        objects.pop('job', None)
         dict_tabulate(objects, is_list_dict=True)
 
 

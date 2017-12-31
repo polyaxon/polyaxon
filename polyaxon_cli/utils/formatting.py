@@ -81,6 +81,17 @@ class Printer(object):
         return obj_dict
 
     @classmethod
+    def handle_statuses(cls, obj_dict):
+        if obj_dict.get('status') == 'Created':
+            obj_dict['status'] = cls.add_color(obj_dict['status'], color='cyan')
+        elif obj_dict.get('status') == 'Succeeded':
+            obj_dict['status'] = cls.add_color(obj_dict['status'], color='green')
+        elif obj_dict.get('status') in ['Failed', 'Deleted']:
+            obj_dict['status'] = cls.add_color(obj_dict['status'], color='red')
+        obj_dict['status'] = cls.add_color(obj_dict['status'], color='yellow')
+        return obj_dict
+
+    @classmethod
     def decorate_format_value(cls, text_format, values, color):
         values = to_list(values)
         values = [cls.add_color(value, color) for value in values]

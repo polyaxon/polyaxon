@@ -20,11 +20,11 @@ from polyaxon_cli.utils.formatting import Printer
 
 @click.command()
 @click.argument('project', type=str)
+@click.option('--run', is_flag=True, default=True,
+              help='Init a polyaxon file with `exec` step template.')
 @click.option('--model', is_flag=True, default=False,
               help='Init a polyaxon file with `model` step template.')
-@click.option('--run', is_flag=True, default=False,
-              help='Init a polyaxon file with `exec` step template.')
-def init(project, model, run):
+def init(project, run, model):
     """Init a new polyaxonfile specification."""
     user, project_name = get_project_or_local(project)
     try:
@@ -51,7 +51,8 @@ def init(project, model, run):
         ProjectManager.set_config(project_config, init=True)
         IgnoreManager.init_config()
         Printer.print_success(
-            "Polyaxonfile was created successfully `{}`".format(constants.INIT_FILE))
+            "Project `{}` was initialized and Polyaxonfile was created successfully `{}`".format(
+                project, constants.INIT_FILE))
         sys.exit(1)
 
     # if we are here the file was not created
@@ -74,4 +75,5 @@ def init(project, model, run):
     ProjectManager.set_config(project_config, init=True)
     IgnoreManager.init_config()
     Printer.print_success(
-        "Polyaxonfile was created successfully `{}`".format(constants.INIT_FILE))
+        "Project `{}` was initialized and Polyaxonfile was created successfully `{}`".format(
+            project, constants.INIT_FILE))

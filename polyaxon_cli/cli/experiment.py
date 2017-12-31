@@ -153,7 +153,7 @@ def jobs(experiment, project, page):
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Jobs:")
-        objects.pop('experiment')
+        objects.pop('experiment', None)
         dict_tabulate(objects, is_list_dict=True)
 
 
@@ -187,11 +187,11 @@ def statuses(experiment, project, page):
     else:
         Printer.print_header('No statuses found for experiment `{}`.'.format(experiment))
 
-    objects = list_dicts_to_tabulate([o.to_light_dict(humanize_values=True)
+    objects = list_dicts_to_tabulate([Printer.handle_statuses(o.to_light_dict(humanize_values=True))
                                       for o in response['results']])
     if objects:
         Printer.print_header("Statuses:")
-        objects.pop('experiment')
+        objects.pop('experiment', None)
         dict_tabulate(objects, is_list_dict=True)
 
 

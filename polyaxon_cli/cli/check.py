@@ -12,7 +12,7 @@ from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer
 
 
-def check_polyaxonfile(file):
+def check_polyaxonfile(file, log=True):
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]
 
@@ -23,7 +23,8 @@ def check_polyaxonfile(file):
 
     try:
         plx_file = PolyaxonFile.read(file)
-        Printer.print_success("Polyaxonfile valid")
+        if log:
+            Printer.print_success("Polyaxonfile valid")
         return plx_file
     except Exception as e:
         Printer.print_error("Polyaxonfile is not valid")
@@ -68,9 +69,12 @@ def check(file, all, version, run_type, project, log_path, matrix, experiments):
                                       'yellow')
     if matrix:
         declarations = '\n'.join([str(d) for d in plx_file.matrix_declarations])
-        Printer.decorate_format_value('The matrix definition is:\n{}',
-                                      declarations,
-                                      'yellow')
+        if not declarations:
+            click.echo('This file has one independent experiment.')
+        else:
+            Printer.decorate_format_value('The matrix definition is:\n{}',
+                                          declarations,
+                                          'yellow')
 
     if experiments:
         num_experiments, concurrency = plx_file.experiments_def
@@ -79,11 +83,11 @@ def check(file, all, version, run_type, project, log_path, matrix, experiments):
                                           'One experiment',
                                           'yellow')
         elif concurrency == 1:
-            Printer.decorate_format_value('he matrix-space has {} experiments, with {} runs',
+            Printer.decorate_format_value('The matrix-space has {} experiments, with {} runs',
                                           [num_experiments, 'sequential'],
                                           'yellow')
         else:
-            Printer.decorate_format_value('he matrix-space has {} experiments, '
+            Printer.decorate_format_value('The matrix-space has {} experiments, '
                                           'with {} concurrent runs',
                                           [num_experiments, concurrency],
                                           'yellow')

@@ -30,7 +30,7 @@ def run(file, description):
     ```
     """
     file = file or 'polyaxonfile.yml'
-    plx_file = check_polyaxonfile(file)
+    plx_file = check_polyaxonfile(file, log=False)
     num_experiments, concurrency = plx_file.experiments_def
     project = get_current_project_or_exit()
     project_client = PolyaxonClients().project

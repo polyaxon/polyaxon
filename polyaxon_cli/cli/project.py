@@ -264,8 +264,8 @@ def groups(project, page):
                                       for o in response['results']])
     if objects:
         Printer.print_header("Experiment groups:")
-        objects.pop('project')
-        objects.pop('user')
+        objects.pop('project', None)
+        objects.pop('user', None)
         dict_tabulate(objects, is_list_dict=True)
 
 
