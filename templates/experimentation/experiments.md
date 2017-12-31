@@ -129,14 +129,14 @@ which means that this experiment is running independently of a group.
 After running this experiment we were not satisfied with the result and we want to try another learning rate `0.5`.
 If we hardcoded the value and passed it directly `--lr=0.01` we should have updated the polyaxonfile.yml.
 Of course we can do that also now, but since we declared the `lr` in the declarations sections,
-we can create instead an `polyaxon_override.yml` to override just that section:
+we can create instead an `polyaxonfile_override.yml` to override just that section:
 
 !!! Tip "You can call your polyaxonfiles anything you want"
     By default polyaxon commands looks for files called `polyaxonfile.yml`
     so if you call your file differently you should always use the option `-f`
 
 ```bash
-$ vi polyaxon_override.yml
+$ vi polyaxonfile_override.yml
 ```
 
 And past the new declarations section.
@@ -233,12 +233,17 @@ environment:
       memory:
         requests: 256
         limits: 1024
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
 ```
 
 This is a lot of configuration, so let's take some time to understand what is happening here.
 
-In this environment section, we described how we want to perform our distributed run.
-In this particular case, we requested 4 workers and one parameter server.
+First of all, notice that we are overriding the image, that's because we want to use GPUs in this experiment.
+
+In the environment section, we are describing how we want to perform our distributed run.
+In this particular case, we are requesting 4 workers and one parameter server.
 By default Polyaxon always creates a master, so you must take that into consideration.
 
 ??? danger "Polyaxon always creates a master"

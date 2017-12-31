@@ -136,7 +136,7 @@ Create a new file, let's call polyaxonfile_override.yml
     so if you call your file differently you should always use the option `-f`
 
 ```bash
-$ vi polyaxon_override.yml
+$ vi polyaxonfile_override.yml
 ```
 
 And past this settings section.
@@ -153,7 +153,7 @@ settings:
 If we run again the `check` command with `-x` or `--experiments` option, we will get
 
 ```yaml
-polyaxon check -f polyaxonfile.yml -f polyaxon_override.yml -x
+polyaxon check -f polyaxonfile.yml -f polyaxonfile_override.yml -x
 
 Polyaxonfile valid
 
@@ -163,7 +163,7 @@ The matrix-space has 5 experiments, with 2 concurrent runs, and random search
 Let's run our new version
 
 ```bash
-$  polyaxon run -f polyaxonfile.yml -f polyaxon_override.yml
+$  polyaxon run -f polyaxonfile.yml -f polyaxonfile_override.yml
 
 Creating an experiment group with 5 experiments.
 
