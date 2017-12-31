@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import {dateOptions} from "../constants/utils"
+import {dateOptions, pluralize} from "../constants/utils"
 
 import {ProjectModel} from "../models/project";
 
@@ -19,7 +19,7 @@ function Project({project, onDelete}: Props) {
         <ButtonToolbar className="pull-right">
           <LinkContainer to={`/${project.user}/${project.name}/`}>
             <Button className="button">
-              { project.num_experiments } Experiment{ project.num_experiments != 1 && 's' }
+              {project.num_experiments} { pluralize('Experiment', project.num_experiments) }
               <i className="fa fa-sliders icon" aria-hidden="true"></i>
             </Button>
           </LinkContainer>

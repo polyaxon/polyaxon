@@ -12,6 +12,7 @@ import * as actions from "../actions/experiment";
 interface OwnProps {
   user: string;
   projectName: string;
+  groupUuid: string;
   fetchData?: () => any;
 }
 
@@ -24,6 +25,9 @@ export function mapStateToProps(state: AppState, ownProps: any) {
         experiments.push(experiment);
       }
     });
+  }
+  if (experiments.length > 0 && ownProps.groupUuid) {
+    experiments = experiments.filter((experiment) => {return experiment.experiment_group === ownProps.groupUuid})
   }
 
   return {experiments: experiments.sort(sortByUpdatedAt)}
@@ -41,7 +45,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
-    fetchData: () => dispatch(actions.fetchExperiments(ownProps.projectName))
+    fetchData: () => dispatch(actions.fetchExperiments(ownProps.projectName, ownProps.groupUuid))
   }
 }
 

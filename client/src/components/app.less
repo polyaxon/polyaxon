@@ -26,7 +26,6 @@
 @green: #7FBA01;
 @orange: #FEA706;
 @light-blue: #0597D5;
-@dark-blue: #3E606F;
 
 html {
   height: 100%;
@@ -44,6 +43,14 @@ body {
   margin: 0;
   padding-bottom: 20rem;
   min-height: 100%;
+}
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 .container {
@@ -91,11 +98,13 @@ body {
     font-size: 15px;
     font-style: italic;
   }
-  .experiment-content {
-    display: block;
+  .content {
     margin: 10px 0 0 55px;
-    font-size: 15px;
+    font-size: 12px;
     font-style: italic;
+  }
+  .button {
+    margin-left: 20px;
   }
   
 }
@@ -147,8 +156,4 @@ body {
 
 .light-blue {
   color: @light-blue;
-}
-
-.dark-blue {
-  color: @dark-blue;
 }

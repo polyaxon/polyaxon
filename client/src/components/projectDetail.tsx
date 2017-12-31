@@ -4,6 +4,7 @@ import {Button, ButtonToolbar} from "react-bootstrap";
 
 import {ProjectModel} from "../models/project";
 import Experiments from "../containers/experiments";
+import Groups from "../containers/groups";
 
 
 export interface Props {
@@ -38,7 +39,8 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               {project.description}
             </span>
           </div>
-          <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name}></Experiments>
+          <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}></Groups>
+          <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name} groupUuid={null}></Experiments>
         </div>
       </div>
     );

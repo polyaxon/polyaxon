@@ -77,10 +77,14 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   }
 }
 
-export function fetchExperiments(projectUniqueName: string): Dispatch<ExperimentModel[]> {
+export function fetchExperiments(projectUniqueName: string, groupUuid: string): Dispatch<ExperimentModel[]> {
   return (dispatch: any)=> {
     dispatch(requestExperimentsActionCreator());
-    return fetch(BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments', {
+    let url = BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/';
+    if (!groupUuid) {
+      url += '?independent=True'
+    }
+    return fetch(url, {
         headers: {
             'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
         }
