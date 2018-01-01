@@ -1,6 +1,6 @@
-If you have already a kubernetes cluster, please skip this section.
+If you have already a kubernetes cluster, you can skip this section, and [setup helm](setup_helm).
 
-Kubernetes’ documentation describes the [many ways to set up a cluster](https://kubernetes.io/docs/setup/pick-right-solution/).
+Kubernetes’ documentation describes [many ways to set up a cluster](https://kubernetes.io/docs/setup/pick-right-solution/).
 
 In this guide we shall provide quick instructions for the most painless and popular ways of getting
 setup in various cloud providers.

@@ -20,8 +20,8 @@ For these materials, any cluster with Kubernetes installed will work with Polyax
 ## Container Technology
 
 Container technology is essentially the idea of bundling all of the necessary components to run a piece of software.
-There are many ways to do this, in the case of Polyaxon we use Docker to bundle the users dependencies required
-to the code.
+There are many ways to do this, in the case of Polyaxon we use Docker to bundle the user dependencies required
+to run the code.
 
 
 ## Kubernetes
@@ -36,7 +36,7 @@ If something goes down, kubernetes will try to automatically bring it back up.
 
 ## Helm
 
-[Helm](https://helm.sh/) is a package manager for Kubernetes,
+[Helm](https://helm.sh/) is the official package manager for Kubernetes,
  and a way of specifying kubernetes objects with a standard template.
 
 Polyaxon is installed into Kubernetes using Helm.
@@ -49,12 +49,17 @@ and scaling deep learning applications on Kubernetes clusters.
 
 ## Requirements
 
-In order to run Polyaxon on top of Kubernetes, we need:
+In order to run Polyaxon on top of Kubernetes, you need:
 
- * Access to internet to Pull images, unless you have all the images you need
+ * Access to internet to pull images, unless you have all the images you need
    for running your experiments accessible to Kubernetes through a locally deployed registry.
- * Kubernetes with a version >= 1.8.0. Polyaxon might work with previous versions, but we recommend recent versions.
- * Helm with a version ≥ 2.5. Polyaxon might work with previous versions, but we recommend recent versions.
+ * Kubernetes with a version >= 1.8.0.
+ * Helm with a version ≥ 2.5.
  * Persistence for data, outputs, logs, and code.
+
+
+!!! note
+    Although Polyaxon might work with previous versions than those recommended by us,
+    we officiall don't supprt them, and we don't recommend using them.
 
 

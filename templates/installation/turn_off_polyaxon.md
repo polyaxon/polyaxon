@@ -7,6 +7,8 @@ You can also decide to completely turn off Polyaxon and remove the namespace and
 
 Stop/delete any running experiments, to kill all associated running jobs, and therefor their Kubernetes pods.
 
+e.g.
+
 ```bash
 $ polyaxon kill experiment 13
 $ polyaxon kill experiment 19

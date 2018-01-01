@@ -5,14 +5,14 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
   * batch size `batch_size`
 
 If you want to run this code with learning rate `lr` with different values,
-you can use the [matrix](/polyaxonfile_specification/sections#matrix) to declare the values you want to run.
+you can use the [matrix section](/polyaxonfile_specification/sections#matrix) to declare the values you want to run.
 
 ## Updating the polyaxonfile.yml with a matrix
 
 The first thing you need to do is to update the default `polyaxonfile.yml` that was generated.
 
 You need set the required information, for example if the code requires `tensorflow` and `sklearn`,
-the polyaxonfile.yml `run` section should look something like this
+the polyaxonfile.yml `run` section could look something like this
 
 ```yaml
 ---
@@ -27,13 +27,13 @@ run:
 
 This declares a section to run our `train.py` file by passing two values, the `learning rate` and the `batch_size`.
 
-!!! info
-    For more details about the `run` check the [run section reference](/polyaxonfile_specification/sections#run)
+!!! info "More details"
+    For more details about the `run section` check the [run section reference](/polyaxonfile_specification/sections#run)
 
 Now you need to declare this values, and for that you will add 2 more sections to the polyaxonfile.yml
 
- * [declarations section](/polyaxonfile_specification/sections#declarations), to declare a constant value for `batch_size`
- * [matrix](/polyaxonfile_specification/sections#matrix) section, to declare the values for `lr`
+ * A [declarations section](/polyaxonfile_specification/sections#declarations), to declare a constant value for `batch_size`
+ * A [matrix](/polyaxonfile_specification/sections#matrix) section, to declare the values for `lr`
 
 The new `polyaxonfile.yml` after the update
 
@@ -64,16 +64,16 @@ run:
 
 So what we did is, we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
 
-In fact there's other options that we could have used such as
+There are other options that we could have used such as
 
  * `values`: [value1, value2, value3]
  * `range`: [start, stop, step]
  * `linspace`: [start, stop, num]
  * `GeomSpace`: [start, stop, num]
 
-You can check all the options available on the [matrix](/polyaxonfile_specification/sections#matrix)
+You can check all the options available on the [matrix section reference](/polyaxonfile_specification/sections#matrix).
 
-To make sure that the polyaxon file is valid you can execute, and creates a multiple values for `lr`, we can run
+To make sure that the polyaxon file is valid, and creates multiple values for `lr`, we can run the following
 
 ```bash
 $ polyaxon check -f polyaxonfile.yml -m
@@ -90,6 +90,10 @@ The matrix definition is:
 
 This command validate the polyaxon file, and the option `-m` returns the matrix space.
 
+!!! info "More details"
+    For more details about this command please run `polyaxon check --help`,
+    or check the [command reference]()
+
 ## Running a group of experiments
 
 To run this polyaxonfile execute
@@ -102,7 +106,7 @@ Creating an experiment group with 5 experiments.
 Experiment group was created
 ```
 
-!!! info
+!!! info "More details"
     For more details about this command please run `polyaxon run --help`,
     or check the [command reference]()
 
@@ -124,7 +128,7 @@ The matrix-space has 5 experiments, with sequential runs
 Now imagine we have enough resources on our cluster to run experiments in parallel.
 And we want to run 2 experiments concurrently, and explore the space randomly instead of sequentially.
 
-For this purpose we need a new [section settings](/polyaxonfile_specification/sections#settings).
+For this purpose we need a new [settings section](/polyaxonfile_specification/sections#settings).
 
 Although we can modify the `polyaxonfile.yml` to include this new section,
 we will do something different this time and override this value with a new file, same way you would do with `docker/docker-compose`.
@@ -226,15 +230,15 @@ Experiments:
         10  admin.mnist.2.10  admin   admin.mnist.2            Building       a few seconds ago  False                0                 a few seconds ago
 ```
 
-!!! info
+!!! info "More details"
     For more details about this command please run `polyaxon group --help`,
     or check the [command reference]()
 
 
 To check the logs, resources, jobs, and statuses of a specific experiment, please go to [experiments](experiments).
-
-In the experiments section, you will also see how you can execute a single experiment without concurrency.
 The section also covers how to customize the resources of an experiment, the configuration,
 the log level and other many more important information.
 All the information that you will learn in that section applies to experiment groups,
 because groups are only a collection of experiments.
+
+In the experiments section, you will also see how you can execute a single experiment without concurrency.

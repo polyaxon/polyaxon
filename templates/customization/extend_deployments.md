@@ -10,13 +10,17 @@ The general method to modify your Kubernetes deployment is to:
  1. Make a change to the config.yaml
  2. Run a helm upgrade:
 
-```bash
-$ helm upgrade <RELEASE_NAME> polyaxon-chart/polyaxon -f config.yaml
-```
+    ```bash
+    $ helm upgrade <RELEASE_NAME> polyaxon-chart/polyaxon -f config.yaml
+    ```
 
-Where <RELEASE_NAME> is the parameter you passed to --name when installing polyaxon with helm install.
-If you don’t remember it, you can probably find it by doing helm list.
+    Where `<RELEASE_NAME>` is the parameter you passed to `--name` when installing polyaxon with `helm install`.
+
+    If you don’t remember it, you can probably find it by doing `helm list`.
+
+    If you used the default values suggested in the docs, the `<RELEASE_NAME>` should be `polyaxon`
 
   3. Wait for the upgrade to finish, and make sure that when you do
-  `kubectl --namespace=<NAMESPACE> get pod` the hub and proxy pods are in Ready state.
-  Your configuration change has been applied!
+  `kubectl --namespace=<NAMESPACE> get pod` the pods are in Ready state.
+
+    Your configuration change has been applied!

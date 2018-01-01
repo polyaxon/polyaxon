@@ -6,9 +6,9 @@ This guide will help you connect and configure the following things:
 
  * install Kubernetes
  * setup helm
- * install polyaxon
+ * deploy polyaxon
  * install polyaxon cli
- * how to turn off polyaxon
+ * turn off polyaxon
 
 
 If you find any problems during the installation process, please [contact us](mailto:contact@polyaxon.com).

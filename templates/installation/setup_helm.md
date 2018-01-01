@@ -1,6 +1,7 @@
-[Helm](https://helm.sh/) is the package manager for Kubernetes,
-is a useful tool to install, upgrade and manage applications on a Kubernetes cluster.
-We will be using Helm to install and manage Polyaxon on our cluster.
+[Helm](https://helm.sh/) is the official package manager for Kubernetes,
+it's a useful tool to install, upgrade, and manage applications on a Kubernetes cluster.
+
+You will be using Helm to install and manage Polyaxon on your cluster.
 
 ## Install Helm
 
@@ -12,9 +13,8 @@ $ curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | ba
 
 ## Initialize Helm and grant RBAC
 
-After installing helm on your machine, initialize helm on your Kubernetes cluster.
-
-Alternatively you can check the [instruction provided bu helm](https://github.com/kubernetes/helm/blob/master/docs/rbac.md).
+After installing helm on your machine, initialize helm on your Kubernetes cluster
+(you can check the [instruction provided bu helm](https://github.com/kubernetes/helm/blob/master/docs/rbac.md)).
 
 Run the commands:
 

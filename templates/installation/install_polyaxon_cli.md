@@ -1,4 +1,4 @@
-Polyaxon CLI is python command line interface to interact with Polyaxon API.
+Polyaxon CLI is a python command line interface to interact with Polyaxon API.
 
 
 ## Install
@@ -21,7 +21,7 @@ pip3 install -U polyaxon-cli
 In order for polyaxon CLI to work correctly,
 you must execute the steps from [polyaxon helm deployments](deploy_polyaxon).
 
-Those steps ensures that, you configure Polyaxon to connect to the correct host, on the correct ports.
+Those steps ensures that, you configure Polyaxon to connect to the correct host on the correct ports.
 
 
 After installing the CLI you can view the commands supported using the `--help` option.
@@ -32,3 +32,12 @@ $ polyaxon --help
 
 For more information please have a look at some [assumptions and conventions](/polyaxon_cli/assumptions)
 Polyaxon use for it's [commands](/polyaxon_cli/commands)
+
+
+## Login
+
+To authenticate your CLI, run the following command
+
+```bash
+$ polyaxon --username=<USERNAME> --password=<PASSWORD>
+```

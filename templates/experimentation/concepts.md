@@ -1,7 +1,7 @@
 ## Polyaxon Architecture
 
-In order to understand how to organize your workflow,
-we need to understand how Polyaxon abstract the best practices of a data scientist job.
+In order to understand how Polyaxon can help you organize your workflow,
+you need to understand how Polyaxon abstract the best practices of data science job.
 
 Polyaxon runs both in the cloud and on premise, and provides access via:
 
@@ -11,7 +11,7 @@ Polyaxon runs both in the cloud and on premise, and provides access via:
 
 
 These interfaces hides the powerful abstraction provided by the Polyaxon architecture.
-When a machine learning engineer or data scientist deploy a model,
+When a machine learning engineer or a data scientist deploys a model,
 Polyaxon relies on Kubernetes for:
 
  * Managing the resources of your cluster (Memory, CPU, and GPU)
@@ -27,7 +27,7 @@ Polyaxon does the heavy lifting of:
  * Reporting back the results to the user
 
 The choice of using Docker containers to run your jobs is important,
-it provides the user a wide range of possibilities to [customize the run run environment](customization/customize_run_environment)
+it provides the user a wide range of possibilities to [customize the run run environment](/customization/customize_run_environment)
 to fit the requirements and dependencies needed for the experiments.
 
 ![Screenshot](/images/polyaxon_architecture.png)
@@ -37,15 +37,15 @@ to fit the requirements and dependencies needed for the experiments.
 
 Polyaxon relies on a set of concepts to manage an experimentation workflow,
 in this section we provide a high level introduction to these concepts,
-with more details in page dedicated to each concept.
+with more details in pages dedicated to each concept.
 
 
 ### User
 
 A `User` is the entity that creates project, starts experiments, manages organizations and clusters.
-A `User` has a set of permissions, and can be an normal user or superuser.
+A `User` has a set of permissions, and can be normal user or superuser.
 
-!!! note
+!!! info "More details"
     Please refer to the [management section](/management/introduction) for more details.
 
 ### Organization
@@ -54,34 +54,35 @@ An `Organization` provides a way to manage team/group of users, their access rol
 
 !!! caution
     This is still a work in progress.
+    If you want to be notified when we release this feature, please subscribe to receive our progress.
 
 ### Project
 
 A `Project` in Polyaxon is very similar to a project in github,
 it aims at organizing your efforts to solve a specific problem.
-A project consist of a name and a description, the code to execute, the data, and a polyaxon.yaml.
+A project consist of a name and a description, the code to execute, the data, and a polyaxonfile.yml.
 
-!!! note
+!!! info "More details"
     Please refer to the [projects section](projects) for more details.
 
 ### Experiment Group
 
-An `Experiment Group` is a way to try a version of code and data with different hyper parameters.
+An `Experiment Group` is a automatic and practical way to run a version of your model and data with different hyper parameters.
 
-!!! note
+!!! info "More details"
     Please refer to the [experiment groups and hyper parameters search section](experiment_groups) for more details.
 
 ### Experiment
 
 An `Experiment` is the execution of your model with data and the provided parameters on the cluster.
 
-!!! note
+!!! info "More details"
     Please refer to the [experiments and distributed runs section](experiments) for more details.
 
 ### Job
 
-A `Job` is the pod running on the cluster for a specific experiment,
+A `Job` is the Kubernetes pod running on the cluster for a specific experiment,
 if an experiment run in a distributed way it will create multiple instances of `Job`.
 
-!!! note
+!!! info "More details"
     Please refer to the [jobs section](jobs) for more details.

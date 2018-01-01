@@ -15,7 +15,7 @@ For example
 polyaxon job logs 3 40465c7cca4f55bca1f98abc2bf8c770
 ```
 
-This command will show the logs of the job in real time for that job.
+This command will show the logs of in real time for that job.
 
 ## Tracking job resources
 
@@ -27,9 +27,9 @@ For example
 polyaxon job resources 3 40465c7cca4f55bca1f98abc2bf8c770
 ```
 
-This command will show the resources of the job in real time.
+This command will show the resources in real time for that job.
 
-!!! info
+!!! info "More details"
     For more details about this command please run `polyaxon job --help`,
     or check the [command reference]()
 

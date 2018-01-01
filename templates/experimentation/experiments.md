@@ -6,10 +6,10 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
 
 ## Updating the polyaxonfile.yml
 
-The first that you need to do is to update the default `polyaxonfile.yml` that was generated.
+The first thing that you need to do is to update the default `polyaxonfile.yml` that was generated.
 
-We need to set the required information, for example if the code requires `tensorflow` and `sklearn`,
-the polyaxonfile.yml `run` section should look something like this
+We will start first by adding the `run` section, for example if the code requires `tensorflow` and `sklearn`,
+the polyaxonfile.yml `run` section could look something like this
 
 ```yaml
 ---
@@ -36,7 +36,7 @@ $ vi polyaxon_requirements.txt
 ...
 ```
 
-And let's modify the polyaxonfile.yml to install our requirements
+And modify the polyaxonfile.yml to install our requirements
 
 
 ```yaml
@@ -63,7 +63,11 @@ run:
 
     For more information please visite the [declarations section](/polyaxonfile_specification/sections#declarations) reference.
 
-To make sure that the polyaxon file is valid you can execute it, we can run
+!!! info "More details"
+    For more details about the `run section` check the [run section reference](/polyaxonfile_specification/sections#run)
+
+
+To make sure that the polyaxon file is valid you can run the following command,
 
 ```bash
 $ polyaxon check -f polyaxonfile.yml -m
@@ -89,13 +93,13 @@ Creating an independent experiment.
 Experiment was created.
 ```
 
-!!! info
+!!! info "More details"
     For more details about this command please run `polyaxon run --help`,
     or check the [command reference]()
 
 ## Checking the experiments of a project
 
-We can check the project has now an independent experiment created.
+We can check that the project has now an independent experiment created.
 
  * Polyaxon dashboard
  * Polyaxon CLI
@@ -126,10 +130,11 @@ which means that this experiment is running independently of a group.
 
 ## Running the experiment with different parameters
 
-After running this experiment we were not satisfied with the result and we want to try another learning rate `0.5`.
-If we hardcoded the value and passed it directly `--lr=0.01` we should have updated the polyaxonfile.yml.
+After running this experiment, we can imagine that you were not satisfied with the result and
+that you wanted to try another learning rate `0.5`.
+If you hardcoded the value and passed it directly `--lr=0.01`, you would be obliged to updated the polyaxonfile.yml.
 Of course we can do that also now, but since we declared the `lr` in the declarations sections,
-we can create instead an `polyaxonfile_override.yml` to override just that section:
+we can create instead another file `polyaxonfile_override.yml` to override just that section:
 
 !!! Tip "You can call your polyaxonfiles anything you want"
     By default polyaxon commands looks for files called `polyaxonfile.yml`
@@ -159,9 +164,9 @@ Creating an independent experiment.
 Experiment was created.
 ```
 
-If we again were not satisfied with this learning rate, we can modify the value and run the polyaxon file again.
-Polyaxon will create a new experiment for you. If the space of values you want to try is large,
-modifying the value manually and executing run is not optimal,
+You can repeat this process as much as you wish until you are satisfied with the performance of your model.
+Polyaxon will create a new experiment for you. However, ff the space of values you want to try is large,
+modifying the value manually and executing `polyaxon run` is not optimal,
 what you can do instead is create an [experiment group](experiment_groups).
 
 ## Stopping an experiment
@@ -169,7 +174,7 @@ what you can do instead is create an [experiment group](experiment_groups).
 To stop experiment 2 for example, run
 
 ```bash
-polyaxon experiment stop 2
+$ polyaxon experiment stop 2
 ```
 
 !!! caution
@@ -179,7 +184,7 @@ polyaxon experiment stop 2
 ## Distributed Runs
 
 !!! caution
-    This is section is oriented for users who want to running experiments with multiple jobs
+    This section is oriented for users who want to run experiments with multiple jobs
     based on Tensorflow.
 
 After modifying our `train.py` we want to run the experiment with 1 master 4 workers and 1 parameter server.
@@ -191,7 +196,7 @@ First let's upload the new version of the code
 $ polyaxon upload
 ```
 
-In order to customize the resources of our jobs we need to introduce a new [environment section]().
+In order to customize the resources of our jobs we need to introduce a new section [environment]().
 
 Let's create a new `polyaxonfile_resources.yml` override file that will allow us to achieve that
 
@@ -202,7 +207,7 @@ version: 1
 environment:
   n_workers: 4
   n_ps: 1
-  delay_workers_by_global_step: true
+
   resources:
     cpu:
       requests: 2
@@ -241,16 +246,16 @@ environment:
         limits: 1024
 
 run:
-  image: tensorflow/tensorflow:1.4.1-py3
+  image: tensorflow/tensorflow:1.4.1-gpu-py3  # Update the image to use GPU
 ```
 
 This is a lot of configuration, so let's take some time to understand what is happening here.
 
-First of all, notice that we are overriding the image, that's because we want to use GPUs in this experiment.
+First of all, notice that we are overriding the image, the reason is that we want to use GPUs in this experiment.
 
 In the environment section, we are describing how we want to perform our distributed run.
 In this particular case, we are requesting 4 workers and one parameter server.
-By default Polyaxon always creates a master, so you must take that into consideration.
+By default, Polyaxon always creates a master, so you must take that into consideration.
 
 ??? danger "Polyaxon always creates a master"
     A master is always created by polyaxon, you can only specify the workers and ps nodes.
@@ -313,17 +318,17 @@ For more information about jobs, please refer to [jobs](jobs)
 
 To view the logs of experiment 3 for example, given that is running now, run
 
-!!! note
-    3 is the sequence of the experiment in this project,
-    you can see it when running `polyaxon project experiments` in the sequence column.
-
-
 ```bash
 polyaxon experiment logs 2
 ```
 
-This command will show the logs of the experiment in real time of all the jobs running.
+This command will show the logs in real time of all the jobs running for the experiment.
 In the [jobs](jobs)'s page, we will see how we can view the logs of a particular job.
+
+!!! note
+    3 is the sequence of the experiment in this project,
+    you can see it when running `polyaxon project experiments` in the sequence column.
+
 
 ## Tracking experiment resources
 
@@ -333,13 +338,13 @@ To view the resources of experiment 3 for example, given that is running now, ru
 polyaxon experiment resources 3
 ```
 
-This command will show the resources of the experiment in real time of all the jobs running.
+This command will show the resources in real time of all the jobs running for the experiment.
 In the [jobs](jobs)'s page, we will see how we can view the resources of a particular job.
 
 
-!!! info
+!!! info "More details"
     For more details about this command please run `polyaxon experiment --help`,
     or check the [command reference]()
 
 If you did not see the [jobs](jobs)'s section, please go there,
-to see how you can get specific information about a particular job.
+you will learn how you can get specific information about a particular job.
