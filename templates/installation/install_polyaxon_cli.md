@@ -39,5 +39,5 @@ Polyaxon use for it's [commands](/polyaxon_cli/commands)
 To authenticate your CLI, run the following command
 
 ```bash
-$ polyaxon --username=<USERNAME> --password=<PASSWORD>
+$ polyaxon login --username=<USERNAME>
 ```
