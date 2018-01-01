@@ -48,9 +48,9 @@ A `User` has a set of permissions, and can be normal user or superuser.
 !!! info "More details"
     Please refer to the [management section](/management/introduction) for more details.
 
-### Organization
+### Teams
 
-An `Organization` provides a way to manage team/group of users, their access roles, and resources quotas.
+An `Team` provides a way to manage team/group of users, their access roles, and resources quotas.
 
 !!! caution
     This is still a work in progress.
