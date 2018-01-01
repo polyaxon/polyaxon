@@ -43,6 +43,14 @@ Polyaxon is currently running:
 {{- end }}
 {{- end }}
 
-2. Setup your cli by running thses commands:
+2. Setup your cli by running theses commands:
 
   polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT
+
+
+3. Log in with superuser
+
+  USER: {{ .Values.user.username }}
+  PASSWORD: Get login password with
+
+    kubectl get secret --namespace {{ .Release.Namespace }} {{ template "fullname" . }}-secret -o jsonpath="{.data.user-password}" | base64 --decode
