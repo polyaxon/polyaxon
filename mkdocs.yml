@@ -78,8 +78,8 @@ pages:
   - Jobs: experimentation/jobs.md
 - Management:
   - Intorduction: management/introduction.md
-  - Admin Users: management/admins.md
-  - Users Management: management/users.md
+  - SuperUsers: management/superusers.md
+  - Users: management/users.md
 - Customization:
   - Extend Polyaxon Deployments: customization/extend_deployments.md
   - Customize Run Environment: customization/customize_run_environment.md  # settings, resources,
