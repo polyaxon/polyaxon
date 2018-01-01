@@ -1,12 +1,12 @@
 -r requirements-dev.txt
 
-coverage==4.4.1
+coverage==4.4.2
 flaky==3.4.0
-gym==0.9.3
+gym==0.9.4
 isort==4.2.15
 mock==2.0.0
 prospector==0.12.7
 pyflakes==1.6.0
-pytest==3.2.2
-pylint==1.7.2
+pytest==3.3.1
+pylint==1.8.1
 tox==2.9.1
