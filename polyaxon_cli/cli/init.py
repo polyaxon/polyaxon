@@ -6,6 +6,7 @@ import sys
 
 import os
 
+from marshmallow import ValidationError
 from polyaxon_client.exceptions import PolyaxonHTTPError
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
@@ -63,7 +64,14 @@ def init(project, run, model):
         sys.exit(1)
 
     # file was already there, let's check if the project passed correspond to this file
-    spec = PolyaxonFile.read(constants.INIT_FILE)
+    try:
+        spec = PolyaxonFile.read(constants.INIT_FILE)
+    except ValidationError:
+        Printer.print_error(
+            "Something went wrong, init command did not create a file.\n"
+            "Anothor file already exist with.")
+        sys.exit(1)
+
     if not equal_projects(spec.project.name, project_config.unique_name):
         Printer.print_error(
             "Something went wrong, init command did not create a file.\n"
