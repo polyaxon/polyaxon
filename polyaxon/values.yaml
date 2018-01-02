@@ -1,25 +1,8 @@
 namespace: "polyaxon"
+passwordLenght: 10
 ingress:
   enabled: false
   rbac: false
-
-passwordLenght: 6
-debug: 0
-celery:
-  always_eager: false
-  celeryd_prefetch_multiplier: 4
-
-types:
-  core: "polyaxon-core"
-  experiment: "polyaxon-experiment"
-
-roles:
-  api: "polyaxon-api"
-  log: "polyaxon-logs"
-  worker: "polyaxon-workers"
-  dashboard: "polyaxon-dashboard"
-
-k8s: {}
 
 # Initial admin user to create
 user:
@@ -28,51 +11,51 @@ user:
   email: "root@polyaxon.local"
   password: "root"
 
-email:
-  host: smtp
-  port: 25
-  use_tls: false
-
-intervals:  # in seconds
-  experiments_scheduler: 60
-  clusters_update_system_info: 150
-  clusters_update_system_nodes: 150
-
-queues:
-  apiExperiments: 'api.experiments'
-  apiClusters: 'api.clusters'
-  eventsNamespace: 'events.namespace'
-  eventsResources: 'events.resources'
-  eventsStatuses: 'events.statuses'
-  logsSidecars: 'logs.sidecars'
-  streamEventsNamespace: 'stream.events.namespace'
-  streamEventsResources: 'stream.events.resources'
-  streamEventsStatuses: 'stream.events.statuses'
-  streamLogsSidecars: 'stream.logs.sidecars'
-
-routingKeys:
-  eventsStatuses: events.statuses
-  eventsNamespace: events.namespace
-  eventsResources: events.resources
-  logsSidecars: logs.sidecars
-
-exchanges:
-  internal: 'internal'
-
 dirs:
-  nvidia: "/var/lib/nvidia-docker/volumes/nvidia_driver/latest"
+  nvidia: "/usr/local/nvidia/lib64"
   docker: "/var/run/docker.sock"
 
-versions:
-  cli:
-    min: 0.0.1
-    latest: 0.0.1
-  platform:
-    min: 0.0.1
-    latest: 0.0.1
-  lib:
-    min: 0.0.1
-    latest: 0.0.1
+persistence:
+  data:
+    storageClass:
+    existingClaim:
+    enabled: false
+    accessMode: ReadWriteMany
+    size: 10Gi
+    mountPath: "/data"
+    subPath: ""
+  logs:
+    storageClass:
+    existingClaim:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/logs"
+    subPath: ""
+  outputs:
+    storageClass:
+    existingClaim:
+    enabled: false
+    accessMode: ReadWriteMany
+    size: 10Gi
+    mountPath: "/outputs"
+    subPath: ""
+  repos:
+    storageClass:
+    existingClaim:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/repos"
+    subPath: ""
+  upload:
+    storageClass:
+    existingClaim:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mountPath: "/tmp/plx"
+    subPath: ""
 
 api:
   image: polyaxon/polyaxon-api
@@ -193,38 +176,6 @@ hooks:
   imageTag: 0.0.1
   imagePullPolicy: IfNotPresent
 
-persistence:
-  data:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 10Gi
-    mountPath: "/data"
-    subPath: ""
-  logs:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 10Gi
-    mountPath: "/logs"
-    subPath: ""
-  outputs:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 10Gi
-    mountPath: "/outputs"
-    subPath: ""
-  repos:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 10Gi
-    mountPath: "/repos"
-    subPath: ""
-  upload:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 10Gi
-    mountPath: "/tmp/plx"
-    subPath: ""
-
 nodeSelectors: {}
 nodeSelectorsGPU: {}
 
@@ -337,3 +288,62 @@ registry:
     accessMode: ReadWriteOnce
     size: 10Gi
     subPath: ""
+
+debug: 0
+celery:
+  always_eager: false
+  celeryd_prefetch_multiplier: 4
+
+types:
+  core: "polyaxon-core"
+  experiment: "polyaxon-experiment"
+
+roles:
+  api: "polyaxon-api"
+  log: "polyaxon-logs"
+  worker: "polyaxon-workers"
+  dashboard: "polyaxon-dashboard"
+
+k8s: {}
+
+email:
+  host: smtp
+  port: 25
+  use_tls: false
+
+intervals:  # in seconds
+  experiments_scheduler: 60
+  clusters_update_system_info: 150
+  clusters_update_system_nodes: 150
+
+queues:
+  apiExperiments: 'api.experiments'
+  apiClusters: 'api.clusters'
+  eventsNamespace: 'events.namespace'
+  eventsResources: 'events.resources'
+  eventsStatuses: 'events.statuses'
+  logsSidecars: 'logs.sidecars'
+  streamEventsNamespace: 'stream.events.namespace'
+  streamEventsResources: 'stream.events.resources'
+  streamEventsStatuses: 'stream.events.statuses'
+  streamLogsSidecars: 'stream.logs.sidecars'
+
+routingKeys:
+  eventsStatuses: events.statuses
+  eventsNamespace: events.namespace
+  eventsResources: events.resources
+  logsSidecars: logs.sidecars
+
+exchanges:
+  internal: 'internal'
+
+versions:
+  cli:
+    min: 0.0.1
+    latest: 0.0.1
+  platform:
+    min: 0.0.1
+    latest: 0.0.1
+  lib:
+    min: 0.0.1
+    latest: 0.0.1
