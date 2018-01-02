@@ -1,7 +1,7 @@
 import {Action, Dispatch} from "redux";
 import * as _ from "lodash";
 
-import {urlifyProjectName} from "../constants/utils"
+import {urlifyProjectName, getStoredToken} from "../constants/utils"
 import {ExperimentModel} from "../models/experiment";
 import {BASE_URL} from "../constants/api";
 
@@ -86,7 +86,7 @@ export function fetchExperiments(projectUniqueName: string, groupUuid: string): 
     }
     return fetch(url, {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
       })
       .then(response => response.json())
@@ -106,7 +106,7 @@ export function fetchExperiment(user: string, projectName: string, experimentSeq
     dispatch(requestExperimentsActionCreator());
     return fetch(BASE_URL + `/${user}` + `/${projectName}` + `/experiments/` + `${experimentSequence}`, {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
     })
       .then(response => response.json())

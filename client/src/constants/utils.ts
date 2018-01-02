@@ -1,3 +1,5 @@
+import * as Cookies from 'js-cookie';
+
 export const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 export let urlifyProjectName = function (origProjectName: string) {
@@ -30,4 +32,27 @@ export let pluralize = function (name: string, num_objects: number): string {
         return name + 's';
     }
     return name;
+};
+
+export let isUserAuthenticated = function () {
+    let hasUser = Cookies.get('user') !== undefined;
+    let hasToken = Cookies.get('token') !== undefined;
+    return (hasUser && hasToken);
+};
+
+export let getStoredToken = function () {
+    return Cookies.get('token');
+};
+
+export let getHomeUrl = function () {
+    let user = Cookies.get('user');
+    return `/${user}/`;
+};
+
+export let getLoginUrl = function () {
+    return '/auth/login/';
+};
+
+export let getLogoutUrl = function () {
+    return '/auth/logout/';
 };

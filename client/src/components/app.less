@@ -26,6 +26,7 @@
 @green: #7FBA01;
 @orange: #FEA706;
 @light-blue: #0597D5;
+@header-gray: #485563;
 
 html {
   height: 100%;
@@ -52,6 +53,45 @@ pre {
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
+
+/* Form */
+
+input, textarea { 
+    padding: 9px;
+    border: solid 1px #E5E5E5; 
+    outline: 0; 
+    font: normal 13px/100% Verdana, Tahoma, sans-serif; 
+    width: 200px; 
+    background: #FFFFFF; 
+    margin-bottom: 10px;
+  } 
+   
+textarea { 
+    width: 400px; 
+    max-width: 400px; 
+    height: 150px; 
+    line-height: 150%; 
+  } 
+   
+input:hover, textarea:hover, 
+input:focus, textarea:focus { 
+    border-color: #C9C9C9; 
+  } 
+   
+.form label { 
+    color: @header-gray;
+    min-width: 80px;
+  } 
+   
+.submit input { 
+    width: auto; 
+    padding: 9px 15px; 
+    background: @header-gray; 
+    border: 0; 
+    font-size: 14px; 
+    color: #FFFFFF; 
+  }
+
 
 .container {
   margin: 0 auto;

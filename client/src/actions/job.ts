@@ -1,7 +1,7 @@
 import {Action, Dispatch} from "redux";
 import * as _ from "lodash";
 
-import {urlifyProjectName} from "../constants/utils"
+import {urlifyProjectName, getStoredToken} from "../constants/utils"
 import {JobModel} from "../models/job";
 import {BASE_URL} from "../constants/api";
 
@@ -90,7 +90,7 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number)
     dispatch(requestJobsActionCreator());
     return fetch(BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs', {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
       })
       .then(response => response.json())
@@ -110,7 +110,7 @@ export function fetchJob(user: string, projectName: string, experimentSequence: 
     dispatch(requestJobActionCreator());
     return fetch(BASE_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobSequence, {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
     })
       .then(response => response.json())

@@ -1,7 +1,7 @@
 import {Action, Dispatch} from "redux";
 import * as _ from "lodash";
 
-import {urlifyProjectName} from "../constants/utils"
+import {urlifyProjectName, getStoredToken} from "../constants/utils"
 import {GroupModel} from "../models/group";
 import {BASE_URL} from "../constants/api";
 
@@ -83,7 +83,7 @@ export function fetchGroups(projectUniqueName: string): Dispatch<GroupModel[]> {
     dispatch(requestGroupsActionCreator());
     return fetch(BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/', {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
       })
       .then(response => response.json())
@@ -103,7 +103,7 @@ export function fetchGroup(user: string, projectName: string, groupSequence: num
     dispatch(requestGroupsActionCreator());
     return fetch(BASE_URL + `/${user}` + `/${projectName}` + `/groups/` + `${groupSequence}`, {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
     })
       .then(response => response.json())
