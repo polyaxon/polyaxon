@@ -4,7 +4,7 @@ The experiment group commands accept 2 optional arguments
 
 If no project/group is provided, the command will default to the currently initialized project/last used group.
 
-If no project/group is provided and no project/group is initialized, the command will raise.
+If no project/group is provided and no project/group is cached, the command will raise.
 
 Usage:
 
@@ -16,8 +16,8 @@ Options:
 
 option | type | description
 -------|------|------------
-  -p, --project | TEXT | The project name, e.g. 'mnist' or 'adam/mnist'
-  -g, --group | INTEGER | The sequence number of the group
+  -p, --project | TEXT | The project name, e.g. 'mnist' or 'adam/mnist'.
+  -g, --group | INTEGER | The group sequence number.
   --help |  | Show this message and exit.
 
 

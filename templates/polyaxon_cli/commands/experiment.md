@@ -4,7 +4,7 @@ The experiment commands accept 2 optional arguments
 
 If no project/experiment is provided, the command will default to the currently initialized project/last used experiment.
 
-If no project/experiment is provided and no project/experiment is initialized, the command will raise.
+If no project/experiment is provided and no project/experiment is cached, the command will raise.
 
 Usage:
 
@@ -16,8 +16,8 @@ Options:
 
 option | type | description
 -------|------|------------
-  -p, --project | TEXT | The project name, e.g. 'mnist' or 'adam/mnist'
-  -xp, --experiment | INTEGER | The sequence number of the experiment
+  -p, --project | TEXT | The project name, e.g. 'mnist' or 'adam/mnist'.
+  -xp, --experiment | INTEGER | The experiment sequence number.
   --help |  | Show this message and exit.
 
 ## get
