@@ -26,8 +26,8 @@ def get_experiment_or_local(experiment=None):
 
 
 @click.group()
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-@click.option('--experiment', '-xp', type=int, help="The sequence number of the experiment")
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
+@click.option('--experiment', '-xp', type=int, help="The experiment sequence number.")
 @click.pass_context
 def experiment(ctx, project, experiment):
     """Commands for experiments."""
@@ -72,7 +72,7 @@ def get(ctx):
     try:
         response = PolyaxonClients().experiment.get_experiment(user, project_name, experiment)
         # Set caching
-        ExperimentManager.set_config(response, init=True)
+        ExperimentManager.set_config(response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not load experiment `{}` info.'.format(experiment))
         Printer.print_error('Error message `{}`.'.format(e))

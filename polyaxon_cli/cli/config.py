@@ -53,11 +53,11 @@ def get(keys):
 
 
 @config.command()
-@click.option('--verbose', type=bool, help='To set the verbosity of the client')
-@click.option('--host', type=str, help='To set the server endpoint')
-@click.option('--http_port', type=int, help='To set the http port')
-@click.option('--ws_port', type=int, help='To set the stream port')
-@click.option('--use_https', type=bool, help='To set the https')
+@click.option('--verbose', type=bool, help='To set the verbosity of the client.')
+@click.option('--host', type=str, help='To set the server endpoint.')
+@click.option('--http_port', type=int, help='To set the http port.')
+@click.option('--ws_port', type=int, help='To set the stream port.')
+@click.option('--use_https', type=bool, help='To set the https.')
 def set(verbose, host, http_port, ws_port, use_https):
     """Set the global config values.
 

@@ -16,9 +16,9 @@ from polyaxon_cli.utils.formatting import Printer
 
 
 @click.command()
-@click.option('--token', '-t', help='Polyaxon token')
-@click.option('--username', '-u', help='Polyaxon username')
-@click.option('--password', '-p', help='Polyaxon password')
+@click.option('--token', '-t', help='Polyaxon token.')
+@click.option('--username', '-u', help='Polyaxon username.')
+@click.option('--password', '-p', help='Polyaxon password.')
 def login(token, username, password):
     """Login to Polyaxon."""
     auth_client = PolyaxonClients().auth

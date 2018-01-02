@@ -22,8 +22,8 @@ def get_group_or_local(group=None):
 
 
 @click.group()
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-@click.option('--group', '-g', type=int, help="The sequence number of the group")
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
+@click.option('--group', '-g', type=int, help="The group sequence number.")
 @click.pass_context
 def group(ctx, project, group):
     """Commands for experiment groups."""
@@ -54,7 +54,7 @@ def get(ctx):
         response = PolyaxonClients().experiment_group.get_experiment_group(
             user, project_name, group)
         # Set caching
-        GroupManager.set_config(response, init=True)
+        GroupManager.set_config(response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiment group `{}`.'.format(group))
         Printer.print_error('Error message `{}`.'.format(e))
