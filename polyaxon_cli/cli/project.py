@@ -58,9 +58,14 @@ def get_project_or_local(project=None):
 
 
 @click.group()
-def project():
+@click.option('--project', '-p', type=str)
+@click.pass_context
+def project(ctx, project):
     """Commands for projects."""
-    pass
+    user, project_name = get_project_or_local(project)
+    ctx.obj = ctx.obj or {}
+    ctx.obj['user'] = user
+    ctx.obj['project_name'] = project_name
 
 
 @project.command()
@@ -75,7 +80,10 @@ def create(name, description, private):
 
     Example:
 
-    polyaxon project create --name=cats-vs-dogs --description="Image Classification with Deep Learning"
+    \b
+    ```bash
+    $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with Deep Learning"
+    ```
     """
     try:
         project_dict = dict(name=name, description=description, is_public=not private)
@@ -130,8 +138,8 @@ def list(page):
 
 
 @project.command()
-@click.argument('project', type=str, required=False)
-def get(project):
+@click.pass_context
+def get(ctx):
     """Get info for current project, by project_name, or user/project_name.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -140,13 +148,19 @@ def get(project):
 
     To get current project:
 
-    polyaxon project get
+    \b
+    ```bash
+    $ polyaxon project get
+    ```
 
     To get a project by name
 
-    polyaxon project get user/project
+    \b
+    ```bash
+    $ polyaxon project get user/project
+    ```
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name = ctx.obj['user'], ctx.obj['project_name']
 
     try:
         response = PolyaxonClients().project.get_project(user, project_name)
@@ -161,10 +175,13 @@ def get(project):
 
 
 @project.command()
-@click.argument('project', type=str)
-def delete(project):
-    """Delete project."""
-    user, project_name = get_project_or_local(project)
+@click.pass_context
+def delete(ctx):
+    """Delete project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = ctx.obj['user'], ctx.obj['project_name']
 
     if not click.confirm("Are sure you want to delete project `{}/{}`".format(user, project_name)):
         click.echo('Existing without deleting project.')
@@ -184,23 +201,29 @@ def delete(project):
 
 
 @project.command()
-@click.argument('project', type=str, required=False)
 @click.option('--name', type=str,
               help='Name of the project, must be unique for the same user,')
 @click.option('--description', type=str, help='Description of the project,')
 @click.option('--private', type=bool, help='Set the visibility of the project to private/public.')
-def update(project, name, description, private):
+@click.pass_context
+def update(ctx, name, description, private):
     """Update project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
     Example:
 
-    polyaxon update foobar --description=Image Classification with Deep Learning using TensorFlow
+    \b
+    ```bash
+    $ polyaxon update foobar --description="Image Classification with Deep Learning using TensorFlow"
+    ```
 
-    polyaxon update mike1/foobar --description=Image Classification with Deep Learning using TensorFlow
+    \b
+    ```bash
+    $ polyaxon update mike1/foobar --description="Image Classification with Deep Learning using TensorFlow"
+    ```
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name = ctx.obj['user'], ctx.obj['project_name']
 
     update_dict = {}
     if name:
@@ -230,14 +253,14 @@ def update(project, name, description, private):
 
 
 @project.command()
-@click.argument('project', type=str, required=False)
 @click.option('--page', type=int, help='To paginate through the list of groups.')
-def groups(project, page):
+@click.pass_context
+def groups(ctx, page):
     """List experiment groups for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name = ctx.obj['user'], ctx.obj['project_name']
 
     page = page or 1
     try:
@@ -266,14 +289,14 @@ def groups(project, page):
 
 
 @project.command()
-@click.argument('project', type=str, required=False)
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
-def experiments(project, page):
+@click.pass_context
+def experiments(ctx, page):
     """List experiments for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name = ctx.obj['user'], ctx.obj['project_name']
 
     page = page or 1
     try:
@@ -300,18 +323,18 @@ def experiments(project, page):
 
 
 @project.command()
-@click.argument('project', type=str, required=False)
-def clone(project):
+@click.pass_context
+def clone(ctx):
     pass
 
 
 @project.command()
-@click.argument('project', type=str, required=False)
-def tensorboard(project):
+@click.pass_context
+def tensorboard(ctx):
     pass
 
 
 @project.command()
-@click.argument('project', type=str, required=False)
-def notebook(project):
+@click.pass_context
+def notebook(ctx):
     pass
