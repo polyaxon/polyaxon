@@ -10,9 +10,10 @@ from polyaxon_schemas.experiment import ExperimentConfig
 from polyaxon_schemas.project import ExperimentGroupConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile
-from polyaxon_cli.cli.project import get_current_project_or_exit, equal_projects
+from polyaxon_cli.cli.project import equal_projects
+from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
-from polyaxon_cli.utils.formatting import Printer, dict_tabulate
+from polyaxon_cli.utils.formatting import Printer
 
 
 @click.command()
@@ -30,7 +31,7 @@ def run(file, description):
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file, log=False)
     num_experiments, concurrency = plx_file.experiments_def
-    project = get_current_project_or_exit()
+    project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
     if not equal_projects(plx_file.project.name, project.unique_name):
         Printer.print_error('Your polyaxonfile defined a different project '
