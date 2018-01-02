@@ -26,7 +26,10 @@ def run(file, description):
 
     Example:
 
+    \b
+    ```bash
     polyaxon run -f file -f file_override ...
+    ```
     """
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file, log=False)

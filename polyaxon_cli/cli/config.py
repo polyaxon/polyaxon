@@ -32,8 +32,9 @@ def get(keys):
 
     Example:
 
-    ```
-    polyaxon config get host http_port
+    \b
+    ```bash
+    $ polyaxon config get host http_port
     ```
     """
     config = GlobalConfigManager.get_config_or_default()
@@ -62,7 +63,10 @@ def set(verbose, host, http_port, ws_port, use_https):
 
     Example:
 
-    polyaxon config set --hots=localhost http_port=80
+    \b
+    ```bash
+    $ polyaxon config set --hots=localhost http_port=80
+    ```
     """
     config = GlobalConfigManager.get_config_or_default()
 
