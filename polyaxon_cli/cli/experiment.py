@@ -179,7 +179,7 @@ def restart(ctx):
 
 
 @experiment.command()
-@click.option('--page', type=int, help='To paginate through the list of experiments.')
+@click.option('--page', type=int, help='To paginate through the list of jobs.')
 @click.pass_context
 def jobs(ctx, page):
     """List jobs for experiment.
@@ -220,7 +220,7 @@ def jobs(ctx, page):
 
 
 @experiment.command()
-@click.option('--page', type=int, help='To paginate through the list of experiments.')
+@click.option('--page', type=int, help='To paginate through the list of statuses.')
 @click.pass_context
 def statuses(ctx, page):
     """Get experiment status.

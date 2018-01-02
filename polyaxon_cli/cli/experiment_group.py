@@ -7,6 +7,7 @@ import sys
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -16,28 +17,44 @@ from polyaxon_cli.utils.formatting import (
 )
 
 
+def get_group_or_local(group=None):
+    return group or GroupManager.get_config_or_raise().sequence
+
+
 @click.group()
-def group():
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
+@click.option('--group', '-g', type=int, help="The sequence number of the group")
+@click.pass_context
+def group(ctx, project, group):
     """Commands for experiment groups."""
-    pass
+    user, project_name = get_project_or_local(project)
+    group = get_group_or_local(group)
+    ctx.obj = ctx.obj or {}
+    ctx.obj['user'] = user
+    ctx.obj['project_name'] = project_name
+    ctx.obj['group'] = group
 
 
 @group.command()
-@click.argument('group', type=int)
-@click.option('--project', '-p', type=str)
-def get(group, project):
+@click.pass_context
+def get(ctx):
     """Get experiment group by uuid.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
     Examples:
 
-    polyaxon group get 13
+    \b
+    ```bash
+    $ polyaxon group -g 13 get
+    ```
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
     try:
         response = PolyaxonClients().experiment_group.get_experiment_group(
             user, project_name, group)
+        # Set caching
+        GroupManager.set_config(response, init=True)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get experiment group `{}`.'.format(group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -49,14 +66,13 @@ def get(group, project):
 
 
 @group.command()
-@click.argument('group', type=int)
-@click.option('--project', '-p', type=str)
-def delete(group, project):
+@click.pass_context
+def delete(ctx):
     """Delete experiment group.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
     if not click.confirm("Are sure you want to delete experiment group `{}`".format(group)):
         click.echo('Existing without deleting experiment group.')
         sys.exit(0)
@@ -64,6 +80,8 @@ def delete(group, project):
     try:
         response = PolyaxonClients().experiment_group.delete_experiment_group(
             user, project_name, group)
+        # Purge caching
+        GroupManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not delete experiment group `{}`.'.format(group))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -74,19 +92,21 @@ def delete(group, project):
 
 
 @group.command()
-@click.argument('group', type=int)
-@click.option('--project', '-p', type=str)
 @click.option('--description', type=str, help='Description of the project,')
-def update(group, project, description):
-    """Update experiement group.
+@click.pass_context
+def update(ctx, description):
+    """Update experiment group.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
     Example:
 
-    polyaxon group update 2 --description="new description for my experiments"
+    \b
+    ```bash
+    $ polyaxon group -g 2 update --description="new description for my experiments"
+    ```
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
     update_dict = {}
 
     if description:
@@ -111,15 +131,14 @@ def update(group, project, description):
 
 
 @group.command()
-@click.argument('group', type=int)
-@click.option('--project', '-p', type=str)
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
-def experiments(group, project, page):
+@click.pass_context
+def experiments(ctx, page):
     """List experiments for this experiment group
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = get_project_or_local(project)
+    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
     page = page or 1
     try:
         response = PolyaxonClients().experiment_group.list_experiments(
