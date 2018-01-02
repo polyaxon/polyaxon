@@ -69,7 +69,7 @@ There are other options that we could have used such as
  * `values`: [value1, value2, value3]
  * `range`: [start, stop, step]
  * `linspace`: [start, stop, num]
- * `GeomSpace`: [start, stop, num]
+ * `geomspace`: [start, stop, num]
 
 You can check all the options available on the [matrix section reference](/polyaxonfile_specification/sections#matrix).
 

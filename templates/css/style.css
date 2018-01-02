@@ -6,3 +6,7 @@
 [data-md-color-primary=blue-grey] .md-typeset a {
     color: #5f8fa5eb;
 }
+
+.md-typeset h2 {
+    color: #19576b;
+}
