@@ -95,7 +95,7 @@ Experiment was created.
 
 !!! info "More details"
     For more details about this command please run `polyaxon run --help`,
-    or check the [command reference]()
+    or check the [command reference](/polyaxon_cli/commands/run)
 
 ## Checking the experiments of a project
 
@@ -344,7 +344,7 @@ In the [jobs](jobs)'s page, we will see how we can view the resources of a parti
 
 !!! info "More details"
     For more details about this command please run `polyaxon experiment --help`,
-    or check the [command reference]()
+    or check the [command reference](/polyaxon_cli/commands/experiment)
 
 If you did not see the [jobs](jobs)'s section, please go there,
 you will learn how you can get specific information about a particular job.

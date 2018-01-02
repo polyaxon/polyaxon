@@ -30,8 +30,7 @@ After installing the CLI you can view the commands supported using the `--help` 
 $ polyaxon --help
 ```
 
-For more information please have a look at some [assumptions and conventions](/polyaxon_cli/assumptions)
-Polyaxon use for it's [commands](/polyaxon_cli/commands)
+For more information please have a look [polyaxon cli section](/polyaxon_cli/introduction).
 
 
 ## Login

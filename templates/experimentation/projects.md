@@ -33,7 +33,7 @@ $ polyaxon project create --name=mnist --description='Classification of handwrit
 
 !!! info "More details"
     For more details about this command please run `polyaxon project create --help`,
-    or check the [command reference]()
+    or check the [command reference](/polyaxon_cli/commands/project)
 
 The project is created by default `public`, to make it private please add `--private`
 

@@ -92,7 +92,7 @@ This command validate the polyaxon file, and the option `-m` returns the matrix 
 
 !!! info "More details"
     For more details about this command please run `polyaxon check --help`,
-    or check the [command reference]()
+    or check the [command reference](/polyaxon_cli/commands/check)
 
 ## Running a group of experiments
 
@@ -108,7 +108,7 @@ Experiment group was created
 
 !!! info "More details"
     For more details about this command please run `polyaxon run --help`,
-    or check the [command reference]()
+    or check the [command reference](/polyaxon_cli/commands/run)
 
 Now one thing we did not discuss is how many experiments we want to run in parallel,
 and how we want to perform the hyperparameters search. Be default, Polyaxon
@@ -232,7 +232,7 @@ Experiments:
 
 !!! info "More details"
     For more details about this command please run `polyaxon group --help`,
-    or check the [command reference]()
+    or check the [command reference](/polyaxon_cli/commands/experiment_group)
 
 
 To check the logs, resources, jobs, and statuses of a specific experiment, please go to [experiments](experiments).

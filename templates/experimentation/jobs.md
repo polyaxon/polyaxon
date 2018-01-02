@@ -31,5 +31,5 @@ This command will show the resources in real time for that job.
 
 !!! info "More details"
     For more details about this command please run `polyaxon job --help`,
-    or check the [command reference]()
+    or check the [command reference](/polyaxon_cli/commands/job)
 
