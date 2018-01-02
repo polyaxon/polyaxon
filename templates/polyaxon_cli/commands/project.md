@@ -1,3 +1,24 @@
+The project commands accept an optional argument `--project` or '-p'  to use a specific project.
+
+If no project is provided, the command will default to the currently initialized project.
+
+If no project is provided and no project is initialized, the command will raise.
+
+
+Usage:
+
+polyaxon project [OPTIONS] COMMAND [ARGS]...
+
+Commands for projects.
+
+Options:
+
+option | type | description
+-------|------|------------
+  -p, --project | TEXT | The project name, e.g. 'mnist' or 'adam/mnist'
+  --help |  | Show this message and exit.
+
+
 ## create
 
 
@@ -48,7 +69,7 @@ option | type | description
 Usage:
 
 ```bash
-$ polyaxon project get [OPTIONS] [PROJECT]
+$ polyaxon project get [OPTIONS]
 ```
 
 Get info for current project, by project_name, or user/project_name.
@@ -66,12 +87,12 @@ Examples:
  * To get a project by name
 
     ```bash
-    $ polyaxon project get project
+    $ polyaxon project --project=project_name get
     ```
 
  * To get a project by user and name
     ```bash
-    $ polyaxon project get user/project
+    $ polyaxon project -p user/project get
     ```
 
 ## update
@@ -79,7 +100,7 @@ Examples:
 Usage:
 
 ```
-$ polyaxon project update [OPTIONS] [PROJECT]
+polyaxon project update [OPTIONS]
 ```
 
 Update project.
@@ -105,23 +126,22 @@ option | type | descrition
   --private | BOOLEAN | Set the visibility of the project to private/public.
   --help | | Show this message and exit.
 
+
 ## delete
 
 Usage:
 ```bash
-$ polyaxon project delete [OPTIONS] PROJECT
+polyaxon project delete
 ```
 
 Delete project.
-
-Uses [Caching](/polyaxon_cli/introduction#Caching)
 
 
 ## experiments
 
 Usage:
 ```bash
-$ polyaxon project experiments [OPTIONS] [PROJECT]
+polyaxon project experiments [OPTIONS]
 ```
 
 List experiments for this project.
@@ -140,7 +160,7 @@ option | type | description
 Usage:
 
 ```bash
-$ polyaxon project groups [OPTIONS] [PROJECT]
+polyaxon project groups [OPTIONS]
 ```
 
 List experiment groups for this project.
