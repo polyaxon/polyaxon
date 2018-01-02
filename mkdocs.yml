@@ -101,8 +101,7 @@ pages:
 - Reference Polyaxonfile Specification:
   - Introduction: polyaxonfile_specification/introduction.md
   - Sections: polyaxonfile_specification/sections.md
-  - Exec File: polyaxonfile_specification/exec_file.md
-  - Model File: polyaxonfile_specification/model_file.md
+  - Model Sections: polyaxonfile_specification/model_sections.md
 - Reference Polyaxon Helm: reference_polyaxon_helm.md
 - Reference Polyaxon Lib:
   - Introduction: polyaxon_lib/introduction.md
