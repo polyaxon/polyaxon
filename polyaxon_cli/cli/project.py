@@ -83,17 +83,19 @@ def project():
 @click.option('--name', required=True, type=str,
               help='Name of the project, must be unique for the same user')
 @click.option('--description', type=str, help='Description of the project,')
-def create(name, description):
+@click.option('--private', is_flag=True, help='Set the visibility of the project to private.')
+def create(name, description, private):
     """Create a new project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
 
     Example:
 
-    ```
-    polyaxon project create --name=cats-vs-dogs --description=Image Classification with Deep Learning
-    ```
+    polyaxon project create --name=cats-vs-dogs --description="Image Classification with Deep Learning"
     """
     try:
-        project_config = ProjectConfig.from_dict(dict(name=name, description=description))
+        project_dict = dict(name=name, description=description, is_public=not private)
+        project_config = ProjectConfig.from_dict(project_dict)
     except ValidationError:
         Printer.print_error('Project name should contain only alpha numerical, "-", and "_".')
         sys.exit(1)
@@ -111,7 +113,10 @@ def create(name, description):
 @project.command()
 @click.option('--page', type=int, help='To paginate through the list of projects.')
 def list(page):
-    """List projects."""
+    """List projects.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user = AuthConfigManager.get_value('username')
     if not user:
         Printer.print_error('Please login first. `polyaxon login --help`')
@@ -145,17 +150,17 @@ def list(page):
 def get(project):
     """Get info for current project, by project_name, or user/project_name.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
 
-         To get current project:
-    ```
-    polyaxon project get
-    ```
+    To get current project:
 
-        To get a project by name
-    ```
+    polyaxon project get
+
+    To get a project by name
+
     polyaxon project get user/project
-    ```
     """
     user, project_name = get_project_or_local(project)
 
@@ -174,7 +179,10 @@ def get(project):
 @project.command()
 @click.argument('project', type=str)
 def delete(project):
-    """Delete project."""
+    """Delete project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
 
     if not click.confirm("Are sure you want to delete project `{}/{}`".format(user, project_name)):
@@ -197,18 +205,17 @@ def delete(project):
 @click.option('--name', type=str,
               help='Name of the project, must be unique for the same user,')
 @click.option('--description', type=str, help='Description of the project,')
-def update(project, name, description):
+@click.option('--private', type=bool, help='Set the visibility of the project to private/public.')
+def update(project, name, description, private):
     """Update project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
 
     Example:
 
-    ```
     polyaxon update foobar --description=Image Classification with Deep Learning using TensorFlow
-    ```
 
-    ```
     polyaxon update mike1/foobar --description=Image Classification with Deep Learning using TensorFlow
-    ```
     """
     user, project_name = get_project_or_local(project)
 
@@ -218,6 +225,9 @@ def update(project, name, description):
 
     if description:
         update_dict['description'] = description
+
+    if private is not None:
+        update_dict['is_public'] = not private
 
     if not update_dict:
         Printer.print_warning('No argument was provided to update the project.')
@@ -238,9 +248,12 @@ def update(project, name, description):
 
 @project.command()
 @click.argument('project', type=str, required=False)
-@click.option('--page', type=int, help='To paginate through the list of projects.')
+@click.option('--page', type=int, help='To paginate through the list of groups.')
 def groups(project, page):
-    """List experiment groups for this project"""
+    """List experiment groups for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
 
     page = page or 1
@@ -271,9 +284,12 @@ def groups(project, page):
 
 @project.command()
 @click.argument('project', type=str, required=False)
-@click.option('--page', type=int, help='To paginate through the list of projects.')
+@click.option('--page', type=int, help='To paginate through the list of experiments.')
 def experiments(project, page):
-    """List experiments for this project"""
+    """List experiments for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
 
     page = page or 1
