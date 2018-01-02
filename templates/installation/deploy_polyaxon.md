@@ -51,7 +51,7 @@ Now you can install Polyaxon with your `config.yml` file
 ```bash
 $ helm install polyaxon/polyaxon \
     --name=<RELEASE_NAME> \
-    --namespace=<NAMESPAC> \
+    --namespace=<NAMESPACE> \
     -f config.yaml
 ```
 
