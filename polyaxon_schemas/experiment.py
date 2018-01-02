@@ -58,7 +58,8 @@ class ExperimentJobConfig(BaseConfig):
                  is_running=None,
                  is_done=None,
                  started_at=None,
-                 finished_at=None):
+                 finished_at=None,
+                 total_run=None):
         self.uuid = uuid
         self.unique_name = unique_name
         self.sequence = sequence
@@ -148,7 +149,8 @@ class ExperimentConfig(BaseConfig):
                  config=None,
                  content=None,
                  num_jobs=0,
-                 jobs=None):
+                 jobs=None,
+                 total_run=None):
         self.sequence = sequence
         self.user = user
         self.uuid = uuid
