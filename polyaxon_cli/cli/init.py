@@ -20,12 +20,12 @@ from polyaxon_cli.utils.formatting import Printer
 
 @click.command()
 @click.argument('project', type=str)
-@click.option('--run', is_flag=True, default=True,
+@click.option('--run', is_flag=True, default=True, show_default=True,
               help='Init a polyaxon file with `exec` step template.')
-@click.option('--model', is_flag=True, default=False,
+@click.option('--model', is_flag=True, default=False, show_default=True,
               help='Init a polyaxon file with `model` step template.')
 def init(project, run, model):
-    """Init a new polyaxonfile specification."""
+    """Initialize a new polyaxonfile specification."""
     user, project_name = get_project_or_local(project)
     try:
         project_config = PolyaxonClients().project.get_project(user, project_name)
