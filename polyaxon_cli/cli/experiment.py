@@ -32,18 +32,15 @@ def experiment():
 def get(experiment, project):
     """Get experiment by uuid.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon experiment get 1
-    ```
 
-    ```
     polyaxon experiment get 1 --project=cats-vs-dogs
-    ```
 
-     ```
     polyaxon experiment get 1 --project=alain/cats-vs-dogs
-    ```
     """
     user, project_name = get_project_or_local(project)
     try:
@@ -62,7 +59,10 @@ def get(experiment, project):
 @click.argument('experiment', type=int)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def delete(experiment, project):
-    """Delete experiment group."""
+    """Delete experiment group.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
     if not click.confirm("Are sure you want to delete experiment `{}`".format(experiment)):
         click.echo('Existing without deleting experiment.')
@@ -86,10 +86,11 @@ def delete(experiment, project):
 def stop(experiment, project):
     """Get experiment by uuid.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon experiment stop 2
-    ```
     """
     user, project_name = get_project_or_local(project)
     if not click.confirm("Are sure you want to stop experiment `{}`".format(experiment)):
@@ -110,7 +111,10 @@ def stop(experiment, project):
 @click.argument('experiment', type=int)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def restart(experiment, project):
-    """Delete experiment."""
+    """Delete experiment.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
     try:
         response = PolyaxonClients().experiment.restart(
@@ -130,7 +134,10 @@ def restart(experiment, project):
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 def jobs(experiment, project, page):
-    """List jobs for this experiment"""
+    """List jobs for this experiment.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
     page = page or 1
     try:
@@ -164,10 +171,11 @@ def jobs(experiment, project, page):
 def statuses(experiment, project, page):
     """Get experiment status.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon experiment statuses 3
-    ```
     """
     user, project_name = get_project_or_local(project)
     page = page or 1
@@ -201,10 +209,11 @@ def statuses(experiment, project, page):
 def resources(experiment, project):
     """Get experiment resources.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon experiment resources 19
-    ```
     """
     user, project_name = get_project_or_local(project)
     try:
@@ -222,10 +231,11 @@ def resources(experiment, project):
 def logs(experiment, project):
     """Get experiment logs.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon experiment logs 1
-    ```
     """
     user, project_name = get_project_or_local(project)
     colors = deque(Printer.COLORS)

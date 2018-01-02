@@ -28,10 +28,11 @@ def group():
 def get(group, project):
     """Get experiment group by uuid.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon group get 13
-    ```
     """
     user, project_name = get_project_or_local(project)
     try:
@@ -51,7 +52,10 @@ def get(group, project):
 @click.argument('group', type=int)
 @click.option('--project', '-p', type=str)
 def delete(group, project):
-    """Delete experiment group."""
+    """Delete experiment group.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
     if not click.confirm("Are sure you want to delete experiment group `{}`".format(group)):
         click.echo('Existing without deleting experiment group.')
@@ -76,11 +80,11 @@ def delete(group, project):
 def update(group, project, description):
     """Update experiement group.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Example:
 
-    ```
     polyaxon group update 2 --description="new description for my experiments"
-    ```
     """
     user, project_name = get_project_or_local(project)
     update_dict = {}
@@ -111,7 +115,10 @@ def update(group, project, description):
 @click.option('--project', '-p', type=str)
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 def experiments(group, project, page):
-    """List experiments for this experiment group"""
+    """List experiments for this experiment group
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
     user, project_name = get_project_or_local(project)
     page = page or 1
     try:

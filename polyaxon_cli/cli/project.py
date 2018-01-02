@@ -56,8 +56,8 @@ def equal_projects(project1, project2):
 
 def get_project_or_local(project=None):
     if not project and not ProjectManager.is_initialized():
-        Printer.print_error('Please provide a valid project, or init a new project.'
-                            '{}'.format(constants.INIT_COMMAND))
+        Printer.print_error('Please provide a valid project, or init a new project. '
+                            ' {}'.format(constants.INIT_COMMAND))
         sys.exit(1)
 
     if project:
@@ -68,7 +68,7 @@ def get_project_or_local(project=None):
 
     if not all([user, project_name]):
         Printer.print_error('Please provide a valid project, or init a new project.'
-                            '{}'.format(constants.INIT_COMMAND))
+                            ' {}'.format(constants.INIT_COMMAND))
         sys.exit(1)
     return user, project_name
 

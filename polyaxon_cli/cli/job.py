@@ -27,10 +27,11 @@ def job():
 def get(experiment, job, project):
     """Get job by uuid.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon job get 1 50c62372137940ca8c456d8596946dd7
-    ```
     """
     user, project_name = get_project_or_local(project)
     try:
@@ -52,10 +53,11 @@ def get(experiment, job, project):
 def statuses(experiment, job, project):
     """Get job status.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon job statuses 1 50c62372137940ca8c456d8596946dd7
-    ```
     """
     user, project_name = get_project_or_local(project)
     try:
@@ -88,10 +90,11 @@ def statuses(experiment, job, project):
 def resources(experiment, job, project):
     """Get job resources.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon job resources 1 50c62372137940ca8c456d8596946dd7
-    ```
     """
     user, project_name = get_project_or_local(project)
     try:
@@ -113,10 +116,11 @@ def resources(experiment, job, project):
 def logs(experiment, job, project):
     """Get job logs.
 
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
     Examples:
-    ```
+
     polyaxon job logs 1 50c62372137940ca8c456d8596946dd7
-    ```
     """
     user, project_name = get_project_or_local(project)
 

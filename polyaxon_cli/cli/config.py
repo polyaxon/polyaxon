@@ -36,7 +36,7 @@ def get(keys):
     polyaxon config get host http_port
     ```
     """
-    config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
+    config = GlobalConfigManager.get_config_or_default()
 
     if len(keys) == 0:
         return
@@ -64,7 +64,7 @@ def set(verbose, host, http_port, ws_port, use_https):
 
     polyaxon config set --hots=localhost http_port=80
     """
-    config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
+    config = GlobalConfigManager.get_config_or_default()
 
     if verbose is not None:
         config.verbose = verbose
