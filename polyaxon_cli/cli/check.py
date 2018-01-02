@@ -47,6 +47,7 @@ def check_polyaxonfile(file, log=True):
               help='Checks and prints the matrix def.')
 def check(file, all, version, run_type, project, log_path, matrix, experiments):
     """Check a polyaxonfile."""
+    file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file)
 
     if version:
