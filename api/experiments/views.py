@@ -127,7 +127,7 @@ class ExperimentViewMixin(object):
     def get_experiment(self):
         # Get project and check access
         project = get_permissible_project(view=self)
-        sequence = self.kwargs['sequence']
+        sequence = self.kwargs['experiment_sequence']
         experiment = get_object_or_404(Experiment, project=project, sequence=sequence)
         return experiment
 
@@ -165,7 +165,7 @@ class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView)
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
     permission_classes = (IsAuthenticated,)
-    lookup_field = 'uuid'
+    lookup_field = 'sequence'
 
 
 class ExperimentJobViewMixin(object):
@@ -174,13 +174,15 @@ class ExperimentJobViewMixin(object):
     def get_experiment(self):
         # Get project and check access
         project = get_permissible_project(view=self)
-        sequence = self.kwargs['sequence']
+        sequence = self.kwargs['experiment_sequence']
         experiment = get_object_or_404(Experiment, project=project, sequence=sequence)
         return experiment
 
     def get_job(self):
-        job_uuid = self.kwargs['job_uuid']
-        job = get_object_or_404(ExperimentJob, uuid=job_uuid, experiment=self.get_experiment())
+        job_sequence = self.kwargs['sequence']
+        job = get_object_or_404(ExperimentJob,
+                                sequence=job_sequence,
+                                experiment=self.get_experiment())
         return job
 
     def filter_queryset(self, queryset):

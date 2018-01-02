@@ -523,7 +523,7 @@ class TestExperimentJobDetailViewV1(BaseViewTest):
             project.user.username,
             project.name,
             self.experiment.sequence,
-            self.object.uuid.hex)
+            self.object.sequence)
         self.queryset = self.model_class.objects.filter(experiment=self.experiment)
 
     def test_get(self):
@@ -573,7 +573,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
             project.user.username,
             project.name,
             experiment.sequence,
-            self.experiment_job.uuid.hex)
+            self.experiment_job.sequence)
         self.objects = [self.factory_class(job=self.experiment_job,
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -648,7 +648,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
             project.user.username,
             project.name,
             experiment.sequence,
-            self.experiment_job.uuid.hex,
+            self.experiment_job.sequence,
             self.object.uuid.hex)
         self.queryset = self.model_class.objects.filter(job=self.experiment_job)
 
