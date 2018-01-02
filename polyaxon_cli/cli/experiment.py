@@ -26,29 +26,49 @@ def get_experiment_or_local(experiment=None):
 
 
 @click.group()
-def experiment():
+@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
+@click.option('--experiment', '-xp', type=int, help="The sequence number of the experiment")
+@click.pass_context
+def experiment(ctx, project, experiment):
     """Commands for experiments."""
-    pass
+    user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
+    ctx.obj = ctx.obj or {}
+    ctx.obj['user'] = user
+    ctx.obj['project_name'] = project_name
+    ctx.obj['experiment'] = experiment
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-def get(experiment, project):
-    """Get experiment by uuid.
+@click.pass_context
+def get(ctx):
+    """Get experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Examples:
+    Example:
 
-    polyaxon experiment get 1
+    \b
+    ```bash
+    $ polyaxon experiment get  # if experiment is cached
+    ```
 
-    polyaxon experiment get 1 --project=cats-vs-dogs
+    \b
+    ```bash
+    $ polyaxon experiment --experiment=1 get
+    ```
 
-    polyaxon experiment get 1 --project=alain/cats-vs-dogs
+    \b
+    ```bash
+    $ polyaxon experiment -xp 1 --project=cats-vs-dogs get
+    ```
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 1 -p alain/cats-vs-dogs get
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     try:
         response = PolyaxonClients().experiment.get_experiment(user, project_name, experiment)
         # Set caching
@@ -64,15 +84,20 @@ def get(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-def delete(experiment, project):
-    """Delete experiment group.
+@click.pass_context
+def delete(ctx):
+    """Delete experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon experiment delete
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     if not click.confirm("Are sure you want to delete experiment `{}`".format(experiment)):
         click.echo('Existing without deleting experiment.')
         sys.exit(1)
@@ -92,19 +117,25 @@ def delete(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-def stop(experiment, project):
-    """Get experiment by uuid.
+@click.pass_context
+def stop(ctx):
+    """Stop experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
     Examples:
 
-    polyaxon experiment stop 2
+    \b
+    ```bash
+    $ polyaxon experiment stop
+    ```
+
+    \b
+    ```bash
+    $ polyaxon experiment -x 2 stop
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     if not click.confirm("Are sure you want to stop experiment `{}`".format(experiment)):
         click.echo('Existing without stopping experiment.')
         sys.exit(0)
@@ -120,15 +151,20 @@ def stop(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-def restart(experiment, project):
-    """Delete experiment.
+@click.pass_context
+def restart(ctx):
+    """Restart experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon experiment --experiment=1 restart
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     try:
         response = PolyaxonClients().experiment.restart(
             user, project_name, experiment)
@@ -143,16 +179,21 @@ def restart(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
-def jobs(experiment, project, page):
-    """List jobs for this experiment.
+@click.pass_context
+def jobs(ctx, page):
+    """List jobs for experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon experiment --experiment=1 jobs
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     page = page or 1
     try:
         response = PolyaxonClients().experiment.list_jobs(user, project_name, experiment, page=page)
@@ -179,20 +220,26 @@ def jobs(experiment, project, page):
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
-def statuses(experiment, project, page):
+@click.pass_context
+def statuses(ctx, page):
     """Get experiment status.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Examples:
+    Example:
 
-    polyaxon experiment statuses 3
+    \b
+    ```bash
+    $ polyaxon experiment statuses 3
+    ```
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 1 statuses
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     page = page or 1
     try:
         response = PolyaxonClients().experiment.get_statuses(
@@ -219,19 +266,19 @@ def statuses(experiment, project, page):
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-def resources(experiment, project):
+def resources(ctx):
     """Get experiment resources.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
-    Examples:
+    Example:
 
-    polyaxon experiment resources 19
+    \b
+    ```bash
+    $ polyaxon experiment -xp 19 resources
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     try:
         PolyaxonClients().experiment.resources(
             user, project_name, experiment, message_handler=Printer.resources)
@@ -242,19 +289,24 @@ def resources(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int, required=False)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-def logs(experiment, project):
+def logs(ctx):
     """Get experiment logs.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
 
     Examples:
 
-    polyaxon experiment logs 1
+    \b
+    ```bash
+    $ polyaxon experiment logs
+    ```
+
+    \b
+    ```bash
+    $ polyaxon experiment -x 10 -p mnist logs
+    ```
     """
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
+    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     colors = deque(Printer.COLORS)
     job_to_color = {}
 
@@ -300,7 +352,5 @@ def logs(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
-@click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
-def outputs(experiment, project):
+def outputs(ctx):
     pass
