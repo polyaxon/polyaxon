@@ -9,19 +9,19 @@ from polyaxon_cli.managers.base import BaseConfigManager
 from polyaxon_cli.utils.formatting import Printer
 
 
-class ExperimentManager(BaseConfigManager):
-    """Manages experiment configuration .polyaxonxpgroup file."""
+class GroupManager(BaseConfigManager):
+    """Manages experiment configuration .polyaxongroup file."""
 
     IS_GLOBAL = False
     IS_POLYAXON_DIR = True
-    CONFIG_FILE_NAME = '.polyaxonxpgroup'
+    CONFIG_FILE_NAME = '.polyaxongroup'
     CONFIG = ExperimentConfig
 
     @classmethod
     def get_config_or_raise(cls):
         experiment_group = cls.get_config()
         if not experiment_group:
-            Printer.print_error('No experiment_group sequence was provided.')
+            Printer.print_error('No group sequence was provided.')
             sys.exit(1)
 
         return experiment_group
