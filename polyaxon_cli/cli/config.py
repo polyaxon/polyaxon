@@ -18,7 +18,7 @@ def validate_options(ctx, param, value):
 @click.group(invoke_without_command=True)
 @click.option('--list', '-l', is_flag=True, help='List all global config values.')
 def config(list):
-    """Set and get global configurations."""
+    """Set and get the global configurations."""
     if list:
         config = GlobalConfigManager.get_config()
         Printer.print_header('Current config:')
@@ -28,7 +28,7 @@ def config(list):
 @config.command()
 @click.argument('keys', type=str, nargs=-1)
 def get(keys):
-    """Get global config values by keys.
+    """Get the global config values by keys.
 
     Example:
 
@@ -58,13 +58,11 @@ def get(keys):
 @click.option('--ws_port', type=int, help='To set the stream port')
 @click.option('--use_https', type=bool, help='To set the https')
 def set(verbose, host, http_port, ws_port, use_https):
-    """Set global config values.
+    """Set the global config values.
 
     Example:
 
-    ```
     polyaxon config set --hots=localhost http_port=80
-    ```
     """
     config = GlobalConfigManager.get_config() or GlobalConfigManager.CONFIG()
 
