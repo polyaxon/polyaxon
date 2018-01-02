@@ -3,6 +3,7 @@ import * as _ from "lodash";
 
 import {ProjectModel} from "../models/project";
 import {BASE_URL} from "../constants/api";
+import {getStoredToken} from "../constants/utils";
 
 
 export enum actionTypes {
@@ -96,7 +97,7 @@ export function createProject(user: string, project: ProjectModel): Dispatch<Pro
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
     })
     .then(response => response.json())
@@ -116,7 +117,7 @@ export function deleteProject(project: ProjectModel): Dispatch<ProjectModel[]> {
     return fetch(BASE_URL + `/${project.user}` + `/${project.name}`, {
         method: 'DELETE',
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
     })
     .then(() => dispatch(receiveProjectsActionCreator([])))
@@ -129,7 +130,7 @@ export function fetchProjects(user: string): Dispatch<ProjectModel[]> {
     dispatch(requestProjectsActionCreator());
     return fetch(BASE_URL + `/${user}`, {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
     })
       .then(response => response.json())
@@ -149,7 +150,7 @@ export function fetchProject(user: string, projectName: string): Dispatch<Projec
     dispatch(requestProjectActionCreator());
     return fetch(BASE_URL + `/${user}` + `/${projectName}`, {
         headers: {
-            'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
+            'Authorization': 'token ' + getStoredToken()
         }
     })
       .then(response => response.json())

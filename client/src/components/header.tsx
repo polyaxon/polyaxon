@@ -1,7 +1,8 @@
 import * as React from "react";
-import {MenuItem, Nav, Navbar, NavItem, NavDropdown} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
 
+import {MenuItem, Nav, Navbar, NavItem, NavDropdown} from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import { getHomeUrl, getLogoutUrl, isUserAuthenticated } from "../constants/utils";
 import "./header.less";
 
 
@@ -11,7 +12,7 @@ function Header() {
       <Navbar inverse collapseOnSelect className="navbar">
         <Navbar.Header >
           <Navbar.Brand>
-            <LinkContainer to="/" className="nav-link brand">
+            <LinkContainer to={getHomeUrl()} className="nav-link brand">
               <a>
                 <img src="../../public/images/logo_white.svg" alt="Polyaxon"/>
               </a>
@@ -19,6 +20,7 @@ function Header() {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
+        { isUserAuthenticated() &&
         <Navbar.Collapse>
           <Nav>
           </Nav>
@@ -27,10 +29,11 @@ function Header() {
               <MenuItem eventKey={3.1}>Docs</MenuItem>
               <MenuItem eventKey={3.2}>Github</MenuItem>
               <MenuItem divider />
-              <MenuItem eventKey={3.3}>Logout</MenuItem>
+              <MenuItem eventKey={3.3} href={getLogoutUrl()}>Logout</MenuItem>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
+        }
       </Navbar>
     </header>
   );
