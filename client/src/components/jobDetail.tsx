@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {Button, ButtonToolbar} from "react-bootstrap";
 
 import {JobModel} from "../models/job";
 

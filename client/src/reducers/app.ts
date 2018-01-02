@@ -5,9 +5,7 @@ import { reducer as formReducer } from "redux-form";
 import {projectsReducer, ProjectExperiments} from "./projects";
 import {experimentsReducer} from "./experiments";
 import {groupsReducer} from "./groups";
-
 import {jobsReducer} from "./jobs";
-
 import {AppState} from "../constants/types";
 import {modalReducer} from "../reducers/modal";
 

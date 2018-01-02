@@ -3,7 +3,6 @@ import * as _ from "lodash";
 import {normalize} from 'normalizr';
 
 import {ExperimentSchema} from "../constants/schemas"
-
 import {ExperimentAction, actionTypes} from "../actions/experiment";
 import {ExperimentStateSchema, ExperimentsEmptyState} from "../models/experiment";
 

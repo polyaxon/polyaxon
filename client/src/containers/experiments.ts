@@ -1,11 +1,9 @@
 import { connect, Dispatch } from "react-redux";
-import * as _ from "lodash";
 
-import {urlifyProjectName, sortByUpdatedAt} from "../constants/utils"
+import {sortByUpdatedAt} from "../constants/utils"
 import { AppState } from "../constants/types";
 import Experiments from "../components/experiments";
 import {ExperimentModel} from "../models/experiment";
-import {ProjectModel} from "../models/project";
 
 import * as actions from "../actions/experiment";
 

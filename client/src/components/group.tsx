@@ -2,8 +2,8 @@ import * as React from "react";
 
 import {Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import {dateOptions, urlifyProjectName, getCssClassForStatus, pluralize} from "../constants/utils"
 
+import {dateOptions, pluralize} from "../constants/utils";
 import {GroupModel} from "../models/group";
 
 

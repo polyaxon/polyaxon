@@ -1,11 +1,8 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {Button, ButtonToolbar} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
 
 import Experiment from "./experiment";
 import {ExperimentModel} from "../models/experiment";
-import {ProjectModel} from "../models/project";
 
 
 export interface Props {

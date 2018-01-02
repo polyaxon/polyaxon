@@ -1,9 +1,7 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {Button, ButtonToolbar} from "react-bootstrap";
 
 import {GroupModel} from "../models/group";
-import Jobs from "../containers/jobs";
 import Experiments from "../containers/experiments";
 
 

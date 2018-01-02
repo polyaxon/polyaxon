@@ -7,7 +7,6 @@ export class ProjectModel {
 	public is_public: boolean;
 	public deleted?: boolean;
 	public description?: string;
-	public isPrivate?: boolean = false;
 	public createdAt: Date;
 	public updatedAt: Date;
 }

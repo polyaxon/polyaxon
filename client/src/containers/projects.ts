@@ -4,7 +4,6 @@ import { AppState } from "../constants/types";
 import Projects from "../components/projects";
 import {ProjectModel} from "../models/project";
 import {sortByUpdatedAt} from "../constants/utils";
-
 import * as actions from "../actions/project";
 import * as modalActions from "../actions/modal"
 import {modalTypes, modalPropsByTypes} from "../models/modal";

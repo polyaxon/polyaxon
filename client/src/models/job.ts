@@ -8,8 +8,8 @@ export class JobModel {
 	public experiment: string;
 	public definition: string;
 	public deleted?: boolean;
-    public project?: string;
-    public status?: string;
+	public project?: string;
+	public status?: string;
 	public createdAt: Date;
 	public updatedAt: Date;
 	public started_at: Date;

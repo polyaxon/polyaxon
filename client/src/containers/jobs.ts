@@ -1,13 +1,9 @@
 import { connect, Dispatch } from "react-redux";
-import * as _ from "lodash";
 
-import {urlifyProjectName, sortByUpdatedAt} from "../constants/utils"
+import {sortByUpdatedAt} from "../constants/utils"
 import { AppState } from "../constants/types";
 import Jobs from "../components/jobs";
 import {JobModel} from "../models/job";
-import {ExperimentModel} from "../models/experiment";
-
-import {ProjectModel} from "../models/project";
 
 import * as actions from "../actions/job";
 
@@ -29,7 +25,7 @@ export function mapStateToProps(state: AppState, params: any) {
 
 export interface DispatchProps {
   onCreate?: (job: JobModel) => any;
-  onDelete?: (jobName: string) => any;
+  onDelete?: (job: JobModel) => any;
   onUpdate?: (job: JobModel) => any;
   fetchData?: () => any;
 }
@@ -37,7 +33,7 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
   return {
     onCreate: (job: JobModel) => dispatch(actions.createJobActionCreator(job)),
-    onDelete: (jobName: string) => dispatch(actions.deleteJobActionCreator(jobName)),
+    onDelete: (job: JobModel) => dispatch(actions.deleteJobActionCreator(job)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
     fetchData: () => dispatch(actions.fetchJobs(params.experiment.project_name, params.experiment.sequence))
   }

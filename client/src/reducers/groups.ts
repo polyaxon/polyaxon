@@ -3,7 +3,6 @@ import * as _ from "lodash";
 import {normalize} from 'normalizr';
 
 import {GroupSchema} from "../constants/schemas"
-
 import {GroupAction, actionTypes} from "../actions/group";
 import {GroupStateSchema, GroupsEmptyState} from "../models/group";
 

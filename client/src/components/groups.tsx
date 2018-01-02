@@ -1,11 +1,8 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {Button, ButtonToolbar} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
 
 import Group from "./group";
 import {GroupModel} from "../models/group";
-import {ProjectModel} from "../models/project";
 
 
 export interface Props {

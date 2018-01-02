@@ -1,12 +1,9 @@
 import { connect, Dispatch } from "react-redux";
-import * as _ from "lodash";
 
-import {urlifyProjectName, sortByUpdatedAt} from "../constants/utils"
+import {sortByUpdatedAt} from "../constants/utils"
 import { AppState } from "../constants/types";
 import Groups from "../components/groups";
 import {GroupModel} from "../models/group";
-import {ProjectModel} from "../models/project";
-
 import * as actions from "../actions/group";
 
 interface OwnProps {

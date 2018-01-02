@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import {dateOptions, urlifyProjectName, getCssClassForStatus, pluralize} from "../constants/utils"
+import {getCssClassForStatus, pluralize} from "../constants/utils"
 
 import {ExperimentModel} from "../models/experiment";
 

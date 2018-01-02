@@ -23,7 +23,7 @@ export interface CreateUpdateReceiveJobAction extends Action {
 
 export interface DeleteJobAction extends Action {
   type: actionTypes.DELETE_JOB;
-  jobUuid: string
+  job: JobModel
 }
 
 export interface ReceiveJobsAction extends Action {
@@ -51,10 +51,10 @@ export function updateJobActionCreator(job: JobModel): CreateUpdateReceiveJobAct
     }
 }
 
-export function deleteJobActionCreator(jobUuid: string): DeleteJobAction {
+export function deleteJobActionCreator(job: JobModel): DeleteJobAction {
     return {
       type: actionTypes.DELETE_JOB,
-      jobUuid
+      job
     }
 }
 
@@ -105,10 +105,10 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number)
   }
 }
 
-export function fetchJob(user: string, projectName: string, experimentSequence: number, jobUuid: string): Dispatch<JobModel> {
+export function fetchJob(user: string, projectName: string, experimentSequence: number, jobSequence: number): Dispatch<JobModel> {
   return (dispatch: any) => {
     dispatch(requestJobActionCreator());
-    return fetch(BASE_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobUuid, {
+    return fetch(BASE_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobSequence, {
         headers: {
             'Authorization': 'token 8ff04973157b2a5831329fbb1befd37f93e4de4f'
         }

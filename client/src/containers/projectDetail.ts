@@ -1,10 +1,8 @@
 import { connect, Dispatch } from "react-redux";
 import {withRouter} from "react-router-dom";
-import * as _ from "lodash";
 
 import { AppState } from "../constants/types";
 import { ProjectModel } from "../models/project";
-
 import ProjectDetail from "../components/projectDetail";
 import * as actions from "../actions/project";
 

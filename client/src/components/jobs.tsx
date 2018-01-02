@@ -1,19 +1,15 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {Button, ButtonToolbar} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
 
 import Job from "./job";
-import {ExperimentModel} from "../models/experiment";
 import {JobModel} from "../models/job";
-import {ProjectModel} from "../models/project";
 
 
 export interface Props {
   jobs: JobModel[];
   onCreate: (job: JobModel) => any;
   onUpdate: (job: JobModel) => any;
-  onDelete: (jobUuid: string) => any;
+  onDelete: (job: JobModel) => any;
   fetchData: () => any
 }
 
@@ -33,7 +29,7 @@ export default class Jobs extends React.Component<Props, Object> {
               {jobs.filter(
                 (job: JobModel) => _.isNil(job.deleted) || !job.deleted
               ).map(
-                (job: JobModel) => <li className="list-item" key={job.uuid}><Job job={job} onDelete={() => onDelete(job.uuid)}/></li>)}
+                (job: JobModel) => <li className="list-item" key={job.uuid}><Job job={job} onDelete={() => onDelete(job)}/></li>)}
             </ul>
           </div>
         </div>

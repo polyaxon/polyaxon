@@ -12,8 +12,6 @@ export class GroupModel {
 	public deleted?: boolean;
 	public createdAt: Date;
 	public updatedAt: Date;
-	public started_at?: Date;
-	public finished_at?: Date;
 }
 
 export class GroupStateSchema {

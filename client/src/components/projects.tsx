@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {Button} from "react-bootstrap";
 
 import Project from "./project";
 import RootModal from "../containers/modal"

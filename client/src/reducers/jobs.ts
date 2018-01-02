@@ -20,8 +20,8 @@ export const jobsReducer: Reducer<JobStateSchema> =
     case actionTypes.DELETE_JOB:
       return {
         ...state,
-        byUuids: {...state.byUuids, [action.jobUuid]: {...state.byUuids[action.jobUuid], deleted: true}},
-        uuids: state.uuids.filter(uuid => uuid != action.jobUuid),
+        byUuids: {...state.byUuids, [action.job.sequence]: {...state.byUuids[action.job.uuid], deleted: true}},
+        uuids: state.uuids.filter(uuid => uuid != action.job.uuid),
       };
     case actionTypes.UPDATE_JOB:
       return {
