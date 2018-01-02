@@ -11,6 +11,7 @@ from collections import deque
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -20,6 +21,10 @@ from polyaxon_cli.utils.formatting import (
 )
 
 
+def get_experiment_or_local(experiment=None):
+    return experiment or ExperimentManager.get_config_or_raise().sequence
+
+
 @click.group()
 def experiment():
     """Commands for experiments."""
@@ -27,7 +32,7 @@ def experiment():
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def get(experiment, project):
     """Get experiment by uuid.
@@ -43,8 +48,11 @@ def get(experiment, project):
     polyaxon experiment get 1 --project=alain/cats-vs-dogs
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     try:
         response = PolyaxonClients().experiment.get_experiment(user, project_name, experiment)
+        # Set caching
+        ExperimentManager.set_config(response, init=True)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not load experiment `{}` info.'.format(experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -56,7 +64,7 @@ def get(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def delete(experiment, project):
     """Delete experiment group.
@@ -64,6 +72,7 @@ def delete(experiment, project):
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     if not click.confirm("Are sure you want to delete experiment `{}`".format(experiment)):
         click.echo('Existing without deleting experiment.')
         sys.exit(1)
@@ -71,6 +80,8 @@ def delete(experiment, project):
     try:
         response = PolyaxonClients().experiment.delete_experiment(
             user, project_name, experiment)
+        # Purge caching
+        ExperimentManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not delete experiment `{}`.'.format(experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -81,7 +92,7 @@ def delete(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def stop(experiment, project):
     """Get experiment by uuid.
@@ -93,6 +104,7 @@ def stop(experiment, project):
     polyaxon experiment stop 2
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     if not click.confirm("Are sure you want to stop experiment `{}`".format(experiment)):
         click.echo('Existing without stopping experiment.')
         sys.exit(0)
@@ -108,7 +120,7 @@ def stop(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def restart(experiment, project):
     """Delete experiment.
@@ -116,6 +128,7 @@ def restart(experiment, project):
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     try:
         response = PolyaxonClients().experiment.restart(
             user, project_name, experiment)
@@ -130,7 +143,7 @@ def restart(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 def jobs(experiment, project, page):
@@ -139,6 +152,7 @@ def jobs(experiment, project, page):
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     page = page or 1
     try:
         response = PolyaxonClients().experiment.list_jobs(user, project_name, experiment, page=page)
@@ -165,7 +179,7 @@ def jobs(experiment, project, page):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 def statuses(experiment, project, page):
@@ -178,6 +192,7 @@ def statuses(experiment, project, page):
     polyaxon experiment statuses 3
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     page = page or 1
     try:
         response = PolyaxonClients().experiment.get_statuses(
@@ -204,7 +219,7 @@ def statuses(experiment, project, page):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def resources(experiment, project):
     """Get experiment resources.
@@ -216,6 +231,7 @@ def resources(experiment, project):
     polyaxon experiment resources 19
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     try:
         PolyaxonClients().experiment.resources(
             user, project_name, experiment, message_handler=Printer.resources)
@@ -226,7 +242,7 @@ def resources(experiment, project):
 
 
 @experiment.command()
-@click.argument('experiment', type=int)
+@click.argument('experiment', type=int, required=False)
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'")
 def logs(experiment, project):
     """Get experiment logs.
@@ -238,6 +254,7 @@ def logs(experiment, project):
     polyaxon experiment logs 1
     """
     user, project_name = get_project_or_local(project)
+    experiment = get_experiment_or_local(experiment)
     colors = deque(Printer.COLORS)
     job_to_color = {}
 

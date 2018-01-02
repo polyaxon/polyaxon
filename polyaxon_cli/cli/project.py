@@ -172,6 +172,8 @@ def delete(project):
 
     try:
         response = PolyaxonClients().project.delete_project(user, project_name)
+        # Purge caching
+        ProjectManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not delete project `{}`.'.format(project))
         Printer.print_error('Error message `{}`.'.format(e))
