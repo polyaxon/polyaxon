@@ -21,13 +21,11 @@ from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 @click.option('--description', type=str,
               help='The description to give to this run.')
 def run(file, description):
-    """Command for running polyaxonfile specification.
+    """Run polyaxonfile specification.
 
     Example:
 
-    ```
     polyaxon run -f file -f file_override ...
-    ```
     """
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file, log=False)
