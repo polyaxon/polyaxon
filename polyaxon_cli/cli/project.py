@@ -21,22 +21,6 @@ from polyaxon_cli.utils.formatting import (
 )
 
 
-def get_current_project():
-    if not ProjectManager.is_initialized():
-        return None
-    return ProjectManager.get_config()
-
-
-def get_current_project_or_exit():
-    project = get_current_project()
-    if not project:
-        Printer.print_error('Please initialize your project before uploading any code.'
-                            '`polyaxon init PROJECT_NAME [--run|--model]`')
-        sys.exit(1)
-
-    return project
-
-
 def get_project_info(project):
     parts = project.replace('.', '/').split('/')
     if len(parts) == 2:
@@ -179,10 +163,7 @@ def get(project):
 @project.command()
 @click.argument('project', type=str)
 def delete(project):
-    """Delete project.
-
-    Uses [Caching](/polyaxon_cli/introduction#Caching)
-    """
+    """Delete project."""
     user, project_name = get_project_or_local(project)
 
     if not click.confirm("Are sure you want to delete project `{}/{}`".format(user, project_name)):
