@@ -11,29 +11,36 @@ class BaseConfigManager(object):
     """Base class for managing a configuration file."""
 
     IS_GLOBAL = False
+    IS_POLYAXON_DIR = False
     CONFIG_FILE_NAME = None
     CONFIG = None
-    INIT_COMMAND = None  # e.g. polyaxon config init
+
+    @staticmethod
+    def _create_dir(dir_path):
+        if not os.path.exists(dir_path):
+            try:
+                os.makedirs(dir_path)
+            except OSError:
+                # Except permission denied and potential race conditions
+                # in multi-threaded environments.
+                logger.error('Could not create config directory `{}`'.format(dir_path))
 
     @classmethod
     def get_config_file_path(cls):
         if not cls.IS_GLOBAL:
             # local to this directory
             base_path = os.path.join('.')
+            if cls.IS_POLYAXON_DIR:
+                # Add it to the current "./.polyaxon"
+                base_path = os.path.join(base_path, '.polyaxon')
+                cls._create_dir(base_path)
         else:
             base_path = os.path.expanduser('~')
             if not os.access(base_path, os.W_OK):
                 base_path = '/tmp'
 
             base_path = os.path.join(base_path, '.polyaxon')
-
-            if not os.path.exists(base_path):
-                try:
-                    os.makedirs(base_path)
-                except OSError:
-                    # Except permission denied and potential race conditions
-                    # in multi-threaded environments.
-                    logger.error('Could not create config directory `{}`'.format(base_path))
+            cls._create_dir(base_path)
 
         return os.path.join(base_path, cls.CONFIG_FILE_NAME)
 
@@ -68,17 +75,20 @@ class BaseConfigManager(object):
 
     @classmethod
     def get_config(cls):
+        if not cls.is_initialized():
+            return None
+
         config_file_path = cls.get_config_file_path()
-
-        if not os.path.isfile(config_file_path):
-            try:
-                return cls.CONFIG()
-            except TypeError:
-                return None
-
         with open(config_file_path, "r") as config_file:
             config_str = config_file.read()
         return cls.CONFIG.from_dict(json.loads(config_str))
+
+    @classmethod
+    def get_config_or_default(cls):
+        if not cls.is_initialized():
+            return cls.CONFIG()
+
+        return cls.get_config()
 
     @classmethod
     def get_value(cls, key):
