@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
-from polyaxon_cli.cli.jobs import job
+from polyaxon_cli.cli.job import job
 from polyaxon_cli.cli.run import run
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.cli.cluster import cluster
@@ -25,11 +25,11 @@ from polyaxon_cli.managers.config import GlobalConfigManager
 def cli(context, verbose):
     """ Polyaxon CLI tool to:
 
-        * parse Polyaxonfiles
+        * Parse, Validate, and Check Polyaxonfiles.
 
-        * interact with Polyaxon server
+        * Interact with Polyaxon server.
 
-        * execute commands.
+        * Run and Monitor your experiments.
 
 
     Check the help available for each command listed below.
