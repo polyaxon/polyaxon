@@ -6,8 +6,8 @@ import sys
 
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
-from polyaxon_cli.cli.project import get_current_project_or_exit
 from polyaxon_cli.managers.ignore import IgnoreManager
+from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.files import create_tarfile, get_files_in_current_directory
 from polyaxon_cli.utils.formatting import Printer
@@ -16,7 +16,7 @@ from polyaxon_cli.utils.formatting import Printer
 @click.command()
 def upload():
     """Upload code of the current directory while respecting the .polyaxonignore file."""
-    project = get_current_project_or_exit()
+    project = ProjectManager.get_config_or_raise()
     files = IgnoreManager.get_unignored_file_paths()
     filepath = create_tarfile(files, project.name)
     files, files_size = get_files_in_current_directory('repo', [filepath])
