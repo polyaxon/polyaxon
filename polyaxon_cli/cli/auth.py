@@ -20,7 +20,7 @@ from polyaxon_cli.utils.formatting import Printer
 @click.option('--username', '-u', help='Polyaxon username')
 @click.option('--password', '-p', help='Polyaxon password')
 def login(token, username, password):
-    """Log into Polyaxon."""
+    """Login to Polyaxon."""
     auth_client = PolyaxonClients().auth
     if username:
         # Use username / password login
