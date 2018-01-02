@@ -123,7 +123,6 @@ PAGES.append(
         {
             'page': 'polyaxon_lib/layers/convolutional_recurrent.md',
             'classes': [
-                convolutional_recurrent.ConvRecurrent2DConfig,
                 convolutional_recurrent.ConvLSTM2DConfig,
             ]
         },

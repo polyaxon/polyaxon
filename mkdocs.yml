@@ -108,7 +108,6 @@ pages:
   - Introduction: polyaxon_lib/introduction.md
   - Models: polyaxon_lib/models.md
   - Layers:
-    - Introduction: polyaxon_lib/layers/introduction.md
     - Advanced Actications: polyaxon_lib/layers/advanced_activations.md
     - Convolutional: polyaxon_lib/layers/convolutional.md
     - Convolutional Reccurent: polyaxon_lib/layers/convolutional_recurrent.md
@@ -116,7 +115,7 @@ pages:
     - Embedding: polyaxon_lib/layers/embeddings.md
     - Local: polyaxon_lib/layers/local.md
     - Merge: polyaxon_lib/layers/merge.md
-    - Moise: polyaxon_lib/layers/noise.md
+    - Noise: polyaxon_lib/layers/noise.md
     - Normalizations: polyaxon_lib/layers/normalizations.md
     - Pooling: polyaxon_lib/layers/pooling.md
     - Recurrent: polyaxon_lib/layers/recurrent.md
