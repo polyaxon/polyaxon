@@ -19,7 +19,7 @@ class ProjectManager(BaseConfigManager):
 
     @classmethod
     def get_config_or_raise(cls):
-        project = ProjectManager.get_config()
+        project = cls.get_config()
         if not project:
             Printer.print_error('Please initialize your project before uploading any code.'
                                 '`polyaxon init PROJECT_NAME [--run|--model]`')
