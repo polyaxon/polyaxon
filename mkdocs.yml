@@ -84,8 +84,20 @@ pages:
   - Extend Polyaxon Deployments: customization/extend_deployments.md
   - Customize Run Environment: customization/customize_run_environment.md  # settings, resources,
 - Reference Polyaxon CLI:
-  - CLI Assumptions: polyaxon_cli/assumptions.md
-  - CLI Commnands: polyaxon_cli/commands.md
+  - Introduction: polyaxon_cli/introduction.md
+  - Commnands:
+    - Auth: polyaxon_cli/commands/auth.md
+    - Check: polyaxon_cli/commands/check.md
+    - Config: polyaxon_cli/commands/config.md
+    - Init: polyaxon_cli/commands/init.md
+    - Project: polyaxon_cli/commands/project.md
+    - Upload: polyaxon_cli/commands/upload.md
+    - Run: polyaxon_cli/commands/run.md
+    - Experiment Group: polyaxon_cli/commands/experiment_group.md
+    - Experiment: polyaxon_cli/commands/experiment.md
+    - Job: polyaxon_cli/commands/job.md
+    - Cluster: polyaxon_cli/commands/cluster.md
+    - Version: polyaxon_cli/commands/version.md
 - Reference Polyaxonfile Specification:
   - Introduction: polyaxonfile_specification/introduction.md
   - Sections: polyaxonfile_specification/sections.md

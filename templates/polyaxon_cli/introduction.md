@@ -1,5 +1,5 @@
 Polyaxon CLI is a tool and a client to interact with your Polyaxon,
-it allows you to manage you cluster, users, projects, and experiments.
+it allows you to manage your cluster, users, projects, and experiments.
 
 ## Installation
 
@@ -23,17 +23,25 @@ $ polyaxon command --help
 
 ## Caching
 
-When using the Polyaxon CLI to run command requiring a project,
-you can always specify the options for project, experiment group, experiment, job, example:
+When using the Polyaxon CLI to run a command requiring a project, group, experiment, and/or a job,
+you can always specify the values for these options, example:
 
- * `$ polyaxon project get user_1/project_10`
- * `$ polyaxon experiment get 2 --project=user_1/project_10`
- * `$ polyaxon group experiments 3 --project=user_1/project_10`
- * `$ polyaxon job logs 50c62372137940ca8c456d8596946dd7 --project=user_1/project_10 --experiment=3`
+ * `$ polyaxon project --project=user_1/project_10 get`
+ * `$ polyaxon experiment --project=user_1/project_10 --experiment=2 get`
+ * `$ polyaxon group --project=user_1/project_10 --group=2 experiments`
+ * `$ polyaxon job --project=user_1/project_10 --experiment=3 --job=2 logs`
 
 
-Polyaxon CLI allows you to omit these options, i.e. project, experiment group, experiment, and job, the CLI does the following:
+Polyaxon CLI allows also you to omit these options, i.e. project, experiment group, experiment, and job, the CLI does the following:
 
  1. When a username is missing, the username of the logged-in user is used.
  2. When a project name is missing, the name of the currently initialized project is used.
  3. When an experiment group, experiment, or job is missing, the last value is used.
+ 4. If no values are found, the CLI will show an error.
+
+Same commands but with caching:
+
+ * `$ polyaxon project get`
+ * `$ polyaxon experiment get`
+ * `$ polyaxon group experiments`
+ * `$ polyaxon job logs`
