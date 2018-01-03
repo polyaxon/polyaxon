@@ -38,7 +38,9 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               {project.description}
             </span>
           </div>
+          <h4 className="polyaxon-header">Experiment groups</h4>
           <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}></Groups>
+          <h4 className="polyaxon-header">Independent Experiments</h4>
           <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name} groupUuid={null}></Experiments>
         </div>
       </div>

@@ -31,7 +31,7 @@ function Experiment({experiment, onDelete}: Props) {
         <span className="title">
           <i className="fa fa-sliders icon" aria-hidden="true"></i>
           { experiment.unique_name}
-          <span className={`status ${statusCssClass}`}>({ experiment.last_status})</span>
+          <span className={`status alert alert-${statusCssClass}`}>{ experiment.last_status}</span>
         </span>
         <div className="meta">
           <i className="fa fa-user-o icon" aria-hidden="true"></i>

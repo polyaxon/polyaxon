@@ -10,15 +10,15 @@ export let urlifyProjectName = function (origProjectName: string) {
 
 export let getCssClassForStatus = function (status?: string): string {
     if (status === 'Succeeded') {
-        return 'green';
+        return 'success';
     } else if (status === 'Deleted') {
-        return 'red';
+        return 'danger';
     } else if (status === 'Failed') {
-        return 'red';
+        return 'danger';
     } else if (status === 'Created') {
-        return 'light-blue';
+        return 'info';
     }
-    return 'orange';
+    return 'warning';
 };
 
 export let sortByUpdatedAt = function (a: any, b: any): any {

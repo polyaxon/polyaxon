@@ -30,7 +30,7 @@ function Job({job, onDelete}: Props) {
         <span className="title">
           <i className="fa fa-cube icon" aria-hidden="true"></i>
           { job.unique_name}
-          <span className={`status ${statusCssClass}`}>({ job.last_status})</span>
+          <span className={`status alert alert-${statusCssClass}`}>{ job.last_status}</span>
         </span>
         { job.started_at &&
         <div className="meta">
