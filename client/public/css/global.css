@@ -197,3 +197,9 @@ a.brand {
 .site-footer .container ul {
     list-style: none;
 }
+
+.jumbotron-action {
+    border-radius: 5px;
+    background: rgba(151, 173, 202, 0.06);
+    margin: 5em 0 5em 0;
+}

@@ -16,3 +16,4 @@ from .k8s import *
 from .registry import *
 from .spawner import *
 from .versions import *
+from .registration import *

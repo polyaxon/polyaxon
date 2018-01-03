@@ -15,7 +15,24 @@ from rest_framework.response import Response
 from users.forms import RegistrationForm
 
 
+class SimpleRegistrationView(hmac_views.RegistrationView):
+    """Registration and validation though a superuser."""
+    form_class = RegistrationForm
+    template_name = 'users/register.html'
+
+    def get_success_url(self, user):
+        return 'users:registration_complete', (), {}
+
+    def create_inactive_user(self, form):
+        """Create the inactive user account and wait for validation from superuser"""
+        new_user = form.save(commit=False)
+        new_user.is_active = False
+        new_user.save()
+        return new_user
+
+
 class RegistrationView(hmac_views.RegistrationView):
+    """Registration and validation through email."""
     form_class = RegistrationForm
     template_name = 'users/register.html'
     email_body_template = 'users/activation_email.txt'

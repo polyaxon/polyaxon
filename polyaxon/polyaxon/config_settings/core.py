@@ -23,8 +23,6 @@ USE_TZ = True
 INTERNAL_IPS = ('127.0.0.1',)
 APPEND_SLASH = True
 
-USERS_MINIMUM_PASSWORD_LENGTH = config.get_int('POLYAXON_PASSWORD_LENGTH')
-
 ROOT_URLCONF = 'polyaxon.urls'
 
 # user management

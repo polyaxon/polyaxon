@@ -1,5 +1,4 @@
 {% extends "polyaxon/index.html" %}
-{% load i18n %}
 
 {% block content %}
 <div class="row">
@@ -8,13 +7,17 @@
             <div class="logo-position logo">
                 <a href="/" class="logo-font-login">Polyaxon</a>
             </div>
-            <div id="signinLabel">{% trans 'Instructions for setting a new password have been sent to your email address.' %}</div>
-            <p> {% trans 'Please check your inbox.' %} </p>
+            <div id="signinLabel">
+                Your account was created successfully.
+                Please reach out to your superuser/admin to activate your account.
+            </div>
             <br>
-            <p>
-                <a class="btn btn-primary btn-login" href="/">{% trans 'Back to start page' %}</a>
-            </p>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    redirectTo("{{ login_url }}");
+</script>
 {% endblock %}
