@@ -13,8 +13,8 @@ logger = logging.getLogger("polyaxon.projects.permissions")
 
 def has_project_permissions(user, project, request_method):
     """This logic is extracted here to be used also with Sanic api."""
-    # The creator is allowed to do everything
-    if project.user == user:
+    # Superusers and the creator is allowed to do everything
+    if user.is_staff or project.user == user:
         return True
 
     # Other user

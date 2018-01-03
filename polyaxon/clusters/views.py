@@ -5,7 +5,7 @@ from rest_framework.generics import (
     get_object_or_404,
     RetrieveUpdateDestroyAPIView,
     RetrieveAPIView)
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from libs.views import ListCreateAPIView
 from clusters.models import Cluster, ClusterNode, NodeGPU
@@ -19,7 +19,7 @@ from clusters.serializers import (
 class ClusterDetailView(RetrieveAPIView):
     queryset = Cluster.objects.all()
     serializer_class = ClusterSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminUser)
 
     def get_object(self):
         return Cluster.load()
@@ -28,7 +28,7 @@ class ClusterDetailView(RetrieveAPIView):
 class ClusterNodeListView(ListCreateAPIView):
     queryset = ClusterNode.objects.all()
     serializer_class = ClusterNodeSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminUser)
 
     def perform_create(self, serializer):
         serializer.save(cluster=Cluster.load())
@@ -37,7 +37,7 @@ class ClusterNodeListView(ListCreateAPIView):
 class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):
     queryset = ClusterNode.objects.all()
     serializer_class = ClusterNodeDetailSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminUser)
     lookup_field = 'uuid'
 
 
@@ -53,7 +53,7 @@ class ClusterNodeGPUViewMixin(object):
 class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
     queryset = NodeGPU.objects.all()
     serializer_class = GPUSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminUser)
 
     def perform_create(self, serializer):
         serializer.save(cluster_node=self.get_cluster_node())
@@ -62,5 +62,5 @@ class ClusterNodeGPUListView(ListCreateAPIView, ClusterNodeGPUViewMixin):
 class ClusterNodeGPUDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeGPUViewMixin):
     queryset = NodeGPU.objects.all()
     serializer_class = GPUSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminUser)
     lookup_field = 'uuid'

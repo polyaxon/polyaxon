@@ -154,7 +154,7 @@ class TestProjectDetailViewV1(BaseViewTest):
 
         # Get other private project does not work
         resp = self.auth_client.get(self.url_private)
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
     def test_patch(self):
         new_name = 'updated_project_name'
@@ -171,9 +171,9 @@ class TestProjectDetailViewV1(BaseViewTest):
 
         # Patch does not work for other project public and private
         resp = self.auth_client.delete(self.url_other)
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
         resp = self.auth_client.delete(self.url_private)
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
     def test_delete(self):
         assert self.queryset.count() == 1
@@ -189,9 +189,9 @@ class TestProjectDetailViewV1(BaseViewTest):
 
         # Delete does not work for other project public and private
         resp = self.auth_client.delete(self.url_other)
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
         resp = self.auth_client.delete(self.url_private)
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
 
 class TestProjectExperimentGroupListViewV1(BaseViewTest):

@@ -20,6 +20,7 @@ class TestClusterDetailViewV1(BaseViewTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
     HAS_AUTH = True
+    ADMIN_USER = True
 
     def setUp(self):
         super().setUp()
@@ -44,6 +45,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
     factory_class = ClusterNodeFactory
     num_objects = 3
     HAS_AUTH = True
+    ADMIN_USER = True
 
     def setUp(self):
         super().setUp()
@@ -118,6 +120,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
     model_class = ClusterNode
     factory_class = ClusterNodeFactory
     HAS_AUTH = True
+    ADMIN_USER = True
 
     def setUp(self):
         super().setUp()
@@ -165,6 +168,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
     factory_class = GPUFactory
     num_objects = 3
     HAS_AUTH = True
+    ADMIN_USER = True
 
     def setUp(self):
         super().setUp()
@@ -234,6 +238,7 @@ class TestClusterNodeGPUDetailViewV1(BaseViewTest):
     model_class = NodeGPU
     factory_class = GPUFactory
     HAS_AUTH = True
+    ADMIN_USER = True
 
     def setUp(self):
         super().setUp()

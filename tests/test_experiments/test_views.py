@@ -119,7 +119,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
         # Test other
         resp = self.auth_client.post(self.other_url, data)
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
 
 class TestExperimentGroupExperimentListViewV1(BaseViewTest):

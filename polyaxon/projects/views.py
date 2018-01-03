@@ -41,7 +41,7 @@ class ProjectListView(ListAPIView):
 
     def filter_queryset(self, queryset):
         username = self.kwargs['username']
-        if self.request.user.username == username:
+        if self.request.user.is_staff or self.request.user.username == username:
             # User checking own projects
             return queryset.filter(user__username=username)
         else:

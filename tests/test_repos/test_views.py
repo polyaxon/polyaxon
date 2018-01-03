@@ -63,7 +63,7 @@ class TestRepoDetailViewV1(BaseViewTest):
 
         # unauthorised object delete not working
         resp = self.auth_client.delete(self.unauthorised_url)
-        assert resp.status_code in (401, 403)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
 
 class TestUploadFilesView(BaseViewTest):
@@ -228,7 +228,7 @@ class TestUploadFilesView(BaseViewTest):
                                         data={'repo': new_uploaded_file},
                                         content_type=MULTIPART_CONTENT)
 
-        assert response.status_code in (401, 403)
+        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
         upload_file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT,
                                                     new_user.username,
                                                     repo_name)

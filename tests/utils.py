@@ -13,6 +13,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.test import Client, TestCase
 from django.test.client import FakePayload
+from rest_framework import status
 
 from rest_framework.authtoken.models import Token
 
@@ -35,7 +36,7 @@ class AuthorizedClient(Client):
         user = defaults.get('user', UserFactory())
         self.login_user(user, access_token, authentication_type)
 
-    def login_user(self, user, access_token=None, authentication_type='Token'):
+    def login_user(self, user, access_token='', authentication_type='Token'):
         self.user = user
         self.expires = datetime.datetime.now() + datetime.timedelta(days=1)
         if not access_token:
@@ -154,11 +155,16 @@ class BaseViewTest(BaseTest):
     """
 
     HAS_AUTH = False
+    ADMIN_USER = False
 
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.auth_client = AuthorizedClient()
+        if cls.ADMIN_USER:
+            user = UserFactory(is_staff=True, is_superuser=True)
+            cls.auth_client = AuthorizedClient(user=user)
+        else:
+            cls.auth_client = AuthorizedClient()
 
     def setUp(self):
         assert hasattr(self, 'auth_client') and self.auth_client is not None
@@ -168,4 +174,5 @@ class BaseViewTest(BaseTest):
         # Test unauthorized access to view
         if type(self).HAS_AUTH:
             assert hasattr(self, 'url'), 'Cannot check auth if url is not set.'
-            assert self.client.get(self.url).status_code in (401, 403)
+            assert self.client.get(self.url).status_code in (status.HTTP_401_UNAUTHORIZED,
+                                                             status.HTTP_403_FORBIDDEN)
