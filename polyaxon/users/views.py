@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views, get_user_model
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from polyaxon_schemas.user import UserConfig
+from rest_framework import status
 
 from rest_framework.authtoken.models import Token
 
 from registration.backends.hmac import views as hmac_views
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, GenericAPIView, get_object_or_404, \
+    CreateAPIView, DestroyAPIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from users.forms import RegistrationForm
 
@@ -69,3 +73,47 @@ class UserView(RetrieveAPIView):
     def retrieve(self, request, *args, **kwargs):
         user = request.user
         return Response(UserConfig.obj_to_dict(user))
+
+
+class ActivateView(CreateAPIView):
+    queryset = get_user_model().objects.filter()
+    permission_classes = (IsAuthenticated, IsAdminUser,)
+    lookup_field = 'username'
+
+    def post(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.is_active = True
+        user.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class DeleteView(DestroyAPIView):
+    queryset = get_user_model()
+    permission_classes = (IsAuthenticated, IsAdminUser,)
+    lookup_field = 'username'
+
+
+class GrantSuperuserView(CreateAPIView):
+    queryset = get_user_model()
+    permission_classes = (IsAuthenticated, IsAdminUser,)
+    lookup_field = 'username'
+
+    def post(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class RevokeSuperuserView(CreateAPIView):
+    queryset = get_user_model()
+    permission_classes = (IsAuthenticated, IsAdminUser,)
+    lookup_field = 'username'
+
+    def post(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.is_staff = False
+        user.is_superuser = False
+        user.save()
+        return Response(status=status.HTTP_200_OK)
