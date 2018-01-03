@@ -129,4 +129,4 @@ pages:
   - Initializations: polyaxon_lib/initializations.md
   - Constraints: polyaxon_lib/constraints.md
   - Regularizations: polyaxon_lib/regularizers.md
-- Contributing: CONTRIBUTING.md
+- Contributing: contributing.md
