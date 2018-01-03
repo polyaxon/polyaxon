@@ -35,20 +35,26 @@ export default class Login extends React.Component<Props, Object> {
   
   public render () {
     return (
-      <form className="form" onSubmit={this.handleSubmit.bind(this)}>
-          <div>
-              <label>Username:</label>
-              <input type="text" id="username"/>
-          </div>
-          <div>
-              <label>Password:</label>
-              <input type="password" id="password" />
-          </div>
-          <div className="submit">
-              <input type="submit" value="Submit" className="button btn btn-polyaxon" />
-          </div>
-          <div className="error-message red" id="error-message"></div>
-      </form>
+      <div className="row">
+         <div className="col-md-4 col-md-offset-4">
+            <div className="login">
+              <form onSubmit={this.handleSubmit.bind(this)}>
+                <div className="form-group">
+                  <label>Username or Email</label>
+                  <input type="text" className="form-control" id="username" placeholder="Username"/>
+                </div>
+                <div className="form-group">
+                  <label>Password</label>
+                  <input type="password" className="form-control" id="password"/>
+                </div>
+                <div className="submit">
+                    <input type="submit" value="Login" className="button btn btn-polyaxon" />
+                </div>
+                <div className="bg-danger error-message" id="error-message"></div>
+              </form>
+            </div>
+         </div>
+      </div>
     )
   }
 

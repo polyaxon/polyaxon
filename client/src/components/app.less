@@ -29,6 +29,11 @@
 @header-gray: #485563;
 @header-gray-hover: #6c7c8c;
 
+body {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+}
+
 html {
   height: 100%;
   box-sizing: border-box;
@@ -81,12 +86,19 @@ textarea {
 input:hover, textarea:hover, 
 input:focus, textarea:focus { 
     border-color: #C9C9C9; 
-  } 
-   
-.form label { 
+  }
+
+.login {
+  margin-top: 50px;
+
+  .error-message {
+    margin-top: 20px;
+  }
+
+  label {
     color: @header-gray;
-    min-width: 80px;
-  } 
+  }
+}
    
 .btn-polyaxon {
     width: auto; 
