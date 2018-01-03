@@ -1,0 +1,23 @@
+celery==4.1.0
+Django==1.11.7
+django-cors-headers==2.1.0
+djangorestframework==3.7.0
+djangorestframework-camel-case==0.2.0
+django-registration==2.3
+docker==2.6.1
+GitPython==2.1.7
+Jinja2==2.9.6
+pandas==0.20.3
+pandas-summary==0.0.41
+pika==0.11.0
+psycopg2==2.7.3.1
+redis==2.10.6
+sanic==0.6.0
+six==1.11.0
+Unipath==1.1
+uWSGI==2.0.15
+websockets==3.4
+
+polyaxon-gpustat==0.0.11
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@b0974c7603e0b314d9e233d51222f4dfbfc420bf#egg=polyaxon-k8s
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@55a06cbd873d2b7f5cc99f09a9314950b18b7454#egg=polyaxon-schemas

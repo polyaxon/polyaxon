@@ -1,0 +1,41 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/environment
+
+LOG_FILE="$DIR/setup.log"
+
+yell() { echo "$0: $*" >&2; }
+die() { yell "$*"; exit 111; }
+try() {
+    # Append command to log file
+    echo -e "\n>>> $*\n" >> $LOG_FILE
+    # Execute command and redirect output to logfile. Exit in case or error.
+    "$@" >> $LOG_FILE 2>&1 || die "cannot $*. Check $LOG_FILE for details.";
+}
+
+$DIR/check
+if [ $? -eq 0 ]; then
+    DOCKER_IP=localhost
+
+    echo "Deleting docker containers..."
+    $DIR/down
+
+    if [ "$1" = "npm" ]; then
+        echo "Installing npm dependencies..."
+        $DIR/npm install
+
+        echo "Compiling ts to js..."
+        $DIR/npm run build
+
+        # echo "Collecting static assets..."
+        $DIR/manage collectstatic --noinput
+    fi
+
+    rm -f $LOG_FILE || true
+
+    echo "Initialising database schema..."
+    $DIR/manage migrate
+    $DIR/manage migrate
+
+    $DIR/manage loaddata api/fixtures/users.json api/fixtures/authtoken.json api/fixtures/clusters.json api/fixtures/projects.json api/fixtures/experiments.json
+fi

@@ -1,0 +1,15 @@
+{% autoescape off %}
+Dear {{ user.name }},
+
+You are receiving this email because you created a new user account at Polyaxon.
+
+Please follow this link to activate your new account:
+{{ protocol }}://{{ domain }}{% url 'users:registration_activate' activation_key=activation_key %}
+
+If you did not create an account, simply ignore this mail.
+
+Thank you for using our service!
+
+
+The Polyaxon team.
+{% endautoescape %}

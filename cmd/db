@@ -1,0 +1,9 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/environment
+
+$DIR/check
+if [ $? -eq 0 ]; then
+    # Does not expose any ports, so you can use the runserver at the same time.
+    docker-compose run postgres psql -h postgres -U polyaxon polyaxon
+fi

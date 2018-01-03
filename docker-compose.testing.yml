@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  rabbitmq:
+    ports:
+      - 5673
+  web:
+    build:
+      context: .
+      dockerfile: ./DockerfileDev
+    environment:
+      WAIT_FOR_PORTS: "postgres:5432"
+      TESTING: 1
+      DJANGO_SETTINGS_MODULE: api.settings

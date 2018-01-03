@@ -80,8 +80,16 @@ target/
 # pyenv
 .python-version
 
+<<<<<<< HEAD
 # celery beat schedule file
 celerybeat-schedule
+=======
+# locals
+local.py
+
+# celery beat schedule file
+celerybeat-schedule*
+>>>>>>> bitbucket-origin/master
 celeryev.pid
 celeryd*pid
 celeryd*log
@@ -96,6 +104,14 @@ ENV/
 # data
 big_data/
 examples/data/
+data/
+
+# environment vars
+api/api/env_vars/local.json
+
+# django registration
+categories.json
+confusables.json
 
 # project
 setup.log

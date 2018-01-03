@@ -1,0 +1,14 @@
+{
+  "DJANGO_DEBUG": false,
+  "POLYAXON_JS_DEBUG": false,
+  "SECRET_KEY": "secret",
+  "DB_NAME": "travis_ci_test",
+  "DB_USER": "postgres",
+  "DB_PASSWORD": "",
+  "DB_HOST": "localhost",
+  "AMQP_CELERY_BROKER_URL": "amqp://rabbitmq:5672",
+  "CELERYD_PREFETCH_MULTIPLIER": 4,
+  "REDIS_CELERY_RESULT_BACKEND": "",
+  "REDIS_EXPERIMENTS_STATUS_URL": "",
+  "REDIS_JOBS_STATUS_URL": ""
+}

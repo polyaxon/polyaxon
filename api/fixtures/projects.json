@@ -1,0 +1,78 @@
+[
+{
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+        "description": "Classify pictures of cats and dogs",
+        "created_at": "2017-12-08T22:18:28.458Z",
+        "updated_at": "2017-12-08T22:18:28.458Z",
+        "uuid": "ac6a3340-b926-422a-a449-6e8b8e9dc77f",
+        "name": "cats-vs-dogs",
+        "user": [
+            "admin"
+        ],
+        "is_public": true
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+        "description": "Classic dataset of handwritten images",
+        "created_at": "2017-12-08T22:41:18.125Z",
+        "updated_at": "2017-12-08T22:41:18.125Z",
+        "uuid": "66494475-143e-4ae9-ae68-041a11e979b6",
+        "name": "mnist",
+        "user": [
+            "admin"
+        ],
+        "is_public": true
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 3,
+    "fields": {
+        "description": "Titanic: Machine Learning from Disaster. Predict survival on the Titanic and get familiar with ML basics",
+        "created_at": "2017-12-08T22:41:26.144Z",
+        "updated_at": "2017-12-08T22:41:26.144Z",
+        "uuid": "1ab20fe4-6d14-4e16-bf8e-986deee470d0",
+        "name": "titanic-machinelearning-from-disaster",
+        "user": [
+            "admin"
+        ],
+        "is_public": true
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 4,
+    "fields": {
+        "description": "Predict sales prices and practice feature engineering, RFs, and gradient boosting",
+        "created_at": "2017-12-08T22:41:33.173Z",
+        "updated_at": "2017-12-08T22:41:33.173Z",
+        "uuid": "2a5a5b51-ba31-46b4-a672-ea5d460502a0",
+        "name": "house-prices-advanced-regression-tecniques",
+        "user": [
+            "admin"
+        ],
+        "is_public": true
+    }
+},
+{
+    "model": "projects.experimentgroup",
+    "pk": 1,
+    "fields": {
+        "description": null,
+        "created_at": "2017-12-24T18:53:47.433Z",
+        "updated_at": "2017-12-24T18:53:47.434Z",
+        "uuid": "a150988d-ea33-4ce4-915f-4297b2baac47",
+        "user": [
+            "admin"
+        ],
+        "sequence": 1,
+        "content": "{'environment': {'n_ps': 1, 'delay_workers_by_global_step': True, 'run_config': {'save_summary_steps': 100, 'save_checkpoints_steps': 100}, 'n_workers': 1}, 'matrix': {'lr': {'logspace': '0.01:0.1:2'}}, 'settings': {'run_type': 'minikube', 'logging': {'path': '/tmp/plx/outputs/project1', 'level': 'INFO'}}, 'project': {'name': 'cats-vs-dogs'}, 'train': {'data_pipeline': {'TFRecordImagePipeline': {'meta_data_file': '/tmp/plx/data/mnist/meta_data.json', 'feature_processors': {'image': {'layers': [{'Cast': {'dtype': 'float32'}}], 'input_layers': ['image']}}, 'batch_size': 64, 'num_epochs': 2, 'shuffle': True, 'data_files': ['/tmp/plx/data/mnist/mnist_train.tfrecord']}}, 'steps': 500}, 'version': 1, 'eval': {'data_pipeline': {'TFRecordImagePipeline': {'meta_data_file': '/plx/tmp/data/mnist/meta_data.json', 'feature_processors': {'image': {'layers': [{'Cast': {'dtype': 'float32'}}], 'input_layers': ['image']}}, 'batch_size': 32, 'num_epochs': 1, 'shuffle': False, 'data_files': ['/plx/tmp/data/mnist/mnist_eval.tfrecord']}}}, 'model': {'classifier': {'loss': {'SigmoidCrossEntropy': None}, 'one_hot_encode': True, 'optimizer': {'Adam': {'learning_rate': '{{ lr }}'}}, 'graph': {'layers': [{'Conv2D': {'strides': 1, 'activation': 'elu', 'filters': 32, 'kernel_size': 3, 'regularizer': {'L2': {'l': 0.02}}}}, {'MaxPooling2D': {'pool_size': 2}}, {'Conv2D': {'activation': 'relu', 'filters': 64, 'kernel_size': 3, 'regularizer': {'L2': {'l': 0.02}}}}, {'MaxPooling2D': {'pool_size': 2}}, {'Flatten': None}, {'Dense': {'units': 128, 'activation': 'tanh'}}, {'Dropout': {'rate': 0.8}}, {'Dense': {'units': 256, 'activation': 'tanh'}}, {'Dropout': {'rate': 0.8}}, {'Dense': {'units': 10}}], 'input_layers': 'image'}, 'metrics': ['Accuracy', 'Precision'], 'n_classes': 10}}}",
+        "project": 1
+    }
+}
+]

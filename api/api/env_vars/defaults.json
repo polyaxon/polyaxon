@@ -1,0 +1,23 @@
+{
+  "POLYAXON_PASSWORD_LENGTH": "6",
+  "POLYAXON_ADMIN_NAME": "Admins",
+  "POLYAXON_ADMIN_MAIL": "test@test.com",
+  "POLYAXON_EMAIL_FROM": "<test@test.com>",
+  "POLYAXON_DB_ENGINE": "django.db.backends.postgresql_psycopg2",
+  "POLYAXON_DB_NAME": "polyaxon",
+  "POLYAXON_DB_USER": "polyaxon",
+  "POLYAXON_DB_PASSWORD": "polyaxon",
+  "POLYAXON_DB_HOST": "postgres",
+  "POLYAXON_DB_PORT": "5432",
+  "POLYAXON_MEDIA_ROOT": "",
+  "POLYAXON_MEDIA_URL": "",
+  "POLYAXON_STATIC_ROOT": "static",
+  "POLYAXON_STATIC_URL": "/static/",
+  "POLYAXON_JS_DEBUG": false,
+  "POLYAXON_CELERY_ALWAYS_EAGER": false,
+  "POLYAXON_CELERYD_PREFETCH_MULTIPLIER": 4,
+  "POLYAXON_INTERNAL_EXCHANGE": "internal",
+  "POLYAXON_K8S_NAMESPACE": "polyaxon",
+  "POLYAXON_JOB_CONTAINER_NAME": "experiment-job",
+  "POLYAXON_JOB_SIDECAR_CONTAINER_NAME": "experiment-sidecar"
+}
