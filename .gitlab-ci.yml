@@ -1,0 +1,14 @@
+image: python:alpine
+
+before_script:
+  - pip install requirements.txt
+
+pages:
+  script:
+  - mkdocs build
+  - mv site public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
