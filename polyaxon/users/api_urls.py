@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^superusers/grant/{}/?$'.format(USERNAME_PATTERN),
         views.GrantSuperuserView.as_view()),
     url(r'^superusers/revoke/{}/?$'.format(USERNAME_PATTERN),
-        views.GrantSuperuserView.as_view()),
+        views.RevokeSuperuserView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

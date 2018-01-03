@@ -57,15 +57,15 @@ class TestDeleteViewV1(BaseViewTest):
     def test_delete_works_as_expected(self):
         # normal user
         self.auth_client.login_user(self.user)
-        resp = self.auth_client.post(self.url)
+        resp = self.auth_client.delete(self.url)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
-        assert self.model_class.objects.filter(pk=self.other_user.pk) == 1
+        assert self.model_class.objects.filter(pk=self.other_user.pk).count() == 1
 
         # admin user
         self.auth_client.login_user(self.admin)
-        resp = self.auth_client.post(self.url)
-        assert resp.status_code == status.HTTP_200_OK
-        assert self.model_class.objects.filter(pk=self.other_user.pk) == 0
+        resp = self.auth_client.delete(self.url)
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.filter(pk=self.other_user.pk).count() == 0
 
 
 class TestGrantSuperuserViewV1(BaseViewTest):
@@ -114,7 +114,7 @@ class TestRevokeSuperuserViewV1(BaseViewTest):
         self.url = '/{}/superusers/revoke/{}'.format(API_V1,
                                                      self.other_admin_user.username)
 
-    def test_grant_works_as_expected(self):
+    def test_revoke_works_as_expected(self):
         # normal user
         self.auth_client.login_user(self.user)
         resp = self.auth_client.post(self.url)
