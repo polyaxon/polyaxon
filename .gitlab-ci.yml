@@ -1,4 +1,4 @@
-image: python:alpine3.6
+image: polyaxon/base:git
 
 before_script:
   - pip install -r requirements.txt
