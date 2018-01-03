@@ -27,6 +27,7 @@
 @orange: #FEA706;
 @light-blue: #0597D5;
 @header-gray: #485563;
+@header-gray-hover: #6c7c8c;
 
 html {
   height: 100%;
@@ -62,7 +63,7 @@ input, textarea {
     outline: 0; 
     font: normal 13px/100% Verdana, Tahoma, sans-serif; 
     width: 200px; 
-    background: #FFFFFF; 
+    background: @white-light;
     margin-bottom: 10px;
   } 
    
@@ -83,14 +84,18 @@ input:focus, textarea:focus {
     min-width: 80px;
   } 
    
-.submit input { 
+.btn-polyaxon {
     width: auto; 
     padding: 9px 15px; 
-    background: @header-gray; 
+    background: @header-gray;
     border: 0; 
     font-size: 14px; 
-    color: #FFFFFF; 
+    color: @white-light;
+  &:hover {
+    color: @white-light;
+    background: @header-gray-hover;
   }
+}
 
 
 .container {

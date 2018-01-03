@@ -45,7 +45,7 @@ export default class Login extends React.Component<Props, Object> {
               <input type="password" id="password" />
           </div>
           <div className="submit">
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Submit" className="button btn btn-polyaxon" />
           </div>
           <div className="error-message red" id="error-message"></div>
       </form>
