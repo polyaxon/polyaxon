@@ -5,8 +5,8 @@ import logging
 
 from polyaxon_k8s.manager import K8SManager
 
-from api.celery_api import app as celery_app
-from api.settings import CeleryTasks
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks
 from clusters.models import Cluster, ClusterNode
 
 logger = logging.getLogger('polyaxon.tasks.clusters')

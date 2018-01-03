@@ -14,7 +14,7 @@ class HealthRateThrottle(AnonRateThrottle):
 
 
 class IndexView(TemplateView):
-    template_name = "api/index.html"
+    template_name = "polyaxon/index.html"
 
 
 class HealthView(APIView):

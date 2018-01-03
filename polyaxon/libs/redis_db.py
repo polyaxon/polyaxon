@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import json
 
-from api.settings import RedisPools, redis
+from polyaxon.settings import RedisPools, redis
 
 
 class BaseRedisDb(object):

@@ -11,7 +11,7 @@ from kubernetes.client.rest import ApiException
 from polyaxon_schemas.utils import TaskType
 from rest_framework import fields
 
-from api.utils import config
+from polyaxon.utils import config
 from experiments.serializers import ExperimentJobSerializer
 from repos.dockerize import get_image_info
 

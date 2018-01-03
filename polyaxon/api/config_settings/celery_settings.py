@@ -5,7 +5,7 @@ from datetime import timedelta
 
 from kombu import Exchange, Queue
 
-from api.utils import config
+from polyaxon.utils import config
 
 CELERY_TRACK_STARTED = True
 

@@ -11,4 +11,4 @@ services:
     environment:
       WAIT_FOR_PORTS: "postgres:5432"
       TESTING: 1
-      DJANGO_SETTINGS_MODULE: api.settings
+      DJANGO_SETTINGS_MODULE: polyaxon.settings

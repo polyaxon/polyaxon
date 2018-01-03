@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from api.utils import config
+from polyaxon.utils import config
 
 DEBUG = config.get_boolean('POLYAXON_DEBUG')
 
@@ -9,7 +9,7 @@ ALLOWED_HOSTS = ['*']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CORS_ORIGIN_ALLOW_ALL = True
 
-WSGI_APPLICATION = 'api.wsgi.application'
+WSGI_APPLICATION = 'polyaxon.wsgi.application'
 TIME_ZONE = 'Europe/Berlin'
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
@@ -25,7 +25,7 @@ APPEND_SLASH = True
 
 USERS_MINIMUM_PASSWORD_LENGTH = config.get_int('POLYAXON_PASSWORD_LENGTH')
 
-ROOT_URLCONF = 'api.urls'
+ROOT_URLCONF = 'polyaxon.urls'
 
 # user management
 LOGIN_URL = '/users/login/'
@@ -68,7 +68,7 @@ if JS_DEBUG:
     def js_debug_processor(request):
         return {'js_debug': True}
 
-    LIST_TEMPLATE_CONTEXT_PROCESSORS += ('api.settings.js_debug_processor', )
+    LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.js_debug_processor', )
 
 
 TEMPLATES = [

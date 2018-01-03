@@ -4,5 +4,5 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    $DIR/manage dumpdata --indent 4 --natural-primary --natural-foreign $* > api/fixtures/$*.json
+    $DIR/manage dumpdata --indent 4 --natural-primary --natural-foreign $* > polyaxon/fixtures/$*.json
 fi

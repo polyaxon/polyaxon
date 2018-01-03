@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from api import views
+from polyaxon import views
 
 
 API_V1 = 'api/v1'

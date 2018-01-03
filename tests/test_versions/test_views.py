@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from rest_framework import status
 
-from api.urls import API_V1
+from polyaxon.urls import API_V1
 from versions.models import CliVersion, PlatformVersion, LibVersion, ChartVersion
 
 from tests.utils import BaseViewTest

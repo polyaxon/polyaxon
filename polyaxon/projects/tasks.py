@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from api.settings import CeleryTasks, Intervals
-from api.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks, Intervals
+from polyaxon.celery_api import app as celery_app
 from experiments.tasks import build_experiment
 from projects.models import ExperimentGroup
 

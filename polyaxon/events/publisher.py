@@ -5,8 +5,8 @@ import logging
 
 from django.conf import settings
 
-from api.config_settings import RoutingKeys
-from api.celery_api import app as celery_app
+from polyaxon.config_settings import RoutingKeys
+from polyaxon.celery_api import app as celery_app
 from libs.redis_db import RedisToStream
 from events.tasks import handle_events_job_logs
 

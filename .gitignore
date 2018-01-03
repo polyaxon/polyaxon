@@ -107,7 +107,7 @@ examples/data/
 data/
 
 # environment vars
-api/api/env_vars/local.json
+polyaxon/polyaxon/env_vars/local.json
 
 # django registration
 categories.json

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from api.utils import ROOT_DIR, config
+from polyaxon.utils import ROOT_DIR, config
 
 MEDIA_ROOT = config.get_string('POLYAXON_MEDIA_ROOT')
 MEDIA_URL = config.get_string('POLYAXON_MEDIA_URL')

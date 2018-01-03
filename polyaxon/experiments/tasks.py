@@ -5,8 +5,8 @@ import logging
 
 from docker.errors import DockerException
 
-from api.celery_api import app as celery_app
-from api.settings import CeleryTasks
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks
 from repos import dockerize
 from repos.models import Repo
 

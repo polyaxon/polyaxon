@@ -9,8 +9,8 @@ import shutil
 
 from django.contrib.auth import get_user_model
 
-from api.settings import CeleryTasks
-from api.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks
+from polyaxon.celery_api import app as celery_app
 from repos import git
 from repos.models import Repo
 

@@ -11,7 +11,7 @@ from sanic import exceptions
 
 from websockets import ConnectionClosed
 
-from api.config_settings.celery_settings import RoutingKeys, CeleryQueues
+from polyaxon.config_settings.celery_settings import RoutingKeys, CeleryQueues
 from events.authentication import authorized
 from events.consumers import Consumer
 from events.socket_manager import SocketManager

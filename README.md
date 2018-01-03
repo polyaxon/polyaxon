@@ -1,17 +1,15 @@
-[![Build Status](https://travis-ci.org/polyaxon/polyaxon-api.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon-api)
+[![Build Status](https://travis-ci.org/polyaxon/polyaxon.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon)
 [![PyPI version](https://badge.fury.io/py/polyaxon.svg)](https://badge.fury.io/py/polyaxon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/polyaxon/polyaxon)
 
-# Polyaxon-api
+# Polyaxon
 
-Polyaxon-api aims to provide a web-api to create, store, run, and compare polyaxon experiments. 
-
-The project depends on [polyaxon](https://github.com/polyaxon/polyaxon) the library. 
+Polyaxon aims to provide the core application and tools to create, manage, and monitor experiments.
 
 # Installation
 
-Clone the repo `git clone https://github.com/polyaxon/polyaxon-api.git`, and use the commands to do everything in docker:
+Clone the repo `git clone https://github.com/polyaxon/polyaxon.git`, and use the commands to do everything in docker:
  
  * `cmd/rebuild` to build the docker containers.
  * `cmd/setup` to setup the depenedencis, initialize the databas and run migrations.
@@ -23,7 +21,7 @@ Clone the repo `git clone https://github.com/polyaxon/polyaxon-api.git`, and use
 
 # Project status
 
-Polyaxon-api is in a pre-release "alpha" state. All interfaces, programming interfaces, and data structures may be changed without prior notice.
+Polyaxon is in a pre-release "alpha" state. All interfaces, programming interfaces, and data structures may be changed without prior notice.
 We'll do our best to communicate potentially disruptive changes.
 
 # Contributions

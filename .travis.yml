@@ -7,7 +7,7 @@ python:
 
 env:
   global:
-    - DJANGO_SETTINGS_MODULE=api.settings
+    - DJANGO_SETTINGS_MODULE=polyaxon.settings
     - PYTHONPATH=$HOME/builds/polyaxon/polyaxon-api/api
     - PIP_USE_MIRRORS=true
   matrix:
@@ -44,7 +44,7 @@ install:
 
 before_script:
   - psql -c "CREATE DATABASE travis_ci_test;" -U postgres
-  - cp config/local.json api/api/env_vars/local.json
+  - cp config/local.json polyaxon/polyaxon/env_vars/local.json
 
 script:
   - python setup.py test

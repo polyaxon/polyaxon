@@ -8,7 +8,7 @@ THIRD_PARTY_APPS = (
 )
 
 PROJECT_APPS = (
-    'api',
+    'polyaxon',
     'libs.apps.LibsConfig',
     'users.apps.UsersConfig',
     'clusters.apps.ClustersConfig',

@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import urllib3
 from kubernetes import client
 
-from api.utils import config
+from polyaxon.utils import config
 
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
 CLUSTER_ID = config.get_string('POLYAXON_CLUSTER_ID', is_optional=True)

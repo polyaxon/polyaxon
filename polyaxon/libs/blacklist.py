@@ -15,6 +15,7 @@ NAME_BLACKLIST = [
     'project',
     'projects',
     'api',
+    'polyaxon',
     'dashboard',
     'index',
     'log',

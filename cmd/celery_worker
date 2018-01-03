@@ -4,5 +4,5 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose run -w /polyaxon/api --rm --name=polyaxon_worker web celery -A api worker --without-mingle --without-gossip --loglevel=DEBUG -Q api.experiments,api.clusters,events.namespace,events.resources,logs.sidecars,stream.logs.sidecars --concurrency=4 -n default@%h
+    docker-compose run -w /polyaxon/polyaxon --rm --name=polyaxon_worker web celery -A polyaxon worker --without-mingle --without-gossip --loglevel=DEBUG -Q api.experiments,api.clusters,events.namespace,events.resources,logs.sidecars,stream.logs.sidecars --concurrency=4 -n default@%h
 fi

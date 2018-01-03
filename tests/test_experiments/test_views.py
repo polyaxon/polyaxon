@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from api.urls import API_V1
+from polyaxon.urls import API_V1
 from experiments.models import (
     Experiment,
     ExperimentStatus,

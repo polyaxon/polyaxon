@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import sys
 
-from api.utils import config
+from polyaxon.utils import config
 
 from .apps import INSTALLED_APPS, MIDDLEWARE_CLASSES
 

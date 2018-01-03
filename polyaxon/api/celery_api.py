@@ -31,9 +31,9 @@ class PolyaxonTask(Task):
 
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'polyaxon.settings')
 
-app = Celery('api')
+app = Celery('polyaxon')
 
 app.Task = PolyaxonTask  # Custom base class for logging
 

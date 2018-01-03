@@ -1,6 +1,6 @@
 import redis
 
-from api.utils import config
+from polyaxon.utils import config
 
 
 class RedisPools(object):

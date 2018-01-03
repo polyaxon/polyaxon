@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from api.utils import config
+from polyaxon.utils import config
 
 email_from = config.get_string('POLYAXON_EMAIL_FROM')
 email_host = config.get_string('POLYAXON_EMAIL_HOST')

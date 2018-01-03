@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from api.utils import config
+from polyaxon.utils import config
 
 # Roles
 ROLE_LABELS_WORKER = config.get_string('POLYAXON_ROLE_LABELS_WORKER')

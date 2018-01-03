@@ -5,5 +5,5 @@ source $DIR/environment
 $DIR/check
 if [ $? -eq 0 ]; then
     # Does not expose any ports, so you can use the runserver at the same time.
-    docker-compose run --rm --name=polyaxon_manage web python3 api/manage.py $*
+    docker-compose run --rm --name=polyaxon_manage web python3 polyaxon/manage.py $*
 fi

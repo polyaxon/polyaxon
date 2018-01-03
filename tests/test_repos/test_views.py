@@ -14,7 +14,7 @@ from django.conf import settings
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from api.urls import API_V1
+from polyaxon.urls import API_V1
 from repos import git
 from repos.models import Repo
 from repos.serializers import RepoSerializer

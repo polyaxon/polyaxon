@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from api.utils import config
+from polyaxon.utils import config
 
 CLI_MIN_VERSION = config.get_string('POLYAXON_CLI_MIN_VERSION',
                                     is_optional=True) or '0.0.0'

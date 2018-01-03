@@ -15,7 +15,7 @@ DEPLOYMENT_NAME = 'plxproject-{project_uuid}-{name}'
 
 
 def SIDECAR_ARGS_FN(pod_id):
-    return ["python3", "api/manage.py", "start_sidecar", pod_id,
+    return ["python3", "polyaxon/manage.py", "start_sidecar", pod_id,
             "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
             "--persist={}".format(settings.JOB_SIDECAR_PERSIST)]
 

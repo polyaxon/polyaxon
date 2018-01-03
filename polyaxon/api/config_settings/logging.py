@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from api.utils import ROOT_DIR
+from polyaxon.utils import ROOT_DIR
 
 LOG_DIRECTORY = ROOT_DIR.child('logs')
 if not os.path.exists(LOG_DIRECTORY):

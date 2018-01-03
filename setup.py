@@ -18,7 +18,7 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
-setup(name='polyaxon-api',
+setup(name='polyaxon',
       version='0.0.1',
       description='Deep Learning library for TensorFlow for '
                   'building end to end models and experiments.',
