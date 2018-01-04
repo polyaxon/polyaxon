@@ -25,5 +25,6 @@
   "POLYAXON_DIRS_DATA": "/tmp/plx/data",
   "POLYAXON_DIRS_LOGS": "/tmp/plx/logs",
   "POLYAXON_DIRS_OUTPUTS": "/tmp/plx/outputs",
-  "POLYAXON_DIRS_REPOS": "/tmp/plx/repos"
+  "POLYAXON_DIRS_REPOS": "/tmp/plx/repos",
+  "POLYAXON_K8S_APP_NAME": ""
 }
