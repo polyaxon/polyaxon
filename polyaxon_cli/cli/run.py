@@ -11,6 +11,7 @@ from polyaxon_schemas.project import ExperimentGroupConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile
 from polyaxon_cli.cli.project import equal_projects
+from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
@@ -21,18 +22,34 @@ from polyaxon_cli.utils.formatting import Printer
               help='The polyaxon files to run.')
 @click.option('--description', type=str,
               help='The description to give to this run.')
-def run(file, description):
+@click.option('-u', is_flag=True, default=False,
+              help='To upload the repo before running.')
+@click.pass_context
+def run(ctx, file, description, u):
     """Run polyaxonfile specification.
 
     Example:
 
     \b
     ```bash
-    polyaxon run -f file -f file_override ...
+    $ polyaxon run -f file -f file_override ...
     ```
+
+    Example: upload before running
+
+    \b
+    ```bash
+    $ polyaxon run -f file -u
+    ```
+
     """
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file, log=False)
+
+    # Check if we need to upload
+    if u:
+        ctx.invoke(upload)
+
     num_experiments, _, _ = plx_file.experiments_def
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
