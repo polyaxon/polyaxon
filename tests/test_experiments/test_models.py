@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from datetime import datetime
 from unittest.mock import patch
 
 import mock
@@ -8,6 +9,7 @@ import mock
 from polyaxon_schemas.polyaxonfile.specification import Specification
 
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
+from experiments.tasks import set_metrics
 from factories.factory_repos import RepoFactory
 from factories.fixtures import experiment_spec_content, exec_experiment_spec_content
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
@@ -120,3 +122,15 @@ class TestExperimentModel(BaseTest):
             experiment.delete()
 
         assert mock_fct.call_count == 1
+
+    def test_set_metrics(self):
+        content = Specification.read(experiment_spec_content)
+        experiment = ExperimentFactory(config=content.parsed_data)
+        assert experiment.metrics.count() == 0
+
+        create_at = datetime.utcnow()
+        set_metrics(experiment_uuid=experiment.uuid.hex,
+                    created_at=create_at,
+                    metrics={'accuracy': 0.9, 'precision': 0.9})
+
+        assert experiment.metrics.count() == 1

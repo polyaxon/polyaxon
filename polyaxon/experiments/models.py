@@ -105,6 +105,11 @@ class Experiment(DiffModel, DescribableModel):
         return status.status if status else None
 
     @property
+    def last_metric(self):
+        metric = self.metrics.last()
+        return metric if metric else None
+
+    @property
     def is_running(self):
         return ExperimentLifeCycle.is_running(self.last_status)
 

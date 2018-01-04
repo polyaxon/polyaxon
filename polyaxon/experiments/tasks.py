@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import logging
 
 from docker.errors import DockerException
+from polyaxon_schemas.utils import TIME_ZONE
 
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks, Intervals
@@ -12,7 +13,7 @@ from repos.models import Repo
 
 from spawner import scheduler
 from spawner.utils.constants import ExperimentLifeCycle
-from experiments.models import Experiment
+from experiments.models import Experiment, ExperimentMetric
 
 logger = logging.getLogger('polyaxon.tasks.experiments')
 
@@ -93,3 +94,15 @@ def stop_experiment(experiment_id):
 def check_experiment_status(experiment_uuid):
     experiment = Experiment.objects.get(uuid=experiment_uuid)
     experiment.update_status()
+
+
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_SET_METRICS)
+def set_metrics(experiment_uuid, created_at, metrics):
+    created_at = TIME_ZONE.localize(created_at)
+    try:
+        experiment = Experiment.objects.get(uuid=experiment_uuid)
+    except Experiment.DoesNotExist:
+        logger.info('Experiment uuid `{}` does not exist'.format(experiment_uuid))
+        return None
+
+    ExperimentMetric.objects.create(experiment=experiment, created_at=created_at, values=metrics)
