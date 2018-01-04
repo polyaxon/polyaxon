@@ -196,6 +196,14 @@ First let's upload the new version of the code
 $ polyaxon upload
 ```
 
+!!! tip
+    You can also execute `run` with `-u` option, to upload before resuming the run the command,
+    In that case `polyaxon upload is not necessary`
+
+    ```bash
+    $ polyaoxn run -f polyaxonfile.yml -u
+    ```
+
 In order to customize the resources of our jobs we need to introduce a new section [environment]().
 
 Let's create a new `polyaxonfile_resources.yml` override file that will allow us to achieve that
