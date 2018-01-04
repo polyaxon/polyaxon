@@ -53,6 +53,8 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('num_jobs') == self.obj1.jobs.count()
         data.pop('created_at')
         data.pop('updated_at')
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -159,6 +161,8 @@ class TestExperimentDetailSerializer(BaseTest):
         assert len(data.pop('jobs')) == 1
         data.pop('created_at')
         data.pop('updated_at')
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -233,6 +237,8 @@ class TestExperimentJobSerializer(BaseTest):
         assert data.pop('experiment_name') == self.obj1.experiment.unique_name
         data.pop('created_at')
         data.pop('updated_at')
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
