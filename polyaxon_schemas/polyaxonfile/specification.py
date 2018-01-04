@@ -215,7 +215,7 @@ class Specification(BaseSpecification):
 
     @cached_property
     def declarations(self):
-        return self.validated_data.get(self.DECLARATIONS, None)
+        return self.parsed_data.get(self.DECLARATIONS, None)
 
     @cached_property
     def cluster_def(self):
