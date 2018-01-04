@@ -1,13 +1,10 @@
 import {Reducer} from "redux";
-import {normalize} from 'normalizr';
-import * as _ from "lodash";
 
 import {TokenAction, actionTypes} from "../actions/token";
 import {TokenStateSchema, TokenEmptyState} from "../models/token";
 
 export const tokenReducer: Reducer<TokenStateSchema> =
 	(state: TokenStateSchema = TokenEmptyState, action: TokenAction) => {
-
 
   switch(action.type){
     case actionTypes.RECEIVE_TOKEN:

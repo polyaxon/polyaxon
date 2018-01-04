@@ -9,6 +9,8 @@ import { createLogger } from 'redux-logger'
 import appReducer from "./reducers/app";
 import {AppState} from "./constants/types";
 import { loadState, saveState } from './localStorage'
+import {getToken} from "./constants/utils";
+import {receiveTokenActionCreator} from "./actions/token";
 
 const configureStore = () => {
   const persistedState = loadState();
@@ -22,6 +24,11 @@ const configureStore = () => {
       loggerMiddleware
     )
   );
+
+  let token = getToken();
+  if (token !== null) {
+    store.dispatch(receiveTokenActionCreator(token.user, token));
+  }
 
   store.subscribe(_.throttle(() => {
     saveState(store.getState())

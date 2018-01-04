@@ -3,8 +3,8 @@ export class TokenModel {
 }
 
 export class TokenStateSchema {
-	user: string
-	token: string
+	user: string;
+	token: string;
 }
 
 export const TokenEmptyState = {token: '', user: ''};
