@@ -133,12 +133,13 @@ class PodManager(object):
         name = self.get_job_name(task_type, task_idx)
         return uuid.uuid5(uuid.NAMESPACE_DNS, name).hex
 
-    def get_cluster_env_var(self, task_type):
+    def get_cluster_env_var(self):
         name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
-        config_map_key_ref = client.V1ConfigMapKeySelector(name=name, key=task_type)
+        config_map_key_ref = client.V1ConfigMapKeySelector(
+            name=name, key=constants.CLUSTER_CONFIG_MAP_KEY_NAME)
         value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-        key_name = constants.CLUSTER_CONFIG_MAP_KEY_NAME.format(task_type=task_type)
-        return client.V1EnvVar(name=key_name, value_from=value)
+        return client.V1EnvVar(
+            name=constants.CLUSTER_CONFIG_MAP_KEY_NAME, value_from=value)
 
     def get_pod_container(self,
                           volume_mounts,
@@ -149,9 +150,7 @@ class PodManager(object):
         """Pod job container for task."""
         env_vars = env_vars or []
         env_vars += [
-            self.get_cluster_env_var(task_type=TaskType.MASTER),
-            self.get_cluster_env_var(task_type=TaskType.WORKER),
-            self.get_cluster_env_var(task_type=TaskType.PS),
+            self.get_cluster_env_var(),
         ]
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]

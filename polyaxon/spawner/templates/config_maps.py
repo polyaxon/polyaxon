@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import six
+import json
 
 from kubernetes import client
 
@@ -35,8 +35,6 @@ def get_cluster_config_map(namespace,
                            experiment_group_uuid,
                            experiment_uuid,
                            cluster_def):
-    def convert_cluster_def():
-        return {k: ','.join(v) for k, v in six.iteritems(cluster_def)}
 
     name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=experiment_uuid)
     labels = get_cluster_config_map_labels(project_name,
@@ -49,4 +47,4 @@ def get_cluster_config_map(namespace,
     return client.V1ConfigMap(api_version=k8s_constants.K8S_API_VERSION_V1,
                               kind=k8s_constants.K8S_CONFIG_MAP_KIND,
                               metadata=metadata,
-                              data=convert_cluster_def())
+                              data={constants.CLUSTER_CONFIG_MAP_KEY_NAME: json.dumps(cluster_def)})
