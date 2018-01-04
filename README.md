@@ -6,3 +6,20 @@
 # Polyaxon-cli
 
 Command line tool for Polyaxon.
+
+
+## Install
+
+```bash
+$ pip install -U polyaxon-cli
+```
+
+
+## Install polyaxon
+
+Please check [polyaxon installation guide](https://docs.polyaxon.com/installation/introduction)
+
+
+## Quick start
+
+Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
