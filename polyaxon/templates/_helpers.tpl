@@ -151,6 +151,8 @@ global config
   value: {{ .Values.k8s.host | quote }}
 - name: POLYAXON_K8S_NAMESPACE
   value: {{ .Values.namespace | quote }}
+- name: POLYAXON_K8S_APP_NAME
+  value: {{ template "polyaxon.fullname" . }}
 - name: POLYAXON_GPU_NODE_SELECTORS
   valueFrom:
     configMapKeyRef:
