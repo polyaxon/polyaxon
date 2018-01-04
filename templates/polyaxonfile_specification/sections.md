@@ -228,7 +228,7 @@ The declaration are particularly important for descriptive models.
 All your declaration will be exported under the environment variable name `POLYAXON_DECLARATIONS`.
 
 !!! tip "Polyaxon export your declarations under environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the cluster definition](reference_polyaxon_helper) to use it with your models.
+    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your models.
 
 
 ## matrix
@@ -243,11 +243,11 @@ Each experiment in this group is defined based on a combination of the values de
 The matrix is defined as `{key: value}` object where the key is the name of the parameter
 you are defining and the value is one of these options:
 
- * values: a list of values, e.g. `[1, 2, 3, 4]`
- * range: [start, stop, step] same way you would define a range in python., e.g. `[1, 10, 2]` or `{start: 1, stop: 10, step: 2}` or `'1:10:2'`
- * linspace: [start, stop, num] steps from start to stop spaced evenly on a `linear scale`.
- * logspace: [start, stop, num] steps from start to stop spaced evenly on a `log scale`
- * geomspace: [start, stop, num] steps from start to stop, numbers spaced evenly on a log scale (a geometric progression).
+ * `values`: a list of values, e.g. `[1, 2, 3, 4]`
+ * `range`: [start, stop, step] same way you would define a range in python., e.g. `[1, 10, 2]` or `{start: 1, stop: 10, step: 2}` or `'1:10:2'`
+ * `linspace`: [start, stop, num] steps from start to stop spaced evenly on a `linear scale`.
+ * `logspace`: [start, stop, num] steps from start to stop spaced evenly on a `log scale`
+ * `geomspace`: [start, stop, num] steps from start to stop, numbers spaced evenly on a log scale (a geometric progression).
 
 Example:
 
@@ -273,7 +273,7 @@ For each experiment generated during the hyperparameters search, Polyaxon will a
 to your declarations, and will as well export them under the environment variable name `POLYAXON_DECLARATIONS`.
 
 !!! tip "Polyaxon append the matrix value combination to your declarations and export under the environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the cluster definition](reference_polyaxon_helper) to use it with your models.
+    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your models.
 
 ## run
 

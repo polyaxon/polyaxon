@@ -12,7 +12,7 @@ To view the logs of a specific job, you need to have the experiment sequence it 
 For example
 
 ```bash
-polyaxon job logs 3 40465c7cca4f55bca1f98abc2bf8c770
+polyaxon job -xp 3 -j 1 logs
 ```
 
 This command will show the logs of in real time for that job.
@@ -24,7 +24,7 @@ To view the resources of a specific job, you need to have the experiment sequenc
 For example
 
 ```bash
-polyaxon job resources 3 40465c7cca4f55bca1f98abc2bf8c770
+polyaxon job -xp 3 -j 1 resources
 ```
 
 This command will show the resources in real time for that job.

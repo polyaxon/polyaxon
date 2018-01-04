@@ -174,7 +174,7 @@ what you can do instead is create an [experiment group](experiment_groups).
 To stop experiment 2 for example, run
 
 ```bash
-$ polyaxon experiment stop 2
+$ polyaxon experiment -xp 2 stop
 ```
 
 !!! caution
@@ -272,7 +272,7 @@ We could have also used `default_ps_resources` instead.
 Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
 
 !!! tip "Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER`"
-    Check how you can [get the cluster definition](reference_polyaxon_helper) to use it with your distributed deep learning model.
+    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your distributed deep learning model.
 
 To run this distributed experiment, run
 
@@ -293,7 +293,7 @@ To check that our experiment is running in a distributed way
  * Polyaxon CLI
 
 ```bash
-$ polyaxon experiment jobs 3
+$ polyaxon experiment -xp 3 jobs
 
 Jobs for experiment `3`.
 
@@ -324,7 +324,7 @@ For more information about jobs, please refer to [jobs](jobs)
 To view the logs of experiment 3 for example, given that is running now, run
 
 ```bash
-polyaxon experiment logs 2
+polyaxon experiment -xp 2 logs
 ```
 
 This command will show the logs in real time of all the jobs running for the experiment.
@@ -340,7 +340,7 @@ In the [jobs](jobs)'s page, we will see how we can view the logs of a particular
 To view the resources of experiment 3 for example, given that is running now, run
 
 ```bash
-polyaxon experiment resources 3
+polyaxon experiment -xp 3 resources
 ```
 
 This command will show the resources in real time of all the jobs running for the experiment.

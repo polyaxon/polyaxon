@@ -228,7 +228,7 @@ The declaration are particularly important for descriptive models.
 All your declaration will be exported under the environment variable name `POLYAXON_DECLARATIONS`.
 
 !!! tip "Polyaxon export your declarations under environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the cluster definition](reference_polyaxon_helper) to use it with your models.
+    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your models.
 
 
 ## matrix
@@ -273,7 +273,7 @@ For each experiment generated during the hyperparameters search, Polyaxon will a
 to your declarations, and will as well export them under the environment variable name `POLYAXON_DECLARATIONS`.
 
 !!! tip "Polyaxon append the matrix value combination to your declarations and export under the environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the cluster definition](reference_polyaxon_helper) to use it with your models.
+    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your models.
 
 ## run
 

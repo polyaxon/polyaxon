@@ -6,7 +6,7 @@ This version of Polyaxon has currently two type of users:
  * [Normal users](users)
 
 !!! attention "Teams"
-    We are currently working on a new version of Polyaxon with organizations,
+    We are currently working on a new version of Polyaxon with teams,
     which will introduce more roles and access levels
     to manage teams, resources quotas, and parallelism quotas.
 

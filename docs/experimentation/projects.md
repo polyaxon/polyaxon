@@ -13,7 +13,7 @@ in that case only you i.e. `logged-in user`, and `superusers` can access the pro
 Public project are visible to everyone as read only mode, and read/write mode to the `owner` and `superusers`.
 
 ??? note "More permissions and roles"
-    More permissions and roles will be available, when we introduce organizations.
+    More permissions and roles will be available, when we introduce teams.
     If you want to be notified when we release this feature, please subscribe to receive our progress.
 
 

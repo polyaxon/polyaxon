@@ -42,7 +42,7 @@ with more details in pages dedicated to each concept.
 
 ### User
 
-A `User` is the entity that creates project, starts experiments, manages organizations and clusters.
+A `User` is the entity that creates project, starts experiments, manages teams and clusters.
 A `User` has a set of permissions, and can be normal user or superuser.
 
 !!! info "More details"

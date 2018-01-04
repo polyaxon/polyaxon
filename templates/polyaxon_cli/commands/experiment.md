@@ -1,6 +1,7 @@
-The experiment commands accept 2 optional arguments
- * Experiment: `--experiment` or '-xp'  to use a specific experiment.
- * Project: `--project` or '-p'  to use a specific project.
+The experiment commands accept 2 optional arguments:
+
+ * Experiment: `--experiment` or `-xp`  to use a specific experiment.
+ * Project: `--project` or `-p`  to use a specific project.
 
 If no project/experiment is provided, the command will default to the currently initialized project/last used experiment.
 
