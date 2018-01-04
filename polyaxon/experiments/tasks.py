@@ -6,7 +6,7 @@ import logging
 from docker.errors import DockerException
 
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks
+from polyaxon.settings import CeleryTasks, Intervals
 from repos import dockerize
 from repos.models import Repo
 
@@ -32,10 +32,16 @@ def get_valid_experiment(experiment_id):
     return experiment
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_BUILD)
-def build_experiment(experiment_id):
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_BUILD, bind=True, max_retries=3)
+def build_experiment(self, experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
+        if self.request.retries < 2:
+            logger.info('Trying again for Experiment `{}`.'.format(experiment_id))
+            self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
+        logger.info('Something went wrong, '
+                    'the Experiment `{}` does not exist anymore.'.format(experiment_id))
         return
 
     # No need to build the image, start the experiment directly

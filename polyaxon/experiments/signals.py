@@ -31,7 +31,7 @@ def new_experiment(sender, **kwargs):
     instance.set_status(ExperimentLifeCycle.CREATED)
     if instance.is_independent:
         # Start building the experiment and then Schedule it to be picked by the spawner
-        build_experiment.delay(experiment_id=instance.id)
+        build_experiment.apply_async((instance.id, ), countdown=1)
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_deleted")

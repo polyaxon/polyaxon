@@ -22,7 +22,7 @@ from tests.utils import BaseTest
 
 class TestExperimentModel(BaseTest):
     def test_experiment_creation_triggers_status_creation_mocks(self):
-        with patch('projects.tasks.start_group_experiments.delay') as _:
+        with patch('projects.tasks.start_group_experiments.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
         with patch('experiments.tasks.start_experiment.delay') as mock_fct:
@@ -33,7 +33,7 @@ class TestExperimentModel(BaseTest):
         assert mock_fct2.call_count == 1
 
     def test_experiment_creation_triggers_status_creation(self):
-        with patch('projects.tasks.start_group_experiments.delay') as _:
+        with patch('projects.tasks.start_group_experiments.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
         experiment = ExperimentFactory(experiment_group=experiment_group)
@@ -42,8 +42,8 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.CREATED
 
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
-        with patch('projects.tasks.start_group_experiments.delay') as _:
-            with patch('experiments.tasks.build_experiment.delay') as mock_fct:
+        with patch('projects.tasks.start_group_experiments.apply_async') as _:
+            with patch('experiments.tasks.build_experiment.apply_async') as mock_fct:
                 with patch.object(Experiment, 'set_status') as mock_fct2:
                     ExperimentFactory()
 

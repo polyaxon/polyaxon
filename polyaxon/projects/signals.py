@@ -26,7 +26,7 @@ def new_experiment_group(sender, **kwargs):
                                   experiment_group=instance,
                                   config=specification.parsed_data[xp])
 
-    start_group_experiments.apply_async((instance.id, ), countdown=2)
+    start_group_experiments.apply_async((instance.id, ), countdown=1)
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
