@@ -13,7 +13,9 @@ $ pip install -U polyaxon-helper
 Polyaxon defines some variables related to your experiment in environment variables, namely:
 
  * `POLYAXON_CLUSTER` : defines the cluster definition, e.g.
-    `{'master': ['plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000'], 'worker': ['plxjob-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000', 'plxjob-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000']}`
+    ```json
+    {'master': ['plxjob-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000'], 'worker': ['plxjob-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000', 'plxjob-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000']}
+    ```
  * `POLYAXON_DECLARATIONS` : defines all the declarations of you polyaxonfile as well as the values from hyperparameters search.
  * `POLYAXON_EXPERIMENT_INFO` : defines information about job, experiment, group, project.
 

@@ -27,13 +27,13 @@ therefor they are responsible to accept or reject new users.
 To accept a new user, run the following command
 
 ```bash
-$ polyaxon users accept <USERNAME>
+$ polyaxon user accept <USERNAME>
 ```
 
 To reject a new user, run the following command
 
 ```bash
-$ polyaxon users reject <USERNAME>
+$ polyaxon user reject <USERNAME>
 ```
 
 

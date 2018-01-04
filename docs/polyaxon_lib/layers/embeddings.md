@@ -2,7 +2,7 @@
 ## EmbeddingConfig
 
 ```python
-polyaxon_schemas.layers.embeddings.EmbeddingConfig(input_dim, output_dim, embeddings_initializer=<polyaxon_schemas.initializations.UniformInitializerConfig object at 0x1049f5710>, embeddings_regularizer=None, activity_regularizer=None, embeddings_constraint=None, mask_zero=False, input_length=None)
+polyaxon_schemas.layers.embeddings.EmbeddingConfig(input_dim, output_dim, embeddings_initializer=<polyaxon_schemas.initializations.UniformInitializerConfig object at 0x10ca3c6a0>, embeddings_regularizer=None, activity_regularizer=None, embeddings_constraint=None, mask_zero=False, input_length=None)
 ```
 
 Turns positive integers (indexes) into dense vectors of fixed size.

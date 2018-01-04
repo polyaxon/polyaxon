@@ -1,7 +1,8 @@
-The experiment commands accept 2 optional arguments
- * Job: `--job` or '-j'  to use a specific job.
- * Experiment: `--experiment` or '-xp'  to use a specific experiment.
- * Project: `--project` or '-p'  to use a specific project.
+The experiment commands accept 2 optional arguments:
+
+ * Job: `--job` or `-j`  to use a specific job.
+ * Experiment: `--experiment` or `-xp`  to use a specific experiment.
+ * Project: `--project` or `-p`  to use a specific project.
 
 If no project/experiment/job is provided, the command will default to the currently initialized project/last used experiment/last used job.
 
