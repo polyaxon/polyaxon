@@ -242,6 +242,13 @@ ACTIVATION_VALUES = [
 TIME_ZONE = timezone('Europe/Berlin')
 
 
+class SEARCH_METHODS(object):
+    SEQUENTIAL = 'SEQUENTIAL'
+    RANDOM = 'RANDOM'
+
+    VALUES = [SEQUENTIAL, RANDOM]
+
+
 class TaskType(object):
     MASTER = 'master'
     PS = 'ps'

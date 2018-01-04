@@ -14,7 +14,7 @@ from polyaxon_schemas.settings import (
     K8SResourcesConfig,
     PodResourcesConfig,
 )
-from polyaxon_schemas.utils import TaskType
+from polyaxon_schemas.utils import TaskType, SEARCH_METHODS
 
 from tests.utils import assert_equal_dict
 
@@ -201,7 +201,8 @@ class TestSettingConfigs(TestCase):
             'logging': LoggingConfig().to_dict(),
             'export_strategies': None,
             'run_type': 'local',
-            'concurrent_experiments': 2
+            'concurrent_experiments': 2,
+            'search_method': SEARCH_METHODS.RANDOM
         }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

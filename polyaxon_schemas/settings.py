@@ -5,7 +5,7 @@ from marshmallow import Schema, fields, post_load, validate, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
-from polyaxon_schemas.utils import RunTypes, UUID
+from polyaxon_schemas.utils import RunTypes, UUID, SEARCH_METHODS
 
 
 class K8SResourcesSchema(Schema):
@@ -278,9 +278,9 @@ class EnvironmentConfig(BaseConfig):
 class SettingsSchema(Schema):
     logging = fields.Nested(LoggingSchema, allow_none=True)
     export_strategies = fields.Str(allow_none=True)
-    run_type = fields.Str(allow_none=True,
-                          validate=validate.OneOf(RunTypes.VALUES))
+    run_type = fields.Str(allow_none=True, validate=validate.OneOf(RunTypes.VALUES))
     concurrent_experiments = fields.Int(allow_none=True)
+    search_method = fields.Str(allow_none=True, validate=validate.OneOf(SEARCH_METHODS.VALUES))
 
     class Meta:
         ordered = True
@@ -302,8 +302,10 @@ class SettingsConfig(BaseConfig):
                  logging=LoggingConfig(),
                  export_strategies=None,
                  run_type=RunTypes.KUBERNETES,
-                 concurrent_experiments=1):
+                 concurrent_experiments=1,
+                 search_method=SEARCH_METHODS.SEQUENTIAL):
         self.logging = logging
         self.export_strategies = export_strategies
         self.run_type = run_type
         self.concurrent_experiments = concurrent_experiments
+        self.search_method = search_method
