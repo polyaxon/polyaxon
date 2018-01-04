@@ -78,19 +78,20 @@ def check(file, all, version, run_type, project, log_path, matrix, experiments):
                                           'yellow')
 
     if experiments:
-        num_experiments, concurrency = plx_file.experiments_def
+        num_experiments, concurrency, search_method = plx_file.experiments_def
         if num_experiments == 1:
             Printer.decorate_format_value('This polyaxon specification has {}',
                                           'One experiment',
                                           'yellow')
         elif concurrency == 1:
-            Printer.decorate_format_value('The matrix-space has {} experiments, with {} runs',
-                                          [num_experiments, 'sequential'],
+            Printer.decorate_format_value('The matrix-space has {} experiments, with {} runs, '
+                                          'and {} search',
+                                          [num_experiments, 'sequential', search_method.lower()],
                                           'yellow')
         else:
             Printer.decorate_format_value('The matrix-space has {} experiments, '
-                                          'with {} concurrent runs',
-                                          [num_experiments, concurrency],
+                                          'with {} concurrent runs, and {} search',
+                                          [num_experiments, concurrency, search_method.lower()],
                                           'yellow')
     if all:
         click.echo("Validated file:\n{}".format(plx_file.parsed_data))

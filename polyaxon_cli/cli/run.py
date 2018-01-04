@@ -33,7 +33,7 @@ def run(file, description):
     """
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file, log=False)
-    num_experiments, concurrency = plx_file.experiments_def
+    num_experiments, _, _ = plx_file.experiments_def
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
     if not equal_projects(plx_file.project.name, project.unique_name):
