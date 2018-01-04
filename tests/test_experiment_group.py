@@ -52,7 +52,7 @@ class TestExperimentGroupClient(TestCase):
         xps = [ExperimentConfig(uuid=xp_uuid,
                                 config={},
                                 project=project_uuid,
-                                group=group_uuid).to_dict()
+                                experiment_group=group_uuid).to_dict()
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,

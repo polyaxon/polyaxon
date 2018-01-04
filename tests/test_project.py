@@ -3,9 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import json
 import uuid
-from unittest import TestCase
 import httpretty
+from unittest import TestCase
 from faker import Faker
+
 from polyaxon_schemas.experiment import ExperimentConfig
 
 from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig

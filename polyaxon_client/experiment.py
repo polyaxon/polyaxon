@@ -58,8 +58,7 @@ class ExperimentClient(PolyaxonClient):
                                       'experiments',
                                       experiment_sequence)
         try:
-            response = self.delete(request_url)
-            return response
+            return self.delete(request_url)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while deleting experiment')
             return None
