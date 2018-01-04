@@ -3,7 +3,6 @@ import {BrowserRouter} from "react-router-dom";
 
 
 import Header from "./header";
-import Footer from "./footer";
 import Routes from "./routes";
 
 import "./app.less";
@@ -14,10 +13,9 @@ function App() {
       <BrowserRouter>
         <div>
           <Header />
-          <div className="container">
+          <div className="container container-fluid">
             <Routes />
           </div>
-          <Footer />
         </div>
       </BrowserRouter>
   );
