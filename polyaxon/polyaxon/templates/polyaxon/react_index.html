@@ -1,0 +1,17 @@
+{% extends "polyaxon/root.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block header_libs %}
+<link href="{{ STATIC_URL }}public/css/global.css" media="all" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block index %}
+<div id="root"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ STATIC_URL }}node_modules/react/dist/react.js"></script>
+<script src="{{ STATIC_URL }}node_modules/react-dom/dist/react-dom.js"></script>
+<script src="{{ STATIC_URL }}dist/bundle.js" />
+{% endblock %}
