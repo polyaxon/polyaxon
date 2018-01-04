@@ -1,12 +1,5 @@
 import * as React from "react";
-import * as _ from "lodash";
-import {Button, ButtonToolbar, FormGroup, FormControl, ControlLabel, HelpBlock} from "react-bootstrap";
 import * as Cookies from 'js-cookie';
-
-import {ProjectModel} from "../models/project";
-import Experiments from "../containers/experiments";
-import Groups from "../containers/groups";
-
 
 export interface Props {
   fetchToken: (username: string, password: string) => any;

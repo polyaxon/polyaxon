@@ -4,7 +4,7 @@ import {LinkContainer} from "react-router-bootstrap";
 import {dateOptions, pluralize} from "../constants/utils"
 
 import {ProjectModel} from "../models/project";
-
+import {getProjectUrl} from "../constants/utils";
 
 export interface Props {
   project: ProjectModel;
@@ -17,7 +17,7 @@ function Project({project, onDelete}: Props) {
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={`/${project.user}/${project.name}/`}>
+          <LinkContainer to={ getProjectUrl(project.user, project.name) }>
             <Button className="button">
               {project.num_experiments} { pluralize('Experiment', project.num_experiments) }
               <i className="fa fa-sliders icon" aria-hidden="true"></i>

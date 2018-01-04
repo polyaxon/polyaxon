@@ -3,7 +3,7 @@ import * as React from "react";
 import {Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
-import {dateOptions, pluralize} from "../constants/utils";
+import {dateOptions, getGroupUrl, pluralize, splitProjectName} from "../constants/utils";
 import {GroupModel} from "../models/group";
 
 
@@ -15,11 +15,12 @@ export interface Props {
 
 function Group({group, onDelete}: Props) {
   let disabled = group.num_experiments == 0;
+  let values = splitProjectName(group.project_name);
   return (
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ `groups/${group.sequence}/` }>
+          <LinkContainer to={ getGroupUrl(values[0], values[1], group.sequence) }>
             <Button className="button" disabled={disabled}>
               {group.num_experiments} { pluralize('Experiment', group.num_experiments) }
               <i className="fa fa-sliders icon" aria-hidden="true"></i>

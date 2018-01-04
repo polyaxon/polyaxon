@@ -1,5 +1,4 @@
-import {Action, Dispatch} from "redux";
-import * as _ from "lodash";
+import {Action} from "redux";
 import * as Cookies from 'js-cookie';
 
 import {TokenModel} from "../models/token";

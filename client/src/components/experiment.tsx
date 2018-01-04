@@ -2,7 +2,12 @@ import * as React from "react";
 
 import {Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import {getCssClassForStatus, pluralize} from "../constants/utils"
+import {
+  getCssClassForStatus,
+  getExperimentUrl,
+  pluralize,
+  splitProjectName
+} from "../constants/utils"
 
 import {ExperimentModel} from "../models/experiment";
 
@@ -16,12 +21,12 @@ export interface Props {
 function Experiment({experiment, onDelete}: Props) {
   let disabled = experiment.num_jobs == 0 ? true : false;
   let statusCssClass = getCssClassForStatus(experiment.last_status);
-  let experimentDetailUrl = experiment.experiment_group ? `../../experiments/${experiment.sequence}/` : `experiments/${experiment.sequence}/`
+  let values = splitProjectName(experiment.project_name);
   return (
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ experimentDetailUrl }>
+          <LinkContainer to={ getExperimentUrl(values[0], values[1], experiment.sequence) }>
             <Button className="button" disabled={disabled}>
               {experiment.num_jobs} { pluralize('Job', experiment.num_jobs) }
               <i className="fa fa-cube icon" aria-hidden="true"></i>

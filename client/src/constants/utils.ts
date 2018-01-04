@@ -1,11 +1,16 @@
 import * as Cookies from 'js-cookie';
+import {TokenStateSchema} from "../models/token";
 
 export const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-export let urlifyProjectName = function (origProjectName: string) {
+export let urlifyProjectName = function (projectName: string) {
     // Replaces . by /
     let re = /\./gi;
-    return origProjectName.replace(re, "\/");
+    return projectName.replace(re, "\/");
+};
+
+export let splitProjectName  = function (projectName: string) {
+    return projectName.split('.');
 };
 
 export let getCssClassForStatus = function (status?: string): string {
@@ -34,6 +39,15 @@ export let pluralize = function (name: string, num_objects: number): string {
     return name;
 };
 
+export let getToken = function(): TokenStateSchema | null {
+    let user = Cookies.get('user');
+    let token = Cookies.get('token');
+    if (user !== undefined && token !== undefined) {
+        return {token: token, user: user};
+    }
+    return null;
+};
+
 export let isUserAuthenticated = function () {
     let hasUser = Cookies.get('user') !== undefined;
     let hasToken = Cookies.get('token') !== undefined;
@@ -46,13 +60,27 @@ export let getStoredToken = function () {
 
 export let getHomeUrl = function () {
     let user = Cookies.get('user');
-    return `/${user}/`;
+    return `/app/${user}/`;
 };
 
 export let getLoginUrl = function () {
-    return '/auth/login/';
+    return '/app/auth/login/';
 };
 
 export let getLogoutUrl = function () {
-    return '/auth/logout/';
+    return '/app/auth/logout/';
+};
+
+export let getProjectUrl = function (username: string, projectName: string) {
+    return `/app/${username}/${projectName}`
+};
+
+export let getGroupUrl = function (username: string, projectName: string, groupSequence: number) {
+    let projectUrl = getProjectUrl(username, projectName);
+    return `${projectUrl}/groups/${groupSequence}/`
+};
+
+export let getExperimentUrl = function (username: string, projectName: string, experimentSequence: number) {
+    let projectUrl = getProjectUrl(username, projectName);
+    return `${projectUrl}/experiments/${experimentSequence}/`
 };

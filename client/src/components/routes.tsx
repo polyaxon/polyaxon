@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Switch, Redirect, Route} from "react-router-dom";
-import * as Cookies from 'js-cookie';
 
 import ProjectDetail from "../containers/projectDetail";
 import ExperimentDetail from "../containers/experimentDetail";
@@ -9,20 +8,29 @@ import JobDetail from "../containers/jobDetail";
 import Projects from "../containers/projects";
 import Login from "../containers/login";
 import Logout from "../containers/logout";
+import Token from "../containers/token";
 
 import {isUserAuthenticated, getHomeUrl, getLoginUrl, getLogoutUrl} from "../constants/utils";
 
 function Routes() {
-  let projectDetailRoute = "/:user/:projectName/";
-  let projectsRoute = "/:user/";
-  let experimentDetailRoute = "/:user/:projectName/experiments/:experimentSequence/";
-  let groupDetailRoute = "/:user/:projectName/groups/:groupSequence/";
-  let jobDetailRoute = "/:user/:projectName/experiments/:experimentSequence/jobs/:jobSequence/";
+  let tokenRoute = "/app/token";
+  let projectDetailRoute = "/app/:user/:projectName/";
+  let projectsRoute = "/app/:user/";
+  let experimentDetailRoute = "/app/:user/:projectName/experiments/:experimentSequence/";
+  let groupDetailRoute = "/app/:user/:projectName/groups/:groupSequence/";
+  let jobDetailRoute = "/app/:user/:projectName/experiments/:experimentSequence/jobs/:jobSequence/";
 
   return (
     <Switch>
         <Route path={getLoginUrl()} component={Login}/>
         <Route path={getLogoutUrl()} component={Logout}/>
+        <Route path={tokenRoute} render={() => (
+          isUserAuthenticated() ? (
+            <Route path={tokenRoute} component={Token}/>
+          ) : (
+            <Redirect to={getLoginUrl()}/>
+          )
+        )}/>
 
         <Route path={jobDetailRoute} render={() => (
           isUserAuthenticated() ? (

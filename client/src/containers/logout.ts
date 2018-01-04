@@ -1,9 +1,7 @@
 import { connect, Dispatch } from "react-redux";
-import * as _ from "lodash";
 import {withRouter} from "react-router-dom";
 
 import { AppState } from "../constants/types";
-
 import * as actions from "../actions/token";
 import Logout from "../components/logout"
 
