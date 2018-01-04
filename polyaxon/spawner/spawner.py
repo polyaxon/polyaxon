@@ -292,9 +292,9 @@ class K8SSpawner(K8SManager):
             else:
                 logger.debug('Volume claim `{}` was not found'.format(volc_name))
 
-    def create_cluster_config_map(self):
-        name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
-        config_map = config_maps.get_cluster_config_map(
+    def create_experiment_config_map(self):
+        name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
+        config_map = config_maps.get_config_map(
             namespace=self.namespace,
             project_name=self.project_name,
             experiment_group_name=self.experiment_group_name,
@@ -302,12 +302,14 @@ class K8SSpawner(K8SManager):
             project_uuid=self.project_uuid,
             experiment_group_uuid=self.experiment_group_uuid,
             experiment_uuid=self.experiment_uuid,
-            cluster_def=self.get_cluster().to_dict())
+            cluster_def=self.get_cluster().to_dict(),
+            declarations=self.spec.declarations
+        )
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)
 
-    def delete_cluster_config_map(self):
-        name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
+    def delete_experiment_config_map(self):
+        name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         self.delete_config_map(name, reraise=True)
 
     def get_pod_cmd_args(self, task_type, task_idx, schedule):
@@ -348,7 +350,7 @@ class K8SSpawner(K8SManager):
     def start_experiment(self):
         self.check_data_volume()
         self.check_outputs_volume()
-        self.create_cluster_config_map()
+        self.create_experiment_config_map()
         master_resp = self.create_master(resources=self.spec.master_resources)
         worker_resp = self.create_worker()
         ps_resp = self.create_ps()
@@ -359,7 +361,7 @@ class K8SSpawner(K8SManager):
         }
 
     def stop_experiment(self):
-        self.delete_cluster_config_map()
+        self.delete_experiment_config_map()
         self.delete_master()
         self.delete_worker()
         self.delete_ps()

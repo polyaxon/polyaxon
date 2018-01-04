@@ -131,15 +131,14 @@ class PodManager(object):
         name = self.get_job_name(task_type, task_idx)
         return uuid.uuid5(uuid.NAMESPACE_DNS, name).hex
 
-    def get_cluster_env_var(self):
-        name = constants.CLUSTER_CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
-        config_map_key_ref = client.V1ConfigMapKeySelector(
-            name=name, key=constants.CLUSTER_CONFIG_MAP_KEY_NAME)
+    def get_from_experiment_config_map(self, key_name):
+        name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
+        config_map_key_ref = client.V1ConfigMapKeySelector(name=name, key=key_name)
         value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-        return client.V1EnvVar(
-            name=constants.CLUSTER_CONFIG_MAP_KEY_NAME, value_from=value)
+        return client.V1EnvVar(name=key_name, value_from=value)
 
-    def get_from_app_secret(self, key_name):
+    @staticmethod
+    def get_from_app_secret(key_name):
         secret_key_ref = client.V1SecretKeySelector(name=settings.POLYAXON_K8S_APP_SECRET_NAME,
                                                     key=key_name)
         value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
@@ -154,7 +153,9 @@ class PodManager(object):
         """Pod job container for task."""
         env_vars = env_vars or []
         env_vars += [
-            self.get_cluster_env_var(),
+            self.get_from_experiment_config_map(constants.CONFIG_MAP_CLUSTER_KEY_NAME),
+            self.get_from_experiment_config_map(constants.CONFIG_MAP_DECLARATIONS_KEY_NAME),
+            self.get_from_experiment_config_map(constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME),
         ]
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]

@@ -8,8 +8,10 @@ DEFAULT_PORT = 2222
 ENV_VAR_TEMPLATE = '{name: "{var_name}", value: "{var_value}"}'
 VOLUME_NAME = 'pv-{vol_name}'
 VOLUME_CLAIM_NAME = 'pvc-{vol_name}'
-CLUSTER_CONFIG_MAP_NAME = 'plxcluster-{experiment_uuid}'
-CLUSTER_CONFIG_MAP_KEY_NAME = 'PLX_CLUSTER'
+CONFIG_MAP_NAME = 'plx-config-{experiment_uuid}'
+CONFIG_MAP_CLUSTER_KEY_NAME = 'POLYAXON_CLUSTER'
+CONFIG_MAP_DECLARATIONS_KEY_NAME = 'POLYAXON_DECLARATIONS'
+CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME = 'POLYAXON_EXPERIMENT_INFO'
 POD_CONTAINER_PROJECT_NAME = 'plxproject-{project_uuid}-{name}'
 DEPLOYMENT_NAME = 'plxproject-{project_uuid}-{name}'
 
