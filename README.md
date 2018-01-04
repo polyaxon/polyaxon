@@ -5,19 +5,27 @@
 
 # Polyaxon
 
-Polyaxon aims to provide the core application and tools to create, manage, and monitor experiments.
+Welcome to Polyaxon, a platform for building, training and monitoring large scale deep learning applications.
 
-# Installation
+Polyaxon deploys into any data center, cloud provider, or can be hosted and managed by Polyaxon, and it supports all the major deep learning frameworks such as Tensorflow, MXNet, Caffe, Torch, etc.
 
-Clone the repo `git clone https://github.com/polyaxon/polyaxon.git`, and use the commands to do everything in docker:
- 
- * `cmd/rebuild` to build the docker containers.
- * `cmd/setup` to setup the depenedencis, initialize the databas and run migrations.
- * `cmd/runserver` to run the web server.
- * `cmd/manage` to access to the django manage. For example you can run `cmd/manage makemigrations core` to create the necessary migrations after changing the code.
- * `cmd/jupyter` to start a jupyter notebook server.
- * `cmd/tensorboard` to start a tensorboard server.
- * `cmd/test` to run the tests.   
+Polyaxon makes it faster, easier, and more efficient to develop deep learning applications by managing workloads with smart container and node management, and turning GPU servers into shared, self-service resources for your team or organization.
+
+# Install
+
+Please check [polyaxon installation guide](https://docs.polyaxon.com/installation/introduction)
+
+# Quick start
+
+Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
+
+# Architecture
+
+![Polyaxon architecture](polyaxon_rchitecture.png)
+
+# Documentation
+
+Check out our [documentation](https://docs.polyaxon.com/) to learn more about Polyaxon.
 
 # Project status
 
