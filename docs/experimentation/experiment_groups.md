@@ -94,6 +94,9 @@ This command validate the polyaxon file, and the option `-m` returns the matrix 
     For more details about this command please run `polyaxon check --help`,
     or check the [command reference](/polyaxon_cli/commands/check)
 
+!!! tip "Polyaxon append the matrix value combination to your declarations and export under the environment variable name `POLYAXON_DECLARATIONS`"
+    Check how you can [get the cluster definition](reference_polyaxon_helper) to use it with your models.
+
 ## Running a group of experiments
 
 To run this polyaxonfile execute
