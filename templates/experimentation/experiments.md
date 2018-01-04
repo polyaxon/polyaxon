@@ -269,6 +269,11 @@ and provided a specific resources by index for the third worker, because we don'
 And finally we defined the resources requirement of our single ps node.
 We could have also used `default_ps_resources` instead.
 
+Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
+
+!!! tip "Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER`"
+    Check how you can [get the cluster definition](reference_polyaxon_helper) to use it with your distributed deep learning model.
+
 To run this distributed experiment, run
 
 ```bash

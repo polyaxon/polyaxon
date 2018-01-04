@@ -49,4 +49,6 @@ Once you have a Polyaxon deployment, you can learn how to organize your [experim
  * [Command Line Interface Reference](polyaxon_cli/introduction)
  * [Polyaxon Specification Reference](polyaxonfile_specification/introduction)
  * [Polyaxon-Lib Reference](polyaxon_lib/introduction)
- * [Helm Chart Configuration Reference](reference_polyaxon_helm)
+ * [Polyaxon Helm Chart Configuration Reference](reference_polyaxon_helm)
+ * [Polyaxon Client Reference](reference_polyaxon_client)
+ * [Polyaxon Helper Reference](reference_polyaxon_helper)

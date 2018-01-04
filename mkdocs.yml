@@ -103,6 +103,8 @@ pages:
   - Sections: polyaxonfile_specification/sections.md
   - Model Sections: polyaxonfile_specification/model_sections.md
 - Reference Polyaxon Helm: reference_polyaxon_helm.md
+- Reference Polyaxon Client: reference_polyaxon_client.md
+- Reference Polyaxon Helper: reference_polyaxon_helper.md
 - Reference Polyaxon Lib:
   - Introduction: polyaxon_lib/introduction.md
   - Models: polyaxon_lib/models.md
