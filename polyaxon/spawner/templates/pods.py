@@ -8,12 +8,10 @@ from django.conf import settings
 from kubernetes import client
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.utils import TaskType
 
 from polyaxon_k8s import constants as k8s_constants
 
 from spawner.templates import constants
-from spawner.templates.persistent_volumes import get_vol_path
 
 
 def get_gpu_volume_mounts():
@@ -73,9 +71,9 @@ def get_resources(resources):
 
     if resources.cpu:
         if resources.cpu.limits:
-            limits['memory'] = resources.memory.limits
+            limits['memory'] = '{}Mi'.format(resources.memory.limits)
         if resources.cpu.request:
-            limits['memory'] = resources.memory.request
+            limits['memory'] = '{}Mi'.format(resources.memory.request)
 
     if resources.gpu:
         if resources.gpu.limits:
