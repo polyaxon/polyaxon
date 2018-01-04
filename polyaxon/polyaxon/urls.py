@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from polyaxon import views
 
@@ -26,6 +27,7 @@ urlpatterns = [
     url(r'^_health/?$', views.HealthView.as_view(), name='health_check'),
     url(r'^{}/'.format(API_V1), include(api_patterns, namespace='v1')),
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^.*/', views.ReactIndexView.as_view(), name='react-index'),
 ]
 
 if settings.DEBUG:
