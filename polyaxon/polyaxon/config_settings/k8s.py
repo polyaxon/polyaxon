@@ -7,6 +7,8 @@ from kubernetes import client
 from polyaxon.utils import config
 
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
+POLYAXON_K8S_APP_NAME = config.get_string('POLYAXON_K8S_APP_NAME')
+POLYAXON_K8S_APP_SECRET_NAME = POLYAXON_K8S_APP_NAME + 'secret'
 CLUSTER_ID = config.get_string('POLYAXON_CLUSTER_ID', is_optional=True)
 
 K8S_AUTHORISATION = config.get_string('POLYAXON_K8S_AUTHORISATION',

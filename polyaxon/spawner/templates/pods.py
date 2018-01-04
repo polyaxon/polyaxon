@@ -139,6 +139,12 @@ class PodManager(object):
         return client.V1EnvVar(
             name=constants.CLUSTER_CONFIG_MAP_KEY_NAME, value_from=value)
 
+    def get_from_app_secret(self, key_name):
+        secret_key_ref = client.V1SecretKeySelector(name=settings.POLYAXON_K8S_APP_SECRET_NAME,
+                                                    key=key_name)
+        value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
+        return client.V1EnvVar(name=key_name, value_from=value)
+
     def get_pod_container(self,
                           volume_mounts,
                           env_vars=None,
@@ -169,6 +175,7 @@ class PodManager(object):
             client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
             client.V1EnvVar(name='POLYAXON_POD_ID', value=job_name),
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
+            self.get_from_app_secret('POLYAXON_SECRET_KEY')
         ]
         for k, v in six.iteritems(self.sidecar_config):
             env_vars.append(client.V1EnvVar(name=k, value=v))
