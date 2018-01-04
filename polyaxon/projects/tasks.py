@@ -3,6 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from random import shuffle
+
+from polyaxon_schemas.utils import SEARCH_METHODS
+
 from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
 from experiments.tasks import build_experiment
@@ -27,6 +31,10 @@ def start_group_experiments(self, experiment_group_id):
 
     pending_experiments = experiment_group.pending_experiments
     experiment_to_start = experiment_group.n_experiments_to_start
+
+    if experiment_group.search_method == SEARCH_METHODS.RANDOM:
+        shuffle(pending_experiments)
+
     while experiment_to_start > 0 and pending_experiments:
         experiment = pending_experiments.pop()
         build_experiment.delay(experiment_id=experiment.id)

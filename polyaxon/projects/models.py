@@ -92,6 +92,12 @@ class ExperimentGroup(DiffModel, DescribableModel):
             return self.specification.settings.concurrent_experiments
         return 1
 
+    @cached_property
+    def search_method(self):
+        if self.specification.settings:
+            return self.specification.settings.search_method
+        return None
+
     @property
     def pending_experiments(self):
         experiments = []
