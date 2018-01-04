@@ -29,6 +29,8 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     experiment = fields.SerializerMethodField()
     experiment_name = fields.SerializerMethodField()
+    started_at = fields.DateTimeField(read_only=True)
+    finished_at = fields.DateTimeField(read_only=True)
 
     class Meta:
         model = ExperimentJob
@@ -65,6 +67,8 @@ class ExperimentSerializer(serializers.ModelSerializer):
     project_name = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     original = fields.SerializerMethodField()
+    started_at = fields.DateTimeField(read_only=True)
+    finished_at = fields.DateTimeField(read_only=True)
 
     class Meta:
         model = Experiment
