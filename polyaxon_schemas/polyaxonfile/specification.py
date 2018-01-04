@@ -214,6 +214,10 @@ class Specification(BaseSpecification):
         return self.validated_data.get(self.EVAL, None)
 
     @cached_property
+    def declarations(self):
+        return self.validated_data.get(self.DECLARATIONS, None)
+
+    @cached_property
     def cluster_def(self):
         cluster = {
             TaskType.MASTER: 1,
