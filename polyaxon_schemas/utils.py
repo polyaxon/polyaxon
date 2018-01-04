@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import ast
 
-import pytz
 import six
 from datetime import datetime
 from collections import Mapping
