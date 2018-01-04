@@ -8,6 +8,7 @@ from polyaxon_client.experiment_group import ExperimentGroupClient
 from polyaxon_client.jobs import JobClient
 from polyaxon_client.project import ProjectClient
 from polyaxon_client.version import VersionClient
+from polyaxon_client.user import UserClient
 
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.config import GlobalConfigManager
@@ -55,3 +56,7 @@ class PolyaxonClients(object):
     @property
     def job(self):
         return JobClient(**self.params)
+
+    @property
+    def user(self):
+        return UserClient(**self.params)

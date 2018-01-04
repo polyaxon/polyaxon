@@ -5,6 +5,7 @@ import click
 
 from polyaxon_cli.cli.job import job
 from polyaxon_cli.cli.run import run
+from polyaxon_cli.cli.superuser import superuser
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.cli.cluster import cluster
 from polyaxon_cli.cli.experiment import experiment
@@ -14,6 +15,7 @@ from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.auth import login, logout, whoami
 from polyaxon_cli.cli.config import config
 from polyaxon_cli.cli.project import project
+from polyaxon_cli.cli.user import user
 from polyaxon_cli.cli.version import version, upgrade, check_cli_version
 from polyaxon_cli.logger import configure_logger
 from polyaxon_cli.managers.config import GlobalConfigManager
@@ -42,6 +44,8 @@ def cli(context, verbose):
 cli.add_command(login)
 cli.add_command(logout)
 cli.add_command(whoami)
+cli.add_command(user)
+cli.add_command(superuser)
 cli.add_command(upgrade)
 cli.add_command(version)
 cli.add_command(config)
