@@ -168,7 +168,7 @@ class ExperimentStatus(models.Model):
         ordering = ['created_at']
 
     def __str__(self):
-        return self.status
+        return '{} <{}>'.format(self.experiment.unique_name, self.status)
 
 
 class ExperimentMetric(models.Model):
@@ -199,6 +199,9 @@ class ExperimentJob(DiffModel):
     class Meta:
         ordering = ['sequence']
         unique_together = (('experiment', 'sequence'),)
+
+    def __str__(self):
+        return self.unique_name
 
     @property
     def unique_name(self):
@@ -272,7 +275,7 @@ class ExperimentJobStatus(models.Model):
     details = JSONField(null=True, blank=True, default={})
 
     def __str__(self):
-        return self.status
+        return '{} <{}>'.format(self.job.unique_name, self.status)
 
     class Meta:
         ordering = ['created_at']

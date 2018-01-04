@@ -5,7 +5,24 @@ from django.contrib import admin
 
 from experiments.models import Experiment, ExperimentStatus, ExperimentJob, ExperimentJobStatus
 
-admin.site.register(Experiment)
-admin.site.register(ExperimentStatus)
-admin.site.register(ExperimentJob)
-admin.site.register(ExperimentJobStatus)
+
+class ExperimentAdmin(admin.ModelAdmin):
+    readonly_fields = ('sequence', 'unique_name', 'last_status', 'created_at', 'updated_at')
+
+
+class ExperimentStatusAdmin(admin.ModelAdmin):
+    readonly_fields = ('created_at',)
+
+
+class ExperimentJobAdmin(admin.ModelAdmin):
+    readonly_fields = ('sequence', 'unique_name', 'last_status', 'created_at', 'updated_at')
+
+
+class ExperimentJobStatusAdmin(admin.ModelAdmin):
+    readonly_fields = ('created_at',)
+
+
+admin.site.register(Experiment, ExperimentAdmin)
+admin.site.register(ExperimentStatus, ExperimentStatusAdmin)
+admin.site.register(ExperimentJob, ExperimentJobAdmin)
+admin.site.register(ExperimentJobStatus, ExperimentJobStatusAdmin)
