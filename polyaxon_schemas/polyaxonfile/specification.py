@@ -389,8 +389,13 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def experiments_def(self):
-        concurrent_experiments = self.settings.concurrent_experiments if self.settings else 1
-        return self.matrix_space, concurrent_experiments
+        if self.settings:
+            concurrent_experiments = self.settings.concurrent_experiments
+            search_method = self.settings.search_method
+        else:
+            concurrent_experiments = 1
+            search_method = None
+        return self.matrix_space, concurrent_experiments, search_method
 
     @cached_property
     def matrix_declarations(self):
