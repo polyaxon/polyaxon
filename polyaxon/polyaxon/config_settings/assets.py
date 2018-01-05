@@ -17,7 +17,7 @@ REPOS_ROOT = config.get_string('POLYAXON_DIRS_REPOS')
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    ROOT_DIR.child('client'),
+    ROOT_DIR.child('client').child('public'),
 )
 
 

@@ -2,14 +2,10 @@
 {% load i18n %}
 {% load staticfiles %}
 
-{% block header_libs %}
-<link href="{{ STATIC_URL }}public/css/global.css" media="all" rel="stylesheet" type="text/css"/>
-{% endblock %}
-
 {% block index %}
 <header id="top">
     <div id="top-brand">
-        <a href="/" title="home"><img src="{{ STATIC_URL }}public/images/logo_white.svg" alt="Polyaxon">Polyaxon</a>
+        <a href="/" title="home"><img src="{% static 'images/logo_white.svg' %}" alt="Polyaxon">Polyaxon</a>
     </div>
     <nav id="top-nav-main">
         <ul>

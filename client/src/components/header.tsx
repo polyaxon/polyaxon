@@ -14,7 +14,7 @@ function Header() {
           <Navbar.Brand>
             <LinkContainer to={getHomeUrl()} className="nav-link brand">
               <a>
-                <img src="/static/public/images/logo_white.svg" alt="Polyaxon"/>
+                <img src="/static/images/logo_white.svg" alt="Polyaxon"/>
               </a>
             </LinkContainer>
           </Navbar.Brand>
