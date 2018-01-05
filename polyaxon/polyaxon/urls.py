@@ -8,7 +8,6 @@ from django.views.generic import TemplateView
 
 from polyaxon import views
 
-
 API_V1 = 'api/v1'
 
 api_patterns = [
