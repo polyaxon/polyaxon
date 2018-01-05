@@ -2,7 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import logging
+import uuid
 
+import requests
+from django.conf import settings
 from polyaxon_k8s.manager import K8SManager
 
 from polyaxon.celery_api import app as celery_app
@@ -12,7 +15,7 @@ from clusters.models import Cluster, ClusterNode
 logger = logging.getLogger('polyaxon.tasks.clusters')
 
 
-@celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO, time_limit=150)
+@celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO, time_limit=150, ignore_result=True)
 def update_system_info():
 
     k8s_manager = K8SManager(in_cluster=True)
@@ -23,7 +26,7 @@ def update_system_info():
         cluster.save()
 
 
-@celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES, time_limit=150)
+@celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES, time_limit=150, ignore_result=True)
 def update_system_nodes():
 
     k8s_manager = K8SManager(in_cluster=True)
@@ -54,6 +57,22 @@ def update_system_nodes():
             current_node.save()
 
 
-@celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES_GPUS, time_limit=150)
+@celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES_GPUS,
+                 time_limit=150,
+                 ignore_result=True)
 def update_system_node_gpus():
     pass
+
+
+@celery_app.task(name=CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE, time_limits=60, ignore_result=True)
+def cluster_analytics():
+    cluster_uuid = Cluster.load().uuid.hex
+    notification = uuid.uuid4()
+    notification_url = settings.POLYAXON_NOTIFICATION_ALIVE_URL.format(
+        cluster_uuid=cluster_uuid,
+        notification=notification,
+        version=settings.CHART_VERSION)
+    try:
+        requests.get(notification_url)
+    except requests.RequestException:
+        pass

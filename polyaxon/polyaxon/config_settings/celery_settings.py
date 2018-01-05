@@ -35,6 +35,7 @@ class Intervals(object):
     CLUSTERS_UPDATE_SYSTEM_NODES = config.get_int(
         'POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES',
         is_optional=True) or 150
+    CLUSTERS_NOTIFICATION_ALIVE = 150
 
     @staticmethod
     def get_schedule(interval):
@@ -65,6 +66,7 @@ class CeleryTasks(object):
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_UPDATE_SYSTEM_NODES_GPUS = 'clusters_update_system_nodes_gpus'
+    CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
     EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
@@ -113,6 +115,7 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.EXPERIMENTS_SET_METRICS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
+    CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
     CeleryTasks.EVENTS_HANDLE_RESOURCES: {'queue': CeleryQueues.EVENTS_RESOURCES},
     CeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
@@ -136,6 +139,13 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
         'options': {
             'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
+        },
+    },
+    CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE + '_beat': {
+        'task': CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE,
+        'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
         },
     },
 }

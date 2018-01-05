@@ -72,7 +72,7 @@ def build_experiment(self, experiment_id):
     start_experiment.delay(experiment_id=experiment_id)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_START)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_START, ignore_result=True)
 def start_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -81,7 +81,7 @@ def start_experiment(experiment_id):
     scheduler.start_experiment(experiment)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_STOP)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
 def stop_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -90,13 +90,13 @@ def stop_experiment(experiment_id):
     scheduler.stop_experiment(experiment, update_status=True)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
 def check_experiment_status(experiment_uuid):
     experiment = Experiment.objects.get(uuid=experiment_uuid)
     experiment.update_status()
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_SET_METRICS)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
 def set_metrics(experiment_uuid, created_at, metrics):
     created_at = TIME_ZONE.localize(created_at)
     try:

@@ -17,7 +17,7 @@ from repos.models import Repo
 logger = logging.getLogger('polyaxon.tasks.repos')
 
 
-@celery_app.task(name=CeleryTasks.REPOS_HANDLE_FILE_UPLOAD)
+@celery_app.task(name=CeleryTasks.REPOS_HANDLE_FILE_UPLOAD, ignore_result=True)
 def handle_new_files(user_id, repo_id, tar_file_name):
     if not tarfile.is_tarfile(tar_file_name):
         raise ValueError('Received wrong file format.')

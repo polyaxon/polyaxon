@@ -34,7 +34,6 @@ INVITATION_TIMEOUT_DAYS = 30
 SESSION_COOKIE_AGE = 24 * 60 * 60  # 24 hours
 SESSION_COOKIE_HTTPONLY = True
 
-
 DEFAULT_DB_ENGINE = 'django.db.backends.postgresql_psycopg2'
 DATABASES = {
     'default': {
@@ -68,7 +67,6 @@ if JS_DEBUG:
 
     LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.js_debug_processor', )
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -83,15 +81,7 @@ TEMPLATES = [
     },
 ]
 
-
-SHORTNAME_BLACKLIST = (
-    'admin',
-    'dashboard',
-    'index',
-    'log',
-    'logs',
-    'metric',
-    'metrics',
-    'perspectives',
-    'portfolio',
-)
+POLYAXON_NOTIFICATION_ALIVE_URL = ("https://www.google-analytics.com/collect?"
+                                   "v=1&tid=UA-89493331-1&cid={cluster_uuid}&t=pageview&"
+                                   "dp=%2Fplatform&ds=app&z={notification}&"
+                                   "an=polyaxon&aid=com.polyaxon.app&av={version}")
