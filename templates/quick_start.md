@@ -1,8 +1,8 @@
 # Polyaxon with an introductory example
 
 
-Let’s look at an example of how easy you can use Polyaxon for your deep learning experiments.
-This example assumes that Polyaxon is [installed](installation/introduction) and running.
+Let’s look at an example of how you can use Polyaxon for your deep learning experiments.
+This example assumes that both Polyaxon is [installed](installation/introduction) and running.
 And you are logged in to your Polyaxon account through the [polyaxon-cli](polyaxon_cli/commands)
 
 1. The first step is to create a project, you can do that with the `Polyaxon-dashboard` or with the `polyaxon-cli`
@@ -23,7 +23,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     mnsit.py README.me LICENSE
     ```
 
-3. Initialize the project with same name that you used when you created the project in Polyaxon
+3. Initialize the project with the same name that you used when you created the project in Polyaxon
 
     ```bash
     $ polyaxon init mnist
@@ -31,7 +31,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Polyaxonfile was created successfully `polyaxonfile.yml`
     ```
 
-4. Let's open the created `polyaxon.yml` and set the minimum needed to start an experiment:
+4. Let's open the created `polyaxon.yml` and set the minimum configuration needed to start an experiment:
 
     ```yaml
     ---
@@ -47,8 +47,8 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     This configuration specifies:
 
-       * the Polyaxon specification `version` we are using.
-       * the `project` namespace we want to run the experiment inside.
+       * The Polyaxon specification `version` we are using.
+       * The `project` namespace we want to run the experiment inside.
        * The `run` section to build and execute our code, in this case we want to run our code with this tensorflow specific docker image.
 
 5. Now let's upload our code to create a commit on Polyaxon
@@ -57,7 +57,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     $ polyaxon upload
     ```
 
-6. And start the experiment
+6. Then start the experiment
 
     ```bash
     $ polyaxon run
@@ -76,7 +76,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     1 | admin.cats-vs-dogs.7 | admin | admin.cats-vs-dogs | Scheduled | seconds ago
 
 
-8. Check experiment logs
+8. Finally, check the experiment logs
 
     ```bash
     $ polyaxon experiment logs 1
@@ -88,12 +88,12 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ...
     ```
 
-Congratulations! You've trained your first experiment with Polyaxon. Behind the scene a couple of things happened:
+Congratulations! You've trained your first experiment with Polyaxon. Behind the scene a couple of things have happened:
 
  * You uploaded your code, and created a git commit for this version of your code
- * You built a docker image with latest version of your code
+ * You built a docker image with the latest version of your code
  * You ran the image with the specified command in the polyaxonfile
  * You persisted your logs and outputs to your volume claims
 
 To gain a deeper understanding on how polyaxon can help you iterate faster with your experiments,
-familiarize yourself with the [experimentation workflow](experimentation/concepts)
+please take some time to familiarize yourself with the [experimentation workflow](experimentation/concepts)

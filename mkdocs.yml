@@ -31,8 +31,11 @@ extra:
 extra_css:
     - css/style.css
 
+google_analytics:
+  - 'UA-89493331-1'
+  - 'auto'
+
 dev_addr: '0.0.0.0:8003'
-google_analytics: ['UA-89493331-1', 'polyaxon.com']
 copyright: Copyright &copy; 2018 Polyaxon
 
 markdown_extensions:

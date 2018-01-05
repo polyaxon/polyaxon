@@ -10,8 +10,8 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
 by managing workloads with smart container and node management,
 and turning GPU servers into shared, self-service resources for your team or organization.
 
-Here  you will find a comprehensive guides for setting up Polyaxon on your cluster,
-and information for training and monitoring your deep learning and AI applications.
+Here  you will find a comprehensive guide for setting up Polyaxon on your cluster,
+and information for training and monitoring your deep learning applications.
 
 We do our best to make this documentation clear and user friendly,
 but If you see anything that is incorrect or have any questions,
@@ -22,9 +22,9 @@ feel free to reach out at the [issues page](https://github.com/polyaxon/polyaxon
 ## Get Started
 
 This documentation start with quick start example,
-and then walks through the steps required to install and configure a complete Polyaxon deployment in
+and then walks through the steps required to install and configure a complete Polyaxon deployment either in
 the cloud or on your own infrastructure.
-Using Kubernetes and the Polyaxon Helm chart provides sensible defaults for an initial deployment.
+Kubernetes and the Polyaxon Helm chart provides sensible defaults for an initial deployment.
 
 To get started, go to [Quick start with Polyaxon](quick_start) to start your first experiment.
 
