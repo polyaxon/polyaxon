@@ -14,10 +14,10 @@ from users import views
 
 if registration.REGISTRATION_WORKFLOW == registration.REGISTRATION_SUPERUSER_VALIDATION_WORKFLOW:
     urlpatterns = [
-        url(r'^register/$',
+        url(r'^register/?$',
             views.SimpleRegistrationView.as_view(),
             name='registration_simple_register'),
-        url(r'^register/complete/$',
+        url(r'^register/complete/?$',
             TemplateView.as_view(
                 template_name='users/registration_simple_complete.html'
             ),

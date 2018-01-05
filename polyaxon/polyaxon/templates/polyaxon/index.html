@@ -3,36 +3,70 @@
 {% load staticfiles %}
 
 {% block index %}
-<header id="top">
-    <div id="top-brand">
-        <a href="/" title="home"><img src="{% static 'images/logo_white.svg' %}" alt="Polyaxon">Polyaxon</a>
-    </div>
-    <nav id="top-nav-main">
-        <ul>
-            <li>
-                <a href="https://docs.polyaxon.com">Docs</a>
-            </li>
-            <li>
-                <a href="https://docs.polyaxon.com">Tutorials</a>
-            </li>
-            <li>
-                <a href="https://docs.polyaxon.com">Examples</a>
-            </li>
-            <li>
-                <a href="https://docs.polyaxon.com">Blog</a>
-            </li>
-            <li>
-                <a href="/about">About</a>
-            </li>
-        </ul>
-    </nav>
+    <header id="top">
+        <div id="top-brand">
+            <a href="/" title="home"><img src="{% static 'images/logo_white.svg' %}" alt="Polyaxon">Polyaxon</a>
+        </div>
+        <nav id="top-nav-main">
+            <ul>
+                <li>
+                    <a href="https://docs.polyaxon.com">Docs</a>
+                </li>
+                <li>
+                    <a href="https://docs.polyaxon.com/tutorials/">Tutorials</a>
+                </li>
+                <li>
+                    <a href="github.com/polyaxon/polyaxon_examples">Examples</a>
+                </li>
+                <li>
+                    <a href="https://docs.polyaxon.com">Blog</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
 
-</header>
-<div class="container container-fluid">
-    {% block content %}{% endblock %}
-</div>
+    </header>
+    <div class="container container-fluid">
+        {% block content %}
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="jumbotron jumbotron-action">
+                        <h3>Welcome to polyaxon</h3>
+                        <ul>
+                            <li>
+                                <a href="/app/">To go to your dashboard</a>
+                            </li>
+                            <li>
+                                <a href="/users/register">To register</a>
+                            </li>
+                        </ul>
+                        <h3>Help</h3>
+                        <ul>
+                            <li>
+                                <a href="https://docs.polyaxon.com/quick_start/">Quick Start</a>
+                            </li>
+                            <li>
+                                <a href="https://docs.polyaxon.com/tutorials/">Tutorials</a>
+                            </li>
+                            <li>
+                                <a href="https://docs.polyaxon.com/">Documentation</a>
+                            </li>
+                            <li>
+                                <a href="github.com/polyaxon/polyaxon_examples">Examples</a>
+                            </li>
+                            <li>
+                                <a href="mailto:contact@polyaxon.com">contact us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
 {% endblock %}
 
 {% block footer %}
-{% include "polyaxon/footer.html" %}
+    {% include "polyaxon/footer.html" %}
 {% endblock %}
