@@ -21,6 +21,10 @@ class ReactIndexView(TemplateView):
     template_name = "polyaxon/react_index.html"
 
 
+class Handler404View(TemplateView):
+    template_name = "polyaxon/404.html"
+
+
 class HealthView(APIView):
     authentication_classes = ()
     throttle_classes = (HealthRateThrottle,)

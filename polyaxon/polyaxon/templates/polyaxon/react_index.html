@@ -5,6 +5,9 @@
 {% block index %}
 <div id="root"></div>
 {% endblock %}
+{% block footer %}
+{% include "polyaxon/footer.html" %}
+{% endblock %}
 
 {% block scripts %}
 <script src="{% static 'dist/js/react.min.js' %}"></script>

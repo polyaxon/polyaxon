@@ -203,3 +203,7 @@ a.brand {
     background: rgba(151, 173, 202, 0.06);
     margin: 5em 0 5em 0;
 }
+
+.jumbotron #main {
+    text-align: center;
+}

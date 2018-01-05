@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^{}/'.format(API_V1), include(api_patterns, namespace='v1')),
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^app/?.*/', views.ReactIndexView.as_view(), name='react-index'),
+    url(r'^.*', views.Handler404View.as_view(), name='not_found')
 ]
 
 if settings.DEBUG:

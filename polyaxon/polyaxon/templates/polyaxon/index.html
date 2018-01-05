@@ -26,9 +26,13 @@
             </li>
         </ul>
     </nav>
-</header>
 
+</header>
 <div class="container container-fluid">
     {% block content %}{% endblock %}
 </div>
+{% endblock %}
+
+{% block footer %}
+{% include "polyaxon/footer.html" %}
 {% endblock %}
