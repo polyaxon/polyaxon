@@ -10,9 +10,8 @@
     "_copy_fonts": "cp -r node_modules/font-awesome/fonts public/dist/",
     "copy": "npm run _copy_react && npm run _copy_css && npm run _copy_fonts",
     "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output public/dist/js/bundle.min.js",
-    "dev": "webpack-dev-server --host 0.0.0.0 --port 8001 --env.dev  --output-public-path=dist/",
-    "build": "webpack",
-    "build-prod": "npm run clean && webpack --env.prod && npm run minify && npm run copy"
+    "dev": "webpack-dev-server --host 0.0.0.0 --port 8001 --env.dev --config webpack.config.dev.js  --output-public-path=dist/",
+    "build": "npm run clean && webpack --env.prod --config webpack.config.prod.js && npm run minify && npm run copy"
   },
   "author": "mourad mourafiq",
   "license": "MIT",

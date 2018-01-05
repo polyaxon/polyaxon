@@ -25,7 +25,10 @@ if [ $? -eq 0 ]; then
         $DIR/npm install
 
         echo "Compiling ts to js..."
-        $DIR/npm run build-prod
+        $DIR/npm run build
+
+        echo "Removing static..."
+        rm -rf static
     fi
 
     # echo "Collecting static assets..."
