@@ -2,7 +2,7 @@
 ## LocallyConnected1DConfig
 
 ```python
-polyaxon_schemas.layers.local.LocallyConnected1DConfig(filters, kernel_size, strides=1, padding='valid', data_format=None, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10d953e80>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10d953e48>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.local.LocallyConnected1DConfig(filters, kernel_size, strides=1, padding='valid', data_format=None, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a630ef0>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a630eb8>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 Locally-connected layer for 1D inputs.
@@ -86,7 +86,7 @@ LocallyConnected1D:
 ## LocallyConnected2DConfig
 
 ```python
-polyaxon_schemas.layers.local.LocallyConnected2DConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10d961470>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10d961438>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.local.LocallyConnected2DConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a63e4e0>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a63e4a8>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 Locally-connected layer for 2D inputs.
