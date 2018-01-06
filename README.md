@@ -21,7 +21,7 @@ Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to s
 
 # Architecture
 
-![Polyaxon architecture](polyaxon_rchitecture.png)
+![Polyaxon architecture](polyaxon_architecture.png)
 
 # Documentation
 
