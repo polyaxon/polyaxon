@@ -7,7 +7,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./DockerfileDev
+      dockerfile: ./Dockerfile
     environment:
       WAIT_FOR_PORTS: "postgres:5432"
       TESTING: 1

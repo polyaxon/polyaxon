@@ -26,7 +26,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./DockerfileDev
+      dockerfile: ./Dockerfile
     command: python3 polyaxon/manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
