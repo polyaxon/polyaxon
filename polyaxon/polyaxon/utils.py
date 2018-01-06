@@ -150,8 +150,14 @@ class SettingConfig(object):
         raise TypeError(key, value, target_type)
 
 
-config = SettingConfig.read_configs([
+config_values = [
     '{}/defaults.json'.format(ENV_VARS_DIR),
-    '{}/test.json'.format(ENV_VARS_DIR) if TESTING else '{}/local.json'.format(ENV_VARS_DIR),
     os.environ,
-])
+]
+
+if TESTING:
+    config_values.append('{}/test.json'.format(ENV_VARS_DIR))
+elif os.path.isfile('{}/local.json'.format(ENV_VARS_DIR)):
+    config_values.append('{}/local.json'.format(ENV_VARS_DIR))
+
+config = SettingConfig.read_configs(config_values)
