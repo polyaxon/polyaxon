@@ -1,1 +1,1 @@
-export const BASE_URL = location.protocol + location.host;
+export const BASE_URL = location.origin + "/api/v1";
