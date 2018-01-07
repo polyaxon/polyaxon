@@ -106,10 +106,11 @@ polyaxon/polyaxon/env_vars/local.json
 
 # project
 setup.log
-static/
 reports/
 logs/
 media/
+static/debug_toolbar
+static/rest_framework
 
 # npm modules and transpiled typescript files
 client/dist/
