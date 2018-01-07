@@ -26,8 +26,8 @@ function Header() {
           </Nav>
           <Nav pullRight>
             <NavDropdown eventKey={3} title="Profile" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}>Docs</MenuItem>
-              <MenuItem eventKey={3.2}>Github</MenuItem>
+              <MenuItem eventKey={3.1} href="https://docs.polyaxon.com/">Docs</MenuItem>
+              <MenuItem eventKey={3.2} href="https://github.com/polyaxon/">Github</MenuItem>
               <MenuItem divider />
               <MenuItem eventKey={3.3} href={getLogoutUrl()}>Logout</MenuItem>
             </NavDropdown>
