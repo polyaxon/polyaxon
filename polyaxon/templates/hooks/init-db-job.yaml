@@ -26,7 +26,7 @@ spec:
       - name: init-db-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
-        command: ["python3", "api/manage.py", "migrate"]
+        args: ["migrate"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}

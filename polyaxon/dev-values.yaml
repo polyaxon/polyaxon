@@ -1,5 +1,3 @@
-debug: 1
-
 hooks:
   loadFixtures: true
 
@@ -29,9 +27,6 @@ rabbitmq:
 registry:
   persistence:
     size: 1Gi
-
-
-
 
 persistence:
   data:
@@ -64,3 +59,40 @@ persistence:
     size: 10Gi
     mountPath: "/tmp/plx/upload"
     subPath: ""
+
+api:
+  imageTag: master
+  imagePullPolicy: Always
+
+apiEvents:
+  imageTag: master
+  imagePullPolicy: Always
+
+workers:
+  scheduler:
+    imageTag: master
+    imagePullPolicy: Always
+  events:
+    imageTag: master
+    imagePullPolicy: Always
+
+beat:
+  imageTag: master
+  imagePullPolicy: Always
+
+events:
+  namespace:
+    imageTag: master
+    imagePullPolicy: Always
+
+  statuses:
+    imageTag: master
+    imagePullPolicy: Always
+
+  resources:
+    imageTag: master
+    imagePullPolicy: Always
+
+hooks:
+  imageTag: master
+  imagePullPolicy: Always

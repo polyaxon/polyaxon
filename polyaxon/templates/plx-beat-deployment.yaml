@@ -42,8 +42,6 @@ spec:
       - name: {{ .Chart.Name }}-beat
         image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
         imagePullPolicy: {{ .Values.beat.imagePullPolicy }}
-        workingDir: /polyaxon/api
-        args: ["celery", "-A", "api", "beat", "--loglevel=DEBUG"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}

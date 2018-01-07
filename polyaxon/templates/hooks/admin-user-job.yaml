@@ -26,7 +26,7 @@ spec:
       - name: admin-user-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
-        command: ["python3", "api/manage.py", "createuser", "--username={{ .Values.user.username }}", "--email={{ .Values.user.email }}", "--password=$(POLYAXON_ADMIN_PASSWORD)", "--superuser"]
+        args: ["createuser", "--username={{ .Values.user.username }}", "--email={{ .Values.user.email }}", "--password=$(POLYAXON_ADMIN_PASSWORD)", "--superuser"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}

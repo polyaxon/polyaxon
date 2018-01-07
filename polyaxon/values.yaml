@@ -9,7 +9,7 @@ user:
   username: "root"
   emailFrom: <root@polyaxon.local>
   email: "root@polyaxon.local"
-  password: "root"
+  password: "rootpassword"
 
 dirs:
   nvidia: "/usr/local/nvidia/lib64"
@@ -59,7 +59,7 @@ persistence:
 
 api:
   image: polyaxon/polyaxon-api
-  imageTag: 0.0.1
+  imageTag: 0.0.2
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -78,8 +78,8 @@ api:
     nodePort: 31811
 
 apiEvents:
-  image: polyaxon/polyaxon-api
-  imageTag: 0.0.1
+  image: polyaxon/polyaxon-api-events
+  imageTag: 0.0.2
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -97,21 +97,34 @@ apiEvents:
     nodePort: 31812
 
 workers:
-  image: polyaxon/polyaxon-api
-  imageTag: 0.0.1
-  imagePullPolicy: IfNotPresent
-  replicas: 1
-  resources:
-    limits:
-      cpu: 300m
-      memory: 256Mi
-    requests:
-      cpu: 100m
-      memory: 100Mi
+  scheduler:
+    image: polyaxon/polyaxon-workers-scheduler
+    imageTag: 0.0.2
+    imagePullPolicy: IfNotPresent
+    replicas: 1
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+  events:
+    image: polyaxon/polyaxon-workers-events
+    imageTag: 0.0.2
+    imagePullPolicy: IfNotPresent
+    replicas: 1
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
 
 beat:
-  image: polyaxon/polyaxon-api
-  imageTag: 0.0.1
+  image: polyaxon/polyaxon-beat
+  imageTag: 0.0.2
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -125,8 +138,8 @@ beat:
 events:
   namespace:
     enabled: true
-    image: polyaxon/polyaxon-api
-    imageTag: 0.0.1
+    image: polyaxon/polyaxon-monitor-namespace
+    imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
     resources:
@@ -141,8 +154,8 @@ events:
 
   statuses:
     enabled: true
-    image: polyaxon/polyaxon-api
-    imageTag: 0.0.1
+    image: polyaxon/polyaxon-monitor-statuses
+    imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
     resources:
@@ -157,8 +170,8 @@ events:
 
   resources:
     enabled: true
-    image: polyaxon/polyaxon-api
-    imageTag: 0.0.1
+    image: polyaxon/polyaxon-monitor-resources
+    imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
     resources:
@@ -172,8 +185,8 @@ events:
     logSleepInterval: 1
 
 hooks:
-  image: polyaxon/polyaxon-api
-  imageTag: 0.0.1
+  image: polyaxon/polyaxon-manage
+  imageTag: 0.0.2
   imagePullPolicy: IfNotPresent
 
 nodeSelectors: {}

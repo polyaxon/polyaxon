@@ -27,7 +27,7 @@ spec:
       - name: load-fixtures-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
-        command: ["python3", "api/manage.py", "loaddata", "api/fixtures/users.json", "api/fixtures/authtoken.json", "api/fixtures/projects.json"]
+        command: ["loaddata", "api/fixtures/users.json", "api/fixtures/authtoken.json", "api/fixtures/projects.json"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}

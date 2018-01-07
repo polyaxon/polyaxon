@@ -53,4 +53,4 @@ Polyaxon is currently running:
   USER: {{ .Values.user.username }}
   PASSWORD: Get login password with
 
-    kubectl get secret --namespace {{ .Release.Namespace }} {{ template "fullname" . }}-secret -o jsonpath="{.data.user-password}" | base64 --decode
+    kubectl get secret --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-secret -o jsonpath="{.data.user-password}" | base64 --decode

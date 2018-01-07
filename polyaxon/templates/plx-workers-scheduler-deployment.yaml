@@ -12,7 +12,7 @@ metadata:
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.worker }}
 spec:
-  replicas: {{ .Values.workers.replicas }}
+  replicas: {{ .Values.workers.scheduler.replicas }}
   template:
     metadata:
       labels:
@@ -40,13 +40,9 @@ spec:
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
       - name: {{ .Chart.Name }}-workers-scheduler
-        image: "{{ .Values.workers.image }}:{{ .Values.workers.imageTag }}"
-        imagePullPolicy: {{ .Values.workers.imagePullPolicy }}
-        workingDir: /polyaxon/api
-        args: [
-        "celery", "-A", "api", "worker" , "--loglevel=INFO", "--without-mingle", "--without-gossip",
-        "-Q", "{{ .Values.queues.apiExperiments }},{{ .Values.queues.apiClusters }}",
-        "--concurrency=4", "-n default@%h"]
+        image: "{{ .Values.workers.scheduler.image }}:{{ .Values.workers.scheduler.imageTag }}"
+        imagePullPolicy: {{ .Values.workers.scheduler.imagePullPolicy }}
+        args: ["{{ .Values.queues.apiExperiments }},{{ .Values.queues.apiClusters }}", "-n default@%h"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -62,6 +58,6 @@ spec:
         volumeMounts:
         {{ include "volumes.volumeMounts" . | indent 8}}
         resources:
-{{ toYaml .Values.workers.resources | indent 10 }}
+{{ toYaml .Values.workers.scheduler.resources | indent 10 }}
       volumes:
       {{ include "volumes.volumes" . | indent 6 }}

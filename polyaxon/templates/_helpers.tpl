@@ -385,7 +385,7 @@ Config dirs
   value: {{ .Values.persistence.data.mountPath | quote }}
 - name: POLYAXON_DIRS_LOGS
   value: {{ .Values.persistence.logs.mountPath | quote }}
-- name: POLYAXON_DIRS_OUTPUT
+- name: POLYAXON_DIRS_OUTPUTS
   value: {{ .Values.persistence.outputs.mountPath | quote }}
 - name: POLYAXON_DIRS_REPOS
   value: {{ .Values.persistence.repos.mountPath | quote }}

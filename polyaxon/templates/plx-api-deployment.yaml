@@ -42,7 +42,6 @@ spec:
       - name: {{ .Chart.Name }}-api
         image: "{{ .Values.api.image }}:{{ .Values.api.imageTag }}"
         imagePullPolicy: {{ .Values.api.imagePullPolicy }}
-        command: ["uwsgi", "--ini", "uwsgi.ini"]
         ports:
         - containerPort: {{ .Values.api.service.internalPort }}
         env:
@@ -84,8 +83,6 @@ spec:
       - name: {{ .Chart.Name }}-api-events
         image: "{{ .Values.apiEvents.image }}:{{ .Values.apiEvents.imageTag }}"
         imagePullPolicy: {{ .Values.api.imagePullPolicy }}
-        workingDir: /polyaxon/api
-        command: ["python3", "-m", "sanic", "events.api.app", "--host=0.0.0.0", "--port={{ .Values.apiEvents.service.internalPort }}"]
         ports:
         - containerPort: {{ .Values.apiEvents.service.internalPort }}
         env:
