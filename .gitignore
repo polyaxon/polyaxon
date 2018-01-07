@@ -80,16 +80,11 @@ target/
 # pyenv
 .python-version
 
-<<<<<<< HEAD
-# celery beat schedule file
-celerybeat-schedule
-=======
 # locals
 local.py
 
 # celery beat schedule file
 celerybeat-schedule*
->>>>>>> bitbucket-origin/master
 celeryev.pid
 celeryd*pid
 celeryd*log
