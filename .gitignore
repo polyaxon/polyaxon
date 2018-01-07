@@ -109,10 +109,6 @@ data/
 # environment vars
 polyaxon/polyaxon/env_vars/local.json
 
-# django registration
-categories.json
-confusables.json
-
 # project
 setup.log
 static/
