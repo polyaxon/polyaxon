@@ -149,3 +149,5 @@ CELERY_BEAT_SCHEDULE = {
         },
     },
 }
+
+CELERY_BEAT_SCHEDULE_FILENAME = "celerybeat-schedule"

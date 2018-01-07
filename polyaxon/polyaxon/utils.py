@@ -141,7 +141,7 @@ class SettingConfig(object):
                 self._add_key(key, is_secret)
                 return type_convert(value)
             except ValueError:
-                raise ValueError("Cannot convert value `{}` (key: `{}`) "
+                raise ValueError("Cannot convert value `{}` (key: `{}`)"
                                  "to `{}`".format(value, key, target_type))
 
         if isinstance(value, target_type):
