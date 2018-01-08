@@ -86,6 +86,28 @@ $ kubectl --namespace=<NAMESPACE> get pod
 When helm is done deploying Polyaxon it will output some instructions `NOTES`
 
 ```
+NOTES:
+Polyaxon is currently running:1. Get the application URL by running these commands:
+
+  export POLYAXON_HTTP_PORT=$(kubectl get --namespace polyaxon -o jsonpath="{.spec.ports[0].nodePort}" services polyaxon-polyaxon-api)
+
+  export POLYAXON_WS_PORT=$(kubectl get --namespace polyaxon -o jsonpath="{.spec.ports[0].nodePort}" services polyaxon-polyaxon-api-events)
+
+  export POLYAXON_IP=$(kubectl get nodes --namespace polyaxon -o jsonpath="{.items[0].status.addresses[0].address}")
+
+  echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
+
+2. Setup your cli by running theses commands:
+
+  polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT
+
+
+3. Log in with superuser
+
+  USER: root
+  PASSWORD: Get login password with
+
+    kubectl get secret --namespace polyaxon polyaxon-polyaxon-secret -o jsonpath="{.data.user-password}" | base64 --decode
 ```
 
 These notes are important for setting the CLI, and getting access to the dashboard.

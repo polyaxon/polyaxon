@@ -150,7 +150,7 @@ Output shape:
 ## SimpleRNNConfig
 
 ```python
-polyaxon_schemas.layers.recurrent.SimpleRNNConfig(units, activation='tanh', use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a5bfac8>, recurrent_initializer=<polyaxon_schemas.initializations.OrthogonalInitializerConfig object at 0x10a5bfa90>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a5bfb00>, kernel_regularizer=None, recurrent_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, recurrent_constraint=None, bias_constraint=None, dropout=0.0, recurrent_dropout=0.0)
+polyaxon_schemas.layers.recurrent.SimpleRNNConfig(units, activation='tanh', use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a4dca58>, recurrent_initializer=<polyaxon_schemas.initializations.OrthogonalInitializerConfig object at 0x10a4dca20>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a4dca90>, kernel_regularizer=None, recurrent_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, recurrent_constraint=None, bias_constraint=None, dropout=0.0, recurrent_dropout=0.0)
 ```
 
 Fully-connected RNN where the output is to be fed back to input.
@@ -223,7 +223,7 @@ SimpleRNN:
 ## LSTMConfig
 
 ```python
-polyaxon_schemas.layers.recurrent.LSTMConfig(units, activation='tanh', recurrent_activation='hard_sigmoid', use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a6006a0>, recurrent_initializer=<class 'polyaxon_schemas.initializations.OrthogonalInitializerConfig'>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a600668>, unit_forget_bias=True, kernel_regularizer=None, recurrent_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, recurrent_constraint=None, bias_constraint=None, dropout=0.0, recurrent_dropout=0.0)
+polyaxon_schemas.layers.recurrent.LSTMConfig(units, activation='tanh', recurrent_activation='hard_sigmoid', use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a51e630>, recurrent_initializer=<class 'polyaxon_schemas.initializations.OrthogonalInitializerConfig'>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a51e5f8>, unit_forget_bias=True, kernel_regularizer=None, recurrent_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, recurrent_constraint=None, bias_constraint=None, dropout=0.0, recurrent_dropout=0.0)
 ```
 
 Long-Short Term Memory unit - Hochreiter 1997.
@@ -312,7 +312,7 @@ LSTM:
 ## GRUConfig
 
 ```python
-polyaxon_schemas.layers.recurrent.GRUConfig(units, activation='tanh', recurrent_activation='hard_sigmoid', use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a6000b8>, recurrent_initializer=<polyaxon_schemas.initializations.OrthogonalInitializerConfig object at 0x10a600080>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a6000f0>, kernel_regularizer=None, recurrent_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, recurrent_constraint=None, bias_constraint=None, dropout=0.0, recurrent_dropout=0.0)
+polyaxon_schemas.layers.recurrent.GRUConfig(units, activation='tanh', recurrent_activation='hard_sigmoid', use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotUniformInitializerConfig object at 0x10a4dcfd0>, recurrent_initializer=<polyaxon_schemas.initializations.OrthogonalInitializerConfig object at 0x10a51e048>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a51e080>, kernel_regularizer=None, recurrent_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, recurrent_constraint=None, bias_constraint=None, dropout=0.0, recurrent_dropout=0.0)
 ```
 
 Gated Recurrent Unit - Cho et al.
