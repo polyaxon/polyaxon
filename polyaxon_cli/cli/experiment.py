@@ -266,6 +266,7 @@ def statuses(ctx, page):
 
 
 @experiment.command()
+@click.pass_context
 def resources(ctx):
     """Get experiment resources.
 
@@ -289,6 +290,7 @@ def resources(ctx):
 
 
 @experiment.command()
+@click.pass_context
 def logs(ctx):
     """Get experiment logs.
 

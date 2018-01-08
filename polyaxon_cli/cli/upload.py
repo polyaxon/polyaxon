@@ -23,7 +23,7 @@ def upload():
     try:
         PolyaxonClients().project.upload_repo(project.user, project.name, files, files_size)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not upload code for project `{}`.'.format(project))
+        Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
     Printer.print_success('Files uploaded.')
