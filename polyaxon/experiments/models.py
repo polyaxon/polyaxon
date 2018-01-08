@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import uuid
+import os
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
@@ -77,6 +78,13 @@ class Experiment(DiffModel, DescribableModel):
         if self.experiment_group:
             return '{}.{}'.format(self.experiment_group.unique_name, self.sequence)
         return '{}.{}'.format(self.project.unique_name, self.sequence)
+
+    @staticmethod
+    def get_outputs_path(experiment_name):
+        values = experiment_name.split('.')
+        if len(values) == 3:
+            values.insert(2, 'independents')
+        return os.path.join(settings.UPLOAD_ROOT, '/'.join(values))
 
     @cached_property
     def compiled_spec(self):

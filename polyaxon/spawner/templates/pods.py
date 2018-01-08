@@ -156,6 +156,8 @@ class PodManager(object):
             self.get_from_experiment_config_map(constants.CONFIG_MAP_CLUSTER_KEY_NAME),
             self.get_from_experiment_config_map(constants.CONFIG_MAP_DECLARATIONS_KEY_NAME),
             self.get_from_experiment_config_map(constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME),
+            self.get_from_experiment_config_map(
+                constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME)
         ]
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
