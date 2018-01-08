@@ -45,7 +45,7 @@ def _get_experiment(project, experiment_sequence):
 
 def _get_job(experiment, job_sequence):
     try:
-        job = ExperimentJob.objects.get(experiment=experiment, sequcen=job_sequence)
+        job = ExperimentJob.objects.get(experiment=experiment, sequence=job_sequence)
     except (ExperimentJob.DoesNotExist, ValidationError):
         logger.info('Job with experiment:`{}` sequence:`{}` does not exist'.format(
             experiment.unique_name, job_sequence))
