@@ -380,15 +380,15 @@ Config claim_names
 */}}
 {{- define "config.claim_names" }}
 - name: POLYAXON_CLAIM_NAMES_UPLOAD
-  value: {{ .Values.persistence.upload.name | quote }}
+  value: {{ .Values.persistence.upload.name }}
 - name: POLYAXON_CLAIM_NAMES_DATA
-  value: {{ .Values.persistence.data.name | quote }}
+  value: {{ .Values.persistence.data.name }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
-  value: {{ .Values.persistence.logs.name | quote }}
+  value: {{ .Values.persistence.logs.name }}
 - name: POLYAXON_CLAIM_NAMES_OUTPUTS
-  value: {{ .Values.persistence.outputs.name | quote }}
+  value: {{ .Values.persistence.outputs.name }}
 - name: POLYAXON_CLAIM_NAMES_REPOS
-  value: {{ .Values.persistence.repos.name | quote }}
+  value: {{ .Values.persistence.repos.name }}
 {{- end -}}
 
 {{/*
@@ -463,40 +463,40 @@ Volume mounts
 Volumes
 */}}
 {{- define "volumes.volumes" }}
-- name: {{ template "polyaxon.fullname" . }}-upload
+- name: upload
 {{- if .Values.persistence.upload.enabled }}
   persistentVolumeClaim:
-    claimName: {{ template "polyaxon.fullname" . }}-upload
+    claimName: {{ .Values.persistence.upload.name }}
 {{- else }}
   hostPath:
-    path: /tmp/plx/upload
+    path:  {{ .Values.persistence.upload.mountPath }}
 {{ end }}
-- name: {{ template "polyaxon.fullname" . }}-repos
+- name: repos
 {{- if .Values.persistence.repos.enabled }}
   persistentVolumeClaim:
-    claimName: {{ template "polyaxon.fullname" . }}-repos
+    claimName: {{ .Values.persistence.repos.name }}
 {{- else }}
   hostPath:
-    path: /tmp/plx/repos
+    path: {{ .Values.persistence.repos.mountPath }}
 {{ end }}
-- name: {{ template "polyaxon.fullname" . }}-logs
+- name: logs
 {{- if .Values.persistence.logs.enabled }}
   persistentVolumeClaim:
-    claimName: {{ template "polyaxon.fullname" . }}-logs
+    claimName: {{ .Values.persistence.logs.name }}
 {{- else }}
   emptyDir: {}
 {{ end }}
-- name: {{ template "polyaxon.fullname" . }}-data
+- name: data
 {{- if .Values.persistence.data.enabled }}
   persistentVolumeClaim:
-    claimName: {{ template "polyaxon.fullname" . }}-data
+    claimName: {{ .Values.persistence.data.name }}
 {{- else }}
   emptyDir: {}
 {{ end }}
-- name: {{ template "polyaxon.fullname" . }}-outputs
+- name: outputs
 {{- if .Values.persistence.outputs.enabled }}
   persistentVolumeClaim:
-    claimName: {{ template "polyaxon.fullname" . }}-outputs
+    claimName: {{ .Values.persistence.outputs.name }}
 {{- else }}
   emptyDir: {}
 {{ end }}
