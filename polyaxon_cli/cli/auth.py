@@ -45,11 +45,11 @@ def login(token, username, password):
             return
     else:
         if not token:
-            cli_info_url = "{}/app/token".format(auth_client.http_host)
+            token_url = "{}/app/token".format(auth_client.http_host)
             click.confirm('Authentication token page will now open in your browser. Continue?',
                           abort=True, default=True)
 
-            click.launch(cli_info_url)
+            click.launch(token_url)
         logger.info("Please copy and paste the authentication token.")
         access_code = click.prompt('This is an invisible field. Paste token and press ENTER',
                                    type=str, hide_input=True)

@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_cli.cli.dashboard import dashboard
 from polyaxon_cli.cli.job import job
 from polyaxon_cli.cli.run import run
 from polyaxon_cli.cli.superuser import superuser
@@ -58,3 +59,4 @@ cli.add_command(experiment)
 cli.add_command(job)
 cli.add_command(upload)
 cli.add_command(run)
+cli.add_command(dashboard)
