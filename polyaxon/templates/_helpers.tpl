@@ -428,27 +428,27 @@ Volume mounts
 */}}
 {{- define "volumes.volumeMounts" }}
 - mountPath: {{ .Values.persistence.upload.mountPath }}
-  name: {{ .Values.persistence.upload.name }}
+  name: upload
   {{ if .Values.persistence.upload.subPath -}}
   subPath: {{ .Values.persistence.upload.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.data.mountPath }}
-  name: {{ .Values.persistence.data.name }}
+  name: data
   {{ if .Values.persistence.data.subPath -}}
   subPath: {{ .Values.persistence.data.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.logs.mountPath }}
-  name: {{ .Values.persistence.logs.name }}
+  name: logs
   {{ if .Values.persistence.logs.subPath -}}
   subPath: {{ .Values.persistence.logs.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.outputs.mountPath }}
-  name: {{ .Values.persistence.outputs.name }}
+  name: outputs
   {{ if .Values.persistence.outputs.subPath -}}
   subPath: {{ .Values.persistence.outputs.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.repos.mountPath }}
-  name: {{ .Values.persistence.repos.name }}
+  name: repos
   {{ if .Values.persistence.repos.subPath -}}
   subPath: {{ .Values.persistence.repos.subPath | quote }}
   {{- end }}
