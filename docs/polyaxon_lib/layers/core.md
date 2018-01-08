@@ -429,7 +429,7 @@ RepeatVector:
 ## DenseConfig
 
 ```python
-polyaxon_schemas.layers.core.DenseConfig(units, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x10a54d390>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a54d358>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.core.DenseConfig(units, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x1042a5390>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x1042a5358>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 Just your regular densely-connected NN layer.

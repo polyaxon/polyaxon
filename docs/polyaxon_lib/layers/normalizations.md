@@ -2,7 +2,7 @@
 ## BatchNormalizationConfig
 
 ```python
-polyaxon_schemas.layers.normalization.BatchNormalizationConfig(axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True, beta_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a57b2b0>, gamma_initializer=<polyaxon_schemas.initializations.OnesInitializerConfig object at 0x10a57b278>, moving_mean_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a57b2e8>, moving_variance_initializer=<polyaxon_schemas.initializations.OnesInitializerConfig object at 0x10a57b320>, beta_regularizer=None, gamma_regularizer=None, beta_constraint=None, gamma_constraint=None)
+polyaxon_schemas.layers.normalization.BatchNormalizationConfig(axis=-1, momentum=0.99, epsilon=0.001, center=True, scale=True, beta_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x1042d32b0>, gamma_initializer=<polyaxon_schemas.initializations.OnesInitializerConfig object at 0x1042d3278>, moving_mean_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x1042d32e8>, moving_variance_initializer=<polyaxon_schemas.initializations.OnesInitializerConfig object at 0x1042d3320>, beta_regularizer=None, gamma_regularizer=None, beta_constraint=None, gamma_constraint=None)
 ```
 
 Batch normalization layer (Ioffe and Szegedy, 2014).
