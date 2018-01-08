@@ -11,12 +11,14 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentJob,
     ExperimentJobStatus,
+    ExperimentMetric,
 )
 from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
+    ExperimentMetricSerializer,
 )
 from factories.fixtures import exec_experiment_spec_parsed_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
@@ -26,7 +28,7 @@ from factories.factory_experiments import (
     ExperimentStatusFactory,
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
-)
+    ExperimentMetricFactory)
 from factories.factory_projects import ProjectFactory, ExperimentGroupFactory
 from tests.utils import BaseViewTest
 
@@ -401,6 +403,74 @@ class TestExperimentStatusListViewV1(BaseViewTest):
         last_object = self.model_class.objects.last()
         assert last_object.experiment == self.experiment
         assert last_object.status == data['status']
+
+
+class TestExperimentMetricListViewV1(BaseViewTest):
+    serializer_class = ExperimentMetricSerializer
+    model_class = ExperimentMetric
+    factory_class = ExperimentMetricFactory
+    num_objects = 3
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        with patch.object(Experiment, 'set_status') as _:
+            with patch('experiments.tasks.start_experiment.delay') as _:
+                project = ProjectFactory(user=self.auth_client.user)
+                self.experiment = ExperimentFactory(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/metrics/'.format(API_V1,
+                                                              project.user.username,
+                                                              project.name,
+                                                              self.experiment.sequence)
+        self.objects = [self.factory_class(experiment=self.experiment, values = {'accuracy': i/10})
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next = resp.data.get('next')
+        assert next is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        data = {'values': {'precision': 0.9}}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.experiment == self.experiment
+        assert last_object.values == data['values']
 
 
 class TestExperimentStatusDetailViewV1(BaseViewTest):

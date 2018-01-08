@@ -9,6 +9,7 @@ from experiments.models import (
     ExperimentJob,
     ExperimentStatus,
     ExperimentJobStatus,
+    ExperimentMetric
 )
 from libs.spec_validation import validate_spec_content
 
@@ -58,6 +59,18 @@ class ExperimentStatusSerializer(serializers.ModelSerializer):
         return obj.experiment.uuid.hex
 
 
+class ExperimentMetricSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+    experiment = fields.SerializerMethodField()
+
+    class Meta:
+        model = ExperimentMetric
+        exclude = ('id',)
+
+    def get_experiment(self, obj):
+        return obj.experiment.uuid.hex
+
+
 class ExperimentSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
@@ -74,7 +87,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = (
             'uuid', 'unique_name', 'user', 'sequence', 'description', 'created_at', 'updated_at',
-            'last_status', 'started_at', 'finished_at', 'is_running', 'is_done', 'is_clone',
+            'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done', 'is_clone',
             'content', 'config', 'project', 'project_name', 'experiment_group',
             'experiment_group_name', 'original', 'original_experiment', 'num_jobs',)
 

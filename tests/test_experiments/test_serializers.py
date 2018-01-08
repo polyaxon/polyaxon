@@ -26,8 +26,8 @@ class TestExperimentSerializer(BaseTest):
     factory_class = ExperimentFactory
     expected_keys = {
         'uuid', 'user', 'unique_name', 'sequence', 'description', 'created_at', 'updated_at',
-        'last_status', 'started_at', 'finished_at', 'is_running', 'is_done', 'content', 'config',
-        'is_clone', 'original', 'project', 'project_name', 'experiment_group',
+        'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
+        'content', 'config', 'is_clone', 'original', 'project', 'project_name', 'experiment_group',
         'experiment_group_name', 'num_jobs', }
 
     def setUp(self):
@@ -50,6 +50,7 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('experiment_group_name') == (self.obj1.experiment_group.unique_name
                                                 if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('last_metric') == self.obj1.last_metric
         assert data.pop('num_jobs') == self.obj1.jobs.count()
         data.pop('created_at')
         data.pop('updated_at')
@@ -120,6 +121,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'user',
         'sequence',
         'last_status',
+        'last_metric',
         'description',
         'experiment_group',
         'experiment_group_name',
@@ -157,6 +159,7 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('experiment_group_name') == (self.obj1.experiment_group.unique_name
                                                 if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('last_metric') == self.obj1.last_metric
         assert data.pop('num_jobs') == self.obj1.jobs.count()
         assert len(data.pop('jobs')) == 1
         data.pop('created_at')

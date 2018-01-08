@@ -8,7 +8,7 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentJob,
     ExperimentJobStatus,
-)
+    ExperimentMetric,)
 from factories.factory_projects import ProjectFactory
 
 from factories.factory_users import UserFactory
@@ -35,6 +35,14 @@ class ExperimentStatusFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = ExperimentStatus
+
+
+class ExperimentMetricFactory(factory.DjangoModelFactory):
+    experiment = factory.SubFactory(ExperimentFactory)
+    values = {'accuracy': 0.9}
+
+    class Meta:
+        model = ExperimentMetric
 
 
 class ExperimentJobFactory(factory.DjangoModelFactory):

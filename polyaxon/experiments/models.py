@@ -107,7 +107,7 @@ class Experiment(DiffModel, DescribableModel):
     @property
     def last_metric(self):
         metric = self.metrics.last()
-        return metric if metric else None
+        return metric.values if metric else None
 
     @property
     def is_running(self):

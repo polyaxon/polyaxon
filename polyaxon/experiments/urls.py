@@ -25,6 +25,9 @@ experiments_urlpatterns = [
     url(r'^{}/{}/experiments/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentStatusListView.as_view()),
+    url(r'^{}/{}/experiments/{}/metrics/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
+        views.ExperimentMetricListView.as_view()),
     url(r'^{}/{}/experiments/{}/statuses/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, UUID_PATTERN),
         views.ExperimentStatusDetailView.as_view()),

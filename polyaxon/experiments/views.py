@@ -16,13 +16,15 @@ from experiments.models import (
     Experiment,
     ExperimentJob,
     ExperimentStatus,
-    ExperimentJobStatus)
+    ExperimentJobStatus,
+    ExperimentMetric)
 from experiments.serializers import (
     ExperimentSerializer,
     ExperimentCreateSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
-    ExperimentJobStatusSerializer)
+    ExperimentJobStatusSerializer,
+    ExperimentMetricSerializer)
 from experiments.tasks import stop_experiment
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
@@ -139,6 +141,15 @@ class ExperimentViewMixin(object):
 class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
     queryset = ExperimentStatus.objects.all()
     serializer_class = ExperimentStatusSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save(experiment=self.get_experiment())
+
+
+class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
+    queryset = ExperimentMetric.objects.all()
+    serializer_class = ExperimentMetricSerializer
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
