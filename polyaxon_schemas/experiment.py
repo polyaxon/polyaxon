@@ -208,6 +208,37 @@ class ExperimentStatusConfig(BaseConfig):
         self.status = status
 
 
+class ExperimentMetricSchema(Schema):
+    uuid = UUID()
+    experiment = UUID()
+    created_at = fields.LocalDateTime()
+    values = fields.Dict()
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return ExperimentMetricConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ExperimentMetricConfig.remove_reduced_attrs(data)
+
+
+class ExperimentMetricConfig(BaseConfig):
+    SCHEMA = ExperimentMetricSchema
+    IDENTIFIER = 'ExperimentMetric'
+    DATETIME_ATTRIBUTES = ['created_at']
+    REDUCED_LIGHT_ATTRIBUTES = ['experiment']
+
+    def __init__(self, uuid, experiment, created_at, values):
+        self.uuid = uuid
+        self.experiment = experiment
+        self.created_at = self.localize_date(created_at)
+        self.values = values
+
+
 class ExperimentJobStatusSchema(Schema):
     uuid = UUID()
     job = UUID()

@@ -13,6 +13,7 @@ from polyaxon_schemas.experiment import (
     ContainerResourcesConfig,
     ExperimentJobConfig,
     ExperimentStatusConfig,
+    ExperimentMetricConfig,
     ExperimentJobStatusConfig)
 from polyaxon_schemas.utils import local_now
 
@@ -121,6 +122,22 @@ class TestExperimentConfigs(TestCase):
                        'created_at': local_now().isoformat(),
                        'status': 'Running'}
         config = ExperimentStatusConfig.from_dict(config_dict)
+        config_to_dict = config.to_dict()
+        assert config_to_dict == config_dict
+
+        config_dict.pop('experiment', None)
+        config_to_dict = config.to_light_dict()
+        assert config_to_dict == config_dict
+
+        config_to_dict = config.to_dict(humanize_values=True)
+        assert config_to_dict.pop('created_at') == 'a few seconds ago'
+
+    def test_experiment_status_config(self):
+        config_dict = {'uuid': uuid.uuid4().hex,
+                       'experiment': uuid.uuid4().hex,
+                       'created_at': local_now().isoformat(),
+                       'values': {'accuracy': 0.9}}
+        config = ExperimentMetricConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict == config_dict
 
