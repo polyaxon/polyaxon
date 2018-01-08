@@ -111,6 +111,12 @@ class BaseSpecification(object):
         return self.settings.run_type if self.settings else RunTypes.KUBERNETES
 
     @cached_property
+    def log_level(self):
+        if self.settings and self.settings.logging:
+            return self.settings.logging.level
+        return 'INFO'
+
+    @cached_property
     def is_local(self):
         return self.run_type == RunTypes.LOCAL
 
