@@ -7,7 +7,7 @@ django-registration==2.3
 docker==2.7.0
 GitPython==2.1.8
 Jinja2==2.10
-pandas==0.20.3
+pandas==0.22.0
 pandas-summary==0.0.41
 pika==0.11.0
 psycopg2==2.7.3.1
