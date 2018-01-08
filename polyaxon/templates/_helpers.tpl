@@ -391,15 +391,15 @@ Config claim_names
 */}}
 {{- define "config.claim_names" }}
 - name: POLYAXON_CLAIM_NAMES_UPLOAD
-  value: {{ .Values.persistence.upload.name }}
+  value: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
 - name: POLYAXON_CLAIM_NAMES_DATA
-  value: {{ .Values.persistence.data.name }}
+  value: {{ .Values.persistence.data.existingClaim }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
-  value: {{ .Values.persistence.logs.name }}
+  value: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
 - name: POLYAXON_CLAIM_NAMES_OUTPUTS
-  value: {{ .Values.persistence.outputs.name }}
+  value: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
 - name: POLYAXON_CLAIM_NAMES_REPOS
-  value: {{ .Values.persistence.repos.name }}
+  value: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
 {{- end -}}
 
 {{/*
@@ -477,7 +477,7 @@ Volumes
 - name: upload
 {{- if .Values.persistence.upload.enabled }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.upload.name }}
+    claimName: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
 {{- else }}
   hostPath:
     path:  {{ .Values.persistence.upload.mountPath }}
@@ -485,7 +485,7 @@ Volumes
 - name: repos
 {{- if .Values.persistence.repos.enabled }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.repos.name }}
+    claimName: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.repos.mountPath }}
@@ -493,21 +493,21 @@ Volumes
 - name: logs
 {{- if .Values.persistence.logs.enabled }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.logs.name }}
+    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
 {{- else }}
   emptyDir: {}
 {{ end }}
 - name: data
 {{- if .Values.persistence.data.enabled }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.data.name }}
+    claimName: {{ .Values.persistence.data.existingClaim }}
 {{- else }}
   emptyDir: {}
 {{ end }}
 - name: outputs
 {{- if .Values.persistence.outputs.enabled }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.outputs.name }}
+    claimName: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
 {{- else }}
   emptyDir: {}
 {{ end }}

@@ -1,4 +1,4 @@
-{{- if .Values.persistence.repos.enabled -}}
+{{- if .Values.persistence.repos.enabled (not .Values.persistence.repos.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:

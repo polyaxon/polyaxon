@@ -17,10 +17,8 @@ dirs:
 
 persistence:
   data:
-    name: "polyaxon-pvc-data"
     storageClass:
     existingClaim:
-    enabled: false
     accessMode: ReadWriteMany
     size: 10Gi
     mountPath: "/data"

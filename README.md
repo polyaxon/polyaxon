@@ -77,7 +77,6 @@ The following tables lists the configurable parameters of the Polyaxon chart and
 | `user.email`                    | Default superuser's email.                                                     | `root@local.com`
 | `user.password`                 | Default superuser's password.                                                  | `root`
 | `dirs.nvidia`                   | nvidia path for GPU                                                            | `/usr/local/nvidia/lib64`
-| `persistence.data.enabled`      | use persistence for data                                                       | `true`
 | `persistence.output.enabled`    | use persistence for output                                                     | `true`
 | `persistence.logs.enabled`      | use persistence for logs                                                       | `false`
 | `persistence.repos.enabled`     | use persistence for repos                                                      | `false`
