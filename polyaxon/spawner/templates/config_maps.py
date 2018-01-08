@@ -7,7 +7,7 @@ from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
 
-from experiments.models import Experiment
+from experiments.utils import get_experiment_outputs_path
 from spawner.templates import constants
 
 
@@ -45,7 +45,7 @@ def get_config_map(namespace,
                                    experiment_group_uuid,
                                    experiment_uuid)
     metadata = client.V1ObjectMeta(name=name, labels=labels, namespace=namespace)
-    experiment_outputs_path = Experiment.get_outputs_path(experiment_name)
+    experiment_outputs_path = get_experiment_outputs_path(experiment_name)
     data = {
         constants.CONFIG_MAP_CLUSTER_KEY_NAME: json.dumps(cluster_def),
         constants.CONFIG_MAP_DECLARATIONS_KEY_NAME: json.dumps(declarations) or '{}',

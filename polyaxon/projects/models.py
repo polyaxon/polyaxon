@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 import uuid
-import os
 
 from django.conf import settings
 from django.core.validators import validate_slug
@@ -37,11 +36,6 @@ class Project(DiffModel, DescribableModel):
     @property
     def unique_name(self):
         return '{}.{}'.format(self.user.username, self.name)
-
-    @staticmethod
-    def get_outputs_path(project_name):
-        values = project_name.split('.')
-        return os.path.join(settings.UPLOAD_ROOT, '/'.join(values))
 
     @property
     def has_code(self):
@@ -87,11 +81,6 @@ class ExperimentGroup(DiffModel, DescribableModel):
     @property
     def unique_name(self):
         return '{}.{}'.format(self.project.unique_name, self.sequence)
-
-    @staticmethod
-    def get_outputs_path(experiment_group_name):
-        values = experiment_group_name.split('.')
-        return os.path.join(settings.UPLOAD_ROOT, '/'.join(values))
 
     @cached_property
     def specification(self):
