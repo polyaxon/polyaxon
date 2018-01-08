@@ -43,15 +43,17 @@ def _get_experiment(project, experiment_sequence):
         raise exceptions.NotFound('Experiment was not found')
 
 
-def _get_job(experiment, job_uuid):
+def _get_job(experiment, job_sequence):
     try:
-        job = ExperimentJob.objects.get(uuid=job_uuid, experiment=experiment)
+        job = ExperimentJob.objects.get(experiment=experiment, sequcen=job_sequence)
     except (ExperimentJob.DoesNotExist, ValidationError):
-        logger.info('Job with uuid `{}` does not exist'.format(job_uuid))
+        logger.info('Job with experiment:`{}` sequence:`{}` does not exist'.format(
+            experiment.unique_name, job_sequence))
         raise exceptions.NotFound('Experiment was not found')
 
     if not job.is_running:
-        logger.info('Job with uuid `{}` is not currently running'.format(job_uuid))
+        logger.info('Job with experiment:`{}` sequence:`{}` is not currently running'.format(
+            experiment.unique_name, job_sequence))
         raise exceptions.NotFound('Job was not running')
 
     return job
@@ -69,14 +71,15 @@ def _get_validated_experiment(project, experiment_sequence):
 
 
 @app.websocket(
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_uuid>/resources')
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/resources')
 @authorized()
-async def job_resources(request, ws, username, project_name, experiment_sequence, job_uuid):
+async def job_resources(request, ws, username, project_name, experiment_sequence, job_sequence):
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
-    _get_job(experiment, job_uuid)
+    job = _get_job(experiment, job_sequence)
+    job_uuid = job.uuid.hex
 
     if not RedisToStream.is_monitored_job_resources(job_uuid=job_uuid):
         logger.info(
@@ -193,14 +196,15 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
 
 
 @app.websocket(
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_uuid>/logs')
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/logs')
 @authorized()
-async def job_logs(request, ws, username, project_name, experiment_sequence, job_uuid):
+async def job_logs(request, ws, username, project_name, experiment_sequence, job_sequence):
     project = _get_project(username, project_name)
     if not has_project_permissions(request.app.user, project, 'GET'):
         exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
-    job = _get_job(experiment, job_uuid)
+    job = _get_job(experiment, job_sequence)
+    job_uuid = job.uuid.hex
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
         logger.info('Job uuid `{}` logs is now being monitored'.format(job_uuid))
