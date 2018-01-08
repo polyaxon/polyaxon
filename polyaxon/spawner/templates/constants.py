@@ -6,8 +6,7 @@ from django.conf import settings
 JOB_NAME = 'plxjob-{task_type}{task_idx}-{experiment_uuid}'
 DEFAULT_PORT = 2222
 ENV_VAR_TEMPLATE = '{name: "{var_name}", value: "{var_value}"}'
-VOLUME_NAME = 'pv-{vol_name}'
-VOLUME_CLAIM_NAME = 'pvc-{vol_name}'
+VOLUME_CLAIM_NAME = 'polyaxon-pvc-{vol_name}'
 CONFIG_MAP_NAME = 'plx-config-{experiment_uuid}'
 CONFIG_MAP_CLUSTER_KEY_NAME = 'POLYAXON_CLUSTER'
 CONFIG_MAP_DECLARATIONS_KEY_NAME = 'POLYAXON_DECLARATIONS'

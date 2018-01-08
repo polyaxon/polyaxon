@@ -232,8 +232,7 @@ class K8SSpawner(K8SManager):
         return volumes, volume_mounts
 
     def has_volume(self, volume):
-        vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-        persistent_volume = self.get_volume(vol_name)
+        persistent_volume = self.get_volume(volume)
         volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
         volume_claime = self.get_volume_claim(volc_name)
         return persistent_volume is not None and volume_claime is not None
@@ -247,12 +246,11 @@ class K8SSpawner(K8SManager):
             logger.warning('Unable to find a outputs volume to mount to job.')
 
     def _create_volume(self, volume):
-        vol_name = constants.VOLUME_NAME.format(vol_name=volume)
         pvol = persistent_volumes.get_persistent_volume(namespace=self.namespace,
                                                         volume=volume,
                                                         run_type=self.spec.run_type)
 
-        self.create_or_update_volume(name=vol_name, data=pvol)
+        self.create_or_update_volume(name=volume, data=pvol)
 
         volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
         pvol_claim = persistent_volumes.get_persistent_volume_claim(namespace=self.namespace,
@@ -261,21 +259,20 @@ class K8SSpawner(K8SManager):
         self.create_or_update_volume_claim(name=volc_name, data=pvol_claim)
 
     def _delete_volume(self, volume):
-        vol_name = constants.VOLUME_NAME.format(vol_name=volume)
         volume_found = False
         try:
-            self.k8s_api.read_persistent_volume(vol_name)
+            self.k8s_api.read_persistent_volume(volume)
             volume_found = True
             self.k8s_api.delete_persistent_volume(
-                vol_name,
+                volume,
                 client.V1DeleteOptions(api_version=k8s_constants.K8S_API_VERSION_V1))
-            logger.debug('Volume `{}` Deleted'.format(vol_name))
+            logger.debug('Volume `{}` Deleted'.format(volume))
         except ApiException as e:
             if volume_found:
-                logger.warning('Could not delete volume `{}`'.format(vol_name))
+                logger.warning('Could not delete volume `{}`'.format(volume))
                 raise PolyaxonK8SError(e)
             else:
-                logger.debug('Volume `{}` was not found'.format(vol_name))
+                logger.debug('Volume `{}` was not found'.format(volume))
 
         volc_name = constants.VOLUME_CLAIM_NAME.format(vol_name=volume)
         volume_claim_found = False

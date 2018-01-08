@@ -31,22 +31,20 @@ def get_gpu_volumes():
 
 
 def get_volume_mount(volume, volume_mount=None):
-    volume_name = constants.VOLUME_NAME.format(vol_name=volume)
-    return client.V1VolumeMount(name=volume_name, mount_path=volume_mount)
+    return client.V1VolumeMount(name=volume, mount_path=volume_mount)
 
 
 def get_volume(volume, claim_name, persist=False, volume_mount=None):
-    vol_name = constants.VOLUME_NAME.format(vol_name=volume)
     if persist:
         pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name)
-        return client.V1Volume(name=vol_name, persistent_volume_claim=pv_claim)
+        return client.V1Volume(name=volume, persistent_volume_claim=pv_claim)
     elif volume_mount:
         return client.V1Volume(
-            name=vol_name,
+            name=volume,
             host_path=client.V1HostPathVolumeSource(path=volume_mount))
     else:
         empty_dir = client.V1EmptyDirVolumeSource()
-        return client.V1Volume(name=vol_name, empty_dir=empty_dir)
+        return client.V1Volume(name=volume, empty_dir=empty_dir)
 
 
 def get_resources(resources):

@@ -59,8 +59,7 @@ def get_labels(volume):
 
 
 def get_persistent_volume(namespace, volume, run_type):
-    vol_name = constants.VOLUME_NAME.format(vol_name=volume)
-    metadata = client.V1ObjectMeta(name=vol_name, labels=get_labels(volume), namespace=namespace)
+    metadata = client.V1ObjectMeta(name=volume, labels=get_labels(volume), namespace=namespace)
     spec = get_persistent_volume_spec(namespace=namespace, volume=volume, run_type=run_type)
 
     return client.V1PersistentVolume(api_version=k8s_constants.K8S_API_VERSION_V1,
