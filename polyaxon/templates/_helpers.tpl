@@ -160,6 +160,8 @@ global config
   value: {{ template "polyaxon.fullname" . }}
 - name: POLYAXON_K8S_API_HOST
   value: {{ template "polyaxon.fullname" . }}-api
+- name: POLYAXON_K8S_API_PORT
+  value: {{ .Values.api.service.externalPort | quote }}
 - name: POLYAXON_K8S_APP_SECRET_NAME
   value: {{ template "polyaxon.fullname" . }}-secret
 - name: POLYAXON_K8S_APP_CONFIG_NAME
