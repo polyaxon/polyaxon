@@ -17,6 +17,7 @@ dirs:
 
 persistence:
   data:
+    name: "polyaxon-pvc-data"
     storageClass:
     existingClaim:
     enabled: false
@@ -25,30 +26,34 @@ persistence:
     mountPath: "/data"
     subPath: ""
   logs:
+    name: "polyaxon-pvc-logs"
     storageClass:
     existingClaim:
     enabled: false
     accessMode: ReadWriteOnce
-    size: 10Gi
+    size: 5Gi
     mountPath: "/logs"
     subPath: ""
   outputs:
+    name: "polyaxon-pvc-outputs"
     storageClass:
     existingClaim:
     enabled: false
     accessMode: ReadWriteMany
-    size: 10Gi
+    size: 5Gi
     mountPath: "/outputs"
     subPath: ""
   repos:
+    name: "polyaxon-pvc-repos"
     storageClass:
     existingClaim:
     enabled: false
     accessMode: ReadWriteOnce
-    size: 10Gi
+    size: 5Gi
     mountPath: "/repos"
     subPath: ""
   upload:
+    name: "polyaxon-pvc-upload"
     storageClass:
     existingClaim:
     enabled: false

@@ -39,5 +39,5 @@ spec:
         {{ include "config.routingKeys" . | indent 8 }}
         {{ include "config.queues" . | indent 8 }}
         {{ include "config.intervals" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.mount_path" . | indent 8 }}
 {{- end }}

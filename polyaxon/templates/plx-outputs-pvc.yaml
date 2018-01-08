@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-outputs
+  name: {{ .Values.persistence.outputs.name }}
   labels:
     app: {{ template "polyaxon.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"

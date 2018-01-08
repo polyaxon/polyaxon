@@ -376,48 +376,79 @@ intervals config
 
 
 {{/*
-Config dirs
+Config claim_names
 */}}
-{{- define "config.dirs" }}
-- name: POLYAXON_DIRS_UPLOAD
+{{- define "config.claim_names" }}
+- name: POLYAXON_CLAIM_NAMES_UPLOAD
+  value: {{ .Values.persistence.upload.name | quote }}
+- name: POLYAXON_CLAIM_NAMES_DATA
+  value: {{ .Values.persistence.data.name | quote }}
+- name: POLYAXON_CLAIM_NAMES_LOGS
+  value: {{ .Values.persistence.logs.name | quote }}
+- name: POLYAXON_CLAIM_NAMES_OUTPUTS
+  value: {{ .Values.persistence.outputs.name | quote }}
+- name: POLYAXON_CLAIM_NAMES_REPOS
+  value: {{ .Values.persistence.repos.name | quote }}
+{{- end -}}
+
+{{/*
+Config mount_paths
+*/}}
+{{- define "config.mount_paths" }}
+- name: POLYAXON_MOUNT_PATHS_UPLOAD
   value: {{ .Values.persistence.upload.mountPath | quote }}
-- name: POLYAXON_DIRS_DATA
+- name: POLYAXON_MOUNT_PATHS_DATA
   value: {{ .Values.persistence.data.mountPath | quote }}
-- name: POLYAXON_DIRS_LOGS
+- name: POLYAXON_MOUNT_PATHS_LOGS
   value: {{ .Values.persistence.logs.mountPath | quote }}
-- name: POLYAXON_DIRS_OUTPUTS
+- name: POLYAXON_MOUNT_PATHS_OUTPUTS
   value: {{ .Values.persistence.outputs.mountPath | quote }}
-- name: POLYAXON_DIRS_REPOS
+- name: POLYAXON_MOUNT_PATHS_REPOS
   value: {{ .Values.persistence.repos.mountPath | quote }}
 {{- end -}}
 
+{{/*
+Config sub_paths
+*/}}
+{{- define "config.sub_paths" }}
+- name: POLYAXON_SUB_PATHS_UPLOAD
+  value: {{ .Values.persistence.upload.subPath | quote }}
+- name: POLYAXON_SUB_PATHS_DATA
+  value: {{ .Values.persistence.data.subPath | quote }}
+- name: POLYAXON_SUB_PATHS_LOGS
+  value: {{ .Values.persistence.logs.subPath | quote }}
+- name: POLYAXON_SUB_PATHS_OUTPUTS
+  value: {{ .Values.persistence.outputs.subPath | quote }}
+- name: POLYAXON_SUB_PATHS_REPOS
+  value: {{ .Values.persistence.repos.subPath | quote }}
+{{- end -}}
 
 {{/*
 Volume mounts
 */}}
 {{- define "volumes.volumeMounts" }}
 - mountPath: {{ .Values.persistence.upload.mountPath }}
-  name: {{ template "polyaxon.fullname" . }}-upload
+  name: {{ .Values.persistence.upload.name }}
   {{ if .Values.persistence.upload.subPath -}}
   subPath: {{ .Values.persistence.upload.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.data.mountPath }}
-  name: {{ template "polyaxon.fullname" . }}-data
+  name: {{ .Values.persistence.data.name }}
   {{ if .Values.persistence.data.subPath -}}
   subPath: {{ .Values.persistence.data.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.logs.mountPath }}
-  name: {{ template "polyaxon.fullname" . }}-logs
+  name: {{ .Values.persistence.logs.name }}
   {{ if .Values.persistence.logs.subPath -}}
   subPath: {{ .Values.persistence.logs.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.outputs.mountPath }}
-  name: {{ template "polyaxon.fullname" . }}-outputs
+  name: {{ .Values.persistence.outputs.name }}
   {{ if .Values.persistence.outputs.subPath -}}
   subPath: {{ .Values.persistence.outputs.subPath | quote }}
   {{- end }}
 - mountPath: {{ .Values.persistence.repos.mountPath }}
-  name: {{ template "polyaxon.fullname" . }}-repos
+  name: {{ .Values.persistence.repos.name }}
   {{ if .Values.persistence.repos.subPath -}}
   subPath: {{ .Values.persistence.repos.subPath | quote }}
   {{- end }}
@@ -446,7 +477,7 @@ Volumes
     claimName: {{ template "polyaxon.fullname" . }}-repos
 {{- else }}
   hostPath:
-    path: /tmp/plx/upload
+    path: /tmp/plx/repos
 {{ end }}
 - name: {{ template "polyaxon.fullname" . }}-logs
 {{- if .Values.persistence.logs.enabled }}
