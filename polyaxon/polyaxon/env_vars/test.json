@@ -21,10 +21,10 @@
   "POLYAXON_K8S_NAMESPACE": "polyaxon",
   "POLYAXON_JOB_CONTAINER_NAME": "experiment-job",
   "POLYAXON_JOB_SIDECAR_CONTAINER_NAME": "experiment-sidecar",
-  "POLYAXON_DIRS_UPLOAD": "/tmp/plx/upload",
-  "POLYAXON_DIRS_DATA": "/tmp/plx/data",
-  "POLYAXON_DIRS_LOGS": "/tmp/plx/logs",
-  "POLYAXON_DIRS_OUTPUTS": "/tmp/plx/outputs",
-  "POLYAXON_DIRS_REPOS": "/tmp/plx/repos",
+  "POLYAXON_MOUNT_PATHS_UPLOAD": "/tmp/plx/upload",
+  "POLYAXON_MOUNT_PATHS_DATA": "/tmp/plx/data",
+  "POLYAXON_MOUNT_PATHS_LOGS": "/tmp/plx/logs",
+  "POLYAXON_MOUNT_PATHS_OUTPUTS": "/tmp/plx/outputs",
+  "POLYAXON_MOUNT_PATHS_REPOS": "/tmp/plx/repos",
   "POLYAXON_K8S_APP_NAME": ""
 }

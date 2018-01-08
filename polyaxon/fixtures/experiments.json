@@ -1545,7 +1545,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -1600,7 +1600,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -1625,7 +1625,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -1635,12 +1635,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -2254,7 +2254,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -2309,7 +2309,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -2334,7 +2334,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -2344,12 +2344,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -2963,7 +2963,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -3018,7 +3018,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -3043,7 +3043,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -3053,12 +3053,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -3672,7 +3672,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -3727,7 +3727,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -3752,7 +3752,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -3762,12 +3762,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -4385,7 +4385,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -4440,7 +4440,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -4465,7 +4465,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -4475,12 +4475,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -5099,7 +5099,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -5154,7 +5154,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -5179,7 +5179,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -5189,12 +5189,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -5813,7 +5813,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -5868,7 +5868,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -5893,7 +5893,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -5903,12 +5903,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -6527,7 +6527,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -6582,7 +6582,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -6607,7 +6607,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -6617,12 +6617,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -7241,7 +7241,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -7296,7 +7296,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -7321,7 +7321,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -7331,12 +7331,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
@@ -7955,7 +7955,7 @@
                                     "value": "polyaxon-core"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_REPOS",
+                                    "name": "POLYAXON_MOUNT_PATHS_REPOS",
                                     "value_from": null,
                                     "value": "/tmp/plx/repos"
                                 },
@@ -8010,7 +8010,7 @@
                                     "value": "<root@polyaxon.local>"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_UPLOAD",
+                                    "name": "POLYAXON_MOUNT_PATHS_UPLOAD",
                                     "value_from": null,
                                     "value": "/tmp/plx/upload"
                                 },
@@ -8035,7 +8035,7 @@
                                     "value": "polyaxon"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_DATA",
+                                    "name": "POLYAXON_MOUNT_PATHS_DATA",
                                     "value_from": null,
                                     "value": "/tmp/plx/data"
                                 },
@@ -8045,12 +8045,12 @@
                                     "value": "60"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_OUTPUTS",
+                                    "name": "POLYAXON_MOUNT_PATHS_OUTPUTS",
                                     "value_from": null,
                                     "value": "/tmp/plx/outputs"
                                 },
                                 {
-                                    "name": "POLYAXON_DIRS_LOGS",
+                                    "name": "POLYAXON_MOUNT_PATHS_LOGS",
                                     "value_from": null,
                                     "value": "/tmp/plx/logs"
                                 },
