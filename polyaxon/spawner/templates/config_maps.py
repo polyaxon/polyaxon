@@ -36,7 +36,8 @@ def get_config_map(namespace,
                    experiment_group_uuid,
                    experiment_uuid,
                    cluster_def,
-                   declarations):
+                   declarations,
+                   log_level):
     name = constants.CONFIG_MAP_NAME.format(experiment_uuid=experiment_uuid)
     labels = get_config_map_labels(project_name,
                                    experiment_group_name,
@@ -50,6 +51,7 @@ def get_config_map(namespace,
         constants.CONFIG_MAP_CLUSTER_KEY_NAME: json.dumps(cluster_def),
         constants.CONFIG_MAP_DECLARATIONS_KEY_NAME: json.dumps(declarations) or '{}',
         constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME: json.dumps(labels),
+        constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME: log_level,
         constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path
     }
     return client.V1ConfigMap(api_version=k8s_constants.K8S_API_VERSION_V1,

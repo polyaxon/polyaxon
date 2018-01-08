@@ -302,7 +302,8 @@ class K8SSpawner(K8SManager):
             experiment_group_uuid=self.experiment_group_uuid,
             experiment_uuid=self.experiment_uuid,
             cluster_def=self.get_cluster().to_dict(),
-            declarations=self.spec.declarations
+            declarations=self.spec.declarations,
+            log_level=self.spec.log_level
         )
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)
