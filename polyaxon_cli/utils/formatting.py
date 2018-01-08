@@ -44,7 +44,7 @@ def dict_tabulate(dict_value, is_list_dict=False):
 
 
 class Printer(object):
-    COLORS = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+    COLORS = ['yellow', 'blue', 'magenta', 'green', 'cyan', 'red', 'white']
 
     @staticmethod
     def print_header(text):
