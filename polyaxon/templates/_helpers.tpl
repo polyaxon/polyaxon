@@ -126,6 +126,11 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: sidecar-container-name
+
+- name: POLYAXON_JOB_DOCKER_NAME
+  value: "{{ .Values.job.image }}:{{ .Values.job.imageTag }}"
+- name: POLYAXON_JOB_SIDECAR_DOCKER_IMAGE
+  value: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.imageTag }}"
 - name: POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL
   valueFrom:
     configMapKeyRef:

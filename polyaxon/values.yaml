@@ -189,6 +189,16 @@ events:
     persists: false
     logSleepInterval: 1
 
+
+sidecar:
+  image: polyaxon/polyaxon-sidecar
+  imageTag: 0.0.2
+
+job:
+  image: polyaxon/polyaxon-lib
+  imageTag: 0.0.2
+
+
 hooks:
   image: polyaxon/polyaxon-manage
   imageTag: 0.0.2
