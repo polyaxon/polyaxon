@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_schemas.experiment import (
     ExperimentConfig,
     ExperimentJobConfig,
-    ExperimentStatusConfig
-)
+    ExperimentStatusConfig,
+    ExperimentMetricConfig)
 
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
@@ -73,6 +73,34 @@ class ExperimentClient(PolyaxonClient):
         try:
             response = self.get(request_url, params=self.get_page(page=page))
             return self.prepare_list_results(response.json(), page, ExperimentStatusConfig)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving experiment status')
+            return None
+
+    def get_metrics(self, username, project_name, experiment_sequence, page=1):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'metrics')
+        try:
+            response = self.get(request_url, params=self.get_page(page=page))
+            return self.prepare_list_results(response.json(), page, ExperimentMetricConfig)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while retrieving experiment status')
+            return None
+
+    def create_metric(self, username, project_name, experiment_sequence, values):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'metrics')
+        try:
+            response = self.post(request_url, data={'values': values})
+            return ExperimentMetricConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while retrieving experiment status')
             return None

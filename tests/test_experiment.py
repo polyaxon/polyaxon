@@ -12,7 +12,7 @@ from polyaxon_schemas.experiment import (
     ExperimentConfig,
     ExperimentStatusConfig,
     ExperimentJobConfig,
-)
+    ExperimentMetricConfig)
 
 from polyaxon_client.experiment import ExperimentClient
 
@@ -99,7 +99,7 @@ class TestExperimentClient(TestCase):
         assert result.status_code == 204
 
     @httpretty.activate
-    def test_get_experiment_status(self):
+    def test_get_experiment_statuses(self):
         experiment_uuid = uuid.uuid4().hex
         object = ExperimentStatusConfig(uuid=experiment_uuid,
                                         experiment=experiment_uuid,
@@ -120,6 +120,53 @@ class TestExperimentClient(TestCase):
             status=200)
         response = self.client.get_statuses('username', 'project_name', 1)
         assert len(response['results']) == 1
+
+    @httpretty.activate
+    def test_get_experiment_metrics(self):
+        experiment_uuid = uuid.uuid4().hex
+        object = ExperimentMetricConfig(uuid=experiment_uuid,
+                                        experiment=experiment_uuid,
+                                        created_at=datetime.datetime.now(),
+                                        values={'accuracy': 0.9}).to_dict()
+        httpretty.register_uri(
+            httpretty.GET,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'metrics'),
+            body=json.dumps({'results': [object], 'count': 1, 'next': None}),
+            content_type='application/json',
+            status=200)
+        response = self.client.get_metrics('username', 'project_name', 1)
+        assert len(response['results']) == 1
+
+    @httpretty.activate
+    def test_create_experiment_metric(self):
+        experiment_uuid = uuid.uuid4().hex
+        object = ExperimentMetricConfig(uuid=experiment_uuid,
+                                        experiment=experiment_uuid,
+                                        created_at=datetime.datetime.now(),
+                                        values={'accuracy': 0.9}).to_dict()
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'metrics'),
+            body=json.dumps(object),
+            content_type='application/json',
+            status=200)
+        response = self.client.create_metric('username', 'project_name', 1,
+                                             values={'accuracy': 0.9})
+        assert response.to_dict() == object
 
     @httpretty.activate
     def test_list_experiment_jobs(self):
