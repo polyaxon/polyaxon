@@ -109,32 +109,32 @@ global config
 - name: POLYAXON_DEBUG
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: debug
 - name: POLYAXON_CLUSTER_ID
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: cluster-id
 - name: POLYAXON_JOB_CONTAINER_NAME
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: job-container-name
 - name: POLYAXON_JOB_SIDECAR_CONTAINER_NAME
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: sidecar-container-name
 - name: POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: sidecar-log-sleep-interval
 - name: POLYAXON_JOB_SIDECAR_PERSIST
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: sidecar-persist
 {{- if .Values.k8s.authorisation }}
 - name: POLYAXON_K8S_AUTHORISATION
@@ -153,10 +153,14 @@ global config
   value: {{ .Values.namespace | quote }}
 - name: POLYAXON_K8S_APP_NAME
   value: {{ template "polyaxon.fullname" . }}
+- name: POLYAXON_K8S_APP_SECRET_NAME
+  value: {{ template "polyaxon.fullname" . }}-secret
+- name: POLYAXON_K8S_APP_CONFIG_NAME
+  value: {{ template "polyaxon.fullname" . }}-config
 - name: POLYAXON_GPU_NODE_SELECTORS
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: gpu-node-selectors
 - name: POLYAXON_ROLE_LABELS_API
   value: {{ .Values.roles.api }}
@@ -283,17 +287,17 @@ redis config
 - name: POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: redis-result-backend-url
 - name: POLYAXON_REDIS_JOB_CONTAINERS_URL
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: redis-job-containers-url
 - name: POLYAXON_REDIS_TO_STREAM_URL
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: redis-to-stream-url
 {{- end }}
 
@@ -305,7 +309,7 @@ amqp config
 - name: POLYAXON_AMQP_URL
   valueFrom:
     configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}
+      name: {{ template "polyaxon.fullname" . }}-config
       key: amqp-url
 - name: POLYAXON_RABBITMQ_USER
   value: {{ default "" .Values.rabbitmq.rabbitmqUsername | quote }}
