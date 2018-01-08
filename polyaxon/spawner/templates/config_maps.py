@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import base64
 import json
 
 from django.conf import settings
@@ -79,9 +80,10 @@ def get_secret(namespace,
                             experiment_uuid)
     metadata = client.V1ObjectMeta(name=name, labels=labels, namespace=namespace)
     data = {
-        constants.SECRET_USER_TOKEN: user_token
+        constants.SECRET_USER_TOKEN: base64.b64encode(bytes(user_token, 'utf-8')).decode("utf-8")
     }
     return client.V1Secret(api_version=k8s_constants.K8S_API_VERSION_V1,
                            kind=k8s_constants.K8S_SECRET_KIND,
                            metadata=metadata,
+                           type="Opaque",
                            data=data)
