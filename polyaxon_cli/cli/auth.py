@@ -63,6 +63,7 @@ def login(token, username, password):
         access_code = access_code.strip(" ")
 
     try:
+        AuthConfigManager.purge()
         user = PolyaxonClients().auth.get_user(token=access_code)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not load user info.')
