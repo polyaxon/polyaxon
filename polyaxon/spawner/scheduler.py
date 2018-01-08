@@ -52,7 +52,7 @@ def start_experiment(experiment):
                          use_sidecar=True,
                          sidecar_config=config.get_requested_params(to_str=True))
     try:
-        resp = spawner.start_experiment()
+        resp = spawner.start_experiment(user_token=experiment.user.auth_token.key)
     except ApiException:
         logger.warning('Could not start the experiment, please check your polyaxon spec.')
         experiment.set_status(ExperimentLifeCycle.FAILED)

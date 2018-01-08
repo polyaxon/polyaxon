@@ -8,6 +8,7 @@ from polyaxon.utils import config
 
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
 POLYAXON_K8S_APP_NAME = config.get_string('POLYAXON_K8S_APP_NAME')
+POLYAXON_K8S_API_HOST = config.get_string('POLYAXON_K8S_API_HOST')
 POLYAXON_K8S_APP_CONFIG_NAME = config.get_string('POLYAXON_K8S_APP_CONFIG_NAME')
 POLYAXON_K8S_APP_SECRET_NAME = config.get_string('POLYAXON_K8S_APP_SECRET_NAME')
 CLUSTER_ID = config.get_string('POLYAXON_CLUSTER_ID', is_optional=True)

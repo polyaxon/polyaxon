@@ -134,6 +134,12 @@ class PodManager(object):
         value = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
         return client.V1EnvVar(name=key_name, value_from=value)
 
+    def get_from_experiment_secret(self, key_name):
+        name = constants.SECRET_NAME.format(experiment_uuid=self.experiment_uuid)
+        secret_key_ref = client.V1SecretKeySelector(name=name, key=key_name)
+        value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
+        return client.V1EnvVar(name=key_name, value_from=value)
+
     @staticmethod
     def get_from_app_secret(key_name, key):
         secret_key_ref = client.V1SecretKeySelector(name=settings.POLYAXON_K8S_APP_SECRET_NAME,
@@ -154,8 +160,10 @@ class PodManager(object):
             self.get_from_experiment_config_map(constants.CONFIG_MAP_DECLARATIONS_KEY_NAME),
             self.get_from_experiment_config_map(constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME),
             self.get_from_experiment_config_map(constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME),
+            self.get_from_experiment_config_map(constants.CONFIG_MAP_API_KEY_NAME),
             self.get_from_experiment_config_map(
-                constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME)
+                constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME),
+            self.get_from_experiment_secret(constants.SECRET_USER_TOKEN),
         ]
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]

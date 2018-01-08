@@ -33,6 +33,7 @@ class K8SSpawner(K8SManager):
                  project_uuid,
                  experiment_uuid,
                  spec_config,
+                 user_token=None,
                  experiment_group_uuid=None,
                  experiment_group_name=None,
                  k8s_config=None,
@@ -56,6 +57,7 @@ class K8SSpawner(K8SManager):
         self.project_uuid = project_uuid
         self.experiment_group_uuid = experiment_group_uuid
         self.experiment_uuid = experiment_uuid
+        self.user_token = user_token
         self.pod_manager = pods.PodManager(namespace=namespace,
                                            project_name=self.project_name,
                                            experiment_group_name=self.experiment_group_name,
@@ -308,9 +310,28 @@ class K8SSpawner(K8SManager):
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)
 
+    def create_experiment_secret(self, user_token):
+        name = constants.SECRET_NAME.format(experiment_uuid=self.experiment_uuid)
+        secret = config_maps.get_secret(
+            namespace=self.namespace,
+            project_name=self.project_name,
+            experiment_group_name=self.experiment_group_name,
+            experiment_name=self.experiment_name,
+            project_uuid=self.project_uuid,
+            experiment_group_uuid=self.experiment_group_uuid,
+            experiment_uuid=self.experiment_uuid,
+            user_token=user_token
+        )
+
+        self.create_or_update_secret(name=name, body=secret, reraise=True)
+
     def delete_experiment_config_map(self):
         name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         self.delete_config_map(name, reraise=True)
+
+    def delete_experiment_secret(self):
+        name = constants.SECRET_NAME.format(experiment_uuid=self.experiment_uuid)
+        self.delete_secret(name, reraise=True)
 
     def get_pod_cmd_args(self, task_type, task_idx, schedule):
         if self.spec.run_exec:
@@ -347,10 +368,11 @@ class K8SSpawner(K8SManager):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         self._delete_ps(n_pods=n_pods)
 
-    def start_experiment(self):
+    def start_experiment(self, user_token=None):
         self.check_data_volume()
         self.check_outputs_volume()
         self.create_experiment_config_map()
+        self.create_experiment_secret(user_token)
         master_resp = self.create_master(resources=self.spec.master_resources)
         worker_resp = self.create_worker()
         ps_resp = self.create_ps()
