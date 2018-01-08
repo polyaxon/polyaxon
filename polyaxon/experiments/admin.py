@@ -3,7 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 from django.contrib import admin
 
-from experiments.models import Experiment, ExperimentStatus, ExperimentJob, ExperimentJobStatus
+from experiments.models import (
+    Experiment,
+    ExperimentStatus,
+    ExperimentJob,
+    ExperimentJobStatus,
+    ExperimentMetric
+)
 
 
 class ExperimentAdmin(admin.ModelAdmin):
@@ -29,6 +35,6 @@ class ExperimentJobStatusAdmin(admin.ModelAdmin):
 
 admin.site.register(Experiment, ExperimentAdmin)
 admin.site.register(ExperimentStatus, ExperimentStatusAdmin)
-admin.site.register(ExperimentStatus, ExperimentMetricAdmin)
+admin.site.register(ExperimentMetric, ExperimentMetricAdmin)
 admin.site.register(ExperimentJob, ExperimentJobAdmin)
 admin.site.register(ExperimentJobStatus, ExperimentJobStatusAdmin)
