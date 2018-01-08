@@ -135,9 +135,9 @@ class PodManager(object):
         return client.V1EnvVar(name=key_name, value_from=value)
 
     @staticmethod
-    def get_from_app_secret(key_name):
+    def get_from_app_secret(key_name, key):
         secret_key_ref = client.V1SecretKeySelector(name=settings.POLYAXON_K8S_APP_SECRET_NAME,
-                                                    key=key_name)
+                                                    key=key)
         value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
         return client.V1EnvVar(name=key_name, value_from=value)
 
@@ -175,7 +175,7 @@ class PodManager(object):
             client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
             client.V1EnvVar(name='POLYAXON_POD_ID', value=job_name),
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
-            self.get_from_app_secret('POLYAXON_SECRET_KEY')
+            self.get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret')
         ]
         for k, v in six.iteritems(self.sidecar_config):
             env_vars.append(client.V1EnvVar(name=k, value=v))
