@@ -15,6 +15,13 @@ LOGS_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_LOGS')
 OUTPUTS_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_OUTPUTS')
 REPOS_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_REPOS')
 
+# TODO: intergrate subpaths
+UPLOAD_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_UPLOAD', is_optional=True)
+DATA_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_DATA', is_optional=True)
+LOGS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_LOGS', is_optional=True)
+OUTPUTS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_OUTPUTS', is_optional=True)
+REPOS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_REPOS', is_optional=True)
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     ROOT_DIR.child('client').child('public'),
