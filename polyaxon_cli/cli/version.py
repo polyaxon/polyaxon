@@ -9,9 +9,11 @@ import pkg_resources
 import click
 import sys
 
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError, \
+    AuthorizationError
 
 from polyaxon_cli.logger import logger
+from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
@@ -70,24 +72,38 @@ def check_cli_version():
 @click.option('--lib', is_flag=True, default=False, help='Version of the Polyaxon cli.')
 def version(cli, platform, lib):
     """Print the current version of the cli, platform, and lib."""
+    def session_expired():
+        AuthConfigManager.purge()
+        click.echo('Session has expired, please try again.')
+        sys.exit(1)
+
     version_client = PolyaxonClients().version
     cli = cli or not any([cli, platform, lib])
     if cli:
-        server_version = version_client.get_cli_version()
+        try:
+            server_version = version_client.get_cli_version()
+        except AuthorizationError:
+            session_expired()
         version = get_version(PROJECT_CLI_NAME)
         Printer.print_header('Current cli version: {}.'.format(version))
         Printer.print_header('Supported cli version:')
         dict_tabulate(server_version.to_dict())
 
     if lib:
-        server_version = version_client.get_lib_version()
+        try:
+            server_version = version_client.get_lib_version()
+        except AuthorizationError:
+            session_expired()
         version = get_version(PROJECT_LIB_NAME)
         Printer.print_header('Current lib version: {}.'.format(version))
         Printer.print_header('Supported lib version:')
         dict_tabulate(server_version.to_dict())
 
     if platform:
-        platform_version = version_client.get_platform_version()
+        try:
+            platform_version = version_client.get_platform_version()
+        except AuthorizationError:
+            session_expired()
         chart_version = version_client.get_chart_version()
         Printer.print_header('Current platform version: {}.'.format(chart_version.version))
         Printer.print_header('Supported platform version:')
