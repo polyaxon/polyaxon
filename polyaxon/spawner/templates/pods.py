@@ -18,17 +18,14 @@ from spawner.templates import constants
 
 def get_gpu_volume_mounts():
     return [
-        client.V1VolumeMount(name='bin', mount_path='/usr/local/nvidia/bin'),
-        client.V1VolumeMount(name='lib', mount_path='/usr/local/nvidia/lib'),
+        client.V1VolumeMount(name='nvidia', mount_path=settings.DIRS_NVIDIA),
     ]
 
 
 def get_gpu_volumes():
     return [
-        client.V1Volume(name='bin',
-                        host_path=client.V1HostPathVolumeSource(path='/usr/local/nvidia/bin')),
-        client.V1Volume(name='lib',
-                        host_path=client.V1HostPathVolumeSource(path='/usr/local/nvidia/lib')),
+        client.V1Volume(name='nvidia',
+                        host_path=client.V1HostPathVolumeSource(path=settings.DIRS_NVIDIA)),
     ]
 
 

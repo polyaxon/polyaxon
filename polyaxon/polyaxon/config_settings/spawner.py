@@ -17,6 +17,10 @@ TYPE_LABELS_EXPERIMENT = config.get_string('POLYAXON_TYPE_LABELS_EXPERIMENT')
 NODE_SELECTORS_EXPERIMENTS = config.get_string('POLYAXON_NODE_SELECTORS_EXPERIMENTS',
                                                is_optional=True)
 
+# dirs
+DIRS_DOCKER = config.get_string('POLYAXON_DIRS_DOCKER')
+DIRS_NVIDIA = config.get_string('POLYAXON_DIRS_NVIDIA')
+
 JOB_CONTAINER_NAME = config.get_string('POLYAXON_JOB_CONTAINER_NAME')
 JOB_SIDECAR_CONTAINER_NAME = config.get_string('POLYAXON_JOB_SIDECAR_CONTAINER_NAME')
 JOB_DOCKER_NAME = config.get_string('POLYAXON_JOB_DOCKER_NAME',
