@@ -409,9 +409,9 @@ Config dirs
 */}}
 {{- define "config.dirs" }}
 - name: POLYAXON_DIRS_DOCKER
-  mountPath: {{ .Values.dirs.docker }}
+  value: {{ .Values.dirs.docker | quote }}
 - name: POLYAXON_DIRS_NVIDIA
-  mountPath: {{ .Values.dirs.nvidia }}
+  value: {{ .Values.dirs.nvidia | quote }}
 {{- end -}}
 
 {{/*
