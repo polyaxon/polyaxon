@@ -83,17 +83,26 @@ You can see the pods being created by entering in a different terminal:
 $ kubectl --namespace=<NAMESPACE> get pod
 ```
 
-When helm is done deploying Polyaxon it will output some instructions `NOTES`
+When helm is done deploying Polyaxon it will output some instructions `NOTES`,
+that depends on the service type used and / or ingress;
 
 ```
 NOTES:
-Polyaxon is currently running:1. Get the application URL by running these commands:
+Polyaxon is currently running:
 
-  export POLYAXON_HTTP_PORT=$(kubectl get --namespace polyaxon -o jsonpath="{.spec.ports[0].nodePort}" services polyaxon-polyaxon-api)
 
-  export POLYAXON_WS_PORT=$(kubectl get --namespace polyaxon -o jsonpath="{.spec.ports[0].nodePort}" services polyaxon-polyaxon-api-events)
+1. Get the application URL by running these commands:
 
-  export POLYAXON_IP=$(kubectl get nodes --namespace polyaxon -o jsonpath="{.items[0].status.addresses[0].address}")
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status by running:
+           'kubectl get --namespace polyaxon svc -w polyaxon-polyaxon-api'
+
+
+  export POLYAXON_IP=$(kubectl get svc --namespace polyaxon polyaxon-polyaxon-api -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+  export POLYAXON_HTTP_PORT=80
+
+  export POLYAXON_WS_PORT=1337
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 

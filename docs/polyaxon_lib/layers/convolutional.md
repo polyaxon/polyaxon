@@ -2,7 +2,7 @@
 ## Conv1DConfig
 
 ```python
-polyaxon_schemas.layers.convolutional.Conv1DConfig(filters, kernel_size, strides=1, padding='valid', dilation_rate=1, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x104227c50>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x104227c18>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.convolutional.Conv1DConfig(filters, kernel_size, strides=1, padding='valid', dilation_rate=1, activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x106606be0>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x106606ba8>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 1D convolution layer (e.g. temporal convolution).
@@ -92,7 +92,7 @@ Conv1D:
 ## Conv2DConfig
 
 ```python
-polyaxon_schemas.layers.convolutional.Conv2DConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, dilation_rate=(1, 1), activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x1042322b0>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x104232278>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.convolutional.Conv2DConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, dilation_rate=(1, 1), activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x106611240>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x106611208>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 2D convolution layer (e.g. spatial convolution over images).
@@ -226,7 +226,7 @@ Conv2D:
 ## Conv3DConfig
 
 ```python
-polyaxon_schemas.layers.convolutional.Conv3DConfig(filters, kernel_size, strides=(1, 1, 1), padding='valid', data_format=None, dilation_rate=(1, 1, 1), activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x1042328d0>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x104232898>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.convolutional.Conv3DConfig(filters, kernel_size, strides=(1, 1, 1), padding='valid', data_format=None, dilation_rate=(1, 1, 1), activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x106611860>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x106611828>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 3D convolution layer (e.g. spatial convolution over volumes).
@@ -340,7 +340,7 @@ Conv3D:
 ## Conv2DTransposeConfig
 
 ```python
-polyaxon_schemas.layers.convolutional.Conv2DTransposeConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, dilation_rate=(1, 1), activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x104232ef0>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x104232eb8>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.convolutional.Conv2DTransposeConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, dilation_rate=(1, 1), activation=None, use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x106611e80>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x106611e48>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 Transposed convolution layer (sometimes called Deconvolution).
@@ -451,7 +451,7 @@ Conv2DTranspose:
 ## Conv3DTransposeConfig
 
 ```python
-polyaxon_schemas.layers.convolutional.Conv3DTransposeConfig(filters, kernel_size, strides=(1, 1, 1), padding='valid', data_format=None, activation=None, dilation_rate=(1, 1, 1), use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x104241550>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x104241518>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.convolutional.Conv3DTransposeConfig(filters, kernel_size, strides=(1, 1, 1), padding='valid', data_format=None, activation=None, dilation_rate=(1, 1, 1), use_bias=True, kernel_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x1066204e0>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x1066204a8>, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
 
 Transposed convolution layer (sometimes called Deconvolution).
@@ -565,7 +565,7 @@ Conv3DTranspose:
 ## SeparableConv2DConfig
 
 ```python
-polyaxon_schemas.layers.convolutional.SeparableConv2DConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, depth_multiplier=1, activation=None, use_bias=True, depthwise_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x104241be0>, pointwise_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x104241ba8>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x104241c18>, depthwise_regularizer=None, pointwise_regularizer=None, bias_regularizer=None, activity_regularizer=None, depthwise_constraint=None, pointwise_constraint=None, bias_constraint=None)
+polyaxon_schemas.layers.convolutional.SeparableConv2DConfig(filters, kernel_size, strides=(1, 1), padding='valid', data_format=None, depth_multiplier=1, activation=None, use_bias=True, depthwise_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x106620b70>, pointwise_initializer=<polyaxon_schemas.initializations.GlorotNormalInitializerConfig object at 0x106620b38>, bias_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x106620ba8>, depthwise_regularizer=None, pointwise_regularizer=None, bias_regularizer=None, activity_regularizer=None, depthwise_constraint=None, pointwise_constraint=None, bias_constraint=None)
 ```
 
 Depthwise separable 2D convolution.

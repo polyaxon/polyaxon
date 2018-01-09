@@ -59,8 +59,8 @@ The following tables lists the configurable parameters of the Polyaxon chart and
 
 | Parameter                       | Description                                                                    | Default
 | --------------------------------| -------------------------------------------------------------------------------| ----------------------------------------------------------
-| `ingress.rbac`                  | Use Kubernetes' role-based access control (RBAC)                               | `true`
-| `ingress.enabled`               | Use Kubernetes' ingress                                                        | `true`
+| `rbac.enabled`                  | Use Kubernetes' role-based access control (RBAC)                               | `false`
+| `ingress.enabled`               | Use Kubernetes' ingress                                                        | `false`
 | `user.username`                 | Default superuser's username.                                                  | `root`
 | `user.email`                    | Default superuser's email.                                                     | `root@local.com`
 | `user.password`                 | Default superuser's password.                                                  | `root`

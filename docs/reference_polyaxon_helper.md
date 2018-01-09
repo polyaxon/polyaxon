@@ -21,6 +21,8 @@ Polyaxon defines some variables related to your experiment in environment variab
     ```
  * `POLYAXON_DECLARATIONS` : defines all the declarations of you polyaxonfile as well as the values from hyperparameters search.
  * `POLYAXON_EXPERIMENT_INFO` : defines information about job, experiment, group, project.
+ * `POLYAXON_OUTPUTS_PATH`: defines the outputs path you should use to export your model, tensorboard metrics, ...
+ * `POLYAXON_LOG_LEVEL`: The log level if defined in the polyaxonfile.
 
 Of course you can get these values on your own, e.g. in python:
 
@@ -33,11 +35,19 @@ os.getenv('POLYAXON_CLUSTER', None)
 however we recommend using our helper library, so that your code and models will be backward compatible to future changes of the platform.
 
 ```python
-from polyaxon_helper import get_cluster_def, get_declarations, get_experiment_info
+from polyaxon_helper import (
+    get_cluster_def,
+    get_declarations,
+    get_experiment_info,
+    get_outputs_path,
+    get_log_level
+)
 
 cluster_def = get_cluster_def()
 declarations = get_declarations()
 experiment_info = get_experiment_info()
+outputs_path = get_outputs_path()
+log_level = get_log_level()
 ```
 
 
