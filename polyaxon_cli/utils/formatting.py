@@ -8,7 +8,7 @@ import six
 import sys
 
 from polyaxon_schemas.experiment import ContainerResourcesConfig
-from polyaxon_schemas.utils import to_list
+from polyaxon_schemas.utils import to_list, to_percentage, to_unit_memory
 from tabulate import tabulate
 
 
@@ -110,9 +110,9 @@ class Printer(object):
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
             line = [
                 job_resources.job_uuid.hex,
-                '{} / {}'.format(job_resources.memory_used / (1024 ** 3),
-                                 job_resources.memory_limit / (1024 ** 3)),
-                '{} - {}'.format(job_resources.cpu_percentage,
+                '{} / {}'.format(to_unit_memory(job_resources.memory_used / (1024 ** 3)),
+                                 to_unit_memory(job_resources.memory_limit / (1024 ** 3))),
+                '{} - {}'.format(to_percentage(job_resources.cpu_percentage),
                                  len(job_resources.percpu_percentage))]
             if job_resources.gpu_resources:
                 pass

@@ -62,10 +62,11 @@ def get_project_or_local(project=None):
 @click.pass_context
 def project(ctx, project):
     """Commands for projects."""
-    user, project_name = get_project_or_local(project)
-    ctx.obj = ctx.obj or {}
-    ctx.obj['user'] = user
-    ctx.obj['project_name'] = project_name
+    if ctx.invoked_subcommand not in ['create', 'list']:
+        user, project_name = get_project_or_local(project)
+        ctx.obj = ctx.obj or {}
+        ctx.obj['user'] = user
+        ctx.obj['project_name'] = project_name
 
 
 @project.command()
