@@ -13,6 +13,10 @@ ROLE_LABELS_API = config.get_string('POLYAXON_ROLE_LABELS_API')
 TYPE_LABELS_CORE = config.get_string('POLYAXON_TYPE_LABELS_CORE')
 TYPE_LABELS_EXPERIMENT = config.get_string('POLYAXON_TYPE_LABELS_EXPERIMENT')
 
+# Selectors
+NODE_SELECTORS_EXPERIMENTS = config.get_string('POLYAXON_NODE_SELECTORS_EXPERIMENTS',
+                                               is_optional=True)
+
 JOB_CONTAINER_NAME = config.get_string('POLYAXON_JOB_CONTAINER_NAME')
 JOB_SIDECAR_CONTAINER_NAME = config.get_string('POLYAXON_JOB_SIDECAR_CONTAINER_NAME')
 JOB_DOCKER_NAME = config.get_string('POLYAXON_JOB_DOCKER_NAME',

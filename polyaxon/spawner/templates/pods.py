@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
+
 import six
 import uuid
 
@@ -226,9 +228,14 @@ class PodManager(object):
                                                            args=sidecar_args,
                                                            resources=resources)
             containers.append(sidecar_container)
+
+        node_selector = settings.NODE_SELECTORS_EXPERIMENTS
+        if node_selector:
+            node_selector = json.loads(node_selector)
         return client.V1PodSpec(restart_policy=restart_policy,
                                 containers=containers,
-                                volumes=volumes)
+                                volumes=volumes,
+                                node_selector=node_selector)
 
     def get_labels(self, task_type, task_idx):
         labels = {'project_name': self.project_name,
