@@ -2,7 +2,8 @@ namespace: "polyaxon"
 passwordLenght: 10
 ingress:
   enabled: false
-  rbac: false
+rbac:
+  enabled: false
 
 # Initial admin user to create
 user:
