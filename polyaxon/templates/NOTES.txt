@@ -43,7 +43,6 @@ Polyaxon is currently running:
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
 {{- end }}
-{{- end }}
 
 
     Otherwise:
@@ -73,6 +72,7 @@ Polyaxon is currently running:
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
 {{- end }}
+
 {{- end }}
 
 2. Setup your cli by running theses commands:
