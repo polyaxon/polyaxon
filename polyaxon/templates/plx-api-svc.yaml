@@ -18,24 +18,7 @@ spec:
   ports:
   - port: {{ .Values.api.service.externalPort }}
     targetPort: {{ .Values.api.service.internalPort }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ template "polyaxon.fullname" . }}-api-events
-  labels:
-    app: {{ template "polyaxon.fullname" . }}-api-events
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
-    role: {{ .Values.roles.api }}
-spec:
-  {{- if not .Values.ingress.enabled }}
-  type: LoadBalancer
-  {{- end }}
-  selector:
-    app: {{ template "polyaxon.fullname" . }}-api
-  ports:
+    name: api-http
   - port: {{ .Values.apiEvents.service.internalPort }}
     targetPort: {{ .Values.apiEvents.service.externalPort }}
+    name: api-ws
