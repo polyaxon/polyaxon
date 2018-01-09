@@ -1,12 +1,13 @@
 Polyaxon is currently running:
 
+
 {{- if not .Values.ingress.enabled -}}
 
 1. Get the application URL by running these commands:
 
   export POLYAXON_HTTP_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
 
-  export POLYAXON_WS_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api-events)
+  export POLYAXON_WS_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
 
   export POLYAXON_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
 
@@ -15,8 +16,6 @@ Polyaxon is currently running:
 {{- else }}
 
 1. Get the application URL by running these commands:
-
-    IF you are on minikube:
 
 {{- if contains "NodePort" .Values.api.service.type }}
 
@@ -43,36 +42,6 @@ Polyaxon is currently running:
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
 {{- end }}
-
-
-    Otherwise:
-
-{{- if contains "NodePort" .Values.api.service.type }}
-
-  export POLYAXON_HTTP_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
-
-  export POLYAXON_WS_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api-events)
-
-  export POLYAXON_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-
-  echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
-
-{{- else if contains "LoadBalancer" .Values.api.service.type }}
-
-     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status by running:
-           'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ template "polyaxon.fullname" . }}'
-
-  export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
-
-  export POLYAXON_WS_PORT={{ .Values.api.service.externalPort }}
-
-  export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-api -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-
-  echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
-
-{{- end }}
-
 {{- end }}
 
 2. Setup your cli by running theses commands:
