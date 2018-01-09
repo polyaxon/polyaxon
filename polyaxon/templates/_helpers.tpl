@@ -405,6 +405,16 @@ Config claim_names
 {{- end -}}
 
 {{/*
+Config dirs
+*/}}
+{{- define "config.dirs" }}
+- name: POLYAXON_DIRS_DOCKER
+  mountPath: {{ .Values.dirs.docker }}
+- name: POLYAXON_DIRS_NVIDIA
+  mountPath: {{ .Values.dirs.nvidia }}
+{{- end -}}
+
+{{/*
 Config mount_paths
 */}}
 {{- define "config.mount_paths" }}
