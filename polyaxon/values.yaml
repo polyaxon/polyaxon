@@ -203,8 +203,38 @@ hooks:
   imageTag: 0.0.2
   imagePullPolicy: IfNotPresent
 
-nodeSelectors: {}
-nodeSelectorsGPU: {}
+nodeSelectors:
+  core:
+  dependencies:
+  experiments:
+tolerations:
+  core:
+  dependencies:
+affinity:
+  core:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
+  dependencies:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
 
 postgresql:
   imageTag: 9.6.1
@@ -268,7 +298,6 @@ redis:
     requests:
       memory: 256Mi
       cpu: 100m
-  tolerations: []
   podLabels: {}
   networkPolicy:
     enabled: false

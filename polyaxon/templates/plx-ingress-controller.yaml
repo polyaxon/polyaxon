@@ -22,22 +22,18 @@ spec:
       # like with kubeadm
 #      hostNetwork: true
       terminationGracePeriodSeconds: 60
-      {{- if .Values.nodeSelectors }}
+      {{- if .Values.nodeSelectors.core }}
       nodeSelector:
-{{ toYaml .Values.nodeSelectors | indent 8 }}
+{{ toYaml .Values.nodeSelectors.core | indent 8 }}
       {{- end }}
+      {{- if .Values.affinity.core }}
       affinity:
-        podAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: type
-                  operator: In
-                  values:
-                  - system
-              topologyKey: "kubernetes.io/hostname"
+{{ toYaml .Values.affinity.core | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations.core }}
+      tolerations:
+{{ toYaml .Values.tolerations.core | indent 8 }}
+      {{- end }}
       containers:
       - image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.15
         name: nginx-ingress-controller

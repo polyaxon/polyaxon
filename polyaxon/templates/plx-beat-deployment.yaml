@@ -21,23 +21,18 @@ spec:
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.worker }}
     spec:
-    {{- if .Values.nodeSelectors }}
+      {{- if .Values.nodeSelectors.core }}
       nodeSelector:
-{{ toYaml .Values.nodeSelectors | indent 8 }}
+{{ toYaml .Values.nodeSelectors.core | indent 8 }}
       {{- end }}
+      {{- if .Values.affinity.core }}
       affinity:
-        podAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: type
-                  operator: In
-                  values:
-                  - system
-              topologyKey: "kubernetes.io/hostname"
-      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+{{ toYaml .Values.affinity.core | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations.core }}
+      tolerations:
+{{ toYaml .Values.tolerations.core | indent 8 }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}-beat
         image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"

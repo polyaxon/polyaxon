@@ -21,13 +21,17 @@ spec:
       securityContext:
         runAsUser: 1001
         fsGroup: 1001
-      {{- if .Values.nodeSelectors }}
+      {{- if .Values.nodeSelectors.dependencies }}
       nodeSelector:
-{{ toYaml .Values.nodeSelectors | indent 8 }}
+{{ toYaml .Values.nodeSelectors.dependencies | indent 8 }}
       {{- end }}
-      {{- if .Values.redis.tolerations }}
+      {{- if .Values.affinity.dependencies }}
+      affinity:
+{{ toYaml .Values.affinity.dependencies | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations.dependencies }}
       tolerations:
-{{ toYaml .Values.redis.tolerations | indent 8 }}
+{{ toYaml .Values.tolerations.dependencies | indent 8 }}
       {{- end }}
       containers:
       - name: {{ template "redis.fullname" . }}

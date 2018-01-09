@@ -166,11 +166,11 @@ global config
   value: {{ template "polyaxon.fullname" . }}-secret
 - name: POLYAXON_K8S_APP_CONFIG_NAME
   value: {{ template "polyaxon.fullname" . }}-config
-- name: POLYAXON_GPU_NODE_SELECTORS
+- name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
   valueFrom:
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
-      key: gpu-node-selectors
+      key: node-selectors-experiments
 - name: POLYAXON_ROLE_LABELS_API
   value: {{ .Values.roles.api }}
 - name: POLYAXON_ROLE_LABELS_LOG

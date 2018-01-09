@@ -14,26 +14,18 @@ spec:
       labels:
         app: {{ template "postgresql.fullname" . }}
     spec:
-      {{- if .Values.nodeSelectors }}
+      {{- if .Values.nodeSelectors.dependencies }}
       nodeSelector:
-{{ toYaml .Values.nodeSelectors | indent 8 }}
+{{ toYaml .Values.nodeSelectors.dependencies | indent 8 }}
       {{- end }}
       {{- if .Values.postgresql.tolerations }}
       tolerations:
 {{ toYaml .Values.postgresql.tolerations | indent 8 }}
       {{- end }}
+      {{- if .Values.affinity.dependencies }}
       affinity:
-        podAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: type
-                  operator: In
-                  values:
-                  - system
-              topologyKey: "kubernetes.io/hostname"
+{{ toYaml .Values.affinity.dependencies | indent 8 }}
+      {{- end }}
       containers:
       - name: {{ template "postgresql.fullname" . }}
         image: "{{ .Values.postgresql.image }}:{{ .Values.postgresql.imageTag }}"
