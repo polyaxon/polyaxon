@@ -1,21 +1,29 @@
 Polyaxon is currently running:
 
 
-{{- if not .Values.ingress.enabled -}}
-
 1. Get the application URL by running these commands:
 
-  export POLYAXON_HTTP_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
+{{- if .Values.ingress.enabled -}}
 
-  export POLYAXON_WS_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
+    {{- range .Values.ingress.hosts }}
+        export POLYAXON_IP={{ . }}
+    {{- end }}
 
-  export POLYAXON_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+    export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
 
-  echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
+    export POLYAXON_WS_PORT={{ .Values.apiEvents.service.externalPort }}
+
+{{- else if .Values.isMinikube }}
+
+    export POLYAXON_HTTP_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
+
+    export POLYAXON_WS_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
+
+    export POLYAXON_IP=$(minikube ip)
+
+    echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
 {{- else }}
-
-1. Get the application URL by running these commands:
 
 {{- if contains "NodePort" .Values.api.service.type }}
 
@@ -31,13 +39,24 @@ Polyaxon is currently running:
 
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status by running:
-           'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ template "polyaxon.fullname" . }}'
+           'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ template "polyaxon.fullname" . }}-api'
+
+
+  export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-api -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
   export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
 
-  export POLYAXON_WS_PORT={{ .Values.api.service.externalPort }}
+  export POLYAXON_WS_PORT={{ .Values.apiEvents.service.externalPort }}
 
-  export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-api -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
+
+{{- else if contains "ClusterIP" .Values.api.service.type }}
+
+  export POLYAXON_IP=<YOUR HOSTNAME/IP>
+
+  export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
+
+  export POLYAXON_WS_PORT={{ .Values.apiEvents.service.externalPort }}
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 

@@ -10,15 +10,13 @@ metadata:
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.api }}
 spec:
-  {{- if not .Values.ingress.enabled }}
-  type: LoadBalancer
-  {{- end }}
+  type: {{ .Values.api.service.type }}
   selector:
     app: {{ template "polyaxon.fullname" . }}-api
   ports:
   - port: {{ .Values.api.service.externalPort }}
     targetPort: {{ .Values.api.service.internalPort }}
-    name: api-http
+    name: {{ .Values.api.service.name }}
   - port: {{ .Values.apiEvents.service.internalPort }}
     targetPort: {{ .Values.apiEvents.service.externalPort }}
-    name: api-ws
+    name: {{ .Values.apiEvents.service.name }}

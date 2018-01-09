@@ -27,7 +27,7 @@ spec:
       - name: load-fixtures-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
-        command: ["loaddata", "api/fixtures/users.json", "api/fixtures/authtoken.json", "api/fixtures/projects.json"]
+        command: ["loaddata", "polyaxon/fixtures/users.json", "polyaxon/fixtures/authtoken.json", "polyaxon/fixtures/projects.json"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -39,5 +39,7 @@ spec:
         {{ include "config.routingKeys" . | indent 8 }}
         {{ include "config.queues" . | indent 8 }}
         {{ include "config.intervals" . | indent 8 }}
-        {{ include "config.mount_path" . | indent 8 }}
+        {{ include "config.mount_paths" . | indent 8 }}
+        {{ include "config.sub_paths" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
 {{- end }}

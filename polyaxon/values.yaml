@@ -75,7 +75,7 @@ api:
 
   service:
     name: api
-    type: LoadBalancer
+    type: ClusterIP
     externalPort: 80
     internalPort: 80
     nodePort: 31811
