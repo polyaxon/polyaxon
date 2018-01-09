@@ -315,7 +315,7 @@ rabbitmq:
   rabbitmqManagerPort: 15672
   serviceType: ClusterIP
   persistence:
-    enabled: true
+    enabled: false
     accessMode: ReadWriteOnce
     size: 8Gi
 
