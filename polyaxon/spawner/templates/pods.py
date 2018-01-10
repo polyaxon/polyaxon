@@ -16,16 +16,22 @@ from polyaxon_k8s import constants as k8s_constants
 from spawner.templates import constants
 
 
-def get_gpu_volume_mounts():
+def get_gpu_volume_mounts(nvidia_paths):
     return [
-        client.V1VolumeMount(name='nvidia', mount_path=settings.DIRS_NVIDIA),
+        client.V1VolumeMount(name='nvidia-bin', mount_path=nvidia_paths['bin']),
+        client.V1VolumeMount(name='nvidia-lib', mount_path=nvidia_paths['lib']),
+        client.V1VolumeMount(name='nvidia-libcuda', mount_path=nvidia_paths['libcuda']),
     ]
 
 
-def get_gpu_volumes():
+def get_gpu_volumes(nvidia_paths):
     return [
-        client.V1Volume(name='nvidia',
-                        host_path=client.V1HostPathVolumeSource(path=settings.DIRS_NVIDIA)),
+        client.V1Volume(name='nvidia-bin',
+                        host_path=client.V1HostPathVolumeSource(path=nvidia_paths['bin'])),
+        client.V1Volume(name='nvidia-lib',
+                        host_path=client.V1HostPathVolumeSource(path=nvidia_paths['lib'])),
+        client.V1Volume(name='nvidia-libcuda',
+                        host_path=client.V1HostPathVolumeSource(path=nvidia_paths['libcuda'])),
     ]
 
 
@@ -33,7 +39,7 @@ def get_volume_mount(volume, volume_mount=None):
     return client.V1VolumeMount(name=volume, mount_path=volume_mount)
 
 
-def get_volume(volume, claim_name, persist=False, volume_mount=None):
+def get_volume(volume, claim_name=None, persist=False, volume_mount=None):
     if persist:
         pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name)
         return client.V1Volume(name=volume, persistent_volume_claim=pv_claim)
@@ -208,9 +214,10 @@ class PodManager(object):
         volume_mounts = volume_mounts or []
         volumes = volumes or []
 
-        if resources and resources.gpu:
-            volume_mounts += get_gpu_volume_mounts()
-            volumes += get_gpu_volumes()
+        if resources and resources.gpu and settings.DIRS_NVIDIA:
+            nvidia_paths = json.loads(settings.DIRS_NVIDIA)
+            volume_mounts += get_gpu_volume_mounts(nvidia_paths)
+            volumes += get_gpu_volumes(nvidia_paths)
 
         pod_container = self.get_pod_container(volume_mounts=volume_mounts,
                                                env_vars=env_vars,
