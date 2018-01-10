@@ -105,7 +105,7 @@ apiEvents:
 
 workers:
   scheduler:
-    image: polyaxon/polyaxon-workers-scheduler
+    image: polyaxon/polyaxon-workers
     imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
@@ -118,7 +118,7 @@ workers:
         cpu: 100m
         memory: 100Mi
   events:
-    image: polyaxon/polyaxon-workers-events
+    image: polyaxon/polyaxon-workers
     imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
@@ -131,7 +131,7 @@ workers:
         cpu: 100m
         memory: 100Mi
   crons:
-    image: polyaxon/polyaxon-crons
+    image: polyaxon/polyaxon-workers
     imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
