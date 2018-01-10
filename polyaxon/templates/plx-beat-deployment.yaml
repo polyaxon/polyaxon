@@ -33,6 +33,7 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations.core | indent 8 }}
       {{- end }}
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
       - name: {{ .Chart.Name }}-beat
         image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
