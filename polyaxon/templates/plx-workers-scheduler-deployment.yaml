@@ -38,7 +38,7 @@ spec:
       - name: {{ .Chart.Name }}-workers-scheduler
         image: "{{ .Values.workers.scheduler.image }}:{{ .Values.workers.scheduler.imageTag }}"
         imagePullPolicy: {{ .Values.workers.scheduler.imagePullPolicy }}
-        args: ["{{ .Values.queues.apiExperiments }},{{ .Values.queues.apiClusters }}", "-n default@%h"]
+        args: ["{{ .Values.queues.apiExperiments }}", "--concurrency={{ .Values.workers.scheduler.concurrency }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}

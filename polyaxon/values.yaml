@@ -109,10 +109,11 @@ workers:
     imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
+    concurrency: 2
     resources:
       limits:
-        cpu: 200m
-        memory: 256Mi
+        cpu: 300m
+        memory: 350Mi
       requests:
         cpu: 100m
         memory: 100Mi
@@ -121,6 +122,20 @@ workers:
     imageTag: 0.0.2
     imagePullPolicy: IfNotPresent
     replicas: 1
+    concurrency: 2
+    resources:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+  crons:
+    image: polyaxon/polyaxon-crons
+    imageTag: 0.0.2
+    imagePullPolicy: IfNotPresent
+    replicas: 1
+    concurrency: 2
     resources:
       limits:
         cpu: 200m
