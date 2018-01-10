@@ -16,6 +16,7 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.settings import ClusterConfig
 from polyaxon_schemas.utils import TaskType
 
+from projects.utils import get_project_outputs_path
 from spawner.templates import config_maps
 from spawner.templates import constants
 from spawner.templates import deployments
@@ -33,7 +34,6 @@ class K8SSpawner(K8SManager):
                  project_uuid,
                  experiment_uuid,
                  spec_config,
-                 user_token=None,
                  experiment_group_uuid=None,
                  experiment_group_name=None,
                  k8s_config=None,
@@ -57,7 +57,6 @@ class K8SSpawner(K8SManager):
         self.project_uuid = project_uuid
         self.experiment_group_uuid = experiment_group_uuid
         self.experiment_uuid = experiment_uuid
-        self.user_token = user_token
         self.pod_manager = pods.PodManager(namespace=namespace,
                                            project_name=self.project_name,
                                            experiment_group_name=self.experiment_group_name,
@@ -174,60 +173,18 @@ class K8SSpawner(K8SManager):
         for i in range(n_pods):
             self._delete_pod(task_type=TaskType.PS, task_idx=i)
 
-    def create_tensorboard_deployment(self):
-        name = 'tensorboard'
-        ports = [6006]
-        volumes, volume_mounts = self.get_pod_volumes()
-        logs_path = persistent_volumes.get_vol_path(volume=constants.OUTPUTS_VOLUME,
-                                                    run_type=self.spec.run_type)
-        deployment = deployments.get_deployment(
-            namespace=self.namespace,
-            name=name,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
-            volume_mounts=volume_mounts,
-            volumes=volumes,
-            command=["/bin/sh", "-c"],
-            args=["tensorboard --logdir={} --port=6006".format(logs_path)],
-            ports=ports,
-            role='dashboard')
-        deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=name)
-
-        self.create_or_update_deployment(name=deployment_name, data=deployment)
-        service = services.get_service(
-            namespace=self.namespace,
-            name=deployment_name,
-            labels=deployments.get_labels(name=name,
-                                          project_name=self.project_name,
-                                          project_uuid=self.project_uuid,
-                                          role=settings.ROLE_LABELS_DASHBOARD,
-                                          type=settings.TYPE_LABELS_EXPERIMENT),
-            ports=ports,
-            service_type='LoadBalancer')
-
-        self.create_or_update_service(name=deployment_name, data=service)
-
-    def delete_tensorboard_deployment(self):
-        name = 'tensorboard'
-        deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=name)
-        self.delete_deployment(name=deployment_name)
-        self.delete_service(name=deployment_name)
-
-    def get_pod_volumes(self):
+    @staticmethod
+    def get_pod_volumes():
         volumes = []
         volume_mounts = []
         volumes.append(pods.get_volume(volume=constants.DATA_VOLUME,
                                        claim_name=settings.DATA_CLAIM_NAME,
-                                       persist=self.persist,
                                        volume_mount=settings.DATA_ROOT))
         volume_mounts.append(pods.get_volume_mount(volume=constants.DATA_VOLUME,
                                                    volume_mount=settings.DATA_ROOT))
 
         volumes.append(pods.get_volume(volume=constants.OUTPUTS_VOLUME,
                                        claim_name=settings.DATA_CLAIM_NAME,
-                                       persist=self.persist,
                                        volume_mount=settings.OUTPUTS_ROOT))
         volume_mounts.append(pods.get_volume_mount(volume=constants.OUTPUTS_VOLUME,
                                                    volume_mount=settings.OUTPUTS_ROOT))
@@ -425,3 +382,58 @@ class K8SSpawner(K8SManager):
         cluster_config[TaskType.PS] = ps
 
         return ClusterConfig.from_dict(cluster_config)
+
+
+class K8SProjectSpawner(K8SManager):
+    def __init__(self,
+                 project_name,
+                 project_uuid,
+                 k8s_config=None,
+                 namespace='default',
+                 in_cluster=False):
+        self.project_name = project_name
+        self.project_uuid = project_uuid
+
+        super(K8SProjectSpawner, self).__init__(k8s_config=k8s_config,
+                                                namespace=namespace,
+                                                in_cluster=in_cluster)
+
+    def create_tensorboard_deployment(self):
+        name = 'tensorboard'
+        ports = [6006]
+        volumes, volume_mounts = K8SSpawner.get_pod_volumes()
+        outputs_path = get_project_outputs_path(project_name=self.project_name)
+        deployment = deployments.get_deployment(
+            namespace=self.namespace,
+            name=name,
+            project_name=self.project_name,
+            project_uuid=self.project_uuid,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            command=["/bin/sh", "-c"],
+            args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
+            ports=ports,
+            role='dashboard')
+        deployment_name = constants.DEPLOYMENT_NAME.format(
+            project_uuid=self.project_uuid, name=name)
+
+        self.create_or_update_deployment(name=deployment_name, data=deployment)
+        service = services.get_service(
+            namespace=self.namespace,
+            name=deployment_name,
+            labels=deployments.get_labels(name=name,
+                                          project_name=self.project_name,
+                                          project_uuid=self.project_uuid,
+                                          role=settings.ROLE_LABELS_DASHBOARD,
+                                          type=settings.TYPE_LABELS_EXPERIMENT),
+            ports=ports,
+            service_type='LoadBalancer')
+
+        self.create_or_update_service(name=deployment_name, data=service)
+
+    def delete_tensorboard_deployment(self):
+        name = 'tensorboard'
+        deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
+                                                           name=name)
+        self.delete_deployment(name=deployment_name)
+        self.delete_service(name=deployment_name)

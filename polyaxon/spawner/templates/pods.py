@@ -39,8 +39,8 @@ def get_volume_mount(volume, volume_mount=None):
     return client.V1VolumeMount(name=volume, mount_path=volume_mount)
 
 
-def get_volume(volume, claim_name=None, persist=False, volume_mount=None):
-    if persist:
+def get_volume(volume, claim_name=None, volume_mount=None):
+    if claim_name:
         pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name)
         return client.V1Volume(name=volume, persistent_volume_claim=pv_claim)
     elif volume_mount:
