@@ -56,7 +56,7 @@ spec:
 {{ toYaml .Values.beat.resources | indent 10 }}
       - name: {{ .Chart.Name }}-crons
         image: "{{ .Values.workers.crons.image }}:{{ .Values.workers.crons.imageTag }}"
-        imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
+        imagePullPolicy: {{ .Values.workers.crons.imagePullPolicy }}
         args: ["{{ .Values.queues.apiClusters }}", "--concurrency={{ .Values.workers.crons.concurrency }}"]
         env:
         {{ include "config.global" . | indent 8 }}
