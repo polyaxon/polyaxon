@@ -41,14 +41,14 @@ def get_container_gpu_indices(container):
 
 
 def get_container(containers, container_id):
-    if container_id in containers:
-        return containers[container_id]
-
-    try:
+    try:  # we check first that the container is visible in this node
         container = docker_client.containers.get(container_id)
     except NotFound:
         logger.info("container `{}` was not found".format(container_id))
         return None
+
+    if container_id in containers:
+        return containers[container_id]
 
     if container.status != ContainerStatuses.RUNNING:
         return None
@@ -129,7 +129,7 @@ def run(containers, persist):
     for container_id in container_ids:
         container = get_container(containers, container_id)
         if not container:
-            RedisJobContainers.remove_container(container_id)
+            return
         payload = get_container_resources(containers[container_id], gpu_resources)
         if payload:
             payload = payload.to_dict()
