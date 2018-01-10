@@ -27,13 +27,14 @@ def get_memory_size(node):
 
 def is_master(node):
     if ('node-role.kubernetes.io/master' in node.metadata.labels or
+            node.metadata.labels.get('kubernetes.io/role') == constants.NodeRoles.MASTER or
             node.metadata.labels.get('kubernetes.io/hostname') == 'minikube'):
         return True
     return False
 
 
 def get_role(node):
-    return constants.NodeRoles.MASTER if is_master(node) else constants.NodeRoles.WORKER
+    return constants.NodeRoles.MASTER if is_master(node) else constants.NodeRoles.AGENT
 
 
 def get_docker_version(node):

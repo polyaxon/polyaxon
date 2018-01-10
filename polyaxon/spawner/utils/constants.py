@@ -30,12 +30,12 @@ class NodeLifeCycle(object):
 
 
 class NodeRoles(object):
-    MASTER = 'Master'
-    WORKER = 'Worker'
+    MASTER = 'master'
+    AGENT = 'agent'
 
     CHOICES = (
         (MASTER, MASTER),
-        (WORKER, WORKER)
+        (AGENT, AGENT)
     )
 
 
