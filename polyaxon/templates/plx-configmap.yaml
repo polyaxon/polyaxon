@@ -12,7 +12,7 @@ metadata:
 data:
   debug: {{ .Values.debug | quote }}
   cluster-id: ""
-  node-selectors-experiments: {{ toYaml .Values.nodeSelectors.experiments | quote }}
+  node-selectors-experiments: {{ toJson .Values.nodeSelectors.experiments | quote }}
   amqp-url: amqp://{{ template "rabbitmq.fullname" . }}:5672
   redis-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
   redis-job-containers-url: redis://{{ template "redis.fullname" . }}:6379/3

@@ -13,7 +13,10 @@ user:
   password: "rootpassword"
 
 dirs:
-  nvidia: "/usr/local/nvidia/lib64"
+  nvidia:
+    lib: ""
+    bin: ""
+    libcuda: ""
   docker: "/var/run/docker.sock"
 
 persistence:

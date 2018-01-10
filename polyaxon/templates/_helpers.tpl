@@ -411,7 +411,7 @@ Config dirs
 - name: POLYAXON_DIRS_DOCKER
   value: {{ .Values.dirs.docker | quote }}
 - name: POLYAXON_DIRS_NVIDIA
-  value: {{ .Values.dirs.nvidia | quote }}
+  value: {{ toJson .Values.dirs.nvidia | quote }}
 {{- end -}}
 
 {{/*
@@ -477,8 +477,12 @@ Volume mounts
   {{- end }}
 - name: docker
   mountPath: {{ .Values.dirs.docker }}
-- name: nvidia
-  mountPath: {{ .Values.dirs.nvidia }}
+- name: nvidia-lib
+  mountPath: {{ .Values.dirs.nvidia.lib | quote }}
+- name: nvidia-bin
+  mountPath: {{ .Values.dirs.nvidia.bin | quote }}
+- name: nvidia-libcuda
+  mountPath: {{ .Values.dirs.nvidia.libcuda | quote }}
 {{- end -}}
 
 
@@ -525,8 +529,14 @@ Volumes
 {{ end }}
 - name: docker
   hostPath:
-    path: {{ .Values.dirs.docker }}
-- name: nvidia
+    path: {{ .Values.dirs.docker | quote }}
+- name: nvidia-lib
   hostPath:
-    path: {{ .Values.dirs.nvidia }}
+    path: {{ .Values.dirs.nvidia.lib | quote }}
+- name: nvidia-bin
+  hostPath:
+    path: {{ .Values.dirs.nvidia.bin | quote }}
+- name: nvidia-libcuda
+  hostPath:
+    path: {{ .Values.dirs.nvidia.libcuda | quote }}
 {{- end -}}
