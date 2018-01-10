@@ -248,6 +248,7 @@ class PodManager(object):
         if node_selector:
             node_selector = json.loads(node_selector)
         return client.V1PodSpec(restart_policy=restart_policy,
+                                service_account_name=settings.K8S_SERVICE_ACCOUNT_NAME,
                                 containers=containers,
                                 volumes=volumes,
                                 node_selector=node_selector)
