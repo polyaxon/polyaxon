@@ -341,6 +341,7 @@ class K8SSpawner(K8SManager):
 
     def stop_experiment(self):
         self.delete_experiment_config_map()
+        self.delete_experiment_secret()
         self.delete_master()
         self.delete_worker()
         self.delete_ps()
