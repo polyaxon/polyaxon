@@ -19,6 +19,14 @@ dirs:
     libcuda: ""
   docker: "/var/run/docker.sock"
 
+# This is where we mount nvidia on hosts
+moutPaths:
+  nvidia:
+    lib: "/usr/lib/nvidia/lib"
+    bin: "/usr/lib/nvidia/bin"
+    libcuda: "/usr/lib/nvidia/cuda"
+  docker: "/var/run/docker.sock"
+
 persistence:
   data:
     storageClass:
