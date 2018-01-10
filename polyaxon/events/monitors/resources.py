@@ -6,6 +6,7 @@ import logging
 import re
 
 import docker
+import requests
 from docker.errors import NotFound
 
 import polyaxon_gpustat
@@ -80,6 +81,8 @@ def get_container_resources(container, gpu_resources):
     except NotFound:
         logger.info("`{}` was not found".format(container.name))
         RedisJobContainers.remove_container(container.id)
+        return
+    except requests.ReadTimeout:
         return
 
     precpu_stats = stats['precpu_stats']
