@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import json
-
 from django.conf import settings
 from kubernetes import client
 
@@ -35,10 +33,9 @@ def get_project_pod_spec(project_uuid,
     volume_mounts = volume_mounts or []
     volumes = volumes or []
 
-    if resources and resources.gpu:
-        nvidia_paths = json.loads(settings.DIRS_NVIDIA)
-        volume_mounts += pods.get_gpu_volume_mounts(nvidia_paths)
-        volumes += pods.get_gpu_volumes(nvidia_paths)
+    gpu_volume_mounts, gpu_volumes = pods.get_gpu_volumes_def(resources)
+    volume_mounts += gpu_volume_mounts
+    volumes += gpu_volumes
 
     ports = [client.V1ContainerPort(container_port=port) for port in ports]
 
