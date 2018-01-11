@@ -17,3 +17,4 @@ from .registry import *
 from .spawner import *
 from .versions import *
 from .registration import *
+from .paths import *

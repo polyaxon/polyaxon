@@ -65,7 +65,6 @@ class CeleryTasks(object):
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
-    CLUSTERS_UPDATE_SYSTEM_NODES_GPUS = 'clusters_update_system_nodes_gpus'
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
     EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'

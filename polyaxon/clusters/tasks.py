@@ -57,13 +57,6 @@ def update_system_nodes():
             current_node.save()
 
 
-@celery_app.task(name=CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES_GPUS,
-                 time_limit=150,
-                 ignore_result=True)
-def update_system_node_gpus():
-    pass
-
-
 @celery_app.task(name=CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE, time_limits=60, ignore_result=True)
 def cluster_analytics():
     cluster_uuid = Cluster.load().uuid.hex

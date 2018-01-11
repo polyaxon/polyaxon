@@ -29,6 +29,11 @@ ENV LANGUAGE en_US.UTF-8
 # Use bash as default shell, rather than sh
 ENV SHELL /bin/bash
 
+{% if nvidia_bin -%}
+# Update with nvidia bin
+ENV PATH="${PATH}:{{ nvidia_bin }}"
+{% endif -%}
+
 WORKDIR {{ workdir }}
 
 {% if polyaxon_requirements_path -%}
@@ -133,7 +138,8 @@ class DockerBuilder(object):
             steps=self.steps,
             env_vars=self.env_vars,
             folder_name=self.folder_name,
-            workdir=self.workdir
+            workdir=self.workdir,
+            nvidia_bin=settings.MOUNT_PATHS_NVIDIA.get('bin')
         )
 
     def build(self, memory_limit=None):
