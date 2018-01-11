@@ -63,6 +63,8 @@ class CeleryTasks(object):
     EXPERIMENTS_START_GROUP = 'experiments_start_group'
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
+    PROJECTS_TENSORBOARD_START = 'projects_tensorboard_start'
+    PROJECTS_TENSORBOARD_STOP = 'projects_tensorboard_stop'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
@@ -112,6 +114,8 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.REPOS_HANDLE_FILE_UPLOAD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_SET_METRICS: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.PROJECTS_TENSORBOARD_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.PROJECTS_TENSORBOARD_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},

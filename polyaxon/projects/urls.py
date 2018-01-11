@@ -15,6 +15,10 @@ projects_urlpatterns = [
         views.ProjectListView.as_view()),
     url(r'^{}/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         views.ProjectDetailView.as_view()),
+    url(r'^{}/{}/tensorboard/start/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+        views.StartTensorboardView.as_view()),
+    url(r'^{}/{}/tensorboard/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+        views.StopTensorboardView.as_view()),
     url(r'^{}/{}/groups/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         views.ExperimentGroupListView.as_view()),
     # Get all experiment under a project

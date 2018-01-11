@@ -791,7 +791,7 @@ class TestStopExperimentViewV1(BaseViewTest):
             self.object.sequence)
         self.queryset = self.model_class.objects.all()
 
-    def test_restart(self):
+    def test_stop(self):
         data = {}
         assert self.queryset.count() == 1
         with patch('experiments.tasks.stop_experiment.delay') as mock_fct:

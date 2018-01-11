@@ -321,3 +321,51 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content == data['content']
+
+
+class TestStartTensorboardViewV1(BaseViewTest):
+    model_class = Project
+    factory_class = ProjectFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.object = self.factory_class(user=self.auth_client.user)
+        self.url = '/{}/{}/{}/tensorboard/start'.format(
+            API_V1,
+            self.object.user.username,
+            self.object.name)
+        self.queryset = self.model_class.objects.all()
+
+    def test_start(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('projects.tasks.start_tensorboard.delay') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+
+class TestStopTensorboardViewV1(BaseViewTest):
+    model_class = Project
+    factory_class = ProjectFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.object = self.factory_class(user=self.auth_client.user)
+        self.url = '/{}/{}/{}/tensorboard/stop'.format(
+            API_V1,
+            self.object.user.username,
+            self.object.name)
+        self.queryset = self.model_class.objects.all()
+
+    def test_start(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('projects.tasks.stop_tensorboard.delay') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1

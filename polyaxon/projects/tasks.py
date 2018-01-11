@@ -10,7 +10,8 @@ from polyaxon_schemas.utils import SEARCH_METHODS
 from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
 from experiments.tasks import build_experiment
-from projects.models import ExperimentGroup
+from projects.models import ExperimentGroup, Project
+from spawner import scheduler
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 
@@ -43,3 +44,25 @@ def start_group_experiments(self, experiment_group_id):
     if pending_experiments:
         # Schedule another task
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
+
+@celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
+def start_tensorboard(project_id):
+    try:
+        project = Project.objects.get(project_id=project_id)
+    except Project.DoesNotExist:
+        logger.info('Project id `{}` does not exist'.format(project_id))
+        return None
+
+    scheduler.start_tensorboard(project)
+
+
+@celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_STOP, ignore_result=True)
+def stop_tensorboard(project_id):
+    try:
+        project = Project.objects.get(project_id=project_id)
+    except Project.DoesNotExist:
+        logger.info('Project id `{}` does not exist'.format(project_id))
+        return None
+
+    scheduler.stop_tensorboard(project)

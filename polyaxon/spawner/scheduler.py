@@ -15,7 +15,7 @@ from polyaxon.utils import config
 from experiments.serializers import ExperimentJobSerializer
 from repos.dockerize import get_image_info
 
-from spawner import K8SSpawner
+from spawner import K8SSpawner, K8SProjectSpawner
 from experiments.models import ExperimentJob
 from spawner.utils.constants import ExperimentLifeCycle
 
@@ -108,3 +108,23 @@ def stop_experiment(experiment, update_status=False):
     if update_status:
         # Update experiment status to show that its deleted
         experiment.set_status(ExperimentLifeCycle.DELETED)
+
+
+def start_tensorboard(project):
+    spawner = K8SProjectSpawner(project_name=project.unique_name,
+                                project_uuid=project.uuid.hex,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True)
+
+    spawner.start_tensorboard()
+
+
+def stop_tensorboard(project):
+    spawner = K8SProjectSpawner(project_name=project.unique_name,
+                                project_uuid=project.uuid.hex,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True)
+
+    spawner.stop_tensorboard()

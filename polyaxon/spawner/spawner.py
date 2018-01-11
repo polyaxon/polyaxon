@@ -399,7 +399,7 @@ class K8SProjectSpawner(K8SManager):
                                                 namespace=namespace,
                                                 in_cluster=in_cluster)
 
-    def create_tensorboard_deployment(self):
+    def start_tensorboard(self):
         name = 'tensorboard'
         ports = [6006]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
@@ -433,7 +433,7 @@ class K8SProjectSpawner(K8SManager):
 
         self.create_or_update_service(name=deployment_name, data=service)
 
-    def delete_tensorboard_deployment(self):
+    def stop_tensorboard(self):
         name = 'tensorboard'
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
                                                            name=name)

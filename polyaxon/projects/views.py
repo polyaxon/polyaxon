@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
@@ -8,6 +9,7 @@ from rest_framework.generics import (
     ListAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from libs.views import ListCreateAPIView
 from projects.models import Project, ExperimentGroup
@@ -19,6 +21,7 @@ from projects.serializers import (
     ProjectSerializer,
     ExperimentGroupSerializer,
 )
+from projects.tasks import start_tensorboard, stop_tensorboard
 
 
 class ProjectCreateView(CreateAPIView):
@@ -58,6 +61,36 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     def filter_queryset(self, queryset):
         username = self.kwargs['username']
         return queryset.filter(user__username=username)
+
+
+class StartTensorboardView(CreateAPIView):
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
+    lookup_field = 'name'
+
+    def filter_queryset(self, queryset):
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        start_tensorboard.delay(project_id=obj.id)
+        return Response(status=status.HTTP_200_OK)
+
+
+class StopTensorboardView(CreateAPIView):
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
+    lookup_field = 'name'
+
+    def filter_queryset(self, queryset):
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        stop_tensorboard.delay(project_id=obj.id)
+        return Response(status=status.HTTP_200_OK)
 
 
 class ExperimentGroupListView(ListCreateAPIView):
