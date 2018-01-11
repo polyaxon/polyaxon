@@ -9,8 +9,11 @@ import pkg_resources
 import click
 import sys
 
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError, \
+from polyaxon_client.exceptions import (
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError,
     AuthorizationError
+)
 
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager

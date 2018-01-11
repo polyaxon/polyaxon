@@ -325,13 +325,39 @@ def experiments(ctx, page):
 
 @project.command()
 @click.pass_context
-def clone(ctx):
-    pass
+def start_tensorboard(ctx):
+    """Start a tensorboard deployment for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    try:
+        response = PolyaxonClients().project.start_tensorboard(user, project_name)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not start tensorboard project `{}`.'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
 
 
 @project.command()
 @click.pass_context
-def tensorboard(ctx):
+def stop_tensorboard(ctx):
+    """Stops the tensorboard deployment for this project if it exists.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+    """
+    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    try:
+        response = PolyaxonClients().project.stop_tensorboard(user, project_name)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not start tensorboard project `{}`.'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+
+@project.command()
+@click.pass_context
+def clone(ctx):
     pass
 
 
