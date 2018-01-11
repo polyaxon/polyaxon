@@ -220,7 +220,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
             'serial': 'serial',
             'name': 'gpu',
             'memory': 100,
-            'device': '/dev/nvidia3',
+            'index': 10
         }
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
@@ -230,7 +230,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
         assert last_object.serial == data['serial']
         assert last_object.name == data['name']
         assert last_object.memory == data['memory']
-        assert last_object.device == data['device']
+        assert last_object.index == data['index']
 
 
 class TestClusterNodeGPUDetailViewV1(BaseViewTest):

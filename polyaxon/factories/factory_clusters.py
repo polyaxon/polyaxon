@@ -33,7 +33,7 @@ class GPUFactory(factory.DjangoModelFactory):
     serial = factory.Sequence(lambda i: '{}'.format(i))
     name = factory.Sequence(lambda i: 'Tesla-{}'.format(i))
     memory = factory.Sequence(lambda x: x)
-    device = factory.Sequence(lambda i: '/dev/nvidia{}'.format(i))
+    index = factory.Sequence(lambda i: i)
 
     cluster_node = factory.SubFactory(ClusterNodeFactory)
 

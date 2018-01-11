@@ -52,6 +52,10 @@ class ClusterNode(models.Model):
         editable=False,
         unique=True,
         null=False)
+    sequence = models.IntegerField(
+        editable=False,
+        null=False,
+        help_text='The sequence number of this node within the cluser.', )
     name = models.CharField(
         max_length=256,
         blank=True,
@@ -85,8 +89,21 @@ class ClusterNode(models.Model):
         choices=NodeLifeCycle.CHOICES)
     is_current = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['sequence']
+        unique_together = (('cluster', 'sequence'),)
+
     def __str__(self):
         return '{}/{}'.format(self.cluster, self.name)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            last = ClusterNode.objects.filter(cluster=self.cluster).last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
+
+        super(ClusterNode, self).save(*args, **kwargs)
 
     @classmethod
     def from_node_item(cls, node):
@@ -113,11 +130,15 @@ class NodeGPU(DiffModel):
         editable=False,
         unique=True,
         null=False)
+    index = models.IntegerField()
     serial = models.CharField(max_length=256)
     name = models.CharField(max_length=256)
-    device = models.CharField(max_length=256)
     memory = models.BigIntegerField()
     cluster_node = models.ForeignKey(ClusterNode, related_name='gpus')
+
+    class Meta:
+        ordering = ['index']
+        unique_together = (('cluster_node', 'index'),)
 
     def __str__(self):
         return self.serial

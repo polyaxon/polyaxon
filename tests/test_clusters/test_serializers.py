@@ -17,7 +17,7 @@ class TestGPUSerializer(BaseTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
     factory_class = GPUFactory
-    expected_keys = {'uuid', 'cluster_node', 'serial', 'name', 'device', 'memory', 'updated_at',
+    expected_keys = {'uuid', 'cluster_node', 'serial', 'name', 'index', 'memory', 'updated_at',
                      'created_at', }
 
     def setUp(self):
@@ -78,7 +78,7 @@ class TestClusterNodeDetailsSerializer(BaseTest):
     expected_keys = {'uuid', 'name', 'hostname', 'role', 'docker_version',
                      'kubelet_version', 'os_image', 'kernel_version',
                      'schedulable_taints', 'schedulable_state', 'is_current',
-                     'memory', 'n_cpus', 'n_gpus', 'status', 'gpus'}
+                     'memory', 'n_cpus', 'n_gpus', 'status', 'gpus', 'sequence',}
 
     def setUp(self):
         super().setUp()

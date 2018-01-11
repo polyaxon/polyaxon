@@ -7,11 +7,14 @@ import re
 
 import docker
 import requests
+from django.conf import settings
 from docker.errors import NotFound
 
 import polyaxon_gpustat
 from polyaxon_schemas.experiment import ContainerResourcesConfig
 
+from clusters.models import ClusterNode, NodeGPU
+from clusters.tasks import update_system_info, update_system_nodes
 from libs.redis_db import RedisJobContainers, RedisToStream
 from events.tasks import handle_events_resources
 from spawner.utils.constants import ContainerStatuses
@@ -23,12 +26,13 @@ docker_client = docker.from_env(version="auto", timeout=10)
 
 def get_gpu_resources():
     if not polyaxon_gpustat.has_gpu_nvidia:
-        return
+        return []
 
     try:
         return polyaxon_gpustat.query()
     except:
         polyaxon_gpustat.has_gpu_nvidia = False
+        return []
 
 
 def get_container_gpu_indices(container):
@@ -124,9 +128,27 @@ def get_container_resources(container, gpu_resources):
     })
 
 
+def update_cluster(node_gpus):
+    update_system_info()
+    update_system_nodes()
+    if not node_gpus:
+        return
+    node_gpu_by_indexes = {node_gpu['index']: node_gpu for node_gpu in node_gpus}
+    node = ClusterNode.objects.filter(name=settings.K8S_NODE_NAME).first()
+    for node_gpu_index in node_gpu_by_indexes.keys():
+        node_gpu_value = node_gpu_by_indexes[node_gpu_index]
+        node_gpu, _ = NodeGPU.objects.get_or_create(cluster_node=node, index=node_gpu_index)
+        node_gpu.serial = node_gpu_value['serial']
+        node_gpu.name = node_gpu_value['name']
+        node_gpu.memory = node_gpu_value['memory_total']
+        node_gpu.save()
+
+
 def run(containers, persist):
     container_ids = RedisJobContainers.get_containers()
     gpu_resources = get_gpu_resources()
+    # update cluster and current node
+    update_cluster(gpu_resources)
     if gpu_resources:
         gpu_resources = {gpu_resource['index']: gpu_resource for gpu_resource in gpu_resources}
     for container_id in container_ids:
