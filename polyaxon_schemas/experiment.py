@@ -90,6 +90,7 @@ class ExperimentSchema(Schema):
     experiment_group_name = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)
     last_status = fields.Str(allow_none=True)
+    last_metric = fields.Dict(allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
     started_at = fields.LocalDateTime(allow_none=True)
@@ -121,7 +122,7 @@ class ExperimentConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         'user', 'sequence', 'description', 'config', 'jobs', 'content',
         'created_at', 'updated_at', 'started_at', 'finished_at',
-        'is_clone', 'is_running', 'is_done', 'total_run']
+        'is_clone', 'is_running', 'is_done', 'total_run', 'last_metric']
     REDUCED_LIGHT_ATTRIBUTES = [
         'uuid', 'project', 'experiment_group', 'description', 'config', 'content',
         'jobs', 'updated_at'
@@ -139,6 +140,7 @@ class ExperimentConfig(BaseConfig):
                  experiment_group_name=None,
                  description=None,
                  last_status=None,
+                 last_metric=None,
                  created_at=None,
                  updated_at=None,
                  started_at=None,
@@ -161,6 +163,7 @@ class ExperimentConfig(BaseConfig):
         self.experiment_group_name = experiment_group_name
         self.description = description
         self.last_status = last_status
+        self.last_metric = last_metric
         self.started_at = self.localize_date(started_at)
         self.finished_at = self.localize_date(finished_at)
         self.created_at = self.localize_date(created_at)
