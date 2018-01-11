@@ -65,6 +65,14 @@ $ helm delete <RELEASE_NAME> --purge
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
+** __warning__ **
+Jobs are only deleted if they succeeded,
+sometime if you can cancel a deployment you might end up with undeleted jobs.
+
+```console
+$ kubectl delete job ...
+```
+
 ## Configuration
 
 The following tables lists the configurable parameters of the Polyaxon chart and their default values.

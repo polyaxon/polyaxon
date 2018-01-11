@@ -22,9 +22,9 @@ dirs:
 # This is where we mount nvidia on hosts
 mountPaths:
   nvidia:
-    lib: "/usr/local/nvidia"
+    lib: "/usr/local/nvidia/lib"
     bin: "/usr/local/nvidia/bin"
-    libcuda: "/usr/local/nvidia/x86_64/libcuda.so.1"
+    libcuda: "/usr/local/nvidia/libcuda/libcuda.so.1"
   docker: "/var/run/docker.sock"
 
 persistence:

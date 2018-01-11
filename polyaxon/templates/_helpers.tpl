@@ -417,7 +417,7 @@ Config dirs
 - name: POLYAXON_MOUNT_PATHS_NVIDIA
   value: {{ toJson .Values.mountPaths.nvidia | quote }}
 - name: LD_LIBRARY_PATH
-  value: "{{ .Values.mountPaths.nvidia.lib | quote }}:{{ .Values.mountPaths.nvidia.libcuda | quote }}"
+  value: "{{ .Values.mountPaths.nvidia.lib }}:{{ .Values.mountPaths.nvidia.libcuda }}"
 {{- end -}}
 
 {{/*
