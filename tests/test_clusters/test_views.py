@@ -126,7 +126,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         super().setUp()
         self.cluster = Cluster.load()
         self.object = self.factory_class(cluster=self.cluster)
-        self.url = '/{}/nodes/{}/'.format(API_V1, self.object.uuid.hex)
+        self.url = '/{}/nodes/{}/'.format(API_V1, self.object.sequence)
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
@@ -173,7 +173,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.cluster_node = ClusterNodeFactory(cluster=Cluster.load())
-        self.url = '/{}/nodes/{}/gpus'.format(API_V1, self.cluster_node.uuid.hex)
+        self.url = '/{}/nodes/{}/gpus'.format(API_V1, self.cluster_node.sequence)
         self.objects = [self.factory_class(cluster_node=self.cluster_node)
                         for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
@@ -220,7 +220,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
             'serial': 'serial',
             'name': 'gpu',
             'memory': 100,
-            'index': 10
+            'index': 1000
         }
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
@@ -245,8 +245,8 @@ class TestClusterNodeGPUDetailViewV1(BaseViewTest):
         self.object = self.factory_class(cluster_node=get_cluster_node())
         self.cluster_node = self.object.cluster_node
         self.url = '/{}/nodes/{}/gpus/{}'.format(API_V1,
-                                                 self.cluster_node.uuid.hex,
-                                                 self.object.uuid.hex)
+                                                 self.cluster_node.sequence,
+                                                 self.object.index)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):

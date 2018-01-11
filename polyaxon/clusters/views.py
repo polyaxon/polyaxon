@@ -38,13 +38,13 @@ class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):
     queryset = ClusterNode.objects.all()
     serializer_class = ClusterNodeDetailSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
-    lookup_field = 'uuid'
+    lookup_field = 'sequence'
 
 
 class ClusterNodeGPUViewMixin(object):
     def get_cluster_node(self):
-        node_uuid = self.kwargs['node_uuid']
-        return get_object_or_404(ClusterNode, uuid=node_uuid)
+        sequence = self.kwargs['sequence']
+        return get_object_or_404(ClusterNode, sequence=sequence)
 
     def filter_queryset(self, queryset):
         return queryset.filter(cluster_node=self.get_cluster_node())
@@ -63,4 +63,4 @@ class ClusterNodeGPUDetailView(RetrieveUpdateDestroyAPIView, ClusterNodeGPUViewM
     queryset = NodeGPU.objects.all()
     serializer_class = GPUSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
-    lookup_field = 'uuid'
+    lookup_field = 'index'
