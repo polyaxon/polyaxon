@@ -137,7 +137,10 @@ def update_cluster(node_gpus):
     node = ClusterNode.objects.filter(name=settings.K8S_NODE_NAME).first()
     for node_gpu_index in node_gpu_by_indexes.keys():
         node_gpu_value = node_gpu_by_indexes[node_gpu_index]
-        node_gpu, _ = NodeGPU.objects.get_or_create(cluster_node=node, index=node_gpu_index)
+        try:
+            node_gpu = NodeGPU.objects.get(cluster_node=node, index=node_gpu_index)
+        except NodeGPU.DoesNotExist:
+            node_gpu = NodeGPU(cluster_node=node, index=node_gpu_index)
         node_gpu.serial = node_gpu_value['serial']
         node_gpu.name = node_gpu_value['name']
         node_gpu.memory = node_gpu_value['memory_total']
