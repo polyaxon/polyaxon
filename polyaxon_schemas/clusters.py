@@ -74,8 +74,9 @@ class ClusterNodeSchema(Schema):
 class ClusterNodeConfig(BaseConfig):
     SCHEMA = ClusterNodeSchema
     IDENTIFIER = 'ClusterNode'
-    REDUCED_ATTRIBUTES = ['uuid', 'docker_version', 'kubelet_version', 'os_image',
+    REDUCED_ATTRIBUTES = ['docker_version', 'kubelet_version', 'os_image',
                           'schedulable_taints', 'schedulable_state', 'gpus']
+    REDUCED_LIGHT_ATTRIBUTES = ['uuid']
 
     def __init__(self,
                  uuid,
