@@ -14,17 +14,17 @@ user:
 
 dirs:
   nvidia:
-    lib: ""
-    bin: ""
-    libcuda: ""
+    lib: ""  # e.g. "/usr/lib/nvidia-384"
+    bin: ""  # e.g. "/usr/lib/nvidia-384/bin"
+    libcuda: ""  # e.g. "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
   docker: "/var/run/docker.sock"
 
 # This is where we mount nvidia on hosts
-moutPaths:
+mountPaths:
   nvidia:
-    lib: "/usr/lib/nvidia/lib"
-    bin: "/usr/lib/nvidia/bin"
-    libcuda: "/usr/lib/nvidia/cuda"
+    lib: "/usr/local/nvidia"
+    bin: "/usr/local/nvidia/bin"
+    libcuda: "/usr/local/nvidia/x86_64/libcuda.so.1"
   docker: "/var/run/docker.sock"
 
 persistence:
@@ -198,22 +198,20 @@ events:
     persists: false
     logSleepInterval: 1
 
+resourcesDaemon:
+  enabled: true
+  image: polyaxon/polyaxon-monitor-resources
+  imageTag: 0.0.2
+  imagePullPolicy: IfNotPresent
   resources:
-    enabled: true
-    image: polyaxon/polyaxon-monitor-resources
-    imageTag: 0.0.2
-    imagePullPolicy: IfNotPresent
-    replicas: 1
-    resources:
-      limits:
-        cpu: 50m
-        memory: 128Mi
-      requests:
-        cpu: 50m
-        memory: 128Mi
-    persists: false
-    logSleepInterval: 1
-
+    limits:
+      cpu: 50m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  persists: false
+  logSleepInterval: 1
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
@@ -233,9 +231,12 @@ nodeSelectors:
   core:
   dependencies:
   experiments:
+
 tolerations:
   core:
   dependencies:
+  resourcesDaemon:
+
 affinity:
   core:
     podAffinity:

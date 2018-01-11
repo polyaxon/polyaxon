@@ -25,3 +25,4 @@ target/
 
 # ignore devvalues
 values.dev.yaml
+values.test.yaml

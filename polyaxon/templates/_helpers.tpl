@@ -166,6 +166,8 @@ global config
   value: {{ template "polyaxon.fullname" . }}-secret
 - name: POLYAXON_K8S_APP_CONFIG_NAME
   value: {{ template "polyaxon.fullname" . }}-config
+- name: POLYAXON_K8S_SERVICE_ACCOUNT_NAME
+  value: {{ template "polyaxon.fullname" . }}-serviceaccount
 - name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
   valueFrom:
     configMapKeyRef:
@@ -414,6 +416,8 @@ Config dirs
   value: {{ toJson .Values.dirs.nvidia | quote }}
 - name: POLYAXON_MOUNT_PATHS_NVIDIA
   value: {{ toJson .Values.mountPaths.nvidia | quote }}
+- name: LD_LIBRARY_PATH
+  value: "{{ .Values.mountPaths.nvidia.lib | quote }}:{{ .Values.mountPaths.nvidia.libcuda | quote }}"
 {{- end -}}
 
 {{/*
