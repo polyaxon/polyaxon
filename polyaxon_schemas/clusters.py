@@ -8,10 +8,10 @@ from polyaxon_schemas.utils import UUID
 
 
 class NodeGPUSchema(Schema):
+    index = fields.Int()
     name = fields.Str()
     uuid = UUID()
     memory = fields.Int()
-    device = fields.Str()
     serial = fields.Str()
     cluster_node = UUID()
 
@@ -30,17 +30,19 @@ class NodeGPUSchema(Schema):
 class NodeGPUConfig(BaseConfig):
     SCHEMA = NodeGPUSchema
     IDENTIFIER = 'NodeGPU'
+    REDUCED_LIGHT_ATTRIBUTES = ['uuid', 'cluster_node']
 
-    def __init__(self, name, uuid, memory, device, serial, cluster_node):
+    def __init__(self, index, name, uuid, memory, serial, cluster_node):
         self.uuid = uuid
         self.serial = serial
         self.name = name
-        self.device = device
+        self.index = index
         self.memory = memory
         self.cluster_node = cluster_node
 
 
 class ClusterNodeSchema(Schema):
+    sequence = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
     uuid = UUID()
     status = fields.Str(allow_none=True)
@@ -72,11 +74,12 @@ class ClusterNodeSchema(Schema):
 class ClusterNodeConfig(BaseConfig):
     SCHEMA = ClusterNodeSchema
     IDENTIFIER = 'ClusterNode'
-    REDUCED_ATTRIBUTES = ['docker_version', 'kubelet_version', 'os_image',
+    REDUCED_ATTRIBUTES = ['uuid', 'docker_version', 'kubelet_version', 'os_image',
                           'schedulable_taints', 'schedulable_state', 'gpus']
 
     def __init__(self,
                  uuid,
+                 sequence=None,
                  name=None,
                  hostname=None,
                  role=None,
@@ -92,6 +95,7 @@ class ClusterNodeConfig(BaseConfig):
                  status=None,
                  gpus=None):
         self.uuid = uuid
+        self.sequence = sequence
         self.name = name
         self.hostname = hostname
         self.role = role

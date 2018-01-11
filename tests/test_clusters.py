@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import random
 import uuid
 from unittest import TestCase
 
@@ -15,7 +16,7 @@ class TestClusterConfigs(TestCase):
             'uuid': uuid.uuid4().hex,
             'serial': 'serial',
             'name': 'gamma',
-            'device': 'device',
+            'index': random.randint(1, 100),
             'memory': 10,
             'cluster_node': uuid.uuid4().hex
         }
@@ -24,6 +25,7 @@ class TestClusterConfigs(TestCase):
     def create_cluster_node(cls):
         return {
             'uuid': uuid.uuid4().hex,
+            'sequence': 1,
             'name': 'node',
             'hostname': 'hostname',
             'role': 'master',

@@ -126,13 +126,14 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict == config_dict
 
         config_dict.pop('experiment', None)
+        config_dict.pop('uuid', None)
         config_to_dict = config.to_light_dict()
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
 
-    def test_experiment_status_config(self):
+    def test_experiment_metricfig(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
                        'created_at': local_now().isoformat(),
@@ -142,6 +143,7 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict == config_dict
 
         config_dict.pop('experiment', None)
+        config_dict.pop('uuid', None)
         config_to_dict = config.to_light_dict()
         assert config_to_dict == config_dict
 
@@ -160,6 +162,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         config_dict.pop('details', None)
         config_dict.pop('job', None)
+        config_dict.pop('uuid', None)
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)

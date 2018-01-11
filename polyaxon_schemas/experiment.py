@@ -199,7 +199,7 @@ class ExperimentStatusConfig(BaseConfig):
     SCHEMA = ExperimentStatusSchema
     IDENTIFIER = 'ExperimentStatus'
     DATETIME_ATTRIBUTES = ['created_at']
-    REDUCED_LIGHT_ATTRIBUTES = ['experiment']
+    REDUCED_LIGHT_ATTRIBUTES = ['experiment', 'uuid']
 
     def __init__(self, uuid, experiment, created_at, status):
         self.uuid = uuid
@@ -230,7 +230,7 @@ class ExperimentMetricConfig(BaseConfig):
     SCHEMA = ExperimentMetricSchema
     IDENTIFIER = 'ExperimentMetric'
     DATETIME_ATTRIBUTES = ['created_at']
-    REDUCED_LIGHT_ATTRIBUTES = ['experiment']
+    REDUCED_LIGHT_ATTRIBUTES = ['experiment', 'uuid']
 
     def __init__(self, uuid, experiment, created_at, values):
         self.uuid = uuid
@@ -263,7 +263,7 @@ class ExperimentJobStatusConfig(BaseConfig):
     SCHEMA = ExperimentJobStatusSchema
     IDENTIFIER = 'ExperimentJobStatus'
     REDUCED_ATTRIBUTES = ['message', 'details']
-    REDUCED_LIGHT_ATTRIBUTES = ['job', 'details']
+    REDUCED_LIGHT_ATTRIBUTES = ['job', 'details', 'uuid']
     DATETIME_ATTRIBUTES = ['created_at']
 
     def __init__(self, uuid, job, created_at, status, message=None, details=None):
