@@ -83,31 +83,3 @@ spec:
         resources:
 {{ toYaml .Values.events.statuses.resources | indent 10 }}
       {{- end }}
-      # resources events
-      {{- if .Values.events.resources.enabled }}
-      - name: {{ .Chart.Name }}-resources
-        image: "{{ .Values.events.resources.image }}:{{ .Values.events.resources.imageTag }}"
-        imagePullPolicy: {{ .Values.events.resources.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.events.resources.logSleepInterval }}", "--persist={{ .Values.events.resources.persists }}"]
-        env:
-        {{ include "config.global" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.django" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
-        {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.routingKeys" . | indent 8 }}
-        {{ include "config.queues" . | indent 8 }}
-        {{ include "config.intervals" . | indent 8 }}
-        {{ include "config.mount_paths" . | indent 8 }}
-        {{ include "config.sub_paths" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
-        resources:
-{{ toYaml .Values.events.resources.resources | indent 10 }}
-      {{- end }}
-        volumeMounts:
-        {{ include "volumes.volumeMounts" . | indent 8}}
-      volumes:
-      {{ include "volumes.volumes" . | indent 6 }}
