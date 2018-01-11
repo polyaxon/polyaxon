@@ -219,3 +219,35 @@ class TestProjectClient(TestCase):
             status=200)
         result = self.client.create_experiment('user', 'project', object)
         assert result.to_dict() == object.to_dict()
+
+    @httpretty.activate
+    def test_start_tensorboard(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'tensorboard',
+                'start'),
+            content_type='application/json',
+            status=200)
+        result = self.client.start_tensorboard('username', 'project_name')
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_stop_tensorboard(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'tensorboard',
+                'stop'),
+            content_type='application/json',
+            status=200)
+        result = self.client.stop_tensorboard('username', 'project_name')
+        assert result.status_code == 200

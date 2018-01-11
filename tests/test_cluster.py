@@ -39,7 +39,7 @@ class TestClusterClient(TestCase):
 
     @httpretty.activate
     def test_get_node(self):
-        object = ClusterNodeConfig(uuid=node_uuid,
+        object = ClusterNodeConfig(uuid=uuid.uuid4().hex,
                                    name='name',
                                    hostname='hostname',
                                    role='Master',

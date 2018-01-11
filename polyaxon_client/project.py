@@ -117,9 +117,30 @@ class ProjectClient(PolyaxonClient):
         # TODO
         pass
 
-    def create_tensorboard(self, username, project_name):
-        # TODO
-        pass
+    def start_tensorboard(self, username, project_name):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'tensorboard',
+                                      'start')
+
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while starting tensorboard')
+            return None
+
+    def stop_tensorboard(self, username, project_name):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'tensorboard',
+                                      'stop')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while stopping tensorboard')
+            return None
 
     def create_notebook(self, username, project_name):
         # TODO
