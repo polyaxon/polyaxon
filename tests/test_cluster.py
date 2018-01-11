@@ -39,7 +39,6 @@ class TestClusterClient(TestCase):
 
     @httpretty.activate
     def test_get_node(self):
-        node_uuid = uuid.uuid4().hex
         object = ClusterNodeConfig(uuid=node_uuid,
                                    name='name',
                                    hostname='hostname',
@@ -60,9 +59,9 @@ class TestClusterClient(TestCase):
             ClusterClient._build_url(
                 self.client.base_url,
                 ClusterClient.ENDPOINT_NODES,
-                node_uuid),
+                1),
             body=json.dumps(object.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.get_node(node_uuid)
+        result = self.client.get_node(1)
         assert result.to_dict() == object.to_dict()

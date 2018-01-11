@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.clusters import PolyaxonClusterConfig, ClusterNodeConfig
+from polyaxon_schemas.clusters import PolyaxonClusterConfig, ClusterNodeConfig, NodeGPUConfig
 
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
@@ -21,8 +21,8 @@ class ClusterClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while retrieving cluster')
             return None
 
-    def get_node(self, node_uuid):
-        request_url = self._build_url(self._get_http_url(self.ENDPOINT_NODES), node_uuid)
+    def get_node(self, node_sequence):
+        request_url = self._build_url(self._get_http_url(self.ENDPOINT_NODES), node_sequence)
         try:
             response = self.get(request_url)
             return ClusterNodeConfig.from_dict(response.json())
