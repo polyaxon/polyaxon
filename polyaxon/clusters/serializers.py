@@ -23,7 +23,7 @@ class ClusterNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ClusterNode
-        fields = ('uuid', 'name', 'hostname', 'role', 'memory', 'n_cpus', 'n_gpus',)
+        fields = ('uuid', 'sequence', 'name', 'hostname', 'role', 'memory', 'n_cpus', 'n_gpus',)
 
 
 class ClusterNodeDetailSerializer(ClusterNodeSerializer):

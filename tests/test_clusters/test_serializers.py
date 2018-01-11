@@ -49,7 +49,7 @@ class TestClusterNodeSerializer(BaseTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
     factory_class = ClusterNodeFactory
-    expected_keys = {'uuid', 'name', 'hostname', 'role', 'memory', 'n_cpus', 'n_gpus', }
+    expected_keys = {'uuid', 'sequence', 'name', 'hostname', 'role', 'memory', 'n_cpus', 'n_gpus', }
 
     def setUp(self):
         super().setUp()
