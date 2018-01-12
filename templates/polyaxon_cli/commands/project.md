@@ -173,3 +173,29 @@ option | type | description
 -------|------|------------
   --page | INTEGER | To paginate through the list of groups.
   --help | | Show this message and exit.
+
+
+## Start Tensorboard
+
+Usage:
+
+```bash
+$ polyaxon project start_tensorboard
+```
+
+Start a tensorboard deployment for this project. It will show all experiments under the project.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+
+## Stop Tensorboard
+
+Usage:
+
+```
+$ polyaxon project stop_tensorboard
+```
+
+Stops the tensorboard deployment for this project if it exists.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
