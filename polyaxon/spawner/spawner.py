@@ -411,6 +411,7 @@ class K8SProjectSpawner(K8SManager):
 
     def start_tensorboard(self):
         ports = [self.get_tensorboard_port()]
+        target_ports = [6006]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
         outputs_path = get_project_outputs_path(project_name=self.project_name)
         deployment = deployments.get_deployment(
@@ -422,7 +423,7 @@ class K8SProjectSpawner(K8SManager):
             volumes=volumes,
             command=["/bin/sh", "-c"],
             args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
-            ports=ports,
+            ports=target_ports,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(
@@ -439,6 +440,7 @@ class K8SProjectSpawner(K8SManager):
                                           role=settings.ROLE_LABELS_DASHBOARD,
                                           type=settings.TYPE_LABELS_EXPERIMENT),
             ports=ports,
+            target_ports=target_ports,
             service_type=service_type)
 
         self.create_or_update_service(name=deployment_name, data=service)
