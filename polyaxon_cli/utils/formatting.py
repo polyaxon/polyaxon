@@ -81,6 +81,13 @@ class Printer(object):
         return obj_dict
 
     @classmethod
+    def add_memory_unit(cls, obj_dict, keys):
+        keys = to_list(keys)
+        for key in keys:
+            obj_dict[key] = to_unit_memory(obj_dict[key])
+        return obj_dict
+
+    @classmethod
     def handle_statuses(cls, obj_dict):
         if obj_dict.get('status') == 'Created':
             obj_dict['status'] = cls.add_color(obj_dict['status'], color='cyan')
@@ -110,8 +117,8 @@ class Printer(object):
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
             line = [
                 job_resources.job_uuid.hex,
-                '{} / {}'.format(to_unit_memory(job_resources.memory_used / (1024 ** 3)),
-                                 to_unit_memory(job_resources.memory_limit / (1024 ** 3))),
+                '{} / {}'.format(to_unit_memory(job_resources.memory_used),
+                                 to_unit_memory(job_resources.memory_limit)),
                 '{} - {}'.format(to_percentage(job_resources.cpu_percentage),
                                  len(job_resources.percpu_percentage))]
             if job_resources.gpu_resources:
