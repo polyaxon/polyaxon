@@ -249,10 +249,12 @@ class PodManager(object):
             containers.append(sidecar_container)
 
         node_selector = settings.NODE_SELECTORS_EXPERIMENTS
-        if node_selector:
-            node_selector = json.loads(node_selector)
+        node_selector = json.loads(node_selector) if node_selector else None
+        service_account_name = None
+        if settings.K8S_RBAC_ENABLED:
+            service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
         return client.V1PodSpec(restart_policy=restart_policy,
-                                service_account_name=settings.K8S_SERVICE_ACCOUNT_NAME,
+                                service_account_name=service_account_name,
                                 containers=containers,
                                 volumes=volumes,
                                 node_selector=node_selector)

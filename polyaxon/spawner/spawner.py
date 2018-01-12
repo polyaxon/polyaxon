@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import json
 import logging
+import random
 
 from django.conf import settings
 from kubernetes import client
@@ -394,19 +395,27 @@ class K8SProjectSpawner(K8SManager):
                  in_cluster=False):
         self.project_name = project_name
         self.project_uuid = project_uuid
+        self.tensorboard_app = 'tensorboard'
 
         super(K8SProjectSpawner, self).__init__(k8s_config=k8s_config,
                                                 namespace=namespace,
                                                 in_cluster=in_cluster)
 
+    def get_tensorboard_port(self):
+        labels = 'app={},role={}'.format(self.tensorboard_app, settings.ROLE_LABELS_DASHBOARD)
+        ports = [service.spec.ports[0].port for service in self.list_services(labels)]
+        port = random.randint(5500, 6500)
+        while port in ports:
+            port = random.randint(5500, 6500)
+        return port
+
     def start_tensorboard(self):
-        name = 'tensorboard'
-        ports = [6006]
+        ports = [self.get_tensorboard_port()]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
         outputs_path = get_project_outputs_path(project_name=self.project_name)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            name=name,
+            name=self.tensorboard_app,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
@@ -417,25 +426,29 @@ class K8SProjectSpawner(K8SManager):
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=name)
+            project_uuid=self.project_uuid, name=self.tensorboard_app)
 
         self.create_or_update_deployment(name=deployment_name, data=deployment)
+        service_type = None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
         service = services.get_service(
             namespace=self.namespace,
             name=deployment_name,
-            labels=deployments.get_labels(name=name,
+            labels=deployments.get_labels(name=self.tensorboard_app,
                                           project_name=self.project_name,
                                           project_uuid=self.project_uuid,
                                           role=settings.ROLE_LABELS_DASHBOARD,
                                           type=settings.TYPE_LABELS_EXPERIMENT),
             ports=ports,
-            service_type='LoadBalancer')
+            service_type=service_type)
 
         self.create_or_update_service(name=deployment_name, data=service)
 
+        if settings.K8S_INGRESS_ENABLED:
+            # create ingress
+            pass
+
     def stop_tensorboard(self):
-        name = 'tensorboard'
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=name)
+                                                           name=self.tensorboard_app)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)

@@ -133,10 +133,9 @@ def update_cluster(node_gpus):
     update_system_nodes()
     if not node_gpus:
         return
-    node_gpu_by_indexes = {node_gpu['index']: node_gpu for node_gpu in node_gpus}
     node = ClusterNode.objects.filter(name=settings.K8S_NODE_NAME).first()
-    for node_gpu_index in node_gpu_by_indexes.keys():
-        node_gpu_value = node_gpu_by_indexes[node_gpu_index]
+    for node_gpu_index in node_gpus.keys():
+        node_gpu_value = node_gpus[node_gpu_index]
         try:
             node_gpu = NodeGPU.objects.get(cluster_node=node, index=node_gpu_index)
         except NodeGPU.DoesNotExist:
@@ -150,10 +149,10 @@ def update_cluster(node_gpus):
 def run(containers, persist):
     container_ids = RedisJobContainers.get_containers()
     gpu_resources = get_gpu_resources()
-    # update cluster and current node
-    update_cluster(gpu_resources)
     if gpu_resources:
         gpu_resources = {gpu_resource['index']: gpu_resource for gpu_resource in gpu_resources}
+    # update cluster and current node
+    update_cluster(gpu_resources)
     for container_id in container_ids:
         container = get_container(containers, container_id)
         if not container:

@@ -118,6 +118,8 @@ def start_tensorboard(project):
                                 in_cluster=True)
 
     spawner.start_tensorboard()
+    project.has_tensorboard = True
+    project.save()
 
 
 def stop_tensorboard(project):
@@ -128,3 +130,5 @@ def stop_tensorboard(project):
                                 in_cluster=True)
 
     spawner.stop_tensorboard()
+    project.has_tensorboard = False
+    project.save()

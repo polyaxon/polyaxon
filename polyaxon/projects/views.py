@@ -74,7 +74,8 @@ class StartTensorboardView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        start_tensorboard.delay(project_id=obj.id)
+        if not obj.has_tensorboard:
+            start_tensorboard.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -89,7 +90,8 @@ class StopTensorboardView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        stop_tensorboard.delay(project_id=obj.id)
+        if obj.has_tensorboard:
+            stop_tensorboard.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
 
