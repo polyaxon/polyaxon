@@ -28,6 +28,12 @@ def pip_upgrade(project_name=PROJECT_CLI_NAME):
     pip.main(["install", "--upgrade", project_name])
 
 
+def session_expired():
+    AuthConfigManager.purge()
+    click.echo('Session has expired, please try again.')
+    sys.exit(1)
+
+
 def get_version(pkg):
     try:
         version = pkg_resources.get_distribution(pkg).version
@@ -40,6 +46,8 @@ def check_cli_version():
     """Check if the current cli version satisfies the server requirements"""
     try:
         server_version = PolyaxonClients().version.get_cli_version()
+    except AuthorizationError:
+        session_expired()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get cli version.')
         Printer.print_error('Error message `{}`.'.format(e))
@@ -75,10 +83,6 @@ def check_cli_version():
 @click.option('--lib', is_flag=True, default=False, help='Version of the Polyaxon cli.')
 def version(cli, platform, lib):
     """Print the current version of the cli, platform, and lib."""
-    def session_expired():
-        AuthConfigManager.purge()
-        click.echo('Session has expired, please try again.')
-        sys.exit(1)
 
     version_client = PolyaxonClients().version
     cli = cli or not any([cli, platform, lib])
