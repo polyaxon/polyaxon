@@ -8,7 +8,8 @@ from polyaxon_schemas.utils import to_list
 from polyaxon_k8s import constants as k8s_constants
 
 
-def get_service(namespace, name, labels, ports, target_ports, service_type=None, external_i_ps=None):
+def get_service(namespace, name, labels, ports, target_ports,
+                service_type=None, external_i_ps=None):
     external_i_ps = to_list(external_i_ps) if external_i_ps else None
     ports = to_list(ports)
     metadata = client.V1ObjectMeta(name=name, labels=labels, namespace=namespace)

@@ -112,7 +112,8 @@ class K8SSpawner(K8SManager):
         service = services.get_service(namespace=self.namespace,
                                        name=job_name,
                                        labels=labels,
-                                       ports=self.pod_manager.ports)
+                                       ports=self.pod_manager.ports,
+                                       target_ports=self.pod_manager.ports)
         service_resp, _ = self.create_or_update_service(name=job_name, data=service)
         return {
             'pod': pod_resp.to_dict(),
