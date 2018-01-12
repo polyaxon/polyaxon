@@ -49,7 +49,7 @@ def start_group_experiments(self, experiment_group_id):
 @celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
 def start_tensorboard(project_id):
     try:
-        project = Project.objects.get(project_id=project_id)
+        project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         logger.info('Project id `{}` does not exist'.format(project_id))
         return None
@@ -60,7 +60,7 @@ def start_tensorboard(project_id):
 @celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_STOP, ignore_result=True)
 def stop_tensorboard(project_id):
     try:
-        project = Project.objects.get(project_id=project_id)
+        project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         logger.info('Project id `{}` does not exist'.format(project_id))
         return None

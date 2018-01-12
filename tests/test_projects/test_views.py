@@ -346,6 +346,15 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
 
+    def test_spawner_start(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('spawner.scheduler.start_tensorboard') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
 
 class TestStopTensorboardViewV1(BaseViewTest):
     model_class = Project
@@ -361,10 +370,19 @@ class TestStopTensorboardViewV1(BaseViewTest):
             self.object.name)
         self.queryset = self.model_class.objects.all()
 
-    def test_start(self):
+    def test_stop(self):
         data = {}
         assert self.queryset.count() == 1
         with patch('projects.tasks.stop_tensorboard.delay') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
+
+    def test_spawner_start(self):
+        data = {}
+        assert self.queryset.count() == 1
+        with patch('spawner.scheduler.stop_tensorboard') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
