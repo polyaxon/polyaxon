@@ -184,7 +184,7 @@ class K8SSpawner(K8SManager):
                                                    volume_mount=settings.DATA_ROOT))
 
         volumes.append(pods.get_volume(volume=constants.OUTPUTS_VOLUME,
-                                       claim_name=settings.DATA_CLAIM_NAME,
+                                       claim_name=settings.OUTPUTS_CLAIM_NAME,
                                        volume_mount=settings.OUTPUTS_ROOT))
         volume_mounts.append(pods.get_volume_mount(volume=constants.OUTPUTS_VOLUME,
                                                    volume_mount=settings.OUTPUTS_ROOT))
