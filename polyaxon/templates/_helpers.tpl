@@ -106,10 +106,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 global config
 */}}
 {{- define "config.global" }}
-- name: POLYAXON_K8S_NODE_NAME
-  valueFrom:
-    fieldRef:
-     fieldPath: spec.nodeName
 - name: POLYAXON_DEBUG
   valueFrom:
     configMapKeyRef:
@@ -130,7 +126,6 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: sidecar-container-name
-
 - name: POLYAXON_JOB_DOCKER_NAME
   value: "{{ .Values.job.image }}:{{ .Values.job.imageTag }}"
 - name: POLYAXON_JOB_SIDECAR_DOCKER_IMAGE
@@ -145,6 +140,14 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: sidecar-persist
+- name: POLYAXON_K8S_NODE_NAME
+  valueFrom:
+    fieldRef:
+     fieldPath: spec.nodeName
+- name: POLYAXON_K8S_INGRESS_ENABLED
+  value: {{ .Values.ingress.enabled }}
+- name: POLYAXON_K8S_RBAC_ENABLED
+  value: {{ .Values.rbac.enabled }}
 {{- if .Values.k8s.authorisation }}
 - name: POLYAXON_K8S_AUTHORISATION
   valueFrom:
