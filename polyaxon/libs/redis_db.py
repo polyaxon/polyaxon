@@ -178,7 +178,9 @@ class RedisToStream(BaseRedisDb):
     def get_latest_experiment_resources(cls, jobs, as_json=False):
         stats = []
         for job in jobs:
-            stats.append(cls.get_latest_job_resources(job, True))
+            job_resources = cls.get_latest_job_resources(job, True)
+            if job_resources:
+                stats.append(job_resources)
         return stats if as_json else json.dumps(stats)
 
     @classmethod

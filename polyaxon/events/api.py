@@ -180,7 +180,6 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
             else:
                 should_check = 0
 
-        resources = [resource for resource in resources if resource]
         if resources:
             try:
                 await ws.send(resources)
