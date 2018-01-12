@@ -414,7 +414,7 @@ class K8SProjectSpawner(K8SManager):
             command=["/bin/sh", "-c"],
             args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
             ports=ports,
-            role='dashboard',
+            role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(
             project_uuid=self.project_uuid, name=name)
