@@ -57,6 +57,7 @@ spec:
         {{ include "config.dirs" . | indent 8 }}
         volumeMounts:
         {{ include "volumes.volumeMounts" . | indent 8}}
+        {{ include "volumes.dirMounts" . | indent 8}}
         livenessProbe:
           failureThreshold: 5
           httpGet:
@@ -103,3 +104,4 @@ spec:
 {{ toYaml .Values.apiEvents.resources | indent 10 }}
       volumes:
       {{ include "volumes.volumes" . | indent 6 }}
+      {{ include "volumes.dirs" . | indent 6 }}

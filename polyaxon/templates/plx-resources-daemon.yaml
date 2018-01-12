@@ -53,7 +53,7 @@ spec:
         resources:
 {{ toYaml .Values.resourcesDaemon.resources | indent 10 }}
         volumeMounts:
-        {{ include "volumes.volumeMounts" . | indent 8}}
+        {{ include "volumes.dirMounts" . | indent 8}}
       volumes:
-      {{ include "volumes.volumes" . | indent 6 }}
+      {{ include "volumes.dirs" . | indent 6 }}
 {{- end }}

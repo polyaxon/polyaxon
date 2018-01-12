@@ -106,6 +106,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 global config
 */}}
 {{- define "config.global" }}
+- name: POLYAXON_K8S_NODE_NAME
+  valueFrom:
+    fieldRef:
+     fieldPath: spec.nodeName
 - name: POLYAXON_DEBUG
   valueFrom:
     configMapKeyRef:
@@ -398,10 +402,10 @@ Config claim_names
   value: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
 - name: POLYAXON_CLAIM_NAMES_DATA
   value: {{ .Values.persistence.data.existingClaim }}
+- name: POLYAXON_CLAIM_NAMES_OUTPUTS
+  value: {{ .Values.persistence.outputs.existingClaim }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
   value: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
-- name: POLYAXON_CLAIM_NAMES_OUTPUTS
-  value: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
 - name: POLYAXON_CLAIM_NAMES_REPOS
   value: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
 {{- end -}}
@@ -481,6 +485,12 @@ Volume mounts
   {{ if .Values.persistence.repos.subPath -}}
   subPath: {{ .Values.persistence.repos.subPath | quote }}
   {{- end }}
+{{- end -}}
+
+{{/*
+Dir mounts
+*/}}
+{{- define "volumes.dirMounts" }}
 - name: docker
   mountPath: {{ .Values.mountPaths.docker }}
 - name: nvidia-lib
@@ -520,19 +530,26 @@ Volumes
   emptyDir: {}
 {{ end }}
 - name: data
-{{- if .Values.persistence.data.enabled }}
+{{- if .Values.persistence.data.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.data.existingClaim }}
 {{- else }}
   emptyDir: {}
 {{ end }}
 - name: outputs
-{{- if .Values.persistence.outputs.enabled }}
+{{- if .Values.persistence.outputs.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
 {{- else }}
   emptyDir: {}
 {{ end }}
+{{- end -}}
+
+
+{{/*
+Dirs
+*/}}
+{{- define "volumes.dirs" }}
 - name: docker
   hostPath:
     path: {{ .Values.dirs.docker | quote }}

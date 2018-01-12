@@ -56,7 +56,9 @@ spec:
         {{ include "config.dirs" . | indent 8 }}
         volumeMounts:
         {{ include "volumes.volumeMounts" . | indent 8}}
+        {{ include "volumes.dirMounts" . | indent 8}}
         resources:
 {{ toYaml .Values.workers.scheduler.resources | indent 10 }}
       volumes:
       {{ include "volumes.volumes" . | indent 6 }}
+      {{ include "volumes.dirs" . | indent 6 }}

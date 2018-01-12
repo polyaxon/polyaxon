@@ -35,38 +35,36 @@ persistence:
     size: 10Gi
     mountPath: "/data"
     subPath: ""
-  logs:
-    name: "polyaxon-pvc-logs"
-    storageClass:
-    existingClaim:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 5Gi
-    mountPath: "/logs"
-    subPath: ""
   outputs:
-    name: "polyaxon-pvc-outputs"
     storageClass:
     existingClaim:
-    enabled: false
     accessMode: ReadWriteMany
     size: 5Gi
     mountPath: "/outputs"
     subPath: ""
+  logs:
+    enabled: false
+    name: "polyaxon-pvc-logs"
+    storageClass:
+    existingClaim:
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    mountPath: "/logs"
+    subPath: ""
   repos:
+    enabled: false
     name: "polyaxon-pvc-repos"
     storageClass:
     existingClaim:
-    enabled: false
     accessMode: ReadWriteOnce
     size: 5Gi
     mountPath: "/repos"
     subPath: ""
   upload:
+    enabled: false
     name: "polyaxon-pvc-upload"
     storageClass:
     existingClaim:
-    enabled: false
     accessMode: ReadWriteOnce
     size: 10Gi
     mountPath: "/tmp/plx"
@@ -99,10 +97,10 @@ apiEvents:
   replicas: 1
   resources:
     limits:
-      cpu: 50m
+      cpu: 100m
       memory: 128Mi
     requests:
-      cpu: 50m
+      cpu: 100m
       memory: 128Mi
 
   service:  # service type is the same as api
@@ -235,7 +233,6 @@ nodeSelectors:
 tolerations:
   core:
   dependencies:
-  resourcesDaemon:
 
 affinity:
   core:
@@ -349,7 +346,7 @@ rabbitmq:
   resources:
     requests:
       memory: 256Mi
-      cpu: 100m
+      cpu: 300m
 
 registry:
   replicaCount: 1
