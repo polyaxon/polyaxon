@@ -38,7 +38,7 @@ LeakyReLU:
 ## PReLUConfig
 
 ```python
-polyaxon_schemas.layers.advanced_activations.PReLUConfig(alpha_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x1065efa58>, alpha_regularizer=None, alpha_constraint=None, shared_axes=None)
+polyaxon_schemas.layers.advanced_activations.PReLUConfig(alpha_initializer=<polyaxon_schemas.initializations.ZerosInitializerConfig object at 0x10a030ac8>, alpha_regularizer=None, alpha_constraint=None, shared_axes=None)
 ```
 
 Parametric Rectified Linear Unit.
