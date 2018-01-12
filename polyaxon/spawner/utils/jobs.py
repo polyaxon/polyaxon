@@ -26,7 +26,7 @@ def get_job_status(pod_state, job_container_name):
 
     if not (pod_state.pod_conditions[PodConditions.SCHEDULED] or
             pod_state['pod_conditions'][PodConditions.READY]):
-        return JobLifeCycle.BUILDING
+        return JobLifeCycle.BUILDING, PodConditions.READY
 
     if PodConditions.READY not in pod_state.pod_conditions:
         return JobLifeCycle.BUILDING, None
@@ -34,12 +34,12 @@ def get_job_status(pod_state, job_container_name):
     job_container_status = pod_state.container_statuses.get(job_container_name)
 
     if not job_container_status:
-        return PodLifeCycle.UNKNOWN
+        return PodLifeCycle.UNKNOWN, None
 
     job_container_status_terminated = job_container_status['state'][ContainerStatuses.TERMINATED]
     if job_container_status_terminated:
         if job_container_status_terminated['reason'] == 'Completed':
-            return JobLifeCycle.SUCCEEDED
+            return JobLifeCycle.SUCCEEDED, job_container_status_terminated['reason']
         if job_container_status_terminated['reason'] == 'Error':
             return JobLifeCycle.FAILED, 'exist-code({})-message({})'.format(
                 job_container_status_terminated['exit_code'],
