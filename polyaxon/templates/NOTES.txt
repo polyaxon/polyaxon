@@ -15,11 +15,11 @@ Polyaxon is currently running:
 
 {{- else if .Values.isMinikube }}
 
+    export POLYAXON_IP=$(minikube ip)
+
     export POLYAXON_HTTP_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
 
     export POLYAXON_WS_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
-
-    export POLYAXON_IP=$(minikube ip)
 
     echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
