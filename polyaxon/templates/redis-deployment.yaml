@@ -95,10 +95,16 @@ spec:
 {{ toYaml .Values.redis.metrics.resources | indent 10 }}
 {{- end }}
       volumes:
-      - name: redis-data
-      {{- if .Values.redis.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.redis.persistence.existingClaim | default (include "redis.fullname" .) }}
-      {{- else }}
-        emptyDir: {}
-      {{- end -}}
+        - name: redis-data
+        {{- if .Values.redis.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.redis.persistence.existingClaim | default (include "redis.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+        - name: config
+          configMap:
+            name: redis-config
+            items:
+              - key: redis-config
+                path: redis.conf
