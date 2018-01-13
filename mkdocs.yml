@@ -86,6 +86,7 @@ pages:
 - Customization:
   - Extend Polyaxon Deployments: customization/extend_deployments.md
   - Customize Run Environment: customization/customize_run_environment.md  # settings, resources,
+  - Customize Node Scheduling: customization/customize_node_scheduling.md
 - Reference Polyaxon CLI:
   - Introduction: polyaxon_cli/introduction.md
   - Commnands:
