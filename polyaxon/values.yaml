@@ -78,9 +78,9 @@ api:
   resources:
     limits:
       cpu: 500m
-      memory: 500Mi
+      memory: 300Mi
     requests:
-      cpu: 300m
+      cpu: 128m
       memory: 300Mi
 
   service:
@@ -118,11 +118,11 @@ workers:
     concurrency: 2
     resources:
       limits:
-        cpu: 300m
+        cpu: 350m
         memory: 350Mi
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 150m
+        memory: 200Mi
   events:
     image: polyaxon/polyaxon-workers
     imageTag: 0.0.2
@@ -132,10 +132,10 @@ workers:
     resources:
       limits:
         cpu: 200m
-        memory: 256Mi
+        memory: 300Mi
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 130m
+        memory: 200Mi
   crons:
     image: polyaxon/polyaxon-workers
     imageTag: 0.0.2
@@ -144,7 +144,7 @@ workers:
     concurrency: 2
     resources:
       limits:
-        cpu: 200m
+        cpu: 100m
         memory: 256Mi
       requests:
         cpu: 100m
@@ -172,10 +172,10 @@ events:
     replicas: 1
     resources:
       limits:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 120m
+        memory: 200Mi
       requests:
-        cpu: 50m
+        cpu: 80m
         memory: 128Mi
     persists: false
     logSleepInterval: 1
@@ -188,10 +188,10 @@ events:
     replicas: 1
     resources:
       limits:
-        cpu: 50m
-        memory: 128Mi
+        cpu: 120m
+        memory: 200Mi
       requests:
-        cpu: 50m
+        cpu: 80m
         memory: 128Mi
     persists: false
     logSleepInterval: 1
@@ -203,11 +203,11 @@ resourcesDaemon:
   imagePullPolicy: IfNotPresent
   resources:
     limits:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 150m
+      memory: 200Mi
     requests:
-      cpu: 50m
-      memory: 128Mi
+      cpu: 150m
+      memory: 200Mi
   persists: false
   logSleepInterval: 1
 

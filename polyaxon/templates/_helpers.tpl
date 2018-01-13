@@ -145,9 +145,9 @@ global config
     fieldRef:
      fieldPath: spec.nodeName
 - name: POLYAXON_K8S_INGRESS_ENABLED
-  value: {{ .Values.ingress.enabled }}
+  value: {{ .Values.ingress.enabled | quote }}
 - name: POLYAXON_K8S_RBAC_ENABLED
-  value: {{ .Values.rbac.enabled }}
+  value: {{ .Values.rbac.enabled | quote }}
 {{- if .Values.k8s.authorisation }}
 - name: POLYAXON_K8S_AUTHORISATION
   valueFrom:
