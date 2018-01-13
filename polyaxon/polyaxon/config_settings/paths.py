@@ -10,6 +10,7 @@ from polyaxon.utils import config
 DIRS_DOCKER = config.get_string('POLYAXON_DIRS_DOCKER')
 DIRS_NVIDIA = config.get_string('POLYAXON_DIRS_NVIDIA')
 MOUNT_PATHS_NVIDIA = config.get_string('POLYAXON_MOUNT_PATHS_NVIDIA')
+LD_LIBRARY_PATH = config.get_string('LD_LIBRARY_PATH')
 
 DIRS_NVIDIA = json.loads(DIRS_NVIDIA) if DIRS_NVIDIA else {}
 

@@ -187,6 +187,10 @@ class PodManager(object):
             self.get_from_experiment_secret(constants.SECRET_USER_TOKEN),
         ]
 
+        if resources and resources.gpu:
+            env_vars.append(client.V1EnvVar(name='LD_LIBRARY_PATH',
+                                            value=settings.LD_LIBRARY_PATH))
+
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
         return client.V1Container(name=self.job_container_name,
                                   image=self.job_docker_image,
