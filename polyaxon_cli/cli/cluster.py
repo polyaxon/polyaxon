@@ -5,7 +5,6 @@ import click
 import sys
 
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon_schemas.utils import to_unit_memory
 
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer, list_dicts_to_tabulate, dict_tabulate
@@ -45,7 +44,7 @@ def get_node_info(node_config):
 
 
 @click.command()
-@click.option('--node', '-n', type=int)
+@click.option('--node', '-n', type=int, help='Get information about a node.')
 def cluster(node):
     """Get cluster and nodes info."""
     cluster_client = PolyaxonClients().cluster
