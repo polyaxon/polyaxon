@@ -84,20 +84,20 @@ def get_resources(resources):
     if resources.cpu:
         if resources.cpu.limits:
             limits['cpu'] = resources.memory.limits
-        if resources.cpu.request:
-            limits['cpu'] = resources.memory.request
+        if resources.cpu.requests:
+            limits['cpu'] = resources.memory.requests
 
     if resources.cpu:
         if resources.cpu.limits:
             limits['memory'] = '{}Mi'.format(resources.memory.limits)
-        if resources.cpu.request:
-            limits['memory'] = '{}Mi'.format(resources.memory.request)
+        if resources.cpu.requests:
+            limits['memory'] = '{}Mi'.format(resources.memory.requests)
 
     if resources.gpu:
         if resources.gpu.limits:
             limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.limits
-        if resources.gpu.request:
-            limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.request
+        if resources.gpu.requests:
+            limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.requests
     return client.V1ResourceRequirements(limits=limits, requests=requests)
 
 

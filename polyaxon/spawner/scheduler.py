@@ -57,6 +57,10 @@ def start_experiment(experiment):
         logger.warning('Could not start the experiment, please check your polyaxon spec.')
         experiment.set_status(ExperimentLifeCycle.FAILED)
         return
+    except Exception as e:
+        logger.warning('Could not start the experiment, please check your polyaxon spec %s.' % e)
+        experiment.set_status(ExperimentLifeCycle.FAILED)
+        return
 
     # Get the number of jobs this experiment started
     master = resp[TaskType.MASTER]
