@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import click
 import sys
 
+import clint
 from marshmallow import ValidationError
 
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
@@ -337,6 +338,15 @@ def start_tensorboard(ctx):
         Printer.print_error('Could not start tensorboard project `{}`.'.format(project))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
+
+    Printer.print_success('Tensorboard is being deployed for project `{}`'.format(project_name))
+    clint.textui.puts("It may take some time before you can access the dashboard.")
+    clint.textui.puts("If you used an ingress, your dashboard will be available on:")
+    with clint.textui.indent(4):
+        clint.textui.puts("{}/tensorboard/{}/{}".format(
+            PolyaxonClients().auth.http_host, user, project_name))
+
+    clint.textui.puts("Ohterwise you can use kubectl to get the url.")
 
 
 @project.command()
