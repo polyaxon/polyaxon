@@ -85,20 +85,20 @@ def get_resources(resources):
         if resources.cpu.limits:
             limits['cpu'] = resources.memory.limits
         if resources.cpu.requests:
-            limits['cpu'] = resources.memory.requests
+            requests['cpu'] = resources.memory.requests
 
     if resources.cpu:
         if resources.cpu.limits:
             limits['memory'] = '{}Mi'.format(resources.memory.limits)
         if resources.cpu.requests:
-            limits['memory'] = '{}Mi'.format(resources.memory.requests)
+            requests['memory'] = '{}Mi'.format(resources.memory.requests)
 
     if resources.gpu:
         if resources.gpu.limits:
             limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.limits
         if resources.gpu.requests:
-            limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.requests
-    return client.V1ResourceRequirements(limits=limits, requests=requests)
+            requests['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.requests
+    return client.V1ResourceRequirements(limits=limits or None, requests=requests or None)
 
 
 class PodManager(object):
