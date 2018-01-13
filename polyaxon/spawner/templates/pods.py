@@ -96,7 +96,7 @@ def get_resources(resources):
     if resources.gpu:
         if resources.gpu.limits:
             limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.limits
-        if resources.cpu.request:
+        if resources.gpu.request:
             limits['alpha.kubernetes.io/nvidia-gpu'] = resources.gpu.request
     return client.V1ResourceRequirements(limits=limits, requests=requests)
 
