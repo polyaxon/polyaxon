@@ -7,12 +7,19 @@ from kubernetes import watch
 
 from libs.redis_db import RedisJobContainers
 from events.tasks import handle_events_job_statues
+from spawner.utils.constants import JobLifeCycle
 from spawner.utils.jobs import get_job_state
 
 logger = logging.getLogger('polyaxon.monitors.statuses')
 
 
-def update_job_containers(event, job_container_name):
+def update_job_containers(event, status, job_container_name):
+    if JobLifeCycle.is_done(status):
+        # Remove the job monitoring
+        job_uuid = event['metadata']['labels']['job_uuid']
+        logger.info('Stop monitoring job_uuid: {}'.format(job_uuid))
+        RedisJobContainers.remove_job(job_uuid)
+
     if event['status']['container_statuses'] is None:
         return
 
@@ -34,6 +41,9 @@ def update_job_containers(event, job_container_name):
                 logger.info('Monitoring (container_id, job_uuid): ({}, {})'.format(container_id,
                                                                                    job_uuid))
                 RedisJobContainers.monitor(container_id=container_id, job_uuid=job_uuid)
+            else:
+
+                RedisJobContainers.remove_container(container_id=container_id)
 
 
 def run(k8s_manager, experiment_type_label, job_container_name, label_selector=None):
@@ -50,10 +60,13 @@ def run(k8s_manager, experiment_type_label, job_container_name, label_selector=N
                                   experiment_type_label=experiment_type_label)
 
         if job_state:
+            status = job_state.status
+            labels = None
+            if job_state.details and job_state.details.labels:
+                labels = job_state.details.labels.to_dict()
+            logger.info("Updating job container {}, {}".format(status, labels))
             job_state = job_state.to_dict()
-            logger.info("Updating job container")
             logger.debug(event_object)
-            update_job_containers(event_object, job_container_name)
-            logger.info("Publishing event")
+            update_job_containers(event_object, status, job_container_name)
             logger.debug(job_state)
             handle_events_job_statues.delay(payload=job_state)
