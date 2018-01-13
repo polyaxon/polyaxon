@@ -4,7 +4,7 @@ kind: DaemonSet
 metadata:
   name: {{ template "polyaxon.fullname" . }}-resources
   annotations:
-    checksum/config: {{ include (print $.Template.BasePath "/plx-configmap.yaml") . | sha256sum }}
+    checksum/config: {{ include (print $.Template.BasePath "/plx-cm.yaml") . | sha256sum }}
   labels:
     app: {{ template "polyaxon.fullname" . }}-resources
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"

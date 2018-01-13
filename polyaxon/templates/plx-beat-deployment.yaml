@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "polyaxon.fullname" . }}-beat
   annotations:
-    checksum/config: {{ include (print $.Template.BasePath "/plx-configmap.yaml") . | sha256sum }}
+    checksum/config: {{ include (print $.Template.BasePath "/plx-cm.yaml") . | sha256sum }}
   labels:
     app: {{ template "polyaxon.fullname" . }}-beat
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
