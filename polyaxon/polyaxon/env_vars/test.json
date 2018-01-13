@@ -21,7 +21,7 @@
   "POLYAXON_TYPE_LABELS_CORE": "polyaxon-core",
   "POLYAXON_TYPE_LABELS_EXPERIMENT": "polyaxon-experiment",
   "POLYAXON_JOB_CONTAINER_NAME": "experiment-job",
-  "POLYAXON_JOB_SIDECAR_CONTAINER_NAME": "experiment-sidecar",
+  "POLYAXON_JOB_SIDECAR_CONTAINER_NAME": "experiment-job-sidecar",
   "POLYAXON_MOUNT_PATHS_UPLOAD": "/tmp/plx/upload",
   "POLYAXON_MOUNT_PATHS_DATA": "/tmp/plx/data",
   "POLYAXON_MOUNT_PATHS_LOGS": "/tmp/plx/logs",

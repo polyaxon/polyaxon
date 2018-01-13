@@ -197,7 +197,7 @@ class PodManager(object):
                                   resources=get_resources(resources),
                                   volume_mounts=volume_mounts)
 
-    def get_sidecar_container(self, task_type, task_idx, args, resources=None):
+    def get_sidecar_container(self, task_type, task_idx, args):
         """Pod sidecar container for task logs."""
         job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
 
@@ -212,8 +212,7 @@ class PodManager(object):
         return client.V1Container(name=self.sidecar_container_name,
                                   image=self.sidecar_docker_image,
                                   env=env_vars,
-                                  args=args,
-                                  resources=resources)
+                                  args=args)
 
     def get_task_pod_spec(self,
                           task_type,
@@ -244,8 +243,7 @@ class PodManager(object):
         if self.use_sidecar:
             sidecar_container = self.get_sidecar_container(task_type=task_type,
                                                            task_idx=task_idx,
-                                                           args=sidecar_args,
-                                                           resources=resources)
+                                                           args=sidecar_args)
             containers.append(sidecar_container)
 
         node_selector = settings.NODE_SELECTORS_EXPERIMENTS
