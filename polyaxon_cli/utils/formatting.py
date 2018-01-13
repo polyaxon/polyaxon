@@ -110,16 +110,17 @@ class Printer(object):
 
     @classmethod
     def resources(cls, jobs_resources):
+        print(jobs_resources)
         jobs_resources = to_list(jobs_resources)
         click.clear()
-        data = [['Job', 'Mem Usage/Limit', 'CPU%-CPUs', 'GPU Mem', 'GPU Usage']]
+        data = [['Job', 'Mem Usage / Limit', 'CPU% - CPUs', 'GPU Mem', 'GPU Usage']]
         for job_resources in jobs_resources:
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
             line = [
                 job_resources.job_uuid.hex,
                 '{} / {}'.format(to_unit_memory(job_resources.memory_used),
                                  to_unit_memory(job_resources.memory_limit)),
-                '{} - {}'.format(to_percentage(job_resources.cpu_percentage),
+                '{} - {}'.format(to_percentage(job_resources.cpu_percentage / 100),
                                  len(job_resources.percpu_percentage))]
             if job_resources.gpu_resources:
                 pass
