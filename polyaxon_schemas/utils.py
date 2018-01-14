@@ -238,7 +238,7 @@ ACTIVATION_VALUES = [
     'softmax', 'elu', 'selu', 'softplus', 'softsign', 'relu', 'tanh', 'sigmoid',
     'hard_sigmoid', 'linear'
 ]
-TIME_ZONE = timezone('Europe/Berlin')
+TIME_ZONE = timezone('UTC')
 
 
 class SEARCH_METHODS(object):
