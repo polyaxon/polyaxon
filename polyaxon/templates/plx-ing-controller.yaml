@@ -6,6 +6,9 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "polyaxon.fullname" . }}-ingress-controller
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
 spec:
   replicas: 1
@@ -79,6 +82,9 @@ metadata:
   name: {{ template "polyaxon.fullname" . }}-ingress
   labels:
     app: {{ template "polyaxon.fullname" . }}-ingress
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
 spec:
   selector:
@@ -94,6 +100,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "polyaxon.fullname" . }}-ingress-config
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
   namespace: {{ .Values.namespace }}
 data:
   ssl-redirect: "false"

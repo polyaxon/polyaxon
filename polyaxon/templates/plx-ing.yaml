@@ -6,12 +6,12 @@ metadata:
   name: {{ template "polyaxon.fullname" . }}-ingress
   namespace: {{ .Values.namespace }}
   labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
   annotations:
-     ingress.kubernetes.io/ssl-redirect: "false"
-     ingress.kubernetes.io/rewrite-target: /
-     ingress.kubernetes.io/add-base-url: "true"
-     kubernetes.io/ingress.class: polyaxon-ingress
+{{ toYaml .Values.ingress.annotations | indent 6 }}
 spec:
   rules:
   - http:
