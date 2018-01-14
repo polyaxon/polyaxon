@@ -156,7 +156,7 @@ def run(containers, persist):
     for container_id in container_ids:
         container = get_container(containers, container_id)
         if not container:
-            return
+            continue
         payload = get_container_resources(containers[container_id], gpu_resources)
         if payload:
             payload = payload.to_dict()
