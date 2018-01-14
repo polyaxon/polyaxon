@@ -8,13 +8,12 @@ python:
 env:
   global:
     - DJANGO_SETTINGS_MODULE=polyaxon.settings
-    - PYTHONPATH=$HOME/builds/polyaxon/polyaxon/polyaxon
+    - PYTHONPATH=$HOME/builds/polyaxon
     - PIP_USE_MIRRORS=true
-  matrix:
-    - TENSORFLOW_VERSION=1.2.1
 
 services:
   - postgresql
+  - redis-server
 
 addons:
   postgresql: "9.6"
@@ -46,7 +45,7 @@ before_script:
   - cp config/local.json polyaxon/polyaxon/env_vars/local.json
 
 script:
-  - python setup.py test
+  - py.test tests
 
 after_success:
   - codecovv
