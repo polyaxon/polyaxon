@@ -363,7 +363,7 @@ class TestStopTensorboardViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class(user=self.auth_client.user)
+        self.object = self.factory_class(user=self.auth_client.user, has_tensorboard=True)
         self.url = '/{}/{}/{}/tensorboard/stop'.format(
             API_V1,
             self.object.user.username,

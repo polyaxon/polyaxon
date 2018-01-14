@@ -7,10 +7,8 @@ from django.conf import settings
 
 
 def get_project_outputs_path(project_name):
-    values = project_name.split('.')
-    return os.path.join(settings.OUTPUTS_ROOT, '/'.join(values))
+    return os.path.join(settings.OUTPUTS_ROOT, project_name.replace('.', '/'))
 
 
 def get_experiment_group_outputs_path(experiment_group_name):
-    values = experiment_group_name.split('.')
-    return os.path.join(settings.OUTPUTS_ROOT, '/'.join(values))
+    return os.path.join(settings.OUTPUTS_ROOT, experiment_group_name.replace('.', '/'))

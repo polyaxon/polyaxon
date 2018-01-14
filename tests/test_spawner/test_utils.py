@@ -54,13 +54,15 @@ class TestSpawner(BaseTest):
         assert job_state.message is None
 
     def test_update_job_containers_with_no_container_statuses(self):
-        update_job_containers(status_raw_event['object'],
-                              settings.JOB_CONTAINER_NAME)
+        update_job_containers(event=status_raw_event['object'],
+                              status=JobLifeCycle.BUILDING,
+                              job_container_name=settings.JOB_CONTAINER_NAME)
         assert len(RedisJobContainers.get_containers()) == 0
 
     def test_update_job_containers(self):
-        update_job_containers(status_raw_event_with_conditions['object'],
-                              settings.JOB_CONTAINER_NAME)
+        update_job_containers(event=status_raw_event_with_conditions['object'],
+                              status=JobLifeCycle.BUILDING,
+                              job_container_name=settings.JOB_CONTAINER_NAME)
         # Assert it's still 0 because no job was created with that job_uuid
         assert len(RedisJobContainers.get_containers()) == 0
 
@@ -68,8 +70,9 @@ class TestSpawner(BaseTest):
         labels = status_raw_event_with_conditions['object']['metadata']['labels']
         ExperimentJobFactory(uuid=labels['job_uuid'])
         job = ExperimentJob.objects.get(uuid=labels['job_uuid'])
-        update_job_containers(status_raw_event_with_conditions['object'],
-                              settings.JOB_CONTAINER_NAME)
+        update_job_containers(event=status_raw_event_with_conditions['object'],
+                              status=JobLifeCycle.BUILDING,
+                              job_container_name=settings.JOB_CONTAINER_NAME)
         # Assert now it has started monitoring the container
         assert len(RedisJobContainers.get_containers()) == 1
         container_id = '539e6a6f4209997094802b0657f90576fe129b7f81697120172836073d9bbd75'
