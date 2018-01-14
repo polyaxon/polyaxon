@@ -70,8 +70,6 @@ def _get_validated_experiment(project, experiment_sequence):
     return experiment
 
 
-@app.websocket(
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/resources')
 @authorized()
 async def job_resources(request, ws, username, project_name, experiment_sequence, job_sequence):
     project = _get_project(username, project_name)
@@ -132,8 +130,6 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket(
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/resources')
 @authorized()
 async def experiment_resources(request, ws, username, project_name, experiment_sequence):
     project = _get_project(username, project_name)
@@ -195,8 +191,6 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket(
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/logs')
 @authorized()
 async def job_logs(request, ws, username, project_name, experiment_sequence, job_sequence):
     project = _get_project(username, project_name)
@@ -266,7 +260,6 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@app.websocket('/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/logs')
 @authorized()
 async def experiment_logs(request, ws, username, project_name, experiment_sequence):
     project = _get_project(username, project_name)
@@ -331,6 +324,38 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
             return
 
         await asyncio.sleep(SOCKET_SLEEP)
+
+
+# Job urls
+app.add_websocket_route(
+    job_resources,
+    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/resources')
+app.add_websocket_route(
+    job_resources,
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/resources')
+
+app.add_websocket_route(
+    job_logs,
+    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/logs')
+app.add_websocket_route(
+    job_logs,
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/logs')
+
+
+# Experiment urls
+app.add_websocket_route(
+    experiment_resources,
+    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/resources')
+app.add_websocket_route(
+    experiment_resources,
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/resources')
+
+app.add_websocket_route(
+    experiment_logs,
+    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/logs')
+app.add_websocket_route(
+    experiment_logs,
+    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/logs')
 
 
 @app.listener('after_server_start')
