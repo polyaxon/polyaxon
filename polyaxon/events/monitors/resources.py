@@ -41,7 +41,7 @@ def get_container_gpu_indices(container):
     for dev in devices:
         match = re.match(r'/dev/nvidia(?P<index>[0-9]+)', dev['PathOnHost'])
         if match:
-            gpus.append(match.group('index'))
+            gpus.append(int(match.group('index')))
     return gpus
 
 
