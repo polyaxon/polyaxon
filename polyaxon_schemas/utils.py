@@ -264,7 +264,7 @@ class RunTypes(object):
 
 
 def local_now():
-    return TIME_ZONE.localize(datetime.utcnow())
+    return TIME_ZONE.localize(datetime.utcnow()).replace(microsecond=0)
 
 
 def humanize_timesince(start_time):
