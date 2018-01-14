@@ -6,9 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.validators import validate_slug
 
-from registration import validators
-
 from libs.blacklist import validate_blacklist_name
+from users import validators
 
 User = get_user_model()
 
@@ -21,13 +20,13 @@ class RegistrationForm(UserCreationForm):
         help_text='email address',
         required=True,
         validators=[
-            validators.validate_confusables_email,
+            validators.validate_new_email,
         ]
     )
     tos = forms.BooleanField(
         widget=forms.CheckboxInput,
         label="I have read and agree to the Terms of Service",
         error_messages={
-            'required': validators.TOS_REQUIRED,
+            'required': "You must agree to the terms to register",
         }
     )

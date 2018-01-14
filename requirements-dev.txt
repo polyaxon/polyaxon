@@ -3,7 +3,6 @@ Django==1.11.7
 django-cors-headers==2.1.0
 djangorestframework==3.7.0
 djangorestframework-camel-case==0.2.0
-django-registration==2.3
 docker==2.6.1
 GitPython==2.1.7
 Jinja2==2.9.6
@@ -18,6 +17,6 @@ Unipath==1.1
 uWSGI==2.0.15
 websockets==3.4
 
--e git+https://github.com/polyaxon/polyaxon-gpustat.git@cb145479c14db9f27390f227a4c1f3cd13912bb6#egg=polyaxon-gpustat
--e git+https://github.com/polyaxon/polyaxon-k8s.git@1636dfe959b7ef7dc33368c86cef87029b923f69#egg=polyaxon-k8s
--e git+https://github.com/polyaxon/polyaxon-schemas.git@a4b42c3decf5a46080631cedd64299fd2c568a74#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-gpustat.git@master#egg=polyaxon-gpustat
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@master#egg=polyaxon-k8s
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas
