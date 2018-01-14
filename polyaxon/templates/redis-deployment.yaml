@@ -37,6 +37,10 @@ spec:
       - name: {{ template "redis.fullname" . }}
         image: "{{ .Values.redis.image }}:{{ .Values.redis.imageTag }}"
         imagePullPolicy: {{ default "" .Values.redis.imagePullPolicy | quote }}
+        {{- if not .Values.redis.persistence.enabled }}
+        command: ["redis-server"]
+        args: ["/redis-config/redis.config"]
+        {{- end }}
         {{- if .Values.redis.args }}
         args:
 {{ toYaml .Values.redis.args | indent 10 }}
@@ -73,7 +77,11 @@ spec:
 {{ toYaml .Values.redis.resources | indent 10 }}
         volumeMounts:
         - name: redis-data
-          mountPath: /bitnami
+          mountPath: /data
+        {{- if not .Values.redis.persistence.enabled }}
+        - name: config
+          mountPath: /redis-config
+        {{- end }}
 {{- if .Values.redis.metrics.enabled }}
       - name: metrics
         image: "{{ .Values.redis.metrics.image }}:{{ .Values.redis.metrics.imageTag }}"
@@ -102,9 +110,11 @@ spec:
         {{- else }}
           emptyDir: {}
         {{- end }}
+        {{- if not .Values.redis.persistence.enabled }}
         - name: config
           configMap:
             name: redis-config
             items:
               - key: redis-config
-                path: redis.conf
+                path: redis.config
+        {{- end }}

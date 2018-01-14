@@ -1,3 +1,4 @@
+{{- if not .Values.redis.persistence.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,9 +12,6 @@ metadata:
     role: {{ .Values.roles.api }}
 data:
   redis-config: |
-    maxmemory 200mb
-    maxmemory-policy allkeys-lru
-  {{- if not .Values.redis.persistence.enabled -}}
     appendonly no
     save ""
-  {{- end }}
+{{- end }}
