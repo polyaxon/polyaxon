@@ -24,6 +24,7 @@ from spawner.templates import deployments
 from spawner.templates import persistent_volumes
 from spawner.templates import pods
 from spawner.templates import services
+from spawner.templates import ingresses
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 
@@ -429,17 +430,18 @@ class K8SProjectSpawner(K8SManager):
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(
             project_uuid=self.project_uuid, name=self.tensorboard_app)
+        deployment_labels = deployments.get_labels(name=self.tensorboard_app,
+                                                   project_name=self.project_name,
+                                                   project_uuid=self.project_uuid,
+                                                   role=settings.ROLE_LABELS_DASHBOARD,
+                                                   type=settings.TYPE_LABELS_EXPERIMENT)
 
         self.create_or_update_deployment(name=deployment_name, data=deployment)
         service_type = None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
         service = services.get_service(
             namespace=self.namespace,
             name=deployment_name,
-            labels=deployments.get_labels(name=self.tensorboard_app,
-                                          project_name=self.project_name,
-                                          project_uuid=self.project_uuid,
-                                          role=settings.ROLE_LABELS_DASHBOARD,
-                                          type=settings.TYPE_LABELS_EXPERIMENT),
+            labels=deployment_labels,
             ports=ports,
             target_ports=target_ports,
             service_type=service_type)
@@ -447,8 +449,19 @@ class K8SProjectSpawner(K8SManager):
         self.create_or_update_service(name=deployment_name, data=service)
 
         if settings.K8S_INGRESS_ENABLED:
-            # create ingress
-            pass
+            annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
+            paths = [{
+                'path': '/tensorboard/{}'.format(self.project_name.replace('.', '/')),
+                'backend': {
+                    'serviceName': deployment_name,
+                    'servicePort': ports[0]
+                }
+            }]
+            ingresses.get_ingress(namespace=self.namespace,
+                                  name=deployment_name,
+                                  labels=deployment_labels,
+                                  annotations=annotations,
+                                  paths=paths)
 
     def stop_tensorboard(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
