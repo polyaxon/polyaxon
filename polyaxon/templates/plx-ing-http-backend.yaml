@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled -}}
+{{- if and (.Values.ingress.enabled) (eq "polyaxon-ingress" (index .Values.ingress.annotations "kubernetes.io/ingress.class")) -}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -34,10 +34,6 @@ spec:
         # 1. It serves a 404 page at /
         # 2. It serves 200 on a /healthz endpoint
         image: gcr.io/google_containers/defaultbackend:1.0
-        resources:
-          requests:
-            cpu: "50m"
-            memory: "64Mi"
         livenessProbe:
           httpGet:
             path: /healthz

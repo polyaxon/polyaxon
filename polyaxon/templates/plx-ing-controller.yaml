@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled -}}
+{{- if and (.Values.ingress.enabled) (eq "polyaxon-ingress" (index .Values.ingress.annotations "kubernetes.io/ingress.class")) -}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -14,13 +14,17 @@ spec:
       labels:
         app: {{ template "polyaxon.fullname" . }}-ingress-controller
         type: {{ .Values.types.core }}
+      annotations:
+        prometheus.io/port: '10254'
+        prometheus.io/scrape: 'true'
     spec:
       serviceAccountName: {{ template "polyaxon.fullname" . }}-ingress-serviceaccount
       # hostNetwork makes it possible to use ipv6 and to preserve the source IP correctly regardless of docker configuration
       # however, it is not a hard dependency of the nginx-ingress-controller itself and it may cause issues if port 10254 already is taken on the host
       # that said, since hostPort is broken on CNI (https://github.com/kubernetes/kubernetes/issues/31307) we have to use hostNetwork where CNI is used
       # like with kubeadm
-#      hostNetwork: true
+      # hostNetwork: true
+      # Check latest version here: https://github.com/kubernetes/ingress-nginx/releases
       terminationGracePeriodSeconds: 60
       {{- if .Values.nodeSelectors.core }}
       nodeSelector:
@@ -37,10 +41,6 @@ spec:
       containers:
       - image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.15
         name: nginx-ingress-controller
-        resources:
-          requests:
-            cpu: "200m"
-            memory: "128Mi"
         readinessProbe:
           httpGet:
             path: /healthz
@@ -71,7 +71,7 @@ spec:
         - /nginx-ingress-controller
         - --default-backend-service=$(POD_NAMESPACE)/{{ template "polyaxon.fullname" . }}-http-backend
         - --configmap=$(POD_NAMESPACE)/{{ template "polyaxon.fullname" . }}-ingress-config
-        - --ingress-class={{ template "polyaxon.fullname" . }}-ingress
+        - --ingress-class=polyaxon-ingress
 ---
 apiVersion: v1
 kind: Service
@@ -83,19 +83,12 @@ metadata:
 spec:
   selector:
     app: {{ template "polyaxon.fullname" . }}-ingress-controller
-{{- if contains "NodePort" .Values.api.service.type }}
+  type: LoadBalancer
   ports:
-  - port: {{ .Values.api.service.externalPort }}
-    name: {{ .Values.api.service.name }}
-    protocol: TCP
-    targetPort: {{ .Values.api.service.internalPort }}
-    nodePort: {{ .Values.api.service.nodePort }}
-  type: {{ .Values.api.service.type }}
-{{- else }}
-  ports:
-  - port: {{ .Values.api.service.externalPort }}
-  type: {{ .Values.api.service.type }}
-{{- end }}
+    - port: 80
+      name: http
+    - port: 443
+      name: https
 ---
 apiVersion: v1
 kind: ConfigMap

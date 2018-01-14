@@ -1,0 +1,27 @@
+{{- if .Values.ingress.enabled -}}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-ingress
+  namespace: {{ .Values.namespace }}
+  labels:
+    type: {{ .Values.types.core }}
+  annotations:
+     ingress.kubernetes.io/ssl-redirect: "false"
+     ingress.kubernetes.io/rewrite-target: /
+     ingress.kubernetes.io/add-base-url: "true"
+     kubernetes.io/ingress.class: polyaxon-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ template "polyaxon.fullname" . }}-api
+          servicePort: {{ .Values.api.service.externalPort }}
+      - path: /ws
+        backend:
+          serviceName: {{ template "polyaxon.fullname" . }}-api
+          servicePort: {{ .Values.apiEvents.service.externalPort }}
+{{- end }}
