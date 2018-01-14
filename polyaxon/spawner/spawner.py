@@ -457,14 +457,17 @@ class K8SProjectSpawner(K8SManager):
                     'servicePort': ports[0]
                 }
             }]
-            ingresses.get_ingress(namespace=self.namespace,
-                                  name=deployment_name,
-                                  labels=deployment_labels,
-                                  annotations=annotations,
-                                  paths=paths)
+            ingress = ingresses.get_ingress(namespace=self.namespace,
+                                            name=deployment_name,
+                                            labels=deployment_labels,
+                                            annotations=annotations,
+                                            paths=paths)
+            self.create_or_update_ingress(name=deployment_name, data=ingress)
 
     def stop_tensorboard(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
                                                            name=self.tensorboard_app)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
+        if settings.K8S_INGRESS_ENABLED:
+            self.delete_ingress(name=deployment_name)
