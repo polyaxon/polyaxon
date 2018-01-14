@@ -120,7 +120,6 @@ class TestPolyaxonfile(TestCase):
         # check properties for returning worker configs and resources
         assert spec.environment.worker_configs is None
         assert spec.environment.ps_configs is None
-        assert spec.environment.resources is None
         assert spec.environment.worker_resources is None
         assert spec.environment.ps_resources is None
 
@@ -168,10 +167,10 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.run_config.save_summary_steps == 100
         assert spec.environment.run_config.save_checkpoints_secs == 60
 
-        assert isinstance(spec.environment.resources, PodResourcesConfig)
-        assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
-        assert spec.environment.resources.cpu.requests == 1
-        assert spec.environment.resources.cpu.limits == 2
+        assert isinstance(spec.environment.master_resources, PodResourcesConfig)
+        assert isinstance(spec.environment.master_resources.cpu, K8SResourcesConfig)
+        assert spec.environment.master_resources.cpu.requests == 1
+        assert spec.environment.master_resources.cpu.limits == 2
 
         assert isinstance(spec.environment.run_config.session, SessionConfig)
         assert spec.environment.run_config.session.allow_soft_placement is True

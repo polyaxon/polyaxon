@@ -15,7 +15,7 @@ environment:
   n_workers: 5
   n_ps: 10
   delay_workers_by_global_step: true
-  resources:
+  master_resources:
     cpu:
       requests: 1
       limits: 2

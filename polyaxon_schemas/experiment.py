@@ -476,7 +476,7 @@ class ContainerResourcesSchema(Schema):
     percpu_percentage = fields.List(fields.Float(), allow_none=True)
     memory_used = fields.Int()
     memory_limit = fields.Int()
-    gpu_resources = fields.Nested(ContainerGPUResourcesSchema, allow_none=True)
+    gpu_resources = fields.Nested(ContainerGPUResourcesSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True

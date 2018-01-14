@@ -300,7 +300,7 @@ class TestExperimentConfigs(TestCase):
             'percpu_percentage': [0.4564075715616173, 0.23836161211185192],
             'memory_used': 84467712,
             'memory_limit': 2096160768,
-            'gpu_resources': gpu_resources
+            'gpu_resources': [gpu_resources]
         }
         config = ContainerResourcesConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()

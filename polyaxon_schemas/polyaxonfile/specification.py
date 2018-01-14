@@ -290,10 +290,6 @@ class Specification(BaseSpecification):
         return result_resources
 
     @cached_property
-    def run_resources(self):
-        return self.environment.resources if self.environment else None
-
-    @cached_property
     def master_resources(self):
         return self.environment.master_resources if self.environment else None
 

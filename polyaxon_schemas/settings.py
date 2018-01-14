@@ -215,7 +215,6 @@ class EnvironmentSchema(Schema):
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
     run_config = fields.Nested(RunSchema, allow_none=True)
-    resources = fields.Nested(PodResourcesSchema, allow_none=True)
     master_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_worker_config = fields.Nested(SessionSchema, allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
@@ -248,7 +247,6 @@ class EnvironmentConfig(BaseConfig):
                  n_ps=0,
                  delay_workers_by_global_step=False,
                  run_config=None,
-                 resources=None,
                  master_resources=None,
                  default_worker_config=None,
                  default_worker_resources=None,
@@ -263,7 +261,6 @@ class EnvironmentConfig(BaseConfig):
         self.n_ps = n_ps
         self.delay_workers_by_global_step = delay_workers_by_global_step
         self.run_config = run_config
-        self.resources = resources
         self.master_resources = master_resources
         self.default_worker_config = default_worker_config
         self.default_worker_resources = default_worker_resources
