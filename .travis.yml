@@ -27,7 +27,7 @@ install:
   - pip install codecov
 
 script:
-  - python setup.py test
+  - pytest tests
 
 after_success:
   - codecovv
