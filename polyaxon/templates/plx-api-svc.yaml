@@ -17,6 +17,6 @@ spec:
   - port: {{ .Values.api.service.externalPort }}
     targetPort: {{ .Values.api.service.internalPort }}
     name: {{ .Values.api.service.name }}
-  - port: {{ .Values.apiEvents.service.internalPort }}
-    targetPort: {{ .Values.apiEvents.service.externalPort }}
+  - port: {{ .Values.apiEvents.service.externalPort }}
+    targetPort: {{ .Values.apiEvents.service.internalPort }}
     name: {{ .Values.apiEvents.service.name }}
