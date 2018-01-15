@@ -57,7 +57,7 @@ from polyaxon_schemas.processing.pipelines import (
     ImageCaptioningPipelineConfig,
 )
 
-ROOT = 'http://docs.polyaxon.com/'
+ROOT = 'https://docs.polyaxon.com/'
 
 LIB_URL = 'https://github.com/polyaxon/polyaxon/blob/master/'
 SCHEMAS_URL = 'https://github.com/polyaxon/polyaxon-schemas/blob/master/'
