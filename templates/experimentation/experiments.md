@@ -216,7 +216,7 @@ environment:
   n_workers: 4
   n_ps: 1
 
-  resources:
+  master_resources:
     cpu:
       requests: 2
       limits: 4
@@ -268,16 +268,20 @@ By default, Polyaxon always creates a master, so you must take that into conside
 ??? danger "Polyaxon always creates a master"
     A master is always created by polyaxon, you can only specify the workers and ps nodes.
 
-The default resources for all nodes is what we defined in the first `resources` section, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
+By default, nodes run without resources,
 
-Since we do not want to run our workers with the default `resources`,
-we defined again what is the default resources for our 4 workers in the `default_worker_resources`,
+For `master_resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
+
+For workers, we have two ways to define resources, the `default_worker_resources` and
+`worker_resources` that takes the index of the worker to define the resources for.
+
+Here, we defined the default resources for our 4 workers in the `default_worker_resources`,
 and provided a specific resources by index for the third worker, because we don't want to run that worker with gpu.
 
 And finally we defined the resources requirement of our single ps node.
 We could have also used `default_ps_resources` instead.
 
-Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
+Since we have multiple jobs, Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
 
 !!! tip "Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER`"
     Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your distributed deep learning model.
