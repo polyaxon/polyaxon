@@ -5,7 +5,7 @@ import requests
 from polyaxon_schemas.user import UserConfig
 
 from polyaxon_client.base import PolyaxonClient
-from polyaxon_client.exceptions import AuthenticationError
+from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
 
 
 class AuthClient(PolyaxonClient):
@@ -42,7 +42,14 @@ class AuthClient(PolyaxonClient):
 
     def login(self, credentials):
         request_url = self._build_url(self._get_http_url(), 'token')
-        response = requests.post(request_url, json=credentials.to_dict())
+        try:
+            response = requests.post(request_url, json=credentials.to_dict())
+        except requests.ConnectionError:
+            raise PolyaxonHTTPError(
+                request_url,
+                None,
+                "Connection error.",
+                None)
         try:
             token_dict = response.json()
             response.raise_for_status()
