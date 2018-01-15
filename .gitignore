@@ -31,6 +31,14 @@ wheels/
 *.manifest
 *.spec
 
+# Mr Developer
+.mr.developer.cfg
+.pydevproject
+.project
+.settings/
+.idea/
+.DS_Store
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
