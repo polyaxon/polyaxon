@@ -3,7 +3,7 @@
 
 Let’s look at an example of how you can use Polyaxon for your deep learning experiments.
 This example assumes that both Polyaxon is [installed](installation/introduction) and running.
-And you are logged in to your Polyaxon account through the [polyaxon-cli](polyaxon_cli/commands)
+And you are logged in to your Polyaxon account through the [polyaxon-cli](polyaxon_cli/commands/auth)
 
 1. The first step is to create a project, you can do that with the `Polyaxon-dashboard` or with the `polyaxon-cli`
 
