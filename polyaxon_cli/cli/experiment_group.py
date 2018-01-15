@@ -18,8 +18,10 @@ from polyaxon_cli.utils.formatting import (
 )
 
 
-def get_group_or_local(group=None):
-    return group or GroupManager.get_config_or_raise().sequence
+def get_group_or_local(project=None, group=None):
+    user, project_name = get_project_or_local(project)
+    group = group or GroupManager.get_config_or_raise().sequence
+    return user, project_name, group
 
 
 @click.group()
@@ -28,11 +30,8 @@ def get_group_or_local(group=None):
 @click.pass_context
 def group(ctx, project, group):
     """Commands for experiment groups."""
-    user, project_name = get_project_or_local(project)
-    group = get_group_or_local(group)
     ctx.obj = ctx.obj or {}
-    ctx.obj['user'] = user
-    ctx.obj['project_name'] = project_name
+    ctx.obj['project'] = project
     ctx.obj['group'] = group
 
 
@@ -50,7 +49,7 @@ def get(ctx):
     $ polyaxon group -g 13 get
     ```
     """
-    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
+    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
     try:
         response = PolyaxonClients().experiment_group.get_experiment_group(
             user, project_name, group)
@@ -74,7 +73,8 @@ def delete(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
+    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+
     if not click.confirm("Are sure you want to delete experiment group `{}`".format(group)):
         click.echo('Existing without deleting experiment group.')
         sys.exit(0)
@@ -108,7 +108,7 @@ def update(ctx, description):
     $ polyaxon group -g 2 update --description="new description for my experiments"
     ```
     """
-    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
+    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
     update_dict = {}
 
     if description:
@@ -140,7 +140,7 @@ def experiments(ctx, page):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, group = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['group']
+    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
     page = page or 1
     try:
         response = PolyaxonClients().experiment_group.list_experiments(
