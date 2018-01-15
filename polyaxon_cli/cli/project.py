@@ -64,10 +64,8 @@ def get_project_or_local(project=None):
 def project(ctx, project):
     """Commands for projects."""
     if ctx.invoked_subcommand not in ['create', 'list']:
-        user, project_name = get_project_or_local(project)
         ctx.obj = ctx.obj or {}
-        ctx.obj['user'] = user
-        ctx.obj['project_name'] = project_name
+        ctx.obj['project'] = project
 
 
 @project.command()
@@ -162,7 +160,7 @@ def get(ctx):
     $ polyaxon project get user/project
     ```
     """
-    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    user, project_name = get_project_or_local(ctx.obj['project'])
 
     try:
         response = PolyaxonClients().project.get_project(user, project_name)
@@ -183,7 +181,7 @@ def delete(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    user, project_name = get_project_or_local(ctx.obj['project'])
 
     if not click.confirm("Are sure you want to delete project `{}/{}`".format(user, project_name)):
         click.echo('Existing without deleting project.')
@@ -225,7 +223,7 @@ def update(ctx, name, description, private):
     $ polyaxon update mike1/foobar --description="Image Classification with Deep Learning using TensorFlow"
     ```
     """
-    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    user, project_name = get_project_or_local(ctx.obj['project'])
 
     update_dict = {}
     if name:
@@ -262,7 +260,7 @@ def groups(ctx, page):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    user, project_name = get_project_or_local(ctx.obj['project'])
 
     page = page or 1
     try:
@@ -298,7 +296,7 @@ def experiments(ctx, page):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    user, project_name = get_project_or_local(ctx.obj['project'])
 
     page = page or 1
     try:
@@ -331,7 +329,7 @@ def start_tensorboard(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         response = PolyaxonClients().project.start_tensorboard(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -356,7 +354,7 @@ def stop_tensorboard(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name = ctx.obj['user'], ctx.obj['project_name']
+    user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         response = PolyaxonClients().project.stop_tensorboard(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
