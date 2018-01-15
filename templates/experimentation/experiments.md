@@ -283,6 +283,8 @@ We could have also used `default_ps_resources` instead.
 
 Since we have multiple jobs, Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
 
+You can also use our helper library to extract these environment variable programmatically, as well as defining `TF_CONFIG` using `get_tf_config`.
+
 !!! tip "Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER`"
     Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your distributed deep learning model.
 
