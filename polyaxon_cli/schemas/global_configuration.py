@@ -32,11 +32,11 @@ class GlobalConfigurationConfig(BaseConfig):
     def __init__(self,
                  verbose=False,
                  host='localhost',
-                 http_port=8000,
-                 ws_port=1337,
+                 http_port=80,
+                 ws_port=80,
                  use_https=False):
         self.verbose = verbose
         self.host = host
-        self.http_port = http_port
-        self.ws_port = ws_port
+        self.http_port = str(http_port)
+        self.ws_port = str(ws_port)
         self.use_https = use_https
