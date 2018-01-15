@@ -241,7 +241,7 @@ class PodManager(object):
         env_vars = env_vars or []
         env_vars.append(
             client.V1EnvVar(
-                name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME,
+                name=constants.CONFIG_MAP_TASK_INFO_KEY_NAME,
                 value_from=json.dumps({'task_type': task_type, 'task_index': task_idx})
             )
         )
