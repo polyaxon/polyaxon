@@ -12,6 +12,7 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.managers.experiment import ExperimentManager
+from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -71,8 +72,9 @@ def get(ctx):
     user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     try:
         response = PolyaxonClients().experiment.get_experiment(user, project_name, experiment)
-        # Set caching
-        ExperimentManager.set_config(response)
+        # Set caching only if we have an initialized project
+        if ProjectManager.is_initialized():
+            ExperimentManager.set_config(response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not load experiment `{}` info.'.format(experiment))
         Printer.print_error('Error message `{}`.'.format(e))

@@ -26,21 +26,23 @@ class BaseConfigManager(object):
                 logger.error('Could not create config directory `{}`'.format(dir_path))
 
     @classmethod
-    def get_config_file_path(cls):
+    def get_config_file_path(cls, create=True):
         if not cls.IS_GLOBAL:
             # local to this directory
             base_path = os.path.join('.')
             if cls.IS_POLYAXON_DIR:
                 # Add it to the current "./.polyaxon"
                 base_path = os.path.join(base_path, '.polyaxon')
-                cls._create_dir(base_path)
+                if create:
+                    cls._create_dir(base_path)
         else:
             base_path = os.path.expanduser('~')
             if not os.access(base_path, os.W_OK):
                 base_path = '/tmp'
 
             base_path = os.path.join(base_path, '.polyaxon')
-            cls._create_dir(base_path)
+            if create:
+                cls._create_dir(base_path)
 
         return os.path.join(base_path, cls.CONFIG_FILE_NAME)
 
@@ -51,7 +53,7 @@ class BaseConfigManager(object):
 
     @classmethod
     def is_initialized(cls):
-        config_file_path = cls.get_config_file_path()
+        config_file_path = cls.get_config_file_path(False)
         return os.path.isfile(config_file_path)
 
     @classmethod

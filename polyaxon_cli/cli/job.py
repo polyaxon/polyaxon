@@ -9,6 +9,7 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 from polyaxon_cli.cli.experiment import get_experiment_or_local
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.managers.job import JobManager
+from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
@@ -64,8 +65,9 @@ def get(ctx):
                                            ctx.obj['job'])
     try:
         response = PolyaxonClients().job.get_job(user, project_name, experiment, job)
-        # Set caching
-        JobManager.set_config(response)
+        # Set caching only if we have an initialized project
+        if ProjectManager.is_initialized():
+            JobManager.set_config(response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
