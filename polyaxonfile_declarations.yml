@@ -1,0 +1,26 @@
+---
+version: 1
+
+project:
+  name: quick-start
+
+declarations:
+  batch_size: 128
+  num_steps: 500
+  learning_rate: 0.001
+  dropout: 0.25
+  num_epochs: 1
+  activation: relu
+
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
+  steps:
+    - apt-get -y update && apt-get -y install git
+    - pip3 install --no-cache-dir -U -e git+https://github.com/polyaxon/polyaxon-helper.git@master#egg=polyaxon-helper
+  cmd:  python3 model.py  --batch_size="{{ batch_size }}" \
+                          --num_steps="{{ num_steps }}" \
+                          --learning_rate="{{ learning_rate }}" \
+                          --dropout="{{ dropout }}" \
+                          --num_epochs="{{ num_epochs }}" \
+                          --activation="{{ activation }}"
