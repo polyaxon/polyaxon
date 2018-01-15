@@ -50,17 +50,17 @@ def login(token, username, password):
                           abort=True, default=True)
 
             click.launch(token_url)
-        logger.info("Please copy and paste the authentication token.")
-        access_code = click.prompt('This is an invisible field. Paste token and press ENTER',
-                                   type=str, hide_input=True)
+            logger.info("Please copy and paste the authentication token.")
+            token = click.prompt('This is an invisible field. Paste token and press ENTER',
+                                 type=str, hide_input=True)
 
-        if not access_code:
+        if not token:
             logger.info("Empty token received. "
                         "Make sure your shell is handling the token appropriately.")
-            logger.info("See docs for help: http://docs.polyaxon.com/faqs/authentication/")
+            logger.info("See docs for help: http://docs.polyaxon.com/polyaxon_cli/commands/auth")
             return
 
-        access_code = access_code.strip(" ")
+        access_code = token.strip(" ")
 
     try:
         AuthConfigManager.purge()
