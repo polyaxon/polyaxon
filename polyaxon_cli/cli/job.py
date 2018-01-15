@@ -19,8 +19,10 @@ from polyaxon_cli.utils.formatting import (
 )
 
 
-def get_job_or_local(experiment=None):
-    return experiment or JobManager.get_config_or_raise().sequence
+def get_job_or_local(project=None, experiment=None, job=None):
+    user, project_name, experiment = get_experiment_or_local(project, experiment)
+    job = job or JobManager.get_config_or_raise().sequence
+    return user, project_name, experiment, job
 
 
 @click.group()
@@ -30,12 +32,8 @@ def get_job_or_local(experiment=None):
 @click.pass_context
 def job(ctx, project, experiment, job):
     """Commands for jobs."""
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
-    job = get_job_or_local(job)
     ctx.obj = ctx.obj or {}
-    ctx.obj['user'] = user
-    ctx.obj['project_name'] = project_name
+    ctx.obj['project'] = project
     ctx.obj['experiment'] = experiment
     ctx.obj['job'] = job
 
@@ -59,10 +57,9 @@ def get(ctx):
     $ polyaxon job --job=1 --project=project_name get
     ```
     """
-    user, project_name, experiment, job = (ctx.obj['user'],
-                                           ctx.obj['project_name'],
-                                           ctx.obj['experiment'],
-                                           ctx.obj['job'])
+    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
+                                                           ctx.obj['experiment'],
+                                                           ctx.obj['job'])
     try:
         response = PolyaxonClients().job.get_job(user, project_name, experiment, job)
         # Set caching only if we have an initialized project
@@ -92,10 +89,9 @@ def statuses(ctx):
     $ polyaxon job -xp 1 -j 2 statuses
     ```
     """
-    user, project_name, experiment, job = (ctx.obj['user'],
-                                           ctx.obj['project_name'],
-                                           ctx.obj['experiment'],
-                                           ctx.obj['job'])
+    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
+                                                           ctx.obj['experiment'],
+                                                           ctx.obj['job'])
     try:
         response = PolyaxonClients().job.get_statuses(user, project_name, experiment, job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
@@ -133,10 +129,9 @@ def resources(ctx):
     $ polyaxon job -j 2 resources
     ```
     """
-    user, project_name, experiment, job = (ctx.obj['user'],
-                                           ctx.obj['project_name'],
-                                           ctx.obj['experiment'],
-                                           ctx.obj['job'])
+    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
+                                                           ctx.obj['experiment'],
+                                                           ctx.obj['job'])
     try:
         PolyaxonClients().job.resources(user,
                                         project_name,
@@ -168,10 +163,9 @@ def logs(ctx):
     $ polyaxon job logs
     ```
     """
-    user, project_name, experiment, job = (ctx.obj['user'],
-                                           ctx.obj['project_name'],
-                                           ctx.obj['experiment'],
-                                           ctx.obj['job'])
+    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
+                                                           ctx.obj['experiment'],
+                                                           ctx.obj['job'])
 
     def message_handler(log_line):
         Printer.log(log_line['log_line'])
