@@ -130,6 +130,7 @@ if __name__ == '__main__':
         get_model_fn(learning_rate=learning_rate, dropout=dropout, activation=activation),
         model_dir=get_outputs_path())
 
+    # Train the Model
     input_fn = tf.estimator.inputs.numpy_input_fn(
         x={'images': mnist.train.images},
         y=mnist.train.labels,
@@ -139,7 +140,6 @@ if __name__ == '__main__':
     estimator.train(input_fn, steps=num_steps)
 
     # Evaluate the Model
-    # Define the input function for evaluating
     input_fn = tf.estimator.inputs.numpy_input_fn(
         x={'images': mnist.test.images},
         y=mnist.test.labels,
