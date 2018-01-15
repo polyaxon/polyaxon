@@ -7,6 +7,26 @@ Usage:
 $ polyaxon login [OPTIONS]
 ```
 
+### Example using username and password
+
+```bash
+$ polyaxon login --username=adam --password=secret
+```
+
+### Example using username and prompt
+
+```bash
+$ polyaxon login --username=adam
+
+Please enter your password:
+```
+
+### Example using token
+
+```bash
+$ polyaxon login --token=my-token
+```
+
 Login to Polyaxon.
 
 Options:
