@@ -311,6 +311,21 @@ def logs(ctx):
     user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
     colors = deque(Printer.COLORS)
     job_to_color = {}
+    sign = {'current': '-', 'values': ['-', '|']}
+
+    def handle_docker_progress(status, log_line):
+        try:
+            log_line = json.loads(log_line)
+            if log_line.get('id') and log_line.get('progress'):
+                log_line = '{} -- container: {}, progress: {}\r'.format(
+                    status,
+                    log_line['id'],
+                    log_line['progress'])
+                Printer.log(log_line)
+                sys.stdout.flush()
+        except json.JSONDecodeError:
+            click.echo('--')
+            Printer.log("{} -- your job's image is being created.".format(status, log_line))
 
     def message_handler(message):
         status = message['status']
@@ -327,24 +342,15 @@ def logs(ctx):
             log_line = '{} -- {}'.format(Printer.add_color(job_info, color), message['log_line'])
             Printer.log(log_line)
         elif status == 'Building':
+            sign['current'] = (sign['values'][0]
+                               if sign['current'] == sign['values'][1]
+                               else sign['values'][1])
             status = Printer.add_color(status, 'yellow')
-            try:
-                log_line = json.loads(log_line)
-                if log_line.get('id') and log_line.get('progress'):
-                    log_line = '{} -- container: {}, progress: {}\r'.format(
-                        status,
-                        log_line['id'],
-                        log_line['progress'])
-                    Printer.log(log_line)
-                    sys.stdout.flush()
-                else:
-                    click.echo('--')
-                    Printer.log('{} -- {}'.format(status, log_line))
-            except json.JSONDecodeError:
-                click.echo('--')
-                Printer.log('{} -- {}'.format(status, log_line))
+            Printer.log("{} -- creating image {}\r".format(status, sign['current']))
+            sys.stdout.flush()
         else:
             Printer.log('{} -- {}'.format(status, log_line))
+
     try:
         PolyaxonClients().experiment.logs(
             user, project_name, experiment, message_handler=message_handler)
