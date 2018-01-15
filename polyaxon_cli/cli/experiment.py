@@ -22,8 +22,10 @@ from polyaxon_cli.utils.formatting import (
 )
 
 
-def get_experiment_or_local(experiment=None):
-    return experiment or ExperimentManager.get_config_or_raise().sequence
+def get_experiment_or_local(project=None, experiment=None):
+    user, project_name = get_project_or_local(project)
+    experiment = experiment or ExperimentManager.get_config_or_raise().sequence
+    return user, project_name, experiment
 
 
 @click.group()
@@ -32,11 +34,8 @@ def get_experiment_or_local(experiment=None):
 @click.pass_context
 def experiment(ctx, project, experiment):
     """Commands for experiments."""
-    user, project_name = get_project_or_local(project)
-    experiment = get_experiment_or_local(experiment)
     ctx.obj = ctx.obj or {}
-    ctx.obj['user'] = user
-    ctx.obj['project_name'] = project_name
+    ctx.obj['project'] = project
     ctx.obj['experiment'] = experiment
 
 
@@ -69,7 +68,8 @@ def get(ctx):
     $ polyaxon experiment -xp 1 -p alain/cats-vs-dogs get
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     try:
         response = PolyaxonClients().experiment.get_experiment(user, project_name, experiment)
         # Set caching only if we have an initialized project
@@ -99,7 +99,8 @@ def delete(ctx):
     $ polyaxon experiment delete
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     if not click.confirm("Are sure you want to delete experiment `{}`".format(experiment)):
         click.echo('Existing without deleting experiment.')
         sys.exit(1)
@@ -137,7 +138,8 @@ def stop(ctx):
     $ polyaxon experiment -x 2 stop
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     if not click.confirm("Are sure you want to stop experiment `{}`".format(experiment)):
         click.echo('Existing without stopping experiment.')
         sys.exit(0)
@@ -166,7 +168,8 @@ def restart(ctx):
     $ polyaxon experiment --experiment=1 restart
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     try:
         response = PolyaxonClients().experiment.restart(
             user, project_name, experiment)
@@ -195,7 +198,8 @@ def jobs(ctx, page):
     $ polyaxon experiment --experiment=1 jobs
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     page = page or 1
     try:
         response = PolyaxonClients().experiment.list_jobs(user, project_name, experiment, page=page)
@@ -241,7 +245,8 @@ def statuses(ctx, page):
     $ polyaxon experiment -xp 1 statuses
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     page = page or 1
     try:
         response = PolyaxonClients().experiment.get_statuses(
@@ -281,7 +286,8 @@ def resources(ctx):
     $ polyaxon experiment -xp 19 resources
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     try:
         PolyaxonClients().experiment.resources(
             user, project_name, experiment, message_handler=Printer.resources)
@@ -310,7 +316,8 @@ def logs(ctx):
     $ polyaxon experiment -x 10 -p mnist logs
     ```
     """
-    user, project_name, experiment = ctx.obj['user'], ctx.obj['project_name'], ctx.obj['experiment']
+    user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
+                                                             ctx.obj['experiment'])
     colors = deque(Printer.COLORS)
     job_to_color = {}
     sign = {'current': '-', 'values': ['-', '|']}
