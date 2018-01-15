@@ -52,7 +52,7 @@ If you use Polyaxon in your academic research, we would be grateful if you could
 }
 ```
 
-Feel free to [contact us](mailto:contact@polyaxon.com) We would love to learn about your project and see if we can support your custom need.
+Feel free to [contact us](mailto:contact@polyaxon.com), we would love to learn about your project and see how we can support your custom need.
 
 # License
 
