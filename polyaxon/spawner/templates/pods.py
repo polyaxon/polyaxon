@@ -237,6 +237,15 @@ class PodManager(object):
         volume_mounts += gpu_volume_mounts
         volumes += gpu_volumes
 
+        # Add job information
+        env_vars = env_vars or []
+        env_vars.append(
+            client.V1EnvVar(
+                name=constants.CONFIG_MAP_JOB_INFO_KEY_NAME,
+                value_from=json.dumps({'task_type': task_type, 'task_index': task_idx})
+            )
+        )
+
         pod_container = self.get_pod_container(volume_mounts=volume_mounts,
                                                env_vars=env_vars,
                                                command=command,
