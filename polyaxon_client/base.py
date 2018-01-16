@@ -158,8 +158,11 @@ class PolyaxonClient(object):
                                         headers=request_headers,
                                         files=files,
                                         timeout=timeout)
-        except requests.exceptions.ConnectionError as exception:
-            logger.debug("Exception: %s", exception, exc_info=True)
+        except (requests.exceptions.RequestException, requests.exceptions.HTTPError) as exception:
+            try:
+                logger.debug("Exception: %s", exception, exc_info=True)
+            except TypeError:
+                pass
             raise PolyaxonShouldExitError(
                 "Cannot connect to the Polyaxon server on `{}`.\n"
                 "Check your host and ports configuration and your internet connection.".format(url))
@@ -232,7 +235,11 @@ class PolyaxonClient(object):
                             f.write(chunk)
             return filename
         except requests.exceptions.ConnectionError as exception:
-            logger.debug("Exception: {}".format(exception))
+            try:
+                logger.debug("Exception: {}".format(exception))
+            except TypeError:
+                pass
+
             raise PolyaxonShouldExitError(
                 "Cannot connect to the Polyaxon server on `{}`.\n"
                 "Check your host and ports configuration and your internet connection.".format(url))
@@ -265,8 +272,9 @@ class PolyaxonClient(object):
 
         try:
             logger.error(
-                "Request to {} failed with status code {}".format(endpoint, response.status_code),
-                response.text)
+                "Request to {} failed with status code {}. \n"
+                "Reason: {}".format(
+                    endpoint, response.status_code, response.text))
         except TypeError:
             logger.error("Request to {} failed with status code".format(endpoint))
 
