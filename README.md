@@ -14,6 +14,9 @@ Command line tool for Polyaxon.
 $ pip install -U polyaxon-cli
 ```
 
+## Polyaxon CLI documentation
+
+Please check the [polyaxon cli reference](https://docs.polyaxon.com/polyaxon_cli/introduction/)
 
 ## Install polyaxon
 
