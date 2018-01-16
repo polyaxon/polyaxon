@@ -25,6 +25,7 @@ class PolyaxonClient(object):
     BASE_WS_URL = "{}/ws/{}"
     MAX_UPLOAD_SIZE = 1024 * 1024 * 150
     PAGE_SIZE = 30
+    TIME_OUT = 12
 
     def __init__(self,
                  host,
@@ -123,7 +124,7 @@ class PolyaxonClient(object):
                 data=None,
                 files=None,
                 json=None,
-                timeout=5,
+                timeout=TIME_OUT,
                 headers=None):
         """Send a request with the given data as json to the given URL.
 
@@ -199,7 +200,7 @@ class PolyaxonClient(object):
 
         return response
 
-    def download(self, url, filename, relative=False, headers=None, timeout=5):
+    def download(self, url, filename, relative=False, headers=None, timeout=TIME_OUT):
         """
         Download the file from the given url at the current path
         """
@@ -253,7 +254,7 @@ class PolyaxonClient(object):
                 os.remove(filename)
             return filename
         except self.errors_mapping['base'] as e:
-            logger.info("Download URL ERROR! {}".format(e))
+            logger.info("Download URL ERROR! {}".format(e.message))
             return False
 
     def check_response_status(self, response, endpoint):
@@ -262,9 +263,12 @@ class PolyaxonClient(object):
         if 200 <= response.status_code < 300:
             return response
 
-        logger.error(
-            "Request to {} failed with status code {}".format(endpoint, response.status_code),
-            response.text)
+        try:
+            logger.error(
+                "Request to {} failed with status code {}".format(endpoint, response.status_code),
+                response.text)
+        except TypeError:
+            logger.error("Request to {} failed with status code".format(endpoint))
 
         exception = self.errors_mapping.get(response.status_code, self.errors_mapping['http'])
         raise exception(endpoint=endpoint,
@@ -273,7 +277,7 @@ class PolyaxonClient(object):
                         status_code=response.status_code)
 
     def handle_exception(self, e, log_message=None):
-        logger.info("{}: {}".format(log_message, e))
+        logger.info("{}: {}".format(log_message, e.message))
 
         if self.reraise:
             raise e
@@ -282,7 +286,14 @@ class PolyaxonClient(object):
             # exit now since there is nothing we can do without login
             raise e
 
-    def get(self, url, params=None, data=None, files=None, json=None, timeout=5, headers=None):
+    def get(self,
+            url,
+            params=None,
+            data=None,
+            files=None,
+            json=None,
+            timeout=TIME_OUT,
+            headers=None):
         """Call request with a get."""
         return self.request('GET',
                             url=url,
@@ -293,7 +304,14 @@ class PolyaxonClient(object):
                             timeout=timeout,
                             headers=headers)
 
-    def post(self, url, params=None, data=None, files=None, json=None, timeout=5, headers=None):
+    def post(self,
+             url,
+             params=None,
+             data=None,
+             files=None,
+             json=None,
+             timeout=TIME_OUT,
+             headers=None):
         """Call request with a post."""
         return self.request('POST',
                             url=url,
@@ -304,7 +322,14 @@ class PolyaxonClient(object):
                             timeout=timeout,
                             headers=headers)
 
-    def patch(self, url, params=None, data=None, files=None, json=None, timeout=5, headers=None):
+    def patch(self,
+              url,
+              params=None,
+              data=None,
+              files=None,
+              json=None,
+              timeout=TIME_OUT,
+              headers=None):
         """Call request with a patch."""
         return self.request('PATCH',
                             url=url,
@@ -315,7 +340,14 @@ class PolyaxonClient(object):
                             timeout=timeout,
                             headers=headers)
 
-    def delete(self, url, params=None, data=None, files=None, json=None, timeout=5, headers=None):
+    def delete(self,
+               url,
+               params=None,
+               data=None,
+               files=None,
+               json=None,
+               timeout=TIME_OUT,
+               headers=None):
         """Call request with a delete."""
         return self.request('DELETE',
                             url=url,
@@ -326,7 +358,14 @@ class PolyaxonClient(object):
                             timeout=timeout,
                             headers=headers)
 
-    def put(self, url, params=None, data=None, files=None, json=None, timeout=5, headers=None):
+    def put(self,
+            url,
+            params=None,
+            data=None,
+            files=None,
+            json=None,
+            timeout=TIME_OUT,
+            headers=None):
         """Call request with a put."""
         return self.request('PUT',
                             url=url,
