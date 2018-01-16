@@ -7,46 +7,44 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.types.core }}
 spec:
-  replicas: 1
   template:
     metadata:
       labels:
         app: {{ template "redis.fullname" . }}
-{{- if .Values.redis.podLabels }}
-{{ toYaml .Values.redis.podLabels | indent 8 }}
+{{- if .Values.podLabels }}
+{{ toYaml .Values.podLabels | indent 8 }}
 {{- end }}
+      {{- if .Values.podAnnotations }}
+      annotations:
+{{ toYaml .Values.podAnnotations | indent 8 }}
+      {{- end }}
     spec:
       securityContext:
-        runAsUser: 1001
-        fsGroup: 1001
-      {{- if .Values.nodeSelectors.dependencies }}
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+      {{- if .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelectors.dependencies | indent 8 }}
+{{ toYaml .Values.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.affinity.dependencies }}
-      affinity:
-{{ toYaml .Values.affinity.dependencies | indent 8 }}
-      {{- end }}
-      {{- if .Values.tolerations.dependencies }}
+      {{- if .Values.tolerations }}
       tolerations:
-{{ toYaml .Values.tolerations.dependencies | indent 8 }}
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
       {{- end }}
       containers:
       - name: {{ template "redis.fullname" . }}
-        image: "{{ .Values.redis.image }}:{{ .Values.redis.imageTag }}"
-        imagePullPolicy: {{ default "" .Values.redis.imagePullPolicy | quote }}
-        {{- if not .Values.redis.persistence.enabled }}
+        image: "{{ .Values.image }}"
+        imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+        {{- if not .Values.persistence.enabled }}
         command: ["redis-server"]
         args: ["/redis-config/redis.config"]
         {{- end }}
-        {{- if .Values.redis.args }}
-        args:
-{{ toYaml .Values.redis.args | indent 10 }}
-        {{- end }}
         env:
-        {{- if .Values.redis.usePassword }}
+        {{- if .Values.usePassword }}
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -74,22 +72,22 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 1
         resources:
-{{ toYaml .Values.redis.resources | indent 10 }}
+{{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: redis-data
-          mountPath: /data
-        {{- if not .Values.redis.persistence.enabled }}
+          mountPath: {{ .Values.persistence.path }}
+        {{- if not .Values.persistence.enabled }}
         - name: config
           mountPath: /redis-config
         {{- end }}
-{{- if .Values.redis.metrics.enabled }}
+{{- if .Values.metrics.enabled }}
       - name: metrics
-        image: "{{ .Values.redis.metrics.image }}:{{ .Values.redis.metrics.imageTag }}"
-        imagePullPolicy: {{ .Values.redis.metrics.imagePullPolicy | quote }}
+        image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
+        imagePullPolicy: {{ .Values.metrics.imagePullPolicy | quote }}
         env:
         - name: REDIS_ALIAS
           value: {{ template "redis.fullname" . }}
-        {{- if .Values.redis.usePassword }}
+        {{- if .Values.usePassword }}
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -100,21 +98,21 @@ spec:
         - name: metrics
           containerPort: 9121
         resources:
-{{ toYaml .Values.redis.metrics.resources | indent 10 }}
+{{ toYaml .Values.metrics.resources | indent 10 }}
 {{- end }}
       volumes:
-        - name: redis-data
-        {{- if .Values.redis.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.redis.persistence.existingClaim | default (include "redis.fullname" .) }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
-        {{- if not .Values.redis.persistence.enabled }}
-        - name: config
-          configMap:
-            name: redis-config
-            items:
-              - key: redis-config
-                path: redis.config
-        {{- end }}
+      - name: redis-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "redis.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
+      {{- if not .Values.persistence.enabled }}
+      - name: config
+        configMap:
+          name: redis-config
+          items:
+            - key: redis-config
+              path: redis.config
+      {{- end }}

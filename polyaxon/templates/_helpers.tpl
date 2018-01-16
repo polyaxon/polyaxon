@@ -286,7 +286,7 @@ redis config
 */}}
 {{- define "config.registry" }}
 - name: POLYAXON_REGISTRY_HOST
-  value: "localhost:{{ .Values.registry.service.nodePort }}"
+  value: "localhost:{{ (index .Values "docker-registry").service.nodePort }}"
 {{- end }}
 
 {{/*

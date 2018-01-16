@@ -10,7 +10,7 @@ metadata:
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.api }}
 spec:
-  type: {{ .Values.api.service.type }}
+  type: {{ .Values.serviceType }}
   selector:
     app: {{ template "polyaxon.fullname" . }}-api
   ports:

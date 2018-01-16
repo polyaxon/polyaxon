@@ -5,13 +5,17 @@ Polyaxon is currently running:
 
 {{- if .Values.ingress.enabled -}}
 
-    {{- range .Values.ingress.hosts }}
-        export POLYAXON_IP={{ . }}
+    {{- if .Values.isMinikube }}
+        export POLYAXON_IP=$(minikube ip)
+    {{- else }}
+        {{- range .Values.ingress.hosts }}
+            export POLYAXON_IP={{ . }}
+        {{- end }}
     {{- end }}
 
-    export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
+    export POLYAXON_HTTP_PORT=80
 
-    export POLYAXON_WS_PORT={{ .Values.apiEvents.service.externalPort }}
+    export POLYAXON_WS_PORT=80
 
 {{- else if .Values.isMinikube }}
 
@@ -25,7 +29,7 @@ Polyaxon is currently running:
 
 {{- else }}
 
-{{- if contains "NodePort" .Values.api.service.type }}
+{{- if contains "NodePort" .Values.serviceType }}
 
   export POLYAXON_HTTP_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
 
@@ -35,7 +39,7 @@ Polyaxon is currently running:
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
-{{- else if contains "LoadBalancer" .Values.api.service.type }}
+{{- else if contains "LoadBalancer" .Values.serviceType }}
 
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status by running:
@@ -50,7 +54,7 @@ Polyaxon is currently running:
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
-{{- else if contains "ClusterIP" .Values.api.service.type }}
+{{- else if contains "ClusterIP" .Values.serviceType }}
 
   export POLYAXON_IP=<YOUR HOSTNAME/IP>
 

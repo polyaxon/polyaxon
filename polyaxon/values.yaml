@@ -2,6 +2,13 @@ namespace: "polyaxon"
 passwordLenght: 10
 ingress:
   enabled: false
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/add-base-url: "true"
+    kubernetes.io/ingress.class: polyaxon-ingress
+
+serviceType: LoadBalancer  # If you enable ingress, please set this value to ClusterIP or NodePort
 rbac:
   enabled: false
 
@@ -85,7 +92,6 @@ api:
 
   service:
     name: api
-    type: ClusterIP
     externalPort: 80
     internalPort: 80
     nodePort: 31811
@@ -260,6 +266,7 @@ affinity:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
 
+
 postgresql:
   imageTag: 9.6.1
   postgresUser: polyaxon
@@ -267,107 +274,40 @@ postgresql:
   postgresDatabase: polyaxon
   persistence:
     enabled: false
-    size: "8Gi"
-    subPath: ""
-
-  # ---
-  image: "postgres"
-  persistence:
-    accessMode: ReadWriteOnce
-    subPath: "postgresql-db"
-  metrics:
-    enabled: false
-    image: wrouesnel/postgres_exporter
-    imageTag: v0.1.1
-    imagePullPolicy: IfNotPresent
-    resources:
-      requests:
-        memory: 256Mi
-        cpu: 100m
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 100m
-  service:
-    type: ClusterIP
-    port: 5432
-    externalIPs: []
-  networkPolicy:
-    enabled: false
-    allowExternal: true
-  tolerations: []
+    size: 2Gi
 
 redis:
+  image: redis
   imageTag: 4.0.2
+  usePassword: false
   persistence:
     enabled: false
     accessMode: ReadWriteOnce
     size: 8Gi
-
-  # ---
-  image: redis
-  imagePullPolicy: IfNotPresent
-  serviceType: ClusterIP
-  usePassword: false
-  metrics:
-    enabled: false
-    image: oliver006/redis_exporter
-    imageTag: v0.11
-    imagePullPolicy: IfNotPresent
-    resources: {}
-    annotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/port: "9121"
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 100m
-  podLabels: {}
-  networkPolicy:
-    enabled: false
-    allowExternal: true
 
 rabbitmq:
   imageTag: "3.6.12-management"
   image: "rabbitmq"
   imagePullPolicy: IfNotPresent
   rabbitmqUsername: polyaxon
-  rabbitmqNodePort: 5672
-  rabbitmqNodeType: stats
-  rabbitmqNodeName: rabbit
-  rabbitmqVhost: /
-  rabbitmqManagerPort: 15672
-  serviceType: ClusterIP
   persistence:
     enabled: false
-    accessMode: ReadWriteOnce
-    size: 8Gi
 
   resources:
     requests:
       memory: 256Mi
       cpu: 300m
 
-registry:
-  replicaCount: 1
-  image:
-    repository: registry
-    tag: 2.6.2
-    pullPolicy: IfNotPresent
+docker-registry:
   service:
-    name: registry
     type: NodePort
-    port: 5000
     nodePort: 31813
   resources:
     requests:
-      cpu: "300m"
-      memory: "512Mi"
+      cpu: 300m
+      memory: 312Mi
   persistence:
     enabled: false
-    accessMode: ReadWriteOnce
-    size: 10Gi
-    subPath: ""
 
 debug: 0
 celery:
