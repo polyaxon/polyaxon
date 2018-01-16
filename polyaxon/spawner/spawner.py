@@ -295,7 +295,9 @@ class K8SSpawner(K8SManager):
 
     def get_pod_cmd_args(self, task_type, task_idx, schedule):
         if self.spec.run_exec:
-            return self.spec.run_exec.cmd.split(' '), []
+            cmd = self.spec.run_exec.cmd.split(' ')
+            cmd = [c.strip() for c in cmd if (c and c != '\\')]
+            return cmd, []
 
         spec_data = json.dumps(self.spec.parsed_data)
 
