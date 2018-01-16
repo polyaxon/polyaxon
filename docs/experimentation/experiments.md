@@ -19,7 +19,7 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install scikit-learn
-  cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
+  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
 If the code requires many python dependencies, Polyaxon provides an elegant way to install these requirements,
@@ -54,7 +54,7 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install -r polyaxon_requirements.txt
-  cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
+  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
 !!! Tip

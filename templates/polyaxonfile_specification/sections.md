@@ -209,7 +209,7 @@ declarations:
 This declaration can be used later on to pass to our program:
 
 ```yaml
- ... --batch-size="{{ batch-size }}"
+ ... --batch-size={{ batch-size }}
 ```
 
 ```yaml
@@ -263,7 +263,7 @@ matrix:
 These values can be accessed in the following way:
 
 ```yaml
---lr="{{ lr }}" --loss="{{ loss }}"
+--lr={{ lr }} --loss={{ loss }}
 ```
 
 You can, of course, only access one value at time,

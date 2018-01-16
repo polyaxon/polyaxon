@@ -22,7 +22,7 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install scikit-learn
-  cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
+  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
 This declares a section to run our `train.py` file by passing two values, the `learning rate` and the `batch_size`.
@@ -55,7 +55,7 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install scikit-learn
-  cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
+  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
 !!! Tip

@@ -31,7 +31,7 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install scikit-learn
-  cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
+  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
 
 Polyaxon also provides, an easy way to install multiple python libraries:
@@ -62,7 +62,7 @@ Polyaxon also provides, an easy way to install multiple python libraries:
       image: tensorflow/tensorflow:1.4.1-py3
       steps:
         - pip install -r polyaxon_requirements.txt
-      cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
+      cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
     ```
 
 
@@ -85,5 +85,5 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - ./polyaxon_setup.sh
-  cmd: python3 train.py --batch_size="{{ batch_size }}" --lr="{{ lr }}"
+  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
