@@ -25,9 +25,6 @@ docker_client = docker.from_env(version="auto", timeout=10)
 
 
 def get_gpu_resources():
-    if not polyaxon_gpustat.has_gpu_nvidia:
-        return []
-
     try:
         return polyaxon_gpustat.query()
     except:
