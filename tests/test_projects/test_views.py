@@ -179,9 +179,11 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
-        with patch('spawner.scheduler.stop_experiment') as mock_stop:
-            resp = self.auth_client.delete(self.url)
-        assert mock_stop.call_count == 4
+        with patch('spawner.scheduler.stop_tensorboard') as tensorboard_mock_fct:
+            with patch('spawner.scheduler.stop_experiment') as xp_mock_stop:
+                resp = self.auth_client.delete(self.url)
+        assert xp_mock_stop.call_count == 4
+        assert tensorboard_mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert ExperimentGroup.objects.count() == 0

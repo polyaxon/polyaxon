@@ -9,4 +9,8 @@ class ProjectsConfig(AppConfig):
     verbose_name = 'Projects'
 
     def ready(self):
-        from projects.signals import new_experiment_group, experiment_group_deleted
+        from projects.signals import (
+            new_experiment_group,
+            experiment_group_deleted,
+            project_deleted,
+        )

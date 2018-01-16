@@ -1,8 +1,11 @@
-from django.db.models.signals import post_save, pre_save
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+from django.db.models.signals import post_save, pre_save, pre_delete
 from django.dispatch import receiver
 
 from libs.decorators import ignore_raw
-from projects.models import ExperimentGroup
+from projects.models import ExperimentGroup, Project
 from projects.tasks import start_group_experiments
 from experiments.models import Experiment
 from spawner import scheduler
@@ -37,3 +40,10 @@ def experiment_group_deleted(sender, **kwargs):
     instance = kwargs['instance']
     for experiment in instance.running_experiments:
         scheduler.stop_experiment(experiment, update_status=False)
+
+
+@receiver(pre_delete, sender=Project, dispatch_uid="project_deleted")
+@ignore_raw
+def project_deleted(sender, **kwargs):
+    instance = kwargs['instance']
+    scheduler.stop_tensorboard(instance)
