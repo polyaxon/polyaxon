@@ -30,7 +30,7 @@ The choice of using Docker containers to run your jobs is important,
 it provides the user a wide range of possibilities to [customize the run run environment](/customization/customize_run_environment)
 to fit the requirements and dependencies needed for the experiments.
 
-![Screenshot](/images/polyaxon_architecture.png)
+![architecture](/images/polyaxon_architecture.png)
 
 
 ## Concepts
