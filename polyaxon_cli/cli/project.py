@@ -338,10 +338,10 @@ def start_tensorboard(ctx):
         sys.exit(1)
 
     Printer.print_success('Tensorboard is being deployed for project `{}`'.format(project_name))
-    clint.textui.puts("It may take some time before you can access the dashboard.")
-    clint.textui.puts("If you used an ingress, your dashboard will be available on:")
+    clint.textui.puts("It may take some time before you can access the dashboard.\n")
+    clint.textui.puts("If you used an ingress, your dashboard will be available on:\n")
     with clint.textui.indent(4):
-        clint.textui.puts("{}/tensorboard/{}/{}".format(
+        clint.textui.puts("{}/tensorboard/{}/{}\n".format(
             PolyaxonClients().auth.http_host, user, project_name))
 
     clint.textui.puts("Ohterwise you can use kubectl to get the url.")
@@ -357,6 +357,7 @@ def stop_tensorboard(ctx):
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         response = PolyaxonClients().project.stop_tensorboard(user, project_name)
+        Printer.print_success('Tensorboard is being deleted')
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not start tensorboard project `{}`.'.format(project))
         Printer.print_error('Error message `{}`.'.format(e))
