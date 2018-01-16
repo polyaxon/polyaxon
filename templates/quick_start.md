@@ -5,11 +5,43 @@ Let’s look at an example of how you can use Polyaxon for your deep learning ex
 This example assumes that both Polyaxon is [installed](installation/introduction) and running.
 And you are logged in to your Polyaxon account through the [polyaxon-cli](polyaxon_cli/commands/auth)
 
-1. The first step is to create a project, you can do that with the `Polyaxon-dashboard` or with the `polyaxon-cli`
+
+0. The first step is is to check that polyaxon is reporting your cluster correctly
+
+    ```bash
+    $ polyaxon cluster
+
+
+    Cluster info:
+
+    --------------  ----------------------------------------
+    build_date      2017-11-20T05:17:43Z
+    major           1
+    go_version      go1.8.3
+    git_version     v1.8.4
+    platform        linux/amd64
+    git_commit      9befc2b8928a9426501d3bf62f72849d5cbcd5a3
+    git_tree_state  clean
+    minor           8
+    compiler        gc
+    --------------  ----------------------------------------
+
+    Cluster Nodes:
+
+      sequence  name                       hostname                   role    memory      n_cpus    n_gpus
+    ----------  -------------------------  -------------------------  ------  --------  --------  --------
+             1  k8s-agentpool1-13475325-0  k8s-agentpool1-13475325-0  agent   6.7 Gb           2         0
+             2  k8s-agentpool2-13475325-0  k8s-agentpool2-13475325-0  agent   54.93 Gb         6         1
+             3  k8s-master-13475325-0      k8s-master-13475325-0      master  6.7 Gb           2         0
+    ```
+
+1. Now  we can create a project, you can do that with the `Polyaxon-dashboard` or with the `polyaxon-cli`
 
     ```bash
     $ polyaxon project create --name=quick-start --description='Polyaxon quick start.'
     ```
+
+    ![Screenshot](/images/dashboard/project.png)
 
 2. Head to your terminal and clone our [quick-start repo](https://github.com/polyaxon/polyaxon-quick-start)
 
@@ -231,7 +263,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
             23  root.quick-start.1.23  root    root.quick-start.1       Created        a few seconds ago  False                0
     ```
 
-9. More information about the project in the dashboard
+13. More information about the project in the dashboard
 
     ```bash
     $ polyaxon dashboard
@@ -239,7 +271,23 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Dashboard page will now open in your browser. Continue? [Y/n]: y
     ```
 
-10. Finally, Let start tensorboard to see the model outputs:
+ * Landing page:
+
+![Screenshot](/images/dashboard/index.png)
+
+ * Login page:
+
+![Screenshot](/images/dashboard/login.png)
+
+ * Project list:
+
+![Screenshot](/images/dashboard/pojects.png)
+
+ * Project Details
+
+![Screenshot](/images/dashboard/poject.png)
+
+14. Finally, Let start tensorboard to see the model outputs:
 
      ```bash
      $ polyaxon project start_tensorboard
@@ -255,12 +303,13 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
         Ohterwise you can use kubectl to get the url.
      ```
 
-Congratulations! You've trained your first experiment with Polyaxon. Behind the scene a couple of things have happened:
+Congratulations! You've trained your first experiments with Polyaxon. Behind the scene a couple of things have happened:
 
  * You uploaded your code, and created a git commit for this version of your code
  * You built a docker image with the latest version of your code
  * You ran the image with the specified command in the polyaxonfile
  * You persisted your logs and outputs to your volume claims
+ * You created a group of experiments to fine tune hyperparameters
 
 To gain a deeper understanding on how polyaxon can help you iterate faster with your experiments,
 please take some time to familiarize yourself with the [experimentation workflow](experimentation/concepts)

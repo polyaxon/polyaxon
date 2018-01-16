@@ -26,7 +26,7 @@ and then walks through the steps required to install and configure a complete Po
 the cloud or on your own infrastructure.
 Kubernetes and the Polyaxon Helm chart provides sensible defaults for an initial deployment.
 
-To get started, go to [Quick start with Polyaxon](quick_start) to start your first experiment.
+To get started, go to [Quick start with Polyaxon](quick_start) to start your first experiments.
 
 To setup a Polyaxon deployment, go to [Installation requirements and setup](installation/introduction).
 
@@ -35,7 +35,7 @@ Once you have a Polyaxon deployment, you can learn how to organize your [experim
 
 ## Management
 
- * [Admins management](management/admins)
+ * [Admins management](management/superusers)
  * [Users management](management/users)
 
 ## Customization
