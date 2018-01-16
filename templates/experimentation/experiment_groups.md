@@ -154,7 +154,7 @@ version: 1
 
 settings:
   concurrent_experiments: 2
-  search_method: random
+  search_method: RANDOM
 ```
 
 If we run again the `check` command with `-x` or `--experiments` option, we will get
