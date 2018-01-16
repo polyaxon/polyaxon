@@ -4,6 +4,10 @@ version: 1
 project:
   name: quick-start
 
+settings:
+  concurrent_experiments: 2
+  search_method: RANDOM
+
 declarations:
   batch_size: 128
   num_steps: 500
@@ -28,8 +32,4 @@ run:
                          --learning_rate={{ learning_rate }} \
                          --dropout={{ dropout }} \
                          --num_epochs={{ num_epochs }} \
-
-
-
-
                          --activation={{ activation }}
