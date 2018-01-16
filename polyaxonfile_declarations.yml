@@ -12,7 +12,6 @@ declarations:
   num_epochs: 1
   activation: relu
 
-
 run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
