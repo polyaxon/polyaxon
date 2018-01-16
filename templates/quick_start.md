@@ -41,8 +41,6 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     $ polyaxon project create --name=quick-start --description='Polyaxon quick start.'
     ```
 
-    ![Screenshot](/images/dashboard/project.png)
-
 2. Head to your terminal and clone our [quick-start repo](https://github.com/polyaxon/polyaxon-quick-start)
 
     ```bash
@@ -273,19 +271,19 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
  * Landing page:
 
-![Screenshot](/images/dashboard/index.png)
+![index](/images/dashboard/index.png)
 
  * Login page:
 
-![Screenshot](/images/dashboard/login.png)
+![login](/images/dashboard/login.png)
 
- * Project list:
+ * Projects list:
 
-![Screenshot](/images/dashboard/pojects.png)
+![project](/images/dashboard/projects.png)
 
  * Project Details
 
-![Screenshot](/images/dashboard/poject.png)
+![project](/images/dashboard/project.png)
 
 14. Finally, Let start tensorboard to see the model outputs:
 

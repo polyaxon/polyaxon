@@ -5,6 +5,7 @@ before_script:
 
 pages:
   script:
+  - python3 generate_doc.py
   - mkdocs build
   - mv site public
   artifacts:
