@@ -32,8 +32,7 @@ def cli(context, verbose):
 
         * Interact with Polyaxon server.
 
-        * Run and Monitor your experiments.
-
+        * Run and Monitor experiments.
 
     Check the help available for each command listed below.
     """
