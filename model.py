@@ -86,18 +86,18 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '--num_steps',
-        default=200,
+        default=800,
         type=int
     )
     parser.add_argument(
         '--learning_rate',
         default=0.001,
-        type=int
+        type=float
     )
     parser.add_argument(
         '--dropout',
         default=0.25,
-        type=int
+        type=float
     )
     parser.add_argument(
         '--num_epochs',
