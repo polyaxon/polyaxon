@@ -16,7 +16,7 @@ from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.utils import cached_property, get_vol_path
 from polyaxon_schemas.operators import ForConfig, IfConfig
 from polyaxon_schemas.settings import ClusterConfig, RunTypes
-from polyaxon_schemas.utils import TaskType, to_list
+from polyaxon_schemas.utils import TaskType, to_list, SEARCH_METHODS
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -400,7 +400,7 @@ class GroupSpecification(BaseSpecification):
             search_method = self.settings.search_method
         else:
             concurrent_experiments = 1
-            search_method = None
+            search_method = SEARCH_METHODS.SEQUENTIAL
         return self.matrix_space, concurrent_experiments, search_method
 
     @cached_property
