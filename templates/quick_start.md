@@ -18,9 +18,11 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ...
 
     $ cd polyaxon-quick-start
-    $ ls polyaxon-quick-start
+    $ ls
 
-    mnsit.py README.me LICENSE
+    LICENSE                       polyaxonfile.yml
+    README.md                     polyaxonfile_declarations.yml
+    model.py                      polyaxonfile_hyperparams.yml
     ```
 
 3. Initialize the project with the same name that you used when you created the project in Polyaxon
@@ -133,7 +135,103 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ...
     ```
 
-8. More information about the experiment in the dashboard
+10. Start another experiment
+
+    ```bash
+    $ polyaxon run -f polyaxonfile_declarations.yml
+    ```
+
+11. Start an experiment group
+
+    ```bash
+    $ polyaxon check -f polyaxonfile_hyperparams.yml -x
+
+    Polyaxonfile valid
+
+    The matrix-space has 20 experiments, with 2 concurrent runs, and random search.
+    ```
+
+    ```bash
+    $ polyaxon check -f polyaxonfile_hyperparams.yml -m
+
+    Polyaxonfile valid
+
+    The matrix definition is:
+    {'learning_rate': 0.001, 'activation': 'relu', 'dropout': 0.25}
+    {'learning_rate': 0.001, 'activation': 'sigmoid', 'dropout': 0.25}
+    {'learning_rate': 0.001, 'activation': 'relu', 'dropout': 0.3}
+    {'learning_rate': 0.001, 'activation': 'sigmoid', 'dropout': 0.3}
+    ...
+    ...
+    ```
+
+    ```bash
+    $ polyaxon run -f polyaxonfile_declarations.yml
+
+    Creating an experiment group with 20 experiments.
+
+    Experiment group was created
+    ```
+
+12. Check experiments in the group
+
+    ```bash
+    polyaxon group -g 1 get
+
+    Experiment group info:
+
+    -----------------------  ------------------
+    sequence                 1
+    unique_name              root.quick-start.1
+    user                     root
+    project_name             root.quick-start
+    created_at               a few seconds ago
+    concurrency              2
+    num_experiments          20
+    num_pending_experiments  18
+    num_running_experiments  0
+    -----------------------  ------------------
+    ```
+
+    ```bash
+    $ polyaxon group -g 1 experiments
+
+    Experiments for experiment group `1`.
+
+
+    Navigation:
+
+    -----  --
+    count  20
+    -----  --
+
+    Experiments:
+
+      sequence  unique_name            user    experiment_group_name    last_status    created_at         is_clone      num_jobs  finished_at    started_at
+    ----------  ---------------------  ------  -----------------------  -------------  -----------------  ----------  ----------  -------------  -----------------
+             4  root.quick-start.1.4   root    root.quick-start.1       Created        a few seconds ago  False                0
+             5  root.quick-start.1.5   root    root.quick-start.1       Created        a few seconds ago  False                0
+             6  root.quick-start.1.6   root    root.quick-start.1       Created        a few seconds ago  False                0
+             7  root.quick-start.1.7   root    root.quick-start.1       Created        a few seconds ago  False                0
+             8  root.quick-start.1.8   root    root.quick-start.1       Created        a few seconds ago  False                0
+             9  root.quick-start.1.9   root    root.quick-start.1       Created        a few seconds ago  False                0
+            10  root.quick-start.1.10  root    root.quick-start.1       Created        a few seconds ago  False                0
+            11  root.quick-start.1.11  root    root.quick-start.1       Created        a few seconds ago  False                0
+            12  root.quick-start.1.12  root    root.quick-start.1       Running        a few seconds ago  False                1                 a few seconds ago
+            13  root.quick-start.1.13  root    root.quick-start.1       Created        a few seconds ago  False                0
+            14  root.quick-start.1.14  root    root.quick-start.1       Created        a few seconds ago  False                0
+            15  root.quick-start.1.15  root    root.quick-start.1       Running        a few seconds ago  False                1                 a few seconds ago
+            16  root.quick-start.1.16  root    root.quick-start.1       Created        a few seconds ago  False                0
+            17  root.quick-start.1.17  root    root.quick-start.1       Created        a few seconds ago  False                0
+            18  root.quick-start.1.18  root    root.quick-start.1       Created        a few seconds ago  False                0
+            19  root.quick-start.1.19  root    root.quick-start.1       Created        a few seconds ago  False                0
+            20  root.quick-start.1.20  root    root.quick-start.1       Created        a few seconds ago  False                0
+            21  root.quick-start.1.21  root    root.quick-start.1       Created        a few seconds ago  False                0
+            22  root.quick-start.1.22  root    root.quick-start.1       Created        a few seconds ago  False                0
+            23  root.quick-start.1.23  root    root.quick-start.1       Created        a few seconds ago  False                0
+    ```
+
+9. More information about the project in the dashboard
 
     ```bash
     $ polyaxon dashboard
@@ -141,10 +239,20 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Dashboard page will now open in your browser. Continue? [Y/n]: y
     ```
 
-9. Finally, Let start tensorboard to see the model outputs:
+10. Finally, Let start tensorboard to see the model outputs:
 
      ```bash
      $ polyaxon project start_tensorboard
+
+     Tensorboard is being deployed for project `quick-start`
+
+        It may take some time before you can access the dashboard.
+
+        If you used an ingress, your dashboard will be available on:
+
+            http://52.226.37.54:80/tensorboard/root/quick-start
+
+        Ohterwise you can use kubectl to get the url.
      ```
 
 Congratulations! You've trained your first experiment with Polyaxon. Behind the scene a couple of things have happened:
