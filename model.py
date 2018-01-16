@@ -50,11 +50,11 @@ def get_model_fn(learning_rate, dropout, activation):
 
         results = get_network(features, is_training=is_training)
 
-        pred_classes = tf.argmax(results, axis=1)
+        predictions = tf.argmax(results, axis=1)
 
         # Return prediction
         if mode == tf.estimator.ModeKeys.PREDICT:
-            return tf.estimator.EstimatorSpec(mode, predictions=pred_classes)
+            return tf.estimator.EstimatorSpec(mode, predictions=predictions)
 
         # Define loss
         loss_op = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(
@@ -63,12 +63,12 @@ def get_model_fn(learning_rate, dropout, activation):
         train_op = optimizer.minimize(loss_op, global_step=tf.train.get_global_step())
 
         # Evaluation metrics
-        accuracy = tf.metrics.accuracy(labels=labels, predictions=pred_classes)
-        precision = tf.metrics.precision(labels=labels, predictions=pred_classes)
+        accuracy = tf.metrics.accuracy(labels=labels, predictions=predictions)
+        precision = tf.metrics.precision(labels=labels, predictions=predictions)
 
         return tf.estimator.EstimatorSpec(
             mode=mode,
-            predictions=pred_classes,
+            predictions=predictions,
             loss=loss_op,
             train_op=train_op,
             eval_metric_ops={'accuracy': accuracy, 'precision': precision})
@@ -148,5 +148,5 @@ if __name__ == '__main__':
 
     metrics = estimator.evaluate(input_fn)
 
-    print("Testing mterics: {}", metrics)
+    print("Testing metrics: {}", metrics)
     send_metrics(loss=metrics['loss'], accuracy=metrics['accuracy'], precision=metrics['precision'])
