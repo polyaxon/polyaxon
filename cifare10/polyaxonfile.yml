@@ -1,0 +1,12 @@
+---
+version: 1
+
+project:
+  name: quick-start
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
+  steps:
+    - apt-get -y update && apt-get -y install git
+    - pip3 install --no-cache-dir -U -e git+https://github.com/polyaxon/polyaxon-helper.git@master#egg=polyaxon-helper
+  cmd:  python3 run.py --train-steps=400
