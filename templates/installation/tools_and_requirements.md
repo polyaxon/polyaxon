@@ -20,7 +20,7 @@ For these materials, any cluster with Kubernetes installed will work with Polyax
 ## Container Technology
 
 Container technology is essentially the idea of bundling all of the necessary components to run a piece of software.
-There are many ways to do this, in the case of Polyaxon we use Docker to bundle the user dependencies required
+There are many ways to do this, in the case of Polyaxon we use Docker to bundle the user's dependencies required
 to run the code.
 
 

@@ -5,7 +5,8 @@ it aims at organizing your efforts to solve a specific problem.
 
 To create a project, you can both use the Polyaxon Dashboard or the Polyaxon CLI.
 
-The projects consist of a required argument `name` and an optional `description`.
+The projects consist of a required argument `--name` an optional argument `--description`,
+and a flag `--private` with a default value set to `False`.
 
 The projects could be `public` (default behaviour) or set to private,
 in that case only you i.e. `logged-in user`, and `superusers` can access the project.
@@ -14,7 +15,7 @@ Public project are visible to everyone as read only mode, and read/write mode to
 
 ??? note "More permissions and roles"
     More permissions and roles will be available, when we introduce teams.
-    If you want to be notified when we release this feature, please subscribe to receive our progress.
+    If you want to be notified when we release this feature, please [subscribe](https://polyaxon.com/signup/) to receive our progress.
 
 
 ??? Tip "Only the creator and superusers can create experiment groups and experiments"
@@ -23,17 +24,13 @@ Public project are visible to everyone as read only mode, and read/write mode to
     `public` only gives read access to other users in your team.
 
 
-### Creating a project with the dashboard
-
-### Creating a project with the CLI
-
 ```bash
 $ polyaxon project create --name=mnist --description='Classification of handwritten images.'
 ```
 
 !!! info "More details"
     For more details about this command please run `polyaxon project create --help`,
-    or check the [command reference](/polyaxon_cli/commands/project)
+    or check the [command reference](/polyaxon_cli/commands/project/#create)
 
 The project is created by default `public`, to make it private please add `--private`
 
@@ -71,7 +68,7 @@ $ vi train.py
 ...
 ```
 
-Upload the to polyaxon to commit this current version.
+Upload the code to polyaxon to commit this current version.
 
 ```bash
 $ polyaxon upload

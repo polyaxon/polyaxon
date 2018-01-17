@@ -19,7 +19,7 @@ pip3 install -U polyaxon-cli
 ## Configure
 
 In order for polyaxon CLI to work correctly,
-you must execute the steps from [polyaxon helm deployments](deploy_polyaxon).
+you must execute the steps in the `NOTES` from [polyaxon helm deployments](deploy_polyaxon).
 
 Those steps ensures that, you configure Polyaxon to connect to the correct host on the correct ports.
 

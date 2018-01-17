@@ -106,9 +106,6 @@ logs/
 media/
 
 # npm modules and transpiled typescript files
-client/dist/
-client/node_modules/
-client/css/
-client/polyaxon/**/*.js
-client/polyaxon/**/*.js.map
-/examples/polyaxon-logs/
+docs/
+site/
+public/

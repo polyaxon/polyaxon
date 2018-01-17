@@ -3,8 +3,32 @@ Polyaxon helper is a lightweight python library to report metrics and communicat
 
 ## Install
 
+You can install the helper directly if you want to provide a prepared docker image by running.
+
 ```bash
 $ pip install -U polyaxon-helper
+```
+
+for python3
+
+```bash
+$ pip3 install -U polyaxon-helper
+```
+
+## Install in polyaxonfile
+
+If you want to delegate the installation to polyaxon during the build process,
+add a new step to the `run` section in your polyaxonfile:
+
+```yaml
+...
+run:
+  image: ...
+  steps:
+    - ...
+    - pip install -U polyaxon-helper
+    - ...
+  cmd: ...
 ```
 
 
@@ -88,7 +112,6 @@ log_level = get_log_level()
         `user/project/group/experiment/files`
 
  * `get_tf_config`: Returns the TF_CONFIG defining the cluster and the current task.
-
    if `envvar` is not null, it will set and env variable with `envvar`.
 
  * `get_log_level`: If set on the polyaxonfile it will return the log level.
@@ -97,7 +120,7 @@ log_level = get_log_level()
 
 ## Reporting metrics to Polyaxon
 
-In order to report metrics for an experiment, just add these line in you program.
+In order to report metrics for an experiment, just add these lines in you program.
 
 ```python
 from polyaxon_helper import send_metrics

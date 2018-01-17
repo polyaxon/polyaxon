@@ -4,11 +4,12 @@ should be used for the core platform, for the dependencies, and for the experime
 
 ## Node Selectors
 
-Polyaxon comes with 3 node selectors to assign pods to nodes
+Polyaxon comes with 2 node selectors to assign pods to nodes
 
   * `core`: the core polyaxon platform
-  * `dependencies`: all polyaxon dependencies, e.i. database, broker, ...
   * `experiments`: all user's experiments scheduled by polyaxon
+
+Additionally every dependency in our helm package, exposes a node selector option.
 
 By providing these values, or some of them,
 you can constrain the pods belonging to that category to only run on
@@ -25,16 +26,15 @@ And use the same label for `nodeSelectors.experiments`
 
 ## Tolerations
 
-If one or more taints are applied to a node, and you want to make sure some pods should not deplay on it, Polyaxon provides 2 types of tolerations:
-
-  * `core`: the core polyaxon platform
-  * `dependencies`: all polyaxon dependencies, e.i. database, broker, ...
+If one or more taints are applied to a node,
+and you want to make sure some pods should not deploy on it,
+Polyaxon provides tolerations option; the core polyaxon platform.
+And all dependencies, e.i. database, broker, expose their own tolerations option.
 
 ## Affinity
 
 It allows you to constrain which nodes your pod is eligible to schedule on, based on labels on the node,
 Polyaxon has a default `Affinity` values for both dependencies and core to ensure that they deploy on the same node.
-Possible values:
+Possible values.
 
-  * `core`: the core polyaxon platform
-  * `dependencies`: all polyaxon dependencies, e.i. database, broker, ...
+You are also welcome to update the dependency of polyaxon or any dependency.

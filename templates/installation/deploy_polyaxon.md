@@ -59,7 +59,7 @@ $ helm install polyaxon/polyaxon \
 You need it when you are changing the configuration of this install or deleting it.
 We recommend using `RELEASE_NAME = polyaxon` or `RELEASE_NAME = plx`.
 
-`--namespace` should be the same value of the name space you created in the first step,
+`--namespace` should be the same value of the namespace you created in the first step,
 we again recommend using `polyaxon` to make it always easy to remember.
 
 !!! Tip
@@ -83,7 +83,7 @@ You can see the pods being created by entering in a different terminal:
 $ kubectl --namespace=<NAMESPACE> get pod
 ```
 
-When helm is done deploying Polyaxon it will output some instructions `NOTES`,
+When helm is done deploying Polyaxon, it will output some instructions `NOTES`,
 that depends on the service type used and / or ingress;
 
 ```

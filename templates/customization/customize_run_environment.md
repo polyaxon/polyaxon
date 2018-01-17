@@ -1,10 +1,11 @@
-Usually a docker image specifies the functionality and environment that you wish when running your experiments.
+Usually a docker image specifies the functionality and environment
+that you wish to run your experiments.
 
 The following sections will describe how to use existing docker images and how to create custom images.
 
 ## Public images
 
-You can use any docker image available on a public registry to run you experiments.
+You can use any docker image available on a public registry to run your experiments.
 
 You can also build your custom docker images and push them to a public registry and use them on Polyaxon.
 
@@ -44,7 +45,7 @@ Polyaxon also provides, an easy way to install multiple python libraries:
     ...
     ```
 
- 2. a command `pip install -r polyaxon_requirements.txt` int he to install our requirements
+ 2. a command `pip install -r polyaxon_requirements.txt` to install the requirements
 
 
     ```yaml

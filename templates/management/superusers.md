@@ -1,7 +1,7 @@
 Superusers in Polyaxon are allowed to:
 
- * Access to all projects in read/write modes.
- * Accept new users to use polyaxon on your cluser.
+ * Access all projects in read/write mode.
+ * Accept new users to use polyaxon on your cluster.
  * Grant access to new users.
  * Perform cluster management.
 
@@ -13,7 +13,7 @@ Polyaxon comes with a default superuser `root`. This user has also a default pas
 You can customize the `username`, `email`, and `password` of that user by updating your `config.yaml`.
 
 !!! info
-    For more details about how to extend your polyaxon deployment, go to the [/customization/extend_deployments].
+    For more details about how to extend your polyaxon deployment, go to [extend deployment section](/customization/extend_deployments).
 
 If null password is provided for this default user, Polyaxon will generate a random password.
 The admin of your cluster will be able to see it by running the command provided

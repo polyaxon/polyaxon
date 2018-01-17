@@ -14,7 +14,7 @@ $ curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | ba
 ## Initialize Helm and grant RBAC
 
 After installing helm on your machine, initialize helm on your Kubernetes cluster
-(you can check the [instruction provided bu helm](https://github.com/kubernetes/helm/blob/master/docs/rbac.md)).
+(you can check the [instruction provided by helm](https://github.com/kubernetes/helm/blob/master/docs/rbac.md)).
 
 Run the commands:
 
@@ -40,4 +40,12 @@ $ helm version
 
 Make sure you have at least version 2.5!
 
-If your Helm version is compatible, then it is time to [deploy polyaxon](deploy_polyaxon)
+## Upgrade Helm
+
+If you need to upgrade helm, you can run the following command
+
+```bash
+$ helm --init upgrade
+```
+
+It's time to [deploy polyaxon](deploy_polyaxon)

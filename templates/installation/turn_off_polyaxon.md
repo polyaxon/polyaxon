@@ -3,7 +3,7 @@ and depending on your persistence configuration you can find all your data saved
 
 You can also decide to completely turn off Polyaxon and remove the namespace and computational resources.
 
-## Stop/kill running experiments
+## Stop/Delete running experiments
 
 Stop/delete any running experiments, to kill all associated running jobs, and therefor their Kubernetes pods.
 
@@ -16,13 +16,13 @@ $ polyaxon experiment -p myother-project -xp 19 kill
 
 ## Delete Helm release
 
-Delete the helm release. This deletes all resources that were created by helm to make your Polyaxon.
+Delete the helm release. This deletes all resources that were created by helm during the deployment.
 
 ```bash
 $ helm delete <RELEASE_NAME> --purge
 ```
 
-If you used the default values the command will be,
+If you used the default values, the command should be,
 
 ```bash
 $ helm delete polyaxon --purge
@@ -38,7 +38,7 @@ and any IP addresses that may have been provisioned.
 $ kubectl delete namespace <your-namespace>
 ```
 
-If you used the default values the command will be,
+If you used the default values, the command should be,
 
 ```bash
 $ kubectl delete namespace polyaxon

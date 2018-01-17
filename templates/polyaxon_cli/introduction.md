@@ -1,4 +1,4 @@
-Polyaxon CLI is a tool and a client to interact with your Polyaxon,
+Polyaxon CLI is a tool and a client to interact with Polyaxon,
 it allows you to manage your cluster, users, projects, and experiments.
 
 ## Installation
@@ -39,7 +39,7 @@ Polyaxon CLI allows also you to omit these options, i.e. project, experiment gro
  3. When an experiment group, experiment, or job is missing, the last value is used.
  4. If no values are found, the CLI will show an error.
 
-Same commands but with caching:
+Same commands with caching:
 
  * `$ polyaxon project get`
  * `$ polyaxon experiment get`

@@ -3,7 +3,7 @@ If you have already a kubernetes cluster, you can skip this section, and [setup 
 Kubernetes’ documentation describes [many ways to set up a cluster](https://kubernetes.io/docs/setup/pick-right-solution/).
 
 In this guide we shall provide quick instructions for the most painless and popular ways of getting
-setup in various cloud providers.
+a setup in various cloud providers.
 
 ??? caution "Security and sensitive data"
     If you are about to deploy a kubernetes cluster with sensitive data,

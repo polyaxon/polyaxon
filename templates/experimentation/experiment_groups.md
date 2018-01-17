@@ -4,7 +4,7 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
   * learning rate `lr`
   * batch size `batch_size`
 
-If you want to run this code with learning rate `lr` with different values,
+If you want to run this code with different learning rate  `lr` values,
 you can use the [matrix section](/polyaxonfile_specification/sections#matrix) to declare the values you want to run.
 
 ## Updating the polyaxonfile.yml with a matrix
@@ -62,7 +62,7 @@ run:
     The declarations section was not completely necessary,
     we could have also just passed the value directly `--batch_size=128`
 
-So what we did is, we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
+So what we did is we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
 
 There are other options that we could have used such as
 
@@ -94,8 +94,8 @@ This command validate the polyaxon file, and the option `-m` returns the matrix 
     For more details about this command please run `polyaxon check --help`,
     or check the [command reference](/polyaxon_cli/commands/check)
 
-!!! tip "Polyaxon append the matrix value combination to your declarations and export under the environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your models.
+!!! tip "Polyaxon merges the combination values from matrix for a single experiment with the values from declarations and export under the environment variable name `POLYAXON_DECLARATIONS`"
+    Check how you can [get the experiment declarations](/reference_polyaxon_helper) to use them with your models.
 
 ## Running a group of experiments
 
@@ -139,14 +139,14 @@ we will do something different this time and override this value with a new file
 Create a new file, let's call polyaxonfile_override.yml
 
 !!! Tip "You can call your polyaxonfiles anything you want"
-    By default polyaxon commands looks for files called `polyaxonfile.yml`
-    so if you call your file differently you should always use the option `-f`
+    By default polyaxon commands look for files called `polyaxonfile.yml`.
+    If you call your files differently or want to override values, you need to use the option `-f`
 
 ```bash
 $ vi polyaxonfile_override.yml
 ```
 
-And past this settings section.
+And past the following settings section.
 
 ```yaml
 ---
@@ -164,7 +164,7 @@ polyaxon check -f polyaxonfile.yml -f polyaxonfile_override.yml -x
 
 Polyaxonfile valid
 
-The matrix-space has 5 experiments, with 2 concurrent runs, and random search
+The matrix-space has 5 experiments, with 2 concurrent runs, and a random search
 ```
 
 Let's run our new version
@@ -179,10 +179,9 @@ Experiment group was created
 
 ## Checking the status of your experiments
 
-First of we can double check that our groups were created.
+First, we can double check that our groups was created.
 
- * Polyaxon dashboard
- * Polyaxon CLI
+For that you can use the Polyaxon dashboard or Polyaxon CLI.
 
 ```bash
 $ polyaxon project groups
@@ -204,14 +203,16 @@ Experiment groups:
          2  admin.mnist.2  admin.mnist     a few seconds ago              2                  5                          3                          2
 ```
 
+We can see that we created 2 groups, the first one with sequential runs, and the second one with 2 concurrent runs.
+
+We can also see the how many experiments are running/pending now.
+
 We can have a look at the the two experiment running concurrently in the second group
 
-
- * Polyaxon dashboard
- * Polyaxon CLI
+Again you can go to the Polyaxon dashboard or use the Polyaxon CLI.
 
 ```bash
-polyaxon group experiments 2
+polyaxon group -g 2 experiments
 
 Experiments for experiment group `2`.
 
@@ -224,13 +225,13 @@ count  5
 
 Experiments:
 
-  sequence  unique_name       user    experiment_group_name    last_status    created_at         is_clone      num_jobs  finished_at    started_at
-----------  ----------------  ------  -----------------------  -------------  -----------------  ----------  ----------  -------------  -----------------
-         6  admin.mnist.2.6   admin   admin.mnist.2            Created        a few seconds ago  False                0
-         7  admin.mnist.2.7   admin   admin.mnist.2            Created        a few seconds ago  False                0
-         8  admin.mnist.2.8   admin   admin.mnist.2            Starting       a few seconds ago  False                0                 a few seconds ago
-         9  admin.mnist.2.9   admin   admin.mnist.2            Created        a few seconds ago  False                0
-        10  admin.mnist.2.10  admin   admin.mnist.2            Building       a few seconds ago  False                0                 a few seconds ago
+  sequence  unique_name       user    last_status    created_at         is_clone      num_jobs  finished_at    started_at
+----------  ----------------  ------  -------------  -----------------  ----------  ----------  -------------  -----------------
+         6  admin.mnist.2.6   admin   Created        a few seconds ago  False                0
+         7  admin.mnist.2.7   admin   Created        a few seconds ago  False                0
+         8  admin.mnist.2.8   admin   Starting       a few seconds ago  False                0                 a few seconds ago
+         9  admin.mnist.2.9   admin   Created        a few seconds ago  False                0
+        10  admin.mnist.2.10  admin   Building       a few seconds ago  False                0                 a few seconds ago
 ```
 
 !!! info "More details"
@@ -240,7 +241,8 @@ Experiments:
 
 To check the logs, resources, jobs, and statuses of a specific experiment, please go to [experiments](experiments).
 The section also covers how to customize the resources of an experiment, the configuration,
-the log level and other many more important information.
+the log level and many important information.
+
 All the information that you will learn in that section applies to experiment groups,
 because groups are only a collection of experiments.
 

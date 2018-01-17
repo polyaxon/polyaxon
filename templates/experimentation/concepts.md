@@ -42,7 +42,7 @@ with more details in pages dedicated to each concept.
 
 ### User
 
-A `User` is the entity that creates project, starts experiments, manages teams and clusters.
+A `User` is the entity that creates projects, starts experiments, manages teams and clusters.
 A `User` has a set of permissions, and can be normal user or superuser.
 
 !!! info "More details"
@@ -54,7 +54,7 @@ An `Team` provides a way to manage team/group of users, their access roles, and 
 
 !!! caution
     This is still a work in progress.
-    If you want to be notified when we release this feature, please subscribe to receive our progress.
+    If you want to be notified when we release this feature, please [subscribe](https://polyaxon.com/signup/) to receive our progress.
 
 ### Project
 
@@ -67,7 +67,7 @@ A project consist of a name and a description, the code to execute, the data, an
 
 ### Experiment Group
 
-An `Experiment Group` is a automatic and practical way to run a version of your model and data with different hyper parameters.
+An `Experiment Group` is an automatic and practical way to run a version of your model and data with different hyper parameters.
 
 !!! info "More details"
     Please refer to the [experiment groups and hyper parameters search section](experiment_groups) for more details.

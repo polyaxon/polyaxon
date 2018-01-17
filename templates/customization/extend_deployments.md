@@ -11,7 +11,7 @@ The general method to modify your Kubernetes deployment is to:
  2. Run a helm upgrade:
 
     ```bash
-    $ helm upgrade <RELEASE_NAME> polyaxon-chart/polyaxon -f config.yaml
+    $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yaml
     ```
 
     Where `<RELEASE_NAME>` is the parameter you passed to `--name` when installing polyaxon with `helm install`.

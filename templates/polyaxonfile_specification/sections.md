@@ -11,7 +11,7 @@ version: 1
 ## project
 
 Represents the project namespace where we want to run the polyaxonfile.
-The project must [created on Polyaxon](/experimentation/projects##create-a-project).
+The project must be [created on Polyaxon](/experimentation/projects##create-a-project).
 
 This section requires one attribute name, which is the name of the project.
 You can specify the name of the project in 2 different ways:
@@ -35,14 +35,15 @@ project:
 
 Settings defines `run_type`, `concurrent_experiments`, `search_method`, and `logging`.
 In general the settings defines some values that must be unique for
-all experiments created with the polyaxonfile.
+all experiments created based on this polyaxonfile.
 
 ### run_type
 
 Currently polyaxon supports three different run types:
-    * `kubernetes` (default value): If your cluster is running on Kubernetes.
-    * `minikube`: if your cluster is running on a minikube.
-    * `local`: In this case the polyaxonfile is used supposed to be used with `polyaxon-lib`.
+
+ * `kubernetes` (default value): If your cluster is running on Kubernetes.
+ * `minikube`: if your cluster is running on a minikube.
+ * `local`: In this case the polyaxonfile is supposed to be used with `polyaxon-lib`.
 
 ### concurrent_experiments
 
@@ -51,10 +52,11 @@ This option will be ignored if the polyaxon file only have one independent exper
 
 ### search_method
 
-Same as `concurrent_experiments`, this it defines the search method to use when running hyperparameters search.
+Same as `concurrent_experiments`, it defines the search method to use when running hyperparameters search.
 Currently, the supported methods are:
-    * `sequential` (default value)
-    * `random`
+
+ * `sequential` (default value)
+ * `random`
 
 !!! info
     More options will be provided for this subsection, to allow the user to explore the matrix space with advanced algorithms.
@@ -63,8 +65,9 @@ Currently, the supported methods are:
 ### logging
 
 Defines the logging behavior for your execution, this subsection accepts:
-    * `level`: The log level.
-    * `formatter`: The log formatter regex.
+
+ * `level`: The log level.
+ * `formatter`: The log formatter regex.
 
 
 Example:
@@ -102,9 +105,9 @@ The number of workers to use for an experiment.
 
 The number of parameter server to use for an experiment.
 
-### resources
+### master_resources
 
-The default resources to use for all jobs.
+The resources to use the master job.
 A resources definition, is optional and made of three optional fields:
 
  * cpu: {limits: value, requests: value}
@@ -113,19 +116,19 @@ A resources definition, is optional and made of three optional fields:
 
 ### default_worker_resources
 
-If specified, it will override the resources and become the default workers resources.
+If specified, it will be the default workers resources.
 
 ### default_ps_resources
 
-If specified, it will override the resources and become the default ps resources.
+If specified, it will be the default ps resources.
 
 ### worker_resources
 
-Define a specific resources definition for a worker indicated by the index of the worker.
+Defines a specific resources definition for a worker indicated by the index of the worker.
 
 ### ps_resources
 
-Define a specific resources definition for a ps indicated by the index of the ps.
+Defines a specific resources definition for a ps indicated by the index of the ps.
 
 
 Example:
@@ -179,7 +182,7 @@ environment:
 This section is the appropriate place to declare constants and variables
 that will be used by the rest of our specification file.
 
-We declared simple constant values:
+To declare a simple constant value:
 
 ```yaml
 declarations:
@@ -206,7 +209,7 @@ declarations:
        strides: [1, 1]
 ```
 
-This declaration can be used later on to pass to our program:
+This declaration can be used to pass values to our program:
 
 ```yaml
  ... --batch-size={{ batch-size }}
@@ -228,13 +231,14 @@ The declaration are particularly important for descriptive models.
 All your declaration will be exported under the environment variable name `POLYAXON_DECLARATIONS`.
 
 !!! tip "Polyaxon export your declarations under environment variable name `POLYAXON_DECLARATIONS`"
-    Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your models.
+    Check how you can [get the experiment declarations](/reference_polyaxon_helper) to use them with your models.
 
 
 ## matrix
 
-The matrix section works the same travis matrix sections, and it basically create multiple specification,
-by traversing the matrix space defined by the Cartesian Product of all your defined parameters.
+The matrix section works the same way as travisCI matrix section,
+and it basically creates multiple specifications.
+The way it does that is by traversing the matrix space defined by the Cartesian Product of all your defined parameters.
 
 The matrix also defines variables same way the `declarations` does, the only difference is
 that all the values generated by the matrix contribute to the definition of an experiment group.
@@ -272,16 +276,16 @@ and the value is chosen directly by the algorithm doing the search defined in th
 For each experiment generated during the hyperparameters search, Polyaxon will also add these values
 to your declarations, and will as well export them under the environment variable name `POLYAXON_DECLARATIONS`.
 
-!!! tip "Polyaxon append the matrix value combination to your declarations and export under the environment variable name `POLYAXON_DECLARATIONS`"
+!!! tip "Polyaxon append the matrix value combination to your declarations and export them under the environment variable name `POLYAXON_DECLARATIONS`"
     Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your models.
 
 ## run
 
-This is where you would define how you want to run your code, and the requirements needed to run it.
+This is where you define how you want to run your code, and the requirements needed to run it.
 This section defines the following values/subsections:
 
- * image [required]: the base image polyaxon will use to build an image for based on your code.
- * steps [optional]: steps are basically a list of ops that Polyaxon we use with docker
+ * image [required]: the base image polyaxon will use to build an image for you to run your code.
+ * steps [optional]: steps are basically a list of ops that Polyaxon use with docker
  `RUN` to install/run further operations you define in the list.
  * envs [optional]: envs are also a list of tuples of 2 elements, that polyaxon will use to add env variables in the docker image.
  * cmd [required]: The command to run during the execution of your code.

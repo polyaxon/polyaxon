@@ -2,10 +2,11 @@ Polyaxon chart is a Helm charts for creating reproducible and maintainable deplo
 
 ## Introduction
 
-This chart bootstraps a [Polyaxon](polyaxon.com) deployment on
+This chart bootstraps a [Polyaxon](https://polyaxon.com) deployment on
 a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 It also packages some required packages for Polyaxon.:
+
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
  * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq)
@@ -94,3 +95,4 @@ $ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> -f values.yaml poly
 ## Ingress
 
 This chart provides support for Ingress resource with an ingress controller.
+You can also provide different annotations for the ingress and it will not use `polyaxon-ingress` class.

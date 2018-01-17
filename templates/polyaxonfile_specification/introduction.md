@@ -13,15 +13,15 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
  * [project](sections#project): defines the project name this specification belongs to (must be unique).
  * [settings](sections#settings): defines the logging, run type and concurrent runs.
  * [environment](sections#environment): defines the run environment for experiment.
- * [declarations](sections#declarations): variables/modules that can be reused.
- * [matrix](sections#matrix): hyper parameters matrix definition.
- * [run](sections#run): defines the run step where the user can set a docker image to execute
+ * [declarations](sections#declarations): defines variables/modules that can be reused.
+ * [matrix](sections#matrix): defines the hyper parameters matrix.
+ * [run](sections#run): defines the run step where the user can set a docker image and a command to execute.
 
 
 ## Model specific Sections
 
  * [model](model_sections#model): defines the model to use based on the declarative API.
- * [train](model_sections#train)sec: defines how to train a model and how to read the data.
+ * [train](model_sections#train): defines how to train a model and how to read the data.
  * [eval](model_sections#train): defines how to evaluate a modela how to read the data
 
 

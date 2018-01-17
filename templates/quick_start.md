@@ -6,7 +6,7 @@ This example assumes that both Polyaxon is [installed](installation/introduction
 And you are logged in to your Polyaxon account through the [polyaxon-cli](polyaxon_cli/commands/auth)
 
 
-0. The first step is is to check that polyaxon is reporting your cluster correctly
+1. The first step is to check that polyaxon is reporting your cluster correctly
 
     ```bash
     $ polyaxon cluster
@@ -35,13 +35,13 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
              3  k8s-master-13475325-0      k8s-master-13475325-0      master  6.7 Gb           2         0
     ```
 
-1. Now  we can create a project, you can do that with the `Polyaxon-dashboard` or with the `polyaxon-cli`
+2. Now  we can create a project, you can do that with `Polyaxon Dashboard` or with `polyaxon CLI`
 
     ```bash
     $ polyaxon project create --name=quick-start --description='Polyaxon quick start.'
     ```
 
-2. Head to your terminal and clone our [quick-start repo](https://github.com/polyaxon/polyaxon-quick-start)
+3. Head to your terminal and clone our [quick-start repo](https://github.com/polyaxon/polyaxon-quick-start)
 
     ```bash
     $ git clone https://github.com/polyaxon/polyaxon-quick-start.git
@@ -55,7 +55,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     model.py                      polyaxonfile_hyperparams.yml
     ```
 
-3. Initialize the project with the same name that you used when you created the project in Polyaxon
+4. Initialize the project with the same name that you used when you created the project in Polyaxon
 
     ```bash
     $ polyaxon init quick-start
@@ -63,7 +63,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Polyaxonfile was created successfully `polyaxonfile.yml`
     ```
 
-4. Let's open the created `polyaxon.yml`, since we cloned the project,
+5. Let's open the created `polyaxon.yml`, since we cloned the project,
    this file is already populated with the minimum configuration needed to start an experiment:
 
     ```yaml
@@ -83,19 +83,19 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     This configuration specifies:
 
-       * The Polyaxon specification `version` we are using.
-       * The `project` namespace we want to run the experiment inside.
-       * The `run` section to build and execute our code,
-         in this case we want to run our code with this tensorflow specific docker image.
-         We are also install the polyaxon helper library to send metrics at the end of the experiment.
+   * The Polyaxon specification `version` we are using.
+   * The `project` namespace we want to run the experiment inside.
+   * The `run` section to build and execute our code,
+     in this case we want to run our code with the specified tensorflow docker image.
+     We are also installing the [polyaxon helper](/reference_polyaxon_helper) library to send metrics at the end of the experiment.
 
-5. Now let's upload our code to create a commit on Polyaxon
+6. Now let's upload our code to create a commit on Polyaxon
 
     ```bash
     $ polyaxon upload
     ```
 
-6. Then start the experiment
+7. Then start the experiment
 
     ```bash
     $ polyaxon run
@@ -103,10 +103,10 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Experiment was created
     ```
 
-!!! tip
-    You can merge these 2 steps: `polyaxon run -u`
+    !!! tip
+        You can merge these 2 steps: `polyaxon run -u`
 
-7. Check your project experiments list
+8. Check your project experiments list
 
     ```bash
     $ polyaxon project experiments
@@ -117,7 +117,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     1 | root.quick-start.1 | root | root.quick-start| Scheduled | seconds ago
 
 
-8. Check the experiment logs and resource
+9. Check the experiment logs and resource
 
     Info:
 
@@ -165,13 +165,15 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ...
     ```
 
-10. Start another experiment
+11. Start another experiment
 
     ```bash
     $ polyaxon run -f polyaxonfile_declarations.yml
     ```
 
-11. Start an experiment group
+12. Start an experiment group
+
+    Check the run definition:
 
     ```bash
     $ polyaxon check -f polyaxonfile_hyperparams.yml -x
@@ -180,6 +182,8 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     The matrix-space has 20 experiments, with 2 concurrent runs, and random search.
     ```
+
+    Check the matrix definition:
 
     ```bash
     $ polyaxon check -f polyaxonfile_hyperparams.yml -m
@@ -203,7 +207,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Experiment group was created
     ```
 
-12. Check experiments in the group
+13. Check experiments in the group
 
     ```bash
     polyaxon group -g 1 get
@@ -237,31 +241,31 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     Experiments:
 
-      sequence  unique_name            user    experiment_group_name    last_status    created_at         is_clone      num_jobs  finished_at    started_at
-    ----------  ---------------------  ------  -----------------------  -------------  -----------------  ----------  ----------  -------------  -----------------
-             4  root.quick-start.1.4   root    root.quick-start.1       Created        a few seconds ago  False                0
-             5  root.quick-start.1.5   root    root.quick-start.1       Created        a few seconds ago  False                0
-             6  root.quick-start.1.6   root    root.quick-start.1       Created        a few seconds ago  False                0
-             7  root.quick-start.1.7   root    root.quick-start.1       Created        a few seconds ago  False                0
-             8  root.quick-start.1.8   root    root.quick-start.1       Created        a few seconds ago  False                0
-             9  root.quick-start.1.9   root    root.quick-start.1       Created        a few seconds ago  False                0
-            10  root.quick-start.1.10  root    root.quick-start.1       Created        a few seconds ago  False                0
-            11  root.quick-start.1.11  root    root.quick-start.1       Created        a few seconds ago  False                0
-            12  root.quick-start.1.12  root    root.quick-start.1       Running        a few seconds ago  False                1                 a few seconds ago
-            13  root.quick-start.1.13  root    root.quick-start.1       Created        a few seconds ago  False                0
-            14  root.quick-start.1.14  root    root.quick-start.1       Created        a few seconds ago  False                0
-            15  root.quick-start.1.15  root    root.quick-start.1       Running        a few seconds ago  False                1                 a few seconds ago
-            16  root.quick-start.1.16  root    root.quick-start.1       Created        a few seconds ago  False                0
-            17  root.quick-start.1.17  root    root.quick-start.1       Created        a few seconds ago  False                0
-            18  root.quick-start.1.18  root    root.quick-start.1       Created        a few seconds ago  False                0
-            19  root.quick-start.1.19  root    root.quick-start.1       Created        a few seconds ago  False                0
-            20  root.quick-start.1.20  root    root.quick-start.1       Created        a few seconds ago  False                0
-            21  root.quick-start.1.21  root    root.quick-start.1       Created        a few seconds ago  False                0
-            22  root.quick-start.1.22  root    root.quick-start.1       Created        a few seconds ago  False                0
-            23  root.quick-start.1.23  root    root.quick-start.1       Created        a few seconds ago  False                0
+      sequence  unique_name            user    last_status    created_at         is_clone      num_jobs  finished_at    started_at
+    ----------  ---------------------  ------  -------------  -----------------  ----------  ----------  -------------  -----------------
+             4  root.quick-start.1.4   root    Created        a few seconds ago  False                0
+             5  root.quick-start.1.5   root    Created        a few seconds ago  False                0
+             6  root.quick-start.1.6   root    Created        a few seconds ago  False                0
+             7  root.quick-start.1.7   root    Created        a few seconds ago  False                0
+             8  root.quick-start.1.8   root    Created        a few seconds ago  False                0
+             9  root.quick-start.1.9   root    Created        a few seconds ago  False                0
+            10  root.quick-start.1.10  root    Created        a few seconds ago  False                0
+            11  root.quick-start.1.11  root    Created        a few seconds ago  False                0
+            12  root.quick-start.1.12  root    Running        a few seconds ago  False                1                 a few seconds ago
+            13  root.quick-start.1.13  root    Created        a few seconds ago  False                0
+            14  root.quick-start.1.14  root    Created        a few seconds ago  False                0
+            15  root.quick-start.1.15  root    Running        a few seconds ago  False                1                 a few seconds ago
+            16  root.quick-start.1.16  root    Created        a few seconds ago  False                0
+            17  root.quick-start.1.17  root    Created        a few seconds ago  False                0
+            18  root.quick-start.1.18  root    Created        a few seconds ago  False                0
+            19  root.quick-start.1.19  root    Created        a few seconds ago  False                0
+            20  root.quick-start.1.20  root    Created        a few seconds ago  False                0
+            21  root.quick-start.1.21  root    Created        a few seconds ago  False                0
+            22  root.quick-start.1.22  root    Created        a few seconds ago  False                0
+            23  root.quick-start.1.23  root    Created        a few seconds ago  False                0
     ```
 
-13. More information about the project in the dashboard
+14. More information about the project in the dashboard
 
     ```bash
     $ polyaxon dashboard
@@ -269,23 +273,23 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     Dashboard page will now open in your browser. Continue? [Y/n]: y
     ```
 
- * Landing page:
+    * Landing page:
 
-![index](/images/dashboard/index.png)
+        ![index](/images/dashboard/index.png)
 
- * Login page:
+    * Login page:
 
-![login](/images/dashboard/login.png)
+        ![login](/images/dashboard/login.png)
 
- * Projects list:
+    * Projects list:
 
-![project](/images/dashboard/projects.png)
+        ![project](/images/dashboard/projects.png)
 
- * Project Details
+    * Project Details
 
-![project](/images/dashboard/project.png)
+        ![project](/images/dashboard/project.png)
 
-14. Finally, Let start tensorboard to see the model outputs:
+15. Finally, Let start tensorboard to see the model outputs:
 
      ```bash
      $ polyaxon project start_tensorboard

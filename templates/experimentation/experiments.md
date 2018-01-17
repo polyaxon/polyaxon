@@ -8,7 +8,7 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
 
 The first thing that you need to do is to update the default `polyaxonfile.yml` that was generated.
 
-We will start first by adding the `run` section, for example if the code requires `tensorflow` and `sklearn`,
+We will start first by adding the `run` section. For example if the code requires `tensorflow` and `sklearn`,
 the polyaxonfile.yml `run` section could look something like this
 
 ```yaml
@@ -67,7 +67,7 @@ run:
     For more details about the `run section` check the [run section reference](/polyaxonfile_specification/sections#run)
 
 
-To make sure that the polyaxon file is valid you can run the following command,
+To make sure that the polyaxon file is valid, you can run the following command,
 
 ```bash
 $ polyaxon check -f polyaxonfile.yml -m
@@ -78,7 +78,7 @@ This file has one independent experiment.
 ```
 
 This command validate the polyaxon file, and the option `-m` returns the matrix space,
-in this case we have only independent experiment. This option is important when we want
+in this case we have only one independent experiment. This option is important when we want
 to check a polyaxonfile with a matrix section having an [experiment group](experiment_groups)
 
 ## Running an experiment
@@ -100,9 +100,7 @@ Experiment was created.
 ## Checking the experiments of a project
 
 We can check that the project has now an independent experiment created.
-
- * Polyaxon dashboard
- * Polyaxon CLI
+For that we can use Polyaxon dashboard or Polyaxon CLI,
 
 ```bash
 $ polyaxon project experiments
@@ -137,8 +135,8 @@ Of course we can do that also now, but since we declared the `lr` in the declara
 we can create instead another file `polyaxonfile_override.yml` to override just that section:
 
 !!! Tip "You can call your polyaxonfiles anything you want"
-    By default polyaxon commands looks for files called `polyaxonfile.yml`
-    so if you call your file differently you should always use the option `-f`
+    By default polyaxon commands look for files called `polyaxonfile.yml`.
+    If you call your files differently or want to override values, you need to use the option `-f`
 
 ```bash
 $ vi polyaxonfile_override.yml
@@ -165,8 +163,8 @@ Experiment was created.
 ```
 
 You can repeat this process as much as you wish until you are satisfied with the performance of your model.
-Polyaxon will create a new experiment for you. However, ff the space of values you want to try is large,
-modifying the value manually and executing `polyaxon run` is not optimal,
+Polyaxon will create a new experiment for you each time. However, if the space of values you want to try is large,
+modifying the values manually and executing `polyaxon run` is not optimal,
 what you can do instead is create an [experiment group](experiment_groups).
 
 ## Stopping an experiment
@@ -268,11 +266,12 @@ By default, Polyaxon always creates a master, so you must take that into conside
 ??? danger "Polyaxon always creates a master"
     A master is always created by polyaxon, you can only specify the workers and ps nodes.
 
-By default, nodes run without resources,
+Also another thing you should, is that by default, all nodes are created without specifying the resources,
+You only need to specify the resources to have more control over the created pods.
 
-For `master_resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
+For the master node, `master_resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
 
-For workers, we have two ways to define resources, the `default_worker_resources` and
+For the workers, we have two ways to define resources, the `default_worker_resources` and
 `worker_resources` that takes the index of the worker to define the resources for.
 
 Here, we defined the default resources for our 4 workers in the `default_worker_resources`,
@@ -283,7 +282,7 @@ We could have also used `default_ps_resources` instead.
 
 Since we have multiple jobs, Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
 
-You can also use our helper library to extract these environment variable programmatically, as well as defining `TF_CONFIG` using `get_tf_config`.
+You can also use our helper library to extract these environment variables programmatically, as well as defining `TF_CONFIG` using `get_tf_config`.
 
 !!! tip "Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER`"
     Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your distributed deep learning model.
@@ -301,10 +300,8 @@ Experiment was created.
 
 ## Experiment jobs
 
-To check that our experiment is running in a distributed way
-
- * Polyaxon dashboard
- * Polyaxon CLI
+To check that our experiment is running in a distributed way,
+you can use Polyaxon dashboard or Polyaxon CLI,
 
 ```bash
 $ polyaxon experiment -xp 3 jobs
@@ -335,7 +332,7 @@ For more information about jobs, please refer to [jobs](jobs)
 
 ## Tracking experiment logs
 
-To view the logs of experiment 3 for example, given that is running now, run
+To view the logs of experiment 3 for example, given that it is running now, run
 
 ```bash
 polyaxon experiment -xp 2 logs
@@ -351,7 +348,7 @@ In the [jobs](jobs)'s page, we will see how we can view the logs of a particular
 
 ## Tracking experiment resources
 
-To view the resources of experiment 3 for example, given that is running now, run
+To view the resources of experiment 3 for example, given that it is running now, run
 
 ```bash
 polyaxon experiment -xp 3 resources

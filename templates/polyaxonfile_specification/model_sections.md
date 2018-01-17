@@ -5,10 +5,10 @@ When using the model section in you polyaxon files, you don't need to define a [
 
 A model is defined as the following:
 
- * model_type [required]: the type of the model, could be a [Classifier](/polyaxon_lib/models#classifier), [Regressor](/polyaxon_lib/models#regressor), or [Generator](/polyaxon_lib/models#generator).
- * loss [optional]: the loss function to use, [possible values](polyaxon_lib/losses)
- * metrics [optional]: the list of metrics to use, [possible values](polyaxon_lib/metrics)
- * optimizer [optional]: the optimizer to use, [possible values](polyaxon_lib/optimizers)
+ * model_type [required]: the type of the model, could be a [Classifier](/polyaxon_lib/models#classifierconfig), [Regressor](/polyaxon_lib/models#regressorconfig), or [Generator](/polyaxon_lib/models#generatorconfig).
+ * loss [optional]: the loss function to use, [possible values](/polyaxon_lib/losses)
+ * metrics [optional]: the list of metrics to use, [possible values](/polyaxon_lib/metrics)
+ * optimizer [optional]: the optimizer to use, [possible values](/polyaxon_lib/optimizers/)
  * graph [required]: the graph definition.
     * inputs [required]: list of tensors that graph expects as inputs.
     * outpus [optonal]: list of tensors the graph outputs.
