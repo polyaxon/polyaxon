@@ -65,17 +65,17 @@ spec:
             port: {{ .Values.api.service.internalPort }}
             scheme: HTTP
           initialDelaySeconds: 100
-          periodSeconds: 10
+          periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: 2
         readinessProbe:
-          failureThreshold: 10
+          failureThreshold: 30
           httpGet:
             path: /_health/
             port: {{ .Values.api.service.internalPort }}
             scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
+          initialDelaySeconds: 150
+          periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: 2
         resources:
