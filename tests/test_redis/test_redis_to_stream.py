@@ -75,7 +75,9 @@ class TestRedisToStream(BaseTest):
         }
 
         RedisToStream.set_latest_job_resources(config_dict['job_uuid'], config_dict)
-        assert config_dict == RedisToStream.get_latest_job_resources(config_dict['job_uuid'], True)
+        config_dict['job_name'] = 'master.0'
+        assert config_dict == RedisToStream.get_latest_job_resources(
+            config_dict['job_uuid'], 'master.0', True)
 
     def test_job_monitoring(self):
         job_uuid = uuid.uuid4().hex

@@ -78,10 +78,11 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
     experiment = _get_validated_experiment(project, experiment_sequence)
     job = _get_job(experiment, job_sequence)
     job_uuid = job.uuid.hex
+    job_name = '{}.{}'.format(job.role, job.sequence)
 
     if not RedisToStream.is_monitored_job_resources(job_uuid=job_uuid):
         logger.info(
-            'Job resources with uuid `{}` is now being monitored'.format(job_uuid))
+            'Job resources with uuid `{}` is now being monitored'.format(job_name))
         RedisToStream.monitor_job_resources(job_uuid=job_uuid)
 
     if job_uuid in request.app.job_resources_ws_mangers:
@@ -93,23 +94,22 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
     def handle_job_disconnected_ws(ws):
         ws_manager.remove_sockets(ws)
         if len(ws_manager.ws) == 0:
-            logger.info('Stopping resources monitor for uuid {}'.format(job_uuid))
+            logger.info('Stopping resources monitor for job {}'.format(job_name))
             RedisToStream.remove_job_resources(job_uuid=job_uuid)
             request.app.job_resources_ws_mangers.pop(job_uuid, None)
 
-        logger.info('Quitting resources socket for uuid {}'.format(job_uuid))
+        logger.info('Quitting resources socket for job {}'.format(job_name))
 
     ws_manager.add_socket(ws)
     should_check = 0
     while True:
-        resources = RedisToStream.get_latest_job_resources(job_uuid)
+        resources = RedisToStream.get_latest_job_resources(job=job_uuid, job_name=job_name)
         should_check += 1
 
         # After trying a couple of time, we must check the status of the experiment
         if should_check > RESOURCES_CHECK:
             if experiment.is_done:
-                logger.info('removing all socket because the job `{}` is done'.format(
-                    job_uuid))
+                logger.info('removing all socket because the job `{}` is done'.format(job_name))
                 ws_manager.ws = set([])
                 handle_job_disconnected_ws(ws)
                 return
@@ -158,11 +158,15 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
 
         logger.info('Quitting resources socket for uuid {}'.format(experiment_uuid))
 
-    job_uuids = [job_uuid.hex for job_uuid in experiment.jobs.values_list('uuid', flat=True)]
+    jobs = []
+    for job in experiment.jobs.values('uuid', 'role', 'sequence'):
+        job['uuid'] = job['uuid'].hex
+        job['name'] = '{}.{}'.format(job.pop('role'), job.pop('sequence'))
+        jobs.append(job)
     ws_manager.add_socket(ws)
     should_check = 0
     while True:
-        resources = RedisToStream.get_latest_experiment_resources(job_uuids)
+        resources = RedisToStream.get_latest_experiment_resources(jobs)
         should_check += 1
 
         # After trying a couple of time, we must check the status of the experiment
