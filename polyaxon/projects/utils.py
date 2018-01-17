@@ -8,6 +8,13 @@ from django.conf import settings
 from libs.outputs import delete_outputs
 
 
+def get_project_data_path(experiment_name):
+    values = experiment_name.split('.')
+    if len(values) == 3:
+        values.insert(2, 'independents')
+    return os.path.join(settings.DATA_ROOT, '/'.join(values))
+
+
 def get_project_outputs_path(project_name):
     return os.path.join(settings.OUTPUTS_ROOT, project_name.replace('.', '/'))
 
