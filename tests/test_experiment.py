@@ -104,6 +104,7 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('definition')
         config_dict.pop('experiment')
         config_dict.pop('updated_at')
+        config_dict.pop('uuid')
         config_to_dict = config.to_light_dict()
         assert config_to_dict.pop('total_run') == '0s'
         config_dict.pop('sequence')
