@@ -7,6 +7,7 @@ from unittest.mock import patch
 import mock
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.utils import TaskType
 
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from experiments.tasks import set_metrics
@@ -14,7 +15,8 @@ from factories.factory_repos import RepoFactory
 from factories.fixtures import experiment_spec_content, exec_experiment_spec_content
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
-from factories.factory_experiments import ExperimentFactory
+from factories.factory_experiments import ExperimentFactory, ExperimentJobFactory, \
+    ExperimentJobStatusFactory
 from factories.factory_projects import ExperimentGroupFactory
 from tests.fixtures import (
     start_experiment_value,
@@ -134,3 +136,27 @@ class TestExperimentModel(BaseTest):
                     metrics={'accuracy': 0.9, 'precision': 0.9})
 
         assert experiment.metrics.count() == 1
+
+    def test_master_success_influences_other_experiment_workers_status(self):
+        with patch('experiments.tasks.start_experiment.delay') as _:
+            with patch.object(Experiment, 'set_status') as _:
+                experiment = ExperimentFactory()
+
+        assert ExperimentLifeCycle.is_done(experiment.last_status) is False
+        # Add jobs
+        master = ExperimentJobFactory(experiment=experiment, role=TaskType.MASTER)
+        assert JobLifeCycle.is_done(master.last_status) is False
+        workers = [ExperimentJobFactory(experiment=experiment, role=TaskType.WORKER)
+                   for _ in range(2)]
+        for worker in workers:
+            assert JobLifeCycle.is_done(worker.last_status) is False
+
+        # Set master to succeeded
+        ExperimentJobStatusFactory(job=master, status=JobLifeCycle.SUCCEEDED)
+
+        # All worker should have a success status
+        for worker in workers:
+            assert worker.last_status == JobLifeCycle.SUCCEEDED
+
+        # Experiment last status should be success
+        assert experiment.last_status == ExperimentLifeCycle.SUCCEEDED

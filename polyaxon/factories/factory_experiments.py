@@ -25,11 +25,6 @@ class ExperimentFactory(factory.DjangoModelFactory):
         model = Experiment
 
 
-class ExperimentMetricFactory(factory.DjangoModelFactory):
-    experiment = factory.SubFactory(ExperimentFactory)
-    values = factory.Sequence(lambda x: {'accuracy': x})
-
-
 class ExperimentStatusFactory(factory.DjangoModelFactory):
     experiment = factory.SubFactory(ExperimentFactory)
 

@@ -92,8 +92,14 @@ def new_experiment_job_status(sender, **kwargs):
 def new_experiment_status(sender, **kwargs):
     instance = kwargs['instance']
 
+    if instance.status == ExperimentLifeCycle.SUCCEEDED:
+        # update all workers with succeeded status, since we will trigger a stop mechanism
+        for job in instance.experiment.jobs.all():
+            if not job.is_done:
+                job.set_status(JobLifeCycle.SUCCEEDED, message='Master is done.')
+
     if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
-        logger.info('Master worker for experiment `{}` is done, '
-                    'send signal to other workers to stop.'.format(instance.uuid.hex))
+        logger.info('One of the workers failed or Master for experiment `{}` is done, '
+                    'send signal to other workers to stop.'.format(instance.experiment.unique_name))
         # Schedule stop for this experiment because other jobs may be still running
         scheduler.stop_experiment(instance.experiment, update_status=False)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import logging
 import uuid
 
 from django.conf import settings
@@ -15,6 +16,8 @@ from clusters.models import Cluster
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
+
+logger = logging.getLogger('polyaxon.experiments')
 
 
 class Experiment(DiffModel, DescribableModel):
@@ -94,7 +97,10 @@ class Experiment(DiffModel, DescribableModel):
 
     @property
     def calculated_status(self):
-        calculated_status = ExperimentLifeCycle.jobs_status(self.last_job_statuses)
+        master_status = self.jobs.filter(role=TaskType.MASTER)[0].last_status
+        calculated_status = master_status if JobLifeCycle.is_done(master_status) else None
+        if calculated_status is None:
+            calculated_status = ExperimentLifeCycle.jobs_status(self.last_job_statuses)
         if calculated_status is None:
             return self.last_status
         return calculated_status
@@ -253,6 +259,13 @@ class ExperimentJob(DiffModel):
 
     def set_status(self, status, message=None, details=None):
         current_status = self.last_status
+        # We should not update statuses statuses anymore
+        if JobLifeCycle.is_done(current_status):
+            logger.info(
+                'Received a new status `{}` for job `{}`. '
+                'But the job is already done with status `{}`'.format(
+                    status, self.unique_name, current_status))
+            return False
         if status != current_status:
             # Add new status to the job
             ExperimentJobStatus.objects.create(job=self,
