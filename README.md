@@ -16,7 +16,7 @@ $ helm install --wait polyaxon
 This chart bootstraps a [Polyaxon](https://polyaxon.com) deployment on
 a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-It also packages some required for Polyaxon.:
+It also packages some required dependencies for Polyaxon:
 
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
@@ -30,12 +30,20 @@ It also packages some required for Polyaxon.:
 - Kubernetes >= 1.8.0
 - helm >= v2.5.0
 
+
+## Add polyaxon charts
+
+```console
+$ helm repo add polyaxon https://charts.polyaxon.com
+$ helm repo update
+```
+
 ## Installing the Chart
 
 To install the chart with the release name `<RELEASE_NAME>`:
 
 ```console
-$ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> --wait stable/polyaxon
+$ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> --wait polyaxon/polyaxon
 ```
 
 If you encounter an error, please use the `--wait` flag
@@ -44,10 +52,11 @@ If you encounter an error, please use the `--wait` flag
 $ helm install --name=<RELEASE_NAME> --wait stable/polyaxon
 ```
 
-The command deploys Polyaxon on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
+The command deploys Polyaxon on the Kubernetes cluster in the default configuration.
 
-!!! tip
-    List all releases using `helm list`
+The [configuration](#configuration) section lists the parameters that can be configured during installation.
+
+> **Tip**: List all releases using `helm list`
 
 
 ## Uninstalling the Chart
@@ -66,7 +75,7 @@ $ helm delete <RELEASE_NAME> --purge
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-** __warning__ **
+> **Warning**:
 Jobs are only deleted if they succeeded,
 sometime if you can cancel a deployment you might end up with undeleted jobs.
 
@@ -78,10 +87,20 @@ $ kubectl delete job ...
 
 The following tables lists the configurable parameters of the Polyaxon chart and their default values.
 
+
+### Ingress and RBAC
+
 | Parameter                       | Description                                                                    | Default
 | --------------------------------| -------------------------------------------------------------------------------| ----------------------------------------------------------
 | `rbac.enabled`                  | Use Kubernetes' role-based access control (RBAC)                               | `true`
 | `ingress.enabled`               | Use Kubernetes' ingress                                                        | `true`
+
+This chart provides support for Ingress resource with an ingress controller.
+You can also provide different annotations for the ingress and it will not use `polyaxon-ingress` class.
+
+
+| Parameter                       | Description                                                                    | Default
+| --------------------------------| -------------------------------------------------------------------------------| ----------------------------------------------------------
 | `user.username`                 | Default superuser's username.                                                  | `root`
 | `user.email`                    | Default superuser's email.                                                     | `root@local.com`
 | `user.password`                 | Default superuser's password.                                                  | `root`
@@ -95,11 +114,14 @@ The following tables lists the configurable parameters of the Polyaxon chart and
 
 Dependent charts can also have values overwritten. Preface values with `postgresql.*`, `redis.*`, `rabbitmq.*`, or `registry.*`
 
+### How to set the configuration
+
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```console
-$ helm install --name my-release \
-  --set persistence.enabled=false,email.host=email \
+$ helm install --name=<RELEASE_NAME> \
+    --namespace=<NAMESPACE>\
+    --set persistence.enabled=false,email.host=email \
     polyaxon
 ```
 
@@ -110,8 +132,3 @@ $ helm install --name my-release -f values.yaml polyaxon
 ```
 
 > **Tip**: You can use the default [values.yaml](polyaxon/values.yaml)
-
-## Ingress
-
-This chart provides support for Ingress resource with an ingress controller.
-You can also provide different annotations for the ingress and it will not use `polyaxon-ingress` class.
