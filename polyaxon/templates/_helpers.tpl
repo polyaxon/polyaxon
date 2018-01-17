@@ -539,14 +539,16 @@ Volumes
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.data.existingClaim }}
 {{- else }}
-  emptyDir: {}
+  hostPath:
+    path: {{ .Values.persistence.data.mountPath }}
 {{ end }}
 - name: outputs
 {{- if .Values.persistence.outputs.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
 {{- else }}
-  emptyDir: {}
+  hostPath:
+    path: {{ .Values.persistence.outputs.mountPath }}
 {{ end }}
 {{- end -}}
 
