@@ -8,9 +8,7 @@ Polyaxon is currently running:
     {{- if .Values.isMinikube }}
         export POLYAXON_IP=$(minikube ip)
     {{- else }}
-        {{- range .Values.ingress.hosts }}
-            export POLYAXON_IP={{ . }}
-        {{- end }}
+        export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     {{- end }}
 
     export POLYAXON_HTTP_PORT=80

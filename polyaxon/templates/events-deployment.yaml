@@ -1,27 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-api
+  name: {{ template "polyaxon.fullname" . }}-events
   annotations:
-    checksum/config: {{ include (print $.Template.BasePath "/plx-cm.yaml") . | sha256sum }}
+    checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-api
+    app: {{ template "polyaxon.fullname" . }}-events
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
-    role: {{ .Values.roles.api }}
+    role: {{ .Values.roles.log }}
 spec:
-  replicas: {{ .Values.api.replicas }}
+  replicas: {{ .Values.events.replicas }}
   template:
     metadata:
       labels:
-        app: {{ template "polyaxon.fullname" . }}-api
+        app: {{ template "polyaxon.fullname" . }}-events
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
-        role: {{ .Values.roles.api }}
+        role: {{ .Values.roles.log }}
     spec:
-    {{- if .Values.nodeSelectors.core }}
+      {{- if .Values.nodeSelectors.core }}
       nodeSelector:
 {{ toYaml .Values.nodeSelectors.core | indent 8 }}
       {{- end }}
@@ -35,56 +35,12 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      - name: {{ .Chart.Name }}-api
-        image: "{{ .Values.api.image }}:{{ .Values.api.imageTag }}"
-        imagePullPolicy: {{ .Values.api.imagePullPolicy }}
-        ports:
-        - containerPort: {{ .Values.api.service.internalPort }}
-        env:
-        {{ include "config.global" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.django" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
-        {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.routingKeys" . | indent 8 }}
-        {{ include "config.queues" . | indent 8 }}
-        {{ include "config.intervals" . | indent 8 }}
-        {{ include "config.mount_paths" . | indent 8 }}
-        {{ include "config.sub_paths" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
-        volumeMounts:
-        {{ include "volumes.volumeMounts" . | indent 8}}
-        {{ include "volumes.dirMounts" . | indent 8}}
-        livenessProbe:
-          failureThreshold: 5
-          httpGet:
-            path: /_health/
-            port: {{ .Values.api.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        readinessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /_health/
-            port: {{ .Values.api.service.internalPort }}
-            scheme: HTTP
-          initialDelaySeconds: 100
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 2
-        resources:
-{{ toYaml .Values.api.resources | indent 10 }}
-      - name: {{ .Chart.Name }}-api-events
-        image: "{{ .Values.apiEvents.image }}:{{ .Values.apiEvents.imageTag }}"
-        imagePullPolicy: {{ .Values.api.imagePullPolicy }}
-        ports:
-        - containerPort: {{ .Values.apiEvents.service.internalPort }}
+      {{- if .Values.events.namespace.enabled }}
+      # namespace events
+      - name: {{ .Chart.Name }}-namespace
+        image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
+        imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
+        args: ["--log_sleep_interval={{ .Values.events.namespace.logSleepInterval }}", "--persist={{ .Values.events.namespace.persists }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -101,7 +57,29 @@ spec:
         {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
         resources:
-{{ toYaml .Values.apiEvents.resources | indent 10 }}
-      volumes:
-      {{ include "volumes.volumes" . | indent 6 }}
-      {{ include "volumes.dirs" . | indent 6 }}
+{{ toYaml .Values.events.namespace.resources | indent 10 }}
+      {{- end }}
+      # statuses events
+      {{- if .Values.events.statuses.enabled }}
+      - name: {{ .Chart.Name }}-statuses
+        image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"
+        imagePullPolicy: {{ .Values.events.statuses.imagePullPolicy }}
+        args: ["--log_sleep_interval={{ .Values.events.statuses.logSleepInterval }}", "--persist={{ .Values.events.statuses.persists }}"]
+        env:
+        {{ include "config.global" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.mount_paths" . | indent 8 }}
+        {{ include "config.sub_paths" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+        resources:
+{{ toYaml .Values.events.statuses.resources | indent 10 }}
+      {{- end }}

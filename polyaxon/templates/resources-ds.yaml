@@ -1,0 +1,59 @@
+{{- if .Values.resourcesDaemon.enabled -}}
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-resources
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-resources
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+    role: {{ .Values.roles.log }}
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ template "polyaxon.fullname" . }}-resources
+        release: "{{ .Release.Name }}"
+        type: {{ .Values.types.core }}
+        role: {{ .Values.roles.log }}
+    spec:
+      {{- if .Values.tolerations.resourcesDaemon }}
+      tolerations:
+{{ toYaml .Values.tolerations.resourcesDaemon | indent 8 }}
+      {{- end }}
+      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+      containers:
+      - name: {{ .Chart.Name }}-resources
+        image: "{{ .Values.resourcesDaemon.image }}:{{ .Values.resourcesDaemon.imageTag }}"
+        imagePullPolicy: {{ .Values.resourcesDaemon.imagePullPolicy }}
+        args: ["--log_sleep_interval={{ .Values.resourcesDaemon.logSleepInterval }}", "--persist={{ .Values.resourcesDaemon.persists }}"]
+        securityContext:
+          privileged: true
+        env:
+        {{ include "config.global" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
+        {{ include "config.django" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.routingKeys" . | indent 8 }}
+        {{ include "config.queues" . | indent 8 }}
+        {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.mount_paths" . | indent 8 }}
+        {{ include "config.sub_paths" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+        resources:
+{{ toYaml .Values.resourcesDaemon.resources | indent 10 }}
+        volumeMounts:
+        {{ include "volumes.dirMounts" . | indent 8}}
+      volumes:
+      {{ include "volumes.dirs" . | indent 6 }}
+{{- end }}

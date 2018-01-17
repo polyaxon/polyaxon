@@ -1,22 +1,22 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-workers-scheduler
+  name: {{ template "polyaxon.fullname" . }}-workers
   annotations:
-    checksum/config: {{ include (print $.Template.BasePath "/plx-cm.yaml") . | sha256sum }}
+    checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-workers-scheduler
+    app: {{ template "polyaxon.fullname" . }}-workers
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.worker }}
 spec:
-  replicas: {{ .Values.workers.scheduler.replicas }}
+  replicas: {{ .Values.workers.events.replicas }}
   template:
     metadata:
       labels:
-        app: {{ template "polyaxon.fullname" . }}-workers-scheduler
+        app: {{ template "polyaxon.fullname" . }}-workers
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.worker }}
@@ -35,10 +35,10 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      - name: {{ .Chart.Name }}-workers-scheduler
-        image: "{{ .Values.workers.scheduler.image }}:{{ .Values.workers.scheduler.imageTag }}"
-        imagePullPolicy: {{ .Values.workers.scheduler.imagePullPolicy }}
-        args: ["{{ .Values.queues.apiExperiments }}", "--concurrency={{ .Values.workers.scheduler.concurrency }}"]
+      - name: {{ .Chart.Name }}-workers
+        image: "{{ .Values.workers.events.image }}:{{ .Values.workers.events.imageTag }}"
+        imagePullPolicy: {{ .Values.workers.events.imagePullPolicy }}
+        args: ["{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsStatuses }},{{ .Values.queues.logsSidecars }},{{ .Values.queues.streamLogsSidecars }}", "--concurrency={{ .Values.workers.events.concurrency }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -54,11 +54,5 @@ spec:
         {{ include "config.sub_paths" . | indent 8 }}
         {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
-        volumeMounts:
-        {{ include "volumes.volumeMounts" . | indent 8}}
-        {{ include "volumes.dirMounts" . | indent 8}}
         resources:
-{{ toYaml .Values.workers.scheduler.resources | indent 10 }}
-      volumes:
-      {{ include "volumes.volumes" . | indent 6 }}
-      {{ include "volumes.dirs" . | indent 6 }}
+{{ toYaml .Values.workers.events.resources | indent 10 }}
