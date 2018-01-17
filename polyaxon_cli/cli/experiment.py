@@ -340,7 +340,7 @@ def logs(ctx):
         status = message['status']
         log_line = message['log_line']
         if status == 'Running':
-            job_info = '{}.{}'.format(message['task_type'], message['job_uuid'])
+            job_info = '{}.{}'.format(message['task_type'], int(message['task_idx']) + 1)
             if job_info in job_to_color:
                 color = job_to_color[job_info]
             else:
