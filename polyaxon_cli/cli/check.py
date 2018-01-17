@@ -85,12 +85,12 @@ def check(file, all, version, run_type, project, log_path, matrix, experiments):
                                           'yellow')
         elif concurrency == 1:
             Printer.decorate_format_value('The matrix-space has {} experiments, with {} runs, '
-                                          'and {} search',
+                                          'and a {} search',
                                           [num_experiments, 'sequential', search_method.lower()],
                                           'yellow')
         else:
             Printer.decorate_format_value('The matrix-space has {} experiments, '
-                                          'with {} concurrent runs, and {} search',
+                                          'with {} concurrent runs, and a {} search',
                                           [num_experiments, concurrency, search_method.lower()],
                                           'yellow')
     if all:

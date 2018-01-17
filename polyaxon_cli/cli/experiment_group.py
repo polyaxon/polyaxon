@@ -163,7 +163,7 @@ def experiments(ctx, page):
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")
-        objects.pop('group', None)
-        objects.pop('group_name', None)
+        objects.pop('experiment_group', None)
+        objects.pop('experiment_group_name', None)
         objects.pop('project_name', None)
         dict_tabulate(objects, is_list_dict=True)
