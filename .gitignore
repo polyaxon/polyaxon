@@ -105,7 +105,5 @@ reports/
 logs/
 media/
 
-# npm modules and transpiled typescript files
 docs/
 site/
-public/
