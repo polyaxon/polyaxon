@@ -1,16 +1,15 @@
 namespace: "polyaxon"
-passwordLenght: 10
+
+rbac:
+  enabled: true
 ingress:
-  enabled: false
+  enabled: true
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
     ingress.kubernetes.io/rewrite-target: /
     ingress.kubernetes.io/add-base-url: "true"
     kubernetes.io/ingress.class: polyaxon-ingress
-
 serviceType: LoadBalancer  # If you enable ingress, please set this value to ClusterIP or NodePort
-rbac:
-  enabled: false
 
 # Initial admin user to create
 user:
@@ -36,14 +35,12 @@ mountPaths:
 
 persistence:
   data:
-    storageClass:
     existingClaim:
     accessMode: ReadWriteMany
     size: 10Gi
     mountPath: "/data"
     subPath: ""
   outputs:
-    storageClass:
     existingClaim:
     accessMode: ReadWriteMany
     size: 5Gi
@@ -76,6 +73,29 @@ persistence:
     size: 10Gi
     mountPath: "/tmp/plx"
     subPath: ""
+
+nodeSelectors:
+  core:
+  experiments:
+
+tolerations:
+  core:
+  resourcesDaemon:
+
+affinity:
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-core"
+          topologyKey: "kubernetes.io/hostname"
+
+passwordLenght: 8
 
 api:
   image: polyaxon/polyaxon-api
@@ -129,6 +149,7 @@ workers:
       requests:
         cpu: 150m
         memory: 200Mi
+
   events:
     image: polyaxon/polyaxon-workers
     imageTag: 0.0.2
@@ -142,6 +163,7 @@ workers:
       requests:
         cpu: 130m
         memory: 200Mi
+
   crons:
     image: polyaxon/polyaxon-workers
     imageTag: 0.0.2
@@ -225,47 +247,10 @@ job:
   image: polyaxon/polyaxon-lib
   imageTag: 0.0.2
 
-
 hooks:
   image: polyaxon/polyaxon-manage
   imageTag: 0.0.2
   imagePullPolicy: IfNotPresent
-
-nodeSelectors:
-  core:
-  dependencies:
-  experiments:
-
-tolerations:
-  core:
-  dependencies:
-
-affinity:
-  core:
-    podAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: type
-                operator: In
-                values:
-                - "polyaxon-core"
-            topologyKey: "kubernetes.io/hostname"
-  dependencies:
-    podAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: type
-                operator: In
-                values:
-                - "polyaxon-core"
-            topologyKey: "kubernetes.io/hostname"
-
 
 postgresql:
   imageTag: 9.6.1
@@ -275,6 +260,18 @@ postgresql:
   persistence:
     enabled: false
     size: 2Gi
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
 
 redis:
   image: redis
@@ -284,6 +281,18 @@ redis:
     enabled: false
     accessMode: ReadWriteOnce
     size: 8Gi
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
 
 rabbitmq:
   imageTag: "3.6.12-management"
@@ -292,11 +301,22 @@ rabbitmq:
   rabbitmqUsername: polyaxon
   persistence:
     enabled: false
-
   resources:
     requests:
       memory: 256Mi
       cpu: 300m
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
 
 docker-registry:
   service:
@@ -308,6 +328,18 @@ docker-registry:
       memory: 312Mi
   persistence:
     enabled: false
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
 
 debug: 0
 celery:
@@ -359,11 +391,11 @@ exchanges:
 
 versions:
   cli:
-    min: 0.0.1
-    latest: 0.0.1
+    min: 0.0.2
+    latest: 0.0.2
   platform:
-    min: 0.0.1
-    latest: 0.0.1
+    min: 0.0.2
+    latest: 0.0.2
   lib:
-    min: 0.0.1
-    latest: 0.0.1
+    min: 0.0.2
+    latest: 0.0.2
