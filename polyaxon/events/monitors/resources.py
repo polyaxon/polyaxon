@@ -115,6 +115,7 @@ def get_container_resources(container, gpu_resources):
 
     return ContainerResourcesConfig.from_dict({
         'job_uuid': job_uuid,
+        'job_name': job_uuid,  # it will be updated during the streaming
         'experiment_uuid': experiment_uuid,
         'container_id': container.id,
         'cpu_percentage': cpu_percentage,
