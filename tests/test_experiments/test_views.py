@@ -325,9 +325,11 @@ class TestExperimentDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
-        with patch('spawner.scheduler.stop_experiment') as mock_stop:
-            resp = self.auth_client.delete(self.url)
-        assert mock_stop.call_count == 1
+        with patch('spawner.scheduler.stop_experiment') as spawner_mock_stop:
+            with patch('experiments.utils.delete_outputs') as outputs_mock_stop:
+                resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.call_count == 1
+        assert outputs_mock_stop.call_count == 1
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert ExperimentJob.objects.count() == 0

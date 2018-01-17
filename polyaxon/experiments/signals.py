@@ -7,6 +7,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus, ExperimentStatus
+from experiments.utils import delete_experiment_outputs
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
 from spawner import scheduler
@@ -44,6 +45,8 @@ def experiment_deleted(sender, **kwargs):
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass
+
+    delete_experiment_outputs(instance.unique_name)
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")

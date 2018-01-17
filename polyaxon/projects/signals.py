@@ -8,6 +8,7 @@ from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup, Project
 from projects.tasks import start_group_experiments
 from experiments.models import Experiment
+from projects.utils import delete_project_outputs, delete_experiment_group_outputs
 from spawner import scheduler
 
 
@@ -41,9 +42,14 @@ def experiment_group_deleted(sender, **kwargs):
     for experiment in instance.running_experiments:
         scheduler.stop_experiment(experiment, update_status=False)
 
+    # Delete outputs
+    delete_experiment_group_outputs(instance.unique_name)
+
 
 @receiver(pre_delete, sender=Project, dispatch_uid="project_deleted")
 @ignore_raw
 def project_deleted(sender, **kwargs):
     instance = kwargs['instance']
     scheduler.stop_tensorboard(instance)
+    # Delete outputs
+    delete_project_outputs(instance.unique_name)
