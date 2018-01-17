@@ -107,7 +107,6 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('uuid')
         config_to_dict = config.to_light_dict()
         assert config_to_dict.pop('total_run') == '0s'
-        config_dict.pop('sequence')
         config_dict.pop('unique_name')
         assert config_to_dict == config_dict
 
