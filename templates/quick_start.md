@@ -161,7 +161,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
         Job                           Mem Usage / Limit    CPU% - CPUs
     --------------------------------  -------------------  ---------------
-    36f277f5053f511f97ae39dc6e00691f  0.47 Gb / 6.79 Gb    120.47% - 6
+    master.1                          0.47 Gb / 6.79 Gb    120.47% - 6
     ...
     ```
 

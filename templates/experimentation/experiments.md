@@ -317,15 +317,15 @@ count  6
 
 Jobs:
 
-uuid                              role    experiment_name         last_status    created_at         started_at    finished_at    total_run
---------------------------------  ------  ----------------------  -------------  -----------------  ------------  -------------  -----------
-40465c7cca4f55bca1f98abc2bf8c770  master  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-7660e37608274b9e98fcfeee89dc7e29  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-024d2b1a51b750a7838132213e89f08b  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-1652e9c51c7f45e085b16040ef2dee45  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-de32c613b1c752948cbb92ce7a33f0b6  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-6ca34c69e4544fdca85fb625c1a114a5  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
-027ac27d7f5754ffbaf6081e6b657e93  ps      admin.cats-vs-dogs.1.5  Building       a few seconds ago
+sequence   role    experiment_name         last_status    created_at         started_at    finished_at    total_run
+---------  ------  ----------------------  -------------  -----------------  ------------  -------------  -----------
+        1  master  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+        2  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+        3  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+        4  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+        5  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+        6  worker  admin.cats-vs-dogs.1.5  Running        a few seconds ago
+        7  ps      admin.cats-vs-dogs.1.5  Building       a few seconds ago
 ```
 
 For more information about jobs, please refer to [jobs](jobs)

@@ -5,7 +5,7 @@ Polyaxon chart is a Helm charts for creating reproducible and maintainable deplo
 This chart bootstraps a [Polyaxon](https://polyaxon.com) deployment on
 a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-It also packages some required packages for Polyaxon.:
+It also packages some required dependencies for Polyaxon:
 
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
