@@ -295,6 +295,7 @@ class TestExperimentConfigs(TestCase):
         config_dict = {
             'job_uuid': uuid.uuid4().hex,
             'experiment_uuid': uuid.uuid4().hex,
+            'job_name': 'master.0',
             'container_id': '3175e88873af9077688cee20eaadc0c07746efb84d01ae696d6d17ed9bcdfbc4',
             'cpu_percentage': 0.6947691836734693,
             'percpu_percentage': [0.4564075715616173, 0.23836161211185192],

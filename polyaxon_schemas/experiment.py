@@ -471,6 +471,7 @@ class ContainerGPUResourcesConfig(BaseConfig):
 class ContainerResourcesSchema(Schema):
     job_uuid = UUID()
     experiment_uuid = UUID()
+    job_name = fields.Str()
     container_id = fields.Str()
     cpu_percentage = fields.Float()
     percpu_percentage = fields.List(fields.Float(), allow_none=True)
@@ -499,6 +500,7 @@ class ContainerResourcesConfig(BaseConfig):
     def __init__(self,
                  job_uuid,
                  experiment_uuid,
+                 job_name,
                  container_id,
                  cpu_percentage,
                  percpu_percentage,
@@ -507,6 +509,7 @@ class ContainerResourcesConfig(BaseConfig):
                  gpu_resources=None):
         self.job_uuid = job_uuid
         self.experiment_uuid = experiment_uuid
+        self.job_name = job_name
         self.container_id = container_id
         self.cpu_percentage = cpu_percentage
         self.percpu_percentage = percpu_percentage
