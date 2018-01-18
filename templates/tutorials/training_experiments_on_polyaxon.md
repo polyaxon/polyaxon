@@ -146,13 +146,13 @@ Before we can train our experiments we need to deploy Polyaxon.
     ```bash
     $ polyaxon experiment -xp 2 resources
 
-      Job       Mem Usage / Limit    CPU% - CPUs
-    --------  -------------------  ---------------
-    master.1  1.26 Gb / 6.79 Gb    120.11% - 128
-    worker.2  249.19 Mb / 6.79 Gb  240.73% - 128
-    worker.3  0.29 Gb / 6.79 Gb    141.94% - 128
-    ps.7      204.19 Mb / 6.79 Gb  275.65% - 128
-    ...
+    Job       Mem Usage / Limit    CPU% - CPUs
+    --------  -------------------  --------------
+    master.1  1.21 Gb / 55.03 Gb   50% - 128
+    worker.2  1.15 Gb / 6.79 Gb    5042.14% - 128
+    worker.3  1.27 Gb / 55.03 Gb   5638.22% - 128
+    worker.4  1.08 Gb / 6.79 Gb    4018.1% - 128
+    ps.5      1.44 Gb / 55.03 Gb   5729.41% - 128
     ```
 
 10. Run an experiment with GPU
