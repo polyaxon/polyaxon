@@ -13,6 +13,5 @@ environment:
 run:
   image: tensorflow/tensorflow:1.4.1-gpu
   steps:
-    - apt-get -y update && apt-get -y install git
-    - pip install --no-cache-dir -U -e git+https://github.com/polyaxon/polyaxon-helper.git@master#egg=polyaxon-helper
+    - pip install --no-cache-dir -U polyaxon-helper
   cmd:  python run.py --num-gpus=1 --train-steps=400

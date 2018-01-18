@@ -11,6 +11,5 @@ environment:
 run:
   image: tensorflow/tensorflow:1.4.1
   steps:
-    - apt-get -y update && apt-get -y install git
-    - pip install --no-cache-dir -U -e git+https://github.com/polyaxon/polyaxon-helper.git@75a9bc0747fc1105727cd116bff5e8d241804ad1#egg=polyaxon-helper
+    - pip install --no-cache-dir -U polyaxon-helper
   cmd:  python run.py --train-steps=400 --use-distributed=true --sync
