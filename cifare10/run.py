@@ -22,7 +22,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--num-gpus',
         type=int,
-        default=1,
+        default=0,
         help='The number of gpus used. Uses only CPU if set to 0.')
     parser.add_argument(
         '--num-layers',
@@ -138,7 +138,7 @@ if __name__ == '__main__':
 
     data_dir = os.path.join(get_data_path(), 'cifar-10-data')
     # We create data for the project if it does not exists
-    if not os.path.exists(data_dir):
+    if not os.path.exists(os.path.join(data_dir, 'train.tfrecords')):
         generate_data(data_dir)
 
     train(job_dir=get_outputs_path(), data_dir=data_dir, **vars(args))
