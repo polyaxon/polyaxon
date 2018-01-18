@@ -1,5 +1,5 @@
 clint==0.5.1
-polyaxon-schemas==0.0.14
+polyaxon-schemas==0.0.2
 requests==2.18.4
 requests-toolbelt==0.8.0
 six==1.11.0
