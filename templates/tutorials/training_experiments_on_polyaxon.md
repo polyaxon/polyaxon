@@ -121,6 +121,22 @@ Before we can train our experiments we need to deploy Polyaxon.
       master.1 --   force_gpu_compatible: true
       master.1 -- }
       ...
+      worker.2 -- INFO:tensorflow:Evaluation [2/100]
+      worker.4 -- INFO:tensorflow:Evaluation [2/100]
+      worker.2 -- INFO:tensorflow:Evaluation [3/100]
+      worker.4 -- INFO:tensorflow:Evaluation [3/100]
+      worker.2 -- INFO:tensorflow:Evaluation [4/100]
+      worker.4 -- INFO:tensorflow:Evaluation [4/100]
+      worker.2 -- INFO:tensorflow:Evaluation [5/100]
+      worker.4 -- INFO:tensorflow:Evaluation [5/100]
+      worker.2 -- INFO:tensorflow:Evaluation [6/100]
+      worker.4 -- INFO:tensorflow:Evaluation [6/100]
+      worker.2 -- INFO:tensorflow:Evaluation [7/100]
+      worker.4 -- INFO:tensorflow:Evaluation [7/100]
+      worker.2 -- INFO:tensorflow:Evaluation [8/100]
+      worker.4 -- INFO:tensorflow:Evaluation [8/100]
+      worker.2 -- INFO:tensorflow:Evaluation [9/100]
+      worker.4 -- INFO:tensorflow:Evaluation [9/100]
     ```
 
 9. Watch the resources
