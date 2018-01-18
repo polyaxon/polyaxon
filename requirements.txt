@@ -17,6 +17,6 @@ Unipath==1.1
 uWSGI==2.0.15
 websockets==3.4
 
-polyaxon-schemas==0.0.16
-polyaxon-k8s==0.0.11
-polyaxon-gpustat==0.0.11
+polyaxon-schemas==0.0.2
+polyaxon-k8s==0.0.2
+polyaxon-gpustat==0.0.2
