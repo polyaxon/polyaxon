@@ -49,7 +49,7 @@ Now we will deploy the custom cluster based on a template in the examples repo.
     DNS_PREFIX=[your DNS prefix]  # e.g. polyaxon-test
     ```
 
-    And also update the `polyaxon_gpu_cluster.json` with correct values, please replace all `FILL IN` fields.
+    And also update the `polyaxon_gpu_cluster.json` with correct values, please replace all `REPLACE ME` fields.
 
 4. Run the following command on your terminal:
 

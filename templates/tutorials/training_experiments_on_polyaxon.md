@@ -160,3 +160,17 @@ Before we can train our experiments we need to deploy Polyaxon.
     ```bash
     $ polyaxon run -f polyaxonfile_gpu.yml -u
     ```
+
+11. Watch the logs
+
+    ```bash
+    $ polyaxon experiment -xp 3 logs
+
+    master.1 -- INFO:tensorflow:Using config: {'_model_dir': '/outputs/root/cifar10/independents/3', '_save_checkpoints_secs': 600, '_num_ps_replicas': 0, '_keep_checkpoint_max': 5, '_session_config': gpu_options {
+    master.1 --   force_gpu_compatible: true
+    master.1 -- }
+    master.1 -- allow_soft_placement: true
+    master.1 -- , '_tf_random_seed': None, '_task_type': None, '_environment': 'local', '_is_chief': True, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x7fd2638d9490>, '_tf_config': gpu_options {
+    master.1 --   per_process_gpu_memory_fraction: 1.0
+    ...
+    ```
