@@ -28,7 +28,6 @@ http://www.cs.toronto.edu/~kriz/cifar.html
 from __future__ import division
 from __future__ import print_function
 
-import argparse
 import functools
 import itertools
 import os
