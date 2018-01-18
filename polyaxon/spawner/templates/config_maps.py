@@ -50,7 +50,7 @@ def get_config_map(namespace,
                             experiment_uuid)
     metadata = client.V1ObjectMeta(name=name, labels=labels, namespace=namespace)
     experiment_outputs_path = get_experiment_outputs_path(experiment_name)
-    experiment_data_path = get_project_data_path(experiment_name)
+    experiment_data_path = get_project_data_path(project_name)
     data = {
         constants.CONFIG_MAP_CLUSTER_KEY_NAME: json.dumps(cluster_def),
         constants.CONFIG_MAP_DECLARATIONS_KEY_NAME: json.dumps(declarations) or '{}',
