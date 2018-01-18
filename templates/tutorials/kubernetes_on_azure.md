@@ -26,104 +26,104 @@ Now we will deploy the custom cluster based on a template in the examples repo.
 
 !!! note
     The cluster will container 3 nodes: 2 CPU nodes and 1 GPU node.
-    Make sure your quote allows you to create the cluster.
+    Make sure your azure quota allows you to create the cluster.
 
 1. Change to where `acs-engine` binary is:
 
-```bash
-$ cd /path/to/your/acs-engine/binary/
-```
+    ```bash
+    $ cd /path/to/your/acs-engine/binary/
+    ```
 
 2. Copy the cluster template from the cloned repo:
 
-```bash
-$ cp /path/to/polyaxon-examples/azure/polyaxon_gpu_cluster.json .
-```
+    ```bash
+    $ cp /path/to/polyaxon-examples/azure/polyaxon_gpu_cluster.json .
+    ```
 
 3. Get your subscription id, and create some environment variables for your deployments (it will come handy in the future)
 
-```bash
-SUBSCRIPTION_ID=[your subscription id]
-RESOURCE_GROUP=[your resource group name]  # e.g. POLYAXON_TEST
-LOCATION=[Azure region that includes GPUs, you can check here]  # e.g. eastus
-DNS_PREFIX=[your DNS prefix]  # e.g. polyaxon-test
-```
+    ```bash
+    SUBSCRIPTION_ID=[your subscription id]
+    RESOURCE_GROUP=[your resource group name]  # e.g. POLYAXON_TEST
+    LOCATION=[Azure region that includes GPUs, you can check here]  # e.g. eastus
+    DNS_PREFIX=[your DNS prefix]  # e.g. polyaxon-test
+    ```
 
-And also update the `polyaxon_gpu_cluster.json` with correct values, please replace all `FILL IN` fields.
+    And also update the `polyaxon_gpu_cluster.json` with correct values, please replace all `FILL IN` fields.
 
-4. And run the following command on your terminal:
+4. Run the following command on your terminal:
 
-```bash
-$ ./acs-engine generate polyaxon_gpu_cluster.json
-```
+    ```bash
+    $ ./acs-engine generate polyaxon_gpu_cluster.json
+    ```
 
-This will generate the necessary Azure templates to deploy the cluster.
+    This will generate the necessary Azure templates to deploy the cluster.
 
 5. Authenticate to your azure account
 
-```bash
-$ az login
-$ az account set --subscription $SUBSCRIPTION_ID
-```
+    ```bash
+    $ az login
+    $ az account set --subscription $SUBSCRIPTION_ID
+    ```
 
 6. Create a group
 
 
-```bash
-$ az group create \
-  --name $RESOURCE_GROUP \
-  --location $LOCATION
-```
+    ```bash
+    $ az group create \
+      --name $RESOURCE_GROUP \
+      --location $LOCATION
+    ```
 
 7. Create a deployment
 
-```bash
-$ az group deployment create \
- --resource-group $RESOURCE_GROUP \
- --template-file "./_output/${DNS_PREFIX}/azuredeploy.json" \
- --parameters "./_output/${DNS_PREFIX}/azuredeploy.parameters.json"
-```
+    ```bash
+    $ az group deployment create \
+     --resource-group $RESOURCE_GROUP \
+     --template-file "./_output/${DNS_PREFIX}/azuredeploy.json" \
+     --parameters "./_output/${DNS_PREFIX}/azuredeploy.parameters.json"
+    ```
 
-Now you have a Kubernetes cluster deployed. You need to enable your `kubectl` to communicate with the cluster.
+    Now you have a Kubernetes cluster deployed. You need to enable your `kubectl` to communicate with the cluster.
 
 8. Export the Kubernetes configuration (kubeconfig) file to be able to use the cluster
 
-```bash
-$ export KUBECONFIG=/path/to/your/acs-engine/_output/${DNS_PREFIX}/kubeconfig/kubeconfig.${LOCATION}.json
-```
+    ```bash
+    $ export KUBECONFIG=/path/to/your/acs-engine/_output/${DNS_PREFIX}/kubeconfig/kubeconfig.${LOCATION}.json
+    ```
 
 9. To access your kubernetes Dashboard
 
-```bash
-$ kubectl proxy
-```
+    ```bash
+    $ kubectl proxy
+    ```
 
-Since we will be using some storage for the data and outputs on Polyaxon, we need some azure storage for that.
+    Since we will be using some storage for the data and outputs on Polyaxon, we need some azure storage for that.
 
 10. Export a storage account name
 
-```bash
-$ STORAGE_ACCOUNT_NAME=[storage account name]
-```
+    ```bash
+    $ STORAGE_ACCOUNT_NAME=[storage account name]
+    ```
 
 11. Create storage
 
-```bash
-$ az storage account create --resource-group $RESOURCE_GROUP --sku Standard_LRS --name $STORAGE_ACCOUNT_NAME
-```
+    ```bash
+    $ az storage account create --resource-group $RESOURCE_GROUP --sku Standard_LRS --name $STORAGE_ACCOUNT_NAME
+    ```
 
 12. Get the access key for the storage
 
-```bash
-$ STORAGE_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP --account-name $STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
-```
+    ```bash
+    $ STORAGE_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP --account-name $STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
+    ```
 
 13. Create a data and output shares on this storage
 
-```bash
-az storage share create --name data --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
+    ```bash
+    $ az storage share create --name data --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
 
-az storage share create --name outputs --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
-```
+    $ az storage share create --name outputs --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
+    ```
 
-If you have a Kubernetes cluster running and have data storage, please go to [train experiments with Polyaxon](train_experiments)
+If you have a Kubernetes cluster running and have data storage, please go to [create persistent volumes](persistent_volumes)

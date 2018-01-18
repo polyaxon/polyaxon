@@ -68,7 +68,7 @@ pages:
 - Installation Requirements & Setup:
   - Introduction: installation/introduction.md
   - Tools & Requirements: installation/tools_and_requirements.md
-  - Install Kuberenetes: installation/install_kubernetes.md
+  - Install Kubernetes: installation/install_kubernetes.md
   - Setup Helm: installation/setup_helm.md
   - Deploy Polyaxon: installation/deploy_polyaxon.md
   - Install Polyaxon CLI: installation/install_polyaxon_cli.md
@@ -79,6 +79,11 @@ pages:
   - Experiment Groups & Hyperparams Search: experimentation/experiment_groups.md
   - Experiments & Distributed Runs: experimentation/experiments.md
   - Jobs: experimentation/jobs.md
+- Tutorials:
+  - Introduction: tutorials/index.md
+  - Kubernetes cluster On Azure: tutorials/kubernetes_on_azure.md
+  - Storage and Persistent Volumes: tutorials/persistent_volumes.md
+  - Training Experiments On Polyaxon : tutorials/training_experiments_on_polyaxon.md
 - Management:
   - Intorduction: management/introduction.md
   - SuperUsers: management/superusers.md
