@@ -91,3 +91,7 @@ celeryd*log
 
 # dotenv
 .env
+
+# polyaxon configs
+.polyaxon/
+.polyaxonignore
