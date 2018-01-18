@@ -11,7 +11,7 @@
       },
       "masterProfile": {
         "count": 1,
-        "dnsPrefix": "[FILL IN]",
+        "dnsPrefix": "[REPLACE ME]",
         "vmSize": "Standard_D2_v2",
         "storageProfile": "ManagedDisks"
       },
@@ -35,14 +35,14 @@
         "ssh": {
           "publicKeys": [
             {
-              "keyData": "[FILL IN]"
+              "keyData": "[REPLACE ME]"
             }
           ]
         }
       },
       "servicePrincipalProfile": {
-        "clientId": "[FILL IN]",
-        "secret": "[FILL IN]"
+        "clientId": "[REPLACE ME]",
+        "secret": "[REPLACE ME]"
       }
     }
   }

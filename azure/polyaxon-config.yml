@@ -1,63 +1,18 @@
 rbac:
   enabled: true
 
-rabbitmq:
-  persistence:
-    size: 1Gi
+ingress:
+  enabled: true
 
-api:
-  imageTag: master
-  imagePullPolicy: Always
-  service:
-    type: LoadBalancer
-
-apiEvents:
-  imageTag: master
-  imagePullPolicy: Always
-
-workers:
-  scheduler:
-    imageTag: master
-    imagePullPolicy: Always
-  events:
-    imageTag: master
-    imagePullPolicy: Always
-  crons:
-    imageTag: master
-    imagePullPolicy: Always
-
-beat:
-  imageTag: master
-  imagePullPolicy: Always
-
-events:
-  namespace:
-    imageTag: master
-    imagePullPolicy: Always
-
-  statuses:
-    imageTag: master
-    imagePullPolicy: Always
-
-resourcesDaemon:
-  imageTag: master
-  imagePullPolicy: Always
-
-hooks:
-  imageTag: master
-  imagePullPolicy: Always
-
-
-sidecar:
-  imageTag: master
-  imagePullPolicy: Always
-
-
-job:
-  imageTag: master
-  imagePullPolicy: Always
+serviceType: ClusterIP
 
 dirs:
+  nvidia:
+    lib: "/usr/lib/nvidia-384/"
+    bin: "/usr/lib/nvidia-384/bin"
+    libcuda: "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
+
+mountPaths:
   nvidia:
     lib: "/usr/lib/nvidia-384/"
     bin: "/usr/lib/nvidia-384/bin"
