@@ -9,7 +9,9 @@ ingress:
     ingress.kubernetes.io/rewrite-target: /
     ingress.kubernetes.io/add-base-url: "true"
     kubernetes.io/ingress.class: polyaxon-ingress
-serviceType: LoadBalancer  # If you enable ingress, please set this value to ClusterIP or NodePort
+# If you enable ingress, please set this value to ClusterIP or NodePort
+# Otherwise you should set it to LoadBalancer
+serviceType: ClusterIP
 
 # Initial admin user to create
 user:
