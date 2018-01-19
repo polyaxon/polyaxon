@@ -17,7 +17,7 @@ Before we can train our experiments we need to deploy Polyaxon.
 
     Now you can install Polyaxon with the `azure/polyaxon_config.yml` file,
     it overrides the default values from Polyaxon, by adding the data and outputs `existingClaim`
-    with the values we just created. I also sets the NVidia paths compatible with azure GPU nodes.
+    with the values we just created. It also sets the compatible NVidia paths with azure GPU nodes.
 
     ```bash
     $ helm install polyaxon/polyaxon --name=polyaxon --namespace=polyaxon -f ../azure/polyaxon-config.yml

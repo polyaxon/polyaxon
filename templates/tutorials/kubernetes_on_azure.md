@@ -6,7 +6,7 @@ a Kubernetes cluster with everything already configured.
 
 If you already have a GPU enabled cluster, you can skip this step.
 
-We are going to be using [acs-engine](https://github.com/Azure/acs-engine/) to deploy a custom GPU cluster.
+We are going to use [acs-engine](https://github.com/Azure/acs-engine/) to deploy a custom GPU cluster.
 
 Download [acs-engine](https://github.com/Azure/acs-engine/releases ) prebuilt binary for your platform of choice.
 And make sure you have [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) installed already.
@@ -49,7 +49,7 @@ Now we will deploy the custom cluster based on a template in the examples repo.
     DNS_PREFIX=[your DNS prefix]  # e.g. polyaxon-test
     ```
 
-    And also update the `polyaxon_gpu_cluster.json` with correct values, please replace all `REPLACE ME` fields.
+    And also update the `polyaxon_gpu_cluster.json` with the correct values, please replace all `REPLACE ME` fields.
 
 4. Run the following command on your terminal:
 

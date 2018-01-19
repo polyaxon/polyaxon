@@ -33,7 +33,7 @@ This declares a section to run our `train.py` file by passing two values, the `l
 Now you need to declare this values, and for that you will add 2 more sections to the polyaxonfile.yml
 
  * A [declarations section](/polyaxonfile_specification/sections#declarations), to declare a constant value for `batch_size`
- * A [matrix](/polyaxonfile_specification/sections#matrix) section, to declare the values for `lr`
+ * A [matrix section](/polyaxonfile_specification/sections#matrix), to declare the values for `lr`
 
 The new `polyaxonfile.yml` after the update
 

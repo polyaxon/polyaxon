@@ -298,7 +298,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
         It may take some time before you can access the dashboard.
 
-        If you used an ingress, your dashboard will be available on:
+        If you used an ingress, your dashboard will be available at:
 
             http://52.226.37.54:80/tensorboard/root/quick-start
 
