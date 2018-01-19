@@ -67,7 +67,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 !!! warning
     Jobs are only deleted if they succeeded,
-    sometime if you can cancel a deployment you might end up with undeleted jobs.
+    sometime if you cancel a deployment you might end up with undeleted jobs.
 
 ```console
 $ kubectl delete job ...
