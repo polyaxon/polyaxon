@@ -43,6 +43,7 @@ Once you have a Polyaxon deployment, you can check polyaxon architecture and lea
 
  * [Extending Polyaxon deployment](customization/extend_deployments)
  * [Customizing run environment](customization/customize_run_environment)
+ * [Customize Node Scheduling](customization/customize_node_scheduling)
 
 
 ## References
