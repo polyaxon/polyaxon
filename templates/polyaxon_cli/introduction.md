@@ -20,6 +20,20 @@ To get help for any Polyaxon CLI Command, you can run the following
 $ polyaxon command --help
 ```
 
+## Commands
+
+ * (Auth)[commands/auth]
+ * (Check)[commands/check]
+ * (Config)[commands/config]
+ * (Init)[commands/init]
+ * (Project)[commands/project]
+ * (Upload)[commands/upload]
+ * (Run)[commands/run]
+ * (Experiment Group)[commands/experiment_group]
+ * (Experiment)[commands/experiment]
+ * (Job)[commands/job]
+ * (Cluster)[commands/cluster]
+ * (Version)[commands/version]
 
 ## Caching
 
