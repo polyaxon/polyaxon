@@ -10,7 +10,7 @@ This repo also contains polyaxonfiles for training: single experiments, distribu
 
 The tutorial provides a step by step guide to:
 
- * [create a Kubernetes cluster on Azure](https://docs.polyaxon.comkubernetes_on_azure)
- * [create volumes for data and outputs on Azure](persistent_volumes)
- * [train experiments with Polyaxon](training_experiments_on_polyaxon)
+ * [create a Kubernetes cluster on Azure](https://docs.polyaxon.com/tutorials/kubernetes_on_azure)
+ * [create volumes for data and outputs on Azure](https://docs.polyaxon.com/tutorials/persistent_volumes)
+ * [train experiments with Polyaxon](https://docs.polyaxon.com/tutorials/training_experiments_on_polyaxon)
 
