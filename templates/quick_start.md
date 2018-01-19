@@ -83,11 +83,11 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     This configuration specifies:
 
-   * The Polyaxon specification `version` we are using.
-   * The `project` namespace we want to run the experiment inside.
-   * The `run` section to build and execute our code,
-     in this case we want to run our code with the specified tensorflow docker image.
-     We are also installing the [polyaxon helper](/reference_polyaxon_helper) library to send metrics at the end of the experiment.
+       * The Polyaxon specification `version` we are using.
+       * The `project` namespace we want to run the experiment inside.
+       * The `run` section to build and execute our code,
+         in this case we want to run our code with the specified tensorflow docker image.
+         We are also installing the [polyaxon helper](/reference_polyaxon_helper) library to send metrics at the end of the experiment.
 
 6. Now let's upload our code to create a commit on Polyaxon
 
