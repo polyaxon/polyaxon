@@ -10,7 +10,7 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
 ## Sections
 
  * [version](sections#version): defines the version of the file to be parsed and validated.
- * [project](sections#project): defines the project name this specification belongs to (must be unique).
+ * [project](sections#project): defines the project name (must be unique).
  * [settings](sections#settings): defines the logging, run type and concurrent runs.
  * [environment](sections#environment): defines the run environment for experiment.
  * [declarations](sections#declarations): defines variables/modules that can be reused.

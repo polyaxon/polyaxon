@@ -35,6 +35,5 @@ And all dependencies, e.i. database, broker, expose their own tolerations option
 
 It allows you to constrain which nodes your pod is eligible to schedule on, based on labels on the node,
 Polyaxon has a default `Affinity` values for both dependencies and core to ensure that they deploy on the same node.
-Possible values.
 
 You are also welcome to update the dependency of polyaxon or any dependency.

@@ -59,7 +59,7 @@ Before we can train our experiments we need to deploy Polyaxon.
 7. Create the first experiment
 
     Unless you copied the data manually to the data share create in the previous section,
-    the first time you create an experiment will create the data.
+    the first time you create an experiment, it will create the data.
 
     Start an experiment with the default `polyaxonfile.yml`
 
