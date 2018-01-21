@@ -19,7 +19,7 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install scikit-learn
-  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
+  cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
 If the code requires many python dependencies, Polyaxon provides an elegant way to install these requirements,
@@ -54,12 +54,12 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install -r polyaxon_requirements.txt
-  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
+  cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
 !!! Tip
     The declarations section was not completely necessary,
-    we could have also just passed the value directly `--batch_size=128 --lr=0.01`
+    we could have also just passed the value directly `--batch-size=128 --lr=0.01`
 
     For more information please visite the [declarations section](/polyaxonfile_specification/sections#declarations) reference.
 

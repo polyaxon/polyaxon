@@ -22,7 +22,7 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install scikit-learn
-  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
+  cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
 This declares a section to run our `train.py` file by passing two values, the `learning rate` and the `batch_size`.
@@ -55,12 +55,12 @@ run:
   image: tensorflow/tensorflow:1.4.1-py3
   steps:
     - pip install scikit-learn
-  cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
+  cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
 !!! Tip
     The declarations section was not completely necessary,
-    we could have also just passed the value directly `--batch_size=128`
+    we could have also just passed the value directly `--batch-size=128`
 
 So what we did is we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
 

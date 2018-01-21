@@ -8,10 +8,10 @@ To create a project, you can both use the Polyaxon Dashboard or the Polyaxon CLI
 The projects consist of a required argument `--name` an optional argument `--description`,
 and a flag `--private` with a default value set to `False`.
 
-The projects could be `public` (default behaviour) or set to private,
+The projects could be `public` (default behaviour) or `private`,
 in that case only you i.e. `logged-in user`, and `superusers` can access the project.
 
-Public project are visible to everyone as read only mode, and read/write mode to the `owner` and `superusers`.
+Public projects are visible to everyone as read only mode, and read/write mode to the `owner` and `superusers`.
 
 ??? note "More permissions and roles"
     More permissions and roles will be available, when we introduce teams.

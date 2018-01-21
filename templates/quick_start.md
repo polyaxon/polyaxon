@@ -241,28 +241,28 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
     Experiments:
 
-      sequence  unique_name            user    last_status    created_at         is_clone      num_jobs  finished_at    started_at
-    ----------  ---------------------  ------  -------------  -----------------  ----------  ----------  -------------  -----------------
-             4  root.quick-start.1.4   root    Created        a few seconds ago  False                0
-             5  root.quick-start.1.5   root    Created        a few seconds ago  False                0
-             6  root.quick-start.1.6   root    Created        a few seconds ago  False                0
-             7  root.quick-start.1.7   root    Created        a few seconds ago  False                0
-             8  root.quick-start.1.8   root    Created        a few seconds ago  False                0
-             9  root.quick-start.1.9   root    Created        a few seconds ago  False                0
-            10  root.quick-start.1.10  root    Created        a few seconds ago  False                0
-            11  root.quick-start.1.11  root    Created        a few seconds ago  False                0
-            12  root.quick-start.1.12  root    Running        a few seconds ago  False                1                 a few seconds ago
-            13  root.quick-start.1.13  root    Created        a few seconds ago  False                0
-            14  root.quick-start.1.14  root    Created        a few seconds ago  False                0
-            15  root.quick-start.1.15  root    Running        a few seconds ago  False                1                 a few seconds ago
-            16  root.quick-start.1.16  root    Created        a few seconds ago  False                0
-            17  root.quick-start.1.17  root    Created        a few seconds ago  False                0
-            18  root.quick-start.1.18  root    Created        a few seconds ago  False                0
-            19  root.quick-start.1.19  root    Created        a few seconds ago  False                0
-            20  root.quick-start.1.20  root    Created        a few seconds ago  False                0
-            21  root.quick-start.1.21  root    Created        a few seconds ago  False                0
-            22  root.quick-start.1.22  root    Created        a few seconds ago  False                0
-            23  root.quick-start.1.23  root    Created        a few seconds ago  False                0
+      sequence  unique_name            user    last_status    created_at          num_jobs  finished_at    started_at
+    ----------  ---------------------  ------  -------------  -----------------  ---------  -------------  -----------------
+             4  root.quick-start.1.4   root    Created        a few seconds ago          0
+             5  root.quick-start.1.5   root    Created        a few seconds ago          0
+             6  root.quick-start.1.6   root    Created        a few seconds ago          0
+             7  root.quick-start.1.7   root    Created        a few seconds ago          0
+             8  root.quick-start.1.8   root    Created        a few seconds ago          0
+             9  root.quick-start.1.9   root    Created        a few seconds ago          0
+            10  root.quick-start.1.10  root    Created        a few seconds ago          0
+            11  root.quick-start.1.11  root    Created        a few seconds ago          0
+            12  root.quick-start.1.12  root    Running        a few seconds ago          1                 a few seconds ago
+            13  root.quick-start.1.13  root    Created        a few seconds ago          0
+            14  root.quick-start.1.14  root    Created        a few seconds ago          0
+            15  root.quick-start.1.15  root    Running        a few seconds ago          1                 a few seconds ago
+            16  root.quick-start.1.16  root    Created        a few seconds ago          0
+            17  root.quick-start.1.17  root    Created        a few seconds ago          0
+            18  root.quick-start.1.18  root    Created        a few seconds ago          0
+            19  root.quick-start.1.19  root    Created        a few seconds ago          0
+            20  root.quick-start.1.20  root    Created        a few seconds ago          0
+            21  root.quick-start.1.21  root    Created        a few seconds ago          0
+            22  root.quick-start.1.22  root    Created        a few seconds ago          0
+            23  root.quick-start.1.23  root    Created        a few seconds ago          0
     ```
 
 14. More information about the project in the dashboard
