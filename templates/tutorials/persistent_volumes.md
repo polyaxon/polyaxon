@@ -15,13 +15,11 @@ But before that, we need to create a Kubernetes `secret`.
     $ echo -n $STORAGE_KEY | base64
     ```
 
-    Switch back to the cloned `polyaxon-examples` repo, and update the values of `azure-secret,ylm`
+    Switch back to the cloned `polyaxon-examples` repo, and update the values of `azure-secret.ylm` with the values generated with base64.
 
     ```bash
     $ vi azure/azure-secret.yml
     ```
-
-    with the values generated with base64.
 
 2. Use `kubectl` to create a namespace `polyaxon`
 
@@ -42,7 +40,7 @@ But before that, we need to create a Kubernetes `secret`.
     ```
 
     ```bash
-    $ kubectl create -f azure/data-pvc.yml -n polyaxon
+    $ kubectl create -f azure/outputs-pvc.yml -n polyaxon
     ```
 
 Now we can [train experiments with Polyaxon](training_experiments_on_polyaxon)

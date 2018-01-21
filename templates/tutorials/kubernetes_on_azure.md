@@ -45,7 +45,7 @@ Now we will deploy the custom cluster based on a template in the examples repo.
     ```bash
     SUBSCRIPTION_ID=[your subscription id]
     RESOURCE_GROUP=[your resource group name]  # e.g. POLYAXON_TEST
-    LOCATION=[Azure region that includes GPUs, you can check here]  # e.g. eastus
+    LOCATION=[Azure region that includes GPUs]  # e.g. eastus
     DNS_PREFIX=[your DNS prefix]  # e.g. polyaxon-test
     ```
 
@@ -118,7 +118,7 @@ Now we will deploy the custom cluster based on a template in the examples repo.
     $ STORAGE_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP --account-name $STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
     ```
 
-13. Create a data and output shares on this storage
+13. Create 2 shares on this storage (`data` and `outputs`)
 
     ```bash
     $ az storage share create --name data --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
