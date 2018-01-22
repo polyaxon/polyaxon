@@ -1,6 +1,6 @@
 -r requirements-dev.txt
 
-coverage==4.4.1
+coverage==4.4.2
 execnet==1.3.0
 django-debug-panel
 django-debug-toolbar
