@@ -294,6 +294,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
+        self.object.refresh_from_db()
         assert resp.data == self.serializer_class(self.object).data
         assert resp.data['num_jobs'] == 2
 

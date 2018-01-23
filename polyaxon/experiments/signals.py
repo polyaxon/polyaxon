@@ -6,7 +6,8 @@ import logging
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus, ExperimentStatus
+from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus, ExperimentStatus, \
+    ExperimentMetric
 from experiments.utils import delete_experiment_outputs
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
@@ -67,9 +68,14 @@ def new_experiment_job(sender, **kwargs):
 def new_experiment_job_status(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
+    job = instance.job
+
+    if created:
+        # update job last_status
+        job.job_status = instance
+        job.save()
 
     # check if the new status is done to remove the containers from the monitors
-    job = instance.job
     if job.is_done:
         from libs.redis_db import RedisJobContainers
 
@@ -91,15 +97,35 @@ def new_experiment_job_status(sender, **kwargs):
 @ignore_raw
 def new_experiment_status(sender, **kwargs):
     instance = kwargs['instance']
+    created = kwargs.get('created', False)
+    experiment = instance.experiment
+
+    if created:
+        # update experiment last_status
+        experiment.experiment_status = instance
+        experiment.save()
 
     if instance.status == ExperimentLifeCycle.SUCCEEDED:
         # update all workers with succeeded status, since we will trigger a stop mechanism
-        for job in instance.experiment.jobs.all():
+        for job in experiment.jobs.all():
             if not job.is_done:
                 job.set_status(JobLifeCycle.SUCCEEDED, message='Master is done.')
 
     if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
         logger.info('One of the workers failed or Master for experiment `{}` is done, '
-                    'send signal to other workers to stop.'.format(instance.experiment.unique_name))
+                    'send signal to other workers to stop.'.format(experiment.unique_name))
         # Schedule stop for this experiment because other jobs may be still running
-        scheduler.stop_experiment(instance.experiment, update_status=False)
+        scheduler.stop_experiment(experiment, update_status=False)
+
+
+@receiver(post_save, sender=ExperimentMetric, dispatch_uid="experiment_metric_saved")
+@ignore_raw
+def new_experiment_metric(sender, **kwargs):
+    instance = kwargs['instance']
+    created = kwargs.get('created', False)
+    experiment = instance.experiment
+
+    if created:
+        # update experiment last_metric
+        experiment.experiment_metric = instance
+        experiment.save()

@@ -62,6 +62,7 @@ class TestExperimentModel(BaseTest):
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 2
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED, ExperimentLifeCycle.SCHEDULED]
+        experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
         # Assert also that experiment is monitored
@@ -84,6 +85,7 @@ class TestExperimentModel(BaseTest):
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,
                                       ExperimentLifeCycle.BUILDING,
                                       ExperimentLifeCycle.SCHEDULED]
+        experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
     @mock.patch('spawner.scheduler.K8SSpawner')
@@ -100,11 +102,7 @@ class TestExperimentModel(BaseTest):
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,
                                       ExperimentLifeCycle.SCHEDULED,
                                       ExperimentLifeCycle.STARTING]
-        assert experiment.last_status == ExperimentLifeCycle.STARTING
-
-        # Assert also that experiment is monitored
-        assert experiment.last_status == ExperimentLifeCycle.STARTING
-        # Assert also that experiment is monitored
+        experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STARTING
 
         # Assert 3 job were created
@@ -149,6 +147,7 @@ class TestExperimentModel(BaseTest):
         workers = [ExperimentJobFactory(experiment=experiment, role=TaskType.WORKER)
                    for _ in range(2)]
         for worker in workers:
+            worker.refresh_from_db()
             assert JobLifeCycle.is_done(worker.last_status) is False
 
         # Set master to succeeded
@@ -156,7 +155,9 @@ class TestExperimentModel(BaseTest):
 
         # All worker should have a success status
         for worker in workers:
+            worker.refresh_from_db()
             assert worker.last_status == JobLifeCycle.SUCCEEDED
 
         # Experiment last status should be success
+        experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SUCCEEDED

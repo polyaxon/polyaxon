@@ -14,4 +14,5 @@ class ExperimentsConfig(AppConfig):
             experiment_deleted,
             new_experiment_job,
             new_experiment_job_status,
+            new_experiment_metric,
         )

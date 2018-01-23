@@ -58,6 +58,18 @@ class Experiment(DiffModel, DescribableModel):
         blank=True,
         related_name='clones',
         help_text='The original experiment that was cloned from.')
+    experiment_status = models.OneToOneField(
+        'ExperimentStatus',
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True)
+    experiment_metric = models.OneToOneField(
+        'ExperimentMetric',
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True)
 
     class Meta:
         ordering = ['sequence']
@@ -107,13 +119,11 @@ class Experiment(DiffModel, DescribableModel):
 
     @property
     def last_status(self):
-        status = self.statuses.last()
-        return status.status if status else None
+        return self.experiment_status.status if self.experiment_status else None
 
     @property
     def last_metric(self):
-        metric = self.metrics.last()
-        return metric.values if metric else None
+        return self.experiment_metric.values if self.experiment_metric else None
 
     @property
     def is_running(self):
@@ -209,6 +219,12 @@ class ExperimentJob(DiffModel):
         editable=False,
         null=False,
         help_text='The sequence number of this job within the experiment.', )
+    job_status = models.OneToOneField(
+        'ExperimentJobStatus',
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True)
 
     class Meta:
         ordering = ['sequence']
@@ -232,8 +248,7 @@ class ExperimentJob(DiffModel):
 
     @property
     def last_status(self):
-        status = self.statuses.last()
-        return status.status if status else None
+        return self.job_status.status if self.job_status else None
 
     @property
     def is_running(self):
