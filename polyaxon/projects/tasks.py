@@ -30,7 +30,7 @@ def start_group_experiments(self, experiment_group_id):
                     'the ExperimentGroup `{}` does not exist anymore.'.format(experiment_group_id))
         return
 
-    pending_experiments = experiment_group.pending_experiments
+    pending_experiments = list(experiment_group.pending_experiments)
     experiment_to_start = experiment_group.n_experiments_to_start
 
     if experiment_group.search_method == SEARCH_METHODS.RANDOM:

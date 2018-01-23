@@ -38,10 +38,10 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
         return obj.experiments.count()
 
     def get_num_pending_experiments(self, obj):
-        return len(obj.pending_experiments)
+        return obj.pending_experiments.count()
 
     def get_num_running_experiments(self, obj):
-        return len(obj.running_experiments)
+        return obj.running_experiments.count()
 
     def validate_content(self, content):
         spec = validate_spec_content(content)
