@@ -6,6 +6,7 @@ import uuid
 
 import requests
 from django.conf import settings
+from django.db.models import Count, Sum
 from polyaxon_k8s.manager import K8SManager
 
 from polyaxon.celery_api import app as celery_app
@@ -59,10 +60,16 @@ def update_system_nodes():
 
 @celery_app.task(name=CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE, time_limits=60, ignore_result=True)
 def cluster_analytics():
-    cluster_uuid = Cluster.load().uuid.hex
+    cluster = Cluster.objects.annotate(
+        n_nodes=Count('nodes'),
+        n_cpus=Sum('nodes__n_cpus'),
+        n_gpus=Sum('nodes__n_gpus')).first()
     notification = uuid.uuid4()
     notification_url = settings.POLYAXON_NOTIFICATION_ALIVE_URL.format(
-        cluster_uuid=cluster_uuid,
+        cluster_uuid=cluster.uuid.hex,
+        n_nodes=cluster.n_nodes,
+        n_cpus=cluster.n_cpus,
+        n_gpus=cluster.n_gpus,
         notification=notification,
         version=settings.CHART_VERSION)
     try:
