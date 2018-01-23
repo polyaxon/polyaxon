@@ -12,9 +12,70 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
 
 # Install
 
+#### TL;DR;
+
+ * Create a deployment
+
+    ```bash
+    # Create a namespace
+    $ kubectl create namespace polyaxon
+
+    # Add Polyaxon charts repo
+    $ helm repo add polyaxon https://charts.polyaxon.com
+
+    # Deply Polyaxon
+    $ helm install polyaxon/polyaxon \
+        --name=polyaxon \
+        --namespace=polyaxon \
+        -f config.yaml
+    ```
+
+ * Install CLI
+
+    ```bash
+    # Install Polyaxon CLI
+    $ pip install -U polyaxon-cli
+
+    # Config Polyaxon CLI
+    $ polyaxon config ...
+
+    # Login to your account
+    $ polyaxon login
+    ```
+
 Please check [polyaxon installation guide](https://docs.polyaxon.com/installation/introduction)
 
 # Quick start
+
+#### TL;DR;
+
+ * Start a project
+
+    ```bash
+    # Create a project
+    $ polyaxon project create --name=quick-start --description='Polyaxon quick start.'
+
+    # Clone the quick start repo
+    $ git clone https://github.com/polyaxon/polyaxon-quick-start.git
+    $ cd polyaxon-quick-start
+
+    # initialize it
+    $ polyaxon init quick-start
+    ```
+
+ * Train and track logs & resources
+
+    ```bash
+    # Upload code and start experiments
+    $ polyaxon run -u
+
+    # Stream logs
+    $ polyaxon experiment -xp 1 logs
+
+    # Stream resources
+    $ polyaxon experiment -xp 1 resources
+    ```
+
 
 Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
 
@@ -42,17 +103,7 @@ Please follow the contribution guide line: *[Contribute to Polyaxon](CONTRIBUTIN
 
 # Research
 
-If you use Polyaxon in your academic research, we would be grateful if you could cite it as follows:
-
-```
-@misc{mourafiq2017polyaxon,
-    author = {Mourafiq, Mourad},
-    title = {Polyaxon: A platform for building, training, and monitoring large scale deep learning applications.},
-    howpublished={https://github.com/polyaxon/polyaxon},
-    url = {https://github.com/polyaxon/polyaxon},
-    year = {2017}
-}
-```
+If you use Polyaxon in your academic research, we would be grateful if you could cite it.
 
 Feel free to [contact us](mailto:contact@polyaxon.com), we would love to learn about your project and see how we can support your custom need.
 
