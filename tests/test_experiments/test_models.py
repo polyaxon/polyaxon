@@ -10,13 +10,17 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
-from experiments.tasks import set_metrics
+from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
 from factories.factory_repos import RepoFactory
 from factories.fixtures import experiment_spec_content, exec_experiment_spec_content
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
-from factories.factory_experiments import ExperimentFactory, ExperimentJobFactory, \
-    ExperimentJobStatusFactory
+from factories.factory_experiments import (
+    ExperimentFactory,
+    ExperimentJobFactory,
+    ExperimentJobStatusFactory,
+    ExperimentStatusFactory,
+)
 from factories.factory_projects import ExperimentGroupFactory
 from tests.fixtures import (
     start_experiment_value,
@@ -161,3 +165,37 @@ class TestExperimentModel(BaseTest):
         # Experiment last status should be success
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SUCCEEDED
+
+    def test_sync_experiments_and_jobs_statuses(self):
+        with patch('experiments.tasks.start_experiment.delay') as _:
+            with patch.object(Experiment, 'set_status') as _:
+                experiments = [ExperimentFactory() for _ in range(3)]
+
+        done_xp, no_jobs_xp, xp_with_jobs = experiments
+
+        # Set done status
+        with patch('spawner.scheduler.stop_experiment') as _:
+            ExperimentStatusFactory(experiment=done_xp, status=JobLifeCycle.FAILED)
+
+        # Create jobs for xp_with_jobs and update status, and do not update the xp status
+        with patch.object(Experiment, 'set_status') as _:
+            job = ExperimentJobFactory(experiment=xp_with_jobs)
+            ExperimentJobStatusFactory(job=job, status=JobLifeCycle.RUNNING)
+
+        xp_with_jobs.refresh_from_db()
+        assert xp_with_jobs.last_status is None
+
+        # Mock sync experiments and jobs statuses
+        with patch('experiments.tasks.check_experiment_status.delay') as check_status_mock:
+            sync_experiments_and_jobs_statuses()
+
+        assert check_status_mock.call_count == 1
+
+        # Call sync experiments and jobs statuses
+        sync_experiments_and_jobs_statuses()
+        done_xp.refresh_from_db()
+        no_jobs_xp.refresh_from_db()
+        xp_with_jobs.refresh_from_db()
+        assert done_xp.last_status == ExperimentLifeCycle.FAILED
+        assert no_jobs_xp.last_status is None
+        assert xp_with_jobs.last_status == ExperimentLifeCycle.RUNNING

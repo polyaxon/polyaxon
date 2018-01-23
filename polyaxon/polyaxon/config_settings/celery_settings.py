@@ -29,6 +29,9 @@ class Intervals(object):
     EXPERIMENTS_SCHEDULER = config.get_int(
         'POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER',
         is_optional=True) or 30
+    EXPERIMENTS_SYNC = config.get_int(
+        'POLYAXON_INTERVALS_EXPERIMENTS_SYNC',
+        is_optional=True) or 30
     CLUSTERS_UPDATE_SYSTEM_INFO = config.get_int(
         'POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO',
         is_optional=True) or 150
@@ -63,6 +66,7 @@ class CeleryTasks(object):
     EXPERIMENTS_START_GROUP = 'experiments_start_group'
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
+    EXPERIMENTS_SYNC_JOBS_STATUSES = 'experiments_sync_jobs_statuses'
     PROJECTS_TENSORBOARD_START = 'projects_tensorboard_start'
     PROJECTS_TENSORBOARD_STOP = 'projects_tensorboard_stop'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
@@ -79,6 +83,9 @@ class CeleryQueues(object):
     API_EXPERIMENTS = config.get_string(
         'POLYAXON_QUEUES_API_EXPERIMENTS',
         is_optional=True) or 'api.experiments'
+    API_EXPERIMENTS_SYNC = config.get_string(
+        'POLYAXON_QUEUES_API_EXPERIMENTS_SYNC',
+        is_optional=True) or 'api.sync_experiments'
     API_CLUSTERS = config.get_string(
         'POLYAXON_QUEUES_API_CLUSTERS',
         is_optional=True) or 'api.clusters'
@@ -114,6 +121,7 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.REPOS_HANDLE_FILE_UPLOAD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_SET_METRICS: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES: {'queue': CeleryQueues.API_EXPERIMENTS_SYNC},
     CeleryTasks.PROJECTS_TENSORBOARD_START: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.PROJECTS_TENSORBOARD_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
@@ -149,6 +157,13 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
         'options': {
             'expires': Intervals.get_expires(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
+        },
+    },
+    CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES + '_beat': {
+        'task': CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES,
+        'schedule': Intervals.get_schedule(Intervals.EXPERIMENTS_SYNC),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.EXPERIMENTS_SYNC),
         },
     },
 }

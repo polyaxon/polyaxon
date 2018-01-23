@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from django.db.models import Count
 from docker.errors import DockerException
 from polyaxon_schemas.utils import TIME_ZONE
 
@@ -106,3 +107,12 @@ def set_metrics(experiment_uuid, created_at, metrics):
         return None
 
     ExperimentMetric.objects.create(experiment=experiment, created_at=created_at, values=metrics)
+
+
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES, ignore_result=True)
+def sync_experiments_and_jobs_statuses():
+    experiments = Experiment.objects.exclude(
+        experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS)
+    experiments = experiments.annotate(num_jobs=Count('jobs')).filter(num_jobs__gt=0)
+    for experiment in experiments:
+        check_experiment_status.delay(experiment_uuid=experiment.uuid.hex)
