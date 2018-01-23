@@ -185,6 +185,8 @@ class PodManager(object):
             self.get_from_experiment_config_map(
                 constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME),
             self.get_from_experiment_config_map(
+                constants.CONFIG_MAP_EXPERIMENT_LOGS_PATH_KEY_NAME),
+            self.get_from_experiment_config_map(
                 constants.CONFIG_MAP_EXPERIMENT_DATA_PATH_KEY_NAME),
             self.get_from_experiment_secret(constants.SECRET_USER_TOKEN),
         ]

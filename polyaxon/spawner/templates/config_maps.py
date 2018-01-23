@@ -9,7 +9,7 @@ from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
 
-from experiments.utils import get_experiment_outputs_path
+from experiments.utils import get_experiment_outputs_path, get_experiment_logs_path
 from projects.utils import get_project_data_path
 from spawner.templates import constants
 
@@ -50,6 +50,7 @@ def get_config_map(namespace,
                             experiment_uuid)
     metadata = client.V1ObjectMeta(name=name, labels=labels, namespace=namespace)
     experiment_outputs_path = get_experiment_outputs_path(experiment_name)
+    experiment_logs_path = get_experiment_logs_path(experiment_name)
     experiment_data_path = get_project_data_path(project_name)
     data = {
         constants.CONFIG_MAP_CLUSTER_KEY_NAME: json.dumps(cluster_def),
@@ -59,6 +60,7 @@ def get_config_map(namespace,
         constants.CONFIG_MAP_API_KEY_NAME: 'http://{}:{}'.format(settings.POLYAXON_K8S_API_HOST,
                                                                  settings.POLYAXON_K8S_API_PORT),
         constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path,
+        constants.CONFIG_MAP_EXPERIMENT_LOGS_PATH_KEY_NAME: experiment_logs_path,
         constants.CONFIG_MAP_EXPERIMENT_DATA_PATH_KEY_NAME: experiment_data_path,
     }
     return client.V1ConfigMap(api_version=k8s_constants.K8S_API_VERSION_V1,
