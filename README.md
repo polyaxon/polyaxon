@@ -110,6 +110,14 @@ Check out our [documentation](https://docs.polyaxon.com/) to learn more about Po
 
 # Dashboard
 
+Polyaxon comes with dashboard shows the projects and experiments created by you and your team members.
+
+To start the dashboard, just run the following command in your terminal
+
+```bash
+$ polyaxon dashboard
+```
+
 ![Polyaxon dashboard](config/polyaxon_dashboard.png)
 
 # Project status
