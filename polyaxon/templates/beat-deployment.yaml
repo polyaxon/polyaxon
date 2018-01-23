@@ -58,7 +58,7 @@ spec:
       - name: {{ .Chart.Name }}-crons
         image: "{{ .Values.workers.crons.image }}:{{ .Values.workers.crons.imageTag }}"
         imagePullPolicy: {{ .Values.workers.crons.imagePullPolicy }}
-        args: ["{{ .Values.queues.apiClusters }}", "--concurrency={{ .Values.workers.crons.concurrency }}"]
+        args: ["{{ .Values.queues.apiClusters }},{{ .Values.queues.apiExperimentsSync }}", "--concurrency={{ .Values.workers.crons.concurrency }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}

@@ -365,6 +365,8 @@ queues config
 {{- define "config.queues" }}
 - name: POLYAXON_QUEUES_API_EXPERIMENTS
   value: {{ .Values.queues.apiExperiments | quote }}
+- name: POLYAXON_QUEUES_API_EXPERIMENTS_SYNC
+  value: {{ .Values.queues.apiExperimentsSync | quote }}
 - name: POLYAXON_QUEUES_API_CLUSTERS
   value: {{ .Values.queues.apiClusters | quote }}
 - name: POLYAXON_QUEUES_EVENTS_NAMESPACE
@@ -392,6 +394,8 @@ intervals config
 {{- define "config.intervals" }}
 - name: POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER
   value: {{ .Values.intervals.experiments_scheduler | quote }}
+- name: POLYAXON_INTERVALS_EXPERIMENTS_SYNC
+  value: {{ .Values.intervals.experiments_sync | quote }}
 - name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO
   value: {{ .Values.intervals.clusters_update_system_info | quote }}
 - name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES

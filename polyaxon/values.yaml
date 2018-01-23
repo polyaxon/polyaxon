@@ -367,11 +367,13 @@ email:
 
 intervals:  # in seconds
   experiments_scheduler: 60
+  experiments_sync: 60
   clusters_update_system_info: 150
   clusters_update_system_nodes: 150
 
 queues:
   apiExperiments: 'api.experiments'
+  apiExperimentsSync: 'api.sync_experiments'
   apiClusters: 'api.clusters'
   eventsNamespace: 'events.namespace'
   eventsResources: 'events.resources'
