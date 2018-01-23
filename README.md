@@ -76,6 +76,27 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
     $ polyaxon experiment -xp 1 resources
     ```
 
+ * Dashboards
+
+    ```bash
+    # Start Polyaxon dashboard
+    $ polyaxon dashboad
+
+    Dashboard page will now open in your browser. Continue? [Y/n]: y
+
+    # Start Tensorboard
+    $ polyaxon project start_tensorboard
+
+    Tensorboard is being deployed for project `quick-start`
+
+       It may take some time before you can access the dashboard.
+
+       If you used an ingress, your dashboard will be available at:
+
+           http://52.226.37.54:80/tensorboard/root/quick-start
+
+       Ohterwise you can use kubectl to get the url.
+    ```
 
 Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
 
