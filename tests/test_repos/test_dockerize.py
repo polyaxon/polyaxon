@@ -17,7 +17,8 @@ class TestRepoDockerize(BaseTest):
         repo_path = os.path.join(settings.REPOS_ROOT, 'repo')
         os.mkdir(repo_path)
 
-        builder = DockerBuilder(experiment_uuid=uuid.uuid4().hex,
+        builder = DockerBuilder(experiment_name='name',
+                                experiment_uuid=uuid.uuid4().hex,
                                 repo_path=repo_path,
                                 from_image='busybox',
                                 image_name='busycube/busycube',
@@ -29,7 +30,8 @@ class TestRepoDockerize(BaseTest):
         Path(os.path.join(repo_path, 'polyaxon_requirements.txt')).touch()
         Path(os.path.join(repo_path, 'polyaxon_setup.sh')).touch()
 
-        builder = DockerBuilder(experiment_uuid=uuid.uuid4().hex,
+        builder = DockerBuilder(experiment_name='name',
+                                experiment_uuid=uuid.uuid4().hex,
                                 repo_path=repo_path,
                                 from_image='busybox',
                                 image_name='busycube/busycube',
@@ -43,7 +45,8 @@ class TestRepoDockerize(BaseTest):
         os.mkdir(repo_path)
 
         # By default it should user FROM image declare WORKDIR and COPY code
-        builder = DockerBuilder(experiment_uuid=uuid.uuid4().hex,
+        builder = DockerBuilder(experiment_name='name',
+                                experiment_uuid=uuid.uuid4().hex,
                                 repo_path=repo_path,
                                 from_image='busybox',
                                 image_name='busycube/tets',
@@ -56,7 +59,8 @@ class TestRepoDockerize(BaseTest):
         assert 'COPY {}'.format(builder.folder_name) in dockerfile
 
         # Add env vars
-        builder = DockerBuilder(experiment_uuid=uuid.uuid4().hex,
+        builder = DockerBuilder(experiment_name='name',
+                                experiment_uuid=uuid.uuid4().hex,
                                 repo_path=repo_path,
                                 from_image='busybox',
                                 image_name='busycube/tets',
@@ -75,7 +79,8 @@ class TestRepoDockerize(BaseTest):
             './polyaxon_setup.sh'
         ]
 
-        builder = DockerBuilder(experiment_uuid=uuid.uuid4().hex,
+        builder = DockerBuilder(experiment_name='name',
+                                experiment_uuid=uuid.uuid4().hex,
                                 repo_path=repo_path,
                                 from_image='busybox',
                                 image_name='busycube/tets',

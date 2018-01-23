@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from experiments.utils import get_experiment_logs_path
 from polyaxon.settings import CeleryTasks
 from polyaxon.celery_api import app as celery_app
 from clusters.models import ClusterEvent
@@ -41,7 +42,23 @@ def handle_events_job_statues(payload):
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)
-def handle_events_job_logs(experiment_uuid, job_uuid, log_line, persist):
+def handle_events_job_logs(experiment_name,
+                           experiment_uuid,
+                           job_uuid,
+                           log_line,
+                           persist,
+                           task_type=None,
+                           task_idx=None):
     # must persist resources if logs according to the config
-    logger.info('handling log event for {} {} {}'.format(
+    logger.debug('handling log event for {} {} {}'.format(
         experiment_uuid, job_uuid, persist))
+    if task_type and task_idx:
+        log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
+    xp_logger = logging.getLogger('experiment_name')
+    log_path = get_experiment_logs_path(experiment_name)
+    log_handler = logging.FileHandler(log_path)
+    log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    log_handler.setFormatter(log_formatter)
+    xp_logger.addHandler(log_handler)
+    xp_logger.setLevel(logging.INFO)
+    xp_logger.info(log_line)

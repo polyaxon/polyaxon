@@ -16,6 +16,7 @@ logger = logging.getLogger('polyaxon.monitors.publisher')
 def publish_log(log_line,
                 status,
                 experiment_uuid,
+                experiment_name,
                 job_uuid,
                 persist=False,
                 task_type=None,
@@ -26,10 +27,13 @@ def publish_log(log_line,
         pass
 
     logger.info("Publishing log event for experiment: {}, {}".format(job_uuid, experiment_uuid))
-    handle_events_job_logs.delay(experiment_uuid=experiment_uuid,
+    handle_events_job_logs.delay(experiment_name=experiment_name,
+                                 experiment_uuid=experiment_uuid,
                                  job_uuid=job_uuid,
                                  log_line=log_line,
-                                 persist=persist)
+                                 persist=persist,
+                                 task_type=task_type,
+                                 task_idx=task_idx)
     if (RedisToStream.is_monitored_job_logs(job_uuid) or
             RedisToStream.is_monitored_experiment_logs(experiment_uuid)):
         logger.info("Streaming new log event for experiment: {}".format(experiment_uuid))

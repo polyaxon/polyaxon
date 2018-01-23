@@ -6,9 +6,14 @@ import logging
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from experiments.models import Experiment, ExperimentJob, ExperimentJobStatus, ExperimentStatus, \
-    ExperimentMetric
-from experiments.utils import delete_experiment_outputs
+from experiments.models import (
+    Experiment,
+    ExperimentJob,
+    ExperimentJobStatus,
+    ExperimentStatus,
+    ExperimentMetric,
+)
+from experiments.utils import delete_experiment_outputs, delete_experiment_logs
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
 from spawner import scheduler
@@ -48,6 +53,7 @@ def experiment_deleted(sender, **kwargs):
         pass
 
     delete_experiment_outputs(instance.unique_name)
+    delete_experiment_logs(instance.unique_name)
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")

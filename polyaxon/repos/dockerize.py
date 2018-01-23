@@ -76,6 +76,7 @@ class DockerBuilder(object):
     CHECK_INTERVAL = 10
 
     def __init__(self,
+                 experiment_name,
                  experiment_uuid,
                  repo_path,
                  from_image,
@@ -85,6 +86,7 @@ class DockerBuilder(object):
                  env_vars=None,
                  workdir='/code',
                  dockerfile_name='Dockerfile'):
+        self.experiment_name = experiment_name
         self.experiment_uuid = experiment_uuid
         self.repo_path = repo_path
         self.build_path = '/'.join(repo_path.split('/')[:-1])
@@ -174,6 +176,7 @@ class DockerBuilder(object):
                 log_line=log_line,
                 status=ExperimentLifeCycle.BUILDING,
                 experiment_uuid=self.experiment_uuid,
+                experiment_name=self.experiment_name,
                 job_uuid='all',
                 persist=False  # TODO: ADD log persistence
             )
@@ -214,6 +217,7 @@ class DockerBuilder(object):
                     log_line=log_line,
                     status=ExperimentLifeCycle.BUILDING,
                     experiment_uuid=self.experiment_uuid,
+                    experiment_name=self.experiment_name,
                     job_uuid='all',
                     persist=False  # TODO: ADD log persistence
                 )
@@ -280,7 +284,8 @@ def build_experiment(experiment):
     image_tag = repo_last_commit
 
     # Build the image
-    docker_builder = DockerBuilder(experiment_uuid=experiment.uuid.hex,
+    docker_builder = DockerBuilder(experiment_name=experiment.unique_name,
+                                   experiment_uuid=experiment.uuid.hex,
                                    repo_path=repo_path,
                                    from_image=experiment_spec.run_exec.image,
                                    image_name=image_name,
