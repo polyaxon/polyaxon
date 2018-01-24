@@ -4,8 +4,10 @@ import * as _ from "lodash";
 import Project from "./project";
 import RootModal from "../containers/modal"
 import {ProjectModel} from "../models/project";
+import {pluralize} from "../constants/utils";
 
 export interface Props {
+  user: '';
   projects: ProjectModel[];
   onUpdate: (project: ProjectModel) => any;
   onDelete: (project: ProjectModel) => any;
@@ -17,17 +19,16 @@ export interface Props {
 
 export default class Projects extends React.Component<Props, Object> {
   componentDidMount() {
-    const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
-    fetchData();
+    this.props.fetchData();
   }
 
   public render() {
-    const {projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
+    const {user, projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
     return (
       <div>
         <div className="entity-details">
-          <span className="title">Projects</span>
-          <span className="results-info">({projects.length} found)</span>
+          <span className="title">{user}</span>
+          <span className="results-info">[{projects.length} {pluralize('Project', projects.length)}]</span>
         </div>
         <RootModal hideModal={hideModal}/>
         <ul>
