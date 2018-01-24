@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as _ from "lodash";
-import {LinkContainer} from "react-router-bootstrap";
 import * as moment from "moment";
+import {LinkContainer} from "react-router-bootstrap";
 
 import {ProjectModel} from "../models/project";
 import Experiments from "../containers/experiments";
