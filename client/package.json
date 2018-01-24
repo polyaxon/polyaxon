@@ -31,7 +31,9 @@
     "uglify-js": "^3.3.4",
     "url-loader": "^0.5.9",
     "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.6.1"
+    "webpack-dev-server": "^2.6.1",
+    "font-awesome": "^4.7.0",
+    "fontawesome": "^4.7.2"
   },
   "dependencies": {
     "@types/js-cookie": "^2.1.0",
@@ -47,8 +49,9 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/sprintf-js": "0.0.27",
     "bootstrap": "^3.3.7",
-    "font-awesome": "^4.7.0",
+    "js-cookie": "^2.2.0",
     "lodash": "^4.17.4",
+    "moment": "^2.20.1",
     "normalizr": "^3.2.3",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.1",
@@ -61,8 +64,6 @@
     "redux-form": "^7.0.3",
     "redux-thunk": "^2.2.0",
     "sprintf-js": "^1.1.1",
-    "whatwg-fetch": "^2.0.3",
-    "fontawesome": "^4.7.2",
-    "js-cookie": "^2.2.0"
+    "whatwg-fetch": "^2.0.3"
   }
 }
