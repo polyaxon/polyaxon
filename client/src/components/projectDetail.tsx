@@ -47,24 +47,26 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               {project.description}
             </div>
             <div className="meta">
-                <span className="meta-info">
-                  <i className="fa fa-lock icon" aria-hidden="true"></i>
-                  <span className="title">Visibility:</span>
-                  {visibility}
-                </span>
               <span className="meta-info">
-                  <i className="fa fa-clock-o icon" aria-hidden="true"></i>
-                  <span className="title">Last updated:</span>
+                <i className="fa fa-lock icon" aria-hidden="true"></i>
+                <span className="title">Visibility:</span>
+                {visibility}
+              </span>
+              <span className="meta-info">
+                <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+                <span className="title">Last updated:</span>
                 {moment(project.updated_at).fromNow()}
-                </span>
+              </span>
               <span className="meta-info">
-                  <i className="fa fa-cube icon" aria-hidden="true"></i>
-                {project.num_experiments} {pluralize('Experiment', project.num_experiments)}
-                </span>
+                <i className="fa fa-cube icon" aria-hidden="true"></i>
+                <span className="title">Experiments:</span>
+                {project.num_experiments}
+              </span>
               <span className="meta-info">
-                  <i className="fa fa-cubes icon" aria-hidden="true"></i>
-                {project.num_experiment_groups} {pluralize('Experiment Group', project.num_experiment_groups)}
-                </span>
+                <i className="fa fa-cubes icon" aria-hidden="true"></i>
+                <span className="title">Experiment Groups:</span>
+                {project.num_experiment_groups}
+              </span>
             </div>
           </div>
           <h4 className="polyaxon-header">Experiment groups</h4>

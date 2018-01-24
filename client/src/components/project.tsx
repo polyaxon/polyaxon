@@ -40,20 +40,18 @@ function Project({project, onDelete}: Props) {
       </div>
 
       <div className="col-md-2 block">
-        <div className="row">
-          <span>
+        <div className="row meta">
+          <span className="meta-info">
             <i className="fa fa-cube icon" aria-hidden="true"></i>
-          </span>
-          <span>
-            {project.num_experiments} {pluralize('Experiment', project.num_experiments)}
+            <span className="title">Experiments:</span>
+            {project.num_experiments}
           </span>
         </div>
-        <div className="row">
-          <span>
+        <div className="row meta">
+          <span className="meta-info">
             <i className="fa fa-cubes icon" aria-hidden="true"></i>
-          </span>
-          <span>
-            {project.num_experiment_groups} {pluralize('Experiment Group', project.num_experiment_groups)}
+            <span className="title">Experiment Groups:</span>
+            {project.num_experiment_groups}
           </span>
         </div>
       </div>
