@@ -10,6 +10,7 @@ import {jobsReducer} from "./jobs";
 import {tokenReducer} from "./token";
 import {AppState} from "../constants/types";
 import {modalReducer} from "../reducers/modal";
+import {userReducer} from "../reducers/user";
 
 
 const combinedReducer = combineReducers<AppState>({
@@ -19,6 +20,7 @@ const combinedReducer = combineReducers<AppState>({
   jobs: jobsReducer,
   modal: modalReducer,
   auth: tokenReducer,
+  user: userReducer,
   form: formReducer
 });
 
@@ -30,6 +32,7 @@ function ProjectSliceReducer(state: AppState, action: Action) {
     jobs: state.jobs,
     modal: state.modal,
     auth: state.auth,
+    user: state.user,
     form: state.form
   }
 }

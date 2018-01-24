@@ -2,6 +2,7 @@ import {Action} from "redux";
 
 import {TokenModel} from "../models/token";
 import {BASE_URL} from "../constants/api";
+import {discardUser, fetchUser} from "../actions/user";
 
 
 export enum actionTypes {
@@ -67,11 +68,13 @@ export function fetchToken(username: string, password: string): any {
       .then(handleErrors)
       .then(response => response.json())
       .then(json => dispatch(receiveTokenActionCreator(username, json)))
+      .then(() => dispatch(fetchUser()))
   }
 }
 
 export function discardToken(): any {
   return (dispatch: any) => {
-    return dispatch(discardTokenActionCreator())
+    dispatch(discardUser());
+    return dispatch(discardTokenActionCreator());
   };
 }

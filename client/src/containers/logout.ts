@@ -1,12 +1,12 @@
-import { connect, Dispatch } from "react-redux";
+import {connect, Dispatch} from "react-redux";
 import {withRouter} from "react-router-dom";
 
-import { AppState } from "../constants/types";
+import {AppState} from "../constants/types";
 import * as actions from "../actions/token";
 import Logout from "../components/logout"
 
 
-export function mapStateToProps(state: AppState, params: any)  {
+export function mapStateToProps(state: AppState, params: any) {
   return {}
 }
 

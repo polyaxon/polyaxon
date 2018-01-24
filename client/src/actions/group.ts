@@ -1,19 +1,19 @@
-import {Action, Dispatch} from "redux";
+import {Action} from "redux";
 import * as _ from "lodash";
 
-import {urlifyProjectName, getStoredToken} from "../constants/utils"
+import {handleAuthError, urlifyProjectName} from "../constants/utils"
 import {GroupModel} from "../models/group";
 import {BASE_URL} from "../constants/api";
 
 
 export enum actionTypes {
-  CREATE_GROUP='CREATE_GROUP',
-  DELETE_GROUP='DELETE_GROUP',
-  UPDATE_GROUP='UPDATE_GROUP',
-  RECEIVE_GROUP='RECEIVE_GROUP',
-  RECEIVE_GROUPS='RECEIVE_GROUPS',
-  REQUEST_GROUP='REQUEST_GROUP',
-  REQUEST_GROUPS='REQUEST_GROUPS',
+  CREATE_GROUP = 'CREATE_GROUP',
+  DELETE_GROUP = 'DELETE_GROUP',
+  UPDATE_GROUP = 'UPDATE_GROUP',
+  RECEIVE_GROUP = 'RECEIVE_GROUP',
+  RECEIVE_GROUPS = 'RECEIVE_GROUPS',
+  REQUEST_GROUP = 'REQUEST_GROUP',
+  REQUEST_GROUPS = 'REQUEST_GROUPS',
 }
 
 export interface CreateUpdateReceiveGroupAction extends Action {
@@ -35,27 +35,31 @@ export interface RequestGroupsAction extends Action {
   type: actionTypes.REQUEST_GROUPS;
 }
 
-export type GroupAction = CreateUpdateReceiveGroupAction | DeleteGroupAction | ReceiveGroupsAction | RequestGroupsAction;
+export type GroupAction =
+  CreateUpdateReceiveGroupAction
+  | DeleteGroupAction
+  | ReceiveGroupsAction
+  | RequestGroupsAction;
 
 export function createGroupActionCreator(group: GroupModel): CreateUpdateReceiveGroupAction {
-    return {
-      type: actionTypes.CREATE_GROUP,
-      group
-    }
+  return {
+    type: actionTypes.CREATE_GROUP,
+    group
+  }
 }
 
 export function updateGroupActionCreator(group: GroupModel): CreateUpdateReceiveGroupAction {
-    return {
-      type: actionTypes.UPDATE_GROUP,
-      group
-    }
+  return {
+    type: actionTypes.UPDATE_GROUP,
+    group
+  }
 }
 
 export function deleteGroupActionCreator(group: GroupModel): DeleteGroupAction {
-    return {
-      type: actionTypes.DELETE_GROUP,
-      group
-    }
+  return {
+    type: actionTypes.DELETE_GROUP,
+    group
+  }
 }
 
 export function requestGroupsActionCreator(): RequestGroupsAction {
@@ -70,7 +74,7 @@ export function receiveGroupsActionCreator(groups: GroupModel[]): ReceiveGroupsA
     groups
   }
 }
-  
+
 export function receiveGroupActionCreator(group: GroupModel): CreateUpdateReceiveGroupAction {
   return {
     type: actionTypes.RECEIVE_GROUP,
@@ -78,40 +82,44 @@ export function receiveGroupActionCreator(group: GroupModel): CreateUpdateReceiv
   }
 }
 
-export function fetchGroups(projectUniqueName: string): Dispatch<GroupModel[]> {
-  return (dispatch: any)=> {
+export function fetchGroups(projectUniqueName: string): any {
+  return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
     return fetch(BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/', {
-        headers: {
-            'Authorization': 'token ' + getStoredToken()
-        }
-      })
+      headers: {
+        'Authorization': 'token ' + getState().auth.token
+      }
+    })
+      .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results.map((xp: {[key: string]: any})=> {
+      .then(json => json.results.map((xp: { [key: string]: any }) => {
           return {
             ...xp,
             createdAt: new Date(_.toString(xp.created_at)),
-            updatedAt: new Date(_.toString(xp.updated_at))};
+            updatedAt: new Date(_.toString(xp.updated_at))
+          };
         })
       )
       .then(json => dispatch(receiveGroupsActionCreator(json)))
   }
 }
 
-export function fetchGroup(user: string, projectName: string, groupSequence: number): Dispatch<GroupModel> {
-  return (dispatch: any) => {
+export function fetchGroup(user: string, projectName: string, groupSequence: number): any {
+  return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
     return fetch(BASE_URL + `/${user}` + `/${projectName}` + `/groups/` + `${groupSequence}`, {
-        headers: {
-            'Authorization': 'token ' + getStoredToken()
-        }
+      headers: {
+        'Authorization': 'token ' + getState().auth.token
+      }
     })
+      .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => {
           return {
             ...json,
             createdAt: new Date(_.toString(json.created_at)),
-            updatedAt: new Date(_.toString(json.updated_at))};
+            updatedAt: new Date(_.toString(json.updated_at))
+          };
         }
       )
       .then(json => dispatch(receiveGroupActionCreator(json)))
