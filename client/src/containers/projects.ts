@@ -10,9 +10,11 @@ import {modalTypes, modalPropsByTypes} from "../models/modal";
 
 
 export function mapStateToProps(state: AppState, params: any)  {
-  if (state.projects)
-    return {projects: (<any>Object).values(state.projects.byUuids).sort(sortByUpdatedAt)};
-  return {projects: []};
+  let results = {projects: [], user: params.match.params.user};
+  if (state.projects) {
+    results.projects = (<any>Object).values(state.projects.byUuids).sort(sortByUpdatedAt);
+  }
+  return results;
 }
 
 export interface DispatchProps {
