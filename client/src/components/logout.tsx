@@ -15,8 +15,8 @@ export default class Logout extends React.Component<Props, Object> {
     discardToken();
     this.props.history.push(getLoginUrl());
   }
-  
-  public render () {
+
+  public render() {
     return (<div></div>);
   }
 }

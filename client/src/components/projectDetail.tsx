@@ -28,7 +28,9 @@ export default class ProjectDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <a className="back-button" onClick={() => {window.history.back()}}>&#060;</a>
+            <a className="back-button" onClick={() => {
+              window.history.back()
+            }}>&#060;</a>
             <span className="title">
               <i className="fa fa-cubes icon" aria-hidden="true"></i>
               {project.name}
@@ -39,9 +41,11 @@ export default class ProjectDetail extends React.Component<Props, Object> {
             </span>
           </div>
           <h4 className="polyaxon-header">Experiment groups</h4>
-          <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}></Groups>
+          <Groups fetchData={() => null} user={project.user}
+                  projectName={project.unique_name}></Groups>
           <h4 className="polyaxon-header">Independent Experiments</h4>
-          <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name} groupUuid={null}></Experiments>
+          <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name}
+                       groupUuid={null}></Experiments>
         </div>
       </div>
     );

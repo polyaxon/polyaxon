@@ -29,12 +29,13 @@ export default class Projects extends React.Component<Props, Object> {
           <span className="title">Projects</span>
           <span className="results-info">({projects.length} found)</span>
         </div>
-        <RootModal hideModal={hideModal} />
+        <RootModal hideModal={hideModal}/>
         <ul>
           {projects.filter(
             (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
           ).map(
-            (project: ProjectModel) => <li className="list-item" key={project.uuid}><Project project={project} onDelete={() => onDelete(project)}/></li>)}
+            (project: ProjectModel) => <li className="list-item" key={project.uuid}>
+              <Project project={project} onDelete={() => onDelete(project)}/></li>)}
         </ul>
       </div>
     );

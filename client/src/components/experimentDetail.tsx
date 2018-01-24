@@ -28,7 +28,9 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <a className="back-button" onClick={() => {window.history.back()}}>&#060;</a>
+            <a className="back-button" onClick={() => {
+              window.history.back()
+            }}>&#060;</a>
             <span className="title">
               <i className="fa fa-sliders icon" aria-hidden="true"></i>
               {experiment.unique_name}

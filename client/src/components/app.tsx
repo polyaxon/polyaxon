@@ -10,14 +10,14 @@ import "./app.less";
 
 function App() {
   return (
-      <BrowserRouter>
-        <div>
-          <Header />
-          <div className="container container-fluid">
-            <Routes />
-          </div>
+    <BrowserRouter>
+      <div>
+        <Header/>
+        <div className="container container-fluid">
+          <Routes/>
         </div>
-      </BrowserRouter>
+      </div>
+    </BrowserRouter>
   );
 }
 

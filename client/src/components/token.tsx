@@ -11,7 +11,7 @@ function Token(probs: Props) {
     <div className="jumbotron jumbotron-action">
       Your token is: {probs.token}
     </div>
-    );
+  );
 };
 
 

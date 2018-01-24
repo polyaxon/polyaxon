@@ -23,16 +23,19 @@ export default class Jobs extends React.Component<Props, Object> {
   public render() {
     const {jobs, onCreate, onUpdate, onDelete, fetchData} = this.props;
     return (
-        <div className="row">
-          <div className="col-md-12">
-            <ul>
-              {jobs.filter(
-                (job: JobModel) => _.isNil(job.deleted) || !job.deleted
-              ).map(
-                (job: JobModel) => <li className="list-item" key={job.uuid}><Job job={job} onDelete={() => onDelete(job)}/></li>)}
-            </ul>
-          </div>
+      <div className="row">
+        <div className="col-md-12">
+          <ul>
+            {jobs.filter(
+              (job: JobModel) => _.isNil(job.deleted) || !job.deleted
+            ).map(
+              (job: JobModel) =>
+                <li className="list-item" key={job.uuid}>
+                  <Job job={job} onDelete={() => onDelete(job)}/>
+                </li>)}
+          </ul>
         </div>
+      </div>
     );
   }
 }

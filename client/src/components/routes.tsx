@@ -22,63 +22,63 @@ function Routes() {
 
   return (
     <Switch>
-        <Route path={getLoginUrl()} component={Login}/>
-        <Route path={getLogoutUrl()} component={Logout}/>
-        <Route path={tokenRoute} render={() => (
-          isUserAuthenticated() ? (
-            <Route path={tokenRoute} component={Token}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}/>
+      <Route path={getLoginUrl()} component={Login}/>
+      <Route path={getLogoutUrl()} component={Logout}/>
+      <Route path={tokenRoute} render={() => (
+        isUserAuthenticated() ? (
+          <Route path={tokenRoute} component={Token}/>
+        ) : (
+          <Redirect to={getLoginUrl()}/>
+        )
+      )}/>
 
-        <Route path={jobDetailRoute} render={() => (
-          isUserAuthenticated() ? (
-            <Route path={jobDetailRoute} component={JobDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}/>
+      <Route path={jobDetailRoute} render={() => (
+        isUserAuthenticated() ? (
+          <Route path={jobDetailRoute} component={JobDetail}/>
+        ) : (
+          <Redirect to={getLoginUrl()}/>
+        )
+      )}/>
 
-        <Route path={groupDetailRoute} render={() => (
-          isUserAuthenticated() ? (
-            <Route path={groupDetailRoute} component={GroupDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}/>
+      <Route path={groupDetailRoute} render={() => (
+        isUserAuthenticated() ? (
+          <Route path={groupDetailRoute} component={GroupDetail}/>
+        ) : (
+          <Redirect to={getLoginUrl()}/>
+        )
+      )}/>
 
-        <Route path={experimentDetailRoute} render={() => (
-          isUserAuthenticated() ? (
-            <Route path={experimentDetailRoute} component={ExperimentDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}/>
+      <Route path={experimentDetailRoute} render={() => (
+        isUserAuthenticated() ? (
+          <Route path={experimentDetailRoute} component={ExperimentDetail}/>
+        ) : (
+          <Redirect to={getLoginUrl()}/>
+        )
+      )}/>
 
-        <Route path={projectDetailRoute} render={() => (
-          isUserAuthenticated() ? (
-            <Route path={projectDetailRoute} component={ProjectDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}/>
+      <Route path={projectDetailRoute} render={() => (
+        isUserAuthenticated() ? (
+          <Route path={projectDetailRoute} component={ProjectDetail}/>
+        ) : (
+          <Redirect to={getLoginUrl()}/>
+        )
+      )}/>
 
-        <Route path={projectsRoute} render={() => (
-          isUserAuthenticated() ? (
-            <Route path={projectsRoute} component={Projects}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}/>
+      <Route path={projectsRoute} render={() => (
+        isUserAuthenticated() ? (
+          <Route path={projectsRoute} component={Projects}/>
+        ) : (
+          <Redirect to={getLoginUrl()}/>
+        )
+      )}/>
 
-        <Route path="*" render={() => (
-          isUserAuthenticated() ? (
-            <Redirect to={getHomeUrl()}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}/>
+      <Route path="*" render={() => (
+        isUserAuthenticated() ? (
+          <Redirect to={getHomeUrl()}/>
+        ) : (
+          <Redirect to={getLoginUrl()}/>
+        )
+      )}/>
     </Switch>
   )
 }

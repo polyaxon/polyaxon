@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import {MenuItem, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { getHomeUrl, getLogoutUrl, isUserAuthenticated } from "../constants/utils";
+import {LinkContainer} from "react-router-bootstrap";
+import {getHomeUrl, getLogoutUrl, isUserAuthenticated} from "../constants/utils";
 import "./header.less";
 
 
@@ -10,7 +10,7 @@ function Header() {
   return (
     <header>
       <Navbar inverse collapseOnSelect className="navbar">
-        <Navbar.Header >
+        <Navbar.Header>
           <Navbar.Brand>
             <LinkContainer to={getHomeUrl()} className="nav-link brand">
               <a>
@@ -18,9 +18,9 @@ function Header() {
               </a>
             </LinkContainer>
           </Navbar.Brand>
-          <Navbar.Toggle />
+          <Navbar.Toggle/>
         </Navbar.Header>
-        { isUserAuthenticated() &&
+        {isUserAuthenticated() &&
         <Navbar.Collapse>
           <Nav>
           </Nav>
@@ -28,7 +28,7 @@ function Header() {
             <NavDropdown eventKey={3} title="Profile" id="basic-nav-dropdown">
               <MenuItem eventKey={3.1} href="https://docs.polyaxon.com/">Docs</MenuItem>
               <MenuItem eventKey={3.2} href="https://github.com/polyaxon/">Github</MenuItem>
-              <MenuItem divider />
+              <MenuItem divider/>
               <MenuItem eventKey={3.3} href={getLogoutUrl()}>Logout</MenuItem>
             </NavDropdown>
           </Nav>

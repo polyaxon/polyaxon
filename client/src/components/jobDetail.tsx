@@ -32,7 +32,7 @@ export default class JobDetail extends React.Component<Props, Object> {
               {job.unique_name}
             </span>
             <span className="description">
-              <pre>{JSON.stringify(job.definition, null, 2) }</pre>
+              <pre>{JSON.stringify(job.definition, null, 2)}</pre>
             </span>
           </div>
         </div>

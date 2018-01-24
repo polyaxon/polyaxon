@@ -27,7 +27,9 @@ export default class GroupDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <a className="back-button" onClick={() => {window.history.back()}}>&#060;</a>
+            <a className="back-button" onClick={() => {
+              window.history.back()
+            }}>&#060;</a>
             <span className="title">
               <i className="fa fa-object-group icon" aria-hidden="true"></i>
               Group: {group.unique_name}
@@ -39,7 +41,8 @@ export default class GroupDetail extends React.Component<Props, Object> {
             </pre>
             }
           </div>
-          <Experiments fetchData={() => null} user={group.user} projectName={group.project_name} groupUuid={group.uuid}></Experiments>
+          <Experiments fetchData={() => null} user={group.user} projectName={group.project_name}
+                       groupUuid={group.uuid}></Experiments>
         </div>
       </div>
     );

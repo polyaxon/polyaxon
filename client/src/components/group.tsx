@@ -20,41 +20,41 @@ function Group({group, onDelete}: Props) {
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ getGroupUrl(values[0], values[1], group.sequence) }>
+          <LinkContainer to={getGroupUrl(values[0], values[1], group.sequence)}>
             <Button className="button" disabled={disabled}>
-              {group.num_experiments} { pluralize('Experiment', group.num_experiments) }
+              {group.num_experiments} {pluralize('Experiment', group.num_experiments)}
               <i className="fa fa-sliders icon" aria-hidden="true"></i>
             </Button>
           </LinkContainer>
         </ButtonToolbar>
         <span className="title">
           <i className="fa fa-object-group icon" aria-hidden="true"></i>
-          Group: { group.unique_name}
+          Group: {group.unique_name}
         </span>
         <div className="meta">
           <i className="fa fa-user-o icon" aria-hidden="true"></i>
           <span className="title">User:</span>
-          { group.user }
+          {group.user}
         </div>
         <div className="meta">
           <i className="fa fa-bolt icon" aria-hidden="true"></i>
           <span className="title">Concurrency:</span>
-          { group.concurrency }
+          {group.concurrency}
         </div>
         <div className="meta">
           <i className="fa fa-sliders icon" aria-hidden="true"></i>
           <span className="title">Number of pending experiments:</span>
-          { group.num_pending_experiments }
+          {group.num_pending_experiments}
         </div>
         <div className="meta">
           <i className="fa fa-sliders icon" aria-hidden="true"></i>
           <span className="title">Number of running experiments:</span>
-          { group.num_running_experiments }
+          {group.num_running_experiments}
         </div>
         <div className="meta">
           <i className="fa fa-clock-o icon" aria-hidden="true"></i>
           <span className="title">Created at:</span>
-          { group.createdAt.toLocaleTimeString("en-US", dateOptions) }
+          {group.createdAt.toLocaleTimeString("en-US", dateOptions)}
         </div>
       </div>
     </div>

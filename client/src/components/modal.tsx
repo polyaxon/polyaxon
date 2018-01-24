@@ -14,7 +14,15 @@ function RootModal({modalProps, hideModal}: Props) {
   let bodyComponent;
   switch (modalProps.type) {
     case modalTypes.CREATE_PROJECT:
-      bodyComponent = <CreateProjectForm onSubmit={(values) => {modalProps.props.submitCb({...values, id:100, createdAt: new Date(), updatedAt: new Date()}); hideModal();}} />
+      bodyComponent = <CreateProjectForm onSubmit={(values) => {
+        modalProps.props.submitCb({
+          ...values,
+          id: 100,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        });
+        hideModal();
+      }}/>
   }
 
   let footer = null;
@@ -23,16 +31,17 @@ function RootModal({modalProps, hideModal}: Props) {
   }
 
   return (
-      <Modal show={modalProps.props.show} onHide={hideModal} bsSize="small" aria-labelledby="contained-modal-title-sm">
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-sm">{modalProps.props.heading}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {bodyComponent}
-        </Modal.Body>
-        {footer}
-      </Modal>
-    );
+    <Modal show={modalProps.props.show} onHide={hideModal} bsSize="small"
+           aria-labelledby="contained-modal-title-sm">
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-sm">{modalProps.props.heading}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {bodyComponent}
+      </Modal.Body>
+      {footer}
+    </Modal>
+  );
 };
 
 

@@ -17,26 +17,26 @@ function Project({project, onDelete}: Props) {
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ getProjectUrl(project.user, project.name) }>
+          <LinkContainer to={getProjectUrl(project.user, project.name)}>
             <Button className="button">
-              {project.num_experiments} { pluralize('Experiment', project.num_experiments) }
+              {project.num_experiments} {pluralize('Experiment', project.num_experiments)}
               <i className="fa fa-sliders icon" aria-hidden="true"></i>
             </Button>
           </LinkContainer>
         </ButtonToolbar>
         <span className="title">
           <i className="fa fa-cubes icon" aria-hidden="true"></i>
-          { project.name }
+          {project.name}
         </span>
         <div className="meta">
           <i className="fa fa-lock icon" aria-hidden="true"></i>
           <span className="title">Visibility:</span>
-          { visibility }
+          {visibility}
         </div>
         <div className="meta">
           <i className="fa fa-clock-o icon" aria-hidden="true"></i>
           <span className="title">Created at:</span>
-          { project.createdAt.toLocaleTimeString("en-US", dateOptions) }
+          {project.createdAt.toLocaleTimeString("en-US", dateOptions)}
         </div>
       </div>
     </div>

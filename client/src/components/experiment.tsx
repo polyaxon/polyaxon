@@ -26,42 +26,42 @@ function Experiment({experiment, onDelete}: Props) {
     <div className="row">
       <div className="col-md-12 block">
         <ButtonToolbar className="pull-right">
-          <LinkContainer to={ getExperimentUrl(values[0], values[1], experiment.sequence) }>
+          <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.sequence)}>
             <Button className="button" disabled={disabled}>
-              {experiment.num_jobs} { pluralize('Job', experiment.num_jobs) }
+              {experiment.num_jobs} {pluralize('Job', experiment.num_jobs)}
               <i className="fa fa-cube icon" aria-hidden="true"></i>
             </Button>
           </LinkContainer>
         </ButtonToolbar>
         <span className="title">
           <i className="fa fa-sliders icon" aria-hidden="true"></i>
-          { experiment.unique_name}
-          <span className={`status alert alert-${statusCssClass}`}>{ experiment.last_status}</span>
+          {experiment.unique_name}
+          <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
         </span>
         <div className="meta">
           <i className="fa fa-user-o icon" aria-hidden="true"></i>
           <span className="title">User:</span>
-          { experiment.user }
+          {experiment.user}
         </div>
-        { experiment.experiment_group_name &&
+        {experiment.experiment_group_name &&
         <div className="meta">
           <i className="fa fa-object-group icon" aria-hidden="true"></i>
           <span className="title">Group:</span>
-          { experiment.experiment_group_name }
+          {experiment.experiment_group_name}
         </div>
-        }        
-        { experiment.started_at &&
+        }
+        {experiment.started_at &&
         <div className="meta">
           <i className="fa fa-clock-o icon" aria-hidden="true"></i>
           <span className="title">Started at:</span>
-          { experiment.started_at }
+          {experiment.started_at}
         </div>
         }
-        { experiment.finished_at &&
+        {experiment.finished_at &&
         <div className="meta">
           <i className="fa fa-clock-o icon" aria-hidden="true"></i>
           <span className="title">Finished at:</span>
-          { experiment.finished_at }
+          {experiment.finished_at}
         </div>
         }
       </div>
