@@ -66,6 +66,10 @@ export let getLogoutUrl = function () {
   return '/app/auth/logout/';
 };
 
+export let getUserUrl = function (username: string) {
+  return `/app/${username}`
+};
+
 export let getProjectUrl = function (username: string, projectName: string) {
   return `/app/${username}/${projectName}`
 };
