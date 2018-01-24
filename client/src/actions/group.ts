@@ -92,14 +92,7 @@ export function fetchGroups(projectUniqueName: string): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results.map((xp: { [key: string]: any }) => {
-          return {
-            ...xp,
-            createdAt: new Date(_.toString(xp.created_at)),
-            updatedAt: new Date(_.toString(xp.updated_at))
-          };
-        })
-      )
+      .then(json => json.results)
       .then(json => dispatch(receiveGroupsActionCreator(json)))
   }
 }
@@ -114,14 +107,6 @@ export function fetchGroup(user: string, projectName: string, groupSequence: num
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => {
-          return {
-            ...json,
-            createdAt: new Date(_.toString(json.created_at)),
-            updatedAt: new Date(_.toString(json.updated_at))
-          };
-        }
-      )
       .then(json => dispatch(receiveGroupActionCreator(json)))
   }
 }

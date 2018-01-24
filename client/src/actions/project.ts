@@ -106,13 +106,6 @@ export function createProject(user: string, project: ProjectModel): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => {
-        return {
-          ...json,
-          createdAt: new Date(_.toString(json.created_at)),
-          updatedAt: new Date(_.toString(json.updated_at))
-        };
-      })
       .then(json => dispatch(receiveProjectActionCreator(json)))
   }
 }
@@ -142,13 +135,7 @@ export function fetchProjects(user: string): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results.map((project: { [key: string]: any }) => {
-        return {
-          ...project,
-          createdAt: new Date(_.toString(project.created_at)),
-          updatedAt: new Date(_.toString(project.updated_at))
-        };
-      }))
+      .then(json => json.results)
       .then(json => dispatch(receiveProjectsActionCreator(json)))
   }
 }
@@ -164,14 +151,6 @@ export function fetchProject(user: string, projectName: string): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => {
-          return {
-            ...json,
-            createdAt: new Date(_.toString(json.created_at)),
-            updatedAt: new Date(_.toString(json.updated_at))
-          };
-        }
-      )
       .then(json => dispatch(receiveProjectActionCreator(json)))
   }
 }

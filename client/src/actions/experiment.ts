@@ -95,14 +95,7 @@ export function fetchExperiments(projectUniqueName: string, groupUuid: string): 
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results.map((xp: { [key: string]: any }) => {
-          return {
-            ...xp,
-            createdAt: new Date(_.toString(xp.created_at)),
-            updatedAt: new Date(_.toString(xp.updated_at))
-          };
-        })
-      )
+      .then(json => json.results)
       .then(json => dispatch(receiveExperimentsActionCreator(json)))
   }
 }
@@ -117,15 +110,6 @@ export function fetchExperiment(user: string, projectName: string, experimentSeq
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => {
-          return {
-            ...json,
-            createdAt: new Date(_.toString(json.created_at)),
-            updatedAt: new Date(_.toString(json.updated_at))
-          };
-        }
-      )
       .then(json => dispatch(receiveExperimentActionCreator(json)))
   }
 }
-

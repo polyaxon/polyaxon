@@ -99,14 +99,7 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number)
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results.map((xp: { [key: string]: any }) => {
-          return {
-            ...xp,
-            createdAt: new Date(_.toString(xp.created_at)),
-            updatedAt: new Date(_.toString(xp.updated_at))
-          };
-        })
-      )
+      .then(json => json.results)
       .then(json => dispatch(receiveJobsActionCreator(json)))
   }
 }
@@ -121,14 +114,6 @@ export function fetchJob(user: string, projectName: string, experimentSequence: 
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => {
-          return {
-            ...json,
-            createdAt: new Date(_.toString(json.created_at)),
-            updatedAt: new Date(_.toString(json.updated_at))
-          };
-        }
-      )
       .then(json => dispatch(receiveJobActionCreator(json)))
   }
 }
