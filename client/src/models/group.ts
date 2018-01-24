@@ -10,8 +10,8 @@ export class GroupModel {
 	public num_pending_experiments?: number;
 	public num_running_experiments?: number;
 	public deleted?: boolean;
-	public createdAt: Date;
-	public updatedAt: Date;
+	public created_at: string;
+	public updated_at: string;
 }
 
 export class GroupStateSchema {

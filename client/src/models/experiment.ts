@@ -12,10 +12,10 @@ export class ExperimentModel {
 	public deleted?: boolean;
 	public project?: string;
 	public status?: string;
-	public createdAt: Date;
-	public updatedAt: Date;
-	public started_at: Date;
-	public finished_at: Date;
+	public created_at: string;
+	public updated_at: string;
+	public started_at: string;
+	public finished_at: string;
 }
 
 export class ExperimentStateSchema {
