@@ -1,9 +1,8 @@
 import * as React from "react";
-
-import {Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
+import * as moment from "moment";
 
-import {dateOptions, getGroupUrl, pluralize, splitProjectName} from "../constants/utils";
+import {getGroupUrl, splitProjectName} from "../constants/utils";
 import {GroupModel} from "../models/group";
 
 
@@ -14,47 +13,64 @@ export interface Props {
 
 
 function Group({group, onDelete}: Props) {
-  let disabled = group.num_experiments == 0;
   let values = splitProjectName(group.project_name);
   return (
     <div className="row">
-      <div className="col-md-12 block">
-        <ButtonToolbar className="pull-right">
-          <LinkContainer to={getGroupUrl(values[0], values[1], group.sequence)}>
-            <Button className="button" disabled={disabled}>
-              {group.num_experiments} {pluralize('Experiment', group.num_experiments)}
-              <i className="fa fa-sliders icon" aria-hidden="true"></i>
-            </Button>
-          </LinkContainer>
-        </ButtonToolbar>
-        <span className="title">
-          <i className="fa fa-object-group icon" aria-hidden="true"></i>
-          Group: {group.unique_name}
-        </span>
-        <div className="meta">
-          <i className="fa fa-user-o icon" aria-hidden="true"></i>
-          <span className="title">User:</span>
-          {group.user}
+      <div className="col-md-10 block">
+        <LinkContainer to={getGroupUrl(values[0], values[1], group.sequence)}>
+          <a className="title">
+            <i className="fa fa-cubes icon" aria-hidden="true"></i>
+            {group.unique_name}
+          </a>
+        </LinkContainer>
+        <div className="meta-description">
+          {group.description}
         </div>
         <div className="meta">
-          <i className="fa fa-bolt icon" aria-hidden="true"></i>
-          <span className="title">Concurrency:</span>
-          {group.concurrency}
+          <span className="meta-info">
+            <i className="fa fa-user-o icon" aria-hidden="true"></i>
+            <span className="title">User:</span>
+            {group.user}
+          </span>
+          <span className="meta-info">
+            <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+            <span className="title">Last updated:</span>
+            {moment(group.updated_at).fromNow()}
+          </span>
         </div>
-        <div className="meta">
-          <i className="fa fa-sliders icon" aria-hidden="true"></i>
-          <span className="title">Number of pending experiments:</span>
-          {group.num_pending_experiments}
+      </div>
+
+      <div className="col-md-2 block">
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-cube icon" aria-hidden="true"></i>
+            <span className="title">Experiments:</span>
+            {group.num_experiments}
+          </span>
         </div>
-        <div className="meta">
-          <i className="fa fa-sliders icon" aria-hidden="true"></i>
-          <span className="title">Number of running experiments:</span>
-          {group.num_running_experiments}
+
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-share-alt icon" aria-hidden="true"></i>
+            <span className="title">Concurrency:</span>
+            {group.concurrency}
+          </span>
         </div>
-        <div className="meta">
-          <i className="fa fa-clock-o icon" aria-hidden="true"></i>
-          <span className="title">Created at:</span>
-          {group.createdAt.toLocaleTimeString("en-US", dateOptions)}
+
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-bolt icon" aria-hidden="true"></i>
+            <span className="title">Running Experiments:</span>
+            {group.num_running_experiments}
+          </span>
+        </div>
+
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-hourglass-end icon" aria-hidden="true"></i>
+            <span className="title">Pending Experiments:</span>
+            {group.num_pending_experiments}
+          </span>
         </div>
       </div>
     </div>

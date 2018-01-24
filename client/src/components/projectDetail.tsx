@@ -32,17 +32,17 @@ export default class ProjectDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
+            <span className="title">
+              <i className="fa fa-server icon" aria-hidden="true"></i>
+              <LinkContainer to={getUserUrl(project.user)}>
+                <a className="title">
+                  {project.user}
+                </a>
+              </LinkContainer> /
               <span className="title">
-                <i className="fa fa-server icon" aria-hidden="true"></i>
-                <LinkContainer to={getUserUrl(project.user)}>
-                  <a className="title">
-                    {project.user}
-                  </a>
-                </LinkContainer> /
-                <span className="title">
-                  {project.name}
-                </span>
+                {project.name}
               </span>
+            </span>
             <div className="meta-description">
               {project.description}
             </div>
