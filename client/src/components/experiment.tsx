@@ -1,11 +1,11 @@
 import * as React from "react";
-
-import {Button, ButtonToolbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
+import * as moment from "moment";
+
 import {
   getCssClassForStatus,
   getExperimentUrl,
-  pluralize,
+  humanizeTimeDelta,
   splitProjectName
 } from "../constants/utils"
 
@@ -19,49 +19,78 @@ export interface Props {
 
 
 function Experiment({experiment, onDelete}: Props) {
-  let disabled = experiment.num_jobs == 0 ? true : false;
+  let totalRun = humanizeTimeDelta(experiment.started_at, experiment.finished_at);
   let statusCssClass = getCssClassForStatus(experiment.last_status);
   let values = splitProjectName(experiment.project_name);
   return (
     <div className="row">
-      <div className="col-md-12 block">
-        <ButtonToolbar className="pull-right">
-          <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.sequence)}>
-            <Button className="button" disabled={disabled}>
-              {experiment.num_jobs} {pluralize('Job', experiment.num_jobs)}
-              <i className="fa fa-cube icon" aria-hidden="true"></i>
-            </Button>
-          </LinkContainer>
-        </ButtonToolbar>
-        <span className="title">
-          <i className="fa fa-sliders icon" aria-hidden="true"></i>
-          {experiment.unique_name}
-          <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
-        </span>
-        <div className="meta">
-          <i className="fa fa-user-o icon" aria-hidden="true"></i>
-          <span className="title">User:</span>
-          {experiment.user}
+      <div className="col-md-10 block">
+        <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.sequence)}>
+          <a className="title">
+            <i className="fa fa-cube icon" aria-hidden="true"></i>
+            {experiment.unique_name}
+            <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
+          </a>
+        </LinkContainer>
+        <div className="meta-description">
+          {experiment.description}
         </div>
-        {experiment.experiment_group_name &&
         <div className="meta">
-          <i className="fa fa-object-group icon" aria-hidden="true"></i>
-          <span className="title">Group:</span>
-          {experiment.experiment_group_name}
+          <span className="meta-info">
+            <i className="fa fa-user-o icon" aria-hidden="true"></i>
+            <span className="title">User:</span>
+            {experiment.user}
+          </span>
+          <span className="meta-info">
+              <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+            <span className="title">Created:</span>
+            {moment(experiment.created_at).fromNow()}
+          </span>
+        </div>
+      </div>
+
+      <div className="col-md-2 block">
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-tasks icon" aria-hidden="true"></i>
+            <span className="title">Jobs:</span>
+            {experiment.num_jobs}
+          </span>
+        </div>
+        {experiment.last_status &&
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-fire icon" aria-hidden="true"></i>
+            <span className="title">Last Status:</span>
+            {experiment.last_status}
+          </span>
         </div>
         }
         {experiment.started_at &&
-        <div className="meta">
-          <i className="fa fa-clock-o icon" aria-hidden="true"></i>
-          <span className="title">Started at:</span>
-          {experiment.started_at}
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+            <span className="title">Started:</span>
+            {moment(experiment.started_at).fromNow()}
+          </span>
         </div>
         }
         {experiment.finished_at &&
-        <div className="meta">
-          <i className="fa fa-clock-o icon" aria-hidden="true"></i>
-          <span className="title">Finished at:</span>
-          {experiment.finished_at}
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+            <span className="title">Finished:</span>
+            {moment(experiment.finished_at).fromNow()}
+          </span>
+        </div>
+        }
+        {totalRun &&
+        <div className="row meta">
+          <span className="meta-info">
+            <i className="fa fa-hourglass icon" aria-hidden="true"></i>
+            <span className="title">Total run:</span>
+            {totalRun}
+          </span>
         </div>
         }
       </div>
