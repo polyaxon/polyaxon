@@ -24,7 +24,7 @@ extra:
     - type: 'linkedin'
       link: 'https://linkedin.com/company/polyaxon'
     - type: 'medium'
-      link: 'https://medium.com/@polyaxon'
+      link: 'https://medium.com/polyaxon'
     - type: 'angellist'
       link: 'https://angel.co/polyaxon'
 
