@@ -90,6 +90,10 @@ export let getExperimentUrl = function (username: string, projectName: string, e
   return `${projectUrl}/experiments/${experimentSequence}/`;
 };
 
+export function getGroupName(projectName: string, groupSequence: number|string) {
+  return `${projectName}.${groupSequence}`;
+}
+
 export function handleAuthError(response: any, dispatch: any) {
   if (!response.ok) {
     dispatch(fetchUser());

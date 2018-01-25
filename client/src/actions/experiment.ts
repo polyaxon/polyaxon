@@ -81,11 +81,17 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   }
 }
 
-export function fetchExperiments(projectUniqueName: string, groupUuid: string): any {
+export function fetchExperiments(projectUniqueName: string, groupSequence?: string): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
-    let url = BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/';
-    if (!groupUuid) {
+    let url = `${BASE_URL}/${urlifyProjectName(projectUniqueName)}`;
+    if (groupSequence) {
+      url += `/groups/${groupSequence}/experiments/`;
+    }
+    else {
+      url += `/experiments/`;
+    }
+    if (!groupSequence) {
       url += '?independent=True'
     }
     return fetch(url, {

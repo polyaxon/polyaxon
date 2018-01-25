@@ -89,7 +89,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
           </div>
           <h4 className="polyaxon-header">Experiments</h4>
           <Experiments fetchData={() => null} user={group.user} projectName={group.project_name}
-                       groupUuid={group.uuid}></Experiments>
+                       groupSequence={group.sequence}></Experiments>
         </div>
       </div>
     );
