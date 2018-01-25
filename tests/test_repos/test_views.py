@@ -77,10 +77,9 @@ class TestUploadFilesView(BaseViewTest):
         self.url = '/{}/{}/{}/repo/upload'.format(API_V1,
                                                   self.project.user.username,
                                                   self.project.name)
-        settings.REPOS_ROOT = tempfile.mkdtemp()
-        settings.UPLOAD_ROOT = tempfile.mkdtemp()
 
-    def get_upload_file(self, filename='repo'):
+    @staticmethod
+    def get_upload_file(filename='repo'):
         file = File(open('./tests/fixtures_static/{}.tar.gz'.format(filename), 'rb'))
         return SimpleUploadedFile(filename, file.read(),
                                   content_type='multipart/form-data')

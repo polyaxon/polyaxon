@@ -6,6 +6,10 @@ from unittest.mock import patch
 
 import mock
 
+from django.test.client import MULTIPART_CONTENT
+from django.core.files import File
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
@@ -13,6 +17,7 @@ from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
 from factories.factory_repos import RepoFactory
 from factories.fixtures import experiment_spec_content, exec_experiment_spec_content
+from polyaxon.urls import API_V1
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 from factories.factory_experiments import (
@@ -21,11 +26,11 @@ from factories.factory_experiments import (
     ExperimentJobStatusFactory,
     ExperimentStatusFactory,
 )
-from factories.factory_projects import ExperimentGroupFactory
+from factories.factory_projects import ExperimentGroupFactory, ProjectFactory
 from tests.fixtures import (
     start_experiment_value,
 )
-from tests.utils import BaseTest
+from tests.utils import BaseTest, BaseViewTest
 
 
 class TestExperimentModel(BaseTest):
@@ -199,3 +204,69 @@ class TestExperimentModel(BaseTest):
         assert done_xp.last_status == ExperimentLifeCycle.FAILED
         assert no_jobs_xp.last_status is None
         assert xp_with_jobs.last_status == ExperimentLifeCycle.RUNNING
+
+
+class TestExperimentCommit(BaseViewTest):
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.url = '/{}/{}/{}/repo/upload'.format(API_V1,
+                                                  self.project.user.username,
+                                                  self.project.name)
+
+    @staticmethod
+    def get_upload_file(filename='repo'):
+        file = File(open('./tests/fixtures_static/{}.tar.gz'.format(filename), 'rb'))
+        return SimpleUploadedFile(filename, file.read(),
+                                  content_type='multipart/form-data')
+
+    def create_experiment(self, content):
+        config = Specification.read(content)
+        with patch('repos.dockerize.build_experiment') as _:
+            return ExperimentFactory(config=config.parsed_data, project=self.project)
+
+    def test_experiment_is_saved_with_commit(self):
+        uploaded_file = self.get_upload_file()
+
+        self.auth_client.put(self.url,
+                             data={'repo': uploaded_file},
+                             content_type=MULTIPART_CONTENT)
+
+        last_commit = self.project.repo.last_commit
+        assert last_commit is not None
+
+        # Check experiment is created with commit
+        experiment = self.create_experiment(exec_experiment_spec_content)
+
+        assert experiment.commit == last_commit[0]
+
+        # Make a new upload with repo_new.tar.gz containing 2 files
+        new_uploaded_file = self.get_upload_file('updated_repo')
+        self.auth_client.put(self.url,
+                             data={'repo': new_uploaded_file},
+                             content_type=MULTIPART_CONTENT)
+
+        new_commit = self.project.repo.last_commit
+        assert new_commit is not None
+        assert new_commit[0] != last_commit[0]
+
+        # Check new experiment is created with new commit
+        new_experiment = self.create_experiment(exec_experiment_spec_content)
+        assert new_experiment.commit == new_commit[0]
+
+        # Cloning an experiment does not assign commit
+        clone_experiment = Experiment.objects.create(
+            project=experiment.project,
+            user=self.project.user,
+            description=experiment.description,
+            experiment_group=experiment.experiment_group,
+            config=experiment.config,
+            original_experiment=experiment,
+            commit=experiment.commit
+        )
+
+        assert clone_experiment.commit == experiment.commit
+
+        # Model experiments should not get a commit
+        model_experiment = self.create_experiment(experiment_spec_content)
+        assert model_experiment.commit is None
