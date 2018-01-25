@@ -24,7 +24,9 @@ from experiments.serializers import (
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
-    ExperimentMetricSerializer)
+    ExperimentMetricSerializer,
+    ExperimentDetailSerializer,
+)
 from experiments.tasks import stop_experiment
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
@@ -77,7 +79,7 @@ class GroupExperimentListView(ListAPIView):
 
 class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
-    serializer_class = ExperimentSerializer
+    serializer_class = ExperimentDetailSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
 

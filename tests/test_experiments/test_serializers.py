@@ -27,7 +27,7 @@ class TestExperimentSerializer(BaseTest):
     expected_keys = {
         'uuid', 'user', 'unique_name', 'sequence', 'description', 'created_at', 'updated_at',
         'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
-        'content', 'config', 'is_clone', 'original', 'project', 'project_name', 'experiment_group',
+        'is_clone', 'project', 'project_name', 'experiment_group',
         'experiment_group_name', 'num_jobs', }
 
     def setUp(self):
@@ -43,8 +43,6 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('project_name') == self.obj1.project.unique_name
-        assert data.pop('original') == (self.obj1.original_experiment.uuid.hex if
-                                        self.obj1.original_experiment else None)
         assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
                                                 if self.obj1.experiment_group else None)
         assert data.pop('experiment_group_name') == (self.obj1.experiment_group.unique_name
@@ -127,7 +125,6 @@ class TestExperimentDetailSerializer(BaseTest):
         'experiment_group_name',
         'content',
         'config',
-        'jobs',
         'started_at',
         'finished_at',
         'is_running',
@@ -161,7 +158,6 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('last_metric') == self.obj1.last_metric
         assert data.pop('num_jobs') == self.obj1.jobs.count()
-        assert len(data.pop('jobs')) == 1
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)

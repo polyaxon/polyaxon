@@ -19,6 +19,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
     ExperimentMetricSerializer,
+    ExperimentDetailSerializer,
 )
 from factories.fixtures import exec_experiment_spec_parsed_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
@@ -272,7 +273,7 @@ class TestExperimentListViewV1(BaseViewTest):
 
 
 class TestExperimentDetailViewV1(BaseViewTest):
-    serializer_class = ExperimentSerializer
+    serializer_class = ExperimentDetailSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     HAS_AUTH = True

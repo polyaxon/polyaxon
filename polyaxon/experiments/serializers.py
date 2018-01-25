@@ -79,19 +79,16 @@ class ExperimentSerializer(serializers.ModelSerializer):
     project = fields.SerializerMethodField()
     project_name = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
-    original = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
 
     class Meta:
         model = Experiment
-        fields = (
+        fields =(
             'uuid', 'unique_name', 'user', 'sequence', 'description', 'created_at', 'updated_at',
             'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
-            'is_clone', 'content', 'config', 'project', 'project_name', 'experiment_group',
-            'experiment_group_name', 'original', 'original_experiment', 'num_jobs',)
-
-        extra_kwargs = {'original_experiment': {'write_only': True}}
+            'is_clone', 'project', 'project_name', 'experiment_group',
+            'experiment_group_name', 'num_jobs',)
 
     def get_user(self, obj):
         return obj.user.username
@@ -111,16 +108,17 @@ class ExperimentSerializer(serializers.ModelSerializer):
     def get_num_jobs(self, obj):
         return obj.jobs.count()
 
-    def get_original(self, obj):
-        return obj.original_experiment.uuid.hex if obj.original_experiment else None
-
 
 class ExperimentDetailSerializer(ExperimentSerializer):
-    jobs = ExperimentJobSerializer(many=True)
+    original = fields.SerializerMethodField()
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
-            'description', 'config', 'original_experiment', 'jobs',)
+            'content', 'config', 'original', 'original_experiment', 'description', 'config',)
+        extra_kwargs = {'original_experiment': {'write_only': True}}
+
+    def get_original(self, obj):
+        return obj.original_experiment.uuid.hex if obj.original_experiment else None
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):
