@@ -1,4 +1,6 @@
 import * as Cookies from 'js-cookie';
+import * as moment from "moment";
+
 import {TokenStateSchema} from "../models/token";
 import {fetchUser} from "../actions/user";
 
@@ -12,6 +14,10 @@ export let urlifyProjectName = function (projectName: string) {
 
 export let splitProjectName = function (projectName: string) {
   return projectName.split('.');
+};
+
+export let splitGroupName = function (groupName: string) {
+  return groupName.split('.');
 };
 
 export let getCssClassForStatus = function (status?: string): string {
@@ -67,21 +73,21 @@ export let getLogoutUrl = function () {
 };
 
 export let getUserUrl = function (username: string) {
-  return `/app/${username}`
+  return `/app/${username}`;
 };
 
 export let getProjectUrl = function (username: string, projectName: string) {
-  return `/app/${username}/${projectName}`
+  return `/app/${username}/${projectName}`;
 };
 
 export let getGroupUrl = function (username: string, projectName: string, groupSequence: number) {
   let projectUrl = getProjectUrl(username, projectName);
-  return `${projectUrl}/groups/${groupSequence}/`
+  return `${projectUrl}/groups/${groupSequence}/`;
 };
 
 export let getExperimentUrl = function (username: string, projectName: string, experimentSequence: number) {
   let projectUrl = getProjectUrl(username, projectName);
-  return `${projectUrl}/experiments/${experimentSequence}/`
+  return `${projectUrl}/experiments/${experimentSequence}/`;
 };
 
 export function handleAuthError(response: any, dispatch: any) {
@@ -90,4 +96,49 @@ export function handleAuthError(response: any, dispatch: any) {
     return Promise.reject(response.statusText);
   }
   return response;
-};
+}
+
+export function humanizeTimeDelta(startDate: string | Date, endtDate: string | Date): string | null {
+  if (startDate == null || endtDate == null) {
+    return null;
+  }
+
+  let seconds = moment(endtDate).diff(moment(startDate), 'seconds');
+  let minutes = moment(endtDate).diff(moment(startDate), 'minutes');
+  let hours = moment(endtDate).diff(moment(startDate), 'hours');
+  let days = moment(endtDate).diff(moment(startDate), 'days');
+
+  hours = hours % 24;
+  minutes = minutes % 60;
+  seconds = seconds % 60;
+  let result = '';
+
+  if (days >= 1) {
+    result += `${days}d`;
+    if (hours >= 1) {
+      result += ` ${hours}h`;
+    }
+    if (minutes >= 1) {
+      result += ` ${minutes}m`;
+    }
+    return result;
+  }
+
+  if (hours >= 1) {
+    result += `${hours}h`;
+    if (hours >= 1) {
+      result += ` ${minutes}m`;
+    }
+    return result;
+  }
+
+  if (minutes >= 1) {
+    result = `${minutes}m`;
+    if (seconds >= 1) {
+      result += ` ${seconds}s`;
+    }
+    return result;
+  }
+
+  return `${seconds}s`;
+}
