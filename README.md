@@ -1,6 +1,6 @@
 # Polyaxon-chart
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/polyaxon/polyaxon)
 
 Helm charts for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.
@@ -254,3 +254,8 @@ $ helm install --name my-release -f values.yaml polyaxon
 ```
 
 > **Tip**: You can use the default [values.yaml](polyaxon/values.yaml)
+
+
+## License
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-chart.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-chart?ref=badge_large)
