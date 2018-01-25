@@ -90,6 +90,7 @@ class ProjectSchema(Schema):
     description = fields.Str(allow_none=True)
     is_public = fields.Boolean(allow_none=True)
     has_code = fields.Bool(allow_none=True)
+    has_tensorboard = fields.Bool(allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
@@ -126,6 +127,7 @@ class ProjectConfig(BaseConfig):
                  description=None,
                  is_public=True,
                  has_code=False,
+                 has_tensorboard=False,
                  created_at=None,
                  updated_at=None,
                  num_experiments=0,
@@ -139,6 +141,7 @@ class ProjectConfig(BaseConfig):
         self.description = description
         self.is_public = is_public
         self.has_code = has_code
+        self.has_tensorboard = has_tensorboard
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
         self.num_experiments = num_experiments
