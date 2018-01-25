@@ -115,8 +115,8 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                 {totalRun}
               </span>
               }
-              <span
-                className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
+              <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}
+              </span>
             </div>
             {experiment.last_metric &&
             <div className="meta meta-metrics">
