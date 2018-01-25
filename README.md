@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/polyaxon/polyaxon-client.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon-client)
 [![PyPI version](https://badge.fury.io/py/polyaxon-client.svg)](https://badge.fury.io/py/polyaxon-client)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/polyaxon/polyaxon)
 
 
@@ -40,3 +40,7 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
 
 Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
 
+
+## LICENSE
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-client.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-client?ref=badge_large)
