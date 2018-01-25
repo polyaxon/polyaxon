@@ -129,6 +129,17 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                 </span>)}
             </div>
             }
+            {experiment.declarations &&
+            <div className="meta meta-declarations">
+              {Object.keys(experiment.declarations).map(
+                (xp, idx) =>
+                  <span className="meta-info" key={idx}>
+                  <i className="fa fa-gear icon" aria-hidden="true"></i>
+                  <span className="title">{xp}:</span>
+                    {experiment.declarations[xp]}
+                </span>)}
+            </div>
+            }
           </div>
           <h4 className="polyaxon-header">Jobs</h4>
           <Jobs fetchData={() => null} user={experiment.user} experiment={experiment}></Jobs>
