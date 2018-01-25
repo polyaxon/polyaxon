@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
 from experiments.models import (
@@ -23,6 +23,28 @@ from experiments.tasks import check_experiment_status, build_experiment
 
 
 logger = logging.getLogger('polyaxon.experiments')
+
+
+@receiver(pre_save, sender=Experiment, dispatch_uid="experiment_saved")
+@ignore_raw
+def add_experiment_commit(sender, **kwargs):
+    instance = kwargs['instance']
+
+    # Check if :
+    # the experiment is new
+    # that it has an exec section
+    # that it's not cloned
+    # if the instance has a primary key then is getting updated
+    if (instance.pk or
+            not instance.compiled_spec.run_exec or
+            instance.is_clone or
+            not instance.project.has_code):
+        return
+
+    # Set the code commit to the experiment
+    last_commit = instance.project.repo.last_commit
+    if last_commit:
+        instance.commit = last_commit[0]
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")

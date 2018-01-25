@@ -70,6 +70,10 @@ class Experiment(DiffModel, DescribableModel):
         blank=True,
         null=True,
         editable=True)
+    commit = models.CharField(
+        max_length=40,
+        blank=True,
+        null=True)
 
     class Meta:
         ordering = ['sequence']
