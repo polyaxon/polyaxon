@@ -132,6 +132,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'is_clone',
         'original',
         'num_jobs',
+        'declarations',
     }
 
     def setUp(self):

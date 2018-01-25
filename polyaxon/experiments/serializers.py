@@ -37,7 +37,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
         model = ExperimentJob
         fields = (
             'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
-            'definition', 'last_status',  'is_running', 'is_done', 'created_at', 'updated_at',
+            'definition', 'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
             'started_at', 'finished_at')
 
     def get_experiment(self, obj):
@@ -84,7 +84,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields =(
+        fields = (
             'uuid', 'unique_name', 'user', 'sequence', 'description', 'created_at', 'updated_at',
             'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
             'is_clone', 'project', 'project_name', 'experiment_group',
@@ -114,7 +114,9 @@ class ExperimentDetailSerializer(ExperimentSerializer):
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
-            'content', 'config', 'original', 'original_experiment', 'description', 'config',)
+            'content', 'config', 'original', 'original_experiment',
+            'description', 'config', 'declarations',
+        )
         extra_kwargs = {'original_experiment': {'write_only': True}}
 
     def get_original(self, obj):

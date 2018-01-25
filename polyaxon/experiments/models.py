@@ -101,6 +101,10 @@ class Experiment(DiffModel, DescribableModel):
     def compiled_spec(self):
         return Specification(experiment=self.uuid, values=self.config)
 
+    @cached_property
+    def declarations(self):
+        return self.compiled_spec.declarations
+
     @property
     def last_job_statuses(self):
         """The statuses of the job in this experiment."""
