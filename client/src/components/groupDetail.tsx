@@ -34,15 +34,19 @@ export default class GroupDetail extends React.Component<Props, Object> {
             <span className="title">
               <i className="fa fa-cubes icon" aria-hidden="true"></i>
               <LinkContainer to={getUserUrl(values[0])}>
-                <a className="title">
-                  {values[0]}
-                </a>
-              </LinkContainer> /
+                <span>
+                  <a className="title">
+                    {values[0]}
+                  </a>/
+                </span>
+              </LinkContainer>
               <LinkContainer to={getProjectUrl(values[0], values[1])}>
-                <a className="title">
-                  {values[1]}
-                </a>
-              </LinkContainer> /
+                <span>
+                  <a className="title">
+                    {values[1]}
+                  </a>/
+                </span>
+              </LinkContainer>
               <span className="title">
                 Group {group.sequence}
               </span>

@@ -6,7 +6,7 @@ import {LinkContainer} from "react-router-bootstrap";
 import {ProjectModel} from "../models/project";
 import Experiments from "../containers/experiments";
 import Groups from "../containers/groups";
-import {getUserUrl, pluralize} from "../constants/utils";
+import {getUserUrl} from "../constants/utils";
 
 
 export interface Props {
@@ -35,10 +35,12 @@ export default class ProjectDetail extends React.Component<Props, Object> {
             <span className="title">
               <i className="fa fa-server icon" aria-hidden="true"></i>
               <LinkContainer to={getUserUrl(project.user)}>
-                <a className="title">
-                  {project.user}
-                </a>
-              </LinkContainer> /
+                <span>
+                  <a className="title">
+                    {project.user}
+                  </a>/
+                </span>
+              </LinkContainer>
               <span className="title">
                 {project.name}
               </span>

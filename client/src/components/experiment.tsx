@@ -1,6 +1,6 @@
 import * as React from "react";
-import {LinkContainer} from "react-router-bootstrap";
 import * as moment from "moment";
+import {LinkContainer} from "react-router-bootstrap";
 
 import {
   getCssClassForStatus,
@@ -57,15 +57,6 @@ function Experiment({experiment, onDelete}: Props) {
             {experiment.num_jobs}
           </span>
         </div>
-        {experiment.last_status &&
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-fire icon" aria-hidden="true"></i>
-            <span className="title">Last Status:</span>
-            {experiment.last_status}
-          </span>
-        </div>
-        }
         {experiment.started_at &&
         <div className="row meta">
           <span className="meta-info">
