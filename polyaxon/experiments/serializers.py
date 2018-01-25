@@ -87,8 +87,8 @@ class ExperimentSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = (
             'uuid', 'unique_name', 'user', 'sequence', 'description', 'created_at', 'updated_at',
-            'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done', 'is_clone',
-            'content', 'config', 'project', 'project_name', 'experiment_group',
+            'last_status', 'last_metric', 'started_at', 'finished_at', 'is_running', 'is_done',
+            'is_clone', 'content', 'config', 'project', 'project_name', 'experiment_group',
             'experiment_group_name', 'original', 'original_experiment', 'num_jobs',)
 
         extra_kwargs = {'original_experiment': {'write_only': True}}

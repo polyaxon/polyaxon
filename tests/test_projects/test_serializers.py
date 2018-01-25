@@ -2,7 +2,11 @@
 from __future__ import absolute_import, division, print_function
 
 from projects.models import Project, ExperimentGroup
-from projects.serializers import ProjectSerializer, ExperimentGroupSerializer, ProjectDetailSerializer
+from projects.serializers import (
+    ProjectSerializer,
+    ExperimentGroupSerializer,
+    ProjectDetailSerializer,
+)
 from factories.factory_projects import ProjectFactory, ExperimentGroupFactory
 
 from tests.utils import BaseTest
@@ -52,7 +56,8 @@ class TestProjectSerializer(BaseTest):
     factory_class = ProjectFactory
     expected_keys = {
         'uuid', 'name', 'unique_name', 'description', 'user', 'description', 'created_at',
-        'updated_at', 'is_public', 'has_code', 'num_experiment_groups', 'num_experiments'}
+        'updated_at', 'is_public', 'has_code', 'has_tensorboard', 'num_experiment_groups',
+        'num_experiments'}
 
     def setUp(self):
         super().setUp()
@@ -87,7 +92,7 @@ class TestProjectDetailSerializer(BaseTest):
     expected_keys = {
         'uuid', 'unique_name', 'name', 'description', 'user', 'description', 'created_at',
         'updated_at', 'is_public', 'experiments', 'experiment_groups', 'has_code',
-        'num_experiment_groups', 'num_experiments'}
+        'has_tensorboard', 'num_experiment_groups', 'num_experiments'}
 
     def setUp(self):
         super().setUp()
