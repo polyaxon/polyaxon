@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/polyaxon/polyaxon.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/polyaxon/polyaxon)
 
 # Polyaxon
@@ -138,4 +138,4 @@ Feel free to [contact us](mailto:contact@polyaxon.com), we would love to learn a
 
 # License
 
-MIT License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon?ref=badge_large)
