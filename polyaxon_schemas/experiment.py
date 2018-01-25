@@ -103,6 +103,7 @@ class ExperimentSchema(Schema):
     config = fields.Dict(allow_none=True)
     content = fields.Str(allow_none=True)
     num_jobs = fields.Int(allow_none=True)
+    declarations = fields.Dict(allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
     class Meta:
@@ -123,10 +124,10 @@ class ExperimentConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         'user', 'sequence', 'description', 'config', 'jobs', 'content',
         'created_at', 'updated_at', 'started_at', 'finished_at',
-        'is_clone', 'is_running', 'is_done', 'total_run', 'last_metric']
+        'is_clone', 'is_running', 'is_done', 'total_run', 'last_metric', 'declarations']
     REDUCED_LIGHT_ATTRIBUTES = [
         'uuid', 'project', 'experiment_group', 'description', 'config', 'content',
-        'jobs', 'updated_at'
+        'jobs', 'updated_at', 'declarations'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -152,6 +153,7 @@ class ExperimentConfig(BaseConfig):
                  config=None,
                  content=None,
                  num_jobs=0,
+                 declarations=None,
                  jobs=None,
                  total_run=None):
         self.sequence = sequence
@@ -175,6 +177,7 @@ class ExperimentConfig(BaseConfig):
         self.config = config  # The json compiled content of this experiment
         self.content = content  # The yaml content when the experiment is independent
         self.num_jobs = num_jobs
+        self.declarations = declarations
         self.jobs = jobs
         self.total_run = None
         if all([self.started_at, self.finished_at]):
