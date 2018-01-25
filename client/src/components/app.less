@@ -124,9 +124,8 @@ input:focus, textarea:focus {
 }
 
 .list-item .description,
-.list-item .meta {
-  color: #7e7c7c;
-  font-size: 12px;
+span .icon {
+  padding-right: 8px;
 }
 
 .entity-details {
@@ -151,12 +150,6 @@ input:focus, textarea:focus {
     font-size: 25px;
     cursor: pointer;
   }
-  .description {
-    display: block;
-    margin: 10px 0 0 67px;
-    font-size: 15px;
-    font-style: italic;
-  }
   .content {
     margin: 10px 0 0 55px;
     font-size: 12px;
@@ -169,15 +162,6 @@ input:focus, textarea:focus {
 }
 
 .block {
-  .status {
-    padding: 4px;
-    border: 1px solid #eee;
-    white-space: nowrap;
-    border-radius: 4px;
-    margin-left: 10px;
-    font-size: 11px;
-
-  }
   .button {
     min-width: 100px;
     .icon {
@@ -190,7 +174,21 @@ input:focus, textarea:focus {
       padding-right: 5px;
     }
   }
+}
+
+.block, .entity-details {
+  .status {
+    padding: 4px;
+    border: 1px solid #eee;
+    white-space: nowrap;
+    border-radius: 4px;
+    margin-left: 10px;
+    font-size: 11px;
+
+  }
   .meta {
+    color: #2f2727;
+    font-size: 12px;
     .icon {
       padding-right: 3px;
     }
@@ -200,5 +198,18 @@ input:focus, textarea:focus {
       color: @layout-link-gray;
       font-weight: 500;
     }
+    .meta-info {
+      padding-right: 15px;
+    }
+  }
+  .meta-description {
+    padding: 20px 20px 20px 0;
+  }
+}
+
+a {
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
   }
 }
