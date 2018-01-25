@@ -11,12 +11,12 @@ export class ExperimentModel {
 	public project_name: string;
 	public experiment_group: string;
 	public deleted?: boolean;
-	public project?: string;
-	public status?: string;
+	public project: string;
 	public created_at: string;
 	public updated_at: string;
 	public started_at: string;
 	public finished_at: string;
+	public last_metric: {[metric: string]: number};
 }
 
 export class ExperimentStateSchema {

@@ -24,7 +24,7 @@ function Experiment({experiment, onDelete}: Props) {
   let values = splitProjectName(experiment.project_name);
   return (
     <div className="row">
-      <div className="col-md-10 block">
+      <div className="col-md-8 block">
         <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.sequence)}>
           <a className="title">
             <i className="fa fa-cube icon" aria-hidden="true"></i>
@@ -48,7 +48,21 @@ function Experiment({experiment, onDelete}: Props) {
           </span>
         </div>
       </div>
-
+      <div className="col-md-2 block">
+        {experiment.last_metric &&
+        <div className="meta-metrics">
+          {Object.keys(experiment.last_metric).map(
+            (xp, idx) =>
+              <div className="row meta" key={idx}>
+                <span className="meta-info">
+                  <i className="fa fa-area-chart icon" aria-hidden="true"></i>
+                  <span className="title">{xp}:</span>
+                  {experiment.last_metric[xp]}
+                </span>
+              </div>)}
+        </div>
+        }
+      </div>
       <div className="col-md-2 block">
         <div className="row meta">
           <span className="meta-info">

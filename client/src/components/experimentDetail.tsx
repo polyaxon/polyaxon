@@ -115,8 +115,20 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                 {totalRun}
               </span>
               }
-              <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
+              <span
+                className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
             </div>
+            {experiment.last_metric &&
+            <div className="meta meta-metrics">
+              {Object.keys(experiment.last_metric).map(
+                (xp, idx) =>
+                  <span className="meta-info" key={idx}>
+                  <i className="fa fa-area-chart icon" aria-hidden="true"></i>
+                  <span className="title">{xp}:</span>
+                    {experiment.last_metric[xp]}
+                </span>)}
+            </div>
+            }
           </div>
           <h4 className="polyaxon-header">Jobs</h4>
           <Jobs fetchData={() => null} user={experiment.user} experiment={experiment}></Jobs>
