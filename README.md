@@ -41,6 +41,6 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
 Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
 
 
-## LICENSE
+## License
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-client.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-client?ref=badge_large)
