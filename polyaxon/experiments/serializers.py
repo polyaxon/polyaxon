@@ -11,6 +11,7 @@ from experiments.models import (
     ExperimentJobStatus,
     ExperimentMetric
 )
+from jobs.serializers import JobResourcesSerializer
 from libs.spec_validation import validate_spec_content
 
 
@@ -30,6 +31,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
     uuid = fields.UUIDField(format='hex', read_only=True)
     experiment = fields.SerializerMethodField()
     experiment_name = fields.SerializerMethodField()
+    resources = JobResourcesSerializer(required=False)
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
 
@@ -38,7 +40,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
         fields = (
             'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
             'definition', 'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
-            'started_at', 'finished_at')
+            'started_at', 'finished_at', 'resources',)
 
     def get_experiment(self, obj):
         return obj.experiment.uuid.hex

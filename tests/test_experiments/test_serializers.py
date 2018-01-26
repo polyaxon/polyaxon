@@ -46,7 +46,7 @@ class TestExperimentSerializer(BaseTest):
         assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
                                                 if self.obj1.experiment_group else None)
         assert data.pop('experiment_group_name') == (self.obj1.experiment_group.unique_name
-                                                if self.obj1.experiment_group else None)
+                                                     if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('last_metric') == self.obj1.last_metric
         assert data.pop('num_jobs') == self.obj1.jobs.count()
@@ -155,7 +155,7 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
                                                 if self.obj1.experiment_group else None)
         assert data.pop('experiment_group_name') == (self.obj1.experiment_group.unique_name
-                                                if self.obj1.experiment_group else None)
+                                                     if self.obj1.experiment_group else None)
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('last_metric') == self.obj1.last_metric
         assert data.pop('num_jobs') == self.obj1.jobs.count()
@@ -221,7 +221,7 @@ class TestExperimentJobSerializer(BaseTest):
     expected_keys = {
         'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
         'definition', 'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
-        'started_at', 'finished_at'}
+        'started_at', 'finished_at', 'resources', }
 
     def setUp(self):
         super().setUp()

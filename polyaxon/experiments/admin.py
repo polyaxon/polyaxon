@@ -10,6 +10,7 @@ from experiments.models import (
     ExperimentJobStatus,
     ExperimentMetric
 )
+from jobs.admin import JobStatusAdmin
 
 
 class ExperimentAdmin(admin.ModelAdmin):
@@ -29,8 +30,8 @@ class ExperimentJobAdmin(admin.ModelAdmin):
     readonly_fields = ('sequence', 'unique_name', 'last_status', 'created_at', 'updated_at')
 
 
-class ExperimentJobStatusAdmin(admin.ModelAdmin):
-    readonly_fields = ('created_at',)
+class ExperimentJobStatusAdmin(JobStatusAdmin):
+    pass
 
 
 admin.site.register(Experiment, ExperimentAdmin)

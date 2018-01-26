@@ -13,6 +13,7 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
 from clusters.models import Cluster
+from jobs.models import JobStatus, JobResources
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
@@ -233,6 +234,12 @@ class ExperimentJob(DiffModel):
         blank=True,
         null=True,
         editable=True)
+    resources = models.OneToOneField(
+        JobResources,
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True)
 
     class Meta:
         ordering = ['sequence']
@@ -299,27 +306,6 @@ class ExperimentJob(DiffModel):
         return False
 
 
-class ExperimentJobStatus(models.Model):
+class ExperimentJobStatus(JobStatus):
     """A model that represents job status at certain time."""
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        editable=False,
-        unique=True,
-        null=False)
     job = models.ForeignKey(ExperimentJob, related_name='statuses')
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
-    status = models.CharField(
-        max_length=64,
-        blank=True,
-        null=True,
-        default=JobLifeCycle.CREATED,
-        choices=JobLifeCycle.CHOICES)
-
-    message = models.CharField(max_length=256, null=True, blank=True)
-    details = JSONField(null=True, blank=True, default={})
-
-    def __str__(self):
-        return '{} <{}>'.format(self.job.unique_name, self.status)
-
-    class Meta:
-        ordering = ['created_at']
