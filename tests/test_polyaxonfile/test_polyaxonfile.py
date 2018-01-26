@@ -214,6 +214,14 @@ class TestPolyaxonfile(TestCase):
         assert set(spec.ps_resources.values()) == {
             spec.environment.default_ps_resources, spec.environment.ps_resources[0]}
 
+        # Check total resources
+        assert isinstance(spec.total_resources, PodResourcesConfig)
+        assert spec.total_resources.to_dict() == {
+            'cpu': {'requests': 1 + 2 * 9, 'limits': 2 + 4 * 9},
+            'memory': {'requests': 512, 'limits': 1024},
+            'gpu': None
+        }
+
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)

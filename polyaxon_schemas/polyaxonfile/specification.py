@@ -15,7 +15,7 @@ from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.utils import cached_property, get_vol_path
 from polyaxon_schemas.operators import ForConfig, IfConfig
-from polyaxon_schemas.settings import ClusterConfig, RunTypes
+from polyaxon_schemas.settings import ClusterConfig, RunTypes, PodResourcesConfig
 from polyaxon_schemas.utils import TaskType, to_list, SEARCH_METHODS
 
 
@@ -273,7 +273,7 @@ class Specification(BaseSpecification):
                                  default_config=environment.default_ps_config,
                                  task_type=TaskType.PS)
 
-    def _get_resources(self, resources, default_resources, task_type):
+    def _get_job_resources(self, resources, default_resources, task_type):
         cluster_def, is_distributed = self.cluster_def
 
         if not is_distributed:
@@ -290,6 +290,21 @@ class Specification(BaseSpecification):
         return result_resources
 
     @cached_property
+    def total_resources(self):
+        master_resources = self.master_resources
+        worker_resources = self.worker_resources
+        ps_resources = self.ps_resources
+
+        resources = PodResourcesConfig.from_dict(master_resources.to_dict())
+        for w_resources in six.itervalues(worker_resources):
+            resources += w_resources
+
+        for p_resources in six.itervalues(ps_resources):
+            resources += p_resources
+
+        return resources
+
+    @cached_property
     def master_resources(self):
         return self.environment.master_resources if self.environment else None
 
@@ -298,18 +313,18 @@ class Specification(BaseSpecification):
         environment = self.environment
         if environment is None:
             return None
-        return self._get_resources(resources=environment.worker_resources,
-                                   default_resources=environment.default_worker_resources,
-                                   task_type=TaskType.WORKER)
+        return self._get_job_resources(resources=environment.worker_resources,
+                                       default_resources=environment.default_worker_resources,
+                                       task_type=TaskType.WORKER)
 
     @cached_property
     def ps_resources(self):
         environment = self.environment
         if environment is None:
             return None
-        return self._get_resources(resources=environment.ps_resources,
-                                   default_resources=environment.default_ps_resources,
-                                   task_type=TaskType.PS)
+        return self._get_job_resources(resources=environment.ps_resources,
+                                       default_resources=environment.default_ps_resources,
+                                       task_type=TaskType.PS)
 
     def get_local_cluster(self,
                           host='127.0.0.1',

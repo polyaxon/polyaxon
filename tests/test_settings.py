@@ -46,6 +46,37 @@ class TestSettingConfigs(TestCase):
         config = PodResourcesConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+    def test_pod_resources_add(self):
+        config_dict1 = {
+            'cpu': {
+                'requests': 0.8,
+            },
+            'gpu': {
+                'requests': 2,
+            },
+            'memory': {
+                'requests': 200,
+                'limits': 300
+            },
+        }
+
+        config_dict2 = {
+            'gpu': {
+                'limits': 4
+            },
+            'memory': {
+                'requests': 300,
+                'limits': 200
+            },
+        }
+        config1 = PodResourcesConfig.from_dict(config_dict1)
+        config2 = PodResourcesConfig.from_dict(config_dict2)
+
+        config = config1 + config2
+        assert config.cpu.to_dict() == {'requests': 0.8, 'limits': None}
+        assert config.memory.to_dict() == {'requests': 500, 'limits': 500}
+        assert config.gpu.to_dict() == {'requests': 2, 'limits': 4}
+
     def test_gpu_options_config(self):
         config_dict = {
             'gpu_memory_fraction': 0.8,
