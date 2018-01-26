@@ -129,6 +129,23 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                 </span>)}
             </div>
             }
+            {experiment.resources &&
+            <div className="meta meta-resources">
+              {Object.keys(experiment.resources)
+                .filter(
+                  (res, idx) =>
+                    experiment.resources[res] != null
+                )
+                .map(
+                  (res, idx) =>
+                    <span className="meta-info" key={idx}>
+                <i className="fa fa-microchip icon" aria-hidden="true"></i>
+                <span className="title">{res}:</span>
+                      {experiment.resources[res].requests || ''} - {experiment.resources[res].limits || ''}
+              </span>
+                )}
+            </div>
+            }
             {experiment.declarations &&
             <div className="meta meta-declarations">
               {Object.keys(experiment.declarations).map(
