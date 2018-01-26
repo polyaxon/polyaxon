@@ -291,11 +291,13 @@ class Specification(BaseSpecification):
 
     @cached_property
     def total_resources(self):
+        resources = PodResourcesConfig()
         master_resources = self.master_resources
         worker_resources = self.worker_resources
         ps_resources = self.ps_resources
 
-        resources = PodResourcesConfig.from_dict(master_resources.to_dict())
+        if master_resources:
+            resources += master_resources
         for w_resources in six.itervalues(worker_resources):
             resources += w_resources
 
