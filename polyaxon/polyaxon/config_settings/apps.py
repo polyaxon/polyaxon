@@ -13,6 +13,7 @@ PROJECT_APPS = (
     'users.apps.UsersConfig',
     'clusters.apps.ClustersConfig',
     'projects.apps.ProjectsConfig',
+    'jobs.apps.JobsConfig',
     'experiments.apps.ExperimentsConfig',
     'repos.apps.ReposConfig',
     'versions.apps.VersionsConfig',
