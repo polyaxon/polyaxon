@@ -106,6 +106,10 @@ class Experiment(DiffModel, DescribableModel):
     def declarations(self):
         return self.compiled_spec.declarations
 
+    @cached_property
+    def resources(self):
+        return self.compiled_spec.total_resources
+
     @property
     def last_job_statuses(self):
         """The statuses of the job in this experiment."""

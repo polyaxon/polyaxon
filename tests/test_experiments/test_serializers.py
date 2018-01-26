@@ -133,6 +133,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'original',
         'num_jobs',
         'declarations',
+        'resources',
     }
 
     def setUp(self):
