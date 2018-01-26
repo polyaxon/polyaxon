@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import Schema, fields, post_load, post_dump, validate
 
 from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.settings import PodResourcesSchema
 from polyaxon_schemas.utils import UUID, humanize_timedelta
 
 
@@ -104,6 +105,7 @@ class ExperimentSchema(Schema):
     content = fields.Str(allow_none=True)
     num_jobs = fields.Int(allow_none=True)
     declarations = fields.Dict(allow_none=True)
+    resources = fields.Nested(PodResourcesSchema, allow_none=True)
     jobs = fields.Nested(ExperimentJobSchema, many=True, allow_none=True)
 
     class Meta:
@@ -124,10 +126,11 @@ class ExperimentConfig(BaseConfig):
     REDUCED_ATTRIBUTES = [
         'user', 'sequence', 'description', 'config', 'jobs', 'content',
         'created_at', 'updated_at', 'started_at', 'finished_at',
-        'is_clone', 'is_running', 'is_done', 'total_run', 'last_metric', 'declarations']
+        'is_clone', 'is_running', 'is_done', 'total_run', 'last_metric',
+        'declarations', 'resources']
     REDUCED_LIGHT_ATTRIBUTES = [
         'uuid', 'project', 'experiment_group', 'description', 'config', 'content',
-        'jobs', 'updated_at', 'declarations'
+        'jobs', 'updated_at', 'declarations', 'resources'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -154,6 +157,7 @@ class ExperimentConfig(BaseConfig):
                  content=None,
                  num_jobs=0,
                  declarations=None,
+                 resources=None,
                  jobs=None,
                  total_run=None):
         self.sequence = sequence
@@ -178,6 +182,7 @@ class ExperimentConfig(BaseConfig):
         self.content = content  # The yaml content when the experiment is independent
         self.num_jobs = num_jobs
         self.declarations = declarations
+        self.resources = resources
         self.jobs = jobs
         self.total_run = None
         if all([self.started_at, self.finished_at]):
@@ -253,6 +258,7 @@ class ExperimentJobStatusSchema(Schema):
     status = fields.Str()
     message = fields.Str(allow_none=True)
     details = fields.Dict(allow_none=True)
+    resources = fields.Nested(PodResourcesSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -269,17 +275,18 @@ class ExperimentJobStatusSchema(Schema):
 class ExperimentJobStatusConfig(BaseConfig):
     SCHEMA = ExperimentJobStatusSchema
     IDENTIFIER = 'ExperimentJobStatus'
-    REDUCED_ATTRIBUTES = ['message', 'details']
-    REDUCED_LIGHT_ATTRIBUTES = ['job', 'details', 'uuid']
+    REDUCED_ATTRIBUTES = ['message', 'details', 'resources']
+    REDUCED_LIGHT_ATTRIBUTES = ['job', 'details', 'uuid', 'resources']
     DATETIME_ATTRIBUTES = ['created_at']
 
-    def __init__(self, uuid, job, created_at, status, message=None, details=None):
+    def __init__(self, uuid, job, created_at, status, message=None, details=None, resources=None):
         self.uuid = uuid
         self.job = job
         self.created_at = self.localize_date(created_at)
         self.status = status
         self.message = message
         self.details = details
+        self.resources = resources
 
 
 class JobLabelSchema(Schema):
