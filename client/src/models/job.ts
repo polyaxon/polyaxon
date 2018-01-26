@@ -14,6 +14,7 @@ export class JobModel {
 	public updated_at: string;
 	public started_at: string;
 	public finished_at: string;
+	public resources: {[key: string]: any};
 }
 
 export class JobStateSchema {

@@ -25,8 +25,6 @@ function Job({job, onDelete}: Props) {
           <span className={`status alert alert-${statusCssClass}`}>{job.last_status}</span>
         </span>
         <div className="meta">
-        </div>
-        <div className="meta">
           <span className="meta-info">
             <i className="fa fa-certificate icon" aria-hidden="true"></i>
             <span className="title">Role:</span>
@@ -38,6 +36,23 @@ function Job({job, onDelete}: Props) {
             {job.sequence}
           </span>
         </div>
+        {job.resources &&
+        <div className="meta meta-resources">
+          {Object.keys(job.resources)
+            .filter(
+              (res, idx) =>
+                job.resources[res] != null
+            )
+            .map(
+            (res, idx) =>
+              <span className="meta-info" key={idx}>
+                <i className="fa fa-microchip icon" aria-hidden="true"></i>
+                <span className="title">{res}:</span>
+                {job.resources[res].requests || ''} - {job.resources[res].limits || ''}
+              </span>
+          )}
+        </div>
+        }
       </div>
       <div className="col-md-2 block">
         {job.started_at &&
