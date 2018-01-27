@@ -248,15 +248,14 @@ def get_image_info(experiment):
             logger.error(
                 'Something went wrong, '
                 'the external repo `{}` was not found'.format(experiment_spec.run_exec.git))
+            raise ValueError('Repo was not found for `{}`.'.format(experiment_spec.run_exec.git))
 
         repo_name = repo.name
-        repo_last_commit = repo.last_commit[0]
     else:
         repo_name = project_name
-        repo_last_commit = experiment.project.repo.last_commit[0]
 
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
-    image_tag = repo_last_commit
+    image_tag = experiment.commit
     return image_name, image_tag
 
 

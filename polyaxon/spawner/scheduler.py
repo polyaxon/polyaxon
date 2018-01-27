@@ -31,7 +31,12 @@ def start_experiment(experiment):
 
     job_docker_image = None  # This will force the spawner to use the default docker image
     if experiment.compiled_spec.run_exec:
-        image_name, image_tag = get_image_info(experiment=experiment)
+        try:
+            image_name, image_tag = get_image_info(experiment=experiment)
+        except ValueError as e:
+            logger.warning('Could not start the experiment, %s', e)
+            experiment.set_status(ExperimentLifeCycle.FAILED)
+            return
         job_docker_image = '{}:{}'.format(image_name, image_tag)
         logger.info('Start experiment with built image `{}`'.format(job_docker_image))
     else:
