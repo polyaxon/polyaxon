@@ -38,7 +38,7 @@ def add_experiment_commit(sender, **kwargs):
     # if the instance has a primary key then is getting updated
     if (instance.pk or
             not instance.compiled_spec.run_exec or
-            not instance.compiled_spec.run_exec.git or
+            instance.compiled_spec.run_exec.git or
             instance.is_clone or
             not instance.project.has_code):
         return
