@@ -28,7 +28,6 @@ def get_gpu_resources():
     try:
         return polyaxon_gpustat.query()
     except:
-        polyaxon_gpustat.has_gpu_nvidia = False
         return []
 
 
@@ -59,7 +58,7 @@ def get_container(containers, container_id):
     return container
 
 
-def get_container_resources(container, gpu_resources):
+def get_container_resources(node, container, gpu_resources):
     # Check if the container is running
     if container.status != ContainerStatuses.RUNNING:
         logger.info("`{}` container is not running".format(container.name))
@@ -99,6 +98,11 @@ def get_container_resources(container, gpu_resources):
 
     percpu_usage = cpu_stats['cpu_usage']['percpu_usage']
     num_cpu_cores = len(percpu_usage)
+    if num_cpu_cores != node.n_cpus:
+        logger.warning('Docker reporting num cpus `{}` and kubernetes reposrting `{}`'.format(
+            num_cpu_cores, node.n_cpus
+        ))
+        num_cpu_cores = node.n_cpus
     cpu_percentage = 0.
     percpu_percentage = [0.] * num_cpu_cores
     if delta_total_usage > 0 and delta_system_cpu_usage > 0:
@@ -144,7 +148,7 @@ def update_cluster(node_gpus):
         node_gpu.save()
 
 
-def run(containers, persist):
+def run(containers, node, persist):
     container_ids = RedisJobContainers.get_containers()
     gpu_resources = get_gpu_resources()
     if gpu_resources:
@@ -155,7 +159,7 @@ def run(containers, persist):
         container = get_container(containers, container_id)
         if not container:
             continue
-        payload = get_container_resources(containers[container_id], gpu_resources)
+        payload = get_container_resources(node, containers[container_id], gpu_resources)
         if payload:
             payload = payload.to_dict()
             logger.info("Publishing resourecs event")
