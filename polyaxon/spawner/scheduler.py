@@ -35,7 +35,8 @@ def start_experiment(experiment):
             image_name, image_tag = get_image_info(experiment=experiment)
         except ValueError as e:
             logger.warning('Could not start the experiment, %s', e)
-            experiment.set_status(ExperimentLifeCycle.FAILED)
+            experiment.set_status(ExperimentLifeCycle.FAILED,
+                                  message='External git repo was note found.')
             return
         job_docker_image = '{}:{}'.format(image_name, image_tag)
         logger.info('Start experiment with built image `{}`'.format(job_docker_image))
@@ -58,13 +59,19 @@ def start_experiment(experiment):
                          sidecar_config=config.get_requested_params(to_str=True))
     try:
         resp = spawner.start_experiment(user_token=experiment.user.auth_token.key)
-    except ApiException:
-        logger.warning('Could not start the experiment, please check your polyaxon spec.')
-        experiment.set_status(ExperimentLifeCycle.FAILED)
+    except ApiException as e:
+        logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
+        experiment.set_status(
+            ExperimentLifeCycle.FAILED,
+            message='Could not start the experiment, encountered a Kubernetes ApiException.')
         return
     except Exception as e:
-        logger.warning('Could not start the experiment, please check your polyaxon spec %s.' % e)
-        experiment.set_status(ExperimentLifeCycle.FAILED)
+        logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
+        experiment.set_status(
+            ExperimentLifeCycle.FAILED,
+            message='Could not start the experiment encountered an {} exception.'.format(
+                e.__class__.__name__
+            ))
         return
 
     # Get the number of jobs this experiment started

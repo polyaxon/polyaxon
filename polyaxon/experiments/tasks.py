@@ -58,12 +58,14 @@ def build_experiment(self, experiment_id):
     try:
         status = dockerize.build_experiment(experiment)
     except DockerException as e:
-        logger.warning('Failed to build experiment %s\n' % e)
-        experiment.set_status(ExperimentLifeCycle.FAILED)
+        logger.warning('Failed to build experiment %s', e)
+        experiment.set_status(ExperimentLifeCycle.FAILED,
+                              message='Failed to build image for experiment.')
         return
     except Repo.DoesNotExist:
         logger.warning('No code was found for this project')
-        experiment.set_status(ExperimentLifeCycle.FAILED)
+        experiment.set_status(ExperimentLifeCycle.FAILED,
+                              message='No code was found for to build this experiment.')
         return
 
     if not status:

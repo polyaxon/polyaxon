@@ -250,7 +250,7 @@ def get_image_info(experiment):
         try:
             repo = ExternalRepo.objects.get(project=experiment.project,
                                             git_url=experiment_spec.run_exec.git)
-        except ExternalRepo:
+        except ExternalRepo.DoesNotExist:
             logger.error(
                 'Something went wrong, '
                 'the external repo `{}` was not found'.format(experiment_spec.run_exec.git))

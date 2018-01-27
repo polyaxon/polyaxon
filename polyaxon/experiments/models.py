@@ -178,8 +178,8 @@ class Experiment(DiffModel, DescribableModel):
             return True
         return False
 
-    def set_status(self, status):
-        ExperimentStatus.objects.create(experiment=self, status=status)
+    def set_status(self, status, message=None):
+        ExperimentStatus.objects.create(experiment=self, status=status, message=message)
 
 
 class ExperimentStatus(models.Model):
