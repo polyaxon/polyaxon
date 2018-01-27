@@ -91,6 +91,15 @@ def archive_repo(repo, repo_name):
         repo.archive(fp)
 
 
+def checkout_commit(repo_path, commit=None):
+    """Checkout to a specific commit.
+
+    If commit is None then checkout to master.
+    """
+    commit = commit or '-'
+    run_command(cmd='git checkout {}'.format(commit), data=None, location=repo_path, chw=True)
+
+
 def run_command(cmd, data, location, chw):
     cwd = os.getcwd()
 

@@ -31,6 +31,8 @@ def handle_new_files(user_id, repo_id, tar_file_name):
 
     try:
         repo = Repo.objects.get(id=repo_id)
+        # Checkout to master
+        git.checkout_commit(repo.path)
     except User.DoesNotExist:
         logger.warning('Repo with id `{}` does not exists anymore.'.format(repo_id))
         return
