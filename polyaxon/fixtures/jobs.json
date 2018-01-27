@@ -1,0 +1,34 @@
+[
+{
+    "model": "jobs.jobresources",
+    "pk": 1,
+    "fields": {
+        "cpu": {
+            "requests": 1
+        },
+        "memory": null,
+        "gpu": {
+            "limits": 3,
+            "requests": 3
+        }
+    }
+},
+{
+    "model": "jobs.jobresources",
+    "pk": 2,
+    "fields": {
+        "cpu": {
+            "limits": 2,
+            "requests": 2
+        },
+        "memory": {
+            "limits": 1,
+            "requests": 1
+        },
+        "gpu": {
+            "limits": 3,
+            "requests": 3
+        }
+    }
+}
+]
