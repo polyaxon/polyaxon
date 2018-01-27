@@ -197,6 +197,7 @@ class ExperimentStatus(models.Model):
         null=True,
         default=ExperimentLifeCycle.CREATED,
         choices=ExperimentLifeCycle.CHOICES)
+    message = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
         ordering = ['created_at']
