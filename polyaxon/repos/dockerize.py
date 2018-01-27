@@ -145,6 +145,9 @@ class DockerBuilder(object):
         )
 
     def build(self, memory_limit=None):
+        # Checkout to the correct commit
+        git.checkout_commit(repo_path=self.repo_path, commit=self.image_tag)
+
         limits = {
             # Always disable memory swap for building, since mostly
             # nothing good can come of that.
@@ -188,6 +191,9 @@ class DockerBuilder(object):
                     return False
                 else:
                     check_pulse = 0
+
+        # Checkout back to master
+        git.checkout_commit(repo_path=self.repo_path)
         return True
 
     def push(self):
