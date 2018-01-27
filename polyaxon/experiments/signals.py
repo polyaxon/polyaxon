@@ -34,9 +34,11 @@ def add_experiment_commit(sender, **kwargs):
     # the experiment is new
     # that it has an exec section
     # that it's not cloned
+    # that is not an external repo (because we did not clone it yet)
     # if the instance has a primary key then is getting updated
     if (instance.pk or
             not instance.compiled_spec.run_exec or
+            not instance.compiled_spec.run_exec.git or
             instance.is_clone or
             not instance.project.has_code):
         return
