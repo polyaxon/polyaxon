@@ -22,7 +22,7 @@ class RepoMixin(object):
 
     @property
     def path(self):
-        """We need to nest the git path inside the project path to mke it easier
+        """We need to nest the git path inside the project path to make it easier
         to create docker images."""
         return os.path.join(self.project_path, self.project.name)
 
@@ -61,6 +61,6 @@ class ExternalRepo(DiffModel, RepoMixin):
 
     @property
     def path(self):
-        """We need to nest the git path inside the project path to mke it easier
+        """We need to nest the git path inside the project path to make it easier
         to create docker images."""
         return os.path.join(self.project_path, self.name)
