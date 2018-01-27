@@ -58,8 +58,7 @@ class ClusterNode(models.Model):
         help_text='The sequence number of this node within the cluser.', )
     name = models.CharField(
         max_length=256,
-        blank=True,
-        null=True,
+        null=False,
         help_text='Name of the node')
     cluster = models.ForeignKey(Cluster, related_name='nodes')
     hostname = models.CharField(

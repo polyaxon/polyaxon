@@ -16,6 +16,7 @@ class ClusterNodeFactory(factory.DjangoModelFactory):
     kubelet_version = 'v1.7.5'
     os_image = 'Buildroot 2017.02'
     kernel_version = '4.9.13'
+    name = factory.Sequence(lambda i: 'name {}'.format(i))
     sequence = factory.Sequence(lambda i: i)
     memory = factory.Sequence(lambda x: x)
     n_cpus = factory.Sequence(lambda x: x)
