@@ -68,3 +68,48 @@ class TestRepoModels(BaseTest):
         # Delete repo
         repo.delete()
         self.assertFalse(os.path.exists(repo_path))
+
+    def test_checkout_commit_and_master(self):
+        git_url = 'https://github.com/polyaxon/empty.git'
+
+        # Create repo
+        repo = ExternalRepo(project=self.project, git_url=git_url)
+        repo.save()
+
+        # Check last commit
+        assert repo.last_commit is None
+
+        # Add new file
+        file_path = os.path.join(repo.path, 'file1.dat')
+        open(file_path, 'w+')
+
+        assert git.get_status(repo.path) is not None
+        git.commit(repo.path, 'user@domain.com', 'username')
+
+        # Check last commit
+        commit1 = repo.last_commit[0]
+        assert commit1 is not None
+
+        # Add new file
+        file_path = os.path.join(repo.path, 'file2.dat')
+        open(file_path, 'w+')
+
+        assert git.get_status(repo.path) is not None
+        git.commit(repo.path, 'user@domain.com', 'username')
+
+        # Check last commit
+        commit2 = repo.last_commit[0]
+        assert commit2 is not None
+
+        # Commits are different
+        assert commit1 != commit2
+
+        # Checkout to commit1
+        git.checkout_commit(repo_path=repo.path, commit=commit1)
+        assert repo.last_commit[0] == commit1
+
+        # Checkout to master
+        git.checkout_commit(repo_path=repo.path)
+        assert repo.last_commit[0] == commit2
+
+
