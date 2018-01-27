@@ -27,6 +27,7 @@ class Project(DiffModel, DescribableModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='projects')
     is_public = models.BooleanField(default=True, help_text='If project is public or private.')
     has_tensorboard = models.BooleanField(default=False, help_text='If project has a tensorboard.')
+    has_notebook = models.BooleanField(default=False, help_text='If project has a notebook.')
 
     def __str__(self):
         return self.unique_name
