@@ -271,17 +271,19 @@ def build_experiment(experiment):
         if not is_created:
             # If the repo already exist, we just need to refetch it
             git.fetch(git_url=repo.git_url, repo_path=repo.path)
+        if not experiment.commit:
+            # Update experiment commit if not set already
+            experiment.commit = repo.last_commit[0]
+            experiment.save()
 
         repo_path = repo.path
         repo_name = repo.name
-        repo_last_commit = repo.last_commit[0]
     else:
         repo_path = experiment.project.repo.path
         repo_name = project_name
-        repo_last_commit = experiment.project.repo.last_commit[0]
 
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
-    image_tag = repo_last_commit
+    image_tag = experiment.commit
 
     # Build the image
     docker_builder = DockerBuilder(experiment_name=experiment.unique_name,
