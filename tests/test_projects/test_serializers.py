@@ -58,7 +58,8 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     expected_keys = {
         'uuid', 'sequence', 'unique_name', 'description', 'content', 'project', 'project_name',
         'user', 'created_at',  'updated_at', 'concurrency', 'num_experiments',
-        'num_pending_experiments', 'num_running_experiments', }
+        'num_pending_experiments', 'num_running_experiments', 'num_scheduled_experiments',
+        'num_succeeded_experiments', 'num_failed_experiments', 'num_stopped_experiments'}
 
     def setUp(self):
         super().setUp()
@@ -78,6 +79,10 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         assert data.pop('num_experiments') == self.obj1.experiments.count()
         assert data.pop('num_pending_experiments') == len(self.obj1.pending_experiments)
         assert data.pop('num_running_experiments') == len(self.obj1.running_experiments)
+        assert data.pop('num_scheduled_experiments') == len(self.obj1.scheduled_experiments)
+        assert data.pop('num_succeeded_experiments') == len(self.obj1.succeeded_experiments)
+        assert data.pop('num_failed_experiments') == len(self.obj1.failed_experiments)
+        assert data.pop('num_stopped_experiments') == len(self.obj1.stopped_experiments)
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

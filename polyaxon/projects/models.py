@@ -101,8 +101,29 @@ class ExperimentGroup(DiffModel, DescribableModel):
         return None
 
     @property
+    def scheduled_experiments(self):
+        return self.experiments.filter(
+            experiment_status__status=ExperimentLifeCycle.SCHEDULED).distinct()
+
+    @property
+    def succeeded_experiments(self):
+        return self.experiments.filter(
+            experiment_status__status=ExperimentLifeCycle.SUCCEEDED).distinct()
+
+    @property
+    def failed_experiments(self):
+        return self.experiments.filter(
+            experiment_status__status=ExperimentLifeCycle.FAILED).distinct()
+
+    @property
+    def stopped_experiments(self):
+        return self.experiments.filter(
+            experiment_status__status=ExperimentLifeCycle.DELETED).distinct()
+
+    @property
     def pending_experiments(self):
-        return self.experiments.filter(experiment_status__status=ExperimentLifeCycle.CREATED).distinct()
+        return self.experiments.filter(
+            experiment_status__status=ExperimentLifeCycle.CREATED).distinct()
 
     @property
     def running_experiments(self):

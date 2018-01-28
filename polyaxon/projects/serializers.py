@@ -45,8 +45,27 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
 
 
 class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
+    num_scheduled_experiments = fields.SerializerMethodField()
+    num_succeeded_experiments = fields.SerializerMethodField()
+    num_failed_experiments = fields.SerializerMethodField()
+    num_stopped_experiments = fields.SerializerMethodField()
+
     class Meta(ExperimentGroupSerializer.Meta):
-        fields = ExperimentGroupSerializer.Meta.fields + ('content',)
+        fields = ExperimentGroupSerializer.Meta.fields + (
+            'content', 'num_scheduled_experiments', 'num_succeeded_experiments',
+            'num_failed_experiments', 'num_stopped_experiments')
+
+    def get_num_scheduled_experiments(self, obj):
+        return obj.scheduled_experiments.count()
+
+    def get_num_succeeded_experiments(self, obj):
+        return obj.succeeded_experiments.count()
+
+    def get_num_failed_experiments(self, obj):
+        return obj.failed_experiments.count()
+
+    def get_num_stopped_experiments(self, obj):
+        return obj.stopped_experiments.count()
 
     def validate_content(self, content):
         spec = validate_spec_content(content)

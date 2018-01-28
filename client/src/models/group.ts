@@ -8,8 +8,12 @@ export class GroupModel {
 	public user: string;
 	public concurrency: number;
 	public content: number;
+	public num_scheduled_experiments?: number;
 	public num_pending_experiments?: number;
 	public num_running_experiments?: number;
+	public num_succeeded_experiments?: number;
+	public num_failed_experiments?: number;
+	public num_stopped_experiments?: number;
 	public deleted?: boolean;
 	public created_at: string;
 	public updated_at: string;

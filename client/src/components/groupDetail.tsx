@@ -66,24 +66,46 @@ export default class GroupDetail extends React.Component<Props, Object> {
                 {moment(group.updated_at).fromNow()}
               </span>
               <span className="meta-info">
+                <i className="fa fa-share-alt icon" aria-hidden="true"></i>
+                <span className="title">Concurrency:</span>
+                {group.concurrency}
+              </span>
+            </div>
+            <div className="meta">
+              <span className="meta-info">
                 <i className="fa fa-cube icon" aria-hidden="true"></i>
                 <span className="title">Experiments:</span>
                 {group.num_experiments}
               </span>
               <span className="meta-info">
-                <i className="fa fa-share-alt icon" aria-hidden="true"></i>
-                <span className="title">Concurrency:</span>
-                {group.concurrency}
-              </span>
-              <span className="meta-info">
-                <i className="fa fa-bolt icon" aria-hidden="true"></i>
-                <span className="title">Running Experiments:</span>
-                {group.num_running_experiments}
+                <i className="fa fa-hourglass-1 icon" aria-hidden="true"></i>
+                <span className="title">Scheduled:</span>
+                {group.num_scheduled_experiments}
               </span>
               <span className="meta-info">
                 <i className="fa fa-hourglass-end icon" aria-hidden="true"></i>
-                <span className="title">Pending Experiments:</span>
+                <span className="title">Pending:</span>
                 {group.num_pending_experiments}
+              </span>
+              <span className="meta-info">
+                <i className="fa fa-bolt icon" aria-hidden="true"></i>
+                <span className="title">Running:</span>
+                {group.num_running_experiments}
+              </span>
+              <span className="meta-info">
+                <i className="fa fa-check icon" aria-hidden="true"></i>
+                <span className="title">Succeeded:</span>
+                {group.num_succeeded_experiments}
+              </span>
+              <span className="meta-info">
+                <i className="fa fa-close icon" aria-hidden="true"></i>
+                <span className="title">Failed:</span>
+                {group.num_failed_experiments}
+              </span>
+              <span className="meta-info">
+                <i className="fa fa-stop icon" aria-hidden="true"></i>
+                <span className="title">Stopped:</span>
+                {group.num_stopped_experiments}
               </span>
             </div>
           </div>
