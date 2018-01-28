@@ -20,7 +20,7 @@ To get help for any Polyaxon CLI Command, you can run the following
 $ polyaxon command --help
 ```
 
-## Commands
+## Commands References
 
  * [Auth](commands/auth)
  * [Check](commands/check)

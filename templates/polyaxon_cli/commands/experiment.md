@@ -70,7 +70,7 @@ $ polyaxon experiment stop
 ```
 
 ```bash
-$ polyaxon experiment -x 2 stop
+$ polyaxon experiment -xp 2 stop
 ```
 
 ## delete
@@ -153,7 +153,7 @@ $ polyaxon experiment logs
 ```
 
 ```bash
-$ polyaxon experiment -x 10 -p mnist logs
+$ polyaxon experiment -xp 10 -p mnist logs
 ```
 
 ## resources

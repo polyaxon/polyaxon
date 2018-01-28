@@ -1,6 +1,6 @@
 The experiment group commands accept 2 optional arguments:
 
- * Experiment: `--group` or `-g`  to use a specific experiment group.
+ * Experiment Group: `--group` or `-g`  to use a specific experiment group.
  * Project: `--project` or `-p` to use a specific project.
 
 If no project/group is provided, the command will default to the currently initialized project/last used group.
