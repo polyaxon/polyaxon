@@ -106,9 +106,10 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
         resources = RedisToStream.get_latest_job_resources(job=job_uuid, job_name=job_name)
         should_check += 1
 
-        # After trying a couple of time, we must check the status of the experiment
+        # After trying a couple of time, we must check the status of the job
         if should_check > RESOURCES_CHECK:
-            if experiment.is_done:
+            job.refresh_from_db()
+            if job.is_done:
                 logger.info('removing all socket because the job `{}` is done'.format(job_name))
                 ws_manager.ws = set([])
                 handle_job_disconnected_ws(ws)
@@ -171,6 +172,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
 
         # After trying a couple of time, we must check the status of the experiment
         if should_check > RESOURCES_CHECK:
+            experiment.refresh_from_db()
             if experiment.is_done:
                 logger.info('removing all socket because the experiment `{}` is done'.format(
                     experiment_uuid))
@@ -238,10 +240,12 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
             consumer.remove_sockets(disconnected_ws)
 
         # After trying a couple of time, we must check the status of the experiment
-        if num_message_retries > MAX_RETRIES and job.is_done:
-            logger.info('removing all socket because the job `{}` is done'.format(
-                job_uuid))
-            consumer.ws = set([])
+        if num_message_retries > MAX_RETRIES:
+            job.refresh_from_db()
+            if job.is_done:
+                logger.info('removing all socket because the job `{}` is done'.format(
+                    job_uuid))
+                consumer.ws = set([])
 
         # Just to check if connection closed
         if ws._connection_lost:
@@ -304,10 +308,12 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
             consumer.remove_sockets(disconnected_ws)
 
         # After trying a couple of time, we must check the status of the experiment
-        if num_message_retries > MAX_RETRIES and experiment.is_done:
-            logger.info('removing all socket because the experiment `{}` is done'.format(
-                experiment_uuid))
-            consumer.ws = set([])
+        if num_message_retries > MAX_RETRIES:
+            experiment.refresh_from_db()
+            if experiment.is_done:
+                logger.info('removing all socket because the experiment `{}` is done'.format(
+                    experiment_uuid))
+                consumer.ws = set([])
 
         # Just to check if connection closed
         if ws._connection_lost:
