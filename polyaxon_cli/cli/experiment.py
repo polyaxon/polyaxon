@@ -135,7 +135,7 @@ def stop(ctx):
 
     \b
     ```bash
-    $ polyaxon experiment -x 2 stop
+    $ polyaxon experiment -xp 2 stop
     ```
     """
     user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
@@ -313,7 +313,7 @@ def logs(ctx):
 
     \b
     ```bash
-    $ polyaxon experiment -x 10 -p mnist logs
+    $ polyaxon experiment -xp 10 -p mnist logs
     ```
     """
     user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
