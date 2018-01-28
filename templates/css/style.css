@@ -5,8 +5,17 @@
 
 [data-md-color-primary=blue-grey] .md-typeset a {
     color: #5f8fa5eb;
+    color: rgba(95, 143, 165, 0.92);
 }
 
 .md-typeset h2 {
     color: #19576b;
+}
+
+.md-sidebar__inner {
+    border-right: .1rem solid rgba(0,0,0,.07);
+}
+
+.md-nav--secondary {
+    border-left: .4rem solid rgba(95, 143, 165, 0.92);
 }
