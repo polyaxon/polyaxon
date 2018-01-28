@@ -21,8 +21,8 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentGroup
         fields = (
-            'uuid', 'unique_name', 'user', 'sequence', 'description', 'content',
-            'project', 'project_name', 'created_at',  'updated_at', 'concurrency',
+            'uuid', 'unique_name', 'user', 'sequence', 'description',
+            'project', 'project_name', 'created_at', 'updated_at', 'concurrency',
             'num_experiments', 'num_pending_experiments', 'num_running_experiments',)
 
     def get_project(self, obj):
@@ -42,6 +42,12 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
 
     def get_num_running_experiments(self, obj):
         return obj.running_experiments.count()
+
+
+class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
+
+    class Meta(ExperimentGroupSerializer.Meta):
+        fields = ExperimentGroupSerializer.Meta.fields + ('content',)
 
     def validate_content(self, content):
         spec = validate_spec_content(content)

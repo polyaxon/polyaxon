@@ -12,7 +12,7 @@ from polyaxon_schemas.utils import TaskType
 from rest_framework import fields
 
 from polyaxon.utils import config
-from experiments.serializers import ExperimentJobSerializer
+from experiments.serializers import ExperimentJobDetailSerializer
 from repos.dockerize import get_image_info
 
 from spawner import K8SSpawner, K8SProjectSpawner
@@ -80,7 +80,7 @@ def start_experiment(experiment):
     job_uuid = uuid.UUID(job_uuid)
 
     def get_definition(definition):
-        serializer = ExperimentJobSerializer(data={
+        serializer = ExperimentJobDetailSerializer(data={
             'definition': json.dumps(definition, default=fields.DateTimeField().to_representation)
         })
         serializer.is_valid()

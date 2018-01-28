@@ -17,6 +17,7 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
+    ExperimentJobDetailSerializer,
     ExperimentJobStatusSerializer,
     ExperimentMetricSerializer,
     ExperimentDetailSerializer,
@@ -582,7 +583,7 @@ class TestExperimentJobListViewV1(BaseViewTest):
 
 
 class TestExperimentJobDetailViewV1(BaseViewTest):
-    serializer_class = ExperimentJobSerializer
+    serializer_class = ExperimentJobDetailSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
     HAS_AUTH = True

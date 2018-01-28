@@ -39,7 +39,7 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
         model = ExperimentJob
         fields = (
             'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
-            'definition', 'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
+            'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
             'started_at', 'finished_at', 'resources',)
 
     def get_experiment(self, obj):
@@ -47,6 +47,11 @@ class ExperimentJobSerializer(serializers.ModelSerializer):
 
     def get_experiment_name(self, obj):
         return obj.experiment.unique_name
+
+
+class ExperimentJobDetailSerializer(ExperimentJobSerializer):
+    class Meta(ExperimentJobSerializer.Meta):
+        fields = ExperimentJobSerializer.Meta.fields + ('definition',)
 
 
 class ExperimentStatusSerializer(serializers.ModelSerializer):

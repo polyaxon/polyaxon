@@ -9,6 +9,7 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentDetailSerializer,
     ExperimentJobSerializer,
+    ExperimentJobDetailSerializer,
 )
 from spawner.utils.constants import ExperimentLifeCycle
 
@@ -217,6 +218,42 @@ class TestExperimentDetailSerializer(BaseTest):
 
 class TestExperimentJobSerializer(BaseTest):
     serializer_class = ExperimentJobSerializer
+    model_class = ExperimentJob
+    factory_class = ExperimentJobFactory
+    expected_keys = {
+        'uuid', 'unique_name', 'sequence', 'role', 'experiment', 'experiment_name',
+        'last_status', 'is_running', 'is_done', 'created_at', 'updated_at',
+        'started_at', 'finished_at', 'resources', }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('experiment') == self.obj1.experiment.uuid.hex
+        assert data.pop('experiment_name') == self.obj1.experiment.unique_name
+        data.pop('created_at')
+        data.pop('updated_at')
+        data.pop('started_at', None)
+        data.pop('finished_at', None)
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+class TestExperimentJobDetailsSerializer(BaseTest):
+    serializer_class = ExperimentJobDetailSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
     expected_keys = {

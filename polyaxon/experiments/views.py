@@ -23,6 +23,7 @@ from experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentStatusSerializer,
     ExperimentJobSerializer,
+    ExperimentJobDetailSerializer,
     ExperimentJobStatusSerializer,
     ExperimentMetricSerializer,
     ExperimentDetailSerializer,
@@ -169,6 +170,7 @@ class ExperimentStatusDetailView(ExperimentViewMixin, RetrieveAPIView):
 class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobSerializer
+    create_serializer_class = ExperimentJobDetailSerializer
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
@@ -177,7 +179,7 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
 
 class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
     queryset = ExperimentJob.objects.all()
-    serializer_class = ExperimentJobSerializer
+    serializer_class = ExperimentJobDetailSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
 

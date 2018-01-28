@@ -20,7 +20,7 @@ from projects.permissions import (
 from projects.serializers import (
     ProjectSerializer,
     ExperimentGroupSerializer,
-)
+    ExperimentGroupDetailSerializer)
 from projects.tasks import start_tensorboard, stop_tensorboard
 
 
@@ -98,6 +98,7 @@ class StopTensorboardView(CreateAPIView):
 class ExperimentGroupListView(ListCreateAPIView):
     queryset = ExperimentGroup.objects.all()
     serializer_class = ExperimentGroupSerializer
+    create_serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated,)
 
     def filter_queryset(self, queryset):
@@ -109,7 +110,7 @@ class ExperimentGroupListView(ListCreateAPIView):
 
 class ExperimentGroupDetailView(RetrieveUpdateDestroyAPIView):
     queryset = ExperimentGroup.objects.all()
-    serializer_class = ExperimentGroupSerializer
+    serializer_class = ExperimentGroupDetailSerializer
     permission_classes = (IsAuthenticated, IsItemProjectOwnerOrPublicReadOnly)
     lookup_field = 'sequence'
 
