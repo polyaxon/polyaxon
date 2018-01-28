@@ -502,12 +502,26 @@ Dir mounts
 {{- define "volumes.dirMounts" }}
 - name: docker
   mountPath: {{ .Values.mountPaths.docker }}
+{{- if and .Values.dirs.nvidia.lib .Values.dirs.nvidia.bin .Values.dirs.nvidia.libcuda }}
 - name: nvidia-lib
+{{- if .Values.mountPaths.nvidia.lib }}
   mountPath: {{ .Values.mountPaths.nvidia.lib | quote }}
+{{- else }}
+  mountPath: {{ .Values.dirs.nvidia.lib | quote }}
+{{- end }}
 - name: nvidia-bin
+{{- if .Values.mountPaths.nvidia.bin }}
   mountPath: {{ .Values.mountPaths.nvidia.bin | quote }}
+{{- else }}
+  mountPath: {{ .Values.dirs.nvidia.bin | quote }}
+{{- end }}
 - name: nvidia-libcuda
+{{- if .Values.mountPaths.nvidia.libcuda }}
   mountPath: {{ .Values.mountPaths.nvidia.libcuda | quote }}
+{{- else }}
+  mountPath: {{ .Values.dirs.nvidia.libcuda | quote }}
+{{- end }}
+{{- end }}
 {{- end -}}
 
 
@@ -564,6 +578,7 @@ Dirs
 - name: docker
   hostPath:
     path: {{ .Values.dirs.docker | quote }}
+{{- if and .Values.dirs.nvidia.lib .Values.dirs.nvidia.bin .Values.dirs.nvidia.libcuda }}
 - name: nvidia-lib
   hostPath:
     path: {{ .Values.dirs.nvidia.lib | quote }}
@@ -573,4 +588,5 @@ Dirs
 - name: nvidia-libcuda
   hostPath:
     path: {{ .Values.dirs.nvidia.libcuda | quote }}
+{{- end }}
 {{- end -}}

@@ -49,11 +49,8 @@ persistence:
     mountPath: "/outputs"
     subPath: ""
   logs:
-    enabled: false
-    name: "polyaxon-pvc-logs"
-    storageClass:
     existingClaim:
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 5Gi
     mountPath: "/logs"
     subPath: ""
