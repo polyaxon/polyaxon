@@ -45,7 +45,6 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
 
 
 class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
-
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + ('content',)
 
