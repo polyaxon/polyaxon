@@ -118,7 +118,17 @@ To start the dashboard, just run the following command in your terminal
 $ polyaxon dashboard
 ```
 
-![Polyaxon dashboard](config/polyaxon_dashboard.png)
+ * List Projects
+
+    ![Polyaxon dashboard](config/projects.png)
+
+ * Project Details
+
+    ![Polyaxon dashboard](config/project.png)
+
+ * Experiment Details
+
+    ![Polyaxon dashboard](config/experiment.png)
 
 # Project status
 
