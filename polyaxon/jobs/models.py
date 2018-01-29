@@ -24,8 +24,8 @@ class JobResources(models.Model):
                                         resource.get('limits'))
 
         cpu = get_resource(self.cpu, 'CPU')
-        memory = get_resource(self.cpu, 'Memory')
-        gpu = get_resource(self.cpu, 'GPU')
+        memory = get_resource(self.memory, 'Memory')
+        gpu = get_resource(self.gpu, 'GPU')
         resources = [cpu, memory, gpu]
         return ', '.join([r for r in resources if r])
 
