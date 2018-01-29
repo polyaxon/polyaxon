@@ -66,7 +66,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
               <LinkContainer to={getGroupUrl(values[0], values[1], group)}>
                 <span>
                   <a className="title">
-                    Group {values[1]}
+                    Group {group}
                   </a>/
                 </span>
               </LinkContainer>
