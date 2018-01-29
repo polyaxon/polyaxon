@@ -10,7 +10,6 @@ Polyaxon is currently running:
     {{- else }}
     export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     {{- end }}
-
     export POLYAXON_HTTP_PORT=80
     export POLYAXON_WS_PORT=80
 
@@ -54,9 +53,7 @@ Polyaxon is currently running:
 {{- else if contains "ClusterIP" .Values.serviceType }}
 
   export POLYAXON_IP=<YOUR HOSTNAME/IP>
-
   export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
-
   export POLYAXON_WS_PORT={{ .Values.apiEvents.service.externalPort }}
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT

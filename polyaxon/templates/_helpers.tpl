@@ -550,7 +550,8 @@ Volumes
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
 {{- else }}
-  emptyDir: {}
+  hostPath:
+    path: {{ .Values.persistence.logs.mountPath }}
 {{ end }}
 - name: data
 {{- if .Values.persistence.data.existingClaim }}
