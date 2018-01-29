@@ -289,6 +289,10 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
         ![project](/images/dashboard/project.png)
 
+    * Experiment Details
+
+        ![experiment](/images/dashboard/experiment.png)
+
 15. Finally, Let start tensorboard to see the model outputs:
 
      ```bash
