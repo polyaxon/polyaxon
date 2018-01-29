@@ -5,7 +5,7 @@ djangorestframework==3.7.7
 djangorestframework-camel-case==0.2.0
 docker==2.7.0
 GitPython==2.1.8
-Jinja2==2.9.6
+Jinja2==2.10
 pandas==0.20.3
 pandas-summary==0.0.41
 pika==0.11.0
