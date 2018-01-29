@@ -13,7 +13,8 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentMetric,
 )
-from experiments.utils import delete_experiment_outputs, delete_experiment_logs
+from experiments.utils import delete_experiment_outputs, delete_experiment_logs, \
+    create_experiment_logs_path
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
 from spawner import scheduler
@@ -60,6 +61,10 @@ def new_experiment(sender, **kwargs):
         return
 
     instance.set_status(ExperimentLifeCycle.CREATED)
+
+    # Create logs path
+    create_experiment_logs_path(instance.unique_name)
+
     if instance.is_independent:
         # Start building the experiment and then Schedule it to be picked by the spawner
         build_experiment.apply_async((instance.id, ), countdown=1)
