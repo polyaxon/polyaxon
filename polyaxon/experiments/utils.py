@@ -30,3 +30,16 @@ def delete_experiment_logs(experiment_group_name):
 def delete_experiment_outputs(experiment_group_name):
     path = get_experiment_outputs_path(experiment_group_name)
     delete_outputs(path)
+
+
+def create_experiment_logs_path(experiment_name):
+    values = experiment_name.split('.')
+    if len(values) == 3:
+        values.insert(2, 'independents')
+
+    path = settings.LOGS_ROOT
+    for value in values[:-1]:
+        path = os.path.join(path, value)
+        if not os.path.isdir(path):
+            os.mkdir(path)
+
