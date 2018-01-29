@@ -18,5 +18,5 @@ uWSGI==2.0.15
 websockets==4.0.1
 
 polyaxon-schemas==0.0.19
-polyaxon-k8s==0.0.2
+polyaxon-k8s==0.0.19
 polyaxon-gpustat==0.0.2
