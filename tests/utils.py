@@ -144,6 +144,7 @@ class BaseTest(TestCase):
         redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
         settings.REPOS_ROOT = tempfile.mkdtemp()
         settings.UPLOAD_ROOT = tempfile.mkdtemp()
+        settings.LOGS_ROOT = tempfile.mkdtemp()
         cache.clear()
         return super().setUp()
 
