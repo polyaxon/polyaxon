@@ -30,5 +30,3 @@ JOB_SIDECAR_DOCKER_IMAGE = config.get_string('POLYAXON_JOB_SIDECAR_DOCKER_IMAGE'
                                              is_optional=True) or 'polyaxon/polyaxon-sidecar'
 JOB_SIDECAR_LOG_SLEEP_INTERVAL = config.get_int('POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL',
                                                 is_optional=True)
-JOB_SIDECAR_PERSIST = config.get_boolean('POLYAXON_JOB_SIDECAR_PERSIST',
-                                         is_optional=True)

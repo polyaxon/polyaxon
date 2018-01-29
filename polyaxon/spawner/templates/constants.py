@@ -26,7 +26,7 @@ DEPLOYMENT_NAME = 'plxproject-{project_uuid}-{name}'
 def SIDECAR_ARGS_FN(pod_id):
     return [pod_id,
             "--log_sleep_interval={}".format(settings.JOB_SIDECAR_LOG_SLEEP_INTERVAL),
-            "--persist={}".format(settings.JOB_SIDECAR_PERSIST)]
+            "--persist=true"]
 
 
 DATA_VOLUME = 'data'
