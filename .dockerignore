@@ -20,3 +20,4 @@ tests_report/
 dist/
 *.egg-info/
 celerybeat.pid
+*.sock
