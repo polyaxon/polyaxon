@@ -341,7 +341,7 @@ def start_tensorboard(ctx):
     clint.textui.puts("It may take some time before you can access the dashboard.\n")
     clint.textui.puts("If you used an ingress, your dashboard will be available on:\n")
     with clint.textui.indent(4):
-        clint.textui.puts("{}/tensorboard/{}/{}\n".format(
+        clint.textui.puts("{}/tensorboard/{}/{}/\n".format(
             PolyaxonClients().auth.http_host, user, project_name))
 
     clint.textui.puts("Ohterwise you can use kubectl to get the url.")
