@@ -454,7 +454,7 @@ class K8SProjectSpawner(K8SManager):
         if settings.K8S_INGRESS_ENABLED:
             annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
             paths = [{
-                'path': '/tensorboard/{}'.format(self.project_name.replace('.', '/')),
+                'path': '/tensorboard/{}/*'.format(self.project_name.replace('.', '/')),
                 'backend': {
                     'serviceName': deployment_name,
                     'servicePort': ports[0]
