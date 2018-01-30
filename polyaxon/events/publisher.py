@@ -26,7 +26,9 @@ def publish_log(log_line,
     except AttributeError:
         pass
 
-    logger.info("Publishing log event for experiment: {}, {}".format(job_uuid, experiment_uuid))
+    logger.info("Publishing log event for task: {}.{}, {}".format(task_type,
+                                                                  task_idx,
+                                                                  experiment_name))
     handle_events_job_logs.delay(experiment_name=experiment_name,
                                  experiment_uuid=experiment_uuid,
                                  job_uuid=job_uuid,
