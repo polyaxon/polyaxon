@@ -36,8 +36,22 @@ class TestExperimentConfigs(TestCase):
             'updated_at': local_now().isoformat(),
         }
         config = ExperimentConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_dict = config.to_dict()
+        config_to_dict.pop('declarations')
+        config_to_dict.pop('finished_at')
+        config_to_dict.pop('is_clone')
+        config_to_dict.pop('is_done')
+        config_to_dict.pop('is_running')
+        config_to_dict.pop('jobs')
+        config_to_dict.pop('last_metric')
+        config_to_dict.pop('resources')
+        config_to_dict.pop('sequence')
+        config_to_dict.pop('started_at')
+        config_to_dict.pop('total_run')
+        config_to_dict.pop('user')
+        assert config_to_dict == config_dict
 
+        config_to_dict = config.to_light_dict()
         config_dict.pop('uuid')
         config_dict.pop('description')
         config_dict.pop('content')
@@ -45,7 +59,15 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('project')
         config_dict.pop('experiment_group')
         config_dict.pop('updated_at')
-        assert config.to_light_dict() == config_dict
+        config_dict.pop('project_name')
+        config_to_dict.pop('finished_at')
+        config_to_dict.pop('is_done')
+        config_to_dict.pop('is_running')
+        config_to_dict.pop('sequence')
+        config_to_dict.pop('started_at')
+        config_to_dict.pop('total_run')
+        config_to_dict.pop('user')
+        assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
@@ -76,6 +98,14 @@ class TestExperimentConfigs(TestCase):
         config = ExperimentConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict.pop('total_run') == '0s'
+        config_to_dict.pop('declarations')
+        config_to_dict.pop('description')
+        config_to_dict.pop('is_clone')
+        config_to_dict.pop('is_done')
+        config_to_dict.pop('is_running')
+        config_to_dict.pop('last_metric')
+        config_to_dict.pop('resources')
+        config_to_dict.pop('user')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
@@ -99,6 +129,10 @@ class TestExperimentConfigs(TestCase):
         config = ExperimentJobConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict.pop('total_run') == '0s'
+        config_to_dict.pop('is_done')
+        config_to_dict.pop('is_running')
+        config_to_dict.pop('last_status')
+        config_to_dict.pop('resources')
         assert config_to_dict == config_dict
 
         config_dict.pop('definition')
@@ -108,6 +142,9 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         assert config_to_dict.pop('total_run') == '0s'
         config_dict.pop('unique_name')
+        config_to_dict.pop('is_done')
+        config_to_dict.pop('is_running')
+        config_to_dict.pop('last_status')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
@@ -157,12 +194,15 @@ class TestExperimentConfigs(TestCase):
                        'status': 'Running'}
         config = ExperimentJobStatusConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
+        config_to_dict.pop('details')
+        config_to_dict.pop('message')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict()
         config_dict.pop('details', None)
         config_dict.pop('job', None)
         config_dict.pop('uuid', None)
+        config_to_dict.pop('message')
         assert config_to_dict == config_dict
 
         config_to_dict = config.to_light_dict(humanize_values=True)
