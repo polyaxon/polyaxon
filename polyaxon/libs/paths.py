@@ -5,13 +5,13 @@ import logging
 import os
 import shutil
 
-logger = logging.getLogger('polyaxon.libs.outputs')
+logger = logging.getLogger('polyaxon.libs.paths')
 
 
-def delete_outputs(path):
+def delete_path(path):
     if not os.path.exists(path):
         return
     try:
         shutil.rmtree(path)
     except OSError:
-        logger.warning('Could not delete outputs `{}`'.format(path))
+        logger.warning('Could not delete path `{}`'.format(path))
