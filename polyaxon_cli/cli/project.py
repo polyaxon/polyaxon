@@ -58,6 +58,19 @@ def get_project_or_local(project=None):
     return user, project_name
 
 
+def get_project_details(project):
+    if project.description:
+        Printer.print_header("Project description:")
+        click.echo('{}\n'.format(project.description))
+
+    response = project.to_light_dict(
+        humanize_values=True,
+        exclude_attrs=['uuid', 'experiment_groups', 'experiments', 'description'])
+
+    Printer.print_header("Project info:")
+    dict_tabulate(response)
+
+
 @click.group()
 @click.option('--project', '-p', type=str)
 @click.pass_context
@@ -132,7 +145,6 @@ def list(page):
     objects = list_dicts_to_tabulate([o.to_light_dict(humanize_values=True)
                                       for o in response['results']])
     if objects:
-        objects.pop('user', None)
         Printer.print_header("Projects:")
         dict_tabulate(objects, is_list_dict=True)
 
@@ -169,9 +181,7 @@ def get(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = response.to_light_dict(humanize_values=True)
-    Printer.print_header("Project info:")
-    dict_tabulate(response)
+    get_project_details(response)
 
 
 @project.command()
@@ -189,15 +199,17 @@ def delete(ctx):
 
     try:
         response = PolyaxonClients().project.delete_project(user, project_name)
-        # Purge caching
-        ProjectManager.purge()
+        local_project = ProjectManager.get_config()
+        if (user, project_name) == (local_project.user, local_project.name):
+            # Purge caching
+            ProjectManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not delete project `{}`.'.format(project))
+        Printer.print_error('Could not delete project `{}/{}`.'.format(user, project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     if response.status_code == 204:
-        Printer.print_success("Project `{}` was delete successfully".format(project))
+        Printer.print_success("Project `{}/{}` was delete successfully".format(user, project_name))
 
 
 @project.command()
@@ -247,9 +259,7 @@ def update(ctx, name, description, private):
         sys.exit(1)
 
     Printer.print_success("Project updated.")
-    response = response.to_light_dict(humanize_values=True)
-    Printer.print_header("Project info:")
-    dict_tabulate(response)
+    get_project_details(response)
 
 
 @project.command()
@@ -319,6 +329,7 @@ def experiments(ctx, page):
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")
+        objects.pop('project_name', None)
         dict_tabulate(objects, is_list_dict=True)
 
 
@@ -331,7 +342,7 @@ def start_tensorboard(ctx):
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
-        response = PolyaxonClients().project.start_tensorboard(user, project_name)
+        PolyaxonClients().project.start_tensorboard(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not start tensorboard project `{}`.'.format(project))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -355,11 +366,17 @@ def stop_tensorboard(ctx):
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
+
+    if not click.confirm("Are sure you want to stop tensorboard for project `{}/{}`".format(
+            user, project_name)):
+        click.echo('Existing without stopping tensorboard.')
+        sys.exit(1)
+
     try:
-        response = PolyaxonClients().project.stop_tensorboard(user, project_name)
+        PolyaxonClients().project.stop_tensorboard(user, project_name)
         Printer.print_success('Tensorboard is being deleted')
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not start tensorboard project `{}`.'.format(project))
+        Printer.print_error('Could not stop tensorboard project `{}`.'.format(project))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
