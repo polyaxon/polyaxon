@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from datetime import datetime
 from unittest.mock import patch
 
+import copy
 import mock
 
 from django.test.client import MULTIPART_CONTENT
@@ -16,7 +17,12 @@ from polyaxon_schemas.utils import TaskType
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
 from factories.factory_repos import RepoFactory
-from factories.fixtures import experiment_spec_content, exec_experiment_spec_content
+from factories.fixtures import (
+    experiment_spec_content,
+    exec_experiment_spec_content,
+    exec_experiment_resources_content,
+)
+from jobs.models import JobResources
 from polyaxon.urls import API_V1
 from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
@@ -116,6 +122,38 @@ class TestExperimentModel(BaseTest):
 
         # Assert 3 job were created
         assert ExperimentJob.objects.filter(experiment=experiment).count() == 3
+        assert JobResources.objects.count() == 0
+        jobs_statuses = ExperimentJob.objects.values_list('statuses__status', flat=True)
+        assert set(jobs_statuses) == {JobLifeCycle.CREATED, }
+        jobs = ExperimentJob.objects.filter(experiment=experiment)
+        assert experiment.calculated_status == ExperimentLifeCycle.STARTING
+
+        for job in jobs:
+            # Assert the jobs status is created
+            assert job.last_status == JobLifeCycle.CREATED
+
+    @mock.patch('spawner.scheduler.K8SSpawner')
+    def test_create_experiment_with_resources_spec(self, spawner_mock):
+        content = Specification.read(exec_experiment_resources_content)
+
+        mock_instance = spawner_mock.return_value
+        mock_instance.start_experiment.return_value = start_experiment_value
+        mock_instance.spec = content
+
+        experiment = ExperimentFactory(config=content.parsed_data)
+        assert experiment.is_independent is True
+
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED,
+                                      ExperimentLifeCycle.SCHEDULED,
+                                      ExperimentLifeCycle.STARTING]
+        experiment.refresh_from_db()
+        assert experiment.last_status == ExperimentLifeCycle.STARTING
+
+        # Assert 3 job were created with resources
+        assert ExperimentJob.objects.filter(experiment=experiment).count() == 3
+        assert JobResources.objects.count() == 3
         jobs_statuses = ExperimentJob.objects.values_list('statuses__status', flat=True)
         assert set(jobs_statuses) == {JobLifeCycle.CREATED, }
         jobs = ExperimentJob.objects.filter(experiment=experiment)
