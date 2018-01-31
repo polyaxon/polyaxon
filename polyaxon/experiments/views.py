@@ -103,8 +103,8 @@ class ExperimentRestartView(CreateAPIView):
             project=obj.project,
             user=self.request.user,
             description=obj.description,
-            experiment_group=obj.experiment_group,
             config=obj.config,
+            content=obj.content,
             original_experiment=obj,
             commit=obj.commit
         )
