@@ -18,8 +18,8 @@ from polyaxon_cli.utils.formatting import (
     Printer,
     get_meta_response,
     list_dicts_to_tabulate,
-    dict_tabulate
-)
+    dict_tabulate,
+    get_experiments_with_metrics)
 
 
 def get_project_info(project):
@@ -326,12 +326,7 @@ def experiments(ctx, page, metrics):
         Printer.print_header('No experiments found for project `{}/{}`.'.format(user, project_name))
 
     if metrics:
-        objects = [o.to_light_dict(include_attrs=['sequence', 'unique_name', 'last_metric'])
-                   for o in response['results']]
-        # Extend experiment with metrics
-        for obj in objects:
-            last_metric = obj.pop('last_metric', {}) or {}
-            obj.update(last_metric)
+        objects = get_experiments_with_metrics(response)
     else:
         objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
                    for o in response['results']]

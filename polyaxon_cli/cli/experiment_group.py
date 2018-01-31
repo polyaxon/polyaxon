@@ -15,13 +15,26 @@ from polyaxon_cli.utils.formatting import (
     get_meta_response,
     dict_tabulate,
     list_dicts_to_tabulate,
-)
+    get_experiments_with_metrics)
 
 
 def get_group_or_local(project=None, group=None):
     user, project_name = get_project_or_local(project)
     group = group or GroupManager.get_config_or_raise().sequence
     return user, project_name, group
+
+
+def get_group_details(group):
+    if group.description:
+        Printer.print_header("Experiment group description:")
+        click.echo('{}\n'.format(group.description))
+
+    response = group.to_light_dict(
+        humanize_values=True,
+        exclude_attrs=['uuid', 'content', 'project', 'experiments', 'description'])
+
+    Printer.print_header("Experiment group info:")
+    dict_tabulate(response)
 
 
 @click.group()
@@ -61,9 +74,7 @@ def get(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = response.to_light_dict(humanize_values=True)
-    Printer.print_header("Experiment group info:")
-    dict_tabulate(response)
+    get_group_details(response)
 
 
 @group.command()
@@ -127,15 +138,14 @@ def update(ctx, description):
         sys.exit(1)
 
     Printer.print_success("Experiment group updated.")
-    response = response.to_light_dict(humanize_values=True)
-    Printer.print_header("Experiment group info:")
-    dict_tabulate(response)
+    get_group_details(response)
 
 
 @group.command()
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
+@click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
 @click.pass_context
-def experiments(ctx, page):
+def experiments(ctx, page, metrics):
     """List experiments for this experiment group
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -158,8 +168,11 @@ def experiments(ctx, page):
     else:
         Printer.print_header('No experiments found for experiment group `{}`.'.format(group))
 
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
+    if metrics:
+        objects = get_experiments_with_metrics(response)
+    else:
+        objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+                   for o in response['results']]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")

@@ -126,3 +126,16 @@ class Printer(object):
             data.append(line)
         click.echo(tabulate(data, headers="firstrow"))
         sys.stdout.flush()
+
+
+def get_experiments_with_metrics(response):
+    objects = [
+        o.to_light_dict(include_attrs=['sequence', 'unique_name', 'total_run', 'last_metric'])
+        for o in response['results']
+    ]
+    # Extend experiment with metrics
+    for obj in objects:
+        last_metric = obj.pop('last_metric', {}) or {}
+        obj.update(last_metric)
+
+    return objects
