@@ -11,6 +11,7 @@ from kubernetes.client.rest import ApiException
 from polyaxon_schemas.utils import TaskType
 from rest_framework import fields
 
+from jobs.models import JobResources
 from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
 from repos.dockerize import get_image_info
@@ -20,6 +21,29 @@ from experiments.models import ExperimentJob
 from spawner.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.scheduler')
+
+
+def create_job(job_uuid, experiment, definition, role=None, resources=None):
+    job = ExperimentJob(uuid=job_uuid,
+                        experiment=experiment,
+                        definition=definition)
+    if role:
+        job.role = role
+
+    if not resources:
+        job.save()
+        return
+
+    job_resources = {}
+    if resources.memory:
+        job_resources['memory'] = resources.memory.to_dict()
+    if resources.cpu:
+        job_resources['cpu'] = resources.cpu.to_dict()
+    if resources.gpu:
+        job_resources['gpu'] = resources.gpu.to_dict()
+    if job_resources:
+        job.resources = JobResources.objects.create(**job_resources)
+    job.save()
 
 
 def start_experiment(experiment):
@@ -86,23 +110,27 @@ def start_experiment(experiment):
         serializer.is_valid()
         return json.loads(serializer.validated_data['definition'])
 
-    ExperimentJob.objects.create(uuid=job_uuid,
-                                 experiment=experiment,
-                                 definition=get_definition(master))
-    for worker in resp[TaskType.WORKER]:
+    create_job(job_uuid=job_uuid,
+               experiment=experiment,
+               definition=get_definition(master),
+               resources=spawner.spec.master_resources)
+
+    for i, worker in enumerate(resp[TaskType.WORKER]):
         job_uuid = worker['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
-        ExperimentJob.objects.create(uuid=job_uuid,
-                                     experiment=experiment,
-                                     definition=get_definition(worker),
-                                     role=TaskType.WORKER)
-    for ps in resp[TaskType.PS]:
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_definition(worker),
+                   role=TaskType.WORKER,
+                   resources=spawner.spec.worker_resources.get(i))
+    for i, ps in enumerate(resp[TaskType.PS]):
         job_uuid = ps['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
-        ExperimentJob.objects.create(uuid=job_uuid,
-                                     experiment=experiment,
-                                     definition=get_definition(ps),
-                                     role=TaskType.PS)
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_definition(ps),
+                   role=TaskType.PS,
+                   resources=spawner.spec.ps_resources.get(i))
 
 
 def stop_experiment(experiment, update_status=False):
