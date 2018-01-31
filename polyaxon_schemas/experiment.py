@@ -23,6 +23,7 @@ class ExperimentJobSchema(Schema):
     started_at = fields.LocalDateTime(allow_none=True)
     finished_at = fields.LocalDateTime(allow_none=True)
     total_run = fields.Str(allow_none=True)
+    resources = fields.Nested(PodResourcesSchema, allow_none=True)
     definition = fields.Dict()
 
     class Meta:
@@ -40,10 +41,8 @@ class ExperimentJobSchema(Schema):
 class ExperimentJobConfig(BaseConfig):
     SCHEMA = ExperimentJobSchema
     IDENTIFIER = 'ExperimentJob'
-    REDUCED_ATTRIBUTES = [
-        'last_status', 'is_running', 'is_done', 'started_at', 'finished_at', 'total_run']
-    REDUCED_LIGHT_ATTRIBUTES = [
-        'uuid', 'definition', 'experiment', 'unique_name', 'updated_at']
+    DEFAULT_EXCLUDE_ATTRIBUTES = [
+        'uuid', 'definition', 'experiment', 'unique_name', 'updated_at', 'resources']
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
     def __init__(self,
@@ -61,6 +60,7 @@ class ExperimentJobConfig(BaseConfig):
                  is_done=None,
                  started_at=None,
                  finished_at=None,
+                 resources=None,
                  total_run=None):
         self.uuid = uuid
         self.unique_name = unique_name
@@ -76,6 +76,7 @@ class ExperimentJobConfig(BaseConfig):
         self.last_status = last_status
         self.is_running = is_running
         self.is_done = is_done
+        self.resources = resources
         self.total_run = None
         if all([self.started_at, self.finished_at]):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
@@ -123,14 +124,9 @@ class ExperimentSchema(Schema):
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'Experiment'
-    REDUCED_ATTRIBUTES = [
-        'user', 'sequence', 'description', 'config', 'jobs', 'content',
-        'created_at', 'updated_at', 'started_at', 'finished_at',
-        'is_clone', 'is_running', 'is_done', 'total_run', 'last_metric',
-        'declarations', 'resources']
-    REDUCED_LIGHT_ATTRIBUTES = [
-        'uuid', 'project', 'experiment_group', 'description', 'config', 'content',
-        'jobs', 'updated_at', 'declarations', 'resources'
+    DEFAULT_INCLUDE_ATTRIBUTES = [
+        'sequence', 'unique_name', 'user', 'experiment_group_name', 'last_status',
+        'created_at', 'started_at', 'finished_at', 'total_run', 'num_jobs', 'is_done', 'is_running'
     ]
     DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
 
@@ -211,7 +207,7 @@ class ExperimentStatusConfig(BaseConfig):
     SCHEMA = ExperimentStatusSchema
     IDENTIFIER = 'ExperimentStatus'
     DATETIME_ATTRIBUTES = ['created_at']
-    REDUCED_LIGHT_ATTRIBUTES = ['experiment', 'uuid']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
     def __init__(self, uuid, experiment, created_at, status):
         self.uuid = uuid
@@ -242,7 +238,7 @@ class ExperimentMetricConfig(BaseConfig):
     SCHEMA = ExperimentMetricSchema
     IDENTIFIER = 'ExperimentMetric'
     DATETIME_ATTRIBUTES = ['created_at']
-    REDUCED_LIGHT_ATTRIBUTES = ['experiment', 'uuid']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
     def __init__(self, uuid, experiment, created_at, values):
         self.uuid = uuid
@@ -258,7 +254,6 @@ class ExperimentJobStatusSchema(Schema):
     status = fields.Str()
     message = fields.Str(allow_none=True)
     details = fields.Dict(allow_none=True)
-    resources = fields.Nested(PodResourcesSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -275,18 +270,16 @@ class ExperimentJobStatusSchema(Schema):
 class ExperimentJobStatusConfig(BaseConfig):
     SCHEMA = ExperimentJobStatusSchema
     IDENTIFIER = 'ExperimentJobStatus'
-    REDUCED_ATTRIBUTES = ['message', 'details', 'resources']
-    REDUCED_LIGHT_ATTRIBUTES = ['job', 'details', 'uuid', 'resources']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'details', 'uuid']
     DATETIME_ATTRIBUTES = ['created_at']
 
-    def __init__(self, uuid, job, created_at, status, message=None, details=None, resources=None):
+    def __init__(self, uuid, job, created_at, status, message=None, details=None):
         self.uuid = uuid
         self.job = job
         self.created_at = self.localize_date(created_at)
         self.status = status
         self.message = message
         self.details = details
-        self.resources = resources
 
 
 class JobLabelSchema(Schema):
