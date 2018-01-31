@@ -28,6 +28,34 @@ def get_experiment_or_local(project=None, experiment=None):
     return user, project_name, experiment
 
 
+def get_experiment_details(experiment):
+    if experiment.description:
+        Printer.print_header("Experiment description:")
+        click.echo('{}\n'.format(experiment.description))
+
+    if experiment.resources:
+        Printer.print_header("Experiment resources:")
+        dict_tabulate(experiment.resources)
+
+    if experiment.declarations:
+        Printer.print_header("Experiment declarations:")
+        dict_tabulate(experiment.declarations)
+
+    if experiment.last_metric:
+        Printer.print_header("Experiment last metrics:")
+        dict_tabulate(experiment.last_metric)
+
+    response = experiment.to_light_dict(
+        humanize_values=True,
+        exclude_attrs=[
+            'uuid', 'content', 'config', 'project', 'experiments', 'description',
+            'declarations', 'last_metric', 'resources', 'jobs'
+        ])
+
+    Printer.print_header("Experiment info:")
+    dict_tabulate(Printer.add_status_color(response))
+
+
 @click.group()
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
 @click.option('--experiment', '-xp', type=int, help="The experiment sequence number.")
@@ -80,9 +108,7 @@ def get(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = Printer.add_status_color(response.to_light_dict(humanize_values=True))
-    Printer.print_header("Experiment info:")
-    dict_tabulate(response)
+    get_experiment_details(response)
 
 
 @experiment.command()
@@ -178,9 +204,7 @@ def restart(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = Printer.add_status_color(response.to_light_dict(humanized_values=True))
-    Printer.print_header("Experiment info:")
-    dict_tabulate(response)
+    get_experiment_details(response)
 
 
 @experiment.command()
