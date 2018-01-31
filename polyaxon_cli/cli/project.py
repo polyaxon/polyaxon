@@ -300,8 +300,9 @@ def groups(ctx, page):
 
 @project.command()
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
+@click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
 @click.pass_context
-def experiments(ctx, page):
+def experiments(ctx, page, metrics):
     """List experiments for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -324,8 +325,16 @@ def experiments(ctx, page):
     else:
         Printer.print_header('No experiments found for project `{}/{}`.'.format(user, project_name))
 
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
+    if metrics:
+        objects = [o.to_light_dict(include_attrs=['sequence', 'unique_name', 'last_metric'])
+                   for o in response['results']]
+        # Extend experiment with metrics
+        for obj in objects:
+            last_metric = obj.pop('last_metric', {}) or {}
+            obj.update(last_metric)
+    else:
+        objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
+                   for o in response['results']]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")
