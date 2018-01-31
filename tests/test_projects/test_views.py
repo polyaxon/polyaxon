@@ -181,7 +181,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 4
         with patch('spawner.scheduler.stop_tensorboard') as tensorboard_mock_fct:
             with patch('spawner.scheduler.stop_experiment') as xp_mock_stop:
-                with patch('projects.utils.delete_outputs') as outputs_mock_stop:
+                with patch('projects.utils.delete_path') as outputs_mock_stop:
                     resp = self.auth_client.delete(self.url)
         assert xp_mock_stop.call_count == 4
         assert tensorboard_mock_fct.call_count == 1

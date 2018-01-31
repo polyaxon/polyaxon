@@ -5,7 +5,7 @@ import os
 
 from django.conf import settings
 
-from libs.outputs import delete_outputs
+from libs.paths import delete_path
 
 
 def get_experiment_outputs_path(experiment_name):
@@ -24,12 +24,12 @@ def get_experiment_logs_path(experiment_name):
 
 def delete_experiment_logs(experiment_group_name):
     path = get_experiment_logs_path(experiment_group_name)
-    delete_outputs(path)
+    delete_path(path)
 
 
 def delete_experiment_outputs(experiment_group_name):
     path = get_experiment_outputs_path(experiment_group_name)
-    delete_outputs(path)
+    delete_path(path)
 
 
 def create_experiment_logs_path(experiment_name):
