@@ -8,6 +8,7 @@ import six
 from marshmallow import Schema, ValidationError, post_load, post_dump
 from marshmallow.utils import utc
 
+from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.utils import to_camel_case, TIME_ZONE, humanize_timesince, to_percentage, \
     to_unit_memory
 
@@ -18,15 +19,25 @@ class BaseConfig(object):
     SCHEMA = None
     IDENTIFIER = None
     REDUCED_ATTRIBUTES = []  # Attribute to remove in the reduced form if they are null.
-    REDUCED_LIGHT_ATTRIBUTES = []
+    DEFAULT_INCLUDE_ATTRIBUTES = []
+    DEFAULT_EXCLUDE_ATTRIBUTES = []
     DATETIME_ATTRIBUTES = []
     MEM_SIZE_ATTRIBUTES = []
     PERCENT_ATTRIBUTES = []
     ROUNDING = 2
 
-    def to_light_dict(self, humanize_values=False):
+    def to_light_dict(self, humanize_values=False, include_attrs=None, exclude_attrs=None):
         obj_dict = self.to_dict(humanize_values=humanize_values)
-        for attr in self.REDUCED_LIGHT_ATTRIBUTES:
+        if all([include_attrs, exclude_attrs]):
+            raise PolyaxonSchemaError(
+                'Only one value `include_attrs` or `exclude_attrs` is allowed.')
+        if not any([include_attrs, exclude_attrs]):  # Use Default setup attrs
+            include_attrs = self.DEFAULT_INCLUDE_ATTRIBUTES
+            exclude_attrs = self.DEFAULT_EXCLUDE_ATTRIBUTES
+
+        if include_attrs:
+            exclude_attrs = set(six.iterkeys(obj_dict)) - set(include_attrs)
+        for attr in exclude_attrs:
             obj_dict.pop(attr, None)
 
         return obj_dict
