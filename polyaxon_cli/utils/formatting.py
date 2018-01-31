@@ -139,3 +139,15 @@ def get_experiments_with_metrics(response):
         obj.update(last_metric)
 
     return objects
+
+
+def get_resources(resources):
+    Printer.print_header("Job resources:")
+    objects = []
+    for item in six.iterkeys(resources):
+        item_dict = OrderedDict()
+        item_dict['resource'] = item
+        item_dict.update(resources[item])
+        objects.append(item_dict)
+    objects = list_dicts_to_tabulate(objects)
+    dict_tabulate(objects, is_list_dict=True)

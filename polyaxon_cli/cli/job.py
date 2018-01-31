@@ -7,7 +7,6 @@ import sys
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 from polyaxon_cli.cli.experiment import get_experiment_or_local
-from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -16,7 +15,7 @@ from polyaxon_cli.utils.formatting import (
     dict_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
-)
+    get_resources)
 
 
 def get_job_or_local(project=None, experiment=None, job=None):
@@ -70,7 +69,13 @@ def get(ctx):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    response = Printer.add_status_color(response.to_light_dict(humanize_values=True))
+    if response.resources:
+        get_resources(response.resources.to_dict())
+
+    response = Printer.add_status_color(response.to_light_dict(
+        humanize_values=True,
+        exclude_attrs=['uuid', 'definition', 'experiment', 'unique_name', 'resources']
+    ))
     Printer.print_header("Job info:")
     dict_tabulate(response)
 
