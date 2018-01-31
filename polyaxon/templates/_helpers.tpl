@@ -546,9 +546,9 @@ Volumes
     path: {{ .Values.persistence.repos.mountPath }}
 {{ end }}
 - name: logs
-{{- if .Values.persistence.logs.enabled }}
+{{- if .Values.persistence.logs.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
+    claimName: {{ .Values.persistence.logs.existingClaim }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.logs.mountPath }}
