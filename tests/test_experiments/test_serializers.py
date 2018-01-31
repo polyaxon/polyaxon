@@ -152,7 +152,7 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('project_name') == self.obj1.project.unique_name
-        assert data.pop('original') == (self.obj1.original_experiment.uuid.hex if
+        assert data.pop('original') == (self.obj1.original_experiment.unique_name if
                                         self.obj1.original_experiment else None)
         assert data.pop('experiment_group') == (self.obj1.experiment_group.uuid.hex
                                                 if self.obj1.experiment_group else None)

@@ -127,7 +127,7 @@ class ExperimentDetailSerializer(ExperimentSerializer):
         extra_kwargs = {'original_experiment': {'write_only': True}}
 
     def get_original(self, obj):
-        return obj.original_experiment.uuid.hex if obj.original_experiment else None
+        return obj.original_experiment.unique_name if obj.original_experiment else None
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):
