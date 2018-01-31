@@ -8,7 +8,12 @@ from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup, Project
 from projects.tasks import start_group_experiments
 from experiments.models import Experiment
-from projects.utils import delete_project_outputs, delete_experiment_group_outputs
+from projects.utils import (
+    delete_project_outputs,
+    delete_experiment_group_outputs,
+    delete_project_logs,
+    delete_experiment_group_logs,
+)
 from spawner import scheduler
 
 
@@ -21,19 +26,22 @@ def new_experiment_group(sender, **kwargs):
     if not created:
         return
 
+    # Clean outputs and logs
+    delete_experiment_group_outputs(instance.unique_name)
+    delete_experiment_group_logs(instance.unique_name)
+
     # Parse polyaxonfile content and create the experiments
     specification = instance.specification
     for xp in range(specification.matrix_space):
-
         Experiment.objects.create(project=instance.project,
                                   user=instance.user,
                                   experiment_group=instance,
                                   config=specification.parsed_data[xp])
 
-    start_group_experiments.apply_async((instance.id, ), countdown=1)
+    start_group_experiments.apply_async((instance.id,), countdown=1)
 
 
-@receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
+@receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")
 @ignore_raw
 def experiment_group_deleted(sender, **kwargs):
     """Stop all experiments before deleting the group."""
@@ -42,8 +50,23 @@ def experiment_group_deleted(sender, **kwargs):
     for experiment in instance.running_experiments:
         scheduler.stop_experiment(experiment, update_status=False)
 
-    # Delete outputs
+    # Delete outputs and logs
     delete_experiment_group_outputs(instance.unique_name)
+    delete_experiment_group_logs(instance.unique_name)
+
+
+@receiver(post_save, sender=Project, dispatch_uid="project_saved")
+@ignore_raw
+def new_project(sender, **kwargs):
+    instance = kwargs['instance']
+    created = kwargs.get('created', False)
+
+    if not created:
+        return
+
+    # Clean outputs and logs
+    delete_project_outputs(instance.unique_name)
+    delete_project_logs(instance.unique_name)
 
 
 @receiver(pre_delete, sender=Project, dispatch_uid="project_deleted")
@@ -51,5 +74,7 @@ def experiment_group_deleted(sender, **kwargs):
 def project_deleted(sender, **kwargs):
     instance = kwargs['instance']
     scheduler.stop_tensorboard(instance)
-    # Delete outputs
+
+    # Delete outputs and logs
     delete_project_outputs(instance.unique_name)
+    delete_project_logs(instance.unique_name)

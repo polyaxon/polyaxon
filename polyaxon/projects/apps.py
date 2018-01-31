@@ -12,5 +12,6 @@ class ProjectsConfig(AppConfig):
         from projects.signals import (
             new_experiment_group,
             experiment_group_deleted,
+            new_project,
             project_deleted,
         )
