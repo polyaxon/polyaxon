@@ -280,9 +280,9 @@ class ExperimentJob(DiffModel):
 
     @property
     def started_at(self):
-        status = self.statuses.filter(status__in=JobLifeCycle.BUILDING).first()
+        status = self.statuses.filter(status=JobLifeCycle.BUILDING).first()
         if not status:
-            status = self.statuses.filter(status__in=JobLifeCycle.RUNNING).first()
+            status = self.statuses.filter(status=JobLifeCycle.RUNNING).first()
         if status:
             return status.created_at
         return None
