@@ -30,7 +30,7 @@ def get_node_info(node_config):
     if not node_config:
         Printer.print_error('No node was found.')
         sys.exit(1)
-    node = node_config.to_light_dict()
+    node = node_config.to_dict()
     node.pop('gpus')
     Printer.print_header("Node info:")
     dict_tabulate(Printer.add_memory_unit(node, 'memory'))
