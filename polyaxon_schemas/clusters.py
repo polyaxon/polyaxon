@@ -30,7 +30,7 @@ class NodeGPUSchema(Schema):
 class NodeGPUConfig(BaseConfig):
     SCHEMA = NodeGPUSchema
     IDENTIFIER = 'NodeGPU'
-    REDUCED_LIGHT_ATTRIBUTES = ['uuid', 'cluster_node']
+    DEFAULT_EXCLUDE_ATTRIBUTES = ['uuid', 'cluster_node']
 
     def __init__(self, index, name, uuid, memory, serial, cluster_node):
         self.uuid = uuid
@@ -74,9 +74,9 @@ class ClusterNodeSchema(Schema):
 class ClusterNodeConfig(BaseConfig):
     SCHEMA = ClusterNodeSchema
     IDENTIFIER = 'ClusterNode'
-    REDUCED_ATTRIBUTES = ['docker_version', 'kubelet_version', 'os_image',
-                          'schedulable_taints', 'schedulable_state', 'gpus']
-    REDUCED_LIGHT_ATTRIBUTES = ['uuid']
+    DEFAULT_INCLUDE_ATTRIBUTES = [
+        'sequence', 'name', 'hostname', 'role', 'memory', 'n_cpus', 'n_gpus', 'status'
+    ]
 
     def __init__(self,
                  uuid,
