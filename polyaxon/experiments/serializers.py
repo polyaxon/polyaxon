@@ -86,6 +86,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
     project = fields.SerializerMethodField()
     project_name = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
+    last_metric = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
 
@@ -114,6 +115,9 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     def get_num_jobs(self, obj):
         return obj.jobs.count()
+
+    def get_last_metric(self, obj):
+        return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
 
 
 class ExperimentDetailSerializer(ExperimentSerializer):
