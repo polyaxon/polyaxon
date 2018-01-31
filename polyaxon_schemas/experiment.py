@@ -24,7 +24,7 @@ class ExperimentJobSchema(Schema):
     finished_at = fields.LocalDateTime(allow_none=True)
     total_run = fields.Str(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    definition = fields.Dict()
+    definition = fields.Dict(allow_none=True)
 
     class Meta:
         ordered = True
@@ -51,7 +51,7 @@ class ExperimentJobConfig(BaseConfig):
                  experiment_name,
                  created_at,
                  updated_at,
-                 definition,
+                 definition=None,
                  unique_name=None,
                  sequence=None,
                  role=None,
