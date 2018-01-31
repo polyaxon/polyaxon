@@ -13,8 +13,11 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentMetric,
 )
-from experiments.utils import delete_experiment_outputs, delete_experiment_logs, \
-    create_experiment_logs_path
+from experiments.utils import (
+    delete_experiment_outputs,
+    delete_experiment_logs,
+    create_experiment_logs_path,
+)
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
 from spawner import scheduler
@@ -62,6 +65,10 @@ def new_experiment(sender, **kwargs):
 
     instance.set_status(ExperimentLifeCycle.CREATED)
 
+    # Clean outputs and logs
+    delete_experiment_logs(instance.unique_name)
+    delete_experiment_outputs(instance.unique_name)
+
     # Create logs path
     create_experiment_logs_path(instance.unique_name)
 
@@ -81,6 +88,7 @@ def experiment_deleted(sender, **kwargs):
         # The experiment was already stopped when the group was deleted
         pass
 
+    # Delete outputs and logs
     delete_experiment_outputs(instance.unique_name)
     delete_experiment_logs(instance.unique_name)
 
