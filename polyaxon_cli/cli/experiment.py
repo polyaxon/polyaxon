@@ -19,6 +19,7 @@ from polyaxon_cli.utils.formatting import (
     dict_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
+    get_resources,
 )
 
 
@@ -35,7 +36,7 @@ def get_experiment_details(experiment):
 
     if experiment.resources:
         Printer.print_header("Experiment resources:")
-        dict_tabulate(experiment.resources)
+        get_resources(experiment.resources.to_dict())
 
     if experiment.declarations:
         Printer.print_header("Experiment declarations:")

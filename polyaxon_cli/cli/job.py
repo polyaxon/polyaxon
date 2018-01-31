@@ -15,7 +15,8 @@ from polyaxon_cli.utils.formatting import (
     dict_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
-    get_resources)
+    get_resources,
+)
 
 
 def get_job_or_local(project=None, experiment=None, job=None):
