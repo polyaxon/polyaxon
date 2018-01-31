@@ -36,11 +36,17 @@ def create_job(job_uuid, experiment, definition, role=None, resources=None):
 
     job_resources = {}
     if resources.memory:
-        job_resources['memory'] = resources.memory.to_dict()
+        _resources = resources.memory.to_dict()
+        if any(_resources.values()):
+            job_resources['memory'] = _resources
     if resources.cpu:
-        job_resources['cpu'] = resources.cpu.to_dict()
+        _resources = resources.cpu.to_dict()
+        if any(_resources.values()):
+            job_resources['cpu'] = _resources
     if resources.gpu:
-        job_resources['gpu'] = resources.gpu.to_dict()
+        _resources = resources.gpu.to_dict()
+        if any(_resources.values()):
+            job_resources['gpu'] = _resources
     if job_resources:
         job.resources = JobResources.objects.create(**job_resources)
     job.save()
