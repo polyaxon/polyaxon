@@ -83,9 +83,9 @@ def get_resources(resources):
         return None
     if resources.cpu:
         if resources.cpu.limits:
-            limits['cpu'] = resources.memory.limits
+            limits['cpu'] = resources.cpu.limits
         if resources.cpu.requests:
-            requests['cpu'] = resources.memory.requests
+            requests['cpu'] = resources.cpu.requests
 
     if resources.cpu:
         if resources.cpu.limits:
