@@ -16,7 +16,7 @@ def get_job_status(pod_state, job_container_name):
         return JobLifeCycle.SUCCEEDED, None
 
     if pod_state.deletion_timestamp:
-        return JobLifeCycle.DELETED, pod_state.deletion_timestamp
+        return JobLifeCycle.DELETED, 'Deletion time: {}'.format(pod_state.deletion_timestamp)
 
     if not pod_state.pod_conditions:
         return JobLifeCycle.UNKNOWN, 'Unknown pod conditions'
