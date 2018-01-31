@@ -28,10 +28,12 @@ class DownloadView(APIView):
     permission_classes = (IsAuthenticated,)
 
     @staticmethod
-    def _redirect_to_file(path):
+    def _redirect_to_file(path, filename=None):
         response = HttpResponse()
         response['Content-Type'] = u''
         response['X-Accel-Redirect'] = path.encode('utf-8')
+        if filename:
+            response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
 
         return response
 
