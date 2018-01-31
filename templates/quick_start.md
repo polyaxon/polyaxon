@@ -299,7 +299,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
             10  root.quick-start.1.10  2081.07          0             0.098
 
       sequence  unique_name                loss    precision    accuracy
-----------  ---------------------  ------------  -----------  ----------
+    ----------  ---------------------  ------------  -----------  ----------
          4  root.quick-start.1.4      0.0514547     0.999445      0.9829
          5  root.quick-start.1.5      0.0554655     0.999334      0.9833
          6  root.quick-start.1.6      0.0607866     0.999002      0.9797
