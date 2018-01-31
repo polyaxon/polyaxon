@@ -93,7 +93,7 @@ def version(cli, platform, lib):
             session_expired()
         version = get_version(PROJECT_CLI_NAME)
         Printer.print_header('Current cli version: {}.'.format(version))
-        Printer.print_header('Supported cli version:')
+        Printer.print_header('Supported cli versions:')
         dict_tabulate(server_version.to_dict())
 
     if lib:
@@ -103,7 +103,7 @@ def version(cli, platform, lib):
             session_expired()
         version = get_version(PROJECT_LIB_NAME)
         Printer.print_header('Current lib version: {}.'.format(version))
-        Printer.print_header('Supported lib version:')
+        Printer.print_header('Supported lib versions:')
         dict_tabulate(server_version.to_dict())
 
     if platform:
@@ -113,7 +113,7 @@ def version(cli, platform, lib):
             session_expired()
         chart_version = version_client.get_chart_version()
         Printer.print_header('Current platform version: {}.'.format(chart_version.version))
-        Printer.print_header('Supported platform version:')
+        Printer.print_header('Supported platform versions:')
         dict_tabulate(platform_version.to_dict())
 
 
