@@ -209,6 +209,8 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
 13. Check experiments in the group
 
+    Group details:
+
     ```bash
     polyaxon group -g 1 get
 
@@ -226,6 +228,8 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     num_running_experiments  0
     -----------------------  ------------------
     ```
+
+    Experiments in the groups
 
     ```bash
     $ polyaxon group -g 1 experiments
@@ -263,6 +267,59 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
             21  root.quick-start.1.21  root    Created        a few seconds ago          0
             22  root.quick-start.1.22  root    Created        a few seconds ago          0
             23  root.quick-start.1.23  root    Created        a few seconds ago          0
+    ```
+
+    Comparing experiments metrics in the groups:
+
+    ```bash
+    polyaxon group -g 1 experiments -m
+
+    Experiments for experiment group `1`.
+
+
+    Navigation:
+
+    -----  --
+    count  20
+    -----  --
+
+    Experiments:
+
+      sequence  unique_name                    loss    precision    accuracy
+    ----------  ---------------------  ------------  -----------  ----------
+             1  root.quick-start.1        0.0514547     0.999445      0.9829
+             2  root.quick-start.2        0.0554655     0.999334      0.9833
+             3  root.quick-start.1.3      0.0607866     0.999002      0.9797
+             4  root.quick-start.1.4      4.62058       0.902         0.1028
+             5  root.quick-start.1.5      0.379242      0.996773      0.8854
+             6  root.quick-start.1.6   3635.83          0.902         0.0974
+             7  root.quick-start.1.7      0.0462428     0.998892      0.9848
+             8  root.quick-start.1.8      2.73637       0.902         0.1135
+             9  root.quick-start.1.9      0.394347      0.997983      0.8859
+            10  root.quick-start.1.10  2081.07          0             0.098
+
+      sequence  unique_name                loss    precision    accuracy
+----------  ---------------------  ------------  -----------  ----------
+         4  root.quick-start.1.4      0.0514547     0.999445      0.9829
+         5  root.quick-start.1.5      0.0554655     0.999334      0.9833
+         6  root.quick-start.1.6      0.0607866     0.999002      0.9797
+         7  root.quick-start.1.7      4.62058       0.902         0.1028
+         8  root.quick-start.1.8      0.379242      0.996773      0.8854
+         9  root.quick-start.1.9   3635.83          0.902         0.0974
+        10  root.quick-start.1.10     0.0462428     0.998892      0.9848
+        11  root.quick-start.1.11     2.73637       0.902         0.1135
+        12  root.quick-start.1.12     0.394347      0.997983      0.8859
+        13  root.quick-start.1.13  2081.07          0             0.098
+        14  root.quick-start.1.14     0.0514547     0.999445      0.9829
+        15  root.quick-start.1.15     0.0554655     0.999334      0.9833
+        16  root.quick-start.1.16     0.0607866     0.999002      0.9797
+        17  root.quick-start.1.17     4.62058       0.902         0.1028
+        18  root.quick-start.1.18     0.379242      0.996773      0.8854
+        19  root.quick-start.1.19     0.388242      0.9963        0.88
+        20  root.quick-start.1.20     0.0462428     0.998892      0.9848
+        21  root.quick-start.1.21     2.73637       0.902         0.1135
+        22  root.quick-start.1.22     0.394347      0.997983      0.8859
+        23  root.quick-start.1.23     4.62058       0.902         0.1028
     ```
 
 14. More information about the project in the dashboard

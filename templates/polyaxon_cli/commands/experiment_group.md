@@ -92,4 +92,5 @@ Uses [Caching](/polyaxon_cli/introduction#Caching)
 option | type | description
 -------|------|------------
   --page | INTEGER | To paginate through the list of experiments.
+  -m, --metrics | Flag | List experiments with their metrics.
   --help | | Show this message and exit.
