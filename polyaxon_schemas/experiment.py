@@ -190,6 +190,7 @@ class ExperimentStatusSchema(Schema):
     experiment = UUID()
     created_at = fields.LocalDateTime()
     status = fields.Str()
+    message = fields.Str(allow_none=True)
 
     class Meta:
         ordered = True
@@ -209,11 +210,12 @@ class ExperimentStatusConfig(BaseConfig):
     DATETIME_ATTRIBUTES = ['created_at']
     DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
 
-    def __init__(self, uuid, experiment, created_at, status):
+    def __init__(self, uuid, experiment, created_at, status, message=None):
         self.uuid = uuid
         self.experiment = experiment
         self.created_at = self.localize_date(created_at)
         self.status = status
+        self.message = message
 
 
 class ExperimentMetricSchema(Schema):

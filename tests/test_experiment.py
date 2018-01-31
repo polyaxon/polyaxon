@@ -157,7 +157,8 @@ class TestExperimentConfigs(TestCase):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
                        'created_at': local_now().isoformat(),
-                       'status': 'Running'}
+                       'status': 'Running',
+                       'message': None}
         config = ExperimentStatusConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict == config_dict
