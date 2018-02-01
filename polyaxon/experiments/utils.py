@@ -43,3 +43,8 @@ def create_experiment_logs_path(experiment_name):
         if not os.path.isdir(path):
             create_path(path)
 
+    # Create file with permissions
+    path = os.path.join(path, values[-1])
+    open(path, 'w+')
+    os.chmod(path, 0o777)
+
