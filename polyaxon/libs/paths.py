@@ -19,4 +19,4 @@ def delete_path(path):
 
 def create_path(path):
     os.mkdir(path)
-    os.chmod(path, 0o666)
+    os.chmod(path, 0o777)
