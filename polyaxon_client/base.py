@@ -25,7 +25,7 @@ class PolyaxonClient(object):
     BASE_WS_URL = "{}/ws/{}"
     MAX_UPLOAD_SIZE = 1024 * 1024 * 150
     PAGE_SIZE = 30
-    TIME_OUT = 12
+    TIME_OUT = 25
 
     def __init__(self,
                  host,
