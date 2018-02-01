@@ -13,8 +13,8 @@ from tests.fixtures import status_raw_event, status_raw_event_with_conditions
 from tests.utils import BaseTest
 
 
-class TestEventsHandling(BaseTest):
-    def test_handle_events_job_statues_for_non_existing_job(self):
+class TestEventsStatusesHandling(BaseTest):
+    def test_handle_events_job_statuses_for_non_existing_job(self):
         assert ExperimentJobStatus.objects.count() == 0
         job_state = get_job_state(event_type=status_raw_event['type'],
                                   event=status_raw_event['object'],
@@ -23,7 +23,7 @@ class TestEventsHandling(BaseTest):
         handle_events_job_statues(job_state.to_dict())
         assert ExperimentJobStatus.objects.count() == 0
 
-    def test_handle_events_job_statues_for_existing_job_with_unknown_conditions(self):
+    def test_handle_events_job_statuses_for_existing_job_with_unknown_conditions(self):
         assert ExperimentJobStatus.objects.count() == 0
         job_state = get_job_state(event_type=status_raw_event['type'],
                                   event=status_raw_event['object'],
@@ -36,7 +36,7 @@ class TestEventsHandling(BaseTest):
         statuses = ExperimentJobStatus.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.UNKNOWN}
 
-    def test_handle_events_job_statues_for_existing_job_with_known_conditions(self):
+    def test_handle_events_job_statuses_for_existing_job_with_known_conditions(self):
         assert ExperimentJobStatus.objects.count() == 0
         job_state = get_job_state(event_type=status_raw_event_with_conditions['type'],
                                   event=status_raw_event_with_conditions['object'],
