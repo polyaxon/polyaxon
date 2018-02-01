@@ -8,6 +8,7 @@ import os
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
 
+from libs.paths import create_path
 from repos import git
 from repos.models import ExternalRepo, Repo
 
@@ -27,11 +28,11 @@ def new_repo(sender, **kwargs):
 
     # Check that the user has a dir
     if not os.path.isdir(instance.user_path):
-        os.mkdir(instance.user_path)
+        create_path(instance.user_path)
 
     # Check that the project has a dir
     if not os.path.isdir(instance.project_path):
-        os.mkdir(instance.project_path)
+        create_path(instance.project_path)
 
     # Create a new repo
     git.get_git_repo(repo_path=instance.path, init=True)
@@ -64,11 +65,11 @@ def new_external_repo(sender, **kwargs):
 
     # Check that the user has a dir
     if not os.path.isdir(instance.user_path):
-        os.mkdir(instance.user_path)
+        create_path(instance.user_path)
 
     # Check that the project has a dir
     if not os.path.isdir(instance.project_path):
-        os.mkdir(instance.project_path)
+        create_path(instance.project_path)
 
     # Create a new repo
     git.clone_git_repo(repo_path=instance.path, git_url=instance.git_url)

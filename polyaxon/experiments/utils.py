@@ -5,7 +5,7 @@ import os
 
 from django.conf import settings
 
-from libs.paths import delete_path
+from libs.paths import delete_path, create_path
 
 
 def get_experiment_outputs_path(experiment_name):
@@ -41,5 +41,5 @@ def create_experiment_logs_path(experiment_name):
     for value in values[:-1]:
         path = os.path.join(path, value)
         if not os.path.isdir(path):
-            os.mkdir(path)
+            create_path(path)
 

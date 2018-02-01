@@ -11,6 +11,8 @@ from django.conf import settings
 from git import Repo as GitRepo, InvalidGitRepositoryError
 from psutil import Popen
 
+from libs.paths import create_path
+
 logger = logging.getLogger('polyaxon.repos.git')
 
 
@@ -29,7 +31,7 @@ def get_git_repo(repo_path, init=False):
                 return GitRepo.init(repo_path)
     elif init:
         try:
-            os.mkdir(repo_path)
+            create_path(repo_path)
             return get_git_repo(repo_path, init=init)
         except FileNotFoundError:
             pass

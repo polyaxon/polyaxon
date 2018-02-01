@@ -15,3 +15,8 @@ def delete_path(path):
         shutil.rmtree(path)
     except OSError:
         logger.warning('Could not delete path `{}`'.format(path))
+
+
+def create_path(path):
+    os.mkdir(path)
+    os.chmod(path, 0o666)
