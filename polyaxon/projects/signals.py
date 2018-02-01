@@ -48,6 +48,9 @@ def experiment_group_deleted(sender, **kwargs):
 
     instance = kwargs['instance']
     for experiment in instance.running_experiments:
+        # Delete all jobs from DB before sending a signal to k8s,
+        # this way no statuses will be updated in the meanwhile
+        experiment.jobs.all().delete()
         scheduler.stop_experiment(experiment, update_status=False)
 
     # Delete outputs and logs

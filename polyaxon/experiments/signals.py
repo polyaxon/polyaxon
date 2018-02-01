@@ -83,6 +83,9 @@ def experiment_deleted(sender, **kwargs):
     instance = kwargs['instance']
     try:
         _ = instance.experiment_group
+        # Delete all jobs from DB before sending a signal to k8s,
+        # this way no statuses will be updated in the meanwhile
+        instance.jobs.all().delete()
         scheduler.stop_experiment(instance, update_status=False)
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
