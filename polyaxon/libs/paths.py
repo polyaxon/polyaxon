@@ -12,7 +12,10 @@ def delete_path(path):
     if not os.path.exists(path):
         return
     try:
-        shutil.rmtree(path)
+        if os.path.isfile(path):
+            os.remove(path)
+        else:
+            shutil.rmtree(path)
     except OSError:
         logger.warning('Could not delete path `{}`'.format(path))
 
