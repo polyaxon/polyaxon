@@ -200,6 +200,7 @@ class ExperimentStatus(models.Model):
     message = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
+        verbose_name_plural = 'Experiment Statuses'
         ordering = ['created_at']
 
     def __str__(self):

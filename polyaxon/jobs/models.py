@@ -53,5 +53,6 @@ class JobStatus(models.Model):
         return '{} <{}>'.format(self.job.unique_name, self.status)
 
     class Meta:
+        verbose_name_plural = 'Job Statuses'
         ordering = ['created_at']
         abstract = True
