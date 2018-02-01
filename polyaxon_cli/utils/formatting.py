@@ -134,9 +134,19 @@ def get_experiments_with_metrics(response):
         for o in response['results']
     ]
     # Extend experiment with metrics
+    metric_keys = set([])
     for obj in objects:
         last_metric = obj.pop('last_metric', {}) or {}
+        metric_keys |= set(six.iterkeys(last_metric))
         obj.update(last_metric)
+
+    # Check that all obj have all metrics
+    # TODO: optimize this process
+    for obj in objects:
+        obj_keys = set(six.iterkeys(obj))
+        for metric in metric_keys:
+            if metric not in obj_keys:
+                obj[metric] = None
 
     return objects
 
