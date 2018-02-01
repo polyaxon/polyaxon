@@ -35,8 +35,7 @@ def get_experiment_details(experiment):
         click.echo('{}\n'.format(experiment.description))
 
     if experiment.resources:
-        Printer.print_header("Experiment resources:")
-        get_resources(experiment.resources.to_dict())
+        get_resources(experiment.resources.to_dict(), header="Experiment resources:")
 
     if experiment.declarations:
         Printer.print_header("Experiment declarations:")

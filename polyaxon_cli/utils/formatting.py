@@ -141,8 +141,9 @@ def get_experiments_with_metrics(response):
     return objects
 
 
-def get_resources(resources):
-    Printer.print_header("Job resources:")
+def get_resources(resources, header=None):
+    header = header or 'Resources:'
+    Printer.print_header(header)
     objects = []
     for item in six.iterkeys(resources):
         item_dict = OrderedDict()

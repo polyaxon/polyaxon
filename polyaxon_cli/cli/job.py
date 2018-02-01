@@ -71,7 +71,7 @@ def get(ctx):
         sys.exit(1)
 
     if response.resources:
-        get_resources(response.resources.to_dict())
+        get_resources(response.resources.to_dict(), header="Job resources:")
 
     response = Printer.add_status_color(response.to_light_dict(
         humanize_values=True,
