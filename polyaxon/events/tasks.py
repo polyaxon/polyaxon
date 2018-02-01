@@ -29,7 +29,7 @@ def handle_events_resources(payload, persist):
 def handle_events_job_statues(payload):
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
-    logger.info('handling events status for job_uuid: {}'.format(job_uuid))
+    logger.debug('handling events status for job_uuid: {}'.format(job_uuid))
 
     try:
         job = ExperimentJob.objects.get(uuid=job_uuid)
