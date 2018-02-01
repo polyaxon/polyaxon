@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 from datetime import datetime
 from unittest.mock import patch
 
-import copy
 import mock
 
 from django.test.client import MULTIPART_CONTENT

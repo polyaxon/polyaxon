@@ -55,7 +55,7 @@ def handle_events_job_logs(experiment_name,
     if task_type and task_idx:
         log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
     xp_logger = logging.getLogger(experiment_name)
-    if not logger.handlers:
+    if not xp_logger.handlers:
         log_path = get_experiment_logs_path(experiment_name)
         log_handler = logging.FileHandler(log_path)
         log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
