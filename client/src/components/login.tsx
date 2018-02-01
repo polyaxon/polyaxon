@@ -26,7 +26,7 @@ export default class Login extends React.Component<Props, Object> {
   public render() {
     return (
       <div className="row">
-        <div className="col-md-4 col-md-offset-4">
+        <div className="col-md-6 col-md-offset-3 login-form">
           <div className="login">
             <form onSubmit={this.handleSubmit.bind(this)}>
               <div className="form-group">
