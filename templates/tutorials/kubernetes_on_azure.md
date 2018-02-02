@@ -98,7 +98,7 @@ Now we will deploy the custom cluster based on a template in the examples repo.
     $ kubectl proxy
     ```
 
-    Since we will be using some storage for the data and outputs on Polyaxon, we need some azure storage for that.
+    Since we will be using some storage for the data, outputs, and logs on Polyaxon, we need some azure storage for that.
 
 10. Export a storage account name
 
@@ -118,12 +118,14 @@ Now we will deploy the custom cluster based on a template in the examples repo.
     $ STORAGE_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP --account-name $STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
     ```
 
-13. Create 2 shares on this storage (`data` and `outputs`)
+13. Create 2 shares on this storage (`data`, `outputs`, and `logs`)
 
     ```bash
     $ az storage share create --name data --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
 
     $ az storage share create --name outputs --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
+
+    $ az storage share create --name logs --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY
     ```
 
 If you have a Kubernetes cluster running and have data storage, please go to [create persistent volumes](persistent_volumes)

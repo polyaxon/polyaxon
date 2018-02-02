@@ -43,4 +43,8 @@ But before that, we need to create a Kubernetes `secret`.
     $ kubectl create -f azure/outputs-pvc.yml -n polyaxon
     ```
 
+    ```bash
+    $ kubectl create -f azure/logs-pvc.yml -n polyaxon
+    ```
+
 Now we can [train experiments with Polyaxon](training_experiments_on_polyaxon)
