@@ -163,7 +163,7 @@ def run(containers, node, persist):
         payload = get_container_resources(node, containers[container_id], gpu_resources)
         if payload:
             payload = payload.to_dict()
-            logger.info("Publishing resourecs event")
+            logger.info("Publishing resources event")
             handle_events_resources.delay(payload=payload, persist=persist)
 
             job_uuid = payload['job_uuid']
