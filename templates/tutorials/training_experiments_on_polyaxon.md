@@ -47,7 +47,7 @@ Before we can train our experiments we need to deploy Polyaxon.
 5. Create a project
 
     ```bash
-    $ polyaxon project create --name=cifar10
+    $ polyaxon project create --name=cifar10 --description='Train and evaluate a CIFAR-10 ResNet model on polyaxon'
     ```
 
 6. Init the project
