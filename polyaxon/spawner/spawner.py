@@ -26,7 +26,7 @@ from spawner.templates import pods
 from spawner.templates import services
 from spawner.templates import ingresses
 
-logger = logging.getLogger('polyaxon.tasks.projects')
+logger = logging.getLogger('polyaxon.spawner.spawner')
 
 
 class K8SSpawner(K8SManager):

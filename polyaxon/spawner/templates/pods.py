@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+import logging
 
 import six
 import uuid
@@ -14,6 +15,8 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_k8s import constants as k8s_constants
 
 from spawner.templates import constants
+
+logger = logging.getLogger('polyaxon.spawner.spawner')
 
 
 def get_gpu_volume_mounts():
@@ -191,9 +194,12 @@ class PodManager(object):
             self.get_from_experiment_secret(constants.SECRET_USER_TOKEN),
         ]
 
-        if resources and resources.gpu:
-            env_vars.append(client.V1EnvVar(name='LD_LIBRARY_PATH',
-                                            value=settings.LD_LIBRARY_PATH))
+        if resources:
+            if resources.gpu and settings.LD_LIBRARY_PATH:
+                env_vars.append(client.V1EnvVar(name='LD_LIBRARY_PATH',
+                                                value=settings.LD_LIBRARY_PATH))
+            if resources.gpu and not settings.LD_LIBRARY_PATH:
+                logger.warning('`LD_LIBRARY_PATH` was not properly set.')  # Publish error
 
         ports = [client.V1ContainerPort(container_port=port) for port in self.ports]
         return client.V1Container(name=self.job_container_name,
