@@ -8,6 +8,7 @@ import six
 import sys
 
 from polyaxon_schemas.experiment import ContainerResourcesConfig
+from polyaxon_schemas.settings import K8SResourcesConfig
 from polyaxon_schemas.utils import to_list, to_percentage, to_unit_memory
 from tabulate import tabulate
 
@@ -158,7 +159,7 @@ def get_resources(resources, header=None):
     for item in six.iterkeys(resources):
         item_dict = OrderedDict()
         item_dict['resource'] = item
-        item_dict.update(resources[item] or {})
+        item_dict.update(resources[item] or K8SResourcesConfig().to_dict())
         objects.append(item_dict)
     objects = list_dicts_to_tabulate(objects)
     dict_tabulate(objects, is_list_dict=True)
