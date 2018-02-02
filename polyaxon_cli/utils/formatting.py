@@ -121,7 +121,7 @@ class Printer(object):
                 '{} / {}'.format(to_unit_memory(job_resources.memory_used),
                                  to_unit_memory(job_resources.memory_limit)),
                 '{} - {}'.format(to_percentage(job_resources.cpu_percentage / 100),
-                                 len(job_resources.percpu_percentage))]
+                                 job_resources.n_cpus)]
             data.append(line)
         click.echo(tabulate(data, headers="firstrow"))
         sys.stdout.flush()
@@ -134,9 +134,13 @@ class Printer(object):
             ['job_name', 'name', 'GPU Usage', 'GPU Mem Usage / Total', 'GPU Temperature',
              'Power Draw / Limit']
         ]
+        non_gpu_jobs = 0
         for job_resources in jobs_resources:
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
             line = []
+            if not job_resources.gpu_resources:
+                non_gpu_jobs += 1
+                continue
             for gpu_resources in job_resources.gpu_resources:
                 line += [
                     job_resources.job_name,
@@ -149,6 +153,10 @@ class Printer(object):
                     '{} / {}'.format(gpu_resources.power_draw, gpu_resources.power_limit),
                 ]
             data.append(line)
+        if non_gpu_jobs == len(jobs_resources):
+            Printer.print_error(
+                'No GPU job was found, please run `resources` command without `-g | --gpu` option.')
+            exit(1)
         click.echo(tabulate(data, headers="firstrow"))
         sys.stdout.flush()
 
