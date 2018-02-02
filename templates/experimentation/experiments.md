@@ -345,7 +345,7 @@ For more information about jobs, please refer to [jobs](jobs)
 To view the logs of experiment 3 for example, given that it is running now, run
 
 ```bash
-polyaxon experiment -xp 2 logs
+$ polyaxon experiment -xp 2 logs
 ```
 
 This command will show the logs in real time of all the jobs running for the experiment.
@@ -361,10 +361,21 @@ In the [jobs](jobs)'s page, we will see how we can view the logs of a particular
 To view the resources of experiment 3 for example, given that it is running now, run
 
 ```bash
-polyaxon experiment -xp 3 resources
+$ polyaxon experiment -xp 3 resources
 ```
 
 This command will show the resources in real time of all the jobs running for the experiment.
+
+If the experiment is running with GPU, and you want to see GPU metrics in real time, run
+
+```bash
+$ polyaxon experiment -xp 3 resources --gpu
+
+or
+
+$ polyaxon experiment -xp 3 resources -g
+```
+
 In the [jobs](jobs)'s page, we will see how we can view the resources of a particular job.
 
 

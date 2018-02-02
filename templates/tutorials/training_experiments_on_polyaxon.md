@@ -87,7 +87,7 @@ Before we can train our experiments we need to deploy Polyaxon.
 
       Job       Mem Usage / Limit    CPU% - CPUs
     --------  -------------------  ---------------
-    master.1  1.26 Gb / 6.79 Gb    120.11% - 128
+    master.1  1.26 Gb / 6.79 Gb    120.11% - 6
     ```
 
     N.B. Azure seems to have an issue with reporting docker cpu resources.
@@ -173,4 +173,25 @@ Before we can train our experiments we need to deploy Polyaxon.
     master.1 -- , '_tf_random_seed': None, '_task_type': None, '_environment': 'local', '_is_chief': True, '_cluster_spec': <tensorflow.python.training.server_lib.ClusterSpec object at 0x7fd2638d9490>, '_tf_config': gpu_options {
     master.1 --   per_process_gpu_memory_fraction: 1.0
     ...
+    ```
+
+12. Watch the resources
+
+
+    ```bash
+    $ polyaxon experiment -xp 3 resources
+
+    Job       Mem Usage / Limit    CPU% - CPUs
+    --------  -------------------  -------------
+    master.1  1.57 Gb / 55.03 Gb   80.91% - 6
+    ```
+
+    Since this experiment is running with GPU, we can also watch the GPU metrics
+
+    ```bash
+    $ polyaxon experiment -xp 3 resources --gpu
+
+    job_name    name         GPU Usage  GPU Mem                         GPU Temperature    Power Draw    Power Limit
+    ----------  ---------  -----------  ----------------------------  -----------------  ------------  -------------
+    master.1    Tesla K80           75  10.71 Gb / 11.17 Gb (3400%%)                 69           125            149
     ```

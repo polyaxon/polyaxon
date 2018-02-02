@@ -43,7 +43,7 @@ To view the logs of a specific job, you need to have the experiment sequence it 
 For example
 
 ```bash
-polyaxon job -xp 3 -j 1 logs
+$ polyaxon job -xp 3 -j 1 logs
 ```
 
 This command will show the logs of in real time for that job.
@@ -55,10 +55,20 @@ To view the resources of a specific job, you need to have the experiment sequenc
 For example
 
 ```bash
-polyaxon job -xp 3 -j 1 resources
+$ polyaxon job -xp 3 -j 1 resources
 ```
 
 This command will show the resources in real time for that job.
+
+If the job is running with GPU, and you want to see GPU metrics in real time, run
+
+```bash
+$ polyaxon job -xp 3 -j 1 resources --gpu
+
+or
+
+$ polyaxon job -xp 3 -j 1 resources -g
+```
 
 ## Job statuses
 
