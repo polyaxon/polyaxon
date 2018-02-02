@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from amqp import AMQPError
 from django.conf import settings
 
 from polyaxon.config_settings import RoutingKeys
@@ -41,17 +42,21 @@ def publish_log(log_line,
         logger.info("Streaming new log event for experiment: {}".format(experiment_uuid))
 
         with celery_app.producer_or_acquire(None) as producer:
-            producer.publish(
-                {
-                    'experiment_uuid': experiment_uuid,
-                    'job_uuid': job_uuid,
-                    'log_line': log_line,
-                    'status': status,
-                    'task_type': task_type,
-                    'task_idx': task_idx
-                },
-                routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
-                                              experiment_uuid,
-                                              job_uuid),
-                exchange=settings.INTERNAL_EXCHANGE,
-            )
+            try:
+                producer.publish(
+                    {
+                        'experiment_uuid': experiment_uuid,
+                        'job_uuid': job_uuid,
+                        'log_line': log_line,
+                        'status': status,
+                        'task_type': task_type,
+                        'task_idx': task_idx
+                    },
+                    routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
+                                                  experiment_uuid,
+                                                  job_uuid),
+                    exchange=settings.INTERNAL_EXCHANGE,
+                )
+            except (TimeoutError, AMQPError):
+                pass
+
