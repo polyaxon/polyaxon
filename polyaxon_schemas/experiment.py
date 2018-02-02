@@ -479,6 +479,7 @@ class ContainerResourcesSchema(Schema):
     experiment_uuid = UUID()
     job_name = fields.Str()
     container_id = fields.Str()
+    n_cpus = fields.Int()
     cpu_percentage = fields.Float()
     percpu_percentage = fields.List(fields.Float(), allow_none=True)
     memory_used = fields.Int()
@@ -508,6 +509,7 @@ class ContainerResourcesConfig(BaseConfig):
                  experiment_uuid,
                  job_name,
                  container_id,
+                 n_cpus,
                  cpu_percentage,
                  percpu_percentage,
                  memory_used,
@@ -517,6 +519,7 @@ class ContainerResourcesConfig(BaseConfig):
         self.experiment_uuid = experiment_uuid
         self.job_name = job_name
         self.container_id = container_id
+        self.n_cpus = n_cpus
         self.cpu_percentage = cpu_percentage
         self.percpu_percentage = percpu_percentage
         self.memory_used = memory_used
