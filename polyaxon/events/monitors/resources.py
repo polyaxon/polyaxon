@@ -123,7 +123,7 @@ def get_container_resources(node, container, gpu_resources):
         'experiment_uuid': experiment_uuid,
         'container_id': container.id,
         'cpu_percentage': cpu_percentage,
-        'n_cpu': num_cpu_cores,
+        'n_cpus': num_cpu_cores,
         'percpu_percentage': percpu_percentage,
         'memory_used': memory_used,
         'memory_limit': memory_limit,
