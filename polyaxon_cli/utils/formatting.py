@@ -113,7 +113,7 @@ class Printer(object):
     def resources(cls, jobs_resources):
         jobs_resources = to_list(jobs_resources)
         click.clear()
-        data = [['Job', 'Mem Usage / Limit', 'CPU% - CPUs', 'GPU Mem', 'GPU Usage']]
+        data = [['Job', 'Mem Usage / Total', 'CPU% - CPUs']]
         for job_resources in jobs_resources:
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
             line = [
@@ -122,8 +122,32 @@ class Printer(object):
                                  to_unit_memory(job_resources.memory_limit)),
                 '{} - {}'.format(to_percentage(job_resources.cpu_percentage / 100),
                                  len(job_resources.percpu_percentage))]
-            if job_resources.gpu_resources:
-                pass
+            data.append(line)
+        click.echo(tabulate(data, headers="firstrow"))
+        sys.stdout.flush()
+
+    @classmethod
+    def gpu_resources(cls, jobs_resources):
+        jobs_resources = to_list(jobs_resources)
+        click.clear()
+        data = [
+            ['job_name', 'name', 'GPU Usage', 'GPU Mem Usage / Total', 'GPU Temperature',
+             'Power Draw / Limit']
+        ]
+        for job_resources in jobs_resources:
+            job_resources = ContainerResourcesConfig.from_dict(job_resources)
+            line = []
+            for gpu_resources in job_resources.gpu_resources:
+                line += [
+                    job_resources.job_name,
+                    gpu_resources.name,
+                    to_percentage(gpu_resources.utilization_gpu / 100),
+                    '{} / {}'.format(
+                        to_unit_memory(gpu_resources.memory_used),
+                        to_unit_memory(gpu_resources.memory_total)),
+                    gpu_resources.temperature_gpu,
+                    '{} / {}'.format(gpu_resources.power_draw, gpu_resources.power_limit),
+                ]
             data.append(line)
         click.echo(tabulate(data, headers="firstrow"))
         sys.stdout.flush()

@@ -122,8 +122,9 @@ def statuses(ctx):
 
 
 @job.command()
+@click.option('--gpu', '-g', is_flag=True, help='List job gpus resources.')
 @click.pass_context
-def resources(ctx):
+def resources(ctx, gpu):
     """Get job resources.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -139,11 +140,12 @@ def resources(ctx):
                                                            ctx.obj['experiment'],
                                                            ctx.obj['job'])
     try:
+        message_handler = Printer.gpu_resources if gpu else Printer.resources
         PolyaxonClients().job.resources(user,
                                         project_name,
                                         experiment,
                                         job,
-                                        message_handler=Printer.resources)
+                                        message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get resources for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
