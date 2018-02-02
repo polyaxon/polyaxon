@@ -5,4 +5,3 @@ six==1.11.0
 websocket-client==0.44.0
 
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas
-
