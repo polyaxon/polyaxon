@@ -362,8 +362,8 @@ def get_experiment_fn(data_dir,
 
 
 def train(job_dir, data_dir, num_gpus, variable_strategy,
-         use_distortion_for_training, log_device_placement, num_intra_threads,
-         **hparams):
+          use_distortion_for_training, log_device_placement, num_intra_threads,
+          **hparams):
     # The env variable is on deprecation path, default is set to off.
     os.environ['TF_SYNC_ON_FINISH'] = '0'
     os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
