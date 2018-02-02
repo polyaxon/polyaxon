@@ -179,6 +179,16 @@ $ polyaxon experiment -xp 2 stop
     There's another command `delete`, the difference between `stop` and `delete`,
     is that delete will remove the experiment completely from your database.
 
+## Restarting an experiment
+
+To restart experiment 2 for example, run
+
+```bash
+$ polyaxon experiment -xp 2 restart
+```
+
+It will create a new experiment based on experiment 2 last saved checked point.
+
 ## Distributed Runs
 
 !!! caution
