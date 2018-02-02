@@ -7,6 +7,8 @@ from django.db.models import Count
 from docker.errors import DockerException
 from polyaxon_schemas.utils import TIME_ZONE
 
+from experiments.restart import handle_restarted_experiment
+from experiments.utils import create_experiment_outputs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks, Intervals
 from repos import dockerize
@@ -80,6 +82,12 @@ def start_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         return
+
+    # Check if we need to restart an experiment
+    if experiment.is_clone:
+        handle_restarted_experiment(experiment)
+    else:
+        create_experiment_outputs_path(experiment.unique_name)
 
     scheduler.start_experiment(experiment)
 

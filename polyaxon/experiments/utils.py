@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+import shutil
 
 from django.conf import settings
 
@@ -53,7 +54,19 @@ def create_experiment_logs_path(experiment_name):
     path = os.path.join(path, values[-1])
     open(path, 'w+')
     os.chmod(path, 0o777)
+    return path
 
 
 def create_experiment_outputs_path(experiment_name):
-    create_experiment_path(experiment_name, settings.OUTPUTS_ROOT)
+    values = experiment_name.split('.')
+    path = create_experiment_path(experiment_name, settings.OUTPUTS_ROOT)
+    path = os.path.join(path, values[-1])
+    if not os.path.isdir(path):
+        create_path(path)
+    return path
+
+
+def copy_experiment_outputs(experiment_name_from, experiment_name_to):
+    path_from = get_experiment_outputs_path(experiment_name_from)
+    path_to = get_experiment_outputs_path(experiment_name_to)
+    shutil.copytree(path_from, path_to)
