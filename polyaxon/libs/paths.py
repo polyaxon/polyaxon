@@ -23,7 +23,6 @@ def delete_path(path):
 def create_path(path):
     try:
         os.mkdir(path)
-        os.chmod(path, 0o777)
     except FileExistsError:
         pass
     except OSError as e:
