@@ -13,6 +13,8 @@ Polyaxon is currently running:
     export POLYAXON_HTTP_PORT=80
     export POLYAXON_WS_PORT=80
 
+    echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
+
 {{- else if .Values.isMinikube }}
 
     export POLYAXON_IP=$(minikube ip)
