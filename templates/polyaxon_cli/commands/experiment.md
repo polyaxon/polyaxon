@@ -174,6 +174,20 @@ Example:
 $ polyaxon experiment -xp 19 resources
 ```
 
+For GPU resources
+
+```bash
+$ polyaxon experiment -xp 19 resources --gpu
+```
+
+Options:
+
+option | type | description
+-------|------|------------
+  -g, --gpu | Flag | List experiment GPU resources.
+  --help | | Show this message and exit.
+
+
 ## statuses
 
 Usage:

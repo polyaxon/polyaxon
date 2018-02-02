@@ -87,6 +87,22 @@ Examples:
 $ polyaxon job -j 2 resources
 ```
 
+For GPU resources
+
+\b
+```bash
+$ polyaxon job -j 2 resources --gpu
+```
+
+
+Options:
+
+option | type | description
+-------|------|------------
+  -g, --gpu | Flag | List job GPU resources.
+  --help | | Show this message and exit.
+
+
 ## statuses
 
 Usage:
