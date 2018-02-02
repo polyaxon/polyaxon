@@ -122,7 +122,7 @@ def statuses(ctx):
 
 
 @job.command()
-@click.option('--gpu', '-g', is_flag=True, help='List job gpus resources.')
+@click.option('--gpu', '-g', is_flag=True, help='List job GPU resources.')
 @click.pass_context
 def resources(ctx, gpu):
     """Get job resources.
@@ -134,6 +134,13 @@ def resources(ctx, gpu):
     \b
     ```bash
     $ polyaxon job -j 2 resources
+    ```
+
+    For GPU resources
+
+    \b
+    ```bash
+    $ polyaxon job -j 2 resources --gpu
     ```
     """
     user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],

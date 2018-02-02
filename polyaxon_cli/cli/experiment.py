@@ -297,7 +297,7 @@ def statuses(ctx, page):
 
 
 @experiment.command()
-@click.option('--gpu', '-g', is_flag=True, help='List experiment gpus resources.')
+@click.option('--gpu', '-g', is_flag=True, help='List experiment GPU resources.')
 @click.pass_context
 def resources(ctx, gpu):
     """Get experiment resources.
@@ -309,6 +309,13 @@ def resources(ctx, gpu):
     \b
     ```bash
     $ polyaxon experiment -xp 19 resources
+    ```
+
+    For GPU resources
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 19 resources --gpu
     ```
     """
     user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
