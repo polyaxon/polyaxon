@@ -145,6 +145,7 @@ class BaseTest(TestCase):
         settings.REPOS_ROOT = tempfile.mkdtemp()
         settings.UPLOAD_ROOT = tempfile.mkdtemp()
         settings.LOGS_ROOT = tempfile.mkdtemp()
+        settings.OUTPUTS_ROOT = tempfile.mkdtemp()
         cache.clear()
         return super().setUp()
 

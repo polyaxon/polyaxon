@@ -5,6 +5,7 @@ from datetime import datetime
 from unittest.mock import patch
 
 import mock
+import os
 
 from django.test.client import MULTIPART_CONTENT
 from django.core.files import File
@@ -14,7 +15,9 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
+from experiments.restart import handle_restarted_experiment
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
+from experiments.utils import create_experiment_outputs_path, get_experiment_outputs_path
 from factories.factory_repos import RepoFactory
 from factories.fixtures import (
     experiment_spec_content,
@@ -241,6 +244,28 @@ class TestExperimentModel(BaseTest):
         assert done_xp.last_status == ExperimentLifeCycle.FAILED
         assert no_jobs_xp.last_status is None
         assert xp_with_jobs.last_status == ExperimentLifeCycle.RUNNING
+
+    def test_restarting_an_experiment(self):
+        with patch('experiments.tasks.build_experiment.apply_async') as _:
+            experiment1 = ExperimentFactory()
+
+        # We create some outputs files for the experiment
+        path = create_experiment_outputs_path(experiment1.unique_name)
+        open(os.path.join(path, 'file'), 'w+')
+
+        # Create a new experiment that is a clone of the previous
+        with patch('experiments.tasks.build_experiment.apply_async') as _:
+            experiment2 = ExperimentFactory(original_experiment=experiment1)
+
+        # Check that outputs path for experiment2 does not exist yet
+        experiment2_outputs_path = get_experiment_outputs_path(experiment2.unique_name)
+        assert os.path.exists(experiment2_outputs_path) is False
+
+        # Handle restart should create the outputs and copy the content of experiment 1
+        handle_restarted_experiment(experiment2)
+
+        assert os.path.exists(experiment2_outputs_path) is True
+        assert os.path.exists(os.path.join(experiment2_outputs_path, 'file')) is True
 
 
 class TestExperimentCommit(BaseViewTest):
