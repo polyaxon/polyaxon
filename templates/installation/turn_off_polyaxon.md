@@ -10,8 +10,8 @@ Stop/delete any running experiments, to kill all associated running jobs, and th
 e.g.
 
 ```bash
-$ polyaxon experiment -xp 13 kill
-$ polyaxon experiment -p myother-project -xp 19 kill
+$ polyaxon experiment -xp 13 stop
+$ polyaxon experiment -p myother-project -xp 19 stop
 ```
 
 ## Delete Helm release
