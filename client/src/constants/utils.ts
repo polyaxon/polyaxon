@@ -110,15 +110,15 @@ export let getJobtUrl = function (username: string,
                                   jobSequence: number) {
   let experimentUrl = getExperimentUrl(username, projectName, experimentSequence);
 
-  return `${experimentUrl}/experiments/${experimentSequence}/jobs/${jobSequence}`;
+  return `${experimentUrl}/jobs/${jobSequence}/`;
 };
 
 export let getJobUniqueName = function (username: string,
                                         projectName: string,
                                         experimentSequence: number,
                                         jobSequence: number) {
-  let experimentUrl = getExperimentUrl(username, projectName, experimentSequence);
-  return `${experimentUrl}.${experimentSequence}`;
+  let experimentUrl = getExperimentUniqueName(username, projectName, experimentSequence);
+  return `${experimentUrl}.${jobSequence}`;
 };
 
 export function getGroupName(projectName: string, groupSequence: number | string) {
