@@ -1,25 +1,22 @@
 import { connect, Dispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
 
 import JobDetail from '../components/jobDetail';
 import * as actions from '../actions/job';
+import { getJobUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let jobSequence = parseInt(params.match.params.jobSequence, 10);
-  let ret;
-
-  state.jobs.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-    if (state.jobs.ByUniqueNames[uniqueName].sequence === jobSequence) {
-      ret = {job: state.jobs.ByUniqueNames[uniqueName]};
-    }
-  });
-
-  if (!ret) {
-    ret = {job: null};
-  }
-  return ret;
+  let jobUniqueName = getJobUniqueName(
+    params.match.params.user,
+    params.match.params.projectName,
+    params.match.params.experimentSequence,
+    params.match.params.jobSequence,);
+  return _.includes(state.jobs.uniqueNames, jobUniqueName) ?
+      {job: state.jobs.ByUniqueNames[jobUniqueName]} :
+      {job: null};
 }
 
 export interface DispatchProps {
