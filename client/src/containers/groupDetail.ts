@@ -1,24 +1,20 @@
 import { connect, Dispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
 import GroupDetail from '../components/groupDetail';
 import * as actions from '../actions/group';
+import { getGroupUniqueName } from '../constants/utils';
 
-export function mapStateToProps(state: AppState, params: any)  {
-  let groupSequence = parseInt(params.match.params.groupSequence, 10);
-  let results;
-  
-  state.groups.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-    if (state.groups.ByUniqueNames[uniqueName].sequence === groupSequence) {
-      results = {group: state.groups.ByUniqueNames[uniqueName]};
-    }
-  });
-
-  if (!results) {
-    results = {group: null};
-  }
-  return results;
+export function mapStateToProps(state: AppState, params: any) {
+  let groupUniqueName = getGroupUniqueName(
+    params.match.params.user,
+    params.match.params.projectName,
+    params.match.params.groupSequence);
+  return _.includes(state.groups.uniqueNames, groupUniqueName) ?
+      {group: state.groups.ByUniqueNames[groupUniqueName]} :
+      {group: null};
 }
 
 export interface DispatchProps {
