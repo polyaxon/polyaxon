@@ -1,8 +1,7 @@
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 
-import RootModal from "../components/modal";
-import {AppState} from "../constants/types";
-
+import RootModal from '../components/modal';
+import { AppState } from '../constants/types';
 
 export function mapStateToProps(state: AppState, ownProps: any) {
   return {modalProps: state.modal};

@@ -1,15 +1,14 @@
-import * as React from "react";
+import * as React from 'react';
 
-import {MenuItem, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
-import {getHomeUrl, getLogoutUrl, isUserAuthenticated} from "../constants/utils";
-import "./header.less";
-
+import { MenuItem, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { getHomeUrl, getLogoutUrl, isUserAuthenticated } from '../constants/utils';
+import './header.less';
 
 function Header() {
   return (
     <header>
-      <Navbar inverse collapseOnSelect className="navbar">
+      <Navbar inverse={true} collapseOnSelect={true} className="navbar">
         <Navbar.Header>
           <Navbar.Brand>
             <LinkContainer to={getHomeUrl()} className="nav-link brand">
@@ -22,13 +21,11 @@ function Header() {
         </Navbar.Header>
         {isUserAuthenticated() &&
         <Navbar.Collapse>
-          <Nav>
-          </Nav>
-          <Nav pullRight>
+          <Nav pullRight={true}>
             <NavDropdown eventKey={3} title="Profile" id="basic-nav-dropdown">
               <MenuItem eventKey={3.1} href="https://docs.polyaxon.com/">Docs</MenuItem>
               <MenuItem eventKey={3.2} href="https://github.com/polyaxon/">Github</MenuItem>
-              <MenuItem divider/>
+              <MenuItem divider={true}/>
               <MenuItem eventKey={3.3} href={getLogoutUrl()}>Logout</MenuItem>
             </NavDropdown>
           </Nav>
@@ -40,4 +37,3 @@ function Header() {
 }
 
 export default Header;
-

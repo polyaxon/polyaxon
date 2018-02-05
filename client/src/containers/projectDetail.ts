@@ -1,11 +1,10 @@
-import { connect, Dispatch } from "react-redux";
-import {withRouter} from "react-router-dom";
+import { connect, Dispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { AppState } from "../constants/types";
-import { ProjectModel } from "../models/project";
-import ProjectDetail from "../components/projectDetail";
-import * as actions from "../actions/project";
-
+import { AppState } from '../constants/types';
+import { ProjectModel } from '../models/project';
+import ProjectDetail from '../components/projectDetail';
+import * as actions from '../actions/project';
 
 export function mapStateToProps(state: AppState, params: any)  {
   let projectName = params.match.params.projectName;
@@ -26,12 +25,11 @@ export interface DispatchProps {
   fetchData?: () => any;
 }
 
-
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
     onDelete: (project: ProjectModel) => dispatch(actions.deleteProject(project)),
     fetchData: () => dispatch(actions.fetchProject(params.match.params.user, params.match.params.projectName))
-  }
+  };
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjectDetail));

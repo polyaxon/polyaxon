@@ -1,10 +1,10 @@
-import * as React from "react";
-import * as _ from "lodash";
-import * as moment from "moment";
-import {LinkContainer} from "react-router-bootstrap";
+import * as React from 'react';
+import * as _ from 'lodash';
+import * as moment from 'moment';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import {ExperimentModel} from "../models/experiment";
-import Jobs from "../containers/jobs";
+import { ExperimentModel } from '../models/experiment';
+import Jobs from '../containers/jobs';
 import {
   getGroupUrl,
   getProjectUrl,
@@ -13,15 +13,13 @@ import {
   splitGroupName,
   splitProjectName,
   getCssClassForStatus,
-} from "../constants/utils";
-
+} from '../constants/utils';
 
 export interface Props {
   experiment: ExperimentModel;
   onDelete: () => any;
   fetchData: () => any;
 }
-
 
 export default class ExperimentDetail extends React.Component<Props, Object> {
   componentDidMount() {
@@ -40,14 +38,14 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
     let values = splitProjectName(experiment.project_name);
     let group = null;
     if (!_.isNil(experiment.experiment_group_name)) {
-      group = parseInt(splitGroupName(experiment.experiment_group_name)[2]);
+      group = parseInt(splitGroupName(experiment.experiment_group_name)[2], 10);
     }
     return (
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
             <span className="title">
-              <i className="fa fa-cube icon" aria-hidden="true"></i>
+              <i className="fa fa-cube icon" aria-hidden="true"/>
               <LinkContainer to={getUserUrl(values[0])}>
                 <span>
                   <a className="title">
@@ -80,37 +78,37 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
             </div>
             <div className="meta">
               <span className="meta-info">
-                <i className="fa fa-user-o icon" aria-hidden="true"></i>
+                <i className="fa fa-user-o icon" aria-hidden="true"/>
                 <span className="title">User:</span>
                 {experiment.user}
               </span>
               <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+                <i className="fa fa-clock-o icon" aria-hidden="true"/>
                 <span className="title">Created:</span>
                 {moment(experiment.created_at).fromNow()}
               </span>
               <span className="meta-info">
-                <i className="fa fa-tasks icon" aria-hidden="true"></i>
+                <i className="fa fa-tasks icon" aria-hidden="true"/>
                 <span className="title">Jobs:</span>
                 {experiment.num_jobs}
               </span>
               {experiment.started_at &&
               <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+                <i className="fa fa-clock-o icon" aria-hidden="true"/>
                 <span className="title">Started:</span>
                 {moment(experiment.started_at).fromNow()}
               </span>
               }
               {experiment.finished_at &&
               <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+                <i className="fa fa-clock-o icon" aria-hidden="true"/>
                 <span className="title">Finished:</span>
                 {moment(experiment.finished_at).fromNow()}
               </span>
               }
               {totalRun &&
               <span className="meta-info">
-                <i className="fa fa-hourglass icon" aria-hidden="true"></i>
+                <i className="fa fa-hourglass icon" aria-hidden="true"/>
                 <span className="title">Total run:</span>
                 {totalRun}
               </span>
@@ -123,7 +121,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
               {Object.keys(experiment.last_metric).map(
                 (xp, idx) =>
                   <span className="meta-info" key={idx}>
-                  <i className="fa fa-area-chart icon" aria-hidden="true"></i>
+                  <i className="fa fa-area-chart icon" aria-hidden="true"/>
                   <span className="title">{xp}:</span>
                     {experiment.last_metric[xp]}
                 </span>)}
@@ -139,7 +137,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                 .map(
                   (res, idx) =>
                     <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"></i>
+                <i className="fa fa-microchip icon" aria-hidden="true"/>
                 <span className="title">{res}:</span>
                       {experiment.resources[res].requests || ''} - {experiment.resources[res].limits || ''}
               </span>
@@ -151,7 +149,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
               {Object.keys(experiment.declarations).map(
                 (xp, idx) =>
                   <span className="meta-info" key={idx}>
-                  <i className="fa fa-gear icon" aria-hidden="true"></i>
+                  <i className="fa fa-gear icon" aria-hidden="true"/>
                   <span className="title">{xp}:</span>
                     {experiment.declarations[xp]}
                 </span>)}
@@ -159,7 +157,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
             }
           </div>
           <h4 className="polyaxon-header">Jobs</h4>
-          <Jobs fetchData={() => null} user={experiment.user} experiment={experiment}></Jobs>
+          <Jobs fetchData={() => null} user={experiment.user} experiment={experiment}/>
         </div>
       </div>
     );

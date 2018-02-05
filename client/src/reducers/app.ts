@@ -1,17 +1,15 @@
-import {Action, combineReducers} from "redux";
-import {reducer as formReducer} from "redux-form";
+import { Action, combineReducers } from 'redux';
+import {reducer as formReducer } from 'redux-form';
 
+import { projectsReducer, ProjectExperiments } from './projects';
+import { experimentsReducer } from './experiments';
+import { groupsReducer } from './groups';
+import { jobsReducer } from './jobs';
 
-import {projectsReducer, ProjectExperiments} from "./projects";
-import {experimentsReducer} from "./experiments";
-import {groupsReducer} from "./groups";
-import {jobsReducer} from "./jobs";
-
-import {tokenReducer} from "./token";
-import {AppState} from "../constants/types";
-import {modalReducer} from "../reducers/modal";
-import {userReducer} from "../reducers/user";
-
+import { tokenReducer } from './token';
+import { AppState } from '../constants/types';
+import { modalReducer } from '../reducers/modal';
+import { userReducer } from '../reducers/user';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
@@ -34,7 +32,7 @@ function ProjectSliceReducer(state: AppState, action: Action) {
     auth: state.auth,
     user: state.user,
     form: state.form
-  }
+  };
 }
 
 function appReducer(state: AppState, action: Action) {

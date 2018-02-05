@@ -1,10 +1,10 @@
-import * as React from "react";
-import * as _ from "lodash";
+import * as React from 'react';
+import * as _ from 'lodash';
 
-import Project from "./project";
-import RootModal from "../containers/modal"
-import {ProjectModel} from "../models/project";
-import {pluralize} from "../constants/utils";
+import Project from './project';
+import RootModal from '../containers/modal';
+import { ProjectModel } from '../models/project';
+import { pluralize } from '../constants/utils';
 
 export interface Props {
   user: '';
@@ -15,7 +15,6 @@ export interface Props {
   showModal: () => any;
   hideModal: () => any;
 }
-
 
 export default class Projects extends React.Component<Props, Object> {
   componentDidMount() {

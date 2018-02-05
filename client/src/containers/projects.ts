@@ -1,18 +1,17 @@
-import { connect, Dispatch } from "react-redux";
+import { connect, Dispatch } from 'react-redux';
 
-import { AppState } from "../constants/types";
-import Projects from "../components/projects";
-import {ProjectModel} from "../models/project";
-import {sortByUpdatedAt} from "../constants/utils";
-import * as actions from "../actions/project";
-import * as modalActions from "../actions/modal"
-import {modalTypes, modalPropsByTypes} from "../models/modal";
-
+import { AppState } from '../constants/types';
+import Projects from '../components/projects';
+import { ProjectModel } from '../models/project';
+import { sortByUpdatedAt } from '../constants/utils';
+import * as actions from '../actions/project';
+import * as modalActions from '../actions/modal';
+import { modalTypes, modalPropsByTypes } from '../models/modal';
 
 export function mapStateToProps(state: AppState, params: any)  {
   let results = {projects: [], user: params.match.params.user};
   if (state.projects) {
-    results.projects = (<any>Object).values(state.projects.ByUniqueNames).sort(sortByUpdatedAt);
+    results.projects = (<any> Object).values(state.projects.ByUniqueNames).sort(sortByUpdatedAt);
   }
   return results;
 }
@@ -33,14 +32,17 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction | mo
     showModal: () => dispatch(modalActions.showModal(
       {
         type: modalTypes.CREATE_PROJECT,
-        props: {...modalPropsByTypes[modalTypes.CREATE_PROJECT], show: true, submitCb: (project: ProjectModel) => dispatch(actions.createProject(params.match.params.user, project))}
+        props: {
+          ...modalPropsByTypes[modalTypes.CREATE_PROJECT],
+          show: true,
+          submitCb: (project: ProjectModel) => dispatch(actions.createProject(params.match.params.user, project))}
       })),
     hideModal: () => dispatch(modalActions.hideModal(
       {
         type: modalTypes.CREATE_PROJECT,
         props: {...modalPropsByTypes[modalTypes.CREATE_PROJECT], show: false}
       })),
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);

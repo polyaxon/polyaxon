@@ -1,10 +1,10 @@
-import { connect, Dispatch } from "react-redux";
+import { connect, Dispatch } from 'react-redux';
 
-import {sortByUpdatedAt} from "../constants/utils"
-import { AppState } from "../constants/types";
-import Groups from "../components/groups";
-import {GroupModel} from "../models/group";
-import * as actions from "../actions/group";
+import { sortByUpdatedAt } from '../constants/utils';
+import { AppState } from '../constants/types';
+import Groups from '../components/groups';
+import { GroupModel } from '../models/group';
+import * as actions from '../actions/group';
 
 interface OwnProps {
   user: string;
@@ -13,7 +13,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: any) {
-  let groups : GroupModel[] = [];
+  let groups: GroupModel[] = [];
   if (state.groups) {
     state.groups.uniqueNames.forEach(function (uniqueName: string, idx: number) {
       let group = state.groups.ByUniqueNames[uniqueName];
@@ -23,7 +23,7 @@ export function mapStateToProps(state: AppState, ownProps: any) {
     });
   }
 
-  return {groups: groups.sort(sortByUpdatedAt)}
+  return {groups: groups.sort(sortByUpdatedAt)};
 }
 
 export interface DispatchProps {
@@ -39,7 +39,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, ownP
     onDelete: (group: GroupModel) => dispatch(actions.deleteGroupActionCreator(group)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroupActionCreator(group)),
     fetchData: () => dispatch(actions.fetchGroups(ownProps.projectName))
-  }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Groups);

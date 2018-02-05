@@ -1,4 +1,4 @@
-import {AppState} from "./constants/types";
+import { AppState } from './constants/types';
 
 export const loadState = () => {
   try {

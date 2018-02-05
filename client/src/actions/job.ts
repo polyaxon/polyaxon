@@ -1,10 +1,9 @@
-import {Action} from "redux";
-import * as _ from "lodash";
+import { Action } from 'redux';
+import * as _ from 'lodash';
 
-import {handleAuthError, urlifyProjectName} from "../constants/utils"
-import {JobModel} from "../models/job";
-import {BASE_URL} from "../constants/api";
-
+import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import { JobModel } from '../models/job';
+import { BASE_URL } from '../constants/api';
 
 export enum actionTypes {
   CREATE_JOB = 'CREATE_JOB',
@@ -18,17 +17,17 @@ export enum actionTypes {
 
 export interface CreateUpdateReceiveJobAction extends Action {
   type: actionTypes.CREATE_JOB | actionTypes.UPDATE_JOB | actionTypes.RECEIVE_JOB;
-  job: JobModel
+  job: JobModel;
 }
 
 export interface DeleteJobAction extends Action {
   type: actionTypes.DELETE_JOB;
-  job: JobModel
+  job: JobModel;
 }
 
 export interface ReceiveJobsAction extends Action {
   type: actionTypes.RECEIVE_JOBS;
-  jobs: JobModel[]
+  jobs: JobModel[];
 }
 
 export interface RequestJobsAction extends Action {
@@ -45,48 +44,47 @@ export function createJobActionCreator(job: JobModel): CreateUpdateReceiveJobAct
   return {
     type: actionTypes.CREATE_JOB,
     job
-  }
+  };
 }
 
 export function updateJobActionCreator(job: JobModel): CreateUpdateReceiveJobAction {
   return {
     type: actionTypes.UPDATE_JOB,
     job
-  }
+  };
 }
 
 export function deleteJobActionCreator(job: JobModel): DeleteJobAction {
   return {
     type: actionTypes.DELETE_JOB,
     job
-  }
+  };
 }
 
 export function requestJobActionCreator(): RequestJobsAction {
   return {
     type: actionTypes.REQUEST_JOB,
-  }
+  };
 }
 
 export function requestJobsActionCreator(): RequestJobsAction {
   return {
     type: actionTypes.REQUEST_JOBS,
-  }
+  };
 }
-
 
 export function receiveJobActionCreator(job: JobModel): CreateUpdateReceiveJobAction {
   return {
     type: actionTypes.RECEIVE_JOB,
     job
-  }
+  };
 }
 
 export function receiveJobsActionCreator(jobs: JobModel[]): ReceiveJobsAction {
   return {
     type: actionTypes.RECEIVE_JOBS,
     jobs
-  }
+  };
 }
 
 export function fetchJobs(projectUniqueName: string, experimentSequence: number): any {
@@ -100,8 +98,8 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number)
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => json.results)
-      .then(json => dispatch(receiveJobsActionCreator(json)))
-  }
+      .then(json => dispatch(receiveJobsActionCreator(json)));
+  };
 }
 
 export function fetchJob(user: string, projectName: string, experimentSequence: number, jobSequence: number): any {
@@ -114,7 +112,6 @@ export function fetchJob(user: string, projectName: string, experimentSequence: 
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveJobActionCreator(json)))
-  }
+      .then(json => dispatch(receiveJobActionCreator(json)));
+  };
 }
-

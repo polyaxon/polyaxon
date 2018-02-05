@@ -1,22 +1,20 @@
-import * as React from "react";
-import * as moment from "moment";
-import {LinkContainer} from "react-router-bootstrap";
+import * as React from 'react';
+import * as moment from 'moment';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import {
   getCssClassForStatus,
   getExperimentUrl,
   humanizeTimeDelta,
   splitProjectName
-} from "../constants/utils"
+} from '../constants/utils';
 
-import {ExperimentModel} from "../models/experiment";
-
+import { ExperimentModel } from '../models/experiment';
 
 export interface Props {
   experiment: ExperimentModel;
   onDelete: () => void;
 }
-
 
 function Experiment({experiment, onDelete}: Props) {
   let totalRun = humanizeTimeDelta(experiment.started_at, experiment.finished_at);

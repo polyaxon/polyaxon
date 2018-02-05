@@ -1,9 +1,9 @@
-import {Action} from "redux";
+import { Action } from 'redux';
 
-import {BASE_URL} from "../constants/api";
-import {UserModel} from "../models/user";
-import {discardToken} from "../actions/token";
-import {getToken} from "../constants/utils";
+import { BASE_URL } from '../constants/api';
+import { UserModel } from '../models/user';
+import { discardToken } from '../actions/token';
+import { getToken } from '../constants/utils';
 
 export enum actionTypes {
   RECEIVE_USER = 'RECEIVE_USER',
@@ -11,12 +11,12 @@ export enum actionTypes {
 }
 
 export interface ReceiveUserAction extends Action {
-  type: actionTypes.RECEIVE_USER,
-  user: UserModel
+  type: actionTypes.RECEIVE_USER;
+  user: UserModel;
 }
 
 export interface DiscardUserAction extends Action {
-  type: actionTypes.DISCARD_USER,
+  type: actionTypes.DISCARD_USER;
 }
 
 export type UserAction = DiscardUserAction | ReceiveUserAction;
@@ -25,15 +25,14 @@ export function receiveUserActionCreator(user: UserModel): ReceiveUserAction {
   return {
     type: actionTypes.RECEIVE_USER,
     user
-  }
+  };
 }
 
 export function discardUserActionCreator(): DiscardUserAction {
   return {
     type: actionTypes.DISCARD_USER,
-  }
+  };
 }
-
 
 export function fetchUser(): any {
   function handleAuthError(response: any, dispatch: any) {
@@ -42,7 +41,7 @@ export function fetchUser(): any {
       return Promise.reject(response.statusText);
     }
     return response;
-  };
+  }
 
   return (dispatch: any) => {
     let token = getToken();
@@ -60,8 +59,8 @@ export function fetchUser(): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveUserActionCreator(json)))
-  }
+      .then(json => dispatch(receiveUserActionCreator(json)));
+  };
 }
 
 export function discardUser(): any {  // Dispatch<null>

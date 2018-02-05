@@ -1,10 +1,9 @@
-import * as React from "react";
-import {LinkContainer} from "react-router-bootstrap";
-import * as moment from "moment";
+import * as React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
+import * as moment from 'moment';
 
-import {pluralize} from "../constants/utils"
-import {ProjectModel} from "../models/project";
-import {getProjectUrl} from "../constants/utils";
+import { ProjectModel } from '../models/project';
+import { getProjectUrl } from '../constants/utils';
 
 export interface Props {
   project: ProjectModel;
@@ -18,7 +17,7 @@ function Project({project, onDelete}: Props) {
       <div className="col-md-10 block">
         <LinkContainer to={getProjectUrl(project.user, project.name)}>
           <a className="title">
-            <i className="fa fa-server icon" aria-hidden="true"></i>
+            <i className="fa fa-server icon" aria-hidden="true"/>
             {project.name}
           </a>
         </LinkContainer>
@@ -27,12 +26,12 @@ function Project({project, onDelete}: Props) {
         </div>
         <div className="meta">
           <span className="meta-info">
-            <i className="fa fa-lock icon" aria-hidden="true"></i>
+            <i className="fa fa-lock icon" aria-hidden="true"/>
             <span className="title">Visibility:</span>
             {visibility}
           </span>
           <span className="meta-info">
-            <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+            <i className="fa fa-clock-o icon" aria-hidden="true"/>
             <span className="title">Last updated:</span>
             {moment(project.updated_at).fromNow()}
           </span>
@@ -42,14 +41,14 @@ function Project({project, onDelete}: Props) {
       <div className="col-md-2 block">
         <div className="row meta">
           <span className="meta-info">
-            <i className="fa fa-cube icon" aria-hidden="true"></i>
+            <i className="fa fa-cube icon" aria-hidden="true"/>
             <span className="title">Experiments:</span>
             {project.num_experiments}
           </span>
         </div>
         <div className="row meta">
           <span className="meta-info">
-            <i className="fa fa-cubes icon" aria-hidden="true"></i>
+            <i className="fa fa-cubes icon" aria-hidden="true"/>
             <span className="title">Experiment Groups:</span>
             {project.num_experiment_groups}
           </span>

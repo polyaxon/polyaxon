@@ -1,12 +1,10 @@
-import * as React from "react";
-import {Field, reduxForm} from "redux-form";
-import {Button} from "react-bootstrap";
-
+import * as React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { Button } from 'react-bootstrap';
 
 export interface Props {
   handleSubmit: () => void;
 }
-
 
 const CreateProjectForm = ({handleSubmit}: any) => {
 
@@ -22,10 +20,9 @@ const CreateProjectForm = ({handleSubmit}: any) => {
       </div>
       <Button bsStyle="default" type="submit">Submit</Button>
     </form>
-  )
+  );
 };
 
 export default reduxForm({
   form: 'CreateProjectForm'
 })(CreateProjectForm);
-

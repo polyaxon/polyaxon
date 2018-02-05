@@ -1,8 +1,7 @@
-import {Reducer} from "redux";
+import { Reducer } from 'redux';
 
-import {ModalAction, actionTypes} from "../actions/modal";
-import {ModalEmptyState, ModalStateSchema} from "../models/modal";
-
+import { ModalAction, actionTypes } from '../actions/modal';
+import { ModalEmptyState, ModalStateSchema } from '../models/modal';
 
 export const modalReducer: Reducer<ModalStateSchema> =
   (state: ModalStateSchema = ModalEmptyState, action: ModalAction) => {
@@ -13,6 +12,6 @@ export const modalReducer: Reducer<ModalStateSchema> =
       case actionTypes.HIDE_MODAL:
         return action.modalProps;
       default:
-        return state
+        return state;
     }
   };

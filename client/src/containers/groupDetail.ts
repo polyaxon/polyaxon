@@ -1,13 +1,12 @@
-import { connect, Dispatch } from "react-redux";
-import {withRouter} from "react-router-dom";
+import { connect, Dispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { AppState } from "../constants/types";
-import GroupDetail from "../components/groupDetail";
-import * as actions from "../actions/group";
-
+import { AppState } from '../constants/types';
+import GroupDetail from '../components/groupDetail';
+import * as actions from '../actions/group';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let groupSequence = parseInt(params.match.params.groupSequence);
+  let groupSequence = parseInt(params.match.params.groupSequence, 10);
   let results;
   
   state.groups.uniqueNames.forEach(function (uniqueName: string, idx: number) {
@@ -27,12 +26,15 @@ export interface DispatchProps {
   fetchData?: () => any;
 }
 
-
 export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, params: any): DispatchProps {
   return {
-    onDelete: () => dispatch(() => {}),
-    fetchData: () => dispatch(actions.fetchGroup(params.match.params.user, params.match.params.projectName, params.match.params.groupSequence))
-  }
+    onDelete: () => dispatch(() => undefined),
+    fetchData: () => dispatch(
+      actions.fetchGroup(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.groupSequence))
+  };
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupDetail));

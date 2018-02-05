@@ -1,10 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 
 export interface Props {
   fetchToken: (username: string, password: string) => any;
   history: any;
 }
-
 
 export default class Login extends React.Component<Props, Object> {
   componentDidMount() {
@@ -19,7 +18,9 @@ export default class Login extends React.Component<Props, Object> {
     this.props.fetchToken(username, password).then((resp: any) => {
       this.props.history.push(`/${username}/`);
     }).catch((err: string) => {
-      (document.getElementById('error-message') as HTMLElement).innerHTML = 'Unable to log in with provided credentials.';
+      (
+        document.getElementById('error-message') as HTMLElement
+      ).innerHTML = 'Unable to log in with provided credentials.';
     });
   }
 
@@ -40,11 +41,11 @@ export default class Login extends React.Component<Props, Object> {
               <div className="submit">
                 <input type="submit" value="Login" className="button btn btn-polyaxon"/>
               </div>
-              <div className="bg-danger error-message" id="error-message"></div>
+              <div className="bg-danger error-message" id="error-message"/>
             </form>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

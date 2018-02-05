@@ -1,11 +1,10 @@
-import {Reducer} from "redux";
+import { Reducer } from 'redux';
 
-import {UserAction, actionTypes} from "../actions/user";
-import {UserModel, UserEmptyState} from "../models/user";
+import { UserAction, actionTypes } from '../actions/user';
+import { UserModel, UserEmptyState } from '../models/user';
 
 export const userReducer: Reducer<UserModel> =
   (state: UserModel = UserEmptyState, action: UserAction) => {
-
     switch (action.type) {
       case actionTypes.RECEIVE_USER:
         return {

@@ -1,10 +1,9 @@
-import {Action} from "redux";
-import * as _ from "lodash";
+import { Action } from 'redux';
+import * as _ from 'lodash';
 
-import {handleAuthError, urlifyProjectName} from "../constants/utils"
-import {ExperimentModel} from "../models/experiment";
-import {BASE_URL} from "../constants/api";
-
+import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import { ExperimentModel } from '../models/experiment';
+import { BASE_URL } from '../constants/api';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
@@ -17,17 +16,17 @@ export enum actionTypes {
 
 export interface CreateUpdateReceiveExperimentAction extends Action {
   type: actionTypes.CREATE_EXPERIMENT | actionTypes.UPDATE_EXPERIMENT | actionTypes.RECEIVE_EXPERIMENT;
-  experiment: ExperimentModel
+  experiment: ExperimentModel;
 }
 
 export interface DeleteExperimentAction extends Action {
   type: actionTypes.DELETE_EXPERIMENT;
-  experiment: ExperimentModel
+  experiment: ExperimentModel;
 }
 
 export interface ReceiveExperimentsAction extends Action {
   type: actionTypes.RECEIVE_EXPERIMENTS;
-  experiments: ExperimentModel[]
+  experiments: ExperimentModel[];
 }
 
 export interface RequestExperimentsAction extends Action {
@@ -44,41 +43,41 @@ export function createExperimentActionCreator(experiment: ExperimentModel): Crea
   return {
     type: actionTypes.CREATE_EXPERIMENT,
     experiment
-  }
+  };
 }
 
 export function updateExperimentActionCreator(experiment: ExperimentModel): CreateUpdateReceiveExperimentAction {
   return {
     type: actionTypes.UPDATE_EXPERIMENT,
     experiment
-  }
+  };
 }
 
 export function deleteExperimentActionCreator(experiment: ExperimentModel): DeleteExperimentAction {
   return {
     type: actionTypes.DELETE_EXPERIMENT,
     experiment
-  }
+  };
 }
 
 export function requestExperimentsActionCreator(): RequestExperimentsAction {
   return {
     type: actionTypes.REQUEST_EXPERIMENTS,
-  }
+  };
 }
 
 export function receiveExperimentsActionCreator(experiments: ExperimentModel[]): ReceiveExperimentsAction {
   return {
     type: actionTypes.RECEIVE_EXPERIMENTS,
     experiments
-  }
+  };
 }
 
 export function receiveExperimentActionCreator(experiment: ExperimentModel): CreateUpdateReceiveExperimentAction {
   return {
     type: actionTypes.RECEIVE_EXPERIMENT,
     experiment
-  }
+  };
 }
 
 export function fetchExperiments(projectUniqueName: string, groupSequence?: string): any {
@@ -87,12 +86,11 @@ export function fetchExperiments(projectUniqueName: string, groupSequence?: stri
     let url = `${BASE_URL}/${urlifyProjectName(projectUniqueName)}`;
     if (groupSequence) {
       url += `/groups/${groupSequence}/experiments/`;
-    }
-    else {
+    } else {
       url += `/experiments/`;
     }
     if (!groupSequence) {
-      url += '?independent=True'
+      url += '?independent=True';
     }
     return fetch(url, {
       headers: {
@@ -102,8 +100,8 @@ export function fetchExperiments(projectUniqueName: string, groupSequence?: stri
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => json.results)
-      .then(json => dispatch(receiveExperimentsActionCreator(json)))
-  }
+      .then(json => dispatch(receiveExperimentsActionCreator(json)));
+  };
 }
 
 export function fetchExperiment(user: string, projectName: string, experimentSequence: number): any {
@@ -116,6 +114,6 @@ export function fetchExperiment(user: string, projectName: string, experimentSeq
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveExperimentActionCreator(json)))
-  }
+      .then(json => dispatch(receiveExperimentActionCreator(json)));
+  };
 }

@@ -1,10 +1,9 @@
-import {Action} from "redux";
-import * as _ from "lodash";
+import { Action } from 'redux';
+import * as _ from 'lodash';
 
-import {handleAuthError, urlifyProjectName} from "../constants/utils"
-import {GroupModel} from "../models/group";
-import {BASE_URL} from "../constants/api";
-
+import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import { GroupModel } from '../models/group';
+import { BASE_URL } from '../constants/api';
 
 export enum actionTypes {
   CREATE_GROUP = 'CREATE_GROUP',
@@ -18,17 +17,17 @@ export enum actionTypes {
 
 export interface CreateUpdateReceiveGroupAction extends Action {
   type: actionTypes.CREATE_GROUP | actionTypes.UPDATE_GROUP | actionTypes.RECEIVE_GROUP;
-  group: GroupModel
+  group: GroupModel;
 }
 
 export interface DeleteGroupAction extends Action {
   type: actionTypes.DELETE_GROUP;
-  group: GroupModel
+  group: GroupModel;
 }
 
 export interface ReceiveGroupsAction extends Action {
   type: actionTypes.RECEIVE_GROUPS;
-  groups: GroupModel[]
+  groups: GroupModel[];
 }
 
 export interface RequestGroupsAction extends Action {
@@ -45,41 +44,41 @@ export function createGroupActionCreator(group: GroupModel): CreateUpdateReceive
   return {
     type: actionTypes.CREATE_GROUP,
     group
-  }
+  };
 }
 
 export function updateGroupActionCreator(group: GroupModel): CreateUpdateReceiveGroupAction {
   return {
     type: actionTypes.UPDATE_GROUP,
     group
-  }
+  };
 }
 
 export function deleteGroupActionCreator(group: GroupModel): DeleteGroupAction {
   return {
     type: actionTypes.DELETE_GROUP,
     group
-  }
+  };
 }
 
 export function requestGroupsActionCreator(): RequestGroupsAction {
   return {
     type: actionTypes.REQUEST_GROUPS,
-  }
+  };
 }
 
 export function receiveGroupsActionCreator(groups: GroupModel[]): ReceiveGroupsAction {
   return {
     type: actionTypes.RECEIVE_GROUPS,
     groups
-  }
+  };
 }
 
 export function receiveGroupActionCreator(group: GroupModel): CreateUpdateReceiveGroupAction {
   return {
     type: actionTypes.RECEIVE_GROUP,
     group
-  }
+  };
 }
 
 export function fetchGroups(projectUniqueName: string): any {
@@ -93,8 +92,8 @@ export function fetchGroups(projectUniqueName: string): any {
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => json.results)
-      .then(json => dispatch(receiveGroupsActionCreator(json)))
-  }
+      .then(json => dispatch(receiveGroupsActionCreator(json)));
+  };
 }
 
 export function fetchGroup(user: string, projectName: string, groupSequence: number): any {
@@ -107,7 +106,6 @@ export function fetchGroup(user: string, projectName: string, groupSequence: num
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveGroupActionCreator(json)))
-  }
+      .then(json => dispatch(receiveGroupActionCreator(json)));
+  };
 }
-

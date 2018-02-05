@@ -1,18 +1,16 @@
-import * as React from "react";
-import * as _ from "lodash";
+import * as React from 'react';
+import * as _ from 'lodash';
 
-import Group from "./group";
-import {GroupModel} from "../models/group";
-
+import Group from './group';
+import { GroupModel } from '../models/group';
 
 export interface Props {
   groups: GroupModel[];
   onCreate: (group: GroupModel) => any;
   onUpdate: (group: GroupModel) => any;
   onDelete: (group: GroupModel) => any;
-  fetchData: () => any
+  fetchData: () => any;
 }
-
 
 export default class Groups extends React.Component<Props, Object> {
   componentDidMount() {

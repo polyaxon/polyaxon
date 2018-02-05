@@ -1,15 +1,13 @@
-import * as React from "react";
-import * as _ from "lodash";
+import * as React from 'react';
+import * as _ from 'lodash';
 
-import {JobModel} from "../models/job";
-
+import { JobModel } from '../models/job';
 
 export interface Props {
   job: JobModel;
   onDelete: (job: JobModel) => any;
   fetchData: () => any;
 }
-
 
 export default class JobDetail extends React.Component<Props, Object> {
   componentDidMount() {
@@ -26,9 +24,9 @@ export default class JobDetail extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-12">
           <div className="entity-details">
-            <a className="back-button" onClick={() => {window.history.back()}}>&#060;</a>
+            <a className="back-button" onClick={() => {window.history.back(); }}>&#060;</a>
             <span className="title">
-              <i className="fa fa-cube icon" aria-hidden="true"></i>
+              <i className="fa fa-cube icon" aria-hidden="true"/>
               {job.unique_name}
             </span>
             <span className="description">

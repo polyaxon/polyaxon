@@ -1,14 +1,13 @@
-import { connect, Dispatch } from "react-redux";
-import {withRouter} from "react-router-dom";
+import { connect, Dispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { AppState } from "../constants/types";
+import { AppState } from '../constants/types';
 
-import JobDetail from "../components/jobDetail";
-import * as actions from "../actions/job";
-
+import JobDetail from '../components/jobDetail';
+import * as actions from '../actions/job';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let jobSequence = parseInt(params.match.params.jobSequence);
+  let jobSequence = parseInt(params.match.params.jobSequence, 10);
   let ret;
 
   state.jobs.uniqueNames.forEach(function (uniqueName: string, idx: number) {
@@ -28,13 +27,17 @@ export interface DispatchProps {
   fetchData?: (jobSequence: number) => any;
 }
 
-
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
   // TODO: We are probably using the wrong user here
   return {
-    onDelete: () => dispatch(() => {}),
-    fetchData: () => dispatch(actions.fetchJob(params.match.params.user, params.match.params.projectName, params.match.params.experimentSequence, params.match.params.jobSequence))
-  }
+    onDelete: () => dispatch(() => undefined),
+    fetchData: () => dispatch(
+      actions.fetchJob(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.experimentSequence,
+        params.match.params.jobSequence))
+  };
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(JobDetail));

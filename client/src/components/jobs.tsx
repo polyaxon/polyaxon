@@ -1,18 +1,16 @@
-import * as React from "react";
-import * as _ from "lodash";
+import * as React from 'react';
+import * as _ from 'lodash';
 
-import Job from "./job";
-import {JobModel} from "../models/job";
-
+import Job from './job';
+import { JobModel } from '../models/job';
 
 export interface Props {
   jobs: JobModel[];
   onCreate: (job: JobModel) => any;
   onUpdate: (job: JobModel) => any;
   onDelete: (job: JobModel) => any;
-  fetchData: () => any
+  fetchData: () => any;
 }
-
 
 export default class Jobs extends React.Component<Props, Object> {
   componentDidMount() {

@@ -9,7 +9,7 @@ export const ModalEmptyState = {
 };
 
 export enum modalTypes {
-  CREATE_PROJECT='CREATE_PROJECT',
+  CREATE_PROJECT = 'CREATE_PROJECT',
 }
 
 export const modalPropsByTypes: {[id: string]: any} = {};

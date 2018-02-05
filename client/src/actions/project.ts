@@ -1,10 +1,9 @@
-import {Action, Dispatch} from "redux";
-import * as _ from "lodash";
+import { Action, Dispatch } from 'redux';
+import * as _ from 'lodash';
 
-import {ProjectModel} from "../models/project";
-import {BASE_URL} from "../constants/api";
-import {handleAuthError} from "../constants/utils";
-
+import { ProjectModel } from '../models/project';
+import { BASE_URL } from '../constants/api';
+import { handleAuthError } from '../constants/utils';
 
 export enum actionTypes {
   CREATE_PROJECT = 'CREATE_PROJECT',
@@ -16,20 +15,19 @@ export enum actionTypes {
   REQUEST_PROJECTS = 'REQUEST_PROJECTS',
 }
 
-
 export interface CreateUpdateReceiveProjectAction extends Action {
   type: actionTypes.CREATE_PROJECT | actionTypes.UPDATE_PROJECT | actionTypes.RECEIVE_PROJECT;
-  project: ProjectModel
+  project: ProjectModel;
 }
 
 export interface DeleteProjectAction extends Action {
   type: actionTypes.DELETE_PROJECT;
-  project: ProjectModel
+  project: ProjectModel;
 }
 
 export interface ReceiveProjectsAction extends Action {
   type: actionTypes.RECEIVE_PROJECTS;
-  projects: ProjectModel[]
+  projects: ProjectModel[];
 }
 
 export interface RequestProjectsAction extends Action {
@@ -46,50 +44,48 @@ export function createProjectActionCreator(project: ProjectModel): CreateUpdateR
   return {
     type: actionTypes.CREATE_PROJECT,
     project
-  }
+  };
 }
 
 export function deleteProjectActionCreator(project: ProjectModel): DeleteProjectAction {
   return {
     type: actionTypes.DELETE_PROJECT,
     project
-  }
+  };
 }
 
 export function updateProjectActionCreator(project: ProjectModel): CreateUpdateReceiveProjectAction {
   return {
     type: actionTypes.UPDATE_PROJECT,
     project
-  }
+  };
 }
-
 
 export function requestProjectActionCreator(): RequestProjectsAction {
   return {
     type: actionTypes.REQUEST_PROJECT,
-  }
+  };
 }
 
 export function requestProjectsActionCreator(): RequestProjectsAction {
   return {
     type: actionTypes.REQUEST_PROJECTS,
-  }
+  };
 }
 
 export function receiveProjectActionCreator(project: ProjectModel): CreateUpdateReceiveProjectAction {
   return {
     type: actionTypes.RECEIVE_PROJECT,
     project
-  }
+  };
 }
 
 export function receiveProjectsActionCreator(projects: ProjectModel[]): ReceiveProjectsAction {
   return {
     type: actionTypes.RECEIVE_PROJECTS,
     projects
-  }
+  };
 }
-
 
 export function createProject(user: string, project: ProjectModel): any {
   return (dispatch: any, getState: any) => {
@@ -106,8 +102,8 @@ export function createProject(user: string, project: ProjectModel): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveProjectActionCreator(json)))
-  }
+      .then(json => dispatch(receiveProjectActionCreator(json)));
+  };
 }
 
 export function deleteProject(project: ProjectModel): any {
@@ -120,10 +116,9 @@ export function deleteProject(project: ProjectModel): any {
       }
     })
       .then(response => handleAuthError(response, dispatch))
-      .then(() => dispatch(receiveProjectsActionCreator([])))
-  }
+      .then(() => dispatch(receiveProjectsActionCreator([])));
+  };
 }
-
 
 export function fetchProjects(user: string): any {
   return (dispatch: any, getState: any) => {
@@ -136,10 +131,9 @@ export function fetchProjects(user: string): any {
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json => json.results)
-      .then(json => dispatch(receiveProjectsActionCreator(json)))
-  }
+      .then(json => dispatch(receiveProjectsActionCreator(json)));
+  };
 }
-
 
 export function fetchProject(user: string, projectName: string): any {
   return (dispatch: any, getState: any) => {
@@ -151,7 +145,6 @@ export function fetchProject(user: string, projectName: string): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveProjectActionCreator(json)))
-  }
+      .then(json => dispatch(receiveProjectActionCreator(json)));
+  };
 }
-

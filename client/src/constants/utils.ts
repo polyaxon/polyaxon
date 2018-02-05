@@ -1,15 +1,15 @@
 import * as Cookies from 'js-cookie';
-import * as moment from "moment";
+import * as moment from 'moment';
 
-import {TokenStateSchema} from "../models/token";
-import {fetchUser} from "../actions/user";
+import { TokenStateSchema } from '../models/token';
+import { fetchUser } from '../actions/user';
 
 export const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
 export let urlifyProjectName = function (projectName: string) {
   // Replaces . by /
   let re = /\./gi;
-  return projectName.replace(re, "\/");
+  return projectName.replace(re, '\/');
 };
 
 export let splitProjectName = function (projectName: string) {
@@ -39,8 +39,8 @@ export let sortByUpdatedAt = function (a: any, b: any): any {
   return dateB - dateA;
 };
 
-export let pluralize = function (name: string, num_objects: number): string {
-  if (num_objects !== 1) {
+export let pluralize = function (name: string, numObjects: number): string {
+  if (numObjects !== 1) {
     return name + 's';
   }
   return name;
@@ -90,7 +90,7 @@ export let getExperimentUrl = function (username: string, projectName: string, e
   return `${projectUrl}/experiments/${experimentSequence}/`;
 };
 
-export function getGroupName(projectName: string, groupSequence: number|string) {
+export function getGroupName(projectName: string, groupSequence: number | string) {
   return `${projectName}.${groupSequence}`;
 }
 

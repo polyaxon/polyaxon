@@ -1,13 +1,12 @@
-import { connect, Dispatch } from "react-redux";
-import {withRouter} from "react-router-dom";
+import { connect, Dispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { AppState } from "../constants/types";
-import ExperimentDetail from "../components/experimentDetail";
-import * as actions from "../actions/experiment";
-
+import { AppState } from '../constants/types';
+import ExperimentDetail from '../components/experimentDetail';
+import * as actions from '../actions/experiment';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let experimentSequence = parseInt(params.match.params.experimentSequence);
+  let experimentSequence = parseInt(params.match.params.experimentSequence, 10);
   let ret;
   
   state.experiments.uniqueNames.forEach(function (uniqueName: string, idx: number) {
@@ -27,12 +26,15 @@ export interface DispatchProps {
   fetchData?: () => any;
 }
 
-
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, params: any): DispatchProps {
   return {
-    onDelete: () => dispatch(() => {}),
-    fetchData: () => dispatch(actions.fetchExperiment(params.match.params.user, params.match.params.projectName, params.match.params.experimentSequence))
-  }
+    onDelete: () => dispatch(() => undefined),
+    fetchData: () => dispatch(
+      actions.fetchExperiment(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.experimentSequence))
+  };
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExperimentDetail));
