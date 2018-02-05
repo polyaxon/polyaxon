@@ -1,24 +1,20 @@
 import { connect, Dispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import * as _ from 'lodash';
 
 import { AppState } from '../constants/types';
 import ExperimentDetail from '../components/experimentDetail';
 import * as actions from '../actions/experiment';
+import { getExperimentUniqueName } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let experimentSequence = parseInt(params.match.params.experimentSequence, 10);
-  let ret;
-  
-  state.experiments.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-    if (state.experiments.ByUniqueNames[uniqueName].sequence === experimentSequence) {
-      ret = {experiment: state.experiments.ByUniqueNames[uniqueName]};
-    }
-  });
-
-  if (!ret) {
-    ret = {experiment: null};
-  }
-  return ret;
+  let experimentUniqueName = getExperimentUniqueName(
+    params.match.params.user,
+    params.match.params.projectName,
+    params.match.params.experimentSequence);
+  return _.includes(state.experiments.uniqueNames, experimentUniqueName) ?
+    {experiment: state.experiments.ByUniqueNames[experimentUniqueName]} :
+    {experiment: null};
 }
 
 export interface DispatchProps {
