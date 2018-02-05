@@ -80,14 +80,45 @@ export let getProjectUrl = function (username: string, projectName: string) {
   return `/app/${username}/${projectName}`;
 };
 
+export let getProjectUniqueName = function (username: string, projectName: string) {
+  return `${username}.${projectName}`;
+};
+
 export let getGroupUrl = function (username: string, projectName: string, groupSequence: number) {
   let projectUrl = getProjectUrl(username, projectName);
   return `${projectUrl}/groups/${groupSequence}/`;
 };
 
+export let getGroupUniqueName = function (username: string, projectName: string, groupSequence: number) {
+  let projectUniqueName = getProjectUniqueName(username, projectName);
+  return `${projectUniqueName}.${groupSequence}`;
+};
+
 export let getExperimentUrl = function (username: string, projectName: string, experimentSequence: number) {
   let projectUrl = getProjectUrl(username, projectName);
   return `${projectUrl}/experiments/${experimentSequence}/`;
+};
+
+export let getExperimentUniqueName = function (username: string, projectName: string, experimentSequence: number) {
+  let projectUniqueName = getProjectUniqueName(username, projectName);
+  return `${projectUniqueName}.${experimentSequence}`;
+};
+
+export let getJobtUrl = function (username: string,
+                                  projectName: string,
+                                  experimentSequence: number,
+                                  jobSequence: number) {
+  let experimentUrl = getExperimentUrl(username, projectName, experimentSequence);
+
+  return `${experimentUrl}/experiments/${experimentSequence}/jobs/${jobSequence}`;
+};
+
+export let getJobUniqueName = function (username: string,
+                                        projectName: string,
+                                        experimentSequence: number,
+                                        jobSequence: number) {
+  let experimentUrl = getExperimentUrl(username, projectName, experimentSequence);
+  return `${experimentUrl}.${experimentSequence}`;
 };
 
 export function getGroupName(projectName: string, groupSequence: number | string) {
@@ -100,6 +131,29 @@ export function handleAuthError(response: any, dispatch: any) {
     return Promise.reject(response.statusText);
   }
   return response;
+}
+
+/*
+  Convert an experiment unique name to an index by ignoring the group if it exists on the unique name.
+*/
+export function getExperimentIndexName(uniqueName: string): string {
+  let values = uniqueName.split('.');
+  if (values.length === 4) {
+    values.splice(2, 1);
+  }
+  return values.join('.');
+}
+
+/*
+  Convert a job unique name to an index by ignoring the group if it exists on the unique name, and task type.
+*/
+export function getJobIndexName(uniqueName: string): string {
+  let values = uniqueName.split('.');
+  if (values.length === 6) {
+    values.splice(2, 1);
+  }
+  values.splice(4, 1);
+  return values.join('.');
 }
 
 export function humanizeTimeDelta(startDate: string | Date, endtDate: string | Date): string | null {
