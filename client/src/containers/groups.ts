@@ -15,8 +15,8 @@ interface OwnProps {
 export function mapStateToProps(state: AppState, ownProps: any) {
   let groups : GroupModel[] = [];
   if (state.groups) {
-    state.groups.uuids.forEach(function (uuid: string, idx: number) {
-      let group = state.groups.byUuids[uuid];
+    state.groups.uniqueNames.forEach(function (uniqueName: string, idx: number) {
+      let group = state.groups.ByUniqueNames[uniqueName];
       if (group.project_name === ownProps.projectName) {
         groups.push(group);
       }

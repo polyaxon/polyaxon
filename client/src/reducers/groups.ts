@@ -13,40 +13,43 @@ export const groupsReducer: Reducer<GroupStateSchema> =
       case actionTypes.CREATE_GROUP:
         return {
           ...state,
-          byUuids: {...state.byUuids, [action.group.uuid]: action.group},
-          uuids: [...state.uuids, action.group.uuid]
+          ByUniqueNames: {...state.ByUniqueNames, [action.group.unique_name]: action.group},
+          uniqueNames: [...state.uniqueNames, action.group.unique_name]
         };
       case actionTypes.DELETE_GROUP:
         return {
           ...state,
-          byUuids: {
-            ...state.byUuids,
-            [action.group.uuid]: {...state.byUuids[action.group.uuid], deleted: true}
+          ByUniqueNames: {
+            ...state.ByUniqueNames,
+            [action.group.unique_name]: {
+              ...state.ByUniqueNames[action.group.unique_name], deleted: true}
           },
-          uuids: state.uuids.filter(uuid => uuid != action.group.uuid),
+          uniqueNames: state.uniqueNames.filter(
+            uniqueName => uniqueName != action.group.unique_name),
         };
       case actionTypes.UPDATE_GROUP:
         return {
           ...state,
-          byUuids: {...state.byUuids, [action.group.uuid]: action.group}
+          ByUniqueNames: {...state.ByUniqueNames, [action.group.unique_name]: action.group}
         };
       case actionTypes.RECEIVE_GROUPS:
         var newState = {...state};
         for (let group of action.groups) {
-          if (!_.includes(newState.uuids, group.uuid)) {
-            newState.uuids.push(group.uuid);
-            newState.byUuids[group.uuid] = group;
+          if (!_.includes(newState.uniqueNames, group.unique_name)) {
+            newState.uniqueNames.push(group.unique_name);
+            newState.ByUniqueNames[group.unique_name] = group;
           }
-          newState.byUuids[group.uuid] = group;
+          newState.ByUniqueNames[group.unique_name] = group;
         }
         return newState;
       case actionTypes.RECEIVE_GROUP:
         var newState = {...state};
-        if (!_.includes(newState.uuids, action.group.uuid)) {
-          newState.uuids.push(action.group.uuid);
+        let uniqueName = action.group.unique_name;
+        if (!_.includes(newState.uniqueNames, uniqueName)) {
+          newState.uniqueNames.push(uniqueName);
         }
         let normalized_groups = normalize(action.group, GroupSchema).entities.groups;
-        newState.byUuids[action.group.uuid] = normalized_groups[action.group.uuid];
+        newState.ByUniqueNames[action.group.unique_name] = normalized_groups[uniqueName];
         return newState;
     }
     return state;

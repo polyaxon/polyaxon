@@ -20,8 +20,8 @@ export class GroupModel {
 }
 
 export class GroupStateSchema {
-	byUuids: {[uuid: string]: GroupModel};
-	uuids: string[];
+	ByUniqueNames: {[uniqueName: string]: GroupModel};
+	uniqueNames: string[];
 }
 
-export const GroupsEmptyState = {byUuids: {}, uuids: []};
+export const GroupsEmptyState = {ByUniqueNames: {}, uniqueNames: []};

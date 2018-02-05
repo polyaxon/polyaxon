@@ -13,40 +13,45 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
       case actionTypes.CREATE_EXPERIMENT:
         return {
           ...state,
-          byUuids: {...state.byUuids, [action.experiment.uuid]: action.experiment},
-          uuids: [...state.uuids, action.experiment.uuid]
+          ByUniqueNames: {
+            ...state.ByUniqueNames, [action.experiment.unique_name]: action.experiment},
+          uniqueNames: [...state.uniqueNames, action.experiment.unique_name]
         };
       case actionTypes.DELETE_EXPERIMENT:
         return {
           ...state,
-          byUuids: {
-            ...state.byUuids,
-            [action.experiment.uuid]: {...state.byUuids[action.experiment.uuid], deleted: true}
+          ByUniqueNames: {
+            ...state.ByUniqueNames,
+            [action.experiment.unique_name]: {
+              ...state.ByUniqueNames[action.experiment.unique_name], deleted: true}
           },
-          uuids: state.uuids.filter(uuid => uuid != action.experiment.uuid),
+          uniqueNames: state.uniqueNames.filter(
+            uniqueName => uniqueName != action.experiment.unique_name),
         };
       case actionTypes.UPDATE_EXPERIMENT:
         return {
           ...state,
-          byUuids: {...state.byUuids, [action.experiment.uuid]: action.experiment}
+          ByUniqueNames: {
+            ...state.ByUniqueNames, [action.experiment.unique_name]: action.experiment}
         };
       case actionTypes.RECEIVE_EXPERIMENTS:
         var newState = {...state};
         for (let xp of action.experiments) {
-          if (!_.includes(newState.uuids, xp.uuid)) {
-            newState.uuids.push(xp.uuid);
-            newState.byUuids[xp.uuid] = xp;
+          if (!_.includes(newState.uniqueNames, xp.unique_name)) {
+            newState.uniqueNames.push(xp.unique_name);
+            newState.ByUniqueNames[xp.unique_name] = xp;
           }
-          newState.byUuids[xp.uuid] = xp;
+          newState.ByUniqueNames[xp.unique_name] = xp;
         }
         return newState;
       case actionTypes.RECEIVE_EXPERIMENT:
         var newState = {...state};
-        if (!_.includes(newState.uuids, action.experiment.uuid)) {
-          newState.uuids.push(action.experiment.uuid);
+        let uniqueName = action.experiment.unique_name;
+        if (!_.includes(newState.uniqueNames, uniqueName)) {
+          newState.uniqueNames.push(uniqueName);
         }
         let normalized_experiments = normalize(action.experiment, ExperimentSchema).entities.experiments;
-        newState.byUuids[action.experiment.uuid] = normalized_experiments[action.experiment.uuid];
+        newState.ByUniqueNames[action.experiment.unique_name] = normalized_experiments[uniqueName];
         return newState;
     }
     return state;

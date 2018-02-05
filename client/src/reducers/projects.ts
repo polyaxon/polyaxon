@@ -14,36 +14,41 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
     case actionTypes.CREATE_PROJECT:
       return {
         ...state,
-        byUuids: {...state.byUuids, [action.project.uuid] : action.project},
-        uuids: [...state.uuids, action.project.uuid]
+        ByUniqueNames: {...state.ByUniqueNames, [action.project.unique_name] : action.project},
+        uniqueNames: [...state.uniqueNames, action.project.unique_name]
       };
     case actionTypes.DELETE_PROJECT:
       return {
         ...state,
-        byUuids: {...state.byUuids, [action.project.uuid] : {...state.byUuids[action.project.uuid], deleted:true}},
-        uuids: state.uuids.filter(uuid => uuid != action.project.uuid),
+        ByUniqueNames: {
+          ...state.ByUniqueNames,
+          [action.project.unique_name] : {
+            ...state.ByUniqueNames[action.project.unique_name], deleted:true}},
+        uniqueNames: state.uniqueNames.filter(
+          uniqueName => uniqueName != action.project.unique_name),
       };
     case actionTypes.UPDATE_PROJECT:
       return {
         ...state,
-        byUuids: {...state.byUuids, [action.project.uuid]: action.project}
+        ByUniqueNames: {...state.ByUniqueNames, [action.project.unique_name]: action.project}
       };
     case actionTypes.RECEIVE_PROJECTS:
       var newState = {...state};
       for (let project of action.projects) {
-        if (!_.includes(newState.uuids, project.uuid)) {
-          newState.uuids.push(project.uuid);
+        if (!_.includes(newState.uniqueNames, project.unique_name)) {
+          newState.uniqueNames.push(project.unique_name);
         }
-        newState.byUuids[project.uuid] = project;
+        newState.ByUniqueNames[project.unique_name] = project;
       }
       return newState;
     case actionTypes.RECEIVE_PROJECT:
       var newState = {...state};
-      if (!_.includes(newState.uuids, action.project.uuid)) {
-        newState.uuids.push(action.project.uuid);
+      let uniqueName = action.project.unique_name;
+      if (!_.includes(newState.uniqueNames, uniqueName)) {
+        newState.uniqueNames.push(uniqueName);
       }
       let normalized_projects = normalize(action.project, ProjectSchema).entities.projects;
-      newState.byUuids[action.project.uuid] = normalized_projects[action.project.uuid];
+      newState.ByUniqueNames[uniqueName] = normalized_projects[uniqueName];
       return newState;
   }
   return state;
@@ -58,12 +63,12 @@ export const ProjectExperiments: Reducer<ExperimentStateSchema> =
       let normalized_project = normalize(action.project, ProjectSchema);
       let projectExperiments = normalized_project.entities.experiments;
       if (_.isNil(projectExperiments)) {
-        return {byUuids: {}, uuids: []};
+        return {ByUniqueNames: {}, uniqueNames: []};
       }
-      for (let xpUuid of Object.keys(projectExperiments)) {
-        if (!_.includes(newState.uuids, xpUuid)) {
-          newState.uuids.push(xpUuid);
-          newState.byUuids[xpUuid] = projectExperiments[xpUuid];
+      for (let uniqueName of Object.keys(projectExperiments)) {
+        if (!_.includes(newState.uniqueNames, uniqueName)) {
+          newState.uniqueNames.push(uniqueName);
+          newState.ByUniqueNames[uniqueName] = projectExperiments[uniqueName];
         }
       }
       return newState;

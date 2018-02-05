@@ -11,9 +11,9 @@ export function mapStateToProps(state: AppState, params: any)  {
   let jobSequence = parseInt(params.match.params.jobSequence);
   let ret;
 
-  state.jobs.uuids.forEach(function (uuid: string, idx: number) {
-    if (state.jobs.byUuids[uuid].sequence === jobSequence) {
-      ret = {job: state.jobs.byUuids[uuid]};
+  state.jobs.uniqueNames.forEach(function (uniqueName: string, idx: number) {
+    if (state.jobs.ByUniqueNames[uniqueName].sequence === jobSequence) {
+      ret = {job: state.jobs.ByUniqueNames[uniqueName]};
     }
   });
 

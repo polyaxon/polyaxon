@@ -12,8 +12,8 @@ export function mapStateToProps(state: AppState, params: any) {
   let jobs : JobModel[] = [];
   
   if (state.jobs) {
-    state.jobs.uuids.forEach(function (uuid: string, idx: number) {
-      let job = state.jobs.byUuids[uuid];
+    state.jobs.uniqueNames.forEach(function (uniqueName: string, idx: number) {
+      let job = state.jobs.ByUniqueNames[uniqueName];
       if (job.experiment_name === params.experiment.unique_name) {
         jobs.push(job);
       }

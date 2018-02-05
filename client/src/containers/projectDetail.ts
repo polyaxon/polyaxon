@@ -10,9 +10,9 @@ import * as actions from "../actions/project";
 export function mapStateToProps(state: AppState, params: any)  {
   let projectName = params.match.params.projectName;
   let results;
-  state.projects.uuids.forEach(function (uuid: string, idx: number) {
-    if (state.projects.byUuids[uuid].name === projectName) {
-      results = {project: state.projects.byUuids[uuid]};
+  state.projects.uniqueNames.forEach(function (uniqueName: string, idx: number) {
+    if (state.projects.ByUniqueNames[uniqueName].name === projectName) {
+      results = {project: state.projects.ByUniqueNames[uniqueName]};
     }
   });
   if (!results) {

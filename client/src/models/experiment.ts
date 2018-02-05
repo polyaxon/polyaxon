@@ -22,8 +22,8 @@ export class ExperimentModel {
 }
 
 export class ExperimentStateSchema {
-	byUuids: {[uuid: string]: ExperimentModel};
-	uuids: string[];
+	ByUniqueNames: {[uniqueName: string]: ExperimentModel};
+	uniqueNames: string[];
 }
 
-export const ExperimentsEmptyState = {byUuids: {}, uuids: []};
+export const ExperimentsEmptyState = {ByUniqueNames: {}, uniqueNames: []};

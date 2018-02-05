@@ -35,7 +35,7 @@ export default class Projects extends React.Component<Props, Object> {
           {projects.filter(
             (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
           ).map(
-            (project: ProjectModel) => <li className="list-item" key={project.uuid}>
+            (project: ProjectModel) => <li className="list-item" key={project.unique_name}>
               <Project project={project} onDelete={() => onDelete(project)}/></li>)}
         </ul>
       </div>

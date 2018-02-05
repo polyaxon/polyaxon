@@ -30,7 +30,7 @@ export default class Groups extends React.Component<Props, Object> {
               (group: GroupModel) => _.isNil(group.deleted) || !group.deleted
             ).map(
               (group: GroupModel) =>
-                <li className="list-item" key={group.uuid}>
+                <li className="list-item" key={group.unique_name}>
                   <Group group={group} onDelete={() => onDelete(group)}/>
                 </li>)}
           </ul>

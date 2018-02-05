@@ -10,9 +10,9 @@ export function mapStateToProps(state: AppState, params: any)  {
   let experimentSequence = parseInt(params.match.params.experimentSequence);
   let ret;
   
-  state.experiments.uuids.forEach(function (uuid: string, idx: number) {
-    if (state.experiments.byUuids[uuid].sequence === experimentSequence) {
-      ret = {experiment: state.experiments.byUuids[uuid]};
+  state.experiments.uniqueNames.forEach(function (uniqueName: string, idx: number) {
+    if (state.experiments.ByUniqueNames[uniqueName].sequence === experimentSequence) {
+      ret = {experiment: state.experiments.ByUniqueNames[uniqueName]};
     }
   });
 

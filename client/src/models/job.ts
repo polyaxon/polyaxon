@@ -18,8 +18,8 @@ export class JobModel {
 }
 
 export class JobStateSchema {
-	byUuids: {[uuid: string]: JobModel};
-	uuids: string[];
+	ByUniqueNames: {[uniqueName: string]: JobModel};
+	uniqueNames: string[];
 }
 
-export const JobsEmptyState = {byUuids: {}, uuids: []};
+export const JobsEmptyState = {ByUniqueNames: {}, uniqueNames: []};

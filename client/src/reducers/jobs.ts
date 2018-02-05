@@ -14,40 +14,42 @@ export const jobsReducer: Reducer<JobStateSchema> =
       case actionTypes.CREATE_JOB:
         return {
           ...state,
-          byUuids: {...state.byUuids, [action.job.uuid]: action.job},
-          uuids: [...state.uuids, action.job.uuid]
+          ByUniqueNames: {...state.ByUniqueNames, [action.job.unique_name]: action.job},
+          uniqueNames: [...state.uniqueNames, action.job.unique_name]
         };
       case actionTypes.DELETE_JOB:
         return {
           ...state,
-          byUuids: {
-            ...state.byUuids,
-            [action.job.sequence]: {...state.byUuids[action.job.uuid], deleted: true}
+          ByUniqueNames: {
+            ...state.ByUniqueNames,
+            [action.job.sequence]: {...state.ByUniqueNames[action.job.unique_name], deleted: true}
           },
-          uuids: state.uuids.filter(uuid => uuid != action.job.uuid),
+          uniqueNames: state.uniqueNames.filter(
+            uniqueName => uniqueName != action.job.unique_name),
         };
       case actionTypes.UPDATE_JOB:
         return {
           ...state,
-          byUuids: {...state.byUuids, [action.job.uuid]: action.job}
+          ByUniqueNames: {...state.ByUniqueNames, [action.job.unique_name]: action.job}
         };
       case actionTypes.RECEIVE_JOBS:
         var newState = {...state};
         for (let xp of action.jobs) {
-          if (!_.includes(newState.uuids, xp.uuid)) {
-            newState.uuids.push(xp.uuid);
-            newState.byUuids[xp.uuid] = xp;
+          if (!_.includes(newState.uniqueNames, xp.unique_name)) {
+            newState.uniqueNames.push(xp.unique_name);
+            newState.ByUniqueNames[xp.unique_name] = xp;
           }
-          newState.byUuids[xp.uuid] = xp;
+          newState.ByUniqueNames[xp.unique_name] = xp;
         }
         return newState;
       case actionTypes.RECEIVE_JOB:
         var newState = {...state};
-        if (!_.includes(newState.uuids, action.job.uuid)) {
-          newState.uuids.push(action.job.uuid);
+        let uniqueName = action.job.unique_name;
+        if (!_.includes(newState.uniqueNames, uniqueName)) {
+          newState.uniqueNames.push(uniqueName);
         }
         let normalized_jobs = normalize(action.job, JobSchema).entities.jobs;
-        newState.byUuids[action.job.uuid] = normalized_jobs[action.job.uuid];
+        newState.ByUniqueNames[uniqueName] = normalized_jobs[uniqueName];
         return newState;
     }
     return state;

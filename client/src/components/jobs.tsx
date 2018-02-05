@@ -30,7 +30,7 @@ export default class Jobs extends React.Component<Props, Object> {
               (job: JobModel) => _.isNil(job.deleted) || !job.deleted
             ).map(
               (job: JobModel) =>
-                <li className="list-item" key={job.uuid}>
+                <li className="list-item" key={job.unique_name}>
                   <Job job={job} onDelete={() => onDelete(job)}/>
                 </li>)}
           </ul>

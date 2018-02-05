@@ -29,7 +29,7 @@ export default class Experiments extends React.Component<Props, Object> {
             {experiments.filter(
               (xp: ExperimentModel) => _.isNil(xp.deleted) || !xp.deleted
             ).map(
-              (xp: ExperimentModel) => <li className="list-item" key={xp.uuid}><Experiment
+              (xp: ExperimentModel) => <li className="list-item" key={xp.unique_name}><Experiment
                 experiment={xp} onDelete={() => onDelete(xp)}/></li>)}
           </ul>
         </div>

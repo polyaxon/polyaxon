@@ -13,8 +13,8 @@ export class ProjectModel {
 }
 
 export class ProjectStateSchema {
-	byUuids: {[uuid: string]: ProjectModel};
-	uuids: string[];
+	ByUniqueNames: {[uniqueName: string]: ProjectModel};
+	uniqueNames: string[];
 }
 
-export const ProjectsEmptyState = {byUuids: {}, uuids: []};
+export const ProjectsEmptyState = {ByUniqueNames: {}, uniqueNames: []};
