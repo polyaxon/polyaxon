@@ -75,7 +75,7 @@ class ClassifierSchema(BaseModelSchema):
 
 
 class ClassifierConfig(BaseModelConfig):
-    """Regressor base model.
+    """Classifier base model.
 
     Args(programmatic):
         mode: `str`, Specifies if this training, evaluation or prediction. See `Modes`.
