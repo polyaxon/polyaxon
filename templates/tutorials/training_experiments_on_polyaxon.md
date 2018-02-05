@@ -191,7 +191,7 @@ Before we can train our experiments we need to deploy Polyaxon.
     ```bash
     $ polyaxon experiment -xp 3 resources --gpu
 
-    job_name    name         GPU Usage  GPU Mem                         GPU Temperature    Power Draw    Power Limit
-    ----------  ---------  -----------  ----------------------------  -----------------  ------------  -------------
-    master.1    Tesla K80           75  10.71 Gb / 11.17 Gb (3400%%)                 69           125            149
+    job_name    name         GPU Usage  GPU Mem                GPU Temperature    Power Draw    Power Limit
+    ----------  ---------  -----------  -------------------- -----------------  ------------  -------------
+    master.1    Tesla K80           75  10.71 Gb / 11.17 Gb                 69           125            149
     ```
