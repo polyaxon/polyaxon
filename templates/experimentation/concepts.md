@@ -27,7 +27,7 @@ Polyaxon does the heavy lifting of:
  * Reporting back the results to the user
 
 The choice of using Docker containers to run your jobs is important,
-it provides the user a wide range of possibilities to [customize the run run environment](/customization/customize_run_environment)
+it provides the user a wide range of possibilities to [customize the run environment](/customization/customize_run_environment)
 to fit the requirements and dependencies needed for the experiments.
 
 ![architecture](/images/polyaxon_architecture.png)
