@@ -4,11 +4,28 @@ import { normalize } from 'normalizr';
 
 import { GroupSchema } from '../constants/schemas';
 import { GroupAction, actionTypes } from '../actions/group';
-import { GroupStateSchema, GroupsEmptyState } from '../models/group';
+import { GroupStateSchema, GroupsEmptyState, GroupModel } from '../models/group';
+import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 
 export const groupsReducer: Reducer<GroupStateSchema> =
   (state: GroupStateSchema = GroupsEmptyState, action: GroupAction) => {
     let newState = {...state};
+
+    let processGroup = function(group: GroupModel) {
+      let uniqueName = group.unique_name;
+      if (!_.includes(newState.uniqueNames, uniqueName)) {
+        newState.uniqueNames.push(uniqueName);
+      }
+      let normalizedGroups = normalize(group, GroupSchema).entities.groups;
+      newState.byUniqueNames[uniqueName] = {
+        ...newState.byUniqueNames[uniqueName], ...normalizedGroups[uniqueName]
+      };
+      if (newState.byUniqueNames[uniqueName].experiments == null) {
+        newState.byUniqueNames[uniqueName].experiments = [];
+      }
+      return newState;
+    };
+
     switch (action.type) {
       case actionTypes.CREATE_GROUP:
         return {
@@ -34,21 +51,38 @@ export const groupsReducer: Reducer<GroupStateSchema> =
         };
       case actionTypes.RECEIVE_GROUPS:
         for (let group of action.groups) {
-          if (!_.includes(newState.uniqueNames, group.unique_name)) {
-            newState.uniqueNames.push(group.unique_name);
-            newState.byUniqueNames[group.unique_name] = group;
-          }
-          newState.byUniqueNames[group.unique_name] = group;
+          newState = processGroup(group);
         }
         return newState;
       case actionTypes.RECEIVE_GROUP:
-        let uniqueName = action.group.unique_name;
-        if (!_.includes(newState.uniqueNames, uniqueName)) {
-          newState.uniqueNames.push(uniqueName);
-        }
-        let normalizedGroups = normalize(action.group, GroupSchema).entities.groups;
-        newState.byUniqueNames[action.group.unique_name] = normalizedGroups[uniqueName];
-        return newState;
+        return processGroup(action.group);
+      default:
+        return state;
     }
-    return state;
+  };
+
+export const ProjectGroupsReducer: Reducer<ProjectStateSchema> =
+  (state: ProjectStateSchema = ProjectsEmptyState, action: GroupAction) => {
+    let newState = {...state};
+
+    let processGroup = function (group: GroupModel) {
+      let projectName = group.project_name;
+      if (_.includes(newState.uniqueNames, projectName) &&
+        !_.includes(newState.byUniqueNames[projectName].groups, group.unique_name)) {
+        newState.byUniqueNames[projectName].groups.push(group.unique_name);
+      }
+      return newState;
+    };
+
+    switch (action.type) {
+      case actionTypes.RECEIVE_GROUP:
+        return processGroup(action.group);
+      case actionTypes.RECEIVE_GROUPS:
+        for (let experiment of action.groups) {
+          newState = processGroup(experiment);
+        }
+        return newState;
+      default:
+        return state;
+    }
   };
