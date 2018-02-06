@@ -19,6 +19,7 @@ export class ExperimentModel {
   public declarations: {[key: string]: any};
   public last_metric: {[metric: string]: number};
   public resources: {[key: string]: any};
+  public jobs: Array<string> = [];
 }
 
 export class ExperimentStateSchema {

@@ -10,8 +10,8 @@ export class ProjectModel {
   public description?: string;
   public created_at: string;
   public updated_at: string;
-  public groups?: Array<string> = [];
-  public experiments?: Array<string> = [];
+  public groups: Array<string> = [];
+  public experiments: Array<string> = [];
 }
 
 export class ProjectStateSchema {

@@ -17,6 +17,7 @@ export class GroupModel {
   public deleted?: boolean;
   public created_at: string;
   public updated_at: string;
+  public experiments: Array<string> = [];
 }
 
 export class GroupStateSchema {
