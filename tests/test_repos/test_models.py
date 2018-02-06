@@ -111,5 +111,3 @@ class TestRepoModels(BaseTest):
         # Checkout to master
         git.checkout_commit(repo_path=repo.path)
         assert repo.last_commit[0] == commit2
-
-
