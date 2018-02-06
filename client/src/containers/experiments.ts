@@ -19,17 +19,16 @@ export function mapStateToProps(state: AppState, ownProps: any) {
                   getGroupName(ownProps.projectName, ownProps.groupSequence) :
                   null;
   let experiments: ExperimentModel[] = [];
-  if (state.experiments) {
-    state.experiments.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-      let experiment = state.experiments.byUniqueNames[uniqueName];
-      if (groupName != null) {
-        if (experiment.experiment_group_name === groupName) {
-          experiments.push(experiment);
-        }
-      } else if (experiment.project_name === ownProps.projectName) {
-        experiments.push(experiment);
-      }
-    });
+  if (groupName != null) {
+    state.groups.byUniqueNames[groupName].experiments.forEach(
+      function (experiment: string, idx: number) {
+        experiments.push(state.experiments.byUniqueNames[experiment]);
+      });
+  } else {
+    state.projects.byUniqueNames[ownProps.projectName].experiments.forEach(
+      function (experiment: string, idx: number) {
+        experiments.push(state.experiments.byUniqueNames[experiment]);
+      });
   }
 
   return {experiments: experiments.sort(sortByUpdatedAt)};

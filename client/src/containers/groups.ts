@@ -14,14 +14,11 @@ interface OwnProps {
 
 export function mapStateToProps(state: AppState, ownProps: any) {
   let groups: GroupModel[] = [];
-  if (state.groups) {
-    state.groups.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-      let group = state.groups.byUniqueNames[uniqueName];
-      if (group.project_name === ownProps.projectName) {
-        groups.push(group);
-      }
+
+  state.projects.byUniqueNames[ownProps.projectName].groups.forEach(
+    function (group: string, idx: number) {
+      groups.push(state.groups.byUniqueNames[group]);
     });
-  }
 
   return {groups: groups.sort(sortByUpdatedAt)};
 }

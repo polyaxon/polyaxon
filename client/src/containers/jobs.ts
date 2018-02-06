@@ -1,6 +1,6 @@
 import { connect, Dispatch } from 'react-redux';
 
-import { sortByUpdatedAt } from '../constants/utils';
+import { getExperimentIndexName, sortByUpdatedAt } from '../constants/utils';
 import { AppState } from '../constants/types';
 import Jobs from '../components/jobs';
 import { JobModel } from '../models/job';
@@ -8,16 +8,12 @@ import { JobModel } from '../models/job';
 import * as actions from '../actions/job';
 
 export function mapStateToProps(state: AppState, params: any) {
+  let experimentName = getExperimentIndexName(params.experiment.unique_name)
   let jobs: JobModel[] = [];
-  
-  if (state.jobs) {
-    state.jobs.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-      let job = state.jobs.byUniqueNames[uniqueName];
-      if (job.experiment_name === params.experiment.unique_name) {
-        jobs.push(job);
-      }
+  state.experiments.byUniqueNames[experimentName].jobs.forEach(
+    function (job: string, idx: number) {
+      jobs.push(state.jobs.byUniqueNames[job]);
     });
-  }
 
   return {jobs: jobs.sort(sortByUpdatedAt)};
 }
