@@ -13,7 +13,7 @@ export function mapStateToProps(state: AppState, params: any) {
     params.match.params.projectName,
     params.match.params.groupSequence);
   return _.includes(state.groups.uniqueNames, groupUniqueName) ?
-      {group: state.groups.ByUniqueNames[groupUniqueName]} :
+      {group: state.groups.byUniqueNames[groupUniqueName]} :
       {group: null};
 }
 

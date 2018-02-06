@@ -15,16 +15,16 @@ export const jobsReducer: Reducer<JobStateSchema> =
       case actionTypes.CREATE_JOB:
         return {
           ...state,
-          ByUniqueNames: {...state.ByUniqueNames, [getJobIndexName(action.job.unique_name)]: action.job},
+          byUniqueNames: {...state.byUniqueNames, [getJobIndexName(action.job.unique_name)]: action.job},
           uniqueNames: [...state.uniqueNames, getJobIndexName(action.job.unique_name)]
         };
       case actionTypes.DELETE_JOB:
         return {
           ...state,
-          ByUniqueNames: {
-            ...state.ByUniqueNames,
+          byUniqueNames: {
+            ...state.byUniqueNames,
             [getJobIndexName(action.job.unique_name)]: {
-              ...state.ByUniqueNames[getJobIndexName(action.job.unique_name)], deleted: true}
+              ...state.byUniqueNames[getJobIndexName(action.job.unique_name)], deleted: true}
           },
           uniqueNames: state.uniqueNames.filter(
             name => name !== getJobIndexName(action.job.unique_name)),
@@ -32,16 +32,16 @@ export const jobsReducer: Reducer<JobStateSchema> =
       case actionTypes.UPDATE_JOB:
         return {
           ...state,
-          ByUniqueNames: {...state.ByUniqueNames, [getJobIndexName(action.job.unique_name)]: action.job}
+          byUniqueNames: {...state.byUniqueNames, [getJobIndexName(action.job.unique_name)]: action.job}
         };
       case actionTypes.RECEIVE_JOBS:
         for (let job of action.jobs) {
           let jobUniqueName = getJobIndexName(job.unique_name);
           if (!_.includes(newState.uniqueNames, jobUniqueName)) {
             newState.uniqueNames.push(jobUniqueName);
-            newState.ByUniqueNames[jobUniqueName] = job;
+            newState.byUniqueNames[jobUniqueName] = job;
           }
-          newState.ByUniqueNames[jobUniqueName] = job;
+          newState.byUniqueNames[jobUniqueName] = job;
         }
         return newState;
       case actionTypes.RECEIVE_JOB:
@@ -50,7 +50,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
           newState.uniqueNames.push(jobUniqueName);
         }
         let normalizedJobs = normalize(action.job, JobSchema).entities.jobs;
-        newState.ByUniqueNames[jobUniqueName] = normalizedJobs[action.job.unique_name];
+        newState.byUniqueNames[jobUniqueName] = normalizedJobs[action.job.unique_name];
         return newState;
     }
     return state;

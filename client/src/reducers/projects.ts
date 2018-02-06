@@ -14,16 +14,16 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
       case actionTypes.CREATE_PROJECT:
         return {
           ...state,
-          ByUniqueNames: {...state.ByUniqueNames, [action.project.unique_name]: action.project},
+          byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: action.project},
           uniqueNames: [...state.uniqueNames, action.project.unique_name]
         };
       case actionTypes.DELETE_PROJECT:
         return {
           ...state,
-          ByUniqueNames: {
-            ...state.ByUniqueNames,
+          byUniqueNames: {
+            ...state.byUniqueNames,
             [action.project.unique_name]: {
-              ...state.ByUniqueNames[action.project.unique_name], deleted: true
+              ...state.byUniqueNames[action.project.unique_name], deleted: true
             }
           },
           uniqueNames: state.uniqueNames.filter(
@@ -32,14 +32,14 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
       case actionTypes.UPDATE_PROJECT:
         return {
           ...state,
-          ByUniqueNames: {...state.ByUniqueNames, [action.project.unique_name]: action.project}
+          byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: action.project}
         };
       case actionTypes.RECEIVE_PROJECTS:
         for (let project of action.projects) {
           if (!_.includes(newState.uniqueNames, project.unique_name)) {
             newState.uniqueNames.push(project.unique_name);
           }
-          newState.ByUniqueNames[project.unique_name] = project;
+          newState.byUniqueNames[project.unique_name] = project;
         }
         return newState;
       case actionTypes.RECEIVE_PROJECT:
@@ -48,7 +48,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           newState.uniqueNames.push(uniqueName);
         }
         let normalizedProjects = normalize(action.project, ProjectSchema).entities.projects;
-        newState.ByUniqueNames[uniqueName] = normalizedProjects[uniqueName];
+        newState.byUniqueNames[uniqueName] = normalizedProjects[uniqueName];
         return newState;
     }
     return state;
@@ -62,12 +62,12 @@ export const ProjectExperiments: Reducer<ExperimentStateSchema> =
         let normalizedProject = normalize(action.project, ProjectSchema);
         let projectExperiments = normalizedProject.entities.experiments;
         if (_.isNil(projectExperiments)) {
-          return {ByUniqueNames: {}, uniqueNames: []};
+          return {byUniqueNames: {}, uniqueNames: []};
         }
         for (let uniqueName of Object.keys(projectExperiments)) {
           if (!_.includes(newState.uniqueNames, uniqueName)) {
             newState.uniqueNames.push(uniqueName);
-            newState.ByUniqueNames[uniqueName] = projectExperiments[uniqueName];
+            newState.byUniqueNames[uniqueName] = projectExperiments[uniqueName];
           }
         }
         return newState;

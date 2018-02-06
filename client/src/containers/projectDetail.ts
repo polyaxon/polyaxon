@@ -13,7 +13,7 @@ export function mapStateToProps(state: AppState, params: any) {
     params.match.params.user,
     params.match.params.projectName);
   return _.includes(state.projects.uniqueNames, projectUniqueName) ?
-      {project: state.projects.ByUniqueNames[projectUniqueName]} :
+      {project: state.projects.byUniqueNames[projectUniqueName]} :
       {project: null};
 }
 

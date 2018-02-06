@@ -13,7 +13,7 @@ export function mapStateToProps(state: AppState, params: any)  {
     params.match.params.projectName,
     params.match.params.experimentSequence);
   return _.includes(state.experiments.uniqueNames, experimentUniqueName) ?
-    {experiment: state.experiments.ByUniqueNames[experimentUniqueName]} :
+    {experiment: state.experiments.byUniqueNames[experimentUniqueName]} :
     {experiment: null};
 }
 

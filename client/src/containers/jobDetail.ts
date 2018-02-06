@@ -15,7 +15,7 @@ export function mapStateToProps(state: AppState, params: any)  {
     params.match.params.experimentSequence,
     params.match.params.jobSequence,);
   return _.includes(state.jobs.uniqueNames, jobUniqueName) ?
-      {job: state.jobs.ByUniqueNames[jobUniqueName]} :
+      {job: state.jobs.byUniqueNames[jobUniqueName]} :
       {job: null};
 }
 

@@ -21,7 +21,7 @@ export function mapStateToProps(state: AppState, ownProps: any) {
   let experiments: ExperimentModel[] = [];
   if (state.experiments) {
     state.experiments.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-      let experiment = state.experiments.ByUniqueNames[uniqueName];
+      let experiment = state.experiments.byUniqueNames[uniqueName];
       if (groupName != null) {
         if (experiment.experiment_group_name === groupName) {
           experiments.push(experiment);

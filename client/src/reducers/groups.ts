@@ -13,16 +13,16 @@ export const groupsReducer: Reducer<GroupStateSchema> =
       case actionTypes.CREATE_GROUP:
         return {
           ...state,
-          ByUniqueNames: {...state.ByUniqueNames, [action.group.unique_name]: action.group},
+          byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: action.group},
           uniqueNames: [...state.uniqueNames, action.group.unique_name]
         };
       case actionTypes.DELETE_GROUP:
         return {
           ...state,
-          ByUniqueNames: {
-            ...state.ByUniqueNames,
+          byUniqueNames: {
+            ...state.byUniqueNames,
             [action.group.unique_name]: {
-              ...state.ByUniqueNames[action.group.unique_name], deleted: true}
+              ...state.byUniqueNames[action.group.unique_name], deleted: true}
           },
           uniqueNames: state.uniqueNames.filter(
             name => name !== action.group.unique_name),
@@ -30,15 +30,15 @@ export const groupsReducer: Reducer<GroupStateSchema> =
       case actionTypes.UPDATE_GROUP:
         return {
           ...state,
-          ByUniqueNames: {...state.ByUniqueNames, [action.group.unique_name]: action.group}
+          byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: action.group}
         };
       case actionTypes.RECEIVE_GROUPS:
         for (let group of action.groups) {
           if (!_.includes(newState.uniqueNames, group.unique_name)) {
             newState.uniqueNames.push(group.unique_name);
-            newState.ByUniqueNames[group.unique_name] = group;
+            newState.byUniqueNames[group.unique_name] = group;
           }
-          newState.ByUniqueNames[group.unique_name] = group;
+          newState.byUniqueNames[group.unique_name] = group;
         }
         return newState;
       case actionTypes.RECEIVE_GROUP:
@@ -47,7 +47,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
           newState.uniqueNames.push(uniqueName);
         }
         let normalizedGroups = normalize(action.group, GroupSchema).entities.groups;
-        newState.ByUniqueNames[action.group.unique_name] = normalizedGroups[uniqueName];
+        newState.byUniqueNames[action.group.unique_name] = normalizedGroups[uniqueName];
         return newState;
     }
     return state;

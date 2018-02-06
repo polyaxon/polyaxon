@@ -12,7 +12,7 @@ export function mapStateToProps(state: AppState, params: any) {
   
   if (state.jobs) {
     state.jobs.uniqueNames.forEach(function (uniqueName: string, idx: number) {
-      let job = state.jobs.ByUniqueNames[uniqueName];
+      let job = state.jobs.byUniqueNames[uniqueName];
       if (job.experiment_name === params.experiment.unique_name) {
         jobs.push(job);
       }

@@ -10,11 +10,13 @@ export class ProjectModel {
   public description?: string;
   public created_at: string;
   public updated_at: string;
+  public groups?: Array<string> = [];
+  public experiments?: Array<string> = [];
 }
 
 export class ProjectStateSchema {
-  ByUniqueNames: {[uniqueName: string]: ProjectModel};
+  byUniqueNames: {[uniqueName: string]: ProjectModel};
   uniqueNames: string[];
 }
 
-export const ProjectsEmptyState = {ByUniqueNames: {}, uniqueNames: []};
+export const ProjectsEmptyState = {byUniqueNames: {}, uniqueNames: []};

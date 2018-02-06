@@ -18,8 +18,8 @@ export class JobModel {
 }
 
 export class JobStateSchema {
-  ByUniqueNames: {[uniqueName: string]: JobModel};
+  byUniqueNames: {[uniqueName: string]: JobModel};
   uniqueNames: string[];
 }
 
-export const JobsEmptyState = {ByUniqueNames: {}, uniqueNames: []};
+export const JobsEmptyState = {byUniqueNames: {}, uniqueNames: []};

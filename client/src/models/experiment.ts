@@ -22,8 +22,8 @@ export class ExperimentModel {
 }
 
 export class ExperimentStateSchema {
-  ByUniqueNames: {[uniqueName: string]: ExperimentModel};
+  byUniqueNames: {[uniqueName: string]: ExperimentModel};
   uniqueNames: string[];
 }
 
-export const ExperimentsEmptyState = {ByUniqueNames: {}, uniqueNames: []};
+export const ExperimentsEmptyState = {byUniqueNames: {}, uniqueNames: []};
