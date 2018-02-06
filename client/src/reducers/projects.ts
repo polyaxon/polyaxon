@@ -4,12 +4,30 @@ import * as _ from 'lodash';
 
 import { ProjectSchema } from '../constants/schemas';
 import { ProjectAction, actionTypes } from '../actions/project';
-import { ProjectStateSchema, ProjectsEmptyState } from '../models/project';
-import { ExperimentStateSchema, ExperimentsEmptyState } from '../models/experiment';
+import { ProjectStateSchema, ProjectsEmptyState, ProjectModel } from '../models/project';
 
 export const projectsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ProjectAction) => {
     let newState = {...state};
+
+    let processProject = function(project: ProjectModel) {
+      let uniqueName = project.unique_name;
+      if (!_.includes(newState.uniqueNames, uniqueName)) {
+        newState.uniqueNames.push(uniqueName);
+      }
+      let normalizedProjects = normalize(project, ProjectSchema).entities.projects;
+      newState.byUniqueNames[uniqueName] = {
+        ...newState.byUniqueNames[uniqueName], ...normalizedProjects[uniqueName]
+      };
+      if (newState.byUniqueNames[uniqueName].experiments == null) {
+        newState.byUniqueNames[uniqueName].experiments = [];
+      }
+      if (newState.byUniqueNames[uniqueName].groups == null) {
+        newState.byUniqueNames[uniqueName].groups = [];
+      }
+      return newState;
+    };
+
     switch (action.type) {
       case actionTypes.CREATE_PROJECT:
         return {
@@ -36,41 +54,12 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
         };
       case actionTypes.RECEIVE_PROJECTS:
         for (let project of action.projects) {
-          if (!_.includes(newState.uniqueNames, project.unique_name)) {
-            newState.uniqueNames.push(project.unique_name);
-          }
-          newState.byUniqueNames[project.unique_name] = project;
+          newState = processProject(project);
         }
         return newState;
       case actionTypes.RECEIVE_PROJECT:
-        let uniqueName = action.project.unique_name;
-        if (!_.includes(newState.uniqueNames, uniqueName)) {
-          newState.uniqueNames.push(uniqueName);
-        }
-        let normalizedProjects = normalize(action.project, ProjectSchema).entities.projects;
-        newState.byUniqueNames[uniqueName] = normalizedProjects[uniqueName];
-        return newState;
+        return processProject(action.project);
+      default:
+        return state;
     }
-    return state;
-  };
-
-export const ProjectExperiments: Reducer<ExperimentStateSchema> =
-  (state: ExperimentStateSchema = ExperimentsEmptyState, action: ProjectAction) => {
-    switch (action.type) {
-      case actionTypes.RECEIVE_PROJECT:
-        var newState = {...state};
-        let normalizedProject = normalize(action.project, ProjectSchema);
-        let projectExperiments = normalizedProject.entities.experiments;
-        if (_.isNil(projectExperiments)) {
-          return {byUniqueNames: {}, uniqueNames: []};
-        }
-        for (let uniqueName of Object.keys(projectExperiments)) {
-          if (!_.includes(newState.uniqueNames, uniqueName)) {
-            newState.uniqueNames.push(uniqueName);
-            newState.byUniqueNames[uniqueName] = projectExperiments[uniqueName];
-          }
-        }
-        return newState;
-    }
-    return state;
   };
