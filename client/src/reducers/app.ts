@@ -1,10 +1,10 @@
 import { Action, combineReducers } from 'redux';
 import {reducer as formReducer } from 'redux-form';
 
-import { projectsReducer, ProjectExperiments } from './projects';
-import { experimentsReducer } from './experiments';
-import { groupsReducer } from './groups';
-import { jobsReducer } from './jobs';
+import { projectsReducer } from './projects';
+import { experimentsReducer, GroupExperimentsReducer, ProjectExperimentsReducer } from './experiments';
+import { groupsReducer, ProjectGroupsReducer } from './groups';
+import { ExperimentJobsReducer, jobsReducer } from './jobs';
 
 import { tokenReducer } from './token';
 import { AppState } from '../constants/types';
@@ -22,11 +22,11 @@ const combinedReducer = combineReducers<AppState>({
   form: formReducer
 });
 
-function ProjectSliceReducer(state: AppState, action: Action) {
+function SliceReducer(state: AppState, action: Action) {
   return {
-    projects: state.projects,
-    experiments: ProjectExperiments(state.experiments, action),
-    groups: state.groups,
+    projects: ProjectGroupsReducer(ProjectExperimentsReducer(state.projects, action), action),
+    groups: GroupExperimentsReducer(state.groups, action),
+    experiments: ExperimentJobsReducer(state.experiments, action),
     jobs: state.jobs,
     modal: state.modal,
     auth: state.auth,
@@ -37,7 +37,7 @@ function ProjectSliceReducer(state: AppState, action: Action) {
 
 function appReducer(state: AppState, action: Action) {
   let _state = combinedReducer(state, action);
-  _state = ProjectSliceReducer(_state, action);
+  _state = SliceReducer(_state, action);
   return _state;
 }
 
