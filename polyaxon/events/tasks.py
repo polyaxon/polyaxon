@@ -3,11 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from experiments.utils import get_experiment_logs_path, create_experiment_logs_path
+from experiments.utils import get_experiment_logs_path
 from polyaxon.settings import CeleryTasks
 from polyaxon.celery_api import app as celery_app
 from clusters.models import ClusterEvent
-from experiments.models import ExperimentJob
+from experiments.models import ExperimentJob, Experiment
 
 logger = logging.getLogger('polyaxon.tasks.events')
 
@@ -50,6 +50,8 @@ def handle_events_job_logs(experiment_name,
                            task_type=None,
                            task_idx=None):
     # must persist resources if logs according to the config
+    if not Experiment.objects.filter(uuid=experiment_uuid).exists():
+        return
     logger.debug('handling log event for {} {} {}'.format(
         experiment_uuid, job_uuid, persist))
     if task_type and task_idx:

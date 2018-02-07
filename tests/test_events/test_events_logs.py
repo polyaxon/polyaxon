@@ -26,7 +26,7 @@ class TestEventsLogsHandling(BaseTest):
             experiment = ExperimentFactory()
 
         params = dict(experiment_name=experiment.unique_name,
-                      experiment_uuid=uuid.uuid4().hex,
+                      experiment_uuid=experiment.uuid.hex,
                       job_uuid=uuid.uuid4().hex,
                       log_line='First test',
                       persist=True,
