@@ -86,4 +86,4 @@ def logout():
 def whoami():
     """Show current logged Polyaxon user."""
     user = PolyaxonClients().auth.get_user()
-    click.echo("Username: {username}, Email: {email}".format(**user.to_dict()))
+    click.echo("\nUsername: {username}, Email: {email}\n".format(**user.to_dict()))
