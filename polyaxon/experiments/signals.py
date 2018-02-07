@@ -94,10 +94,6 @@ def experiment_deleted(sender, **kwargs):
     # Delete outputs and logs
     delete_experiment_outputs(instance.unique_name)
     delete_experiment_logs(instance.unique_name)
-    # Remove any handlers
-    xp_logger = logging.getLogger(instance.unique_name)
-    while xp_logger.handlers:
-        xp_logger.handlers.pop()
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")

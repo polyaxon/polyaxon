@@ -47,14 +47,7 @@ def create_experiment_path(experiment_name, path):
 
 
 def create_experiment_logs_path(experiment_name):
-    values = experiment_name.split('.')
-    path = create_experiment_path(experiment_name, settings.LOGS_ROOT)
-
-    # Create file with permissions
-    path = os.path.join(path, values[-1])
-    open(path, 'w+')
-    os.chmod(path, 0o777)
-    return path
+    return create_experiment_path(experiment_name, settings.LOGS_ROOT)
 
 
 def create_experiment_outputs_path(experiment_name):

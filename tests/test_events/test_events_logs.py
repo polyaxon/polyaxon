@@ -38,15 +38,15 @@ class TestEventsLogsHandling(BaseTest):
         log_path = get_experiment_logs_path(experiment.unique_name)
         assert os.path.exists(log_path) is True
 
-        # Check the logger has a file handler
+        # Check the logger has no file handler, and one line created
         xp_logger = logging.getLogger(experiment.unique_name)
-        assert len(xp_logger.handlers) == 1
+        assert len(xp_logger.handlers) == 0
         assert self.file_line_count(log_path) == 1
 
         # Calling again the task should not reuse handler, and create a new line
         handle_events_job_logs(**params)
 
-        # Check the logger has a file handler
+        # Check the logger has no file handler, and one line created
         xp_logger = logging.getLogger(experiment.unique_name)
-        assert len(xp_logger.handlers) == 1
+        assert len(xp_logger.handlers) == 0
         assert self.file_line_count(log_path) == 2

@@ -30,6 +30,7 @@ class TestProjectUtils(BaseTest):
         with patch('experiments.tasks.build_experiment.apply_async') as _:
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
+        open(experiment_logs_path, '+w')
         project_logs_path = get_project_logs_path(self.project.unique_name)
         # Should be true, created by the signal
         assert os.path.exists(experiment_logs_path) is True
@@ -64,6 +65,7 @@ class TestExperimentGroupUtils(BaseTest):
                                            project=self.project,
                                            experiment_group=self.experiment_group)
         experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
+        open(experiment_logs_path, '+w')
         experiment_group_logs_path = get_experiment_group_logs_path(
             self.experiment_group.unique_name)
         # Should be true, created by the signal
