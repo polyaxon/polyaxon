@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { Tab, Tabs } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { ProjectModel } from '../models/project';
@@ -69,10 +70,14 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               </span>
             </div>
           </div>
-          <h4 className="polyaxon-header">Experiment groups</h4>
-          <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}/>
-          <h4 className="polyaxon-header">Independent Experiments</h4>
-          <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name}/>
+          <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="plx-nav">
+            <Tab eventKey={1} title="Independent Experiments">
+              <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name}/>
+            </Tab>
+            <Tab eventKey={2} title="Experiment groups">
+              <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}/>
+            </Tab>
+          </Tabs>
         </div>
       </div>
     );
