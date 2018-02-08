@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Tab, Nav, NavItem, Col, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { ProjectModel } from '../models/project';
@@ -22,6 +22,16 @@ export default class ProjectDetail extends React.Component<Props, Object> {
   }
 
   public render() {
+    let state = {experimentCurrentPage: 0};
+
+    const handleNextPage = () => {
+      state.experimentCurrentPage += 1;
+    };
+
+    const handlePreviousPage = () => {
+      state.experimentCurrentPage -= 1;
+    };
+
     const {project, onDelete, fetchData} = this.props;
     if (_.isNil(project)) {
       return (<div>Nothing</div>);
@@ -70,14 +80,32 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               </span>
             </div>
           </div>
-          <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" className="plx-nav">
-            <Tab eventKey={1} title="Independent Experiments">
-              <Experiments fetchData={() => null} user={project.user} projectName={project.unique_name}/>
-            </Tab>
-            <Tab eventKey={2} title="Experiment groups">
-              <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}/>
-            </Tab>
-          </Tabs>
+          <Tab.Container defaultActiveKey={1} id="project-tabs" className="plx-nav">
+            <Row className="clearfix">
+              <Col sm={12}>
+                <Nav bsStyle="tabs">
+                  <NavItem eventKey={1}>Independent Experiments</NavItem>
+                  <NavItem eventKey={2}>Experiment groups</NavItem>
+                </Nav>
+              </Col>
+              <Col sm={12}>
+                <Tab.Content animation={true}>
+                  <Tab.Pane eventKey={1} animation={true}>
+                    <Experiments
+                      fetchData={() => null}
+                      user={project.user}
+                      projectName={project.unique_name}
+                      currentPage={state.experimentCurrentPage}
+                    />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey={2} animation={true}>
+                     <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}/>
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
+
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ import { JobModel } from '../models/job';
 
 export interface Props {
   job: JobModel;
-  onDelete: (job: JobModel) => any;
+  onDelete: () => any;
   fetchData: () => any;
 }
 

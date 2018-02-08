@@ -10,6 +10,7 @@ import * as actions from '../actions/experiment';
 interface OwnProps {
   user: string;
   projectName: string;
+  currentPage: number;
   groupSequence?: string;
   fetchData?: () => any;
 }
@@ -46,7 +47,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
-    fetchData: () => dispatch(actions.fetchExperiments(ownProps.projectName, ownProps.groupSequence))
+    fetchData: () => dispatch(
+      actions.fetchExperiments(ownProps.projectName, ownProps.groupSequence, ownProps.currentPage))
   };
 }
 

@@ -80,7 +80,7 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   };
 }
 
-export function fetchExperiments(projectUniqueName: string, groupSequence?: string): any {
+export function fetchExperiments(projectUniqueName: string, groupSequence?: string, currentPage?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
     let url = `${BASE_URL}/${urlifyProjectName(projectUniqueName)}`;

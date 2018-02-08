@@ -9,9 +9,10 @@ import * as modalActions from '../actions/modal';
 import { modalTypes, modalPropsByTypes } from '../models/modal';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  let results = {projects: [], user: params.match.params.user};
+  let results = {projects: <ProjectModel[]> [], user: params.match.params.user};
   if (state.projects) {
-    results.projects = (<any> Object).values(state.projects.byUniqueNames).sort(sortByUpdatedAt);
+    results.projects = Object.keys(state.projects.byUniqueNames).map(
+      key => state.projects.byUniqueNames[key]).sort(sortByUpdatedAt);
   }
   return results;
 }

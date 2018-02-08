@@ -21,7 +21,7 @@ export function mapStateToProps(state: AppState, params: any)  {
 
 export interface DispatchProps {
   onDelete?: () => any;
-  fetchData?: (jobSequence: number) => any;
+  fetchData?: () => any;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
