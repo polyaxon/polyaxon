@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { Tab, Nav, NavItem, Col, Row } from 'react-bootstrap';
+import { Tab, TabPane, Nav, NavItem, Col, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { ProjectModel } from '../models/project';
@@ -89,8 +89,8 @@ export default class ProjectDetail extends React.Component<Props, Object> {
                 </Nav>
               </Col>
               <Col sm={12}>
-                <Tab.Content animation={true}>
-                  <Tab.Pane eventKey={1} animation={true}>
+                <Tab.Content animation={true} mountOnEnter={true}>
+                  <Tab.Pane eventKey={1}>
                     <Experiments
                       fetchData={() => null}
                       user={project.user}
@@ -98,7 +98,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
                       currentPage={state.experimentCurrentPage}
                     />
                   </Tab.Pane>
-                  <Tab.Pane eventKey={2} animation={true}>
+                  <Tab.Pane eventKey={2}>
                      <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}/>
                   </Tab.Pane>
                 </Tab.Content>
