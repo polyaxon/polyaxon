@@ -1,0 +1,37 @@
+---
+version: 1
+
+project:
+  name: quick-start
+
+settings:
+  concurrent_experiments: 2
+  search_method: SEQUENTIAL
+
+environment:
+  n_workers: 1
+  n_ps: 1
+
+declarations:
+  batch_size: 128
+  num_steps: 500
+  dropout: 0.25
+  num_epochs: 1
+  activation: relu
+
+matrix:
+  learning_rate:
+    linspace: 0.001:0.4:6
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
+  steps:
+    - apt-get -y update && apt-get -y install git
+    - pip3 install --no-cache-dir -U polyaxon-helper
+  cmd:  python3 model.py --batch_size={{ batch_size }} \
+                         --num_steps={{ num_steps }} \
+                         --learning_rate={{ learning_rate }} \
+                         --dropout={{ dropout }} \
+                         --num_epochs={{ num_epochs }} \
+                         --activation={{ activation }}
+                         --distributed=true

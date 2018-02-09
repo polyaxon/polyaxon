@@ -6,7 +6,7 @@ import tensorflow as tf
 
 from tensorflow.examples.tutorials.mnist import input_data
 
-from polyaxon_helper import get_outputs_path, send_metrics, get_log_level
+from polyaxon_helper import get_outputs_path, send_metrics, get_log_level, get_tf_config
 
 
 def set_logging(log_level=None):
@@ -109,6 +109,11 @@ if __name__ == '__main__':
         default='relu',
         type=str
     )
+    parser.add_argument(
+        '--distributed',
+        default=False,
+        type=bool
+    )
 
     args = parser.parse_args()
     arguments = args.__dict__
@@ -119,12 +124,17 @@ if __name__ == '__main__':
     dropout = arguments.pop('dropout')
     num_epochs = arguments.pop('num_epochs')
     activation = arguments.pop('activation')
+    distributed = arguments.pop('distributed')
     if activation == 'relu':
         activation = tf.nn.relu
     elif activation == 'sigmoid':
         activation = tf.nn.sigmoid
     elif activation == 'linear':
         activation = None
+
+    if distributed:
+        # Check if we need to export TF_CLUSTER
+        get_tf_config()
 
     estimator = tf.estimator.Estimator(
         get_model_fn(learning_rate=learning_rate, dropout=dropout, activation=activation),
