@@ -6,11 +6,12 @@ export interface Props {
 }
 
 export default class Login extends React.Component<Props, Object> {
+
   componentDidMount() {
     const {fetchToken, history} = this.props;
   }
 
-  public handleSubmit(event: any) {
+  handleSubmit = (event: any) => {
     event.preventDefault();
     let username = (document.getElementById('username') as HTMLInputElement).value;
     let password = (document.getElementById('password') as HTMLInputElement).value;
@@ -29,7 +30,7 @@ export default class Login extends React.Component<Props, Object> {
       <div className="row">
         <div className="col-md-6 col-md-offset-3 login-form">
           <div className="login">
-            <form onSubmit={this.handleSubmit.bind(this)}>
+            <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label>Username or Email</label>
                 <input type="text" className="form-control" id="username" placeholder="Username"/>
