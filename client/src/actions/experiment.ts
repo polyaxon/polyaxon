@@ -1,9 +1,10 @@
 import { Action } from 'redux';
-import * as _ from 'lodash';
+import * as url from 'url';
 
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 import { BASE_URL } from '../constants/api';
+import { get_offset } from '../constants/paginate';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
@@ -80,19 +81,27 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
   };
 }
 
-export function fetchExperiments(projectUniqueName: string, groupSequence?: string, currentPage?: number): any {
+export function fetchExperiments(projectUniqueName: string, currentPage: number, groupSequence?: string): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
-    let url = `${BASE_URL}/${urlifyProjectName(projectUniqueName)}`;
+    let experimentsUrl = `${BASE_URL}/${urlifyProjectName(projectUniqueName)}`;
     if (groupSequence) {
-      url += `/groups/${groupSequence}/experiments/`;
+      experimentsUrl += `/groups/${groupSequence}/experiments/`;
     } else {
-      url += `/experiments/`;
+      experimentsUrl += `/experiments/`;
     }
+    let filters: {[key: string]: number|boolean|string} = {};
     if (!groupSequence) {
-      url += '?independent=True';
+      filters.independent = true;
     }
-    return fetch(url, {
+    let offset = get_offset(currentPage);
+    if (offset != null) {
+      filters.offset = offset;
+    }
+    if (filters) {
+      experimentsUrl += url.format({ query: filters });
+    }
+    return fetch(experimentsUrl, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
