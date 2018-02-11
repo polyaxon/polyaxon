@@ -103,6 +103,7 @@ class ProjectSchema(Schema):
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
     num_experiments = fields.Int(allow_none=True)
+    num_independent_experiments = fields.Int(allow_none=True)
     num_experiment_groups = fields.Int(allow_none=True)
     has_tensorboard = fields.Bool(allow_none=True)
     has_notebook = fields.Bool(allow_none=True)
@@ -143,6 +144,7 @@ class ProjectConfig(BaseConfig):
                  updated_at=None,
                  num_experiments=0,
                  num_experiment_groups=0,
+                 num_independent_experiments=0,
                  experiments=None,
                  experiment_groups=None):
         self.name = name
@@ -157,6 +159,7 @@ class ProjectConfig(BaseConfig):
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
         self.num_experiments = num_experiments
+        self.num_independent_experiments = num_independent_experiments
         self.num_experiment_groups = num_experiment_groups
         self.experiments = experiments
         self.experiment_groups = experiment_groups

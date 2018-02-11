@@ -26,6 +26,7 @@ class TestProjectConfigs(TestCase):
             'has_code': True,
             'has_tensorboard': True,
             'num_experiments': 0,
+            'num_independent_experiments': 0,
             'num_experiment_groups': 0,
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat()
