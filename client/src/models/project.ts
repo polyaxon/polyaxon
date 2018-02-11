@@ -4,6 +4,7 @@ export class ProjectModel {
   public user: string;
   public num_experiments: number;
   public num_experiment_groups: number;
+  public num_independent_experiments: number;
   public unique_name: string;
   public is_public: boolean;
   public deleted?: boolean;
