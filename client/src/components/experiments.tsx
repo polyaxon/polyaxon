@@ -1,13 +1,15 @@
 import * as React from 'react';
 import * as _ from 'lodash';
+import { Pager } from 'react-bootstrap';
 
 import Experiment from './experiment';
 import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
-import { Pager } from 'react-bootstrap';
+import { paginate, paginateNext, paginatePrevious } from '../constants/paginate';
 
 export interface Props {
   experiments: ExperimentModel[];
+  count: number;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete: (experiment: ExperimentModel) => actions.ExperimentAction;
@@ -61,10 +63,22 @@ export default class Experiments extends React.Component<Props, State> {
                 </li>)}
           </ul>
         </div>
+        {paginate(this.props.count) &&
         <Pager>
-          <Pager.Item onClick={this.handlePreviousPage}>Previous</Pager.Item>{' '}
-          <Pager.Item onClick={this.handleNextPage}>Next</Pager.Item>
+          <Pager.Item
+            onClick={this.handlePreviousPage}
+            disabled={!paginatePrevious(this.state.currentPage)}
+          >
+            Previous
+          </Pager.Item>{' '}
+          <Pager.Item
+            onClick={this.handleNextPage}
+            disabled={!paginateNext(this.state.currentPage, this.props.count)}
+          >
+            Next
+          </Pager.Item>
         </Pager>
+        }
       </div>
     );
   }
