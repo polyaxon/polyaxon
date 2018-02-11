@@ -76,7 +76,9 @@ export const UserProjectsReducer: Reducer<UserStateSchema> =
         newState.userNames.push(username);
         newState.byUserNames[username] = new UserModel();
       }
-      newState.byUserNames[username].projects.push(uniqueName);
+      if (!_.includes(newState.byUserNames[username].projects, uniqueName)) {
+        newState.byUserNames[username].projects.push(uniqueName);
+      }
       if (count != null) {
         newState.byUserNames[username].num_projects = count;
       }
