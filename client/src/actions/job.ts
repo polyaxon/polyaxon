@@ -1,5 +1,4 @@
 import { Action } from 'redux';
-import * as _ from 'lodash';
 
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { JobModel } from '../models/job';
@@ -90,7 +89,8 @@ export function receiveJobsActionCreator(jobs: JobModel[]): ReceiveJobsAction {
 export function fetchJobs(projectUniqueName: string, experimentSequence: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestJobsActionCreator());
-    return fetch(BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs', {
+    return fetch(
+      BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs', {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
@@ -105,7 +105,8 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number)
 export function fetchJob(user: string, projectName: string, experimentSequence: number, jobSequence: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestJobActionCreator());
-    return fetch(BASE_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobSequence, {
+    return fetch(
+      BASE_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobSequence, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
