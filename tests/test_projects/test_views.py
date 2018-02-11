@@ -14,6 +14,7 @@ from projects.models import (
 from projects.serializers import (
     ProjectSerializer,
     ExperimentGroupSerializer,
+    ProjectDetailSerializer,
 )
 from factories.factory_projects import (
     ProjectFactory,
@@ -111,7 +112,7 @@ class TestProjectListViewV1(BaseViewTest):
 
 
 class TestProjectDetailViewV1(BaseViewTest):
-    serializer_class = ProjectSerializer
+    serializer_class = ProjectDetailSerializer
     model_class = Project
     factory_class = ProjectFactory
     HAS_AUTH = True

@@ -105,8 +105,10 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class ProjectDetailSerializer(ProjectSerializer):
-    experiments = ExperimentSerializer(many=True)
-    experiment_groups = ExperimentGroupSerializer(many=True)
+    num_independent_experiments = fields.SerializerMethodField()
 
     class Meta(ProjectSerializer.Meta):
-        fields = ProjectSerializer.Meta.fields + ('experiments', 'experiment_groups',)
+        fields = ProjectSerializer.Meta.fields + ('num_independent_experiments',)
+
+    def get_num_independent_experiments(self, obj):
+        return obj.experiments.filter(experiment_group__isnull=True).count()

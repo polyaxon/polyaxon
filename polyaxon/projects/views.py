@@ -20,7 +20,9 @@ from projects.permissions import (
 from projects.serializers import (
     ProjectSerializer,
     ExperimentGroupSerializer,
-    ExperimentGroupDetailSerializer)
+    ExperimentGroupDetailSerializer,
+    ProjectDetailSerializer,
+)
 from projects.tasks import start_tensorboard, stop_tensorboard
 
 
@@ -54,7 +56,7 @@ class ProjectListView(ListAPIView):
 
 class ProjectDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+    serializer_class = ProjectDetailSerializer
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
 

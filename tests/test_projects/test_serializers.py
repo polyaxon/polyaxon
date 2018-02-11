@@ -135,8 +135,8 @@ class TestProjectDetailSerializer(BaseTest):
     factory_class = ProjectFactory
     expected_keys = {
         'uuid', 'unique_name', 'name', 'description', 'user', 'description', 'created_at',
-        'updated_at', 'is_public', 'experiments', 'experiment_groups', 'has_code',
-        'has_tensorboard', 'has_notebook', 'num_experiment_groups', 'num_experiments'}
+        'updated_at', 'is_public', 'has_code', 'has_tensorboard', 'has_notebook',
+        'num_experiment_groups', 'num_experiments', 'num_independent_experiments'}
 
     def setUp(self):
         super().setUp()
@@ -151,10 +151,10 @@ class TestProjectDetailSerializer(BaseTest):
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('user') == self.obj1.user.username
-        assert len(data.pop('experiments')) == self.obj1.experiments.count()
-        assert len(data.pop('experiment_groups')) == self.obj1.experiment_groups.count()
         assert data.pop('num_experiments') == self.obj1.experiments.count()
         assert data.pop('num_experiment_groups') == self.obj1.experiment_groups.count()
+        assert data.pop('num_independent_experiments') == self.obj1.experiments.filter(
+            experiment_group__isnull=True).count()
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
