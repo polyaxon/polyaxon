@@ -7,6 +7,7 @@ import { GroupStateSchema, GroupsEmptyState } from '../models/group';
 import { TokenStateSchema, TokenEmptyState } from '../models/token';
 import { ModalStateSchema } from '../models/modal';
 import { UserEmptyState, UserModel } from '../models/user';
+import { PaginationStateSchema } from '../models/pagination';
 
 export interface AppState {
   projects: ProjectStateSchema;
@@ -17,6 +18,7 @@ export interface AppState {
   auth: TokenStateSchema;
   user: UserModel;
   form: FormReducer;
+  pagination: PaginationStateSchema;
 }
 
 export const AppEmptyState = {

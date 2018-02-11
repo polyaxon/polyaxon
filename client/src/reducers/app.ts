@@ -10,6 +10,7 @@ import { tokenReducer } from './token';
 import { AppState } from '../constants/types';
 import { modalReducer } from '../reducers/modal';
 import { userReducer } from '../reducers/user';
+import { PaginationReducer } from '../reducers/pagination';
 
 const combinedReducer = combineReducers<AppState>({
   projects: projectsReducer,
@@ -19,7 +20,8 @@ const combinedReducer = combineReducers<AppState>({
   modal: modalReducer,
   auth: tokenReducer,
   user: userReducer,
-  form: formReducer
+  form: formReducer,
+  pagination: PaginationReducer
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -31,7 +33,8 @@ function SliceReducer(state: AppState, action: Action) {
     modal: state.modal,
     auth: state.auth,
     user: state.user,
-    form: state.form
+    form: state.form,
+    pagination: state.pagination
   };
 }
 
