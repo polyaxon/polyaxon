@@ -1,9 +1,11 @@
-import { Action, Dispatch } from 'redux';
-import * as _ from 'lodash';
+import { Action } from 'redux';
+import * as url from 'url';
 
 import { ProjectModel } from '../models/project';
 import { BASE_URL } from '../constants/api';
 import { handleAuthError } from '../constants/utils';
+import { getOffset } from '../constants/paginate';
+import * as paginationActions from '../actions/pagination';
 
 export enum actionTypes {
   CREATE_PROJECT = 'CREATE_PROJECT',
@@ -28,6 +30,7 @@ export interface DeleteProjectAction extends Action {
 export interface ReceiveProjectsAction extends Action {
   type: actionTypes.RECEIVE_PROJECTS;
   projects: ProjectModel[];
+  count: number;
 }
 
 export interface RequestProjectsAction extends Action {
@@ -80,10 +83,11 @@ export function receiveProjectActionCreator(project: ProjectModel): CreateUpdate
   };
 }
 
-export function receiveProjectsActionCreator(projects: ProjectModel[]): ReceiveProjectsAction {
+export function receiveProjectsActionCreator(projects: ProjectModel[], count: number): ReceiveProjectsAction {
   return {
     type: actionTypes.RECEIVE_PROJECTS,
-    projects
+    projects,
+    count,
   };
 }
 
@@ -116,22 +120,27 @@ export function deleteProject(project: ProjectModel): any {
       }
     })
       .then(response => handleAuthError(response, dispatch))
-      .then(() => dispatch(receiveProjectsActionCreator([])));
+      .then(() => dispatch(receiveProjectsActionCreator([], 0)));
   };
 }
 
-export function fetchProjects(user: string): any {
+export function fetchProjects(user: string, currentPage?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectsActionCreator());
-    return fetch(BASE_URL + `/${user}`, {
+    paginationActions.paginateProject(dispatch, currentPage);
+    let projectsUrl = BASE_URL + `/${user}`;
+    let offset = getOffset(currentPage);
+    if (offset != null) {
+      projectsUrl += url.format({query: {offset: offset}});
+    }
+    return fetch(projectsUrl, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => json.results)
-      .then(json => dispatch(receiveProjectsActionCreator(json)));
+      .then(json => dispatch(receiveProjectsActionCreator(json.results, json.count)));
   };
 }
 
