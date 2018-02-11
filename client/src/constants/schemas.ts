@@ -27,3 +27,10 @@ export const ProjectSchema = new schema.Entity(
   {
     idAttribute: 'unique_name'
   });
+
+export const UserSchema = new schema.Entity(
+  'users',
+  {},
+  {
+    idAttribute: 'username'
+  });

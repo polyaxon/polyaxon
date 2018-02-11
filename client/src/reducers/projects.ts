@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { ProjectSchema } from '../constants/schemas';
 import { ProjectAction, actionTypes } from '../actions/project';
 import { ProjectStateSchema, ProjectsEmptyState, ProjectModel } from '../models/project';
+import { UserEmptyState, UserModel, UserStateSchema } from '../models/user';
 
 export const projectsReducer: Reducer<ProjectStateSchema> =
   (state: ProjectStateSchema = ProjectsEmptyState, action: ProjectAction) => {
@@ -59,6 +60,37 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
         return newState;
       case actionTypes.RECEIVE_PROJECT:
         return processProject(action.project);
+      default:
+        return state;
+    }
+  };
+
+export const UserProjectsReducer: Reducer<UserStateSchema> =
+  (state: UserStateSchema = UserEmptyState, action: ProjectAction) => {
+    let newState = {...state};
+
+    let processProject = function (project: ProjectModel, count?: number) {
+      let username = project.user;
+      let uniqueName = project.unique_name;
+      if (!_.includes(newState.userNames, username)) {
+        newState.userNames.push(username);
+        newState.byUserNames[username] = new UserModel();
+      }
+      newState.byUserNames[username].projects.push(uniqueName);
+      if (count != null) {
+        newState.byUserNames[username].num_projects = count;
+      }
+      return newState;
+    };
+
+    switch (action.type) {
+      case actionTypes.RECEIVE_PROJECT:
+        return processProject(action.project);
+      case actionTypes.RECEIVE_PROJECTS:
+        for (let experiment of action.projects) {
+          newState = processProject(experiment, action.count);
+        }
+        return newState;
       default:
         return state;
     }

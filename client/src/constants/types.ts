@@ -6,7 +6,7 @@ import { JobStateSchema, JobsEmptyState } from '../models/job';
 import { GroupStateSchema, GroupsEmptyState } from '../models/group';
 import { TokenStateSchema, TokenEmptyState } from '../models/token';
 import { ModalStateSchema } from '../models/modal';
-import { UserEmptyState, UserModel } from '../models/user';
+import { UserEmptyState, UserStateSchema } from '../models/user';
 import { PaginationStateSchema } from '../models/pagination';
 
 export interface AppState {
@@ -16,7 +16,7 @@ export interface AppState {
   jobs: JobStateSchema;
   modal: ModalStateSchema;
   auth: TokenStateSchema;
-  user: UserModel;
+  users: UserStateSchema;
   form: FormReducer;
   pagination: PaginationStateSchema;
 }
