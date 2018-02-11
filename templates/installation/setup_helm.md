@@ -45,7 +45,7 @@ Make sure you have at least version 2.5!
 If you need to upgrade helm, you can run the following command
 
 ```bash
-$ helm --init upgrade
+$ helm init --upgrade
 ```
 
 It's time to [deploy polyaxon](deploy_polyaxon)
