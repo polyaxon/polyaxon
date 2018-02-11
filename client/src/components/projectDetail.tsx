@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { Tab, TabPane, Nav, NavItem, Col, Row } from 'react-bootstrap';
+import { Tab, Nav, NavItem, Col, Row, Pager } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { ProjectModel } from '../models/project';
@@ -11,27 +11,38 @@ import { getUserUrl } from '../constants/utils';
 
 export interface Props {
   project: ProjectModel;
-  onDelete: (project: ProjectModel) => any;
-  fetchData: () => any;
+  onDelete: (project: ProjectModel) => undefined;
+  fetchData: () => undefined;
 }
 
-export default class ProjectDetail extends React.Component<Props, Object> {
+interface State {
+  experimentCurrentPage: number;
+}
+
+export default class ProjectDetail extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {experimentCurrentPage: 1};
+  }
+
   componentDidMount() {
     const {project, onDelete, fetchData} = this.props;
     fetchData();
   }
 
+  handleNextPage = () => {
+      this.setState((prevState, props) => ({
+        experimentCurrentPage: prevState.experimentCurrentPage + 1,
+      }));
+  }
+
+  handlePreviousPage = () => {
+      this.setState((prevState, props) => ({
+        experimentCurrentPage: prevState.experimentCurrentPage - 1,
+      }));
+  }
+
   public render() {
-    let state = {experimentCurrentPage: 0};
-
-    const handleNextPage = () => {
-      state.experimentCurrentPage += 1;
-    };
-
-    const handlePreviousPage = () => {
-      state.experimentCurrentPage -= 1;
-    };
-
     const {project, onDelete, fetchData} = this.props;
     if (_.isNil(project)) {
       return (<div>Nothing</div>);
@@ -92,14 +103,17 @@ export default class ProjectDetail extends React.Component<Props, Object> {
                 <Tab.Content animation={true} mountOnEnter={true}>
                   <Tab.Pane eventKey={1}>
                     <Experiments
-                      fetchData={() => null}
                       user={project.user}
                       projectName={project.unique_name}
-                      currentPage={state.experimentCurrentPage}
+                      currentPage={this.state.experimentCurrentPage}
                     />
+                    <Pager>
+                      <Pager.Item onClick={this.handlePreviousPage}>Previous</Pager.Item>{' '}
+                      <Pager.Item onClick={this.handleNextPage}>Next</Pager.Item>
+                    </Pager>
                   </Tab.Pane>
                   <Tab.Pane eventKey={2}>
-                     <Groups fetchData={() => null} user={project.user} projectName={project.unique_name}/>
+                    <Groups user={project.user} projectName={project.unique_name}/>
                   </Tab.Pane>
                 </Tab.Content>
               </Col>

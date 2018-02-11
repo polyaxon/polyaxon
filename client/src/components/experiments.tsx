@@ -3,23 +3,31 @@ import * as _ from 'lodash';
 
 import Experiment from './experiment';
 import { ExperimentModel } from '../models/experiment';
+import * as actions from '../actions/experiment';
 
 export interface Props {
   experiments: ExperimentModel[];
-  onCreate: (experiment: ExperimentModel) => any;
-  onUpdate: (experiment: ExperimentModel) => any;
-  onDelete: (experiment: ExperimentModel) => any;
-  fetchData: () => any;
+  currentPage: number;
+  onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
+  onUpdate: (experiment: ExperimentModel) => actions.ExperimentAction;
+  onDelete: (experiment: ExperimentModel) => actions.ExperimentAction;
+  fetchData: () => actions.ExperimentAction;
 }
 
 export default class Experiments extends React.Component<Props, Object> {
   componentDidMount() {
-    const {experiments, onCreate, onUpdate, onDelete, fetchData} = this.props;
+    const {experiments, currentPage, onCreate, onUpdate, onDelete, fetchData} = this.props;
     fetchData();
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.currentPage !== prevProps.currentPage) {
+      this.props.fetchData();
+    }
+  }
+
   public render() {
-    const {experiments, onCreate, onUpdate, onDelete, fetchData} = this.props;
+    const {experiments, currentPage, onCreate, onUpdate, onDelete, fetchData} = this.props;
     return (
       <div className="row">
         <div className="col-md-12">

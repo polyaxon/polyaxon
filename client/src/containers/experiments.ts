@@ -26,20 +26,22 @@ export function mapStateToProps(state: AppState, ownProps: any) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
       });
   } else {
-    state.projects.byUniqueNames[ownProps.projectName].experiments.forEach(
+    state.projects.byUniqueNames[ownProps.projectName].experiments.filter(
+      (experiment) => state.experiments.byUniqueNames[experiment].experiment_group_name == null
+    ).forEach(
       function (experiment: string, idx: number) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
       });
   }
 
-  return {experiments: experiments.sort(sortByUpdatedAt)};
+  return {experiments: experiments.sort(sortByUpdatedAt), currentPage: ownProps.currentPage};
 }
 
 export interface DispatchProps {
-  onCreate?: (experiment: ExperimentModel) => any;
-  onDelete?: (experiment: ExperimentModel) => any;
-  onUpdate?: (experiment: ExperimentModel) => any;
-  fetchData?: () => any;
+  onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
+  onDelete?: (experiment: ExperimentModel) => actions.ExperimentAction;
+  onUpdate?: (experiment: ExperimentModel) => actions.ExperimentAction;
+  fetchData?: () => actions.ExperimentAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -48,7 +50,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
     fetchData: () => dispatch(
-      actions.fetchExperiments(ownProps.projectName, ownProps.groupSequence, ownProps.currentPage))
+      actions.fetchExperiments(ownProps.projectName, ownProps.currentPage, ownProps.groupSequence))
   };
 }
 
