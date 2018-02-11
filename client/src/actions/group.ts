@@ -1,9 +1,11 @@
 import { Action } from 'redux';
-import * as _ from 'lodash';
+import * as url from 'url';
 
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { GroupModel } from '../models/group';
 import { BASE_URL } from '../constants/api';
+import * as paginationActions from '../actions/pagination';
+import { getOffset } from '../constants/paginate';
 
 export enum actionTypes {
   CREATE_GROUP = 'CREATE_GROUP',
@@ -81,10 +83,16 @@ export function receiveGroupActionCreator(group: GroupModel): CreateUpdateReceiv
   };
 }
 
-export function fetchGroups(projectUniqueName: string): any {
+export function fetchGroups(projectUniqueName: string, currentPage?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
-    return fetch(BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/', {
+    paginationActions.paginateGroup(dispatch, currentPage);
+    let groupsUrl = BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/';
+    let offset = getOffset(currentPage);
+    if (offset != null) {
+      groupsUrl += url.format({query: {offset: offset}});
+    }
+    return fetch(groupsUrl, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
