@@ -1,6 +1,6 @@
 export const PAGE_SIZE = 30;
 
-export function get_offset(page?: number): number | null {
+export function getOffset(page?: number): number | null {
   if (page == null || page <= 1) {
     return null;
   }
@@ -21,4 +21,10 @@ export function paginateNext(currentPage: number, count: number): boolean {
 
 export function paginatePrevious(currentPage: number): boolean {
   return currentPage > 1;
+}
+
+export function getPaginatedSlice(list: Array<any>, currentPage: number): Array<any> {
+  let start = getOffset(currentPage) || 0;
+  let end = start + PAGE_SIZE;
+  return list.slice(start, end);
 }

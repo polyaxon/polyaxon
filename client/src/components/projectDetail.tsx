@@ -80,11 +80,7 @@ export default class ProjectDetail extends React.Component<Props, Object> {
               <Col sm={12}>
                 <Tab.Content animation={true} mountOnEnter={true}>
                   <Tab.Pane eventKey={1}>
-                    <Experiments
-                      user={project.user}
-                      projectName={project.unique_name}
-                      count={project.num_independent_experiments}
-                    />
+                    <Experiments user={project.user} projectName={project.unique_name}/>
                   </Tab.Pane>
                   <Tab.Pane eventKey={2}>
                     <Groups user={project.user} projectName={project.unique_name}/>

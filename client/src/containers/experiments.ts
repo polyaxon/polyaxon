@@ -1,17 +1,17 @@
 import { connect, Dispatch } from 'react-redux';
 
-import { getGroupName, sortByUpdatedAt } from '../constants/utils';
+import { getGroupName } from '../constants/utils';
 import { AppState } from '../constants/types';
 import Experiments from '../components/experiments';
 import { ExperimentModel } from '../models/experiment';
 
 import * as actions from '../actions/experiment';
+import { getPaginatedSlice } from '../constants/paginate';
 
 interface OwnProps {
   user: string;
   projectName: string;
   groupSequence?: string;
-  count: number;
   fetchData?: () => any;
 }
 
@@ -20,21 +20,30 @@ export function mapStateToProps(state: AppState, ownProps: any) {
                   getGroupName(ownProps.projectName, ownProps.groupSequence) :
                   null;
   let experiments: ExperimentModel[] = [];
+  let count = 0;
   if (groupName != null) {
-    state.groups.byUniqueNames[groupName].experiments.forEach(
+    let group = state.groups.byUniqueNames[groupName];
+    count = group.num_experiments;
+    let experimentNames = group.experiments;
+    experimentNames = getPaginatedSlice(experimentNames, state.pagination.experimentCurrentPage);
+    experimentNames.forEach(
       function (experiment: string, idx: number) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
       });
   } else {
-    state.projects.byUniqueNames[ownProps.projectName].experiments.filter(
+    let project = state.projects.byUniqueNames[ownProps.projectName];
+    count = project.num_independent_experiments;
+    let experimentNames = project.experiments.filter(
       (experiment) => state.experiments.byUniqueNames[experiment].experiment_group_name == null
-    ).forEach(
+    );
+    experimentNames = getPaginatedSlice(experimentNames, state.pagination.experimentCurrentPage);
+    experimentNames.forEach(
       function (experiment: string, idx: number) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
       });
   }
 
-  return {experiments: experiments.sort(sortByUpdatedAt), count: ownProps.count};
+  return {experiments: experiments, count: count};
 }
 
 export interface DispatchProps {

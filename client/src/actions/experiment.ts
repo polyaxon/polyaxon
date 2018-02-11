@@ -4,7 +4,8 @@ import * as url from 'url';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
 import { BASE_URL } from '../constants/api';
-import { get_offset } from '../constants/paginate';
+import { getOffset } from '../constants/paginate';
+import * as paginationActions from '../actions/pagination';
 
 export enum actionTypes {
   CREATE_EXPERIMENT = 'CREATE_EXPERIMENT',
@@ -84,6 +85,7 @@ export function receiveExperimentActionCreator(experiment: ExperimentModel): Cre
 export function fetchExperiments(projectUniqueName: string, currentPage?: number, groupSequence?: string): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
+    paginationActions.paginateExperiment(dispatch, currentPage);
     let experimentsUrl = `${BASE_URL}/${urlifyProjectName(projectUniqueName)}`;
     if (groupSequence) {
       experimentsUrl += `/groups/${groupSequence}/experiments/`;
@@ -94,7 +96,7 @@ export function fetchExperiments(projectUniqueName: string, currentPage?: number
     if (!groupSequence) {
       filters.independent = true;
     }
-    let offset = get_offset(currentPage);
+    let offset = getOffset(currentPage);
     if (offset != null) {
       filters.offset = offset;
     }
