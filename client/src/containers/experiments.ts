@@ -11,6 +11,7 @@ interface OwnProps {
   user: string;
   projectName: string;
   groupSequence?: string;
+  count: number;
   fetchData?: () => any;
 }
 
@@ -33,7 +34,7 @@ export function mapStateToProps(state: AppState, ownProps: any) {
       });
   }
 
-  return {experiments: experiments.sort(sortByUpdatedAt)};
+  return {experiments: experiments.sort(sortByUpdatedAt), count: ownProps.count};
 }
 
 export interface DispatchProps {

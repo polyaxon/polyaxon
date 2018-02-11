@@ -107,7 +107,12 @@ export default class GroupDetail extends React.Component<Props, Object> {
             </div>
           </div>
           <h4 className="polyaxon-header">Experiments</h4>
-          <Experiments user={group.user} projectName={group.project_name} groupSequence={group.sequence}/>
+          <Experiments
+            user={group.user}
+            projectName={group.project_name}
+            groupSequence={group.sequence}
+            count={group.num_experiments}
+          />
         </div>
       </div>
     );
