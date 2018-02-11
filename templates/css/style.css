@@ -13,9 +13,13 @@
 }
 
 .md-sidebar__inner {
-    border-right: .1rem solid rgba(0,0,0,.07);
+    border-right: .1rem solid rgba(0, 0, 0, .07);
 }
 
 .md-nav--secondary {
     border-left: .4rem solid rgba(95, 143, 165, 0.92);
+}
+
+.md-typeset .codehilite, .md-typeset .highlight {
+    background-color: hsla(0, 0%, 93%, .5);
 }
