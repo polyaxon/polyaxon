@@ -9,18 +9,17 @@ import { getProjectUrl, getUserUrl, splitProjectName } from '../constants/utils'
 
 export interface Props {
   group: GroupModel;
-  onDelete: () => any;
-  fetchData: () => any;
+  onDelete: () => undefined;
+  fetchData: () => undefined;
 }
 
 export default class GroupDetail extends React.Component<Props, Object> {
   componentDidMount() {
-    const {group, onDelete, fetchData} = this.props;
-    fetchData();
+    this.props.fetchData();
   }
 
   public render() {
-    const {group, onDelete, fetchData} = this.props;
+    const group = this.props.group;
     if (_.isNil(group)) {
       return (<div>Nothing</div>);
     }
@@ -108,12 +107,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
             </div>
           </div>
           <h4 className="polyaxon-header">Experiments</h4>
-          <Experiments
-            fetchData={() => null}
-            user={group.user}
-            projectName={group.project_name}
-            groupSequence={group.sequence}
-          />
+          <Experiments user={group.user} projectName={group.project_name} groupSequence={group.sequence}/>
         </div>
       </div>
     );

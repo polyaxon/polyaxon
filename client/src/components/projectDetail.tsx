@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { Tab, Nav, NavItem, Col, Row, Pager } from 'react-bootstrap';
+import { Tab, Nav, NavItem, Col, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { ProjectModel } from '../models/project';
@@ -15,35 +15,13 @@ export interface Props {
   fetchData: () => undefined;
 }
 
-interface State {
-  experimentCurrentPage: number;
-}
-
-export default class ProjectDetail extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {experimentCurrentPage: 1};
-  }
-
+export default class ProjectDetail extends React.Component<Props, Object> {
   componentDidMount() {
-    const {project, onDelete, fetchData} = this.props;
-    fetchData();
-  }
-
-  handleNextPage = () => {
-      this.setState((prevState, props) => ({
-        experimentCurrentPage: prevState.experimentCurrentPage + 1,
-      }));
-  }
-
-  handlePreviousPage = () => {
-      this.setState((prevState, props) => ({
-        experimentCurrentPage: prevState.experimentCurrentPage - 1,
-      }));
+    this.props.fetchData();
   }
 
   public render() {
-    const {project, onDelete, fetchData} = this.props;
+    const project = this.props.project;
     if (_.isNil(project)) {
       return (<div>Nothing</div>);
     }
@@ -102,15 +80,7 @@ export default class ProjectDetail extends React.Component<Props, State> {
               <Col sm={12}>
                 <Tab.Content animation={true} mountOnEnter={true}>
                   <Tab.Pane eventKey={1}>
-                    <Experiments
-                      user={project.user}
-                      projectName={project.unique_name}
-                      currentPage={this.state.experimentCurrentPage}
-                    />
-                    <Pager>
-                      <Pager.Item onClick={this.handlePreviousPage}>Previous</Pager.Item>{' '}
-                      <Pager.Item onClick={this.handleNextPage}>Next</Pager.Item>
-                    </Pager>
+                    <Experiments user={project.user} projectName={project.unique_name}/>
                   </Tab.Pane>
                   <Tab.Pane eventKey={2}>
                     <Groups user={project.user} projectName={project.unique_name}/>

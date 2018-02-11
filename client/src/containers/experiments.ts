@@ -10,7 +10,6 @@ import * as actions from '../actions/experiment';
 interface OwnProps {
   user: string;
   projectName: string;
-  currentPage: number;
   groupSequence?: string;
   fetchData?: () => any;
 }
@@ -34,14 +33,14 @@ export function mapStateToProps(state: AppState, ownProps: any) {
       });
   }
 
-  return {experiments: experiments.sort(sortByUpdatedAt), currentPage: ownProps.currentPage};
+  return {experiments: experiments.sort(sortByUpdatedAt)};
 }
 
 export interface DispatchProps {
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   onDelete?: (experiment: ExperimentModel) => actions.ExperimentAction;
   onUpdate?: (experiment: ExperimentModel) => actions.ExperimentAction;
-  fetchData?: () => actions.ExperimentAction;
+  fetchData?: (currentPage?: number) => actions.ExperimentAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, ownProps: OwnProps): DispatchProps {
@@ -49,8 +48,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperimentActionCreator(experiment)),
     onDelete: (experiment: ExperimentModel) => dispatch(actions.deleteExperimentActionCreator(experiment)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentActionCreator(experiment)),
-    fetchData: () => dispatch(
-      actions.fetchExperiments(ownProps.projectName, ownProps.currentPage, ownProps.groupSequence))
+    fetchData: (currentPage?: number) => dispatch(
+      actions.fetchExperiments(ownProps.projectName, currentPage, ownProps.groupSequence))
   };
 }
 
