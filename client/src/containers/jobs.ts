@@ -1,28 +1,32 @@
 import { connect, Dispatch } from 'react-redux';
 
-import { getExperimentIndexName, sortByUpdatedAt } from '../constants/utils';
+import { getExperimentIndexName } from '../constants/utils';
 import { AppState } from '../constants/types';
 import Jobs from '../components/jobs';
 import { JobModel } from '../models/job';
 
 import * as actions from '../actions/job';
+import { getPaginatedSlice } from '../constants/paginate';
 
 export function mapStateToProps(state: AppState, params: any) {
-  let experimentName = getExperimentIndexName(params.experiment.unique_name)
+  let experimentName = getExperimentIndexName(params.experiment.unique_name);
   let jobs: JobModel[] = [];
-  state.experiments.byUniqueNames[experimentName].jobs.forEach(
+  let experiment = state.experiments.byUniqueNames[experimentName];
+  let jobNames = experiment.jobs;
+  jobNames = getPaginatedSlice(jobNames, state.pagination.jobCurrentPage);
+  jobNames.forEach(
     function (job: string, idx: number) {
       jobs.push(state.jobs.byUniqueNames[job]);
     });
 
-  return {jobs: jobs.sort(sortByUpdatedAt)};
+  return {jobs: jobs, count: experiment.num_jobs};
 }
 
 export interface DispatchProps {
-  onCreate?: (job: JobModel) => any;
-  onDelete?: (job: JobModel) => any;
-  onUpdate?: (job: JobModel) => any;
-  fetchData?: () => any;
+  onCreate?: (job: JobModel) => actions.JobAction;
+  onDelete?: (job: JobModel) => actions.JobAction;
+  onUpdate?: (job: JobModel) => actions.JobAction;
+  fetchData?: (currentPage?: number) => actions.JobAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
@@ -30,7 +34,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
     onCreate: (job: JobModel) => dispatch(actions.createJobActionCreator(job)),
     onDelete: (job: JobModel) => dispatch(actions.deleteJobActionCreator(job)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
-    fetchData: () => dispatch(actions.fetchJobs(params.experiment.project_name, params.experiment.sequence))
+    fetchData: (currentPage?: number) => dispatch(
+      actions.fetchJobs(params.experiment.project_name, params.experiment.sequence, currentPage))
   };
 }
 

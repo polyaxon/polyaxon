@@ -1,8 +1,11 @@
 import { Action } from 'redux';
+import * as url from 'url';
 
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { JobModel } from '../models/job';
 import { BASE_URL } from '../constants/api';
+import * as paginationActions from '../actions/pagination';
+import { getOffset } from '../constants/paginate';
 
 export enum actionTypes {
   CREATE_JOB = 'CREATE_JOB',
@@ -86,11 +89,18 @@ export function receiveJobsActionCreator(jobs: JobModel[]): ReceiveJobsAction {
   };
 }
 
-export function fetchJobs(projectUniqueName: string, experimentSequence: number): any {
+export function fetchJobs(projectUniqueName: string, experimentSequence: number, currentPage?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestJobsActionCreator());
+    paginationActions.paginateJob(dispatch, currentPage);
+    let jobsUrl =
+      BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs';
+    let offset = getOffset(currentPage);
+    if (offset != null) {
+      jobsUrl += url.format({query: {offset: offset}});
+    }
     return fetch(
-      BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs', {
+      jobsUrl, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

@@ -1,6 +1,5 @@
 import { connect, Dispatch } from 'react-redux';
 
-import { sortByUpdatedAt } from '../constants/utils';
 import { AppState } from '../constants/types';
 import Groups from '../components/groups';
 import { GroupModel } from '../models/group';
