@@ -15,7 +15,7 @@ sanic==0.7.0
 six==1.11.0
 Unipath==1.1
 uWSGI==2.0.16
-websockets==3.4
+websockets==4.0.1
 
 -e git+https://github.com/polyaxon/polyaxon-gpustat.git@0e3d91a52c72a311ade05ede65f6d8dd5cd10044#egg=polyaxon-gpustat
 -e git+https://github.com/polyaxon/polyaxon-k8s.git@25dd674bb9d0d11c200b510e4174b84bd817f5cd#egg=polyaxon-k8s
