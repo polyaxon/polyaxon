@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as moment from 'moment';
 
 import { JobModel } from '../models/job';
-import { getCssClassForStatus, humanizeTimeDelta } from '../constants/utils';
+import { getCssClassForStatus } from '../constants/utils';
+import TaskRunMetaInfo from './taskRunMetaInfo';
 
 export interface Props {
   job: JobModel;
@@ -10,7 +10,6 @@ export interface Props {
 }
 
 function Job({job, onDelete}: Props) {
-  let totalRun = humanizeTimeDelta(job.started_at, job.finished_at);
   let statusCssClass = getCssClassForStatus(job.last_status);
   let jobDetailUrl = `jobs/${job.sequence}/`;
 
@@ -53,33 +52,7 @@ function Job({job, onDelete}: Props) {
         }
       </div>
       <div className="col-md-2 block">
-        {job.started_at &&
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-clock-o icon" aria-hidden="true"/>
-            <span className="title">Started:</span>
-            {moment(job.started_at).fromNow()}
-          </span>
-        </div>
-        }
-        {job.finished_at &&
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-clock-o icon" aria-hidden="true"/>
-            <span className="title">Finished:</span>
-            {moment(job.finished_at).fromNow()}
-          </span>
-        </div>
-        }
-        {totalRun &&
-        <div className="row meta">
-          <span className="meta-info">
-            <i className="fa fa-hourglass icon" aria-hidden="true"/>
-            <span className="title">Total run:</span>
-            {totalRun}
-          </span>
-        </div>
-        }
+        <TaskRunMetaInfo startedAt={job.started_at} finishedAt={job.finished_at}/>
       </div>
     </div>
   );

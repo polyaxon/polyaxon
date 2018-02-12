@@ -9,11 +9,11 @@ import {
   getGroupUrl,
   getProjectUrl,
   getUserUrl,
-  humanizeTimeDelta,
   splitGroupName,
   splitProjectName,
   getCssClassForStatus,
 } from '../constants/utils';
+import TaskRunMetaInfo from './taskRunMetaInfo';
 
 export interface Props {
   experiment: ExperimentModel;
@@ -33,7 +33,6 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
     if (_.isNil(experiment)) {
       return (<div>Nothing</div>);
     }
-    let totalRun = humanizeTimeDelta(experiment.started_at, experiment.finished_at);
     let statusCssClass = getCssClassForStatus(experiment.last_status);
     let values = splitProjectName(experiment.project_name);
     let group = null;
@@ -92,27 +91,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
                 <span className="title">Jobs:</span>
                 {experiment.num_jobs}
               </span>
-              {experiment.started_at &&
-              <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"/>
-                <span className="title">Started:</span>
-                {moment(experiment.started_at).fromNow()}
-              </span>
-              }
-              {experiment.finished_at &&
-              <span className="meta-info">
-                <i className="fa fa-clock-o icon" aria-hidden="true"/>
-                <span className="title">Finished:</span>
-                {moment(experiment.finished_at).fromNow()}
-              </span>
-              }
-              {totalRun &&
-              <span className="meta-info">
-                <i className="fa fa-hourglass icon" aria-hidden="true"/>
-                <span className="title">Total run:</span>
-                {totalRun}
-              </span>
-              }
+              <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at} inline={true}/>
               <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}
               </span>
             </div>
