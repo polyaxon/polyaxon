@@ -25,7 +25,7 @@ function Experiment({experiment, onDelete}: Props) {
       <div className="col-md-8 block">
         <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.sequence)}>
           <a className="title">
-            <i className="fa fa-cube icon" aria-hidden="true"></i>
+            <i className="fa fa-cube icon" aria-hidden="true"/>
             {experiment.unique_name}
             <span className={`status alert alert-${statusCssClass}`}>{experiment.last_status}</span>
           </a>
@@ -35,12 +35,12 @@ function Experiment({experiment, onDelete}: Props) {
         </div>
         <div className="meta">
           <span className="meta-info">
-            <i className="fa fa-user-o icon" aria-hidden="true"></i>
+            <i className="fa fa-user-o icon" aria-hidden="true"/>
             <span className="title">User:</span>
             {experiment.user}
           </span>
           <span className="meta-info">
-              <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+              <i className="fa fa-clock-o icon" aria-hidden="true"/>
             <span className="title">Created:</span>
             {moment(experiment.created_at).fromNow()}
           </span>
@@ -53,7 +53,7 @@ function Experiment({experiment, onDelete}: Props) {
             (xp, idx) =>
               <div className="row meta" key={idx}>
                 <span className="meta-info">
-                  <i className="fa fa-area-chart icon" aria-hidden="true"></i>
+                  <i className="fa fa-area-chart icon" aria-hidden="true"/>
                   <span className="title">{xp}:</span>
                   {experiment.last_metric[xp]}
                 </span>
@@ -64,7 +64,7 @@ function Experiment({experiment, onDelete}: Props) {
       <div className="col-md-2 block">
         <div className="row meta">
           <span className="meta-info">
-            <i className="fa fa-tasks icon" aria-hidden="true"></i>
+            <i className="fa fa-tasks icon" aria-hidden="true"/>
             <span className="title">Jobs:</span>
             {experiment.num_jobs}
           </span>
@@ -72,7 +72,7 @@ function Experiment({experiment, onDelete}: Props) {
         {experiment.started_at &&
         <div className="row meta">
           <span className="meta-info">
-            <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+            <i className="fa fa-clock-o icon" aria-hidden="true"/>
             <span className="title">Started:</span>
             {moment(experiment.started_at).fromNow()}
           </span>
@@ -81,7 +81,7 @@ function Experiment({experiment, onDelete}: Props) {
         {experiment.finished_at &&
         <div className="row meta">
           <span className="meta-info">
-            <i className="fa fa-clock-o icon" aria-hidden="true"></i>
+            <i className="fa fa-clock-o icon" aria-hidden="true"/>
             <span className="title">Finished:</span>
             {moment(experiment.finished_at).fromNow()}
           </span>
@@ -90,7 +90,7 @@ function Experiment({experiment, onDelete}: Props) {
         {totalRun &&
         <div className="row meta">
           <span className="meta-info">
-            <i className="fa fa-hourglass icon" aria-hidden="true"></i>
+            <i className="fa fa-hourglass icon" aria-hidden="true"/>
             <span className="title">Total run:</span>
             {totalRun}
           </span>

@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import * as React from 'react';
 
 export interface Props {
   token: string;
@@ -12,7 +11,6 @@ function Token(probs: Props) {
       Your token is: {probs.token}
     </div>
   );
-};
-
+}
 
 export default Token;
