@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 
 import Group from './group';
 import { GroupModel } from '../models/group';
-import PaginatedList from '../constants/components';
+import PaginatedList from '../components/paginatedList';
 
 export interface Props {
   groups: GroupModel[];

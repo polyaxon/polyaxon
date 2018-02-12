@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import * as actions from '../actions/job';
 import Job from './job';
 import { JobModel } from '../models/job';
-import PaginatedList from '../constants/components';
+import PaginatedList from '../components/paginatedList';
 
 export interface Props {
   jobs: JobModel[];

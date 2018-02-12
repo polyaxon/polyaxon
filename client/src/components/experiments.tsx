@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import Experiment from './experiment';
 import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
-import PaginatedList from '../constants/components';
+import PaginatedList from '../components/paginatedList';
 
 export interface Props {
   experiments: ExperimentModel[];

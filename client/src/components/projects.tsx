@@ -5,7 +5,7 @@ import Project from './project';
 import RootModal from '../containers/modal';
 import { ProjectModel } from '../models/project';
 import { pluralize } from '../constants/utils';
-import PaginatedList from '../constants/components';
+import PaginatedList from '../components/paginatedList';
 
 export interface Props {
   user: string;
