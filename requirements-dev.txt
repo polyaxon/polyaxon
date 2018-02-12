@@ -3,7 +3,7 @@ Django==2.0.2
 django-cors-headers==2.1.0
 djangorestframework==3.7.7
 djangorestframework-camel-case==0.2.0
-docker==2.6.1
+docker==3.0.1
 GitPython==2.1.7
 Jinja2==2.9.6
 pandas==0.20.3
