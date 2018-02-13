@@ -9,15 +9,18 @@ from django.db import models
 
 from libs.blacklist import validate_blacklist_name
 from libs.models import DiffModel, DescribableModel
-from projects.models import Project
 
 
 class Dataset(DiffModel, DescribableModel):
     """A model that represents a dataset."""
-    name = models.CharField(max_length=256, validators=[validate_slug, validate_blacklist_name])
+    name = models.CharField(
+        max_length=256,
+        validators=[validate_slug, validate_blacklist_name])
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='datasets')
     version = models.IntegerField(default=1)
-    is_public = models.BooleanField(default=True, help_text='If dataset is public or private.')
+    is_public = models.BooleanField(
+        default=True,
+        help_text='If the dataset is public or private.')
 
     @property
     def user_path(self):
@@ -29,9 +32,3 @@ class Dataset(DiffModel, DescribableModel):
 
     def get_tmp_tar_path(self):
         return os.path.join(self.path, '{}_new.tar.gz'.format(self.name))
-
-    @property
-    def path(self):
-        """We need to nest the git path inside the project path to make it easier
-        to create docker images."""
-        return os.path.join(self.project_path, self.name)
