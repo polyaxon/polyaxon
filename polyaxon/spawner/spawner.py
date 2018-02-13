@@ -414,7 +414,7 @@ class K8SProjectSpawner(K8SManager):
             port = random.randint(5500, 6500)
         return port
 
-    def start_tensorboard(self):
+    def start_tensorboard(self, tensorboard_image):
         ports = [self.get_tensorboard_port()]
         target_ports = [6006]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
@@ -426,6 +426,7 @@ class K8SProjectSpawner(K8SManager):
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
             volumes=volumes,
+            image=tensorboard_image,
             command=["/bin/sh", "-c"],
             args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
             ports=target_ports,
