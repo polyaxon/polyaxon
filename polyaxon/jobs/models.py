@@ -6,6 +6,7 @@ import uuid
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
+from libs.models import DiffModel
 from spawner.utils.constants import JobLifeCycle
 
 
@@ -28,6 +29,18 @@ class JobResources(models.Model):
         gpu = get_resource(self.gpu, 'GPU')
         resources = [cpu, memory, gpu]
         return ', '.join([r for r in resources if r])
+
+
+class Job(DiffModel):
+    resources = models.OneToOneField(
+        JobResources,
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True)
+
+    class Meta:
+        abstract = True
 
 
 class JobStatus(models.Model):

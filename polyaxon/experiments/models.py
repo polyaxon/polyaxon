@@ -12,8 +12,7 @@ from django.utils.functional import cached_property
 from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
-from clusters.models import Cluster
-from jobs.models import JobStatus, JobResources
+from jobs.models import Job, JobStatus
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
@@ -220,7 +219,7 @@ class ExperimentMetric(models.Model):
         ordering = ['created_at']
 
 
-class ExperimentJob(DiffModel):
+class ExperimentJob(Job):
     """A model that represents job related to an experiment"""
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -236,12 +235,6 @@ class ExperimentJob(DiffModel):
         help_text='The sequence number of this job within the experiment.', )
     job_status = models.OneToOneField(
         'ExperimentJobStatus',
-        related_name='+',
-        blank=True,
-        null=True,
-        editable=True)
-    resources = models.OneToOneField(
-        JobResources,
         related_name='+',
         blank=True,
         null=True,
