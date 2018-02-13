@@ -12,6 +12,7 @@ PROJECT_APPS = (
     'libs.apps.LibsConfig',
     'users.apps.UsersConfig',
     'clusters.apps.ClustersConfig',
+    'plugins.apps.PluginsConfig',
     'projects.apps.ProjectsConfig',
     'jobs.apps.JobsConfig',
     'experiments.apps.ExperimentsConfig',
