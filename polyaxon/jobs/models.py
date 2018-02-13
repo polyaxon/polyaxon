@@ -7,14 +7,24 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from libs.models import DiffModel
+from libs.resource_validation import validate_resource
 from spawner.utils.constants import JobLifeCycle
 
 
 class JobResources(models.Model):
     """A model that represents job resources."""
-    cpu = JSONField(null=True, blank=True)
-    memory = JSONField(null=True, blank=True)
-    gpu = JSONField(null=True, blank=True)
+    cpu = JSONField(
+        null=True,
+        blank=True,
+        validators=[validate_resource])
+    memory = JSONField(
+        null=True,
+        blank=True,
+        validators=[validate_resource])
+    gpu = JSONField(
+        null=True,
+        blank=True,
+        validators=[validate_resource])
 
     def __str__(self):
         def get_resource(resource, resource_name):
