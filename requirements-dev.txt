@@ -6,8 +6,6 @@ djangorestframework-camel-case==0.2.0
 docker==2.6.1
 GitPython==2.1.7
 Jinja2==2.9.6
-pandas==0.20.3
-pandas-summary==0.0.41
 pika==0.11.0
 psycopg2==2.7.3.1
 redis==2.10.6
@@ -17,6 +15,6 @@ Unipath==1.1
 uWSGI==2.0.15
 websockets==3.4
 
--e git+https://github.com/polyaxon/polyaxon-gpustat.git@0e3d91a52c72a311ade05ede65f6d8dd5cd10044#egg=polyaxon-gpustat
--e git+https://github.com/polyaxon/polyaxon-k8s.git@25dd674bb9d0d11c200b510e4174b84bd817f5cd#egg=polyaxon-k8s
--e git+https://github.com/polyaxon/polyaxon-schemas.git@695dd2cd22650cb7a4c3d5a155eb2f9023f2fd00#egg=polyaxon-schemas
+-e git+https://github.com/polyaxon/polyaxon-gpustat.git@0adac2ebb7910d6fc8e9cb3aae467b88bf995047#egg=polyaxon-gpustat==0.0.3
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@ed9b977fd7edeb433e4ac2b7e326fe33a9d772c1#egg=polyaxon-k8s==0.0.3
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@c1725b97cad4b943f850b2b4e74527321f6380fa#egg=polyaxon-schemas==0.0.3
