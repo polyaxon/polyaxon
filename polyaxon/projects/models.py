@@ -13,6 +13,7 @@ from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from libs.blacklist import validate_blacklist_name
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
+from plugins.models import TensorboardJob
 from spawner.utils.constants import ExperimentLifeCycle
 
 
@@ -32,6 +33,10 @@ class Project(DiffModel, DescribableModel):
     is_public = models.BooleanField(
         default=True,
         help_text='If project is public or private.')
+    tensorboard = models.OneToOneField(
+        TensorboardJob,
+        null=True,
+        blank=True)
     has_tensorboard = models.BooleanField(
         default=False,
         help_text='If project has a tensorboard.')

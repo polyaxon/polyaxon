@@ -161,13 +161,14 @@ def stop_experiment(experiment, update_status=False):
 
 
 def start_tensorboard(project):
-    spawner = K8SProjectSpawner(project_name=project.unique_name,
-                                project_uuid=project.uuid.hex,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True)
+    spawner = K8SProjectSpawner(
+        project_name=project.unique_name,
+        project_uuid=project.uuid.hex,
+        k8s_config=settings.K8S_CONFIG,
+        namespace=settings.K8S_NAMESPACE,
+        in_cluster=True)
 
-    spawner.start_tensorboard()
+    spawner.start_tensorboard(tensorboard_image=project.tensorboard.image)
     project.has_tensorboard = True
     project.save()
 
