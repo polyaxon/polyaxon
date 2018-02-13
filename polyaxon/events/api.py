@@ -25,6 +25,7 @@ logger = logging.getLogger('polyaxon.monitors.api')
 SOCKET_SLEEP = 1
 MAX_RETRIES = 15
 RESOURCES_CHECK = 15
+CHECK_DELAY = 5
 
 app = Sanic(__name__)
 
@@ -115,7 +116,7 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
                 handle_job_disconnected_ws(ws)
                 return
             else:
-                should_check = 0
+                should_check -= CHECK_DELAY
 
         if resources:
             try:
@@ -180,7 +181,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
                 handle_experiment_disconnected_ws(ws)
                 return
             else:
-                should_check = 0
+                should_check -= CHECK_DELAY
 
         if resources:
             try:
@@ -246,6 +247,8 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
                 logger.info('removing all socket because the job `{}` is done'.format(
                     job_uuid))
                 consumer.ws = set([])
+            else:
+                num_message_retries -= CHECK_DELAY
 
         # Just to check if connection closed
         if ws._connection_lost:
@@ -314,6 +317,8 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
                 logger.info('removing all socket because the experiment `{}` is done'.format(
                     experiment_uuid))
                 consumer.ws = set([])
+            else:
+                num_message_retries -= CHECK_DELAY
 
         # Just to check if connection closed
         if ws._connection_lost:
