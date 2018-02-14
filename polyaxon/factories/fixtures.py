@@ -202,7 +202,6 @@ tensorboard_spec_content = """---
 
     run:
       image: my_image
-      cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
-exec_experiment_spec_parsed_content = Specification.read(exec_experiment_spec_content)
+tensorboard_spec_parsed_content = Specification.read(tensorboard_spec_content)
