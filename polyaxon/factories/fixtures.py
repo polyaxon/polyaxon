@@ -130,7 +130,7 @@ exec_experiment_resources_content = """---
     environment:
       n_workers: 1
       n_ps: 1  
-      master_resources:
+      resources:
         cpu:
           requests: 1
           limits: 1
@@ -192,3 +192,17 @@ exec_experiment_resources_content = """---
 """
 
 exec_experiment_resources_parsed_content = Specification.read(exec_experiment_resources_content)
+
+
+tensorboard_spec_content = """---
+    version: 1
+
+    project:
+      name: project1
+
+    run:
+      image: my_image
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
+exec_experiment_spec_parsed_content = Specification.read(exec_experiment_spec_content)
