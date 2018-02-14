@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from django.core.exceptions import ValidationError
 from polyaxon_schemas.exceptions import PolyaxonfileError, PolyaxonConfigurationError
-from polyaxon_schemas.polyaxonfile.specification import GroupSpecification, Specification
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification, PluginSpecification
 
 
 def validate_run_type(spec):
@@ -24,7 +24,7 @@ def validate_spec_content(content):
 
 def validate_tensorboard_spec_content(content):
     try:
-        spec = Specification.read(content)
+        spec = PluginSpecification.read(content)
     except (PolyaxonfileError, PolyaxonConfigurationError):
         raise ValidationError('Received non valid tensorboard specification content.')
 

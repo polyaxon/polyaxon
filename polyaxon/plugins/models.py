@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
-from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
 from libs.models import DiffModel
 from libs.spec_validation import validate_tensorboard_spec_content
@@ -27,7 +27,7 @@ class TensorboardJob(DiffModel):
 
     @cached_property
     def compiled_spec(self):
-        return Specification(experiment='tensorboard', values=self.config)
+        return PluginSpecification(values=self.config)
 
     @cached_property
     def resources(self):
