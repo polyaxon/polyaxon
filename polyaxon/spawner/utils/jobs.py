@@ -58,7 +58,7 @@ def get_job_status(pod_state, job_container_name):
 
 def get_job_state(event_type, event, job_container_name, experiment_type_label):
     pod_state = pods.get_pod_state(event_type=event_type, event=event)
-    if pod_state.labels.type != experiment_type_label:  # 2 type: core and experiment
+    if pod_state.labels.type != experiment_type_label:  # 2 types: core and experiment
         return
 
     status, message = get_job_status(pod_state, job_container_name)
