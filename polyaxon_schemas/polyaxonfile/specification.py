@@ -155,7 +155,6 @@ class Specification(BaseSpecification):
         PROJECT: defines the project name this specification belongs to (must be unique).
         SETTINGS: defines the logging, run type and concurrent runs.
         ENVIRONMENT: defines the run environment for experiment.
-        MATRIX: hyper parameters matrix definition.
         DECLARATIONS: variables/modules that can be reused.
         RUN_EXEC: defines the run step where the user can set a docker image to execute
         MODEL: defines the model to use based on the declarative API.
@@ -166,6 +165,10 @@ class Specification(BaseSpecification):
     def __init__(self, experiment, values):
         self._experiment = experiment
         super(Specification, self).__init__(values=values)
+        if self.MATRIX in self.headers:
+            raise PolyaxonConfigurationError(
+                'Specification cannot contain a `matrix` section, you should '
+                'use a GroupSpecification instead.')
 
     @classmethod
     def read(cls, values, experiment=None):
@@ -368,7 +371,20 @@ class Specification(BaseSpecification):
 
 
 class GroupSpecification(BaseSpecification):
-    """Parses Polyaxonfiles/Configuration, with matrix section definition."""
+    """Parses Polyaxonfiles/Configuration, with matrix section definition.
+
+    SECTIONS:
+        VERSION: defines the version of the file to be parsed and validated.
+        PROJECT: defines the project name this specification belongs to (must be unique).
+        SETTINGS: defines the logging, run type and concurrent runs.
+        ENVIRONMENT: defines the run environment for experiment.
+        MATRIX: hyper parameters matrix definition.
+        DECLARATIONS: variables/modules that can be reused.
+        RUN_EXEC: defines the run step where the user can set a docker image to execute
+        MODEL: defines the model to use based on the declarative API.
+        TRAIN: defines how to train a model and how to read the data.
+        EVAL: defines how to evaluate a model and how to read the data.
+    """
 
     def __init__(self, values):
         self._values = to_list(values)
@@ -450,3 +466,43 @@ class GroupSpecification(BaseSpecification):
             raise ValueError("""Could not find an experiment at index {},
                this file has {} experiments""".format(experiment, self.matrix_space))
         return self.experiment_specs[experiment]
+
+
+class PluginSpecification(BaseSpecification):
+    """The polyaxonfile specification for plugins.
+
+    SECTIONS:
+        VERSION: defines the version of the file to be parsed and validated.
+        PROJECT: defines the project name this specification belongs to (must be unique).
+        ENVIRONMENT: defines the run environment for experiment.
+        RUN_EXEC: defines the run step where the user can set a docker image to execute
+    """
+    def __init__(self, values):
+        super(PluginSpecification, self).__init__(values=values)
+        if (self.RUN_EXEC not in self.validated_data or
+                not self.validated_data[self.RUN_EXEC] or
+                self.validated_data[self.RUN_EXEC].cmd is not None):
+            raise PolyaxonConfigurationError(
+                'Plugin specification must contain a valid `run` section.')
+
+    @classmethod
+    def read(cls, values):
+        if isinstance(values, cls):
+            return values
+        return cls(values=values)
+
+    @cached_property
+    def parsed_data(self):
+        return self._parsed_data
+
+    @cached_property
+    def validated_data(self):
+        return self._validated_data
+
+    @cached_property
+    def run_exec(self):
+        return self.validated_data[self.RUN_EXEC]
+
+    @cached_property
+    def resources(self):
+        return self.environment.resources if self.environment else None
