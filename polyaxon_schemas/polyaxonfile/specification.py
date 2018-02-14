@@ -297,22 +297,22 @@ class Specification(BaseSpecification):
         if not any([master_resources, worker_resources, ps_resources]):
             return None
 
-        resources = PodResourcesConfig()
+        total_resources = PodResourcesConfig()
 
         if master_resources:
-            resources += master_resources
+            total_resources += master_resources
 
         for w_resources in six.itervalues(worker_resources or {}):
-            resources += w_resources
+            total_resources += w_resources
 
         for p_resources in six.itervalues(ps_resources or {}):
-            resources += p_resources
+            total_resources += p_resources
 
-        return resources.to_dict()
+        return total_resources.to_dict()
 
     @cached_property
     def master_resources(self):
-        return self.environment.master_resources if self.environment else None
+        return self.environment.resources if self.environment else None
 
     @cached_property
     def worker_resources(self):

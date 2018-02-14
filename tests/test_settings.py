@@ -163,7 +163,7 @@ class TestSettingConfigs(TestCase):
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add run resources
-        config_dict['master_resources'] = PodResourcesConfig(
+        config_dict['resources'] = PodResourcesConfig(
             cpu=K8SResourcesConfig(0.5, 1)).to_dict()
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
