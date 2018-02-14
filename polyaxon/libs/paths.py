@@ -27,3 +27,23 @@ def create_path(path):
         pass
     except OSError as e:
         logger.warning('Could not create path `{}`, exception %s', e)
+
+
+def get_tmp_path(path):
+    return os.path.join('/tmp', path)
+
+
+def create_tmp_dir(dir_name):
+    create_path(get_tmp_path(dir_name))
+
+
+def delete_tmp_dir(dir_name):
+    delete_path(get_tmp_path(dir_name))
+
+
+def copy_to_tmp_dir(path, dir_name):
+    tmp_path = get_tmp_path(dir_name)
+    if os.path.exists(tmp_path):
+        return tmp_path
+    shutil.copytree(path, tmp_path)
+    return tmp_path
