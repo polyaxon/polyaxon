@@ -14,6 +14,7 @@ from docker.errors import DockerException
 
 from events import publisher
 from experiments.models import Experiment
+from libs.paths import copy_to_tmp_dir, delete_tmp_dir
 from repos import git
 from repos.models import ExternalRepo
 from spawner.utils.constants import ExperimentLifeCycle
@@ -88,12 +89,13 @@ class DockerBuilder(object):
                  dockerfile_name='Dockerfile'):
         self.experiment_name = experiment_name
         self.experiment_uuid = experiment_uuid
-        self.repo_path = repo_path
-        self.build_path = '/'.join(repo_path.split('/')[:-1])
-        self.folder_name = repo_path.split('/')[-1]
         self.from_image = from_image
         self.image_name = image_name
         self.image_tag = image_tag
+        self.repo_path = repo_path
+        self.folder_name = repo_path.split('/')[-1]
+        self.tmp_repo_path = self.create_tmp_repo()
+        self.build_path = '/'.join(self.tmp_repo_path.split('/')[:-1])
         self.steps = steps or []
         self.env_vars = env_vars or []
         self.workdir = workdir
@@ -101,6 +103,13 @@ class DockerBuilder(object):
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()
         self.docker = None
+
+    def create_tmp_repo(self):
+        # Create a tmp copy of the repo before starting the build
+        return copy_to_tmp_dir(self.repo_path, os.path.join(self.image_tag, self.folder_name))
+
+    def clean(self):
+        delete_tmp_dir(self.image_tag)
 
     def connect(self):
         if not self.docker:
@@ -117,13 +126,13 @@ class DockerBuilder(object):
             logger.exception('Failed to connect to registry %s\n' % e)
 
     def _get_requirements_path(self):
-        requirements_path = os.path.join(self.repo_path, 'polyaxon_requirements.txt')
+        requirements_path = os.path.join(self.tmp_repo_path, 'polyaxon_requirements.txt')
         if os.path.isfile(requirements_path):
             return os.path.join(self.folder_name, 'polyaxon_requirements.txt')
         return None
 
     def _get_setup_path(self):
-        setup_file_path = os.path.join(self.repo_path, 'polyaxon_setup.sh')
+        setup_file_path = os.path.join(self.tmp_repo_path, 'polyaxon_setup.sh')
         has_setup = os.path.isfile(setup_file_path)
         if has_setup:
             st = os.stat(setup_file_path)
@@ -146,7 +155,7 @@ class DockerBuilder(object):
 
     def build(self, memory_limit=None):
         # Checkout to the correct commit
-        git.checkout_commit(repo_path=self.repo_path, commit=self.image_tag)
+        git.checkout_commit(repo_path=self.tmp_repo_path, commit=self.image_tag)
 
         limits = {
             # Always disable memory swap for building, since mostly
@@ -193,7 +202,7 @@ class DockerBuilder(object):
                     check_pulse = 0
 
         # Checkout back to master
-        git.checkout_commit(repo_path=self.repo_path)
+        git.checkout_commit(repo_path=self.tmp_repo_path)
         return True
 
     def push(self):
@@ -303,7 +312,10 @@ def build_experiment(experiment):
                          registry_password=settings.REGISTRY_PASSWORD,
                          registry_host=settings.REGISTRY_HOST)
     if not docker_builder.build():
+        docker_builder.clean()
         return False
     if not docker_builder.push():
+        docker_builder.clean()
         return False
+    docker_builder.clean()
     return True

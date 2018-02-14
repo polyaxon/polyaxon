@@ -25,6 +25,7 @@ class TestRepoDockerize(BaseTest):
                                 image_tag='1')
         assert builder.polyaxon_requirements_path is None
         assert builder.polyaxon_setup_path is None
+        builder.clean()
 
         # Add a polyaxon_requirements.txt and polyaxon_setup.sh files to repo path
         Path(os.path.join(repo_path, 'polyaxon_requirements.txt')).touch()
@@ -38,6 +39,7 @@ class TestRepoDockerize(BaseTest):
                                 image_tag='1')
         assert builder.polyaxon_requirements_path == 'repo/polyaxon_requirements.txt'
         assert builder.polyaxon_setup_path == 'repo/polyaxon_setup.sh'
+        builder.clean()
 
     def test_render_works_as_expected(self):
         # Create a repo folder
@@ -53,6 +55,7 @@ class TestRepoDockerize(BaseTest):
                                 image_tag='1.0.0')
 
         dockerfile = builder.render()
+        builder.clean()
 
         assert 'FROM busybox' in dockerfile
         assert 'WORKDIR {}'.format(builder.workdir) in dockerfile
@@ -69,6 +72,7 @@ class TestRepoDockerize(BaseTest):
 
         dockerfile = builder.render()
         assert 'ENV BLA BLA' in dockerfile
+        builder.clean()
 
         # Add a polyaxon_requirements.txt and polyaxon_setup.sh files to repo path
         Path(os.path.join(repo_path, 'polyaxon_requirements.txt')).touch()
@@ -95,3 +99,4 @@ class TestRepoDockerize(BaseTest):
 
         assert 'RUN {}'.format(steps[0]) in dockerfile
         assert 'RUN {}'.format(steps[1]) in dockerfile
+        builder.clean()

@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import os
 
 from django.conf import settings
-from django.db import IntegrityError
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory

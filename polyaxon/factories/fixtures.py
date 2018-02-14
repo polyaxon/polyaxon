@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.polyaxonfile.specification import Specification, PluginSpecification
 
 
 experiment_group_spec_content = """---
@@ -204,4 +204,4 @@ tensorboard_spec_content = """---
       image: my_image
 """
 
-tensorboard_spec_parsed_content = Specification.read(tensorboard_spec_content)
+tensorboard_spec_parsed_content = PluginSpecification.read(tensorboard_spec_content)
