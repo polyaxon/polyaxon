@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.db.models.signals import post_save, pre_save, pre_delete
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from libs.decorators import ignore_raw
@@ -13,7 +13,8 @@ from projects.utils import (
     delete_experiment_group_outputs,
     delete_project_logs,
     delete_experiment_group_logs,
-    delete_project_repos)
+    delete_project_repos,
+)
 from spawner import scheduler
 
 
@@ -78,9 +79,14 @@ def new_project(sender, **kwargs):
 def project_deleted(sender, **kwargs):
     instance = kwargs['instance']
     scheduler.stop_tensorboard(instance)
+    scheduler.stop_notebook(instance)
     # Delete tensorboard job
     if instance.tensorboard:
         instance.tensorboard.delete()
+
+    # Delete notebook job
+    if instance.notebook:
+        instance.notebook.delete()
 
     # Clean outputs, logs, and repos
     delete_project_outputs(instance.unique_name)

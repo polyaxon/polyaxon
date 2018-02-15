@@ -19,7 +19,8 @@ class TestPluginsModel(BaseTest):
         assert TensorboardJob.objects.count() == 1
 
         with patch('spawner.scheduler.stop_tensorboard') as _:
-            project.delete()
+            with patch('spawner.scheduler.stop_notebook') as _:
+                project.delete()
         assert TensorboardJob.objects.count() == 0
 
     def test_project_deletion_cascade_to_notebook_job(self):
@@ -29,7 +30,7 @@ class TestPluginsModel(BaseTest):
         project.save()
         assert NotebookJob.objects.count() == 1
 
-        # with patch('spawner.scheduler.stop_notebook') as _:
-        #     project.delete()
-        project.delete()
+        with patch('spawner.scheduler.stop_tensorboard') as _:
+            with patch('spawner.scheduler.stop_notebook') as _:
+                project.delete()
         assert NotebookJob.objects.count() == 0
