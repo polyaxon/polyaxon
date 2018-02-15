@@ -98,7 +98,7 @@ def checkout_commit(repo_path, commit=None):
 
     If commit is None then checkout to master.
     """
-    commit = commit or '-'
+    commit = commit or 'master'
     run_command(cmd='git checkout {}'.format(commit), data=None, location=repo_path, chw=True)
 
 

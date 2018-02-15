@@ -154,6 +154,7 @@ class DockerBuilder(object):
         )
 
     def build(self, memory_limit=None):
+        logger.debug('Starting build in `{}`'.format(self.tmp_repo_path))
         # Checkout to the correct commit
         git.checkout_commit(repo_path=self.tmp_repo_path, commit=self.image_tag)
 
