@@ -6,6 +6,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from libs.urls import USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN
 from experiments import views as experiments_views
+from plugins import views as plugins_views
 from projects import views
 
 projects_urlpatterns = [
@@ -16,9 +17,9 @@ projects_urlpatterns = [
     url(r'^{}/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         views.ProjectDetailView.as_view()),
     url(r'^{}/{}/tensorboard/start/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
-        views.StartTensorboardView.as_view()),
+        plugins_views.StartTensorboardView.as_view()),
     url(r'^{}/{}/tensorboard/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
-        views.StopTensorboardView.as_view()),
+        plugins_views.StopTensorboardView.as_view()),
     url(r'^{}/{}/groups/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         views.ExperimentGroupListView.as_view()),
     # Get all experiment under a project
