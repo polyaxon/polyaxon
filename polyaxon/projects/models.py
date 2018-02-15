@@ -36,7 +36,8 @@ class Project(DiffModel, DescribableModel):
     tensorboard = models.OneToOneField(
         TensorboardJob,
         null=True,
-        blank=True)
+        blank=True,
+        on_delete=models.SET_NULL)
     has_tensorboard = models.BooleanField(
         default=False,
         help_text='If project has a tensorboard.')

@@ -13,7 +13,7 @@ from projects.utils import (
     delete_experiment_group_outputs,
     delete_project_logs,
     delete_experiment_group_logs,
-)
+    delete_project_repos)
 from spawner import scheduler
 
 
@@ -67,9 +67,10 @@ def new_project(sender, **kwargs):
     if not created:
         return
 
-    # Clean outputs and logs
+    # Clean outputs, logs, and repos
     delete_project_outputs(instance.unique_name)
     delete_project_logs(instance.unique_name)
+    delete_project_repos(instance.unique_name)
 
 
 @receiver(pre_delete, sender=Project, dispatch_uid="project_deleted")
@@ -77,7 +78,11 @@ def new_project(sender, **kwargs):
 def project_deleted(sender, **kwargs):
     instance = kwargs['instance']
     scheduler.stop_tensorboard(instance)
+    # Delete tensorboard job
+    if instance.tensorboard:
+        instance.tensorboard.delete()
 
-    # Delete outputs and logs
+    # Clean outputs, logs, and repos
     delete_project_outputs(instance.unique_name)
     delete_project_logs(instance.unique_name)
+    delete_project_repos(instance.unique_name)

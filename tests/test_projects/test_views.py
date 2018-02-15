@@ -190,7 +190,8 @@ class TestProjectDetailViewV1(BaseViewTest):
                         resp = self.auth_client.delete(self.url)
         assert xp_mock_stop.call_count == 4
         assert tensorboard_mock_fct.call_count == 1
-        assert delete_path_project_mock_stop.call_count == 6  # 2 * project + 2 * 2 * groups
+        # 2 * project + 2 * 2 * groups + 1 repo
+        assert delete_path_project_mock_stop.call_count == 7
         assert delete_path_xp_mock_stop.call_count == 8  # 2 * 4  * groups
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
