@@ -168,7 +168,8 @@ def start_tensorboard(project):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.start_tensorboard(tensorboard_image=project.tensorboard.image)
+    spawner.start_tensorboard(tensorboard_image=project.tensorboard.image,
+                              resources=project.tensorboard.spec.resources)
     project.has_tensorboard = True
     project.save()
 
