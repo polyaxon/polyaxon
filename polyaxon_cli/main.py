@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_cli.cli.tensorboard import tensorboard
 from polyaxon_cli.cli.dashboard import dashboard
 from polyaxon_cli.cli.job import job
 from polyaxon_cli.cli.run import run
@@ -53,6 +54,7 @@ cli.add_command(check)
 cli.add_command(init)
 cli.add_command(cluster)
 cli.add_command(project)
+cli.add_command(tensorboard)
 cli.add_command(group)
 cli.add_command(experiment)
 cli.add_command(job)
