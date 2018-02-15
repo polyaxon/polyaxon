@@ -5,12 +5,16 @@ import logging
 
 from random import shuffle
 
+from docker.errors import DockerException
 from polyaxon_schemas.utils import SEARCH_METHODS
 
 from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
 from experiments.tasks import build_experiment
 from projects.models import ExperimentGroup, Project
+from repos import dockerize
+from repos.dockerize import get_job_image_info
+from repos.models import Repo
 from spawner import scheduler
 
 logger = logging.getLogger('polyaxon.tasks.projects')
@@ -46,23 +50,73 @@ def start_group_experiments(self, experiment_group_id):
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
-def start_tensorboard(project_id):
+def get_valid_project(project_id):
     try:
-        project = Project.objects.get(id=project_id)
+        return Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         logger.info('Project id `{}` does not exist'.format(project_id))
         return None
 
+
+@celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
+def start_tensorboard(project_id):
+    project = get_valid_project(project_id)
+    if not project or not project.tensorboard:
+        return None
     scheduler.start_tensorboard(project)
 
 
 @celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_STOP, ignore_result=True)
 def stop_tensorboard(project_id):
+    project = get_valid_project(project_id)
+    if not project:
+        return None
+    scheduler.stop_tensorboard(project)
+
+
+@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_BUILD, bind=True)
+def build_notebook(self, project_id):
+    project = get_valid_project(project_id)
+    if not project or not project.notebook:
+        return None
+
+    # docker image
     try:
-        project = Project.objects.get(id=project_id)
-    except Project.DoesNotExist:
-        logger.info('Project id `{}` does not exist'.format(project_id))
+        status = dockerize.build_job(project.notebook)
+    except DockerException:
+        return
+    except Repo.DoesNotExist:
+        logger.warning('No code was found for this project')
+        return
+
+    if not status:
+        return
+
+    # Now we can start the notebook
+    start_notebook.delay(project_id=project_id)
+
+
+@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
+def start_notebook(project_id):
+    project = get_valid_project(project_id)
+    if not project or not project.notebook:
+        return None
+
+    try:
+        image_name, image_tag = get_job_image_info(project=project, job=project.notebook)
+    except ValueError as e:
+        logger.warning('Could not start the notebook, %s', e)
+        return
+    job_docker_image = '{}:{}'.format(image_name, image_tag)
+    logger.info('Start notebook with built image `{}`'.format(job_docker_image))
+
+    scheduler.start_notebook(project, image=job_docker_image)
+
+
+@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_STOP, ignore_result=True)
+def stop_notebook(project_id):
+    project = get_valid_project(project_id)
+    if not project:
         return None
 
     scheduler.stop_tensorboard(project)

@@ -251,7 +251,7 @@ class DockerBuilder(object):
         return True
 
 
-def get_image_info(experiment):
+def get_experiment_image_info(experiment):
     """Return the image name and image tag for an experiment"""
     project_name = experiment.project.name
     experiment_spec = experiment.compiled_spec
@@ -273,6 +273,32 @@ def get_image_info(experiment):
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     image_tag = experiment.commit
     return image_name, image_tag
+
+
+def get_job_image_info(project, job):
+    """Return the image name and image tag for a job"""
+    project_name = project.name
+    job_spec = job.compiled_spec
+    if job_spec.run_exec.git:
+
+        try:
+            repo = ExternalRepo.objects.get(project=project,
+                                            git_url=job.run_exec.git)
+        except ExternalRepo.DoesNotExist:
+            logger.error(
+                'Something went wrong, '
+                'the external repo `{}` was not found'.format(job_spec.run_exec.git))
+            raise ValueError('Repo was not found for `{}`.'.format(job_spec.run_exec.git))
+
+        repo_name = repo.name
+    else:
+        repo_name = project_name
+
+    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    last_commit = project.last_commit
+    if not last_commit:
+        raise ValueError('Repo was not found for project `{}`.'.format(project))
+    return image_name, last_commit[0]
 
 
 def build_experiment(experiment):

@@ -14,7 +14,7 @@ from rest_framework import fields
 from jobs.models import JobResources
 from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
-from repos.dockerize import get_image_info
+from repos.dockerize import get_experiment_image_info
 
 from spawner import K8SSpawner, K8SProjectSpawner
 from experiments.models import ExperimentJob
@@ -62,7 +62,7 @@ def start_experiment(experiment):
     job_docker_image = None  # This will force the spawner to use the default docker image
     if experiment.compiled_spec.run_exec:
         try:
-            image_name, image_tag = get_image_info(experiment=experiment)
+            image_name, image_tag = get_experiment_image_info(experiment=experiment)
         except ValueError as e:
             logger.warning('Could not start the experiment, %s', e)
             experiment.set_status(ExperimentLifeCycle.FAILED,
