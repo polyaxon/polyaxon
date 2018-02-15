@@ -32,6 +32,14 @@ class PluginJobBase(DiffModel):
     class Meta:
         abstract = True
 
+    @cached_property
+    def compiled_spec(self):
+        return PluginSpecification(values=self.config)
+
+    @cached_property
+    def resources(self):
+        return self.compiled_spec.total_resources
+
 
 class TensorboardJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
@@ -41,14 +49,6 @@ class TensorboardJob(PluginJobBase):
             return '{} tensorboard<{}>'.format(self.project, self.image)
         logger.warning('Tensorboard with id `{}` is orphan.'.format(self.id))
         return self.image
-
-    @cached_property
-    def compiled_spec(self):
-        return PluginSpecification(values=self.config)
-
-    @cached_property
-    def resources(self):
-        return self.compiled_spec.total_resources
 
     @cached_property
     def image(self):

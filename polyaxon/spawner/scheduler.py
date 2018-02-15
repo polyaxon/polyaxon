@@ -168,7 +168,7 @@ def start_tensorboard(project):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.start_tensorboard(tensorboard_image=project.tensorboard.image,
+    spawner.start_tensorboard(image=project.tensorboard.image,
                               resources=project.tensorboard.spec.resources)
     project.has_tensorboard = True
     project.save()
@@ -183,4 +183,30 @@ def stop_tensorboard(project):
 
     spawner.stop_tensorboard()
     project.has_tensorboard = False
+    project.save()
+
+
+def start_notebook(project, image):
+    spawner = K8SProjectSpawner(
+        project_name=project.unique_name,
+        project_uuid=project.uuid.hex,
+        k8s_config=settings.K8S_CONFIG,
+        namespace=settings.K8S_NAMESPACE,
+        in_cluster=True)
+
+    spawner.start_notebook(image=image,
+                           resources=project.notebook.spec.resources)
+    project.has_tensorboard = True
+    project.save()
+
+
+def stop_notebook(project):
+    spawner = K8SProjectSpawner(project_name=project.unique_name,
+                                project_uuid=project.uuid.hex,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True)
+
+    spawner.stop_notebook()
+    project.has_notebook = False
     project.save()
