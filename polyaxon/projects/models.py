@@ -13,7 +13,7 @@ from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from libs.blacklist import validate_blacklist_name
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
-from plugins.models import TensorboardJob
+from plugins.models import TensorboardJob, NotebookJob
 from spawner.utils.constants import ExperimentLifeCycle
 
 
@@ -35,6 +35,11 @@ class Project(DiffModel, DescribableModel):
         help_text='If project is public or private.')
     tensorboard = models.OneToOneField(
         TensorboardJob,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
+    notebook = models.OneToOneField(
+        NotebookJob,
         null=True,
         blank=True,
         on_delete=models.SET_NULL)
