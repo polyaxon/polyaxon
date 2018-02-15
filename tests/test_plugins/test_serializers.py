@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from factories.fixtures import tensorboard_spec_parsed_content
-from plugins.models import TensorboardJob
-from plugins.serializers import (
-    TensorboardJobSerializer,
-)
-from factories.factory_plugins import TensorboardJobFactory
+from factories.fixtures import plugin_spec_parsed_content
+from plugins.models import TensorboardJob, NotebookJob
+from plugins.serializers import TensorboardJobSerializer, NotebookJobSerializer
+from factories.factory_plugins import TensorboardJobFactory, NotebookJobFactory
 
 from tests.utils import BaseTest
 
 
-class TestTensorboardJobSerializer(BaseTest):
-    serializer_class = TensorboardJobSerializer
-    model_class = TensorboardJob
-    factory_class = TensorboardJobFactory
+class BasePluginJobSerializerTest(BaseTest):
+    model_class = None
+    serializer_class = None
+    factory_class = None
 
     def test_validation_raises_for_invalid_data(self):
         # No data
@@ -27,26 +25,42 @@ class TestTensorboardJobSerializer(BaseTest):
 
     def test_validation_passes_for_valid_data(self):
         serializer = self.serializer_class(
-            data={'config': tensorboard_spec_parsed_content.parsed_data})
+            data={'config': plugin_spec_parsed_content.parsed_data})
         assert serializer.is_valid() is True
 
-    def creating_tensorboard_job_from_valid_data(self):
-        assert TensorboardJob.objects.count() == 0
+    def creating_plugin_job_from_valid_data(self):
+        assert self.model_class.objects.count() == 0
         serializer = self.serializer_class(
-            data={'config': tensorboard_spec_parsed_content.parsed_data})
+            data={'config': plugin_spec_parsed_content.parsed_data})
         serializer.is_valid()
         serializer.save()
-        assert TensorboardJob.objects.count() == 1
+        assert self.model_class.objects.count() == 1
 
-    def updating_tensorboard_job(self):
-        tb = TensorboardJobFactory()
-        assert tb.config['version'] == 1
-        config = tensorboard_spec_parsed_content.parsed_data
+    def updating_plugin_job(self):
+        obj = self.factory_class()
+        assert obj.config['version'] == 1
+        config = plugin_spec_parsed_content.parsed_data
         config['version'] = 2
         serializer = self.serializer_class(
-            instance=tb,
+            instance=obj,
             data={'config': config})
         serializer.is_valid()
         serializer.save()
-        tb.refresh_from_db()
-        assert tb.config['version'] == 2
+        obj.refresh_from_db()
+        assert obj.config['version'] == 2
+
+
+class TestTensorboardJobSerializer(BaseTest):
+    serializer_class = TensorboardJobSerializer
+    model_class = TensorboardJob
+    factory_class = TensorboardJobFactory
+
+
+class TestNotebookJobSerializer(BaseTest):
+    serializer_class = NotebookJobSerializer
+    model_class = NotebookJob
+    factory_class = NotebookJobFactory
+
+
+# Prevent this base class from running tests
+del BasePluginJobSerializerTest

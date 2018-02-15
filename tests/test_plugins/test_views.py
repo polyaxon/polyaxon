@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from factories.fixtures import tensorboard_spec_parsed_content
+from factories.fixtures import plugin_spec_parsed_content
 from plugins.models import TensorboardJob
 from polyaxon.urls import API_V1
 from projects.models import Project
@@ -71,7 +71,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         # Starting again the tensorboard with different config
         with patch('projects.tasks.start_tensorboard.delay') as _:
             self.auth_client.post(self.url,
-                                  data={'config': tensorboard_spec_parsed_content.parsed_data})
+                                  data={'config': plugin_spec_parsed_content.parsed_data})
 
         self.object.tensorboard.refresh_from_db()
         # Check that the image was update
