@@ -194,7 +194,7 @@ exec_experiment_resources_content = """---
 exec_experiment_resources_parsed_content = Specification.read(exec_experiment_resources_content)
 
 
-tensorboard_spec_content = """---
+plugin_spec_content = """---
     version: 1
 
     project:
@@ -204,4 +204,4 @@ tensorboard_spec_content = """---
       image: my_image
 """
 
-tensorboard_spec_parsed_content = PluginSpecification.read(tensorboard_spec_content)
+plugin_spec_parsed_content = PluginSpecification.read(plugin_spec_content)

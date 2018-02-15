@@ -5,16 +5,25 @@ import factory
 from faker import Factory as FakerFactory
 
 from factories.factory_users import UserFactory
-from factories.fixtures import tensorboard_spec_parsed_content
-from plugins.models import TensorboardJob
+from factories.fixtures import plugin_spec_parsed_content
+from plugins.models import TensorboardJob, NotebookJob
 
 fake = FakerFactory.create()
 
 
 class TensorboardJobFactory(factory.DjangoModelFactory):
-    config = tensorboard_spec_parsed_content.parsed_data
+    config = plugin_spec_parsed_content.parsed_data
 
     user = factory.SubFactory(UserFactory)
 
     class Meta:
         model = TensorboardJob
+
+
+class NotebookJobFactory(factory.DjangoModelFactory):
+    config = plugin_spec_parsed_content.parsed_data
+
+    user = factory.SubFactory(UserFactory)
+
+    class Meta:
+        model = NotebookJob
