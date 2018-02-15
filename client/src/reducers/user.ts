@@ -14,10 +14,13 @@ export const userReducer: Reducer<UserStateSchema> =
       if (!_.includes(newState.userNames, user.username)) {
         newState.userNames.push(user.username);
       }
-      let normalizedusers = normalize(user, UserSchema).entities.jobs;
+      let normalizedUsers = normalize(user, UserSchema).entities.users;
       newState.byUserNames[user.username] = {
-        ...newState.byUserNames[user.username], ...normalizedusers[user.username]
+        ...newState.byUserNames[user.username], ...normalizedUsers[user.username]
       };
+      if (newState.byUserNames[user.username].projects == null) {
+        newState.byUserNames[user.username].projects = [];
+      }
       return newState;
     };
 
