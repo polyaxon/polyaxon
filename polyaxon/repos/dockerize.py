@@ -17,7 +17,7 @@ from experiments.models import Experiment
 from libs.paths import copy_to_tmp_dir, delete_tmp_dir
 from projects.models import Project
 from repos import git
-from repos.models import ExternalRepo
+from repos.models import ExternalRepo, Repo
 from spawner.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.repos.dockerize')
@@ -411,6 +411,9 @@ def build_experiment(experiment):
 
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     image_tag = experiment.commit
+    if not image_tag:
+        raise Repo.DoesNotExist(
+            'Repo was not found for project `{}`.'.format(experiment.unique_name))
 
     # Build the image
     docker_builder = ExperimentDockerBuilder(experiment_name=experiment.unique_name,
@@ -455,7 +458,8 @@ def build_job(project, job, job_builder):
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     last_commit = project.last_commit
     if not last_commit:
-        raise ValueError('Repo was not found for project `{}`.'.format(project))
+        raise Repo.DoesNotExist(
+            'Repo was not found for project `{}`.'.format(project.unique_name))
     image_tag = last_commit[0]
 
     # Build the image
