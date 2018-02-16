@@ -169,7 +169,7 @@ def start_tensorboard(project):
         in_cluster=True)
 
     spawner.start_tensorboard(image=project.tensorboard.image,
-                              resources=project.tensorboard.spec.resources)
+                              resources=project.tensorboard.compiled_spec.resources)
     project.has_tensorboard = True
     project.save()
 
@@ -195,7 +195,7 @@ def start_notebook(project, image):
         in_cluster=True)
 
     spawner.start_notebook(image=image,
-                           resources=project.notebook.spec.resources)
+                           resources=project.notebook.compiled_spec.resources)
     project.has_tensorboard = True
     project.save()
 
