@@ -8,6 +8,7 @@ from unittest import TestCase
 from faker import Faker
 
 from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.plugins import PluginJobConfig
 
 from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
 
@@ -93,7 +94,6 @@ class TestProjectClient(TestCase):
 
     @httpretty.activate
     def test_delete_project(self):
-        project_uuid = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.DELETE,
             ProjectClient._build_url(
@@ -237,6 +237,24 @@ class TestProjectClient(TestCase):
         assert result.status_code == 200
 
     @httpretty.activate
+    def test_start_tensorboard_with_config(self):
+        object = PluginJobConfig(config={})
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'tensorboard',
+                'start'),
+            body=json.dumps(object.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.start_tensorboard('username', 'project_name', object)
+        assert result.status_code == 200
+
+    @httpretty.activate
     def test_stop_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,
@@ -250,4 +268,54 @@ class TestProjectClient(TestCase):
             content_type='application/json',
             status=200)
         result = self.client.stop_tensorboard('username', 'project_name')
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_start_notebook(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'notebook',
+                'start'),
+            content_type='application/json',
+            status=200)
+        result = self.client.start_notebook('username', 'project_name')
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_start_notebook_with_config(self):
+        object = PluginJobConfig(config={})
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'notebook',
+                'start'),
+            body=json.dumps(object.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.start_notebook('username', 'project_name', object)
+        assert result.status_code == 200
+
+    @httpretty.activate
+    def test_stop_notebook(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'username',
+                'project_name',
+                'notebook',
+                'stop'),
+            content_type='application/json',
+            status=200)
+        result = self.client.stop_notebook('username', 'project_name')
         assert result.status_code == 200

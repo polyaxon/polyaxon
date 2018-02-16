@@ -117,7 +117,7 @@ class ProjectClient(PolyaxonClient):
         # TODO
         pass
 
-    def start_tensorboard(self, username, project_name):
+    def start_tensorboard(self, username, project_name, plugin_job_config=None):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
@@ -125,7 +125,8 @@ class ProjectClient(PolyaxonClient):
                                       'start')
 
         try:
-            return self.post(request_url)
+            plugin_job_config = plugin_job_config.to_dict() if plugin_job_config else {}
+            return self.post(request_url, json=plugin_job_config)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while starting tensorboard')
             return None
@@ -142,6 +143,28 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while stopping tensorboard')
             return None
 
-    def create_notebook(self, username, project_name):
-        # TODO
-        pass
+    def start_notebook(self, username, project_name, plugin_job_config=None):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'notebook',
+                                      'start')
+
+        try:
+            plugin_job_config = plugin_job_config.to_dict() if plugin_job_config else {}
+            return self.post(request_url, json=plugin_job_config)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while starting notebook')
+            return None
+
+    def stop_notebook(self, username, project_name):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'notebook',
+                                      'stop')
+        try:
+            return self.post(request_url)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while stopping notebook')
+            return None
