@@ -6,13 +6,14 @@ import sys
 
 import os
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 from polyaxon_schemas.utils import to_list
 
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer
 
 
-def check_polyaxonfile(file, log=True):
+def check_polyaxonfile(file, log=True, is_plugin=True):
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]
 
@@ -23,6 +24,8 @@ def check_polyaxonfile(file, log=True):
 
     try:
         plx_file = PolyaxonFile.read(file)
+        if is_plugin:
+            plx_file = PluginSpecification.read(plx_file._data)
         if log:
             Printer.print_success("Polyaxonfile valid")
         return plx_file

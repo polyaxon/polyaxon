@@ -6,8 +6,12 @@ import sys
 
 import clint
 from polyaxon_client.exceptions import PolyaxonShouldExitError, PolyaxonHTTPError
+from polyaxon_schemas.plugins import PluginJobConfig
 
-from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.cli.check import check_polyaxonfile
+from polyaxon_cli.cli.project import get_project_or_local, equal_projects
+from polyaxon_cli.cli.upload import upload
+from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
 
@@ -21,15 +25,35 @@ def notebook(ctx, project):
 
 
 @notebook.command()
+@click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
+              help='The polyaxon files to run.')
+@click.option('-u', is_flag=True, default=False,
+              help='To upload the repo before running.')
 @click.pass_context
-def start(ctx):
+def start(ctx, file, u):
     """Start a notebook deployment for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
+    file = file or 'polyaxonfile.yml'
+    plx_file = check_polyaxonfile(file, log=False, is_plugin=True)
+
+    # Check if we need to upload
+    if u:
+        ctx.invoke(upload)
+
+    num_experiments, _, _ = plx_file.experiments_def
+    project = ProjectManager.get_config_or_raise()
+    if not equal_projects(plx_file.project.name, project.unique_name):
+        Printer.print_error('Your polyaxonfile defined a different project '
+                            'than the one set in this repo.')
+        sys.exit(1)
+
+    plugin_job = PluginJobConfig(content=plx_file._data,
+                                 config=plx_file.experiment_specs[0].parsed_data)
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
-        PolyaxonClients().project.start_notebook(user, project_name)
+        PolyaxonClients().project.start_notebook(user, project_name, plugin_job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not start notebook project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
