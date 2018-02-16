@@ -504,5 +504,9 @@ class PluginSpecification(BaseSpecification):
         return self.validated_data[self.RUN_EXEC]
 
     @cached_property
+    def environment(self):
+        return self.validated_data.get(self.ENVIRONMENT, None)
+
+    @cached_property
     def resources(self):
         return self.environment.resources if self.environment else None
