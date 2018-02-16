@@ -176,7 +176,7 @@ def get(ctx):
     try:
         response = PolyaxonClients().project.get_project(user, project_name)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get project `{}`.'.format(project))
+        Printer.print_error('Could not get project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -253,7 +253,7 @@ def update(ctx, name, description, private):
     try:
         response = PolyaxonClients().project.update_project(user, project_name, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not update project `{}`.'.format(project))
+        Printer.print_error('Could not update project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -275,7 +275,8 @@ def groups(ctx, page):
     try:
         response = PolyaxonClients().project.list_experiment_groups(user, project_name, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get experiment groups for project `{}`.'.format(project))
+        Printer.print_error(
+            'Could not get experiment groups for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -312,7 +313,7 @@ def experiments(ctx, page, metrics):
     try:
         response = PolyaxonClients().project.list_experiments(user, project_name, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get experiments for project `{}`.'.format(project))
+        Printer.print_error('Could not get experiments for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
