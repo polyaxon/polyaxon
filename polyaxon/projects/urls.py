@@ -20,6 +20,10 @@ projects_urlpatterns = [
         plugins_views.StartTensorboardView.as_view()),
     url(r'^{}/{}/tensorboard/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         plugins_views.StopTensorboardView.as_view()),
+    url(r'^{}/{}/notebook/start/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+        plugins_views.StartNotebookView.as_view()),
+    url(r'^{}/{}/notebook/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+        plugins_views.StopNotebookView.as_view()),
     url(r'^{}/{}/groups/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         views.ExperimentGroupListView.as_view()),
     # Get all experiment under a project

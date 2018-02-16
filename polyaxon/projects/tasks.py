@@ -74,8 +74,8 @@ def stop_tensorboard(project_id):
     scheduler.stop_tensorboard(project)
 
 
-@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_BUILD, bind=True)
-def build_notebook(self, project_id):
+@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
+def build_notebook(project_id):
     project = get_valid_project(project_id)
     if not project or not project.notebook:
         return None

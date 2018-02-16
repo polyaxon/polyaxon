@@ -7,10 +7,10 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from plugins.serializers import TensorboardJobSerializer
+from plugins.serializers import TensorboardJobSerializer, NotebookJobSerializer
 from projects.models import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly
-from projects.tasks import start_tensorboard, stop_tensorboard
+from projects.tasks import start_tensorboard, stop_tensorboard, build_notebook, stop_notebook
 
 
 class StartTensorboardView(CreateAPIView):
@@ -71,4 +71,54 @@ class StopTensorboardView(CreateAPIView):
         obj = self.get_object()
         if obj.has_tensorboard:
             stop_tensorboard.delay(project_id=obj.id)
+        return Response(status=status.HTTP_200_OK)
+
+
+class StartNotebookView(CreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = NotebookJobSerializer
+    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
+    lookup_field = 'name'
+
+    def filter_queryset(self, queryset):
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
+
+    def _should_create_notebook_job(self, project):
+        # If the project already has a tensorboard specification
+        # and no data is provided to update
+        # then we do not need to create a TensorboardJob
+        if project.tensorboard and not self.request.data:
+            return False
+        return True
+
+    def _create_notebook(self, project):
+        if not self._should_create_notebook_job(project):
+            return
+        serializer = self.get_serializer(instance=project.tensorboard, data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+        project.notebook = serializer.save(user=self.request.user, project=project)
+        project.save()
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if not obj.has_notebook:
+            self._create_notebook(obj)
+            build_notebook.delay(project_id=obj.id)
+        return Response(status=status.HTTP_200_OK)
+
+
+class StopNotebookView(CreateAPIView):
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
+    lookup_field = 'name'
+
+    def filter_queryset(self, queryset):
+        username = self.kwargs['username']
+        return queryset.filter(user__username=username)
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.has_notebook:
+            stop_notebook.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
