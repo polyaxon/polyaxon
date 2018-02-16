@@ -119,4 +119,4 @@ def stop_notebook(project_id):
     if not project:
         return None
 
-    scheduler.stop_tensorboard(project)
+    scheduler.stop_notebook(project)

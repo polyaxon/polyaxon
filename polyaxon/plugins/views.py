@@ -85,17 +85,17 @@ class StartNotebookView(CreateAPIView):
         return queryset.filter(user__username=username)
 
     def _should_create_notebook_job(self, project):
-        # If the project already has a tensorboard specification
+        # If the project already has a notebook specification
         # and no data is provided to update
         # then we do not need to create a TensorboardJob
-        if project.tensorboard and not self.request.data:
+        if project.notebook and not self.request.data:
             return False
         return True
 
     def _create_notebook(self, project):
         if not self._should_create_notebook_job(project):
             return
-        serializer = self.get_serializer(instance=project.tensorboard, data=self.request.data)
+        serializer = self.get_serializer(instance=project.notebook, data=self.request.data)
         serializer.is_valid(raise_exception=True)
         project.notebook = serializer.save(user=self.request.user, project=project)
         project.save()
