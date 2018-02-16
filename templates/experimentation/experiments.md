@@ -224,7 +224,7 @@ environment:
   n_workers: 4
   n_ps: 1
 
-  master_resources:
+  resources:
     cpu:
       requests: 2
       limits: 4
@@ -279,7 +279,7 @@ By default, Polyaxon always creates a master, so you must take that into conside
 Also another thing you should, is that by default, all nodes are created without specifying the resources,
 You only need to specify the resources to have more control over the created pods.
 
-For the master node, `master_resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
+For the master node, `resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
 
 For the workers, we have two ways to define resources, the `default_worker_resources` and
 `worker_resources` that takes the index of the worker to define the resources for.

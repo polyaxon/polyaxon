@@ -105,9 +105,9 @@ The number of workers to use for an experiment.
 
 The number of parameter server to use for an experiment.
 
-### master_resources
+### resources
 
-The resources to use the master job.
+The resources to use for the job. In the case of distributed run, its the resources to use for the master job.
 A resources definition, is optional and made of three optional fields:
 
  * cpu: {limits: value, requests: value}
