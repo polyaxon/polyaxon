@@ -248,3 +248,28 @@ class TestUploadFilesView(BaseViewTest):
 
         # Log old user, otherwise other tests will crash
         self.auth_client.login_user(user)
+
+    def test_cannot_upload_if_project_has_a_running_notebook(self):
+        user = self.auth_client.user
+        repo_name = self.project.name
+
+        # Update project with has_notebook True
+        self.project.has_notebook = True
+        self.project.save()
+
+        assert self.model_class.objects.count() == 0
+
+        uploaded_file = self.get_upload_file()
+
+        with patch('repos.tasks.handle_new_files.delay') as mock_task:
+            response = self.auth_client.put(self.url,
+                                            data={'repo': uploaded_file},
+                                            content_type=MULTIPART_CONTENT)
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+        file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT, user.username, repo_name)
+        self.assertFalse(os.path.exists(file_path))
+        assert mock_task.call_count == 0
+        # No new repo was not created and still exists
+        assert self.model_class.objects.count() == 0
+        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name, repo_name)
+        self.assertFalse(os.path.exists(repo_path))
