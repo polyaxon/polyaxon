@@ -34,6 +34,20 @@ def start(ctx, file, u):
     """Start a notebook deployment for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon notebook start -f file -f file_override ...
+    ```
+
+    Example: upload before running
+
+    \b
+    ```bash
+    $ polyaxon -p user12/mnist notebook start -f file -u
+    ```
     """
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file, log=False, is_plugin=True)
@@ -42,7 +56,6 @@ def start(ctx, file, u):
     if u:
         ctx.invoke(upload)
 
-    num_experiments, _, _ = plx_file.experiments_def
     project = ProjectManager.get_config_or_raise()
     if not equal_projects(plx_file.project.name, project.unique_name):
         Printer.print_error('Your polyaxonfile defined a different project '
@@ -50,7 +63,7 @@ def start(ctx, file, u):
         sys.exit(1)
 
     plugin_job = PluginJobConfig(content=plx_file._data,
-                                 config=plx_file.experiment_specs[0].parsed_data)
+                                 config=plx_file.parsed_data)
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         PolyaxonClients().project.start_notebook(user, project_name, plugin_job)
