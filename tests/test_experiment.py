@@ -171,7 +171,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_dict(humanize_values=True)
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
 
-    def test_experiment_metricfig(self):
+    def test_experiment_metric_config(self):
         config_dict = {'uuid': uuid.uuid4().hex,
                        'experiment': uuid.uuid4().hex,
                        'created_at': local_now().isoformat(),
