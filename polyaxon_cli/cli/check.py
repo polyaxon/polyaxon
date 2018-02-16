@@ -13,7 +13,7 @@ from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer
 
 
-def check_polyaxonfile(file, log=True, is_plugin=True):
+def check_polyaxonfile(file, log=True, is_plugin=False):
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]
 
