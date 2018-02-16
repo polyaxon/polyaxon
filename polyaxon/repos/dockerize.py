@@ -15,6 +15,7 @@ from docker.errors import DockerException
 from events import publisher
 from experiments.models import Experiment
 from libs.paths import copy_to_tmp_dir, delete_tmp_dir
+from projects.models import Project
 from repos import git
 from repos.models import ExternalRepo
 from spawner.utils.constants import ExperimentLifeCycle
@@ -73,12 +74,10 @@ def experiment_still_running(experiment_uuid):
     return True
 
 
-class DockerBuilder(object):
+class BaseDockerBuilder(object):
     CHECK_INTERVAL = 10
 
     def __init__(self,
-                 experiment_name,
-                 experiment_uuid,
                  repo_path,
                  from_image,
                  image_name,
@@ -87,8 +86,6 @@ class DockerBuilder(object):
                  env_vars=None,
                  workdir='/code',
                  dockerfile_name='Dockerfile'):
-        self.experiment_name = experiment_name
-        self.experiment_uuid = experiment_uuid
         self.from_image = from_image
         self.image_name = image_name
         self.image_tag = image_tag
@@ -124,6 +121,18 @@ class DockerBuilder(object):
                               reauth=True)
         except DockerException as e:
             logger.exception('Failed to connect to registry %s\n' % e)
+
+    def _handle_logs(self, log_line):
+        raise NotImplementedError
+
+    def _check_pulse(self, check_pulse):
+        """Checks if the job/experiment is still running.
+
+        returns:
+          * int: the updated check_pulse (+1) value
+          * boolean: if the docker process should stop
+        """
+        raise NotImplementedError
 
     def _get_requirements_path(self):
         requirements_path = os.path.join(self.tmp_repo_path, 'polyaxon_requirements.txt')
@@ -184,23 +193,11 @@ class DockerBuilder(object):
             container_limits=limits,
             stream=True,
         ):
-            check_pulse += 1
-            publisher.publish_log(
-                log_line=log_line,
-                status=ExperimentLifeCycle.BUILDING,
-                experiment_uuid=self.experiment_uuid,
-                experiment_name=self.experiment_name,
-                job_uuid='all',
-                persist=False  # TODO: ADD log persistence
-            )
-            # Check if experiment is not stopped in the meanwhile
-            if check_pulse > self.CHECK_INTERVAL:
-                if not experiment_still_running(self.experiment_uuid):
-                    logger.info('Experiment `{}` is not running, stopping build'.format(
-                        self.experiment_uuid))
-                    return False
-                else:
-                    check_pulse = 0
+            self._handle_logs(log_line)
+            # Check if we need to stop this process
+            check_pulse, should_stop = self._check_pulse(check_pulse)
+            if should_stop:
+                return False
 
         # Checkout back to master
         git.checkout_commit(repo_path=self.tmp_repo_path)
@@ -229,26 +226,115 @@ class DockerBuilder(object):
                     logger.debug('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
                     last_emit_time = time.time()
 
-                publisher.publish_log(
-                    log_line=log_line,
-                    status=ExperimentLifeCycle.BUILDING,
-                    experiment_uuid=self.experiment_uuid,
-                    experiment_name=self.experiment_name,
-                    job_uuid='all',
-                    persist=False  # TODO: ADD log persistence
-                )
+                self._handle_logs(log_line)
 
-            # Check if experiment is not stopped in the meanwhile
-            check_pulse += 1
-            if check_pulse > self.CHECK_INTERVAL:
-                if not experiment_still_running(self.experiment_uuid):
-                    logger.info('Experiment `{}` is not running, stopping build'.format(
-                        self.experiment_uuid))
-                    return False
-                else:
-                    check_pulse = 0
+                # Check if we need to stop this process
+            check_pulse, should_stop = self._check_pulse(check_pulse)
+            if should_stop:
+                return False
 
         return True
+
+
+class ExperimentDockerBuilder(BaseDockerBuilder):
+    CHECK_INTERVAL = 10
+
+    def __init__(self,
+                 experiment_name,
+                 experiment_uuid,
+                 repo_path,
+                 from_image,
+                 image_name,
+                 image_tag,
+                 steps=None,
+                 env_vars=None,
+                 workdir='/code',
+                 dockerfile_name='Dockerfile'):
+        self.experiment_name = experiment_name
+        self.experiment_uuid = experiment_uuid
+        super(ExperimentDockerBuilder, self).__init__(
+            repo_path=repo_path,
+            from_image=from_image,
+            image_name=image_name,
+            image_tag=image_tag,
+            steps=steps,
+            env_vars=env_vars,
+            workdir=workdir,
+            dockerfile_name=dockerfile_name)
+
+    def _handle_logs(self, log_line):
+        publisher.publish_log(
+            log_line=log_line,
+            status=ExperimentLifeCycle.BUILDING,
+            experiment_uuid=self.experiment_uuid,
+            experiment_name=self.experiment_name,
+            job_uuid='all',
+            persist=False  # TODO: ADD log persistence
+        )
+
+    def _check_pulse(self, check_pulse):
+        # Check if experiment is not stopped in the meanwhile
+        if check_pulse > self.CHECK_INTERVAL:
+            if not experiment_still_running(self.experiment_uuid):
+                logger.info('Experiment `{}` is not running, stopping build'.format(
+                    self.experiment_name))
+                return check_pulse, True
+            else:
+                check_pulse = 0
+        return check_pulse, False
+
+
+class JobDockerBuilder(BaseDockerBuilder):
+    CHECK_INTERVAL = 10
+
+    def __init__(self,
+                 project_id,
+                 project_name,
+                 repo_path,
+                 from_image,
+                 image_name,
+                 image_tag,
+                 steps=None,
+                 env_vars=None,
+                 workdir='/code',
+                 dockerfile_name='Dockerfile'):
+        self.project_id = project_id
+        self.project_name = project_name
+        super(JobDockerBuilder, self).__init__(
+            repo_path=repo_path,
+            from_image=from_image,
+            image_name=image_name,
+            image_tag=image_tag,
+            steps=steps,
+            env_vars=env_vars,
+            workdir=workdir,
+            dockerfile_name=dockerfile_name)
+
+    def _handle_logs(self, log_line):
+        pass
+
+    def _check_pulse(self, check_pulse):
+        pass
+
+
+class NotebookDockerBuilder(JobDockerBuilder):
+    def _check_pulse(self, check_pulse):
+        # Check if experiment is not stopped in the meanwhile
+        if check_pulse > self.CHECK_INTERVAL:
+            try:
+                project = Project.objects.get(id=self.project_id)
+            except Project.DoesNotExist:
+                logger.info('Project `{}` does not exist anymore, stopping build'.format(
+                    self.project_name))
+                return check_pulse, True
+
+            if not project.has_notebook or not project.notebook:
+                logger.info('Project `{}` does not have a notebook anymore, stopping build'.format(
+                    self.project_name))
+                return check_pulse, True
+            else:
+                check_pulse = 0
+        return check_pulse, False
 
 
 def get_experiment_image_info(experiment):
@@ -327,14 +413,14 @@ def build_experiment(experiment):
     image_tag = experiment.commit
 
     # Build the image
-    docker_builder = DockerBuilder(experiment_name=experiment.unique_name,
-                                   experiment_uuid=experiment.uuid.hex,
-                                   repo_path=repo_path,
-                                   from_image=experiment_spec.run_exec.image,
-                                   image_name=image_name,
-                                   image_tag=image_tag,
-                                   steps=experiment_spec.run_exec.steps,
-                                   env_vars=experiment_spec.run_exec.env_vars)
+    docker_builder = ExperimentDockerBuilder(experiment_name=experiment.unique_name,
+                                             experiment_uuid=experiment.uuid.hex,
+                                             repo_path=repo_path,
+                                             from_image=experiment_spec.run_exec.image,
+                                             image_name=image_name,
+                                             image_tag=image_tag,
+                                             steps=experiment_spec.run_exec.steps,
+                                             env_vars=experiment_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
                          registry_host=settings.REGISTRY_HOST)
@@ -346,3 +432,53 @@ def build_experiment(experiment):
         return False
     docker_builder.clean()
     return True
+
+
+def build_job(project, job, job_builder):
+    """Build necessary code for a job to run"""
+    project_name = project.name
+    job_spec = job.compiled_spec
+    if job_spec.run_exec.git:  # We need to fetch the repo first
+
+        repo, is_created = ExternalRepo.objects.get_or_create(project=project,
+                                                              git_url=job_spec.run_exec.git)
+        if not is_created:
+            # If the repo already exist, we just need to refetch it
+            git.fetch(git_url=repo.git_url, repo_path=repo.path)
+
+        repo_path = repo.path
+        repo_name = repo.name
+    else:
+        repo_path = project.repo.path
+        repo_name = project_name
+
+    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    last_commit = project.last_commit
+    if not last_commit:
+        raise ValueError('Repo was not found for project `{}`.'.format(project))
+    image_tag = last_commit[0]
+
+    # Build the image
+    docker_builder = job_builder(project_id=project.id,
+                                 project_name=project.unique_name,
+                                 repo_path=repo_path,
+                                 from_image=job_spec.run_exec.image,
+                                 image_name=image_name,
+                                 image_tag=image_tag,
+                                 steps=job_spec.run_exec.steps,
+                                 env_vars=job_spec.run_exec.env_vars)
+    docker_builder.login(registry_user=settings.REGISTRY_USER,
+                         registry_password=settings.REGISTRY_PASSWORD,
+                         registry_host=settings.REGISTRY_HOST)
+    if not docker_builder.build():
+        docker_builder.clean()
+        return False
+    if not docker_builder.push():
+        docker_builder.clean()
+        return False
+    docker_builder.clean()
+    return True
+
+
+def build_notebook_job(project, job):
+    return build_job(project=project, job=job, job_builder=NotebookDockerBuilder)

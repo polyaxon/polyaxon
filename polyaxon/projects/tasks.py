@@ -82,7 +82,7 @@ def build_notebook(self, project_id):
 
     # docker image
     try:
-        status = dockerize.build_job(project.notebook)
+        status = dockerize.build_notebook_job(project=project, job=project.notebook)
     except DockerException:
         return
     except Repo.DoesNotExist:

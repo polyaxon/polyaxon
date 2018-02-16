@@ -181,12 +181,14 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
         with patch('spawner.scheduler.stop_tensorboard') as tensorboard_mock_fct:
-            with patch('spawner.scheduler.stop_experiment') as xp_mock_stop:
-                with patch('projects.utils.delete_path') as delete_path_project_mock_stop:
-                    with patch('experiments.utils.delete_path') as delete_path_xp_mock_stop:
-                        resp = self.auth_client.delete(self.url)
+            with patch('spawner.scheduler.stop_notebook') as notebook_mock_fct:
+                with patch('spawner.scheduler.stop_experiment') as xp_mock_stop:
+                    with patch('projects.utils.delete_path') as delete_path_project_mock_stop:
+                        with patch('experiments.utils.delete_path') as delete_path_xp_mock_stop:
+                            resp = self.auth_client.delete(self.url)
         assert xp_mock_stop.call_count == 4
         assert tensorboard_mock_fct.call_count == 1
+        assert notebook_mock_fct.call_count == 1
         # 2 * project + 2 * 2 * groups + 1 repo
         assert delete_path_project_mock_stop.call_count == 7
         assert delete_path_xp_mock_stop.call_count == 8  # 2 * 4  * groups
