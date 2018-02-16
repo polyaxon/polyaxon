@@ -181,7 +181,7 @@ option | type | description
 Usage:
 
 ```bash
-$ polyaxon project start_tensorboard
+$ polyaxon tensorboard start
 ```
 
 Start a tensorboard deployment for this project. It will show all experiments under the project.
@@ -194,7 +194,7 @@ Uses [Caching](/polyaxon_cli/introduction#Caching)
 Usage:
 
 ```
-$ polyaxon project stop_tensorboard
+$ polyaxon tensorboard stop
 ```
 
 Stops the tensorboard deployment for this project if it exists.

@@ -340,7 +340,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 15. Finally, Let start tensorboard to see the model outputs:
 
      ```bash
-     $ polyaxon project start_tensorboard
+     $ polyaxon tensorboard start
 
      Tensorboard is being deployed for project `quick-start`
 

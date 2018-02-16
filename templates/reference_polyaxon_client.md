@@ -24,6 +24,6 @@ with Polyaxon API in a programmatic way.
  * `Experiment`: A client for doing CRUD operations on experiments, as well as statuses, jobs, resources, and logs.
  * `Experiment group`: A client for doing CRUD operations on experiment groups, as well as fetching experiments per group.
  * `Job`: A client for getting information, resources, and logs of jobs.
- * `Project`: A client for doing CRUD operations on projects, as well as getting and creating experiments and experiment groups, creating and stopping tensorboard, and uploading code.
+ * `Project`: A client for doing CRUD operations on projects, as well as getting and creating experiments and experiment groups, creating and stopping tensorboard/notebook, and uploading code.
  * `User`: A client to manage users and superuser roles.
  * `Version`: A client to get current and supported versions of several Polyaxon component.

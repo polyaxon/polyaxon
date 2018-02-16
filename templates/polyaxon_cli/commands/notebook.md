@@ -22,13 +22,28 @@ option | type | description
 Usage:
 
 ```bash
-$ polyaxon tensorboard start
+$ polyaxon notebook start
 ```
 
 Start a notebook deployment for this project.
 
 
 Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+
+Example:
+
+Example specifying the polyaxonfile
+
+```bash
+$ polyaxon notebook start -f file -f file_override ...
+```
+
+Example upload before running
+
+```bash
+$ polyaxon -p user12/mnist notebook start -f file -u
+```
 
 Options:
 
@@ -43,9 +58,9 @@ option | type | description
 Usage:
 
 ```
-$ polyaxon tensorboard stop
+$ polyaxon notebook stop
 ```
 
-Stops the tensorboard deployment for this project if it exists.
+Stops the notebook deployment for this project if it exists.
 
 Uses [Caching](/polyaxon_cli/introduction#Caching)
