@@ -49,21 +49,24 @@ def start(ctx, file, u):
     $ polyaxon -p user12/mnist notebook start -f file -u
     ```
     """
-    file = file or 'polyaxonfile.yml'
-    plx_file = check_polyaxonfile(file, log=False, is_plugin=True)
+    plx_file = None
+    plugin_job = None
+    if file:
+        plx_file = check_polyaxonfile(file, log=False, is_plugin=True)
 
     # Check if we need to upload
     if u:
         ctx.invoke(upload)
 
-    project = ProjectManager.get_config_or_raise()
-    if not equal_projects(plx_file.project.name, project.unique_name):
-        Printer.print_error('Your polyaxonfile defined a different project '
-                            'than the one set in this repo.')
-        sys.exit(1)
+    if plx_file:
+        project = ProjectManager.get_config_or_raise()
+        if not equal_projects(plx_file.project.name, project.unique_name):
+            Printer.print_error('Your polyaxonfile defined a different project '
+                                'than the one set in this repo.')
+            sys.exit(1)
 
-    plugin_job = PluginJobConfig(content=plx_file._data,
-                                 config=plx_file.parsed_data)
+        plugin_job = PluginJobConfig(content=plx_file._data,
+                                     config=plx_file.parsed_data)
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         PolyaxonClients().project.start_notebook(user, project_name, plugin_job)
