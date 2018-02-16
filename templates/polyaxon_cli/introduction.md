@@ -32,6 +32,9 @@ $ polyaxon command --help
  * [Experiment Group](commands/experiment_group)
  * [Experiment](commands/experiment)
  * [Job](commands/job)
+ * [Dashboard](commands/dashboard)
+ * [Tensorboard](commands/tensorboard)
+ * [Notebook](commands/notebook)
  * [Cluster](commands/cluster)
  * [Version](commands/version)
 
