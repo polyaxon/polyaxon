@@ -377,11 +377,12 @@ def get_job_image_info(project, job):
             raise ValueError('Repo was not found for `{}`.'.format(job_spec.run_exec.git))
 
         repo_name = repo.name
+        last_commit = repo.last_commit
     else:
         repo_name = project_name
+        last_commit = project.repo.last_commit
 
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
-    last_commit = project.last_commit
     if not last_commit:
         raise ValueError('Repo was not found for project `{}`.'.format(project))
     return image_name, last_commit[0]
@@ -451,12 +452,13 @@ def build_job(project, job, job_builder):
 
         repo_path = repo.path
         repo_name = repo.name
+        last_commit = repo.last_commit
     else:
         repo_path = project.repo.path
+        last_commit = project.repo.last_commit
         repo_name = project_name
 
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
-    last_commit = project.last_commit
     if not last_commit:
         raise Repo.DoesNotExist(
             'Repo was not found for project `{}`.'.format(project.unique_name))
