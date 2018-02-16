@@ -25,6 +25,8 @@ def tensorboard(ctx, project):
 def start(ctx):
     """Start a tensorboard deployment for this project.
 
+    It will show a tensorboard with all experiments under the project.
+
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
