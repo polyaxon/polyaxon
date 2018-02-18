@@ -492,7 +492,7 @@ class K8SProjectSpawner(K8SManager):
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            name=self.tensorboard_app,
+            name=self.notebook_app,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
