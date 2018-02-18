@@ -196,7 +196,7 @@ def start_notebook(project, image):
 
     spawner.start_notebook(image=image,
                            resources=project.notebook.compiled_spec.resources)
-    project.has_tensorboard = True
+    project.has_notebook = True
     project.save()
 
 
