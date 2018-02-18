@@ -486,7 +486,7 @@ class K8SProjectSpawner(K8SManager):
             port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
         return port
 
-    def start_notebook(self, image, resources=None):
+    def start_notebook(self, image, repo_path, resources=None):
         ports = [self.get_notebook_port()]
         target_ports = [8888]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
@@ -499,7 +499,9 @@ class K8SProjectSpawner(K8SManager):
             volumes=volumes,
             image=image,
             command=["/bin/sh", "-c"],
-            args=["jupyter notebook"],
+            args=["jupyter notebook "
+                  "--no-browser --port=8888 --ip=0.0.0.0 "
+                  "--notebook-dir={} --allow-root".format(repo_path)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,

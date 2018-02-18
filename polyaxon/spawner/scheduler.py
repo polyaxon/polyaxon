@@ -12,6 +12,7 @@ from polyaxon_schemas.utils import TaskType
 from rest_framework import fields
 
 from jobs.models import JobResources
+from jobs.utils import get_job_repo_path
 from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
 from repos.dockerize import get_experiment_image_info
@@ -194,7 +195,9 @@ def start_notebook(project, image):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
+    repo_path = get_job_repo_path(job=project.notebook, project=project)
     spawner.start_notebook(image=image,
+                           repo_path=repo_path,
                            resources=project.notebook.compiled_spec.resources)
     project.has_notebook = True
     project.save()
