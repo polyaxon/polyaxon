@@ -369,7 +369,7 @@ def get_job_image_info(project, job):
 
         try:
             repo = ExternalRepo.objects.get(project=project,
-                                            git_url=job.run_exec.git)
+                                            git_url=job_spec.run_exec.git)
         except ExternalRepo.DoesNotExist:
             logger.error(
                 'Something went wrong, '
