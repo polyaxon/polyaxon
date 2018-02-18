@@ -490,6 +490,7 @@ class K8SProjectSpawner(K8SManager):
         ports = [self.get_notebook_port()]
         target_ports = [8888]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
+        notebook_path = '/notebook/{}'.format(self.project_name.replace('.', '/'))
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             name=self.notebook_app,
@@ -501,7 +502,7 @@ class K8SProjectSpawner(K8SManager):
             command=["/bin/sh", "-c"],
             args=["jupyter notebook "
                   "--no-browser --port=8888 --ip=0.0.0.0 "
-                  "--allow-root"],
+                  "--allow-root --NotebookApp.default_url={}".format(notebook_path)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
@@ -529,7 +530,7 @@ class K8SProjectSpawner(K8SManager):
         if settings.K8S_INGRESS_ENABLED:
             annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
             paths = [{
-                'path': '/notebook/{}'.format(self.project_name.replace('.', '/')),
+                'path': notebook_path,
                 'backend': {
                     'serviceName': deployment_name,
                     'servicePort': ports[0]
