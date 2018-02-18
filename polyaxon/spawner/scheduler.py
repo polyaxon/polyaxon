@@ -195,10 +195,7 @@ def start_notebook(project, image):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    repo_path = get_job_repo_path(job=project.notebook, project=project)
-    spawner.start_notebook(image=image,
-                           repo_path=repo_path,
-                           resources=project.notebook.compiled_spec.resources)
+    spawner.start_notebook(image=image, resources=project.notebook.compiled_spec.resources)
     project.has_notebook = True
     project.save()
 

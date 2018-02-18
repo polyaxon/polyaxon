@@ -31,3 +31,4 @@ def SIDECAR_ARGS_FN(pod_id):
 
 DATA_VOLUME = 'data'
 OUTPUTS_VOLUME = 'outputs'
+REPOS_VOLUME = 'repos'
