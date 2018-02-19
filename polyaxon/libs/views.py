@@ -21,8 +21,8 @@ class ListCreateAPIView(generics.ListCreateAPIView):
         return self.serializer_class
 
 
-class DownloadView(APIView):
-    """Base view for to redirect to a file by instructing Nginx
+class ProtectedView(APIView):
+    """Base view for to redirect to a file/path by instructing Nginx
     to do so via special HTTP response headers.
     """
     permission_classes = (IsAuthenticated,)
@@ -37,13 +37,13 @@ class DownloadView(APIView):
 
         return response
 
-    def get(self, request, file_path):
+    def get(self, request, path, filename):
 
         if settings.DEBUG:  # pragma: no cover
             # Redirect to the checked-in test data. Works only with development settings.
-            return HttpResponseRedirect(file_path)
+            return HttpResponseRedirect(path)
 
-        return self._redirect_to_file(file_path)
+        return self._redirect_to_file(path, filename)
 
 
 class UploadView(APIView):
