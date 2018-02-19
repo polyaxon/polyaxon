@@ -18,6 +18,7 @@ api_patterns = [
     url(r'', include('experiments.urls', namespace='experiments')),
     url(r'', include('repos.urls', namespace='repos')),
     url(r'', include('projects.urls', namespace='projects')),
+    url(r'', include('plugins.urls', namespace='plugins')),
 ]
 
 urlpatterns = [

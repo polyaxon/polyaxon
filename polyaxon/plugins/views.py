@@ -2,15 +2,18 @@
 from __future__ import absolute_import, division, print_function
 
 from django.conf import settings
+from django.http import Http404
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from libs.views import ProtectedView
 from plugins.serializers import TensorboardJobSerializer, NotebookJobSerializer
 from projects.models import Project
-from projects.permissions import IsProjectOwnerOrPublicReadOnly
+from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from projects.tasks import start_tensorboard, stop_tensorboard, build_notebook, stop_notebook
+from spawner import scheduler
 
 
 class StartTensorboardView(CreateAPIView):
@@ -122,3 +125,31 @@ class StopNotebookView(CreateAPIView):
         if obj.has_notebook:
             stop_notebook.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
+
+
+class NotebookView(ProtectedView):
+
+    def get_object(self):
+        return get_permissible_project(view=self)
+
+    def get(self, request, *args, **kwargs):
+        project = self.get_object()
+        if not project.has_notebook:
+            raise Http404
+        service_url = scheduler.get_notebook_url(project=project)
+        return self.redirect(path='/proxy/{}/notebook/{}/{}'.format(
+            service_url, project.user.username, project.name))
+
+
+class TensorboardView(ProtectedView):
+
+    def get_object(self):
+        return get_permissible_project(view=self)
+
+    def get(self, request, *args, **kwargs):
+        project = self.get_object()
+        if not project.has_notebook:
+            raise Http404
+        service_url = scheduler.get_tensorboard_url(project=project)
+        return self.redirect(path='/proxy/{}/tensorboard/{}/{}'.format(
+            service_url, project.user.username, project.name))

@@ -28,7 +28,7 @@ class ProtectedView(APIView):
     permission_classes = (IsAuthenticated,)
 
     @staticmethod
-    def _redirect_to_file(path, filename=None):
+    def _redirect(path, filename=None):
         response = HttpResponse()
         response['Content-Type'] = u''
         response['X-Accel-Redirect'] = path.encode('utf-8')
@@ -37,13 +37,13 @@ class ProtectedView(APIView):
 
         return response
 
-    def get(self, request, path, filename):
+    def redirect(self, path, filename=None):
 
         if settings.DEBUG:  # pragma: no cover
             # Redirect to the checked-in test data. Works only with development settings.
             return HttpResponseRedirect(path)
 
-        return self._redirect_to_file(path, filename)
+        return self._redirect(path, filename)
 
 
 class UploadView(APIView):
