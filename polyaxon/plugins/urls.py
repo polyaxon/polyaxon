@@ -8,9 +8,9 @@ from libs.urls import NAME_PATTERN, USERNAME_PATTERN
 from plugins import views
 
 plugin_urlpatterns = [
-    url(r'^notebook/{}/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    url(r'^notebook/{}/{}/?(?P<path>.*)/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         views.NotebookView.as_view()),
-    url(r'^tensorboard/{}/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    url(r'^tensorboard/{}/{}/?(?P<path>.*)/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
         views.TensorboardView.as_view()),
 ]
 
