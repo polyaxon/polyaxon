@@ -12,7 +12,6 @@ from polyaxon_schemas.utils import TaskType
 from rest_framework import fields
 
 from jobs.models import JobResources
-from jobs.utils import get_job_repo_path
 from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
 from repos.dockerize import get_experiment_image_info

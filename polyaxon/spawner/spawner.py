@@ -413,7 +413,7 @@ class K8SProjectSpawner(K8SManager):
             project_uuid=self.project_uuid, name=job_name)
         service = self.get_service(deployment_name)
         if service:
-            return '{}:{}'.format(deployment_name, service.spec.ports[0].port)
+            return '{}:{}'.format(service.spec.cluster_ip, service.spec.ports[0].port)
         return None
 
     def get_tensorboard_url(self):
