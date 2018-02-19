@@ -75,7 +75,7 @@ def start(ctx, file, u):
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    Printer.print_success('Tensorboard is being deployed for project `{}`'.format(project_name))
+    Printer.print_success('Notebook is being deployed for project `{}`'.format(project_name))
     clint.textui.puts("It may take some time before you can access the dashboard.\n")
     clint.textui.puts("If you used an ingress, your dashboard will be available on:\n")
     with clint.textui.indent(4):
@@ -101,7 +101,7 @@ def stop(ctx):
 
     try:
         PolyaxonClients().project.stop_notebook(user, project_name)
-        Printer.print_success('Tensorboard is being deleted')
+        Printer.print_success('Notebook is being deleted')
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not stop notebook project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
