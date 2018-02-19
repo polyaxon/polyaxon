@@ -187,6 +187,15 @@ def stop_tensorboard(project):
     project.save()
 
 
+def get_tensorboard_url(project):
+    spawner = K8SProjectSpawner(project_name=project.unique_name,
+                                project_uuid=project.uuid.hex,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True)
+    return spawner.get_tensorboard_url()
+
+
 def start_notebook(project, image):
     spawner = K8SProjectSpawner(
         project_name=project.unique_name,
@@ -210,3 +219,12 @@ def stop_notebook(project):
     spawner.stop_notebook()
     project.has_notebook = False
     project.save()
+
+
+def get_notebook_url(project):
+    spawner = K8SProjectSpawner(project_name=project.unique_name,
+                                project_uuid=project.uuid.hex,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True)
+    return spawner.get_notebook_url()
