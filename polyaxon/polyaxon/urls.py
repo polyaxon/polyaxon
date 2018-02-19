@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic import TemplateView
 
 from polyaxon import views
 
@@ -18,10 +17,10 @@ api_patterns = [
     url(r'', include('experiments.urls', namespace='experiments')),
     url(r'', include('repos.urls', namespace='repos')),
     url(r'', include('projects.urls', namespace='projects')),
-    url(r'', include('plugins.urls', namespace='plugins')),
 ]
 
 urlpatterns = [
+    url(r'', include('plugins.urls', namespace='plugins')),
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^_admin/', include(admin.site.urls)),
     url(r'^_health/?$', views.HealthView.as_view(), name='health_check'),
