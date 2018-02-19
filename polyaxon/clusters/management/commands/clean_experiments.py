@@ -8,5 +8,5 @@ from spawner.utils.constants import ExperimentLifeCycle
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for experiment in Experiment.objects.filter(
-                experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS):
+                experiment_status__status__in=ExperimentLifeCycle.RUNNING_STATUS):
             scheduler.stop_experiment(experiment)
