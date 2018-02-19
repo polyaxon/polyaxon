@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ .Release.Name }}-init-db"
+  name: "{{ .Release.Name }}-sync-db"
   labels:
     app: {{ template "polyaxon.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
@@ -10,20 +10,20 @@ metadata:
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
-    "helm.sh/hook": post-install
+    "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
-      name: "{{ .Release.Name }}-init-db"
+      name: "{{ .Release.Name }}-sync-db"
       labels:
         app: {{ template "polyaxon.fullname" . }}
         release: "{{ .Release.Name }}"
     spec:
       restartPolicy: Never
       containers:
-      - name: init-db-job
+      - name: sync-db-job
         image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
         args: ["migrate"]
