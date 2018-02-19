@@ -520,7 +520,7 @@ class K8SProjectSpawner(K8SManager):
                   "--port=8888 "
                   "--ip=0.0.0.0 "
                   "--allow-root "
-                  "--NotebookApp.base_url={notebook_path}".format(notebook_path)],
+                  "--NotebookApp.base_url={notebook_path}".format(notebook_path=notebook_path)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
