@@ -501,8 +501,11 @@ class K8SProjectSpawner(K8SManager):
             image=image,
             command=["/bin/sh", "-c"],
             args=["jupyter notebook "
-                  "--no-browser --port=8888 --ip=0.0.0.0 "
-                  "--allow-root --NotebookApp.default_url={}".format(notebook_path)],
+                  "--no-browser "
+                  "--port=8888 "
+                  "--ip=0.0.0.0 "
+                  "--allow-root "
+                  "--NotebookApp.base_url={notebook_path}".format(notebook_path)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
