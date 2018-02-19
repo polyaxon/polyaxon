@@ -416,6 +416,16 @@ class K8SProjectSpawner(K8SManager):
             return '{}:{}'.format(service.spec.cluster_ip, service.spec.ports[0].port)
         return None
 
+    @staticmethod
+    def _get_service_type():
+        if settings.USE_PUBLIC_JOBS:
+            return None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
+        return None
+
+    @staticmethod
+    def _use_ingress():
+        return settings.K8S_INGRESS_ENABLED and settings.USE_PUBLIC_JOBS
+
     def get_tensorboard_url(self):
         return self._get_service_url(self.TENSORBOARD_APP)
 
@@ -455,18 +465,17 @@ class K8SProjectSpawner(K8SManager):
                                                    type=settings.TYPE_LABELS_EXPERIMENT)
 
         self.create_or_update_deployment(name=deployment_name, data=deployment)
-        service_type = None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
         service = services.get_service(
             namespace=self.namespace,
             name=deployment_name,
             labels=deployment_labels,
             ports=ports,
             target_ports=target_ports,
-            service_type=service_type)
+            service_type=self._get_service_type())
 
         self.create_or_update_service(name=deployment_name, data=service)
 
-        if settings.K8S_INGRESS_ENABLED:
+        if self._use_ingress():
             annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
             paths = [{
                 'path': '/tensorboard/{}'.format(self.project_name.replace('.', '/')),
@@ -487,7 +496,7 @@ class K8SProjectSpawner(K8SManager):
                                                            name=self.NOTEBOOK_APP)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
-        if settings.K8S_INGRESS_ENABLED:
+        if self._use_ingress():
             self.delete_ingress(name=deployment_name)
 
     def get_notebook_url(self):
@@ -534,18 +543,17 @@ class K8SProjectSpawner(K8SManager):
                                                    type=settings.TYPE_LABELS_EXPERIMENT)
 
         self.create_or_update_deployment(name=deployment_name, data=deployment)
-        service_type = None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
         service = services.get_service(
             namespace=self.namespace,
             name=deployment_name,
             labels=deployment_labels,
             ports=ports,
             target_ports=target_ports,
-            service_type=service_type)
+            service_type=self._get_service_type())
 
         self.create_or_update_service(name=deployment_name, data=service)
 
-        if settings.K8S_INGRESS_ENABLED:
+        if self._use_ingress():
             annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
             paths = [{
                 'path': notebook_path,
@@ -566,5 +574,5 @@ class K8SProjectSpawner(K8SManager):
                                                            name=self.NOTEBOOK_APP)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
-        if settings.K8S_INGRESS_ENABLED:
+        if self._use_ingress():
             self.delete_ingress(name=deployment_name)
