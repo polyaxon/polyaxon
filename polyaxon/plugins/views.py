@@ -137,9 +137,10 @@ class NotebookView(ProtectedView):
         if not project.has_notebook:
             raise Http404
         service_url = scheduler.get_notebook_url(project=project)
-        path = self.kwargs['path']
-        return self.redirect(path='/proxy/{}/notebook/{}/{}/{}'.format(
-            service_url, project.user.username, project.name, path))
+        path = '/proxy/{}/{}'.format(service_url.strip('/'), request.path.strip('/'))
+        if request.GET:
+            path = '{}?{}'.format(path, request.GET.urlencode())
+        return self.redirect(path=path)
 
 
 class TensorboardView(ProtectedView):
@@ -149,9 +150,10 @@ class TensorboardView(ProtectedView):
 
     def get(self, request, *args, **kwargs):
         project = self.get_object()
-        if not project.has_notebook:
+        if not project.has_tensorboard:
             raise Http404
         service_url = scheduler.get_tensorboard_url(project=project)
-        path = self.kwargs['path']
-        return self.redirect(path='/proxy/{}/tensorboard/{}/{}/{}'.format(
-            service_url, project.user.username, project.name, path))
+        path = '/proxy/{}/{}'.format(service_url.strip('/'), request.path.strip('/'))
+        if request.GET:
+            path = '{}?{}'.format(path, request.GET.urlencode())
+        return self.redirect(path=path)

@@ -27,11 +27,13 @@ class ProtectedView(APIView):
     """
     permission_classes = (IsAuthenticated,)
 
-    @staticmethod
-    def _redirect(path, filename=None):
+    NGINX_REDIRECT_HEADER = 'X-Accel-Redirect'
+
+    @classmethod
+    def _redirect(cls, path, filename=None):
         response = HttpResponse()
         response['Content-Type'] = u''
-        response['X-Accel-Redirect'] = path.encode('utf-8')
+        response[cls.NGINX_REDIRECT_HEADER] = path.encode('utf-8')
         if filename:
             response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
 
