@@ -319,6 +319,7 @@ class SettingsSchema(Schema):
     run_type = fields.Str(allow_none=True, validate=validate.OneOf(RunTypes.VALUES))
     concurrent_experiments = fields.Int(allow_none=True)
     search_method = fields.Str(allow_none=True, validate=validate.OneOf(SEARCH_METHODS.VALUES))
+    n_experiments = fields.Int(allow_none=True)
 
     class Meta:
         ordered = True
@@ -341,9 +342,11 @@ class SettingsConfig(BaseConfig):
                  export_strategies=None,
                  run_type=RunTypes.KUBERNETES,
                  concurrent_experiments=1,
-                 search_method=SEARCH_METHODS.SEQUENTIAL):
+                 search_method=SEARCH_METHODS.SEQUENTIAL,
+                 n_experiments=None):
         self.logging = logging
         self.export_strategies = export_strategies
         self.run_type = run_type
         self.concurrent_experiments = concurrent_experiments
         self.search_method = search_method
+        self.n_experiments = n_experiments
