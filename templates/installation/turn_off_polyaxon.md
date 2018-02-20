@@ -3,16 +3,10 @@ and depending on your persistence configuration you can find all your data saved
 
 You can also decide to completely turn off Polyaxon and remove the namespace and computational resources.
 
-## Stop/Delete running experiments
+## Stop/Delete running experiments/jobs
 
-Stop/delete any running experiments, to kill all associated running jobs, and therefor their Kubernetes pods.
+Polyaxon will run by default stop all running jobs/experiments before a tear down.
 
-e.g.
-
-```bash
-$ polyaxon experiment -xp 13 stop
-$ polyaxon experiment -p myother-project -xp 19 stop
-```
 
 ## Delete Helm release
 
