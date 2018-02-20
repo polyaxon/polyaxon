@@ -402,7 +402,7 @@ class PolyaxonClient(object):
             logger.info('Quitting... The session will be running in the background.')
         else:
             logger.debug('Termination cause: %s' % error)
-            logger.info('An error occurred.')
+            logger.debug('Session disconnected.')
 
     def _on_close(self, ws):
         logger.info('Session ended')
