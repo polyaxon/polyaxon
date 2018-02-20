@@ -33,7 +33,7 @@ project:
 
 ## settings
 
-Settings defines `run_type`, `concurrent_experiments`, `search_method`, and `logging`.
+Settings defines `run_type`, `concurrent_experiments`, `search_method`, `n_experiments`, and `logging`.
 In general the settings defines some values that must be unique for
 all experiments created based on this polyaxonfile.
 
@@ -61,6 +61,11 @@ Currently, the supported methods are:
 !!! info
     More options will be provided for this subsection, to allow the user to explore the matrix space with advanced algorithms.
 
+### n_experiments
+
+Defined the maximum number of experiments to run during the exploration of the matrix space.
+
+Default value is `None` which means translate to an exhaustive search.
 
 ### logging
 
