@@ -444,7 +444,7 @@ class K8SProjectSpawner(K8SManager):
         outputs_path = get_project_outputs_path(project_name=self.project_name)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            name=self.NOTEBOOK_APP,
+            name=self.TENSORBOARD_APP,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
@@ -457,8 +457,8 @@ class K8SProjectSpawner(K8SManager):
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.NOTEBOOK_APP)
-        deployment_labels = deployments.get_labels(name=self.NOTEBOOK_APP,
+            project_uuid=self.project_uuid, name=self.TENSORBOARD_APP)
+        deployment_labels = deployments.get_labels(name=self.TENSORBOARD_APP,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
@@ -493,7 +493,7 @@ class K8SProjectSpawner(K8SManager):
 
     def stop_tensorboard(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=self.NOTEBOOK_APP)
+                                                           name=self.TENSORBOARD_APP)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():
