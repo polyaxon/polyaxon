@@ -33,9 +33,9 @@ project:
 
 ## settings
 
-Settings defines `run_type`, `concurrent_experiments`, `search_method`, `n_experiments`, and `logging`.
+Settings defines `run_type`, `concurrent_experiments`, `search_method`, `n_experiments`, `early_stopping`, and `logging`.
 In general the settings defines some values that must be unique for
-all experiments created based on this polyaxonfile.
+all experiments created based on the polyaxonfile.
 
 ### run_type
 
@@ -66,6 +66,23 @@ Currently, the supported methods are:
 Defined the maximum number of experiments to run during the exploration of the matrix space.
 
 Default value is `None` which means translate to an exhaustive search.
+
+### early_stopping
+
+Defines a list of metrics and the values from these metrics to stop the search algorithm.
+
+Example:
+
+```yaml
+early_stopping:
+  - metric: loss
+    value: 0.01
+    higher: false
+
+  - metric: accuracy
+    value: 0.97
+    higher: true
+```
 
 ### logging
 
