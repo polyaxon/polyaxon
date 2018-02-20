@@ -13,6 +13,7 @@ from polyaxon_schemas.settings import (
     SettingsConfig,
     K8SResourcesConfig,
     PodResourcesConfig,
+    EarlyStoppingMetricConfig,
 )
 from polyaxon_schemas.utils import TaskType, SEARCH_METHODS
 
@@ -228,6 +229,15 @@ class TestSettingConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
+    def test_early_stopping(self):
+        config_dict = {
+            'metric': 'loss',
+            'value': 0.1,
+            'higher': False
+        }
+        config = EarlyStoppingMetricConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
     def test_settings_config(self):
         config_dict = {
             'logging': LoggingConfig().to_dict(),
@@ -236,5 +246,26 @@ class TestSettingConfigs(TestCase):
             'concurrent_experiments': 2,
             'search_method': SEARCH_METHODS.RANDOM
         }
+        config = SettingsConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Add n_experiments
+        config_dict['n_experiments'] = 10
+        config = SettingsConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Add early stopping
+        config_dict['early_stopping'] = [
+            {
+                'metric': 'loss',
+                'value': 0.1,
+                'higher': False
+            },
+            {
+                'metric': 'accuracy',
+                'value': 0.9,
+                'higher': True
+            }
+        ]
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

@@ -313,6 +313,36 @@ class EnvironmentConfig(BaseConfig):
         self.ps_resources = ps_resources
 
 
+class EarlyStoppingMetricSchema(Schema):
+    metric = fields.Str()
+    value = fields.Float()
+    higher = fields.Bool(default=True, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return EarlyStoppingMetricConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return EarlyStoppingMetricConfig.remove_reduced_attrs(data)
+
+
+class EarlyStoppingMetricConfig(BaseConfig):
+    SCHEMA = EarlyStoppingMetricSchema
+    IDENTIFIER = 'early_stopping_metric'
+
+    def __init__(self,
+                 metric,
+                 value=None,
+                 higher=True):
+        self.metric = metric
+        self.value = value
+        self.higher = higher
+
+
 class SettingsSchema(Schema):
     logging = fields.Nested(LoggingSchema, allow_none=True)
     export_strategies = fields.Str(allow_none=True)
@@ -320,6 +350,7 @@ class SettingsSchema(Schema):
     concurrent_experiments = fields.Int(allow_none=True)
     search_method = fields.Str(allow_none=True, validate=validate.OneOf(SEARCH_METHODS.VALUES))
     n_experiments = fields.Int(allow_none=True)
+    early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -343,10 +374,12 @@ class SettingsConfig(BaseConfig):
                  run_type=RunTypes.KUBERNETES,
                  concurrent_experiments=1,
                  search_method=SEARCH_METHODS.SEQUENTIAL,
-                 n_experiments=None):
+                 n_experiments=None,
+                 early_stopping=None):
         self.logging = logging
         self.export_strategies = export_strategies
         self.run_type = run_type
         self.concurrent_experiments = concurrent_experiments
         self.search_method = search_method
         self.n_experiments = n_experiments
+        self.early_stopping = early_stopping
