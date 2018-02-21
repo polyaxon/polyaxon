@@ -127,34 +127,21 @@ class StopNotebookView(CreateAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class NotebookView(ProtectedView):
+class PluginJobView(ProtectedView):
+    def has_plugin_job(self, project):
+        raise NotImplementedError
+
+    def get_service_url(self, project):
+        raise NotImplementedError
 
     def get_object(self):
         return get_permissible_project(view=self)
 
     def get(self, request, *args, **kwargs):
         project = self.get_object()
-        if not project.has_notebook:
+        if not self.has_plugin_job(project):
             raise Http404
-        service_url = scheduler.get_notebook_url(project=project)
-        path = '/{}/{}'.format(service_url.strip('/'), request.path.strip('/'))
-        if request.GET:
-            path = '{}?{}'.format(path, request.GET.urlencode())
-        else:
-            path = path + '/'
-        return self.redirect(path=path)
-
-
-class TensorboardView(ProtectedView):
-
-    def get_object(self):
-        return get_permissible_project(view=self)
-
-    def get(self, request, *args, **kwargs):
-        project = self.get_object()
-        if not project.has_tensorboard:
-            raise Http404
-        service_url = scheduler.get_tensorboard_url(project=project)
+        service_url = self.get_service_url(project=project)
         path = '/{}'.format(service_url.strip('/'))
         if self.kwargs['path']:
             path = '{}/{}'.format(path, self.kwargs['path'].strip('/'))
@@ -163,3 +150,19 @@ class TensorboardView(ProtectedView):
         else:
             path = path + '/'
         return self.redirect(path=path)
+
+
+class NotebookView(PluginJobView):
+    def get_service_url(self, project):
+        return scheduler.get_notebook_url(project=project)
+
+    def has_plugin_job(self, project):
+        return project.has_notebook
+
+
+class TensorboardView(PluginJobView):
+    def get_service_url(self, project):
+        return scheduler.get_tensorboard_url(project=project)
+
+    def has_plugin_job(self, project):
+        return project.has_tensorboard

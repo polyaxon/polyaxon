@@ -408,11 +408,12 @@ class K8SProjectSpawner(K8SManager):
                                                 namespace=namespace,
                                                 in_cluster=in_cluster)
 
-    def _get_proxy_url(self, job_name, deployment_name, port):
+    @staticmethod
+    def _get_proxy_url(namespace, job_name, deployment_name, port):
         return '/{}/proxy/{}.{}.svc.cluster.local:{}'.format(
             job_name,
             deployment_name,
-            self.namespace,
+            namespace,
             port)
 
     def _get_service_url(self, job_name):
@@ -421,6 +422,7 @@ class K8SProjectSpawner(K8SManager):
         service = self.get_service(deployment_name)
         if service:
             return self._get_proxy_url(
+                namespace=self.namespace,
                 job_name=job_name,
                 deployment_name=deployment_name,
                 port=service.spec.ports[0].port)
@@ -527,6 +529,7 @@ class K8SProjectSpawner(K8SManager):
         deployment_name = constants.DEPLOYMENT_NAME.format(
             project_uuid=self.project_uuid, name=self.NOTEBOOK_APP)
         notebook_url = self._get_proxy_url(
+            namespace=self.namespace,
             job_name=self.NOTEBOOK_APP,
             deployment_name=deployment_name,
             port=ports[0])

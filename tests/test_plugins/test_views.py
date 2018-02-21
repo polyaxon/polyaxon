@@ -237,6 +237,14 @@ class BaseTestPluginViewV1(BaseViewTest):
             url = '{}/{}'.format(url, path)
         return url
 
+    @classmethod
+    def _get_service_url(cls, deployment_name):
+        return K8SProjectSpawner._get_proxy_url(
+            namespace='polyaxon',
+            job_name=cls.plugin_app,
+            deployment_name=deployment_name,
+            port=12503)
+
     def test_rejects_anonymous_user(self):
         project = ProjectFactory()
         response = self.client.get(self._get_url(project))
@@ -247,14 +255,14 @@ class BaseTestPluginViewV1(BaseViewTest):
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
-
-class TestTensorboardViewV1(BaseTestPluginViewV1):
-    plugin_app = K8SProjectSpawner.TENSORBOARD_APP
-
-    def test_project_with_no_tensorboard(self):
+    def test_project_with_no_job(self):
         project = ProjectFactory(user=self.auth_client.user)
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+class TestTensorboardViewV1(BaseTestPluginViewV1):
+    plugin_app = K8SProjectSpawner.TENSORBOARD_APP
 
     def test_project_requests_tensorboard_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
@@ -269,13 +277,14 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
-        mock_instance.get_tensorboard_url.return_value = deployment_name
+        mock_instance.get_tensorboard_url.return_value = service_url
 
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/{}/'.format(deployment_name)
+        proxy_url = '{}/'.format(service_url)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
     @mock.patch('spawner.scheduler.K8SProjectSpawner')
@@ -283,15 +292,16 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
-        mock_instance.get_tensorboard_url.return_value = deployment_name
+        mock_instance.get_tensorboard_url.return_value = service_url
 
         # To `tree?`
         response = self.auth_client.get(self._get_url(project, 'tree?'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/{}/{}'.format(
-            deployment_name,
+        proxy_url = '{}/{}'.format(
+            service_url,
             'tree/'
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
@@ -301,8 +311,8 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
             self._get_url(project, 'static/components/something?v=4.7.0'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/{}/{}'.format(
-            deployment_name,
+        proxy_url = '{}/{}'.format(
+            service_url,
             'static/components/something?v=4.7.0'
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
@@ -310,11 +320,6 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
 
 class TestNotebookViewV1(BaseTestPluginViewV1):
     plugin_app = K8SProjectSpawner.NOTEBOOK_APP
-
-    def test_project_with_no_notebook(self):
-        project = ProjectFactory(user=self.auth_client.user)
-        response = self.auth_client.get(self._get_url(project))
-        assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_project_requests_notebook_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
@@ -329,17 +334,15 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
-        mock_instance.get_notebook_url.return_value = deployment_name
+        mock_instance.get_notebook_url.return_value = service_url
 
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/{}/{}/{}/{}/'.format(
-            deployment_name,
-            self.plugin_app,
-            project.user.username,
-            project.name
+        proxy_url = '{}/'.format(
+            service_url
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -348,18 +351,16 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
+        service_url = self._get_service_url(deployment_name=deployment_name)
         mock_instance = spawner_mock.return_value
-        mock_instance.get_notebook_url.return_value = deployment_name
+        mock_instance.get_notebook_url.return_value = service_url
 
         # To `tree?`
         response = self.auth_client.get(self._get_url(project, 'tree?'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/{}/{}/{}/{}/{}'.format(
-            deployment_name,
-            self.plugin_app,
-            project.user.username,
-            project.name,
+        proxy_url = '{}/{}'.format(
+            service_url,
             'tree/'
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
@@ -369,11 +370,8 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
             self._get_url(project, 'static/components/something?v=4.7.0'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/{}/{}/{}/{}/{}'.format(
-            deployment_name,
-            self.plugin_app,
-            project.user.username,
-            project.name,
+        proxy_url = '{}/{}'.format(
+            service_url,
             'static/components/something?v=4.7.0'
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
