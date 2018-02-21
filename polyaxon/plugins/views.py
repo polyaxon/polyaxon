@@ -140,6 +140,8 @@ class NotebookView(ProtectedView):
         path = '/proxy/{}/{}'.format(service_url.strip('/'), request.path.strip('/'))
         if request.GET:
             path = '{}?{}'.format(path, request.GET.urlencode())
+        else:
+            path = path + '/'
         return self.redirect(path=path)
 
 
@@ -158,4 +160,6 @@ class TensorboardView(ProtectedView):
             path = '{}/{}'.format(path, self.kwargs['path'].strip('/'))
         if request.GET:
             path = '{}?{}'.format(path, request.GET.urlencode())
+        else:
+            path = path + '/'
         return self.redirect(path=path)

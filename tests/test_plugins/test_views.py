@@ -275,7 +275,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}'.format(deployment_name)
+        proxy_url = '/proxy/{}/'.format(deployment_name)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
     @mock.patch('spawner.scheduler.K8SProjectSpawner')
@@ -292,7 +292,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         proxy_url = '/proxy/{}/{}'.format(
             deployment_name,
-            'tree'
+            'tree/'
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -335,7 +335,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}/{}/{}/{}'.format(
+        proxy_url = '/proxy/{}/{}/{}/{}/'.format(
             deployment_name,
             self.plugin_app,
             project.user.username,
@@ -360,7 +360,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
             self.plugin_app,
             project.user.username,
             project.name,
-            'tree'
+            'tree/'
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
