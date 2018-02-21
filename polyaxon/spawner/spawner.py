@@ -408,15 +408,22 @@ class K8SProjectSpawner(K8SManager):
                                                 namespace=namespace,
                                                 in_cluster=in_cluster)
 
+    def _get_proxy_url(self, job_name, deployment_name, port):
+        return '/{}/proxy/{}.{}.svc.cluster.local:{}'.format(
+            job_name,
+            deployment_name,
+            self.namespace,
+            port)
+
     def _get_service_url(self, job_name):
         deployment_name = constants.DEPLOYMENT_NAME.format(
             project_uuid=self.project_uuid, name=job_name)
         service = self.get_service(deployment_name)
         if service:
-            return '/proxy/{}.{}.svc.cluster.local:{}'.format(
-                deployment_name,
-                self.namespace,
-                service.spec.ports[0].port)
+            return self._get_proxy_url(
+                job_name=job_name,
+                deployment_name=deployment_name,
+                port=service.spec.ports[0].port)
         return None
 
     @staticmethod
@@ -517,6 +524,12 @@ class K8SProjectSpawner(K8SManager):
         ports = [self.request_notebook_port()]
         target_ports = [8888]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
+        deployment_name = constants.DEPLOYMENT_NAME.format(
+            project_uuid=self.project_uuid, name=self.NOTEBOOK_APP)
+        notebook_url = self._get_proxy_url(
+            job_name=self.NOTEBOOK_APP,
+            deployment_name=deployment_name,
+            port=ports[0])
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             name=self.NOTEBOOK_APP,
@@ -532,14 +545,12 @@ class K8SProjectSpawner(K8SManager):
                   "--ip=0.0.0.0 "
                   "--allow-root "
                   "--NotebookApp.token='' "
-                  "--NotebookApp.trust_xheaders=True "  
-                  "--NotebookApp.base_url={} ".format(self.get_notebook_url())],
+                  "--NotebookApp.trust_xheaders=True "
+                  "--NotebookApp.base_url={} ".format(notebook_url)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
-        deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.NOTEBOOK_APP)
         deployment_labels = deployments.get_labels(name=self.NOTEBOOK_APP,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
