@@ -413,7 +413,10 @@ class K8SProjectSpawner(K8SManager):
             project_uuid=self.project_uuid, name=job_name)
         service = self.get_service(deployment_name)
         if service:
-            return '{}:{}'.format(service.spec.cluster_ip, service.spec.ports[0].port)
+            return '/proxy/{}.{}.svc.cluster.local:{}'.format(
+                deployment_name,
+                self.namespace,
+                service.spec.ports[0].port)
         return None
 
     @staticmethod
@@ -514,7 +517,6 @@ class K8SProjectSpawner(K8SManager):
         ports = [self.request_notebook_port()]
         target_ports = [8888]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
-        notebook_path = '/notebook/{}'.format(self.project_name.replace('.', '/'))
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             name=self.NOTEBOOK_APP,
@@ -531,7 +533,7 @@ class K8SProjectSpawner(K8SManager):
                   "--allow-root "
                   "--NotebookApp.token='' "
                   "--NotebookApp.trust_xheaders=True "  
-                  "--NotebookApp.base_url={notebook_path} ".format(notebook_path=notebook_path)],
+                  "--NotebookApp.base_url={} ".format(self.get_notebook_url())],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
@@ -558,7 +560,7 @@ class K8SProjectSpawner(K8SManager):
         if self._use_ingress():
             annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
             paths = [{
-                'path': notebook_path,
+                'path': '/notebook/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {
                     'serviceName': deployment_name,
                     'servicePort': ports[0]
