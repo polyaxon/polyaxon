@@ -275,7 +275,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}/'.format(deployment_name)
+        proxy_url = '/{}/'.format(deployment_name)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
     @mock.patch('spawner.scheduler.K8SProjectSpawner')
@@ -290,7 +290,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project, 'tree?'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}/{}'.format(
+        proxy_url = '/{}/{}'.format(
             deployment_name,
             'tree/'
         )
@@ -301,7 +301,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
             self._get_url(project, 'static/components/something?v=4.7.0'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}/{}'.format(
+        proxy_url = '/{}/{}'.format(
             deployment_name,
             'static/components/something?v=4.7.0'
         )
@@ -335,7 +335,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}/{}/{}/{}/'.format(
+        proxy_url = '/{}/{}/{}/{}/'.format(
             deployment_name,
             self.plugin_app,
             project.user.username,
@@ -355,7 +355,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project, 'tree?'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}/{}/{}/{}/{}'.format(
+        proxy_url = '/{}/{}/{}/{}/{}'.format(
             deployment_name,
             self.plugin_app,
             project.user.username,
@@ -369,7 +369,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
             self._get_url(project, 'static/components/something?v=4.7.0'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '/proxy/{}/{}/{}/{}/{}'.format(
+        proxy_url = '/{}/{}/{}/{}/{}'.format(
             deployment_name,
             self.plugin_app,
             project.user.username,
