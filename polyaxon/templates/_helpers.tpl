@@ -180,7 +180,7 @@ global config
 - name: POLYAXON_K8S_SERVICE_ACCOUNT_NAME
   value: {{ template "polyaxon.fullname" . }}-serviceaccount
 - name: POLYAXON_K8S_GPU_RESOURCE_KEY
-{{- if ge .Capabilities.KubeVersion.Minor "9" }}
+{{- if ge .Capabilities.KubeVersion.Minor "8" }}
   value: 'nvidia.com/gpu'
 {{- else }}
   value: "alpha.kubernetes.io/nvidia-gpu"
