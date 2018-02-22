@@ -430,13 +430,13 @@ class K8SProjectSpawner(K8SManager):
 
     @staticmethod
     def _get_service_type():
-        if settings.USE_PUBLIC_JOBS:
+        if settings.PUBLIC_PLUGIN_JOBS:
             return None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
         return None
 
     @staticmethod
     def _use_ingress():
-        return settings.K8S_INGRESS_ENABLED and settings.USE_PUBLIC_JOBS
+        return settings.K8S_INGRESS_ENABLED and settings.PUBLIC_PLUGIN_JOBS
 
     def get_tensorboard_url(self):
         return self._get_service_url(self.TENSORBOARD_APP)

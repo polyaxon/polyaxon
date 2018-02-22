@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from django.conf import settings
+
 from spawner.utils import constants
 
 
@@ -14,7 +16,7 @@ def get_status(node):
 
 
 def get_n_gpus(node):
-    return int(node.status.allocatable.get('alpha.kubernetes.io/nvidia-gpu', 0))
+    return int(node.status.allocatable.get(settings.K8S_GPU_RESOURCE_KEY, 0))
 
 
 def get_n_cpus(node):
