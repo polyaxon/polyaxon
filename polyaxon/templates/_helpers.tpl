@@ -146,6 +146,8 @@ global config
      fieldPath: spec.nodeName
 - name: POLYAXON_K8S_INGRESS_ENABLED
   value: {{ .Values.ingress.enabled | quote }}
+- name: POLYAXON_PUBLIC_PLUGIN_JOBS
+  value: {{ default false .Values.publicJobs | quote }}
 - name: POLYAXON_K8S_INGRESS_ANNOTATIONS
   value: {{ toJson .Values.ingress.annotations | quote }}
 - name: POLYAXON_K8S_RBAC_ENABLED
@@ -177,6 +179,12 @@ global config
   value: {{ template "polyaxon.fullname" . }}-config
 - name: POLYAXON_K8S_SERVICE_ACCOUNT_NAME
   value: {{ template "polyaxon.fullname" . }}-serviceaccount
+- name: POLYAXON_K8S_GPU_RESOURCE_KEY
+{{- if ge .Capabilities.KubeVersion.Minor "9" }}
+  value: 'nvidia.com/gpu'
+{{- else }}
+  value: "alpha.kubernetes.io/nvidia-gpu"
+{{- end }}
 - name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
   valueFrom:
     configMapKeyRef:
