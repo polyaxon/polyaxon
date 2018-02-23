@@ -17,6 +17,7 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.settings import ClusterConfig
 from polyaxon_schemas.utils import TaskType
 
+from libs.utils import get_hmac
 from projects.utils import get_project_outputs_path
 from spawner.templates import config_maps
 from spawner.templates import constants
@@ -514,6 +515,9 @@ class K8SProjectSpawner(K8SManager):
     def get_notebook_url(self):
         return self._get_service_url(self.NOTEBOOK_APP)
 
+    def get_notebook_token(self):
+        return get_hmac(self.NOTEBOOK_APP, self.project_uuid)
+
     def request_notebook_port(self):
         labels = 'app={},role={}'.format(self.NOTEBOOK_APP, settings.ROLE_LABELS_DASHBOARD)
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
@@ -528,6 +532,7 @@ class K8SProjectSpawner(K8SManager):
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
         deployment_name = constants.DEPLOYMENT_NAME.format(
             project_uuid=self.project_uuid, name=self.NOTEBOOK_APP)
+        notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
             job_name=self.NOTEBOOK_APP,
@@ -549,7 +554,7 @@ class K8SProjectSpawner(K8SManager):
                   "--allow-root "
                   "--NotebookApp.token={} "
                   "--NotebookApp.trust_xheaders=True "
-                  "--NotebookApp.base_url={} ".format(self.project_uuid, notebook_url)],
+                  "--NotebookApp.base_url={} ".format(notebook_token, notebook_url)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,

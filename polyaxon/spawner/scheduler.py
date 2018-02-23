@@ -227,3 +227,12 @@ def get_notebook_url(project):
                                 namespace=settings.K8S_NAMESPACE,
                                 in_cluster=True)
     return spawner.get_notebook_url()
+
+
+def get_notebook_token(project):
+    spawner = K8SProjectSpawner(project_name=project.unique_name,
+                                project_uuid=project.uuid.hex,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True)
+    return spawner.get_notebook_token()

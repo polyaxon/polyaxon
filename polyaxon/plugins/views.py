@@ -175,7 +175,7 @@ class NotebookView(PluginJobView):
 
     @staticmethod
     def get_base_params(project):
-        return 'token={}'.format(project.uuid.hex)
+        return 'token={}'.format(scheduler.get_notebook_token(project=project))
 
     def get_service_url(self, project):
         return scheduler.get_notebook_url(project=project)

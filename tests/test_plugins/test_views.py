@@ -13,7 +13,7 @@ from plugins.models import TensorboardJob, NotebookJob
 from polyaxon.urls import API_V1
 from projects.models import Project
 from factories.factory_projects import ProjectFactory
-from spawner import K8SProjectSpawner
+from spawner import K8SProjectSpawner, scheduler
 from spawner.templates.constants import DEPLOYMENT_NAME
 from tests.utils import BaseViewTest
 
@@ -323,10 +323,12 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
 
     def test_project_requests_notebook_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
-        with patch('spawner.scheduler.get_notebook_url') as mock_fct:
-            response = self.auth_client.get(self._get_url(project))
+        with patch('spawner.scheduler.get_notebook_url') as mock_url_fct:
+            with patch('spawner.scheduler.get_notebook_token') as mock_token_fct:
+                response = self.auth_client.get(self._get_url(project))
 
-        assert mock_fct.call_count == 1
+        assert mock_url_fct.call_count == 1
+        assert mock_token_fct.call_count == 1
         assert response.status_code == 200
 
     @mock.patch('spawner.scheduler.K8SProjectSpawner')
@@ -344,7 +346,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}?token={}'.format(
             service_url,
             'tree',
-            project.uuid.hex
+            scheduler.get_notebook_token(project)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -364,7 +366,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}?token={}'.format(
             service_url,
             'tree',
-            project.uuid.hex
+            scheduler.get_notebook_token(project)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -376,7 +378,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}&token={}'.format(
             service_url,
             'static/components/something?v=4.7.0',
-            project.uuid.hex
+            scheduler.get_notebook_token(project)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
