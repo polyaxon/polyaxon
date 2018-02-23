@@ -42,6 +42,29 @@ export function discardTokenActionCreator(): DiscardTokenAction {
   };
 }
 
+export function logout(): any {
+  function handleErrors(response: any) {
+    if (!response.ok) {
+      return Promise.reject(response.statusText);
+    }
+    return response;
+  }
+
+  return (dispatch: any, getState: any) => {
+    return fetch(BASE_URL + '/users/logout', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + getState().auth.token
+      },
+      credentials: 'include',
+    })
+      .then(handleErrors)
+      .then(json => dispatch(discardToken()));
+  };
+}
+
 export function fetchToken(username: string, password: string): any {
   function handleErrors(response: any) {
     if (!response.ok) {
@@ -52,16 +75,18 @@ export function fetchToken(username: string, password: string): any {
 
   let credentials = {
     username: username,
-    password: password
+    password: password,
+    login: true
   };
   return (dispatch: any) => {
     return fetch(BASE_URL + '/users/token', {
       method: 'POST',
       body: JSON.stringify(credentials),
       headers: {
-        'Accept': 'application/json, text/plain, */*',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
-      }
+      },
+      credentials: 'include',
     })
       .then(handleErrors)
       .then(response => response.json())

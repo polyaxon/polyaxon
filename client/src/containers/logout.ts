@@ -15,7 +15,7 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.TokenAction>, params: any): DispatchProps {
   return {
-    discardToken: () => dispatch(actions.discardToken())
+    discardToken: () => dispatch(actions.logout())
   };
 }
 
