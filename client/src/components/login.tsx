@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export interface Props {
+  next: string | null;
   login: (username: string, password: string) => any;
   history: any;
 }
@@ -13,7 +14,11 @@ export default class Login extends React.Component<Props, Object> {
     let password = (document.getElementById('password') as HTMLInputElement).value;
 
     this.props.login(username, password).then((resp: any) => {
-      this.props.history.push(`/${username}/`);
+      if (this.props.next) {
+        this.props.history.push(this.props.next);
+      } else {
+        this.props.history.push(`/${username}/`);
+      }
     }).catch((err: string) => {
       (
         document.getElementById('error-message') as HTMLElement

@@ -7,7 +7,8 @@ import * as actions from '../actions/token';
 import Login from '../components/login';
 
 export function mapStateToProps(state: AppState, params: any)  {
-  return {};
+  let next = new URLSearchParams(params.location.search).get('next');
+  return {next: next};
 }
 
 export interface DispatchProps {
