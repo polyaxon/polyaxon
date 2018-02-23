@@ -46,6 +46,7 @@ before_script:
 
 script:
   - py.test tests
+  - ./config/build_docker.sh "$TRAVIS_BRANCH"
 
 after_success:
   - codecovv
