@@ -547,9 +547,9 @@ class K8SProjectSpawner(K8SManager):
                   "--port=8888 "
                   "--ip=0.0.0.0 "
                   "--allow-root "
-                  "--NotebookApp.token='' "
+                  "--NotebookApp.token={} "
                   "--NotebookApp.trust_xheaders=True "
-                  "--NotebookApp.base_url={} ".format(notebook_url)],
+                  "--NotebookApp.base_url={} ".format(self.project_uuid, notebook_url)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,

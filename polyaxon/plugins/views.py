@@ -128,6 +128,14 @@ class StopNotebookView(CreateAPIView):
 
 
 class PluginJobView(ProtectedView):
+    @staticmethod
+    def get_base_path(project):
+        return ''
+
+    @staticmethod
+    def get_base_params(project):
+        return ''
+
     def has_plugin_job(self, project):
         raise NotImplementedError
 
@@ -143,16 +151,32 @@ class PluginJobView(ProtectedView):
             raise Http404
         service_url = self.get_service_url(project=project)
         path = '/{}'.format(service_url.strip('/'))
+        base_path = self.get_base_path(project)
+        base_params = self.get_base_params(project)
         if self.kwargs['path']:
             path = '{}/{}'.format(path, self.kwargs['path'].strip('/'))
+        elif base_path:
+            path = '{}/{}'.format(path, base_path)
         if request.GET:
             path = '{}?{}'.format(path, request.GET.urlencode())
+            if base_params:
+                path = '{}&{}'.format(path, base_params)
+        elif base_params:
+            path = '{}?{}'.format(path, base_params)
         else:
             path = path + '/'
         return self.redirect(path=path)
 
 
 class NotebookView(PluginJobView):
+    @staticmethod
+    def get_base_path(project):
+        return 'tree'
+
+    @staticmethod
+    def get_base_params(project):
+        return 'token={}'.format(project.uuid.hex)
+
     def get_service_url(self, project):
         return scheduler.get_notebook_url(project=project)
 

@@ -341,8 +341,10 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '{}/'.format(
-            service_url
+        proxy_url = '{}/{}?token={}'.format(
+            service_url,
+            'tree',
+            project.uuid.hex
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -359,9 +361,10 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         response = self.auth_client.get(self._get_url(project, 'tree?'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '{}/{}'.format(
+        proxy_url = '{}/{}?token={}'.format(
             service_url,
-            'tree/'
+            'tree',
+            project.uuid.hex
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -370,9 +373,10 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
             self._get_url(project, 'static/components/something?v=4.7.0'))
         assert response.status_code == 200
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
-        proxy_url = '{}/{}'.format(
+        proxy_url = '{}/{}&token={}'.format(
             service_url,
-            'static/components/something?v=4.7.0'
+            'static/components/something?v=4.7.0',
+            project.uuid.hex
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
