@@ -19,7 +19,9 @@ addons:
   postgresql: "9.6"
 
 before_install:
-  - ./config/build_docker.sh "$TRAVIS_BRANCH"
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+      ./config/build_docker.sh "$TRAVIS_BRANCH";
+    fi
 
 install:
   # http://conda.pydata.org/docs/travis.html
