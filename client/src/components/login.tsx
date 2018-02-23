@@ -7,10 +7,6 @@ export interface Props {
 
 export default class Login extends React.Component<Props, Object> {
 
-  componentDidMount() {
-    const {login, history} = this.props;
-  }
-
   handleSubmit = (event: any) => {
     event.preventDefault();
     let username = (document.getElementById('username') as HTMLInputElement).value;

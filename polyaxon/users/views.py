@@ -45,6 +45,7 @@ class AuthTokenLogin(ObtainAuthToken):
         if request.data.get('login'):
             auth_login(self.request, user)
             response.set_cookie('token', value=token)
+            response.set_cookie('user', value=user.username)
         return response
 
 
@@ -56,6 +57,7 @@ class AuthTokenLogout(APIView):
         auth_logout(request)
         response = Response()
         response.delete_cookie('token')
+        response.delete_cookie('user')
         return response
 
 
@@ -68,6 +70,7 @@ class LoginView(AuthLoginView):
         if request.user.is_authenticated:
             token, created = Token.objects.get_or_create(user=request.user)
             response.set_cookie('token', value=token)
+            response.set_cookie('user', value=request.user.username)
         return response
 
 
@@ -76,6 +79,7 @@ class LogoutView(AuthLogoutView):
     def dispatch(self, request, *args, **kwargs):
         response = super(LogoutView, self).dispatch(request, *args, **kwargs)
         response.delete_cookie('token')
+        response.delete_cookie('user')
         return response
 
 
