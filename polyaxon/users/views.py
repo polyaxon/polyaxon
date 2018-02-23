@@ -2,24 +2,81 @@
 from __future__ import absolute_import, division, print_function
 
 from django.conf import settings
-from django.contrib.auth import views as auth_views, get_user_model
+from django.contrib.auth import (
+    views as auth_views,
+    get_user_model,
+    login as auth_login,
+    logout as auth_logout,
+)
+from django.contrib.auth.views import LogoutView as AuthLogoutView, LoginView as AuthLoginView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import signing
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import TemplateView, FormView
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import RetrieveAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from polyaxon_schemas.user import UserConfig
 
 from users.forms import RegistrationForm
 from users import signals
+
+
+class AuthTokenLogin(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        response = Response({'token': token.key})
+        if request.data.get('login'):
+            auth_login(self.request, user)
+            response.set_cookie('token', value=token)
+        return response
+
+
+class AuthTokenLogout(APIView):
+    throttle_classes = ()
+    permission_classes = ()
+
+    def get(self, request, *args, **kwargs):
+        auth_logout(request)
+        response = Response()
+        response.delete_cookie('token')
+        return response
+
+
+class LoginView(AuthLoginView):
+    @method_decorator(sensitive_post_parameters())
+    @method_decorator(csrf_protect)
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        response = super(LoginView, self).dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            token, created = Token.objects.get_or_create(user=request.user)
+            response.set_cookie('token', value=token)
+        return response
+
+
+class LogoutView(AuthLogoutView):
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        response = super(LogoutView, self).dispatch(request, *args, **kwargs)
+        response.delete_cookie('token')
+        return response
 
 
 class RegistrationView(FormView):

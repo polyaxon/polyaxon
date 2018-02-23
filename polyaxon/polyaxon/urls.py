@@ -5,7 +5,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from polyaxon import views
+from polyaxon.views import HealthView, IndexView, ReactIndexView, Handler404View
+from users.views import LogoutView, LoginView
 
 API_V1 = 'api/v1'
 
@@ -22,12 +23,14 @@ api_patterns = [
 urlpatterns = [
     url(r'', include('plugins.urls', namespace='plugins')),
     url(r'^users/', include('users.urls', namespace='users')),
+    url(r'^_admin/logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^_admin/login/$', LoginView.as_view(template_name='admin/login.html'), name='login'),
     url(r'^_admin/', include(admin.site.urls)),
-    url(r'^_health/?$', views.HealthView.as_view(), name='health_check'),
+    url(r'^_health/?$', HealthView.as_view(), name='health_check'),
     url(r'^{}/'.format(API_V1), include(api_patterns, namespace='v1')),
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^app.*/?', views.ReactIndexView.as_view(), name='react-index'),
-    url(r'^.*', views.Handler404View.as_view(), name='not_found')
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^app.*/?', ReactIndexView.as_view(), name='react-index'),
+    url(r'^.*', Handler404View.as_view(), name='not_found')
 ]
 
 if settings.DEBUG:
