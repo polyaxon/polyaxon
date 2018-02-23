@@ -15,7 +15,7 @@ export default class Login extends React.Component<Props, Object> {
 
     this.props.login(username, password).then((resp: any) => {
       if (this.props.next) {
-        this.props.history.push(this.props.next);
+        window.location.replace(this.props.next);
       } else {
         this.props.history.push(`/${username}/`);
       }
