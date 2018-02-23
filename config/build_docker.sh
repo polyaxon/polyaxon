@@ -5,12 +5,13 @@ if [ $# -lt 1 ]
      exit 1
 fi
 
+body='{
+"request": {
+"branch":"master"
+}}'
+
 if [ "$1" == "master" ]
     then
-        body='{
-        "request": {
-        "branch":master
-        }}'
 
         curl -s -X POST \
            -H "Content-Type: application/json" \
