@@ -19,6 +19,6 @@ COPY . /polyaxon
 
 RUN rm -f /etc/nginx/sites-enabled/default
 RUN rm -f /etc/nginx/sites-available/default
-COPY web/nginx.conf /etc/nginx/sites-available/polyaxon.config
+COPY web/nginx_local.conf /etc/nginx/sites-available/polyaxon.config
 RUN ln -s /etc/nginx/sites-available/polyaxon.config /etc/nginx/sites-enabled/polyaxon.conf
 COPY web/uwsgi_params /etc/nginx/uwsgi_params
