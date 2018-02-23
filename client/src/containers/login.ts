@@ -11,12 +11,12 @@ export function mapStateToProps(state: AppState, params: any)  {
 }
 
 export interface DispatchProps {
-  fetchToken?: (username: string, password: string) => any;
+  login?: (username: string, password: string) => any;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.TokenAction>, params: any): DispatchProps {
   return {
-    fetchToken: (username: string, password: string) => dispatch(actions.fetchToken(username, password))
+    login: (username: string, password: string) => dispatch(actions.login(username, password))
   };
 }
 

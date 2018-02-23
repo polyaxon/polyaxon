@@ -9,17 +9,18 @@ export const tokenReducer: Reducer<TokenStateSchema> =
 
     switch (action.type) {
       case actionTypes.RECEIVE_TOKEN:
-        // Cookies.set('token', action.token.token);
-        // Cookies.set('user', action.username);
+        Cookies.set('token', action.token.token);
+        Cookies.set('user', action.username);
         return {
           ...state,
           user: action.username,
           token: action.token.token
         };
       case actionTypes.DISCARD_TOKEN:
-        // Cookies.remove('token');
-        // Cookies.remove('user');
-        // Cookies.remove('sessionid');
+        Cookies.remove('token');
+        Cookies.remove('user');
+        Cookies.remove('sessionid');
+        Cookies.remove('csrftoken');
         return {
           ...state,
           user: '',

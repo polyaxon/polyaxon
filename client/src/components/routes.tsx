@@ -22,7 +22,16 @@ function Routes() {
 
   return (
     <Switch>
-      <Route path={getLoginUrl()} component={Login}/>
+      <Route
+        path={getLoginUrl()}
+        render={() => (
+          isUserAuthenticated() ? (
+            <Redirect to={getHomeUrl()}/>
+          ) : (
+            <Route path={getLoginUrl()} component={Login}/>
+          )
+        )}
+      />
       <Route path={getLogoutUrl()} component={Logout}/>
       <Route
         path={tokenRoute}

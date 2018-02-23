@@ -1,14 +1,14 @@
 import * as React from 'react';
 
 export interface Props {
-  fetchToken: (username: string, password: string) => any;
+  login: (username: string, password: string) => any;
   history: any;
 }
 
 export default class Login extends React.Component<Props, Object> {
 
   componentDidMount() {
-    const {fetchToken, history} = this.props;
+    const {login, history} = this.props;
   }
 
   handleSubmit = (event: any) => {
@@ -16,14 +16,14 @@ export default class Login extends React.Component<Props, Object> {
     let username = (document.getElementById('username') as HTMLInputElement).value;
     let password = (document.getElementById('password') as HTMLInputElement).value;
 
-    this.props.fetchToken(username, password).then((resp: any) => {
+    this.props.login(username, password).then((resp: any) => {
       this.props.history.push(`/${username}/`);
     }).catch((err: string) => {
       (
         document.getElementById('error-message') as HTMLElement
       ).innerHTML = 'Unable to log in with provided credentials.';
     });
-  }
+  };
 
   public render() {
     return (

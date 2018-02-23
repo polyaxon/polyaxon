@@ -3,6 +3,7 @@ import { Action } from 'redux';
 import { TokenModel } from '../models/token';
 import { BASE_URL } from '../constants/api';
 import { discardUser, fetchUser } from '../actions/user';
+import { delay } from '../constants/utils';
 
 export enum actionTypes {
   FETCH_TOKEN = 'FETCH_TOKEN',
@@ -50,18 +51,23 @@ export function logout(): any {
     return response;
   }
 
-  return (dispatch: any, getState: any) => {
+  return (dispatch: any) => {
     return fetch(BASE_URL + '/users/logout', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'token ' + getState().auth.token
       },
       credentials: 'include',
     })
       .then(handleErrors)
       .then(json => dispatch(discardToken()));
+  };
+}
+
+export function login(username: string, password: string): any {
+  return (dispatch: any) => {
+    return dispatch(logout()).then(() => dispatch(fetchToken(username, password)));
   };
 }
 
@@ -97,7 +103,8 @@ export function fetchToken(username: string, password: string): any {
 
 export function discardToken(): any {
   return (dispatch: any) => {
-    dispatch(discardUser());
-    return dispatch(discardTokenActionCreator());
+    return delay().then(() => {
+        dispatch(discardUser()).then(() => dispatch(discardTokenActionCreator()));
+    });
   };
 }
