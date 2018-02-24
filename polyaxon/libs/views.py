@@ -40,10 +40,10 @@ class ProtectedView(APIView):
                 self.request.get_full_path()))
 
         if isinstance(exc, Http404):
-            raise Http404
+            raise Http404()
 
         if isinstance(exc, rest_exceptions.PermissionDenied):
-            raise django_exceptions.PermissionDenied
+            raise django_exceptions.PermissionDenied()
 
         return super(ProtectedView, self).handle_exception(exc)
 

@@ -245,10 +245,10 @@ class BaseTestPluginViewV1(BaseViewTest):
             deployment_name=deployment_name,
             port=12503)
 
-    def test_rejects_anonymous_user(self):
+    def test_rejects_anonymous_user_and_redirected_to_login_page(self):
         project = ProjectFactory()
         response = self.client.get(self._get_url(project))
-        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        assert response.status_code == 302
 
     def test_rejects_user_with_no_privileges(self):
         project = ProjectFactory(is_public=False)
