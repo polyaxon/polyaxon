@@ -4,7 +4,10 @@ from __future__ import absolute_import, division, print_function
 import os
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.core import exceptions as django_exceptions
+
+from rest_framework import exceptions as rest_exceptions
 
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -28,6 +31,21 @@ class ProtectedView(APIView):
     permission_classes = (IsAuthenticated,)
 
     NGINX_REDIRECT_HEADER = 'X-Accel-Redirect'
+
+    def handle_exception(self, exc):
+        """Use custom exception handler for errors."""
+        if isinstance(exc, (rest_exceptions.NotAuthenticated,
+                            rest_exceptions.AuthenticationFailed)):
+            return HttpResponseRedirect('/app/auth/login?next={}'.format(
+                self.request.get_full_path()))
+
+        if isinstance(exc, Http404):
+            raise Http404
+
+        if isinstance(exc, rest_exceptions.PermissionDenied):
+            raise django_exceptions.PermissionDenied
+
+        return super(ProtectedView, self).handle_exception(exc)
 
     @classmethod
     def _redirect(cls, path, filename=None):
