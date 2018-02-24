@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^_health/?$', HealthView.as_view(), name='health_check'),
     url(r'^{}/'.format(API_V1), include(api_patterns, namespace='v1')),
     url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^50x/?$', Handler50xView.as_view(), name='50x'),
+    url(r'^^50x.html$', Handler50xView.as_view(), name='50x'),
     url(r'^app.*/?', ReactIndexView.as_view(), name='react-index'),
 ]
 
