@@ -25,6 +25,14 @@ class Handler404View(TemplateView):
     template_name = "polyaxon/404.html"
 
 
+class Handler50xView(TemplateView):
+    template_name = "polyaxon/50x.html"
+
+
+class Handler403View(TemplateView):
+    template_name = "polyaxon/403.html"
+
+
 class HealthView(APIView):
     authentication_classes = ()
     throttle_classes = (HealthRateThrottle,)

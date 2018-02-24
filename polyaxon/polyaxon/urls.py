@@ -5,7 +5,13 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from polyaxon.views import HealthView, IndexView, ReactIndexView, Handler404View
+from polyaxon.views import (
+    Handler404View,
+    Handler403View,
+    HealthView,
+    IndexView,
+    ReactIndexView,
+    Handler50xView)
 from users.views import LogoutView, LoginView
 
 API_V1 = 'api/v1'
@@ -29,9 +35,14 @@ urlpatterns = [
     url(r'^_health/?$', HealthView.as_view(), name='health_check'),
     url(r'^{}/'.format(API_V1), include(api_patterns, namespace='v1')),
     url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^50x/?$', Handler50xView.as_view(), name='50x'),
     url(r'^app.*/?', ReactIndexView.as_view(), name='react-index'),
-    url(r'^.*', Handler404View.as_view(), name='not_found')
 ]
+
+handler400 = Handler50xView.as_view()
+handler403 = Handler403View.as_view()
+handler404 = Handler404View.as_view()
+handler500 = Handler50xView.as_view()
 
 if settings.DEBUG:
     import debug_toolbar
