@@ -29,73 +29,25 @@ Return the appropriate apiVersion for networkpolicy.
 
 
 {{/*
-Postgres
-Expand the name of the chart.
-*/}}
-{{- define "postgresql.name" -}}
-{{- "postgresql" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
+Create a default fully qualified app names.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
+
 {{- define "postgresql.fullname" -}}
 {{- $name := "postgresql" -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-
-{{/*
-Redis
-Expand the name of the chart.
-*/}}
-{{- define "redis.name" -}}
-{{- "redis" -}}
+{{- define "docker-registry.fullname" -}}
+{{- $name := "docker-registry" -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
 {{- define "redis.fullname" -}}
 {{- $name := default "redis" -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-
-{{/*
-registry
-Expand the name of the chart.
-*/}}
-{{- define "registry.name" -}}
-{{- "registry" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "registry.fullname" -}}
-{{- $name := "registry" -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-
-{{/*
-Rabbitmq
-Expand the name of the chart.
-*/}}
-{{- define "rabbitmq.name" -}}
-{{- "rabbitmq" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
 {{- define "rabbitmq.fullname" -}}
 {{- $name := "rabbitmq" -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
@@ -290,11 +242,13 @@ db config
 
 
 {{/*
-redis config
+registry config
 */}}
 {{- define "config.registry" }}
 - name: POLYAXON_REGISTRY_HOST
-  value: "localhost:{{ (index .Values "docker-registry").service.nodePort }}"
+  value: {{ template "docker-registry.fullname" . }}
+- name: POLYAXON_REGISTRY_PORT
+  value: {{ (index .Values "docker-registry").service.port | quote }}
 {{- end }}
 
 {{/*
