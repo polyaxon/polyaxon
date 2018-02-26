@@ -27,7 +27,7 @@ logger = logging.getLogger('polyaxon.repos.dockerize')
 
 
 def _get_registry_host():
-    if not settings.REGISTRY_HOST:
+    if not hasattr(settings, 'REGISTRY_HOST'):
         k8s = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
         settings.REGISTRY_HOST = '{}:{}'.format(
             k8s.get_service(name=settings.REGISTRY_HOST_NAME).spec.cluster_ip,
