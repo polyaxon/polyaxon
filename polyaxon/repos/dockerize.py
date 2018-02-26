@@ -6,11 +6,14 @@ import logging
 import time
 import os
 import stat
-
 import jinja2
+
 from django.conf import settings
+
 from docker import APIClient
 from docker.errors import DockerException
+
+from polyaxon_k8s.manager import K8SManager
 
 from events import publisher
 from experiments.models import Experiment
@@ -21,6 +24,17 @@ from repos.models import ExternalRepo, Repo
 from spawner.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.repos.dockerize')
+
+
+def _get_registry_host():
+    if not settings.REGISTRY_HOST:
+        k8s = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
+        settings.REGISTRY_HOST = '{}:{}'.format(
+            k8s.get_service(name=settings.REGISTRY_HOST_NAME).spec.cluster_ip,
+            settings.REGISTRY_PORT)
+
+    return settings.REGISTRY_HOST
+
 
 POLYAXON_DOCKER_TEMPLATE = """
 FROM {{ from_image }}
@@ -356,7 +370,7 @@ def get_experiment_image_info(experiment):
     else:
         repo_name = project_name
 
-    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_name = '{}/{}'.format(_get_registry_host(), repo_name)
     image_tag = experiment.commit
     return image_name, image_tag
 
@@ -382,7 +396,7 @@ def get_job_image_info(project, job):
         repo_name = project_name
         last_commit = project.repo.last_commit
 
-    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_name = '{}/{}'.format(_get_registry_host(), repo_name)
     if not last_commit:
         raise ValueError('Repo was not found for project `{}`.'.format(project))
     return image_name, last_commit[0]
@@ -410,7 +424,7 @@ def build_experiment(experiment):
         repo_path = experiment.project.repo.path
         repo_name = project_name
 
-    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_name = '{}/{}'.format(_get_registry_host(), repo_name)
     image_tag = experiment.commit
     if not image_tag:
         raise Repo.DoesNotExist(
@@ -427,7 +441,7 @@ def build_experiment(experiment):
                                              env_vars=experiment_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
-                         registry_host=settings.REGISTRY_HOST)
+                         registry_host=_get_registry_host())
     if not docker_builder.build():
         docker_builder.clean()
         return False
@@ -458,7 +472,7 @@ def build_job(project, job, job_builder):
         last_commit = project.repo.last_commit
         repo_name = project_name
 
-    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
+    image_name = '{}/{}'.format(_get_registry_host(), repo_name)
     if not last_commit:
         raise Repo.DoesNotExist(
             'Repo was not found for project `{}`.'.format(project.unique_name))
@@ -475,7 +489,7 @@ def build_job(project, job, job_builder):
                                  env_vars=job_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
-                         registry_host=settings.REGISTRY_HOST)
+                         registry_host=_get_registry_host())
     if not docker_builder.build():
         docker_builder.clean()
         return False

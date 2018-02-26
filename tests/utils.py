@@ -5,9 +5,11 @@ import datetime
 import json
 import tempfile
 import uuid
-from urllib.parse import urlparse
-
 import redis
+
+from urllib.parse import urlparse
+from unittest.mock import patch
+
 
 from django.conf import settings
 from django.core.cache import cache
@@ -142,10 +144,12 @@ class BaseTest(TestCase):
         # Flushing all redis databases
         redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
         redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
+        # Mock dirs
         settings.REPOS_ROOT = tempfile.mkdtemp()
         settings.UPLOAD_ROOT = tempfile.mkdtemp()
         settings.LOGS_ROOT = tempfile.mkdtemp()
         settings.OUTPUTS_ROOT = tempfile.mkdtemp()
+        # Flush cache
         cache.clear()
         return super().setUp()
 
