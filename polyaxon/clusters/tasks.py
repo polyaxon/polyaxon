@@ -62,7 +62,7 @@ def update_system_nodes():
 def cluster_analytics():
     cluster = Cluster.objects.annotate(
         n_nodes=Count('nodes'),
-        n_cpus=Sum('nodes__n_cpus'),
+        n_cpus=Sum('nodes__cpu'),
         n_gpus=Sum('nodes__n_gpus')).first()
     notification = uuid.uuid4()
     notification_url = settings.POLYAXON_NOTIFICATION_ALIVE_URL.format(

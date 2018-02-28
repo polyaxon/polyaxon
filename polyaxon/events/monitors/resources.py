@@ -98,11 +98,11 @@ def get_container_resources(node, container, gpu_resources):
 
     percpu_usage = cpu_stats['cpu_usage']['percpu_usage']
     num_cpu_cores = len(percpu_usage)
-    if num_cpu_cores != node.n_cpus:
-        logger.warning('Docker reporting num cpus `{}` and kubernetes reposrting `{}`'.format(
-            num_cpu_cores, node.n_cpus
+    if num_cpu_cores >= node.cpu * 1.5:
+        logger.warning('Docker reporting num cpus `{}` and kubernetes reporting `{}`'.format(
+            num_cpu_cores, node.cpu
         ))
-        num_cpu_cores = node.n_cpus
+        num_cpu_cores = node.cpu
     cpu_percentage = 0.
     percpu_percentage = [0.] * num_cpu_cores
     if delta_total_usage > 0 and delta_system_cpu_usage > 0:
