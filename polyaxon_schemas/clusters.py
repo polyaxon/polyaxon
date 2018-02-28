@@ -49,7 +49,7 @@ class ClusterNodeSchema(Schema):
     hostname = fields.Str(allow_none=True)
     role = fields.Str(allow_none=True)
     memory = fields.Int(allow_none=True)
-    n_cpus = fields.Int(allow_none=True)
+    cpu = fields.Float(allow_none=True)
     n_gpus = fields.Int(allow_none=True)
     kubelet_version = fields.Str(allow_none=True)
     docker_version = fields.Str(allow_none=True)
@@ -75,7 +75,7 @@ class ClusterNodeConfig(BaseConfig):
     SCHEMA = ClusterNodeSchema
     IDENTIFIER = 'ClusterNode'
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'sequence', 'name', 'hostname', 'role', 'memory', 'n_cpus', 'n_gpus', 'status'
+        'sequence', 'name', 'hostname', 'role', 'memory', 'cpu', 'n_gpus', 'status'
     ]
 
     def __init__(self,
@@ -91,7 +91,7 @@ class ClusterNodeConfig(BaseConfig):
                  schedulable_taints=None,
                  schedulable_state=None,
                  memory=None,
-                 n_cpus=None,
+                 cpu=None,
                  n_gpus=None,
                  status=None,
                  gpus=None):
@@ -107,7 +107,7 @@ class ClusterNodeConfig(BaseConfig):
         self.schedulable_taints = schedulable_taints
         self.schedulable_state = schedulable_state
         self.memory = memory
-        self.n_cpus = n_cpus
+        self.cpu = cpu
         self.n_gpus = n_gpus
         self.status = status
         self.gpus = gpus

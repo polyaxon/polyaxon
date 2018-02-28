@@ -36,7 +36,7 @@ class TestClusterConfigs(TestCase):
             'schedulable_taints': True,
             'schedulable_state': True,
             'memory': 10,
-            'n_cpus': 2,
+            'cpu': 2,
             'n_gpus': 3,
             'status': 'Running',
             'gpus': [cls.create_gpu()]
