@@ -61,7 +61,7 @@ def get_valid_project(project_id):
 @celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
 def start_tensorboard(project_id):
     project = get_valid_project(project_id)
-    if not project or not project.tensorboard:
+    if not project or not project.tensorboard or project.has_tensorboard:
         return None
     scheduler.start_tensorboard(project)
 
@@ -99,7 +99,7 @@ def build_notebook(project_id):
 @celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
 def start_notebook(project_id):
     project = get_valid_project(project_id)
-    if not project or not project.notebook:
+    if not project or not project.notebook or project.has_notebook:
         return None
 
     try:
