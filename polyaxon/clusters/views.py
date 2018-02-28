@@ -26,7 +26,7 @@ class ClusterDetailView(RetrieveAPIView):
 
 
 class ClusterNodeListView(ListCreateAPIView):
-    queryset = ClusterNode.objects.all()
+    queryset = ClusterNode.objects.filter(is_current=True)
     serializer_class = ClusterNodeSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
 
@@ -35,7 +35,7 @@ class ClusterNodeListView(ListCreateAPIView):
 
 
 class ClusterNodeDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = ClusterNode.objects.all()
+    queryset = ClusterNode.objects.filter(is_current=True)
     serializer_class = ClusterNodeDetailSerializer
     permission_classes = (IsAuthenticated, IsAdminUser)
     lookup_field = 'sequence'
