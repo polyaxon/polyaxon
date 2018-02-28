@@ -80,7 +80,7 @@ class ClusterNode(models.Model):
     schedulable_taints = models.BooleanField(default=False)
     schedulable_state = models.BooleanField(default=False)
     memory = models.BigIntegerField()
-    n_cpus = models.SmallIntegerField()
+    cpu = models.FloatField()
     n_gpus = models.SmallIntegerField()
     status = models.CharField(
         max_length=24,
@@ -116,8 +116,8 @@ class ClusterNode(models.Model):
             'kernel_version': node.status.node_info.kernel_version,
             'schedulable_taints': nodes.is_schedulable(node),
             'schedulable_state': nodes.get_schedulable_state(node),
-            'memory': nodes.get_memory_size(node),
-            'n_cpus': nodes.get_n_cpus(node),
+            'memory': nodes.get_memory(node),
+            'cpu': nodes.get_cpu(node),
             'n_gpus': nodes.get_n_gpus(node),
             'status': nodes.get_status(node)}
 

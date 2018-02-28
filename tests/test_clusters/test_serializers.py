@@ -49,7 +49,7 @@ class TestClusterNodeSerializer(BaseTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
     factory_class = ClusterNodeFactory
-    expected_keys = {'uuid', 'sequence', 'name', 'hostname', 'role', 'memory', 'n_cpus', 'n_gpus', }
+    expected_keys = {'uuid', 'sequence', 'name', 'hostname', 'role', 'memory', 'cpu', 'n_gpus', }
 
     def setUp(self):
         super().setUp()
@@ -78,7 +78,7 @@ class TestClusterNodeDetailsSerializer(BaseTest):
     expected_keys = {'uuid', 'name', 'hostname', 'role', 'docker_version',
                      'kubelet_version', 'os_image', 'kernel_version',
                      'schedulable_taints', 'schedulable_state', 'is_current',
-                     'memory', 'n_cpus', 'n_gpus', 'status', 'gpus', 'sequence',}
+                     'memory', 'cpu', 'n_gpus', 'status', 'gpus', 'sequence',}
 
     def setUp(self):
         super().setUp()

@@ -103,7 +103,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
             'os_image': 'Buildroot 2017.02',
             'kernel_version': '4.9.13',
             'memory': 100,
-            'n_cpus': 2,
+            'cpu': 2,
             'n_gpus': 0,
         }
         resp = self.auth_client.post(self.url, data)
@@ -112,7 +112,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
         last_object = self.model_class.objects.last()
         assert last_object.cluster == self.cluster
         assert last_object.memory == 100
-        assert last_object.n_cpus == 2
+        assert last_object.cpu == 2
         assert last_object.n_gpus == 0
 
 
@@ -143,15 +143,15 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
 
     def test_patch(self):
         data = {
-            'n_cpus': self.object.n_cpus + 1
+            'cpu': self.object.cpu + 1
         }
-        assert self.object.n_cpus != data['n_cpus']
+        assert self.object.cpu != data['cpu']
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.cluster == self.object.cluster
-        assert new_object.n_cpus != self.object.n_cpus
-        assert new_object.n_cpus == data['n_cpus']
+        assert new_object.cpu != self.object.cpu
+        assert new_object.cpu == data['cpu']
         assert new_object.gpus.count() == 2
 
     def test_delete(self):

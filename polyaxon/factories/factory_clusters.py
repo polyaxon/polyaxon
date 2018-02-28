@@ -19,7 +19,7 @@ class ClusterNodeFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda i: 'name {}'.format(i))
     sequence = factory.Sequence(lambda i: i)
     memory = factory.Sequence(lambda x: x)
-    n_cpus = factory.Sequence(lambda x: x)
+    cpu = factory.Sequence(lambda x: x)
     n_gpus = factory.Sequence(lambda x: x)
 
     class Meta:

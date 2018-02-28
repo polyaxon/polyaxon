@@ -19,11 +19,14 @@ def get_n_gpus(node):
     return int(node.status.allocatable.get(settings.K8S_GPU_RESOURCE_KEY, 0))
 
 
-def get_n_cpus(node):
-    return int(node.status.allocatable['cpu'])
+def get_cpu(node):
+    cpu = node.status.allocatable['cpu']
+    if cpu.lower()[-1] == 'm':
+        cpu = int(cpu[:-1]) / 1000
+    return float(cpu)
 
 
-def get_memory_size(node):
+def get_memory(node):
     return constants.to_bytes(node.status.allocatable['memory'])
 
 

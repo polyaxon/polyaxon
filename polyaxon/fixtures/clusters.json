@@ -36,7 +36,7 @@
         "schedulable_taints": true,
         "schedulable_state": true,
         "memory": 4038840320,
-        "n_cpus": 2,
+        "cpu": 2,
         "n_gpus": 0,
         "status": "Ready",
         "is_current": true
