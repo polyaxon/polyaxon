@@ -21,15 +21,33 @@ export interface Props {
 export default class Projects extends React.Component<Props, Object> {
   public render() {
     const {user, projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
-    const listProjects = (
-      <ul>
-        {projects.filter(
-          (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
-        ).map(
-          (project: ProjectModel) => <li className="list-item" key={project.unique_name}>
-            <Project project={project} onDelete={() => onDelete(project)}/></li>)}
-      </ul>
-    );
+    const listProjects = () => {
+      if (projects.length === 0) {
+        return (
+          <div className="row">
+            <div className="col-md-offset-2 col-md-8">
+              <div className="jumbotron jumbotron-action text-center">
+                <h3>You don't have any project</h3>
+                <img src="/static/images/project.svg" alt="project" className="empty-icon"/>
+                <div>
+                  You can create new project by using CLI: <b>polyaxon project create --help</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <ul>
+          {projects.filter(
+            (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
+          ).map(
+            (project: ProjectModel) => <li className="list-item" key={project.unique_name}>
+              <Project project={project} onDelete={() => onDelete(project)}/></li>)}
+        </ul>
+      );
+    };
+
     return (
       <div>
         <div className="entity-details">
@@ -39,7 +57,7 @@ export default class Projects extends React.Component<Props, Object> {
         <RootModal hideModal={hideModal}/>
         <PaginatedList
           count={this.props.count}
-          componentList={listProjects}
+          componentList={listProjects()}
           fetchData={this.props.fetchData}
         />
       </div>

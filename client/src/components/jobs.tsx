@@ -18,23 +18,37 @@ export interface Props {
 export default class Jobs extends React.Component<Props, Object> {
   public render() {
     const jobs = this.props.jobs;
-    const listJobs = (
-      <div className="col-md-12">
-        <ul>
-          {jobs.filter(
-            (xp: JobModel) => _.isNil(xp.deleted) || !xp.deleted
-          ).map(
-            (job: JobModel) =>
-              <li className="list-item" key={job.unique_name}>
-                <Job job={job} onDelete={() => this.props.onDelete(job)}/>
-              </li>)}
-        </ul>
-      </div>
-    );
+    const listJobs = () => {
+      if (jobs.length === 0) {
+        return (
+          <div className="row">
+            <div className="col-md-offset-2 col-md-8">
+              <div className="jumbotron jumbotron-action text-center">
+                <h3>No job was found</h3>
+                <img src="/static/images/job.svg" alt="group" className="empty-icon"/>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div className="col-md-12">
+          <ul>
+            {jobs.filter(
+              (xp: JobModel) => _.isNil(xp.deleted) || !xp.deleted
+            ).map(
+              (job: JobModel) =>
+                <li className="list-item" key={job.unique_name}>
+                  <Job job={job} onDelete={() => this.props.onDelete(job)}/>
+                </li>)}
+          </ul>
+        </div>
+      );
+    };
     return (
       <PaginatedList
         count={this.props.count}
-        componentList={listJobs}
+        componentList={listJobs()}
         fetchData={this.props.fetchData}
       />
     );
