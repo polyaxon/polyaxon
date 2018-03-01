@@ -8,7 +8,7 @@ from django.utils.crypto import salted_hmac
 
 def to_bool(value):
     if isinstance(value, str):
-        return strtobool(value)
+        value = strtobool(value)
 
     if value in (False, 0):
         return False

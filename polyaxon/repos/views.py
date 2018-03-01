@@ -11,6 +11,7 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from libs.utils import to_bool
 from libs.views import UploadView
 from projects.permissions import get_permissible_project
 from repos.serializers import RepoSerializer
@@ -57,9 +58,13 @@ class UploadFilesView(UploadView):
                 'IOError while trying to save posted data ({}): {}'.format(e.errno, e.strerror))
             return HttpResponseServerError()
 
-        handle_new_files.delay(user_id=user.id,
-                               repo_id=repo.id,
-                               tar_file_name=tar_file_name)
+        async = request.data.get('async')
+        if async and to_bool(async) is False:
+            file_handler = handle_new_files
+        else:
+            file_handler = handle_new_files.delay
+
+        file_handler(user_id=user.id, repo_id=repo.id, tar_file_name=tar_file_name)
 
         # do some stuff with uploaded file
         return Response(status=204)

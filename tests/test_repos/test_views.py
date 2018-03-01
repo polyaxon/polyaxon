@@ -84,6 +84,28 @@ class TestUploadFilesView(BaseViewTest):
         return SimpleUploadedFile(filename, file.read(),
                                   content_type='multipart/form-data')
 
+    def test_upload_files_synchronously_creates_repo(self):
+        user = self.auth_client.user
+        repo_name = self.project.name
+
+        # No repo was created yet
+        assert self.model_class.objects.count() == 0
+        repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name, repo_name)
+        self.assertFalse(os.path.exists(repo_path))
+
+        uploaded_file = self.get_upload_file()
+
+        with patch('repos.views.handle_new_files') as mock_task:
+            self.auth_client.put(self.url,
+                                 data={'repo': uploaded_file, 'async': False},
+                                 content_type=MULTIPART_CONTENT)
+
+        file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT, user.username, repo_name)
+        self.assertTrue(os.path.exists(file_path))
+        assert mock_task.call_count == 1
+        assert self.model_class.objects.count() == 1
+        self.assertTrue(os.path.exists(repo_path))
+
     def test_upload_files_creates_repo(self):
         user = self.auth_client.user
         repo_name = self.project.name
