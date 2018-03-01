@@ -84,16 +84,19 @@ def start(ctx, file, u):
 
 
 @notebook.command()
+@click.option('--yes', '-y', is_flag=True, default=False,
+              help='Automatic yes to prompts. '
+                   'Assume "yes" as answer to all prompts and run non-interactively.')
 @click.pass_context
-def stop(ctx):
+def stop(ctx, yes):
     """Stops the notebook deployment for this project if it exists.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
     user, project_name = get_project_or_local(ctx.obj['project'])
 
-    if not click.confirm("Are sure you want to stop notebook for project `{}/{}`".format(
-        user, project_name)):
+    if not yes and not click.confirm("Are sure you want to stop notebook "
+                                     "for project `{}/{}`".format(user, project_name)):
         click.echo('Existing without stopping notebook.')
         sys.exit(1)
 
