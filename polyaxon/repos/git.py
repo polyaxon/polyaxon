@@ -11,7 +11,7 @@ from django.conf import settings
 from git import Repo as GitRepo, InvalidGitRepositoryError
 from psutil import Popen
 
-from libs.paths import create_path
+from libs.paths import create_path, delete_path
 
 logger = logging.getLogger('polyaxon.repos.git')
 
@@ -79,7 +79,7 @@ def fetch(git_url, repo_path, overwrite=False):
         logger.info('Current checkout path has content.')
         if overwrite:
             logger.info('Overwriting current checkout path.')
-            shutil.rmtree(repo_path)
+            delete_path(repo_path)
         else:
             run_command(cmd='git fetch origin master', data=None, location=repo_path, chw=True)
             run_command(cmd='git reset --hard FETCH_HEAD', data=None, location=repo_path, chw=True)

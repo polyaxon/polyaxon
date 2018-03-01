@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import shutil
-
 import os
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
 
-from libs.paths import create_path
+from libs.paths import create_path, delete_path
 from repos import git
 from repos.models import ExternalRepo, Repo
 
@@ -47,7 +45,7 @@ def repo_deleted(sender, **kwargs):
     instance = kwargs['instance']
 
     # Clean repo
-    shutil.rmtree(instance.path)
+    delete_path(instance.path)
 
 
 @receiver(post_save, sender=ExternalRepo, dispatch_uid="external_repo_saved")
@@ -84,4 +82,4 @@ def external_repo_deleted(sender, **kwargs):
     instance = kwargs['instance']
 
     # Clean repo
-    shutil.rmtree(instance.path)
+    delete_path(instance.path)

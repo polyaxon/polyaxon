@@ -9,6 +9,7 @@ import shutil
 
 from django.contrib.auth import get_user_model
 
+from libs.paths import delete_path
 from polyaxon.settings import CeleryTasks
 from polyaxon.celery_api import app as celery_app
 from repos import git
@@ -49,7 +50,7 @@ def handle_new_files(user_id, repo_id, tar_file_name):
         if os.path.isfile(member):
             os.remove(member)
         else:
-            shutil.rmtree(member)
+            delete_path(member)
 
     # Move the tar inside the repo path
     shutil.move(tar_file_name, new_repo_path)
