@@ -27,7 +27,7 @@ therefor they are responsible to accept or reject new users.
 To accept a new user, run the following command
 
 ```bash
-$ polyaxon user accept <USERNAME>
+$ polyaxon user activate <USERNAME>
 ```
 
 To reject a new user, run the following command
