@@ -12,7 +12,7 @@ from polyaxon_cli.utils.clients import PolyaxonClients
                    'Assume "yes" as answer to all prompts and run non-interactively.')
 def dashboard(yes):
     """Open dashboard in browser."""
-    dashboard_url = "{}/app/".format(PolyaxonClients().auth.http_host)
+    dashboard_url = "{}".format(PolyaxonClients().auth.http_host)
     if not yes:
         click.confirm('Dashboard page will now open in your browser. Continue?',
                       abort=True, default=True)
