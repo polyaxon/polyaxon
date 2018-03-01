@@ -32,7 +32,7 @@ class ProjectClient(PolyaxonClient):
 
     def create_project(self, project_config):
         try:
-            response = self.post(self._get_http_url('/projects'), json=project_config.to_dict())
+            response = self.post(self._get_http_url('/projects'), data=project_config.to_dict())
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while creating project')
@@ -41,7 +41,7 @@ class ProjectClient(PolyaxonClient):
     def update_project(self, username, project_name, patch_dict):
         request_url = self._build_url(self._get_http_url(), username, project_name)
         try:
-            response = self.patch(request_url, json=patch_dict)
+            response = self.patch(request_url, data=patch_dict)
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while updating project')
@@ -56,13 +56,19 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while deleting project')
             return None
 
-    def upload_repo(self, username, project_name, files, files_size=None):
+    def upload_repo(self, username, project_name, files, files_size=None, async=True):
         """Uploads code data related for this project from the current dir."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'repo', 'upload')
 
+        json_data = None
+        if async is False:
+            json_data = {'async': async}
         try:
-            response = self.upload(request_url, files=files, files_size=files_size)
+            response = self.upload(request_url,
+                                   files=files,
+                                   files_size=files_size,
+                                   json_data=json_data)
             return response
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while updating project repo')
@@ -85,7 +91,7 @@ class ProjectClient(PolyaxonClient):
             self._get_http_url(), username, project_name, 'groups')
 
         try:
-            response = self.post(request_url, json=experiment_group_config.to_dict())
+            response = self.post(request_url, data=experiment_group_config.to_dict())
             return ExperimentGroupConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while creating experiment group')
@@ -107,7 +113,7 @@ class ProjectClient(PolyaxonClient):
         request_url = self._build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
-            response = self.post(request_url, json=experiment_config.to_dict())
+            response = self.post(request_url, data=experiment_config.to_dict())
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while creating experiment group')
@@ -126,7 +132,7 @@ class ProjectClient(PolyaxonClient):
 
         try:
             plugin_job_config = plugin_job_config.to_dict() if plugin_job_config else {}
-            return self.post(request_url, json=plugin_job_config)
+            return self.post(request_url, data=plugin_job_config)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while starting tensorboard')
             return None
@@ -152,7 +158,7 @@ class ProjectClient(PolyaxonClient):
 
         try:
             plugin_job_config = plugin_job_config.to_dict() if plugin_job_config else {}
-            return self.post(request_url, json=plugin_job_config)
+            return self.post(request_url, data=plugin_job_config)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while starting notebook')
             return None

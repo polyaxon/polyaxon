@@ -171,7 +171,7 @@ class PolyaxonClient(object):
         self.check_response_status(response, url)
         return response
 
-    def upload(self, url, files, files_size, params=None, json=None, timeout=3600):
+    def upload(self, url, files, files_size, params=None, json_data=None, timeout=3600):
         if files_size > self.MAX_UPLOAD_SIZE:
             raise PolyaxonShouldExitError(
                 "Files too large to sync, please keep it under {}.\n"
@@ -181,8 +181,8 @@ class PolyaxonClient(object):
                     self.format_sizeof(self.MAX_UPLOAD_SIZE)))
 
         files = to_list(files)
-        if json:
-            files.append(('json', json.dumps(json)))
+        if json_data:
+            files.append(('json', json.dumps(json_data)))
 
         multipart_encoder = MultipartEncoder(
             fields=files
@@ -299,7 +299,7 @@ class PolyaxonClient(object):
             params=None,
             data=None,
             files=None,
-            json=None,
+            json_data=None,
             timeout=TIME_OUT,
             headers=None):
         """Call request with a get."""
@@ -308,7 +308,7 @@ class PolyaxonClient(object):
                             params=params,
                             data=data,
                             files=files,
-                            json=json,
+                            json=json_data,
                             timeout=timeout,
                             headers=headers)
 
@@ -317,7 +317,7 @@ class PolyaxonClient(object):
              params=None,
              data=None,
              files=None,
-             json=None,
+             json_data=None,
              timeout=TIME_OUT,
              headers=None):
         """Call request with a post."""
@@ -326,7 +326,7 @@ class PolyaxonClient(object):
                             params=params,
                             data=data,
                             files=files,
-                            json=json,
+                            json=json_data,
                             timeout=timeout,
                             headers=headers)
 
@@ -335,7 +335,7 @@ class PolyaxonClient(object):
               params=None,
               data=None,
               files=None,
-              json=None,
+              json_data=None,
               timeout=TIME_OUT,
               headers=None):
         """Call request with a patch."""
@@ -344,7 +344,7 @@ class PolyaxonClient(object):
                             params=params,
                             data=data,
                             files=files,
-                            json=json,
+                            json=json_data,
                             timeout=timeout,
                             headers=headers)
 
@@ -353,7 +353,7 @@ class PolyaxonClient(object):
                params=None,
                data=None,
                files=None,
-               json=None,
+               json_data=None,
                timeout=TIME_OUT,
                headers=None):
         """Call request with a delete."""
@@ -362,7 +362,7 @@ class PolyaxonClient(object):
                             params=params,
                             data=data,
                             files=files,
-                            json=json,
+                            json=json_data,
                             timeout=timeout,
                             headers=headers)
 
@@ -371,7 +371,7 @@ class PolyaxonClient(object):
             params=None,
             data=None,
             files=None,
-            json=None,
+            json_data=None,
             timeout=TIME_OUT,
             headers=None):
         """Call request with a put."""
@@ -380,7 +380,7 @@ class PolyaxonClient(object):
                             params=params,
                             data=data,
                             files=files,
-                            json=json,
+                            json=json_data,
                             timeout=timeout,
                             headers=headers)
 

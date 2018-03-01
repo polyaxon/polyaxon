@@ -45,7 +45,7 @@ class ExperimentClient(PolyaxonClient):
                                       'experiments',
                                       experiment_sequence)
         try:
-            response = self.patch(request_url, json=patch_dict)
+            response = self.patch(request_url, json_data=patch_dict)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while updating experiment')

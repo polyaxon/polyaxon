@@ -126,6 +126,25 @@ class TestProjectClient(TestCase):
         assert result.status_code == 204
 
     @httpretty.activate
+    def test_upload_repo_synchronous(self):
+        httpretty.register_uri(
+            httpretty.PUT,
+            ProjectClient._build_url(
+                self.client.base_url,
+                ProjectClient.ENDPOINT,
+                'user',
+                'project',
+                'repo',
+                'upload'),
+            content_type='application/json',
+            status=204)
+        files = [('code', ('repo',
+                           open('./tests/fixtures_static/repo.tar.gz', 'rb'),
+                           'text/plain'))]
+        result = self.client.upload_repo('user', 'project', files=files, files_size=10, async=False)
+        assert result.status_code == 204
+
+    @httpretty.activate
     def test_list_experiment_groups(self):
         project_uuid = uuid.uuid4().hex
         experiment_groups = [

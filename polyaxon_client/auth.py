@@ -43,7 +43,7 @@ class AuthClient(PolyaxonClient):
     def login(self, credentials):
         request_url = self._build_url(self._get_http_url(), 'token')
         try:
-            response = requests.post(request_url, json=credentials.to_dict())
+            response = requests.post(request_url, data=credentials.to_dict())
         except requests.ConnectionError:
             raise PolyaxonHTTPError(
                 request_url,

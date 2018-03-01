@@ -47,7 +47,7 @@ class DatasetClient(PolyaxonClient):
             logger.info("Making create request to server...")
             post_body = data.to_dict()
             post_body["resumable"] = True
-            response = self.post(self._get_http_url(), json=post_body)
+            response = self.post(self._get_http_url(), data=post_body)
             return response.json()
         except BadRequestError as e:
             if 'Dataset not found, ID' in e.message:
