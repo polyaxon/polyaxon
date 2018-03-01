@@ -14,14 +14,15 @@ from polyaxon_cli.utils.formatting import Printer
 
 
 @click.command()
-def upload():
+@click.option('--async', is_flag=True, default=True, help='Upload synchronously.')
+def upload(async):
     """Upload code of the current directory while respecting the .polyaxonignore file."""
     project = ProjectManager.get_config_or_raise()
     files = IgnoreManager.get_unignored_file_paths()
-    filepath = create_tarfile(files, project.name)
-    files, files_size = get_files_in_current_directory('repo', [filepath])
+    file_path = create_tarfile(files, project.name)
+    files, files_size = get_files_in_current_directory('repo', [file_path])
     try:
-        PolyaxonClients().project.upload_repo(project.user, project.name, files, files_size)
+        PolyaxonClients().project.upload_repo(project.user, project.name, files, files_size, async)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
         Printer.print_error('Error message `{}`.'.format(e))
