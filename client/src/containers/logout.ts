@@ -10,12 +10,12 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  discardToken?: () => any;
+  logout?: () => any;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.TokenAction>, params: any): DispatchProps {
   return {
-    discardToken: () => dispatch(actions.logout())
+    logout: () => dispatch(actions.logout())
   };
 }
 

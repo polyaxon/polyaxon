@@ -103,8 +103,9 @@ export function fetchToken(username: string, password: string): any {
 
 export function discardToken(): any {
   return (dispatch: any) => {
-    return delay().then(() => {
-        dispatch(discardUser()).then(() => dispatch(discardTokenActionCreator()));
-    });
+    dispatch(discardUser()).then(
+      () => delay().then(() => {
+        dispatch(discardTokenActionCreator());
+    }));
   };
 }
