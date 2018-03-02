@@ -19,7 +19,6 @@ def publish_log(log_line,
                 experiment_uuid,
                 experiment_name,
                 job_uuid,
-                persist=False,
                 task_type=None,
                 task_idx=None):
     try:
@@ -34,7 +33,6 @@ def publish_log(log_line,
                                  experiment_uuid=experiment_uuid,
                                  job_uuid=job_uuid,
                                  log_line=log_line,
-                                 persist=persist,
                                  task_type=task_type,
                                  task_idx=task_idx)
     if (RedisToStream.is_monitored_job_logs(job_uuid) or

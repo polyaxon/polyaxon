@@ -41,7 +41,7 @@ class ExperimentMetricFactory(factory.DjangoModelFactory):
 
 
 class ExperimentJobFactory(factory.DjangoModelFactory):
-    definition = {}  # TODO should be a valid k8s config
+    definition = {}
     experiment = factory.SubFactory(ExperimentFactory)
 
     class Meta:

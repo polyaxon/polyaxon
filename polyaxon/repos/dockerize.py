@@ -283,7 +283,6 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
             experiment_uuid=self.experiment_uuid,
             experiment_name=self.experiment_name,
             job_uuid='all',
-            persist=False  # TODO: ADD log persistence
         )
 
     def _check_pulse(self, check_pulse):

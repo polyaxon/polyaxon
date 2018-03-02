@@ -21,8 +21,7 @@ def run(k8s_manager,
         job_uuid,
         task_type,
         task_idx,
-        container_job_name,
-        persist):
+        container_job_name):
     raw = k8s_manager.k8s_api.read_namespaced_pod_log(pod_id,
                                                       k8s_manager.namespace,
                                                       container=container_job_name,
@@ -34,7 +33,6 @@ def run(k8s_manager,
                               experiment_uuid=experiment_uuid,
                               experiment_name=experiment_name,
                               job_uuid=job_uuid,
-                              persist=persist,
                               task_type=task_type,
                               task_idx=task_idx)
 

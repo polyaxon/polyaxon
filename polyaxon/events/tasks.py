@@ -46,14 +46,12 @@ def handle_events_job_logs(experiment_name,
                            experiment_uuid,
                            job_uuid,
                            log_line,
-                           persist,
                            task_type=None,
                            task_idx=None):
-    # must persist resources if logs according to the config
+    # Must persist resources if logs according to the config
     if not Experiment.objects.filter(uuid=experiment_uuid).exists():
         return
-    logger.debug('handling log event for {} {} {}'.format(
-        experiment_uuid, job_uuid, persist))
+    logger.debug('handling log event for {} {}'.format(experiment_uuid, job_uuid))
     if task_type and task_idx:
         log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
     xp_logger = logging.getLogger(experiment_name)

@@ -25,7 +25,6 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
-  // TODO: We are probably using the wrong user here
   return {
     onDelete: () => dispatch(() => undefined),
     fetchData: () => dispatch(

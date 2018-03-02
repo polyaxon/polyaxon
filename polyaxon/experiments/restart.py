@@ -21,7 +21,6 @@ def handle_restarted_experiment(experiment):
             experiment_uuid=experiment.uuid.hex,
             experiment_name=experiment.unique_name,
             job_uuid='all',
-            persist=True
         )
         copy_experiment_outputs(experiment.original_experiment.unique_name, experiment.unique_name)
 
@@ -34,7 +33,6 @@ def handle_restarted_experiment(experiment):
             experiment_uuid=experiment.uuid.hex,
             experiment_name=experiment.unique_name,
             job_uuid='all',
-            persist=True
         )
         logger.warning(
             'Could not copy the outputs of experiment `{}` into experiment `{}`'.format(

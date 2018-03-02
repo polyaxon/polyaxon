@@ -29,7 +29,6 @@ class TestEventsLogsHandling(BaseTest):
                       experiment_uuid=experiment.uuid.hex,
                       job_uuid=uuid.uuid4().hex,
                       log_line='First test',
-                      persist=True,
                       task_type=TaskType.MASTER,
                       task_idx=0)
         handle_events_job_logs(**params)
