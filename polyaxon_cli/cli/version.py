@@ -17,6 +17,7 @@ from polyaxon_client.exceptions import (
 
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
+from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
@@ -44,6 +45,8 @@ def get_version(pkg):
 
 def check_cli_version():
     """Check if the current cli version satisfies the server requirements"""
+    if not CliConfigManager.should_check():
+        return
     try:
         server_version = PolyaxonClients().version.get_cli_version()
     except AuthorizationError:

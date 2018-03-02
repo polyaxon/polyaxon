@@ -6,7 +6,7 @@ from polyaxon_cli.managers.base import BaseConfigManager
 
 
 class AuthConfigManager(BaseConfigManager):
-    """Manages access token configuration .plxauthconfig file."""
+    """Manages access token configuration .polyaxonauth file."""
 
     IS_GLOBAL = True
     CONFIG_FILE_NAME = '.polyaxonauth'
