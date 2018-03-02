@@ -7,7 +7,7 @@ import sys
 import os
 
 from marshmallow import ValidationError
-from polyaxon_client.exceptions import PolyaxonHTTPError
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
 from polyaxon_cli.cli.project import get_project_or_local, equal_projects
@@ -30,10 +30,11 @@ def init(project, run, model):
     user, project_name = get_project_or_local(project)
     try:
         project_config = PolyaxonClients().project.get_project(user, project_name)
-    except PolyaxonHTTPError:
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Make sure you have a project with this name `{}`'.format(project))
         Printer.print_error('You can a new project with this command: '
                             'polyaxon project create --name={} --description=...'.format(project))
+        Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     if not any([model, run]) and not all([model, run]):
