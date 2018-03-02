@@ -8,7 +8,7 @@ from polyaxon_schemas.base import BaseConfig
 
 class UserSchema(Schema):
     username = fields.Str()
-    email = fields.Email()
+    email = fields.Email(allow_none=True)
     is_superuser = fields.Bool(allow_none=True)
 
     class Meta:
