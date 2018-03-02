@@ -22,7 +22,12 @@ export function mapStateToProps(state: AppState, params: any)  {
       projects.push(state.projects.byUniqueNames[project]);
     });
 
-  return {user: username, projects: projects, count: user.num_projects};
+  return {
+    isCurrentUser: state.auth.user === username,
+    user: username,
+    projects: projects,
+    count: user.num_projects
+  };
 }
 
 export interface DispatchProps {

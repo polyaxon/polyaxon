@@ -5,6 +5,7 @@ import * as actions from '../actions/job';
 import Job from './job';
 import { JobModel } from '../models/job';
 import PaginatedList from '../components/paginatedList';
+import { noObjectListComponent } from '../constants/templates';
 
 export interface Props {
   jobs: JobModel[];
@@ -20,16 +21,7 @@ export default class Jobs extends React.Component<Props, Object> {
     const jobs = this.props.jobs;
     const listJobs = () => {
       if (jobs.length === 0) {
-        return (
-          <div className="row">
-            <div className="col-md-offset-2 col-md-8">
-              <div className="jumbotron jumbotron-action text-center">
-                <h3>No job was found</h3>
-                <img src="/static/images/job.svg" alt="group" className="empty-icon"/>
-              </div>
-            </div>
-          </div>
-        );
+        return noObjectListComponent(false, 'job');
       }
       return (
         <div className="col-md-12">

@@ -22,7 +22,10 @@ export function mapStateToProps(state: AppState, ownProps: any) {
       groups.push(state.groups.byUniqueNames[group]);
     });
 
-  return {groups: groups, count: project.num_experiment_groups};
+  return {
+    isCurrentUser: state.auth.user === ownProps.user,
+    groups: groups,
+    count: project.num_experiment_groups};
 }
 
 export interface DispatchProps {

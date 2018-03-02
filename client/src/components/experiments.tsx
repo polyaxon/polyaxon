@@ -5,8 +5,10 @@ import Experiment from './experiment';
 import { ExperimentModel } from '../models/experiment';
 import * as actions from '../actions/experiment';
 import PaginatedList from '../components/paginatedList';
+import { noObjectListComponent } from '../constants/templates';
 
 export interface Props {
+  isCurrentUser: boolean;
   experiments: ExperimentModel[];
   count: number;
   onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
@@ -21,19 +23,10 @@ export default class Experiments extends React.Component<Props, Object> {
     const experiments = this.props.experiments;
     const listExperiments = () => {
       if (experiments.length === 0) {
-        return (
-          <div className="row">
-            <div className="col-md-offset-2 col-md-8">
-              <div className="jumbotron jumbotron-action text-center">
-                <h3>You don't have any experiment</h3>
-                <img src="/static/images/experiment.svg" alt="experiment" className="empty-icon"/>
-                <div>
-                  You can start new experiment by using CLI: <b>polyaxon run --help</b>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+         return noObjectListComponent(
+          this.props.isCurrentUser,
+          'experiment',
+          'polyaxon run --help');
       }
       return (
         <div className="col-md-12">

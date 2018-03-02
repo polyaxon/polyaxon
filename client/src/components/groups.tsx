@@ -4,8 +4,10 @@ import * as _ from 'lodash';
 import Group from './group';
 import { GroupModel } from '../models/group';
 import PaginatedList from '../components/paginatedList';
+import { noObjectListComponent } from '../constants/templates';
 
 export interface Props {
+  isCurrentUser: boolean;
   groups: GroupModel[];
   count: number;
   onCreate: (group: GroupModel) => any;
@@ -19,19 +21,10 @@ export default class Groups extends React.Component<Props, Object> {
     const groups = this.props.groups;
     const listGroups = () => {
       if (groups.length === 0) {
-        return (
-          <div className="row">
-            <div className="col-md-offset-2 col-md-8">
-              <div className="jumbotron jumbotron-action text-center">
-                <h3>You don't have any experiment group</h3>
-                <img src="/static/images/group.svg" alt="group" className="empty-icon"/>
-                <div>
-                  You can start new experiment group by using CLI: <b>polyaxon run --help</b>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return noObjectListComponent(
+          this.props.isCurrentUser,
+          'experiment group',
+          'polyaxon run --help');
       }
       return (
         <div className="col-md-12">

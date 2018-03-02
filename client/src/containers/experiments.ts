@@ -43,7 +43,7 @@ export function mapStateToProps(state: AppState, ownProps: any) {
       });
   }
 
-  return {experiments: experiments, count: count};
+  return {isCurrentUser: state.auth.user === ownProps.user, experiments: experiments, count: count};
 }
 
 export interface DispatchProps {
