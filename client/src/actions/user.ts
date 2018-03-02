@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { BASE_URL } from '../constants/api';
 import { UserModel } from '../models/user';
 import { discardToken } from '../actions/token';
-import {delay, getToken} from '../constants/utils';
+import { delay, getToken } from '../constants/utils';
 
 export enum actionTypes {
   RECEIVE_USER = 'RECEIVE_USER',
@@ -60,12 +60,18 @@ export function fetchUser(): any {
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
       .then(json =>
-        delay().then(() => dispatch(receiveUserActionCreator(json))));
+        new Promise(function(resolve: any, reject: any) {
+          dispatch(receiveUserActionCreator(json));
+          resolve();
+        }))
+      .catch(error => undefined);
   };
 }
 
 export function discardUser(): any {
-  return (dispatch: any) => {
-    return delay().then(() => dispatch(discardUserActionCreator()));
-  };
+  return (dispatch: any) =>
+    new Promise(function(resolve: any, reject: any) {
+      dispatch(discardUserActionCreator());
+      resolve();
+    });
 }

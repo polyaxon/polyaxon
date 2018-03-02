@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { AppState } from '../constants/types';
 
 import * as actions from '../actions/token';
+import * as userActions from '../actions/user';
 import Login from '../components/login';
 
 export function mapStateToProps(state: AppState, params: any)  {
@@ -12,11 +13,14 @@ export function mapStateToProps(state: AppState, params: any)  {
 }
 
 export interface DispatchProps {
+  fetchUser: () => any;
   login?: (username: string, password: string) => any;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.TokenAction>, params: any): DispatchProps {
+export function mapDispatchToProps(
+  dispatch: Dispatch<actions.TokenAction | userActions.UserAction>, params: any): DispatchProps {
   return {
+    fetchUser: () => dispatch(userActions.fetchUser()),
     login: (username: string, password: string) => dispatch(actions.login(username, password))
   };
 }

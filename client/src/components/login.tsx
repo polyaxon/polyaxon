@@ -5,6 +5,7 @@ export interface Props {
   next: string | null;
   isLoggedIn: boolean;
   history: any;
+  fetchUser: () => any;
   login: (username: string, password: string) => any;
 }
 
@@ -29,13 +30,16 @@ export default class Login extends React.Component<Props, Object> {
   }
 
   componentWillMount() {
-    if (this.props.isLoggedIn) {
-      if (this.props.next) {
-        window.location.replace(this.props.next);
-      } else {
-        this.props.history.push(getHomeUrl());
-      }
-    }
+    this.props.fetchUser().then(
+      () => {
+        if (this.props.isLoggedIn) {
+          if (this.props.next) {
+            window.location.replace(this.props.next);
+          } else {
+            this.props.history.push(getHomeUrl());
+          }
+        }
+      });
   }
 
   public render() {

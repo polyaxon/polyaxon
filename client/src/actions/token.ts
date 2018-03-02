@@ -102,9 +102,11 @@ export function fetchToken(username: string, password: string): any {
 }
 
 export function discardToken(): any {
-  return (dispatch: any) => {
-    delay().then(() => {
-        dispatch(discardTokenActionCreator());
-    }).then(() => dispatch(discardUser()));
-  };
+  return (dispatch: any) =>
+    new Promise(function(resolve: any, reject: any) {
+      dispatch(discardTokenActionCreator());
+      dispatch(discardUser()).then(
+        () => resolve()
+    ).catch((error: any) => reject(error))
+    });
 }

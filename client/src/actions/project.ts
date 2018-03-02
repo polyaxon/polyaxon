@@ -140,7 +140,8 @@ export function fetchProjects(user: string, currentPage?: number): any {
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveProjectsActionCreator(json.results, json.count)));
+      .then(json => dispatch(receiveProjectsActionCreator(json.results, json.count)))
+      .catch(error => undefined);
   };
 }
 
