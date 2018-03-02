@@ -11,12 +11,11 @@ export interface Props {
 
 export default class JobDetail extends React.Component<Props, Object> {
   componentDidMount() {
-    const {job, onDelete, fetchData} = this.props;
-    fetchData();
+    this.props.fetchData();
   }
 
   public render() {
-    const {job, onDelete, fetchData} = this.props;
+    const job = this.props.job;
     if (_.isNil(job)) {
       return (<div>Nothing</div>);
     }

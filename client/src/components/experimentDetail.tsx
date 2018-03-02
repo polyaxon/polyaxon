@@ -23,12 +23,11 @@ export interface Props {
 
 export default class ExperimentDetail extends React.Component<Props, Object> {
   componentDidMount() {
-    const {experiment, onDelete, fetchData} = this.props;
-    fetchData();
+    this.props.fetchData();
   }
 
   public render() {
-    const {experiment, onDelete, fetchData} = this.props;
+    const experiment = this.props.experiment;
 
     if (_.isNil(experiment)) {
       return (<div>Nothing</div>);

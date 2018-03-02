@@ -20,7 +20,7 @@ export interface Props {
 
 export default class Projects extends React.Component<Props, Object> {
   public render() {
-    const {user, projects, onUpdate, onDelete, fetchData, showModal, hideModal} = this.props;
+    const projects = this.props.projects;
     const listProjects = () => {
       if (projects.length === 0) {
         return (
@@ -43,7 +43,7 @@ export default class Projects extends React.Component<Props, Object> {
             (project: ProjectModel) => _.isNil(project.deleted) || !project.deleted
           ).map(
             (project: ProjectModel) => <li className="list-item" key={project.unique_name}>
-              <Project project={project} onDelete={() => onDelete(project)}/></li>)}
+              <Project project={project} onDelete={() => this.props.onDelete(project)}/></li>)}
         </ul>
       );
     };
@@ -51,10 +51,10 @@ export default class Projects extends React.Component<Props, Object> {
     return (
       <div>
         <div className="entity-details">
-          <span className="title">{user}</span>
+          <span className="title">{this.props.user}</span>
           <span className="results-info">[{projects.length} {pluralize('Project', projects.length)}]</span>
         </div>
-        <RootModal hideModal={hideModal}/>
+        <RootModal hideModal={this.props.hideModal}/>
         <PaginatedList
           count={this.props.count}
           componentList={listProjects()}
