@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { getHomeUrl } from '../constants/utils';
 
 export interface Props {
   next: string | null;
-  login: (username: string, password: string) => any;
+  isLoggedIn: boolean;
   history: any;
+  login: (username: string, password: string) => any;
 }
 
 export default class Login extends React.Component<Props, Object> {
@@ -24,7 +26,17 @@ export default class Login extends React.Component<Props, Object> {
         document.getElementById('error-message') as HTMLElement
       ).innerHTML = 'Unable to log in with provided credentials.';
     });
-  };
+  }
+
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      if (this.props.next) {
+        window.location.replace(this.props.next);
+      } else {
+        this.props.history.push(getHomeUrl());
+      }
+    }
+  }
 
   public render() {
     return (

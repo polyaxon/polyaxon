@@ -12,6 +12,7 @@ import Token from '../containers/token';
 
 import { isUserAuthenticated, getHomeUrl, getLoginUrl, getLogoutUrl } from '../constants/utils';
 
+
 function Routes() {
   let tokenRoute = '/app/token';
   let projectDetailRoute = '/app/:user/:projectName/';
@@ -22,16 +23,7 @@ function Routes() {
 
   return (
     <Switch>
-      <Route
-        path={getLoginUrl()}
-        render={() => (
-          isUserAuthenticated() ? (
-            <Redirect to={getHomeUrl()}/>
-          ) : (
-            <Route path={getLoginUrl()} component={Login}/>
-          )
-        )}
-      />
+      <Route path={getLoginUrl()} component={Login}/>
       <Route path={getLogoutUrl()} component={Logout}/>
       <Route
         path={tokenRoute}

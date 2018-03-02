@@ -8,7 +8,7 @@ import Login from '../components/login';
 
 export function mapStateToProps(state: AppState, params: any)  {
   let next = new URLSearchParams(params.location.search).get('next');
-  return {next: next};
+  return {next: next, isLoggedIn: Boolean(state.auth.user) && Boolean(state.auth.token)};
 }
 
 export interface DispatchProps {
