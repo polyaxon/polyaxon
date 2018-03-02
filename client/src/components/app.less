@@ -193,11 +193,13 @@ span .icon {
     .icon {
       padding-right: 3px;
     }
-    .title {
+    .title, .title-link {
       font-size: 12px;
       padding-right: 3px;
-      color: @layout-link-gray;
       font-weight: 500;
+    }
+    .title {
+      color: @layout-link-gray;
     }
     .meta-info {
       padding-right: 15px;
@@ -209,6 +211,12 @@ span .icon {
 }
 
 .meta-metrics {
+  .icon {
+    color: @green;
+  }
+}
+
+.meta-dashboard {
   .icon {
     color: @light-blue;
   }

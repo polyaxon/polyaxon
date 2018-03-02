@@ -11,6 +11,8 @@ export class ProjectModel {
   public description?: string;
   public created_at: string;
   public updated_at: string;
+  public has_tensorboard: boolean;
+  public has_notebook: boolean;
   public groups: Array<string> = [];
   public experiments: Array<string> = [];
 }

@@ -7,7 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { ProjectModel } from '../models/project';
 import Experiments from '../containers/experiments';
 import Groups from '../containers/groups';
-import { getUserUrl } from '../constants/utils';
+import { getNotebookUrl, getTensorboardUrl, getUserUrl } from '../constants/utils';
 
 export interface Props {
   project: ProjectModel;
@@ -67,6 +67,20 @@ export default class ProjectDetail extends React.Component<Props, Object> {
                 <span className="title">Experiment Groups:</span>
                 {project.num_experiment_groups}
               </span>
+            </div>
+            <div className="meta">
+              {project.has_tensorboard &&
+              <span className="meta-info meta-metrics">
+                <i className="fa fa-columns icon" aria-hidden="true"/>
+                <a href={getTensorboardUrl(project.user, project.name)} className="title-link">Tensorboard</a>
+              </span>
+              }
+              {project.has_notebook &&
+              <span className="meta-info meta-metrics">
+                <i className="fa fa-columns icon" aria-hidden="true"/>
+                <a href={getNotebookUrl(project.user, project.name)} className="title-link">Notebook</a>
+              </span>
+              }
             </div>
           </div>
           <Tab.Container defaultActiveKey={1} id="project-tabs" className="plx-nav">

@@ -4,6 +4,7 @@ import * as moment from 'moment';
 
 import { ProjectModel } from '../models/project';
 import { getProjectUrl } from '../constants/utils';
+import { getNotebookUrl, getTensorboardUrl } from '../constants/utils';
 
 export interface Props {
   project: ProjectModel;
@@ -53,6 +54,22 @@ function Project({project, onDelete}: Props) {
             {project.num_experiment_groups}
           </span>
         </div>
+        {project.has_tensorboard &&
+        <div className="row meta">
+          <span className="meta-info meta-metrics">
+            <i className="fa fa-columns icon" aria-hidden="true"/>
+            <a href={getTensorboardUrl(project.user, project.name)} className="title-link">Tensorboard</a>
+          </span>
+        </div>
+        }
+        {project.has_notebook &&
+        <div className="row meta">
+          <span className="meta-info meta-metrics">
+            <i className="fa fa-columns icon" aria-hidden="true"/>
+            <a href={getNotebookUrl(project.user, project.name)} className="title-link">Notebook</a>
+          </span>
+        </div>
+        }
       </div>
     </div>
   );

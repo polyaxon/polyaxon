@@ -80,6 +80,14 @@ export let getProjectUrl = function (username: string, projectName: string) {
   return `/app/${username}/${projectName}`;
 };
 
+export let getTensorboardUrl = function (username: string, projectName: string) {
+  return `/tensorboard/${username}/${projectName}/`;
+};
+
+export let getNotebookUrl = function (username: string, projectName: string) {
+  return `/notebook/${username}/${projectName}/`;
+};
+
 export let getProjectUniqueName = function (username: string, projectName: string) {
   return `${username}.${projectName}`;
 };
