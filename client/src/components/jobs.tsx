@@ -21,7 +21,7 @@ export default class Jobs extends React.Component<Props, Object> {
     const jobs = this.props.jobs;
     const listJobs = () => {
       if (jobs.length === 0) {
-        return noObjectListComponent(false, 'job');
+        return noObjectListComponent(false, 'job', 'job');
       }
       return (
         <div className="col-md-12">

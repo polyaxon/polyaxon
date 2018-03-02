@@ -24,6 +24,7 @@ export default class Groups extends React.Component<Props, Object> {
         return noObjectListComponent(
           this.props.isCurrentUser,
           'experiment group',
+          'group',
           'polyaxon run --help');
       }
       return (

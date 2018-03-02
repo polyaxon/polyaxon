@@ -26,6 +26,7 @@ export default class Experiments extends React.Component<Props, Object> {
          return noObjectListComponent(
           this.props.isCurrentUser,
           'experiment',
+          'experiment',
           'polyaxon run --help');
       }
       return (

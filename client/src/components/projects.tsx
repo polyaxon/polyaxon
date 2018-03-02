@@ -28,6 +28,7 @@ export default class Projects extends React.Component<Props, Object> {
         return noObjectListComponent(
           this.props.isCurrentUser,
           'project',
+          'project',
           'polyaxon project create --help');
       }
       return (
