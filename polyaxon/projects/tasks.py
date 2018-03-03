@@ -13,7 +13,7 @@ from polyaxon.celery_api import app as celery_app
 from experiments.tasks import build_experiment
 from projects.models import ExperimentGroup, Project
 from dockerizer.builders import notebooks as notebooks_builder
-from dockerizer.images import get_job_image_info
+from dockerizer.images import get_notebook_image_info
 from repos.models import Repo
 from spawner import scheduler
 
@@ -103,7 +103,7 @@ def start_notebook(project_id):
         return None
 
     try:
-        image_name, image_tag = get_job_image_info(project=project, job=project.notebook)
+        image_name, image_tag = get_notebook_image_info(project=project, job=project.notebook)
     except ValueError as e:
         logger.warning('Could not start the notebook, %s', e)
         return

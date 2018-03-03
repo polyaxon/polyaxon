@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from dockerizer.builders.notebooks import NotebookDockerBuilder
 from libs.registry import get_registry_host
 from repos.models import ExternalRepo
 
@@ -58,3 +59,9 @@ def get_job_image_info(project, job):
     if not last_commit:
         raise ValueError('Repo was not found for project `{}`.'.format(project))
     return image_name, last_commit[0]
+
+
+def get_notebook_image_info(project, job):
+    """Return the image name and image tag for a job"""
+    image_name, image_tag = get_job_image_info(project, job)
+    return image_name, NotebookDockerBuilder.LATEST_IMAGE_TAG
