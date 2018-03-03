@@ -16,12 +16,12 @@ PROJECT_APPS = (
     'events.apps.EventsConfig',
     'spawner.apps.SpawnerConfig',
 )
+
 THIRD_PARTY_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
 )
-
 
 INSTALLED_APPS = (
     'django.contrib.auth',
