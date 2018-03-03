@@ -8,7 +8,7 @@ from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup, Project
 from projects.tasks import start_group_experiments
 from experiments.models import Experiment
-from projects.utils import (
+from projects.paths import (
     delete_project_outputs,
     delete_experiment_group_outputs,
     delete_project_logs,

@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import os
 
-from experiments.utils import (
+from experiments.paths import (
     get_experiment_logs_path,
     get_experiment_outputs_path,
     create_experiment_outputs_path,
@@ -13,7 +13,7 @@ from experiments.utils import (
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ProjectFactory, ExperimentGroupFactory
 from factories.factory_repos import RepoFactory
-from projects.utils import (
+from projects.paths import (
     delete_project_logs,
     get_project_logs_path,
     delete_project_outputs,

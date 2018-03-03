@@ -12,8 +12,8 @@ from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
 from experiments.tasks import build_experiment
 from projects.models import ExperimentGroup, Project
-from repos import dockerize
-from repos.dockerize import get_job_image_info
+from dockerizer.builders import notebooks as notebooks_builder
+from dockerizer.images import get_job_image_info
 from repos.models import Repo
 from spawner import scheduler
 
@@ -82,7 +82,7 @@ def build_notebook(project_id):
 
     # docker image
     try:
-        status = dockerize.build_notebook_job(project=project, job=project.notebook)
+        status = notebooks_builder.build_notebook_job(project=project, job=project.notebook)
     except DockerException:
         return
     except Repo.DoesNotExist:

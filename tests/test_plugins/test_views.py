@@ -149,7 +149,7 @@ class TestStartNotebookViewV1(BaseViewTest):
     def test_start(self):
         data = {'config': plugin_spec_parsed_content.parsed_data}
         assert self.queryset.count() == 1
-        with patch('repos.dockerize.build_notebook_job') as build_mock_fct:
+        with patch('dockerizer.builders.notebooks.build_notebook_job') as build_mock_fct:
             with patch('projects.tasks.start_notebook.delay') as mock_fct:
                 resp = self.auth_client.post(self.url, data)
         assert build_mock_fct.call_count == 1

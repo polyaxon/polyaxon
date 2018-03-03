@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import logging
 
 from events import publisher
-from experiments.utils import copy_experiment_outputs
+from experiments.paths import copy_experiment_outputs
 from spawner.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.experiments')

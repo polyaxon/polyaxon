@@ -183,8 +183,8 @@ class TestProjectDetailViewV1(BaseViewTest):
         with patch('spawner.scheduler.stop_tensorboard') as tensorboard_mock_fct:
             with patch('spawner.scheduler.stop_notebook') as notebook_mock_fct:
                 with patch('spawner.scheduler.stop_experiment') as xp_mock_stop:
-                    with patch('projects.utils.delete_path') as delete_path_project_mock_stop:
-                        with patch('experiments.utils.delete_path') as delete_path_xp_mock_stop:
+                    with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
+                        with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
                             resp = self.auth_client.delete(self.url)
         assert xp_mock_stop.call_count == 4
         assert tensorboard_mock_fct.call_count == 1
@@ -222,7 +222,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
                                                     self.other_project.user.username,
                                                     self.other_project.name)
 
-        with patch('repos.dockerize.build_experiment') as _:
+        with patch('dockerizer.builders.experiments.build_experiment') as _:
             with patch('spawner.scheduler.start_experiment') as _:
                 self.objects = [self.factory_class(project=self.project)
                                 for _ in range(self.num_objects)]

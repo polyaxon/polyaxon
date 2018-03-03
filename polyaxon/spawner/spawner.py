@@ -18,7 +18,7 @@ from polyaxon_schemas.settings import ClusterConfig
 from polyaxon_schemas.utils import TaskType
 
 from libs.utils import get_hmac
-from projects.utils import get_project_outputs_path
+from projects.paths import get_project_outputs_path
 from spawner.templates import config_maps
 from spawner.templates import constants
 from spawner.templates import deployments
