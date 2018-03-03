@@ -6,6 +6,7 @@ import shutil
 
 from django.conf import settings
 
+from experiments.models import Experiment
 from libs.paths import delete_path, create_path
 
 
@@ -63,3 +64,21 @@ def copy_experiment_outputs(experiment_name_from, experiment_name_to):
     path_from = get_experiment_outputs_path(experiment_name_from)
     path_to = get_experiment_outputs_path(experiment_name_to)
     shutil.copytree(path_from, path_to)
+
+
+def is_experiment_still_running(experiment_id=None, experiment_uuid=None):
+    if not any([experiment_id, experiment_uuid]) or all([experiment_id, experiment_uuid]):
+        raise ValueError('`is_experiment_still_running` function expects an experiment id or uuid.')
+
+    try:
+        if experiment_uuid:
+            experiment = Experiment.objects.get(uuid=experiment_uuid)
+        else:
+            experiment = Experiment.objects.get(id=experiment_id)
+    except Experiment.DoesNotExist:
+        return False
+
+    if experiment.is_done:
+        return False
+
+    return True
