@@ -56,7 +56,7 @@ def start(ctx, file, u):
 
     # Check if we need to upload
     if u:
-        ctx.invoke(upload, async=True)
+        ctx.invoke(upload, async=False)
 
     if plx_file:
         project = ProjectManager.get_config_or_raise()

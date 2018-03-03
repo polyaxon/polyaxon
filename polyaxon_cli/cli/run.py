@@ -48,7 +48,7 @@ def run(ctx, file, description, u):
 
     # Check if we need to upload
     if u:
-        ctx.invoke(upload, async=True)
+        ctx.invoke(upload, async=False)
 
     num_experiments, _, _ = plx_file.experiments_def
     project = ProjectManager.get_config_or_raise()
