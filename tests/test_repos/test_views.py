@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
 import tempfile
 
 from unittest.mock import patch
@@ -97,7 +98,7 @@ class TestUploadFilesView(BaseViewTest):
 
         with patch('repos.views.handle_new_files') as mock_task:
             self.auth_client.put(self.url,
-                                 data={'repo': uploaded_file, 'async': False},
+                                 data={'repo': uploaded_file, 'json': json.dumps({'async': False})},
                                  content_type=MULTIPART_CONTENT)
 
         file_path = '{}/{}/{}.tar.gz'.format(settings.UPLOAD_ROOT, user.username, repo_name)

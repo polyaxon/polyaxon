@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
 import os
 
 from django.conf import settings
@@ -86,3 +87,10 @@ class UploadView(APIView):
             for chunk in file_data.chunks():
                 destination.write(chunk)
         return file_path
+
+    @staticmethod
+    def _handle_json_data(request):
+        json_data = request.data.get('json')
+        if json_data:
+            return json.loads(json_data)
+        return {}

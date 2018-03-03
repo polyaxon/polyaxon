@@ -58,8 +58,10 @@ class UploadFilesView(UploadView):
                 'IOError while trying to save posted data ({}): {}'.format(e.errno, e.strerror))
             return HttpResponseServerError()
 
-        async = request.data.get('async')
-        if async and to_bool(async) is False:
+        json_data = self._handle_json_data(request)
+        async = json_data.get('async')
+
+        if async is False:
             file_handler = handle_new_files
         else:
             file_handler = handle_new_files.delay
