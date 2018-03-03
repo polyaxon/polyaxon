@@ -18,7 +18,7 @@ from polyaxon_schemas.settings import ClusterConfig
 from polyaxon_schemas.utils import TaskType
 
 from libs.utils import get_hmac
-from projects.paths import get_project_outputs_path
+from projects.paths import get_project_outputs_path, get_project_repos_path
 from spawner.templates import config_maps
 from spawner.templates import constants
 from spawner.templates import deployments
@@ -518,6 +518,16 @@ class K8SProjectSpawner(K8SManager):
     def get_notebook_token(self):
         return get_hmac(self.NOTEBOOK_APP, self.project_uuid)
 
+    @staticmethod
+    def get_notebook_code_volume():
+        volume = pods.get_volume(volume=constants.REPOS_VOLUME,
+                                 claim_name=settings.REPOS_CLAIM_NAME,
+                                 volume_mount=get_project_repos_path)
+
+        volume_mount = pods.get_volume_mount(volume=constants.OUTPUTS_VOLUME,
+                                             volume_mount=settings.DOCKER_WORKDIR)
+        return volume, volume_mount
+
     def request_notebook_port(self):
         labels = 'app={},role={}'.format(self.NOTEBOOK_APP, settings.ROLE_LABELS_DASHBOARD)
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
@@ -530,6 +540,9 @@ class K8SProjectSpawner(K8SManager):
         ports = [self.request_notebook_port()]
         target_ports = [8888]
         volumes, volume_mounts = K8SSpawner.get_pod_volumes()
+        code_volume, code_volume_mount = self.get_notebook_code_volume()
+        volumes.append(code_volume)
+        volume_mounts.append(code_volume_mount)
         deployment_name = constants.DEPLOYMENT_NAME.format(
             project_uuid=self.project_uuid, name=self.NOTEBOOK_APP)
         notebook_token = self.get_notebook_token()

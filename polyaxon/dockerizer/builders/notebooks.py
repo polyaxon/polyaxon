@@ -20,7 +20,6 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
                  in_tmp_repo=False,
                  steps=None,
                  env_vars=None,
-                 workdir='/code',
                  dockerfile_name='Dockerfile'):
         super(NotebookDockerBuilder, self).__init__(
             project_id=project_id,
@@ -32,7 +31,6 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
             in_tmp_repo=in_tmp_repo,
             steps=steps,
             env_vars=env_vars,
-            workdir=workdir,
             dockerfile_name=dockerfile_name)
 
     def _check_pulse(self, check_pulse):

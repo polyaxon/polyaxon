@@ -23,6 +23,7 @@ logger = logging.getLogger('polyaxon.dockerizer.builders')
 class BaseDockerBuilder(object):
     CHECK_INTERVAL = 10
     LATEST_IMAGE_TAG = 'latest'
+    WORKDIR = settings.DOCKER_WORKDIR
 
     def __init__(self,
                  repo_path,
@@ -32,7 +33,6 @@ class BaseDockerBuilder(object):
                  in_tmp_repo=True,
                  steps=None,
                  env_vars=None,
-                 workdir='/code',
                  dockerfile_name='Dockerfile'):
         self.from_image = from_image
         self.image_name = image_name
@@ -48,7 +48,6 @@ class BaseDockerBuilder(object):
         self.build_path = '/'.join(self.build_repo_path.split('/')[:-1])
         self.steps = steps or []
         self.env_vars = env_vars or []
-        self.workdir = workdir
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()
@@ -112,7 +111,7 @@ class BaseDockerBuilder(object):
             steps=self.steps,
             env_vars=self.env_vars,
             folder_name=self.folder_name,
-            workdir=self.workdir,
+            workdir=self.WORKDIR,
             nvidia_bin=settings.MOUNT_PATHS_NVIDIA.get('bin')
         )
 

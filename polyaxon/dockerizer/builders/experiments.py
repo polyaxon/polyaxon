@@ -30,7 +30,6 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
                  in_tmp_repo=True,
                  steps=None,
                  env_vars=None,
-                 workdir='/code',
                  dockerfile_name='Dockerfile'):
         self.experiment_name = experiment_name
         self.experiment_uuid = experiment_uuid
@@ -42,7 +41,6 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
             in_tmp_repo=in_tmp_repo,
             steps=steps,
             env_vars=env_vars,
-            workdir=workdir,
             dockerfile_name=dockerfile_name)
 
     def _handle_logs(self, log_line):

@@ -27,7 +27,6 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
                  in_tmp_repo=True,
                  steps=None,
                  env_vars=None,
-                 workdir='/code',
                  dockerfile_name='Dockerfile'):
         self.project_id = project_id
         self.project_name = project_name
@@ -39,7 +38,6 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
             in_tmp_repo=in_tmp_repo,
             steps=steps,
             env_vars=env_vars,
-            workdir=workdir,
             dockerfile_name=dockerfile_name)
 
     def _handle_logs(self, log_line):

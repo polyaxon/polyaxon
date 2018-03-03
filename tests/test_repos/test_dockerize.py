@@ -58,7 +58,7 @@ class TestRepoDockerize(BaseTest):
         builder.clean()
 
         assert 'FROM busybox' in dockerfile
-        assert 'WORKDIR {}'.format(builder.workdir) in dockerfile
+        assert 'WORKDIR {}'.format(builder.WORKDIR) in dockerfile
         assert 'COPY {}'.format(builder.folder_name) in dockerfile
 
         # Add env vars
@@ -93,9 +93,9 @@ class TestRepoDockerize(BaseTest):
 
         dockerfile = builder.render()
         assert 'COPY {} {}'.format(
-            builder.polyaxon_requirements_path, builder.workdir) in dockerfile
+            builder.polyaxon_requirements_path, builder.WORKDIR) in dockerfile
         assert 'COPY {} {}'.format(
-            builder.polyaxon_setup_path, builder.workdir) in dockerfile
+            builder.polyaxon_setup_path, builder.WORKDIR) in dockerfile
 
         assert 'RUN {}'.format(steps[0]) in dockerfile
         assert 'RUN {}'.format(steps[1]) in dockerfile
