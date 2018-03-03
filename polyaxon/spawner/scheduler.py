@@ -14,7 +14,7 @@ from rest_framework import fields
 from jobs.models import JobResources
 from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
-from repos.dockerize import get_experiment_image_info
+from dockerizer.images import get_experiment_image_info
 
 from spawner import K8SSpawner, K8SProjectSpawner
 from experiments.models import ExperimentJob

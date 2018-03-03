@@ -222,7 +222,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
                                                     self.other_project.user.username,
                                                     self.other_project.name)
 
-        with patch('repos.dockerize.build_experiment') as _:
+        with patch('dockerizer.builders.experiments.build_experiment') as _:
             with patch('spawner.scheduler.start_experiment') as _:
                 self.objects = [self.factory_class(project=self.project)
                                 for _ in range(self.num_objects)]

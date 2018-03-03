@@ -90,7 +90,7 @@ class TestExperimentModel(BaseTest):
         # Create a repo for the project
         repo = RepoFactory()
 
-        with patch('repos.dockerize.build_experiment') as mock_docker_build:
+        with patch('dockerizer.builders.experiments.build_experiment') as mock_docker_build:
             experiment = ExperimentFactory(config=content.parsed_data, project=repo.project)
 
         assert mock_docker_build.call_count == 1
@@ -284,7 +284,7 @@ class TestExperimentCommit(BaseViewTest):
 
     def create_experiment(self, content):
         config = Specification.read(content)
-        with patch('repos.dockerize.build_experiment') as _:
+        with patch('dockerizer.builders.experiments.build_experiment') as _:
             return ExperimentFactory(config=config.parsed_data, project=self.project)
 
     def test_experiment_is_saved_with_commit(self):

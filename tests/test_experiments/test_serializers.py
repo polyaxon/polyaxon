@@ -60,7 +60,7 @@ class TestExperimentSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        with patch('repos.dockerize.build_experiment') as _:
+        with patch('dockerizer.builders.experiments.build_experiment') as _:
             obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
@@ -170,7 +170,7 @@ class TestExperimentDetailSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        with patch('repos.dockerize.build_experiment') as _:
+        with patch('dockerizer.builders.experiments.build_experiment') as _:
             obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 

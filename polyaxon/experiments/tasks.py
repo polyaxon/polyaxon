@@ -11,7 +11,7 @@ from experiments.restart import handle_restarted_experiment
 from experiments.paths import create_experiment_outputs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks, Intervals
-from repos import dockerize
+from dockerizer.builders import experiments as experiments_builder
 from repos.models import Repo
 
 from spawner import scheduler
@@ -58,7 +58,7 @@ def build_experiment(self, experiment_id):
 
     # docker image
     try:
-        status = build_experiment(experiment)
+        status = experiments_builder.build_experiment(experiment)
     except DockerException as e:
         logger.warning('Failed to build experiment %s', e)
         experiment.set_status(ExperimentLifeCycle.FAILED,

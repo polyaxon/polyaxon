@@ -7,7 +7,7 @@ import uuid
 from django.conf import settings
 from pathlib import Path
 
-from repos.dockerize import ExperimentDockerBuilder
+from dockerizer.builders.experiments import ExperimentDockerBuilder
 from tests.utils import BaseTest
 
 
