@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from experiments.utils import get_experiment_logs_path
+from experiments.paths import get_experiment_logs_path
 from polyaxon.settings import CeleryTasks
 from polyaxon.celery_api import app as celery_app
 from clusters.models import ClusterEvent

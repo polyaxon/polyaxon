@@ -17,7 +17,7 @@ from polyaxon_schemas.utils import TaskType
 from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from experiments.restart import handle_restarted_experiment
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
-from experiments.utils import create_experiment_outputs_path, get_experiment_outputs_path
+from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from factories.factory_repos import RepoFactory
 from factories.fixtures import (
     experiment_spec_content,

@@ -9,7 +9,7 @@ from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
 
-from experiments.utils import get_experiment_outputs_path, get_experiment_logs_path
+from experiments.paths import get_experiment_outputs_path, get_experiment_logs_path
 from projects.utils import get_project_data_path
 from spawner.templates import constants
 

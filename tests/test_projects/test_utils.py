@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import os
 
-from experiments.utils import (
+from experiments.paths import (
     get_experiment_logs_path,
     get_experiment_outputs_path,
     create_experiment_outputs_path,

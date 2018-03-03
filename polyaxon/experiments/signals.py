@@ -13,7 +13,7 @@ from experiments.models import (
     ExperimentStatus,
     ExperimentMetric,
 )
-from experiments.utils import (
+from experiments.paths import (
     delete_experiment_outputs,
     delete_experiment_logs,
     create_experiment_logs_path,
