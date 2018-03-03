@@ -518,13 +518,12 @@ class K8SProjectSpawner(K8SManager):
     def get_notebook_token(self):
         return get_hmac(self.NOTEBOOK_APP, self.project_uuid)
 
-    @staticmethod
-    def get_notebook_code_volume():
+    def get_notebook_code_volume(self):
         volume = pods.get_volume(volume=constants.REPOS_VOLUME,
                                  claim_name=settings.REPOS_CLAIM_NAME,
-                                 volume_mount=get_project_repos_path)
+                                 volume_mount=get_project_repos_path(self.project_name))
 
-        volume_mount = pods.get_volume_mount(volume=constants.OUTPUTS_VOLUME,
+        volume_mount = pods.get_volume_mount(volume=constants.REPOS_VOLUME,
                                              volume_mount=settings.DOCKER_WORKDIR)
         return volume, volume_mount
 
