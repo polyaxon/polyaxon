@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from django.core.validators import validate_slug
 from django.db import models
 from django.core.cache import cache
-
-from libs.blacklist import validate_blacklist_name
 
 
 class DescribableModel(models.Model):
