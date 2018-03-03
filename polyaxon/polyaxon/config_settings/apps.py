@@ -1,26 +1,27 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+PROJECT_APPS = (
+    'polyaxon',
+    'libs.apps.LibsConfig',
+    'users.apps.UsersConfig',
+    'clusters.apps.ClustersConfig',
+    'jobs.apps.JobsConfig',
+    'plugins.apps.PluginsConfig',
+    'projects.apps.ProjectsConfig',
+    'experiments.apps.ExperimentsConfig',
+    'repos.apps.ReposConfig',
+    'dockerizer.apps.DockerizerConfig',
+    'versions.apps.VersionsConfig',
+    'events.apps.EventsConfig',
+    'spawner.apps.SpawnerConfig',
+)
 THIRD_PARTY_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
 )
 
-PROJECT_APPS = (
-    'polyaxon',
-    'libs.apps.LibsConfig',
-    'users.apps.UsersConfig',
-    'clusters.apps.ClustersConfig',
-    'plugins.apps.PluginsConfig',
-    'projects.apps.ProjectsConfig',
-    'jobs.apps.JobsConfig',
-    'experiments.apps.ExperimentsConfig',
-    'repos.apps.ReposConfig',
-    'versions.apps.VersionsConfig',
-    'events.apps.EventsConfig',
-    'spawner.apps.SpawnerConfig',
-)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
