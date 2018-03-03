@@ -27,6 +27,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
                  from_image,
                  image_name,
                  image_tag,
+                 in_tmp_repo=True,
                  steps=None,
                  env_vars=None,
                  workdir='/code',
@@ -38,6 +39,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
             from_image=from_image,
             image_name=image_name,
             image_tag=image_tag,
+            in_tmp_repo=in_tmp_repo,
             steps=steps,
             env_vars=env_vars,
             workdir=workdir,
@@ -64,8 +66,8 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
         return check_pulse, False
 
 
-def build_experiment(experiment):
-    """Build necessary code for an experiment to run"""
+def get_experiment_repo_info(experiment):
+    """Returns information required to create a build for an experiment."""
     project_name = experiment.project.name
     experiment_spec = experiment.compiled_spec
     if experiment_spec.run_exec.git:  # We need to fetch the repo first
@@ -91,14 +93,25 @@ def build_experiment(experiment):
     if not image_tag:
         raise Repo.DoesNotExist(
             'Repo was not found for project `{}`.'.format(experiment.unique_name))
+    return {
+        'repo_path': repo_path,
+        'image_name': image_name,
+        'image_tag': image_tag
+    }
+
+
+def build_experiment(experiment, image_tag=None):
+    """Build necessary code for an experiment to run"""
+    experiment_spec = experiment.compiled_spec
+    build_info = get_experiment_repo_info(experiment)
 
     # Build the image
     docker_builder = ExperimentDockerBuilder(experiment_name=experiment.unique_name,
                                              experiment_uuid=experiment.uuid.hex,
-                                             repo_path=repo_path,
+                                             repo_path=build_info['repo_path'],
                                              from_image=experiment_spec.run_exec.image,
-                                             image_name=image_name,
-                                             image_tag=image_tag,
+                                             image_name=build_info['image_name'],
+                                             image_tag=image_tag or build_info['image_tag'],
                                              steps=experiment_spec.run_exec.steps,
                                              env_vars=experiment_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,

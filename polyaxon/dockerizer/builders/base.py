@@ -22,13 +22,14 @@ logger = logging.getLogger('polyaxon.dockerizer.builders')
 
 class BaseDockerBuilder(object):
     CHECK_INTERVAL = 10
+    LATEST_IMAGE_TAG = 'latest'
 
     def __init__(self,
                  repo_path,
                  from_image,
                  image_name,
                  image_tag,
-                 in_tmp_repo=False,
+                 in_tmp_repo=True,
                  steps=None,
                  env_vars=None,
                  workdir='/code',
@@ -118,7 +119,8 @@ class BaseDockerBuilder(object):
     def build(self, memory_limit=None):
         logger.debug('Starting build in `{}`'.format(self.build_repo_path))
         # Checkout to the correct commit
-        git.checkout_commit(repo_path=self.build_repo_path, commit=self.image_tag)
+        if self.image_tag != self.LATEST_IMAGE_TAG:
+            git.checkout_commit(repo_path=self.build_repo_path, commit=self.image_tag)
 
         limits = {
             # Always disable memory swap for building, since mostly
@@ -153,7 +155,8 @@ class BaseDockerBuilder(object):
                 return False
 
         # Checkout back to master
-        git.checkout_commit(repo_path=self.build_repo_path)
+        if self.image_tag != self.LATEST_IMAGE_TAG:
+            git.checkout_commit(repo_path=self.build_repo_path)
         return True
 
     def push(self):

@@ -10,6 +10,31 @@ logger = logging.getLogger('polyaxon.dockerizer.builders')
 
 
 class NotebookDockerBuilder(BaseJobDockerBuilder):
+    def __init__(self,
+                 project_id,
+                 project_name,
+                 repo_path,
+                 from_image,
+                 image_name,
+                 image_tag,
+                 in_tmp_repo=False,
+                 steps=None,
+                 env_vars=None,
+                 workdir='/code',
+                 dockerfile_name='Dockerfile'):
+        super(NotebookDockerBuilder, self).__init__(
+            project_id=project_id,
+            project_name=project_name,
+            repo_path=repo_path,
+            from_image=from_image,
+            image_name=image_name,
+            image_tag=image_tag,
+            in_tmp_repo=in_tmp_repo,
+            steps=steps,
+            env_vars=env_vars,
+            workdir=workdir,
+            dockerfile_name=dockerfile_name)
+
     def _check_pulse(self, check_pulse):
         # Check if experiment is not stopped in the meanwhile
         if check_pulse > self.CHECK_INTERVAL:
@@ -30,4 +55,7 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
 
 
 def build_notebook_job(project, job):
-    return build_job(project=project, job=job, job_builder=NotebookDockerBuilder)
+    return build_job(project=project,
+                     job=job,
+                     job_builder=NotebookDockerBuilder,
+                     image_tag=NotebookDockerBuilder.LATEST_IMAGE_TAG)
