@@ -28,6 +28,7 @@ class BaseDockerBuilder(object):
                  from_image,
                  image_name,
                  image_tag,
+                 in_tmp_repo=False,
                  steps=None,
                  env_vars=None,
                  workdir='/code',
@@ -37,8 +38,13 @@ class BaseDockerBuilder(object):
         self.image_tag = image_tag
         self.repo_path = repo_path
         self.folder_name = repo_path.split('/')[-1]
-        self.tmp_repo_path = self.create_tmp_repo()
-        self.build_path = '/'.join(self.tmp_repo_path.split('/')[:-1])
+        self.in_tmp_repo = in_tmp_repo
+        if in_tmp_repo:
+            self.build_repo_path = self.create_tmp_repo()
+        else:
+            self.build_repo_path = self.repo_path
+
+        self.build_path = '/'.join(self.build_repo_path.split('/')[:-1])
         self.steps = steps or []
         self.env_vars = env_vars or []
         self.workdir = workdir
@@ -52,7 +58,8 @@ class BaseDockerBuilder(object):
         return copy_to_tmp_dir(self.repo_path, os.path.join(self.image_tag, self.folder_name))
 
     def clean(self):
-        delete_tmp_dir(self.image_tag)
+        if self.in_tmp_repo:
+            delete_tmp_dir(self.image_tag)
 
     def connect(self):
         if not self.docker:
@@ -81,13 +88,13 @@ class BaseDockerBuilder(object):
         raise NotImplementedError
 
     def _get_requirements_path(self):
-        requirements_path = os.path.join(self.tmp_repo_path, 'polyaxon_requirements.txt')
+        requirements_path = os.path.join(self.build_repo_path, 'polyaxon_requirements.txt')
         if os.path.isfile(requirements_path):
             return os.path.join(self.folder_name, 'polyaxon_requirements.txt')
         return None
 
     def _get_setup_path(self):
-        setup_file_path = os.path.join(self.tmp_repo_path, 'polyaxon_setup.sh')
+        setup_file_path = os.path.join(self.build_repo_path, 'polyaxon_setup.sh')
         has_setup = os.path.isfile(setup_file_path)
         if has_setup:
             st = os.stat(setup_file_path)
@@ -109,9 +116,9 @@ class BaseDockerBuilder(object):
         )
 
     def build(self, memory_limit=None):
-        logger.debug('Starting build in `{}`'.format(self.tmp_repo_path))
+        logger.debug('Starting build in `{}`'.format(self.build_repo_path))
         # Checkout to the correct commit
-        git.checkout_commit(repo_path=self.tmp_repo_path, commit=self.image_tag)
+        git.checkout_commit(repo_path=self.build_repo_path, commit=self.image_tag)
 
         limits = {
             # Always disable memory swap for building, since mostly
@@ -146,7 +153,7 @@ class BaseDockerBuilder(object):
                 return False
 
         # Checkout back to master
-        git.checkout_commit(repo_path=self.tmp_repo_path)
+        git.checkout_commit(repo_path=self.build_repo_path)
         return True
 
     def push(self):
