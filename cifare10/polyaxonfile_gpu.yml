@@ -5,7 +5,7 @@ project:
   name: cifar10
 
 environment:
-  master_resources:
+  resources:
     gpu:
       requests: 1
       limits: 1
