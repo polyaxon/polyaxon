@@ -18,7 +18,14 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
  * [run](sections#run): defines the run step where the user can set a docker image and a command to execute.
 
 
-## Model specific Sections
+## Plugins jobs specific sections
+ * [version](sections#version): defines the version of the file to be parsed and validated.
+ * [project](sections#project): defines the project name (must be unique).
+ * [run](sections#run): defines the run step where the user can set a docker image and a command to execute.
+ * [environment](sections#environment): defines the run environment for experiment.
+
+
+## Model specific sections
 
  * [model](model_sections#model): defines the model to use based on the declarative API.
  * [train](model_sections#train): defines how to train a model and how to read the data.

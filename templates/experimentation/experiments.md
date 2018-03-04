@@ -209,7 +209,7 @@ $ polyaxon upload
     In that case `polyaxon upload is not necessary`
 
     ```bash
-    $ polyaoxn run -f polyaxonfile.yml -u
+    $ polyaxon run -f polyaxonfile.yml -u
     ```
 
 In order to customize the resources of our jobs we need to introduce a new section [environment]().
