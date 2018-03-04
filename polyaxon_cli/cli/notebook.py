@@ -84,11 +84,13 @@ def start(ctx, file, u):
 
 
 @notebook.command()
+@click.option('--commit', type=bool,
+              help='Commit changes before stopping the notebook.')
 @click.option('--yes', '-y', is_flag=True, default=False,
               help='Automatic yes to prompts. '
                    'Assume "yes" as answer to all prompts and run non-interactively.')
 @click.pass_context
-def stop(ctx, yes):
+def stop(ctx, commit, yes):
     """Stops the notebook deployment for this project if it exists.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -100,8 +102,11 @@ def stop(ctx, yes):
         click.echo('Existing without stopping notebook.')
         sys.exit(1)
 
+    if commit is None:
+        commit = True
+
     try:
-        PolyaxonClients().project.stop_notebook(user, project_name)
+        PolyaxonClients().project.stop_notebook(user, project_name, commit)
         Printer.print_success('Notebook is being deleted')
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not stop notebook project `{}`.'.format(project_name))
