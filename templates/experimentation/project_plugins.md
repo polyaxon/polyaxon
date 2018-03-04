@@ -60,7 +60,7 @@ This means that if the project is private the notebook will only be visible to t
     ```
 
 
-Since the notebook is create with polyaxonfile, it can be customized same way as any other job, e.g. you can customize the resources, request GPUs ...
+Since the notebook is create with polyaxonfile, it can be customized in the same way as any other job, e.g. you can customize the resources, request GPUs ...
 
 ```yaml
 -------
@@ -167,4 +167,4 @@ $ polyaxon tensorboard stop
 
 !!! info "More details"
     For more details about this command please run `polyaxon tensorboard --help`,
-    or check the [command reference](/polyaxon_cli/commands/tensorborad)
+    or check the [command reference](/polyaxon_cli/commands/tensorboard)

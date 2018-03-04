@@ -106,6 +106,8 @@ pages:
     - Experiment Group: polyaxon_cli/commands/experiment_group.md
     - Experiment: polyaxon_cli/commands/experiment.md
     - Job: polyaxon_cli/commands/job.md
+    - Notebook: polyaxon_cli/commands/notebook.md
+    - Tensorboard: polyaxon_cli/commands/tensorboard.md
     - Cluster: polyaxon_cli/commands/cluster.md
     - Version: polyaxon_cli/commands/version.md
 - Reference Polyaxonfile Specification:
