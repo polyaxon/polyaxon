@@ -163,14 +163,17 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while starting notebook')
             return None
 
-    def stop_notebook(self, username, project_name):
+    def stop_notebook(self, username, project_name, commit=True):
         request_url = self._build_url(self._get_http_url(),
                                       username,
                                       project_name,
                                       'notebook',
                                       'stop')
+        json_data = None
+        if commit is False:
+            json_data = {'commit': commit}
         try:
-            return self.post(request_url)
+            return self.post(request_url, json_data=json_data)
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while stopping notebook')
             return None
