@@ -1,0 +1,10 @@
+---
+version: 1
+
+project:
+  name: quick-start
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
+  steps:
+    - pip3 install jupyter
