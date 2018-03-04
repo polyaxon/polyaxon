@@ -128,8 +128,11 @@ class StopNotebookView(CreateAPIView):
             commit = request.data.get('commit')
             commit = to_bool(commit) if commit is not None else True
             if commit:
-                # commit changes
+                # Commit changes
                 git.commit(obj.repo.path, request.user.email, request.user.username)
+            else:
+                # Reset changes
+                git.reset(obj.repo.path)
             stop_notebook.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 

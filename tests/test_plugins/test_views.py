@@ -211,9 +211,11 @@ class TestStopNotebookViewV1(BaseViewTest):
         assert self.queryset.count() == 1
         with patch('projects.tasks.stop_notebook.delay') as mock_fct:
             with patch('repos.git.commit') as mock_git_commit:
-                resp = self.auth_client.post(self.url, data)
+                with patch('repos.git.reset') as mock_git_reset:
+                    resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert mock_git_commit.call_count == 1
+        assert mock_git_reset.call_count == 0
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
 
@@ -222,9 +224,11 @@ class TestStopNotebookViewV1(BaseViewTest):
         assert self.queryset.count() == 1
         with patch('projects.tasks.stop_notebook.delay') as mock_fct:
             with patch('repos.git.commit') as mock_git_commit:
-                resp = self.auth_client.post(self.url, data)
+                with patch('repos.git.reset') as mock_git_reset:
+                    resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert mock_git_commit.call_count == 0
+        assert mock_git_reset.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
 

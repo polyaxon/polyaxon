@@ -54,6 +54,10 @@ def commit(repo_path, user_email, user_name, message='updated'):
         data=None, location=repo_path, chw=True)
 
 
+def reset(repo_path):
+    run_command(cmd='git reset --hard', data=None, location=repo_path, chw=True)
+
+
 def get_last_commit(repo_path):
     commit_hash = run_command(cmd='git --no-pager log --pretty=oneline -1', data=None,
                               location=repo_path, chw=True).split(' ')[0]
