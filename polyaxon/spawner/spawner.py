@@ -521,10 +521,10 @@ class K8SProjectSpawner(K8SManager):
     def get_notebook_code_volume(self):
         volume = pods.get_volume(volume=constants.REPOS_VOLUME,
                                  claim_name=settings.REPOS_CLAIM_NAME,
-                                 volume_mount=get_project_repos_path(self.project_name))
+                                 volume_mount=settings.REPOS_ROOT)
 
         volume_mount = pods.get_volume_mount(volume=constants.REPOS_VOLUME,
-                                             volume_mount=settings.DOCKER_WORKDIR)
+                                             volume_mount=settings.REPOS_ROOT)
         return volume, volume_mount
 
     def request_notebook_port(self):
@@ -564,9 +564,13 @@ class K8SProjectSpawner(K8SManager):
                   "--port=8888 "
                   "--ip=0.0.0.0 "
                   "--allow-root "
-                  "--NotebookApp.token={} "
+                  "--NotebookApp.token={token} "
                   "--NotebookApp.trust_xheaders=True "
-                  "--NotebookApp.base_url={} ".format(notebook_token, notebook_url)],
+                  "--NotebookApp.base_url={base_url} "
+                  "--NotebookApp.notebook_dir={notebook_dir} ".format(
+                    token=notebook_token,
+                    base_url=notebook_url,
+                    notebook_dir=get_project_repos_path(self.project_name))],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
