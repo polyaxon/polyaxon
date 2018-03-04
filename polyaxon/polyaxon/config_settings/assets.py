@@ -14,7 +14,6 @@ DATA_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_DATA')
 LOGS_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_LOGS')
 OUTPUTS_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_OUTPUTS')
 REPOS_ROOT = config.get_string('POLYAXON_MOUNT_PATHS_REPOS')
-DOCKER_WORKDIR = config.get_string('POLYAXON_DOCKER_WORKDIR', is_optional=True) or '/code'
 
 UPLOAD_CLAIM_NAME = config.get_string('POLYAXON_CLAIM_NAMES_UPLOAD')
 DATA_CLAIM_NAME = config.get_string('POLYAXON_CLAIM_NAMES_DATA')

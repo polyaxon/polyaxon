@@ -14,7 +14,7 @@ from docker import APIClient
 from docker.errors import DockerException
 
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
-from libs.paths import copy_to_tmp_dir, delete_tmp_dir
+from libs.paths import copy_to_tmp_dir, delete_tmp_dir, delete_path
 from repos import git
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')
@@ -23,13 +23,14 @@ logger = logging.getLogger('polyaxon.dockerizer.builders')
 class BaseDockerBuilder(object):
     CHECK_INTERVAL = 10
     LATEST_IMAGE_TAG = 'latest'
-    WORKDIR = settings.DOCKER_WORKDIR
+    WORKDIR = '/code'
 
     def __init__(self,
                  repo_path,
                  from_image,
                  image_name,
                  image_tag,
+                 copy_code=True,
                  in_tmp_repo=True,
                  steps=None,
                  env_vars=None,
@@ -39,8 +40,9 @@ class BaseDockerBuilder(object):
         self.image_tag = image_tag
         self.repo_path = repo_path
         self.folder_name = repo_path.split('/')[-1]
+        self.copy_code = copy_code
         self.in_tmp_repo = in_tmp_repo
-        if in_tmp_repo:
+        if in_tmp_repo and copy_code:
             self.build_repo_path = self.create_tmp_repo()
         else:
             self.build_repo_path = self.repo_path
@@ -58,7 +60,11 @@ class BaseDockerBuilder(object):
         return copy_to_tmp_dir(self.repo_path, os.path.join(self.image_tag, self.folder_name))
 
     def clean(self):
-        if self.in_tmp_repo:
+        # Clean dockerfile
+        delete_path(self.dockerfile_path)
+
+        # Clean tmp dir if created
+        if self.in_tmp_repo and self.copy_code:
             delete_tmp_dir(self.image_tag)
 
     def connect(self):
@@ -112,7 +118,8 @@ class BaseDockerBuilder(object):
             env_vars=self.env_vars,
             folder_name=self.folder_name,
             workdir=self.WORKDIR,
-            nvidia_bin=settings.MOUNT_PATHS_NVIDIA.get('bin')
+            nvidia_bin=settings.MOUNT_PATHS_NVIDIA.get('bin'),
+            copy_code=self.copy_code
         )
 
     def build(self, memory_limit=None):

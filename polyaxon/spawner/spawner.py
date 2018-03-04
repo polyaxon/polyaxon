@@ -550,6 +550,8 @@ class K8SProjectSpawner(K8SManager):
             job_name=self.NOTEBOOK_APP,
             deployment_name=deployment_name,
             port=ports[0])
+        notebook_dir = get_project_repos_path(self.project_name)
+        notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
         deployment = deployments.get_deployment(
             namespace=self.namespace,
             name=self.NOTEBOOK_APP,
@@ -570,7 +572,7 @@ class K8SProjectSpawner(K8SManager):
                   "--NotebookApp.notebook_dir={notebook_dir} ".format(
                     token=notebook_token,
                     base_url=notebook_url,
-                    notebook_dir=get_project_repos_path(self.project_name))],
+                    notebook_dir=notebook_dir)],
             ports=target_ports,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,

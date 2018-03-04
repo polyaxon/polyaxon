@@ -34,5 +34,7 @@ ENV {{env_var[0]}} {{env_var[1]}}
 {% endfor -%}
 {% endif -%}
 
+{% if copy_code -%}
 COPY {{ folder_name }} {{ workdir }}
+{% endif -%}
 """
