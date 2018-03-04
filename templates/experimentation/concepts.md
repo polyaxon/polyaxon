@@ -86,3 +86,11 @@ if an experiment run in a distributed way it will create multiple instances of `
 
 !!! info "More details"
     Please refer to the [jobs section](jobs) for more details.
+
+
+### Project Plugins
+
+A `Project plugin` is a job that is running project wide. Currently, Polyaxon offers 2 plugins: Tensorboard and Jupyter notebook.
+
+!!! info "More details"
+    Please refer to the [project plugins section](project_plugins) for more details.
