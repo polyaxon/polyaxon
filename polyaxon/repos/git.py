@@ -54,8 +54,9 @@ def commit(repo_path, user_email, user_name, message='updated'):
         data=None, location=repo_path, chw=True)
 
 
-def reset(repo_path):
+def undo(repo_path):
     run_command(cmd='git reset --hard', data=None, location=repo_path, chw=True)
+    run_command(cmd='git clean -fd', data=None, location=repo_path, chw=True)
 
 
 def get_last_commit(repo_path):

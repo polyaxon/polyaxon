@@ -132,7 +132,7 @@ class StopNotebookView(CreateAPIView):
                 git.commit(obj.repo.path, request.user.email, request.user.username)
             else:
                 # Reset changes
-                git.reset(obj.repo.path)
+                git.undo(obj.repo.path)
             stop_notebook.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
