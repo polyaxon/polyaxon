@@ -14,6 +14,7 @@ from experiments.tasks import build_experiment
 from projects.models import ExperimentGroup, Project
 from dockerizer.builders import notebooks as notebooks_builder
 from dockerizer.images import get_notebook_image_info
+from repos import git
 from repos.models import Repo
 from spawner import scheduler
 

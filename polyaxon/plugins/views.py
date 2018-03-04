@@ -8,11 +8,13 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from libs.utils import to_bool
 from libs.views import ProtectedView
 from plugins.serializers import TensorboardJobSerializer, NotebookJobSerializer
 from projects.models import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from projects.tasks import start_tensorboard, stop_tensorboard, build_notebook, stop_notebook
+from repos import git
 from spawner import scheduler
 
 
@@ -123,6 +125,11 @@ class StopNotebookView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.has_notebook:
+            commit = request.data.get('commit')
+            commit = to_bool(commit) if commit is not None else True
+            if commit:
+                # commit changes
+                git.commit(obj.repo.path, request.user.email, request.user.username)
             stop_notebook.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
