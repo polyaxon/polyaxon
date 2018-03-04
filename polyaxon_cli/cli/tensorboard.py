@@ -72,8 +72,8 @@ def start(ctx, file):
         sys.exit(1)
 
     Printer.print_success('Tensorboard is being deployed for project `{}`'.format(project_name))
-    clint.textui.puts("It may take some time before you can access the dashboard.\n")
-    clint.textui.puts("Your Tensorboard will be available on:\n")
+    clint.textui.puts("It may take some time before you can access tensorboard.\n")
+    clint.textui.puts("Your tensorboard will be available on:\n")
     with clint.textui.indent(4):
         clint.textui.puts("{}/tensorboard/{}/{}/\n".format(
             PolyaxonClients().auth.http_host, user, project_name))

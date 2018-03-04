@@ -76,7 +76,7 @@ def start(ctx, file, u):
         sys.exit(1)
 
     Printer.print_success('Notebook is being deployed for project `{}`'.format(project_name))
-    clint.textui.puts("It may take some time before you can access the dashboard.\n")
+    clint.textui.puts("It may take some time before you can access the notebook.\n")
     clint.textui.puts("Your notebook will be available on:\n")
     with clint.textui.indent(4):
         clint.textui.puts("{}/notebook/{}/{}/\n".format(
