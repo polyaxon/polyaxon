@@ -376,9 +376,17 @@ Config claim_names
 - name: POLYAXON_CLAIM_NAMES_OUTPUTS
   value: {{ .Values.persistence.outputs.existingClaim }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
+{{- if .Values.persistence.logs.enabled }}
   value: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
+{{- else }}
+  value: ""
+{{- end }}
 - name: POLYAXON_CLAIM_NAMES_REPOS
+{{- if .Values.persistence.repos.enabled }}
   value: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
+{{- else }}
+  value: ""
+{{- end }}
 {{- end -}}
 
 {{/*
