@@ -27,7 +27,7 @@ def handle_new_files(user_id, repo_id, tar_file_name):
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-        logger.warning('User with id `{}` does not exists anymore.'.format(user_id))
+        logger.warning('User with id `{}` does not exist anymore.'.format(user_id))
         return
 
     try:
@@ -35,7 +35,7 @@ def handle_new_files(user_id, repo_id, tar_file_name):
         # Checkout to master
         git.checkout_commit(repo.path)
     except User.DoesNotExist:
-        logger.warning('Repo with id `{}` does not exists anymore.'.format(repo_id))
+        logger.warning('Repo with id `{}` does not exist anymore.'.format(repo_id))
         return
 
     # Destination files

@@ -11,7 +11,6 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from libs.utils import to_bool
 from libs.views import UploadView
 from projects.permissions import get_permissible_project
 from repos.serializers import RepoSerializer
