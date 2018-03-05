@@ -13,7 +13,7 @@ sanic==0.7.0
 six==1.11.0
 Unipath==1.1
 uWSGI==2.0.17
-websockets==3.4
+websockets==4.0.1
 
 polyaxon-schemas==0.0.4
 polyaxon-k8s==0.0.4
