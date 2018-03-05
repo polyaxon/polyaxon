@@ -76,26 +76,41 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
     $ polyaxon experiment -xp 1 resources
     ```
 
- * Dashboards
+ * Dashboard
 
     ```bash
     # Start Polyaxon dashboard
     $ polyaxon dashboad
 
     Dashboard page will now open in your browser. Continue? [Y/n]: y
+    ```
 
+ * Notebook
+    ```bash
+    # Start Jupyter notebook for your porject
+    $ polyaxon notebook start -f polyaxon_notebook.yml
+
+    Notebook is being deployed for project `quick-start`
+
+    It may take some time before you can access the notebook..
+
+    Your notebook will be available on:
+
+        http://52.226.37.54:80/notebook/root/quick-start
+    ```
+
+ * Tensorboard
+    ```bash
     # Start Tensorboard
-    $ polyaxon project start_tensorboard
+    $ polyaxon tensorboard start
 
     Tensorboard is being deployed for project `quick-start`
 
-       It may take some time before you can access the dashboard.
+    It may take some time before you can access tensorboard.
 
-       If you used an ingress, your dashboard will be available at:
+    Your tensorboard will be available on:
 
-           http://52.226.37.54:80/tensorboard/root/quick-start
-
-       Ohterwise you can use kubectl to get the url.
+        http://52.226.37.54:80/tensorboard/root/quick-start
     ```
 
 Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
