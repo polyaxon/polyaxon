@@ -21,7 +21,7 @@ Starting notebook is similar to running any other Polyaxon job, i.e. you need to
 Let's create a simple polyaxonfile_notebook.yml
 
 ```yaml
--------
+---
 version: 1
 
 project:
@@ -63,7 +63,7 @@ This means that if the project is private the notebook will only be visible to t
 Since the notebook is create with polyaxonfile, it can be customized in the same way as any other job, e.g. you can customize the resources, request GPUs ...
 
 ```yaml
--------
+---
 version: 1
 
 project:
@@ -137,7 +137,7 @@ For example to start tensorboard with Tensorflow 1.6, you need to define a new p
 
 
 ```yaml
--------
+---
 version: 1
 
 project:

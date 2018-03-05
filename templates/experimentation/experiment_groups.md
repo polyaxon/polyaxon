@@ -159,7 +159,7 @@ settings:
 
 If we run again the `check` command with `-x` or `--experiments` option, we will get
 
-```yaml
+```bash
 polyaxon check -f polyaxonfile.yml -f polyaxonfile_override.yml -x
 
 Polyaxonfile valid
