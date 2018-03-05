@@ -285,16 +285,16 @@ class ExperimentJobStatusConfig(BaseConfig):
 
 
 class JobLabelSchema(Schema):
+    app = fields.Str(allow_none=True)
     project_name = fields.Str()
     experiment_group_name = fields.Str(allow_none=True)
-    experiment_name = fields.Str()
+    experiment_name = fields.Str(allow_none=True)
     project_uuid = UUID()
     experiment_group_uuid = UUID(allow_none=True)
-    experiment_uuid = UUID()
-    task_type = fields.Str()
-    task_idx = fields.Str()
-    task = fields.Str()
-    job_uuid = UUID()
+    experiment_uuid = UUID(allow_none=True)
+    task_type = fields.Str(allow_none=True)
+    task_idx = fields.Str(allow_none=True)
+    job_uuid = UUID(allow_none=True)
     role = fields.Str()
     type = fields.Str()
 
@@ -313,20 +313,26 @@ class JobLabelSchema(Schema):
 class JobLabelConfig(BaseConfig):
     SCHEMA = JobLabelSchema
     IDENTIFIER = 'JobLabel'
-    REDUCED_ATTRIBUTES = ['experiment_group_name', 'experiment_group_uuid']
+    REDUCED_ATTRIBUTES = [
+        'app', 'experiment_name', 'experiment_uuid',
+        'experiment_group_name', 'experiment_group_uuid',
+        'task_type', 'task_idx', 'job_uuid'
+    ]
 
     def __init__(self,
                  project_name,
-                 experiment_name,
                  project_uuid,
-                 experiment_uuid,
-                 task_type,
-                 task_idx,
-                 job_uuid,
                  role,
                  type,
+                 experiment_name=None,
+                 experiment_uuid=None,
+                 app=None,
+                 task_type=None,
+                 task_idx=None,
+                 job_uuid=None,
                  experiment_group_name=None,
-                 experiment_group_uuid=None):
+                 experiment_group_uuid=None,
+                 **kwargs):
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
         self.experiment_name = experiment_name
@@ -338,6 +344,7 @@ class JobLabelConfig(BaseConfig):
         self.job_uuid = job_uuid
         self.role = role
         self.type = type
+        self.app = app
 
 
 class PodStateSchema(Schema):
