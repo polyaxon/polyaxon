@@ -7,7 +7,6 @@ from django.conf import settings
 
 from polyaxon_k8s.manager import K8SManager
 
-from libs.utils import to_bool
 from events.management.commands._base_monitor import BaseMonitorCommand
 from events.monitors import sidecar
 
