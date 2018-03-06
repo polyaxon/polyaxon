@@ -7,3 +7,9 @@ from django.apps import AppConfig
 class PluginsConfig(AppConfig):
     name = 'plugins'
     verbose_name = 'Plugins'
+
+    def ready(self):
+        from plugins.signals import (
+            new_tensorboard_job,
+            new_notebook_job,
+        )
