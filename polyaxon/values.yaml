@@ -355,6 +355,10 @@ roles:
   worker: "polyaxon-workers"
   dashboard: "polyaxon-dashboard"
 
+apps:
+  tensorboard: "polyaxon-tensorboard"
+  notebook: "polyaxon-notebook"
+
 k8s: {}
 
 email:

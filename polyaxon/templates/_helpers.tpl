@@ -68,16 +68,21 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: cluster-id
-- name: POLYAXON_JOB_CONTAINER_NAME
+- name: POLYAXON_CONTAINER_NAME_JOB
   valueFrom:
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
-      key: job-container-name
-- name: POLYAXON_JOB_SIDECAR_CONTAINER_NAME
+      key: container-name-job
+- name: POLYAXON_SIDECAR_CONTAINER_NAME
   valueFrom:
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
-      key: sidecar-container-name
+      key: container-name-sidecar
+- name: POLYAXON_CONTAINER_NAME_PLUGIN_JOB
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-plugin-job
 - name: POLYAXON_JOB_DOCKER_NAME
   value: "{{ .Values.job.image }}:{{ .Values.job.imageTag }}"
 - name: POLYAXON_JOB_SIDECAR_DOCKER_IMAGE
@@ -154,6 +159,10 @@ global config
   value: {{ .Values.types.core }}
 - name: POLYAXON_TYPE_LABELS_EXPERIMENT
   value: {{ .Values.types.experiment }}
+- name: POLYAXON_APP_LABELS_TENSORBOARD
+  value: {{ .Values.apps.tensorboard }}
+- name: POLYAXON_APP_LABELS_NOTEBOOK
+  value: {{ .Values.apps.notebook }}
 {{- end -}}
 
 {{/*

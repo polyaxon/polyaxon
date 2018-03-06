@@ -17,7 +17,8 @@ data:
   redis-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
   redis-job-containers-url: redis://{{ template "redis.fullname" . }}:6379/3
   redis-to-stream-url: redis://{{ template "redis.fullname" . }}:6379/4
-  job-container-name: "experiment-job"
-  sidecar-container-name: "experiment-job-sidecar"
+  container-name-job: "experiment-job"
+  container-name-sidecar: "experiment-job-sidecar"
+  container-name-plugin-job: : "plugin-job"
   sidecar-persist: "0"
   sidecar-log-sleep-interval: "1"
