@@ -393,8 +393,8 @@ class K8SSpawner(K8SManager):
 
 
 class K8SProjectSpawner(K8SManager):
-    TENSORBOARD_APP = 'tensorboard'
-    NOTEBOOK_APP = 'notebook'
+    TENSORBOARD_JOB_NAME = 'tensorboard'
+    NOTEBOOK_JOB_NAME = 'notebook'
 
     def __init__(self,
                  project_name,
@@ -440,10 +440,11 @@ class K8SProjectSpawner(K8SManager):
         return settings.K8S_INGRESS_ENABLED and settings.PUBLIC_PLUGIN_JOBS
 
     def get_tensorboard_url(self):
-        return self._get_service_url(self.TENSORBOARD_APP)
+        return self._get_service_url(self.TENSORBOARD_JOB_NAME)
 
     def request_tensorboard_port(self):
-        labels = 'app={},role={}'.format(self.TENSORBOARD_APP, settings.ROLE_LABELS_DASHBOARD)
+        labels = 'app={},role={}'.format(settings.APP_LABELS_TENSORBOARD,
+                                         settings.ROLE_LABELS_DASHBOARD)
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
         port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
         while port in ports:
@@ -457,7 +458,7 @@ class K8SProjectSpawner(K8SManager):
         outputs_path = get_project_outputs_path(project_name=self.project_name)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            name=self.TENSORBOARD_APP,
+            name=settings.APP_LABELS_TENSORBOARD,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
@@ -466,12 +467,13 @@ class K8SProjectSpawner(K8SManager):
             command=["/bin/sh", "-c"],
             args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
             ports=target_ports,
+            container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.TENSORBOARD_APP)
-        deployment_labels = deployments.get_labels(name=self.TENSORBOARD_APP,
+            project_uuid=self.project_uuid, name=settings.APP_LABELS_TENSORBOARD)
+        deployment_labels = deployments.get_labels(name=settings.APP_LABELS_TENSORBOARD,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
@@ -506,17 +508,17 @@ class K8SProjectSpawner(K8SManager):
 
     def stop_tensorboard(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=self.TENSORBOARD_APP)
+                                                           name=settings.APP_LABELS_TENSORBOARD)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():
             self.delete_ingress(name=deployment_name)
 
     def get_notebook_url(self):
-        return self._get_service_url(self.NOTEBOOK_APP)
+        return self._get_service_url(self.NOTEBOOK_JOB_NAME)
 
     def get_notebook_token(self):
-        return get_hmac(self.NOTEBOOK_APP, self.project_uuid)
+        return get_hmac(settings.APP_LABELS_NOTEBOOK, self.project_uuid)
 
     def get_notebook_code_volume(self):
         volume = pods.get_volume(volume=constants.REPOS_VOLUME,
@@ -528,7 +530,8 @@ class K8SProjectSpawner(K8SManager):
         return volume, volume_mount
 
     def request_notebook_port(self):
-        labels = 'app={},role={}'.format(self.NOTEBOOK_APP, settings.ROLE_LABELS_DASHBOARD)
+        labels = 'app={},role={}'.format(settings.APP_LABELS_NOTEBOOK,
+                                         settings.ROLE_LABELS_DASHBOARD)
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
         port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
         while port in ports:
@@ -543,18 +546,18 @@ class K8SProjectSpawner(K8SManager):
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
         deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.NOTEBOOK_APP)
+            project_uuid=self.project_uuid, name=settings.APP_LABELS_NOTEBOOK)
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
-            job_name=self.NOTEBOOK_APP,
+            job_name=self.NOTEBOOK_JOB_NAME,
             deployment_name=deployment_name,
             port=ports[0])
         notebook_dir = get_project_repos_path(self.project_name)
         notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            name=self.NOTEBOOK_APP,
+            name=settings.APP_LABELS_NOTEBOOK,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
@@ -574,10 +577,11 @@ class K8SProjectSpawner(K8SManager):
                     base_url=notebook_url,
                     notebook_dir=notebook_dir)],
             ports=target_ports,
+            container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
-        deployment_labels = deployments.get_labels(name=self.NOTEBOOK_APP,
+        deployment_labels = deployments.get_labels(name=settings.APP_LABELS_NOTEBOOK,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
@@ -612,7 +616,7 @@ class K8SProjectSpawner(K8SManager):
 
     def stop_notebook(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=self.NOTEBOOK_APP)
+                                                           name=settings.APP_LABELS_NOTEBOOK)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():
