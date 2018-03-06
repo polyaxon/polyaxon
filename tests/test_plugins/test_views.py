@@ -5,6 +5,7 @@ import mock
 
 from unittest.mock import patch
 
+from django.conf import settings
 from rest_framework import status
 
 from factories.factory_repos import RepoFactory
@@ -281,7 +282,7 @@ class BaseTestPluginViewV1(BaseViewTest):
 
 
 class TestTensorboardViewV1(BaseTestPluginViewV1):
-    plugin_app = K8SProjectSpawner.TENSORBOARD_APP
+    plugin_app = K8SProjectSpawner.TENSORBOARD_JOB_NAME
 
     def test_project_requests_tensorboard_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
@@ -338,7 +339,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
 
 
 class TestNotebookViewV1(BaseTestPluginViewV1):
-    plugin_app = K8SProjectSpawner.NOTEBOOK_APP
+    plugin_app = K8SProjectSpawner.NOTEBOOK_JOB_NAME
 
     def test_project_requests_notebook_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)

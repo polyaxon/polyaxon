@@ -1297,7 +1297,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -1337,7 +1337,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -1457,14 +1457,14 @@
                                     "name": "POLYAXON_DB_PORT"
                                 },
                                 {
-                                    "value": "experiment-job-sidecar",
+                                    "value": "polyaxon-experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job,
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -1647,7 +1647,7 @@
                             ],
                             "lifecycle": null,
                             "ports": null,
-                            "name": "experiment-job-sidecar",
+                            "name": "polyaxon-experiment-job-sidecar",
                             "working_dir": null
                         }
                     ],
@@ -2008,7 +2008,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -2048,7 +2048,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -2170,12 +2170,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -2719,7 +2719,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -2759,7 +2759,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -2881,12 +2881,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -3430,7 +3430,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -3470,7 +3470,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -3592,12 +3592,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -4143,7 +4143,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -4183,7 +4183,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -4305,12 +4305,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -4859,7 +4859,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -4899,7 +4899,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -5021,12 +5021,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -5575,7 +5575,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -5615,7 +5615,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -5737,12 +5737,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -6291,7 +6291,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -6331,7 +6331,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -6453,12 +6453,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -7007,7 +7007,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -7047,7 +7047,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -7169,12 +7169,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -7723,7 +7723,7 @@
                                     "protocol": "TCP"
                                 }
                             ],
-                            "name": "experiment-job",
+                            "name": "polyaxon-experiment-job",
                             "working_dir": null
                         },
                         {
@@ -7763,7 +7763,7 @@
                                     "name": "POLYAXON_POD_ID"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_JOB_ID"
                                 },
@@ -7885,12 +7885,12 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
                                 },
                                 {
-                                    "value": "experiment-job",
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
-                                    "name": "POLYAXON_JOB_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
                                 {
                                     "value": "amqp://polyaxon-rabbitmq:5672",
@@ -8325,7 +8325,7 @@
             },
             "event_type": "MODIFIED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": {
                             "started_at": "2017-12-24T17:21:11Z"
@@ -8389,7 +8389,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -8542,7 +8542,7 @@
             },
             "event_type": "MODIFIED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": {
                             "started_at": "2017-12-24T17:49:56Z"
@@ -8606,7 +8606,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -8759,7 +8759,7 @@
             },
             "event_type": "MODIFIED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": {
                             "started_at": "2017-12-24T18:12:47Z"
@@ -8823,7 +8823,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -8976,7 +8976,7 @@
             },
             "event_type": "MODIFIED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": {
                             "started_at": "2017-12-24T18:16:04Z"
@@ -9040,7 +9040,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -9256,7 +9256,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -9327,7 +9327,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -9434,7 +9434,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": null,
@@ -9501,7 +9501,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": null,
@@ -9568,7 +9568,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": null,
@@ -9635,7 +9635,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -9712,7 +9712,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -9728,7 +9728,7 @@
                     },
                     "ready": false
                 },
-                "experiment-job-sidecar": {
+                "polyaxon-experiment-job-sidecar": {
                     "state": {
                         "running": {
                             "started_at": "2017-12-24T19:02:14Z"
@@ -9783,7 +9783,7 @@
             },
             "event_type": "ADDED",
             "container_statuses": {
-                "experiment-job": {
+                "polyaxon-experiment-job": {
                     "state": {
                         "running": null,
                         "terminated": {
@@ -9799,7 +9799,7 @@
                     },
                     "ready": false
                 },
-                "experiment-job-sidecar": {
+                "polyaxon-experiment-job-sidecar": {
                     "state": {
                         "running": {
                             "started_at": "2017-12-24T19:02:14Z"

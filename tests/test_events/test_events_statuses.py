@@ -3,48 +3,109 @@ from __future__ import absolute_import, division, print_function
 
 from django.conf import settings
 
-from events.tasks import handle_events_job_statues
+from events.tasks import handle_events_job_statues, handle_events_plugin_job_statues
 from experiments.models import ExperimentJobStatus
+from factories.factory_plugins import TensorboardJobFactory, NotebookJobFactory
+from factories.factory_projects import ProjectFactory
+from plugins.models import TensorboardJobStatus, NotebookJobStatus
 from spawner.utils.constants import JobLifeCycle
 from spawner.utils.jobs import get_job_state
 
 from factories.factory_experiments import ExperimentJobFactory
-from tests.fixtures import status_raw_event, status_raw_event_with_conditions
+from tests.fixtures import (
+    status_experiment_job_event,
+    status_experiment_job_event_with_conditions,
+    status_notebook_job_event,
+    status_notebook_job_event_with_conditions,
+    status_tensorboard_job_event,
+    status_tensorboard_job_event_with_conditions
+)
 from tests.utils import BaseTest
 
 
-class TestEventsStatusesHandling(BaseTest):
+class TestEventsBaseJobsStatusesHandling(BaseTest):
+    EVENT = None
+    EVENT_WITH_CONDITIONS = None
+    CONTAINER_NAME = None
+    STATUS_MODEL = None
+    STATUS_HANDLER = None
+
+    def get_job_object(self, job_state):
+        raise NotImplemented
+
     def test_handle_events_job_statuses_for_non_existing_job(self):
-        assert ExperimentJobStatus.objects.count() == 0
-        job_state = get_job_state(event_type=status_raw_event['type'],
-                                  event=status_raw_event['object'],
-                                  job_container_name=settings.JOB_CONTAINER_NAME,
+        assert self.STATUS_MODEL.objects.count() == 0
+        job_state = get_job_state(event_type=self.EVENT['type'],
+                                  event=self.EVENT['object'],
+                                  job_container_names=(self.CONTAINER_NAME,),
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
-        handle_events_job_statues(job_state.to_dict())
-        assert ExperimentJobStatus.objects.count() == 0
+        self.STATUS_HANDLER(job_state.to_dict())
+        assert self.STATUS_MODEL.objects.count() == 0
 
     def test_handle_events_job_statuses_for_existing_job_with_unknown_conditions(self):
-        assert ExperimentJobStatus.objects.count() == 0
-        job_state = get_job_state(event_type=status_raw_event['type'],
-                                  event=status_raw_event['object'],
-                                  job_container_name=settings.JOB_CONTAINER_NAME,
+        assert self.STATUS_MODEL.objects.count() == 0
+        job_state = get_job_state(event_type=self.EVENT['type'],
+                                  event=self.EVENT['object'],
+                                  job_container_names=(self.CONTAINER_NAME,),
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
-        job_uuid = job_state.details.labels.job_uuid.hex
-        job = ExperimentJobFactory(uuid=job_uuid)
-        handle_events_job_statues(job_state.to_dict())
-        assert ExperimentJobStatus.objects.count() == 2
-        statuses = ExperimentJobStatus.objects.filter(job=job).values_list('status', flat=True)
+
+        job = self.get_job_object(job_state)
+
+        self.STATUS_HANDLER(job_state.to_dict())
+        assert self.STATUS_MODEL.objects.count() == 2
+        statuses = self.STATUS_MODEL.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.UNKNOWN}
 
     def test_handle_events_job_statuses_for_existing_job_with_known_conditions(self):
-        assert ExperimentJobStatus.objects.count() == 0
-        job_state = get_job_state(event_type=status_raw_event_with_conditions['type'],
-                                  event=status_raw_event_with_conditions['object'],
-                                  job_container_name=settings.JOB_CONTAINER_NAME,
+        assert self.STATUS_MODEL.objects.count() == 0
+        job_state = get_job_state(event_type=self.EVENT_WITH_CONDITIONS['type'],
+                                  event=self.EVENT_WITH_CONDITIONS['object'],
+                                  job_container_names=(self.CONTAINER_NAME,),
                                   experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
-        job_uuid = job_state.details.labels.job_uuid.hex
-        job = ExperimentJobFactory(uuid=job_uuid)
-        handle_events_job_statues(job_state.to_dict())
-        assert ExperimentJobStatus.objects.count() == 2
-        statuses = ExperimentJobStatus.objects.filter(job=job).values_list('status', flat=True)
+
+        job = self.get_job_object(job_state)
+
+        self.STATUS_HANDLER(job_state.to_dict())
+        assert self.STATUS_MODEL.objects.count() == 2
+        statuses = self.STATUS_MODEL.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.FAILED}
+
+
+class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
+    EVENT = status_experiment_job_event
+    EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
+    CONTAINER_NAME = settings.JOB_CONTAINER_NAME
+    STATUS_MODEL = ExperimentJobStatus
+    STATUS_HANDLER = handle_events_job_statues
+
+    def get_job_object(self, job_state):
+        job_uuid = job_state.details.labels.job_uuid.hex
+        return ExperimentJobFactory(uuid=job_uuid)
+
+
+class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
+    EVENT = status_tensorboard_job_event
+    EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
+    CONTAINER_NAME = settings.JOB_PLUGIN_CONTAINER_NAME
+    STATUS_MODEL = TensorboardJobStatus
+    STATUS_HANDLER = handle_events_plugin_job_statues
+
+    def get_job_object(self, job_state):
+        project_uuid = job_state.details.labels.project_uuid.hex
+        return ProjectFactory(uuid=project_uuid, tensorboard=TensorboardJobFactory()).tensorboard
+
+
+class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
+    EVENT = status_notebook_job_event
+    EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions
+    CONTAINER_NAME = settings.JOB_PLUGIN_CONTAINER_NAME
+    STATUS_MODEL = NotebookJobStatus
+    STATUS_HANDLER = handle_events_plugin_job_statues
+
+    def get_job_object(self, job_state):
+        project_uuid = job_state.details.labels.project_uuid.hex
+        return ProjectFactory(uuid=project_uuid, notebook=NotebookJobFactory()).notebook
+
+
+# Prevent this base class from running tests
+del TestEventsBaseJobsStatusesHandling
