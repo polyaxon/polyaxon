@@ -7,7 +7,7 @@ from spawner.utils.constants import PodLifeCycle, JobLifeCycle, ContainerStatuse
 from spawner.utils import pods
 
 
-def get_job_status(pod_state, job_container_name):
+def get_job_status(pod_state, job_container_names):
     # For terminated pods that failed and successfully terminated pods
     if pod_state.phase == PodLifeCycle.FAILED:
         return JobLifeCycle.FAILED, None
@@ -31,7 +31,11 @@ def get_job_status(pod_state, job_container_name):
     if PodConditions.READY not in pod_state.pod_conditions:
         return JobLifeCycle.BUILDING, None
 
-    job_container_status = pod_state.container_statuses.get(job_container_name)
+    job_container_status = None
+    for job_container_name in job_container_names:
+        job_container_status = pod_state.container_statuses.get(job_container_name)
+        if job_container_status:
+            break
 
     if not job_container_status:
         return PodLifeCycle.UNKNOWN, None
@@ -56,12 +60,12 @@ def get_job_status(pod_state, job_container_name):
     return PodLifeCycle.UNKNOWN, None
 
 
-def get_job_state(event_type, event, job_container_name, experiment_type_label):
+def get_job_state(event_type, event, job_container_names, experiment_type_label):
     pod_state = pods.get_pod_state(event_type=event_type, event=event)
     if pod_state.labels.type != experiment_type_label:  # 2 types: core and experiment
         return
 
-    status, message = get_job_status(pod_state, job_container_name)
+    status, message = get_job_status(pod_state, job_container_names)
     return JobStateConfig(
         status=status,
         message=message,
