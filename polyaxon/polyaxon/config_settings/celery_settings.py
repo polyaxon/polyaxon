@@ -78,6 +78,7 @@ class CeleryTasks(object):
     EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
+    EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
     EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
     REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
 
@@ -136,6 +137,7 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
     CeleryTasks.EVENTS_HANDLE_RESOURCES: {'queue': CeleryQueues.EVENTS_RESOURCES},
     CeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
+    CeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR: {'queue': CeleryQueues.LOGS_SIDECARS},
 
     CeleryPublishTask.PUBLISH_LOGS_SIDECAR: {'exchange': INTERNAL_EXCHANGE,

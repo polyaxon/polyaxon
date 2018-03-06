@@ -25,13 +25,7 @@ class Command(BaseMonitorCommand):
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
         while True:
             try:
-                role_label = settings.ROLE_LABELS_WORKER
-                type_label = settings.TYPE_LABELS_EXPERIMENT
-                label_selector = 'role={},type={}'.format(role_label, type_label)
-                statuses.run(k8s_manager,
-                             job_container_name=settings.JOB_CONTAINER_NAME,
-                             experiment_type_label=type_label,
-                             label_selector=label_selector)
+                statuses.run(k8s_manager)
             except ApiException as e:
                 statuses.logger.error(
                     "Exception when calling CoreV1Api->list_namespaced_pod: %s\n" % e)

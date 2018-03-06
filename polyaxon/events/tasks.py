@@ -3,11 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from django.conf import settings
+
 from experiments.paths import get_experiment_logs_path
 from polyaxon.settings import CeleryTasks
 from polyaxon.celery_api import app as celery_app
 from clusters.models import ClusterEvent
 from experiments.models import ExperimentJob, Experiment
+from projects.models import Project
 
 logger = logging.getLogger('polyaxon.tasks.events')
 
@@ -27,6 +30,7 @@ def handle_events_resources(payload, persist):
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
 def handle_events_job_statues(payload):
+    """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
     logger.debug('handling events status for job_uuid: {}'.format(job_uuid))
@@ -35,6 +39,35 @@ def handle_events_job_statues(payload):
         job = ExperimentJob.objects.get(uuid=job_uuid)
     except ExperimentJob.DoesNotExist:
         logger.info('Job uuid`{}` does not exist'.format(job_uuid))
+        return
+
+    # Set the new status
+    job.set_status(status=payload['status'], message=payload['message'], details=details)
+
+
+@celery_app.task(name=CeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
+def handle_events_plugin_job_statues(payload):
+    """Project Plugin jobs statuses"""
+    details = payload['details']
+    app = details['labels']['app']
+    project_uuid = details['labels']['project_uuid']
+    project_name = details['labels']['project_name']
+    logger.debug('handling events status for project {} {}'.format(project_name, app))
+
+    try:
+        project = Project.objects.get(uuid=project_uuid)
+        if app == settings.APP_LABELS_TENSORBOARD:
+            job = project.tensorboard
+        elif app == settings.APP_LABELS_NOTEBOOK:
+            job = project.notebook
+        else:
+            logger.info('Plugin job `{}` does not exist'.format(app))
+            return
+        if job is None:
+            logger.info('Project `{}` Job `{}` does not exist'.format(project_name, app))
+            return
+    except Project.DoesNotExist:
+        logger.info('Project `{}` does not exist'.format(project_name))
         return
 
     # Set the new status

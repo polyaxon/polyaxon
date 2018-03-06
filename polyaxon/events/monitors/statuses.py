@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
+from django.conf import settings
+
 from kubernetes import watch
 
 from libs.redis_db import RedisJobContainers
@@ -46,18 +48,27 @@ def update_job_containers(event, status, job_container_name):
                 RedisJobContainers.remove_container(container_id=container_id)
 
 
-def run(k8s_manager, experiment_type_label, job_container_name, label_selector=None):
+def get_label_selector():
+    type_label = settings.TYPE_LABELS_EXPERIMENT
+    return 'role in ({},{}),type={}'.format(
+        settings.ROLE_LABELS_WORKER,
+        settings.ROLE_LABELS_DASHBOARD,
+        type_label)
+
+
+def run(k8s_manager):
     w = watch.Watch()
 
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
                           namespace=k8s_manager.namespace,
-                          label_selector=label_selector):
+                          label_selector=get_label_selector()):
         logger.debug("Received event: {}".format(event['type']))
         event_object = event['object'].to_dict()
-        job_state = get_job_state(event_type=event['type'],
-                                  event=event_object,
-                                  job_container_name=job_container_name,
-                                  experiment_type_label=experiment_type_label)
+        job_state = get_job_state(
+            event_type=event['type'],
+            event=event_object,
+            job_container_names=(settings.JOB_CONTAINER_NAME, settings.JOB_PLUGIN_CONTAINER_NAME),
+            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
 
         if job_state:
             status = job_state.status
@@ -67,6 +78,12 @@ def run(k8s_manager, experiment_type_label, job_container_name, label_selector=N
             logger.info("Updating job container {}, {}".format(status, labels))
             job_state = job_state.to_dict()
             logger.debug(event_object)
-            update_job_containers(event_object, status, job_container_name)
-            logger.debug(job_state)
-            handle_events_job_statues.delay(payload=job_state)
+            # Only update job containers if it's an experiment job not plugins
+            if settings.JOB_CONTAINER_NAME in job_state.details.container_statuses:
+                update_job_containers(event_object, status, settings.JOB_CONTAINER_NAME)
+                logger.debug(job_state)
+                # Handle experiment job statuses differently than plugin job statuses
+                handle_events_job_statues.delay(payload=job_state)
+            elif settings.JOB_PLUGIN_CONTAINER_NAME in job_state.details.container_statuses:
+                # Handle plugin job statuses
+                handle_events_job_statues.delay(payload=job_state)
