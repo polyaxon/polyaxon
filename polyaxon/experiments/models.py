@@ -12,7 +12,7 @@ from django.utils.functional import cached_property
 from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
-from jobs.models import Job, JobStatus
+from jobs.models import Job, JobStatus, JobResources
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
@@ -233,6 +233,12 @@ class ExperimentJob(Job):
         editable=False,
         null=False,
         help_text='The sequence number of this job within the experiment.', )
+    resources = models.OneToOneField(
+        JobResources,
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True)
     job_status = models.OneToOneField(
         'ExperimentJobStatus',
         related_name='+',
@@ -260,51 +266,12 @@ class ExperimentJob(Job):
 
         super(ExperimentJob, self).save(*args, **kwargs)
 
-    @property
-    def last_status(self):
-        return self.job_status.status if self.job_status else None
-
-    @property
-    def is_running(self):
-        return JobLifeCycle.is_running(self.last_status)
-
-    @property
-    def is_done(self):
-        return JobLifeCycle.is_done(self.last_status)
-
-    @property
-    def started_at(self):
-        status = self.statuses.filter(status=JobLifeCycle.BUILDING).first()
-        if not status:
-            status = self.statuses.filter(status=JobLifeCycle.RUNNING).first()
-        if status:
-            return status.created_at
-        return None
-
-    @property
-    def finished_at(self):
-        status = self.statuses.filter(status__in=JobLifeCycle.DONE_STATUS).last()
-        if status:
-            return status.created_at
-        return None
-
     def set_status(self, status, message=None, details=None):
-        current_status = self.last_status
-        # We should not update statuses statuses anymore
-        if JobLifeCycle.is_done(current_status):
-            logger.info(
-                'Received a new status `{}` for job `{}`. '
-                'But the job is already done with status `{}`'.format(
-                    status, self.unique_name, current_status))
-            return False
-        if status != current_status:
-            # Add new status to the job
-            ExperimentJobStatus.objects.create(job=self,
-                                               status=status,
-                                               message=message,
-                                               details=details)
-            return True
-        return False
+        return self._set_status(status_model=ExperimentJobStatus,
+                                logger=logger,
+                                status=status,
+                                message=message,
+                                details=details)
 
 
 class ExperimentJobStatus(JobStatus):

@@ -42,15 +42,54 @@ class JobResources(models.Model):
 
 
 class Job(DiffModel):
-    resources = models.OneToOneField(
-        JobResources,
-        related_name='+',
-        blank=True,
-        null=True,
-        editable=True)
-
     class Meta:
         abstract = True
+
+    @property
+    def last_status(self):
+        return self.job_status.status if self.job_status else None
+
+    @property
+    def is_running(self):
+        return JobLifeCycle.is_running(self.last_status)
+
+    @property
+    def is_done(self):
+        return JobLifeCycle.is_done(self.last_status)
+
+    @property
+    def started_at(self):
+        status = self.statuses.filter(status=JobLifeCycle.BUILDING).first()
+        if not status:
+            status = self.statuses.filter(status=JobLifeCycle.RUNNING).first()
+        if status:
+            return status.created_at
+        return None
+
+    @property
+    def finished_at(self):
+        status = self.statuses.filter(status__in=JobLifeCycle.DONE_STATUS).last()
+        if status:
+            return status.created_at
+        return None
+
+    def _set_status(self, status_model, logger, status, message=None, details=None):
+        current_status = self.last_status
+        # We should not update statuses anymore
+        if JobLifeCycle.is_done(current_status):
+            logger.info(
+                'Received a new status `{}` for job `{}`. '
+                'But the job is already done with status `{}`'.format(
+                    status, self.unique_name, current_status))
+            return False
+        if status != current_status:
+            # Add new status to the job
+            status_model.objects.create(job=self,
+                                        status=status,
+                                        message=message,
+                                        details=details)
+            return True
+        return False
 
 
 class JobStatus(models.Model):
