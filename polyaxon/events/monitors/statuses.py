@@ -8,7 +8,7 @@ from django.conf import settings
 from kubernetes import watch
 
 from libs.redis_db import RedisJobContainers
-from events.tasks import handle_events_job_statues
+from events.tasks import handle_events_job_statues, handle_events_plugin_job_statues
 from spawner.utils.constants import JobLifeCycle
 from spawner.utils.jobs import get_job_state
 
@@ -86,4 +86,4 @@ def run(k8s_manager):
                 handle_events_job_statues.delay(payload=job_state)
             elif settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses']:
                 # Handle plugin job statuses
-                handle_events_job_statues.delay(payload=job_state)
+                handle_events_plugin_job_statues.delay(payload=job_state)
