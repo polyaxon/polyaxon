@@ -73,7 +73,7 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: container-name-job
-- name: POLYAXON_SIDECAR_CONTAINER_NAME
+- name: POLYAXON_CONTAINER_NAME_SIDECAR
   valueFrom:
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
