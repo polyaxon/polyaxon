@@ -49,11 +49,17 @@ class CliVersion(BaseValidationVersion):
     LATEST_VERSION = settings.CLI_LATEST_VERSION
     MIN_VERSION = settings.CLI_MIN_VERSION
 
+    def __str__(self):
+        return 'Cli version'
+
 
 class PlatformVersion(BaseValidationVersion):
     """A model that represents the polyaxon platfom version."""
     LATEST_VERSION = settings.PLATFORM_LATEST_VERSION
     MIN_VERSION = settings.PLATFORM_MIN_VERSION
+
+    def __str__(self):
+        return 'Platform version'
 
 
 class LibVersion(BaseValidationVersion):
@@ -61,12 +67,18 @@ class LibVersion(BaseValidationVersion):
     LATEST_VERSION = settings.LIB_LATEST_VERSION
     MIN_VERSION = settings.LIB_MIN_VERSION
 
+    def __str__(self):
+        return 'Lib version'
+
 
 class ChartVersion(Singleton):
     """A model that represents the polyaxon chart version."""
     VERSION = settings.CHART_VERSION
 
     version = models.CharField(max_length=16)
+
+    def __str__(self):
+        return 'Chart version'
 
     @classmethod
     def may_be_update(cls, obj):
