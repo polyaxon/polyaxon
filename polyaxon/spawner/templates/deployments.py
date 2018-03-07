@@ -9,8 +9,8 @@ from spawner.templates import constants
 from spawner.templates import pods
 
 
-def get_labels(name, project_name, project_uuid, role=None, type=None):
-    labels = {'app': name, 'project_name': project_name, 'project_uuid': project_uuid}
+def get_labels(app, project_name, project_uuid, role=None, type=None):
+    labels = {'app': app, 'project_name': project_name, 'project_uuid': project_uuid}
     if role:
         labels['role'] = role
     if type:
@@ -50,6 +50,7 @@ def get_project_pod_spec(volume_mounts,
 
 
 def get_deployment_spec(namespace,
+                        app,
                         name,
                         project_name,
                         project_uuid,
@@ -64,7 +65,7 @@ def get_deployment_spec(namespace,
                         role=None,
                         type=None,
                         replicas=1):
-    labels = get_labels(name=name,
+    labels = get_labels(app=app,
                         project_name=project_name,
                         project_uuid=project_uuid,
                         role=role,
@@ -86,6 +87,7 @@ def get_deployment_spec(namespace,
 
 
 def get_deployment(namespace,
+                   app,
                    name,
                    project_name,
                    project_uuid,
@@ -100,7 +102,7 @@ def get_deployment(namespace,
                    role=None,
                    type=None,
                    replicas=1):
-    labels = get_labels(name=name,
+    labels = get_labels(app=app,
                         project_name=project_name,
                         project_uuid=project_uuid,
                         role=role,
@@ -110,6 +112,7 @@ def get_deployment(namespace,
         labels=labels,
         namespace=namespace)
     spec = get_deployment_spec(namespace=namespace,
+                               app=app,
                                name=name,
                                project_name=project_name,
                                project_uuid=project_uuid,

@@ -458,7 +458,8 @@ class K8SProjectSpawner(K8SManager):
         outputs_path = get_project_outputs_path(project_name=self.project_name)
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            name=settings.APP_LABELS_TENSORBOARD,
+            app=settings.APP_LABELS_TENSORBOARD,
+            name=self.TENSORBOARD_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
@@ -472,8 +473,8 @@ class K8SProjectSpawner(K8SManager):
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=settings.APP_LABELS_TENSORBOARD)
-        deployment_labels = deployments.get_labels(name=settings.APP_LABELS_TENSORBOARD,
+            project_uuid=self.project_uuid, name=self.TENSORBOARD_JOB_NAME)
+        deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
@@ -508,7 +509,7 @@ class K8SProjectSpawner(K8SManager):
 
     def stop_tensorboard(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=settings.APP_LABELS_TENSORBOARD)
+                                                           name=self.TENSORBOARD_JOB_NAME)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():
@@ -520,7 +521,8 @@ class K8SProjectSpawner(K8SManager):
     def get_notebook_token(self):
         return get_hmac(settings.APP_LABELS_NOTEBOOK, self.project_uuid)
 
-    def get_notebook_code_volume(self):
+    @staticmethod
+    def get_notebook_code_volume():
         volume = pods.get_volume(volume=constants.REPOS_VOLUME,
                                  claim_name=settings.REPOS_CLAIM_NAME,
                                  volume_mount=settings.REPOS_ROOT)
@@ -546,7 +548,7 @@ class K8SProjectSpawner(K8SManager):
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
         deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=settings.APP_LABELS_NOTEBOOK)
+            project_uuid=self.project_uuid, name=self.NOTEBOOK_JOB_NAME)
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
@@ -557,7 +559,8 @@ class K8SProjectSpawner(K8SManager):
         notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
         deployment = deployments.get_deployment(
             namespace=self.namespace,
-            name=settings.APP_LABELS_NOTEBOOK,
+            app=settings.APP_LABELS_NOTEBOOK,
+            name=self.NOTEBOOK_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             volume_mounts=volume_mounts,
@@ -581,7 +584,7 @@ class K8SProjectSpawner(K8SManager):
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
-        deployment_labels = deployments.get_labels(name=settings.APP_LABELS_NOTEBOOK,
+        deployment_labels = deployments.get_labels(app=settings.APP_LABELS_NOTEBOOK,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
@@ -616,7 +619,7 @@ class K8SProjectSpawner(K8SManager):
 
     def stop_notebook(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=settings.APP_LABELS_NOTEBOOK)
+                                                           name=self.NOTEBOOK_JOB_NAME)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():
