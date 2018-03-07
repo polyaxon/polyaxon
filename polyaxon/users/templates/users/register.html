@@ -11,7 +11,7 @@
                 <p>Your registration takes place with the email-address: {{ invitation.email }}</p>
                 <p>After logging on you can change your email-address anytime in the profile settings.</p>
                 {% else %}
-                <p>Please sign up to get access to the Polyaxon.</p>
+                <p>Please sign up to get access to Polyaxon.</p>
                 {% endif %}
             </div>
             {% if form.non_field_errors %}
@@ -27,7 +27,7 @@
                 {% include 'users/formcontents.html' %}
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-8">
-                        <button class="btn btn-primary" type="submit" id="id_signup"v>
+                        <button class="btn btn-primary btn-polyaxon" type="submit" id="id_signup"v>
                             {% if invitation %}
                                 Accept invitation
                             {% else %}

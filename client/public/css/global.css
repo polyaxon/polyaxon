@@ -12,7 +12,7 @@
   color: #7e7c7c;
   font-size: 12px;
 }
-.navbar {
+.navbar, #header {
   background: #485563;
   background: -webkit-linear-gradient(to left,#485563,#29323c);
   background: linear-gradient(to left,#485563,#29323c);
@@ -46,8 +46,13 @@
     margin-right: 30px;
 }
 
+#branding h1 a:link, #branding h1 a:visited {
+    color: white;
+}
+
 #top #top-brand span,
-#top #top-brand a {
+#top #top-brand a,
+#branding h1 a{
     font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
     color: white;
     text-decoration: none;
@@ -63,7 +68,8 @@
     text-decoration: none;
 }
 
-#top #top-brand img {
+#top #top-brand img,
+#branding h1 img{
     height: 40px;
     margin-top: -2px;
     vertical-align: middle;
