@@ -5,7 +5,8 @@ from mock import patch
 
 from factories.factory_plugins import TensorboardJobFactory, NotebookJobFactory
 from factories.factory_projects import ProjectFactory
-from plugins.models import TensorboardJob, NotebookJob
+from plugins.models import TensorboardJob, NotebookJob, NotebookJobStatus, TensorboardJobStatus
+from spawner.utils.constants import JobLifeCycle
 
 from tests.utils import BaseTest
 
@@ -34,3 +35,21 @@ class TestPluginsModel(BaseTest):
             with patch('spawner.scheduler.stop_notebook') as _:
                 project.delete()
         assert NotebookJob.objects.count() == 0
+
+    def test_tensorboard_creation_triggers_status_creation(self):
+        assert TensorboardJobStatus.objects.count() == 0
+        project = ProjectFactory()
+        project.tensorboard = TensorboardJobFactory()
+        project.save()
+
+        assert TensorboardJobStatus.objects.count() == 1
+        assert project.tensorboard.last_status == JobLifeCycle.CREATED
+
+    def test_notebook_creation_triggers_status_creation(self):
+        assert NotebookJobStatus.objects.count() == 0
+        project = ProjectFactory()
+        project.notebook = NotebookJobFactory()
+        project.save()
+
+        assert NotebookJobStatus.objects.count() == 1
+        assert project.notebook.last_status == JobLifeCycle.CREATED

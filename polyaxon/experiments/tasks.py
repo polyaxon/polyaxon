@@ -56,7 +56,7 @@ def build_experiment(self, experiment_id):
     # Update experiment status to show that its building
     experiment.set_status(ExperimentLifeCycle.BUILDING)
 
-    # docker image
+    # Building the docker image
     try:
         status = experiments_builder.build_experiment(experiment)
     except DockerException as e:

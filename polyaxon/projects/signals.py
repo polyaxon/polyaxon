@@ -78,8 +78,8 @@ def new_project(sender, **kwargs):
 @ignore_raw
 def project_deleted(sender, **kwargs):
     instance = kwargs['instance']
-    scheduler.stop_tensorboard(instance)
-    scheduler.stop_notebook(instance)
+    scheduler.stop_tensorboard(instance, update_status=False)
+    scheduler.stop_notebook(instance, update_status=False)
     # Delete tensorboard job
     if instance.tensorboard:
         instance.tensorboard.delete()

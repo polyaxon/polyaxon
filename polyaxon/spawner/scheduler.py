@@ -174,7 +174,7 @@ def start_tensorboard(project):
     project.save()
 
 
-def stop_tensorboard(project):
+def stop_tensorboard(project, update_status=False):
     spawner = K8SProjectSpawner(project_name=project.unique_name,
                                 project_uuid=project.uuid.hex,
                                 k8s_config=settings.K8S_CONFIG,
@@ -184,6 +184,10 @@ def stop_tensorboard(project):
     spawner.stop_tensorboard()
     project.has_tensorboard = False
     project.save()
+    if update_status:
+        # Update experiment status to show that its deleted
+        project.tensorboard.set_status(status=ExperimentLifeCycle.DELETED,
+                                       message='Tensorboard was stopped')
 
 
 def get_tensorboard_url(project):
@@ -208,7 +212,7 @@ def start_notebook(project, image):
     project.save()
 
 
-def stop_notebook(project):
+def stop_notebook(project, update_status=False):
     spawner = K8SProjectSpawner(project_name=project.unique_name,
                                 project_uuid=project.uuid.hex,
                                 k8s_config=settings.K8S_CONFIG,
@@ -218,6 +222,10 @@ def stop_notebook(project):
     spawner.stop_notebook()
     project.has_notebook = False
     project.save()
+    if update_status:
+        # Update experiment status to show that its deleted
+        project.notebook.set_status(status=ExperimentLifeCycle.DELETED,
+                                    message='Notebook was stopped')
 
 
 def get_notebook_url(project):

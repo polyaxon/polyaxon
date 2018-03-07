@@ -9,6 +9,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for project in Project.objects.filter(Q(has_tensorboard=True) | Q(has_notebook=True)):
             if project.has_notebook:
-                scheduler.stop_notebook(project)
+                scheduler.stop_notebook(project, update_status=False)
             if project.has_tensorboard:
-                scheduler.stop_tensorboard(project)
+                scheduler.stop_tensorboard(project, update_status=False)

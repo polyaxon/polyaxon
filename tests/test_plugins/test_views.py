@@ -5,7 +5,6 @@ import mock
 
 from unittest.mock import patch
 
-from django.conf import settings
 from rest_framework import status
 
 from factories.factory_repos import RepoFactory
@@ -17,6 +16,7 @@ from projects.models import Project
 from factories.factory_projects import ProjectFactory
 from spawner import K8SProjectSpawner, scheduler
 from spawner.templates.constants import DEPLOYMENT_NAME
+from spawner.utils.constants import JobLifeCycle
 from tests.utils import BaseViewTest
 
 
@@ -54,8 +54,10 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
     def test_start_with_updated_config(self):
-        with patch('projects.tasks.start_tensorboard.delay') as _:
-            self.auth_client.post(self.url)
+        with patch('projects.tasks.start_tensorboard.delay') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
         # Start with default config
         self.object.refresh_from_db()
         config = self.object.tensorboard.config
@@ -65,8 +67,10 @@ class TestStartTensorboardViewV1(BaseViewTest):
         self.object.save()
 
         # Starting the tensorboard without config should pass
-        with patch('projects.tasks.start_tensorboard.delay') as _:
-            self.auth_client.post(self.url)
+        with patch('projects.tasks.start_tensorboard.delay') as mock_fct:
+            resp = self.auth_client.post(self.url)
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
         # Check that still using same config
         self.object.tensorboard.refresh_from_db()
         assert config == self.object.tensorboard.config
@@ -76,13 +80,28 @@ class TestStartTensorboardViewV1(BaseViewTest):
         self.object.save()
 
         # Starting again the tensorboard with different config
-        with patch('projects.tasks.start_tensorboard.delay') as _:
-            self.auth_client.post(self.url,
-                                  data={'config': plugin_spec_parsed_content.parsed_data})
+        with patch('projects.tasks.start_tensorboard.delay') as mock_fct:
+            resp = self.auth_client.post(self.url,
+                                         data={'config': plugin_spec_parsed_content.parsed_data})
 
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
         self.object.tensorboard.refresh_from_db()
         # Check that the image was update
         assert config != self.object.tensorboard.config
+
+    def test_start_during_build_process(self):
+        with patch('projects.tasks.start_tensorboard.delay') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+
+        # Check that user cannot start a new job if it's already building
+        self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
+        with patch('projects.tasks.start_tensorboard.delay') as start_mock:
+            self.auth_client.post(self.url)
+        assert start_mock.call_count == 0
 
 
 class TestStopTensorboardViewV1(BaseViewTest):
@@ -161,8 +180,11 @@ class TestStartNotebookViewV1(BaseViewTest):
 
     def test_build_with_updated_config(self):
         data = {'config': plugin_spec_parsed_content.parsed_data}
-        with patch('projects.tasks.build_notebook.delay') as _:
-            self.auth_client.post(self.url, data)
+        with patch('projects.tasks.build_notebook.delay') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
         # Start with default config
         self.object.refresh_from_db()
         config = self.object.notebook.config
@@ -172,8 +194,11 @@ class TestStartNotebookViewV1(BaseViewTest):
         self.object.save()
 
         # Starting the notebook without config should pass
-        with patch('projects.tasks.build_notebook.delay') as _:
-            self.auth_client.post(self.url)
+        with patch('projects.tasks.build_notebook.delay') as mock_fct:
+            resp = self.auth_client.post(self.url)
+
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
         # Check that still using same config
         self.object.notebook.refresh_from_db()
         assert config == self.object.notebook.config
@@ -190,6 +215,24 @@ class TestStartNotebookViewV1(BaseViewTest):
         self.object.notebook.refresh_from_db()
         # Check that the image was update
         assert config != self.object.notebook.config
+
+    def test_start_during_build_process(self):
+        data = {'config': plugin_spec_parsed_content.parsed_data}
+        with patch('projects.tasks.build_notebook.delay') as start_mock:
+            resp = self.auth_client.post(self.url, data=data)
+
+        assert resp.status_code == status.HTTP_200_OK
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.notebook.last_status == JobLifeCycle.CREATED
+
+        # Check that user cannot start a new job if it's already building
+        self.object.notebook.set_status(status=JobLifeCycle.BUILDING)
+        with patch('projects.tasks.build_notebook.delay') as start_mock:
+            resp = self.auth_client.post(self.url)
+
+        assert resp.status_code == status.HTTP_200_OK
+        assert start_mock.call_count == 0
 
 
 class TestStopNotebookViewV1(BaseViewTest):

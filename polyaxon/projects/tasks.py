@@ -14,9 +14,9 @@ from experiments.tasks import build_experiment
 from projects.models import ExperimentGroup, Project
 from dockerizer.builders import notebooks as notebooks_builder
 from dockerizer.images import get_notebook_image_info
-from repos import git
 from repos.models import Repo
 from spawner import scheduler
+from spawner.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 
@@ -72,7 +72,7 @@ def stop_tensorboard(project_id):
     project = get_valid_project(project_id)
     if not project:
         return None
-    scheduler.stop_tensorboard(project)
+    scheduler.stop_tensorboard(project, update_status=True)
 
 
 @celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
@@ -81,13 +81,25 @@ def build_notebook(project_id):
     if not project or not project.notebook:
         return None
 
-    # docker image
+    job = project.notebook
+
+    # Update job status to show that its building docker image
+    job.set_status(JobLifeCycle.BUILDING, message='Building container')
+
+    # Building the docker image
     try:
         status = notebooks_builder.build_notebook_job(project=project, job=project.notebook)
-    except DockerException:
+    except DockerException as e:
+        logger.warning('Failed to build notebook %s', e)
+        job.set_status(
+            JobLifeCycle.FAILED,
+            message='Failed to build image for notebook.'.format(project.unique_name))
         return
     except Repo.DoesNotExist:
         logger.warning('No code was found for this project')
+        job.set_status(
+            JobLifeCycle.FAILED,
+            message='Failed to build image for notebook.'.format(project.unique_name))
         return
 
     if not status:
@@ -120,4 +132,4 @@ def stop_notebook(project_id):
     if not project:
         return None
 
-    scheduler.stop_notebook(project)
+    scheduler.stop_notebook(project, update_status=True)

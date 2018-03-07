@@ -59,7 +59,8 @@ class StartTensorboardView(CreateAPIView):
         obj = self.get_object()
         if not obj.has_tensorboard:
             self._create_tensorboard(obj)
-            start_tensorboard.delay(project_id=obj.id)
+            if not obj.tensorboard.is_running:
+                start_tensorboard.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -109,7 +110,8 @@ class StartNotebookView(CreateAPIView):
         obj = self.get_object()
         if not obj.has_notebook:
             self._create_notebook(obj)
-            build_notebook.delay(project_id=obj.id)
+            if not obj.notebook.is_running:
+                build_notebook.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
 

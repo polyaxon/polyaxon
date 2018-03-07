@@ -12,4 +12,6 @@ class PluginsConfig(AppConfig):
         from plugins.signals import (
             new_tensorboard_job,
             new_notebook_job,
+            new_tensorboard_job_status,
+            new_notebook_job_status,
         )
