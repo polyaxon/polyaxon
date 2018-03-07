@@ -70,14 +70,14 @@ export default class ProjectDetail extends React.Component<Props, Object> {
             </div>
             <div className="meta">
               {project.has_tensorboard &&
-              <span className="meta-info meta-metrics">
-                <i className="fa fa-columns icon" aria-hidden="true"/>
+              <span className="meta-info meta-dashboard">
+                <i className="fa fa-link icon" aria-hidden="true"/>
                 <a href={getTensorboardUrl(project.user, project.name)} className="title-link">Tensorboard</a>
               </span>
               }
               {project.has_notebook &&
-              <span className="meta-info meta-metrics">
-                <i className="fa fa-columns icon" aria-hidden="true"/>
+              <span className="meta-info meta-dashboard">
+                <i className="fa fa-link icon" aria-hidden="true"/>
                 <a href={getNotebookUrl(project.user, project.name)} className="title-link">Notebook</a>
               </span>
               }

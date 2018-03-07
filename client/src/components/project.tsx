@@ -56,16 +56,16 @@ function Project({project, onDelete}: Props) {
         </div>
         {project.has_tensorboard &&
         <div className="row meta">
-          <span className="meta-info meta-metrics">
-            <i className="fa fa-columns icon" aria-hidden="true"/>
+          <span className="meta-info meta-dashboard">
+            <i className="fa fa-link icon" aria-hidden="true"/>
             <a href={getTensorboardUrl(project.user, project.name)} className="title-link">Tensorboard</a>
           </span>
         </div>
         }
         {project.has_notebook &&
         <div className="row meta">
-          <span className="meta-info meta-metrics">
-            <i className="fa fa-columns icon" aria-hidden="true"/>
+          <span className="meta-info meta-dashboard">
+            <i className="fa fa-link icon" aria-hidden="true"/>
             <a href={getNotebookUrl(project.user, project.name)} className="title-link">Notebook</a>
           </span>
         </div>
