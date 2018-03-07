@@ -70,13 +70,13 @@ def init(project, run, model):
     except ValidationError:
         Printer.print_error(
             "Something went wrong, init command did not create a file.\n"
-            "Anothor file already exist with.")
+            "Another file already exist with.")
         sys.exit(1)
 
     if not equal_projects(spec.project.name, project_config.unique_name):
         Printer.print_error(
             "Something went wrong, init command did not create a file.\n"
-            "Anothor file already exist with different "
+            "Another file already exist with different "
             "project name `{}`.".format(spec.project.name))
         sys.exit(1)
 

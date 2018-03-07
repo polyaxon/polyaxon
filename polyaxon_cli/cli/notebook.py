@@ -25,6 +25,37 @@ def notebook(ctx, project):
 
 
 @notebook.command()
+@click.pass_context
+def url(ctx, url):
+    """Prints the notebook url for this project.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Example:
+
+    \b
+    ```bash
+    $ polyaxon notebook url
+    ```
+    """
+    user, project_name = get_project_or_local(ctx.obj['project'])
+    try:
+        response = PolyaxonClients().project.get_project(user, project_name)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get project `{}`.'.format(project_name))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    if response.has_notebook:
+        click.echo("{}/notebook/{}/{}/\n".format(
+            PolyaxonClients().auth.http_host, user, project_name))
+    else:
+        Printer.print_warning(
+            'This project `{}` does not have a running notebook.'.format(project_name))
+        click.echo('You can start a notebook with this command: polyaxon notebook start --help')
+
+
+@notebook.command()
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to run.')
 @click.option('-u', is_flag=True, default=False,
