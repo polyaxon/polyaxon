@@ -102,7 +102,13 @@ class TensorboardJobStatus(JobStatus):
     """A model that represents tensorboard job status at certain time."""
     job = models.ForeignKey(TensorboardJob, related_name='statuses')
 
+    class Meta(JobStatus.Meta):
+        verbose_name_plural = 'Tensorboard Job Statuses'
+
 
 class NotebookJobStatus(JobStatus):
     """A model that represents notebook job status at certain time."""
     job = models.ForeignKey(NotebookJob, related_name='statuses')
+
+    class Meta(JobStatus.Meta):
+        verbose_name_plural = 'Notebook Job Statuses'

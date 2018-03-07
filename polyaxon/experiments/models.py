@@ -277,3 +277,6 @@ class ExperimentJob(Job):
 class ExperimentJobStatus(JobStatus):
     """A model that represents job status at certain time."""
     job = models.ForeignKey(ExperimentJob, related_name='statuses')
+
+    class Meta(JobStatus.Meta):
+        verbose_name_plural = 'Experiment Job Statuses'
