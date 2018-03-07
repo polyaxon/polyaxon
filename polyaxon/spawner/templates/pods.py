@@ -129,9 +129,9 @@ class PodManager(object):
         self.project_uuid = project_uuid
         self.experiment_group_uuid = experiment_group_uuid
         self.experiment_uuid = experiment_uuid
-        self.job_container_name = job_container_name or settings.JOB_CONTAINER_NAME
+        self.job_container_name = job_container_name or settings.CONTAINER_NAME_JOB
         self.job_docker_image = job_docker_image or settings.JOB_DOCKER_NAME
-        self.sidecar_container_name = sidecar_container_name or settings.JOB_SIDECAR_CONTAINER_NAME
+        self.sidecar_container_name = sidecar_container_name or settings.CONTAINER_NAME_SIDECAR
         self.sidecar_docker_image = sidecar_docker_image or settings.JOB_SIDECAR_DOCKER_IMAGE
         self.role_label = role_label or settings.ROLE_LABELS_WORKER
         self.type_label = type_label or settings.TYPE_LABELS_EXPERIMENT

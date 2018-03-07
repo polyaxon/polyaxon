@@ -24,7 +24,7 @@ class Command(BaseMonitorCommand):
         self.stdout.write(
             "Started a new jobs logs / sidecar monitor with, pod_id: `{}` container_job_name: `{}`"
             "log sleep interval: `{}`".format(pod_id,
-                                              settings.JOB_CONTAINER_NAME,
+                                              settings.CONTAINER_NAME_JOB,
                                               log_sleep_interval),
             ending='\n')
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
@@ -40,5 +40,5 @@ class Command(BaseMonitorCommand):
                     job_uuid=labels.job_uuid.hex,
                     task_type=labels.task_type,
                     task_idx=labels.task_idx,
-                    container_job_name=settings.JOB_CONTAINER_NAME)
+                    container_job_name=settings.CONTAINER_NAME_JOB)
         sidecar.logger.info('Finished logging')

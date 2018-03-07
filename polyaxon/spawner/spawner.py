@@ -467,7 +467,7 @@ class K8SProjectSpawner(K8SManager):
             command=["/bin/sh", "-c"],
             args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
             ports=target_ports,
-            container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
+            container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
@@ -577,7 +577,7 @@ class K8SProjectSpawner(K8SManager):
                     base_url=notebook_url,
                     notebook_dir=notebook_dir)],
             ports=target_ports,
-            container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
+            container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)

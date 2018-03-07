@@ -23,7 +23,7 @@
   "POLYAXON_APP_LABELS_TENSORBOARD": "polyaxon-tensorboard",
   "POLYAXON_APP_LABELS_NOTEBOOK": "polyaxon-notebook",
   "POLYAXON_CONTAINER_NAME_JOB": "polyaxon-experiment-job",
-  "POLYAXON_SIDECAR_CONTAINER_NAME": "polyaxon-experiment-job-sidecar",
+  "POLYAXON_CONTAINER_NAME_SIDECAR": "polyaxon-experiment-job-sidecar",
   "POLYAXON_CONTAINER_NAME_PLUGIN_JOB": "polyaxon-plugin-job",
   "POLYAXON_MOUNT_PATHS_UPLOAD": "/tmp/plx/upload",
   "POLYAXON_MOUNT_PATHS_DATA": "/tmp/plx/data",

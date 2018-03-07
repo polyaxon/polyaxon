@@ -67,7 +67,7 @@ def run(k8s_manager):
         job_state = get_job_state(
             event_type=event['type'],
             event=event_object,
-            job_container_names=(settings.JOB_CONTAINER_NAME, settings.JOB_PLUGIN_CONTAINER_NAME),
+            job_container_names=(settings.CONTAINER_NAME_JOB, settings.CONTAINER_NAME_PLUGIN_JOB),
             experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
 
         if job_state:
@@ -80,10 +80,10 @@ def run(k8s_manager):
             job_state = job_state.to_dict()
             logger.debug(job_state)
             # Only update job containers if it's an experiment job not plugins
-            if settings.JOB_CONTAINER_NAME in job_state['details']['container_statuses']:
-                update_job_containers(event_object, status, settings.JOB_CONTAINER_NAME)
+            if settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses']:
+                update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
                 # Handle experiment job statuses differently than plugin job statuses
                 handle_events_job_statues.delay(payload=job_state)
-            elif settings.JOB_PLUGIN_CONTAINER_NAME in job_state['details']['container_statuses']:
+            elif settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses']:
                 # Handle plugin job statuses
                 handle_events_job_statues.delay(payload=job_state)

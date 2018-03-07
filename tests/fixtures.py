@@ -567,7 +567,7 @@ def get_status_event_with_conditions(name, container_name, labels):
 
 status_experiment_job_event = get_status_event(
     name='project1-id1-spec1-xp1-master0',
-    container_name=settings.JOB_CONTAINER_NAME,
+    container_name=settings.CONTAINER_NAME_JOB,
     labels={
         'project_name': 'mike/project1',
         'experiment_name': 'mike/project1/1',
@@ -583,7 +583,7 @@ status_experiment_job_event = get_status_event(
 
 status_experiment_job_event_with_conditions = get_status_event_with_conditions(
     name='project1-id1-spec1-xp1-master0',
-    container_name=settings.JOB_CONTAINER_NAME,
+    container_name=settings.CONTAINER_NAME_JOB,
     labels={
         'project_name': 'mike/project1',
         'experiment_name': 'mike/project1/1',
@@ -599,7 +599,7 @@ status_experiment_job_event_with_conditions = get_status_event_with_conditions(
 
 status_notebook_job_event = get_status_event(
     name='plxproject-project_uuid-notebook',
-    container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
+    container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
     labels={
         'app': settings.APP_LABELS_NOTEBOOK,
         'project_name': 'mike/project1',
@@ -611,7 +611,7 @@ status_notebook_job_event = get_status_event(
 
 status_notebook_job_event_with_conditions = get_status_event_with_conditions(
     name='plxproject-project_uuid-notebook',
-    container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
+    container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
     labels={
         'app': settings.APP_LABELS_NOTEBOOK,
         'project_name': 'mike/project1',
@@ -624,7 +624,7 @@ status_notebook_job_event_with_conditions = get_status_event_with_conditions(
 
 status_tensorboard_job_event = get_status_event(
     name='plxproject-project_uuid-tensroboard',
-    container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
+    container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
     labels={
         'app': settings.APP_LABELS_TENSORBOARD,
         'project_name': 'mike/project1',
@@ -636,7 +636,7 @@ status_tensorboard_job_event = get_status_event(
 
 status_tensorboard_job_event_with_conditions = get_status_event_with_conditions(
     name='plxproject-project_uuid-tensroboard',
-    container_name=settings.JOB_PLUGIN_CONTAINER_NAME,
+    container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
     labels={
         'app': settings.APP_LABELS_TENSORBOARD,
         'project_name': 'mike/project1',

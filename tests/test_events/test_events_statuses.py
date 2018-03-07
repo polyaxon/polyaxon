@@ -74,7 +74,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
 class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_experiment_job_event
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
-    CONTAINER_NAME = settings.JOB_CONTAINER_NAME
+    CONTAINER_NAME = settings.CONTAINER_NAME_JOB
     STATUS_MODEL = ExperimentJobStatus
     STATUS_HANDLER = handle_events_job_statues
 
@@ -86,7 +86,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
 class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_tensorboard_job_event
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
-    CONTAINER_NAME = settings.JOB_PLUGIN_CONTAINER_NAME
+    CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = TensorboardJobStatus
     STATUS_HANDLER = handle_events_plugin_job_statues
 
@@ -98,7 +98,7 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
 class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_notebook_job_event
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions
-    CONTAINER_NAME = settings.JOB_PLUGIN_CONTAINER_NAME
+    CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = NotebookJobStatus
     STATUS_HANDLER = handle_events_plugin_job_statues
 

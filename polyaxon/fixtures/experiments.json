@@ -1459,10 +1459,10 @@
                                 {
                                     "value": "polyaxon-experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
-                                    "value": "polyaxon-experiment-job,
+                                    "value": "polyaxon-experiment-job",
                                     "value_from": null,
                                     "name": "POLYAXON_CONTAINER_NAME_JOB"
                                 },
@@ -2170,7 +2170,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -2881,7 +2881,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -3592,7 +3592,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -4305,7 +4305,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -5021,7 +5021,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -5737,7 +5737,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -6453,7 +6453,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -7169,7 +7169,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
@@ -7885,7 +7885,7 @@
                                 {
                                     "value": "experiment-job-sidecar",
                                     "value_from": null,
-                                    "name": "POLYAXON_SIDECAR_CONTAINER_NAME"
+                                    "name": "POLYAXON_CONTAINER_NAME_SIDECAR"
                                 },
                                 {
                                     "value": "polyaxon-experiment-job",
