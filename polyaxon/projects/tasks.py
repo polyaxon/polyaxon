@@ -65,6 +65,11 @@ def start_group_experiments(self, experiment_group_id):
     if not experiment_group:
         return
 
+    # Check for early stopping before starting new experiments from this group
+    if experiment_group.should_stop_early():
+        experiment_group.stop_pending_experiments(message='Early stopping')
+        return
+
     pending_experiments = list(experiment_group.pending_experiments)
     experiment_to_start = experiment_group.n_experiments_to_start
 

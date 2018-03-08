@@ -2,10 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 import uuid
+import functools
+
+from operator import __or__ as OR
 
 from django.conf import settings
 from django.core.validators import validate_slug
 from django.db import models
+from django.db.models import Q
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
@@ -76,7 +80,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     sequence = models.IntegerField(
         editable=False,
         null=False,
-        help_text='The sequence number of this group within the project.',)
+        help_text='The sequence number of this group within the project.', )
     content = models.TextField(
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_spec_content])
@@ -157,3 +161,19 @@ class ExperimentGroup(DiffModel, DescribableModel):
         If the polyaxonfile has concurrency we need to check how many experiments are running.
         """
         return self.concurrency - len(self.running_experiments)
+
+    def should_stop_early(self):
+        filters = []
+        for early_stopping_metric in self.specification.early_stopping:
+            comparison = 'ge' if early_stopping_metric.higher else 'le'
+            metric_filter = 'experiment_metric__values__{}__{}'.format(
+                early_stopping_metric.metric, comparison)
+            filters.append({metric_filter: early_stopping_metric.value})
+        if filters:
+            return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
+        return False
+
+    def stop_pending_experiments(self, message=None):
+        for experiment in self.pending_experiments:
+            # Update experiment status to show that its deleted
+            experiment.set_status(status=ExperimentLifeCycle.DELETED, message=message)
