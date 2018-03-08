@@ -197,8 +197,8 @@ class Specification(BaseSpecification):
         """Checks of the sections required to run experiment exist."""
         sections = set(self.validated_data.keys())
         if (self.RUN_EXEC in sections or
-                    {self.MODEL, self.TRAIN} <= sections or
-                    {self.MODEL, self.EVAL} <= sections):
+                {self.MODEL, self.TRAIN} <= sections or
+                {self.MODEL, self.EVAL} <= sections):
             return True
         return False
 
@@ -431,14 +431,25 @@ class GroupSpecification(BaseSpecification):
         return space_size
 
     @cached_property
+    def early_stopping(self):
+        return self.settings.early_stopping or []
+
+    @cached_property
     def experiments_def(self):
         if self.settings:
             concurrent_experiments = self.settings.concurrent_experiments
             search_method = self.settings.search_method
+            n_experiments = self.settings.n_experiments
         else:
             concurrent_experiments = 1
             search_method = SEARCH_METHODS.SEQUENTIAL
-        return self.matrix_space, concurrent_experiments, search_method
+            n_experiments = None
+        return (
+            self.matrix_space,
+            n_experiments,
+            concurrent_experiments,
+            search_method
+        )
 
     @cached_property
     def matrix_declarations(self):
@@ -477,6 +488,7 @@ class PluginSpecification(BaseSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         RUN_EXEC: defines the run step where the user can set a docker image to execute
     """
+
     def __init__(self, values):
         super(PluginSpecification, self).__init__(values=values)
         if (self.RUN_EXEC not in self.validated_data or

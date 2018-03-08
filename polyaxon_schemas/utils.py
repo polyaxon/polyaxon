@@ -242,10 +242,12 @@ TIME_ZONE = timezone('UTC')
 
 
 class SEARCH_METHODS(object):
-    SEQUENTIAL = 'SEQUENTIAL'
-    RANDOM = 'RANDOM'
+    SEQUENTIAL = 'sequential'
+    RANDOM = 'random'
 
-    VALUES = [SEQUENTIAL, RANDOM]
+    VALUES = [SEQUENTIAL, RANDOM,
+              SEQUENTIAL.upper(), RANDOM.upper(),
+              SEQUENTIAL.capitalize(), RANDOM.capitalize()]
 
 
 class TaskType(object):

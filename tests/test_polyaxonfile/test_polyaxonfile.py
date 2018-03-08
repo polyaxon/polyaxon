@@ -23,8 +23,8 @@ from polyaxon_schemas.settings import (
     EnvironmentConfig,
     RunConfig,
     SessionConfig,
-    PodResourcesConfig, K8SResourcesConfig)
-from polyaxon_schemas.utils import TaskType
+    PodResourcesConfig, K8SResourcesConfig, EarlyStoppingMetricConfig)
+from polyaxon_schemas.utils import TaskType, SEARCH_METHODS
 from tests.utils import assert_equal_dict
 
 
@@ -260,7 +260,17 @@ class TestPolyaxonfile(TestCase):
             declarations, key=lambda x: (x['lr'], x['loss']))
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.settings.concurrent_experiments == 2
+        assert plxfile.settings.n_experiments is None
+        assert plxfile.settings.early_stopping is None
+        assert plxfile.early_stopping == []
         assert plxfile.run_type == RunTypes.LOCAL
+
+        assert plxfile.experiments_def == (
+            10,
+            None,
+            2,
+            SEARCH_METHODS.SEQUENTIAL
+        )
 
         for xp in range(plxfile.matrix_space):
             spec = plxfile.experiment_spec_at(xp)
@@ -272,6 +282,56 @@ class TestPolyaxonfile(TestCase):
                               {TaskType.MASTER: ['127.0.0.1:10000'],
                                TaskType.PS: [],
                                TaskType.WORKER: []})
+            model = spec.model
+            assert isinstance(model, RegressorConfig)
+            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+            assert isinstance(model.optimizer, AdamConfig)
+            assert isinstance(model.graph, GraphConfig)
+            assert len(model.graph.layers) == 4
+            assert model.graph.input_layers == [['images', 0, 0]]
+            last_layer = model.graph.layers[-1].name
+            assert model.graph.output_layers == [[last_layer, 0, 0]]
+            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+
+    def test_matrix_early_stopping_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'project1'
+        assert isinstance(plxfile.matrix['lr'], MatrixConfig)
+        assert isinstance(plxfile.matrix['loss'], MatrixConfig)
+        assert plxfile.matrix['lr'].to_dict() == {
+            'logspace': {'start': 0.01, 'stop': 0.1, 'num': 5}}
+        assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
+                                                               'AbsoluteDifference']}
+        assert plxfile.matrix_space == 10
+        declarations = []
+        for lr in plxfile.matrix['lr'].to_numpy():
+            for loss in plxfile.matrix['loss'].to_numpy():
+                declarations.append({'loss': loss, 'lr': lr})
+        assert sorted(
+            plxfile.matrix_declarations, key=lambda x: (x['lr'], x['loss'])) == sorted(
+            declarations, key=lambda x: (x['lr'], x['loss']))
+        assert isinstance(plxfile.settings, SettingsConfig)
+        assert plxfile.settings.concurrent_experiments == 2
+        assert plxfile.settings.n_experiments == 5
+        assert plxfile.early_stopping == plxfile.settings.early_stopping
+        assert len(plxfile.settings.early_stopping) == 1
+        assert isinstance(plxfile.settings.early_stopping[0], EarlyStoppingMetricConfig)
+        assert plxfile.run_type == RunTypes.KUBERNETES
+
+        assert plxfile.experiments_def == (
+            10,
+            5,
+            2,
+            SEARCH_METHODS.SEQUENTIAL
+        )
+
+        for xp in range(plxfile.matrix_space):
+            spec = plxfile.experiment_spec_at(xp)
+            assert spec.is_runnable
+            assert spec.environment is None
+            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+
             model = spec.model
             assert isinstance(model, RegressorConfig)
             assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
