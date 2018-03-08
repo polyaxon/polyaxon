@@ -45,11 +45,14 @@ def create_group_experiments(self, experiment_group_id):
     # Parse polyaxonfile content and create the experiments
     specification = experiment_group.specification
     # We create a list of indices that we will explore
-    if specification.search_method == SEARCH_METHODS.SEQUENTIAL:
+    if SEARCH_METHODS.is_sequential(specification.search_method):
         indices = range(specification.n_experiments or specification.matrix_space)
-    elif specification.search_method == SEARCH_METHODS.RANDOM:
+    elif SEARCH_METHODS.is_random(specification.search_method):
         sub_space = specification.n_experiments or specification.matrix_space
         indices = random.sample(range(specification.matrix_space), sub_space)
+    else:
+        logger.warning('Search method was not found `{}`'.format(specification.search_method))
+        return
     for xp in indices:
         Experiment.objects.create(project=experiment_group.project,
                                   user=experiment_group.user,
