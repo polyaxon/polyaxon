@@ -1,0 +1,39 @@
+---
+version: 1
+
+project:
+  name: quick-start
+
+settings:
+  concurrent_experiments: 2
+  n_experiments: 10
+  search_method: random
+  early_stopping:
+    - metric: accuracy
+      value: 0.9
+      higher: true
+
+declarations:
+  batch_size: 128
+  num_steps: 500
+  num_epochs: 1
+
+matrix:
+  learning_rate:
+    linspace: 0.001:0.01:5
+  dropout:
+    values: [0.25, 0.3]
+  activation:
+    values: [relu, sigmoid]
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
+  steps:
+    - apt-get -y update && apt-get -y install git
+    - pip3 install --no-cache-dir -U polyaxon-helper
+  cmd:  python3 model.py --batch_size={{ batch_size }} \
+                         --num_steps={{ num_steps }} \
+                         --learning_rate={{ learning_rate }} \
+                         --dropout={{ dropout }} \
+                         --num_epochs={{ num_epochs }} \
+                         --activation={{ activation }}
