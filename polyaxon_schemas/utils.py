@@ -245,9 +245,18 @@ class SEARCH_METHODS(object):
     SEQUENTIAL = 'sequential'
     RANDOM = 'random'
 
-    VALUES = [SEQUENTIAL, RANDOM,
-              SEQUENTIAL.upper(), RANDOM.upper(),
-              SEQUENTIAL.capitalize(), RANDOM.capitalize()]
+    SEQUENTIAL_VALUES = [SEQUENTIAL, SEQUENTIAL.upper(), SEQUENTIAL.capitalize()]
+    RANDOM_VALUES = [RANDOM, RANDOM.upper(), RANDOM.capitalize()]
+
+    VALUES = SEQUENTIAL_VALUES + RANDOM_VALUES
+
+    @classmethod
+    def is_sequential(cls, value):
+        return value in cls.SEQUENTIAL_VALUES
+
+    @classmethod
+    def is_random(cls, value):
+        return value in cls.RANDOM_VALUES
 
 
 class TaskType(object):
