@@ -432,21 +432,27 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def early_stopping(self):
-        return self.settings.early_stopping or []
+        if self.settings:
+            return self.settings.early_stopping or []
+        return []
+
+    @cached_property
+    def n_experiments(self):
+        if self.settings:
+            return self.settings.n_experiments
+        return None
 
     @cached_property
     def experiments_def(self):
         if self.settings:
             concurrent_experiments = self.settings.concurrent_experiments
             search_method = self.settings.search_method
-            n_experiments = self.settings.n_experiments
         else:
             concurrent_experiments = 1
             search_method = SEARCH_METHODS.SEQUENTIAL
-            n_experiments = None
         return (
             self.matrix_space,
-            n_experiments,
+            self.n_experiments,
             concurrent_experiments,
             search_method
         )
