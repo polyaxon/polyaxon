@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-
 import click
 import sys
 
@@ -9,7 +8,7 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 from polyaxon_schemas.experiment import ExperimentConfig
 from polyaxon_schemas.project import ExperimentGroupConfig
 
-from polyaxon_cli.cli.check import check_polyaxonfile
+from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.project import equal_projects
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.managers.project import ProjectManager
@@ -50,14 +49,14 @@ def run(ctx, file, description, u):
     if u:
         ctx.invoke(upload, async=False)
 
-    num_experiments, _, _ = plx_file.experiments_def
+    matrix_space, n_experiments, concurrency, search_method = plx_file.experiments_def
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
     if not equal_projects(plx_file.project.name, project.unique_name):
         Printer.print_error('Your polyaxonfile defined a different project '
                             'than the one set in this repo.')
         sys.exit(1)
-    if num_experiments == 1:
+    if matrix_space == 1:
         click.echo('Creating an independent experiment.')
         experiment = ExperimentConfig(description=description,
                                       content=plx_file._data,
@@ -72,7 +71,8 @@ def run(ctx, file, description, u):
             sys.exit(1)
         Printer.print_success('Experiment was created')
     else:
-        click.echo('Creating an experiment group with {} experiments.'.format(num_experiments))
+        click.echo('Creating an experiment group with the following definition:')
+        get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method)
         experiment_group = ExperimentGroupConfig(description=description,
                                                  content=plx_file._data)
         try:

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from collections import OrderedDict
+
 import click
 import sys
 
@@ -10,7 +12,7 @@ from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 from polyaxon_schemas.utils import to_list
 
 from polyaxon_cli.utils import constants
-from polyaxon_cli.utils.formatting import Printer
+from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
 
 def check_polyaxonfile(file, log=True, is_plugin=False):
@@ -32,6 +34,19 @@ def check_polyaxonfile(file, log=True, is_plugin=False):
     except Exception as e:
         Printer.print_error("Polyaxonfile is not valid")
         sys.exit(1)
+
+
+def get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method):
+    info = OrderedDict()
+    info['Matrix space contains'] = '{} experiments'.format(matrix_space)
+    if n_experiments:
+        info['Exploring a maximum of'] = '{} experiments'.format(n_experiments)
+    info['Search method'] = search_method.lower()
+    info['Concurrency'] = ('{} runs'.format('sequential')
+                           if concurrency == 1 else
+                           '{} concurrent runs'.format(concurrency))
+
+    dict_tabulate(info)
 
 
 @click.command()
@@ -81,21 +96,16 @@ def check(file, all, version, run_type, project, log_path, matrix, experiments):
                                           'yellow')
 
     if experiments:
-        num_experiments, concurrency, search_method = plx_file.experiments_def
-        if num_experiments == 1:
+        matrix_space, n_experiments, concurrency, search_method = plx_file.experiments_def
+        if matrix_space == 1:
             Printer.decorate_format_value('This polyaxon specification has {}',
                                           'One experiment',
                                           'yellow')
-        elif concurrency == 1:
-            Printer.decorate_format_value('The matrix-space has {} experiments, with {} runs, '
-                                          'and a {} search',
-                                          [num_experiments, 'sequential', search_method.lower()],
-                                          'yellow')
         else:
-            Printer.decorate_format_value('The matrix-space has {} experiments, '
-                                          'with {} concurrent runs, and a {} search',
-                                          [num_experiments, concurrency, search_method.lower()],
-                                          'yellow')
+            click.echo(
+                'This polyaxon specification has experiment group with the following definition:')
+            get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method)
+
     if all:
         click.echo("Validated file:\n{}".format(plx_file.parsed_data))
 
