@@ -6,8 +6,7 @@ from django.dispatch import receiver
 
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup, Project
-from projects.tasks import start_group_experiments
-from experiments.models import Experiment
+from projects.tasks import create_group_experiments
 from projects.paths import (
     delete_project_outputs,
     delete_experiment_group_outputs,
@@ -31,15 +30,7 @@ def new_experiment_group(sender, **kwargs):
     delete_experiment_group_outputs(instance.unique_name)
     delete_experiment_group_logs(instance.unique_name)
 
-    # Parse polyaxonfile content and create the experiments
-    specification = instance.specification
-    for xp in range(specification.matrix_space):
-        Experiment.objects.create(project=instance.project,
-                                  user=instance.user,
-                                  experiment_group=instance,
-                                  config=specification.parsed_data[xp])
-
-    start_group_experiments.apply_async((instance.id,), countdown=1)
+    create_group_experiments.apply_async((instance.id,), countdown=1)
 
 
 @receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")

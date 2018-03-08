@@ -14,6 +14,13 @@ from tests.utils import BaseTest
 
 
 class TestExperimentGroupModel(BaseTest):
+    def test_spec_creation_triggers_experiments_planning(self):
+        with patch('projects.tasks.create_group_experiments.apply_async') as mock_fct:
+            experiment_group = ExperimentGroupFactory()
+
+        assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
+        assert mock_fct.call_count == 1
+
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
         with patch('projects.tasks.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()

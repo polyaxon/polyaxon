@@ -8,6 +8,7 @@ from random import shuffle
 from docker.errors import DockerException
 from polyaxon_schemas.utils import SEARCH_METHODS
 
+from experiments.models import Experiment
 from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
 from experiments.tasks import build_experiment
@@ -21,18 +22,41 @@ from spawner.utils.constants import JobLifeCycle
 logger = logging.getLogger('polyaxon.tasks.projects')
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_START_GROUP, bind=True, max_retries=None)
-def start_group_experiments(self, experiment_group_id):
+def _get_group_ro_retry(experiment_group_id, task):
     try:
-        experiment_group = ExperimentGroup.objects.get(id=experiment_group_id)
+        return ExperimentGroup.objects.get(id=experiment_group_id)
     except ExperimentGroup.DoesNotExist:
         logger.info('ExperimentGroup `{}` was not found.'.format(experiment_group_id))
-        if self.request.retries < 2:
+        if task.request.retries < 2:
             logger.info('Trying again for ExperimentGroup `{}`.'.format(experiment_group_id))
-            self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+            task.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
         logger.info('Something went wrong, '
                     'the ExperimentGroup `{}` does not exist anymore.'.format(experiment_group_id))
+        return None
+
+
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_CREATE_GROUP, bind=True, max_retries=None)
+def create_group_experiments(self, experiment_group_id):
+    experiment_group = _get_group_ro_retry(experiment_group_id=experiment_group_id, task=self)
+    if not experiment_group:
+        return
+
+    # Parse polyaxonfile content and create the experiments
+    specification = experiment_group.specification
+    for xp in range(specification.matrix_space):
+        Experiment.objects.create(project=experiment_group.project,
+                                  user=experiment_group.user,
+                                  experiment_group=experiment_group,
+                                  config=specification.parsed_data[xp])
+
+    start_group_experiments.apply_async((experiment_group.id,), countdown=1)
+
+
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_START_GROUP, bind=True, max_retries=None)
+def start_group_experiments(self, experiment_group_id):
+    experiment_group = _get_group_ro_retry(experiment_group_id=experiment_group_id, task=self)
+    if not experiment_group:
         return
 
     pending_experiments = list(experiment_group.pending_experiments)
