@@ -67,3 +67,20 @@ class ExperimentGroupClient(PolyaxonClient):
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while deleting experiment group')
             return None
+
+    def stop(self, username, project_name, group_sequence, pending=False):
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'groups',
+                                      group_sequence,
+                                      'stop')
+        json_data = None
+        if pending is True:
+            json_data = {'pending': pending}
+
+        try:
+            return self.post(request_url, json_data=json_data)
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while stopping experiments in group')
+            return None

@@ -147,7 +147,7 @@ class ExperimentClient(PolyaxonClient):
         try:
             return self.post(request_url)
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while deleting experiment')
+            self.handle_exception(e=e, log_message='Error while stopping experiment')
             return None
 
     def resources(self, username, project_name, experiment_sequence, message_handler=None):
