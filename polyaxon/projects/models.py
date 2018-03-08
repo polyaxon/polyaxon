@@ -157,7 +157,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     @property
     def n_experiments_to_start(self):
-        """ We need to check if we are allowed to start the experiment
+        """We need to check if we are allowed to start the experiment
         If the polyaxonfile has concurrency we need to check how many experiments are running.
         """
         return self.concurrency - len(self.running_experiments)
@@ -165,7 +165,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     def should_stop_early(self):
         filters = []
         for early_stopping_metric in self.specification.early_stopping:
-            comparison = 'ge' if early_stopping_metric.higher else 'le'
+            comparison = 'gte' if early_stopping_metric.higher else 'lte'
             metric_filter = 'experiment_metric__values__{}__{}'.format(
                 early_stopping_metric.metric, comparison)
             filters.append({metric_filter: early_stopping_metric.value})
@@ -177,3 +177,11 @@ class ExperimentGroup(DiffModel, DescribableModel):
         for experiment in self.pending_experiments:
             # Update experiment status to show that its deleted
             experiment.set_status(status=ExperimentLifeCycle.DELETED, message=message)
+
+    def stop_all_experiments(self, message=None):
+        """Stop all experiments that are not ended yet"""
+        for experiment in self.experiments.exclude(
+                experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct():
+            # Update experiment status to show that its deleted
+            experiment.set_status(status=ExperimentLifeCycle.DELETED, message=message)
+

@@ -63,13 +63,15 @@ class Experiment(DiffModel, DescribableModel):
         related_name='+',
         blank=True,
         null=True,
-        editable=True)
+        editable=True,
+        on_delete=models.SET_NULL)
     experiment_metric = models.OneToOneField(
         'ExperimentMetric',
         related_name='+',
         blank=True,
         null=True,
-        editable=True)
+        editable=True,
+        on_delete=models.SET_NULL)
     commit = models.CharField(
         max_length=40,
         blank=True,
@@ -238,13 +240,15 @@ class ExperimentJob(Job):
         related_name='+',
         blank=True,
         null=True,
-        editable=True)
+        editable=True,
+        on_delete=models.SET_NULL)
     job_status = models.OneToOneField(
         'ExperimentJobStatus',
         related_name='+',
         blank=True,
         null=True,
-        editable=True)
+        editable=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ['sequence']

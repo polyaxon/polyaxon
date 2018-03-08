@@ -65,7 +65,8 @@ class TensorboardJob(PluginJobBase):
         related_name='+',
         blank=True,
         null=True,
-        editable=True)
+        editable=True,
+        on_delete=models.SET_NULL)
 
     def __str__(self):
         if hasattr(self, 'project'):
@@ -93,7 +94,8 @@ class NotebookJob(PluginJobBase):
         related_name='+',
         blank=True,
         null=True,
-        editable=True)
+        editable=True,
+        on_delete=models.SET_NULL)
 
     def __str__(self):
         if hasattr(self, 'project'):
