@@ -66,6 +66,32 @@ experiment_group_spec_content_2_xps = """---
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
+experiment_group_spec_content_early_stopping = """---
+    version: 1
+
+    project:
+      name: project1
+
+    settings:
+      concurrent_experiments: 2
+      n_experiments: 2
+      early_stopping:
+        - metric: precision
+          value: 0.9
+        - metric: loss
+          value: 0.1
+          higher: false 
+
+
+    matrix:
+      lr:
+        values: [0.01, 0.1, 0.2]
+
+    run:
+      image: my_image
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
 experiment_spec_content = """---
     version: 1
 
