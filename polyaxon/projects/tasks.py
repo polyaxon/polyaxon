@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from random import shuffle
+import random
 
 from docker.errors import DockerException
 from polyaxon_schemas.utils import SEARCH_METHODS
@@ -44,7 +44,13 @@ def create_group_experiments(self, experiment_group_id):
 
     # Parse polyaxonfile content and create the experiments
     specification = experiment_group.specification
-    for xp in range(specification.matrix_space):
+    # We create a list of indices that we will explore
+    if specification.search_method == SEARCH_METHODS.SEQUENTIAL:
+        indices = range(specification.n_experiments or specification.matrix_space)
+    elif specification.search_method == SEARCH_METHODS.RANDOM:
+        sub_space = specification.n_experiments or specification.matrix_space
+        indices = random.sample(range(specification.matrix_space), sub_space)
+    for xp in indices:
         Experiment.objects.create(project=experiment_group.project,
                                   user=experiment_group.user,
                                   experiment_group=experiment_group,
@@ -61,9 +67,6 @@ def start_group_experiments(self, experiment_group_id):
 
     pending_experiments = list(experiment_group.pending_experiments)
     experiment_to_start = experiment_group.n_experiments_to_start
-
-    if experiment_group.search_method == SEARCH_METHODS.RANDOM:
-        shuffle(pending_experiments)
 
     while experiment_to_start > 0 and pending_experiments:
         experiment = pending_experiments.pop()
