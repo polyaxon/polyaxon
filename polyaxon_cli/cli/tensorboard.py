@@ -25,7 +25,7 @@ def tensorboard(ctx, project):
 
 @tensorboard.command()
 @click.pass_context
-def url(ctx, url):
+def url(ctx):
     """Prints the tensorboard url for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
