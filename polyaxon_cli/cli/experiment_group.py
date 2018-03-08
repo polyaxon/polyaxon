@@ -180,3 +180,47 @@ def experiments(ctx, page, metrics):
         objects.pop('experiment_group_name', None)
         objects.pop('project_name', None)
         dict_tabulate(objects, is_list_dict=True)
+
+
+@group.command()
+@click.option('--pending', is_flag=True, default=False,
+              help='To stop only pending experiments, i.e. leave currently running one intact.')
+@click.pass_context
+def stop(ctx, pending):
+    """Stop experiments in the group.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples: stop only pending experiments
+
+    \b
+    ```bash
+    $ polyaxon group stop --pending
+    ```
+
+    Examples: stop all unfinished
+
+    \b
+    ```bash
+    $ polyaxon group stop
+    ```
+
+    \b
+    ```bash
+    $ polyaxon group -g 2 stop
+    ```
+    """
+    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+
+    if not click.confirm("Are sure you want to stop experiments in group `{}`".format(group)):
+        click.echo('Existing without stopping experiments in group.')
+        sys.exit(0)
+
+    try:
+        PolyaxonClients().experiment_group.stop(user, project_name, group, pending=pending)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not stop experiments in group `{}`.'.format(group))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Experiments in group are being stopped.")
