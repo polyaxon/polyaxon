@@ -53,7 +53,7 @@ class PolyaxonClient(object):
         return {
             'count': response_json.get("count", 0),
             'next': current_page + 1 if response_json.get("next") else None,
-            'previous': current_page - 1 if response_json.get("previoustest_list_experiments") else None,
+            'previous': current_page - 1 if response_json.get("previous") else None,
             "results": [config.from_dict(obj)
                         for obj in response_json.get("results", [])]
         }
