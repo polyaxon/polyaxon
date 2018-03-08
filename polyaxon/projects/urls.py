@@ -32,6 +32,8 @@ projects_urlpatterns = [
 
     url(r'^{}/{}/groups/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentGroupDetailView.as_view()),
+    url(r'^{}/{}/groups/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
+        views.ExperimentGroupStopView.as_view()),
     url(r'^{}/{}/groups/{}/experiments/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         experiments_views.GroupExperimentListView.as_view()),
 ]

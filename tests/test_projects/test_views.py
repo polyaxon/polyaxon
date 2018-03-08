@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from rest_framework import status
 
+from factories.factory_experiments import ExperimentStatusFactory, ExperimentFactory
 from polyaxon.urls import API_V1
 from experiments.models import Experiment
 from projects.models import (
@@ -20,6 +21,7 @@ from factories.factory_projects import (
     ProjectFactory,
     ExperimentGroupFactory,
 )
+from spawner.utils.constants import ExperimentLifeCycle
 from tests.utils import BaseViewTest
 
 
@@ -331,3 +333,52 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content == data['content']
+
+
+class TestStopExperimentGroupViewV1(BaseViewTest):
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch('projects.tasks.start_group_experiments.apply_async') as _:
+            self.object = self.factory_class(project=project)
+        # Add a running experiment
+        experiment = ExperimentFactory(experiment_group=self.object)
+        ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
+        self.url = '/{}/{}/{}/groups/{}/stop'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.object.sequence)
+
+    def test_all_stop(self):
+        data = {}
+        assert self.object.stopped_experiments.count() == 0
+
+        # Check that is calling the correct function
+        with patch.object(ExperimentGroup, 'stop_all_experiments') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 1
+
+        # Execute the function
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.object.stopped_experiments.count() == 3
+
+    def test_pending_stop(self):
+        data = {'pending': True}
+        assert self.object.stopped_experiments.count() == 0
+
+        # Check that is calling the correct function
+        with patch.object(ExperimentGroup, 'stop_pending_experiments') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 1
+
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.object.stopped_experiments.count() == 2
