@@ -221,7 +221,7 @@ This will start 40% of total number of experiments.
 
 Another way to stop the exhaustive search is to provide a condition for early stopping.
 Obviously in this case early stopping is only responsible for the number of experiments to run.
-For an early stopping related to number of steps or epochs, you should be able to provide such logic in your code.
+For an early stopping related to the number of steps or epochs, you should be able to provide such logic in your code.
 
 In order to activate this option, you must update your polyaxonfile's `settings` section with `early_stopping`
 
@@ -234,7 +234,6 @@ settings:
   concurrent_experiments: 2
   search_method: random
   n_experiments: 4
-  
   early_stopping:
     - metric: accuracy
       value: 0.9
@@ -244,7 +243,7 @@ settings:
       higher: flase
 ```
 
-The scheduler will not start any experiment, if one of the experiments in the group validate the following condition:
+In this case, the scheduler will not start any more experiment, if one of the experiments in the group validate the following condition:
  
  * An accuracy >= 0.9
  * Or a loss <= 0.05

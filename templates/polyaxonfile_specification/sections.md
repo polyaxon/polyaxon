@@ -67,15 +67,19 @@ Defined the maximum number of experiments to run during the exploration of the m
 
 The `n_experiments` must be less that total matrix space to explore.
 
-You can also provide a percent, i.e. a float value between 0 and 1, e.g. 0.4 this will tranlate to 40% of the total matrix space.
+You can also provide a percent, i.e. a float value between 0 and 1, e.g. 0.4 this will translate to 40% of the total matrix space.
 
-Default value is `None` which means translate to an exhaustive search.
+Default value is `None` which means will translate to an exhaustive search.
 
 Example:
+
+Value 
 
 ```yaml
 n_experiments: 10
 ```
+
+Percentage 
 
 ```yaml
 n_experiments: 0.3
@@ -83,7 +87,7 @@ n_experiments: 0.3
 
 ### early_stopping
 
-Defines a list of metrics and the values from these metrics to stop the search algorithm.
+Defines a list of metrics and the values for these metrics to stop the search algorithm.
 
 Example:
 
