@@ -65,7 +65,21 @@ Currently, the supported methods are:
 
 Defined the maximum number of experiments to run during the exploration of the matrix space.
 
+The `n_experiments` must be less that total matrix space to explore.
+
+You can also provide a percent, i.e. a float value between 0 and 1, e.g. 0.4 this will tranlate to 40% of the total matrix space.
+
 Default value is `None` which means translate to an exhaustive search.
+
+Example:
+
+```yaml
+n_experiments: 10
+```
+
+```yaml
+n_experiments: 0.3
+```
 
 ### early_stopping
 
