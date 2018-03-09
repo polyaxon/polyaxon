@@ -17,7 +17,7 @@ option | type | description
   --help | | Show this message and exit.
 
 
-## Start
+## start
 
 Usage:
 
@@ -53,7 +53,7 @@ option | type | description
   -u | | To upload the repo before running.
   --help | | Show this message and exit.
 
-## Stop
+## stop
 
 Usage:
 
@@ -72,7 +72,7 @@ option | type | description
   --help | | Show this message and exit.
 
 
-## Url
+## url
 
 Prints the notebook url for this project.
 

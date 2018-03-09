@@ -17,7 +17,7 @@ option | type | description
   --help | | Show this message and exit.
 
 
-## Start
+## start
 
 Usage:
 
@@ -37,7 +37,7 @@ Start a tensorboard deployment for this project. It will show all experiments un
 Uses [Caching](/polyaxon_cli/introduction#Caching)
 
 
-## Stop
+## stop
 
 Usage:
 
@@ -56,7 +56,7 @@ option | type | description
   --help | | Show this message and exit.
 
 
-## Url
+## url
 
 Prints the tensorboard url for this project.
 
