@@ -92,7 +92,7 @@ class JobLifeCycle(object):
                      not going to restart any of these containers.
         * FAILED: All containers in the pod have terminated,
                   and at least one container has terminated in a failure.
-        * DELETED: was deleted/killed
+        * STOPPED: was stopped/deleted/killed
         * UNKNOWN: For some reason the state of the pod could not be obtained,
                    typically due to an error in communicating with the host of the pod.
     """
@@ -101,7 +101,7 @@ class JobLifeCycle(object):
     RUNNING = 'Running'
     SUCCEEDED = 'Succeeded'
     FAILED = 'Failed'
-    DELETED = 'Deleted'
+    STOPPED = 'Stopped'
     UNKNOWN = UNKNOWN
 
     CHOICES = (
@@ -110,13 +110,13 @@ class JobLifeCycle(object):
         (RUNNING, RUNNING),
         (SUCCEEDED, SUCCEEDED),
         (FAILED, FAILED),
-        (DELETED, DELETED),
+        (STOPPED, STOPPED),
         (UNKNOWN, UNKNOWN),
     )
 
     STARTING_STATUS = [CREATED, BUILDING]
     RUNNING_STATUS = [BUILDING, RUNNING]
-    DONE_STATUS = [FAILED, DELETED, SUCCEEDED]
+    DONE_STATUS = [FAILED, STOPPED, SUCCEEDED]
 
     @classmethod
     def is_starting(cls, status):
@@ -146,7 +146,7 @@ class ExperimentLifeCycle(object):
         * RUNNING: one or all jobs is still running
         * SUCCEEDED: master and workers have finished successfully
         * FAILED: one of the jobs has failed
-        * DELETED: was deleted/killed
+        * STOPPED: was stopped/deleted/killed
         * UNKNOWN: unknown state
     """
     CREATED = 'Created'
@@ -156,7 +156,7 @@ class ExperimentLifeCycle(object):
     RUNNING = 'Running'
     SUCCEEDED = 'Succeeded'
     FAILED = 'Failed'
-    DELETED = 'Deleted'
+    STOPPED = 'Stopped'
     UNKNOWN = UNKNOWN
 
     CHOICES = (
@@ -167,12 +167,12 @@ class ExperimentLifeCycle(object):
         (RUNNING, RUNNING),
         (SUCCEEDED, SUCCEEDED),
         (FAILED, FAILED),
-        (DELETED, DELETED),
+        (STOPPED, STOPPED),
         (UNKNOWN, UNKNOWN),
     )
 
     RUNNING_STATUS = [SCHEDULED, BUILDING, STARTING, RUNNING]
-    DONE_STATUS = [FAILED, DELETED, SUCCEEDED]
+    DONE_STATUS = [FAILED, STOPPED, SUCCEEDED]
 
     @staticmethod
     def jobs_starting(job_statuses):
@@ -195,8 +195,8 @@ class ExperimentLifeCycle(object):
                     for job_status in job_statuses])
 
     @staticmethod
-    def jobs_deleted(job_statuses):
-        return any([True if job_status == JobLifeCycle.DELETED else False
+    def jobs_stopped(job_statuses):
+        return any([True if job_status == JobLifeCycle.STOPPED else False
                     for job_status in job_statuses])
 
     @classmethod
@@ -225,8 +225,8 @@ class ExperimentLifeCycle(object):
         if cls.jobs_unknown(job_statuses):
             return cls.UNKNOWN
 
-        if cls.jobs_deleted(job_statuses):
-            return cls.DELETED
+        if cls.jobs_stopped(job_statuses):
+            return cls.STOPPED
 
         if cls.jobs_succeeded(job_statuses):
             return cls.SUCCEEDED

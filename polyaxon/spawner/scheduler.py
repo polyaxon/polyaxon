@@ -156,8 +156,8 @@ def stop_experiment(experiment, update_status=False):
                          sidecar_config=config.get_requested_params(to_str=True))
     spawner.stop_experiment()
     if update_status:
-        # Update experiment status to show that its deleted
-        experiment.set_status(ExperimentLifeCycle.DELETED)
+        # Update experiment status to show that its stopped
+        experiment.set_status(ExperimentLifeCycle.STOPPED)
 
 
 def start_tensorboard(project):
@@ -185,8 +185,8 @@ def stop_tensorboard(project, update_status=False):
     project.has_tensorboard = False
     project.save()
     if update_status:
-        # Update experiment status to show that its deleted
-        project.tensorboard.set_status(status=ExperimentLifeCycle.DELETED,
+        # Update experiment status to show that its stopped
+        project.tensorboard.set_status(status=ExperimentLifeCycle.STOPPED,
                                        message='Tensorboard was stopped')
 
 
@@ -223,8 +223,8 @@ def stop_notebook(project, update_status=False):
     project.has_notebook = False
     project.save()
     if update_status:
-        # Update experiment status to show that its deleted
-        project.notebook.set_status(status=ExperimentLifeCycle.DELETED,
+        # Update experiment status to show that its stopped
+        project.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
                                     message='Notebook was stopped')
 
 

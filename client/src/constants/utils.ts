@@ -23,7 +23,7 @@ export let splitGroupName = function (groupName: string) {
 export let getCssClassForStatus = function (status?: string): string {
   if (status === 'Succeeded') {
     return 'success';
-  } else if (status === 'Deleted') {
+  } else if (status === 'Stopped') {
     return 'danger';
   } else if (status === 'Failed') {
     return 'danger';
