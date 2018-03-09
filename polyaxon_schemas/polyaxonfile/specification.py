@@ -439,9 +439,15 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def n_experiments(self):
-        if self.settings:
-            return self.settings.n_experiments
-        return None
+        if not self.settings or not self.settings.n_experiments or not self.matrix_space:
+            return None
+
+        n_experiments = self.settings.n_experiments
+        # Check the if the n_experiments is percent
+        if n_experiments < 1:
+            return int(self.matrix_space * n_experiments)
+
+        return int(n_experiments) if n_experiments < self.matrix_space else None
 
     @cached_property
     def search_method(self):

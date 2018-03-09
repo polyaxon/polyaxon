@@ -349,7 +349,7 @@ class SettingsSchema(Schema):
     run_type = fields.Str(allow_none=True, validate=validate.OneOf(RunTypes.VALUES))
     concurrent_experiments = fields.Int(allow_none=True)
     search_method = fields.Str(allow_none=True, validate=validate.OneOf(SEARCH_METHODS.VALUES))
-    n_experiments = fields.Int(allow_none=True)
+    n_experiments = fields.Float(allow_none=True, validate=validate.Range(min=0))
     early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
 
     class Meta:
@@ -381,5 +381,7 @@ class SettingsConfig(BaseConfig):
         self.run_type = run_type
         self.concurrent_experiments = concurrent_experiments
         self.search_method = search_method
-        self.n_experiments = n_experiments
+        self.n_experiments = (int(n_experiments)
+                              if (n_experiments and n_experiments >= 1)
+                              else n_experiments)
         self.early_stopping = early_stopping
