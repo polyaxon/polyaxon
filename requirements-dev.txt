@@ -15,6 +15,6 @@ Unipath==1.1
 uWSGI==2.0.15
 websockets==3.4
 
--e git+https://github.com/polyaxon/polyaxon-gpustat.git@7f1bb3f9e05f48a89f4f9dd241dc0457bd3ac6a2#egg=polyaxon-gpustat==0.0.4
--e git+https://github.com/polyaxon/polyaxon-k8s.git@71548c75cbfa09e38737e5c505458a5e72f88f19#egg=polyaxon-k8s==0.0.4
--e git+https://github.com/polyaxon/polyaxon-schemas.git@5925ab295c662524c76dda8571671f9e4bd30cb1#egg=polyaxon-schemas==0.0.4
+-e git+https://github.com/polyaxon/polyaxon-gpustat.git@7f1bb3f9e05f48a89f4f9dd241dc0457bd3ac6a2#egg=polyaxon-gpustat==0.0.5
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@71548c75cbfa09e38737e5c505458a5e72f88f19#egg=polyaxon-k8s==0.0.5
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@5925ab295c662524c76dda8571671f9e4bd30cb1#egg=polyaxon-schemas==0.0.5
