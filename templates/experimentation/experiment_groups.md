@@ -149,12 +149,13 @@ $ vi polyaxonfile_override.yml
 And past the following settings section.
 
 ```yaml
+
 ---
 version: 1
 
 settings:
   concurrent_experiments: 2
-  search_method: RANDOM
+  search_method: random
 ```
 
 If we run again the `check` command with `-x` or `--experiments` option, we will get
@@ -176,6 +177,77 @@ Creating an experiment group with 5 experiments.
 
 Experiment group was created
 ```
+
+## Maximum number of experiments
+
+Sometimes you don't wish to explore the matrix space exhaustively. 
+In that case, you can define a maximum number of experiments to explore form the matrix space.
+The value must be of course less than the total number of experiments in the matrix space, 
+or a float value between 0 and 1 defining a percentage of the total number of experiments.
+
+In order to activate this option, you must update your polyaxonfile's `settings` section with `n_experiments`
+
+
+```yaml
+
+---
+version: 1
+
+settings:
+  concurrent_experiments: 2
+  search_method: random
+  n_experiments: 4
+```
+
+This will start a maximum of 4 experiments in this group independently of how big is the total number of experiments in matrix space.
+
+Or, alternatively you can provide a percentage:
+
+```yaml
+
+---
+version: 1
+
+settings:
+  concurrent_experiments: 2
+  search_method: random
+  n_experiments: 0.4
+```
+
+This will start 40% of total number of experiments.
+
+
+## Early stopping
+
+Another way to stop the exhaustive search is to provide a condition for early stopping.
+Obviously in this case early stopping is only responsible for the number of experiments to run.
+For an early stopping related to number of steps or epochs, you should be able to provide such logic in your code.
+
+In order to activate this option, you must update your polyaxonfile's `settings` section with `early_stopping`
+
+```yaml
+
+---
+version: 1
+
+settings:
+  concurrent_experiments: 2
+  search_method: random
+  n_experiments: 4
+  
+  early_stopping:
+    - metric: accuracy
+      value: 0.9
+      higher: true
+    - metric: loss
+      value: 0.05
+      higher: flase
+```
+
+The scheduler will not start any experiment, if one of the experiments in the group validate the following condition:
+ 
+ * An accuracy >= 0.9
+ * Or a loss <= 0.05
 
 ## Checking the status of your experiments
 
