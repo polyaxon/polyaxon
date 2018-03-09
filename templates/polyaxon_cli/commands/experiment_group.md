@@ -94,3 +94,42 @@ option | type | description
   --page | INTEGER | To paginate through the list of experiments.
   -m, --metrics | Flag | List experiments with their metrics.
   --help | | Show this message and exit.
+
+## stop
+
+Stop [all | pending] experiments in the group
+
+Usage: 
+
+```bash
+polyaxon group stop [OPTIONS]
+```
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+
+Examples: stop only pending experiments
+
+```bash
+$ polyaxon group stop --pending
+```
+
+Examples: stop all unfinished
+
+```bash
+$ polyaxon group stop
+```
+
+```bash
+$ polyaxon group -g 2 stop
+```
+
+Options:
+  --pending  To stop only pending experiments, i.e. leave currently running
+             one intact.
+  --help     Show this message and exit.
+
+option | type | description
+-------|------|------------
+  --pending | Flag | To stop only pending experiments, i.e. leave currently running one intact.
+  --help | | Show this message and exit.
