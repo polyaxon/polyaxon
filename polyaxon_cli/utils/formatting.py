@@ -94,7 +94,7 @@ class Printer(object):
             obj_dict['status'] = cls.add_color(obj_dict['status'], color='cyan')
         elif obj_dict.get('status') == 'Succeeded':
             obj_dict['status'] = cls.add_color(obj_dict['status'], color='green')
-        elif obj_dict.get('status') in ['Failed', 'Deleted']:
+        elif obj_dict.get('status') in ['Failed', 'Stopped']:
             obj_dict['status'] = cls.add_color(obj_dict['status'], color='red')
         obj_dict['status'] = cls.add_color(obj_dict['status'], color='yellow')
         return obj_dict
