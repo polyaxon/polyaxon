@@ -249,13 +249,11 @@ class RunConfig(BaseConfig):
         self.cluster = cluster
 
 
-class EnvironmentSchema(Schema):
-    cluster_uuid = UUID(allow_none=True)
+class TensorflowSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
     run_config = fields.Nested(RunSchema, allow_none=True)
-    resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_worker_config = fields.Nested(SessionSchema, allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_ps_config = fields.Nested(SessionSchema, allow_none=True)
@@ -264,6 +262,54 @@ class EnvironmentSchema(Schema):
     worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
     ps_configs = fields.Nested(SessionSchema, many=True, allow_none=True)
     ps_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return TensorflowConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return TensorflowConfig.remove_reduced_attrs(data)
+
+
+class TensorflowConfig(BaseConfig):
+    IDENTIFIER = 'tensorflow'
+    SCHEMA = TensorflowSchema
+
+    def __init__(self,
+                 n_workers=0,
+                 n_ps=0,
+                 delay_workers_by_global_step=False,
+                 run_config=None,
+                 default_worker_config=None,
+                 default_worker_resources=None,
+                 default_ps_config=None,
+                 default_ps_resources=None,
+                 worker_configs=None,
+                 worker_resources=None,
+                 ps_configs=None,
+                 ps_resources=None):
+        self.n_workers = n_workers
+        self.n_ps = n_ps
+        self.delay_workers_by_global_step = delay_workers_by_global_step
+        self.run_config = run_config
+        self.default_worker_config = default_worker_config
+        self.default_worker_resources = default_worker_resources
+        self.default_ps_config = default_ps_config
+        self.default_ps_resources = default_ps_resources
+        self.worker_configs = worker_configs
+        self.worker_resources = worker_resources
+        self.ps_configs = ps_configs
+        self.ps_resources = ps_resources
+
+
+class EnvironmentSchema(Schema):
+    cluster_uuid = UUID(allow_none=True)
+    resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -283,30 +329,8 @@ class EnvironmentConfig(BaseConfig):
 
     def __init__(self,
                  cluster_uuid=None,
-                 n_workers=0,
-                 n_ps=0,
-                 delay_workers_by_global_step=False,
-                 run_config=None,
                  resources=None,
-                 default_worker_config=None,
-                 default_worker_resources=None,
-                 default_ps_config=None,
-                 default_ps_resources=None,
-                 worker_configs=None,
-                 worker_resources=None,
-                 ps_configs=None,
-                 ps_resources=None):
+                 tensorflow=None):
         self.cluster_uuid = cluster_uuid
-        self.n_workers = n_workers
-        self.n_ps = n_ps
-        self.delay_workers_by_global_step = delay_workers_by_global_step
-        self.run_config = run_config
         self.resources = resources
-        self.default_worker_config = default_worker_config
-        self.default_worker_resources = default_worker_resources
-        self.default_ps_config = default_ps_config
-        self.default_ps_resources = default_ps_resources
-        self.worker_configs = worker_configs
-        self.worker_resources = worker_resources
-        self.ps_configs = ps_configs
-        self.ps_resources = ps_resources
+        self.tensorflow = tensorflow
