@@ -328,7 +328,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
-        with patch('spawner.scheduler.stop_experiment') as spawner_mock_stop:
+        with patch('schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
             with patch('experiments.paths.delete_path') as outputs_mock_stop:
                 resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1

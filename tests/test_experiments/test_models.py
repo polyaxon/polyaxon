@@ -105,7 +105,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
-    @mock.patch('spawner.scheduler.K8SSpawner')
+    @mock.patch('schedulers.experiment_scheduler.K8SSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
@@ -134,7 +134,7 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @mock.patch('spawner.scheduler.K8SSpawner')
+    @mock.patch('schedulers.experiment_scheduler.K8SSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
         content = Specification.read(exec_experiment_resources_content)
 
@@ -167,7 +167,7 @@ class TestExperimentModel(BaseTest):
 
     def test_delete_experiment_triggers_experiment_stop_mocks(self):
         experiment = ExperimentFactory()
-        with patch('spawner.scheduler.stop_experiment') as mock_fct:
+        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()
 
         assert mock_fct.call_count == 1
@@ -219,7 +219,7 @@ class TestExperimentModel(BaseTest):
         done_xp, no_jobs_xp, xp_with_jobs = experiments
 
         # Set done status
-        with patch('spawner.scheduler.stop_experiment') as _:
+        with patch('schedulers.experiment_scheduler.stop_experiment') as _:
             ExperimentStatusFactory(experiment=done_xp, status=JobLifeCycle.FAILED)
 
         # Create jobs for xp_with_jobs and update status, and do not update the xp status

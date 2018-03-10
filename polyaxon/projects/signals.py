@@ -14,7 +14,7 @@ from projects.paths import (
     delete_experiment_group_logs,
     delete_project_repos,
 )
-from spawner import scheduler
+from schedulers import experiment_scheduler, notebook_scheduler, tensorboard_scheduler
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
@@ -43,7 +43,7 @@ def experiment_group_deleted(sender, **kwargs):
         # Delete all jobs from DB before sending a signal to k8s,
         # this way no statuses will be updated in the meanwhile
         experiment.jobs.all().delete()
-        scheduler.stop_experiment(experiment, update_status=False)
+        experiment_scheduler.stop_experiment(experiment, update_status=False)
 
     # Delete outputs and logs
     delete_experiment_group_outputs(instance.unique_name)
@@ -69,8 +69,8 @@ def new_project(sender, **kwargs):
 @ignore_raw
 def project_deleted(sender, **kwargs):
     instance = kwargs['instance']
-    scheduler.stop_tensorboard(instance, update_status=False)
-    scheduler.stop_notebook(instance, update_status=False)
+    tensorboard_scheduler.stop_tensorboard(instance, update_status=False)
+    notebook_scheduler.stop_notebook(instance, update_status=False)
     # Delete tensorboard job
     if instance.tensorboard:
         instance.tensorboard.delete()

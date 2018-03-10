@@ -43,7 +43,7 @@ class TestExperimentGroupModel(BaseTest):
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
 
-        with patch('spawner.scheduler.stop_experiment') as mock_fct:
+        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_fct:
             experiment_group.delete()
 
         assert mock_fct.call_count == 2

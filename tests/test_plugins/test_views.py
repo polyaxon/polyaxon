@@ -14,7 +14,8 @@ from plugins.models import TensorboardJob, NotebookJob
 from polyaxon.urls import API_V1
 from projects.models import Project
 from factories.factory_projects import ProjectFactory
-from spawner import K8SProjectSpawner, scheduler
+from schedulers import notebook_scheduler
+from spawner import K8SProjectSpawner
 from spawner.templates.constants import DEPLOYMENT_NAME
 from spawner.utils.constants import JobLifeCycle
 from tests.utils import BaseViewTest
@@ -47,7 +48,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
 
     def test_spawner_start(self):
         assert self.queryset.count() == 1
-        with patch('spawner.scheduler.start_tensorboard') as mock_fct:
+        with patch('schedulers.tensorboard_scheduler.start_tensorboard') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
@@ -130,7 +131,7 @@ class TestStopTensorboardViewV1(BaseViewTest):
     def test_spawner_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('spawner.scheduler.stop_tensorboard') as mock_fct:
+        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
@@ -279,7 +280,7 @@ class TestStopNotebookViewV1(BaseViewTest):
     def test_spawner_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('spawner.scheduler.stop_notebook') as mock_fct:
+        with patch('schedulers.notebook_scheduler.stop_notebook') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
@@ -329,13 +330,13 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
 
     def test_project_requests_tensorboard_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
-        with patch('spawner.scheduler.get_tensorboard_url') as mock_fct:
+        with patch('schedulers.tensorboard_scheduler.get_tensorboard_url') as mock_fct:
             response = self.auth_client.get(self._get_url(project))
 
         assert mock_fct.call_count == 1
         assert response.status_code == 200
 
-    @mock.patch('spawner.scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.tensorboard_scheduler.K8SProjectSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -350,7 +351,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/'.format(service_url)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
-    @mock.patch('spawner.scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.tensorboard_scheduler.K8SProjectSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -386,15 +387,15 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
 
     def test_project_requests_notebook_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
-        with patch('spawner.scheduler.get_notebook_url') as mock_url_fct:
-            with patch('spawner.scheduler.get_notebook_token') as mock_token_fct:
+        with patch('schedulers.notebook_scheduler.get_notebook_url') as mock_url_fct:
+            with patch('schedulers.notebook_scheduler.get_notebook_token') as mock_token_fct:
                 response = self.auth_client.get(self._get_url(project))
 
         assert mock_url_fct.call_count == 1
         assert mock_token_fct.call_count == 1
         assert response.status_code == 200
 
-    @mock.patch('spawner.scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.notebook_scheduler.K8SProjectSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -409,11 +410,11 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}?token={}'.format(
             service_url,
             'tree',
-            scheduler.get_notebook_token(project)
+            notebook_scheduler.get_notebook_token(project)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
-    @mock.patch('spawner.scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.notebook_scheduler.K8SProjectSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -429,7 +430,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}?token={}'.format(
             service_url,
             'tree',
-            scheduler.get_notebook_token(project)
+            notebook_scheduler.get_notebook_token(project)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -441,7 +442,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}&token={}'.format(
             service_url,
             'static/components/something?v=4.7.0',
-            scheduler.get_notebook_token(project)
+            notebook_scheduler.get_notebook_token(project)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 

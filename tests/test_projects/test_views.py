@@ -182,9 +182,9 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
-        with patch('spawner.scheduler.stop_tensorboard') as tensorboard_mock_fct:
-            with patch('spawner.scheduler.stop_notebook') as notebook_mock_fct:
-                with patch('spawner.scheduler.stop_experiment') as xp_mock_stop:
+        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as tensorboard_mock_fct:
+            with patch('schedulers.notebook_scheduler.stop_notebook') as notebook_mock_fct:
+                with patch('schedulers.experiment_scheduler.stop_experiment') as xp_mock_stop:
                     with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
                         with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
                             resp = self.auth_client.delete(self.url)
@@ -225,7 +225,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
                                                     self.other_project.name)
 
         with patch('dockerizer.builders.experiments.build_experiment') as _:
-            with patch('spawner.scheduler.start_experiment') as _:
+            with patch('schedulers.experiment_scheduler.start_experiment') as _:
                 self.objects = [self.factory_class(project=self.project)
                                 for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)

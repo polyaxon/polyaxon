@@ -16,11 +16,12 @@ from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
 from dockerizer.images import get_experiment_image_info
 
-from spawner import K8SSpawner, K8SProjectSpawner
+from spawner import K8SSpawner
 from experiments.models import ExperimentJob
 from spawner.utils.constants import ExperimentLifeCycle
 
-logger = logging.getLogger('polyaxon.scheduler')
+logger = logging.getLogger('polyaxon.schedulers.experiment')
+
 
 
 def create_job(job_uuid, experiment, definition, role=None, resources=None):
@@ -50,6 +51,7 @@ def create_job(job_uuid, experiment, definition, role=None, resources=None):
     if job_resources:
         job.resources = JobResources.objects.create(**job_resources)
     job.save()
+
 
 
 def start_experiment(experiment):
@@ -159,88 +161,3 @@ def stop_experiment(experiment, update_status=False):
         # Update experiment status to show that its stopped
         experiment.set_status(ExperimentLifeCycle.STOPPED)
 
-
-def start_tensorboard(project):
-    spawner = K8SProjectSpawner(
-        project_name=project.unique_name,
-        project_uuid=project.uuid.hex,
-        k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
-        in_cluster=True)
-
-    spawner.start_tensorboard(image=project.tensorboard.image,
-                              resources=project.tensorboard.compiled_spec.resources)
-    project.has_tensorboard = True
-    project.save()
-
-
-def stop_tensorboard(project, update_status=False):
-    spawner = K8SProjectSpawner(project_name=project.unique_name,
-                                project_uuid=project.uuid.hex,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True)
-
-    spawner.stop_tensorboard()
-    project.has_tensorboard = False
-    project.save()
-    if update_status:
-        # Update experiment status to show that its stopped
-        project.tensorboard.set_status(status=ExperimentLifeCycle.STOPPED,
-                                       message='Tensorboard was stopped')
-
-
-def get_tensorboard_url(project):
-    spawner = K8SProjectSpawner(project_name=project.unique_name,
-                                project_uuid=project.uuid.hex,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True)
-    return spawner.get_tensorboard_url()
-
-
-def start_notebook(project, image):
-    spawner = K8SProjectSpawner(
-        project_name=project.unique_name,
-        project_uuid=project.uuid.hex,
-        k8s_config=settings.K8S_CONFIG,
-        namespace=settings.K8S_NAMESPACE,
-        in_cluster=True)
-
-    spawner.start_notebook(image=image, resources=project.notebook.compiled_spec.resources)
-    project.has_notebook = True
-    project.save()
-
-
-def stop_notebook(project, update_status=False):
-    spawner = K8SProjectSpawner(project_name=project.unique_name,
-                                project_uuid=project.uuid.hex,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True)
-
-    spawner.stop_notebook()
-    project.has_notebook = False
-    project.save()
-    if update_status:
-        # Update experiment status to show that its stopped
-        project.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
-                                    message='Notebook was stopped')
-
-
-def get_notebook_url(project):
-    spawner = K8SProjectSpawner(project_name=project.unique_name,
-                                project_uuid=project.uuid.hex,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True)
-    return spawner.get_notebook_url()
-
-
-def get_notebook_token(project):
-    spawner = K8SProjectSpawner(project_name=project.unique_name,
-                                project_uuid=project.uuid.hex,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True)
-    return spawner.get_notebook_token()

@@ -19,8 +19,8 @@ class TestPluginsModel(BaseTest):
         project.save()
         assert TensorboardJob.objects.count() == 1
 
-        with patch('spawner.scheduler.stop_tensorboard') as _:
-            with patch('spawner.scheduler.stop_notebook') as _:
+        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as _:
+            with patch('schedulers.notebook_scheduler.stop_notebook') as _:
                 project.delete()
         assert TensorboardJob.objects.count() == 0
 
@@ -31,8 +31,8 @@ class TestPluginsModel(BaseTest):
         project.save()
         assert NotebookJob.objects.count() == 1
 
-        with patch('spawner.scheduler.stop_tensorboard') as _:
-            with patch('spawner.scheduler.stop_notebook') as _:
+        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as _:
+            with patch('schedulers.notebook_scheduler.stop_notebook') as _:
                 project.delete()
         assert NotebookJob.objects.count() == 0
 

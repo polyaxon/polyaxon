@@ -75,7 +75,7 @@ class TestExperimentSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        with patch('spawner.scheduler.stop_experiment') as mock_stop:
+        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_stop:
             ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
@@ -185,7 +185,7 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        with patch('spawner.scheduler.stop_experiment') as mock_stop:
+        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_stop:
             ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 

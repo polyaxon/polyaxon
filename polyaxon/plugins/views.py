@@ -15,7 +15,7 @@ from projects.models import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from projects.tasks import start_tensorboard, stop_tensorboard, build_notebook, stop_notebook
 from repos import git
-from spawner import scheduler
+from schedulers import notebook_scheduler, tensorboard_scheduler
 
 
 class StartTensorboardView(CreateAPIView):
@@ -187,10 +187,10 @@ class NotebookView(PluginJobView):
 
     @staticmethod
     def get_base_params(project):
-        return 'token={}'.format(scheduler.get_notebook_token(project=project))
+        return 'token={}'.format(notebook_scheduler.get_notebook_token(project=project))
 
     def get_service_url(self, project):
-        return scheduler.get_notebook_url(project=project)
+        return notebook_scheduler.get_notebook_url(project=project)
 
     def has_plugin_job(self, project):
         return project.has_notebook
@@ -198,7 +198,7 @@ class NotebookView(PluginJobView):
 
 class TensorboardView(PluginJobView):
     def get_service_url(self, project):
-        return scheduler.get_tensorboard_url(project=project)
+        return tensorboard_scheduler.get_tensorboard_url(project=project)
 
     def has_plugin_job(self, project):
         return project.has_tensorboard

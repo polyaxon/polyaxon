@@ -14,7 +14,7 @@ from polyaxon.settings import CeleryTasks, Intervals
 from dockerizer.builders import experiments as experiments_builder
 from repos.models import Repo
 
-from spawner import scheduler
+from schedulers import experiment_scheduler
 from spawner.utils.constants import ExperimentLifeCycle
 from experiments.models import Experiment, ExperimentMetric
 
@@ -89,7 +89,7 @@ def start_experiment(experiment_id):
     else:
         create_experiment_outputs_path(experiment.unique_name)
 
-    scheduler.start_experiment(experiment)
+    experiment_scheduler.start_experiment(experiment)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
@@ -98,7 +98,7 @@ def stop_experiment(experiment_id):
     if not experiment:
         return
 
-    scheduler.stop_experiment(experiment, update_status=True)
+    experiment_scheduler.stop_experiment(experiment, update_status=True)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)

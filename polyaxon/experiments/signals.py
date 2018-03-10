@@ -20,7 +20,7 @@ from experiments.paths import (
 )
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
-from spawner import scheduler
+from schedulers import experiment_scheduler
 from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 from experiments.tasks import check_experiment_status, build_experiment
@@ -86,7 +86,7 @@ def experiment_deleted(sender, **kwargs):
         # Delete all jobs from DB before sending a signal to k8s,
         # this way no statuses will be updated in the meanwhile
         instance.jobs.all().delete()
-        scheduler.stop_experiment(instance, update_status=False)
+        experiment_scheduler.stop_experiment(instance, update_status=False)
     except ExperimentGroup.DoesNotExist:
         # The experiment was already stopped when the group was deleted
         pass
@@ -161,7 +161,7 @@ def new_experiment_status(sender, **kwargs):
         logger.info('One of the workers failed or Master for experiment `{}` is done, '
                     'send signal to other workers to stop.'.format(experiment.unique_name))
         # Schedule stop for this experiment because other jobs may be still running
-        scheduler.stop_experiment(experiment, update_status=False)
+        experiment_scheduler.stop_experiment(experiment, update_status=False)
 
 
 @receiver(post_save, sender=ExperimentMetric, dispatch_uid="experiment_metric_saved")
