@@ -15,6 +15,7 @@ PROJECT_APPS = (
     'versions.apps.VersionsConfig',
     'events.apps.EventsConfig',
     'spawner.apps.SpawnerConfig',
+    'schedulers.apps.SchedulersConfig',
 )
 
 THIRD_PARTY_APPS = (
