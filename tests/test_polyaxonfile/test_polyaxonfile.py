@@ -30,7 +30,7 @@ from polyaxon_schemas.settings import (
     SettingsConfig,
     EarlyStoppingMetricConfig,
 )
-from polyaxon_schemas.utils import TaskType, SEARCH_METHODS
+from polyaxon_schemas.utils import TaskType, SEARCH_METHODS, Frameworks
 from tests.utils import assert_equal_dict
 
 
@@ -57,6 +57,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
         assert spec.environment is None
+        assert spec.framework is None
         assert spec.experiment_path == '/tmp/plx_logs/project1/0'
         assert spec.is_runnable
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -85,6 +86,7 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.run_type == RunTypes.LOCAL
         assert spec.experiment_path == '/tmp/plx_logs/project1/0'
         assert spec.environment is None
+        assert spec.framework is None
         assert spec.is_runnable
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert_equal_dict(spec.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
@@ -111,6 +113,7 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.experiment_spec_at(0)
         assert spec.is_runnable
         assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
         assert spec.environment.tensorflow.delay_workers_by_global_step is True
@@ -183,6 +186,7 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.experiment_spec_at(0)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
+        assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
         assert spec.environment.tensorflow.delay_workers_by_global_step is True
@@ -321,6 +325,7 @@ class TestPolyaxonfile(TestCase):
             spec = plxfile.experiment_spec_at(xp)
             assert spec.is_runnable
             assert spec.environment is None
+            assert spec.framework is None
             assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
             assert_equal_dict(spec.get_cluster().to_dict(),
@@ -375,6 +380,7 @@ class TestPolyaxonfile(TestCase):
             spec = plxfile.experiment_spec_at(xp)
             assert spec.is_runnable
             assert spec.environment is None
+            assert spec.framework is None
             assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
             model = spec.model
@@ -424,6 +430,7 @@ class TestPolyaxonfile(TestCase):
             spec = plxfile.experiment_spec_at(xp)
             assert spec.is_runnable
             assert spec.environment is None
+            assert spec.framework is None
             assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
             model = spec.model
@@ -473,6 +480,7 @@ class TestPolyaxonfile(TestCase):
             spec = plxfile.experiment_spec_at(xp)
             assert spec.is_runnable
             assert spec.environment is None
+            assert spec.framework is None
             assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
             model = spec.model
@@ -508,6 +516,7 @@ class TestPolyaxonfile(TestCase):
             spec = plxfile.experiment_spec_at(xp)
             assert spec.is_runnable
             assert spec.environment is None
+            assert spec.framework is None
             assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
             assert_equal_dict(spec.get_cluster().to_dict(),
@@ -536,6 +545,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.experiment_path == "/tmp/plx_logs/video_prediction/0"
         assert spec.is_runnable
         assert spec.environment is None
+        assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.model is None
         run_exec = spec.run_exec

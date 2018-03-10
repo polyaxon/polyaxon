@@ -68,8 +68,8 @@ class Tensor(fields.Field):
             return [value, 0, 0]
         if isinstance(value, list) and len(value) == 3:
             if (isinstance(value[0], str) and
-                    isinstance(value[1], int) and
-                    isinstance(value[1], int)):
+                isinstance(value[1], int) and
+                isinstance(value[1], int)):
                 return value
         raise ValidationError("This field expects a str or a list of [str, int, int].")
 
@@ -263,6 +263,10 @@ class TaskType(object):
     MASTER = 'master'
     PS = 'ps'
     WORKER = 'worker'
+
+
+class Frameworks(object):
+    TENSORFLOW = 'tensorflow'
 
 
 class RunTypes(object):

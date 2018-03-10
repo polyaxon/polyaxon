@@ -8,7 +8,7 @@ from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.environments import ClusterConfig
-from polyaxon_schemas.utils import TaskType
+from polyaxon_schemas.utils import TaskType, Frameworks
 
 
 class Specification(BaseSpecification):
@@ -89,6 +89,14 @@ class Specification(BaseSpecification):
     @cached_property
     def declarations(self):
         return self.parsed_data.get(self.DECLARATIONS, None)
+
+    @cached_property
+    def framework(self):
+        if not self.environment:
+            return None
+
+        if self.environment.tensorflow:
+            return Frameworks.TENSORFLOW
 
     @cached_property
     def cluster_def(self):
