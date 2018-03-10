@@ -12,7 +12,7 @@ from clusters.serializers import (
     GPUSerializer,
 )
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
-from spawner.utils.constants import NodeRoles
+from spawners.utils.constants import NodeRoles
 from tests.utils import BaseViewTest
 
 

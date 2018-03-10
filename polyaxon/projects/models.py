@@ -18,7 +18,7 @@ from libs.blacklist import validate_blacklist_name
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
 from plugins.models import TensorboardJob, NotebookJob
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle
 
 
 class Project(DiffModel, DescribableModel):

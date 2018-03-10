@@ -15,9 +15,9 @@ from polyaxon.urls import API_V1
 from projects.models import Project
 from factories.factory_projects import ProjectFactory
 from schedulers import notebook_scheduler
-from spawner import K8SProjectSpawner
-from spawner.templates.constants import DEPLOYMENT_NAME
-from spawner.utils.constants import JobLifeCycle
+from spawners import K8SProjectSpawner
+from spawners.templates.constants import DEPLOYMENT_NAME
+from spawners.utils.constants import JobLifeCycle
 from tests.utils import BaseViewTest
 
 

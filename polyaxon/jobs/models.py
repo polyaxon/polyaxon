@@ -8,7 +8,7 @@ from django.db import models
 
 from libs.models import DiffModel
 from libs.resource_validation import validate_resource
-from spawner.utils.constants import JobLifeCycle
+from spawners.utils.constants import JobLifeCycle
 
 
 class JobResources(models.Model):

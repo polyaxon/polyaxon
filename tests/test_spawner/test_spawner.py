@@ -7,8 +7,8 @@
 # from polyaxon_schemas.utils import TaskType
 #
 # from factories.factory_projects import ProjectFactory
-# from spawner import K8SSpawner
-# from spawner.templates.constants import DEFAULT_PORT
+# from spawners import K8SSpawner
+# from spawners.templates.constants import DEFAULT_PORT
 #
 # from factories.factory_experiments import ExperimentFactory
 #
@@ -21,16 +21,16 @@
 #         project = ProjectFactory()
 #         experiment = ExperimentFactory(project=project,
 #                                        config=plxfile.experiment_spec_at(0).parsed_data)
-#         spawner = K8SSpawner(project_name=project.unique_name,
+#         spawners = K8SSpawner(project_name=project.unique_name,
 #                              experiment_name=experiment.unique_name,
 #                              project_uuid=project.uuid.hex,
 #                              experiment_uuid=experiment.uuid.hex,
 #                              spec_config=experiment.config)
 #
 #         def job_name(task_type, task_idx):
-#             return spawner.pod_manager.get_job_name(task_type, task_idx)
+#             return spawners.pod_manager.get_job_name(task_type, task_idx)
 #
-#         cluster_def = spawner.get_cluster().to_dict()
+#         cluster_def = spawners.get_cluster().to_dict()
 #         expected_cluster_def = {
 #             TaskType.MASTER: ['{}:{}'.format(DEFAULT_PORT, job_name(TaskType.MASTER, 0))],
 #             TaskType.WORKER: [

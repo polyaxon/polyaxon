@@ -4,6 +4,6 @@ from __future__ import absolute_import, division, print_function
 from django.apps import AppConfig
 
 
-class SpawnerConfig(AppConfig):
-    name = 'spawner'
-    verbose_name = 'Spawner'
+class SpawnersConfig(AppConfig):
+    name = 'spawners'
+    verbose_name = 'Spawners'

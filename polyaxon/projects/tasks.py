@@ -17,7 +17,7 @@ from dockerizer.builders import notebooks as notebooks_builder
 from dockerizer.images import get_notebook_image_info
 from repos.models import Repo
 from schedulers import notebook_scheduler, tensorboard_scheduler
-from spawner.utils.constants import JobLifeCycle
+from spawners.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 

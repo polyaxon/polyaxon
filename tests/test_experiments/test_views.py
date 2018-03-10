@@ -23,7 +23,7 @@ from experiments.serializers import (
     ExperimentDetailSerializer,
 )
 from factories.fixtures import exec_experiment_spec_parsed_content
-from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
+from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 from factories.factory_experiments import (
     ExperimentFactory,

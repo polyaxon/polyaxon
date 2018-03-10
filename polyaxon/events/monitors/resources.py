@@ -17,7 +17,7 @@ from clusters.models import ClusterNode, NodeGPU
 from clusters.tasks import update_system_info, update_system_nodes
 from libs.redis_db import RedisJobContainers, RedisToStream
 from events.tasks import handle_events_resources
-from spawner.utils.constants import ContainerStatuses
+from spawners.utils.constants import ContainerStatuses
 
 logger = logging.getLogger('polyaxon.monitors.resources')
 

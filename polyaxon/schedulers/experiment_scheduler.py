@@ -16,9 +16,9 @@ from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
 from dockerizer.images import get_experiment_image_info
 
-from spawner import K8SSpawner
+from spawners import K8SSpawner
 from experiments.models import ExperimentJob
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.schedulers.experiment')
 
@@ -61,7 +61,7 @@ def start_experiment(experiment):
     project = experiment.project
     group = experiment.experiment_group
 
-    job_docker_image = None  # This will force the spawner to use the default docker image
+    job_docker_image = None  # This will force the spawners to use the default docker image
     if experiment.compiled_spec.run_exec:
         try:
             image_name, image_tag = get_experiment_image_info(experiment=experiment)
@@ -75,7 +75,7 @@ def start_experiment(experiment):
     else:
         logger.info('Start experiment with default image.')
 
-    # Use spawner to start the experiment
+    # Use spawners to start the experiment
     spawner = K8SSpawner(project_name=project.unique_name,
                          experiment_name=experiment.unique_name,
                          experiment_group_name=group.unique_name if group else None,

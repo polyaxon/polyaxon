@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon_schemas.experiment import JobStateConfig
 
-from spawner.utils.constants import PodLifeCycle, JobLifeCycle, ContainerStatuses, PodConditions
-from spawner.utils import pods
+from spawners.utils.constants import PodLifeCycle, JobLifeCycle, ContainerStatuses, PodConditions
+from spawners.utils import pods
 
 
 def get_job_status(pod_state, job_container_names):

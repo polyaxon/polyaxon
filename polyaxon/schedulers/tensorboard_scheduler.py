@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 import logging
 
 from django.conf import settings
-from spawner import K8SProjectSpawner
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners import K8SProjectSpawner
+from spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.schedulers.tensorboard')
 

@@ -11,7 +11,7 @@ from polyaxon_k8s import constants as k8s_constants
 
 from experiments.paths import get_experiment_outputs_path, get_experiment_logs_path
 from projects.paths import get_project_data_path
-from spawner.templates import constants
+from spawners.templates import constants
 
 
 def get_map_labels(project_name,

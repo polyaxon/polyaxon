@@ -11,7 +11,7 @@ from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
 from jobs.models import Job, JobStatus
 from libs.spec_validation import validate_tensorboard_spec_content
-from spawner.utils.constants import JobLifeCycle
+from spawners.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.plugins')
 

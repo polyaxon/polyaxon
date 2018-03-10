@@ -2,7 +2,7 @@ from django.core.management import BaseCommand
 
 from experiments.models import Experiment
 from schedulers import experiment_scheduler
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle
 
 
 class Command(BaseCommand):

@@ -9,7 +9,7 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.utils import RunTypes, to_list
 
-from spawner.templates import constants
+from spawners.templates import constants
 
 
 STORAGE_BY_VOLUME = {

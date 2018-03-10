@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import factory
 from faker import Factory as FakerFactory
 
-from spawner.utils.constants import NodeRoles
+from spawners.utils.constants import NodeRoles
 
 from clusters.models import NodeGPU, ClusterNode, ClusterEvent, Cluster
 

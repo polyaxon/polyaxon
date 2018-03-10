@@ -14,9 +14,9 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 
 from polyaxon_k8s import constants as k8s_constants
 
-from spawner.templates import constants
+from spawners.templates import constants
 
-logger = logging.getLogger('polyaxon.spawner.spawner')
+logger = logging.getLogger('polyaxon.spawners.spawners')
 
 
 def get_gpu_volume_mounts():

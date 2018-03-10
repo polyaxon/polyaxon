@@ -9,7 +9,7 @@ from polyaxon_schemas.experiment import JobLabelConfig
 
 from events import publisher
 
-from spawner.utils.constants import PodLifeCycle, ExperimentLifeCycle
+from spawners.utils.constants import PodLifeCycle, ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.monitors.sidecar')
 

@@ -21,7 +21,7 @@ from experiments.paths import (
 from libs.decorators import ignore_raw
 from projects.models import ExperimentGroup
 from schedulers import experiment_scheduler
-from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
+from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 from experiments.tasks import check_experiment_status, build_experiment
 
@@ -73,7 +73,7 @@ def new_experiment(sender, **kwargs):
     create_experiment_logs_path(instance.unique_name)
 
     if instance.is_independent:
-        # Start building the experiment and then Schedule it to be picked by the spawner
+        # Start building the experiment and then Schedule it to be picked by the spawners
         build_experiment.apply_async((instance.id, ), countdown=1)
 
 

@@ -19,15 +19,15 @@ from polyaxon_schemas.utils import TaskType
 
 from libs.utils import get_hmac
 from projects.paths import get_project_outputs_path, get_project_repos_path
-from spawner.templates import config_maps
-from spawner.templates import constants
-from spawner.templates import deployments
-from spawner.templates import persistent_volumes
-from spawner.templates import pods
-from spawner.templates import services
-from spawner.templates import ingresses
+from spawners.templates import config_maps
+from spawners.templates import constants
+from spawners.templates import deployments
+from spawners.templates import persistent_volumes
+from spawners.templates import pods
+from spawners.templates import services
+from spawners.templates import ingresses
 
-logger = logging.getLogger('polyaxon.spawner.spawner')
+logger = logging.getLogger('polyaxon.spawners.spawners')
 
 
 class K8SSpawner(K8SManager):

@@ -8,7 +8,7 @@ from factories.factory_projects import ExperimentGroupFactory, ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle
 from experiments.models import Experiment, ExperimentMetric
 
 from tests.utils import BaseTest

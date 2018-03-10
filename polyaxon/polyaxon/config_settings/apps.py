@@ -14,7 +14,7 @@ PROJECT_APPS = (
     'dockerizer.apps.DockerizerConfig',
     'versions.apps.VersionsConfig',
     'events.apps.EventsConfig',
-    'spawner.apps.SpawnerConfig',
+    'spawners.apps.SpawnersConfig',
     'schedulers.apps.SchedulersConfig',
 )
 

@@ -11,7 +11,7 @@ from experiments.serializers import (
     ExperimentJobSerializer,
     ExperimentJobDetailSerializer,
 )
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle
 
 from factories.factory_experiments import (
     ExperimentStatusFactory,

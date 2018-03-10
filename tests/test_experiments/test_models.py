@@ -26,7 +26,7 @@ from factories.fixtures import (
 )
 from jobs.models import JobResources
 from polyaxon.urls import API_V1
-from spawner.utils.constants import ExperimentLifeCycle, JobLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 from factories.factory_experiments import (
     ExperimentFactory,

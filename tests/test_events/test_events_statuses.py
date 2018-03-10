@@ -8,8 +8,8 @@ from experiments.models import ExperimentJobStatus
 from factories.factory_plugins import TensorboardJobFactory, NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from plugins.models import TensorboardJobStatus, NotebookJobStatus
-from spawner.utils.constants import JobLifeCycle
-from spawner.utils.jobs import get_job_state
+from spawners.utils.constants import JobLifeCycle
+from spawners.utils.jobs import get_job_state
 
 from factories.factory_experiments import ExperimentJobFactory
 from tests.fixtures import (

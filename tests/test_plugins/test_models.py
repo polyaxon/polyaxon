@@ -6,7 +6,7 @@ from mock import patch
 from factories.factory_plugins import TensorboardJobFactory, NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from plugins.models import TensorboardJob, NotebookJob, NotebookJobStatus, TensorboardJobStatus
-from spawner.utils.constants import JobLifeCycle
+from spawners.utils.constants import JobLifeCycle
 
 from tests.utils import BaseTest
 

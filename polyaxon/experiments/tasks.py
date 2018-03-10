@@ -15,7 +15,7 @@ from dockerizer.builders import experiments as experiments_builder
 from repos.models import Repo
 
 from schedulers import experiment_scheduler
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle
 from experiments.models import Experiment, ExperimentMetric
 
 logger = logging.getLogger('polyaxon.tasks.experiments')

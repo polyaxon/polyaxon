@@ -15,7 +15,7 @@ from polyaxon_schemas.utils import TaskType
 from jobs.models import Job, JobStatus, JobResources
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
-from spawner.utils.constants import JobLifeCycle, ExperimentLifeCycle
+from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.experiments')
 

@@ -21,7 +21,7 @@ from factories.factory_projects import (
     ProjectFactory,
     ExperimentGroupFactory,
 )
-from spawner.utils.constants import ExperimentLifeCycle
+from spawners.utils.constants import ExperimentLifeCycle
 from tests.utils import BaseViewTest
 
 

@@ -9,8 +9,8 @@ from django.core.cache import cache
 from django.db import models
 
 from libs.models import DiffModel, Singleton
-from spawner.utils import nodes
-from spawner.utils.constants import NodeLifeCycle, NodeRoles
+from spawners.utils import nodes
+from spawners.utils.constants import NodeLifeCycle, NodeRoles
 
 
 class Cluster(Singleton):
