@@ -16,6 +16,7 @@ from polyaxon_schemas.optimizers import AdamConfig
 from polyaxon_schemas.polyaxonfile import constants
 from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
 from polyaxon_schemas.environments import (
     EnvironmentConfig,
@@ -128,10 +129,28 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.tensorflow.worker_resources is None
         assert spec.environment.tensorflow.ps_resources is None
 
-        assert spec.tensorflow_worker_configs == {}
-        assert spec.tensorflow_ps_configs == {}
-        assert spec.tensorflow_worker_resources == {}
-        assert spec.tensorflow_ps_resources == {}
+        cluster, is_distributed = spec.cluster_def
+
+        assert TensorflowSpecification.get_worker_configs(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        ) == {}
+        assert TensorflowSpecification.get_ps_configs(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        ) == {}
+        assert TensorflowSpecification.get_worker_resources(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        ) == {}
+        assert TensorflowSpecification.get_ps_resources(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        ) == {}
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5,
@@ -209,15 +228,34 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.tensorflow.ps_resources[0].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
-        assert len(spec.tensorflow_worker_configs) == spec.environment.tensorflow.n_workers
-        assert set(spec.tensorflow_worker_configs.values()) == {
+        cluster, is_distributed = spec.cluster_def
+        worker_configs = TensorflowSpecification.get_worker_configs(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert len(worker_configs) == spec.environment.tensorflow.n_workers
+        assert set(worker_configs.values()) == {
             spec.environment.tensorflow.default_worker_config,
             spec.environment.tensorflow.worker_configs[0]}
-        assert spec.tensorflow_ps_configs == {}
+        assert TensorflowSpecification.get_ps_configs(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        ) == {}
 
-        assert spec.tensorflow_worker_resources == {}
-        assert len(spec.tensorflow_ps_resources) == spec.environment.tensorflow.n_ps
-        assert set(spec.tensorflow_ps_resources.values()) == {
+        assert TensorflowSpecification.get_worker_resources(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        ) == {}
+        ps_resources = TensorflowSpecification.get_ps_resources(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert len(ps_resources) == spec.environment.tensorflow.n_ps
+        assert set(ps_resources.values()) == {
             spec.environment.tensorflow.default_ps_resources,
             spec.environment.tensorflow.ps_resources[0]}
 
