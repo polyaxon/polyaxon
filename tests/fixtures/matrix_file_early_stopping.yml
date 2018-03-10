@@ -7,7 +7,6 @@ project:
 settings:
   concurrent_experiments: 2
   n_experiments: 5
-
   early_stopping:
     - metric: loss
       value: 0.01

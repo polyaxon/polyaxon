@@ -12,44 +12,46 @@ settings:
   run_type: minikube
 
 environment:
-  n_workers: 5
-  n_ps: 10
-  delay_workers_by_global_step: true
   resources:
     cpu:
       requests: 1
       limits: 2
 
-  run_config:
-    tf_random_seed: 100
-    save_summary_steps: 100
-    save_checkpoints_secs: 60
-    session:
+  tensorflow:
+    n_workers: 5
+    n_ps: 10
+    delay_workers_by_global_step: true
+
+    run_config:
+      tf_random_seed: 100
+      save_summary_steps: 100
+      save_checkpoints_secs: 60
+      session:
+        allow_soft_placement: true
+        intra_op_parallelism_threads: 2
+        inter_op_parallelism_threads: 2
+
+    default_worker_config:
       allow_soft_placement: true
-      intra_op_parallelism_threads: 2
-      inter_op_parallelism_threads: 2
+      intra_op_parallelism_threads: 1
+      inter_op_parallelism_threads: 1
 
-  default_worker_config:
-    allow_soft_placement: true
-    intra_op_parallelism_threads: 1
-    inter_op_parallelism_threads: 1
+    worker_configs:
+      - index: 3
+        allow_soft_placement: False
+        intra_op_parallelism_threads: 5
+        inter_op_parallelism_threads: 5
 
-  worker_configs:
-    - index: 3
-      allow_soft_placement: False
-      intra_op_parallelism_threads: 5
-      inter_op_parallelism_threads: 5
+    default_ps_resources:
+      cpu:
+        requests: 2
+        limits: 4
 
-  default_ps_resources:
-    cpu:
-      requests: 2
-      limits: 4
-
-  ps_resources:
-    - index: 9
-      memory:
-        requests: 512
-        limits: 1024
+    ps_resources:
+      - index: 9
+        memory:
+          requests: 512
+          limits: 1024
 
 
 declarations:

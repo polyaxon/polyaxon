@@ -198,8 +198,8 @@ class Specification(BaseSpecification):
         """Checks of the sections required to run experiment exist."""
         sections = set(self.validated_data.keys())
         if (self.RUN_EXEC in sections or
-                {self.MODEL, self.TRAIN} <= sections or
-                {self.MODEL, self.EVAL} <= sections):
+            {self.MODEL, self.TRAIN} <= sections or
+            {self.MODEL, self.EVAL} <= sections):
             return True
         return False
 
@@ -227,6 +227,19 @@ class Specification(BaseSpecification):
     def declarations(self):
         return self.parsed_data.get(self.DECLARATIONS, None)
 
+    @staticmethod
+    def _get_tensorflow_cluster_def(cluster, tensorflow_config):
+        is_distributed = False
+        if not tensorflow_config:
+            return cluster, is_distributed
+
+        cluster[TaskType.WORKER] = tensorflow_config.n_workers
+        cluster[TaskType.PS] = tensorflow_config.n_ps
+        if tensorflow_config.n_workers != 0 or tensorflow_config.n_ps != 0:
+            is_distributed = True
+
+        return cluster, is_distributed
+
     @cached_property
     def cluster_def(self):
         cluster = {
@@ -236,10 +249,9 @@ class Specification(BaseSpecification):
         environment = self.environment
 
         if environment:
-            cluster[TaskType.WORKER] = environment.n_workers
-            cluster[TaskType.PS] = environment.n_ps
-            if environment.n_workers != 0 or environment.n_ps != 0:
-                is_distributed = True
+            if environment.tensorflow:
+                cluster, is_distributed = self._get_tensorflow_cluster_def(cluster,
+                                                                           environment.tensorflow)
 
         return cluster, is_distributed
 
@@ -260,21 +272,21 @@ class Specification(BaseSpecification):
         return result_configs
 
     @cached_property
-    def worker_configs(self):
+    def tensorflow_worker_configs(self):
         environment = self.environment
-        if environment is None:
+        if environment is None or environment.tensorflow is None:
             return {}
-        return self._get_configs(configs=environment.worker_configs,
-                                 default_config=environment.default_worker_config,
+        return self._get_configs(configs=environment.tensorflow.worker_configs,
+                                 default_config=environment.tensorflow.default_worker_config,
                                  task_type=TaskType.WORKER)
 
     @cached_property
-    def ps_configs(self):
+    def tensorflow_ps_configs(self):
         environment = self.environment
-        if environment is None:
+        if environment is None or environment.tensorflow is None:
             return {}
-        return self._get_configs(configs=environment.ps_configs,
-                                 default_config=environment.default_ps_config,
+        return self._get_configs(configs=environment.tensorflow.ps_configs,
+                                 default_config=environment.tensorflow.default_ps_config,
                                  task_type=TaskType.PS)
 
     def _get_job_resources(self, resources, default_resources, task_type):
@@ -295,9 +307,21 @@ class Specification(BaseSpecification):
 
     @cached_property
     def total_resources(self):
+        if not self.environment:
+            return None
+
+        # Check if any framework is defined
+        if self.environment.tensorflow:
+            return self.tensorflow_total_resources
+
+        # default value is the master resources
+        return self.master_resources
+
+    @cached_property
+    def tensorflow_total_resources(self):
         master_resources = self.master_resources
-        worker_resources = self.worker_resources
-        ps_resources = self.ps_resources
+        worker_resources = self.tensorflow_worker_resources
+        ps_resources = self.tensorflow_ps_resources
         if not any([master_resources, worker_resources, ps_resources]):
             return None
 
@@ -319,22 +343,24 @@ class Specification(BaseSpecification):
         return self.environment.resources if self.environment else None
 
     @cached_property
-    def worker_resources(self):
+    def tensorflow_worker_resources(self):
         environment = self.environment
-        if environment is None:
+        if environment is None or environment.tensorflow is None:
             return None
-        return self._get_job_resources(resources=environment.worker_resources,
-                                       default_resources=environment.default_worker_resources,
-                                       task_type=TaskType.WORKER)
+        return self._get_job_resources(
+            resources=environment.tensorflow.worker_resources,
+            default_resources=environment.tensorflow.default_worker_resources,
+            task_type=TaskType.WORKER)
 
     @cached_property
-    def ps_resources(self):
+    def tensorflow_ps_resources(self):
         environment = self.environment
-        if environment is None:
+        if environment is None or environment.tensorflow is None:
             return None
-        return self._get_job_resources(resources=environment.ps_resources,
-                                       default_resources=environment.default_ps_resources,
-                                       task_type=TaskType.PS)
+        return self._get_job_resources(
+            resources=environment.tensorflow.ps_resources,
+            default_resources=environment.tensorflow.default_ps_resources,
+            task_type=TaskType.PS)
 
     def get_local_cluster(self,
                           host='127.0.0.1',

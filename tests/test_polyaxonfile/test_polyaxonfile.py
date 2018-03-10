@@ -110,28 +110,28 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.experiment_spec_at(0)
         assert spec.is_runnable
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.n_workers == 5
-        assert spec.environment.n_ps == 10
-        assert spec.environment.delay_workers_by_global_step is True
-        assert isinstance(spec.environment.run_config, RunConfig)
-        assert spec.environment.run_config.tf_random_seed == 100
-        assert spec.environment.run_config.save_summary_steps == 100
-        assert spec.environment.run_config.save_checkpoints_secs == 60
-        assert isinstance(spec.environment.run_config.session, SessionConfig)
-        assert spec.environment.run_config.session.allow_soft_placement is True
-        assert spec.environment.run_config.session.intra_op_parallelism_threads == 2
-        assert spec.environment.run_config.session.inter_op_parallelism_threads == 2
+        assert spec.environment.tensorflow.n_workers == 5
+        assert spec.environment.tensorflow.n_ps == 10
+        assert spec.environment.tensorflow.delay_workers_by_global_step is True
+        assert isinstance(spec.environment.tensorflow.run_config, RunConfig)
+        assert spec.environment.tensorflow.run_config.tf_random_seed == 100
+        assert spec.environment.tensorflow.run_config.save_summary_steps == 100
+        assert spec.environment.tensorflow.run_config.save_checkpoints_secs == 60
+        assert isinstance(spec.environment.tensorflow.run_config.session, SessionConfig)
+        assert spec.environment.tensorflow.run_config.session.allow_soft_placement is True
+        assert spec.environment.tensorflow.run_config.session.intra_op_parallelism_threads == 2
+        assert spec.environment.tensorflow.run_config.session.inter_op_parallelism_threads == 2
 
         # check properties for returning worker configs and resources
-        assert spec.environment.worker_configs is None
-        assert spec.environment.ps_configs is None
-        assert spec.environment.worker_resources is None
-        assert spec.environment.ps_resources is None
+        assert spec.environment.tensorflow.worker_configs is None
+        assert spec.environment.tensorflow.ps_configs is None
+        assert spec.environment.tensorflow.worker_resources is None
+        assert spec.environment.tensorflow.ps_resources is None
 
-        assert spec.worker_configs == {}
-        assert spec.ps_configs == {}
-        assert spec.worker_resources == {}
-        assert spec.ps_resources == {}
+        assert spec.tensorflow_worker_configs == {}
+        assert spec.tensorflow_ps_configs == {}
+        assert spec.tensorflow_worker_resources == {}
+        assert spec.tensorflow_ps_resources == {}
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5,
@@ -164,60 +164,62 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.experiment_spec_at(0)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.environment.n_workers == 5
-        assert spec.environment.n_ps == 10
-        assert spec.environment.delay_workers_by_global_step is True
-        assert isinstance(spec.environment.run_config, RunConfig)
-        assert spec.environment.run_config.tf_random_seed == 100
-        assert spec.environment.run_config.save_summary_steps == 100
-        assert spec.environment.run_config.save_checkpoints_secs == 60
+        assert spec.environment.tensorflow.n_workers == 5
+        assert spec.environment.tensorflow.n_ps == 10
+        assert spec.environment.tensorflow.delay_workers_by_global_step is True
+        assert isinstance(spec.environment.tensorflow.run_config, RunConfig)
+        assert spec.environment.tensorflow.run_config.tf_random_seed == 100
+        assert spec.environment.tensorflow.run_config.save_summary_steps == 100
+        assert spec.environment.tensorflow.run_config.save_checkpoints_secs == 60
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
         assert spec.environment.resources.cpu.requests == 1
         assert spec.environment.resources.cpu.limits == 2
 
-        assert isinstance(spec.environment.run_config.session, SessionConfig)
-        assert spec.environment.run_config.session.allow_soft_placement is True
-        assert spec.environment.run_config.session.intra_op_parallelism_threads == 2
-        assert spec.environment.run_config.session.inter_op_parallelism_threads == 2
+        assert isinstance(spec.environment.tensorflow.run_config.session, SessionConfig)
+        assert spec.environment.tensorflow.run_config.session.allow_soft_placement is True
+        assert spec.environment.tensorflow.run_config.session.intra_op_parallelism_threads == 2
+        assert spec.environment.tensorflow.run_config.session.inter_op_parallelism_threads == 2
 
-        assert isinstance(spec.environment.default_worker_config, SessionConfig)
-        assert spec.environment.default_worker_config.allow_soft_placement is True
-        assert spec.environment.default_worker_config.intra_op_parallelism_threads == 1
-        assert spec.environment.default_worker_config.inter_op_parallelism_threads == 1
+        assert isinstance(spec.environment.tensorflow.default_worker_config, SessionConfig)
+        assert spec.environment.tensorflow.default_worker_config.allow_soft_placement is True
+        assert spec.environment.tensorflow.default_worker_config.intra_op_parallelism_threads == 1
+        assert spec.environment.tensorflow.default_worker_config.inter_op_parallelism_threads == 1
 
-        assert isinstance(spec.environment.worker_configs[0], SessionConfig)
-        assert spec.environment.worker_configs[0].index == 3
-        assert spec.environment.worker_configs[0].allow_soft_placement is False
-        assert spec.environment.worker_configs[0].intra_op_parallelism_threads == 5
-        assert spec.environment.worker_configs[0].inter_op_parallelism_threads == 5
+        assert isinstance(spec.environment.tensorflow.worker_configs[0], SessionConfig)
+        assert spec.environment.tensorflow.worker_configs[0].index == 3
+        assert spec.environment.tensorflow.worker_configs[0].allow_soft_placement is False
+        assert spec.environment.tensorflow.worker_configs[0].intra_op_parallelism_threads == 5
+        assert spec.environment.tensorflow.worker_configs[0].inter_op_parallelism_threads == 5
 
-        assert spec.environment.ps_configs is None
+        assert spec.environment.tensorflow.ps_configs is None
 
-        assert spec.environment.worker_resources is None
+        assert spec.environment.tensorflow.worker_resources is None
 
-        assert isinstance(spec.environment.default_ps_resources, PodResourcesConfig)
-        assert isinstance(spec.environment.default_ps_resources.cpu, K8SResourcesConfig)
-        assert spec.environment.default_ps_resources.cpu.requests == 2
-        assert spec.environment.default_ps_resources.cpu.limits == 4
+        assert isinstance(spec.environment.tensorflow.default_ps_resources, PodResourcesConfig)
+        assert isinstance(spec.environment.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
+        assert spec.environment.tensorflow.default_ps_resources.cpu.requests == 2
+        assert spec.environment.tensorflow.default_ps_resources.cpu.limits == 4
 
-        assert isinstance(spec.environment.ps_resources[0], PodResourcesConfig)
-        assert isinstance(spec.environment.ps_resources[0].memory, K8SResourcesConfig)
-        assert spec.environment.ps_resources[0].index == 9
-        assert spec.environment.ps_resources[0].memory.requests == 512
-        assert spec.environment.ps_resources[0].memory.limits == 1024
+        assert isinstance(spec.environment.tensorflow.ps_resources[0], PodResourcesConfig)
+        assert isinstance(spec.environment.tensorflow.ps_resources[0].memory, K8SResourcesConfig)
+        assert spec.environment.tensorflow.ps_resources[0].index == 9
+        assert spec.environment.tensorflow.ps_resources[0].memory.requests == 512
+        assert spec.environment.tensorflow.ps_resources[0].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
-        assert len(spec.worker_configs) == spec.environment.n_workers
-        assert set(spec.worker_configs.values()) == {
-            spec.environment.default_worker_config, spec.environment.worker_configs[0]}
-        assert spec.ps_configs == {}
+        assert len(spec.tensorflow_worker_configs) == spec.environment.tensorflow.n_workers
+        assert set(spec.tensorflow_worker_configs.values()) == {
+            spec.environment.tensorflow.default_worker_config,
+            spec.environment.tensorflow.worker_configs[0]}
+        assert spec.tensorflow_ps_configs == {}
 
-        assert spec.worker_resources == {}
-        assert len(spec.ps_resources) == spec.environment.n_ps
-        assert set(spec.ps_resources.values()) == {
-            spec.environment.default_ps_resources, spec.environment.ps_resources[0]}
+        assert spec.tensorflow_worker_resources == {}
+        assert len(spec.tensorflow_ps_resources) == spec.environment.tensorflow.n_ps
+        assert set(spec.tensorflow_ps_resources.values()) == {
+            spec.environment.tensorflow.default_ps_resources,
+            spec.environment.tensorflow.ps_resources[0]}
 
         # Check total resources
         assert spec.total_resources == {
