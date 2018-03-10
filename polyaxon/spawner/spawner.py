@@ -14,7 +14,7 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
-from polyaxon_schemas.settings import ClusterConfig
+from polyaxon_schemas.environments import ClusterConfig
 from polyaxon_schemas.utils import TaskType
 
 from libs.utils import get_hmac
@@ -53,7 +53,7 @@ class K8SSpawner(K8SManager):
                  sidecar_config=None,
                  sidecar_args_fn=None,
                  persist=False):
-        self.specification = Specification.read(spec_config)
+        self.spec = Specification.read(spec_config)
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
         self.experiment_name = experiment_name
@@ -82,10 +82,6 @@ class K8SSpawner(K8SManager):
         super(K8SSpawner, self).__init__(k8s_config=k8s_config,
                                          namespace=namespace,
                                          in_cluster=in_cluster)
-
-    @property
-    def spec(self):
-        return self.specification
 
     def _create_pod(self,
                     task_type,
