@@ -2,14 +2,16 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_schemas.data import DatasetConfig
-from polyaxon_schemas.polyaxonfile.logger import logger
 
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import (
     AuthenticationError,
     PolyaxonException,
     NotFoundError,
-    BadRequestError)
+    BadRequestError,
+)
+
+from polyaxon_client.logger import logger
 
 
 class DatasetClient(PolyaxonClient):

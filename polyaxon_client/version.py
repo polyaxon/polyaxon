@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.polyaxonfile.logger import logger
+from polyaxon_client.logger import logger
 
-from polyaxon_client.base import PolyaxonClient
 from polyaxon_schemas.version import (
     CliVersionConfig,
     PlatformVersionConfig,
     LibVersionConfig,
     ChartVersionConfig,
 )
+
+from polyaxon_client.base import PolyaxonClient
 
 
 class VersionClient(PolyaxonClient):

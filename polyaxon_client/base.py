@@ -9,10 +9,13 @@ import tarfile
 import six
 
 import websocket
+
 from clint.textui import progress
 from clint.textui.progress import Bar
-from polyaxon_schemas.utils import to_list
+
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
+
+from polyaxon_schemas.utils import to_list
 
 from polyaxon_client.logger import logger
 from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError, AuthenticationError
