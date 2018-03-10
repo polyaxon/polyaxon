@@ -17,13 +17,18 @@ from polyaxon_schemas.polyaxonfile import constants
 from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
-from polyaxon_schemas.settings import (
-    RunTypes,
-    SettingsConfig,
+from polyaxon_schemas.environments import (
     EnvironmentConfig,
     RunConfig,
     SessionConfig,
-    PodResourcesConfig, K8SResourcesConfig, EarlyStoppingMetricConfig)
+    PodResourcesConfig,
+    K8SResourcesConfig,
+)
+from polyaxon_schemas.settings import (
+    RunTypes,
+    SettingsConfig,
+    EarlyStoppingMetricConfig,
+)
 from polyaxon_schemas.utils import TaskType, SEARCH_METHODS
 from tests.utils import assert_equal_dict
 
@@ -526,6 +531,8 @@ class TestPolyaxonfile(TestCase):
             assert isinstance(run_exec, RunExecConfig)
             declarations = plxfile.get_declarations_at(xp)
             declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
-            assert run_exec.cmd == 'video_prediction_train --model="{model}" --num_masks={num_masks}'.format(
+            assert run_exec.cmd == ('video_prediction_train '
+                                    '--model="{model}" '
+                                    '--num_masks={num_masks}').format(
                 **declarations
             )

@@ -9,7 +9,8 @@ from polyaxon_schemas.eval import EvalConfig
 from polyaxon_schemas.run_exec import RunExecConfig
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.models import ModelConfig
-from polyaxon_schemas.settings import SettingsConfig, EnvironmentConfig
+from polyaxon_schemas.environments import EnvironmentConfig
+from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.train import TrainConfig
 from polyaxon_schemas.project import ProjectConfig
 

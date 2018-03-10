@@ -15,7 +15,8 @@ from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.utils import cached_property, get_vol_path
 from polyaxon_schemas.operators import ForConfig, IfConfig
-from polyaxon_schemas.settings import ClusterConfig, RunTypes, PodResourcesConfig
+from polyaxon_schemas.environments import ClusterConfig, PodResourcesConfig
+from polyaxon_schemas.settings import RunTypes
 from polyaxon_schemas.utils import TaskType, to_list, SEARCH_METHODS
 
 
