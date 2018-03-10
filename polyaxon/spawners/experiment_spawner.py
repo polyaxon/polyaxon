@@ -3,9 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import json
 import logging
-import random
 
-from django.conf import settings
 from kubernetes import client
 from kubernetes.client.rest import ApiException
 
@@ -17,20 +15,17 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.environments import ClusterConfig
 from polyaxon_schemas.utils import TaskType
 
-from libs.utils import get_hmac
-from projects.paths import get_project_outputs_path, get_project_repos_path
+from spawners.base import get_pod_volumes
 from spawners.templates import config_maps
 from spawners.templates import constants
-from spawners.templates import deployments
 from spawners.templates import persistent_volumes
 from spawners.templates import pods
 from spawners.templates import services
-from spawners.templates import ingresses
 
 logger = logging.getLogger('polyaxon.spawners.spawners')
 
 
-class K8SSpawner(K8SManager):
+class ExperimentSpawner(K8SManager):
     def __init__(self,
                  project_name,
                  experiment_name,
@@ -79,9 +74,9 @@ class K8SSpawner(K8SManager):
         self.sidecar_args_fn = sidecar_args_fn or constants.SIDECAR_ARGS_FN
         self.persist = persist
 
-        super(K8SSpawner, self).__init__(k8s_config=k8s_config,
-                                         namespace=namespace,
-                                         in_cluster=in_cluster)
+        super(ExperimentSpawner, self).__init__(k8s_config=k8s_config,
+                                                namespace=namespace,
+                                                in_cluster=in_cluster)
 
     def _create_pod(self,
                     task_type,
@@ -95,7 +90,7 @@ class K8SSpawner(K8SManager):
         sidecar_args = sidecar_args_fn(pod_id=job_name)
         labels = self.pod_manager.get_labels(task_type=task_type, task_idx=task_idx)
 
-        volumes, volume_mounts = self.get_pod_volumes()
+        volumes, volume_mounts = get_pod_volumes()
         pod = self.pod_manager.get_pod(task_type=task_type,
                                        task_idx=task_idx,
                                        volume_mounts=volume_mounts,
@@ -172,23 +167,6 @@ class K8SSpawner(K8SManager):
     def _delete_ps(self, n_pods):
         for i in range(n_pods):
             self._delete_pod(task_type=TaskType.PS, task_idx=i)
-
-    @staticmethod
-    def get_pod_volumes():
-        volumes = []
-        volume_mounts = []
-        volumes.append(pods.get_volume(volume=constants.DATA_VOLUME,
-                                       claim_name=settings.DATA_CLAIM_NAME,
-                                       volume_mount=settings.DATA_ROOT))
-        volume_mounts.append(pods.get_volume_mount(volume=constants.DATA_VOLUME,
-                                                   volume_mount=settings.DATA_ROOT))
-
-        volumes.append(pods.get_volume(volume=constants.OUTPUTS_VOLUME,
-                                       claim_name=settings.OUTPUTS_CLAIM_NAME,
-                                       volume_mount=settings.OUTPUTS_ROOT))
-        volume_mounts.append(pods.get_volume_mount(volume=constants.OUTPUTS_VOLUME,
-                                                   volume_mount=settings.OUTPUTS_ROOT))
-        return volumes, volume_mounts
 
     def has_volume(self, volume):
         persistent_volume = self.get_volume(volume)
@@ -386,237 +364,3 @@ class K8SSpawner(K8SManager):
         cluster_config[TaskType.PS] = ps
 
         return ClusterConfig.from_dict(cluster_config)
-
-
-class K8SProjectSpawner(K8SManager):
-    TENSORBOARD_JOB_NAME = 'tensorboard'
-    NOTEBOOK_JOB_NAME = 'notebook'
-
-    def __init__(self,
-                 project_name,
-                 project_uuid,
-                 k8s_config=None,
-                 namespace='default',
-                 in_cluster=False):
-        self.project_name = project_name
-        self.project_uuid = project_uuid
-
-        super(K8SProjectSpawner, self).__init__(k8s_config=k8s_config,
-                                                namespace=namespace,
-                                                in_cluster=in_cluster)
-
-    @staticmethod
-    def _get_proxy_url(namespace, job_name, deployment_name, port):
-        return '/{}/proxy/{}.{}.svc.cluster.local:{}'.format(
-            job_name,
-            deployment_name,
-            namespace,
-            port)
-
-    def _get_service_url(self, job_name):
-        deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=job_name)
-        service = self.get_service(deployment_name)
-        if service:
-            return self._get_proxy_url(
-                namespace=self.namespace,
-                job_name=job_name,
-                deployment_name=deployment_name,
-                port=service.spec.ports[0].port)
-        return None
-
-    @staticmethod
-    def _get_service_type():
-        if settings.PUBLIC_PLUGIN_JOBS:
-            return None if settings.K8S_INGRESS_ENABLED else 'LoadBalancer'
-        return None
-
-    @staticmethod
-    def _use_ingress():
-        return settings.K8S_INGRESS_ENABLED and settings.PUBLIC_PLUGIN_JOBS
-
-    def get_tensorboard_url(self):
-        return self._get_service_url(self.TENSORBOARD_JOB_NAME)
-
-    def request_tensorboard_port(self):
-        labels = 'app={},role={}'.format(settings.APP_LABELS_TENSORBOARD,
-                                         settings.ROLE_LABELS_DASHBOARD)
-        ports = [service.spec.ports[0].port for service in self.list_services(labels)]
-        port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
-        while port in ports:
-            port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
-        return port
-
-    def start_tensorboard(self, image, resources=None):
-        ports = [self.request_tensorboard_port()]
-        target_ports = [6006]
-        volumes, volume_mounts = K8SSpawner.get_pod_volumes()
-        outputs_path = get_project_outputs_path(project_name=self.project_name)
-        deployment = deployments.get_deployment(
-            namespace=self.namespace,
-            app=settings.APP_LABELS_TENSORBOARD,
-            name=self.TENSORBOARD_JOB_NAME,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
-            volume_mounts=volume_mounts,
-            volumes=volumes,
-            image=image,
-            command=["/bin/sh", "-c"],
-            args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
-            ports=target_ports,
-            container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
-            resources=resources,
-            role=settings.ROLE_LABELS_DASHBOARD,
-            type=settings.TYPE_LABELS_EXPERIMENT)
-        deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.TENSORBOARD_JOB_NAME)
-        deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
-                                                   project_name=self.project_name,
-                                                   project_uuid=self.project_uuid,
-                                                   role=settings.ROLE_LABELS_DASHBOARD,
-                                                   type=settings.TYPE_LABELS_EXPERIMENT)
-
-        self.create_or_update_deployment(name=deployment_name, data=deployment)
-        service = services.get_service(
-            namespace=self.namespace,
-            name=deployment_name,
-            labels=deployment_labels,
-            ports=ports,
-            target_ports=target_ports,
-            service_type=self._get_service_type())
-
-        self.create_or_update_service(name=deployment_name, data=service)
-
-        if self._use_ingress():
-            annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
-            paths = [{
-                'path': '/tensorboard/{}'.format(self.project_name.replace('.', '/')),
-                'backend': {
-                    'serviceName': deployment_name,
-                    'servicePort': ports[0]
-                }
-            }]
-            ingress = ingresses.get_ingress(namespace=self.namespace,
-                                            name=deployment_name,
-                                            labels=deployment_labels,
-                                            annotations=annotations,
-                                            paths=paths)
-            self.create_or_update_ingress(name=deployment_name, data=ingress)
-
-    def stop_tensorboard(self):
-        deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=self.TENSORBOARD_JOB_NAME)
-        self.delete_deployment(name=deployment_name)
-        self.delete_service(name=deployment_name)
-        if self._use_ingress():
-            self.delete_ingress(name=deployment_name)
-
-    def get_notebook_url(self):
-        return self._get_service_url(self.NOTEBOOK_JOB_NAME)
-
-    def get_notebook_token(self):
-        return get_hmac(settings.APP_LABELS_NOTEBOOK, self.project_uuid)
-
-    @staticmethod
-    def get_notebook_code_volume():
-        volume = pods.get_volume(volume=constants.REPOS_VOLUME,
-                                 claim_name=settings.REPOS_CLAIM_NAME,
-                                 volume_mount=settings.REPOS_ROOT)
-
-        volume_mount = pods.get_volume_mount(volume=constants.REPOS_VOLUME,
-                                             volume_mount=settings.REPOS_ROOT)
-        return volume, volume_mount
-
-    def request_notebook_port(self):
-        labels = 'app={},role={}'.format(settings.APP_LABELS_NOTEBOOK,
-                                         settings.ROLE_LABELS_DASHBOARD)
-        ports = [service.spec.ports[0].port for service in self.list_services(labels)]
-        port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
-        while port in ports:
-            port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
-        return port
-
-    def start_notebook(self, image, resources=None):
-        ports = [self.request_notebook_port()]
-        target_ports = [8888]
-        volumes, volume_mounts = K8SSpawner.get_pod_volumes()
-        code_volume, code_volume_mount = self.get_notebook_code_volume()
-        volumes.append(code_volume)
-        volume_mounts.append(code_volume_mount)
-        deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.NOTEBOOK_JOB_NAME)
-        notebook_token = self.get_notebook_token()
-        notebook_url = self._get_proxy_url(
-            namespace=self.namespace,
-            job_name=self.NOTEBOOK_JOB_NAME,
-            deployment_name=deployment_name,
-            port=ports[0])
-        notebook_dir = get_project_repos_path(self.project_name)
-        notebook_dir = '{}/{}'.format(notebook_dir, notebook_dir.split('/')[-1])
-        deployment = deployments.get_deployment(
-            namespace=self.namespace,
-            app=settings.APP_LABELS_NOTEBOOK,
-            name=self.NOTEBOOK_JOB_NAME,
-            project_name=self.project_name,
-            project_uuid=self.project_uuid,
-            volume_mounts=volume_mounts,
-            volumes=volumes,
-            image=image,
-            command=["/bin/sh", "-c"],
-            args=["jupyter notebook "
-                  "--no-browser "
-                  "--port=8888 "
-                  "--ip=0.0.0.0 "
-                  "--allow-root "
-                  "--NotebookApp.token={token} "
-                  "--NotebookApp.trust_xheaders=True "
-                  "--NotebookApp.base_url={base_url} "
-                  "--NotebookApp.notebook_dir={notebook_dir} ".format(
-                    token=notebook_token,
-                    base_url=notebook_url,
-                    notebook_dir=notebook_dir)],
-            ports=target_ports,
-            container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
-            resources=resources,
-            role=settings.ROLE_LABELS_DASHBOARD,
-            type=settings.TYPE_LABELS_EXPERIMENT)
-        deployment_labels = deployments.get_labels(app=settings.APP_LABELS_NOTEBOOK,
-                                                   project_name=self.project_name,
-                                                   project_uuid=self.project_uuid,
-                                                   role=settings.ROLE_LABELS_DASHBOARD,
-                                                   type=settings.TYPE_LABELS_EXPERIMENT)
-
-        self.create_or_update_deployment(name=deployment_name, data=deployment)
-        service = services.get_service(
-            namespace=self.namespace,
-            name=deployment_name,
-            labels=deployment_labels,
-            ports=ports,
-            target_ports=target_ports,
-            service_type=self._get_service_type())
-
-        self.create_or_update_service(name=deployment_name, data=service)
-
-        if self._use_ingress():
-            annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
-            paths = [{
-                'path': '/notebook/{}'.format(self.project_name.replace('.', '/')),
-                'backend': {
-                    'serviceName': deployment_name,
-                    'servicePort': ports[0]
-                }
-            }]
-            ingress = ingresses.get_ingress(namespace=self.namespace,
-                                            name=deployment_name,
-                                            labels=deployment_labels,
-                                            annotations=annotations,
-                                            paths=paths)
-            self.create_or_update_ingress(name=deployment_name, data=ingress)
-
-    def stop_notebook(self):
-        deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=self.NOTEBOOK_JOB_NAME)
-        self.delete_deployment(name=deployment_name)
-        self.delete_service(name=deployment_name)
-        if self._use_ingress():
-            self.delete_ingress(name=deployment_name)

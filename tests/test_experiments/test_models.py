@@ -105,7 +105,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
-    @mock.patch('schedulers.experiment_scheduler.K8SSpawner')
+    @mock.patch('schedulers.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
@@ -134,7 +134,7 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @mock.patch('schedulers.experiment_scheduler.K8SSpawner')
+    @mock.patch('schedulers.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
         content = Specification.read(exec_experiment_resources_content)
 

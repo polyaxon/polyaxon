@@ -16,12 +16,11 @@ from polyaxon.utils import config
 from experiments.serializers import ExperimentJobDetailSerializer
 from dockerizer.images import get_experiment_image_info
 
-from spawners import K8SSpawner
+from spawners.experiment_spawner import ExperimentSpawner
 from experiments.models import ExperimentJob
 from spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.schedulers.experiment')
-
 
 
 def create_job(job_uuid, experiment, definition, role=None, resources=None):
@@ -53,7 +52,6 @@ def create_job(job_uuid, experiment, definition, role=None, resources=None):
     job.save()
 
 
-
 def start_experiment(experiment):
     # Update experiment status to show that its started
     experiment.set_status(ExperimentLifeCycle.SCHEDULED)
@@ -76,19 +74,19 @@ def start_experiment(experiment):
         logger.info('Start experiment with default image.')
 
     # Use spawners to start the experiment
-    spawner = K8SSpawner(project_name=project.unique_name,
-                         experiment_name=experiment.unique_name,
-                         experiment_group_name=group.unique_name if group else None,
-                         project_uuid=project.uuid.hex,
-                         experiment_group_uuid=group.uuid.hex if group else None,
-                         experiment_uuid=experiment.uuid.hex,
-                         spec_config=experiment.config,
-                         k8s_config=settings.K8S_CONFIG,
-                         namespace=settings.K8S_NAMESPACE,
-                         in_cluster=True,
-                         job_docker_image=job_docker_image,
-                         use_sidecar=True,
-                         sidecar_config=config.get_requested_params(to_str=True))
+    spawner = ExperimentSpawner(project_name=project.unique_name,
+                                experiment_name=experiment.unique_name,
+                                experiment_group_name=group.unique_name if group else None,
+                                project_uuid=project.uuid.hex,
+                                experiment_group_uuid=group.uuid.hex if group else None,
+                                experiment_uuid=experiment.uuid.hex,
+                                spec_config=experiment.config,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True,
+                                job_docker_image=job_docker_image,
+                                use_sidecar=True,
+                                sidecar_config=config.get_requested_params(to_str=True))
     try:
         resp = spawner.start_experiment(user_token=experiment.user.auth_token.key)
     except ApiException as e:
@@ -144,20 +142,19 @@ def start_experiment(experiment):
 def stop_experiment(experiment, update_status=False):
     project = experiment.project
     group = experiment.experiment_group
-    spawner = K8SSpawner(project_name=project.unique_name,
-                         experiment_name=experiment.unique_name,
-                         experiment_group_name=group.unique_name if group else None,
-                         project_uuid=project.uuid.hex,
-                         experiment_group_uuid=group.uuid.hex if group else None,
-                         experiment_uuid=experiment.uuid.hex,
-                         spec_config=experiment.config,
-                         k8s_config=settings.K8S_CONFIG,
-                         namespace=settings.K8S_NAMESPACE,
-                         in_cluster=True,
-                         use_sidecar=True,
-                         sidecar_config=config.get_requested_params(to_str=True))
+    spawner = ExperimentSpawner(project_name=project.unique_name,
+                                experiment_name=experiment.unique_name,
+                                experiment_group_name=group.unique_name if group else None,
+                                project_uuid=project.uuid.hex,
+                                experiment_group_uuid=group.uuid.hex if group else None,
+                                experiment_uuid=experiment.uuid.hex,
+                                spec_config=experiment.config,
+                                k8s_config=settings.K8S_CONFIG,
+                                namespace=settings.K8S_NAMESPACE,
+                                in_cluster=True,
+                                use_sidecar=True,
+                                sidecar_config=config.get_requested_params(to_str=True))
     spawner.stop_experiment()
     if update_status:
         # Update experiment status to show that its stopped
         experiment.set_status(ExperimentLifeCycle.STOPPED)
-

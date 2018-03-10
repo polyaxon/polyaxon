@@ -15,7 +15,9 @@ from polyaxon.urls import API_V1
 from projects.models import Project
 from factories.factory_projects import ProjectFactory
 from schedulers import notebook_scheduler
-from spawners import K8SProjectSpawner
+from spawners.project_spawner import ProjectSpawner
+from spawners.tensorboard_spawner import TensorboardSpawner
+from spawners.notebook_spawner import NotebookSpawner
 from spawners.templates.constants import DEPLOYMENT_NAME
 from spawners.utils.constants import JobLifeCycle
 from tests.utils import BaseViewTest
@@ -303,7 +305,7 @@ class BaseTestPluginViewV1(BaseViewTest):
 
     @classmethod
     def _get_service_url(cls, deployment_name):
-        return K8SProjectSpawner._get_proxy_url(
+        return ProjectSpawner._get_proxy_url(
             namespace='polyaxon',
             job_name=cls.plugin_app,
             deployment_name=deployment_name,
@@ -326,7 +328,7 @@ class BaseTestPluginViewV1(BaseViewTest):
 
 
 class TestTensorboardViewV1(BaseTestPluginViewV1):
-    plugin_app = K8SProjectSpawner.TENSORBOARD_JOB_NAME
+    plugin_app = TensorboardSpawner.TENSORBOARD_JOB_NAME
 
     def test_project_requests_tensorboard_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
@@ -336,7 +338,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         assert mock_fct.call_count == 1
         assert response.status_code == 200
 
-    @mock.patch('schedulers.tensorboard_scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.tensorboard_scheduler.TensorboardSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -351,7 +353,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/'.format(service_url)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
-    @mock.patch('schedulers.tensorboard_scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.tensorboard_scheduler.TensorboardSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -383,7 +385,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
 
 
 class TestNotebookViewV1(BaseTestPluginViewV1):
-    plugin_app = K8SProjectSpawner.NOTEBOOK_JOB_NAME
+    plugin_app = NotebookSpawner.NOTEBOOK_JOB_NAME
 
     def test_project_requests_notebook_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
@@ -395,7 +397,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         assert mock_token_fct.call_count == 1
         assert response.status_code == 200
 
-    @mock.patch('schedulers.notebook_scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.notebook_scheduler.NotebookSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -414,7 +416,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
-    @mock.patch('schedulers.notebook_scheduler.K8SProjectSpawner')
+    @mock.patch('schedulers.notebook_scheduler.NotebookSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(
