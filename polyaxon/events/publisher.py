@@ -5,6 +5,7 @@ import logging
 
 from amqp import AMQPError
 from django.conf import settings
+from redis import RedisError
 
 from polyaxon.config_settings import RoutingKeys
 from polyaxon.celery_api import app as celery_app
@@ -35,8 +36,12 @@ def publish_log(log_line,
                                  log_line=log_line,
                                  task_type=task_type,
                                  task_idx=task_idx)
-    if (RedisToStream.is_monitored_job_logs(job_uuid) or
-            RedisToStream.is_monitored_experiment_logs(experiment_uuid)):
+    try:
+        should_stream = (RedisToStream.is_monitored_job_logs(job_uuid) or
+                         RedisToStream.is_monitored_experiment_logs(experiment_uuid))
+    except RedisError:
+        should_stream = False
+    if should_stream:
         logger.info("Streaming new log event for experiment: {}".format(experiment_uuid))
 
         with celery_app.producer_or_acquire(None) as producer:
