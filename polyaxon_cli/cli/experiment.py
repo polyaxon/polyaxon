@@ -146,8 +146,11 @@ def delete(ctx):
 
 
 @experiment.command()
+@click.option('--yes', '-y', is_flag=True, default=False,
+              help='Automatic yes to prompts. '
+                   'Assume "yes" as answer to all prompts and run non-interactively.')
 @click.pass_context
-def stop(ctx):
+def stop(ctx, yes):
     """Stop experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -166,7 +169,7 @@ def stop(ctx):
     """
     user, project_name, experiment = get_experiment_or_local(ctx.obj['project'],
                                                              ctx.obj['experiment'])
-    if not click.confirm("Are sure you want to stop experiment `{}`".format(experiment)):
+    if not yes and not click.confirm("Are sure you want to stop experiment `{}`".format(experiment)):
         click.echo('Existing without stopping experiment.')
         sys.exit(0)
 

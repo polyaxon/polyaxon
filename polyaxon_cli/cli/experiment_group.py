@@ -183,10 +183,13 @@ def experiments(ctx, page, metrics):
 
 
 @group.command()
+@click.option('--yes', '-y', is_flag=True, default=False,
+              help='Automatic yes to prompts. '
+                   'Assume "yes" as answer to all prompts and run non-interactively.')
 @click.option('--pending', is_flag=True, default=False,
               help='To stop only pending experiments, i.e. leave currently running one intact.')
 @click.pass_context
-def stop(ctx, pending):
+def stop(ctx, yes, pending):
     """Stop experiments in the group.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -212,7 +215,7 @@ def stop(ctx, pending):
     """
     user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
 
-    if not click.confirm("Are sure you want to stop experiments in group `{}`".format(group)):
+    if not yes and not click.confirm("Are sure you want to stop experiments in group `{}`".format(group)):
         click.echo('Existing without stopping experiments in group.')
         sys.exit(0)
 

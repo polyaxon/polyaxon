@@ -8,7 +8,7 @@ import six
 import sys
 
 from polyaxon_schemas.experiment import ContainerResourcesConfig
-from polyaxon_schemas.settings import K8SResourcesConfig
+from polyaxon_schemas.environments import K8SResourcesConfig
 from polyaxon_schemas.utils import to_list, to_percentage, to_unit_memory
 from tabulate import tabulate
 
