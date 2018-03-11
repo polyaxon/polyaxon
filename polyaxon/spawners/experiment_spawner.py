@@ -5,7 +5,6 @@ import logging
 
 from polyaxon_k8s.manager import K8SManager
 
-from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
 from spawners.base import get_pod_volumes
@@ -23,7 +22,7 @@ class ExperimentSpawner(K8SManager):
                  experiment_name,
                  project_uuid,
                  experiment_uuid,
-                 spec_config,
+                 spec,
                  experiment_group_uuid=None,
                  experiment_group_name=None,
                  k8s_config=None,
@@ -40,7 +39,7 @@ class ExperimentSpawner(K8SManager):
                  sidecar_config=None,
                  sidecar_args_fn=None,
                  persist=False):
-        self.spec = Specification.read(spec_config)
+        self.spec = spec
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
         self.experiment_name = experiment_name

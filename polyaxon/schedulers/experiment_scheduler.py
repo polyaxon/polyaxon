@@ -7,8 +7,9 @@ import uuid
 
 from django.conf import settings
 from kubernetes.client.rest import ApiException
+from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 
-from polyaxon_schemas.utils import TaskType
+from polyaxon_schemas.utils import TaskType, Frameworks
 from rest_framework import fields
 
 from jobs.models import JobResources
@@ -17,6 +18,7 @@ from experiments.serializers import ExperimentJobDetailSerializer
 from dockerizer.images import get_experiment_image_info
 
 from spawners.experiment_spawner import ExperimentSpawner
+from spawners.tensorflow_spawner import TensorflowSpawner
 from experiments.models import ExperimentJob
 from spawners.utils.constants import ExperimentLifeCycle
 
@@ -52,6 +54,85 @@ def create_job(job_uuid, experiment, definition, role=None, resources=None):
     job.save()
 
 
+def get_job_definition(definition):
+    serializer = ExperimentJobDetailSerializer(data={
+        'definition': json.dumps(definition, default=fields.DateTimeField().to_representation)
+    })
+    serializer.is_valid()
+    return json.loads(serializer.validated_data['definition'])
+
+
+def get_spawner_class(framework):
+    if framework == Frameworks.TENSORFLOW:
+        return TensorflowSpawner
+
+    return ExperimentSpawner
+
+
+def handle_tensorflow_experiment(experiment, spawner, response):
+    # Get the number of jobs this experiment started
+    master = response[TaskType.MASTER]
+    job_uuid = master['pod']['metadata']['labels']['job_uuid']
+    job_uuid = uuid.UUID(job_uuid)
+
+    create_job(job_uuid=job_uuid,
+               experiment=experiment,
+               definition=get_job_definition(master),
+               resources=spawner.spec.master_resources)
+
+    cluster, is_distributed, = spawner.spec.cluster_def
+    worker_resources = TensorflowSpecification.get_worker_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+
+    ps_resources = TensorflowSpecification.get_ps_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+
+    for i, worker in enumerate(response[TaskType.WORKER]):
+        job_uuid = worker['pod']['metadata']['labels']['job_uuid']
+        job_uuid = uuid.UUID(job_uuid)
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_job_definition(worker),
+                   role=TaskType.WORKER,
+                   resources=worker_resources.get(i))
+
+    for i, ps in enumerate(response[TaskType.PS]):
+        job_uuid = ps['pod']['metadata']['labels']['job_uuid']
+        job_uuid = uuid.UUID(job_uuid)
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_job_definition(ps),
+                   role=TaskType.PS,
+                   resources=ps_resources.get(i))
+
+
+def handle_base_experiment(experiment, spawner, response):
+    # Default case only master was created by the experiment spawner
+    master = response[TaskType.MASTER]
+    job_uuid = master['pod']['metadata']['labels']['job_uuid']
+    job_uuid = uuid.UUID(job_uuid)
+
+    create_job(job_uuid=job_uuid,
+               experiment=experiment,
+               definition=get_job_definition(master),
+               resources=spawner.spec.master_resources)
+
+
+def handle_experiment(experiment, spawner, response):
+    framework = experiment.compiled_spec.framework
+    if framework == Frameworks.TENSORFLOW:
+        handle_tensorflow_experiment(experiment=experiment, spawner=spawner, response=response)
+        return
+
+    handle_base_experiment(experiment=experiment, spawner=spawner, response=response)
+
+
 def start_experiment(experiment):
     # Update experiment status to show that its started
     experiment.set_status(ExperimentLifeCycle.SCHEDULED)
@@ -73,22 +154,24 @@ def start_experiment(experiment):
     else:
         logger.info('Start experiment with default image.')
 
+    spawner_class = get_spawner_class(experiment.compiled_spec.framework)
+
     # Use spawners to start the experiment
-    spawner = ExperimentSpawner(project_name=project.unique_name,
-                                experiment_name=experiment.unique_name,
-                                experiment_group_name=group.unique_name if group else None,
-                                project_uuid=project.uuid.hex,
-                                experiment_group_uuid=group.uuid.hex if group else None,
-                                experiment_uuid=experiment.uuid.hex,
-                                spec_config=experiment.config,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True,
-                                job_docker_image=job_docker_image,
-                                use_sidecar=True,
-                                sidecar_config=config.get_requested_params(to_str=True))
+    spawner = spawner_class(project_name=project.unique_name,
+                            experiment_name=experiment.unique_name,
+                            experiment_group_name=group.unique_name if group else None,
+                            project_uuid=project.uuid.hex,
+                            experiment_group_uuid=group.uuid.hex if group else None,
+                            experiment_uuid=experiment.uuid.hex,
+                            spec=experiment.compiled_spec,
+                            k8s_config=settings.K8S_CONFIG,
+                            namespace=settings.K8S_NAMESPACE,
+                            in_cluster=True,
+                            job_docker_image=job_docker_image,
+                            use_sidecar=True,
+                            sidecar_config=config.get_requested_params(to_str=True))
     try:
-        resp = spawner.start_experiment(user_token=experiment.user.auth_token.key)
+        response = spawner.start_experiment(user_token=experiment.user.auth_token.key)
     except ApiException as e:
         logger.warning('Could not start the experiment, please check your polyaxon spec %s', e)
         experiment.set_status(
@@ -104,56 +187,27 @@ def start_experiment(experiment):
             ))
         return
 
-    # Get the number of jobs this experiment started
-    master = resp[TaskType.MASTER]
-    job_uuid = master['pod']['metadata']['labels']['job_uuid']
-    job_uuid = uuid.UUID(job_uuid)
-
-    def get_definition(definition):
-        serializer = ExperimentJobDetailSerializer(data={
-            'definition': json.dumps(definition, default=fields.DateTimeField().to_representation)
-        })
-        serializer.is_valid()
-        return json.loads(serializer.validated_data['definition'])
-
-    create_job(job_uuid=job_uuid,
-               experiment=experiment,
-               definition=get_definition(master),
-               resources=spawner.spec.master_resources)
-
-    for i, worker in enumerate(resp[TaskType.WORKER]):
-        job_uuid = worker['pod']['metadata']['labels']['job_uuid']
-        job_uuid = uuid.UUID(job_uuid)
-        create_job(job_uuid=job_uuid,
-                   experiment=experiment,
-                   definition=get_definition(worker),
-                   role=TaskType.WORKER,
-                   resources=spawner.spec.worker_resources.get(i))
-    for i, ps in enumerate(resp[TaskType.PS]):
-        job_uuid = ps['pod']['metadata']['labels']['job_uuid']
-        job_uuid = uuid.UUID(job_uuid)
-        create_job(job_uuid=job_uuid,
-                   experiment=experiment,
-                   definition=get_definition(ps),
-                   role=TaskType.PS,
-                   resources=spawner.spec.ps_resources.get(i))
+    handle_experiment(experiment=experiment, spawner=spawner, response=response)
 
 
 def stop_experiment(experiment, update_status=False):
     project = experiment.project
     group = experiment.experiment_group
-    spawner = ExperimentSpawner(project_name=project.unique_name,
-                                experiment_name=experiment.unique_name,
-                                experiment_group_name=group.unique_name if group else None,
-                                project_uuid=project.uuid.hex,
-                                experiment_group_uuid=group.uuid.hex if group else None,
-                                experiment_uuid=experiment.uuid.hex,
-                                spec_config=experiment.config,
-                                k8s_config=settings.K8S_CONFIG,
-                                namespace=settings.K8S_NAMESPACE,
-                                in_cluster=True,
-                                use_sidecar=True,
-                                sidecar_config=config.get_requested_params(to_str=True))
+
+    spawner_class = get_spawner_class(experiment.compiled_spec.framework)
+
+    spawner = spawner_class(project_name=project.unique_name,
+                            experiment_name=experiment.unique_name,
+                            experiment_group_name=group.unique_name if group else None,
+                            project_uuid=project.uuid.hex,
+                            experiment_group_uuid=group.uuid.hex if group else None,
+                            experiment_uuid=experiment.uuid.hex,
+                            spec=experiment.compiled_spec,
+                            k8s_config=settings.K8S_CONFIG,
+                            namespace=settings.K8S_NAMESPACE,
+                            in_cluster=True,
+                            use_sidecar=True,
+                            sidecar_config=config.get_requested_params(to_str=True))
     spawner.stop_experiment()
     if update_status:
         # Update experiment status to show that its stopped
