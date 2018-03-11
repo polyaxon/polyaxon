@@ -107,10 +107,12 @@ class TestExperimentModel(BaseTest):
 
     @mock.patch('schedulers.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
+        content = Specification.read(experiment_spec_content)
+
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
+        mock_instance.spec = content
 
-        content = Specification.read(experiment_spec_content)
         experiment = ExperimentFactory(config=content.parsed_data)
         assert experiment.is_independent is True
 
@@ -122,8 +124,8 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STARTING
 
-        # Assert 3 job were created
-        assert ExperimentJob.objects.filter(experiment=experiment).count() == 3
+        # Assert 1 job was created
+        assert ExperimentJob.objects.filter(experiment=experiment).count() == 1
         assert JobResources.objects.count() == 0
         jobs_statuses = ExperimentJob.objects.values_list('statuses__status', flat=True)
         assert set(jobs_statuses) == {JobLifeCycle.CREATED, }
@@ -134,7 +136,7 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @mock.patch('schedulers.experiment_scheduler.ExperimentSpawner')
+    @mock.patch('schedulers.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
         content = Specification.read(exec_experiment_resources_content)
 
@@ -153,7 +155,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STARTING
 
-        # Assert 3 job were created with resources
+        # Assert 3 jobs were created with resources
         assert ExperimentJob.objects.filter(experiment=experiment).count() == 3
         assert JobResources.objects.count() == 3
         jobs_statuses = ExperimentJob.objects.values_list('statuses__status', flat=True)

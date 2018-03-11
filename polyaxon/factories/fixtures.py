@@ -154,34 +154,35 @@ exec_experiment_resources_content = """---
       name: project1
     
     environment:
-      n_workers: 1
-      n_ps: 1  
       resources:
         cpu:
           requests: 1
-          limits: 1
-          
+          limits: 1    
         memory:
           requests: 100
           limits: 200
-          
-      default_worker_resources:
-        cpu:
-          requests: 1
-          limits: 1
-          
-        memory:
-          requests: 100
-          limits: 200
-      
-      default_ps_resources:
-        cpu:
-          requests: 1
-          limits: 1
-          
-        memory:
-          requests: 100
-          limits: 200
+    
+      tensorflow:  
+        n_workers: 1
+        n_ps: 1  
+        
+        default_worker_resources:
+          cpu:
+            requests: 1
+            limits: 1
+            
+          memory:
+            requests: 100
+            limits: 200
+        
+        default_ps_resources:
+          cpu:
+            requests: 1
+            limits: 1
+            
+          memory:
+            requests: 100
+            limits: 200
 
     model:
       model_type: regressor
