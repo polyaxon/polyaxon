@@ -73,6 +73,12 @@ $ polyaxon experiment stop
 $ polyaxon experiment -xp 2 stop
 ```
 
+option | type | description
+-------|------|------------
+  -y, --yes | Flag |  Automatic yes to prompts. Assume "yes" as answer to all prompts and run non-interactively.
+  --help | | Show this message and exit.
+
+
 ## delete
 
 Usage:

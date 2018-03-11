@@ -132,4 +132,5 @@ Options:
 option | type | description
 -------|------|------------
   --pending | Flag | To stop only pending experiments, i.e. leave currently running one intact.
+  -y, --yes | Flag |  Automatic yes to prompts. Assume "yes" as answer to all prompts and run non-interactively.
   --help | | Show this message and exit.
