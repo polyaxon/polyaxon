@@ -9,7 +9,9 @@ from polyaxon_schemas.environments import (
     GPUOptionsConfig,
     RunConfig,
     SessionConfig,
-    ClusterConfig,
+    TensorflowClusterConfig,
+    HorovodClusterConfig,
+    MXNetClusterConfig,
     EnvironmentConfig,
     K8SResourcesConfig,
     PodResourcesConfig,
@@ -112,7 +114,7 @@ class TestEnvironmentsConfigs(TestCase):
         config = SessionConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-    def test_cluster_config(self):
+    def test_tensorflow_cluster_config(self):
         config_dict = {
             "worker": [
                 "worker0.example.com:2222",
@@ -124,8 +126,34 @@ class TestEnvironmentsConfigs(TestCase):
                 "ps1.example.com:2222"
             ]
         }
-        config = ClusterConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowClusterConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_horovod_cluster_config(self):
+        config_dict = {
+            "worker": [
+                "worker0.example.com:2222",
+                "worker1.example.com:2222",
+                "worker2.example.com:2222"
+            ]
+        }
+        config = HorovodClusterConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_mxnet_cluster_config(self):
+        config_dict = {
+            "worker": [
+                "worker0.example.com:2222",
+                "worker1.example.com:2222",
+                "worker2.example.com:2222"
+            ],
+            "server": [
+                "server0.example.com:2222",
+                "server1.example.com:2222"
+            ]
+        }
+        config = MXNetClusterConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
     def test_run_config(self):
         config_dict = {
@@ -145,7 +173,7 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add cluster config
-        config_dict['cluster'] = ClusterConfig(
+        config_dict['cluster'] = TensorflowClusterConfig(
             worker=[TaskType.WORKER], ps=[TaskType.PS]
         ).to_dict()
         config = RunConfig.from_dict(config_dict)

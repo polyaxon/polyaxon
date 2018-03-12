@@ -11,7 +11,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     MXNetSpecification,
 )
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.environments import ClusterConfig
+from polyaxon_schemas.environments import TensorflowClusterConfig
 from polyaxon_schemas.utils import TaskType, Frameworks
 
 
@@ -201,7 +201,7 @@ class Specification(BaseSpecification):
 
         cluster_config[TaskType.PS] = ps
 
-        return ClusterConfig.from_dict(cluster_config)
+        return TensorflowClusterConfig.from_dict(cluster_config)
 
     def get_cluster(self, **kwargs):
         if self.is_local:

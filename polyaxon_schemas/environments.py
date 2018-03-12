@@ -7,7 +7,7 @@ from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import UUID
 
 
-class ClusterSchema(Schema):
+class TensorflowClusterSchema(Schema):
     master = fields.List(fields.Str(), allow_none=True)
     worker = fields.List(fields.Str(), allow_none=True)
     ps = fields.List(fields.Str(), allow_none=True)
@@ -17,22 +17,76 @@ class ClusterSchema(Schema):
 
     @post_load
     def make(self, data):
-        return ClusterConfig(**data)
+        return TensorflowClusterConfig(**data)
 
     @post_dump
     def unmake(self, data):
-        return ClusterConfig.remove_reduced_attrs(data)
+        return TensorflowClusterConfig.remove_reduced_attrs(data)
 
 
-class ClusterConfig(BaseConfig):
+class TensorflowClusterConfig(BaseConfig):
     """Tensorflow cluster definition"""
-    IDENTIFIER = 'cluster'
-    SCHEMA = ClusterSchema
+    IDENTIFIER = 'tensorflow_cluster'
+    SCHEMA = TensorflowClusterSchema
 
     def __init__(self, master=None, worker=None, ps=None):
         self.master = master
         self.worker = worker
         self.ps = ps
+
+
+class HorovodClusterSchema(Schema):
+    master = fields.List(fields.Str(), allow_none=True)
+    worker = fields.List(fields.Str(), allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return HorovodClusterConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HorovodClusterConfig.remove_reduced_attrs(data)
+
+
+class HorovodClusterConfig(BaseConfig):
+    """Horovod cluster definition"""
+    IDENTIFIER = 'horovod_cluster'
+    SCHEMA = HorovodClusterSchema
+
+    def __init__(self, master=None, worker=None):
+        self.master = master
+        self.worker = worker
+
+
+class MXNetClusterSchema(Schema):
+    master = fields.List(fields.Str(), allow_none=True)
+    worker = fields.List(fields.Str(), allow_none=True)
+    server = fields.List(fields.Str(), allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return MXNetClusterConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MXNetClusterConfig.remove_reduced_attrs(data)
+
+
+class MXNetClusterConfig(BaseConfig):
+    """MXNet cluster definition"""
+    IDENTIFIER = 'mxnet_cluster'
+    SCHEMA = MXNetClusterSchema
+
+    def __init__(self, master=None, worker=None, server=None):
+        self.master = master
+        self.worker = worker
+        self.server = server
 
 
 class K8SResourcesSchema(Schema):
@@ -212,7 +266,7 @@ class RunSchema(Schema):
     keep_checkpoint_every_n_hours = fields.Int(allow_none=True)
 
     session = fields.Nested(SessionSchema, allow_none=True)
-    cluster = fields.Nested(ClusterSchema, allow_none=True)
+    cluster = fields.Nested(TensorflowClusterSchema, allow_none=True)
 
     class Meta:
         ordered = True
