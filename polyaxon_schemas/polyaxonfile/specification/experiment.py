@@ -150,7 +150,7 @@ class Specification(BaseSpecification):
                 is_distributed=is_distributed
             )
 
-        if environment.horovo:
+        if environment.horovod:
             return HorovodSpecification.get_total_resources(
                 master_resources=self.master_resources,
                 environment=environment,

@@ -18,6 +18,7 @@ from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification,
+    HorovodSpecification,
     MXNetSpecification,
 )
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
@@ -673,6 +674,67 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)
+
+    def test_distributed_horovod_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/distributed_horovod_file.yml'))
+        assert plxfile.version == 1
+        assert plxfile.project.name == 'project1'
+        assert plxfile.project_path == '/mypath/project1'
+        assert plxfile.matrix is None
+        assert plxfile.run_type == RunTypes.KUBERNETES
+        assert isinstance(plxfile.settings, SettingsConfig)
+        assert isinstance(plxfile.settings.logging, LoggingConfig)
+        spec = plxfile.experiment_spec_at(0)
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.is_runnable
+        assert spec.framework == Frameworks.HOROVOD
+        assert spec.environment.horovod.n_workers == 5
+
+        assert isinstance(spec.environment.resources, PodResourcesConfig)
+        assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
+        assert spec.environment.resources.cpu.requests == 1
+        assert spec.environment.resources.cpu.limits == 2
+
+        assert isinstance(spec.environment.horovod.default_worker_resources,
+                          PodResourcesConfig)
+        assert isinstance(spec.environment.horovod.default_worker_resources.cpu,
+                          K8SResourcesConfig)
+        assert spec.environment.horovod.default_worker_resources.cpu.requests == 3
+        assert spec.environment.horovod.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.environment.horovod.default_worker_resources.memory,
+                          K8SResourcesConfig)
+        assert spec.environment.horovod.default_worker_resources.memory.requests == 256
+        assert spec.environment.horovod.default_worker_resources.memory.limits == 256
+
+        assert isinstance(spec.environment.horovod.worker_resources[0], PodResourcesConfig)
+        assert isinstance(spec.environment.horovod.worker_resources[0].memory,
+                          K8SResourcesConfig)
+        assert spec.environment.horovod.worker_resources[0].index == 3
+        assert spec.environment.horovod.worker_resources[0].memory.requests == 300
+        assert spec.environment.horovod.worker_resources[0].memory.limits == 300
+
+        # check that properties for return list of configs and resources is working
+        cluster, is_distributed = spec.cluster_def
+        worker_resources = HorovodSpecification.get_worker_resources(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert len(worker_resources) == spec.environment.horovod.n_workers
+        assert set(worker_resources.values()) == {
+            spec.environment.horovod.default_worker_resources,
+            spec.environment.horovod.worker_resources[0]}
+
+        # Check total resources
+        assert spec.total_resources == {
+            'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
+            'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
+            'gpu': None
+        }
+
+        assert spec.cluster_def == ({TaskType.MASTER: 1,
+                                     TaskType.WORKER: 5}, True)
 
     def test_distributed_mxnet_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
