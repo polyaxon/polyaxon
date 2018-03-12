@@ -97,6 +97,63 @@ class TensorflowSpecification(object):
         return total_resources.to_dict()
 
 
+class HorovodSpecification(object):
+
+    @staticmethod
+    def get_cluster_def(cluster, horovod_config):
+        is_distributed = False
+        if not horovod_config:
+            return cluster, is_distributed
+
+        cluster[TaskType.WORKER] = horovod_config.n_workers
+        if horovod_config.n_workers != 0:
+            is_distributed = True
+
+        return cluster, is_distributed
+
+    @staticmethod
+    def get_worker_configs(environment, cluster, is_distributed):
+        if environment is None or environment.horovod is None:
+            return {}
+        return get_task_configs(cluster=cluster,
+                                is_distributed=is_distributed,
+                                configs=environment.horovod.worker_configs,
+                                default_config=environment.horovod.default_worker_config,
+                                task_type=TaskType.WORKER)
+
+    @staticmethod
+    def get_worker_resources(environment, cluster, is_distributed):
+        if environment is None or environment.horovod is None:
+            return None
+        return get_task_job_resources(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            resources=environment.horovod.worker_resources,
+            default_resources=environment.horovod.default_worker_resources,
+            task_type=TaskType.WORKER)
+
+    @classmethod
+    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+        worker_resources = cls.get_worker_resources(
+            environment=environment,
+            cluster=cluster,
+            is_distributed=is_distributed,
+        )
+
+        if not any([master_resources, worker_resources]):
+            return None
+
+        total_resources = PodResourcesConfig()
+
+        if master_resources:
+            total_resources += master_resources
+
+        for w_resources in six.itervalues(worker_resources or {}):
+            total_resources += w_resources
+
+        return total_resources.to_dict()
+
+
 class MXNetSpecification(object):
 
     @staticmethod

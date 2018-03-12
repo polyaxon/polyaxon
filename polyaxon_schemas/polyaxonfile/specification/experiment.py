@@ -7,6 +7,7 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification,
+    HorovodSpecification,
     MXNetSpecification,
 )
 from polyaxon_schemas.polyaxonfile.utils import cached_property
@@ -101,6 +102,9 @@ class Specification(BaseSpecification):
         if self.environment.tensorflow:
             return Frameworks.TENSORFLOW
 
+        if self.environment.horovod:
+            return Frameworks.HOROVOD
+
         if self.environment.mxnet:
             return Frameworks.MXNET
 
@@ -119,6 +123,10 @@ class Specification(BaseSpecification):
             return TensorflowSpecification.get_cluster_def(
                 cluster=cluster,
                 tensorflow_config=environment.tensorflow)
+        if environment.horovod:
+            return HorovodSpecification.get_cluster_def(
+                cluster=cluster,
+                horovod_config=environment.horovod)
         if environment.mxnet:
             return MXNetSpecification.get_cluster_def(
                 cluster=cluster,
@@ -136,6 +144,14 @@ class Specification(BaseSpecification):
         # Check if any framework is defined
         if environment.tensorflow:
             return TensorflowSpecification.get_total_resources(
+                master_resources=self.master_resources,
+                environment=environment,
+                cluster=cluster,
+                is_distributed=is_distributed
+            )
+
+        if environment.horovo:
+            return HorovodSpecification.get_total_resources(
                 master_resources=self.master_resources,
                 environment=environment,
                 cluster=cluster,
