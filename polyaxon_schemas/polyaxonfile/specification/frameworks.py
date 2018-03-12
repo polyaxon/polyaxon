@@ -163,8 +163,8 @@ class MXNetSpecification(object):
             return cluster, is_distributed
 
         cluster[TaskType.WORKER] = mxnet_config.n_workers
-        cluster[TaskType.SERVER] = mxnet_config.n_servers
-        if mxnet_config.n_workers != 0 or mxnet_config.n_servers != 0:
+        cluster[TaskType.SERVER] = mxnet_config.n_ps
+        if mxnet_config.n_workers != 0 or mxnet_config.n_ps != 0:
             is_distributed = True
 
         return cluster, is_distributed
@@ -181,14 +181,14 @@ class MXNetSpecification(object):
             task_type=TaskType.WORKER)
 
     @staticmethod
-    def get_server_resources(environment, cluster, is_distributed):
+    def get_ps_resources(environment, cluster, is_distributed):
         if environment is None or environment.mxnet is None:
             return None
         return get_task_job_resources(
             cluster=cluster,
             is_distributed=is_distributed,
-            resources=environment.mxnet.server_resources,
-            default_resources=environment.mxnet.default_server_resources,
+            resources=environment.mxnet.ps_resources,
+            default_resources=environment.mxnet.default_ps_resources,
             task_type=TaskType.SERVER)
 
     @classmethod
@@ -198,12 +198,12 @@ class MXNetSpecification(object):
             cluster=cluster,
             is_distributed=is_distributed,
         )
-        server_resources = cls.get_server_resources(
+        ps_resources = cls.get_ps_resources(
             environment=environment,
             cluster=cluster,
             is_distributed=is_distributed,
         )
-        if not any([master_resources, worker_resources, server_resources]):
+        if not any([master_resources, worker_resources, ps_resources]):
             return None
 
         total_resources = PodResourcesConfig()
@@ -214,7 +214,7 @@ class MXNetSpecification(object):
         for w_resources in six.itervalues(worker_resources or {}):
             total_resources += w_resources
 
-        for p_resources in six.itervalues(server_resources or {}):
+        for p_resources in six.itervalues(ps_resources or {}):
             total_resources += p_resources
 
         return total_resources.to_dict()

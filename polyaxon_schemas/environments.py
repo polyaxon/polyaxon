@@ -395,11 +395,11 @@ class HorovodConfig(BaseConfig):
 
 class MXNetSchema(Schema):
     n_workers = fields.Int(allow_none=True)
-    n_servers = fields.Int(allow_none=True)
+    n_ps = fields.Int(allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
-    default_server_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    default_ps_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
-    server_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+    ps_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
 
     class Meta:
         ordered = True
@@ -419,17 +419,17 @@ class MXNetConfig(BaseConfig):
 
     def __init__(self,
                  n_workers=0,
-                 n_servers=0,
+                 n_ps=0,
                  default_worker_resources=None,
-                 default_server_resources=None,
+                 default_ps_resources=None,
                  worker_resources=None,
-                 server_resources=None):
+                 ps_resources=None):
         self.n_workers = n_workers
-        self.n_servers = n_servers
+        self.n_ps = n_ps
         self.default_worker_resources = default_worker_resources
-        self.default_server_resources = default_server_resources
+        self.default_ps_resources = default_ps_resources
         self.worker_resources = worker_resources
-        self.server_resources = server_resources
+        self.ps_resources = ps_resources
 
 
 def validate_frameworks(frameworks):

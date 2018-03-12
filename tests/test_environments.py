@@ -275,7 +275,7 @@ class TestEnvironmentsConfigs(TestCase):
     def test_mxnet_config(self):
         config_dict = {
             'n_workers': 10,
-            'n_servers': 5,
+            'n_ps': 5,
         }
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -287,7 +287,7 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add default ps resources
-        config_dict['default_server_resources'] = PodResourcesConfig(
+        config_dict['default_ps_resources'] = PodResourcesConfig(
             cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -299,7 +299,7 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom resources for ps 4
-        config_dict['server_resources'] = [PodResourcesConfig(
+        config_dict['ps_resources'] = [PodResourcesConfig(
             index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -323,7 +323,7 @@ class TestEnvironmentsConfigs(TestCase):
         # Add mxnet should raise
         config_dict['mxnet'] = {
             'n_workers': 10,
-            'n_servers': 5,
+            'n_ps': 5,
         }
 
         with self.assertRaises(ValidationError):

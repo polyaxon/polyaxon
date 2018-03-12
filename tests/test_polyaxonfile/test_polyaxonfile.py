@@ -751,7 +751,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_runnable
         assert spec.framework == Frameworks.MXNET
         assert spec.environment.mxnet.n_workers == 5
-        assert spec.environment.mxnet.n_servers == 10
+        assert spec.environment.mxnet.n_ps == 10
 
         assert isinstance(spec.environment.resources, PodResourcesConfig)
         assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
@@ -776,20 +776,20 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment.mxnet.worker_resources[0].memory.requests == 300
         assert spec.environment.mxnet.worker_resources[0].memory.limits == 300
 
-        assert isinstance(spec.environment.mxnet.default_server_resources,
+        assert isinstance(spec.environment.mxnet.default_ps_resources,
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.default_server_resources.cpu,
+        assert isinstance(spec.environment.mxnet.default_ps_resources.cpu,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.default_server_resources.cpu.requests == 2
-        assert spec.environment.mxnet.default_server_resources.cpu.limits == 4
+        assert spec.environment.mxnet.default_ps_resources.cpu.requests == 2
+        assert spec.environment.mxnet.default_ps_resources.cpu.limits == 4
 
-        assert isinstance(spec.environment.mxnet.server_resources[0],
+        assert isinstance(spec.environment.mxnet.ps_resources[0],
                           PodResourcesConfig)
-        assert isinstance(spec.environment.mxnet.server_resources[0].memory,
+        assert isinstance(spec.environment.mxnet.ps_resources[0].memory,
                           K8SResourcesConfig)
-        assert spec.environment.mxnet.server_resources[0].index == 9
-        assert spec.environment.mxnet.server_resources[0].memory.requests == 512
-        assert spec.environment.mxnet.server_resources[0].memory.limits == 1024
+        assert spec.environment.mxnet.ps_resources[0].index == 9
+        assert spec.environment.mxnet.ps_resources[0].memory.requests == 512
+        assert spec.environment.mxnet.ps_resources[0].memory.limits == 1024
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
@@ -803,15 +803,15 @@ class TestPolyaxonfile(TestCase):
             spec.environment.mxnet.default_worker_resources,
             spec.environment.mxnet.worker_resources[0]}
 
-        server_resources = MXNetSpecification.get_server_resources(
+        ps_resources = MXNetSpecification.get_ps_resources(
             environment=spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        assert len(server_resources) == spec.environment.mxnet.n_servers
-        assert set(server_resources.values()) == {
-            spec.environment.mxnet.default_server_resources,
-            spec.environment.mxnet.server_resources[0]}
+        assert len(ps_resources) == spec.environment.mxnet.n_ps
+        assert set(ps_resources.values()) == {
+            spec.environment.mxnet.default_ps_resources,
+            spec.environment.mxnet.ps_resources[0]}
 
         # Check total resources
         assert spec.total_resources == {

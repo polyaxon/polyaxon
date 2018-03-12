@@ -20,7 +20,7 @@ environment:
 
   mxnet:
     n_workers: 5
-    n_servers: 10
+    n_ps: 10
 
     default_worker_resources:
       cpu:
@@ -36,12 +36,12 @@ environment:
           requests: 300
           limits: 300
 
-    default_server_resources:
+    default_ps_resources:
       cpu:
         requests: 2
         limits: 4
 
-    server_resources:
+    ps_resources:
       - index: 9
         memory:
           requests: 512
