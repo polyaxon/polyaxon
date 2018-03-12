@@ -7,7 +7,12 @@ import uuid
 
 from django.conf import settings
 from kubernetes.client.rest import ApiException
-from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
+
+from polyaxon_schemas.polyaxonfile.specification.frameworks import (
+    TensorflowSpecification,
+    HorovodSpecification,
+    MXNetSpecification,
+)
 
 from polyaxon_schemas.utils import TaskType, Frameworks
 from rest_framework import fields
@@ -18,6 +23,8 @@ from experiments.serializers import ExperimentJobDetailSerializer
 from dockerizer.images import get_experiment_image_info
 
 from spawners.experiment_spawner import ExperimentSpawner
+from spawners.horovod_spawner import HorovodSpawner
+from spawners.mxnet_spawner import MXNetSpawner
 from spawners.tensorflow_spawner import TensorflowSpawner
 from experiments.models import ExperimentJob
 from spawners.utils.constants import ExperimentLifeCycle
@@ -65,6 +72,10 @@ def get_job_definition(definition):
 def get_spawner_class(framework):
     if framework == Frameworks.TENSORFLOW:
         return TensorflowSpawner
+    if framework == Frameworks.HOROVOD:
+        return HorovodSpawner
+    if framework == Frameworks.MXNET:
+        return MXNetSpawner
 
     return ExperimentSpawner
 
@@ -112,6 +123,77 @@ def handle_tensorflow_experiment(experiment, spawner, response):
                    resources=ps_resources.get(i))
 
 
+def handle_horovod_experiment(experiment, spawner, response):
+    # Get the number of jobs this experiment started
+    master = response[TaskType.MASTER]
+    job_uuid = master['pod']['metadata']['labels']['job_uuid']
+    job_uuid = uuid.UUID(job_uuid)
+
+    create_job(job_uuid=job_uuid,
+               experiment=experiment,
+               definition=get_job_definition(master),
+               resources=spawner.spec.master_resources)
+
+    cluster, is_distributed, = spawner.spec.cluster_def
+    worker_resources = HorovodSpecification.get_worker_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+
+    for i, worker in enumerate(response[TaskType.WORKER]):
+        job_uuid = worker['pod']['metadata']['labels']['job_uuid']
+        job_uuid = uuid.UUID(job_uuid)
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_job_definition(worker),
+                   role=TaskType.WORKER,
+                   resources=worker_resources.get(i))
+
+
+def handle_mxnet_experiment(experiment, spawner, response):
+    # Get the number of jobs this experiment started
+    master = response[TaskType.MASTER]
+    job_uuid = master['pod']['metadata']['labels']['job_uuid']
+    job_uuid = uuid.UUID(job_uuid)
+
+    create_job(job_uuid=job_uuid,
+               experiment=experiment,
+               definition=get_job_definition(master),
+               resources=spawner.spec.master_resources)
+
+    cluster, is_distributed, = spawner.spec.cluster_def
+    worker_resources = MXNetSpecification.get_worker_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+
+    server_resources = MXNetSpecification.get_server_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+
+    for i, worker in enumerate(response[TaskType.WORKER]):
+        job_uuid = worker['pod']['metadata']['labels']['job_uuid']
+        job_uuid = uuid.UUID(job_uuid)
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_job_definition(worker),
+                   role=TaskType.WORKER,
+                   resources=worker_resources.get(i))
+
+    for i, server in enumerate(response[TaskType.PS]):
+        job_uuid = server['pod']['metadata']['labels']['job_uuid']
+        job_uuid = uuid.UUID(job_uuid)
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_job_definition(server),
+                   role=TaskType.PS,
+                   resources=server_resources.get(i))
+
+
 def handle_base_experiment(experiment, spawner, response):
     # Default case only master was created by the experiment spawner
     master = response[TaskType.MASTER]
@@ -128,6 +210,12 @@ def handle_experiment(experiment, spawner, response):
     framework = experiment.compiled_spec.framework
     if framework == Frameworks.TENSORFLOW:
         handle_tensorflow_experiment(experiment=experiment, spawner=spawner, response=response)
+        return
+    if framework == Frameworks.HOROVOD:
+        handle_horovod_experiment(experiment=experiment, spawner=spawner, response=response)
+        return
+    if framework == Frameworks.MXNET:
+        handle_mxnet_experiment(experiment=experiment, spawner=spawner, response=response)
         return
 
     handle_base_experiment(experiment=experiment, spawner=spawner, response=response)
