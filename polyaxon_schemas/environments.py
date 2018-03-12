@@ -306,6 +306,36 @@ class TensorflowConfig(BaseConfig):
         self.ps_resources = ps_resources
 
 
+class HorovodSchema(Schema):
+    n_workers = fields.Int(allow_none=True)
+    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return HorovodConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HorovodConfig.remove_reduced_attrs(data)
+
+
+class HorovodConfig(BaseConfig):
+    IDENTIFIER = 'horovod'
+    SCHEMA = HorovodSchema
+
+    def __init__(self,
+                 n_workers=0,
+                 default_worker_resources=None,
+                 worker_resources=None):
+        self.n_workers = n_workers
+        self.default_worker_resources = default_worker_resources
+        self.worker_resources = worker_resources
+
+
 class MXNetSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     n_servers = fields.Int(allow_none=True)
@@ -354,6 +384,7 @@ class EnvironmentSchema(Schema):
     cluster_uuid = UUID(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
+    horovod = fields.Nested(HorovodSchema, allow_none=True)
     mxnet = fields.Nested(MXNetSchema, allow_none=True)
 
     class Meta:
@@ -369,7 +400,7 @@ class EnvironmentSchema(Schema):
 
     @validates_schema
     def validate_quantity(self, data):
-        validate_frameworks([data.get('tensorflow'), data.get('mxnet')])
+        validate_frameworks([data.get('tensorflow'), data.get('mxnet'), data.get('horovod')])
 
 
 class EnvironmentConfig(BaseConfig):
@@ -380,9 +411,11 @@ class EnvironmentConfig(BaseConfig):
                  cluster_uuid=None,
                  resources=None,
                  tensorflow=None,
+                 horovod=None,
                  mxnet=None):
         self.cluster_uuid = cluster_uuid
         self.resources = resources
         validate_frameworks([tensorflow, mxnet])
         self.tensorflow = tensorflow
+        self.horovod = horovod
         self.mxnet = mxnet

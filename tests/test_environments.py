@@ -13,7 +13,10 @@ from polyaxon_schemas.environments import (
     EnvironmentConfig,
     K8SResourcesConfig,
     PodResourcesConfig,
-    TensorflowConfig, MXNetConfig)
+    TensorflowConfig,
+    HorovodConfig,
+    MXNetConfig,
+)
 from polyaxon_schemas.utils import TaskType
 
 from tests.utils import assert_equal_dict
@@ -222,6 +225,25 @@ class TestEnvironmentsConfigs(TestCase):
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+    def test_horovod_config(self):
+        config_dict = {
+            'n_workers': 10,
+        }
+        config = HorovodConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add default worker resources
+        config_dict['default_worker_resources'] = PodResourcesConfig(
+            cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
+        config = HorovodConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Adding custom resources for worker 4
+        config_dict['worker_resources'] = [PodResourcesConfig(
+            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config = HorovodConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
     def test_mxnet_config(self):
         config_dict = {
             'n_workers': 10,
@@ -283,3 +305,17 @@ class TestEnvironmentsConfigs(TestCase):
         del config_dict['tensorflow']
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
+
+        # Adding horovod should raise
+        config_dict['horovod'] = {
+            'n_workers': 5
+        }
+
+        with self.assertRaises(ValidationError):
+            EnvironmentConfig.from_dict(config_dict)
+
+        # Removing mxnet should pass for horovod
+        del config_dict['mxnet']
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
