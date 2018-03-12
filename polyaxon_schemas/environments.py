@@ -170,19 +170,22 @@ class PodResourcesConfig(BaseConfig):
             if other.cpu:
                 self.cpu += other.cpu
         elif other.cpu:
-            self.cpu = other.cpu
+            self.cpu = K8SResourcesConfig()
+            self.cpu += other.cpu
 
         if self.memory:
             if other.memory:
                 self.memory += other.memory
         elif other.memory:
-            self.memory = other.memory
+            self.memory = K8SResourcesConfig()
+            self.memory += other.memory
 
         if self.gpu:
             if other.gpu:
                 self.gpu += other.gpu
         elif other.gpu:
-            self.gpu = other.gpu
+            self.gpu = K8SResourcesConfig()
+            self.gpu += other.gpu
         return self
 
 
