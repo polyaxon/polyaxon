@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, post_dump
+from marshmallow import Schema, fields, post_load, post_dump, validates_schema, ValidationError
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import UUID
@@ -306,10 +306,55 @@ class TensorflowConfig(BaseConfig):
         self.ps_resources = ps_resources
 
 
+class MXNetSchema(Schema):
+    n_workers = fields.Int(allow_none=True)
+    n_servers = fields.Int(allow_none=True)
+    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    default_server_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+    server_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return MXNetConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return MXNetConfig.remove_reduced_attrs(data)
+
+
+class MXNetConfig(BaseConfig):
+    IDENTIFIER = 'mxnet'
+    SCHEMA = MXNetSchema
+
+    def __init__(self,
+                 n_workers=0,
+                 n_servers=0,
+                 default_worker_resources=None,
+                 default_server_resources=None,
+                 worker_resources=None,
+                 server_resources=None):
+        self.n_workers = n_workers
+        self.n_servers = n_servers
+        self.default_worker_resources = default_worker_resources
+        self.default_server_resources = default_server_resources
+        self.worker_resources = worker_resources
+        self.server_resources = server_resources
+
+
+def validate_frameworks(frameworks):
+    if sum([1 for f in frameworks if f is not None]) > 1:
+        raise ValidationError('Only one framework can be used.')
+
+
 class EnvironmentSchema(Schema):
     cluster_uuid = UUID(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
+    mxnet = fields.Nested(MXNetSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -322,6 +367,10 @@ class EnvironmentSchema(Schema):
     def unmake(self, data):
         return EnvironmentConfig.remove_reduced_attrs(data)
 
+    @validates_schema
+    def validate_quantity(self, data):
+        validate_frameworks([data.get('tensorflow'), data.get('mxnet')])
+
 
 class EnvironmentConfig(BaseConfig):
     IDENTIFIER = 'environment'
@@ -330,7 +379,10 @@ class EnvironmentConfig(BaseConfig):
     def __init__(self,
                  cluster_uuid=None,
                  resources=None,
-                 tensorflow=None):
+                 tensorflow=None,
+                 mxnet=None):
         self.cluster_uuid = cluster_uuid
         self.resources = resources
+        validate_frameworks([tensorflow, mxnet])
         self.tensorflow = tensorflow
+        self.mxnet = mxnet

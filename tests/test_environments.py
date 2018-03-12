@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from marshmallow import ValidationError
 
 from polyaxon_schemas.environments import (
     GPUOptionsConfig,
@@ -12,7 +13,7 @@ from polyaxon_schemas.environments import (
     EnvironmentConfig,
     K8SResourcesConfig,
     PodResourcesConfig,
-)
+    TensorflowConfig, MXNetConfig)
 from polyaxon_schemas.utils import TaskType
 
 from tests.utils import assert_equal_dict
@@ -147,53 +148,47 @@ class TestEnvironmentsConfigs(TestCase):
         config = RunConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-    def test_environment_config(self):
+    def test_tensorflow_config(self):
         config_dict = {
             'n_workers': 10,
             'n_ps': 5,
             'delay_workers_by_global_step': False
         }
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Add run config
         config_dict['run_config'] = RunConfig().to_dict()
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-
-        # Add run resources
-        config_dict['resources'] = PodResourcesConfig(
-            cpu=K8SResourcesConfig(0.5, 1)).to_dict()
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Add default worker session config
         config_dict['default_worker_config'] = SessionConfig(
             intra_op_parallelism_threads=1,
             inter_op_parallelism_threads=3
         ).to_dict()
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Add default worker resources
         config_dict['default_worker_resources'] = PodResourcesConfig(
             cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Add default ps session config
-        config_dict['default_wps_config'] = SessionConfig(
+        config_dict['default_ps_config'] = SessionConfig(
             intra_op_parallelism_threads=0,
             inter_op_parallelism_threads=2
         ).to_dict()
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Add default ps resources
         config_dict['default_ps_resources'] = PodResourcesConfig(
             cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom config for worker 3
         config_dict['worker_configs'] = [SessionConfig(
@@ -202,14 +197,14 @@ class TestEnvironmentsConfigs(TestCase):
             intra_op_parallelism_threads=8,
             inter_op_parallelism_threads=8
         ).to_dict()]
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom resources for worker 4
         config_dict['worker_resources'] = [PodResourcesConfig(
             index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom config for ps 2
         config_dict['ps_configs'] = [SessionConfig(
@@ -218,11 +213,73 @@ class TestEnvironmentsConfigs(TestCase):
             intra_op_parallelism_threads=1,
             inter_op_parallelism_threads=1
         ).to_dict()]
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Adding custom resources for ps 4
         config_dict['ps_resources'] = [PodResourcesConfig(
             index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config = TensorflowConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_mxnet_config(self):
+        config_dict = {
+            'n_workers': 10,
+            'n_servers': 5,
+        }
+        config = MXNetConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add default worker resources
+        config_dict['default_worker_resources'] = PodResourcesConfig(
+            cpu=K8SResourcesConfig(0.5, 1), gpu=K8SResourcesConfig(2, 4)).to_dict()
+        config = MXNetConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add default ps resources
+        config_dict['default_server_resources'] = PodResourcesConfig(
+            cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()
+        config = MXNetConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Adding custom resources for worker 4
+        config_dict['worker_resources'] = [PodResourcesConfig(
+            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config = MXNetConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Adding custom resources for ps 4
+        config_dict['server_resources'] = [PodResourcesConfig(
+            index=4, cpu=K8SResourcesConfig(0.5, 1), memory=K8SResourcesConfig(256, 400)).to_dict()]
+        config = MXNetConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_environment_config(self):
+        config_dict = {
+            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict()
+        }
         config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add tensorflow
+        config_dict['tensorflow'] = {
+            'n_workers': 10,
+            'n_ps': 5,
+        }
+
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add mxnet should raise
+        config_dict['mxnet'] = {
+            'n_workers': 10,
+            'n_servers': 5,
+        }
+
+        with self.assertRaises(ValidationError):
+            EnvironmentConfig.from_dict(config_dict)
+
+        # Removing tensorflow should pass for mxnet
+        del config_dict['tensorflow']
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
