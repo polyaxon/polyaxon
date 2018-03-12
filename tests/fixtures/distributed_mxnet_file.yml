@@ -1,0 +1,53 @@
+---
+version: 1
+
+project:
+  name: project1
+  description: this is a test project
+
+settings:
+  logging:
+    level: INFO
+    path: /mypath/project1
+  run_type: kubernetes
+
+
+environment:
+  resources:
+    cpu:
+      requests: 1
+      limits: 2
+
+  mxnet:
+    n_workers: 5
+    n_servers: 10
+
+    default_worker_resources:
+      cpu:
+        requests: 3
+        limits: 3
+      memory:
+          requests: 256
+          limits: 256
+
+    worker_resources:
+      - index: 3
+        memory:
+          requests: 300
+          limits: 300
+
+    default_server_resources:
+      cpu:
+        requests: 2
+        limits: 4
+
+    server_resources:
+      - index: 9
+        memory:
+          requests: 512
+          limits: 1024
+
+run:
+  image: my_image
+  cmd: video_prediction_train --model=DNA --num_masks=1
+...
