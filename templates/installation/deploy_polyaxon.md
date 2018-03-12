@@ -52,7 +52,7 @@ Now you can install Polyaxon with your `config.yml` file
 $ helm install polyaxon/polyaxon \
     --name=<RELEASE_NAME> \
     --namespace=<NAMESPACE> \
-    -f config.yaml
+    -f config.yml
 ```
 
 `--name` is an identifier used by helm to refer to this deployment.
