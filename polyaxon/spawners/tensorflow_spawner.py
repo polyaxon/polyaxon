@@ -31,7 +31,7 @@ class TensorflowSpawner(ExperimentSpawner):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
         self._delete_multi_pods(task_type=TaskType.WORKER, n_pods=n_pods)
 
-    def create_param_servers(self):
+    def create_servers(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         cluster, is_distributed, = self.spec.cluster_def
         resources = TensorflowSpecification.get_ps_resources(
@@ -43,20 +43,20 @@ class TensorflowSpawner(ExperimentSpawner):
                                        resources=resources,
                                        n_pods=n_pods)
 
-    def delete_param_servers(self):
+    def delete_servers(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
         self._delete_multi_pods(task_type=TaskType.PS, n_pods=n_pods)
 
     def start_experiment(self, user_token=None):
         experiment = super(TensorflowSpawner, self).start_experiment(user_token=user_token)
         experiment[TaskType.WORKER] = self.create_workers()
-        experiment[TaskType.PS] = self.create_param_servers()
+        experiment[TaskType.PS] = self.create_servers()
         return experiment
 
     def stop_experiment(self):
         super(TensorflowSpawner, self).stop_experiment()
         self.delete_workers()
-        self.delete_param_servers()
+        self.delete_servers()
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def
@@ -73,12 +73,12 @@ class TensorflowSpawner(ExperimentSpawner):
 
         cluster_config[TaskType.WORKER] = workers
 
-        ps = []
+        servers = []
         for i in range(cluster_def.get(TaskType.PS, 0)):
             job_name = self.pod_manager.get_job_name(task_type=TaskType.PS, task_idx=i)
-            ps.append(self._get_pod_address(job_name))
+            servers.append(self._get_pod_address(job_name))
 
-        cluster_config[TaskType.PS] = ps
+        cluster_config[TaskType.PS] = servers
 
         return TensorflowClusterConfig.from_dict(cluster_config).to_dict()
 

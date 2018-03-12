@@ -169,7 +169,7 @@ def handle_mxnet_experiment(experiment, spawner, response):
         is_distributed=is_distributed
     )
 
-    server_resources = MXNetSpecification.get_server_resources(
+    server_resources = MXNetSpecification.get_ps_resources(
         environment=spawner.spec.environment,
         cluster=cluster,
         is_distributed=is_distributed
@@ -184,13 +184,13 @@ def handle_mxnet_experiment(experiment, spawner, response):
                    role=TaskType.WORKER,
                    resources=worker_resources.get(i))
 
-    for i, server in enumerate(response[TaskType.PS]):
+    for i, server in enumerate(response[TaskType.SERVER]):
         job_uuid = server['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         create_job(job_uuid=job_uuid,
                    experiment=experiment,
                    definition=get_job_definition(server),
-                   role=TaskType.PS,
+                   role=TaskType.SERVER,
                    resources=server_resources.get(i))
 
 
