@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import logging
 
-from polyaxon_schemas.environments import ClusterConfig
+from polyaxon_schemas.environments import TensorflowClusterConfig
 from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.utils import TaskType
 
@@ -80,5 +80,5 @@ class TensorflowSpawner(ExperimentSpawner):
 
         cluster_config[TaskType.PS] = ps
 
-        return ClusterConfig.from_dict(cluster_config).to_dict()
+        return TensorflowClusterConfig.from_dict(cluster_config).to_dict()
 
