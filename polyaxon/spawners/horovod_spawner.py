@@ -25,6 +25,7 @@ class HorovodSpawner(ExperimentSpawner):
         )
         return self._create_multi_pods(task_type=TaskType.WORKER,
                                        resources=resources,
+                                       env_vars={},  # TODO
                                        n_pods=n_pods)
 
     def delete_workers(self):

@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import json
 import logging
 
+from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.utils import TaskType
 
 from spawners.tensorflow_spawner import TensorflowSpawner
@@ -30,11 +31,13 @@ class PolyaxonSpawner(TensorflowSpawner):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER,
                                                   task_idx=0,
                                                   schedule='train_and_evaluate')
+        env_vars = self.get_env_vars(task_type=TaskType.MASTER, task_idx=0)
         return self._create_pod(task_type=TaskType.MASTER,
                                 task_idx=0,
                                 command=command,
                                 args=args,
                                 sidecar_args_fn=self.sidecar_args_fn,
+                                env_vars=env_vars,
                                 resources=resources)
 
     def _create_workers(self, resources, n_pods):
@@ -43,33 +46,48 @@ class PolyaxonSpawner(TensorflowSpawner):
             command, args = self.get_pod_command_args(task_type=TaskType.WORKER,
                                                       task_idx=i,
                                                       schedule='train')
+            env_vars = self.get_env_vars(task_type=TaskType.WORKER, task_idx=i)
             resp.append(self._create_pod(task_type=TaskType.WORKER,
                                          task_idx=i,
                                          command=command,
                                          args=args,
                                          sidecar_args_fn=self.sidecar_args_fn,
+                                         env_vars=env_vars,
                                          resources=resources.get(i)))
         return resp
 
     def create_workers(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
-        resources = self.spec.worker_resources
+
+        cluster, is_distributed, = self.spec.cluster_def
+        resources = TensorflowSpecification.get_worker_resources(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
         return self._create_workers(resources=resources, n_pods=n_pods)
 
-    def _create_param_servers(self, resources, n_pods):
+    def _create_servers(self, resources, n_pods):
         resp = []
         for i in range(n_pods):
             command, args = self.get_pod_command_args(task_type=TaskType.PS,
                                                       task_idx=i,
                                                       schedule='run_std_server')
+            env_vars = self.get_env_vars(task_type=TaskType.PS, task_idx=i)
             resp.append(self._create_pod(task_type=TaskType.PS,
                                          task_idx=i,
                                          command=command,
                                          args=args,
                                          sidecar_args_fn=self.sidecar_args_fn,
+                                         env_vars=env_vars,
                                          resources=resources.get(i)))
 
-    def create_param_servers(self):
+    def create_servers(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
-        resources = self.spec.ps_resources
-        return self._create_param_servers(resources=resources, n_pods=n_pods)
+        cluster, is_distributed, = self.spec.cluster_def
+        resources = TensorflowSpecification.get_ps_resources(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        return self._create_servers(resources=resources, n_pods=n_pods)

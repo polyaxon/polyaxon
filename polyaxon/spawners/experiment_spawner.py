@@ -75,6 +75,7 @@ class ExperimentSpawner(K8SManager):
                     command=None,
                     args=None,
                     sidecar_args_fn=None,
+                    env_vars=None,
                     resources=None,
                     restart_policy='Never'):
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
@@ -86,6 +87,7 @@ class ExperimentSpawner(K8SManager):
                                        task_idx=task_idx,
                                        volume_mounts=volume_mounts,
                                        volumes=volumes,
+                                       env_vars=env_vars,
                                        command=command,
                                        args=args,
                                        sidecar_args=sidecar_args,
@@ -104,7 +106,7 @@ class ExperimentSpawner(K8SManager):
             'service': service_resp.to_dict()
         }
 
-    def _create_multi_pods(self, task_type, resources, n_pods):
+    def _create_multi_pods(self, task_type, resources, env_vars, n_pods):
         resp = []
         for i in range(n_pods):
             command, args = self.get_pod_command_args()
@@ -113,6 +115,7 @@ class ExperimentSpawner(K8SManager):
                                          command=command,
                                          args=args,
                                          sidecar_args_fn=self.sidecar_args_fn,
+                                         env_vars=env_vars.get(i),
                                          resources=resources.get(i)))
         return resp
 
@@ -134,13 +137,21 @@ class ExperimentSpawner(K8SManager):
         cmd = [c for c in cmd if (c and c != '\\')]
         return cmd, []
 
+    def get_env_vars(self, task_type, task_idx):
+        return None
+
+    def _get_multi_env_vars(self, task_type, n_pods):
+        return {i: self.get_env_vars(task_type=task_type, task_idx=i) for i in range(n_pods)}
+
     def create_master(self, resources=None):
         command, args = self.get_pod_command_args()
+        env_vars = self.get_env_vars(task_type=TaskType.MASTER, task_idx=0)
         return self._create_pod(task_type=TaskType.MASTER,
                                 task_idx=0,
                                 command=command,
                                 args=args,
                                 sidecar_args_fn=self.sidecar_args_fn,
+                                env_vars=env_vars,
                                 resources=resources)
 
     def delete_master(self):

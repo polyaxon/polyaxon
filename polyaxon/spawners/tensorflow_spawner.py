@@ -7,12 +7,23 @@ from polyaxon_schemas.environments import TensorflowClusterConfig
 from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.utils import TaskType
 
+from experiments.paths import get_experiment_outputs_path
 from spawners.experiment_spawner import ExperimentSpawner
+from spawners.templates.config_maps import get_env_var
 
 logger = logging.getLogger('polyaxon.spawners.tensorflow')
 
 
 class TensorflowSpawner(ExperimentSpawner):
+
+    def get_env_vars(self, task_type, task_idx):
+        tf_config = {
+            'cluster': self.get_cluster(),
+            'task': {'type': task_type, 'index': task_idx},
+            'model_dir': get_experiment_outputs_path(self.experiment_name),
+            'environment': 'cloud'
+        }
+        return get_env_var('TF_CONFIG', tf_config)
 
     def create_workers(self):
         n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
@@ -23,8 +34,10 @@ class TensorflowSpawner(ExperimentSpawner):
             cluster=cluster,
             is_distributed=is_distributed
         )
+        env_vars = self._get_multi_env_vars(task_type=TaskType.WORKER, n_pods=n_pods)
         return self._create_multi_pods(task_type=TaskType.WORKER,
                                        resources=resources,
+                                       env_vars=env_vars,
                                        n_pods=n_pods)
 
     def delete_workers(self):
@@ -39,8 +52,10 @@ class TensorflowSpawner(ExperimentSpawner):
             cluster=cluster,
             is_distributed=is_distributed
         )
+        env_vars = self._get_multi_env_vars(task_type=TaskType.PS, n_pods=n_pods)
         return self._create_multi_pods(task_type=TaskType.PS,
                                        resources=resources,
+                                       env_vars=env_vars,
                                        n_pods=n_pods)
 
     def delete_servers(self):

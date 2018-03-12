@@ -14,6 +14,12 @@ from projects.paths import get_project_data_path
 from spawners.templates import constants
 
 
+def get_env_var(name, value):
+    if isinstance(value, dict):
+        value = json.dumps(value)
+    return client.V1EnvVar(name=name, value=value)
+
+
 def get_map_labels(project_name,
                    experiment_group_name,
                    experiment_name,
