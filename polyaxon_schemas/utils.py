@@ -263,10 +263,19 @@ class TaskType(object):
     MASTER = 'master'
     PS = 'ps'
     WORKER = 'worker'
+    SERVER = 'server'
+    SCHEDULER = 'scheduler'
+
+    VALUES = [MASTER, PS, WORKER, SERVER, SCHEDULER]
 
 
 class Frameworks(object):
     TENSORFLOW = 'tensorflow'
+    MXNET = 'mxnet'
+    HOROVOD = 'horovod'
+    PYTORCH = 'pytorch'
+
+    VALUES = [TENSORFLOW, MXNET, HOROVOD, PYTORCH]
 
 
 class RunTypes(object):
