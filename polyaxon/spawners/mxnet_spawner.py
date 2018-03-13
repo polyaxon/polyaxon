@@ -8,13 +8,29 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import MXNetSpecific
 from polyaxon_schemas.utils import TaskType
 
 from spawners.experiment_spawner import ExperimentSpawner
+from spawners.templates.config_maps import get_env_var
 
 logger = logging.getLogger('polyaxon.spawners.mxnet')
 
 
 class MXNetSpawner(ExperimentSpawner):
     def get_env_vars(self, task_type, task_idx):
-        raise NotImplemented
+        role = TaskType.SCHEDULER if task_type == TaskType.MASTER else task_type
+        env_vars = [
+            get_env_var('DMLC_NUM_WORKER', self.get_n_pods(TaskType.WORKER)),
+            get_env_var('DMLC_NUM_SERVER', self.get_n_pods(TaskType.SERVER)),
+            get_env_var('DMLC_PS_ROOT_URI', self.pod_manager.get_job_name(
+                task_type=TaskType.MASTER, task_idx=0)),
+            get_env_var('DMLC_PS_ROOT_PORT', self.pod_manager.ports[0]),
+            get_env_var(name='DMLC_ROLE', value=role)
+        ]
+        if task_type == TaskType.SERVER:
+            env_vars.append(get_env_var(name='DMLC_SERVER_ID', value=task_idx))
+        elif task_type == TaskType.WORKER:
+            env_vars.append(get_env_var(name='DMLC_SERVER_ID', value=0))
+            env_vars.append(get_env_var(name='DMLC_WORKER_ID', value=task_idx))
+
+        return env_vars
 
     @property
     def resources(self):

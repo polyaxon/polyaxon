@@ -14,9 +14,14 @@ from projects.paths import get_project_data_path
 from spawners.templates import constants
 
 
-def get_env_var(name, value):
-    if isinstance(value, dict):
-        value = json.dumps(value)
+def get_env_var(name, value, reraise=True):
+    if not isinstance(value, str):
+        try:
+            value = json.dumps(value)
+        except (ValueError, TypeError) as e:
+            if reraise:
+                raise e
+
     return client.V1EnvVar(name=name, value=value)
 
 
