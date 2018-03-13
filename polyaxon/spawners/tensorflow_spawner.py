@@ -39,7 +39,7 @@ class TensorflowSpawner(ExperimentSpawner):
             is_distributed=is_distributed
         )
         return {
-            TaskType.MASTER: self.spec.master_resources,
+            TaskType.MASTER: {0: self.spec.master_resources},
             TaskType.WORKER: worker_resources,
             TaskType.PS: ps_resources,
         }

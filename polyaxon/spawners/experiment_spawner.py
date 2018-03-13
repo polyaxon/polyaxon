@@ -73,9 +73,7 @@ class ExperimentSpawner(K8SManager):
         return None
 
     def get_resources(self, task_type, task_idx):
-        return {
-            TaskType.MASTER: self.spec.master_resources
-        }
+        return self.spec.master_resources
 
     def get_n_pods(self, task_type):
         return 0
@@ -130,7 +128,7 @@ class ExperimentSpawner(K8SManager):
                                          args=args,
                                          sidecar_args_fn=self.sidecar_args_fn,
                                          env_vars=env_vars,
-                                         resources=resources.get(i)))
+                                         resources=resources))
         return resp
 
     def _delete_pod(self, task_type, task_idx):
