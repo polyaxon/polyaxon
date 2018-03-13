@@ -73,15 +73,14 @@ def start_group_experiments(self, experiment_group_id):
         experiment_group.stop_pending_experiments(message='Early stopping')
         return
 
-    pending_experiments = list(experiment_group.pending_experiments)
     experiment_to_start = experiment_group.n_experiments_to_start
+    pending_experiments = experiment_group.pending_experiments[:experiment_to_start]
+    n_pending_experiment = experiment_group.pending_experiments.count()
 
-    while experiment_to_start > 0 and pending_experiments:
-        experiment = pending_experiments.pop()
+    for experiment in pending_experiments:
         build_experiment.delay(experiment_id=experiment.id)
-        experiment_to_start -= 1
 
-    if pending_experiments:
+    if n_pending_experiment - experiment_to_start > 0:
         # Schedule another task
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
