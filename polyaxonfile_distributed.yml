@@ -9,8 +9,9 @@ settings:
   search_method: SEQUENTIAL
 
 environment:
-  n_workers: 1
-  n_ps: 1
+  tensorflow:
+    n_workers: 1
+    n_ps: 1
 
 declarations:
   batch_size: 128
