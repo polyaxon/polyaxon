@@ -172,16 +172,3 @@ class ExperimentGroup(DiffModel, DescribableModel):
         if filters:
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
-
-    def stop_pending_experiments(self, message=None):
-        for experiment in self.pending_experiments:
-            # Update experiment status to show that its stopped
-            experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
-
-    def stop_all_experiments(self, message=None):
-        """Stop all experiments that are not ended yet"""
-        for experiment in self.experiments.exclude(
-                experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct():
-            # Update experiment status to show that its stopped
-            experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
-

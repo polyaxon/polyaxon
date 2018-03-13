@@ -63,8 +63,9 @@ class CeleryTasks(object):
     EXPERIMENTS_BUILD = 'experiments_build'
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_STOP = 'experiments_stop'
-    EXPERIMENTS_START_GROUP = 'experiments_start_group'
-    EXPERIMENTS_CREATE_GROUP = 'experiments_create_group'
+    EXPERIMENTS_GROUP_START = 'experiments_group_start'
+    EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
+    EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
     EXPERIMENTS_SYNC_JOBS_STATUSES = 'experiments_sync_jobs_statuses'
@@ -122,8 +123,9 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.EXPERIMENTS_START: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_START_GROUP: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_CREATE_GROUP: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.EXPERIMENTS_GROUP_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.EXPERIMENTS_GROUP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
+    CeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.REPOS_HANDLE_FILE_UPLOAD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_SET_METRICS: {'queue': CeleryQueues.API_EXPERIMENTS},

@@ -24,6 +24,7 @@ from projects.serializers import (
     ExperimentGroupDetailSerializer,
     ProjectDetailSerializer,
 )
+from projects.tasks import stop_group_experiments
 
 
 class ProjectCreateView(CreateAPIView):
@@ -107,8 +108,7 @@ class ExperimentGroupStopView(CreateAPIView):
         obj = self.get_object()
         pending = request.data.get('pending')
         pending = to_bool(pending) if pending is not None else False
-        if pending:
-            obj.stop_pending_experiments(message='User stopped experiment group')
-        else:
-            obj.stop_all_experiments(message='User stopped experiment group')
+        stop_group_experiments.delay(experiment_group_id=obj.id,
+                                     pending=pending,
+                                     message='User stopped experiment group')
         return Response(status=status.HTTP_200_OK)

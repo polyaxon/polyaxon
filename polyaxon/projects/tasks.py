@@ -11,13 +11,13 @@ from polyaxon_schemas.utils import SEARCH_METHODS
 from experiments.models import Experiment
 from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
-from experiments.tasks import build_experiment
+from experiments.tasks import build_experiment, stop_experiment
 from projects.models import ExperimentGroup, Project
 from dockerizer.builders import notebooks as notebooks_builder
 from dockerizer.images import get_notebook_image_info
 from repos.models import Repo
 from schedulers import notebook_scheduler, tensorboard_scheduler
-from spawners.utils.constants import JobLifeCycle
+from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 
@@ -36,7 +36,7 @@ def _get_group_ro_retry(experiment_group_id, task):
         return None
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_CREATE_GROUP, bind=True, max_retries=None)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
 def create_group_experiments(self, experiment_group_id):
     experiment_group = _get_group_ro_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
@@ -62,7 +62,7 @@ def create_group_experiments(self, experiment_group_id):
     start_group_experiments.apply_async((experiment_group.id,), countdown=1)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_START_GROUP, bind=True, max_retries=None)
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_START, bind=True, max_retries=None)
 def start_group_experiments(self, experiment_group_id):
     experiment_group = _get_group_ro_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
@@ -70,7 +70,9 @@ def start_group_experiments(self, experiment_group_id):
 
     # Check for early stopping before starting new experiments from this group
     if experiment_group.should_stop_early():
-        experiment_group.stop_pending_experiments(message='Early stopping')
+        stop_group_experiments(experiment_group_id=experiment_group_id,
+                               pending=True,
+                               message='Early stopping')
         return
 
     experiment_to_start = experiment_group.n_experiments_to_start
@@ -83,6 +85,28 @@ def start_group_experiments(self, experiment_group_id):
     if n_pending_experiment - experiment_to_start > 0:
         # Schedule another task
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
+
+@celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
+def stop_group_experiments(experiment_group_id, pending, message=None):
+    try:
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group_id)
+    except ExperimentGroup.DoesNotExist:
+        logger.info('ExperimentGroup `{}` was not found.'.format(experiment_group_id))
+        return
+
+    if pending:
+        for experiment in experiment_group.pending_experiments:
+            # Update experiment status to show that its stopped
+            experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
+    else:
+        for experiment in experiment_group.experiments.exclude(
+                experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct():
+            if experiment.is_running:
+                stop_experiment.delay(experiment_id=experiment.id)
+            else:
+                # Update experiment status to show that its stopped
+                experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
 
 
 def get_valid_project(project_id):

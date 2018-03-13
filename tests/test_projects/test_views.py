@@ -359,22 +359,24 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert self.object.stopped_experiments.count() == 0
 
         # Check that is calling the correct function
-        with patch.object(ExperimentGroup, 'stop_all_experiments') as mock_fct:
+        with patch('projects.tasks.stop_group_experiments.delay') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1
 
         # Execute the function
-        resp = self.auth_client.post(self.url, data)
+        with patch('schedulers.experiment_scheduler.stop_experiment') as _:
+            resp = self.auth_client.post(self.url, data)
+
         assert resp.status_code == status.HTTP_200_OK
-        assert self.object.stopped_experiments.count() == 3
+        assert self.object.stopped_experiments.count() == 2
 
     def test_pending_stop(self):
         data = {'pending': True}
         assert self.object.stopped_experiments.count() == 0
 
         # Check that is calling the correct function
-        with patch.object(ExperimentGroup, 'stop_pending_experiments') as mock_fct:
+        with patch('projects.tasks.stop_group_experiments.delay') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1
