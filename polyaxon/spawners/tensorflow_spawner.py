@@ -25,53 +25,41 @@ class TensorflowSpawner(ExperimentSpawner):
         }
         return get_env_var('TF_CONFIG', tf_config)
 
-    def create_workers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
-
+    @property
+    def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
-        resources = TensorflowSpecification.get_worker_resources(
+        worker_resources = TensorflowSpecification.get_worker_resources(
             environment=self.spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        env_vars = self._get_multi_env_vars(task_type=TaskType.WORKER, n_pods=n_pods)
-        return self._create_multi_pods(task_type=TaskType.WORKER,
-                                       resources=resources,
-                                       env_vars=env_vars,
-                                       n_pods=n_pods)
-
-    def delete_workers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
-        self._delete_multi_pods(task_type=TaskType.WORKER, n_pods=n_pods)
-
-    def create_servers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
-        cluster, is_distributed, = self.spec.cluster_def
-        resources = TensorflowSpecification.get_ps_resources(
+        ps_resources = TensorflowSpecification.get_ps_resources(
             environment=self.spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        env_vars = self._get_multi_env_vars(task_type=TaskType.PS, n_pods=n_pods)
-        return self._create_multi_pods(task_type=TaskType.PS,
-                                       resources=resources,
-                                       env_vars=env_vars,
-                                       n_pods=n_pods)
+        return {
+            TaskType.MASTER: self.spec.master_resources,
+            TaskType.WORKER: worker_resources,
+            TaskType.PS: ps_resources,
+        }
 
-    def delete_servers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.PS, 0)
-        self._delete_multi_pods(task_type=TaskType.PS, n_pods=n_pods)
+    def get_resources(self, task_type, task_idx):
+        return self.resources.get(task_type, {}).get(task_idx)
+
+    def get_n_pods(self, task_type):
+        return self.spec.cluster_def[0].get(task_type, 0)
 
     def start_experiment(self, user_token=None):
         experiment = super(TensorflowSpawner, self).start_experiment(user_token=user_token)
-        experiment[TaskType.WORKER] = self.create_workers()
-        experiment[TaskType.PS] = self.create_servers()
+        experiment[TaskType.WORKER] = self.create_multi_pods(task_type=TaskType.WORKER)
+        experiment[TaskType.PS] = self.create_multi_pods(task_type=TaskType.PS)
         return experiment
 
     def stop_experiment(self):
         super(TensorflowSpawner, self).stop_experiment()
-        self.delete_workers()
-        self.delete_servers()
+        self.delete_multi_pods(task_type=TaskType.WORKER)
+        self.delete_multi_pods(task_type=TaskType.PS)
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def
