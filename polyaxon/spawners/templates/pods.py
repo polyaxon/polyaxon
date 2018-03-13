@@ -14,6 +14,7 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 
 from polyaxon_k8s import constants as k8s_constants
 
+from libs.utils import get_list
 from spawners.templates import constants
 
 logger = logging.getLogger('polyaxon.spawners.spawners')
@@ -178,7 +179,7 @@ class PodManager(object):
                           args=None,
                           resources=None):
         """Pod job container for task."""
-        env_vars = env_vars or []
+        env_vars = get_list(env_vars)
         env_vars += [
             self.get_from_experiment_config_map(constants.CONFIG_MAP_CLUSTER_KEY_NAME),
             self.get_from_experiment_config_map(constants.CONFIG_MAP_DECLARATIONS_KEY_NAME),
@@ -240,15 +241,15 @@ class PodManager(object):
                           resources=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
-        volume_mounts = volume_mounts or []
-        volumes = volumes or []
+        volume_mounts = get_list(volume_mounts)
+        volumes = get_list(volumes)
 
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts
         volumes += gpu_volumes
 
         # Add job information
-        env_vars = env_vars or []
+        env_vars = get_list(env_vars)
         env_vars.append(
             client.V1EnvVar(
                 name=constants.CONFIG_MAP_TASK_INFO_KEY_NAME,

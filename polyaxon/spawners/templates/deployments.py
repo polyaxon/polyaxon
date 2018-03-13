@@ -5,6 +5,7 @@ from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
 
+from libs.utils import get_list
 from spawners.templates import constants
 from spawners.templates import pods
 
@@ -29,8 +30,8 @@ def get_project_pod_spec(volume_mounts,
                          env_vars=None,
                          restart_policy=None):
     """Pod spec to be used to create pods for project side: tensorboard, notebooks."""
-    volume_mounts = volume_mounts or []
-    volumes = volumes or []
+    volume_mounts = get_list(volume_mounts)
+    volumes = get_list(volumes)
 
     gpu_volume_mounts, gpu_volumes = pods.get_gpu_volumes_def(resources)
     volume_mounts += gpu_volume_mounts

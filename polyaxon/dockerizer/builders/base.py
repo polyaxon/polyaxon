@@ -15,6 +15,7 @@ from docker.errors import DockerException
 
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from libs.paths import copy_to_tmp_dir, delete_tmp_dir, delete_path
+from libs.utils import get_list
 from repos import git
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')
@@ -48,8 +49,8 @@ class BaseDockerBuilder(object):
             self.build_repo_path = self.repo_path
 
         self.build_path = '/'.join(self.build_repo_path.split('/')[:-1])
-        self.steps = steps or []
-        self.env_vars = env_vars or []
+        self.steps = get_list(steps)
+        self.env_vars = get_list(env_vars)
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()

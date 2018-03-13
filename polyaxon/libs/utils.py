@@ -5,6 +5,8 @@ from distutils.util import strtobool
 
 from django.utils.crypto import salted_hmac
 
+from polyaxon_schemas.utils import to_list
+
 
 def to_bool(value):
     if isinstance(value, str):
@@ -21,3 +23,7 @@ def to_bool(value):
 
 def get_hmac(key_salt, value):
     return salted_hmac(key_salt, value).hexdigest()
+
+
+def get_list(values):
+    return to_list(values) if values is not None else []
