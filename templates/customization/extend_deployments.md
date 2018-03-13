@@ -7,11 +7,11 @@ see the [Polyaxon Helm Chart Configuration Reference](/reference_polyaxon_helm).
 
 The general method to modify your Kubernetes deployment is to:
 
- 1. Make a change to the config.yaml
+ 1. Make a change to the config.yml
  2. Run a helm upgrade:
 
     ```bash
-    $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yaml
+    $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yml
     ```
 
     Where `<RELEASE_NAME>` is the parameter you passed to `--name` when installing polyaxon with `helm install`.

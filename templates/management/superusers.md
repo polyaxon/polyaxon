@@ -10,7 +10,7 @@ Superusers in Polyaxon are allowed to:
 
 Polyaxon comes with a default superuser `root`. This user has also a default password and email.
 
-You can customize the `username`, `email`, and `password` of that user by updating your `config.yaml`.
+You can customize the `username`, `email`, and `password` of that user by updating your `config.yml`.
 
 !!! info
     For more details about how to extend your polyaxon deployment, go to [extend deployment section](/customization/extend_deployments).

@@ -11,7 +11,7 @@ This version of Polyaxon has currently two type of users:
     to manage teams, resources quotas, and parallelism quotas.
 
 By default, Polyaxon ships with a default super user `root`.
-You can customize the `username`, `email`, and `password` of that user by updating your `config.yaml`.
+You can customize the `username`, `email`, and `password` of that user by updating your `config.yml`.
 
 !!! info
     For more details about how to extend your polyaxon deployment, go to the [extend deployment section](/customization/extend_deployments).

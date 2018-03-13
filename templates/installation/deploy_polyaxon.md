@@ -70,7 +70,7 @@ we again recommend using `polyaxon` to make it always easy to remember.
     $ helm install polyaxon/polyaxon \
     --name=polyaxon \
     --namespace=polyaxon \
-    -f config.yaml
+    -f config.yml
     ```
 
 ??? note "Release name already exists error"
