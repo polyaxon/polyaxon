@@ -13,52 +13,44 @@ logger = logging.getLogger('polyaxon.spawners.mxnet')
 
 
 class MXNetSpawner(ExperimentSpawner):
+    def get_env_vars(self, task_type, task_idx):
+        raise NotImplemented
 
-    def create_workers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
-
+    @property
+    def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
-        resources = MXNetSpecification.get_worker_resources(
+        worker_resources = MXNetSpecification.get_worker_resources(
             environment=self.spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        return self._create_multi_pods(task_type=TaskType.WORKER,
-                                       resources=resources,
-                                       env_vars={},  # TODO
-                                       n_pods=n_pods)
-
-    def delete_workers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
-        self._delete_multi_pods(task_type=TaskType.WORKER, n_pods=n_pods)
-
-    def create_servers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.SERVER, 0)
-        cluster, is_distributed, = self.spec.cluster_def
-        resources = MXNetSpecification.get_ps_resources(
+        ps_resources = MXNetSpecification.get_ps_resources(
             environment=self.spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        return self._create_multi_pods(task_type=TaskType.SERVER,
-                                       resources=resources,
-                                       env_vars={},  # TODO
-                                       n_pods=n_pods)
+        return {
+            TaskType.MASTER: self.spec.master_resources,
+            TaskType.WORKER: worker_resources,
+            TaskType.SERVER: ps_resources,
+        }
 
-    def delete_servers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.SERVER, 0)
-        self._delete_multi_pods(task_type=TaskType.SERVER, n_pods=n_pods)
+    def get_resources(self, task_type, task_idx):
+        return self.resources.get(task_type, {}).get(task_idx)
+
+    def get_n_pods(self, task_type):
+        return self.spec.cluster_def[0].get(task_type, 0)
 
     def start_experiment(self, user_token=None):
         experiment = super(MXNetSpawner, self).start_experiment(user_token=user_token)
-        experiment[TaskType.WORKER] = self.create_workers()
-        experiment[TaskType.SERVER] = self.create_servers()
+        experiment[TaskType.WORKER] = self.create_multi_pods(task_type=TaskType.WORKER)
+        experiment[TaskType.SERVER] = self.create_multi_pods(task_type=TaskType.SERVER)
         return experiment
 
     def stop_experiment(self):
         super(MXNetSpawner, self).stop_experiment()
-        self.delete_workers()
-        self.delete_servers()
+        self.delete_multi_pods(task_type=TaskType.WORKER)
+        self.delete_multi_pods(task_type=TaskType.SERVER)
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def

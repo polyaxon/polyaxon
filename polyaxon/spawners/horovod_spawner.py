@@ -14,32 +14,36 @@ logger = logging.getLogger('polyaxon.spawners.horovod')
 
 class HorovodSpawner(ExperimentSpawner):
 
-    def create_workers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
+    def get_env_vars(self, task_type, task_idx):
+        raise NotImplemented
 
+    @property
+    def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
-        resources = HorovodSpecification.get_worker_resources(
+        worker_resources = HorovodSpecification.get_worker_resources(
             environment=self.spec.environment,
             cluster=cluster,
             is_distributed=is_distributed
         )
-        return self._create_multi_pods(task_type=TaskType.WORKER,
-                                       resources=resources,
-                                       env_vars={},  # TODO
-                                       n_pods=n_pods)
+        return {
+            TaskType.MASTER: self.spec.master_resources,
+            TaskType.WORKER: worker_resources,
+        }
 
-    def delete_workers(self):
-        n_pods = self.spec.cluster_def[0].get(TaskType.WORKER, 0)
-        self._delete_multi_pods(task_type=TaskType.WORKER, n_pods=n_pods)
+    def get_resources(self, task_type, task_idx):
+        return self.resources.get(task_type, {}).get(task_idx)
+
+    def get_n_pods(self, task_type):
+        return self.spec.cluster_def[0].get(task_type, 0)
 
     def start_experiment(self, user_token=None):
         experiment = super(HorovodSpawner, self).start_experiment(user_token=user_token)
-        experiment[TaskType.WORKER] = self.create_workers()
+        experiment[TaskType.WORKER] = self.create_multi_pods(task_type=TaskType.WORKER)
         return experiment
 
     def stop_experiment(self):
         super(HorovodSpawner, self).stop_experiment()
-        self.delete_workers()
+        self.delete_multi_pods(task_type=TaskType.WORKER)
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def
