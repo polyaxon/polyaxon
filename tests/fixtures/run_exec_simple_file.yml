@@ -9,5 +9,9 @@ project:
 
 run:
   image: my_image
+  steps:
+    - pip install package1
+  env_vars:
+    - ['LC_ALL', 'en_US.UTF-8']
   cmd: video_prediction_train --model=DNA --num_masks=1
 ...
