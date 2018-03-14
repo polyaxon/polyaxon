@@ -10,7 +10,7 @@ environment:
     n_ps: 1
 
 run:
-  image: mouradmourafiq/mxnet2
+  image: polyaxon/mxnetkv
   steps:
     - pip install --no-cache-dir -U polyaxon-helper
   env_vars:
