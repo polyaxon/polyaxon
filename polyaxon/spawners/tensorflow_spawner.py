@@ -15,6 +15,9 @@ logger = logging.getLogger('polyaxon.spawners.tensorflow')
 
 
 class TensorflowSpawner(ExperimentSpawner):
+    MASTER_SERVICE = True
+    WORKER_SERVICE = True
+    PS_SERVICE = True
 
     def get_env_vars(self, task_type, task_idx):
         tf_config = {
@@ -52,14 +55,16 @@ class TensorflowSpawner(ExperimentSpawner):
 
     def start_experiment(self, user_token=None):
         experiment = super(TensorflowSpawner, self).start_experiment(user_token=user_token)
-        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER)
-        experiment[TaskType.PS] = self.create_multi_jobs(task_type=TaskType.PS)
+        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
+                                                             add_service=self.WORKER_SERVICE)
+        experiment[TaskType.PS] = self.create_multi_jobs(task_type=TaskType.PS,
+                                                         add_service=self.PS_SERVICE)
         return experiment
 
     def stop_experiment(self):
         super(TensorflowSpawner, self).stop_experiment()
-        self.delete_multi_jobs(task_type=TaskType.WORKER)
-        self.delete_multi_jobs(task_type=TaskType.PS)
+        self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE)
+        self.delete_multi_jobs(task_type=TaskType.PS, has_service=self.PS_SERVICE)
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def

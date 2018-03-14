@@ -14,6 +14,10 @@ logger = logging.getLogger('polyaxon.spawners.mxnet')
 
 
 class MXNetSpawner(ExperimentSpawner):
+    MASTER_SERVICE = True
+    WORKER_SERVICE = False
+    SERVER_SERVICE = False
+
     def get_env_vars(self, task_type, task_idx):
         role = TaskType.SCHEDULER if task_type == TaskType.MASTER else task_type
         env_vars = [
@@ -59,14 +63,16 @@ class MXNetSpawner(ExperimentSpawner):
 
     def start_experiment(self, user_token=None):
         experiment = super(MXNetSpawner, self).start_experiment(user_token=user_token)
-        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER)
-        experiment[TaskType.SERVER] = self.create_multi_jobs(task_type=TaskType.SERVER)
+        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
+                                                             add_service=self.WORKER_SERVICE)
+        experiment[TaskType.SERVER] = self.create_multi_jobs(task_type=TaskType.SERVER,
+                                                             add_service=self.SERVER_SERVICE)
         return experiment
 
     def stop_experiment(self):
         super(MXNetSpawner, self).stop_experiment()
-        self.delete_multi_jobs(task_type=TaskType.WORKER)
-        self.delete_multi_jobs(task_type=TaskType.SERVER)
+        self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE)
+        self.delete_multi_jobs(task_type=TaskType.SERVER, has_service=self.SERVER_SERVICE)
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def
