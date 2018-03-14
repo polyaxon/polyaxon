@@ -10,7 +10,7 @@ class RunExecSchema(Schema):
     image = fields.Str()
     cmd = fields.Str(allow_none=True)
     steps = fields.List(fields.Str(), allow_none=True)
-    env_vars = fields.List(fields.List(fields.Str(), validate=validate.Length(equal=2)),
+    env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
     git = fields.Str(allow_none=True)
 

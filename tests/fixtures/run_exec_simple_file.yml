@@ -12,6 +12,7 @@ run:
   steps:
     - pip install package1
   env_vars:
-    - ['LC_ALL', 'en_US.UTF-8']
+    - ['KEY1', 'en_US.UTF-8']
+    - ['KEY2', 2]
   cmd: video_prediction_train --model=DNA --num_masks=1
 ...
