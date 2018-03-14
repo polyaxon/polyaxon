@@ -38,12 +38,12 @@ class HorovodSpawner(ExperimentSpawner):
 
     def start_experiment(self, user_token=None):
         experiment = super(HorovodSpawner, self).start_experiment(user_token=user_token)
-        experiment[TaskType.WORKER] = self.create_multi_pods(task_type=TaskType.WORKER)
+        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER)
         return experiment
 
     def stop_experiment(self):
         super(HorovodSpawner, self).stop_experiment()
-        self.delete_multi_pods(task_type=TaskType.WORKER)
+        self.delete_multi_jobs(task_type=TaskType.WORKER)
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def

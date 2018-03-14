@@ -78,7 +78,7 @@ class ExperimentSpawner(K8SManager):
     def get_n_pods(self, task_type):
         return 0
 
-    def _create_pod(self,
+    def _create_job(self,
                     task_type,
                     task_idx,
                     command=None,
@@ -115,14 +115,14 @@ class ExperimentSpawner(K8SManager):
             'service': service_resp.to_dict()
         }
 
-    def create_multi_pods(self, task_type):
+    def create_multi_jobs(self, task_type):
         resp = []
         n_pods = self.get_n_pods(task_type=task_type)
         for i in range(n_pods):
             command, args = self.get_pod_command_args(task_type=task_type, task_idx=i)
             env_vars = self.get_env_vars(task_type=task_type, task_idx=i)
             resources = self.get_resources(task_type=task_type, task_idx=i)
-            resp.append(self._create_pod(task_type=task_type,
+            resp.append(self._create_job(task_type=task_type,
                                          task_idx=i,
                                          command=command,
                                          args=args,
@@ -131,15 +131,15 @@ class ExperimentSpawner(K8SManager):
                                          resources=resources))
         return resp
 
-    def _delete_pod(self, task_type, task_idx):
+    def _delete_job(self, task_type, task_idx):
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
         self.delete_pod(name=job_name)
         self.delete_service(name=job_name)
 
-    def delete_multi_pods(self, task_type):
+    def delete_multi_jobs(self, task_type):
         n_pods = self.get_n_pods(task_type=task_type)
         for i in range(n_pods):
-            self._delete_pod(task_type=task_type, task_idx=i)
+            self._delete_job(task_type=task_type, task_idx=i)
 
     def get_pod_command_args(self, task_type, task_idx):
         if not self.spec.run_exec or not self.spec.run_exec.cmd:
@@ -154,7 +154,7 @@ class ExperimentSpawner(K8SManager):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER, task_idx=0)
         env_vars = self.get_env_vars(task_type=TaskType.MASTER, task_idx=0)
         resources = self.get_resources(task_type=TaskType.MASTER, task_idx=0)
-        return self._create_pod(task_type=TaskType.MASTER,
+        return self._create_job(task_type=TaskType.MASTER,
                                 task_idx=0,
                                 command=command,
                                 args=args,
@@ -163,7 +163,7 @@ class ExperimentSpawner(K8SManager):
                                 resources=resources)
 
     def delete_master(self):
-        self._delete_pod(task_type=TaskType.MASTER, task_idx=0)
+        self._delete_job(task_type=TaskType.MASTER, task_idx=0)
 
     def create_experiment_config_map(self):
         name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)

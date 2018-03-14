@@ -59,14 +59,14 @@ class MXNetSpawner(ExperimentSpawner):
 
     def start_experiment(self, user_token=None):
         experiment = super(MXNetSpawner, self).start_experiment(user_token=user_token)
-        experiment[TaskType.WORKER] = self.create_multi_pods(task_type=TaskType.WORKER)
-        experiment[TaskType.SERVER] = self.create_multi_pods(task_type=TaskType.SERVER)
+        experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER)
+        experiment[TaskType.SERVER] = self.create_multi_jobs(task_type=TaskType.SERVER)
         return experiment
 
     def stop_experiment(self):
         super(MXNetSpawner, self).stop_experiment()
-        self.delete_multi_pods(task_type=TaskType.WORKER)
-        self.delete_multi_pods(task_type=TaskType.SERVER)
+        self.delete_multi_jobs(task_type=TaskType.WORKER)
+        self.delete_multi_jobs(task_type=TaskType.SERVER)
 
     def get_cluster(self):
         cluster_def, is_distributed = self.spec.cluster_def
