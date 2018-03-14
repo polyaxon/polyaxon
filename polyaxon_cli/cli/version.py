@@ -94,6 +94,10 @@ def version(cli, platform, lib):
             server_version = version_client.get_cli_version()
         except AuthorizationError:
             session_expired()
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not get cli version.')
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
         version = get_version(PROJECT_CLI_NAME)
         Printer.print_header('Current cli version: {}.'.format(version))
         Printer.print_header('Supported cli versions:')
@@ -104,6 +108,10 @@ def version(cli, platform, lib):
             server_version = version_client.get_lib_version()
         except AuthorizationError:
             session_expired()
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not get lib version.')
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
         version = get_version(PROJECT_LIB_NAME)
         Printer.print_header('Current lib version: {}.'.format(version))
         Printer.print_header('Supported lib versions:')
@@ -114,6 +122,10 @@ def version(cli, platform, lib):
             platform_version = version_client.get_platform_version()
         except AuthorizationError:
             session_expired()
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not get platform version.')
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
         chart_version = version_client.get_chart_version()
         Printer.print_header('Current platform version: {}.'.format(chart_version.version))
         Printer.print_header('Supported platform versions:')
