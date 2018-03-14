@@ -5,8 +5,9 @@ project:
   name: cifar10
 
 environment:
-  n_workers: 3
-  n_ps: 1
+  tensorflow:
+    n_workers: 3
+    n_ps: 1
 
 run:
   image: tensorflow/tensorflow:1.4.1
