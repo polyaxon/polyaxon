@@ -20,11 +20,15 @@ logger = logging.getLogger('polyaxon.spawners.tensorboard')
 
 class TensorboardSpawner(ProjectSpawner):
     TENSORBOARD_JOB_NAME = 'tensorboard'
+    PORT = 6006
 
     def get_tensorboard_url(self):
         return self._get_service_url(self.TENSORBOARD_JOB_NAME)
 
     def request_tensorboard_port(self):
+        if not self._use_ingress():
+            return self.PORT
+
         labels = 'app={},role={}'.format(settings.APP_LABELS_TENSORBOARD,
                                          settings.ROLE_LABELS_DASHBOARD)
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
@@ -35,7 +39,7 @@ class TensorboardSpawner(ProjectSpawner):
 
     def start_tensorboard(self, image, resources=None):
         ports = [self.request_tensorboard_port()]
-        target_ports = [6006]
+        target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes()
         outputs_path = get_project_outputs_path(project_name=self.project_name)
         deployment = deployments.get_deployment(
@@ -48,7 +52,7 @@ class TensorboardSpawner(ProjectSpawner):
             volumes=volumes,
             image=image,
             command=["/bin/sh", "-c"],
-            args=["tensorboard --logdir={} --port=6006".format(outputs_path)],
+            args=["tensorboard --logdir={} --port={}".format(outputs_path, self.PORT)],
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,

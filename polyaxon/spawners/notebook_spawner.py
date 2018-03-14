@@ -22,6 +22,7 @@ logger = logging.getLogger('polyaxon.spawners.notebook')
 
 class NotebookSpawner(ProjectSpawner):
     NOTEBOOK_JOB_NAME = 'notebook'
+    PORT = 8888
 
     def get_notebook_url(self):
         return self._get_service_url(self.NOTEBOOK_JOB_NAME)
@@ -40,6 +41,9 @@ class NotebookSpawner(ProjectSpawner):
         return volume, volume_mount
 
     def request_notebook_port(self):
+        if not self._use_ingress():
+            return self.PORT
+
         labels = 'app={},role={}'.format(settings.APP_LABELS_NOTEBOOK,
                                          settings.ROLE_LABELS_DASHBOARD)
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
@@ -50,7 +54,7 @@ class NotebookSpawner(ProjectSpawner):
 
     def start_notebook(self, image, resources=None):
         ports = [self.request_notebook_port()]
-        target_ports = [8888]
+        target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes()
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
@@ -77,13 +81,14 @@ class NotebookSpawner(ProjectSpawner):
             command=["/bin/sh", "-c"],
             args=["jupyter notebook "
                   "--no-browser "
-                  "--port=8888 "
+                  "--port={port} "
                   "--ip=0.0.0.0 "
                   "--allow-root "
                   "--NotebookApp.token={token} "
                   "--NotebookApp.trust_xheaders=True "
                   "--NotebookApp.base_url={base_url} "
                   "--NotebookApp.notebook_dir={notebook_dir} ".format(
+                    port=self.PORT,
                     token=notebook_token,
                     base_url=notebook_url,
                     notebook_dir=notebook_dir)],
