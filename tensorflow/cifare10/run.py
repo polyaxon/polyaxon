@@ -4,15 +4,10 @@ import argparse
 from cifar10_main import train
 from generate_cifar10_tfrecords import generate_data
 
-from polyaxon_helper import get_data_path, get_outputs_path, get_tf_config
+from polyaxon_helper import get_data_path, get_outputs_path
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--use-distributed',
-        type=bool,
-        default=False,
-        help='To run in distributed way.')
     parser.add_argument(
         '--variable-strategy',
         choices=['CPU', 'GPU'],
@@ -129,12 +124,6 @@ if __name__ == '__main__':
         raise ValueError('--train-batch-size must be multiple of --num-gpus.')
     if args.num_gpus != 0 and args.eval_batch_size % args.num_gpus != 0:
         raise ValueError('--eval-batch-size must be multiple of --num-gpus.')
-
-    # Check if we need to export TF_CLUSTER
-    if args.use_distributed:
-        get_tf_config()
-
-    del args.use_distributed
 
     data_dir = os.path.join(get_data_path(), 'cifar-10-data')
     # We create data for the project if it does not exists

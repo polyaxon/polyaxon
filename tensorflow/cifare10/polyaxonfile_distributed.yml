@@ -13,4 +13,4 @@ run:
   image: tensorflow/tensorflow:1.4.1
   steps:
     - pip install --no-cache-dir -U polyaxon-helper
-  cmd:  python run.py --train-steps=400 --use-distributed=true --sync
+  cmd:  python run.py --train-steps=400 --sync
