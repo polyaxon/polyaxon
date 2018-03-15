@@ -85,6 +85,6 @@ TEMPLATES = [
 POLYAXON_NOTIFICATION_ALIVE_URL = ("https://www.google-analytics.com/collect?"
                                    "v=1&tid=UA-89493331-1&cid={cluster_uuid}&t=pageview&"
                                    "dp=%2Fplatform%2F{cluster_uuid}%2F{n_nodes}"
-                                   "%2F{n_cpus}%2F{n_gpus}&"
+                                   "%2F{n_cpus}%2F{n_gpus}%2F{version}&"
                                    "ds=app&z={notification}&"
                                    "an=polyaxon&aid=com.polyaxon.app&av={version}")
