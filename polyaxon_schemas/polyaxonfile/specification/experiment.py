@@ -9,6 +9,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification,
     HorovodSpecification,
     MXNetSpecification,
+    PytorchSpecification,
 )
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.environments import TensorflowClusterConfig
@@ -108,6 +109,9 @@ class Specification(BaseSpecification):
         if self.environment.mxnet:
             return Frameworks.MXNET
 
+        if self.environment.pytorch:
+            return Frameworks.PYTORCH
+
     @cached_property
     def cluster_def(self):
         cluster = {
@@ -131,6 +135,10 @@ class Specification(BaseSpecification):
             return MXNetSpecification.get_cluster_def(
                 cluster=cluster,
                 mxnet_config=environment.mxnet)
+        if environment.pytorch:
+            return PytorchSpecification.get_cluster_def(
+                cluster=cluster,
+                pytorch_config=environment.pytorch)
 
     @cached_property
     def total_resources(self):
@@ -160,6 +168,14 @@ class Specification(BaseSpecification):
 
         if environment.mxnet:
             return MXNetSpecification.get_total_resources(
+                master_resources=self.master_resources,
+                environment=environment,
+                cluster=cluster,
+                is_distributed=is_distributed
+            )
+
+        if environment.pytorch:
+            return PytorchSpecification.get_total_resources(
                 master_resources=self.master_resources,
                 environment=environment,
                 cluster=cluster,
