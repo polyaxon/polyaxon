@@ -25,9 +25,9 @@ class PytorchSpawner(ExperimentSpawner):
             rank = task_idx + 1
             master_addr = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
         env_vars = [
-            get_env_var('MASTER_ADDR', master_addr),
-            get_env_var('MASTER_PORT', self.pod_manager.ports[0]),
-            get_env_var('WORLD_SIZE', self.get_n_pods(TaskType.WORKER) + 1),
+            get_env_var(name='MASTER_ADDR', value=master_addr),
+            get_env_var(name='MASTER_PORT', value=self.pod_manager.ports[0]),
+            get_env_var(name='WORLD_SIZE', value=self.get_n_pods(TaskType.WORKER) + 1),
             get_env_var(name='RANK', value=rank)
         ]
         return env_vars

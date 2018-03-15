@@ -26,7 +26,7 @@ class TensorflowSpawner(ExperimentSpawner):
             'model_dir': get_experiment_outputs_path(self.experiment_name),
             'environment': 'cloud'
         }
-        return get_env_var('TF_CONFIG', tf_config)
+        return get_env_var(name='TF_CONFIG', value=tf_config)
 
     @property
     def resources(self):
