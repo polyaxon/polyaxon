@@ -124,51 +124,9 @@ and update your polyaxonfile with an environment section.
 
 By default polyaxon creates a master job, so you only need to provide the workers  and/or parameter servers.
 
-### Tensorflow
-
-```yaml
-
-...
-environment:
-  tensorflow:
-    n_workers: 3
-    n_ps: 1
-
-```
-
-### MXNet
-
-```yaml
-
-...
-environment:
-  mxnet:
-    n_workers: 3
-    n_ps: 1
-
-```
-
-### Pytorch
-
-```yaml
-
-...
-environment:
-  pytorch:
-    n_workers: 3
-
-```
-
-### Horovod
-
-```yaml
-
-...
-environment:
-  horovod:
-    n_workers: 5
-
-```
+ * [Tensorflow distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/tensorflow/cifare10/polyaxonfile_distributed.yml)
+ * [MXNet distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/mxnet/cifar10/polyaxonfile_distributed.yml)
+ * [Pytorch distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/pytorch/mnist/polyaxonfile_distributed.yml)
 
 # Architecture
 
