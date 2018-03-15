@@ -12,6 +12,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification,
     HorovodSpecification,
     MXNetSpecification,
+    PytorchSpecification,
 )
 
 from polyaxon_schemas.utils import TaskType, Frameworks
@@ -25,6 +26,7 @@ from dockerizer.images import get_experiment_image_info
 from spawners.experiment_spawner import ExperimentSpawner
 from spawners.horovod_spawner import HorovodSpawner
 from spawners.mxnet_spawner import MXNetSpawner
+from spawners.pytorch_spawner import PytorchSpawner
 from spawners.tensorflow_spawner import TensorflowSpawner
 from experiments.models import ExperimentJob
 from spawners.utils.constants import ExperimentLifeCycle
@@ -76,6 +78,8 @@ def get_spawner_class(framework):
         return HorovodSpawner
     if framework == Frameworks.MXNET:
         return MXNetSpawner
+    if framework == Frameworks.PYTORCH:
+        return PytorchSpawner
 
     return ExperimentSpawner
 
@@ -136,6 +140,34 @@ def handle_horovod_experiment(experiment, spawner, response):
 
     cluster, is_distributed, = spawner.spec.cluster_def
     worker_resources = HorovodSpecification.get_worker_resources(
+        environment=spawner.spec.environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+
+    for i, worker in enumerate(response[TaskType.WORKER]):
+        job_uuid = worker['pod']['metadata']['labels']['job_uuid']
+        job_uuid = uuid.UUID(job_uuid)
+        create_job(job_uuid=job_uuid,
+                   experiment=experiment,
+                   definition=get_job_definition(worker),
+                   role=TaskType.WORKER,
+                   resources=worker_resources.get(i))
+
+
+def handle_pytorch_experiment(experiment, spawner, response):
+    # Get the number of jobs this experiment started
+    master = response[TaskType.MASTER]
+    job_uuid = master['pod']['metadata']['labels']['job_uuid']
+    job_uuid = uuid.UUID(job_uuid)
+
+    create_job(job_uuid=job_uuid,
+               experiment=experiment,
+               definition=get_job_definition(master),
+               resources=spawner.spec.master_resources)
+
+    cluster, is_distributed, = spawner.spec.cluster_def
+    worker_resources = PytorchSpecification.get_worker_resources(
         environment=spawner.spec.environment,
         cluster=cluster,
         is_distributed=is_distributed
@@ -216,6 +248,9 @@ def handle_experiment(experiment, spawner, response):
         return
     if framework == Frameworks.MXNET:
         handle_mxnet_experiment(experiment=experiment, spawner=spawner, response=response)
+        return
+    if framework == Frameworks.PYTORCH:
+        handle_pytorch_experiment(experiment=experiment, spawner=spawner, response=response)
         return
 
     handle_base_experiment(experiment=experiment, spawner=spawner, response=response)
