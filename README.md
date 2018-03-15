@@ -116,6 +116,60 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
 
 Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
 
+# Distributed training
+
+Polyaxon supports and simplifies distributed training. 
+Depending on the framework you are using, you need to adapt your code to enable the distributed training, 
+and update your polyaxonfile with an environment section.
+
+By default polyaxon creates a master job, so you only need to provide the workers  and/or parameter servers.
+
+### Tensorflow
+
+```yaml
+
+...
+environment:
+  tensorflow:
+    n_workers: 3
+    n_ps: 1
+
+```
+
+### MXNet
+
+```yaml
+
+...
+environment:
+  mxnet:
+    n_workers: 3
+    n_ps: 1
+
+```
+
+### Pytorch
+
+```yaml
+
+...
+environment:
+  pytorch:
+    n_workers: 3
+
+```
+
+### Horovod
+
+```yaml
+
+...
+environment:
+  horovod:
+    n_workers: 5
+
+```
+
 # Architecture
 
 ![Polyaxon architecture](config/polyaxon_architecture.png)
