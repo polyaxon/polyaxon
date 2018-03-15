@@ -61,6 +61,32 @@ class HorovodClusterConfig(BaseConfig):
         self.worker = worker
 
 
+class PytorchClusterSchema(Schema):
+    master = fields.List(fields.Str(), allow_none=True)
+    worker = fields.List(fields.Str(), allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return PytorchClusterConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PytorchClusterConfig.remove_reduced_attrs(data)
+
+
+class PytorchClusterConfig(BaseConfig):
+    """Pytorch cluster definition"""
+    IDENTIFIER = 'pytorch_cluster'
+    SCHEMA = PytorchClusterSchema
+
+    def __init__(self, master=None, worker=None):
+        self.master = master
+        self.worker = worker
+
+
 class MXNetClusterSchema(Schema):
     master = fields.List(fields.Str(), allow_none=True)
     worker = fields.List(fields.Str(), allow_none=True)
@@ -393,6 +419,36 @@ class HorovodConfig(BaseConfig):
         self.worker_resources = worker_resources
 
 
+class PytorchSchema(Schema):
+    n_workers = fields.Int(allow_none=True)
+    default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return PytorchConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return PytorchConfig.remove_reduced_attrs(data)
+
+
+class PytorchConfig(BaseConfig):
+    IDENTIFIER = 'pytorch'
+    SCHEMA = PytorchSchema
+
+    def __init__(self,
+                 n_workers=0,
+                 default_worker_resources=None,
+                 worker_resources=None):
+        self.n_workers = n_workers
+        self.default_worker_resources = default_worker_resources
+        self.worker_resources = worker_resources
+
+
 class MXNetSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
@@ -443,6 +499,7 @@ class EnvironmentSchema(Schema):
     tensorflow = fields.Nested(TensorflowSchema, allow_none=True)
     horovod = fields.Nested(HorovodSchema, allow_none=True)
     mxnet = fields.Nested(MXNetSchema, allow_none=True)
+    pytorch = fields.Nested(PytorchSchema, allow_none=True)
 
     class Meta:
         ordered = True
@@ -457,7 +514,10 @@ class EnvironmentSchema(Schema):
 
     @validates_schema
     def validate_quantity(self, data):
-        validate_frameworks([data.get('tensorflow'), data.get('mxnet'), data.get('horovod')])
+        validate_frameworks([data.get('tensorflow'),
+                             data.get('mxnet'),
+                             data.get('pytorch'),
+                             data.get('horovod')])
 
 
 class EnvironmentConfig(BaseConfig):
@@ -469,10 +529,12 @@ class EnvironmentConfig(BaseConfig):
                  resources=None,
                  tensorflow=None,
                  horovod=None,
+                 pytorch=None,
                  mxnet=None):
         self.cluster_uuid = cluster_uuid
         self.resources = resources
-        validate_frameworks([tensorflow, mxnet])
+        validate_frameworks([tensorflow, horovod, pytorch, mxnet])
         self.tensorflow = tensorflow
         self.horovod = horovod
+        self.pytorch = pytorch
         self.mxnet = mxnet
