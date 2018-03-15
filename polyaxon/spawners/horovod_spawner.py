@@ -64,4 +64,3 @@ class HorovodSpawner(ExperimentSpawner):
         cluster_config[TaskType.WORKER] = workers
 
         return HorovodClusterConfig.from_dict(cluster_config).to_dict()
-

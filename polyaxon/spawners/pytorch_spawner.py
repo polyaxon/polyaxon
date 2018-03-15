@@ -77,4 +77,3 @@ class PytorchSpawner(ExperimentSpawner):
         cluster_config[TaskType.WORKER] = workers
 
         return PytorchClusterConfig.from_dict(cluster_config).to_dict()
-

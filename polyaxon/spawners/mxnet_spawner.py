@@ -97,4 +97,3 @@ class MXNetSpawner(ExperimentSpawner):
         cluster_config[TaskType.SERVER] = servers
 
         return MXNetClusterConfig.from_dict(cluster_config).to_dict()
-

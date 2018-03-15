@@ -79,15 +79,16 @@ class NotebookSpawner(ProjectSpawner):
             volumes=volumes,
             image=image,
             command=["/bin/sh", "-c"],
-            args=["jupyter notebook "
-                  "--no-browser "
-                  "--port={port} "
-                  "--ip=0.0.0.0 "
-                  "--allow-root "
-                  "--NotebookApp.token={token} "
-                  "--NotebookApp.trust_xheaders=True "
-                  "--NotebookApp.base_url={base_url} "
-                  "--NotebookApp.notebook_dir={notebook_dir} ".format(
+            args=[
+                "jupyter notebook "
+                "--no-browser "
+                "--port={port} "
+                "--ip=0.0.0.0 "
+                "--allow-root "
+                "--NotebookApp.token={token} "
+                "--NotebookApp.trust_xheaders=True "
+                "--NotebookApp.base_url={base_url} "
+                "--NotebookApp.notebook_dir={notebook_dir} ".format(
                     port=self.PORT,
                     token=notebook_token,
                     base_url=notebook_url,
