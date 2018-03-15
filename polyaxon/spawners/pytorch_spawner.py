@@ -18,10 +18,14 @@ class PytorchSpawner(ExperimentSpawner):
     WORKER_SERVICE = False
 
     def get_env_vars(self, task_type, task_idx):
-        rank = 0 if task_type == TaskType.MASTER else task_idx + 1
+        if task_type == TaskType.MASTER:
+            rank = 0
+            master_addr = 'localhost'
+        else:
+            rank = task_idx + 1
+            master_addr = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
         env_vars = [
-            get_env_var('MASTER_ADDR', self.pod_manager.get_job_name(
-                task_type=TaskType.MASTER, task_idx=0)),
+            get_env_var('MASTER_ADDR', master_addr),
             get_env_var('MASTER_PORT', self.pod_manager.ports[0]),
             get_env_var('WORLD_SIZE', self.get_n_pods(TaskType.WORKER) + 1),
             get_env_var(name='RANK', value=rank)
