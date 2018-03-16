@@ -79,6 +79,7 @@ pages:
   - Experiment Groups & Hyperparams Search: experimentation/experiment_groups.md
   - Experiments & Distributed Runs: experimentation/experiments.md
   - Jobs: experimentation/jobs.md
+  - Distributed Experiments: experimentation/distributed_experiments.md
   - Project Plugins: experimentation/project_plugins.md
 - Tutorials:
   - Introduction: tutorials/index.md
