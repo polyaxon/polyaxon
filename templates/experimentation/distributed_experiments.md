@@ -32,12 +32,12 @@ each subsection in this guide describes how to define the the distributed traini
 ## Distributed experiments with Tensorflow
 
 To [distribute Tensorflow](https://www.tensorflow.org/deploy/distributed) experiment, 
-the user needs to defines cluster, which is a set of tasks that participate in the distributed execution.
+the user needs to define a cluster, which is a set of tasks that participate in the distributed execution.
 
 Tensorflow defines 3 different types of tasks: master, worker, and parameter server.
 
 To define a cluster in Polyaxon with a master, 3 workers, and 1 parameter server, 
-add a tensorflow subsection to environment section of your polyaxonfile: 
+add a tensorflow subsection to the environment section of your polyaxonfile: 
 
 ```yaml
 ...
@@ -50,10 +50,10 @@ environment:
     n_ps: 1
 ```
 
-You can have more control over the created tasks by polyaxon, by defining the resources of each task, 
+You can have more control over the created tasks by defining the resources of each task 
 the same way we defined the resources for the master.
 
-Here's an example where we define a resources for the master, workers and parameter server. 
+Here's an example where we define resources for the master, workers and parameter server. 
 
 
 ```yaml
@@ -86,12 +86,12 @@ environment:
 
     worker_resources:
       - index: 2
-         cpu:
-           requests: 1
-           limits: 2
-         memory:
-           requests: 256
-           limits: 1024
+        cpu:
+          requests: 1
+          limits: 2
+        memory:
+          requests: 256
+          limits: 1024
 
     default_ps_resources:
       cpu:
@@ -159,27 +159,6 @@ Same logic applies to the parameter servers with the `default_ps_resources` and 
 
 ## Distributed experiments with MXNet
 
-In a similar fashion, MXNet defines 3 types of tasks: scheduler, workers, and parameter servers.
-
-To define an MXNet cluster in Polyaxon with a scheduler, 3 workers, and 1 parameter server, 
-add an mxnet subsection to the environment section of your polyaxonfile: 
-
-```yaml
-...
-
-environment:
-  ...
-  
-  mxnet:
-    n_workers: 3
-    n_ps: 1
-```
-
-You can customize the resources of each task the same way it was explained in the tensorflow section.
-
-
-## Distributed experiments with MXNet
-
 In a similar fashion, [MXNet](https://mxnet.incubator.apache.org/faq/multi_devices.html#distributed-training-with-multiple-machines) defines 3 types of tasks: scheduler, workers, and parameter servers.
 
 To define an MXNet cluster in Polyaxon with a scheduler, 3 workers, and 1 parameter server, 
@@ -203,7 +182,7 @@ You can customize the resources of each task the same way it was explained in th
 
 [Distributed Pytorch](http://pytorch.org/tutorials/intermediate/dist_tuto.html) is also similar but only defines a master task (worker with rank 0) and a set of worker tasks. 
 
-To define an Pytorch cluster in Polyaxon with master, 3 workers, 
+To define a Pytorch cluster in Polyaxon with a master, 3 workers, 
 add a pytorch subsection to the environment section of your polyaxonfile: 
 
 
