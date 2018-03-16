@@ -213,7 +213,7 @@ $ polyaxon upload
     $ polyaxon run -f polyaxonfile.yml -u
     ```
 
-In order to customize the resources of our jobs we need to introduce a new section [environment](/sections#environment).
+In order to customize the resources of our jobs we need to introduce a new section [environment](polyaxonfile_specification/sections#environment).
 
 Let's create a new `polyaxonfile_resources.yml` override file that will allow us to achieve that
 

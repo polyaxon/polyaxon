@@ -5,7 +5,7 @@ and update your polyaxonfile with an environment section.
 
 By default polyaxon creates a master job, so you only need to provide the workers and/or parameter servers.
 
-To enable distributed runs, you need to update the [environment](/sections#environment) section.
+To enable distributed runs, you need to update the [environment](/polyaxonfile_specification/sections#environment) section.
 
 The environment section allows to customize the resources of the master job, 
 as well as defining the topology of the experiment with a specific definition for each framework.
