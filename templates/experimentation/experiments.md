@@ -193,10 +193,11 @@ It will create a new experiment based on experiment 2 last saved checked point.
 
 !!! caution
     This section is oriented for users who want to run experiments with multiple jobs
-    based on Tensorflow.
+    based on Tensorflow. Polyaxon supports also MXNet, Pytorch, and Horovod, 
+    you can find more details in the [distributed experiments](distributed_experiments)'s section.
 
 After modifying our `train.py` we want to run the experiment with 1 master 4 workers and 1 parameter server.
-We also want to customize the resources of the each node.
+We also want to customize the resources of each node.
 
 First let's upload the new version of the code
 
@@ -212,17 +213,16 @@ $ polyaxon upload
     $ polyaxon run -f polyaxonfile.yml -u
     ```
 
-In order to customize the resources of our jobs we need to introduce a new section [environment]().
+In order to customize the resources of our jobs we need to introduce a new section [environment](/sections#environment).
 
 Let's create a new `polyaxonfile_resources.yml` override file that will allow us to achieve that
 
 ```yaml
+
 ---
 version: 1
 
 environment:
-  n_workers: 4
-  n_ps: 1
 
   resources:
     cpu:
@@ -232,19 +232,23 @@ environment:
       requests: 512
       limits: 2048
 
-  default_worker_resources:
-    cpu:
-      requests: 1
-      limits: 2
-    memory:
-      requests: 256
-      limits: 1024
-    gpu:
-      request: 1
-      limits: 1
+  tensorflow:
+    n_workers: 4
+    n_ps: 1
 
-  worker_resources:
-    - index: 2
+     default_worker_resources:
+      cpu:
+        requests: 1
+        limits: 2
+      memory:
+        requests: 256
+        limits: 1024
+      gpu:
+        request: 1
+        limits: 1
+
+    worker_resources:
+      - index: 2
         cpu:
           requests: 1
           limits: 2
@@ -252,14 +256,14 @@ environment:
           requests: 256
           limits: 1024
 
-  ps_resources:
-    - index: 0
-      cpu:
-        requests: 1
-        limits: 1
-      memory:
-        requests: 256
-        limits: 1024
+    ps_resources:
+      - index: 0
+        cpu:
+          requests: 1
+          limits: 1
+        memory:
+          requests: 256
+          limits: 1024
 
 run:
   image: tensorflow/tensorflow:1.4.1-gpu-py3  # Update the image to use GPU
@@ -276,10 +280,10 @@ By default, Polyaxon always creates a master, so you must take that into conside
 ??? danger "Polyaxon always creates a master"
     A master is always created by polyaxon, you can only specify the workers and ps nodes.
 
-Also another thing you should, is that by default, all nodes are created without specifying the resources,
-You only need to specify the resources to have more control over the created pods.
+Also another thing you should know, is that by default, you can create all nodes without specifying the resources,
+you only need to specify the resources to have more control over the created pods.
 
-For the master node, `resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
+`resources` section defines the resources for the master node, i.e.  2 CPUs with a limit 4 CPUs, 0.5GB with a limit of 2GB.
 
 For the workers, we have two ways to define resources, the `default_worker_resources` and
 `worker_resources` that takes the index of the worker to define the resources for.
@@ -292,7 +296,9 @@ We could have also used `default_ps_resources` instead.
 
 Since we have multiple jobs, Polyaxon adds the cluster definition to the docker container you will be running under the name `POLYAXON_CLUSTER`.
 
-You can also use our helper library to extract these environment variables programmatically, as well as defining `TF_CONFIG` using `get_tf_config`.
+It also exposes some framework specific environment variables to the pods, in this case `TF_CONFIG` since we are running a Tensorflow distributed experiment.
+
+You can also use our helper library to extract these environment variables programmatically.
 
 !!! tip "Polyaxon export your cluster definition under environment variable name `POLYAXON_CLUSTER`"
     Check how you can [get the cluster definition](/reference_polyaxon_helper) to use it with your distributed deep learning model.
@@ -307,10 +313,13 @@ Creating an independent experiment.
 Experiment was created.
 ```
 
+Polyaxon currently supports distributed runs for Tensorflow, MXNet, Pytorch, and Horovod.
+Please go to the [distributed experiments](distributed_experiments)'s section to learn more how 
+to configure your experiment for the different frameworks. 
 
 ## Experiment jobs
 
-To check that our experiment is running in a distributed way,
+To check that the experiment is running in a distributed way,
 you can use Polyaxon dashboard or Polyaxon CLI,
 
 ```bash

@@ -137,14 +137,6 @@ the resources and configs of each job.
 
 The values of this section are:
 
-### n_workers
-
-The number of workers to use for an experiment.
-
-### n_ps
-
-The number of parameter server to use for an experiment.
-
 ### resources
 
 The resources to use for the job. In the case of distributed run, its the resources to use for the master job.
@@ -153,20 +145,32 @@ A resources definition, is optional and made of three optional fields:
  * cpu: {limits: value, requests: value}
  * memory: {limits: value, requests: value}
  * gpu: {limits: value, requests: value}
+ 
+To enable a distributed run, the user can define one of the following framework:
 
-### default_worker_resources
+### tensorflow
+
+#### n_workers
+
+The number of workers to use for an experiment.
+
+#### n_ps
+
+The number of parameter server to use for an experiment.
+
+#### default_worker_resources
 
 If specified, it will be the default workers resources.
 
-### default_ps_resources
+#### default_ps_resources
 
 If specified, it will be the default ps resources.
 
-### worker_resources
+#### worker_resources
 
 Defines a specific resources definition for a worker indicated by the index of the worker.
 
-### ps_resources
+#### ps_resources
 
 Defines a specific resources definition for a ps indicated by the index of the ps.
 
@@ -176,8 +180,6 @@ Example:
 ```yaml
 
 environment:
-  n_workers: 4
-  n_ps: 1
 
   resources:
     cpu:
@@ -187,34 +189,120 @@ environment:
       requests: 512
       limits: 2048
 
-  default_worker_resources:
-    cpu:
-      requests: 1
-      limits: 2
-    memory:
-      requests: 256
-      limits: 1024
-    gpu:
-      request: 1
-      limits: 1
-
-  worker_resources:
-    - index: 2
+  tensorflow:
+      n_workers: 4
+      n_ps: 1
+      default_worker_resources:
         cpu:
           requests: 1
           limits: 2
         memory:
           requests: 256
           limits: 1024
+        gpu:
+          request: 1
+          limits: 1
+    
+      worker_resources:
+        - index: 2
+          cpu:
+            requests: 1
+            limits: 2
+          memory:
+            requests: 256
+            limits: 1024
+    
+      ps_resources:
+        - index: 0
+          cpu:
+            requests: 1
+            limits: 1
+          memory:
+            requests: 256
+            limits: 1024
+```
 
-  ps_resources:
-    - index: 0
-      cpu:
-        requests: 1
-        limits: 1
-      memory:
-        requests: 256
-        limits: 1024
+### mxnet
+
+#### n_workers
+
+The number of workers to use for an experiment.
+
+#### n_ps
+
+The number of parameter server to use for an experiment.
+
+#### default_worker_resources
+
+If specified, it will be the default workers resources.
+
+#### default_ps_resources
+
+If specified, it will be the default ps resources.
+
+#### worker_resources
+
+Defines a specific resources definition for a worker indicated by the index of the worker.
+
+#### ps_resources
+
+Defines a specific resources definition for a ps indicated by the index of the ps.
+
+
+Example:
+
+```yaml
+
+environment:
+  mxnet:
+    n_workers: 4
+    n_ps: 1
+```
+
+### pytorch
+
+#### n_workers
+
+The number of workers to use for an experiment.
+
+#### default_worker_resources
+
+If specified, it will be the default workers resources.
+
+#### worker_resources
+
+Defines a specific resources definition for a worker indicated by the index of the worker.
+
+Example:
+
+```yaml
+
+environment:
+  pytorch:
+    n_workers: 4
+```
+
+### horovod
+
+#### n_workers
+
+The number of workers to use for an experiment.
+
+#### default_worker_resources
+
+If specified, it will be the default workers resources.
+
+#### worker_resources
+
+Defines a specific resources definition for a worker indicated by the index of the worker.
+
+Example:
+
+```yaml
+
+environment:
+  horovod:
+    n_workers: 4
 ```
 
 ## declarations

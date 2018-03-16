@@ -88,6 +88,14 @@ if an experiment run in a distributed way it will create multiple instances of `
     Please refer to the [jobs section](jobs) for more details.
 
 
+### Distributed Experiment
+
+A `Distrubted Experiment` is the execution of your model in distributed fashion and depends on the framework you are using.
+
+!!! info "More details"
+    Please refer to the [distributed experiments](distributed_experiments) for more details.
+
+
 ### Project Plugins
 
 A `Project plugin` is a job running project wide. Currently, Polyaxon offers 2 plugins: Tensorboard and Jupyter notebook.
