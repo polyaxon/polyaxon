@@ -3,7 +3,7 @@ Before we can train our experiments we need to deploy Polyaxon.
 1. Change to examples folder, and specifically to cifar10
 
     ```bash
-    $ cd /path/to/polyaxon-examples/cifar10
+    $ cd /path/to/polyaxon-examples/tensorflow/cifar10
     ```
 
 2. Deploy Polyaxon
