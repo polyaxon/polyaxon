@@ -46,7 +46,7 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
                     self.project_name))
                 return check_pulse, True
 
-            if not project.has_notebook or not project.notebook:
+            if not project.notebook or not project.notebook.is_running:
                 logger.info('Project `{}` does not have a notebook anymore, stopping build'.format(
                     self.project_name))
                 return check_pulse, True
