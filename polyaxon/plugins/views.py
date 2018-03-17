@@ -16,6 +16,7 @@ from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible
 from projects.tasks import start_tensorboard, stop_tensorboard, build_notebook, stop_notebook
 from repos import git
 from schedulers import notebook_scheduler, tensorboard_scheduler
+from spawners.utils.constants import ExperimentLifeCycle
 
 
 class StartTensorboardView(CreateAPIView):
@@ -136,6 +137,9 @@ class StopNotebookView(CreateAPIView):
                 # Reset changes
                 git.undo(obj.repo.path)
             stop_notebook.delay(project_id=obj.id)
+        elif obj.notebook and obj.notebook.is_running:
+            obj.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
+                                    message='Notebook was stopped')
         return Response(status=status.HTTP_200_OK)
 
 
