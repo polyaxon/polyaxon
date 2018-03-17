@@ -18,7 +18,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-client',
-      version='0.0.5',
+      version='0.0.6',
       description='Python base clients to interact with Polyaxon API.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mouradmourafiq@gmail.com',
@@ -42,7 +42,7 @@ setup(name='polyaxon-client',
       ],
       install_requires=[
           "clint==0.5.1",
-          "polyaxon-schemas==0.0.5",
+          "polyaxon-schemas==0.0.6",
           "requests==2.18.4",
           "requests-toolbelt==0.8.0",
           "six==1.11.0",
