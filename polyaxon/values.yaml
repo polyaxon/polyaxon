@@ -98,7 +98,7 @@ passwordLenght: 8
 
 api:
   image: polyaxon/polyaxon-api
-  imageTag: 0.0.5
+  imageTag: 0.0.6
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -117,7 +117,7 @@ api:
 
 apiEvents:
   image: polyaxon/polyaxon-api-events
-  imageTag: 0.0.5
+  imageTag: 0.0.6
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -137,7 +137,7 @@ apiEvents:
 workers:
   scheduler:
     image: polyaxon/polyaxon-workers
-    imageTag: 0.0.5
+    imageTag: 0.0.6
     imagePullPolicy: IfNotPresent
     replicas: 1
     concurrency: 2
@@ -151,7 +151,7 @@ workers:
 
   events:
     image: polyaxon/polyaxon-workers
-    imageTag: 0.0.5
+    imageTag: 0.0.6
     imagePullPolicy: IfNotPresent
     replicas: 1
     concurrency: 2
@@ -165,7 +165,7 @@ workers:
 
   crons:
     image: polyaxon/polyaxon-workers
-    imageTag: 0.0.5
+    imageTag: 0.0.6
     imagePullPolicy: IfNotPresent
     replicas: 1
     concurrency: 2
@@ -179,7 +179,7 @@ workers:
 
 beat:
   image: polyaxon/polyaxon-beat
-  imageTag: 0.0.5
+  imageTag: 0.0.6
   imagePullPolicy: IfNotPresent
   replicas: 1
   resources:
@@ -194,7 +194,7 @@ events:
   namespace:
     enabled: true
     image: polyaxon/polyaxon-monitor-namespace
-    imageTag: 0.0.5
+    imageTag: 0.0.6
     imagePullPolicy: IfNotPresent
     replicas: 1
     resources:
@@ -210,7 +210,7 @@ events:
   statuses:
     enabled: true
     image: polyaxon/polyaxon-monitor-statuses
-    imageTag: 0.0.5
+    imageTag: 0.0.6
     imagePullPolicy: IfNotPresent
     replicas: 1
     resources:
@@ -226,7 +226,7 @@ events:
 resourcesDaemon:
   enabled: true
   image: polyaxon/polyaxon-monitor-resources
-  imageTag: 0.0.5
+  imageTag: 0.0.6
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -240,15 +240,15 @@ resourcesDaemon:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
-  imageTag: 0.0.5
+  imageTag: 0.0.6
 
 job:
   image: polyaxon/polyaxon-lib
-  imageTag: 0.0.5
+  imageTag: 0.0.6
 
 hooks:
   image: polyaxon/polyaxon-manage
-  imageTag: 0.0.5
+  imageTag: 0.0.6
   imagePullPolicy: IfNotPresent
 
 postgresql:
@@ -397,10 +397,10 @@ exchanges:
 versions:
   cli:
     min: 0.0.3
-    latest: 0.0.5
+    latest: 0.0.6
   platform:
     min: 0.0.3
-    latest: 0.0.5
+    latest: 0.0.6
   lib:
     min: 0.0.2
     latest: 0.0.5

@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/polyaxon/polyaxon)
-![Release](https://img.shields.io/badge/release-0.0.5-green.svg)
+![Release](https://img.shields.io/badge/release-0.0.6-green.svg)
 
 Helm charts for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.
 
