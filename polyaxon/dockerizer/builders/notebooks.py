@@ -36,6 +36,7 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
             dockerfile_name=dockerfile_name)
 
     def _check_pulse(self, check_pulse):
+        check_pulse += 1
         # Check if experiment is not stopped in the meanwhile
         if check_pulse > self.CHECK_INTERVAL:
             try:

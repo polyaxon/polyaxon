@@ -55,6 +55,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
         )
 
     def _check_pulse(self, check_pulse):
+        check_pulse += 1
         # Check if experiment is not stopped in the meanwhile
         if check_pulse > self.CHECK_INTERVAL:
             if not is_experiment_still_running(self.experiment_uuid):
