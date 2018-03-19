@@ -2,6 +2,6 @@ Jinja2==2.10
 marshmallow==2.15.0
 numpy==1.14.2
 python-dateutil==2.7.0
-pytz==2017.2
+pytz==2018.3
 PyYAML==3.12
 six==1.11.0
