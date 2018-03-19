@@ -7,5 +7,5 @@ mock==2.0.0
 prospector==0.12.7
 pyflakes==1.6.0
 pytest==3.4.2
-pylint==1.7.2
+pylint==1.8.3
 tox==2.9.1
