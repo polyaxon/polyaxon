@@ -12,7 +12,7 @@ mock==2.0.0
 prospector==0.12.7
 pyflakes==1.6.0
 responses==0.8.1
-pylint==1.7.2
+pylint==1.8.3
 pylint-django==0.7.2
 pytest==3.2.2
 pytest-django==3.1.2
