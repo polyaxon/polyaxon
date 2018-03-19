@@ -1,5 +1,5 @@
 Jinja2==2.10
-marshmallow==2.13.5
+marshmallow==2.15.0
 numpy==1.13.1
 python-dateutil==2.6.1
 pytz==2017.2
