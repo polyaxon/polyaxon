@@ -5,14 +5,32 @@ UNKNOWN = 'UNKNOWN'
 
 
 def to_bytes(size_str):
-    unit_multiplier = {
-        'Ki': 1024,
-        'Mi': 1024 ** 2,
-        'Gi': 1024 ** 3,
-        'Ti': 1024 ** 4
+    try:
+        return int(float(size_str))
+    except (ValueError, TypeError):
+        pass
+
+    fixed_point_unit_multiplier = {
+        'k': 1000,
+        'm': 1000 ** 2,
+        'g': 1000 ** 3,
+        't': 1000 ** 4
     }
 
-    return int(size_str[:-2]) * unit_multiplier.get(size_str[-2:], 1)
+    power_two_unit_multiplier = {
+        'ki': 1024,
+        'mi': 1024 ** 2,
+        'gi': 1024 ** 3,
+        'ti': 1024 ** 4
+    }
+
+    if size_str[-2:].lower() in power_two_unit_multiplier.keys():
+        return int(size_str[:-2]) * power_two_unit_multiplier.get(size_str[-2:].lower(), 1)
+
+    if size_str[-1].lower() in fixed_point_unit_multiplier.keys():
+        return int(size_str[:-1]) * fixed_point_unit_multiplier.get(size_str[-1].lower(), 1)
+
+    return 0
 
 
 class NodeLifeCycle(object):
