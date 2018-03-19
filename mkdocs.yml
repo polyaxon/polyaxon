@@ -77,7 +77,7 @@ pages:
   - Polyaxon Concepts: experimentation/concepts.md
   - Projects: experimentation/projects.md
   - Experiment Groups & Hyperparams Search: experimentation/experiment_groups.md
-  - Experiments & Distributed Runs: experimentation/experiments.md
+  - Experiments: experimentation/experiments.md
   - Jobs: experimentation/jobs.md
   - Distributed Experiments: experimentation/distributed_experiments.md
   - Project Plugins: experimentation/project_plugins.md
