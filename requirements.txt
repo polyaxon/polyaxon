@@ -1,4 +1,4 @@
-Jinja2==2.9.6
+Jinja2==2.10
 marshmallow==2.13.5
 numpy==1.13.1
 python-dateutil==2.6.1
