@@ -26,8 +26,8 @@ environment:
       limits: 1
 ```
 
-Since the distributed training is performed differently by the the different frameworks, 
-each subsection in this guide describes how to define the the distributed training for each one of the supported frameworks.
+Since the distributed training is performed differently by the different frameworks, 
+each subsection in this guide describes how to define the distributed training for each one of the supported frameworks.
 
 ## Distributed experiments with Tensorflow
 
