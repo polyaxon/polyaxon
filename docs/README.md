@@ -1,6 +1,6 @@
 # polyaxon-docs
 
-[Documentation](https://polyaxon.com/docs/) for polyaxon
+[Documentation](https://docs.polyaxon.com/) for polyaxon
 
 ## Introduction
 
