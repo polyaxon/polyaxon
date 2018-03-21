@@ -1,0 +1,15 @@
+image: polyaxon/base:git
+
+before_script:
+  - pip install -r requirements.txt
+
+pages:
+  script:
+  - python3 generate_doc.py
+  - mkdocs build
+  - mv site public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master

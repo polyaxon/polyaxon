@@ -1,0 +1,148 @@
+site_name: Polyaxon Documentation
+site_url: https://polyaxon.com
+site_author: Polyaxon Team
+repo_url: https://github.com/polyaxon/polyaxon
+repo_name: polyaxon/polyaxon
+docs_dir: docs
+site_description: 'Documentation for polyaxon, a Deep Learning Platform.'
+theme:
+  name: material
+  favicon: 'images/favicon.ico'
+  logo: 'images/logo_white.svg'
+  palette:
+    primary: 'blue grey'
+    accent: 'light blue'
+
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/polyaxon'
+    - type: 'cubes'
+      link: 'https://hub.docker.com/r/polyaxon'
+    - type: 'twitter'
+      link: 'https://twitter.com/polyaxonai'
+    - type: 'linkedin'
+      link: 'https://linkedin.com/company/polyaxon'
+    - type: 'medium'
+      link: 'https://medium.com/polyaxon'
+    - type: 'angellist'
+      link: 'https://angel.co/polyaxon'
+
+extra_css:
+    - css/style.css
+
+google_analytics:
+  - 'UA-89493331-1'
+  - 'auto'
+
+dev_addr: '0.0.0.0:8003'
+copyright: Copyright &copy; 2018 Polyaxon
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - pymdownx.inlinehilite
+  - footnotes
+  - toc(permalink=true)
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+pages:
+- Home: index.md
+- Quick Start With Polyaxon: quick_start.md
+- Installation Requirements & Setup:
+  - Introduction: installation/introduction.md
+  - Tools & Requirements: installation/tools_and_requirements.md
+  - Install Kubernetes: installation/install_kubernetes.md
+  - Setup Helm: installation/setup_helm.md
+  - Deploy Polyaxon: installation/deploy_polyaxon.md
+  - Install Polyaxon CLI: installation/install_polyaxon_cli.md
+  - Turn Off Polyaxon: installation/turn_off_polyaxon.md
+- Experimentation Workflow:
+  - Polyaxon Concepts: experimentation/concepts.md
+  - Projects: experimentation/projects.md
+  - Experiment Groups & Hyperparams Search: experimentation/experiment_groups.md
+  - Experiments: experimentation/experiments.md
+  - Jobs: experimentation/jobs.md
+  - Distributed Experiments: experimentation/distributed_experiments.md
+  - Project Plugins: experimentation/project_plugins.md
+- Tutorials:
+  - Introduction: tutorials/index.md
+  - Kubernetes cluster On Azure: tutorials/kubernetes_on_azure.md
+  - Storage and Persistent Volumes: tutorials/persistent_volumes.md
+  - Training Experiments On Polyaxon : tutorials/training_experiments_on_polyaxon.md
+- Management:
+  - Intorduction: management/introduction.md
+  - SuperUsers: management/superusers.md
+  - Users: management/users.md
+- Customization:
+  - Extend Polyaxon Deployments: customization/extend_deployments.md
+  - Customize Run Environment: customization/customize_run_environment.md  # settings, resources,
+  - Customize Node Scheduling: customization/customize_node_scheduling.md
+- Reference Polyaxon CLI:
+  - Introduction: polyaxon_cli/introduction.md
+  - Commnands:
+    - Auth: polyaxon_cli/commands/auth.md
+    - Check: polyaxon_cli/commands/check.md
+    - Config: polyaxon_cli/commands/config.md
+    - Init: polyaxon_cli/commands/init.md
+    - Project: polyaxon_cli/commands/project.md
+    - Upload: polyaxon_cli/commands/upload.md
+    - Run: polyaxon_cli/commands/run.md
+    - Experiment Group: polyaxon_cli/commands/experiment_group.md
+    - Experiment: polyaxon_cli/commands/experiment.md
+    - Job: polyaxon_cli/commands/job.md
+    - Dashboard: polyaxon_cli/commands/dashboard.md
+    - Notebook: polyaxon_cli/commands/notebook.md
+    - Tensorboard: polyaxon_cli/commands/tensorboard.md
+    - Cluster: polyaxon_cli/commands/cluster.md
+    - Version: polyaxon_cli/commands/version.md
+- Reference Polyaxonfile Specification:
+  - Introduction: polyaxonfile_specification/introduction.md
+  - Sections: polyaxonfile_specification/sections.md
+  - Model Sections: polyaxonfile_specification/model_sections.md
+- Reference Polyaxon Helm: reference_polyaxon_helm.md
+- Reference Polyaxon Client: reference_polyaxon_client.md
+- Reference Polyaxon Helper: reference_polyaxon_helper.md
+- Reference Polyaxon Lib:
+  - Introduction: polyaxon_lib/introduction.md
+  - Models: polyaxon_lib/models.md
+  - Layers:
+    - Advanced Actications: polyaxon_lib/layers/advanced_activations.md
+    - Convolutional: polyaxon_lib/layers/convolutional.md
+    - Convolutional Reccurent: polyaxon_lib/layers/convolutional_recurrent.md
+    - Core: polyaxon_lib/layers/core.md
+    - Embedding: polyaxon_lib/layers/embeddings.md
+    - Local: polyaxon_lib/layers/local.md
+    - Merge: polyaxon_lib/layers/merge.md
+    - Noise: polyaxon_lib/layers/noise.md
+    - Normalizations: polyaxon_lib/layers/normalizations.md
+    - Pooling: polyaxon_lib/layers/pooling.md
+    - Recurrent: polyaxon_lib/layers/recurrent.md
+    - Wrappers: polyaxon_lib/layers/wrappers.md
+  - Bridges: polyaxon_lib/bridges.md
+  - Processing:
+    - Image: polyaxon_lib/processing/image.md
+    - Pipelines: polyaxon_lib/processing/pipelines.md
+  - Losses: polyaxon_lib/losses.md
+  - Metrics: polyaxon_lib/metrics.md
+  - Optimizers: polyaxon_lib/optimizers.md
+  - Initializations: polyaxon_lib/initializations.md
+  - Constraints: polyaxon_lib/constraints.md
+  - Regularizations: polyaxon_lib/regularizers.md
+- Contributing: contributing.md
