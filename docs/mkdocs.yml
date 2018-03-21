@@ -2,7 +2,7 @@ site_name: Polyaxon Documentation
 site_url: https://polyaxon.com
 site_author: Polyaxon Team
 repo_url: https://github.com/polyaxon/polyaxon
-edit_uri: edit/master/docs/templates
+edit_uri: blob/master/docs/templates
 repo_name: polyaxon/polyaxon
 docs_dir: docs
 site_description: 'Documentation for polyaxon, a Deep Learning Platform.'
