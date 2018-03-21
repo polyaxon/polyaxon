@@ -21,3 +21,5 @@ dist/
 *.egg-info/
 celerybeat.pid
 *.sock
+docs/
+cmd/
