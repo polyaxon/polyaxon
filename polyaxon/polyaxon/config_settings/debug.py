@@ -5,7 +5,7 @@ import sys
 
 from polyaxon.utils import config
 
-from .apps import INSTALLED_APPS, MIDDLEWARE_CLASSES
+from .apps import INSTALLED_APPS, MIDDLEWARE
 
 if config.get_boolean('POLYAXON_DEBUG', is_optional=True):
 
@@ -30,7 +30,7 @@ if config.get_boolean('POLYAXON_DEBUG', is_optional=True):
         'debug_toolbar.panels.sql.SQLDebugPanel',
     )
 
-    MIDDLEWARE_CLASSES += (
+    MIDDLEWARE += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
 
