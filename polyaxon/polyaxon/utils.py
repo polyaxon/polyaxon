@@ -1,5 +1,4 @@
 import os
-import six
 
 from distutils.util import strtobool
 
@@ -133,7 +132,7 @@ class SettingConfig(object):
                 raise
             return None
 
-        if isinstance(value, six.string_types):
+        if isinstance(value, str):
             try:
                 self._add_key(key, is_secret)
                 return type_convert(value)

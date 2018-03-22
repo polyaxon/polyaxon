@@ -1,7 +1,6 @@
 import json
 import logging
 
-import six
 import uuid
 
 from django.conf import settings
@@ -219,7 +218,7 @@ class PodManager(object):
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
             self.get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret')
         ]
-        for k, v in six.iteritems(self.sidecar_config):
+        for k, v in self.sidecar_config.items():
             env_vars.append(client.V1EnvVar(name=k, value=v))
         return client.V1Container(name=self.sidecar_container_name,
                                   image=self.sidecar_docker_image,
