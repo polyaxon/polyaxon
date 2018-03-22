@@ -61,15 +61,43 @@ class UpstreamModel(models.Model):
                   "default is `all_success`. "
                   "Options can be set as string or for the task to get triggered. "
                   "Options are: "
-                  "`{ all_success | all_failed | all_done | one_success | one_failed | any}`")
+                  "`all_success | all_failed | all_done | one_success | one_failed | one_done`")
 
     class Meta:
         abstract = True
 
     def should_start(self):
         """Checks the upstream and the trigger rule."""
-        if self.trigger_rule == TriggerRule.ANY:
-            return True
+        if self.trigger_rule == TriggerRule.ONE_DONE:
+            task_check = self.upstream_tasks.filter(status__in=TaskStatus.DONE_STATUS).exists()
+            if task_check:
+                return True
+            return self.upstream_pipelines.filter(status__in=TaskStatus.DONE_STATUS).exists()
+        if self.trigger_rule == TriggerRule.ONE_SUCCESS:
+            task_check = self.upstream_tasks.filter(status=TaskStatus.SUCCESS).exists()
+            if task_check:
+                return True
+            return self.upstream_pipelines.filter(status=TaskStatus.SUCCESS).exists()
+        if self.trigger_rule == TriggerRule.ONE_FAILED:
+            task_check = self.upstream_tasks.filter(status=TaskStatus.FAILED).exists()
+            if task_check:
+                return True
+            return self.upstream_pipelines.filter(status=TaskStatus.FAILED).exists()
+        if self.trigger_rule == TriggerRule.ALL_DONE:
+            task_check = self.upstream_tasks.exclude(status__in=TaskStatus.DONE_STATUS).exists()
+            if not task_check:
+                return False
+            return self.upstream_pipelines.exclude(status__in=TaskStatus.DONE_STATUS).exists()
+        if self.trigger_rule == TriggerRule.ALL_SUCCESS:
+            task_check = self.upstream_tasks.exclude(status=TaskStatus.SUCCESS).exists()
+            if not task_check:
+                return False
+            return self.upstream_pipelines.exclude(status=TaskStatus.SUCCESS).exists()
+        if self.trigger_rule == TriggerRule.ALL_FAILED:
+            task_check = self.upstream_tasks.exclude(status=TaskStatus.FAILED).exists()
+            if not task_check:
+                return False
+            return self.upstream_pipelines.exclude(status=TaskStatus.FAILED).exists()
 
 
 class Pipeline(DiffModel, DescribableModel, UpstreamModel, CallbackMixin):

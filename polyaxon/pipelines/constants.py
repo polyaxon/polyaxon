@@ -25,6 +25,8 @@ class TaskStatus(object):
         (RETRYING, RETRYING)
     )
 
+    DONE_STATUS = [SUCCESS, FAILED]
+
 
 class TriggerRule(object):
     ALL_SUCCESS = 'all_success'
@@ -32,14 +34,14 @@ class TriggerRule(object):
     ALL_DONE = 'all_done'
     ONE_SUCCESS = 'one_success'
     ONE_FAILED = 'one_failed'
-    ANY = 'any'
+    ONE_DONE = 'one_done'
 
-    VALUES = [ALL_SUCCESS, ALL_FAILED, ALL_DONE, ONE_SUCCESS, ONE_FAILED, ANY]
+    VALUES = [ALL_SUCCESS, ALL_FAILED, ALL_DONE, ONE_SUCCESS, ONE_FAILED, ONE_DONE]
     CHOICES = (
         (ALL_SUCCESS, ALL_SUCCESS),
         (ALL_FAILED, ALL_FAILED),
         (ALL_DONE, ALL_DONE),
         (ONE_SUCCESS, ONE_SUCCESS),
         (ONE_FAILED, ONE_FAILED),
-        (ANY, ANY),
+        (ONE_DONE, ONE_DONE),
     )
