@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.contrib import admin
 
 from polyaxon.views import (
@@ -17,26 +17,26 @@ from users.views import LogoutView, LoginView
 API_V1 = 'api/v1'
 
 api_patterns = [
-    url(r'', include('clusters.urls', namespace='clusters')),
-    url(r'', include('versions.urls', namespace='versions')),
-    url(r'', include('users.api_urls', namespace='users')),
+    re_path(r'', include(('clusters.urls', 'clusters'), namespace='clusters')),
+    re_path(r'', include(('versions.urls', 'versions'), namespace='versions')),
+    re_path(r'', include(('users.api_urls', 'users'), namespace='users')),
     # always include project last because of it's patterns
-    url(r'', include('experiments.urls', namespace='experiments')),
-    url(r'', include('repos.urls', namespace='repos')),
-    url(r'', include('projects.urls', namespace='projects')),
+    re_path(r'', include(('experiments.urls', 'experiments'), namespace='experiments')),
+    re_path(r'', include(('repos.urls', 'repos'), namespace='repos')),
+    re_path(r'', include(('projects.urls', 'projects'), namespace='projects')),
 ]
 
 urlpatterns = [
-    url(r'', include('plugins.urls', namespace='plugins')),
-    url(r'^users/', include('users.urls', namespace='users')),
-    url(r'^_admin/logout/$', LogoutView.as_view(), name='logout'),
-    url(r'^_admin/login/$', LoginView.as_view(template_name='admin/login.html'), name='login'),
-    url(r'^_admin/', include(admin.site.urls)),
-    url(r'^_health/?$', HealthView.as_view(), name='health_check'),
-    url(r'^{}/'.format(API_V1), include(api_patterns, namespace='v1')),
-    url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^^50x.html$', Handler50xView.as_view(), name='50x'),
-    url(r'^app.*/?', ReactIndexView.as_view(), name='react-index'),
+    re_path(r'', include(('plugins.urls', 'plugins'), namespace='plugins')),
+    re_path(r'^users/', include(('users.urls', 'users'), namespace='users')),
+    re_path(r'^_admin/logout/$', LogoutView.as_view(), name='logout'),
+    re_path(r'^_admin/login/$', LoginView.as_view(template_name='admin/login.html'), name='login'),
+    re_path(r'^_admin/', admin.site.urls),
+    re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
+    re_path(r'^{}/'.format(API_V1), include((api_patterns, 'v1'), namespace='v1')),
+    re_path(r'^$', IndexView.as_view(), name='index'),
+    re_path(r'^^50x.html$', Handler50xView.as_view(), name='50x'),
+    re_path(r'^app.*/?', ReactIndexView.as_view(), name='react-index'),
 ]
 
 handler400 = Handler50xView.as_view()
@@ -48,5 +48,5 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        re_path(r'^__debug__/', include(debug_toolbar.urls)),
     ]
