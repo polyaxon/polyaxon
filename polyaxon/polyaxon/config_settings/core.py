@@ -35,7 +35,7 @@ INVITATION_TIMEOUT_DAYS = 30
 SESSION_COOKIE_AGE = 24 * 60 * 60  # 24 hours
 SESSION_COOKIE_HTTPONLY = True
 
-DEFAULT_DB_ENGINE = 'django.db.backends.postgresql_psycopg2'
+DEFAULT_DB_ENGINE = 'django.db.backends.postgresql'
 DATABASES = {
     'default': {
         'ENGINE': config.get_string('POLYAXON_DB_ENGINE', is_optional=True) or DEFAULT_DB_ENGINE,

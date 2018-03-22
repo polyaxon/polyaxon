@@ -1422,7 +1422,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -2133,7 +2133,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -2844,7 +2844,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -3555,7 +3555,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -4268,7 +4268,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -4984,7 +4984,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -5700,7 +5700,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -6416,7 +6416,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -7132,7 +7132,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },
@@ -7848,7 +7848,7 @@
                                     "name": "POLYAXON_QUEUES_API_EXPERIMENTS"
                                 },
                                 {
-                                    "value": "django.db.backends.postgresql_psycopg2",
+                                    "value": "django.db.backends.postgresql",
                                     "value_from": null,
                                     "name": "POLYAXON_DB_ENGINE"
                                 },

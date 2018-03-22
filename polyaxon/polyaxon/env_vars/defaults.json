@@ -3,7 +3,7 @@
   "POLYAXON_ADMIN_NAME": "Admins",
   "POLYAXON_ADMIN_MAIL": "test@test.com",
   "POLYAXON_EMAIL_FROM": "<test@test.com>",
-  "POLYAXON_DB_ENGINE": "django.db.backends.postgresql_psycopg2",
+  "POLYAXON_DB_ENGINE": "django.db.backends.postgresql",
   "POLYAXON_DB_NAME": "polyaxon",
   "POLYAXON_DB_USER": "polyaxon",
   "POLYAXON_DB_PASSWORD": "polyaxon",
