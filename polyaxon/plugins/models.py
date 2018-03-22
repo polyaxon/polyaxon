@@ -20,6 +20,7 @@ class PluginJobBase(Job):
     """A base model for plugin jobs."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         related_name='+')
     content = models.TextField(
         blank=True,
@@ -113,7 +114,10 @@ class NotebookJob(PluginJobBase):
 
 class TensorboardJobStatus(JobStatus):
     """A model that represents tensorboard job status at certain time."""
-    job = models.ForeignKey(TensorboardJob, related_name='statuses')
+    job = models.ForeignKey(
+        TensorboardJob,
+        on_delete=models.CASCADE,
+        related_name='statuses')
 
     class Meta(JobStatus.Meta):
         verbose_name_plural = 'Tensorboard Job Statuses'
@@ -121,7 +125,10 @@ class TensorboardJobStatus(JobStatus):
 
 class NotebookJobStatus(JobStatus):
     """A model that represents notebook job status at certain time."""
-    job = models.ForeignKey(NotebookJob, related_name='statuses')
+    job = models.ForeignKey(
+        NotebookJob,
+        on_delete=models.CASCADE,
+        related_name='statuses')
 
     class Meta(JobStatus.Meta):
         verbose_name_plural = 'Notebook Job Statuses'

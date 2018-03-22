@@ -34,12 +34,15 @@ class Experiment(DiffModel, DescribableModel):
         help_text='The sequence number of this experiment within the project.')
     project = models.ForeignKey(
         'projects.Project',
+        on_delete=models.CASCADE,
         related_name='experiments')
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         related_name='experiments')
     experiment_group = models.ForeignKey(
         'projects.ExperimentGroup',
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
         related_name='experiments',
@@ -54,6 +57,7 @@ class Experiment(DiffModel, DescribableModel):
         validators=[validate_spec_content])
     original_experiment = models.ForeignKey(
         'self',
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name='clones',
@@ -190,7 +194,10 @@ class ExperimentStatus(models.Model):
         editable=False,
         unique=True,
         null=False)
-    experiment = models.ForeignKey(Experiment, related_name='statuses')
+    experiment = models.ForeignKey(
+        Experiment,
+        on_delete=models.CASCADE,
+        related_name='statuses')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(
         max_length=64,
@@ -210,7 +217,10 @@ class ExperimentStatus(models.Model):
 
 class ExperimentMetric(models.Model):
     """A model that represents an experiment metric at certain time."""
-    experiment = models.ForeignKey(Experiment, related_name='metrics')
+    experiment = models.ForeignKey(
+        Experiment,
+        on_delete=models.CASCADE,
+        related_name='metrics')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     values = JSONField()
 
@@ -228,7 +238,10 @@ class ExperimentJob(Job):
         editable=False,
         unique=True,
         null=False)
-    experiment = models.ForeignKey(Experiment, related_name='jobs')
+    experiment = models.ForeignKey(
+        Experiment,
+        on_delete=models.CASCADE,
+        related_name='jobs')
     definition = JSONField(help_text='The specific values for this job.')
     role = models.CharField(max_length=64, default=TaskType.MASTER)
     sequence = models.PositiveSmallIntegerField(
@@ -280,7 +293,10 @@ class ExperimentJob(Job):
 
 class ExperimentJobStatus(JobStatus):
     """A model that represents job status at certain time."""
-    job = models.ForeignKey(ExperimentJob, related_name='statuses')
+    job = models.ForeignKey(
+        ExperimentJob,
+        on_delete=models.CASCADE,
+        related_name='statuses')
 
     class Meta(JobStatus.Meta):
         verbose_name_plural = 'Experiment Job Statuses'

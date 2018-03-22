@@ -41,13 +41,19 @@ class RepoMixin(object):
 
 class Repo(DiffModel, RepoMixin):
     """A model that represents a repository containing code."""
-    project = models.OneToOneField(Project, related_name='repo')
+    project = models.OneToOneField(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='repo')
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 
 
 class ExternalRepo(DiffModel, RepoMixin):
     """A model that represents a an external repository containing code."""
-    project = models.ForeignKey(Project, related_name='external_repos')
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='external_repos')
     git_url = models.URLField()
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 

@@ -60,7 +60,10 @@ class ClusterNode(models.Model):
         max_length=256,
         null=False,
         help_text='Name of the node')
-    cluster = models.ForeignKey(Cluster, related_name='nodes')
+    cluster = models.ForeignKey(
+        Cluster,
+        on_delete=models.CASCADE,
+        related_name='nodes')
     hostname = models.CharField(
         max_length=256,
         blank=True,
@@ -133,7 +136,10 @@ class NodeGPU(DiffModel):
     serial = models.CharField(max_length=256)
     name = models.CharField(max_length=256)
     memory = models.BigIntegerField()
-    cluster_node = models.ForeignKey(ClusterNode, related_name='gpus')
+    cluster_node = models.ForeignKey(
+        ClusterNode,
+        on_delete=models.CASCADE,
+        related_name='gpus')
 
     class Meta:
         ordering = ['index']
@@ -145,7 +151,10 @@ class NodeGPU(DiffModel):
 
 class ClusterEvent(models.Model):
     """A model to catch all errors and warning events of the cluster."""
-    cluster = models.ForeignKey(Cluster, related_name='events')
+    cluster = models.ForeignKey(
+        Cluster,
+        on_delete=models.CASCADE,
+        related_name='events')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     data = JSONField()
     meta = JSONField()

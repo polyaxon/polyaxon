@@ -99,7 +99,8 @@ class JobStatus(models.Model):
         editable=False,
         unique=True,
         null=False)
-    # job = models.ForeignKey(Job, related_name='statuses')  # Must be implemented in subclasses
+    # Must be implemented in subclasses
+    # job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='statuses')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(
         max_length=64,

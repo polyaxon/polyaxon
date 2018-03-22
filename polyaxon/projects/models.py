@@ -33,6 +33,7 @@ class Project(DiffModel, DescribableModel):
         validators=[validate_slug, validate_blacklist_name])
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         related_name='projects')
     is_public = models.BooleanField(
         default=True,
@@ -76,7 +77,10 @@ class ExperimentGroup(DiffModel, DescribableModel):
         editable=False,
         unique=True,
         null=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='experiment_groups')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='experiment_groups')
     sequence = models.PositiveSmallIntegerField(
         editable=False,
         null=False,
@@ -86,6 +90,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         validators=[validate_spec_content])
     project = models.ForeignKey(
         Project,
+        on_delete=models.CASCADE,
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
 
