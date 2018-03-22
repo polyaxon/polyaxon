@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 import logging
 
 from django.db.models.signals import post_save, pre_delete, pre_save

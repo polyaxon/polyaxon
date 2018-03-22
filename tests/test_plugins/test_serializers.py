@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from factories.fixtures import plugin_spec_parsed_content
 from plugins.models import TensorboardJob, NotebookJob
 from plugins.serializers import TensorboardJobSerializer, NotebookJobSerializer

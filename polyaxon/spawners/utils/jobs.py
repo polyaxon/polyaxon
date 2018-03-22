@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from polyaxon_schemas.experiment import JobStateConfig
 
 from spawners.utils.constants import PodLifeCycle, JobLifeCycle, ContainerStatuses, PodConditions

@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants

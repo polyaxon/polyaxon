@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from django.conf import settings
 
 JOB_NAME = 'plxjob-{task_type}{task_idx}-{experiment_uuid}'

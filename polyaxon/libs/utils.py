@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from distutils.util import strtobool
 
 from django.utils.crypto import salted_hmac

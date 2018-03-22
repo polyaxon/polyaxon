@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 UUID_PATTERN = r'(?P<uuid>\w{1,36})'
 SLUG_PATTERN = r'[-\w]{1,256}'
 USERNAME_PATTERN = r'(?P<username>[-\w]{1,156})'

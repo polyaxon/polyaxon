@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from django.conf import settings
 from django.urls import include, re_path
 from django.contrib import admin

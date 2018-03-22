@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
-from experiments.serializers import ExperimentSerializer
 from libs.spec_validation import validate_spec_content
 from projects.models import Project, ExperimentGroup
 

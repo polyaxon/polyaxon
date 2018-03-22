@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 import factory
 
 from factories.fixtures import experiment_group_spec_content_2_xps

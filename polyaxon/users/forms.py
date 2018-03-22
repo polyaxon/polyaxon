@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.validators import validate_slug

@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
-
 from django.urls import re_path
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
