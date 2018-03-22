@@ -52,7 +52,7 @@ class ClusterNode(models.Model):
         editable=False,
         unique=True,
         null=False)
-    sequence = models.IntegerField(
+    sequence = models.PositiveSmallIntegerField(
         editable=False,
         null=False,
         help_text='The sequence number of this node within the cluser.', )
@@ -81,7 +81,7 @@ class ClusterNode(models.Model):
     schedulable_state = models.BooleanField(default=False)
     memory = models.BigIntegerField()
     cpu = models.FloatField()
-    n_gpus = models.SmallIntegerField()
+    n_gpus = models.PositiveSmallIntegerField()
     status = models.CharField(
         max_length=24,
         default=NodeLifeCycle.UNKNOWN,
@@ -129,7 +129,7 @@ class NodeGPU(DiffModel):
         editable=False,
         unique=True,
         null=False)
-    index = models.IntegerField()
+    index = models.PositiveSmallIntegerField()
     serial = models.CharField(max_length=256)
     name = models.CharField(max_length=256)
     memory = models.BigIntegerField()

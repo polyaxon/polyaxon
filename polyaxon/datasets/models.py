@@ -17,7 +17,7 @@ class Dataset(DiffModel, DescribableModel):
         max_length=256,
         validators=[validate_slug, validate_blacklist_name])
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='datasets')
-    version = models.IntegerField(default=1)
+    version = models.PositiveSmallIntegerField(default=1)
     is_public = models.BooleanField(
         default=True,
         help_text='If the dataset is public or private.')

@@ -77,7 +77,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         unique=True,
         null=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='experiment_groups')
-    sequence = models.IntegerField(
+    sequence = models.PositiveSmallIntegerField(
         editable=False,
         null=False,
         help_text='The sequence number of this group within the project.', )

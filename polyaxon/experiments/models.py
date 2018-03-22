@@ -28,10 +28,10 @@ class Experiment(DiffModel, DescribableModel):
         editable=False,
         unique=True,
         null=False)
-    sequence = models.IntegerField(
+    sequence = models.PositiveSmallIntegerField(
         editable=False,
         null=False,
-        help_text='The sequence number of this experiment within the project.', )
+        help_text='The sequence number of this experiment within the project.')
     project = models.ForeignKey(
         'projects.Project',
         related_name='experiments')
@@ -231,7 +231,7 @@ class ExperimentJob(Job):
     experiment = models.ForeignKey(Experiment, related_name='jobs')
     definition = JSONField(help_text='The specific values for this job.')
     role = models.CharField(max_length=64, default=TaskType.MASTER)
-    sequence = models.IntegerField(
+    sequence = models.PositiveSmallIntegerField(
         editable=False,
         null=False,
         help_text='The sequence number of this job within the experiment.', )
