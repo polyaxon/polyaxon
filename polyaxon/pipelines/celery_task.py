@@ -6,9 +6,13 @@ class OperationTask(CeleryTask):
     """Base operation celery task with basic logging."""
     _operation = None
 
-    def run(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs):
         self._operation = Operation.objects.get(id=kwargs['query_id'])
-        super(OperationTask, self).run(*args, **kwargs)
+        self._operation.on_run()
+        self.max_retries = self._operation.max_retries
+        self.countdown = self._operation.get_countdown(self.request.retries)
+
+        super(OperationTask, self).__call__(*args, **kwargs)
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         """Update query status and send email notification to a user"""
