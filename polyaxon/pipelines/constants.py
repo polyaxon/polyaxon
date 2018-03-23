@@ -5,16 +5,18 @@ class OperationStatus(object):
     RUNNING = 'running'
     SUCCESS = 'success'
     FAILED = 'failed'
+    STOPPED = 'stopped'
     SKIPPED = 'skipped'
     RETRYING = 'retrying'
 
-    VALUES = [CREATED, STARTED, PENDING, RUNNING, SUCCESS, FAILED, SKIPPED, RETRYING]
+    VALUES = [CREATED, STARTED, PENDING, RUNNING, SUCCESS, FAILED, STOPPED, SKIPPED, RETRYING]
     CHOICES = (
         (CREATED, CREATED),
         (STARTED, STARTED),
         (RUNNING, RUNNING),
         (SUCCESS, SUCCESS),
         (FAILED, FAILED),
+        (STOPPED, STOPPED),
         (SKIPPED, SKIPPED),
         (RETRYING, RETRYING)
     )
