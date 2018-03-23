@@ -4,6 +4,7 @@ import uuid
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.utils import timezone
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
@@ -218,7 +219,7 @@ class ExperimentMetric(models.Model):
         Experiment,
         on_delete=models.CASCADE,
         related_name='metrics')
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+    created_at = models.DateTimeField(default=timezone.now)
     values = JSONField()
 
     def __str__(self):
