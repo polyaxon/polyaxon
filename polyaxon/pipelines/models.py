@@ -1,5 +1,11 @@
+from celery.result import AsyncResult
 from django.conf import settings
+from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.utils import timezone
+
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import Intervals
 
 from libs.models import DiffModel, DescribableModel
 from pipelines.constants import OperationStatus, TriggerRule
@@ -56,11 +62,11 @@ class ExecutableModel(models.Model):
     started_at = models.DateTimeField(
         null=True,
         blank=True,
-        help_text="When the started.")
+        help_text="When the instance started.")
     finished_at = models.DateTimeField(
         null=True,
         blank=True,
-        help_text="When the finished.")
+        help_text="When the instance finished.")
     status = models.CharField(
         max_length=16,
         blank=True,
@@ -71,14 +77,25 @@ class ExecutableModel(models.Model):
     class Meta:
         abstract = True
 
+    def on_run(self):
+        self.status = OperationStatus.RUNNING
+        self.save()
+
     def on_timeout(self):
-        pass
+        self.status = OperationStatus.FAILED
+        self.save()
 
     def on_failure(self):
-        pass
+        self.status = OperationStatus.FAILED
+        self.save()
 
     def on_success(self):
-        pass
+        self.status = OperationStatus.SUCCESS
+        self.save()
+
+    def on_stop(self):
+        self.status = OperationStatus.STOPPED
+        self.save()
 
 
 class UpstreamModel(models.Model):
@@ -216,13 +233,14 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
         null=True,
         blank=True,
         related_name='operations')
-    n_retries = models.PositiveSmallIntegerField(
+    max_retries = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
         help_text="the number of retries that should be performed before failing the operation.")
     retry_delay = models.PositiveIntegerField(
         null=True,
         blank=True,
+        default=Intervals.DEFAULT_RETRY_DELAY,
         help_text="The delay between retries.")
     retry_exponential_backoff = models.BooleanField(
         default=False,
@@ -231,7 +249,16 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
     max_retry_delay = models.PositiveIntegerField(
         null=True,
         blank=True,
+        default=Intervals.MAX_RETRY_DELAY,
         help_text="maximum delay interval between retries.")
+    retried_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the instance last retried.")
+    n_retries = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text="the number of retries that performed so far by the operations.")
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
@@ -247,6 +274,20 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
         on_delete=models.SET_NULL,
         null=True,
         blank=True)
+    celery_task_context = JSONField(
+        blank=True,
+        null=True,
+        help_text='The kwargs required to execute the celery task.')
+    celery_task = models.CharField(
+        max_length=128,
+        help_text="The celery task name to execute.")
+    celery_task_id = models.UUIDField(null=False, blank=True)
+    celery_queue = models.CharField(
+        max_length=128,
+        blank=True,
+        null=True,
+        help_text="The celery queue name to use for the executing this task. "
+                  "If provided, it will override the queue provided in CELERY_TASK_ROUTES.")
 
     @property
     def independent(self):
@@ -254,3 +295,44 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
 
     def on_retry(self):
         pass
+
+    def get_countdown(self, retries):
+        """Calculate the countdown for a celery task retry."""
+        retry_delay = self.retry_delay
+        if self.retry_exponential_backoff:
+            return min(
+                max(2 ** retries, retry_delay),  # Exp backoff
+                self.max_retry_delay  # The countdown should be more the max allowed
+            )
+        else:
+            return retry_delay
+
+    def schedule(self):
+        """Schedules the celery task of this operation."""
+        kwargs = {}
+        if self.celery_queue:
+            kwargs['queue'] = self.celery_queue
+
+        if self.timeout:
+            kwargs['soft_time_limit'] = self.timeout
+            # We set also a hard time limit that will send sig 9
+            # This hard time limit should not happened, as it will set inconsistent state
+            kwargs['time_limit'] = self.timeout + settings.CELERY_HARD_TIME_LIMIT_DELAY
+
+        if self.execute_at:
+            kwargs['eta'] = self.execute_at
+
+        async_result = celery_app.send_task(
+            self.celery_task,
+            kwargs=self.celery_task_context,
+            **kwargs)
+        self.celery_task_id = async_result.id
+        self.started_at = timezone.now()
+        self.status = OperationStatus.STARTED
+        self.save()
+
+    def stop(self):
+        self.task = AsyncResult(self.celery_task_id)
+        self.task.revoke(terminate=True, signal='SIGKILL')
+        self.status = OperationStatus.STOPPED
+        self.save()

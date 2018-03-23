@@ -21,10 +21,16 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 CELERY_IGNORE_RESULT = True
+CELERY_HARD_TIME_LIMIT_DELAY = config.get_int(
+    'POLYAXON_CELERY_HARD_TIME_LIMIT_DELAY', is_optional=True) or 180
 
 
 class Intervals(object):
     """All intervals are in seconds"""
+    DEFAULT_RETRY_DELAY = config.get_int(
+        'POLYAXON_INTERVALS_DEFAULT_RETRY_DELAY', is_optional=True) or 60
+    MAX_RETRY_DELAY = config.get_int(
+        'POLYAXON_INTERVALS_DEFAULT_RETRY_DELAY', is_optional=True) or 60 * 60
     EXPERIMENTS_SCHEDULER = config.get_int(
         'POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER',
         is_optional=True) or 30
