@@ -20,6 +20,8 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+CELERY_IGNORE_RESULT = True
+
 
 class Intervals(object):
     """All intervals are in seconds"""

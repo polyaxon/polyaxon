@@ -1,14 +1,18 @@
 import logging
 import os
 
-from celery import Celery, Task
+from celery import Celery, Task, states
 
 from django.apps import apps
 
 logger = logging.getLogger("polyaxon.tasks")
 
 
-class PolyaxonTask(Task):
+STATES = states
+
+
+class CeleryTask(Task):
+    """Base custom celery task with basic logging."""
     abstract = True
 
     def on_success(self, retval, task_id, args, kwargs):
@@ -32,7 +36,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'polyaxon.settings')
 
 app = Celery('polyaxon')
 
-app.Task = PolyaxonTask  # Custom base class for logging
+app.Task = CeleryTask  # Custom base class for logging
 
 # Using a string here means the worker don't have to serialize
 # the configuration object to child processes.
