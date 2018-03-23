@@ -1,7 +1,7 @@
-Jinja2==2.9.6
-marshmallow==2.13.5
-numpy==1.13.1
-python-dateutil==2.6.1
-pytz==2017.2
+Jinja2==2.10
+marshmallow==2.15.0
+numpy==1.14.2
+python-dateutil==2.7.0
+pytz==2018.3
 PyYAML==3.12
 six==1.11.0
