@@ -1,12 +1,5 @@
-class CeleryTaskStatus(object):
-    PENDING = 'PENDING'
-    STARTED = 'STARTED'
-    RETRY = 'RETRY'
-    FAILURE = 'FAILURE'
-    SUCCESS = 'SUCCESS'
-
-
-class TaskStatus(object):
+class OperationStatus(object):
+    CREATED = 'created'
     STARTED = 'started'
     PENDING = 'pending'
     RUNNING = 'running'
@@ -15,8 +8,9 @@ class TaskStatus(object):
     SKIPPED = 'skipped'
     RETRYING = 'retrying'
 
-    VALUES = [STARTED, PENDING, RUNNING, SUCCESS, FAILED, SKIPPED, RETRYING]
+    VALUES = [CREATED, STARTED, PENDING, RUNNING, SUCCESS, FAILED, SKIPPED, RETRYING]
     CHOICES = (
+        (CREATED, CREATED),
         (STARTED, STARTED),
         (RUNNING, RUNNING),
         (SUCCESS, SUCCESS),

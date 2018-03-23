@@ -2,31 +2,75 @@ from django.conf import settings
 from django.db import models
 
 from libs.models import DiffModel, DescribableModel
-from pipelines.constants import TaskStatus, TriggerRule
+from pipelines.constants import OperationStatus, TriggerRule
 
 
 class Schedule(DiffModel):
-    """A model that represents the scheduling behaviour of a task or a pipeline."""
+    """A model that represents the scheduling behaviour of a operation or a pipeline."""
     frequency = models.CharField(
         max_length=64,
         null=True,
         blank=True,
-        help_text="Defines how often a pipeline/task runs, "
-                  "this timedelta object gets added to your latest task instance's "
+        help_text="Defines how often to run, "
+                  "this timedelta object gets added to your latest operation instance's "
                   "execution_date to figure out the next schedule", )
     start_at = models.DateTimeField(
         null=True,
         blank=True,
-        help_text="When the pipeline/task should run, "
+        help_text="When this instance should run, "
                   "default is None which translate to now.")
     end_at = models.DateTimeField(
         null=True,
         blank=True,
-        help_text="When the pipeline/task should stop running, "
+        help_text="When this instance should stop running, "
                   "default is None which translate to open ended.")
+    depends_on_past = models.BooleanField(
+        default=False,
+        help_text="when set to true, the instances will run "
+                  "sequentially while relying on the previous instances' schedule to succeed.")
 
 
-class CallbackMixin(object):
+class ExecutableModel(models.Model):
+    """A model that represents an execution behaviour of a operation or a pipeline."""
+    EXECUTABLE_RELATED_NAME = ''
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name=EXECUTABLE_RELATED_NAME)
+    schedule = models.OneToOneField(
+        Schedule,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
+    execute_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When this instance should be executed. "
+                  "default None which translate to now")
+    timeout = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text="specify how long this instance should be up "
+                  "before timing out in seconds.")
+    started_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the started.")
+    finished_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the finished.")
+    status = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=OperationStatus.CREATED,
+        choices=OperationStatus.CHOICES)
+
+    class Meta:
+        abstract = True
+
     def on_timeout(self):
         pass
 
@@ -38,11 +82,11 @@ class CallbackMixin(object):
 
 
 class UpstreamModel(models.Model):
-    """A model that represents the dependency behaviour of a task or a pipeline."""
+    """A model that represents the dependency behaviour of a operation or a pipeline."""
     DOWNSTREAM_RELATED_NAME = ''
 
-    upstream_tasks = models.ManyToManyField(
-        "pipelines.Task",
+    upstream_operations = models.ManyToManyField(
+        "pipelines.Operation",
         blank=True,
         null=True,
         related_name=DOWNSTREAM_RELATED_NAME)
@@ -57,143 +101,125 @@ class UpstreamModel(models.Model):
         null=True,
         default=TriggerRule.ALL_SUCCESS,
         choices=TriggerRule.CHOICES,
-        help_text="defines the rule by which dependencies are applied "
-                  "default is `all_success`. "
-                  "Options can be set as string or for the task to get triggered. "
-                  "Options are: "
-                  "`all_success | all_failed | all_done | one_success | one_failed | one_done`")
+        help_text="defines the rule by which dependencies are applied, "
+                  "default is `all_success`.")
 
     class Meta:
         abstract = True
 
-    def should_start(self):
+    def can_start(self):
         """Checks the upstream and the trigger rule."""
         if self.trigger_rule == TriggerRule.ONE_DONE:
-            task_check = self.upstream_tasks.filter(status__in=TaskStatus.DONE_STATUS).exists()
-            if task_check:
+            operation_check = self.upstream_operations.filter(
+                status__in=OperationStatus.DONE_STATUS).exists()
+            if operation_check:
                 return True
-            return self.upstream_pipelines.filter(status__in=TaskStatus.DONE_STATUS).exists()
+            return self.upstream_pipelines.filter(
+                status__in=OperationStatus.DONE_STATUS).exists()
         if self.trigger_rule == TriggerRule.ONE_SUCCESS:
-            task_check = self.upstream_tasks.filter(status=TaskStatus.SUCCESS).exists()
-            if task_check:
+            operation_check = self.upstream_operations.filter(
+                status=OperationStatus.SUCCESS).exists()
+            if operation_check:
                 return True
-            return self.upstream_pipelines.filter(status=TaskStatus.SUCCESS).exists()
+            return self.upstream_pipelines.filter(status=OperationStatus.SUCCESS).exists()
         if self.trigger_rule == TriggerRule.ONE_FAILED:
-            task_check = self.upstream_tasks.filter(status=TaskStatus.FAILED).exists()
-            if task_check:
+            operation_check = self.upstream_operations.filter(
+                status=OperationStatus.FAILED).exists()
+            if operation_check:
                 return True
-            return self.upstream_pipelines.filter(status=TaskStatus.FAILED).exists()
+            return self.upstream_pipelines.filter(status=OperationStatus.FAILED).exists()
         if self.trigger_rule == TriggerRule.ALL_DONE:
-            task_check = self.upstream_tasks.exclude(status__in=TaskStatus.DONE_STATUS).exists()
-            if not task_check:
+            operation_check = self.upstream_operations.exclude(
+                status__in=OperationStatus.DONE_STATUS).exists()
+            if not operation_check:
                 return False
-            return self.upstream_pipelines.exclude(status__in=TaskStatus.DONE_STATUS).exists()
+            return self.upstream_pipelines.exclude(
+                status__in=OperationStatus.DONE_STATUS).exists()
         if self.trigger_rule == TriggerRule.ALL_SUCCESS:
-            task_check = self.upstream_tasks.exclude(status=TaskStatus.SUCCESS).exists()
-            if not task_check:
+            operation_check = self.upstream_operations.exclude(
+                status=OperationStatus.SUCCESS).exists()
+            if not operation_check:
                 return False
-            return self.upstream_pipelines.exclude(status=TaskStatus.SUCCESS).exists()
+            return self.upstream_pipelines.exclude(status=OperationStatus.SUCCESS).exists()
         if self.trigger_rule == TriggerRule.ALL_FAILED:
-            task_check = self.upstream_tasks.exclude(status=TaskStatus.FAILED).exists()
-            if not task_check:
+            operation_check = self.upstream_operations.exclude(
+                status=OperationStatus.FAILED).exists()
+            if not operation_check:
                 return False
-            return self.upstream_pipelines.exclude(status=TaskStatus.FAILED).exists()
+            return self.upstream_pipelines.exclude(status=OperationStatus.FAILED).exists()
+
+    def notify_downstream(self):
+        """Notify downstream that this instance is done, and that its dependency can start."""
+        for pipeline in self.downstream_operations.filter(status=OperationStatus.CREATED):
+            pipeline.check_and_start()
+        for pipeline in self.downstream_pipelines.filter(status=OperationStatus.CREATED):
+            pipeline.check_and_start()
 
 
-class Pipeline(DiffModel, DescribableModel, UpstreamModel, CallbackMixin):
+class Pipeline(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
-    A Pipeline is a collection / namespace of tasks with directional dependencies.
+    A Pipeline is a collection / namespace of operations with directional dependencies.
     A Pipeline can optionally have
      * a schedule (e.g. daily, hourly, ...)
      * a start end an end date
 
-    Every task has dependencies, and can only run when all the dependencies are met.
+    Every operation has dependencies, and can only run when all the dependencies are met.
 
-    Certain tasks can depend on their own past, i.e that they can't run
-    until their previous schedule (and upstream tasks) are completed.
+    Certain operations can depend on their own past, i.e that they can't run
+    until their previous schedule (and upstream operations) are completed.
 
-    A pipeline can also have dependencies/upstream dags/tasks.
+    A pipeline can also have dependencies/upstream pipelines/operations.
     """
     DOWNSTREAM_RELATED_NAME = 'downstream_pipelines'
+    EXECUTABLE_RELATED_NAME = 'pipelines'
 
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='pipelines')
-    schedule = models.OneToOneField(
-        Schedule,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
-    execute_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the task should be executed. "
-                  "default None which translate to now")
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
-        help_text="the number of task instances allowed to run concurrently")
-    timeout = models.DurationField(
-        null=True,
-        blank=True,
-        help_text="specify how long a pipeline should be up before timing out in seconds.")
+        help_text="the number of operation instances allowed to run concurrently")
 
 
-class Task(DiffModel, DescribableModel, UpstreamModel, CallbackMixin):
-    """ Base class for all Tasks.
+class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
+    """ Base class for all Operations.
 
     To derive this class, you are expected to override
     the constructor as well as the 'execute' method.
 
-    Tasks derived from this class should perform or trigger certain behaviour
+    Operations derived from this class should perform or trigger certain behaviour
     synchronously (wait for completion).
 
-    Instantiating a class derived from this one results in the creation of a task object,
+    Instantiating a class derived from this one results in the creation of a operation object,
     which ultimately could run independently or becomes a node in DAG objects.
 
-    N.B.1: The `start_date` for the task, determines
-        the `execution_date` for the first task instance. The best practice
+    N.B.1: The `start_date` for the operation, determines
+        the `execution_date` for the first operation instance. The best practice
         is to have the start_date rounded
         to your DAG's `schedule`. Daily jobs have their `start_date`
         some day at 00:00:00, hourly jobs have their start_date at 00:00
         of a specific hour. Note that Polyaxon simply looks at the latest
         `execution_date` and adds the `schedule_interval` to determine
         the next `execution_date`. It is also very important
-        to note that different tasks' dependencies
-        need to line up in time. If task A depends on task B and their
+        to note that different operations' dependencies
+        need to line up in time. If operation A depends on operation B and their
         `start_date` are offset in a way that their execution_date don't line
         up, A's dependencies will never be met.
 
-    Add for wait for downstream `wait_for_downstream` of upstream tasks before running.
+    Add for wait for downstream `wait_for_downstream` of upstream operations before running.
     """
-    DOWNSTREAM_RELATED_NAME = 'downstream_tasks'
+    DOWNSTREAM_RELATED_NAME = 'downstream_operations'
+    EXECUTABLE_RELATED_NAME = 'operations'
 
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='tasks')
     pipeline = models.ForeignKey(
         Pipeline,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='tasks')
-    schedule = models.OneToOneField(
-        Schedule,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
-    execute_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the task should be executed. "
-                  "default None which translate to now")
+        related_name='operations')
     n_retries = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
-        help_text="the number of retries that should be performed before failing the task.")
+        help_text="the number of retries that should be performed before failing the operation.")
     retry_delay = models.PositiveIntegerField(
         null=True,
         blank=True,
@@ -206,35 +232,16 @@ class Task(DiffModel, DescribableModel, UpstreamModel, CallbackMixin):
         null=True,
         blank=True,
         help_text="maximum delay interval between retries.")
-    start_date = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="start date of the task, "
-                  "default is None which translate to now.")
-    end_date = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the task should stop running, "
-                  "default is None which translate to open ended.")
-    depends_on_past = models.BooleanField(
-        default=False,
-        help_text="when set to true, task instances will run "
-                  "sequentially while relying on the previous task's schedule to succeed. "
-                  "The task instance for the start_date is allowed to run.")
-    timeout = models.PositiveIntegerField(
-        null=True,
-        blank=True,
-        help_text="specify how long a task should be up before timing out in seconds.")
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
-        help_text="When set, a task will be able to limit the concurrent "
+        help_text="When set, a operation will be able to limit the concurrent "
                   "runs across execution_dates")
     run_as_user = models.CharField(
         max_length=64,
         null=True,
         blank=True,
-        help_text="unix username to impersonate while running the task.")
+        help_text="unix username to impersonate while running the operation.")
     resources = models.OneToOneField(
         'jobs.JobResources',
         on_delete=models.SET_NULL,
@@ -245,30 +252,5 @@ class Task(DiffModel, DescribableModel, UpstreamModel, CallbackMixin):
     def independent(self):
         return self.pipeline is None
 
-
-class TaskRun(models.Model):
-    """ A model that represents a run of Task."""
-    task = models.ForeignKey(
-        Task,
-        on_delete=models.CASCADE,
-        related_name='runs')
-    pipeline = models.ForeignKey(
-        Pipeline,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name='tasks')
-    started_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the started.")
-    finished_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the finished.")
-    status = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=TaskStatus.STARTED,
-        choices=TaskStatus.CHOICES)
+    def on_retry(self):
+        pass
