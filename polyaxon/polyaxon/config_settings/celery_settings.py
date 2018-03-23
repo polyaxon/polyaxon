@@ -58,7 +58,10 @@ class CeleryPublishTask(object):
 
 
 class CeleryTasks(object):
-    """Normal celery tasks."""
+    """Normal celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
     EXPERIMENTS_BUILD = 'experiments_build'
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_STOP = 'experiments_stop'
@@ -85,6 +88,10 @@ class CeleryTasks(object):
 
 
 class CeleryQueues(object):
+    """Celery Queues.
+
+    N.B. make sure that the queue name is not < 128.
+    """
     API_EXPERIMENTS = config.get_string(
         'POLYAXON_QUEUES_API_EXPERIMENTS',
         is_optional=True) or 'api.experiments'
