@@ -1,4 +1,3 @@
-from datetime import datetime
 from unittest.mock import patch
 
 import mock
@@ -7,6 +6,7 @@ import os
 from django.test.client import MULTIPART_CONTENT
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils import timezone
 
 from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
@@ -176,7 +176,7 @@ class TestExperimentModel(BaseTest):
         experiment = ExperimentFactory(config=content.parsed_data)
         assert experiment.metrics.count() == 0
 
-        create_at = datetime.utcnow()
+        create_at = timezone.now()
         set_metrics(experiment_uuid=experiment.uuid.hex,
                     created_at=create_at,
                     metrics={'accuracy': 0.9, 'precision': 0.9})

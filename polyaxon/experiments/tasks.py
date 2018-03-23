@@ -2,7 +2,6 @@ import logging
 
 from django.db.models import Count
 from docker.errors import DockerException
-from polyaxon_schemas.utils import TIME_ZONE
 
 from experiments.restart import handle_restarted_experiment
 from experiments.paths import create_experiment_outputs_path
@@ -105,15 +104,17 @@ def check_experiment_status(experiment_uuid):
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
-def set_metrics(experiment_uuid, created_at, metrics):
-    created_at = TIME_ZONE.localize(created_at)
+def set_metrics(experiment_uuid, metrics, created_at=None):
     try:
         experiment = Experiment.objects.get(uuid=experiment_uuid)
     except Experiment.DoesNotExist:
         logger.info('Experiment uuid `{}` does not exist'.format(experiment_uuid))
         return None
 
-    ExperimentMetric.objects.create(experiment=experiment, created_at=created_at, values=metrics)
+    kwargs = {}
+    if created_at:
+        kwargs['created_at'] = created_at
+    ExperimentMetric.objects.create(experiment=experiment, values=metrics, **kwargs)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES, ignore_result=True)
