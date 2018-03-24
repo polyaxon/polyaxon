@@ -1,7 +1,7 @@
 class OperationStatus(object):
     CREATED = 'created'
+    SCHEDULED = 'scheduled'
     STARTED = 'started'
-    PENDING = 'pending'
     RUNNING = 'running'
     SUCCESS = 'success'
     FAILED = 'failed'
@@ -9,9 +9,10 @@ class OperationStatus(object):
     SKIPPED = 'skipped'
     RETRYING = 'retrying'
 
-    VALUES = [CREATED, STARTED, PENDING, RUNNING, SUCCESS, FAILED, STOPPED, SKIPPED, RETRYING]
+    VALUES = [CREATED, STARTED, SCHEDULED, RUNNING, SUCCESS, FAILED, STOPPED, SKIPPED, RETRYING]
     CHOICES = (
         (CREATED, CREATED),
+        (SCHEDULED, SCHEDULED),
         (STARTED, STARTED),
         (RUNNING, RUNNING),
         (SUCCESS, SUCCESS),
@@ -21,7 +22,7 @@ class OperationStatus(object):
         (RETRYING, RETRYING)
     )
 
-    DONE_STATUS = [SUCCESS, FAILED]
+    DONE_STATUS = [SUCCESS, FAILED, STOPPED, SKIPPED]
 
 
 class TriggerRule(object):
