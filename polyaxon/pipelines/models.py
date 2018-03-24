@@ -13,7 +13,7 @@ from pipelines.constants import OperationStatus, TriggerRule
 
 
 class Schedule(DiffModel):
-    """A model that represents the scheduling behaviour of a operation or a pipeline."""
+    """A model that represents the scheduling behaviour of an operation or a pipeline."""
     frequency = models.CharField(
         max_length=64,
         null=True,
@@ -38,7 +38,7 @@ class Schedule(DiffModel):
 
 
 class ExecutableModel(models.Model):
-    """A model that represents an execution behaviour of a operation or a pipeline."""
+    """A model that represents an execution behaviour of an operation or a pipeline."""
     EXECUTABLE_RELATED_NAME = ''
 
     user = models.ForeignKey(
@@ -60,121 +60,9 @@ class ExecutableModel(models.Model):
         blank=True,
         help_text="specify how long this instance should be up "
                   "before timing out in seconds.")
-    started_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the instance started.")
-    finished_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the instance finished.")
-    status = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=OperationStatus.CREATED,
-        choices=OperationStatus.CHOICES)
-
-    class Meta:
-        abstract = True
-
-    def on_run(self):
-        self.status = OperationStatus.RUNNING
-        self.save()
-
-    def on_timeout(self):
-        self.status = OperationStatus.FAILED
-        self.save()
-
-    def on_failure(self):
-        self.status = OperationStatus.FAILED
-        self.save()
-
-    def on_success(self):
-        self.status = OperationStatus.SUCCESS
-        self.save()
-
-    def on_stop(self):
-        self.status = OperationStatus.STOPPED
-        self.save()
 
 
-class UpstreamModel(models.Model):
-    """A model that represents the dependency behaviour of a operation or a pipeline."""
-    DOWNSTREAM_RELATED_NAME = ''
-
-    upstream_operations = models.ManyToManyField(
-        "pipelines.Operation",
-        blank=True,
-        null=True,
-        related_name=DOWNSTREAM_RELATED_NAME)
-    upstream_pipelines = models.ManyToManyField(
-        "pipelines.Pipeline",
-        blank=True,
-        null=True,
-        related_name=DOWNSTREAM_RELATED_NAME)
-    trigger_rule = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=TriggerRule.ALL_SUCCESS,
-        choices=TriggerRule.CHOICES,
-        help_text="defines the rule by which dependencies are applied, "
-                  "default is `all_success`.")
-
-    class Meta:
-        abstract = True
-
-    def can_start(self):
-        """Checks the upstream and the trigger rule."""
-        if self.trigger_rule == TriggerRule.ONE_DONE:
-            operation_check = self.upstream_operations.filter(
-                status__in=OperationStatus.DONE_STATUS).exists()
-            if operation_check:
-                return True
-            return self.upstream_pipelines.filter(
-                status__in=OperationStatus.DONE_STATUS).exists()
-        if self.trigger_rule == TriggerRule.ONE_SUCCESS:
-            operation_check = self.upstream_operations.filter(
-                status=OperationStatus.SUCCESS).exists()
-            if operation_check:
-                return True
-            return self.upstream_pipelines.filter(status=OperationStatus.SUCCESS).exists()
-        if self.trigger_rule == TriggerRule.ONE_FAILED:
-            operation_check = self.upstream_operations.filter(
-                status=OperationStatus.FAILED).exists()
-            if operation_check:
-                return True
-            return self.upstream_pipelines.filter(status=OperationStatus.FAILED).exists()
-        if self.trigger_rule == TriggerRule.ALL_DONE:
-            operation_check = self.upstream_operations.exclude(
-                status__in=OperationStatus.DONE_STATUS).exists()
-            if not operation_check:
-                return False
-            return self.upstream_pipelines.exclude(
-                status__in=OperationStatus.DONE_STATUS).exists()
-        if self.trigger_rule == TriggerRule.ALL_SUCCESS:
-            operation_check = self.upstream_operations.exclude(
-                status=OperationStatus.SUCCESS).exists()
-            if not operation_check:
-                return False
-            return self.upstream_pipelines.exclude(status=OperationStatus.SUCCESS).exists()
-        if self.trigger_rule == TriggerRule.ALL_FAILED:
-            operation_check = self.upstream_operations.exclude(
-                status=OperationStatus.FAILED).exists()
-            if not operation_check:
-                return False
-            return self.upstream_pipelines.exclude(status=OperationStatus.FAILED).exists()
-
-    def notify_downstream(self):
-        """Notify downstream that this instance is done, and that its dependency can start."""
-        for pipeline in self.downstream_operations.filter(status=OperationStatus.CREATED):
-            pipeline.check_and_start()
-        for pipeline in self.downstream_pipelines.filter(status=OperationStatus.CREATED):
-            pipeline.check_and_start()
-
-
-class Pipeline(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
+class Pipeline(DiffModel, DescribableModel, ExecutableModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
     A Pipeline is a collection / namespace of operations with directional dependencies.
@@ -189,13 +77,32 @@ class Pipeline(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
 
     A pipeline can also have dependencies/upstream pipelines/operations.
     """
-    DOWNSTREAM_RELATED_NAME = 'downstream_pipelines'
     EXECUTABLE_RELATED_NAME = 'pipelines'
 
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
         help_text="the number of operation instances allowed to run concurrently")
+
+
+class UpstreamModel(models.Model):
+    """A model that represents the dependency behaviour of an operation."""
+    upstream_operations = models.ManyToManyField(
+        "pipelines.Operation",
+        blank=True,
+        null=True,
+        related_name='downstream_operations')
+    trigger_rule = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=TriggerRule.ALL_SUCCESS,
+        choices=TriggerRule.CHOICES,
+        help_text="defines the rule by which dependencies are applied, "
+                  "default is `all_success`.")
+
+    class Meta:
+        abstract = True
 
 
 class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
@@ -225,7 +132,6 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
 
     Add for wait for downstream `wait_for_downstream` of upstream operations before running.
     """
-    DOWNSTREAM_RELATED_NAME = 'downstream_operations'
     EXECUTABLE_RELATED_NAME = 'operations'
 
     pipeline = models.ForeignKey(
@@ -252,10 +158,6 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
         blank=True,
         default=Intervals.MAX_RETRY_DELAY,
         help_text="maximum delay interval between retries.")
-    retried_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the instance last retried.")
     n_retries = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
@@ -275,14 +177,9 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
         on_delete=models.SET_NULL,
         null=True,
         blank=True)
-    celery_task_context = JSONField(
-        blank=True,
-        null=True,
-        help_text='The kwargs required to execute the celery task.')
     celery_task = models.CharField(
         max_length=128,
         help_text="The celery task name to execute.")
-    celery_task_id = models.UUIDField(null=False, blank=True)
     celery_queue = models.CharField(
         max_length=128,
         blank=True,
@@ -337,3 +234,114 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
         self.task.revoke(terminate=True, signal='SIGKILL')
         self.status = OperationStatus.STOPPED
         self.save()
+
+
+class RunModel(models.Model):
+    """
+    A model that represents an execution behaviour of instance/run of a operation or a pipeline.
+    """
+    started_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the instance started.")
+    finished_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the instance finished.")
+    status = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=OperationStatus.CREATED,
+        choices=OperationStatus.CHOICES)
+
+    class Meta:
+        abstract = True
+
+    def on_run(self):
+        self.status = OperationStatus.RUNNING
+        self.save()
+
+    def on_timeout(self):
+        self.status = OperationStatus.FAILED
+        self.save()
+
+    def on_failure(self):
+        self.status = OperationStatus.FAILED
+        self.save()
+
+    def on_success(self):
+        self.status = OperationStatus.SUCCESS
+        self.save()
+
+    def on_stop(self):
+        self.status = OperationStatus.STOPPED
+        self.save()
+
+
+class PipelineRun(RunModel):
+    """A model that represents an execution behaviour/run of instance of a pipeline.
+
+    Since this is an instance of known Pipeline,
+    we can store the sorted topology of the dag,
+    which should should not change during the execution time.
+    """
+    pipeline = models.ForeignKey(
+        Pipeline,
+        on_delete=models.CASCADE,
+        related_name='runs')
+
+
+class UpstreamRunModel(models.Model):
+    """A model that represents the dependency behaviour of an operation."""
+    upstream_runs = models.ManyToManyField(
+        "pipelines.OperationRun",
+        blank=True,
+        null=True,
+        related_name='downstream_runs')
+
+    class Meta:
+        abstract = True
+
+    def can_start(self):
+        """Checks the upstream and the trigger rule."""
+        if self.operation.trigger_rule == TriggerRule.ONE_DONE:
+            return self.upstream_runs.filter(
+                status__in=OperationStatus.DONE_STATUS).exists()
+        if self.operation.trigger_rule == TriggerRule.ONE_SUCCESS:
+            return self.upstream_runs.filter(
+                status=OperationStatus.SUCCESS).exists()
+        if self.operation.trigger_rule == TriggerRule.ONE_FAILED:
+            return self.upstream_runs.filter(
+                status=OperationStatus.FAILED).exists()
+        if self.operation.trigger_rule == TriggerRule.ALL_DONE:
+            return self.upstream_runs.exclude(
+                status__in=OperationStatus.DONE_STATUS).exists()
+        if self.operation.trigger_rule == TriggerRule.ALL_SUCCESS:
+            return self.upstream_runs.exclude(
+                status=OperationStatus.SUCCESS).exists()
+        if self.operation.trigger_rule == TriggerRule.ALL_FAILED:
+            return self.upstream_runs.exclude(
+                status=OperationStatus.FAILED).exists()
+
+    def notify_downstream(self):
+        """Notify downstream that this instance is done, and that its dependency can start."""
+        for pipeline in self.downstream_operations.filter(status=OperationStatus.CREATED):
+            pipeline.check_and_start()
+
+
+class OperationRun(RunModel, UpstreamRunModel):
+    """A model that represents an execution behaviour/run of instance of an operation."""
+    retried_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the instance last retried.")
+    operation = models.ForeignKey(
+        Operation,
+        on_delete=models.CASCADE,
+        related_name='runs')
+    celery_task_context = JSONField(
+        blank=True,
+        null=True,
+        help_text='The kwargs required to execute the celery task.')
+    celery_task_id = models.UUIDField(null=False, blank=True)
