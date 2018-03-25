@@ -1,0 +1,21 @@
+[run]
+branch = True
+parallel = True
+omit =
+    tests/*
+    polyaxon/polyaxon/*
+    polyaxon/manage.py
+    polyaxon/*/migrations/*
+    polyaxon/*/admin.py
+    polyaxon/*/apps.py
+    setup.py
+
+[html]
+directory = tests_report/
+
+[xml]
+output = tests_report/coverage.xml
+
+[report]
+precision = 2
+show_missing = True
