@@ -31,15 +31,18 @@ def set_topological_dag_upstreams(dag, ops, op_runs, runs_by_ops):
         set_op_upstreams(op_run=op_run, op=ops[op_id])
 
 
-def create_pipeline_run(pipeline):
-    """Create a pipeline."""
+def create_pipeline_run(pipeline, context_by_op):
+    """Create a pipeline run/instance."""
     pipeline_run = PipelineRun.objects.create(pipeline=pipeline)
     dag, ops = pipeline.dag
     # Go trough the operation and create operation runs and the upstreams
     op_runs = {}
     runs_by_ops = {}
     for op_id in dag.keys():
-        op_run = OperationRun.objects.create(pipeline_run=pipeline_run, operation_id=op_id)
+        op_run = OperationRun.objects.create(
+            pipeline_run=pipeline_run,
+            operation_id=op_id,
+            celery_task_context=context_by_op.get(op_id))
         op_run_id = op_run.id
         op_runs[op_run_id] = op_run
         runs_by_ops[op_id] = op_run_id
