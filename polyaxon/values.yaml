@@ -20,6 +20,9 @@ user:
   email: "root@polyaxon.local"
   password: "rootpassword"
 
+# Time zone
+timeZone: 'UTC'
+
 dirs:
   nvidia:
     lib: ""  # e.g. "/usr/lib/nvidia-384"

@@ -100,11 +100,22 @@ The following tables lists the configurable parameters of the Polyaxon chart and
 This chart provides support for Ingress resource with a custom ingress controller `polyaxon-ingress`.
 You can also provide different annotations for the ingress and it will not use `polyaxon-ingress` class. (`ingress.annotations.kubernetes.io/ingress.class`)
 
-| Parameter                       | Description                                      | Default
-| --------------------------------| -------------------------------------------------| ----------------------------------------------------------
-| `rbac.enabled`                  | Use Kubernetes' role-based access control (RBAC) | `true`
-| `ingress.enabled`               | Use Kubernetes' ingress                          | `true`
-| `ingress.annotations`           | Ingress annotations                              | `{}`
+| Parameter            | Description                                      | Default
+| ---------------------| -------------------------------------------------| ----------------------------------------------------------
+| `rbac.enabled`       | Use Kubernetes' role-based access control (RBAC) | `true`
+| `ingress.enabled`    | Use Kubernetes' ingress                          | `true`
+| `ingress.annotations`| Ingress annotations                              | `{}`
+
+
+### Time zone
+
+To set a different time zone for application (convenient for the dashboard and admin interface)
+you can can provide a [valid time zone value](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+
+
+| Parameter | Description         | Default
+| ----------| --------------------| ----------------------------------------------------------
+| `timeZone`| The timezone to use | `UTC`
 
 
 ### Root user
