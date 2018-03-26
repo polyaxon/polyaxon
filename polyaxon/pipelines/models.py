@@ -281,20 +281,54 @@ class RunModel(DiffModel):
 
         return True
 
+    def notify(self):
+        pass
+
     def on_run(self, commit=True):
-        self.update_status(status=self.STATUSES.RUNNING, commit=commit)
+        self.update_status(status=self.STATUSES.RUNNING, commit=False)
+        self.started_at = timezone.now()
+        if commit:
+            self.save()
 
-    def on_timeout(self, commit=True):
-        self.update_status(status=self.STATUSES.FAILED, commit=commit)
+    def on_timeout(self, commit=True, notify=True):
+        self.update_status(status=self.STATUSES.FAILED, commit=False)
+        self.finished_at = timezone.now()
+        if commit:
+            self.save()
+        if notify:
+            self.notify()
 
-    def on_failure(self, commit=True):
-        self.update_status(status=self.STATUSES.FAILED, commit=commit)
+    def on_failure(self, commit=True, notify=True):
+        self.update_status(status=self.STATUSES.FAILED, commit=False)
+        self.finished_at = timezone.now()
+        if commit:
+            self.save()
+        if notify:
+            self.notify()
 
-    def on_success(self, commit=True):
-        self.update_status(status=self.STATUSES.SUCCESS, commit=commit)
+    def on_success(self, commit=True, notify=True):
+        self.update_status(status=self.STATUSES.SUCCESS, commit=False)
+        self.finished_at = timezone.now()
+        if commit:
+            self.save()
+        if notify:
+            self.notify()
 
-    def on_stop(self, commit=True):
-        self.update_status(status=self.STATUSES.STOPPED, commit=commit)
+    def on_stop(self, commit=True, notify=True):
+        self.update_status(status=self.STATUSES.STOPPED, commit=False)
+        self.finished_at = timezone.now()
+        if commit:
+            self.save()
+        if notify:
+            self.notify()
+
+    def on_skip(self, commit=True, notify=True):
+        self.update_status(status=self.STATUSES.SKIPPED, commit=False)
+        self.finished_at = timezone.now()
+        if commit:
+            self.save()
+        if notify:
+            self.notify()
 
 
 class PipelineRun(RunModel):
@@ -322,6 +356,14 @@ class PipelineRun(RunModel):
 
         ops_count = self.operation_runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.pipeline.concurrency
+
+    def notify(self):
+        """Notification logic for pipeline runs:
+
+            * notify operations with status change
+            * other notification if configured on the pipeline
+        """
+        pass
 
 
 class OperationRun(RunModel):
@@ -365,7 +407,7 @@ class OperationRun(RunModel):
         ops_count = self.operation.runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.operation.concurrency
 
-    def check_upstream(self):
+    def check_upstream_trigger(self):
         """Checks the upstream and the trigger rule."""
         if self.operation.trigger_rule == TriggerRule.ONE_DONE:
             return self.upstream_runs.filter(
@@ -393,18 +435,30 @@ class OperationRun(RunModel):
             status__in=self.STATUSES.DONE_STATUS).count()
         return upstream_count == upstream_done_count
 
-    def update_status(self, status, commit=True):
-        is_updated = super(OperationRun, self).update_status(status=status, commit=commit)
+    def notify_pipeline(self):
         # If the operation run is updated, we need to notify the pipeline run
-        if is_updated and status in PipelineStatuses.VALUES:
-            self.pipeline_run.update_status(status)
-
-        return is_updated
+        if self.status in PipelineStatuses.VALUES:
+            # TODO This is not correct, the pipeline must check for all tasks to decide on the status
+            self.pipeline_run.update_status(status=self.status, commit=True)
+        # One case that we also need to handle
+        if self.status == self.STATUSES.UPSTREAM_FAILED:
+            # TODO: may be we need to call on_failure, to notify the rest of the operations to stop.
+            self.pipeline_run.update_status(status=PipelineStatuses.FAILED, commit=True)
 
     def notify_downstream(self):
         """Notify downstream that this instance is done, and that its dependency can start."""
         for op in self.downstream_runs.filter(status=self.STATUSES.CREATED):
             op.schedule_start()
+
+    def notify(self):
+        """Notification logic for operation runs:
+
+            * notify downstream with status change
+            * notify pipeline with status change
+            * other notification if configured on the pipeline
+        """
+        self.notify_pipeline()
+        self.notify_downstream()
 
     def schedule_start(self):
         """Schedule the task: check first if the task can start:
@@ -438,9 +492,9 @@ class OperationRun(RunModel):
         if self.status in self.STATUSES.DONE_STATUS:
             return False
 
-        upstream_check = self.check_upstream()
-        if not upstream_check and self.is_upstream_done:  # This task cannot be scheduled anymore
-            self.update_status(status=self.STATUSES.UPSTREAM_FAILED)
+        upstream_trigger_check = self.check_upstream_trigger()
+        if not upstream_trigger_check and self.is_upstream_done:  # This task cannot be scheduled anymore
+            self.on_upstream_failed(commit=True, notify=True)
             return False
 
         if not self.pipeline_run.check_concurrency():
@@ -449,7 +503,7 @@ class OperationRun(RunModel):
         if not self.check_concurrency():
             return True
 
-        self.update_status(status=self.STATUSES.SCHEDULED)
+        self.on_scheduled(commit=True)
         self.start()
         return False
 
@@ -462,27 +516,27 @@ class OperationRun(RunModel):
         self.celery_task_id = async_result.id
         self.save()
 
-    def on_run(self, commit=True):
-        super(OperationRun, self).on_run(commit=False)
-        self.started_at = timezone.now()
-        if commit:
-            self.save()
-
     def stop(self):
         task = AsyncResult(self.celery_task_id)
         task.revoke(terminate=True, signal='SIGKILL')
-        self.update_status(status=self.STATUSES.STOPPED, commit=False)
-        self.finished_at = timezone.now()
-        self.save()
-        self.notify_downstream()
+        self.on_stop()
 
     def skip(self):
-        self.update_status(status=self.STATUSES.SKIPPED, commit=False)
-        self.finished_at = timezone.now()
-        self.save()
-        self.notify_downstream()
+        self.on_skip()
 
-    def on_retry(self):
+    def on_scheduled(self, commit=True):
+        self.update_status(status=self.STATUSES.SCHEDULED, commit=commit)
+
+    def on_retry(self, commit=True):
         self.update_status(status=self.STATUSES.RETRYING, commit=False)
         self.retried_at = timezone.now()
-        self.save()
+        if commit:
+            self.save()
+
+    def on_upstream_failed(self, commit=True, notify=True):
+        self.update_status(status=self.STATUSES.UPSTREAM_FAILED, commit=False)
+        self.finished_at = timezone.now()
+        if commit:
+            self.save()
+        if notify:
+            self.notify()
