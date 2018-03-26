@@ -25,6 +25,7 @@ class OperationStatus(object):
     )
 
     DONE_STATUS = [SUCCESS, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED]
+    RUNNING_STATUS = [SCHEDULED, RUNNING]
 
     ALLOWED_VALUES = {
         CREATED: set([]),
