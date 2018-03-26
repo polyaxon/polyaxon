@@ -86,15 +86,18 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
 
     @property
     def dag(self):
-        """Construct the DAG of this pipeline based on the its tasks."""
+        """Construct the DAG of this pipeline based on the its operations and their downstream."""
         dag = {}
+        ops = {}
         operations = self.operations.all()
         operations = operations.prefetch_related('downstream_operations')
+
         for operation in operations:
             downstream_ops = operation.downstream_operations.values_list('id', flat=True)
             dag[operation.id] = set(downstream_ops)
+            ops[operation.id] = operation
 
-        return dag
+        return dag, ops
 
 
 class Operation(DiffModel, DescribableModel, ExecutableModel):
@@ -224,7 +227,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         return kwargs
 
 
-class RunModel(models.Model):
+class RunModel(DiffModel):
     """
     A model that represents an execution behaviour of instance/run of a operation or a pipeline.
     """
