@@ -10,7 +10,7 @@ psycopg2-binary==2.7.4
 redis==2.10.6
 sanic==0.7.0
 Unipath==1.1
-uWSGI==2.0.15
+uWSGI==2.0.17
 websockets==3.4
 
 -e git+https://github.com/polyaxon/polyaxon-gpustat.git@158b1f2a88df1b8d80e07b447710164c8d4ad25e#egg=polyaxon-gpustat==0.0.6
