@@ -31,7 +31,7 @@ polyaxonSecret: "RANDOM_STRING"
 user:
   username: "root"
   email: "root@polyaxon.local"
-  password: "root"
+  password: "dummypassword"
 ```
 
 ## Install Polyaxon
