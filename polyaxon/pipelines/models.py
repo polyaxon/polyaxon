@@ -289,6 +289,12 @@ class OperationRun(RunModel):
         Operation,
         on_delete=models.CASCADE,
         related_name='runs')
+    pipeline_run = models.ForeignKey(
+        PipelineRun,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='operation_runs')
     upstream_runs = models.ManyToManyField(
         'self',
         blank=True,
