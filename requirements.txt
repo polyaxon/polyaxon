@@ -10,7 +10,7 @@ psycopg2-binary==2.7.4
 redis==2.10.6
 sanic==0.7.0
 Unipath==1.1
-uWSGI==2.0.15
+uWSGI==2.0.17
 websockets==3.4
 
 polyaxon-schemas==0.0.6
