@@ -7,7 +7,7 @@ django-debug-toolbar==1.9.1
 factory-boy==2.10.0
 fake-factory==9999.9.9
 flaky==3.4.0
-isort==4.2.15
+isort==4.3.4
 mock==2.0.0
 prospector==0.12.7
 pyflakes==1.6.0
