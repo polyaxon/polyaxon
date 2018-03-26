@@ -3,7 +3,7 @@ Django==2.0.3
 django-cors-headers==2.2.0
 djangorestframework==3.7.7
 docker==3.1.4
-GitPython==2.1.7
+GitPython==2.1.9
 Jinja2==2.9.6
 pika==0.11.0
 psycopg2-binary==2.7.4
