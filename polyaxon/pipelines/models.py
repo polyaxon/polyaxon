@@ -474,6 +474,13 @@ class OperationRun(RunModel):
         self.update_status(status=self.STATUSES.STOPPED, commit=False)
         self.finished_at = timezone.now()
         self.save()
+        self.notify_downstream()
+
+    def skip(self):
+        self.update_status(status=self.STATUSES.SKIPPED, commit=False)
+        self.finished_at = timezone.now()
+        self.save()
+        self.notify_downstream()
 
     def on_retry(self):
         self.update_status(status=self.STATUSES.RETRYING, commit=False)
