@@ -1,3 +1,5 @@
+import logging
+
 from celery.result import AsyncResult
 
 from django.conf import settings
@@ -10,6 +12,8 @@ from polyaxon.settings import Intervals
 
 from libs.models import DiffModel, DescribableModel
 from pipelines.constants import OperationStatus, TriggerRule
+
+logger = logging.getLogger('polyaxon.pipelines')
 
 
 class Schedule(DiffModel):
@@ -61,6 +65,9 @@ class ExecutableModel(models.Model):
         help_text="specify how long this instance should be up "
                   "before timing out in seconds.")
 
+    class Meta:
+        abstract = True
+
 
 class Pipeline(DiffModel, DescribableModel, ExecutableModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
@@ -82,7 +89,8 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
-        help_text="the number of operation instances allowed to run concurrently")
+        help_text="If set, it determines the number of operation instances "
+                  "allowed to run concurrently.")
 
     @property
     def dag(self):
@@ -173,7 +181,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
-        help_text="When set, a operation will be able to limit the concurrent "
+        help_text="When set, an operation will be able to limit the concurrent "
                   "runs across execution_dates")
     run_as_user = models.CharField(
         max_length=64,
@@ -211,6 +219,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
             return retry_delay
 
     def get_run_kwargs(self):
+        """Return the kwargs to run the celery task."""
         kwargs = {}
         if self.celery_queue:
             kwargs['queue'] = self.celery_queue
@@ -249,25 +258,40 @@ class RunModel(DiffModel):
     class Meta:
         abstract = True
 
-    def on_run(self):
-        self.status = OperationStatus.RUNNING
-        self.save()
+    def update_status(self, status, commit=True):
+        """Update the status of the current instance.
 
-    def on_timeout(self):
-        self.status = OperationStatus.FAILED
-        self.save()
+        Returns:
+            boolean: if the instance is updated.
+        """
+        if self.status == status:
+            return False
 
-    def on_failure(self):
-        self.status = OperationStatus.FAILED
-        self.save()
+        if not OperationStatus.can_transition(status_from=self.status, status_to=status):
+            logger.warning('`{}` tried to transition from status `{}` to non permitted status `{}`'.format(
+                str(self), self.status, status))
+            return False
 
-    def on_success(self):
-        self.status = OperationStatus.SUCCESS
-        self.save()
+        self.status = status
+        if commit:
+            self.save()
 
-    def on_stop(self):
-        self.status = OperationStatus.STOPPED
-        self.save()
+        return True
+
+    def on_run(self, commit=True):
+        self.update_status(status=OperationStatus.RUNNING, commit=commit)
+
+    def on_timeout(self, commit=True):
+        self.update_status(status=OperationStatus.FAILED, commit=commit)
+
+    def on_failure(self, commit=True):
+        self.update_status(status=OperationStatus.FAILED, commit=commit)
+
+    def on_success(self, commit=True):
+        self.update_status(status=OperationStatus.SUCCESS, commit=commit)
+
+    def on_stop(self, commit=True):
+        self.update_status(status=OperationStatus.STOPPED, commit=commit)
 
 
 class PipelineRun(RunModel):
@@ -281,6 +305,18 @@ class PipelineRun(RunModel):
         Pipeline,
         on_delete=models.CASCADE,
         related_name='runs')
+
+    def check_concurrency(self):
+        """Checks the concurrency of the pipeline run to validate if we can start a new operation run.
+
+        Returns:
+            boolean: Whether to start a new operation run or not.
+        """
+        if not self.pipeline.concurrency:  # No concurrency set
+            return True
+
+        ops_count = self.operation_runs.filter(status__in=OperationStatus.RUNNING_STATUS).count()
+        return ops_count < self.pipeline.concurrency
 
 
 class OperationRun(RunModel):
@@ -310,7 +346,19 @@ class OperationRun(RunModel):
         help_text='The kwargs required to execute the celery task.')
     celery_task_id = models.UUIDField(null=False, blank=True)
 
-    def can_start(self):
+    def check_concurrency(self):
+        """Checks the concurrency of the operation run to validate if we can start a new operation run.
+
+        Returns:
+            boolean: Whether to start a new operation run or not.
+        """
+        if not self.operation.concurrency:  # No concurrency set
+            return True
+
+        ops_count = self.operation.runs.filter(status__in=OperationStatus.RUNNING_STATUS).count()
+        return ops_count < self.operation.concurrency
+
+    def check_upstream(self):
         """Checks the upstream and the trigger rule."""
         if self.operation.trigger_rule == TriggerRule.ONE_DONE:
             return self.upstream_runs.filter(
@@ -331,19 +379,72 @@ class OperationRun(RunModel):
             return self.upstream_runs.exclude(
                 status=OperationStatus.FAILED).exists()
 
+    @property
+    def is_upstream_done(self):
+        upstream_count = self.upstream_runs.count()
+        upstream_done_count = self.upstream_runs.exclude(
+            status__in=OperationStatus.DONE_STATUS).count()
+        return upstream_count == upstream_done_count
+
+    def update_status(self, status, commit=True):
+        is_updated = super(OperationRun, self).update_status(status=status, commit=commit)
+        # If the operation run is updated, we need to notify the pipeline run
+        if is_updated:
+            self.pipeline_run.update_status(status)
+
+        return is_updated
+
     def notify_downstream(self):
         """Notify downstream that this instance is done, and that its dependency can start."""
-        for pipeline in self.downstream_operations.filter(status=OperationStatus.CREATED):
-            pipeline.check_and_start()
+        for op in self.downstream_runs.filter(status=OperationStatus.CREATED):
+            op.schedule_start()
 
-    def schedule(self):
-        """Schedule the task: check first if the task is startable and then start it"""
-        if self.status != OperationStatus.CREATED:
-            return
-        self.status = OperationStatus.SCHEDULED
-        self.save()
-        if self.can_start():
-            self.start()
+    def schedule_start(self):
+        """Schedule the task: check first if the task can start:
+            1. we check that the task did not reach a end status;
+              e.g. was `STOPPED` or marked as `SKIPPED`.
+            2. we check that the upstream dependency is met.
+            3. we check that pipeline can start a new task;
+              i.e. we check the concurrency of the pipeline.
+            4. we check that operation can start a new instance;
+              i.e. we check the concurrency of the operation.
+
+        -> If all checks pass we schedule the task start it.
+
+        -> 1. If the operation is in end status: nothing should be done.
+        -> 2. If the upstream dependency check is not met, two use cases need to be validated:
+            * The upstream dependency is not met but could be met in the future,
+              because some ops are still CREATED/SCHEDULED/RUNNING/...
+              in this case nothing need to be done, every time an upstream operation finishes,
+              it will notify all the downstream ops including this one.
+            * The upstream dependency is not met and could not be met at all.
+              In this case we need to mark the task with `UPSTREAM_FAILED`.
+        -> 3. If the pipeline has reached it's concurrency limit,
+           we just delay schedule based on the interval/time delay defined by the user.
+           The pipeline scheduler will keep checking until the task can be scheduled or stopped.
+        -> 4. If the operation has reached it's concurrency limit,
+           Same as above we keep trying based on an interval defined by the user.
+
+        Returns:
+            boolean: Whether to try to schedule this operation run in the future or not.
+        """
+        if self.status in OperationStatus.DONE_STATUS:
+            return False
+
+        upstream_check = self.check_upstream()
+        if not upstream_check and self.is_upstream_done:  # This task cannot be scheduled anymore
+            self.update_status(status=OperationStatus.UPSTREAM_FAILED)
+            return False
+
+        if not self.pipeline_run.check_concurrency():
+            return True
+
+        if not self.check_concurrency():
+            return True
+
+        self.update_status(status=OperationStatus.SCHEDULED)
+        self.start()
+        return False
 
     def start(self):
         """Start the celery task of this operation."""
@@ -352,16 +453,22 @@ class OperationRun(RunModel):
             kwargs=self.celery_task_context,
             **self.operation.get_run_kwargs())
         self.celery_task_id = async_result.id
-        self.started_at = timezone.now()
-        self.status = OperationStatus.STARTED
         self.save()
 
+    def on_run(self, commit=True):
+        super(OperationRun, self).on_run(commit=False)
+        self.started_at = timezone.now()
+        if commit:
+            self.save()
+
     def stop(self):
-        self.task = AsyncResult(self.celery_task_id)
-        self.task.revoke(terminate=True, signal='SIGKILL')
-        self.status = OperationStatus.STOPPED
+        task = AsyncResult(self.celery_task_id)
+        task.revoke(terminate=True, signal='SIGKILL')
+        self.update_status(status=OperationStatus.STOPPED, commit=False)
+        self.finished_at = timezone.now()
         self.save()
 
     def on_retry(self):
-        self.status = OperationStatus.RETRYING
+        self.update_status(status=OperationStatus.RETRYING, commit=False)
+        self.retried_at = timezone.now()
         self.save()
