@@ -8,7 +8,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 WSGI_APPLICATION = 'polyaxon.wsgi.application'
-TIME_ZONE = 'Europe/Berlin'
+TIME_ZONE = config.get_string('POLYAXON_TIME_ZONE', is_optional=True) or 'Europe/Berlin'
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
     ('en', u'English'),

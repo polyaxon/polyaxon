@@ -95,6 +95,17 @@ You can also provide different annotations for the ingress and it will not use `
 | `ingress.annotations`           | Ingress annotations                              | `{}`
 
 
+### Time zone
+
+To set a different time zone for application (convenient for the dashboard and admin interface)
+you can can provide a [valid time zone value](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+
+
+| Parameter | Description         | Default
+| ----------| --------------------| ----------------------------------------------------------
+| `timeZone`| The timezone to use | `UTC`
+
+
 ### Root user
 
 The default superuser/root user for polyaxon.
