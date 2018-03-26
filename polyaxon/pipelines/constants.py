@@ -24,6 +24,22 @@ class OperationStatus(object):
 
     DONE_STATUS = [SUCCESS, FAILED, STOPPED, SKIPPED]
 
+    ALLOWED_VALUES = {
+        CREATED: set([]),
+        SCHEDULED: {CREATED, },
+        STARTED: {SCHEDULED, RETRYING, },
+        RUNNING: {STARTED, },
+        SUCCESS: {RUNNING, },
+        FAILED: {SCHEDULED, STARTED, RUNNING, },
+        STOPPED: {CREATED, SCHEDULED, STARTED, RUNNING, },
+        SKIPPED: {CREATED, SCHEDULED, STOPPED, },
+        RETRYING: {SCHEDULED, FAILED, STOPPED, SKIPPED},
+    }
+
+    @classmethod
+    def can_transition(cls, status_from, status_to):
+        return status_to in cls.ALLOWED_VALUES[status_from]
+
 
 class TriggerRule(object):
     ALL_SUCCESS = 'all_success'
