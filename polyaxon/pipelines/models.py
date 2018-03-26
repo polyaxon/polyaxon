@@ -11,7 +11,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
 from libs.models import DiffModel, DescribableModel
-from pipelines.constants import OperationStatus, TriggerRule
+from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerRule
 
 logger = logging.getLogger('polyaxon.pipelines')
 
@@ -240,6 +240,8 @@ class RunModel(DiffModel):
     """
     A model that represents an execution behaviour of instance/run of a operation or a pipeline.
     """
+    STATUSES = None
+
     started_at = models.DateTimeField(
         null=True,
         blank=True,
@@ -252,8 +254,8 @@ class RunModel(DiffModel):
         max_length=16,
         blank=True,
         null=True,
-        default=OperationStatus.CREATED,
-        choices=OperationStatus.CHOICES)
+        default=STATUSES.CREATED,
+        choices=STATUSES.CHOICES)
 
     class Meta:
         abstract = True
@@ -267,9 +269,10 @@ class RunModel(DiffModel):
         if self.status == status:
             return False
 
-        if not OperationStatus.can_transition(status_from=self.status, status_to=status):
-            logger.warning('`{}` tried to transition from status `{}` to non permitted status `{}`'.format(
-                str(self), self.status, status))
+        if not self.STATUSES.can_transition(status_from=self.status, status_to=status):
+            logger.warning(
+                '`{}` tried to transition from status `{}` to non permitted status `{}`'.format(
+                    str(self), self.status, status))
             return False
 
         self.status = status
@@ -279,19 +282,19 @@ class RunModel(DiffModel):
         return True
 
     def on_run(self, commit=True):
-        self.update_status(status=OperationStatus.RUNNING, commit=commit)
+        self.update_status(status=self.STATUSES.RUNNING, commit=commit)
 
     def on_timeout(self, commit=True):
-        self.update_status(status=OperationStatus.FAILED, commit=commit)
+        self.update_status(status=self.STATUSES.FAILED, commit=commit)
 
     def on_failure(self, commit=True):
-        self.update_status(status=OperationStatus.FAILED, commit=commit)
+        self.update_status(status=self.STATUSES.FAILED, commit=commit)
 
     def on_success(self, commit=True):
-        self.update_status(status=OperationStatus.SUCCESS, commit=commit)
+        self.update_status(status=self.STATUSES.SUCCESS, commit=commit)
 
     def on_stop(self, commit=True):
-        self.update_status(status=OperationStatus.STOPPED, commit=commit)
+        self.update_status(status=self.STATUSES.STOPPED, commit=commit)
 
 
 class PipelineRun(RunModel):
@@ -301,6 +304,8 @@ class PipelineRun(RunModel):
     we can store the sorted topology of the dag,
     which should should not change during the execution time.
     """
+    STATUSES = PipelineStatuses
+
     pipeline = models.ForeignKey(
         Pipeline,
         on_delete=models.CASCADE,
@@ -315,12 +320,14 @@ class PipelineRun(RunModel):
         if not self.pipeline.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation_runs.filter(status__in=OperationStatus.RUNNING_STATUS).count()
+        ops_count = self.operation_runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.pipeline.concurrency
 
 
 class OperationRun(RunModel):
     """A model that represents an execution behaviour/run of instance of an operation."""
+    STATUSES = OperationStatuses
+
     operation = models.ForeignKey(
         Operation,
         on_delete=models.CASCADE,
@@ -355,48 +362,48 @@ class OperationRun(RunModel):
         if not self.operation.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation.runs.filter(status__in=OperationStatus.RUNNING_STATUS).count()
+        ops_count = self.operation.runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.operation.concurrency
 
     def check_upstream(self):
         """Checks the upstream and the trigger rule."""
         if self.operation.trigger_rule == TriggerRule.ONE_DONE:
             return self.upstream_runs.filter(
-                status__in=OperationStatus.DONE_STATUS).exists()
+                status__in=self.STATUSES.DONE_STATUS).exists()
         if self.operation.trigger_rule == TriggerRule.ONE_SUCCESS:
             return self.upstream_runs.filter(
-                status=OperationStatus.SUCCESS).exists()
+                status=self.STATUSES.SUCCESS).exists()
         if self.operation.trigger_rule == TriggerRule.ONE_FAILED:
             return self.upstream_runs.filter(
-                status=OperationStatus.FAILED).exists()
+                status=self.STATUSES.FAILED).exists()
         if self.operation.trigger_rule == TriggerRule.ALL_DONE:
             return self.upstream_runs.exclude(
-                status__in=OperationStatus.DONE_STATUS).exists()
+                status__in=self.STATUSES.DONE_STATUS).exists()
         if self.operation.trigger_rule == TriggerRule.ALL_SUCCESS:
             return self.upstream_runs.exclude(
-                status=OperationStatus.SUCCESS).exists()
+                status=self.STATUSES.SUCCESS).exists()
         if self.operation.trigger_rule == TriggerRule.ALL_FAILED:
             return self.upstream_runs.exclude(
-                status=OperationStatus.FAILED).exists()
+                status=self.STATUSES.FAILED).exists()
 
     @property
     def is_upstream_done(self):
         upstream_count = self.upstream_runs.count()
         upstream_done_count = self.upstream_runs.exclude(
-            status__in=OperationStatus.DONE_STATUS).count()
+            status__in=self.STATUSES.DONE_STATUS).count()
         return upstream_count == upstream_done_count
 
     def update_status(self, status, commit=True):
         is_updated = super(OperationRun, self).update_status(status=status, commit=commit)
         # If the operation run is updated, we need to notify the pipeline run
-        if is_updated:
+        if is_updated and status in PipelineStatuses.VALUES:
             self.pipeline_run.update_status(status)
 
         return is_updated
 
     def notify_downstream(self):
         """Notify downstream that this instance is done, and that its dependency can start."""
-        for op in self.downstream_runs.filter(status=OperationStatus.CREATED):
+        for op in self.downstream_runs.filter(status=self.STATUSES.CREATED):
             op.schedule_start()
 
     def schedule_start(self):
@@ -428,12 +435,12 @@ class OperationRun(RunModel):
         Returns:
             boolean: Whether to try to schedule this operation run in the future or not.
         """
-        if self.status in OperationStatus.DONE_STATUS:
+        if self.status in self.STATUSES.DONE_STATUS:
             return False
 
         upstream_check = self.check_upstream()
         if not upstream_check and self.is_upstream_done:  # This task cannot be scheduled anymore
-            self.update_status(status=OperationStatus.UPSTREAM_FAILED)
+            self.update_status(status=self.STATUSES.UPSTREAM_FAILED)
             return False
 
         if not self.pipeline_run.check_concurrency():
@@ -442,7 +449,7 @@ class OperationRun(RunModel):
         if not self.check_concurrency():
             return True
 
-        self.update_status(status=OperationStatus.SCHEDULED)
+        self.update_status(status=self.STATUSES.SCHEDULED)
         self.start()
         return False
 
@@ -464,11 +471,11 @@ class OperationRun(RunModel):
     def stop(self):
         task = AsyncResult(self.celery_task_id)
         task.revoke(terminate=True, signal='SIGKILL')
-        self.update_status(status=OperationStatus.STOPPED, commit=False)
+        self.update_status(status=self.STATUSES.STOPPED, commit=False)
         self.finished_at = timezone.now()
         self.save()
 
     def on_retry(self):
-        self.update_status(status=OperationStatus.RETRYING, commit=False)
+        self.update_status(status=self.STATUSES.RETRYING, commit=False)
         self.retried_at = timezone.now()
         self.save()

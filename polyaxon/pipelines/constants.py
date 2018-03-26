@@ -1,4 +1,44 @@
-class OperationStatus(object):
+class PipelineStatuses(object):
+    CREATED = 'created'
+    SCHEDULED = 'scheduled'
+    RUNNING = 'running'
+    SUCCESS = 'success'
+    FAILED = 'failed'
+    STOPPED = 'stopped'
+    SKIPPED = 'skipped'
+
+    VALUES = [
+        CREATED, SCHEDULED, RUNNING, SUCCESS, FAILED, STOPPED, SKIPPED
+    ]
+    CHOICES = (
+        (CREATED, CREATED),
+        (SCHEDULED, SCHEDULED),
+        (RUNNING, RUNNING),
+        (SUCCESS, SUCCESS),
+        (FAILED, FAILED),
+        (STOPPED, STOPPED),
+        (SKIPPED, SKIPPED),
+    )
+
+    DONE_STATUS = [SUCCESS, FAILED, STOPPED, SKIPPED]
+    RUNNING_STATUS = [SCHEDULED, RUNNING]
+
+    ALLOWED_VALUES = {
+        CREATED: set([]),
+        SCHEDULED: {CREATED, },
+        RUNNING: {SCHEDULED, },
+        SUCCESS: {RUNNING, },
+        FAILED: {SCHEDULED, RUNNING, },
+        STOPPED: {CREATED, SCHEDULED, RUNNING, },
+        SKIPPED: {CREATED, SCHEDULED, STOPPED, },
+    }
+
+    @classmethod
+    def can_transition(cls, status_from, status_to):
+        return status_to in cls.ALLOWED_VALUES[status_from]
+
+
+class OperationStatuses(object):
     CREATED = 'created'
     SCHEDULED = 'scheduled'
     RUNNING = 'running'
