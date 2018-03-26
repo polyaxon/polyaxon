@@ -84,28 +84,20 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
         blank=True,
         help_text="the number of operation instances allowed to run concurrently")
 
+    @property
+    def dag(self):
+        """Construct the DAG of this pipeline based on the its tasks."""
+        dag = {}
+        operations = self.operations.all()
+        operations = operations.prefetch_related('downstream_operations')
+        for operation in operations:
+            downstream_ops = operation.downstream_operations.values_list('id', flat=True)
+            dag[operation.id] = set(downstream_ops)
 
-class UpstreamModel(models.Model):
-    """A model that represents the dependency behaviour of an operation."""
-    upstream_operations = models.ManyToManyField(
-        "pipelines.Operation",
-        blank=True,
-        null=True,
-        related_name='downstream_operations')
-    trigger_rule = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=TriggerRule.ALL_SUCCESS,
-        choices=TriggerRule.CHOICES,
-        help_text="defines the rule by which dependencies are applied, "
-                  "default is `all_success`.")
-
-    class Meta:
-        abstract = True
+        return dag
 
 
-class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
+class Operation(DiffModel, DescribableModel, ExecutableModel):
     """ Base class for all Operations.
 
     To derive this class, you are expected to override
@@ -140,6 +132,19 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
         null=True,
         blank=True,
         related_name='operations')
+    upstream_operations = models.ManyToManyField(
+        "self",
+        blank=True,
+        null=True,
+        related_name='downstream_operations')
+    trigger_rule = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=TriggerRule.ALL_SUCCESS,
+        choices=TriggerRule.CHOICES,
+        help_text="defines the rule by which dependencies are applied, "
+                  "default is `all_success`.")
     max_retries = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
@@ -191,22 +196,18 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
     def independent(self):
         return self.pipeline is None
 
-    def on_retry(self):
-        pass
-
     def get_countdown(self, retries):
         """Calculate the countdown for a celery task retry."""
         retry_delay = self.retry_delay
         if self.retry_exponential_backoff:
             return min(
-                max(2 ** retries, retry_delay),  # Exp backoff
+                max(2 ** retries, retry_delay),  # Exp. backoff
                 self.max_retry_delay  # The countdown should be more the max allowed
             )
         else:
             return retry_delay
 
-    def schedule(self):
-        """Schedules the celery task of this operation."""
+    def get_run_kwargs(self):
         kwargs = {}
         if self.celery_queue:
             kwargs['queue'] = self.celery_queue
@@ -220,20 +221,7 @@ class Operation(DiffModel, DescribableModel, UpstreamModel, ExecutableModel):
         if self.execute_at:
             kwargs['eta'] = self.execute_at
 
-        async_result = celery_app.send_task(
-            self.celery_task,
-            kwargs=self.celery_task_context,
-            **kwargs)
-        self.celery_task_id = async_result.id
-        self.started_at = timezone.now()
-        self.status = OperationStatus.STARTED
-        self.save()
-
-    def stop(self):
-        self.task = AsyncResult(self.celery_task_id)
-        self.task.revoke(terminate=True, signal='SIGKILL')
-        self.status = OperationStatus.STOPPED
-        self.save()
+        return kwargs
 
 
 class RunModel(models.Model):
@@ -292,16 +280,26 @@ class PipelineRun(RunModel):
         related_name='runs')
 
 
-class UpstreamRunModel(models.Model):
-    """A model that represents the dependency behaviour of an operation."""
+class OperationRun(RunModel):
+    """A model that represents an execution behaviour/run of instance of an operation."""
+    operation = models.ForeignKey(
+        Operation,
+        on_delete=models.CASCADE,
+        related_name='runs')
     upstream_runs = models.ManyToManyField(
-        "pipelines.OperationRun",
+        'self',
         blank=True,
         null=True,
         related_name='downstream_runs')
-
-    class Meta:
-        abstract = True
+    retried_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the instance last retried.")
+    celery_task_context = JSONField(
+        blank=True,
+        null=True,
+        help_text='The kwargs required to execute the celery task.')
+    celery_task_id = models.UUIDField(null=False, blank=True)
 
     def can_start(self):
         """Checks the upstream and the trigger rule."""
@@ -329,19 +327,32 @@ class UpstreamRunModel(models.Model):
         for pipeline in self.downstream_operations.filter(status=OperationStatus.CREATED):
             pipeline.check_and_start()
 
+    def schedule(self):
+        """Schedule the task: check first if the task is startable and then start it"""
+        if self.status != OperationStatus.CREATED:
+            return
+        self.status = OperationStatus.SCHEDULED
+        self.save()
+        if self.can_start():
+            self.start()
 
-class OperationRun(RunModel, UpstreamRunModel):
-    """A model that represents an execution behaviour/run of instance of an operation."""
-    retried_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the instance last retried.")
-    operation = models.ForeignKey(
-        Operation,
-        on_delete=models.CASCADE,
-        related_name='runs')
-    celery_task_context = JSONField(
-        blank=True,
-        null=True,
-        help_text='The kwargs required to execute the celery task.')
-    celery_task_id = models.UUIDField(null=False, blank=True)
+    def start(self):
+        """Start the celery task of this operation."""
+        async_result = celery_app.send_task(
+            self.operation.celery_task,
+            kwargs=self.celery_task_context,
+            **self.operation.get_run_kwargs())
+        self.celery_task_id = async_result.id
+        self.started_at = timezone.now()
+        self.status = OperationStatus.STARTED
+        self.save()
+
+    def stop(self):
+        self.task = AsyncResult(self.celery_task_id)
+        self.task.revoke(terminate=True, signal='SIGKILL')
+        self.status = OperationStatus.STOPPED
+        self.save()
+
+    def on_retry(self):
+        self.status = OperationStatus.RETRYING
+        self.save()
