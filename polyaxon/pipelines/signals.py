@@ -2,14 +2,38 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from libs.decorators import ignore_raw
-from pipelines.constants import OperationStatuses
-from pipelines.models import PipelineRunStatus, OperationRunStatus
+from pipelines.constants import OperationStatuses, PipelineStatuses
+from pipelines.models import PipelineRunStatus, OperationRunStatus, PipelineRun, OperationRun
 from pipelines.tasks import (
     check_pipeline_run_status,
     start_operation_run,
     stop_pipeline_operation_runs,
     skip_pipeline_operation_runs,
 )
+
+
+@receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_saved")
+@ignore_raw
+def new_pipeline_run(sender, **kwargs):
+    instance = kwargs['instance']
+    created = kwargs.get('created', False)
+
+    if not created:
+        return
+
+    instance.set_status(PipelineStatuses.CREATED)
+
+
+@receiver(post_save, sender=OperationRun, dispatch_uid="operation_run_saved")
+@ignore_raw
+def new_operation_run(sender, **kwargs):
+    instance = kwargs['instance']
+    created = kwargs.get('created', False)
+
+    if not created:
+        return
+
+    instance.set_status(OperationStatuses.CREATED)
 
 
 @receiver(post_save, sender=PipelineRunStatus, dispatch_uid="new_pipeline_run_status_saved")
@@ -46,6 +70,10 @@ def new_operation_run_status(sender, **kwargs):
     # Update job last_status
     operation_run.status = instance
     operation_run.save()
+
+    # No need to check if it is just created
+    if instance.status == OperationStatuses.CREATED:
+        return
 
     # Check if we need to update the pipeline_run's status
     check_pipeline_run_status.delay(pipline_run_uuid=pipeline_run.uuid.hex,
