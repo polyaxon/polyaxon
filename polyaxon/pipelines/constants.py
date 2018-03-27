@@ -35,6 +35,8 @@ class PipelineStatuses(object):
 
     @classmethod
     def can_transition(cls, status_from, status_to):
+        if status_from == status_to:
+            return False
         return status_to in cls.ALLOWED_VALUES[status_from]
 
 
@@ -76,11 +78,13 @@ class OperationStatuses(object):
         UPSTREAM_FAILED: set(VALUES),
         STOPPED: {CREATED, SCHEDULED, RUNNING, },
         SKIPPED: {CREATED, SCHEDULED, STOPPED, },
-        RETRYING: {SCHEDULED, FAILED, STOPPED, SKIPPED},
+        RETRYING: {SCHEDULED, FAILED, STOPPED, SKIPPED, RETRYING},
     }
 
     @classmethod
     def can_transition(cls, status_from, status_to):
+        if status_from == status_to and status_to != cls.RETRYING:
+            return False
         return status_to in cls.ALLOWED_VALUES[status_from]
 
 
