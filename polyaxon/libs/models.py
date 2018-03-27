@@ -122,6 +122,18 @@ class LastStatusMixin(object):
         return self.STATUSES.is_done(self.last_status)
 
     @property
+    def failed(self):
+        return self.STATUSES.failed(self.last_status)
+
+    @property
+    def succeeded(self):
+        return self.STATUSES.succeeded(self.last_status)
+
+    @property
+    def stopped(self):
+        return self.STATUSES.stopped(self.last_status)
+
+    @property
     def finished_at(self):
         raise NotImplemented
 

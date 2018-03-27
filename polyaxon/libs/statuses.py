@@ -39,3 +39,7 @@ class BaseStatuses(object):
     @classmethod
     def stopped(cls, status):
         return status == cls.STOPPED
+
+    @classmethod
+    def skipped(cls, status):
+        return status == cls.SKIPPED
