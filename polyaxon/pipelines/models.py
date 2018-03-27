@@ -1,5 +1,7 @@
 import logging
 
+import uuid
+
 from celery.result import AsyncResult
 
 from django.conf import settings
@@ -50,6 +52,11 @@ class ExecutableModel(models.Model):
     """A model that represents an execution behaviour of an operation or a pipeline."""
     EXECUTABLE_RELATED_NAME = ''
 
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -242,6 +249,11 @@ class RunModel(DiffModel):
     """
     STATUSES = None
 
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     started_at = models.DateTimeField(
         null=True,
         blank=True,
