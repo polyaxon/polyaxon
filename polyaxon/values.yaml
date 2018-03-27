@@ -152,6 +152,20 @@ workers:
         cpu: 150m
         memory: 200Mi
 
+  pipelines:
+    image: polyaxon/polyaxon-workers
+    imageTag: 0.0.6
+    imagePullPolicy: IfNotPresent
+    replicas: 1
+    concurrency: 2
+    resources:
+      limits:
+        cpu: 350m
+        memory: 350Mi
+      requests:
+        cpu: 150m
+        memory: 200Mi
+
   events:
     image: polyaxon/polyaxon-workers
     imageTag: 0.0.6
@@ -379,6 +393,7 @@ queues:
   apiExperiments: 'api.experiments'
   apiExperimentsSync: 'api.sync_experiments'
   apiClusters: 'api.clusters'
+  apiPipelines: 'api.pipelines'
   eventsNamespace: 'events.namespace'
   eventsResources: 'events.resources'
   eventsStatuses: 'events.statuses'

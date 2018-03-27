@@ -340,6 +340,8 @@ queues config
   value: {{ .Values.queues.apiExperimentsSync | quote }}
 - name: POLYAXON_QUEUES_API_CLUSTERS
   value: {{ .Values.queues.apiClusters | quote }}
+- name: POLYAXON_QUEUES_API_PIPELINES
+  value: {{ .Values.queues.apiPipelines | quote }}
 - name: POLYAXON_QUEUES_EVENTS_NAMESPACE
   value: {{ .Values.queues.eventsNamespace | quote }}
 - name: POLYAXON_QUEUES_EVENTS_RESOURCES
