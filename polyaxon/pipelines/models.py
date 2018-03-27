@@ -8,17 +8,15 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.dispatch import Signal
-from django.utils import timezone
 
 from pipelines import dags
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
-from libs.models import DiffModel, DescribableModel
+from libs.models import DiffModel, DescribableModel, StatusModel, LastStatusMixin
 from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerRule
 
 logger = logging.getLogger('polyaxon.pipelines')
-
 
 status_change = Signal(providing_args=["instance", "status"])
 
@@ -159,7 +157,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         max_length=16,
         blank=True,
         null=True,
-        default=TriggerRule.ALL_SUCCESS,
+        default=TriggerRule.ALL_SUCCEEDED,
         choices=TriggerRule.CHOICES,
         help_text="defines the rule by which dependencies are applied, "
                   "default is `all_success`.")
@@ -170,7 +168,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
     retry_delay = models.PositiveIntegerField(
         null=True,
         blank=True,
-        default=Intervals.DEFAULT_RETRY_DELAY,
+        default=Intervals.OPERATIONS_DEFAULT_RETRY_DELAY,
         help_text="The delay between retries.")
     retry_exponential_backoff = models.BooleanField(
         default=False,
@@ -179,7 +177,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
     max_retry_delay = models.PositiveIntegerField(
         null=True,
         blank=True,
-        default=Intervals.MAX_RETRY_DELAY,
+        default=Intervals.OPERATIONS_MAX_RETRY_DELAY,
         help_text="maximum delay interval between retries.")
     n_retries = models.PositiveSmallIntegerField(
         null=True,
@@ -243,7 +241,53 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         return kwargs
 
 
-class RunModel(DiffModel):
+class PipelineRunStatus(StatusModel):
+    """A model that represents a pipeline run status at certain time."""
+    STATUSES = PipelineStatuses
+
+    status = models.CharField(
+        max_length=64,
+        blank=True,
+        null=True,
+        default=STATUSES.CREATED,
+        choices=STATUSES.CHOICES)
+    pipeline_run = models.ForeignKey(
+        'pipelines.PipelineRun',
+        on_delete=models.CASCADE,
+        related_name='statuses')
+
+    class Meta:
+        verbose_name_plural = 'Pipeline Run Statuses'
+        ordering = ['created_at']
+
+    def __str__(self):
+        return '{} <{}>'.format(self.pipeline_run.unique_name, self.status)
+
+
+class OperationRunStatus(StatusModel):
+    """A model that represents an operation run status at certain time."""
+    STATUSES = PipelineStatuses
+
+    status = models.CharField(
+        max_length=64,
+        blank=True,
+        null=True,
+        default=STATUSES.CREATED,
+        choices=STATUSES.CHOICES)
+    operation_run = models.ForeignKey(
+        'pipelines.OperationRun',
+        on_delete=models.CASCADE,
+        related_name='statuses')
+
+    class Meta:
+        verbose_name_plural = 'Operation Run Statuses'
+        ordering = ['created_at']
+
+    def __str__(self):
+        return '{} <{}>'.format(self.operation_run.unique_name, self.status)
+
+
+class RunModel(DiffModel, LastStatusMixin):
     """
     A model that represents an execution behaviour of instance/run of a operation or a pipeline.
     """
@@ -254,79 +298,60 @@ class RunModel(DiffModel):
         editable=False,
         unique=True,
         null=False)
-    started_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the instance started.")
-    finished_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the instance finished.")
-    status = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=STATUSES.CREATED,
-        choices=STATUSES.CHOICES)
 
     class Meta:
         abstract = True
 
-    def update_status(self, status):
+    @property
+    def last_status(self):
+        return self.status.status if self.status else None
+
+    @property
+    def skipped(self):
+        return self.STATUSES.skipped(self.last_status)
+
+    @property
+    def finished_at(self):
+        status = self.statuses.filter(status__in=self.STATUSES.DONE_STATUS).first()
+        if status:
+            return status.created_at
+        return None
+
+    @property
+    def started_at(self):
+        status = self.statuses.filter(status=self.STATUSES.STARTING).first()
+        if status:
+            return status.created_at
+        return None
+
+    def can_transition(self, status):
         """Update the status of the current instance.
 
         Returns:
             boolean: if the instance is updated.
         """
-        if self.status == status:
-            return False
-
         if not self.STATUSES.can_transition(status_from=self.status, status_to=status):
-            logger.warning(
+            logger.info(
                 '`{}` tried to transition from status `{}` to non permitted status `{}`'.format(
                     str(self), self.status, status))
             return False
 
-        self.status = status
-        status_change.send(sender=self.__class__, instance=self, status=status)
         return True
 
-    def notify_status_changed(self):
-        pass
+    def on_scheduled(self, message=None):
+        self.set_status(status=self.STATUSES.SCHEDULED, message=message)
 
-    def on_scheduled(self):
-        self.update_status(status=self.STATUSES.SCHEDULED)
-        self.save()
+    def on_run(self, message=None):
+        self.set_status(status=self.STATUSES.RUNNING, message=message)
 
-    def on_run(self):
-        self.update_status(status=self.STATUSES.RUNNING)
-        self.started_at = timezone.now()
-        self.save()
+    def on_timeout(self, message=None):
+        self.set_status(status=self.STATUSES.FAILED, message=message)
 
-    def on_timeout(self):
-        self.update_status(status=self.STATUSES.FAILED)
-        self.finished_at = timezone.now()
-        self.save()
+    def on_stop(self, message=None):
+        self.set_status(status=self.STATUSES.STOPPED, message=message)
 
-    def on_failure(self):
-        self.update_status(status=self.STATUSES.FAILED)
-        self.finished_at = timezone.now()
-        self.save()
-
-    def on_success(self):
-        self.update_status(status=self.STATUSES.SUCCESS)
-        self.finished_at = timezone.now()
-        self.save()
-
-    def on_stop(self):
-        self.update_status(status=self.STATUSES.STOPPED)
-        self.finished_at = timezone.now()
-        self.save()
-
-    def on_skip(self):
-        self.update_status(status=self.STATUSES.SKIPPED)
-        self.finished_at = timezone.now()
-        self.save()
+    def on_skip(self, message=None):
+        self.set_status(status=self.STATUSES.SKIPPED, message=message)
 
 
 class PipelineRun(RunModel):
@@ -342,6 +367,13 @@ class PipelineRun(RunModel):
         Pipeline,
         on_delete=models.CASCADE,
         related_name='runs')
+    status = models.OneToOneField(
+        PipelineRunStatus,
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True,
+        on_delete=models.SET_NULL)
 
     @property
     def dag(self):
@@ -355,6 +387,28 @@ class PipelineRun(RunModel):
 
         return dags.get_dag(operation_runs, get_downstream)
 
+    def on_finished(self, message=None):
+        self.set_status(status=self.STATUSES.FINISHED, message=message)
+
+    def set_status(self, status, message=None, **kwargs):
+        if not self.can_transition(status):
+            return
+
+        if not PipelineStatuses.is_done(status):
+            # If the status that we want to transition to is not a final state,
+            # then no further checks are required
+            PipelineRunStatus.objects.create(experiment=self, status=status, message=message)
+            return
+
+        # If we reached a final state,
+        # we mark the pipeline as FINISHED if all operation runs are finished
+        all_op_runs_done = (
+            self.operation_runs.filter(status__status__in=OperationStatuses.DONE_STATUS).count() ==
+            self.operation_runs.count()
+        )
+        if all_op_runs_done:
+            self.on_finished(message=message)
+
     def check_concurrency(self):
         """Checks the concurrency of the pipeline run to validate if we can start a new operation run.
 
@@ -366,14 +420,6 @@ class PipelineRun(RunModel):
 
         ops_count = self.operation_runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.pipeline.concurrency
-
-    def notify_status_changed(self):
-        """Notification logic for pipeline runs:
-
-            * notify operations with status change.
-            * other notification if configured on the pipeline.
-        """
-        pass
 
 
 class OperationRun(RunModel):
@@ -395,6 +441,13 @@ class OperationRun(RunModel):
         blank=True,
         null=True,
         related_name='downstream_runs')
+    status = models.OneToOneField(
+        OperationRunStatus,
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True,
+        on_delete=models.SET_NULL)
     retried_at = models.DateTimeField(
         null=True,
         blank=True,
@@ -404,6 +457,10 @@ class OperationRun(RunModel):
         null=True,
         help_text='The kwargs required to execute the celery task.')
     celery_task_id = models.UUIDField(null=False, blank=True)
+
+    def set_status(self, status, message=None, **kwargs):
+        if self.can_transition(status):
+            OperationRunStatus.objects.create(experiment=self, status=status, message=message)
 
     def check_concurrency(self):
         """Checks the concurrency of the operation run to validate if we can start a new operation run.
@@ -421,54 +478,35 @@ class OperationRun(RunModel):
         """Checks the upstream and the trigger rule."""
         if self.operation.trigger_rule == TriggerRule.ONE_DONE:
             return self.upstream_runs.filter(
-                status__in=self.STATUSES.DONE_STATUS).exists()
-        if self.operation.trigger_rule == TriggerRule.ONE_SUCCESS:
+                status__status__in=self.STATUSES.DONE_STATUS).exists()
+        if self.operation.trigger_rule == TriggerRule.ONE_SUCCEEDED:
             return self.upstream_runs.filter(
-                status=self.STATUSES.SUCCESS).exists()
+                status__status=self.STATUSES.SUCCEEDED).exists()
         if self.operation.trigger_rule == TriggerRule.ONE_FAILED:
             return self.upstream_runs.filter(
-                status=self.STATUSES.FAILED).exists()
+                status__status=self.STATUSES.FAILED).exists()
         if self.operation.trigger_rule == TriggerRule.ALL_DONE:
-            return self.upstream_runs.exclude(
-                status__in=self.STATUSES.DONE_STATUS).exists()
-        if self.operation.trigger_rule == TriggerRule.ALL_SUCCESS:
-            return self.upstream_runs.exclude(
-                status=self.STATUSES.SUCCESS).exists()
+            count_done = self.upstream_runs.exclude(
+                status__status__in=self.STATUSES.DONE_STATUS).count()
+            all_count = self.upstream_runs.count()
+            return count_done == all_count
+        if self.operation.trigger_rule == TriggerRule.ALL_SUCCEEDED:
+            succeeded_count = self.upstream_runs.exclude(
+                status__status=self.STATUSES.SUCCEEDED).count()
+            all_count = self.upstream_runs.count()
+            return succeeded_count == all_count
         if self.operation.trigger_rule == TriggerRule.ALL_FAILED:
-            return self.upstream_runs.exclude(
-                status=self.STATUSES.FAILED).exists()
+            failed_count = self.upstream_runs.exclude(
+                status__status=self.STATUSES.FAILED).exists()
+            all_count = self.upstream_runs.count()
+            return failed_count == all_count
 
     @property
     def is_upstream_done(self):
         upstream_count = self.upstream_runs.count()
         upstream_done_count = self.upstream_runs.exclude(
-            status__in=self.STATUSES.DONE_STATUS).count()
+            status__status__in=self.STATUSES.DONE_STATUS).count()
         return upstream_count == upstream_done_count
-
-    def notify_pipeline(self):
-        # If the operation run is updated, we need to notify the pipeline run
-        if self.status in PipelineStatuses.VALUES:
-            # TODO This is not correct, the pipeline must check for all tasks to decide on the status
-            self.pipeline_run.update_status(status=self.status)
-        # One case that we also need to handle
-        if self.status == self.STATUSES.UPSTREAM_FAILED:
-            # TODO: may be we need to call on_failure, to notify the rest of the operations to stop.
-            self.pipeline_run.update_status(status=PipelineStatuses.FAILED)
-
-    def notify_downstream(self):
-        """Notify downstream that this instance is done, and that its dependency can start."""
-        for op in self.downstream_runs.filter(status=self.STATUSES.CREATED):
-            op.schedule_start()
-
-    def notify_status_changed(self):
-        """Notification logic for operation runs:
-
-            * notify downstream with status change
-            * notify pipeline with status change
-            * other notification if configured on the pipeline
-        """
-        self.notify_pipeline()
-        self.notify_downstream()
 
     def schedule_start(self):
         """Schedule the task: check first if the task can start:
@@ -527,20 +565,23 @@ class OperationRun(RunModel):
         self.celery_task_id = async_result.id
         self.save()
 
-    def stop(self):
+    def stop(self, message=None):
         task = AsyncResult(self.celery_task_id)
         task.revoke(terminate=True, signal='SIGKILL')
-        self.on_stop()
+        self.on_stop(message=message)
 
-    def skip(self):
-        self.on_skip()
+    def skip(self, message=None):
+        self.on_skip(message=message)
 
     def on_retry(self):
-        self.update_status(status=self.STATUSES.RETRYING)
-        self.retried_at = timezone.now()
-        self.save()
+        self.set_status(status=self.STATUSES.RETRYING)
 
     def on_upstream_failed(self):
-        self.update_status(status=self.STATUSES.UPSTREAM_FAILED)
-        self.finished_at = timezone.now()
+        self.set_status(status=self.STATUSES.UPSTREAM_FAILED)
+
+    def on_failure(self, message=None):
+        self.set_status(status=self.STATUSES.FAILED, message=message)
         self.save()
+
+    def on_success(self, message=None):
+        self.set_status(status=self.STATUSES.SUCCEEDED, message=message)
