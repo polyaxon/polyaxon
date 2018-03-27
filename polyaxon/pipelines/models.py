@@ -5,8 +5,10 @@ from celery.result import AsyncResult
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.dispatch import Signal
 from django.utils import timezone
 
+from pipelines import dags
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
@@ -14,6 +16,9 @@ from libs.models import DiffModel, DescribableModel
 from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerRule
 
 logger = logging.getLogger('polyaxon.pipelines')
+
+
+status_change = Signal(providing_args=["instance", "status"])
 
 
 class Schedule(DiffModel):
@@ -95,17 +100,12 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
     @property
     def dag(self):
         """Construct the DAG of this pipeline based on the its operations and their downstream."""
-        dag = {}
-        ops = {}
-        operations = self.operations.all()
-        operations = operations.prefetch_related('downstream_operations')
+        operations = self.operations.all().prefetch_related('downstream_operations')
 
-        for operation in operations:
-            downstream_ops = operation.downstream_operations.values_list('id', flat=True)
-            dag[operation.id] = set(downstream_ops)
-            ops[operation.id] = operation
+        def get_downstream(op):
+            return op.downstream_operations.values_list('id', flat=True)
 
-        return dag, ops
+        return dags.get_dag(operations, get_downstream)
 
 
 class Operation(DiffModel, DescribableModel, ExecutableModel):
@@ -260,7 +260,7 @@ class RunModel(DiffModel):
     class Meta:
         abstract = True
 
-    def update_status(self, status, commit=True):
+    def update_status(self, status):
         """Update the status of the current instance.
 
         Returns:
@@ -276,59 +276,45 @@ class RunModel(DiffModel):
             return False
 
         self.status = status
-        if commit:
-            self.save()
-
+        status_change.send(sender=self.__class__, instance=self, status=status)
         return True
 
-    def notify(self):
+    def notify_status_changed(self):
         pass
 
-    def on_run(self, commit=True):
-        self.update_status(status=self.STATUSES.RUNNING, commit=False)
+    def on_scheduled(self):
+        self.update_status(status=self.STATUSES.SCHEDULED)
+        self.save()
+
+    def on_run(self):
+        self.update_status(status=self.STATUSES.RUNNING)
         self.started_at = timezone.now()
-        if commit:
-            self.save()
+        self.save()
 
-    def on_timeout(self, commit=True, notify=True):
-        self.update_status(status=self.STATUSES.FAILED, commit=False)
+    def on_timeout(self):
+        self.update_status(status=self.STATUSES.FAILED)
         self.finished_at = timezone.now()
-        if commit:
-            self.save()
-        if notify:
-            self.notify()
+        self.save()
 
-    def on_failure(self, commit=True, notify=True):
-        self.update_status(status=self.STATUSES.FAILED, commit=False)
+    def on_failure(self):
+        self.update_status(status=self.STATUSES.FAILED)
         self.finished_at = timezone.now()
-        if commit:
-            self.save()
-        if notify:
-            self.notify()
+        self.save()
 
-    def on_success(self, commit=True, notify=True):
-        self.update_status(status=self.STATUSES.SUCCESS, commit=False)
+    def on_success(self):
+        self.update_status(status=self.STATUSES.SUCCESS)
         self.finished_at = timezone.now()
-        if commit:
-            self.save()
-        if notify:
-            self.notify()
+        self.save()
 
-    def on_stop(self, commit=True, notify=True):
-        self.update_status(status=self.STATUSES.STOPPED, commit=False)
+    def on_stop(self):
+        self.update_status(status=self.STATUSES.STOPPED)
         self.finished_at = timezone.now()
-        if commit:
-            self.save()
-        if notify:
-            self.notify()
+        self.save()
 
-    def on_skip(self, commit=True, notify=True):
-        self.update_status(status=self.STATUSES.SKIPPED, commit=False)
+    def on_skip(self):
+        self.update_status(status=self.STATUSES.SKIPPED)
         self.finished_at = timezone.now()
-        if commit:
-            self.save()
-        if notify:
-            self.notify()
+        self.save()
 
 
 class PipelineRun(RunModel):
@@ -345,6 +331,18 @@ class PipelineRun(RunModel):
         on_delete=models.CASCADE,
         related_name='runs')
 
+    @property
+    def dag(self):
+        """Construct the DAG of this pipeline run
+        based on the its operation runs and their downstream.
+        """
+        operation_runs = self.operation_runs.all().prefetch_related('downstream_operations')
+
+        def get_downstream(op_run):
+            return op_run.operation_runs.values_list('id', flat=True)
+
+        return dags.get_dag(operation_runs, get_downstream)
+
     def check_concurrency(self):
         """Checks the concurrency of the pipeline run to validate if we can start a new operation run.
 
@@ -357,11 +355,11 @@ class PipelineRun(RunModel):
         ops_count = self.operation_runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.pipeline.concurrency
 
-    def notify(self):
+    def notify_status_changed(self):
         """Notification logic for pipeline runs:
 
-            * notify operations with status change
-            * other notification if configured on the pipeline
+            * notify operations with status change.
+            * other notification if configured on the pipeline.
         """
         pass
 
@@ -439,18 +437,18 @@ class OperationRun(RunModel):
         # If the operation run is updated, we need to notify the pipeline run
         if self.status in PipelineStatuses.VALUES:
             # TODO This is not correct, the pipeline must check for all tasks to decide on the status
-            self.pipeline_run.update_status(status=self.status, commit=True)
+            self.pipeline_run.update_status(status=self.status)
         # One case that we also need to handle
         if self.status == self.STATUSES.UPSTREAM_FAILED:
             # TODO: may be we need to call on_failure, to notify the rest of the operations to stop.
-            self.pipeline_run.update_status(status=PipelineStatuses.FAILED, commit=True)
+            self.pipeline_run.update_status(status=PipelineStatuses.FAILED)
 
     def notify_downstream(self):
         """Notify downstream that this instance is done, and that its dependency can start."""
         for op in self.downstream_runs.filter(status=self.STATUSES.CREATED):
             op.schedule_start()
 
-    def notify(self):
+    def notify_status_changed(self):
         """Notification logic for operation runs:
 
             * notify downstream with status change
@@ -493,8 +491,9 @@ class OperationRun(RunModel):
             return False
 
         upstream_trigger_check = self.check_upstream_trigger()
-        if not upstream_trigger_check and self.is_upstream_done:  # This task cannot be scheduled anymore
-            self.on_upstream_failed(commit=True, notify=True)
+        if not upstream_trigger_check and self.is_upstream_done:
+            # This task cannot be scheduled anymore
+            self.on_upstream_failed()
             return False
 
         if not self.pipeline_run.check_concurrency():
@@ -503,7 +502,7 @@ class OperationRun(RunModel):
         if not self.check_concurrency():
             return True
 
-        self.on_scheduled(commit=True)
+        self.on_scheduled()
         self.start()
         return False
 
@@ -524,19 +523,12 @@ class OperationRun(RunModel):
     def skip(self):
         self.on_skip()
 
-    def on_scheduled(self, commit=True):
-        self.update_status(status=self.STATUSES.SCHEDULED, commit=commit)
-
-    def on_retry(self, commit=True):
-        self.update_status(status=self.STATUSES.RETRYING, commit=False)
+    def on_retry(self):
+        self.update_status(status=self.STATUSES.RETRYING)
         self.retried_at = timezone.now()
-        if commit:
-            self.save()
+        self.save()
 
-    def on_upstream_failed(self, commit=True, notify=True):
-        self.update_status(status=self.STATUSES.UPSTREAM_FAILED, commit=False)
+    def on_upstream_failed(self):
+        self.update_status(status=self.STATUSES.UPSTREAM_FAILED)
         self.finished_at = timezone.now()
-        if commit:
-            self.save()
-        if notify:
-            self.notify()
+        self.save()
