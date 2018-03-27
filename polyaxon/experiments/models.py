@@ -116,7 +116,9 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @property
     def last_job_statuses(self):
-        """The statuses of the job in this experiment."""
+        """The last statuses of the job in this experiment."""
+        # TODO: use F to calculate this property in one query
+
         statuses = []
         for job in self.jobs.all():
             status = job.last_status
