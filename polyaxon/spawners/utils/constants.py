@@ -1,3 +1,5 @@
+from libs.statuses import BaseStatuses
+
 UNKNOWN = 'UNKNOWN'
 
 
@@ -94,7 +96,7 @@ class PodLifeCycle(object):
     DONE_STATUS = [FAILED, SUCCEEDED]
 
 
-class JobLifeCycle(object):
+class JobLifeCycle(BaseStatuses):
     """Experiment lifecycle
 
     Props:
@@ -132,25 +134,10 @@ class JobLifeCycle(object):
     STARTING_STATUS = [CREATED, BUILDING]
     RUNNING_STATUS = [BUILDING, RUNNING]
     DONE_STATUS = [FAILED, STOPPED, SUCCEEDED]
-
-    @classmethod
-    def is_starting(cls, status):
-        return status in cls.STARTING_STATUS
-
-    @classmethod
-    def is_running(cls, status):
-        return status in cls.RUNNING_STATUS
-
-    @classmethod
-    def is_deletable(cls, status):
-        return not cls.is_done(status)
-
-    @classmethod
-    def is_done(cls, status):
-        return status in cls.DONE_STATUS
+    FAILED_STATUS = [FAILED]
 
 
-class ExperimentLifeCycle(object):
+class ExperimentLifeCycle(BaseStatuses):
     """Experiment lifecycle
 
     Props:
@@ -188,6 +175,7 @@ class ExperimentLifeCycle(object):
 
     RUNNING_STATUS = [SCHEDULED, BUILDING, STARTING, RUNNING]
     DONE_STATUS = [FAILED, STOPPED, SUCCEEDED]
+    FAILED_STATUS = [FAILED]
 
     @staticmethod
     def jobs_starting(job_statuses):
@@ -218,19 +206,6 @@ class ExperimentLifeCycle(object):
     def jobs_unknown(cls, job_statuses):
         return any([True if job_status == JobLifeCycle.UNKNOWN else False
                     for job_status in job_statuses])
-
-    @staticmethod
-    def jobs_deletable(job_statuses):
-        return all([True if JobLifeCycle.is_deletable(job_status) else False
-                    for job_status in job_statuses])
-
-    @classmethod
-    def is_running(cls, status):
-        return status in cls.RUNNING_STATUS
-
-    @classmethod
-    def is_done(cls, status):
-        return status in cls.DONE_STATUS
 
     @classmethod
     def jobs_status(cls, job_statuses):

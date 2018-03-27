@@ -1,50 +1,45 @@
-class PipelineStatuses(object):
+from libs.statuses import BaseStatuses
+
+
+class PipelineStatuses(BaseStatuses):
     CREATED = 'created'
     SCHEDULED = 'scheduled'
     RUNNING = 'running'
-    SUCCESS = 'success'
-    FAILED = 'failed'
+    FINISHED = 'finished'
     STOPPED = 'stopped'
     SKIPPED = 'skipped'
 
     VALUES = [
-        CREATED, SCHEDULED, RUNNING, SUCCESS, FAILED, STOPPED, SKIPPED
+        CREATED, SCHEDULED, RUNNING, FINISHED, STOPPED, SKIPPED
     ]
     CHOICES = (
         (CREATED, CREATED),
         (SCHEDULED, SCHEDULED),
         (RUNNING, RUNNING),
-        (SUCCESS, SUCCESS),
-        (FAILED, FAILED),
+        (FINISHED, FINISHED),
         (STOPPED, STOPPED),
         (SKIPPED, SKIPPED),
     )
 
-    DONE_STATUS = [SUCCESS, FAILED, STOPPED, SKIPPED]
+    DONE_STATUS = [FINISHED, STOPPED, SKIPPED]
     RUNNING_STATUS = [SCHEDULED, RUNNING]
+    FAILED_STATUS = []
 
-    ALLOWED_VALUES = {
+    TRANSITION_MATRIX = {
         CREATED: set([]),
         SCHEDULED: {CREATED, },
         RUNNING: {SCHEDULED, },
-        SUCCESS: {RUNNING, },
-        FAILED: {SCHEDULED, RUNNING, },
+        FINISHED: {SCHEDULED, RUNNING, },
         STOPPED: {CREATED, SCHEDULED, RUNNING, },
         SKIPPED: {CREATED, SCHEDULED, STOPPED, },
     }
 
-    @classmethod
-    def can_transition(cls, status_from, status_to):
-        if status_from == status_to:
-            return False
-        return status_to in cls.ALLOWED_VALUES[status_from]
 
-
-class OperationStatuses(object):
+class OperationStatuses(BaseStatuses):
     CREATED = 'created'
     SCHEDULED = 'scheduled'
     RUNNING = 'running'
-    SUCCESS = 'success'
+    SUCCEEDED = 'succeeded'
     FAILED = 'failed'
     UPSTREAM_FAILED = 'upstream_failed'
     STOPPED = 'stopped'
@@ -52,13 +47,13 @@ class OperationStatuses(object):
     RETRYING = 'retrying'
 
     VALUES = [
-        CREATED, SCHEDULED, RUNNING, SUCCESS, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED, RETRYING
+        CREATED, SCHEDULED, RUNNING, SUCCEEDED, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED, RETRYING
     ]
     CHOICES = (
         (CREATED, CREATED),
         (SCHEDULED, SCHEDULED),
         (RUNNING, RUNNING),
-        (SUCCESS, SUCCESS),
+        (SUCCEEDED, SUCCEEDED),
         (FAILED, FAILED),
         (UPSTREAM_FAILED, UPSTREAM_FAILED),
         (STOPPED, STOPPED),
@@ -66,26 +61,21 @@ class OperationStatuses(object):
         (RETRYING, RETRYING)
     )
 
-    DONE_STATUS = [SUCCESS, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED]
+    DONE_STATUS = [SUCCEEDED, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED]
     RUNNING_STATUS = [SCHEDULED, RUNNING]
+    FAILED_STATUS = [FAILED, UPSTREAM_FAILED]
 
-    ALLOWED_VALUES = {
+    TRANSITION_MATRIX = {
         CREATED: set([]),
         SCHEDULED: {CREATED, RETRYING, },
         RUNNING: {SCHEDULED, },
-        SUCCESS: {RUNNING, },
+        SUCCEEDED: {RUNNING, },
         FAILED: {SCHEDULED, RUNNING, },
         UPSTREAM_FAILED: set(VALUES),
         STOPPED: {CREATED, SCHEDULED, RUNNING, },
         SKIPPED: {CREATED, SCHEDULED, STOPPED, },
         RETRYING: {SCHEDULED, FAILED, STOPPED, SKIPPED, RETRYING},
     }
-
-    @classmethod
-    def can_transition(cls, status_from, status_to):
-        if status_from == status_to and status_to != cls.RETRYING:
-            return False
-        return status_to in cls.ALLOWED_VALUES[status_from]
 
 
 class TriggerRule(object):
