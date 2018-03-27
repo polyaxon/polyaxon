@@ -27,10 +27,13 @@ CELERY_HARD_TIME_LIMIT_DELAY = config.get_int(
 
 class Intervals(object):
     """All intervals are in seconds"""
-    DEFAULT_RETRY_DELAY = config.get_int(
-        'POLYAXON_INTERVALS_DEFAULT_RETRY_DELAY', is_optional=True) or 60
-    MAX_RETRY_DELAY = config.get_int(
-        'POLYAXON_INTERVALS_DEFAULT_RETRY_DELAY', is_optional=True) or 60 * 60
+    OPERATIONS_DEFAULT_RETRY_DELAY = config.get_int(
+        'POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY', is_optional=True) or 60
+    OPERATIONS_MAX_RETRY_DELAY = config.get_int(
+        'POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY', is_optional=True) or 60 * 60
+    PIPELINES_SCHEDULER = config.get_int(
+        'POLYAXON_INTERVALS_PIPELINES_SCHEDULER',
+        is_optional=True) or 30
     EXPERIMENTS_SCHEDULER = config.get_int(
         'POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER',
         is_optional=True) or 30
@@ -85,6 +88,10 @@ class CeleryTasks(object):
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
+    PIPELINES_START = 'pipelines_start'
+    PIPELINES_STOP_OPERATIONS = 'pipelines_stop_operations'
+    PIPELINES_SKIP_OPERATIONS = 'pipelines_skip_operations'
+    PIPELINES_CHECK_STATUS = 'pipelines_check_statuses'
     EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
@@ -107,6 +114,9 @@ class CeleryQueues(object):
     API_CLUSTERS = config.get_string(
         'POLYAXON_QUEUES_API_CLUSTERS',
         is_optional=True) or 'api.clusters'
+    API_PIPELINES = config.get_string(
+        'POLYAXON_QUEUES_API_PIPELINES',
+        is_optional=True) or 'api.pipelines'
     EVENTS_NAMESPACE = config.get_string(
         'POLYAXON_QUEUES_EVENTS_NAMESPACE',
         is_optional=True) or 'events.namespace'
@@ -150,6 +160,10 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
+    CeleryTasks.PIPELINES_START: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_STOP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_SKIP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_CHECK_STATUS: {'queue': CeleryQueues.API_PIPELINES},
     CeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
     CeleryTasks.EVENTS_HANDLE_RESOURCES: {'queue': CeleryQueues.EVENTS_RESOURCES},
     CeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
