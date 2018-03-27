@@ -367,14 +367,18 @@ intervals config
 {{- define "config.intervals" }}
 - name: POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER
   value: {{ .Values.intervals.experiments_scheduler | quote }}
-- name: POLYAXON_INTERVALS_PIPELINES_SCHEDULER
-  value: {{ .Values.intervals.pipelines_scheduler | quote }}
 - name: POLYAXON_INTERVALS_EXPERIMENTS_SYNC
   value: {{ .Values.intervals.experiments_sync | quote }}
 - name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO
   value: {{ .Values.intervals.clusters_update_system_info | quote }}
 - name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES
   value: {{ .Values.intervals.clusters_update_system_nodes | quote }}
+- name: POLYAXON_INTERVALS_PIPELINES_SCHEDULER
+  value: {{ .Values.intervals.pipelines_scheduler | quote }}
+- name: POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY
+  value: {{ .Values.intervals.operations_default_retry_delay | quote }}
+- name: POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY
+  value: {{ .Values.intervals.operations_max_retry_delay | quote }}
 {{- end -}}
 
 

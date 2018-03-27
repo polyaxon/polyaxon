@@ -385,10 +385,12 @@ email:
 
 intervals:  # in seconds
   experiments_scheduler: 60
-  pipelines_scheduler: 60
   experiments_sync: 60
   clusters_update_system_info: 150
   clusters_update_system_nodes: 150
+  pipelines_scheduler: 60
+  operations_default_retry_delay: 60
+  operations_max_retry_delay: 3600
 
 queues:
   apiExperiments: 'api.experiments'
