@@ -41,10 +41,10 @@ def new_notebook_job(sender, **kwargs):
 def new_tensorboard_job_status(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
-    job = instance.job
 
     if created:
-        # update job last_status
+        job = instance.job
+        # Update job last_status
         job.job_status = instance
         job.save()
 
@@ -54,9 +54,9 @@ def new_tensorboard_job_status(sender, **kwargs):
 def new_notebook_job_status(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
-    job = instance.job
 
     if created:
-        # update job last_status
+        job = instance.job
+        # Update job last_status
         job.job_status = instance
         job.save()
