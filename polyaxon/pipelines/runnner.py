@@ -5,6 +5,7 @@ from pipelines.models import PipelineRun, OperationRun
 
 
 def set_op_upstreams(op_run, op):
+    """Set the upstream operations for operation run."""
     # We get a list of all upstream ops or the current op
     upstream_ops = op.upstream_operations.values_list('id', flat=True)
     # We get latest op runs for the upstream_ops
@@ -15,15 +16,8 @@ def set_op_upstreams(op_run, op):
     op_run.set(latest_op_runs)
 
 
-def set_orphan_ops_upstreams(dag, ops, op_runs, runs_by_ops):
-    orphan_ops = dags.get_orphan_operations(dag)
-    for op_id in orphan_ops:
-        op_run_id = runs_by_ops[op_id]
-        op_run = op_runs[op_run_id]
-        set_op_upstreams(op_run=op_run, op=ops[op_id])
-
-
 def set_topological_dag_upstreams(dag, ops, op_runs, runs_by_ops):
+    """Set the upstream runs for the operation runs in the dag following the topological sort."""
     sorted_ops = dags.sort_topologically(dag=dag)
     for op_id in sorted_ops:
         op_run_id = runs_by_ops[op_id]
@@ -48,8 +42,5 @@ def create_pipeline_run(pipeline, context_by_op):
         runs_by_ops[op_id] = op_run_id
 
     # Create operations upstreams
-    # 1. We set first the upstream for orphan operations
-    set_orphan_ops_upstreams(dag=dag, ops=ops, op_runs=op_runs, runs_by_ops=runs_by_ops)
-
-    # 2. We set the upstream for topologically sorted dag
+    # We set the upstream for the topologically sorted dag
     set_topological_dag_upstreams(dag=dag, ops=ops, op_runs=op_runs, runs_by_ops=runs_by_ops)
