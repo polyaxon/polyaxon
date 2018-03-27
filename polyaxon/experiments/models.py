@@ -11,15 +11,16 @@ from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.utils import TaskType
 
 from jobs.models import Job, JobStatus, JobResources
-from libs.models import DiffModel, DescribableModel
+from libs.models import DiffModel, DescribableModel, StatusModel, LastStatusMixin
 from libs.spec_validation import validate_spec_content
 from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.experiments')
 
 
-class Experiment(DiffModel, DescribableModel):
+class Experiment(DiffModel, DescribableModel, LastStatusMixin):
     """A model that represents experiments."""
+    STATUSES = ExperimentLifeCycle
 
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -142,14 +143,6 @@ class Experiment(DiffModel, DescribableModel):
         return self.experiment_metric.values if self.experiment_metric else None
 
     @property
-    def is_running(self):
-        return ExperimentLifeCycle.is_running(self.last_status)
-
-    @property
-    def is_done(self):
-        return ExperimentLifeCycle.is_done(self.last_status)
-
-    @property
     def finished_at(self):
         status = self.statuses.filter(status__in=ExperimentLifeCycle.DONE_STATUS).first()
         if status:
@@ -181,29 +174,24 @@ class Experiment(DiffModel, DescribableModel):
             return True
         return False
 
-    def set_status(self, status, message=None):
+    def set_status(self, status, message=None, **kwargs):
         ExperimentStatus.objects.create(experiment=self, status=status, message=message)
 
 
-class ExperimentStatus(models.Model):
+class ExperimentStatus(StatusModel):
     """A model that represents an experiment status at certain time."""
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        editable=False,
-        unique=True,
-        null=False)
+    STATUSES = ExperimentLifeCycle
+
     experiment = models.ForeignKey(
         Experiment,
         on_delete=models.CASCADE,
         related_name='statuses')
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     status = models.CharField(
         max_length=64,
         blank=True,
         null=True,
-        default=ExperimentLifeCycle.CREATED,
-        choices=ExperimentLifeCycle.CHOICES)
-    message = models.CharField(max_length=256, null=True, blank=True)
+        default=STATUSES.CREATED,
+        choices=STATUSES.CHOICES)
 
     class Meta:
         verbose_name_plural = 'Experiment Statuses'

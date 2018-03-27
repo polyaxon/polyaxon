@@ -1,9 +1,7 @@
-import uuid
-
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-from libs.models import DiffModel
+from libs.models import DiffModel, StatusModel, LastStatusMixin
 from libs.resource_validation import validate_resource
 from spawners.utils.constants import JobLifeCycle
 
@@ -38,21 +36,15 @@ class JobResources(models.Model):
         return ', '.join([r for r in resources if r])
 
 
-class Job(DiffModel):
+class Job(DiffModel, LastStatusMixin):
+    STATUSES = JobLifeCycle
+
     class Meta:
         abstract = True
 
     @property
     def last_status(self):
         return self.job_status.status if self.job_status else None
-
-    @property
-    def is_running(self):
-        return JobLifeCycle.is_running(self.last_status)
-
-    @property
-    def is_done(self):
-        return JobLifeCycle.is_done(self.last_status)
 
     @property
     def started_at(self):
@@ -89,24 +81,16 @@ class Job(DiffModel):
         return False
 
 
-class JobStatus(models.Model):
+class JobStatus(StatusModel):
     """A model that represents job status at certain time."""
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        editable=False,
-        unique=True,
-        null=False)
-    # Must be implemented in subclasses
-    # job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='statuses')
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+    STATUSES = JobLifeCycle
+
     status = models.CharField(
         max_length=64,
         blank=True,
         null=True,
-        default=JobLifeCycle.CREATED,
-        choices=JobLifeCycle.CHOICES)
-
-    message = models.CharField(max_length=256, null=True, blank=True)
+        default=STATUSES.CREATED,
+        choices=STATUSES.CHOICES)
     details = JSONField(null=True, blank=True, default={})
 
     def __str__(self):
