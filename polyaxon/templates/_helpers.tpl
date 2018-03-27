@@ -367,6 +367,8 @@ intervals config
 {{- define "config.intervals" }}
 - name: POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER
   value: {{ .Values.intervals.experiments_scheduler | quote }}
+- name: POLYAXON_INTERVALS_PIPELINES_SCHEDULER
+  value: {{ .Values.intervals.pipelines_scheduler | quote }}
 - name: POLYAXON_INTERVALS_EXPERIMENTS_SYNC
   value: {{ .Values.intervals.experiments_sync | quote }}
 - name: POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO
