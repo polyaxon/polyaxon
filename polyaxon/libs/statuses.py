@@ -9,8 +9,6 @@ class BaseStatuses(object):
 
     @classmethod
     def can_transition(cls, status_from, status_to):
-        if status_from == status_to:
-            return False
         if status_to not in cls.TRANSITION_MATRIX:
             return False
 
