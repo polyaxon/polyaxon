@@ -4,6 +4,7 @@ from pipelines.utils import (
     get_pipeline_run,
     stop_operation_runs_for_pipeline_run,
     skip_operation_runs_for_pipeline_run,
+    get_operation_run,
 )
 from polyaxon.celery_api import app as celery_app
 
@@ -15,7 +16,7 @@ logger = logging.getLogger('polyaxon.tasks.pipelines')
 
 
 @celery_app.task(name=CeleryTasks.PIPELINES_START, bind=True, max_retries=None)
-def start_pipeline(self, pipeline_run_id):
+def start_pipeline_run(self, pipeline_run_id):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
         logger.info('Pipeline `{}` does not exist any more.'.format(pipeline_run_id))
@@ -29,7 +30,7 @@ def start_pipeline(self, pipeline_run_id):
     concurrency = concurrency or len(op_runs_to_start)
     while op_runs_to_start:
         op_run = op_runs_to_start.pop()
-        op_run.schedule_start()
+        start_operation_run.delay(operation_run_id=op_run.id)
         concurrency -= 1
         if concurrency == 0:
             break
@@ -37,6 +38,15 @@ def start_pipeline(self, pipeline_run_id):
     if op_runs_to_start:
         # Schedule another task
         self.retry(countdown=Intervals.PIPELINES_SCHEDULER)
+
+
+@celery_app.task(name=CeleryTasks.PIPELINES_STOP_OPERATIONS)
+def start_operation_run(operation_run_id):
+    operation_run = get_operation_run(operation_run_id=operation_run_id)
+    if not operation_run:
+        logger.info('Operation `{}` does not exist any more.'.format(operation_run_id))
+
+    operation_run.schedule_start()
 
 
 @celery_app.task(name=CeleryTasks.PIPELINES_STOP_OPERATIONS, bind=True, max_retries=None)
