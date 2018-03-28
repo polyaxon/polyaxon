@@ -15,6 +15,7 @@ from polyaxon.settings import Intervals
 
 from libs.models import DiffModel, DescribableModel, StatusModel, LastStatusMixin
 from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerRule
+from projects.models import Project
 
 logger = logging.getLogger('polyaxon.pipelines')
 
@@ -94,6 +95,12 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='pipelines')
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='pipelines')
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
@@ -138,10 +145,6 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
 
     Add for wait for downstream `wait_for_downstream` of upstream operations before running.
     """
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='operations')
     pipeline = models.ForeignKey(
         Pipeline,
         on_delete=models.CASCADE,
@@ -149,6 +152,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
     upstream_operations = models.ManyToManyField(
         "self",
         blank=True,
+        symmetrical=False,
         related_name='downstream_operations')
     trigger_rule = models.CharField(
         max_length=16,
@@ -377,7 +381,7 @@ class PipelineRun(RunModel):
         """Construct the DAG of this pipeline run
         based on the its operation runs and their downstream.
         """
-        operation_runs = self.operation_runs.all().prefetch_related('downstream_operations')
+        operation_runs = self.operation_runs.all().prefetch_related('downstream_runs')
 
         def get_downstream(op_run):
             return op_run.operation_runs.values_list('id', flat=True)
@@ -434,6 +438,7 @@ class OperationRun(RunModel):
     upstream_runs = models.ManyToManyField(
         'self',
         blank=True,
+        symmetrical=False,
         related_name='downstream_runs')
     status = models.OneToOneField(
         OperationRunStatus,
