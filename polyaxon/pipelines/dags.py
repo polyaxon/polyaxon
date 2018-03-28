@@ -33,12 +33,12 @@ def get_independent_nodes(dag):
 def get_orphan_nodes(dag):
     """Get orphan nodes for given dag."""
     independent_nodes = get_independent_nodes(dag)
-    return [node for node in independent_nodes if not dag[node]]
+    return set([node for node in independent_nodes if not dag[node]])
 
 
 def has_dependencies(node, dag):
     """Checks if the node has dependencies."""
-    for _, downstream_nodes in dag.items():
+    for downstream_nodes in dag.values():
         if node in downstream_nodes:
             return True
     return False
@@ -46,6 +46,8 @@ def has_dependencies(node, dag):
 
 def sort_topologically(dag):
     """Sort the dag topologically.
+
+    Only the nodes inside the dag are returned, i.e. the nodes that are also keys.
 
     Returns:
          a topological ordering of the DAG.
