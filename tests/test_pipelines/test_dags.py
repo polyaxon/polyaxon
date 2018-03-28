@@ -1,3 +1,4 @@
+from factories.pipelines import PipelineFactory, OperationFactory
 from pipelines import dags
 from tests.utils import BaseTest
 
@@ -69,3 +70,35 @@ class TestDags(BaseTest):
         with self.assertRaises(ValueError):  # Cycles
             assert dags.sort_topologically(self.cycle2)
 
+    def test_get_dag(self):
+        pipeline = PipelineFactory()
+        operations = [OperationFactory(pipeline=pipeline) for _ in range(4)]
+        operations[0].upstream_operations.set(operations[2:])
+        operations[1].upstream_operations.set(operations[2:])
+        operation_by_ids = {op.id: op for op in operations}
+        assert pipeline.dag == (
+            {
+                operations[0].id: set(),
+                operations[1].id: set(),
+                operations[2].id: {operations[0].id, operations[1].id},
+                operations[3].id: {operations[0].id, operations[1].id},
+            },
+            operation_by_ids
+        )
+
+        # Add operations outside the dag
+        operation1 = OperationFactory()
+        operation1.downstream_operations.set([operations[1], operations[2], operations[3]])
+
+        operation2 = OperationFactory()
+        operation2.upstream_operations.set([operations[0], operations[2]])
+
+        assert pipeline.dag == (
+            {
+                operations[0].id: {operation2.id, },
+                operations[1].id: set(),
+                operations[2].id: {operations[0].id, operations[1].id, operation2.id},
+                operations[3].id: {operations[0].id, operations[1].id},
+            },
+            operation_by_ids
+        )
