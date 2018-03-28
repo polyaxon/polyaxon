@@ -7,6 +7,8 @@ class PipelinesConfig(AppConfig):
 
     def ready(self):
         from pipelines.signals import (
+            new_pipeline_run,
+            new_operation_run,
             new_pipeline_run_status,
             new_operation_run_status
         )
