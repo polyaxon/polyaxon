@@ -48,17 +48,12 @@ class Schedule(DiffModel):
 
 class ExecutableModel(models.Model):
     """A model that represents an execution behaviour of an operation or a pipeline."""
-    EXECUTABLE_RELATED_NAME = ''
 
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
         unique=True,
         null=False)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name=EXECUTABLE_RELATED_NAME)
     schedule = models.OneToOneField(
         Schedule,
         null=True,
@@ -94,8 +89,11 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
 
     A pipeline can also have dependencies/upstream pipelines/operations.
     """
-    EXECUTABLE_RELATED_NAME = 'pipelines'
 
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='pipelines')
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
@@ -140,18 +138,17 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
 
     Add for wait for downstream `wait_for_downstream` of upstream operations before running.
     """
-    EXECUTABLE_RELATED_NAME = 'operations'
-
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='operations')
     pipeline = models.ForeignKey(
         Pipeline,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
         related_name='operations')
     upstream_operations = models.ManyToManyField(
         "self",
         blank=True,
-        null=True,
         related_name='downstream_operations')
     trigger_rule = models.CharField(
         max_length=16,
@@ -433,13 +430,10 @@ class OperationRun(RunModel):
     pipeline_run = models.ForeignKey(
         PipelineRun,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
         related_name='operation_runs')
     upstream_runs = models.ManyToManyField(
         'self',
         blank=True,
-        null=True,
         related_name='downstream_runs')
     status = models.OneToOneField(
         OperationRunStatus,
