@@ -7,10 +7,11 @@ RUN apt-get -y update && \
     apt-get -y install nginx
 
 
-COPY requirements.txt /setup/
-COPY requirements-dev.txt /setup/
-COPY requirements-test.txt /setup/
-RUN pip3 install --no-cache-dir -r /setup/requirements-test.txt
+COPY requirements/requirements-base.txt /requirements/
+COPY requirements/requirements.txt /requirements/
+COPY requirements/requirements-dev.txt /requirements/
+COPY requirements/requirements-test.txt /requirements/
+RUN pip3 install --no-cache-dir -r /requirements/requirements-test.txt
 
 VOLUME /tmp/plx/repos
 VOLUME /polyaxon
