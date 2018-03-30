@@ -18,16 +18,16 @@ class CeleryTask(Task):
     def on_success(self, retval, task_id, args, kwargs):
         logger.info("Celery task succeeded", extra={'task name': self.name})
 
-    def on_failure(self, exc, task_id, args, kwargs, einfo):
+    def on_failure(self, exc, task_id, args, kwargs, exc_info):
         extra = {
             'task name': self.name,
             'task id': task_id,
             'task args': args,
             'task kwargs': kwargs,
         }
-        logger.error("Celery Task Failed", exc_info=einfo, extra=extra)
+        logger.error("Celery Task Failed", exc_info=exc_info, extra=extra)
 
-    def on_retry(self, exc, task_id, args, kwargs, einfo):
+    def on_retry(self, exc, task_id, args, kwargs, exc_info):
         logger.info("Celery task retry", extra={'task name': self.name})
 
 

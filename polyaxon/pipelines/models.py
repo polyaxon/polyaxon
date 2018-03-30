@@ -224,22 +224,22 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         else:
             return retry_delay
 
-    def get_run_kwargs(self):
-        """Return the kwargs to run the celery task."""
-        kwargs = {}
+    def get_run_params(self):
+        """Return the params to run the celery task."""
+        params = {}
         if self.celery_queue:
-            kwargs['queue'] = self.celery_queue
+            params['queue'] = self.celery_queue
 
         if self.timeout:
-            kwargs['soft_time_limit'] = self.timeout
+            params['soft_time_limit'] = self.timeout
             # We set also a hard time limit that will send sig 9
             # This hard time limit should not happened, as it will set inconsistent state
-            kwargs['time_limit'] = self.timeout + settings.CELERY_HARD_TIME_LIMIT_DELAY
+            params['time_limit'] = self.timeout + settings.CELERY_HARD_TIME_LIMIT_DELAY
 
         if self.execute_at:
-            kwargs['eta'] = self.execute_at
+            params['eta'] = self.execute_at
 
-        return kwargs
+        return params
 
 
 class PipelineRunStatus(StatusModel):
@@ -557,10 +557,14 @@ class OperationRun(RunModel):
 
     def start(self):
         """Start the celery task of this operation."""
+        kwargs = self.celery_task_context
+        # Update we the operation run id
+        kwargs['operation_id'] = self.id
+
         async_result = celery_app.send_task(
             self.operation.celery_task,
-            kwargs=self.celery_task_context,
-            **self.operation.get_run_kwargs())
+            kwargs=kwargs,
+            **self.operation.get_run_params())
         self.celery_task_id = async_result.id
         self.save()
 
