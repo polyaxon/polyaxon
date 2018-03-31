@@ -131,11 +131,12 @@ class TestStatusesTransition(BaseTest):
             else:
                 assert can_transition is False
 
-        # {SCHEDULED, FAILED, STOPPED, SKIPPED, RETRYING} -> RETRYING
+        # {SCHEDULED, RUNNING, FAILED, STOPPED, SKIPPED, RETRYING} -> RETRYING
         for status in OperationStatuses.VALUES:
             can_transition = OperationStatuses.can_transition(
                 status_from=status, status_to=OperationStatuses.RETRYING)
             if status in {OperationStatuses.SCHEDULED,
+                          OperationStatuses.RUNNING,
                           OperationStatuses.FAILED,
                           OperationStatuses.STOPPED,
                           OperationStatuses.SKIPPED,
