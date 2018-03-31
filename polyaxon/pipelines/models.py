@@ -559,7 +559,7 @@ class OperationRun(RunModel):
         """Start the celery task of this operation."""
         kwargs = self.celery_task_context
         # Update we the operation run id
-        kwargs['operation_id'] = self.id
+        kwargs['operation_run_id'] = self.id
 
         async_result = celery_app.send_task(
             self.operation.celery_task,
