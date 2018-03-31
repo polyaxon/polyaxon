@@ -26,7 +26,7 @@ class PipelineStatuses(BaseStatuses):
     FAILED_STATUS = []
 
     TRANSITION_MATRIX = {
-        CREATED: set([]),
+        CREATED: {None, },
         SCHEDULED: {CREATED, },
         RUNNING: {SCHEDULED, },
         FINISHED: {SCHEDULED, RUNNING, },
@@ -66,7 +66,7 @@ class OperationStatuses(BaseStatuses):
     FAILED_STATUS = [FAILED, UPSTREAM_FAILED]
 
     TRANSITION_MATRIX = {
-        CREATED: set([]),
+        CREATED: {None, },
         SCHEDULED: {CREATED, RETRYING, },
         RUNNING: {SCHEDULED, },
         SUCCEEDED: {RUNNING, },
@@ -74,7 +74,7 @@ class OperationStatuses(BaseStatuses):
         UPSTREAM_FAILED: set(VALUES) - {UPSTREAM_FAILED, },
         STOPPED: {CREATED, SCHEDULED, RUNNING, },
         SKIPPED: {CREATED, SCHEDULED, STOPPED, },
-        RETRYING: {SCHEDULED, FAILED, STOPPED, SKIPPED, RETRYING, },
+        RETRYING: {SCHEDULED, RUNNING, FAILED, STOPPED, SKIPPED, RETRYING, },
     }
 
 
