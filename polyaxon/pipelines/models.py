@@ -180,10 +180,6 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         blank=True,
         default=Intervals.OPERATIONS_MAX_RETRY_DELAY,
         help_text="maximum delay interval between retries.")
-    n_retries = models.PositiveSmallIntegerField(
-        null=True,
-        blank=True,
-        help_text="the number of retries that performed so far by the operations.")
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
@@ -262,7 +258,7 @@ class PipelineRunStatus(StatusModel):
         ordering = ['created_at']
 
     def __str__(self):
-        return '{} <{}>'.format(self.pipeline_run.unique_name, self.status)
+        return '{} <{}>'.format(self.pipeline_run.id, self.status)
 
 
 class OperationRunStatus(StatusModel):
@@ -285,7 +281,7 @@ class OperationRunStatus(StatusModel):
         ordering = ['created_at']
 
     def __str__(self):
-        return '{} <{}>'.format(self.operation_run.unique_name, self.status)
+        return '{} <{}>'.format(self.operation_run.id, self.status)
 
 
 class RunModel(DiffModel, LastStatusMixin):
@@ -331,10 +327,10 @@ class RunModel(DiffModel, LastStatusMixin):
         Returns:
             boolean: if the instance is updated.
         """
-        if not self.STATUSES.can_transition(status_from=self.status, status_to=status):
+        if not self.STATUSES.can_transition(status_from=self.last_status, status_to=status):
             logger.info(
                 '`{}` tried to transition from status `{}` to non permitted status `{}`'.format(
-                    str(self), self.status, status))
+                    str(self), self.last_status, status))
             return False
 
         return True
@@ -398,7 +394,7 @@ class PipelineRun(RunModel):
         if not PipelineStatuses.is_done(status):
             # If the status that we want to transition to is not a final state,
             # then no further checks are required
-            PipelineRunStatus.objects.create(experiment=self, status=status, message=message)
+            PipelineRunStatus.objects.create(pipeline_run=self, status=status, message=message)
             return
 
         # If we reached a final state,
@@ -408,7 +404,7 @@ class PipelineRun(RunModel):
             self.operation_runs.count()
         )
         if all_op_runs_done:
-            self.on_finished(message=message)
+            PipelineRunStatus.objects.create(pipeline_run=self, status=status, message=message)
 
     def check_concurrency(self):
         """Checks the concurrency of the pipeline run to validate if we can start a new operation run.
@@ -447,19 +443,15 @@ class OperationRun(RunModel):
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
-    retried_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        help_text="When the instance last retried.")
     celery_task_context = JSONField(
         blank=True,
         null=True,
         help_text='The kwargs required to execute the celery task.')
-    celery_task_id = models.UUIDField(null=False, blank=True)
+    celery_task_id = models.CharField(max_length=36, null=False, blank=True)
 
     def set_status(self, status, message=None, **kwargs):
         if self.can_transition(status):
-            OperationRunStatus.objects.create(experiment=self, status=status, message=message)
+            OperationRunStatus.objects.create(operation_run=self, status=status, message=message)
 
     def check_concurrency(self):
         """Checks the concurrency of the operation run to validate if we can start a new operation run.

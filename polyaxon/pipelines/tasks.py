@@ -9,7 +9,7 @@ from pipelines.utils import (
 from polyaxon.celery_api import app as celery_app
 
 from pipelines import dags
-from pipelines.constants import OperationStatuses
+from pipelines.constants import OperationStatuses, PipelineStatuses
 from polyaxon.config_settings import CeleryTasks, Intervals
 
 logger = logging.getLogger('polyaxon.tasks.pipelines')
@@ -76,4 +76,6 @@ def check_pipeline_run_status(pipeline_run_id, status, message=None):
     if not pipeline_run:
         logger.info('Pipeline `{}` does not exist any more.'.format(pipeline_run_id))
 
+    if status in [OperationStatuses.FAILED, OperationStatuses.SUCCEEDED]:
+        status = PipelineStatuses.FINISHED
     pipeline_run.set_status(status=status, message=message)
