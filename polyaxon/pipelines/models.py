@@ -154,7 +154,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         blank=True,
         symmetrical=False,
         related_name='downstream_operations')
-    trigger_rule = models.CharField(
+    trigger_policy = models.CharField(
         max_length=16,
         blank=True,
         null=True,
@@ -467,26 +467,26 @@ class OperationRun(RunModel):
 
     def check_upstream_trigger(self):
         """Checks the upstream and the trigger rule."""
-        if self.operation.trigger_rule == TriggerRule.ONE_DONE:
+        if self.operation.trigger_policy == TriggerRule.ONE_DONE:
             return self.upstream_runs.filter(
                 status__status__in=self.STATUSES.DONE_STATUS).exists()
-        if self.operation.trigger_rule == TriggerRule.ONE_SUCCEEDED:
+        if self.operation.trigger_policy == TriggerRule.ONE_SUCCEEDED:
             return self.upstream_runs.filter(
                 status__status=self.STATUSES.SUCCEEDED).exists()
-        if self.operation.trigger_rule == TriggerRule.ONE_FAILED:
+        if self.operation.trigger_policy == TriggerRule.ONE_FAILED:
             return self.upstream_runs.filter(
                 status__status=self.STATUSES.FAILED).exists()
-        if self.operation.trigger_rule == TriggerRule.ALL_DONE:
+        if self.operation.trigger_policy == TriggerRule.ALL_DONE:
             count_done = self.upstream_runs.exclude(
                 status__status__in=self.STATUSES.DONE_STATUS).count()
             all_count = self.upstream_runs.count()
             return count_done == all_count
-        if self.operation.trigger_rule == TriggerRule.ALL_SUCCEEDED:
+        if self.operation.trigger_policy == TriggerRule.ALL_SUCCEEDED:
             succeeded_count = self.upstream_runs.exclude(
                 status__status=self.STATUSES.SUCCEEDED).count()
             all_count = self.upstream_runs.count()
             return succeeded_count == all_count
-        if self.operation.trigger_rule == TriggerRule.ALL_FAILED:
+        if self.operation.trigger_policy == TriggerRule.ALL_FAILED:
             failed_count = self.upstream_runs.exclude(
                 status__status=self.STATUSES.FAILED).exists()
             all_count = self.upstream_runs.count()
