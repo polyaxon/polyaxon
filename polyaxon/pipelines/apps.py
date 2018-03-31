@@ -10,6 +10,7 @@ class PipelinesConfig(AppConfig):
             new_pipeline_run,
             new_operation_run,
             new_pipeline_run_status,
-            new_operation_run_status
+            new_operation_run_status,
+            operation_run_deleted
         )
 

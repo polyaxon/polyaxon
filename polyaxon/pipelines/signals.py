@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from libs.decorators import ignore_raw
@@ -88,3 +88,10 @@ def new_operation_run_status(sender, **kwargs):
         # Notify downstream that instance is done, and that its dependency can start.
         for op_run in operation_run.downstream_runs.filter(status=OperationStatuses.CREATED):
             start_operation_run.delay(operation_run_id=op_run.id)
+
+
+@receiver(pre_delete, sender=OperationRun, dispatch_uid="operation_run_deleted")
+@ignore_raw
+def operation_run_deleted(sender, **kwargs):
+    instance = kwargs['instance']
+    instance.stop()
