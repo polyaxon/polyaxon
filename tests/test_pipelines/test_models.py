@@ -190,34 +190,6 @@ class TestOperationRunModel(BaseTest):
                                           operation_run=operation_run2)
         assert operation_run.check_concurrency() is False
 
-    def test_trigger_policy_no_upstream(self):
-        operation_run = OperationRunFactory()
-        operation = operation_run.operation
-
-        operation.trigger_policy = TriggerPolicy.ONE_DONE
-        operation.save()
-        assert operation_run.check_upstream_trigger() is False
-
-        operation.trigger_policy = TriggerPolicy.ONE_SUCCEEDED
-        operation.save()
-        assert operation_run.check_upstream_trigger() is False
-
-        operation.trigger_policy = TriggerPolicy.ONE_FAILED
-        operation.save()
-        assert operation_run.check_upstream_trigger() is False
-
-        operation.trigger_policy = TriggerPolicy.ALL_DONE
-        operation.save()
-        assert operation_run.check_upstream_trigger() is True
-
-        operation.trigger_policy = TriggerPolicy.ALL_SUCCEEDED
-        operation.save()
-        assert operation_run.check_upstream_trigger() is True
-
-        operation.trigger_policy = TriggerPolicy.ALL_FAILED
-        operation.save()
-        assert operation_run.check_upstream_trigger() is True
-
     def test_trigger_policy_one_done(self):
         operation_run = OperationRunFactory()
         operation = operation_run.operation
@@ -235,13 +207,11 @@ class TestOperationRunModel(BaseTest):
         # A running upstream
         OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
         OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
@@ -280,13 +250,11 @@ class TestOperationRunModel(BaseTest):
         # A running upstream
         OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
         OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add skipped upstream
@@ -325,13 +293,11 @@ class TestOperationRunModel(BaseTest):
         # A running upstream
         OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
         OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
@@ -370,13 +336,11 @@ class TestOperationRunModel(BaseTest):
         # A running upstream
         OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
         OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
@@ -420,13 +384,11 @@ class TestOperationRunModel(BaseTest):
         # A running upstream
         OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
         OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add skipped upstream
@@ -472,13 +434,11 @@ class TestOperationRunModel(BaseTest):
         # A running upstream
         OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
         OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                           operation_run=upstream_run1)
-        operation.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
@@ -506,3 +466,48 @@ class TestOperationRunModel(BaseTest):
         operation_run.upstream_runs.set(
             [upstream_run1, upstream_run2, upstream_run3])
         assert operation_run.check_upstream_trigger() is False
+
+    def test_is_upstream_done(self):
+        operation_run = OperationRunFactory()
+
+        # No upstream
+        assert operation_run.is_upstream_done is True
+
+        # Add non done upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        assert operation_run.is_upstream_done is False
+
+        # A running upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=upstream_run1)
+        assert operation_run.is_upstream_done is False
+
+        # A failed upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run1)
+        assert operation_run.is_upstream_done is True
+
+        # Add skipped upstream
+        upstream_run2 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run2])
+        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
+                                          operation_run=upstream_run2)
+        assert operation_run.is_upstream_done is True
+
+        # Add succeeded upstream
+        upstream_run3 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run3)
+        assert operation_run.is_upstream_done is True
+
+        # Many done upstreams
+        operation_run.upstream_runs.set(
+            [upstream_run1, upstream_run2, upstream_run3])
+        assert operation_run.is_upstream_done is True
+
+        # Add another upstream
+        upstream_run4 = OperationRunFactory()
+        operation_run.upstream_runs.add(upstream_run4)
+        assert operation_run.is_upstream_done is False

@@ -491,10 +491,9 @@ class OperationRun(RunModel):
 
     @property
     def is_upstream_done(self):
-        upstream_count = self.upstream_runs.count()
-        upstream_done_count = self.upstream_runs.exclude(
-            status__status__in=self.STATUSES.DONE_STATUS).count()
-        return upstream_count == upstream_done_count
+        statuses = self.upstream_runs.values_list('status__status', flat=True)
+        return not bool([True for status in statuses
+                         if status not in self.STATUSES.DONE_STATUS])
 
     def schedule_start(self):
         """Schedule the task: check first if the task can start:
