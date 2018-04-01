@@ -3,8 +3,14 @@ from datetime import timedelta
 from django.conf import settings
 from django.utils import timezone
 
-from factories.pipelines import OperationFactory, PipelineFactory, PipelineRunFactory, \
-    OperationRunFactory
+from factories.pipelines import (
+    OperationFactory,
+    PipelineFactory,
+    PipelineRunFactory,
+    OperationRunFactory,
+)
+from pipelines.constants import OperationStatuses
+from pipelines.models import OperationRunStatus
 from tests.utils import BaseTest
 
 
@@ -120,7 +126,69 @@ class TestPipelineRunModel(BaseTest):
             operation_by_ids
         )
 
+    def test_check_concurrency(self):
+        # Pipeline without concurrency defaults to infinite concurrency
+        pipeline = PipelineFactory()
+        pipeline_run = PipelineRunFactory(pipeline=pipeline)
+        assert pipeline_run.check_concurrency() is True
+
+        # Pipeline with concurrency and pipeline run with operation runs
+        pipeline.concurrency = 2
+        pipeline.save()
+
+        # No running operation runs
+        assert pipeline_run.check_concurrency() is True
+
+        # One operation run
+        operation_run1 = OperationRunFactory(pipeline_run=pipeline_run)
+        assert pipeline_run.check_concurrency() is True
+
+        # One operation run with RUNNING status
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=operation_run1)
+        assert pipeline_run.check_concurrency() is True
+
+        # Second operation run
+        operation_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        assert pipeline_run.check_concurrency() is True
+
+        # Second operation run with RUNNING status
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=operation_run2)
+        assert pipeline_run.check_concurrency() is False
+
 
 class TestOperationRunModel(BaseTest):
+    def test_check_concurrency(self):
+        # Operation without concurrency defaults to infinite concurrency
+        operation = OperationFactory()
+        operation_run = OperationRunFactory(operation=operation)
+        assert operation_run.check_concurrency() is True
+
+        # Operation with concurrency and operation run with operation runs
+        operation.concurrency = 2
+        operation.save()
+
+        # No running operation runs
+        assert operation_run.check_concurrency() is True
+
+        # One operation run
+        operation_run1 = OperationRunFactory(operation=operation)
+        assert operation_run.check_concurrency() is True
+
+        # One operation run with RUNNING status
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=operation_run1)
+        assert operation_run.check_concurrency() is True
+
+        # Second operation run
+        operation_run2 = OperationRunFactory(operation=operation)
+        assert operation_run.check_concurrency() is True
+
+        # Second operation run with RUNNING status
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=operation_run2)
+        assert operation_run.check_concurrency() is False
+
     def test_trigger_policy(self):
         pass

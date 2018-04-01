@@ -415,7 +415,8 @@ class PipelineRun(RunModel):
         if not self.pipeline.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation_runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
+        ops_count = self.operation_runs.filter(
+            status__status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.pipeline.concurrency
 
 
@@ -462,7 +463,7 @@ class OperationRun(RunModel):
         if not self.operation.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation.runs.filter(status__in=self.STATUSES.RUNNING_STATUS).count()
+        ops_count = self.operation.runs.filter(status__status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.operation.concurrency
 
     def check_upstream_trigger(self):
