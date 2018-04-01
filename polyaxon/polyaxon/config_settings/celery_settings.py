@@ -89,6 +89,7 @@ class CeleryTasks(object):
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
     PIPELINES_START = 'pipelines_start'
+    PIPELINES_START_OPERATION = 'pipelines_start_operation'
     PIPELINES_STOP_OPERATIONS = 'pipelines_stop_operations'
     PIPELINES_SKIP_OPERATIONS = 'pipelines_skip_operations'
     PIPELINES_CHECK_STATUS = 'pipelines_check_statuses'
@@ -161,6 +162,7 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.PIPELINES_START: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_START_OPERATION: {'queue': CeleryQueues.API_PIPELINES},
     CeleryTasks.PIPELINES_STOP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
     CeleryTasks.PIPELINES_SKIP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
     CeleryTasks.PIPELINES_CHECK_STATUS: {'queue': CeleryQueues.API_PIPELINES},

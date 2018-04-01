@@ -40,7 +40,7 @@ def start_pipeline_run(self, pipeline_run_id):
         self.retry(countdown=Intervals.PIPELINES_SCHEDULER)
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_STOP_OPERATIONS)
+@celery_app.task(name=CeleryTasks.PIPELINES_START_OPERATION)
 def start_operation_run(operation_run_id):
     operation_run = get_operation_run(operation_run_id=operation_run_id)
     if not operation_run:

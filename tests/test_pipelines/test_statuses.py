@@ -31,7 +31,9 @@ class TestStatusesTransition(BaseTest):
         for status in PipelineStatuses.VALUES:
             can_transition = PipelineStatuses.can_transition(
                 status_from=status, status_to=PipelineStatuses.FINISHED)
-            if status in {PipelineStatuses.SCHEDULED, PipelineStatuses.RUNNING}:
+            if status in {PipelineStatuses.CREATED,
+                          PipelineStatuses.SCHEDULED,
+                          PipelineStatuses.RUNNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
