@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.utils import timezone
+from mock import patch
 
 from factories.pipelines import (
     OperationFactory,
@@ -511,3 +512,136 @@ class TestOperationRunModel(BaseTest):
         upstream_run4 = OperationRunFactory()
         operation_run.upstream_runs.add(upstream_run4)
         assert operation_run.is_upstream_done is False
+
+    def test_schedule_start_with_already_scheduled_operation_run(self):
+        operation_run = OperationRunFactory()
+        OperationRunStatus.objects.create(operation_run=operation_run.operation,
+                                          status=OperationStatuses.FAILED)
+        assert operation_run.schedule_start() is False
+
+        operation_run = OperationRunFactory()
+        OperationRunStatus.objects.create(operation_run=operation_run.operation,
+                                          status=OperationStatuses.SCHEDULED)
+        assert operation_run.schedule_start() is False
+
+    def test_schedule_start_with_failed_upstream(self):
+        operation_run = OperationRunFactory()
+        operation_run.operation.trigger_policy = TriggerPolicy.ALL_SUCCEEDED
+        operation_run.operation.save()
+
+        # Add a failed upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                              operation_run=upstream_run1)
+
+        assert start_operation_run.call_count == 1
+
+        assert operation_run.schedule_start() is False
+
+        # Check also that the task is marked as UPSTREAM_FAILED
+        # Since this operation cannot be started anymore
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.UPSTREAM_FAILED
+
+    def test_schedule_start_works_when_conditions_are_met(self):
+        operation_run = OperationRunFactory()
+        operation_run.operation.trigger_policy = TriggerPolicy.ONE_DONE
+        operation_run.operation.save()
+        pipeline_run = operation_run.pipeline_run
+
+        # Add a failed upstream
+        upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
+        operation_run.upstream_runs.set([upstream_run1])
+        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                              operation_run=upstream_run1)
+
+        assert start_operation_run.call_count == 1
+
+        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+            assert operation_run.schedule_start() is False
+
+        assert start_operation_run.call_count == 1
+
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.SCHEDULED
+
+    def test_schedule_start_works_with_pipeline_concurrency(self):
+        operation_run = OperationRunFactory()
+        operation_run.operation.trigger_policy = TriggerPolicy.ONE_DONE
+        operation_run.operation.save()
+        pipeline_run = operation_run.pipeline_run
+        # Set pipeline concurrency to 1
+        pipeline_run.pipeline.concurrency = 1
+        pipeline_run.pipeline.save()
+
+        # Add a failed upstream
+        upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
+        upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        operation_run.upstream_runs.set([upstream_run1, upstream_run2])
+        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                              operation_run=upstream_run1)
+            OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                              operation_run=upstream_run2)
+
+        assert start_operation_run.call_count == 1
+
+        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+            assert operation_run.schedule_start() is True
+
+        assert start_operation_run.call_count == 0
+
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.CREATED
+
+    def test_schedule_start_works_with_operation_concurrency(self):
+        operation_run = OperationRunFactory()
+        operation_run.operation.trigger_policy = TriggerPolicy.ONE_DONE
+        operation_run.operation.save()
+        pipeline_run = operation_run.pipeline_run
+        # Set operation concurrency to 1
+        operation_run.operation.concurrency = 1
+        operation_run.operation.save()
+
+        # Add a failed upstream
+        upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
+        upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        operation_run.upstream_runs.set([upstream_run1, upstream_run2])
+        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                              operation_run=upstream_run1)
+            OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                              operation_run=upstream_run2)
+
+        assert start_operation_run.call_count == 1
+
+        # Add another operation run for this operation with scheduled
+        new_operation_run = OperationRunFactory(operation=operation_run.operation)
+        new_operation_run.upstream_runs.set([upstream_run1, upstream_run2])
+
+        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+            assert operation_run.schedule_start() is False
+
+        assert start_operation_run.call_count == 1
+
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.SCHEDULED
+
+        # Check if we can start another instance
+        new_operation_run.refresh_from_db()
+        assert new_operation_run.last_status == OperationStatuses.CREATED
+
+        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+            assert new_operation_run.schedule_start() is True
+
+        assert start_operation_run.call_count == 0
+
+        new_operation_run.refresh_from_db()
+        assert new_operation_run.last_status == OperationStatuses.CREATED
+
+
+
+

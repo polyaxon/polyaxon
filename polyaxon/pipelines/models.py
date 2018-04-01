@@ -399,10 +399,11 @@ class PipelineRun(RunModel):
 
         # If we reached a final state,
         # we mark the pipeline as FINISHED if all operation runs are finished
-        all_op_runs_done = (
-            self.operation_runs.filter(status__status__in=OperationStatuses.DONE_STATUS).count() ==
-            self.operation_runs.count()
-        )
+        all_op_runs_done = not bool([
+            True for status in
+            self.operation_runs.values_list('status_status')
+            if status not in OperationStatuses.DONE_STATUS
+        ])
         if all_op_runs_done:
             PipelineRunStatus.objects.create(pipeline_run=self, status=status, message=message)
 
@@ -497,8 +498,7 @@ class OperationRun(RunModel):
 
     def schedule_start(self):
         """Schedule the task: check first if the task can start:
-            1. we check that the task did not reach a end status;
-              e.g. was `STOPPED` or marked as `SKIPPED`.
+            1. we check that the task is still in the CREATED state.
             2. we check that the upstream dependency is met.
             3. we check that pipeline can start a new task;
               i.e. we check the concurrency of the pipeline.
@@ -507,7 +507,7 @@ class OperationRun(RunModel):
 
         -> If all checks pass we schedule the task start it.
 
-        -> 1. If the operation is in end status: nothing should be done.
+        -> 1. If the operation is not in created status, nothing to do.
         -> 2. If the upstream dependency check is not met, two use cases need to be validated:
             * The upstream dependency is not met but could be met in the future,
               because some ops are still CREATED/SCHEDULED/RUNNING/...
@@ -524,7 +524,7 @@ class OperationRun(RunModel):
         Returns:
             boolean: Whether to try to schedule this operation run in the future or not.
         """
-        if self.status in self.STATUSES.DONE_STATUS:
+        if self.last_status != self.STATUSES.CREATED:
             return False
 
         upstream_trigger_check = self.check_upstream_trigger()
