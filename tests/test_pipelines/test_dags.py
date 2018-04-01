@@ -1,4 +1,4 @@
-from factories.pipelines import PipelineFactory, OperationFactory
+from factories.pipelines import OperationFactory
 from pipelines import dags
 from tests.utils import BaseTest
 
@@ -71,12 +71,15 @@ class TestDags(BaseTest):
             assert dags.sort_topologically(self.cycle2)
 
     def test_get_dag(self):
-        pipeline = PipelineFactory()
-        operations = [OperationFactory(pipeline=pipeline) for _ in range(4)]
+        operations = [OperationFactory() for _ in range(4)]
         operations[0].upstream_operations.set(operations[2:])
         operations[1].upstream_operations.set(operations[2:])
         operation_by_ids = {op.id: op for op in operations}
-        assert pipeline.dag == (
+
+        def get_downstream(op):
+            return op.downstream_operations.values_list('id', flat=True)
+
+        assert dags.get_dag(nodes=operations, downstream_fn=get_downstream) == (
             {
                 operations[0].id: set(),
                 operations[1].id: set(),
@@ -93,7 +96,7 @@ class TestDags(BaseTest):
         operation2 = OperationFactory()
         operation2.upstream_operations.set([operations[0], operations[2]])
 
-        assert pipeline.dag == (
+        assert dags.get_dag(nodes=operations, downstream_fn=get_downstream) == (
             {
                 operations[0].id: {operation2.id, },
                 operations[1].id: set(),

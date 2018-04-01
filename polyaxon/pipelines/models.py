@@ -258,7 +258,7 @@ class PipelineRunStatus(StatusModel):
         ordering = ['created_at']
 
     def __str__(self):
-        return '{} <{}>'.format(self.pipeline_run.id, self.status)
+        return '{} <{}>'.format(self.pipeline_run, self.status)
 
 
 class OperationRunStatus(StatusModel):
@@ -281,7 +281,7 @@ class OperationRunStatus(StatusModel):
         ordering = ['created_at']
 
     def __str__(self):
-        return '{} <{}>'.format(self.operation_run.id, self.status)
+        return '{} <{}>'.format(self.operation_run, self.status)
 
 
 class RunModel(DiffModel, LastStatusMixin):
@@ -380,7 +380,7 @@ class PipelineRun(RunModel):
         operation_runs = self.operation_runs.all().prefetch_related('downstream_runs')
 
         def get_downstream(op_run):
-            return op_run.operation_runs.values_list('id', flat=True)
+            return op_run.downstream_runs.values_list('id', flat=True)
 
         return dags.get_dag(operation_runs, get_downstream)
 
