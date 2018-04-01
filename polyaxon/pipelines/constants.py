@@ -29,7 +29,7 @@ class PipelineStatuses(BaseStatuses):
         CREATED: {None, },
         SCHEDULED: {CREATED, },
         RUNNING: {SCHEDULED, },
-        FINISHED: {SCHEDULED, RUNNING, },
+        FINISHED: {CREATED, SCHEDULED, RUNNING, },
         STOPPED: {CREATED, SCHEDULED, RUNNING, },
         SKIPPED: {CREATED, SCHEDULED, STOPPED, },
     }

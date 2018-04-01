@@ -76,6 +76,6 @@ def check_pipeline_run_status(pipeline_run_id, status, message=None):
     if not pipeline_run:
         logger.info('Pipeline `{}` does not exist any more.'.format(pipeline_run_id))
 
-    if status in [OperationStatuses.FAILED, OperationStatuses.SUCCEEDED]:
+    if status in OperationStatuses.DONE_STATUS:
         status = PipelineStatuses.FINISHED
     pipeline_run.set_status(status=status, message=message)

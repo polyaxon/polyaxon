@@ -61,7 +61,7 @@ def new_pipeline_run_status(sender, **kwargs):
                                                message='Pipeline run was skipped')
 
 
-@receiver(post_save, sender=OperationRunStatus, dispatch_uid="new_pipeline_run_status_saved")
+@receiver(post_save, sender=OperationRunStatus, dispatch_uid="new_operation_run_status_saved")
 @ignore_raw
 def new_operation_run_status(sender, **kwargs):
     instance = kwargs['instance']
