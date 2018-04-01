@@ -10,8 +10,8 @@ from factories.pipelines import (
     PipelineRunFactory,
     OperationRunFactory,
 )
-from pipelines.constants import OperationStatuses, TriggerPolicy
-from pipelines.models import OperationRunStatus
+from pipelines.constants import OperationStatuses, TriggerPolicy, PipelineStatuses
+from pipelines.models import OperationRunStatus, PipelineRunStatus
 from tests.utils import BaseTest
 
 
@@ -94,6 +94,16 @@ class TestOperationModel(BaseTest):
 
 
 class TestPipelineRunModel(BaseTest):
+    def test_pipeline_run_creation_sets_created_status(self):
+        with patch('pipelines.tasks.new_pipeline_run_status') as new_pipeline_run_status:
+            assert PipelineRunStatus.objects.count() == 0
+
+        # Assert `new_pipeline_run_status` task is also called
+        assert new_pipeline_run_status.call_count == 1
+        pipeline_run = PipelineRunFactory()
+        assert PipelineRunStatus.objects.filter(pipeline_run=pipeline_run).count() == 1
+        assert pipeline_run.last_status == PipelineStatuses.CREATED
+
     def test_dag_property(self):
         pipeline_run = PipelineRunFactory()
         operation_runs = [OperationRunFactory(pipeline_run=pipeline_run) for _ in range(4)]
@@ -160,6 +170,16 @@ class TestPipelineRunModel(BaseTest):
 
 
 class TestOperationRunModel(BaseTest):
+    def test_operation_run_creation_sets_created_status(self):
+        with patch('pipelines.tasks.new_operation_run_status') as new_operation_run_status:
+            assert OperationRunStatus.objects.count() == 0
+
+        # Assert `new_pipeline_run_status` task is also called
+        assert new_operation_run_status.call_count == 1
+        operation_run = OperationRunFactory()
+        assert OperationRunStatus.objects.filter(operation_run=operation_run).count() == 1
+        assert operation_run.last_status == OperationStatuses.CREATED
+
     def test_check_concurrency(self):
         # Operation without concurrency defaults to infinite concurrency
         operation = OperationFactory()
