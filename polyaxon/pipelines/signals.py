@@ -47,18 +47,20 @@ def new_pipeline_run_status(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
 
-    if created:
-        pipeline_run = instance.pipeline_run
-        # Update job last_status
-        pipeline_run.status = instance
-        pipeline_run.save()
-        # Notify operations with status change. This is necessary if we skip or stop the dag run.
-        if pipeline_run.stopped:
-            stop_pipeline_operation_runs.delay(pipeline_run_id=pipeline_run.id,
-                                               message='Pipeline run was stopped')
-        if pipeline_run.skipped:
-            skip_pipeline_operation_runs.delay(pipeline_run_id=pipeline_run.id,
-                                               message='Pipeline run was skipped')
+    if not created:
+        return
+
+    pipeline_run = instance.pipeline_run
+    # Update job last_status
+    pipeline_run.status = instance
+    pipeline_run.save()
+    # Notify operations with status change. This is necessary if we skip or stop the dag run.
+    if pipeline_run.stopped:
+        stop_pipeline_operation_runs.delay(pipeline_run_id=pipeline_run.id,
+                                           message='Pipeline run was stopped')
+    if pipeline_run.skipped:
+        skip_pipeline_operation_runs.delay(pipeline_run_id=pipeline_run.id,
+                                           message='Pipeline run was skipped')
 
 
 @receiver(post_save, sender=OperationRunStatus, dispatch_uid="new_operation_run_status_saved")

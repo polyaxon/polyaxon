@@ -133,7 +133,9 @@ class TestPipelineRunModel(BaseTest):
         # Operation run are also skipped
         assert OperationRunStatus.objects.filter().count() == 6
         assert set(OperationRunStatus.objects.values_list(
-            'status', flat=True)) == {OperationStatuses.CREATED, OperationStatuses.STOPPED, OperationStatuses.SKIPPED}
+            'status', flat=True)) == {OperationStatuses.CREATED,
+                                      OperationStatuses.STOPPED,
+                                      OperationStatuses.SKIPPED}
 
     def test_dag_property(self):
         pipeline_run = PipelineRunFactory()
