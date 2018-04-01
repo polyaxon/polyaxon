@@ -14,7 +14,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
 from libs.models import DiffModel, DescribableModel, StatusModel, LastStatusMixin
-from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerRule
+from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
 from projects.models import Project
 
 logger = logging.getLogger('polyaxon.pipelines')
@@ -158,8 +158,8 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         max_length=16,
         blank=True,
         null=True,
-        default=TriggerRule.ALL_SUCCEEDED,
-        choices=TriggerRule.CHOICES,
+        default=TriggerPolicy.ALL_SUCCEEDED,
+        choices=TriggerPolicy.CHOICES,
         help_text="defines the rule by which dependencies are applied, "
                   "default is `all_success`.")
     max_retries = models.PositiveSmallIntegerField(
@@ -468,30 +468,26 @@ class OperationRun(RunModel):
 
     def check_upstream_trigger(self):
         """Checks the upstream and the trigger rule."""
-        if self.operation.trigger_policy == TriggerRule.ONE_DONE:
+        if self.operation.trigger_policy == TriggerPolicy.ONE_DONE:
             return self.upstream_runs.filter(
                 status__status__in=self.STATUSES.DONE_STATUS).exists()
-        if self.operation.trigger_policy == TriggerRule.ONE_SUCCEEDED:
+        if self.operation.trigger_policy == TriggerPolicy.ONE_SUCCEEDED:
             return self.upstream_runs.filter(
                 status__status=self.STATUSES.SUCCEEDED).exists()
-        if self.operation.trigger_policy == TriggerRule.ONE_FAILED:
+        if self.operation.trigger_policy == TriggerPolicy.ONE_FAILED:
             return self.upstream_runs.filter(
                 status__status=self.STATUSES.FAILED).exists()
-        if self.operation.trigger_policy == TriggerRule.ALL_DONE:
-            count_done = self.upstream_runs.exclude(
-                status__status__in=self.STATUSES.DONE_STATUS).count()
-            all_count = self.upstream_runs.count()
-            return count_done == all_count
-        if self.operation.trigger_policy == TriggerRule.ALL_SUCCEEDED:
-            succeeded_count = self.upstream_runs.exclude(
-                status__status=self.STATUSES.SUCCEEDED).count()
-            all_count = self.upstream_runs.count()
-            return succeeded_count == all_count
-        if self.operation.trigger_policy == TriggerRule.ALL_FAILED:
-            failed_count = self.upstream_runs.exclude(
-                status__status=self.STATUSES.FAILED).exists()
-            all_count = self.upstream_runs.count()
-            return failed_count == all_count
+
+        statuses = self.upstream_runs.values_list('status__status', flat=True)
+        if self.operation.trigger_policy == TriggerPolicy.ALL_DONE:
+            return not bool([True for status in statuses
+                             if status not in self.STATUSES.DONE_STATUS])
+        if self.operation.trigger_policy == TriggerPolicy.ALL_SUCCEEDED:
+            return not bool([True for status in statuses
+                             if status != self.STATUSES.SUCCEEDED])
+        if self.operation.trigger_policy == TriggerPolicy.ALL_FAILED:
+            return not bool([True for status in statuses
+                             if status not in self.STATUSES.FAILED_STATUS])
 
     @property
     def is_upstream_done(self):

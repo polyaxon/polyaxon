@@ -9,7 +9,7 @@ from factories.pipelines import (
     PipelineRunFactory,
     OperationRunFactory,
 )
-from pipelines.constants import OperationStatuses
+from pipelines.constants import OperationStatuses, TriggerPolicy
 from pipelines.models import OperationRunStatus
 from tests.utils import BaseTest
 
@@ -190,5 +190,319 @@ class TestOperationRunModel(BaseTest):
                                           operation_run=operation_run2)
         assert operation_run.check_concurrency() is False
 
-    def test_trigger_policy(self):
-        pass
+    def test_trigger_policy_no_upstream(self):
+        operation_run = OperationRunFactory()
+        operation = operation_run.operation
+
+        operation.trigger_policy = TriggerPolicy.ONE_DONE
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        operation.trigger_policy = TriggerPolicy.ONE_SUCCEEDED
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        operation.trigger_policy = TriggerPolicy.ONE_FAILED
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        operation.trigger_policy = TriggerPolicy.ALL_DONE
+        operation.save()
+        assert operation_run.check_upstream_trigger() is True
+
+        operation.trigger_policy = TriggerPolicy.ALL_SUCCEEDED
+        operation.save()
+        assert operation_run.check_upstream_trigger() is True
+
+        operation.trigger_policy = TriggerPolicy.ALL_FAILED
+        operation.save()
+        assert operation_run.check_upstream_trigger() is True
+
+    def test_trigger_policy_one_done(self):
+        operation_run = OperationRunFactory()
+        operation = operation_run.operation
+        operation.trigger_policy = TriggerPolicy.ONE_DONE
+        operation.save()
+
+        # No upstream
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add non done upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        assert operation_run.check_upstream_trigger() is False
+
+        # A running upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # A failed upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add skipped upstream
+        upstream_run2 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run2])
+        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
+                                          operation_run=upstream_run2)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add succeeded upstream
+        upstream_run3 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run3)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add another upstream still True
+        upstream_run4 = OperationRunFactory()
+        operation_run.upstream_runs.add(upstream_run4)
+        assert operation_run.check_upstream_trigger() is True
+
+    def test_trigger_policy_one_succeeded(self):
+        operation_run = OperationRunFactory()
+        operation = operation_run.operation
+        operation.trigger_policy = TriggerPolicy.ONE_SUCCEEDED
+        operation.save()
+
+        # No upstream
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add non done upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        assert operation_run.check_upstream_trigger() is False
+
+        # A running upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # A failed upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add skipped upstream
+        upstream_run2 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run2])
+        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
+                                          operation_run=upstream_run2)
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add succeeded upstream
+        upstream_run3 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run3)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add another upstream still True
+        upstream_run4 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1, upstream_run2, upstream_run3, upstream_run4])
+        assert operation_run.check_upstream_trigger() is True
+
+    def test_trigger_policy_one_failed(self):
+        operation_run = OperationRunFactory()
+        operation = operation_run.operation
+        operation.trigger_policy = TriggerPolicy.ONE_FAILED
+        operation.save()
+
+        # No upstream
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add non done upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        assert operation_run.check_upstream_trigger() is False
+
+        # A running upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # A failed upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add skipped upstream
+        upstream_run2 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run2])
+        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
+                                          operation_run=upstream_run2)
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add succeeded upstream
+        upstream_run3 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run3)
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add another upstream still True
+        upstream_run4 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1, upstream_run2, upstream_run3, upstream_run4])
+        assert operation_run.check_upstream_trigger() is True
+
+    def test_trigger_policy_all_done(self):
+        operation_run = OperationRunFactory()
+        operation = operation_run.operation
+        operation.trigger_policy = TriggerPolicy.ALL_DONE
+        operation.save()
+
+        # No upstream
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add non done upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        assert operation_run.check_upstream_trigger() is False
+
+        # A running upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # A failed upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add skipped upstream
+        upstream_run2 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run2])
+        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
+                                          operation_run=upstream_run2)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add succeeded upstream
+        upstream_run3 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run3)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Many done upstreams
+        operation_run.upstream_runs.set(
+            [upstream_run1, upstream_run2, upstream_run3])
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add another upstream
+        upstream_run4 = OperationRunFactory()
+        operation_run.upstream_runs.add(upstream_run4)
+        assert operation_run.check_upstream_trigger() is False
+
+    def test_trigger_policy_all_succeeded(self):
+        operation_run = OperationRunFactory()
+        operation = operation_run.operation
+        operation.trigger_policy = TriggerPolicy.ALL_SUCCEEDED
+        operation.save()
+
+        # No upstream
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add non done upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        assert operation_run.check_upstream_trigger() is False
+
+        # A running upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # A failed upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add skipped upstream
+        upstream_run2 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run2])
+        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
+                                          operation_run=upstream_run2)
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add succeeded upstream
+        upstream_run3 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run3)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add many succeeded upstream
+        upstream_run4 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3, upstream_run4])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run4)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Many done upstreams
+        operation_run.upstream_runs.set(
+            [upstream_run1, upstream_run2, upstream_run3])
+        assert operation_run.check_upstream_trigger() is False
+
+    def test_trigger_policy_all_failed(self):
+        operation_run = OperationRunFactory()
+        operation = operation_run.operation
+        operation.trigger_policy = TriggerPolicy.ALL_FAILED
+        operation.save()
+
+        # No upstream
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add non done upstream
+        upstream_run1 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1])
+        assert operation_run.check_upstream_trigger() is False
+
+        # A running upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is False
+
+        # A failed upstream
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run1)
+        operation.save()
+        assert operation_run.check_upstream_trigger() is True
+
+        # Add skipped upstream
+        upstream_run2 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run2])
+        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
+                                          operation_run=upstream_run2)
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add succeeded upstream
+        upstream_run3 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run3])
+        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
+                                          operation_run=upstream_run3)
+        assert operation_run.check_upstream_trigger() is False
+
+        # Add many failed upstream
+        upstream_run4 = OperationRunFactory()
+        operation_run.upstream_runs.set([upstream_run1, upstream_run4])
+        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
+                                          operation_run=upstream_run4)
+        assert operation_run.check_upstream_trigger() is True
+
+        # Many done upstreams
+        operation_run.upstream_runs.set(
+            [upstream_run1, upstream_run2, upstream_run3])
+        assert operation_run.check_upstream_trigger() is False

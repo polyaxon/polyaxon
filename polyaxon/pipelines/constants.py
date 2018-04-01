@@ -78,7 +78,7 @@ class OperationStatuses(BaseStatuses):
     }
 
 
-class TriggerRule(object):
+class TriggerPolicy(object):
     ALL_SUCCEEDED = 'all_succeeded'
     ALL_FAILED = 'all_failed'
     ALL_DONE = 'all_done'
