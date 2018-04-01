@@ -4,7 +4,7 @@ coverage==4.5.1
 execnet==1.5.0
 django-debug-panel==0.8.3
 django-debug-toolbar==1.9.1
-factory-boy
+factory-boy==2.10.0
 fake-factory==0.7.2
 flaky==3.4.0
 isort==4.2.15
