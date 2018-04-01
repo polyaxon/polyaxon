@@ -391,7 +391,7 @@ class PipelineRun(RunModel):
         if not self.can_transition(status):
             return
 
-        if not PipelineStatuses.is_done(status):
+        if PipelineStatuses.FINISHED != status:
             # If the status that we want to transition to is not a final state,
             # then no further checks are required
             PipelineRunStatus.objects.create(pipeline_run=self, status=status, message=message)
@@ -401,7 +401,7 @@ class PipelineRun(RunModel):
         # we mark the pipeline as FINISHED if all operation runs are finished
         all_op_runs_done = not bool([
             True for status in
-            self.operation_runs.values_list('status_status')
+            self.operation_runs.values_list('status__status', flat=True)
             if status not in OperationStatuses.DONE_STATUS
         ])
         if all_op_runs_done:

@@ -104,6 +104,40 @@ class TestPipelineRunModel(BaseTest):
         assert PipelineRunStatus.objects.filter(pipeline_run=pipeline_run).count() == 1
         assert pipeline_run.last_status == PipelineStatuses.CREATED
 
+    def test_stopping_pipeline_run_stops_operation_runs(self):
+        pipeline_run = PipelineRunFactory()
+        [OperationRunFactory(pipeline_run=pipeline_run) for _ in range(2)]
+        assert pipeline_run.statuses.count() == 1
+        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert OperationRunStatus.objects.filter().count() == 2
+        assert set(OperationRunStatus.objects.values_list(
+            'status', flat=True)) == {OperationStatuses.CREATED, }
+        # Set pipeline run to stopped
+        pipeline_run.on_stop()
+        assert pipeline_run.statuses.count() == 2
+        assert pipeline_run.last_status == PipelineStatuses.STOPPED
+        # Operation run are also stopped
+        assert OperationRunStatus.objects.filter().count() == 4
+        assert set(OperationRunStatus.objects.values_list(
+            'status', flat=True)) == {OperationStatuses.CREATED, OperationStatuses.STOPPED}
+
+    def test_skipping_pipeline_run_stops_operation_runs(self):
+        pipeline_run = PipelineRunFactory()
+        [OperationRunFactory(pipeline_run=pipeline_run) for _ in range(2)]
+        assert pipeline_run.statuses.count() == 1
+        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert OperationRunStatus.objects.filter().count() == 2
+        assert set(OperationRunStatus.objects.values_list(
+            'status', flat=True)) == {OperationStatuses.CREATED, }
+        # Set pipeline run to skipped
+        pipeline_run.on_skip()
+        assert pipeline_run.statuses.count() == 2
+        assert pipeline_run.last_status == PipelineStatuses.SKIPPED
+        # Operation run are also skipped
+        assert OperationRunStatus.objects.filter().count() == 6
+        assert set(OperationRunStatus.objects.values_list(
+            'status', flat=True)) == {OperationStatuses.CREATED, OperationStatuses.STOPPED, OperationStatuses.SKIPPED}
+
     def test_dag_property(self):
         pipeline_run = PipelineRunFactory()
         operation_runs = [OperationRunFactory(pipeline_run=pipeline_run) for _ in range(4)]

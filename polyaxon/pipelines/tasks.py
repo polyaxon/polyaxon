@@ -49,7 +49,7 @@ def start_operation_run(operation_run_id):
     operation_run.schedule_start()
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_STOP_OPERATIONS, bind=True, max_retries=None)
+@celery_app.task(name=CeleryTasks.PIPELINES_STOP_OPERATIONS, max_retries=None)
 def stop_pipeline_operation_runs(pipeline_run_id, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
@@ -58,7 +58,7 @@ def stop_pipeline_operation_runs(pipeline_run_id, message=None):
     stop_operation_runs_for_pipeline_run(pipeline_run, message=message)
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_SKIP_OPERATIONS, bind=True, max_retries=None)
+@celery_app.task(name=CeleryTasks.PIPELINES_SKIP_OPERATIONS, max_retries=None)
 def skip_pipeline_operation_runs(pipeline_run_id, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
