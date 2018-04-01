@@ -50,7 +50,7 @@ before_script:
   - cp config/local.json polyaxon/polyaxon/env_vars/local.json
 
 script:
-  - py.test tests
+  - py.test tests -v
 
 notifications:
   slack:
