@@ -1,12 +1,13 @@
 import logging
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from dockerizer.builders.base import BaseDockerBuilder
 from libs.registry import get_registry_host
 from repos import git
 from repos.models import Repo, ExternalRepo
-
+from spawners.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')
 
@@ -67,8 +68,7 @@ def get_job_repo_info(project, job):
 
     image_name = '{}/{}'.format(get_registry_host(), repo_name)
     if not last_commit:
-        raise Repo.DoesNotExist(
-            'Repo was not found for project `{}`.'.format(project.unique_name))
+        raise Repo.DoesNotExist
     image_tag = last_commit[0]
     return {
         'repo_path': repo_path,
@@ -99,6 +99,11 @@ def build_job(project, job, job_builder, image_tag=None):
         return False
     if not docker_builder.push():
         docker_builder.clean()
+        try:
+            job.set_status(JobLifeCycle.FAILED,
+                           message='The docker image could not be pushed.')
+        except ObjectDoesNotExist:
+            pass
         return False
     docker_builder.clean()
     return True

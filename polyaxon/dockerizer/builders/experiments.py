@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from dockerizer.builders.base import BaseDockerBuilder
 from events import publisher
@@ -89,8 +90,7 @@ def get_experiment_repo_info(experiment):
     image_name = '{}/{}'.format(get_registry_host(), repo_name)
     image_tag = experiment.commit
     if not image_tag:
-        raise Repo.DoesNotExist(
-            'Repo was not found for project `{}`.'.format(experiment.unique_name))
+        raise Repo.DoesNotExist
     return {
         'repo_path': repo_path,
         'image_name': image_name,
@@ -120,6 +120,11 @@ def build_experiment(experiment, image_tag=None):
         return False
     if not docker_builder.push():
         docker_builder.clean()
+        try:
+            experiment.set_status(ExperimentLifeCycle.FAILED,
+                                  message='The docker image could not be pushed.')
+        except ObjectDoesNotExist:
+            pass
         return False
     docker_builder.clean()
     return True
