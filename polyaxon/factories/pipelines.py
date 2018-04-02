@@ -6,6 +6,7 @@ from pipelines.models import Pipeline, Operation, PipelineRun, OperationRun
 
 
 class PipelineFactory(factory.DjangoModelFactory):
+    name = factory.Sequence(lambda x: "pipeline-{}".format(x))
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)
 

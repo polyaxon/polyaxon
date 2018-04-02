@@ -9,9 +9,9 @@ class PipelineStatuses(BaseStatuses):
     STOPPED = 'stopped'
     SKIPPED = 'skipped'
 
-    VALUES = [
+    VALUES = {
         CREATED, SCHEDULED, RUNNING, FINISHED, STOPPED, SKIPPED
-    ]
+    }
     CHOICES = (
         (CREATED, CREATED),
         (SCHEDULED, SCHEDULED),
@@ -21,9 +21,9 @@ class PipelineStatuses(BaseStatuses):
         (SKIPPED, SKIPPED),
     )
 
-    DONE_STATUS = [FINISHED, STOPPED, SKIPPED]
-    RUNNING_STATUS = [SCHEDULED, RUNNING]
-    FAILED_STATUS = []
+    DONE_STATUS = {FINISHED, STOPPED, SKIPPED}
+    RUNNING_STATUS = {SCHEDULED, RUNNING}
+    FAILED_STATUS = set([])
 
     TRANSITION_MATRIX = {
         CREATED: {None, },
@@ -46,9 +46,9 @@ class OperationStatuses(BaseStatuses):
     SKIPPED = 'skipped'
     RETRYING = 'retrying'
 
-    VALUES = [
+    VALUES = {
         CREATED, SCHEDULED, RUNNING, SUCCEEDED, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED, RETRYING
-    ]
+    }
     CHOICES = (
         (CREATED, CREATED),
         (SCHEDULED, SCHEDULED),
@@ -61,9 +61,9 @@ class OperationStatuses(BaseStatuses):
         (RETRYING, RETRYING)
     )
 
-    DONE_STATUS = [SUCCEEDED, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED]
-    RUNNING_STATUS = [SCHEDULED, RUNNING]
-    FAILED_STATUS = [FAILED, UPSTREAM_FAILED]
+    DONE_STATUS = {SUCCEEDED, FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED}
+    RUNNING_STATUS = {SCHEDULED, RUNNING}
+    FAILED_STATUS = {FAILED, UPSTREAM_FAILED}
 
     TRANSITION_MATRIX = {
         CREATED: {None, },
@@ -86,7 +86,7 @@ class TriggerPolicy(object):
     ONE_FAILED = 'one_failed'
     ONE_DONE = 'one_done'
 
-    VALUES = [ALL_SUCCEEDED, ALL_FAILED, ALL_DONE, ONE_SUCCEEDED, ONE_FAILED, ONE_DONE]
+    VALUES = {ALL_SUCCEEDED, ALL_FAILED, ALL_DONE, ONE_SUCCEEDED, ONE_FAILED, ONE_DONE}
     CHOICES = (
         (ALL_SUCCEEDED, ALL_SUCCEEDED),
         (ALL_FAILED, ALL_FAILED),
@@ -94,4 +94,19 @@ class TriggerPolicy(object):
         (ONE_SUCCEEDED, ONE_SUCCEEDED),
         (ONE_FAILED, ONE_FAILED),
         (ONE_DONE, ONE_DONE),
+    )
+
+
+class PipelineTypes(object):
+    PIPELINE = 'pipeline'
+    EXPERIMENT = 'experiment'
+    EXPERIMENT_GROUP = 'experiment_group'
+    DATASET = 'dataset'
+
+    VALUES = {PIPELINE, EXPERIMENT, EXPERIMENT_GROUP, DATASET}
+    CHOICES = (
+        (PIPELINE, PIPELINE),
+        (EXPERIMENT, EXPERIMENT),
+        (EXPERIMENT_GROUP, EXPERIMENT_GROUP),
+        (DATASET, DATASET)
     )

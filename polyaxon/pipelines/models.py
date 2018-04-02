@@ -6,15 +6,17 @@ from celery.result import AsyncResult
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
+from django.core.validators import validate_slug
 from django.db import models
 from django.dispatch import Signal
 
+from libs.blacklist import validate_blacklist_name
 from pipelines import dags
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
 from libs.models import DiffModel, DescribableModel, StatusModel, LastStatusMixin
-from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
+from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy, PipelineTypes
 from projects.models import Project
 
 logger = logging.getLogger('polyaxon.pipelines')
@@ -90,10 +92,17 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
 
     A pipeline can also have dependencies/upstream pipelines/operations.
     """
-
+    name = models.CharField(
+        max_length=256,
+        validators=[validate_slug, validate_blacklist_name])
+    type = models.CharField(
+        max_length=32,
+        default=PipelineTypes.PIPELINE)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
         related_name='pipelines')
     project = models.ForeignKey(
         Project,
@@ -204,10 +213,6 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         null=True,
         help_text="The celery queue name to use for the executing this task. "
                   "If provided, it will override the queue provided in CELERY_TASK_ROUTES.")
-
-    @property
-    def independent(self):
-        return self.pipeline is None
 
     def get_countdown(self, retries):
         """Calculate the countdown for a celery task retry."""
