@@ -316,7 +316,7 @@ class RunModel(DiffModel, LastStatusMixin):
 
     @property
     def started_at(self):
-        status = self.statuses.filter(status=self.STATUSES.STARTING).first()
+        status = self.statuses.filter(status=self.STATUSES.RUNNING).first()
         if status:
             return status.created_at
         return None

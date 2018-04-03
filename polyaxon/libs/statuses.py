@@ -5,6 +5,7 @@ class BaseStatuses(object):
     DONE_STATUS = []
     RUNNING_STATUS = []
     FAILED_STATUS = []
+    # Defines the transition matrix: {desired_status: set(possible_statuses)}
     TRANSITION_MATRIX = {}
 
     @classmethod
