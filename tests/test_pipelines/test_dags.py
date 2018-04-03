@@ -22,6 +22,28 @@ class TestDags(BaseTest):
             7: [10],
             9: [10, 11],
         }
+        self.dag3 = {
+            1: [2, 3, 4, 5],
+            2: [6, 7],
+            3: [8],
+            4: [9],
+            5: [10],
+            6: [11],
+            7: [],
+            8: [12, 13],
+            9: [14],
+            10: [15],
+            11: [],
+            12: []
+        }
+        self.dag4 = {
+            0: [1, 2],
+            1: [2, 3],
+            2: [3, 5],
+            3: [4],
+            5: [],
+            7: [6]
+        }
         #
         self.cycle1 = {
             1: [2],
@@ -42,12 +64,16 @@ class TestDags(BaseTest):
     def test_get_orphan_nodes(self):
         assert dags.get_orphan_nodes(self.dag1) == {6, }
         assert dags.get_orphan_nodes(self.dag2) == {5, }
+        assert dags.get_orphan_nodes(self.dag3) == set([])
+        assert dags.get_orphan_nodes(self.dag4) == set([])
         assert dags.get_orphan_nodes(self.cycle1) == set([])
         assert dags.get_orphan_nodes(self.cycle2) == set([])
 
     def test_get_independent_nodes(self):
         assert dags.get_independent_nodes(self.dag1) == {1, 5, 6}
         assert dags.get_independent_nodes(self.dag2) == {1, 5, 6, 9}
+        assert dags.get_independent_nodes(self.dag3) == {1}
+        assert dags.get_independent_nodes(self.dag4) == {0, 7}
         assert dags.get_independent_nodes(self.cycle1) == set([])
         assert dags.get_independent_nodes(self.cycle2) == {6, 9}
 
@@ -56,6 +82,9 @@ class TestDags(BaseTest):
         assert dags.has_dependencies(node=2, dag=self.dag1) is True
         assert dags.has_dependencies(node=1, dag=self.dag2) is False
         assert dags.has_dependencies(node=2, dag=self.dag2) is True
+        assert dags.has_dependencies(node=1, dag=self.dag3) is False
+        assert dags.has_dependencies(node=2, dag=self.dag3) is True
+        assert dags.has_dependencies(node=10, dag=self.dag3) is True
         assert dags.has_dependencies(node=1, dag=self.cycle1) is True
         assert dags.has_dependencies(node=2, dag=self.cycle1) is True
         assert dags.has_dependencies(node=3, dag=self.cycle1) is True
@@ -63,8 +92,11 @@ class TestDags(BaseTest):
         assert dags.has_dependencies(node=9, dag=self.cycle2) is False
 
     def test_sort_topologically(self):
-        assert dags.sort_topologically(self.dag1) == [1, 2, 4, 5, 6]
-        assert dags.sort_topologically(self.dag2) == [1, 2, 3, 5, 6, 7, 9]
+        assert dags.sort_topologically(self.dag1) == [1, 5, 6, 2, 4]
+        assert dags.sort_topologically(self.dag2) == [1, 5, 6, 9, 2, 7, 3]
+        assert dags.sort_topologically(self.dag3) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        assert dags.sort_topologically(self.dag4) == [0, 7, 1, 2, 3, 5]
+
         with self.assertRaises(ValueError):  # Cycles
             assert dags.sort_topologically(self.cycle1)
         with self.assertRaises(ValueError):  # Cycles

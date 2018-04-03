@@ -1,4 +1,5 @@
 import copy
+from collections import deque
 
 
 def get_dag(nodes, downstream_fn):
@@ -45,7 +46,7 @@ def has_dependencies(node, dag):
 
 
 def sort_topologically(dag):
-    """Sort the dag topologically.
+    """Sort the dag breath first topologically.
 
     Only the nodes inside the dag are returned, i.e. the nodes that are also keys.
 
@@ -56,17 +57,18 @@ def sort_topologically(dag):
     """
     dag = copy.deepcopy(dag)
     sorted_nodes = []
-    independent_nodes = get_independent_nodes(dag)
+    independent_nodes = deque(get_independent_nodes(dag))
     while independent_nodes:
-        node = independent_nodes.pop()
+        node = independent_nodes.popleft()
         sorted_nodes.append(node)
+        # this alters the dag so that we are sure we are visiting the nodes only once
         downstream_nodes = dag[node]
         while downstream_nodes:
-            downstream_node = downstream_nodes.pop()
+            downstream_node = downstream_nodes.pop(0)
             if downstream_node not in dag:
                 continue
             if not has_dependencies(downstream_node, dag):
-                independent_nodes.add(downstream_node)
+                independent_nodes.append(downstream_node)
 
     if len(sorted_nodes) != len(dag.keys()):
         raise ValueError('graph is not acyclic')
