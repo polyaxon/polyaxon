@@ -101,6 +101,14 @@ class CeleryTasks(object):
     REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
 
 
+class CeleryOperationTasks(object):
+    """Celery operation tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
+    EXPERIMENTS_SCHEDULE = 'experiments_schedule'
+
+
 class CeleryQueues(object):
     """Celery Queues.
 
@@ -161,16 +169,23 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
-    CeleryTasks.PIPELINES_START: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_START_OPERATION: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_STOP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_SKIP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_CHECK_STATUS: {'queue': CeleryQueues.API_PIPELINES},
+
+    # Monitors
     CeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
     CeleryTasks.EVENTS_HANDLE_RESOURCES: {'queue': CeleryQueues.EVENTS_RESOURCES},
     CeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     CeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR: {'queue': CeleryQueues.LOGS_SIDECARS},
+
+    # Pipelines
+    CeleryTasks.PIPELINES_START: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_START_OPERATION: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_STOP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_SKIP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_CHECK_STATUS: {'queue': CeleryQueues.API_PIPELINES},
+
+    # Operation tasks
+    CeleryOperationTasks.EXPERIMENTS_SCHEDULE: {'queue': CeleryQueues.API_PIPELINES},
 
     CeleryPublishTask.PUBLISH_LOGS_SIDECAR: {'exchange': INTERNAL_EXCHANGE,
                                              'routing_key': RoutingKeys.LOGS_SIDECARS,
