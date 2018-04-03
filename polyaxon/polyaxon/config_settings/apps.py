@@ -7,6 +7,7 @@ PROJECT_APPS = (
     'jobs.apps.JobsConfig',
     'plugins.apps.PluginsConfig',
     'projects.apps.ProjectsConfig',
+    'experiment_groups.apps.ExperimentGroupsConfig',
     'experiments.apps.ExperimentsConfig',
     'repos.apps.ReposConfig',
     'dockerizer.apps.DockerizerConfig',

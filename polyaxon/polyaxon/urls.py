@@ -14,18 +14,28 @@ from users.views import LogoutView, LoginView
 API_V1 = 'api/v1'
 
 api_patterns = [
-    re_path(r'', include(('clusters.urls', 'clusters'), namespace='clusters')),
-    re_path(r'', include(('versions.urls', 'versions'), namespace='versions')),
-    re_path(r'', include(('users.api_urls', 'users'), namespace='users')),
+    re_path(r'', include(
+        ('clusters.urls', 'clusters'), namespace='clusters')),
+    re_path(r'', include(
+        ('versions.urls', 'versions'), namespace='versions')),
+    re_path(r'', include(
+        ('users.api_urls', 'users'), namespace='users')),
     # always include project last because of it's patterns
-    re_path(r'', include(('experiments.urls', 'experiments'), namespace='experiments')),
-    re_path(r'', include(('repos.urls', 'repos'), namespace='repos')),
-    re_path(r'', include(('projects.urls', 'projects'), namespace='projects')),
+    re_path(r'', include(
+        ('experiments.urls', 'experiments'), namespace='experiments')),
+    re_path(r'', include(
+        ('experiment_groups.urls', 'experiment_groups'), namespace='experiment_groups')),
+    re_path(r'', include(
+        ('repos.urls', 'repos'), namespace='repos')),
+    re_path(r'', include(
+        ('projects.urls', 'projects'), namespace='projects')),
 ]
 
 urlpatterns = [
-    re_path(r'', include(('plugins.urls', 'plugins'), namespace='plugins')),
-    re_path(r'^users/', include(('users.urls', 'users'), namespace='users')),
+    re_path(r'', include(
+        ('plugins.urls', 'plugins'), namespace='plugins')),
+    re_path(r'^users/', include(
+        ('users.urls', 'users'), namespace='users')),
     re_path(r'^_admin/logout/$', LogoutView.as_view(), name='logout'),
     re_path(r'^_admin/login/$', LoginView.as_view(template_name='admin/login.html'), name='login'),
     re_path(r'^_admin/', admin.site.urls),

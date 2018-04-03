@@ -26,9 +26,9 @@ from experiments.serializers import (
     ExperimentDetailSerializer,
 )
 from experiments.tasks import stop_experiment
+from experiment_groups.models import ExperimentGroup
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
-from projects.models import ExperimentGroup
 from projects.permissions import get_permissible_project
 
 
