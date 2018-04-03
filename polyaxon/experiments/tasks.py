@@ -35,8 +35,8 @@ def build_experiment(self, experiment_id):
         start_experiment.delay(experiment_id=experiment_id)
         return
 
-    if ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
-                                          status_to=ExperimentLifeCycle.BUILDING):
+    if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
+                                              status_to=ExperimentLifeCycle.BUILDING):
         logger.info('Experiment id `{}` cannot transition from `{}` to `{}`.'.format(
             experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING))
         return None
@@ -73,8 +73,8 @@ def start_experiment(experiment_id):
                     'the Experiment `{}` does not exist anymore.'.format(experiment_id))
         return
 
-    if ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
-                                          status_to=ExperimentLifeCycle.SCHEDULED):
+    if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
+                                              status_to=ExperimentLifeCycle.SCHEDULED):
         logger.info('Experiment id `{}` cannot transition from `{}` to `{}`.'.format(
             experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING))
         return None
