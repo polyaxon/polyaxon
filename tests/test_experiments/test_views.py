@@ -2,6 +2,16 @@ from unittest.mock import patch
 
 from rest_framework import status
 
+from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiments import (
+    ExperimentFactory,
+    ExperimentStatusFactory,
+    ExperimentJobFactory,
+    ExperimentJobStatusFactory,
+    ExperimentMetricFactory,
+)
+from factories.factory_projects import ProjectFactory
+from factories.fixtures import exec_experiment_spec_parsed_content
 from polyaxon.urls import API_V1
 from experiments.models import (
     Experiment,
@@ -19,16 +29,8 @@ from experiments.serializers import (
     ExperimentMetricSerializer,
     ExperimentDetailSerializer,
 )
-from factories.fixtures import exec_experiment_spec_parsed_content
 from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
 
-from factories.factory_experiments import (
-    ExperimentFactory,
-    ExperimentStatusFactory,
-    ExperimentJobFactory,
-    ExperimentJobStatusFactory,
-    ExperimentMetricFactory)
-from factories.factory_projects import ProjectFactory, ExperimentGroupFactory
 from tests.utils import BaseViewTest
 
 
@@ -175,7 +177,7 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        with patch('projects.tasks.start_group_experiments.retry') as _:
+        with patch('experiment_groups.tasks.start_group_experiments.retry') as _:
             self.experiment_group = ExperimentGroupFactory(content=content)
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,

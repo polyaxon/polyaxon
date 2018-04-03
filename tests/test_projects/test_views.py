@@ -2,23 +2,17 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from factories.factory_experiments import ExperimentStatusFactory, ExperimentFactory
+from experiment_groups.models import ExperimentGroup
+from experiment_groups.serializers import ExperimentGroupSerializer
+from factories.factory_experiment_groups import ExperimentGroupFactory
 from polyaxon.urls import API_V1
 from experiments.models import Experiment
-from projects.models import (
-    Project,
-    ExperimentGroup,
-)
+from projects.models import Project
 from projects.serializers import (
     ProjectSerializer,
-    ExperimentGroupSerializer,
     ProjectDetailSerializer,
 )
-from factories.factory_projects import (
-    ProjectFactory,
-    ExperimentGroupFactory,
-)
-from spawners.utils.constants import ExperimentLifeCycle
+from factories.factory_projects import ProjectFactory
 from tests.utils import BaseViewTest
 
 
@@ -183,13 +177,16 @@ class TestProjectDetailViewV1(BaseViewTest):
             with patch('schedulers.notebook_scheduler.stop_notebook') as notebook_mock_fct:
                 with patch('schedulers.experiment_scheduler.stop_experiment') as xp_mock_stop:
                     with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
-                        with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
-                            resp = self.auth_client.delete(self.url)
+                        with patch('experiment_groups.paths.delete_path') as delete_path_group_mock_stop:
+                            with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
+                                resp = self.auth_client.delete(self.url)
         assert xp_mock_stop.call_count == 4
         assert tensorboard_mock_fct.call_count == 1
         assert notebook_mock_fct.call_count == 1
-        # 2 * project + 2 * 2 * groups + 1 repo
-        assert delete_path_project_mock_stop.call_count == 7
+        # 2 * project + 1 repo
+        assert delete_path_project_mock_stop.call_count == 3
+        # 2 * 2 * groups
+        assert delete_path_group_mock_stop.call_count
         assert delete_path_xp_mock_stop.call_count == 8  # 2 * 4  * groups
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
@@ -330,54 +327,3 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content == data['content']
-
-
-class TestStopExperimentGroupViewV1(BaseViewTest):
-    model_class = ExperimentGroup
-    factory_class = ExperimentGroupFactory
-    HAS_AUTH = True
-
-    def setUp(self):
-        super().setUp()
-        project = ProjectFactory(user=self.auth_client.user)
-        with patch('projects.tasks.start_group_experiments.apply_async') as _:
-            self.object = self.factory_class(project=project)
-        # Add a running experiment
-        experiment = ExperimentFactory(experiment_group=self.object)
-        ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
-        self.url = '/{}/{}/{}/groups/{}/stop'.format(
-            API_V1,
-            project.user.username,
-            project.name,
-            self.object.sequence)
-
-    def test_all_stop(self):
-        data = {}
-        assert self.object.stopped_experiments.count() == 0
-
-        # Check that is calling the correct function
-        with patch('projects.tasks.stop_group_experiments.delay') as mock_fct:
-            resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_200_OK
-        assert mock_fct.call_count == 1
-
-        # Execute the function
-        with patch('schedulers.experiment_scheduler.stop_experiment') as _:
-            resp = self.auth_client.post(self.url, data)
-
-        assert resp.status_code == status.HTTP_200_OK
-        assert self.object.stopped_experiments.count() == 2
-
-    def test_pending_stop(self):
-        data = {'pending': True}
-        assert self.object.stopped_experiments.count() == 0
-
-        # Check that is calling the correct function
-        with patch('projects.tasks.stop_group_experiments.delay') as mock_fct:
-            resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_200_OK
-        assert mock_fct.call_count == 1
-
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_200_OK
-        assert self.object.stopped_experiments.count() == 2

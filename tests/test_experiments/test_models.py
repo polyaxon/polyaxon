@@ -15,6 +15,7 @@ from experiments.models import ExperimentStatus, ExperimentJob, Experiment
 from experiments.restart import handle_restarted_experiment
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
 from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
+from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import (
     experiment_spec_content,
@@ -31,7 +32,7 @@ from factories.factory_experiments import (
     ExperimentJobStatusFactory,
     ExperimentStatusFactory,
 )
-from factories.factory_projects import ExperimentGroupFactory, ProjectFactory
+from factories.factory_projects import ProjectFactory
 from tests.fixtures import (
     start_experiment_value,
 )
@@ -40,7 +41,7 @@ from tests.utils import BaseTest, BaseViewTest
 
 class TestExperimentModel(BaseTest):
     def test_experiment_creation_triggers_status_creation_mocks(self):
-        with patch('projects.tasks.start_group_experiments.apply_async') as _:
+        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
         with patch('experiments.tasks.start_experiment.delay') as mock_fct:
@@ -51,7 +52,7 @@ class TestExperimentModel(BaseTest):
         assert mock_fct2.call_count == 1
 
     def test_experiment_creation_triggers_status_creation(self):
-        with patch('projects.tasks.start_group_experiments.apply_async') as _:
+        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
         experiment = ExperimentFactory(experiment_group=experiment_group)
@@ -60,7 +61,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.CREATED
 
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
-        with patch('projects.tasks.start_group_experiments.apply_async') as _:
+        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
             with patch('experiments.tasks.build_experiment.apply_async') as mock_fct:
                 with patch.object(Experiment, 'set_status') as mock_fct2:
                     ExperimentFactory()

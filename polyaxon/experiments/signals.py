@@ -16,7 +16,7 @@ from experiments.paths import (
     create_experiment_logs_path,
 )
 from libs.decorators import ignore_raw
-from projects.models import ExperimentGroup
+from experiment_groups.models import ExperimentGroup
 from schedulers import experiment_scheduler
 from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
 

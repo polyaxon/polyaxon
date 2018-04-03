@@ -40,7 +40,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         on_delete=models.CASCADE,
         related_name='experiments')
     experiment_group = models.ForeignKey(
-        'projects.ExperimentGroup',
+        'experiment_groups.ExperimentGroup',
         on_delete=models.CASCADE,
         blank=True,
         null=True,
