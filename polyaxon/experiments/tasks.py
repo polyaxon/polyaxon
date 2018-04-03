@@ -5,6 +5,7 @@ from docker.errors import DockerException
 
 from experiments.restart import handle_restarted_experiment
 from experiments.paths import create_experiment_outputs_path
+from experiments.utils import get_valid_experiment
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks, Intervals
 from dockerizer.builders import experiments as experiments_builder
@@ -15,21 +16,6 @@ from spawners.utils.constants import ExperimentLifeCycle
 from experiments.models import Experiment, ExperimentMetric
 
 logger = logging.getLogger('polyaxon.tasks.experiments')
-
-
-def get_valid_experiment(experiment_id):
-    try:
-        experiment = Experiment.objects.get(id=experiment_id)
-    except Experiment.DoesNotExist:
-        logger.info('Experiment id `{}` does not exist'.format(experiment_id))
-        return None
-
-    if experiment.is_done:
-        logger.info('Experiment id `{}` stopped with status `{}`.'.format(experiment_id,
-                                                                          experiment.last_status))
-        return None
-
-    return experiment
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_BUILD, bind=True, max_retries=3)
@@ -48,6 +34,12 @@ def build_experiment(self, experiment_id):
     if not experiment.compiled_spec.run_exec:
         start_experiment.delay(experiment_id=experiment_id)
         return
+
+    if ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
+                                          status_to=ExperimentLifeCycle.BUILDING):
+        logger.info('Experiment id `{}` cannot transition from `{}` to `{}`.'.format(
+            experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING))
+        return None
 
     # Update experiment status to show that its building
     experiment.set_status(ExperimentLifeCycle.BUILDING)
@@ -77,7 +69,15 @@ def build_experiment(self, experiment_id):
 def start_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
+        logger.info('Something went wrong, '
+                    'the Experiment `{}` does not exist anymore.'.format(experiment_id))
         return
+
+    if ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
+                                          status_to=ExperimentLifeCycle.SCHEDULED):
+        logger.info('Experiment id `{}` cannot transition from `{}` to `{}`.'.format(
+            experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING))
+        return None
 
     # Check if we need to restart an experiment
     if experiment.is_clone:
@@ -92,6 +92,8 @@ def start_experiment(experiment_id):
 def stop_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
+        logger.info('Something went wrong, '
+                    'the Experiment `{}` does not exist anymore.'.format(experiment_id))
         return
 
     experiment_scheduler.stop_experiment(experiment, update_status=True)

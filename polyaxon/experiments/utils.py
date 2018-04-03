@@ -1,9 +1,13 @@
+import logging
+
 from experiments.models import Experiment
 
+logger = logging.getLogger('polyaxon.experiments.utils')
 
-def is_experiment_still_running(experiment_id=None, experiment_uuid=None):
+
+def get_valid_experiment(experiment_id=None, experiment_uuid=None):
     if not any([experiment_id, experiment_uuid]) or all([experiment_id, experiment_uuid]):
-        raise ValueError('`is_experiment_still_running` function expects an experiment id or uuid.')
+        raise ValueError('`get_valid_experiment` function expects an experiment id or uuid.')
 
     try:
         if experiment_uuid:
@@ -11,9 +15,16 @@ def is_experiment_still_running(experiment_id=None, experiment_uuid=None):
         else:
             experiment = Experiment.objects.get(id=experiment_id)
     except Experiment.DoesNotExist:
-        return False
+        logger.info('Experiment id `{}` does not exist'.format(experiment_id))
+        return None
 
-    if not experiment.is_running:
+    return experiment
+
+
+def is_experiment_still_running(experiment_id=None, experiment_uuid=None):
+    experiment = get_valid_experiment(experiment_id=experiment_id, experiment_uuid=experiment_uuid)
+
+    if not experiment or not experiment.is_running:
         return False
 
     return True
