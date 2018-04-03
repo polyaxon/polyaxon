@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 from rest_framework import status
 
+from experiments.models import Experiment
 from factories.factory_experiments import ExperimentStatusFactory, ExperimentFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
@@ -10,6 +11,7 @@ from experiment_groups.models import (
 )
 from experiment_groups.serializers import (
     ExperimentGroupSerializer,
+    ExperimentGroupDetailSerializer,
 )
 from factories.factory_experiment_groups import (
     ExperimentGroupFactory,
@@ -145,6 +147,59 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content == data['content']
+
+
+class TestExperimentGroupDetailViewV1(BaseViewTest):
+    serializer_class = ExperimentGroupDetailSerializer
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+            self.object = self.factory_class(project=project)
+        self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
+                                                 project.user.username,
+                                                 project.name,
+                                                 self.object.sequence)
+        self.queryset = self.model_class.objects.all()
+
+        # Add 2 more experiments
+        for i in range(2):
+            ExperimentFactory(experiment_group=self.object)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.object.refresh_from_db()
+        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data['num_pending_experiments'] == 4
+
+    def test_patch(self):
+        new_description = 'updated_xp_name'
+        data = {'description': new_description}
+        assert self.object.description != data['description']
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.user == self.object.user
+        assert new_object.description != self.object.description
+        assert new_object.description == new_description
+        assert new_object.experiments.count() == 4
+
+    def test_delete(self):
+        assert self.model_class.objects.count() == 1
+        assert Experiment.objects.count() == 4
+        with patch('schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
+            with patch('experiments.paths.delete_path') as outputs_mock_stop:
+                resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.call_count == 4
+        assert outputs_mock_stop.call_count == 8  # Outputs and Logs * 4
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.count() == 0
+        assert Experiment.objects.count() == 0
 
 
 class TestStopExperimentGroupViewV1(BaseViewTest):
