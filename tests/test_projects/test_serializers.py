@@ -35,8 +35,8 @@ class TestExperimentGroupSerializer(BaseTest):
         assert data.pop('project_name') == self.obj1.project.unique_name
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('num_experiments') == self.obj1.experiments.count()
-        assert data.pop('num_pending_experiments') == len(self.obj1.pending_experiments)
-        assert data.pop('num_running_experiments') == len(self.obj1.running_experiments)
+        assert data.pop('num_pending_experiments') == self.obj1.pending_experiments.count()
+        assert data.pop('num_running_experiments') == self.obj1.running_experiments.count()
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -74,12 +74,12 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         assert data.pop('project_name') == self.obj1.project.unique_name
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('num_experiments') == self.obj1.experiments.count()
-        assert data.pop('num_pending_experiments') == len(self.obj1.pending_experiments)
-        assert data.pop('num_running_experiments') == len(self.obj1.running_experiments)
-        assert data.pop('num_scheduled_experiments') == len(self.obj1.scheduled_experiments)
-        assert data.pop('num_succeeded_experiments') == len(self.obj1.succeeded_experiments)
-        assert data.pop('num_failed_experiments') == len(self.obj1.failed_experiments)
-        assert data.pop('num_stopped_experiments') == len(self.obj1.stopped_experiments)
+        assert data.pop('num_pending_experiments') == self.obj1.pending_experiments.count()
+        assert data.pop('num_running_experiments') == self.obj1.running_experiments.count()
+        assert data.pop('num_scheduled_experiments') == self.obj1.scheduled_experiments.count()
+        assert data.pop('num_succeeded_experiments') == self.obj1.succeeded_experiments.count()
+        assert data.pop('num_failed_experiments') == self.obj1.failed_experiments.count()
+        assert data.pop('num_stopped_experiments') == self.obj1.stopped_experiments.count()
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

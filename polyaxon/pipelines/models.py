@@ -407,6 +407,15 @@ class PipelineRun(RunModel):
         if all_op_runs_done:
             PipelineRunStatus.objects.create(pipeline_run=self, status=status, message=message)
 
+    @property
+    def running_operation_runs(self):
+        return self.operation_runs.filter(status__status__in=self.STATUSES.RUNNING_STATUS)
+
+    @property
+    def n_operation_runs_to_start(self):
+        """We need to check if we are allowed to start any operations"""
+        return self.pipeline.concurrency - self.running_operation_runs.count()
+
     def check_concurrency(self):
         """Checks the concurrency of the pipeline run to validate if we can start a new operation run.
 
@@ -416,9 +425,7 @@ class PipelineRun(RunModel):
         if not self.pipeline.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation_runs.filter(
-            status__status__in=self.STATUSES.RUNNING_STATUS).count()
-        return ops_count < self.pipeline.concurrency
+        return self.n_operation_runs_to_start > 0
 
 
 class OperationRun(RunModel):

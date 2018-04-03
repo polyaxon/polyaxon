@@ -162,7 +162,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         """We need to check if we are allowed to start the experiment
         If the polyaxonfile has concurrency we need to check how many experiments are running.
         """
-        return self.concurrency - len(self.running_experiments)
+        return self.concurrency - self.running_experiments.count()
 
     def should_stop_early(self):
         filters = []

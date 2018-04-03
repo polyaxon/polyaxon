@@ -26,12 +26,12 @@ class TestExperimentGroupModel(BaseTest):
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
         assert mock_fct.call_count == 1
-        assert len(experiment_group.pending_experiments) == 2
-        assert len(experiment_group.running_experiments) == 0
+        assert experiment_group.pending_experiments.count() == 2
+        assert experiment_group.running_experiments.count() == 0
         experiment = Experiment.objects.filter(experiment_group=experiment_group).first()
         ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
-        assert len(experiment_group.pending_experiments) == 1
-        assert len(experiment_group.running_experiments) == 1
+        assert experiment_group.pending_experiments.count() == 1
+        assert experiment_group.running_experiments.count() == 1
 
     def test_experiment_group_deletion_triggers_experiments_deletion(self):
         with patch('projects.tasks.start_group_experiments.apply_async') as mock_fct:

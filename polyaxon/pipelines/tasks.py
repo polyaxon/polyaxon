@@ -23,19 +23,20 @@ def start_pipeline_run(self, pipeline_run_id):
 
     pipeline_run.on_schedule()
     dag, op_runs = pipeline_run.dag
-    independent_op_run_ids = dags.get_independent_nodes(dag=dag)
-    op_runs_to_start = [op_runs[op_run_id] for op_run_id in independent_op_run_ids
+    sorted_ops = dags.sort_topologically(dag=dag)
+    op_runs_to_start = [op_runs[op_run_id] for op_run_id in sorted_ops
                         if op_runs[op_run_id].last_status == OperationStatuses.CREATED]
-    concurrency = pipeline_run.pipeline.concurrency
-    concurrency = concurrency or len(op_runs_to_start)
-    while op_runs_to_start:
+    concurrency = pipeline_run.pipeline.n_operation_runs_to_start
+    future_check = False
+    while op_runs_to_start and concurrency > 0:
         op_run = op_runs_to_start.pop()
-        start_operation_run.delay(operation_run_id=op_run.id)
-        concurrency -= 1
-        if concurrency == 0:
-            break
+        if op_run.schedule_start():
+            # If we end up here it means that the task
+            future_check = True
+        else:
+            concurrency -= 1
 
-    if op_runs_to_start:
+    if op_runs_to_start or future_check:
         # Schedule another task
         self.retry(countdown=Intervals.PIPELINES_SCHEDULER)
 
