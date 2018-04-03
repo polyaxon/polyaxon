@@ -5,7 +5,11 @@ from pipelines.models import OperationRun
 from polyaxon.celery_api import CeleryTask
 
 
-class OperationRunTaskException(Exception):
+class OperationRunDoesNotExist(Exception):
+    pass
+
+
+class OperationRunError(Exception):
     pass
 
 
@@ -17,7 +21,7 @@ class OperationTask(CeleryTask):
         try:
             self._operation_run = OperationRun.objects.get(id=kwargs['operation_run_id'])
         except (KeyError, OperationRun.DoesNotExist):
-            raise OperationRunTaskException
+            raise OperationRunDoesNotExist
         self._operation_run.on_run()
         self.max_retries = self._operation_run.operation.max_retries
         self.countdown = self._operation_run.operation.get_countdown(self.request.retries)
@@ -27,7 +31,7 @@ class OperationTask(CeleryTask):
     def on_failure(self, exc, task_id, args, kwargs, exc_info):
         """Update query status and send email notification to a user"""
         super(OperationTask, self).on_failure(exc, task_id, args, kwargs, exc_info)
-        if isinstance(exc, OperationRunTaskException):
+        if isinstance(exc, OperationRunDoesNotExist):
             return
         self._operation_run.on_failure()
 
