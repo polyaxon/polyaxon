@@ -16,7 +16,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
 from libs.models import DiffModel, DescribableModel, StatusModel, LastStatusMixin
-from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy, PipelineTypes
+from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
 from projects.models import Project
 
 logger = logging.getLogger('polyaxon.pipelines')
@@ -95,9 +95,6 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
     name = models.CharField(
         max_length=256,
         validators=[validate_slug, validate_blacklist_name])
-    type = models.CharField(
-        max_length=32,
-        default=PipelineTypes.PIPELINE)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -199,11 +196,9 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
         null=True,
         blank=True,
         help_text="unix username to impersonate while running the operation.")
-    resources = models.OneToOneField(
-        'jobs.JobResources',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True)
+    config = models.TextField(
+        blank=True,
+        null=True)
     celery_task = models.CharField(
         max_length=128,
         help_text="The celery task name to execute.")

@@ -95,18 +95,3 @@ class TriggerPolicy(object):
         (ONE_FAILED, ONE_FAILED),
         (ONE_DONE, ONE_DONE),
     )
-
-
-class PipelineTypes(object):
-    PIPELINE = 'pipeline'
-    EXPERIMENT = 'experiment'
-    EXPERIMENT_GROUP = 'experiment_group'
-    DATASET = 'dataset'
-
-    VALUES = {PIPELINE, EXPERIMENT, EXPERIMENT_GROUP, DATASET}
-    CHOICES = (
-        (PIPELINE, PIPELINE),
-        (EXPERIMENT, EXPERIMENT),
-        (EXPERIMENT_GROUP, EXPERIMENT_GROUP),
-        (DATASET, DATASET)
-    )
