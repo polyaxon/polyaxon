@@ -4,9 +4,9 @@ import random
 
 from polyaxon_schemas.utils import SEARCH_METHODS
 
+from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
 from experiments.tasks import build_experiment, stop_experiment
-from experiment_groups.models import ExperimentGroup
 from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
 from spawners.utils.constants import ExperimentLifeCycle
@@ -14,23 +14,24 @@ from spawners.utils.constants import ExperimentLifeCycle
 logger = logging.getLogger('polyaxon.tasks.experiment_groups')
 
 
-def _get_group_ro_retry(experiment_group_id, task):
-    try:
-        return ExperimentGroup.objects.get(id=experiment_group_id)
-    except ExperimentGroup.DoesNotExist:
-        logger.info('ExperimentGroup `{}` was not found.'.format(experiment_group_id))
-        if task.request.retries < 2:
-            logger.info('Trying again for ExperimentGroup `{}`.'.format(experiment_group_id))
-            task.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+def _get_group_or_retry(experiment_group_id, task):
+    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
+    if experiment_group:
+        return experiment_group
 
-        logger.info('Something went wrong, '
-                    'the ExperimentGroup `{}` does not exist anymore.'.format(experiment_group_id))
-        return None
+    # We retry if experiment group does not exist
+    if task.request.retries < 2:
+        logger.info('Trying again for ExperimentGroup `{}`.'.format(experiment_group_id))
+        task.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
+    logger.info('Something went wrong, '
+                'the ExperimentGroup `{}` does not exist anymore.'.format(experiment_group_id))
+    return None
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
 def create_group_experiments(self, experiment_group_id):
-    experiment_group = _get_group_ro_retry(experiment_group_id=experiment_group_id, task=self)
+    experiment_group = _get_group_or_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
         return
 
@@ -56,7 +57,7 @@ def create_group_experiments(self, experiment_group_id):
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_START, bind=True, max_retries=None)
 def start_group_experiments(self, experiment_group_id):
-    experiment_group = _get_group_ro_retry(experiment_group_id=experiment_group_id, task=self)
+    experiment_group = _get_group_or_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
         return
 
@@ -81,10 +82,8 @@ def start_group_experiments(self, experiment_group_id):
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
 def stop_group_experiments(experiment_group_id, pending, message=None):
-    try:
-        experiment_group = ExperimentGroup.objects.get(id=experiment_group_id)
-    except ExperimentGroup.DoesNotExist:
-        logger.info('ExperimentGroup `{}` was not found.'.format(experiment_group_id))
+    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
+    if not experiment_group:
         return
 
     if pending:
