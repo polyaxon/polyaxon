@@ -95,11 +95,11 @@ Example:
 early_stopping:
   - metric: loss
     value: 0.01
-    higher: false
+    optimization: minimize
 
   - metric: accuracy
     value: 0.97
-    higher: true
+    optimization: maximize
 ```
 
 ### logging

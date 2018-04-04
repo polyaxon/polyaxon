@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.utils.functional import cached_property
 
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
+from polyaxon_schemas.utils import Optimization
 
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
@@ -116,7 +117,8 @@ class ExperimentGroup(DiffModel, DescribableModel):
     def should_stop_early(self):
         filters = []
         for early_stopping_metric in self.specification.early_stopping:
-            comparison = 'gte' if early_stopping_metric.higher else 'lte'
+            comparison = (
+                'gte' if Optimization.maximize(early_stopping_metric.optimization) else 'lte')
             metric_filter = 'experiment_metric__values__{}__{}'.format(
                 early_stopping_metric.metric, comparison)
             filters.append({metric_filter: early_stopping_metric.value})

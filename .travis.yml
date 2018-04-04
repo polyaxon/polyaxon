@@ -41,7 +41,6 @@ install:
 
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy pytest-cov h5py
   - source activate test-environment
-#  - python setup.py -q install
   - pip install -r requirements/requirements-test.txt
   - pip install codecov
 

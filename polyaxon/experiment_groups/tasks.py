@@ -2,7 +2,7 @@ import logging
 
 import random
 
-from polyaxon_schemas.utils import SEARCH_METHODS
+from polyaxon_schemas.utils import SearchMethods
 
 from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
@@ -38,9 +38,9 @@ def create_group_experiments(self, experiment_group_id):
     # Parse polyaxonfile content and create the experiments
     specification = experiment_group.specification
     # We create a list of indices that we will explore
-    if SEARCH_METHODS.is_sequential(specification.search_method):
+    if SearchMethods.is_grid(specification.search_method):
         indices = range(specification.n_experiments or specification.matrix_space)
-    elif SEARCH_METHODS.is_random(specification.search_method):
+    elif SearchMethods.is_random(specification.search_method):
         sub_space = specification.n_experiments or specification.matrix_space
         indices = random.sample(range(specification.matrix_space), sub_space)
     else:

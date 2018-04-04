@@ -237,10 +237,10 @@ settings:
   early_stopping:
     - metric: accuracy
       value: 0.9
-      higher: true
+      optimization: maximize
     - metric: loss
       value: 0.05
-      higher: flase
+      optimization: minimize
 ```
 
 In this case, the scheduler will not start any more experiment, if one of the experiments in the group validate the following condition:

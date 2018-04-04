@@ -77,7 +77,7 @@ experiment_group_spec_content_early_stopping = """---
           value: 0.9
         - metric: loss
           value: 0.1
-          higher: false 
+          optimization: minimize 
 
 
     matrix:
