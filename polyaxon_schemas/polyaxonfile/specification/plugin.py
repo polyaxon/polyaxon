@@ -24,12 +24,6 @@ class PluginSpecification(BaseSpecification):
             raise PolyaxonConfigurationError(
                 'Plugin specification must contain a valid `run` section.')
 
-    @classmethod
-    def read(cls, values):
-        if isinstance(values, cls):
-            return values
-        return cls(values=values)
-
     @cached_property
     def parsed_data(self):
         return self._parsed_data

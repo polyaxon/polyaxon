@@ -31,27 +31,12 @@ class Specification(BaseSpecification):
         EVAL: defines how to evaluate a modela how to read the data
     """
 
-    def __init__(self, experiment, values):
-        self._experiment = experiment
+    def __init__(self, values):
         super(Specification, self).__init__(values=values)
         if self.MATRIX in self.headers:
             raise PolyaxonConfigurationError(
                 'Specification cannot contain a `matrix` section, you should '
                 'use a GroupSpecification instead.')
-
-    @classmethod
-    def read(cls, values, experiment=None):
-        if isinstance(values, cls):
-            return values
-        return cls(experiment=experiment, values=values)
-
-    @property
-    def experiment(self):
-        return self._experiment
-
-    @cached_property
-    def experiment_path(self):
-        return os.path.join(self.project_path, '{}'.format(self.experiment))
 
     @cached_property
     def parsed_data(self):

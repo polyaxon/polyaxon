@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import itertools
 import six
 
 from marshmallow import ValidationError
@@ -47,20 +46,19 @@ class GroupSpecification(BaseSpecification):
             self._headers = validator.validate_headers(spec=self, data=headers)
         except ValidationError as e:
             raise PolyaxonConfigurationError(e)
-        self._parsed_data = []
-        self._validated_data = []
-        self._experiment_specs = []
+        self._parsed_data = None
+        self._validated_data = None
 
-        matrix_declarations = self.matrix_declarations if self.matrix_declarations else [{}]
-        for i, matrix_declaration in enumerate(matrix_declarations):
-            parsed_data = Parser.parse(self, self._data, matrix_declaration)
-            self._validated_data.append(validator.validate(spec=self, data=parsed_data))
-            self._parsed_data.append(parsed_data)
-            self._experiment_specs.append(Specification(experiment=i, values=parsed_data))
+        # We need to validate that the data is correct
+        # For that we just use a matrix declaration test
+        parsed_data = Parser.parse(self, self._data, self.matrix_declaration_test)
+        validator.validate(spec=self, data=parsed_data)
 
-    @cached_property
-    def experiment_specs(self):
-        return self._experiment_specs
+    def get_experiment_spec(self, matrix_declaration):
+        """Returns and experiment spec for this group spec and the given matrix declaration."""
+        parsed_data = Parser.parse(self, self._data, matrix_declaration)
+        validator.validate(spec=self, data=parsed_data)
+        return Specification(values=parsed_data)
 
     @cached_property
     def matrix(self):
@@ -119,29 +117,8 @@ class GroupSpecification(BaseSpecification):
         )
 
     @cached_property
-    def matrix_declarations(self):
+    def matrix_declaration_test(self):
         if not self.matrix:
-            return []
+            return {}
 
-        declarations = []
-        keys = list(six.iterkeys(self.matrix))
-        values = [v.to_numpy() for v in six.itervalues(self.matrix)]
-        for v in itertools.product(*values):
-            declarations.append(dict(zip(keys, v)))
-
-        if len(declarations) != self.matrix_space:
-            raise PolyaxonConfigurationError('The matrix declaration is not valid.')
-        return declarations
-
-    def get_declarations_at(self, experiment):
-        if experiment > self.matrix_space:
-            raise ValueError("""Could not find an experiment at index {},
-               this file has {} experiments""".format(experiment, self.matrix_space))
-        return self.matrix_declarations[experiment]
-
-    def experiment_spec_at(self, experiment):
-        if experiment > self.matrix_space:
-            raise ValueError("""Could not find an experiment at index {},
-               this file has {} experiments""".format(experiment, self.matrix_space))
-        return self.experiment_specs[experiment]
-
+        return {k: v.to_numpy()[0] for k, v in six.iteritems(self.matrix)}

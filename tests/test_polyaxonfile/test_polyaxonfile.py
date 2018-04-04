@@ -13,8 +13,6 @@ from polyaxon_schemas.losses import MeanSquaredErrorConfig, AbsoluteDifferenceCo
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.models import ClassifierConfig, RegressorConfig, GeneratorConfig
 from polyaxon_schemas.optimizers import AdamConfig
-from polyaxon_schemas.polyaxonfile import constants
-from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification,
@@ -54,16 +52,14 @@ class TestPolyaxonfile(TestCase):
 
     def test_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file.yml'))
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/tmp/plx_logs/project1'
         assert plxfile.matrix is None
         assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
         assert spec.environment is None
         assert spec.framework is None
-        assert spec.experiment_path == '/tmp/plx_logs/project1/0'
         assert spec.is_runnable
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert_equal_dict(spec.get_cluster().to_dict(), {TaskType.MASTER: ['127.0.0.1:10000'],
@@ -82,14 +78,12 @@ class TestPolyaxonfile(TestCase):
 
     def test_simple_generator_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_generator_file.yml'))
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert plxfile.matrix is None
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/tmp/plx_logs/project1'
         assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
-        assert spec.experiment_path == '/tmp/plx_logs/project1/0'
         assert spec.environment is None
         assert spec.framework is None
         assert spec.is_runnable
@@ -110,12 +104,11 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/advanced_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
         assert plxfile.run_type == RunTypes.MINIKUBE
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert spec.is_runnable
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == Frameworks.TENSORFLOW
@@ -183,12 +176,11 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/advanced_file_with_custom_configs_and_resources.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
         assert plxfile.run_type == RunTypes.MINIKUBE
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.TENSORFLOW
@@ -297,7 +289,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/tmp/plx_logs/project1'
         assert isinstance(plxfile.matrix['lr'], MatrixConfig)
         assert isinstance(plxfile.matrix['loss'], MatrixConfig)
         assert plxfile.matrix['lr'].to_dict() == {
@@ -305,13 +296,6 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                'AbsoluteDifference']}
         assert plxfile.matrix_space == 10
-        declarations = []
-        for lr in plxfile.matrix['lr'].to_numpy():
-            for loss in plxfile.matrix['loss'].to_numpy():
-                declarations.append({'loss': loss, 'lr': lr})
-        assert sorted(
-            plxfile.matrix_declarations, key=lambda x: (x['lr'], x['loss'])) == sorted(
-            declarations, key=lambda x: (x['lr'], x['loss']))
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.settings.concurrent_experiments == 2
         assert plxfile.settings.n_experiments is None
@@ -326,27 +310,26 @@ class TestPolyaxonfile(TestCase):
             SearchMethods.GRID
         )
 
-        for xp in range(plxfile.matrix_space):
-            spec = plxfile.experiment_spec_at(xp)
-            assert spec.is_runnable
-            assert spec.environment is None
-            assert spec.framework is None
-            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        spec = plxfile.get_experiment_spec(matrix_declaration=plxfile.matrix_declaration_test)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-            assert_equal_dict(spec.get_cluster().to_dict(),
-                              {TaskType.MASTER: ['127.0.0.1:10000'],
-                               TaskType.PS: [],
-                               TaskType.WORKER: []})
-            model = spec.model
-            assert isinstance(model, RegressorConfig)
-            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-            assert isinstance(model.optimizer, AdamConfig)
-            assert isinstance(model.graph, GraphConfig)
-            assert len(model.graph.layers) == 4
-            assert model.graph.input_layers == [['images', 0, 0]]
-            last_layer = model.graph.layers[-1].name
-            assert model.graph.output_layers == [[last_layer, 0, 0]]
-            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert_equal_dict(spec.get_cluster().to_dict(),
+                          {TaskType.MASTER: ['127.0.0.1:10000'],
+                           TaskType.PS: [],
+                           TaskType.WORKER: []})
+        model = spec.model
+        assert isinstance(model, RegressorConfig)
+        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+        assert isinstance(model.optimizer, AdamConfig)
+        assert isinstance(model.graph, GraphConfig)
+        assert len(model.graph.layers) == 4
+        assert model.graph.input_layers == [['images', 0, 0]]
+        last_layer = model.graph.layers[-1].name
+        assert model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
     def test_matrix_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
@@ -359,13 +342,6 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                'AbsoluteDifference']}
         assert plxfile.matrix_space == 10
-        declarations = []
-        for lr in plxfile.matrix['lr'].to_numpy():
-            for loss in plxfile.matrix['loss'].to_numpy():
-                declarations.append({'loss': loss, 'lr': lr})
-        assert sorted(
-            plxfile.matrix_declarations, key=lambda x: (x['lr'], x['loss'])) == sorted(
-            declarations, key=lambda x: (x['lr'], x['loss']))
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.settings.concurrent_experiments == 2
         assert plxfile.settings.n_experiments == 5
@@ -381,23 +357,22 @@ class TestPolyaxonfile(TestCase):
             SearchMethods.GRID
         )
 
-        for xp in range(plxfile.matrix_space):
-            spec = plxfile.experiment_spec_at(xp)
-            assert spec.is_runnable
-            assert spec.environment is None
-            assert spec.framework is None
-            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        spec = plxfile.get_experiment_spec(matrix_declaration=plxfile.matrix_declaration_test)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-            model = spec.model
-            assert isinstance(model, RegressorConfig)
-            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-            assert isinstance(model.optimizer, AdamConfig)
-            assert isinstance(model.graph, GraphConfig)
-            assert len(model.graph.layers) == 4
-            assert model.graph.input_layers == [['images', 0, 0]]
-            last_layer = model.graph.layers[-1].name
-            assert model.graph.output_layers == [[last_layer, 0, 0]]
-            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        model = spec.model
+        assert isinstance(model, RegressorConfig)
+        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+        assert isinstance(model.optimizer, AdamConfig)
+        assert isinstance(model.graph, GraphConfig)
+        assert len(model.graph.layers) == 4
+        assert model.graph.input_layers == [['images', 0, 0]]
+        last_layer = model.graph.layers[-1].name
+        assert model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
     def test_matrix_percent_experiments_file_passes(self):
         plxfile = PolyaxonFile(
@@ -411,13 +386,6 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                'AbsoluteDifference']}
         assert plxfile.matrix_space == 10
-        declarations = []
-        for lr in plxfile.matrix['lr'].to_numpy():
-            for loss in plxfile.matrix['loss'].to_numpy():
-                declarations.append({'loss': loss, 'lr': lr})
-        assert sorted(
-            plxfile.matrix_declarations, key=lambda x: (x['lr'], x['loss'])) == sorted(
-            declarations, key=lambda x: (x['lr'], x['loss']))
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.settings.concurrent_experiments == 2
         assert plxfile.settings.n_experiments == 0.3
@@ -431,23 +399,22 @@ class TestPolyaxonfile(TestCase):
             SearchMethods.GRID
         )
 
-        for xp in range(plxfile.matrix_space):
-            spec = plxfile.experiment_spec_at(xp)
-            assert spec.is_runnable
-            assert spec.environment is None
-            assert spec.framework is None
-            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        spec = plxfile.get_experiment_spec(matrix_declaration=plxfile.matrix_declaration_test)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-            model = spec.model
-            assert isinstance(model, RegressorConfig)
-            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-            assert isinstance(model.optimizer, AdamConfig)
-            assert isinstance(model.graph, GraphConfig)
-            assert len(model.graph.layers) == 4
-            assert model.graph.input_layers == [['images', 0, 0]]
-            last_layer = model.graph.layers[-1].name
-            assert model.graph.output_layers == [[last_layer, 0, 0]]
-            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        model = spec.model
+        assert isinstance(model, RegressorConfig)
+        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+        assert isinstance(model.optimizer, AdamConfig)
+        assert isinstance(model.graph, GraphConfig)
+        assert len(model.graph.layers) == 4
+        assert model.graph.input_layers == [['images', 0, 0]]
+        last_layer = model.graph.layers[-1].name
+        assert model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
     def test_matrix_large_n_experiments_ignored_file_passes(self):
         plxfile = PolyaxonFile(
@@ -461,13 +428,6 @@ class TestPolyaxonfile(TestCase):
         assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                'AbsoluteDifference']}
         assert plxfile.matrix_space == 10
-        declarations = []
-        for lr in plxfile.matrix['lr'].to_numpy():
-            for loss in plxfile.matrix['loss'].to_numpy():
-                declarations.append({'loss': loss, 'lr': lr})
-        assert sorted(
-            plxfile.matrix_declarations, key=lambda x: (x['lr'], x['loss'])) == sorted(
-            declarations, key=lambda x: (x['lr'], x['loss']))
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.settings.concurrent_experiments == 2
         assert plxfile.settings.n_experiments == 300
@@ -481,73 +441,62 @@ class TestPolyaxonfile(TestCase):
             SearchMethods.GRID
         )
 
-        for xp in range(plxfile.matrix_space):
-            spec = plxfile.experiment_spec_at(xp)
-            assert spec.is_runnable
-            assert spec.environment is None
-            assert spec.framework is None
-            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        spec = plxfile.get_experiment_spec(matrix_declaration=plxfile.matrix_declaration_test)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-            model = spec.model
-            assert isinstance(model, RegressorConfig)
-            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-            assert isinstance(model.optimizer, AdamConfig)
-            assert isinstance(model.graph, GraphConfig)
-            assert len(model.graph.layers) == 4
-            assert model.graph.input_layers == [['images', 0, 0]]
-            last_layer = model.graph.layers[-1].name
-            assert model.graph.output_layers == [[last_layer, 0, 0]]
-            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        model = spec.model
+        assert isinstance(model, RegressorConfig)
+        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+        assert isinstance(model.optimizer, AdamConfig)
+        assert isinstance(model.graph, GraphConfig)
+        assert len(model.graph.layers) == 4
+        assert model.graph.input_layers == [['images', 0, 0]]
+        last_layer = model.graph.layers[-1].name
+        assert model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
     def test_one_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/tmp/plx_logs/project1'
         assert isinstance(plxfile.matrix['loss'], MatrixConfig)
         assert plxfile.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                'AbsoluteDifference']}
         assert plxfile.matrix_space == 2
-        declarations = []
-        for loss in plxfile.matrix['loss'].to_numpy():
-            declarations.append({'loss': loss})
-        assert sorted(
-            plxfile.matrix_declarations, key=lambda x: (x['loss'])) == sorted(
-            declarations, key=lambda x: (x['loss']))
         assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
 
-        for xp in range(plxfile.matrix_space):
-            spec = plxfile.experiment_spec_at(xp)
-            assert spec.is_runnable
-            assert spec.environment is None
-            assert spec.framework is None
-            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        spec = plxfile.get_experiment_spec(matrix_declaration=plxfile.matrix_declaration_test)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
 
-            assert_equal_dict(spec.get_cluster().to_dict(),
-                              {TaskType.MASTER: ['127.0.0.1:10000'],
-                               TaskType.PS: [],
-                               TaskType.WORKER: []})
-            model = spec.model
-            assert isinstance(model, RegressorConfig)
-            assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-            assert isinstance(model.optimizer, AdamConfig)
-            assert isinstance(model.graph, GraphConfig)
-            assert len(model.graph.layers) == 4
-            assert model.graph.input_layers == [['images', 0, 0]]
-            last_layer = model.graph.layers[-1].name
-            assert model.graph.output_layers == [[last_layer, 0, 0]]
-            assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert_equal_dict(spec.get_cluster().to_dict(),
+                          {TaskType.MASTER: ['127.0.0.1:10000'],
+                           TaskType.PS: [],
+                           TaskType.WORKER: []})
+        model = spec.model
+        assert isinstance(model, RegressorConfig)
+        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
+        assert isinstance(model.optimizer, AdamConfig)
+        assert isinstance(model.graph, GraphConfig)
+        assert len(model.graph.layers) == 4
+        assert model.graph.input_layers == [['images', 0, 0]]
+        last_layer = model.graph.layers[-1].name
+        assert model.graph.output_layers == [[last_layer, 0, 0]]
+        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
     def test_run_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file.yml'))
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
         assert plxfile.settings is not None
         assert plxfile.run_type == RunTypes.LOCAL
-        assert plxfile.project_path == "/tmp/plx_logs/video_prediction"
-        assert spec.experiment_path == "/tmp/plx_logs/video_prediction/0"
         assert spec.is_runnable
         assert spec.environment is None
         assert spec.framework is None
@@ -561,48 +510,36 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'video_prediction'
-        assert plxfile.project_path == get_vol_path(constants.LOGS_VOLUME,
-                                                    RunTypes.MINIKUBE) + '/video_prediction'
         assert isinstance(plxfile.matrix['model'], MatrixConfig)
         assert plxfile.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert plxfile.matrix_space == 3
-        declarations = []
-        for loss in plxfile.matrix['model'].to_numpy():
-            declarations.append({'model': loss})
-        assert sorted(
-            plxfile.matrix_declarations, key=lambda x: (x['model'])) == sorted(
-            declarations, key=lambda x: (x['model']))
         assert isinstance(plxfile.settings, SettingsConfig)
         assert plxfile.run_type == RunTypes.MINIKUBE
-        assert len(plxfile.experiment_specs) == plxfile.matrix_space
-
-        for xp in range(plxfile.matrix_space):
-            spec = plxfile.experiment_spec_at(xp)
-            assert spec.is_runnable
-            assert spec.environment is None
-            assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-            assert spec.model is None
-            run_exec = spec.run_exec
-            assert isinstance(run_exec, RunExecConfig)
-            declarations = plxfile.get_declarations_at(xp)
-            declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
-            assert run_exec.cmd == ('video_prediction_train '
-                                    '--model="{model}" '
-                                    '--num_masks={num_masks}').format(
-                **declarations
-            )
+        declarations = plxfile.matrix_declaration_test
+        spec = plxfile.get_experiment_spec(declarations)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.model is None
+        run_exec = spec.run_exec
+        assert isinstance(run_exec, RunExecConfig)
+        declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
+        assert run_exec.cmd == ('video_prediction_train '
+                                '--model="{model}" '
+                                '--num_masks={num_masks}').format(
+            **declarations
+        )
 
     def test_distributed_tensorflow_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/distributed_tensorflow_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
         assert plxfile.run_type == RunTypes.KUBERNETES
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.TENSORFLOW
@@ -681,12 +618,11 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_horovod_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
         assert plxfile.run_type == RunTypes.KUBERNETES
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.HOROVOD
@@ -742,12 +678,11 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_pytorch_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
         assert plxfile.run_type == RunTypes.KUBERNETES
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.PYTORCH
@@ -803,12 +738,11 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_mxnet_file.yml'))
         assert plxfile.version == 1
         assert plxfile.project.name == 'project1'
-        assert plxfile.project_path == '/mypath/project1'
         assert plxfile.matrix is None
         assert plxfile.run_type == RunTypes.KUBERNETES
         assert isinstance(plxfile.settings, SettingsConfig)
         assert isinstance(plxfile.settings.logging, LoggingConfig)
-        spec = plxfile.experiment_spec_at(0)
+        spec = plxfile.get_experiment_spec(matrix_declaration={})
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.MXNET

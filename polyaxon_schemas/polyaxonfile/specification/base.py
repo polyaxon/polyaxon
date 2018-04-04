@@ -3,16 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import six
-import os
 
 from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.polyaxonfile import constants
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
-from polyaxon_schemas.polyaxonfile.utils import cached_property, get_vol_path
+from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.operators import ForConfig, IfConfig
 from polyaxon_schemas.settings import RunTypes
 from polyaxon_schemas.utils import to_list
@@ -72,10 +70,10 @@ class BaseSpecification(object):
         self._parsed_data = parsed_data
 
     @classmethod
-    def read(cls, filepaths):
-        if isinstance(filepaths, cls):
-            return filepaths
-        return cls(filepaths)
+    def read(cls, values):
+        if isinstance(values, cls):
+            return values
+        return cls(values)
 
     @property
     def values(self):
@@ -126,21 +124,3 @@ class BaseSpecification(object):
     @cached_property
     def is_kubernetes(self):
         return self.run_type == RunTypes.KUBERNETES
-
-    @cached_property
-    def project_path(self):
-        def get_path():
-            project_path = None
-            if self.settings:
-                project_path = self.settings.logging.path
-
-            if project_path:
-                return project_path
-
-            if self.run_type == RunTypes.LOCAL:
-                return '/tmp/plx_logs/' + self.project.name
-
-            return os.path.join(get_vol_path(constants.LOGS_VOLUME, self.run_type),
-                                self.project.name)
-
-        return get_path()
