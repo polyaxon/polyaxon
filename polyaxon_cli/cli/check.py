@@ -58,12 +58,11 @@ def get_group_experiments_info(matrix_space, n_experiments, concurrency, search_
 @click.option('--run-type', is_flag=True, default=False, help='Checks and prints the run_type.')
 @click.option('--project', '-p', is_flag=True, default=False,
               help='Checks and prints the project def.')
-@click.option('--log-path', is_flag=True, default=False, help='Checks and prints the log path.')
 @click.option('--experiments', '-x', is_flag=True, default=False,
               help='Checks and prints the matrix space of experiments.')
 @click.option('--matrix', '-m', is_flag=True, default=False,
               help='Checks and prints the matrix def.')
-def check(file, all, version, run_type, project, log_path, matrix, experiments):
+def check(file, all, version, run_type, project, matrix, experiments):
     """Check a polyaxonfile."""
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file)
@@ -82,18 +81,6 @@ def check(file, all, version, run_type, project, log_path, matrix, experiments):
         Printer.decorate_format_value('The project is: {}',
                                       plx_file.project.name,
                                       'yellow')
-    if log_path:
-        Printer.decorate_format_value('The project logging path is: {}',
-                                      plx_file.project_path,
-                                      'yellow')
-    if matrix:
-        declarations = '\n'.join([str(d) for d in plx_file.matrix_declarations])
-        if not declarations:
-            click.echo('This file has one independent experiment.')
-        else:
-            Printer.decorate_format_value('The matrix definition is:\n{}',
-                                          declarations,
-                                          'yellow')
 
     if experiments:
         matrix_space, n_experiments, concurrency, search_method = plx_file.experiments_def

@@ -6,6 +6,7 @@ import sys
 
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.polyaxonfile.specification import Specification
 from polyaxon_schemas.project import ExperimentGroupConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
@@ -58,9 +59,10 @@ def run(ctx, file, description, u):
         sys.exit(1)
     if matrix_space == 1:
         click.echo('Creating an independent experiment.')
+        plx_file = Specification.read(plx_file._data)
         experiment = ExperimentConfig(description=description,
                                       content=plx_file._data,
-                                      config=plx_file.experiment_specs[0].parsed_data)
+                                      config=plx_file.parsed_data)
         try:
             response = project_client.create_experiment(project.user,
                                                         project.name,
