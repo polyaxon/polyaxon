@@ -13,7 +13,7 @@ from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification.experiment import Specification
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.utils import to_list, SEARCH_METHODS
+from polyaxon_schemas.utils import to_list, SearchMethods
 
 
 class GroupSpecification(BaseSpecification):
@@ -100,7 +100,7 @@ class GroupSpecification(BaseSpecification):
         search_method = None
         if self.settings:
             search_method = self.settings.search_method
-        return search_method or SEARCH_METHODS.SEQUENTIAL
+        return search_method or SearchMethods.SEQUENTIAL
 
     @cached_property
     def concurrent_experiments(self):

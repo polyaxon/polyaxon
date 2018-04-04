@@ -5,13 +5,13 @@ from marshmallow import Schema, fields, post_load, validate, post_dump
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
-from polyaxon_schemas.utils import RunTypes, SEARCH_METHODS
+from polyaxon_schemas.utils import RunTypes, SearchMethods, Optimization
 
 
 class EarlyStoppingMetricSchema(Schema):
     metric = fields.Str()
     value = fields.Float()
-    higher = fields.Bool(default=True, allow_none=True)
+    optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
 
     class Meta:
         ordered = True
@@ -32,10 +32,10 @@ class EarlyStoppingMetricConfig(BaseConfig):
     def __init__(self,
                  metric,
                  value=None,
-                 higher=True):
+                 optimization=Optimization.MAXIMIZE):
         self.metric = metric
         self.value = value
-        self.higher = higher
+        self.optimization = optimization
 
 
 class SettingsSchema(Schema):
@@ -43,7 +43,7 @@ class SettingsSchema(Schema):
     export_strategies = fields.Str(allow_none=True)
     run_type = fields.Str(allow_none=True, validate=validate.OneOf(RunTypes.VALUES))
     concurrent_experiments = fields.Int(allow_none=True)
-    search_method = fields.Str(allow_none=True, validate=validate.OneOf(SEARCH_METHODS.VALUES))
+    search_method = fields.Str(allow_none=True, validate=validate.OneOf(SearchMethods.VALUES))
     n_experiments = fields.Float(allow_none=True, validate=validate.Range(min=0))
     early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
 
@@ -68,7 +68,7 @@ class SettingsConfig(BaseConfig):
                  export_strategies=None,
                  run_type=RunTypes.KUBERNETES,
                  concurrent_experiments=1,
-                 search_method=SEARCH_METHODS.SEQUENTIAL,
+                 search_method=SearchMethods.SEQUENTIAL,
                  n_experiments=None,
                  early_stopping=None):
         self.logging = logging

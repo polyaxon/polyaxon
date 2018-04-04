@@ -35,7 +35,7 @@ from polyaxon_schemas.settings import (
     SettingsConfig,
     EarlyStoppingMetricConfig,
 )
-from polyaxon_schemas.utils import TaskType, SEARCH_METHODS, Frameworks
+from polyaxon_schemas.utils import TaskType, SearchMethods, Frameworks
 from tests.utils import assert_equal_dict
 
 
@@ -323,7 +323,7 @@ class TestPolyaxonfile(TestCase):
             10,
             None,
             2,
-            SEARCH_METHODS.SEQUENTIAL
+            SearchMethods.SEQUENTIAL
         )
 
         for xp in range(plxfile.matrix_space):
@@ -378,7 +378,7 @@ class TestPolyaxonfile(TestCase):
             10,
             5,
             2,
-            SEARCH_METHODS.SEQUENTIAL
+            SearchMethods.SEQUENTIAL
         )
 
         for xp in range(plxfile.matrix_space):
@@ -428,7 +428,7 @@ class TestPolyaxonfile(TestCase):
             10,
             int(0.3 * 10),
             2,
-            SEARCH_METHODS.SEQUENTIAL
+            SearchMethods.SEQUENTIAL
         )
 
         for xp in range(plxfile.matrix_space):
@@ -478,7 +478,7 @@ class TestPolyaxonfile(TestCase):
             10,
             None,
             2,
-            SEARCH_METHODS.SEQUENTIAL
+            SearchMethods.SEQUENTIAL
         )
 
         for xp in range(plxfile.matrix_space):

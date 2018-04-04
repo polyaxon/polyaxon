@@ -68,8 +68,8 @@ class Tensor(fields.Field):
             return [value, 0, 0]
         if isinstance(value, list) and len(value) == 3:
             if (isinstance(value[0], str) and
-                    isinstance(value[1], int) and
-                    isinstance(value[1], int)):
+                isinstance(value[1], int) and
+                isinstance(value[1], int)):
                 return value
         raise ValidationError("This field expects a str or a list of [str, int, int].")
 
@@ -241,7 +241,7 @@ ACTIVATION_VALUES = [
 TIME_ZONE = timezone('UTC')
 
 
-class SEARCH_METHODS(object):
+class SearchMethods(object):
     SEQUENTIAL = 'sequential'
     RANDOM = 'random'
 
@@ -257,6 +257,24 @@ class SEARCH_METHODS(object):
     @classmethod
     def is_random(cls, value):
         return value in cls.RANDOM_VALUES
+
+
+class Optimization(object):
+    MAXIMIZE = 'maximize'
+    MINIMIZE = 'minimize'
+
+    MAXIMIZE_VALUES = [MAXIMIZE, MAXIMIZE.upper(), MAXIMIZE.capitalize()]
+    MINIMIZE_VALUES = [MINIMIZE, MINIMIZE.upper(), MINIMIZE.capitalize()]
+
+    VALUES = MAXIMIZE_VALUES + MINIMIZE_VALUES
+
+    @classmethod
+    def maximize(cls, value):
+        return value in cls.MAXIMIZE_VALUES
+
+    @classmethod
+    def minimize(cls, value):
+        return value in cls.MINIMIZE_VALUES
 
 
 class TaskType(object):

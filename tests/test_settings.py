@@ -10,7 +10,7 @@ from polyaxon_schemas.settings import (
     SettingsConfig,
     EarlyStoppingMetricConfig,
 )
-from polyaxon_schemas.utils import SEARCH_METHODS
+from polyaxon_schemas.utils import SearchMethods, Optimization
 
 from tests.utils import assert_equal_dict
 
@@ -21,7 +21,7 @@ class TestSettingConfigs(TestCase):
         config_dict = {
             'metric': 'loss',
             'value': 0.1,
-            'higher': False
+            'optimization': Optimization.MINIMIZE
         }
         config = EarlyStoppingMetricConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -32,7 +32,7 @@ class TestSettingConfigs(TestCase):
             'export_strategies': None,
             'run_type': 'local',
             'concurrent_experiments': 2,
-            'search_method': SEARCH_METHODS.RANDOM
+            'search_method': SearchMethods.RANDOM
         }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -61,12 +61,12 @@ class TestSettingConfigs(TestCase):
             {
                 'metric': 'loss',
                 'value': 0.1,
-                'higher': False
+                'optimization': Optimization.MINIMIZE
             },
             {
                 'metric': 'accuracy',
                 'value': 0.9,
-                'higher': True
+                'optimization': Optimization.MAXIMIZE
             }
         ]
         config = SettingsConfig.from_dict(config_dict)

@@ -10,7 +10,7 @@ settings:
   early_stopping:
     - metric: loss
       value: 0.01
-      higher: false
+      optimization: maximize
 
 matrix:
   lr:
