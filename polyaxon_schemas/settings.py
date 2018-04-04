@@ -68,7 +68,7 @@ class SettingsConfig(BaseConfig):
                  export_strategies=None,
                  run_type=RunTypes.KUBERNETES,
                  concurrent_experiments=1,
-                 search_method=SearchMethods.SEQUENTIAL,
+                 search_method=SearchMethods.GRID,
                  n_experiments=None,
                  early_stopping=None):
         self.logging = logging

@@ -242,17 +242,17 @@ TIME_ZONE = timezone('UTC')
 
 
 class SearchMethods(object):
-    SEQUENTIAL = 'sequential'
+    GRID = 'grid'
     RANDOM = 'random'
 
-    SEQUENTIAL_VALUES = [SEQUENTIAL, SEQUENTIAL.upper(), SEQUENTIAL.capitalize()]
+    GRID_VALUES = [GRID, GRID.upper(), GRID.capitalize()]
     RANDOM_VALUES = [RANDOM, RANDOM.upper(), RANDOM.capitalize()]
 
-    VALUES = SEQUENTIAL_VALUES + RANDOM_VALUES
+    VALUES = GRID_VALUES + RANDOM_VALUES
 
     @classmethod
-    def is_sequential(cls, value):
-        return value in cls.SEQUENTIAL_VALUES
+    def is_grid(cls, value):
+        return value in cls.GRID_VALUES
 
     @classmethod
     def is_random(cls, value):

@@ -323,7 +323,7 @@ class TestPolyaxonfile(TestCase):
             10,
             None,
             2,
-            SearchMethods.SEQUENTIAL
+            SearchMethods.GRID
         )
 
         for xp in range(plxfile.matrix_space):
@@ -378,7 +378,7 @@ class TestPolyaxonfile(TestCase):
             10,
             5,
             2,
-            SearchMethods.SEQUENTIAL
+            SearchMethods.GRID
         )
 
         for xp in range(plxfile.matrix_space):
@@ -428,7 +428,7 @@ class TestPolyaxonfile(TestCase):
             10,
             int(0.3 * 10),
             2,
-            SearchMethods.SEQUENTIAL
+            SearchMethods.GRID
         )
 
         for xp in range(plxfile.matrix_space):
@@ -478,7 +478,7 @@ class TestPolyaxonfile(TestCase):
             10,
             None,
             2,
-            SearchMethods.SEQUENTIAL
+            SearchMethods.GRID
         )
 
         for xp in range(plxfile.matrix_space):

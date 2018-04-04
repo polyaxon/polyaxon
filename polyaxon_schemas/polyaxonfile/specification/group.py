@@ -100,7 +100,7 @@ class GroupSpecification(BaseSpecification):
         search_method = None
         if self.settings:
             search_method = self.settings.search_method
-        return search_method or SearchMethods.SEQUENTIAL
+        return search_method or SearchMethods.GRID
 
     @cached_property
     def concurrent_experiments(self):
