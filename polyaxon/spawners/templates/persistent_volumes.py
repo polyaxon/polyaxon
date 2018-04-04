@@ -1,9 +1,9 @@
+import os
 from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.polyaxonfile.utils import get_vol_path
 from polyaxon_schemas.utils import RunTypes, to_list
 
 from spawners.templates import constants
@@ -30,7 +30,7 @@ def get_persistent_volume_spec(namespace,
                                persistent_volume_reclaim_policy='Recycle'):
     capacity = {'storage': STORAGE_BY_VOLUME[volume]}
     access_modes = to_list(access_modes)
-    vol_path = get_vol_path(volume, run_type)
+    vol_path = os.path.join('/', volume)
     if run_type == RunTypes.MINIKUBE:
         params = get_host_path_pvol(vol_path)
     elif run_type == RunTypes.KUBERNETES:

@@ -4,6 +4,7 @@ import random
 
 from polyaxon_schemas.utils import SearchMethods
 
+from experiment_groups.search_algorithms import grid
 from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
 from experiments.tasks import build_experiment, stop_experiment
@@ -39,18 +40,20 @@ def create_group_experiments(self, experiment_group_id):
     specification = experiment_group.specification
     # We create a list of indices that we will explore
     if SearchMethods.is_grid(specification.search_method):
-        indices = range(specification.n_experiments or specification.matrix_space)
+        suggestions = grid.get_suggestions(matrix=specification.matrix,
+                                           n_suggestions=specification.n_experiments)
     elif SearchMethods.is_random(specification.search_method):
-        sub_space = specification.n_experiments or specification.matrix_space
-        indices = random.sample(range(specification.matrix_space), sub_space)
+        suggestions = grid.get_suggestions(matrix=specification.matrix,
+                                           n_suggestions=specification.n_experiments)
     else:
         logger.warning('Search method was not found `{}`'.format(specification.search_method))
         return
-    for xp in indices:
-        Experiment.objects.create(project=experiment_group.project,
-                                  user=experiment_group.user,
-                                  experiment_group=experiment_group,
-                                  config=specification.parsed_data[xp])
+    for suggestion in suggestions:
+        Experiment.objects.create(
+            project=experiment_group.project,
+            user=experiment_group.user,
+            experiment_group=experiment_group,
+            config=specification.get_experiment_spec(matrix_declaration=suggestion).parsed_data)
 
     start_group_experiments.apply_async((experiment_group.id,), countdown=1)
 

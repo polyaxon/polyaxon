@@ -55,7 +55,7 @@ This option will be ignored if the polyaxon file only have one independent exper
 Same as `concurrent_experiments`, it defines the search method to use when running hyperparameters search.
 Currently, the supported methods are:
 
- * `sequential` (default value)
+ * `grid` (default value)
  * `random`
 
 !!! info

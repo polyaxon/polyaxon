@@ -104,7 +104,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def compiled_spec(self):
-        return Specification(experiment=self.uuid, values=self.config)
+        return Specification(values=self.config)
 
     @cached_property
     def declarations(self):
