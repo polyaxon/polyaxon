@@ -12,7 +12,6 @@ from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.operators import ForConfig, IfConfig
-from polyaxon_schemas.settings import RunTypes
 from polyaxon_schemas.utils import to_list
 
 
@@ -104,23 +103,7 @@ class BaseSpecification(object):
         return self.headers.get(self.SETTINGS, None)
 
     @cached_property
-    def run_type(self):
-        return self.settings.run_type if self.settings else RunTypes.KUBERNETES
-
-    @cached_property
     def log_level(self):
         if self.settings and self.settings.logging:
             return self.settings.logging.level
         return 'INFO'
-
-    @cached_property
-    def is_local(self):
-        return self.run_type == RunTypes.LOCAL
-
-    @cached_property
-    def is_minikube(self):
-        return self.run_type == RunTypes.MINIKUBE
-
-    @cached_property
-    def is_kubernetes(self):
-        return self.run_type == RunTypes.KUBERNETES
