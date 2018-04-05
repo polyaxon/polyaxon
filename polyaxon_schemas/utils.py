@@ -241,14 +241,16 @@ ACTIVATION_VALUES = [
 TIME_ZONE = timezone('UTC')
 
 
-class SearchMethods(object):
+class SearchAlgorithms(object):
     GRID = 'grid'
     RANDOM = 'random'
+    HYPERBAND = 'hyperband'
 
     GRID_VALUES = [GRID, GRID.upper(), GRID.capitalize()]
     RANDOM_VALUES = [RANDOM, RANDOM.upper(), RANDOM.capitalize()]
+    HYPERBAND_VALUES = [HYPERBAND, HYPERBAND.upper(), HYPERBAND.capitalize()]
 
-    VALUES = GRID_VALUES + RANDOM_VALUES
+    VALUES = GRID_VALUES + RANDOM_VALUES + HYPERBAND_VALUES
 
     @classmethod
     def is_grid(cls, value):
@@ -257,6 +259,10 @@ class SearchMethods(object):
     @classmethod
     def is_random(cls, value):
         return value in cls.RANDOM_VALUES
+
+    @classmethod
+    def is_hyperband(cls, value):
+        return value in cls.HYPERBAND_VALUES
 
 
 class Optimization(object):
@@ -277,6 +283,30 @@ class Optimization(object):
         return value in cls.MINIMIZE_VALUES
 
 
+class EarlyStopPolicy(object):
+    EXPERIMENT = 'experiment'
+    GROUP = 'group'
+    ALL = 'all'
+
+    EXPERIMENT_VALUES = [EXPERIMENT, EXPERIMENT.upper(), EXPERIMENT.capitalize()]
+    GROUP_VALUES = [GROUP, GROUP.upper(), GROUP.capitalize()]
+    ALL_VALUES = [ALL, ALL.upper(), ALL.capitalize()]
+
+    VALUES = EXPERIMENT_VALUES + GROUP_VALUES
+
+    @classmethod
+    def stop_experiment(cls, value):
+        return value in cls.EXPERIMENT_VALUES
+
+    @classmethod
+    def stop_group(cls, value):
+        return value in cls.GROUP_VALUES
+
+    @classmethod
+    def stop_all(cls, value):
+        return value in cls.ALL_VALUES
+
+
 class TaskType(object):
     MASTER = 'master'
     PS = 'ps'
@@ -294,15 +324,6 @@ class Frameworks(object):
     PYTORCH = 'pytorch'
 
     VALUES = [TENSORFLOW, MXNET, HOROVOD, PYTORCH]
-
-
-class RunTypes(object):
-    LOCAL = 'local'
-    MINIKUBE = 'minikube'
-    KUBERNETES = 'kubernetes'
-    AWS = 'aws'
-
-    VALUES = [LOCAL, MINIKUBE, KUBERNETES, AWS]
 
 
 def local_now():
