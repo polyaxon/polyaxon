@@ -10,7 +10,6 @@ class LoggingSchema(Schema):
     level = fields.Str(allow_none=True, validate=validate.OneOf(
         ['INFO', 'DEBUG', 'WARN', 'ERROR', 'FATAL']))
     formatter = fields.Str(allow_none=True)
-    path = fields.Str(allow_none=True)
 
     class Meta:
         ordered = True
@@ -28,10 +27,6 @@ class LoggingConfig(BaseConfig):
     SCHEMA = LoggingSchema
     IDENTIFIER = 'logging'
 
-    def __init__(self,
-                 level='INFO',
-                 formatter=None,
-                 path=None):
+    def __init__(self, level='INFO', formatter=None):
         self.level = level
         self.formatter = formatter
-        self.path = path
