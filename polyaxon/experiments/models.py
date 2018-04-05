@@ -79,6 +79,12 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         max_length=40,
         blank=True,
         null=True)
+    code_reference = models.ForeignKey(
+        'repos.CodeReference',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='experients')
 
     class Meta:
         ordering = ['sequence']

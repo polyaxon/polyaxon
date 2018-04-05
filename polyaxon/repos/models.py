@@ -46,7 +46,7 @@ class Repo(DiffModel, RepoMixin):
 
 
 class ExternalRepo(DiffModel, RepoMixin):
-    """A model that represents a an external repository containing code."""
+    """A model that represents an external repository containing code."""
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
@@ -67,3 +67,23 @@ class ExternalRepo(DiffModel, RepoMixin):
         """We need to nest the git path inside the project path to make it easier
         to create docker images."""
         return os.path.join(self.project_path, self.name)
+
+
+class CodeReference(DiffModel):
+    """A model that represents a reference to repo and code commit."""
+    repo = models.ForeignKey(
+        Repo,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='references')
+    external_repo = models.ForeignKey(
+        ExternalRepo,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='references')
+    commit = models.CharField(
+        max_length=40,
+        blank=True,
+        null=True)

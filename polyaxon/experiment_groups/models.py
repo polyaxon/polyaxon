@@ -40,6 +40,12 @@ class ExperimentGroup(DiffModel, DescribableModel):
         on_delete=models.CASCADE,
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
+    code_reference = models.ForeignKey(
+        'repos.CodeReference',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='groups')
 
     class Meta:
         ordering = ['sequence']
