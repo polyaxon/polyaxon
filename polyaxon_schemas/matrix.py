@@ -85,14 +85,39 @@ class MatrixConfig(BaseConfig):
         'qlognormal': qlognormal,
     }
 
-    def __init__(self, values=None, range=None, linspace=None, logspace=None, geomspace=None):
+    def __init__(self,
+                 values=None,
+                 pvalues=None,
+                 range=None,
+                 linspace=None,
+                 logspace=None,
+                 geomspace=None,
+                 uniform=None,
+                 quniform=None,
+                 loguniform=None,
+                 qloguniform=None,
+                 normal=None,
+                 qnormal=None,
+                 lognormal=None,
+                 qlognormal=None):
         self.values = values
+        self.pvalues = pvalues
         self.range = range
         self.linspace = linspace
         self.logspace = logspace
         self.geomspace = geomspace
+        self.uniform = uniform
+        self.quniform = quniform
+        self.loguniform = loguniform
+        self.qloguniform = qloguniform
+        self.normal = normal
+        self.qnormal = qnormal
+        self.lognormal = lognormal
+        self.qlognormal = qlognormal
 
-        v = sum(map(lambda x: 1 if x else 0, [values, range, linspace, logspace, geomspace]))
+        v = sum(map(lambda x: 1 if x else 0,
+                    [values, pvalues, range, linspace, logspace, geomspace, uniform, quniform,
+                     loguniform, qloguniform, normal, qnormal, lognormal, qlognormal]))
         if v == 0 or v > 1:
             raise ValueError("Matrix element is not valid, one and only one option is required.")
 
