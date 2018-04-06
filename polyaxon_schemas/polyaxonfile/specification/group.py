@@ -12,7 +12,7 @@ from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification.experiment import Specification
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.utils import to_list, SearchMethods
+from polyaxon_schemas.utils import to_list, SearchAlgorithms
 
 
 class GroupSpecification(BaseSpecification):
@@ -94,11 +94,13 @@ class GroupSpecification(BaseSpecification):
         return int(n_experiments) if n_experiments < self.matrix_space else None
 
     @cached_property
-    def search_method(self):
-        search_method = None
-        if self.settings:
-            search_method = self.settings.search_method
-        return search_method or SearchMethods.GRID
+    def search_algorithm(self):
+        if self.settings.random_search:
+            return SearchAlgorithms.RANDOM
+        if self.settings.hyperband:
+            return SearchAlgorithms.HYPERBAND
+        # Default value
+        return SearchAlgorithms.GRID
 
     @cached_property
     def concurrent_experiments(self):
