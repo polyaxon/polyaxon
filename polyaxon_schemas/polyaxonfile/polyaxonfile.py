@@ -3,12 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon_schemas.exceptions import PolyaxonfileError, PolyaxonConfigurationError
-from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
+from polyaxon_schemas.exceptions import (
+    PolyaxonfileError,
+    PolyaxonfileGroupError,
+    PolyaxonConfigurationError,
+)
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification, Specification
 from polyaxon_schemas.utils import to_list
 
 
-class PolyaxonFile(GroupSpecification):
+class PolyaxonFile(object):
     """Parses Polyaxonfiles, and validate that it respects the current file specification"""
 
     def __init__(self, filepaths):
@@ -18,7 +22,15 @@ class PolyaxonFile(GroupSpecification):
                 raise PolyaxonfileError("`{}` must be a valid file".format(filepath))
         self._filenames = [os.path.basename(filepath) for filepath in filepaths]
         try:
-            super(PolyaxonFile, self).__init__(filepaths)
+            self.specification = GroupSpecification(filepaths)
+            return
+        except PolyaxonfileGroupError:
+            pass
+        except PolyaxonConfigurationError as e:
+            raise PolyaxonfileError(e)
+
+        try:
+            self.specification = Specification(filepaths)
         except PolyaxonConfigurationError as e:
             raise PolyaxonfileError(e)
 
@@ -28,5 +40,5 @@ class PolyaxonFile(GroupSpecification):
 
     @property
     def filepaths(self):
-        return self.values
+        return self.specification.values
 

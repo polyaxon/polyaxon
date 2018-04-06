@@ -12,7 +12,6 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     PytorchSpecification,
 )
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.environments import TensorflowClusterConfig
 from polyaxon_schemas.utils import TaskType, Frameworks
 
 
@@ -173,37 +172,3 @@ class Specification(BaseSpecification):
     @cached_property
     def master_resources(self):
         return self.environment.resources if self.environment else None
-
-    def get_local_cluster(self,
-                          host='127.0.0.1',
-                          master_port=10000,
-                          worker_port=11000,
-                          ps_port=12000):
-        def get_address(port):
-            return '{}:{}'.format(host, port)
-
-        cluster_def, is_distributed = self.cluster_def
-
-        cluster_config = {
-            TaskType.MASTER: [get_address(master_port)]
-        }
-
-        workers = []
-        for i in range(cluster_def.get(TaskType.WORKER, 0)):
-            workers.append(get_address(worker_port))
-            worker_port += 1
-
-        cluster_config[TaskType.WORKER] = workers
-
-        ps = []
-        for i in range(cluster_def.get(TaskType.PS, 0)):
-            ps.append(get_address(ps_port))
-            ps_port += 1
-
-        cluster_config[TaskType.PS] = ps
-
-        return TensorflowClusterConfig.from_dict(cluster_config)
-
-    def get_cluster(self, **kwargs):
-        if self.is_local:
-            return self.get_local_cluster(**kwargs)

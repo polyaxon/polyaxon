@@ -5,7 +5,7 @@ import six
 
 from marshmallow import ValidationError
 
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileGroupError
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
@@ -37,15 +37,14 @@ class GroupSpecification(BaseSpecification):
         self._data = reader.read(self._values)
         Parser.check_data(spec=self, data=self._data)
         headers = Parser.get_headers(spec=self, data=self._data)
-        matrix = Parser.get_matrix(spec=self, data=self._data)
-        try:
-            self._matrix = validator.validate_matrix(matrix)
-        except ValidationError as e:
-            raise PolyaxonConfigurationError(e)
         try:
             self._headers = validator.validate_headers(spec=self, data=headers)
         except ValidationError as e:
             raise PolyaxonConfigurationError(e)
+
+        if not self.matrix:
+            raise PolyaxonfileGroupError(
+                'A matrix definition is required for group specification.')
         self._parsed_data = None
         self._validated_data = None
 
@@ -62,7 +61,8 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def matrix(self):
-        return self._matrix
+        if self.settings:
+            return self.settings.matrix
 
     @cached_property
     def matrix_space(self):
@@ -70,6 +70,7 @@ class GroupSpecification(BaseSpecification):
             return 1
 
         space_size = 1
+
         for value in six.itervalues(self.matrix):
             space_size *= len(value.to_numpy())
         return space_size
@@ -83,18 +84,21 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def n_experiments(self):
-        if not self.settings or not self.settings.n_experiments or not self.matrix_space:
+        condition = (not self.settings or
+                     not self.settings.searc or
+                     not self.settings.n_experiments or
+                     not self.matrix_space)
+        if condition:
             return None
 
         n_experiments = self.settings.n_experiments
-        # Check the if the n_experiments is percent
-        if n_experiments < 1:
-            return int(self.matrix_space * n_experiments)
 
         return int(n_experiments) if n_experiments < self.matrix_space else None
 
     @cached_property
     def search_algorithm(self):
+        if not self.matrix:
+            raise PolyaxonConfigurationError('a search algorithm requires a matrix definition.')
         if self.settings.random_search:
             return SearchAlgorithms.RANDOM
         if self.settings.hyperband:
@@ -111,11 +115,12 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def experiments_def(self):
+        # TODO Rework this
         return (
             self.matrix_space,
             self.n_experiments,
             self.concurrent_experiments,
-            self.search_method
+            self.search_algorithm
         )
 
     @cached_property
