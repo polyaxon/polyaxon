@@ -11,6 +11,7 @@ from django.utils.functional import cached_property
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 
+from experiment_groups import search_algorithms
 from libs.models import DiffModel, DescribableModel
 from libs.spec_validation import validate_spec_content
 from projects.models import Project
@@ -78,9 +79,9 @@ class ExperimentGroup(DiffModel, DescribableModel):
         return 1
 
     @cached_property
-    def search_method(self):
+    def search_algorithm(self):
         if self.specification.settings:
-            return self.specification.settings.search_method
+            return self.specification.settings.search_algorithm
         return None
 
     @property
@@ -131,3 +132,10 @@ class ExperimentGroup(DiffModel, DescribableModel):
         if filters:
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
+
+    def get_suggestions(self, iteration=0):
+        search_algorithm = search_algorithms.init(self.specification)
+        return search_algorithms.get_suggestions(
+            search_algorithm=self.specification.search_algorithm,
+            matrix=self.specification.matrix,
+            n_suggestions=self.specification.n_experiments)

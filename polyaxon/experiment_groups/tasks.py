@@ -1,10 +1,6 @@
 import logging
 
-import random
-
-from polyaxon_schemas.utils import SearchMethods
-
-from experiment_groups.search_algorithms import grid
+from experiment_groups import search_algorithms
 from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
 from experiments.tasks import build_experiment, stop_experiment
@@ -31,24 +27,24 @@ def _get_group_or_retry(experiment_group_id, task):
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
-def create_group_experiments(self, experiment_group_id):
+def create_group_experiments(self, experiment_group_id, iteration=0):
     experiment_group = _get_group_or_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
         return
 
     # Parse polyaxonfile content and create the experiments
     specification = experiment_group.specification
-    # We create a list of indices that we will explore
-    if SearchMethods.is_grid(specification.search_method):
-        suggestions = grid.get_suggestions(matrix=specification.matrix,
-                                           n_suggestions=specification.n_experiments)
-    elif SearchMethods.is_random(specification.search_method):
-        suggestions = grid.get_suggestions(matrix=specification.matrix,
-                                           n_suggestions=specification.n_experiments)
-    else:
-        logger.warning('Search method was not found `{}`'.format(specification.search_method))
+    suggestions = search_algorithms.get_suggestions(
+        search_algorithm=specification.search_algorithm,
+        matrix=specification.matrix,
+        n_suggestions=specification.n_experiments)
+
+    if not suggestions:
+        logger.warning('Search algorithm was not found `{}`'.format(specification.search_algorithm))
         return
+
     for suggestion in suggestions:
+        # We need to check if we should create or restart
         Experiment.objects.create(
             project=experiment_group.project,
             user=experiment_group.user,
@@ -82,6 +78,13 @@ def start_group_experiments(self, experiment_group_id):
         # Schedule another task
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
+    elif experiment_group.should_reschedule():
+        create_group_experiments.delay(experiment_group_id=experiment_group_id)
+
+    elif experiment_group.reduce_experiments_to_restart():
+        # Schedule another task
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
 def stop_group_experiments(experiment_group_id, pending, message=None):
@@ -94,8 +97,9 @@ def stop_group_experiments(experiment_group_id, pending, message=None):
             # Update experiment status to show that its stopped
             experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
     else:
-        for experiment in experiment_group.experiments.exclude(
-                experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct():
+        experiments = experiment_group.experiments.exclude(
+            experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
+        for experiment in experiments:
             if experiment.is_running:
                 stop_experiment.delay(experiment_id=experiment.id)
             else:
