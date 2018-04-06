@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, validate, post_dump
+from marshmallow import Schema, fields, post_load, validate, post_dump, validates_schema, \
+    ValidationError
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
-from polyaxon_schemas.utils import RunTypes, SearchMethods, Optimization
+from polyaxon_schemas.utils import Optimization, EarlyStopPolicy
 
 
 class EarlyStoppingMetricSchema(Schema):
     metric = fields.Str()
     value = fields.Float()
     optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
+    policy = fields.Str(allow_none=True, validate=validate.OneOf(EarlyStopPolicy.VALUES))
 
     class Meta:
         ordered = True
@@ -32,19 +34,73 @@ class EarlyStoppingMetricConfig(BaseConfig):
     def __init__(self,
                  metric,
                  value=None,
-                 optimization=Optimization.MAXIMIZE):
+                 optimization=Optimization.MAXIMIZE,
+                 policy=EarlyStopPolicy.ALL):
         self.metric = metric
         self.value = value
         self.optimization = optimization
+        self.policy = policy
+
+
+class RandomSearchSchema(Schema):
+    n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=0))
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return RandomSearchConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return RandomSearchConfig.remove_reduced_attrs(data)
+
+
+class RandomSearchConfig(BaseConfig):
+    SCHEMA = RandomSearchSchema
+    IDENTIFIER = 'random_search'
+
+    def __init__(self, n_experiments):
+        self.n_experiments = n_experiments
+
+
+class HyperBandSchema(Schema):
+    max_iter = fields.Int(allow_none=True, validate=validate.Range(min=0))
+    eta = fields.Int(allow_none=True, validate=validate.Range(min=0))
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return HyperBandConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HyperBandConfig.remove_reduced_attrs(data)
+
+
+class HyperBandConfig(BaseConfig):
+    SCHEMA = HyperBandSchema
+    IDENTIFIER = 'hyperband'
+
+    def __init__(self, max_iter, eta=3):
+        self.max_iter = max_iter
+        self.eta = eta
+
+
+def validate_search_algorithm(frameworks):
+    if sum([1 for f in frameworks if f is not None]) > 1:
+        raise ValidationError('Only one search algorithm can be used.')
 
 
 class SettingsSchema(Schema):
     logging = fields.Nested(LoggingSchema, allow_none=True)
-    export_strategies = fields.Str(allow_none=True)
-    run_type = fields.Str(allow_none=True, validate=validate.OneOf(RunTypes.VALUES))
+    matrix = fields.Dict(allow_none=True)
     concurrent_experiments = fields.Int(allow_none=True)
-    search_method = fields.Str(allow_none=True, validate=validate.OneOf(SearchMethods.VALUES))
-    n_experiments = fields.Float(allow_none=True, validate=validate.Range(min=0))
+    random_search = fields.Nested(RandomSearchSchema, allow_none=None)
+    hyperband = fields.Nested(HyperBandSchema, allow_none=None)
     early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
 
     class Meta:
@@ -58,6 +114,13 @@ class SettingsSchema(Schema):
     def unmake(self, data):
         return SettingsConfig.remove_reduced_attrs(data)
 
+    @validates_schema
+    def validate_quantity(self, data):
+        validate_search_algorithm([data.get('random_search'),
+                                   data.get('hyperband'),
+                                   data.get('pytorch'),
+                                   data.get('horovod')])
+
 
 class SettingsConfig(BaseConfig):
     SCHEMA = SettingsSchema
@@ -65,17 +128,18 @@ class SettingsConfig(BaseConfig):
 
     def __init__(self,
                  logging=LoggingConfig(),
-                 export_strategies=None,
-                 run_type=RunTypes.KUBERNETES,
+                 matrix=None,
                  concurrent_experiments=1,
-                 search_method=SearchMethods.GRID,
+                 random_search=None,
+                 hyperband=None,
                  n_experiments=None,
                  early_stopping=None):
         self.logging = logging
-        self.export_strategies = export_strategies
-        self.run_type = run_type
+        self.matrix = matrix
         self.concurrent_experiments = concurrent_experiments
-        self.search_method = search_method
+        validate_search_algorithm([random_search, hyperband])
+        self.random_search = random_search
+        self.hyperband = hyperband
         self.n_experiments = (int(n_experiments)
                               if (n_experiments and n_experiments >= 1)
                               else n_experiments)
