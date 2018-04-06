@@ -368,7 +368,7 @@ class Optimization(object):
         return value in cls.MINIMIZE_VALUES
 
 
-class EarlyStopPolicy(object):
+class EarlyStoppingPolicy(object):
     EXPERIMENT = 'experiment'
     GROUP = 'group'
     ALL = 'all'
@@ -377,7 +377,7 @@ class EarlyStopPolicy(object):
     GROUP_VALUES = [GROUP, GROUP.upper(), GROUP.capitalize()]
     ALL_VALUES = [ALL, ALL.upper(), ALL.capitalize()]
 
-    VALUES = EXPERIMENT_VALUES + GROUP_VALUES
+    VALUES = EXPERIMENT_VALUES + GROUP_VALUES + ALL_VALUES
 
     @classmethod
     def stop_experiment(cls, value):

@@ -1,19 +1,29 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, validate, post_dump, validates_schema, \
-    ValidationError
+import six
+
+from marshmallow import (
+    Schema,
+    fields,
+    post_load,
+    validate,
+    post_dump,
+    validates_schema,
+    ValidationError,
+)
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
-from polyaxon_schemas.utils import Optimization, EarlyStopPolicy
+from polyaxon_schemas.matrix import MatrixConfig
+from polyaxon_schemas.utils import Optimization, EarlyStoppingPolicy
 
 
 class EarlyStoppingMetricSchema(Schema):
     metric = fields.Str()
     value = fields.Float()
     optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
-    policy = fields.Str(allow_none=True, validate=validate.OneOf(EarlyStopPolicy.VALUES))
+    policy = fields.Str(allow_none=True, validate=validate.OneOf(EarlyStoppingPolicy.VALUES))
 
     class Meta:
         ordered = True
@@ -35,7 +45,7 @@ class EarlyStoppingMetricConfig(BaseConfig):
                  metric,
                  value=None,
                  optimization=Optimization.MAXIMIZE,
-                 policy=EarlyStopPolicy.ALL):
+                 policy=EarlyStoppingPolicy.ALL):
         self.metric = metric
         self.value = value
         self.optimization = optimization
@@ -43,7 +53,7 @@ class EarlyStoppingMetricConfig(BaseConfig):
 
 
 class RandomSearchSchema(Schema):
-    n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=0))
+    n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
 
     class Meta:
         ordered = True
@@ -66,7 +76,7 @@ class RandomSearchConfig(BaseConfig):
 
 
 class HyperBandSchema(Schema):
-    max_iter = fields.Int(allow_none=True, validate=validate.Range(min=0))
+    max_iter = fields.Int(allow_none=True, validate=validate.Range(min=1))
     eta = fields.Int(allow_none=True, validate=validate.Range(min=0))
 
     class Meta:
@@ -90,9 +100,20 @@ class HyperBandConfig(BaseConfig):
         self.eta = eta
 
 
-def validate_search_algorithm(frameworks):
-    if sum([1 for f in frameworks if f is not None]) > 1:
+def validate_search_algorithm(algorithms):
+    if sum([1 for f in algorithms if f is not None]) > 1:
         raise ValidationError('Only one search algorithm can be used.')
+
+
+def validate_matrix(matrix):
+    if not matrix:
+        return None
+
+    matrix_data = {}
+    for key, value in six.iteritems(matrix):
+        matrix_data[key] = MatrixConfig.from_dict(value)
+
+    return matrix_data
 
 
 class SettingsSchema(Schema):
@@ -122,6 +143,11 @@ class SettingsSchema(Schema):
                                    data.get('pytorch'),
                                    data.get('horovod')])
 
+    @validates_schema
+    def validate_matrix(self, data):
+        """Validates matrix data and creates the config objects"""
+        validate_matrix(data.get('matrix'))
+
 
 class SettingsConfig(BaseConfig):
     SCHEMA = SettingsSchema
@@ -138,6 +164,7 @@ class SettingsConfig(BaseConfig):
                  early_stopping=None):
         self.logging = logging
         self.seed = seed
+        matrix = validate_matrix(matrix)
         self.matrix = matrix
         self.concurrent_experiments = concurrent_experiments
         validate_search_algorithm([random_search, hyperband])
