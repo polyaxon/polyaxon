@@ -1,10 +1,14 @@
 ---
 version: 1
 
+kind: group
+
 project:
   name: video_prediction
 
 settings:
+  logging:
+    level: INFO
   matrix:
     model:
       values: [CDNA, DNA, STP]

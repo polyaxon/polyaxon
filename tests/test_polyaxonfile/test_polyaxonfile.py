@@ -33,7 +33,6 @@ from polyaxon_schemas.settings import (
     EarlyStoppingMetricConfig,
 )
 from polyaxon_schemas.utils import TaskType, SearchAlgorithms, Frameworks
-from tests.utils import assert_equal_dict
 
 
 class TestPolyaxonfile(TestCase):
@@ -48,6 +47,10 @@ class TestPolyaxonfile(TestCase):
     def test_missing_project_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_project.yml'))
+
+    def test_missing_kind_raises(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/missing_kind.yml'))
 
     def test_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file.yml'))
@@ -454,6 +457,8 @@ class TestPolyaxonfile(TestCase):
         spec = spec.get_experiment_spec(declarations)
         assert spec.is_runnable
         assert spec.environment is None
+        assert spec.settings is not None
+        assert spec.settings.logging is not None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.model is None
         run_exec = spec.run_exec

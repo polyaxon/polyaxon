@@ -1,7 +1,7 @@
 ---
 version: 1
 
-kind: experiment
+kind: plugin
 
 project:
   name: video_prediction

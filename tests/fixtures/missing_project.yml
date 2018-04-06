@@ -1,6 +1,8 @@
 ---
 version: 1
 
+kind: experiment
+
 model:
   model_type: classifier
   loss:
