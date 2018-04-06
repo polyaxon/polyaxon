@@ -75,6 +75,14 @@ class Tensor(fields.Field):
         raise ValidationError("This field expects a str or a list of [str, int, int].")
 
 
+class PValue(fields.Field):
+    def _deserialize(self, value, attr, data):
+        if isinstance(value, (list, tuple)) and len(value) == 2:
+            if isinstance(value[1], float):
+                return value
+        raise ValidationError("This field expects a str or a list of [str, int].")
+
+
 class Range(fields.Field):
     REQUIRED_KEYS = ['start', 'stop', 'step']
     OPTIONAL_KEY = None
@@ -171,8 +179,19 @@ def qnormal(loc, scale, q, size=None):
 
 
 def lognormal(loc, scale, size=None):
-    draw = np.random.normal(loc=loc, scale=scale, size=size)
+    return np.random.lognormal(mean=loc, sigma=scale, size=size)
+
+
+def qlognormal(loc, scale, size=None):
+    draw = lognormal(loc=loc, scale=scale, size=size)
     return np.exp(draw)
+
+
+def pvalues(pvalues, size=None):
+    keys = list(six.iterkeys(pvalues))
+    dists = list(six.itervalues(pvalues))
+    indices = np.random.multinomial(1, dists, size=size)
+    return [keys[ind.argmax()] for ind in indices]
 
 
 class Uniform(Range):
