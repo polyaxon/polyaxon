@@ -97,6 +97,7 @@ def validate_search_algorithm(frameworks):
 
 class SettingsSchema(Schema):
     logging = fields.Nested(LoggingSchema, allow_none=True)
+    seed = fields.Int(allow_none=True)
     matrix = fields.Dict(allow_none=True)
     concurrent_experiments = fields.Int(allow_none=True)
     random_search = fields.Nested(RandomSearchSchema, allow_none=None)
@@ -128,6 +129,7 @@ class SettingsConfig(BaseConfig):
 
     def __init__(self,
                  logging=LoggingConfig(),
+                 seed=None,
                  matrix=None,
                  concurrent_experiments=1,
                  random_search=None,
@@ -135,6 +137,7 @@ class SettingsConfig(BaseConfig):
                  n_experiments=None,
                  early_stopping=None):
         self.logging = logging
+        self.seed = seed
         self.matrix = matrix
         self.concurrent_experiments = concurrent_experiments
         validate_search_algorithm([random_search, hyperband])
