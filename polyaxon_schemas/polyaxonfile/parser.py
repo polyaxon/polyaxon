@@ -19,32 +19,6 @@ class Parser(object):
 
     env = jinja2.Environment()
 
-    @staticmethod
-    def validate_version(spec, data):
-        if 'version' not in data:
-            raise PolyaxonfileError("The Polyaxonfile version must be specified.")
-        if not (spec.MIN_VERSION <= data['version'] <= spec.MAX_VERSION):
-            raise PolyaxonfileError(
-                "The Polyaxonfile's version specified is not supported by your current CLI."
-                "Your CLI support Polyaxonfile versions between: {} {}."
-                "You can run `polyaxon upgrade` and "
-                "check documentation for the specification.".format(
-                    spec.MIN_VERSION, spec.MAX_VERSION))
-
-    @classmethod
-    def check_data(cls, spec, data):
-        cls.validate_version(spec, data)
-        for key in (set(six.iterkeys(data)) - set(spec.SECTIONS)):
-            raise PolyaxonfileError("Unexpected section `{}` in Polyaxonfile version `{}`. "
-                                    "Please check the Polyaxonfile specification "
-                                    "for this version.".format(key, 'v1'))
-
-        for key in spec.REQUIRED_SECTIONS:
-            if key not in data:
-                raise PolyaxonfileError("{} is a required section for a valid Polyaxonfile".format(
-                    key
-                ))
-
     @classmethod
     def get_headers(cls, spec, data):
         parsed_data = {
@@ -54,21 +28,16 @@ class Parser(object):
         return parsed_data
 
     @classmethod
-    def get_matrix(cls, spec, data):
-        return data.get(spec.MATRIX)
-
-    @classmethod
     def parse(cls, spec, data, matrix_declarations=None):
         declarations = copy.copy(data.get(spec.DECLARATIONS, {}))
         matrix_declarations = copy.copy(matrix_declarations)
         if matrix_declarations:
             declarations = deep_update(matrix_declarations, declarations)
 
-        cls.check_data(spec, data)
-
         parsed_data = {
             spec.VERSION: data[spec.VERSION],
-            spec.PROJECT: data[spec.PROJECT]
+            spec.KIND: data[spec.KIND],
+            spec.PROJECT: data[spec.PROJECT],
         }
 
         if declarations:

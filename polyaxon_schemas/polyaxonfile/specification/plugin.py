@@ -15,9 +15,9 @@ class PluginSpecification(BaseSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         RUN_EXEC: defines the run step where the user can set a docker image to execute
     """
+    _SPEC_KIND = BaseSpecification._PLUGIN
 
-    def __init__(self, values):
-        super(PluginSpecification, self).__init__(values=values)
+    def _extra_validation(self):
         if (self.RUN_EXEC not in self.validated_data or
                 not self.validated_data[self.RUN_EXEC] or
                 self.validated_data[self.RUN_EXEC].cmd is not None):

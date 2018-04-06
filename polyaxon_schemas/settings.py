@@ -160,7 +160,6 @@ class SettingsConfig(BaseConfig):
                  concurrent_experiments=1,
                  random_search=None,
                  hyperband=None,
-                 n_experiments=None,
                  early_stopping=None):
         self.logging = logging
         self.seed = seed
@@ -170,7 +169,20 @@ class SettingsConfig(BaseConfig):
         validate_search_algorithm([random_search, hyperband])
         self.random_search = random_search
         self.hyperband = hyperband
-        self.n_experiments = (int(n_experiments)
-                              if (n_experiments and n_experiments >= 1)
-                              else n_experiments)
         self.early_stopping = early_stopping
+
+    @classmethod
+    def get_experiment_settings(cls, data):
+        _data = {}
+        logging = data.get('logging')
+        if logging:
+            _data['logging'] = logging
+        early_stopping = data.get('early_stopping')
+        condition = (
+            early_stopping and
+            (EarlyStoppingPolicy.stop_experiment(early_stopping) or
+             EarlyStoppingPolicy.stop_all(early_stopping)))
+        if condition:
+            _data['early_stopping'] = early_stopping
+
+        return _data or None

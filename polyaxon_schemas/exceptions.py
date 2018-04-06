@@ -12,11 +12,6 @@ class PolyaxonfileError(Exception):
     pass
 
 
-class PolyaxonfileGroupError(PolyaxonfileError):
-    """Exception class to raise if a Configurable object has an issue."""
-    pass
-
-
 class PolyaxonConfigurationError(Exception):
     """Exception class to raise if a Configurable object has an issue."""
     pass

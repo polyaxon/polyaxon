@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import os
-
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
@@ -15,7 +13,7 @@ from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import TaskType, Frameworks
 
 
-class Specification(BaseSpecification):
+class ExperimentSpecification(BaseSpecification):
     """The Base polyaxonfile specification (parsing and validation of Polyaxonfiles/Configurations).
 
     SECTIONS:
@@ -29,12 +27,12 @@ class Specification(BaseSpecification):
         TRAIN: defines how to train a model and how to read the data.
         EVAL: defines how to evaluate a modela how to read the data
     """
+    _SPEC_KIND = BaseSpecification._EXPERIMENT
 
-    def __init__(self, values):
-        super(Specification, self).__init__(values=values)
-        if self.MATRIX in self.headers:
+    def _extra_validation(self):
+        if self.settings and self.settings.matrix:
             raise PolyaxonConfigurationError(
-                'Specification cannot contain a `matrix` section, you should '
+                'ExperimentSpecification cannot contain a `matrix` section, you should '
                 'use a GroupSpecification instead.')
 
     @cached_property

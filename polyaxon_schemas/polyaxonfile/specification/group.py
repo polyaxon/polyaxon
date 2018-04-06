@@ -3,16 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
-from marshmallow import ValidationError
-
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileGroupError
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile import validator
-from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.parser import Parser
-from polyaxon_schemas.polyaxonfile.specification.experiment import Specification
+from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.utils import to_list, SearchAlgorithms
+from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class GroupSpecification(BaseSpecification):
@@ -23,7 +21,6 @@ class GroupSpecification(BaseSpecification):
         PROJECT: defines the project name this specification belongs to (must be unique).
         SETTINGS: defines the logging, run type and concurrent runs.
         ENVIRONMENT: defines the run environment for experiment.
-        MATRIX: hyper parameters matrix definition.
         DECLARATIONS: variables/modules that can be reused.
         RUN_EXEC: defines the run step where the user can set a docker image to execute
         MODEL: defines the model to use based on the declarative API.
@@ -31,23 +28,14 @@ class GroupSpecification(BaseSpecification):
         EVAL: defines how to evaluate a model and how to read the data.
     """
 
-    def __init__(self, values):
-        self._values = to_list(values)
+    _SPEC_KIND = BaseSpecification._GROUP
 
-        self._data = reader.read(self._values)
-        Parser.check_data(spec=self, data=self._data)
-        headers = Parser.get_headers(spec=self, data=self._data)
-        try:
-            self._headers = validator.validate_headers(spec=self, data=headers)
-        except ValidationError as e:
-            raise PolyaxonConfigurationError(e)
-
+    def _extra_validation(self):
         if not self.matrix:
-            raise PolyaxonfileGroupError(
+            raise PolyaxonConfigurationError(
                 'A matrix definition is required for group specification.')
-        self._parsed_data = None
-        self._validated_data = None
 
+    def _set_parsed_data(self):
         # We need to validate that the data is correct
         # For that we just use a matrix declaration test
         parsed_data = Parser.parse(self, self._data, self.matrix_declaration_test)
@@ -56,8 +44,12 @@ class GroupSpecification(BaseSpecification):
     def get_experiment_spec(self, matrix_declaration):
         """Returns and experiment spec for this group spec and the given matrix declaration."""
         parsed_data = Parser.parse(self, self._data, matrix_declaration)
+        settings = SettingsConfig.get_experiment_settings(parsed_data[self.SETTINGS])
+        del parsed_data[self.SETTINGS]
+        if settings:
+            parsed_data[self.SETTINGS] = settings
         validator.validate(spec=self, data=parsed_data)
-        return Specification(values=parsed_data)
+        return ExperimentSpecification(values=[parsed_data, {'kind': self._EXPERIMENT}])
 
     @cached_property
     def matrix(self):
