@@ -9,7 +9,6 @@ settings:
   logging:
     level: INFO
     path: /mypath/project1
-  run_type: minikube
 
 environment:
   tensorflow:

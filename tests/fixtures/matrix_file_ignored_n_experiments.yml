@@ -6,15 +6,16 @@ project:
 
 settings:
   concurrent_experiments: 2
-  n_experiments: 300
 
+  random_search:
+    n_experiments: 300
 
-matrix:
-  lr:
-    logspace: 0.01:0.1:5
+  matrix:
+    lr:
+      logspace: 0.01:0.1:5
 
-  loss:
-    values: [MeanSquaredError, AbsoluteDifference]
+    loss:
+      values: [MeanSquaredError, AbsoluteDifference]
 
 model:
   model_type: regressor

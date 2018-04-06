@@ -1,9 +1,6 @@
 ---
 version: 1
 
-settings:
-  run_type: local
-
 project:
   name: video_prediction
 ...

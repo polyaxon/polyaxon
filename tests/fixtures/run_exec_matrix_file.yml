@@ -5,11 +5,9 @@ project:
   name: video_prediction
 
 settings:
-  run_type: minikube
-
-matrix:
-  model:
-    values: [CDNA, DNA, STP]
+  matrix:
+    model:
+      values: [CDNA, DNA, STP]
 
 run:
   image: my_image

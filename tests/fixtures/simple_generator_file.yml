@@ -4,9 +4,6 @@ version: 1
 project:
   name: project1
 
-settings:
-  run_type: local
-
 model:
   generator:
     loss:
