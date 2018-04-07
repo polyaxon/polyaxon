@@ -3,9 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import httpretty
 
-from unittest import TestCase
-
 from faker import Faker
+from unittest import TestCase
 
 from polyaxon_client.user import UserClient
 

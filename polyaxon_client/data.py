@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.data import DatasetConfig
-
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import (
     AuthenticationError,
-    PolyaxonException,
-    NotFoundError,
     BadRequestError,
+    NotFoundError,
+    PolyaxonException
 )
-
 from polyaxon_client.logger import logger
+from polyaxon_schemas.data import DatasetConfig
 
 
 class DatasetClient(PolyaxonClient):
@@ -28,7 +26,7 @@ class DatasetClient(PolyaxonClient):
             if isinstance(e, AuthenticationError):
                 # exit now since there is nothing we can do without login
                 raise e
-            logger.info("Error while retrieving datasets: {}".format(e.message))
+            logger.info("Error while retrieving datasets: %s", e.message)
             return []
 
     def get_by_name(self, username, datasetname):

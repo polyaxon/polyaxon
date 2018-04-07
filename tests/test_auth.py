@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import httpretty
 import json
 import uuid
-from unittest import TestCase
-import httpretty
-from faker import Faker
-from polyaxon_schemas.authentication import CredentialsConfig
 
-from polyaxon_schemas.user import UserConfig
+from faker import Faker
+from unittest import TestCase
 
 from polyaxon_client.auth import AuthClient
+from polyaxon_schemas.authentication import CredentialsConfig
+from polyaxon_schemas.user import UserConfig
 
 faker = Faker()
 

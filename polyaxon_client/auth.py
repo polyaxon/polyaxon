@@ -2,10 +2,10 @@
 from __future__ import absolute_import, division, print_function
 
 import requests
-from polyaxon_schemas.user import UserConfig
 
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonHTTPError
+from polyaxon_schemas.user import UserConfig
 
 
 class AuthClient(PolyaxonClient):

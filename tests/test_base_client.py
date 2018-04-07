@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from unittest import TestCase
-
 from faker import Faker
+from unittest import TestCase
 
 from polyaxon_client.base import PolyaxonClient
 
@@ -53,4 +52,3 @@ class TestBaseClient(TestCase):
         self.client.token = 'token_hash'
         assert self.client._get_headers() == {"Authorization": "{} {}".format(
             self.client.authentication_type, self.client.token)}
-

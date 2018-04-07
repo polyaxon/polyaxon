@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import httpretty
 import json
 import uuid
-from unittest import TestCase
-import httpretty
-from faker import Faker
 
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ExperimentGroupConfig
+from faker import Faker
+from unittest import TestCase
 
 from polyaxon_client.experiment_group import ExperimentGroupClient
+from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.project import ExperimentGroupConfig
 
 faker = Faker()
 

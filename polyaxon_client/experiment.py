@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_client.base import PolyaxonClient
+from polyaxon_client.exceptions import PolyaxonException
 from polyaxon_schemas.experiment import (
     ExperimentConfig,
     ExperimentJobConfig,
-    ExperimentStatusConfig,
-    ExperimentMetricConfig)
-
-from polyaxon_client.base import PolyaxonClient
-from polyaxon_client.exceptions import PolyaxonException
+    ExperimentMetricConfig,
+    ExperimentStatusConfig
+)
 
 
 class ExperimentClient(PolyaxonClient):

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import httpretty
 import json
 import uuid
-from unittest import TestCase
-import httpretty
-from faker import Faker
 
-from polyaxon_schemas.clusters import PolyaxonClusterConfig, ClusterNodeConfig
+from faker import Faker
+from unittest import TestCase
 
 from polyaxon_client.cluster import ClusterClient
+from polyaxon_schemas.clusters import ClusterNodeConfig, PolyaxonClusterConfig
 
 faker = Faker()
 

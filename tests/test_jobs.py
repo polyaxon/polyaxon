@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import json
-import uuid
-from unittest import TestCase
-
 import datetime
 import httpretty
+import json
+import uuid
+
 from faker import Faker
-from polyaxon_schemas.experiment import ExperimentJobStatusConfig, ExperimentJobConfig
+from unittest import TestCase
+
 from polyaxon_client.jobs import JobClient
+from polyaxon_schemas.experiment import ExperimentJobConfig, ExperimentJobStatusConfig
 
 faker = Faker()
 

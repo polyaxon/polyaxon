@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.clusters import PolyaxonClusterConfig, ClusterNodeConfig, NodeGPUConfig
-
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_schemas.clusters import ClusterNodeConfig, PolyaxonClusterConfig
 
 
 class ClusterClient(PolyaxonClient):

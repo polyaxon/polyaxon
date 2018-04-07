@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import httpretty
 import json
 import uuid
-import httpretty
-from unittest import TestCase
+
 from faker import Faker
-
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.plugins import PluginJobConfig
-
-from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
+from unittest import TestCase
 
 from polyaxon_client.project import ProjectClient
+from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.plugins import PluginJobConfig
+from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
 faker = Faker()
 
@@ -141,7 +140,11 @@ class TestProjectClient(TestCase):
         files = [('code', ('repo',
                            open('./tests/fixtures_static/repo.tar.gz', 'rb'),
                            'text/plain'))]
-        result = self.client.upload_repo('user', 'project', files=files, files_size=10, async=False)
+        result = self.client.upload_repo('user',
+                                         'project',
+                                         files=files,
+                                         files_size=10,
+                                         upload_async=False)
         assert result.status_code == 204
 
     @httpretty.activate

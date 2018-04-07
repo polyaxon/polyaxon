@@ -2,23 +2,19 @@
 from __future__ import absolute_import, division, print_function
 
 import json
-
-import requests
 import os
-import tarfile
+import requests
 import six
-
+import tarfile
 import websocket
 
 from clint.textui import progress
 from clint.textui.progress import Bar
-
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
-from polyaxon_schemas.utils import to_list
-
+from polyaxon_client.exceptions import ERRORS_MAPPING, AuthenticationError, PolyaxonShouldExitError
 from polyaxon_client.logger import logger
-from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError, AuthenticationError
+from polyaxon_schemas.utils import to_list
 
 
 class PolyaxonClient(object):
@@ -37,7 +33,7 @@ class PolyaxonClient(object):
                  token=None,
                  version='v1',
                  authentication_type='token',
-                 errors_mapping=ERRORS_MAPPING,
+                 errors_mapping=None,
                  reraise=False,
                  use_https=False):
         http_protocol = 'https' if use_https else 'http'
@@ -48,7 +44,7 @@ class PolyaxonClient(object):
         self.base_ws_url = self.BASE_WS_URL.format(self.ws_host, version)
         self.token = token
         self.authentication_type = authentication_type
-        self.errors_mapping = errors_mapping
+        self.errors_mapping = errors_mapping or ERRORS_MAPPING
         self.reraise = reraise
 
     @staticmethod
@@ -70,12 +66,12 @@ class PolyaxonClient(object):
     @staticmethod
     def create_progress_callback(encoder):
         encoder_len = encoder.len
-        bar = Bar(expected_size=encoder_len, filled_char='=')
+        progress_bar = Bar(expected_size=encoder_len, filled_char='=')
 
         def callback(monitor):
-            bar.show(monitor.bytes_read)
+            progress_bar.show(monitor.bytes_read)
 
-        return callback, bar
+        return callback, progress_bar
 
     @staticmethod
     def format_sizeof(num, suffix='B'):
@@ -126,7 +122,7 @@ class PolyaxonClient(object):
                 params=None,
                 data=None,
                 files=None,
-                json=None,
+                json=None,  # noqa
                 timeout=TIME_OUT,
                 headers=None):
         """Send a request with the given data as json to the given URL.
@@ -147,8 +143,8 @@ class PolyaxonClient(object):
         Raises:
             PolyaxonHTTPError or one of its subclasses.
         """
-        logger.debug("Starting request to url: {} with params: {}, data: {}".format(
-            url, params, data))
+        logger.debug("Starting request to url: %s with params: %s, data: %s",
+                     url, params, data)
 
         request_headers = self._get_headers(headers=headers)
 
@@ -170,7 +166,7 @@ class PolyaxonClient(object):
                 "Cannot connect to the Polyaxon server on `{}`.\n"
                 "Check your host and ports configuration and your internet connection.".format(url))
 
-        logger.debug("Response Content: %s, Headers: %s" % (response.content, response.headers))
+        logger.debug("Response Content: %s, Headers: %s", response.content, response.headers)
         self.check_response_status(response, url)
         return response
 
@@ -192,7 +188,7 @@ class PolyaxonClient(object):
         )
 
         # Attach progress bar
-        progress_callback, bar = self.create_progress_callback(multipart_encoder)
+        progress_callback, progress_bar = self.create_progress_callback(multipart_encoder)
         multipart_encoder_monitor = MultipartEncoderMonitor(multipart_encoder, progress_callback)
         try:
             response = self.put(url=url,
@@ -202,7 +198,7 @@ class PolyaxonClient(object):
                                 timeout=timeout)
         finally:
             # always make sure we clear the console
-            bar.done()
+            progress_bar.done()
 
         return response
 
@@ -211,7 +207,7 @@ class PolyaxonClient(object):
         Download the file from the given url at the current path
         """
         request_url = self.base_url + url if relative else url
-        logger.debug("Downloading file from url: {}".format(request_url))
+        logger.debug("Downloading file from url: %s", request_url)
 
         request_headers = self._get_headers(headers=headers)
 
@@ -239,7 +235,7 @@ class PolyaxonClient(object):
             return filename
         except requests.exceptions.ConnectionError as exception:
             try:
-                logger.debug("Exception: {}".format(exception))
+                logger.debug("Exception: %s", exception)
             except TypeError:
                 pass
 
@@ -264,7 +260,7 @@ class PolyaxonClient(object):
                 os.remove(filename)
             return filename
         except self.errors_mapping['base'] as e:
-            logger.info("Download URL ERROR! {}".format(e.message))
+            logger.info("Download URL ERROR! %s", e.message)
             return False
 
     def check_response_status(self, response, endpoint):
@@ -275,11 +271,10 @@ class PolyaxonClient(object):
 
         try:
             logger.error(
-                "Request to {} failed with status code {}. \n"
-                "Reason: {}".format(
-                    endpoint, response.status_code, response.text))
+                "Request to %s failed with status code %s. \n"
+                "Reason: %s", endpoint, response.status_code, response.text)
         except TypeError:
-            logger.error("Request to {} failed with status code".format(endpoint))
+            logger.error("Request to %s failed with status code", endpoint)
 
         exception = self.errors_mapping.get(response.status_code, self.errors_mapping['http'])
         raise exception(endpoint=endpoint,
@@ -288,7 +283,7 @@ class PolyaxonClient(object):
                         status_code=response.status_code)
 
     def handle_exception(self, e, log_message=None):
-        logger.info("{}: {}".format(log_message, e.message))
+        logger.info("%s: %s", log_message, e.message)
 
         if self.reraise:
             raise e
@@ -404,7 +399,7 @@ class PolyaxonClient(object):
         if isinstance(error, (KeyboardInterrupt, SystemExit)):
             logger.info('Quitting... The session will be running in the background.')
         else:
-            logger.debug('Termination cause: %s' % error)
+            logger.debug('Termination cause: %s', error)
             logger.debug('Session disconnected.')
 
     def _on_close(self, ws):

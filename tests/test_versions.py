@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import json
-from unittest import TestCase
 import httpretty
-from faker import Faker
+import json
 
-from polyaxon_schemas.version import CliVersionConfig, PlatformVersionConfig, LibVersionConfig, \
-    ChartVersionConfig
+from faker import Faker
+from unittest import TestCase
 
 from polyaxon_client.version import VersionClient
+from polyaxon_schemas.version import (
+    ChartVersionConfig,
+    CliVersionConfig,
+    LibVersionConfig,
+    PlatformVersionConfig
+)
 
 faker = Faker()
 

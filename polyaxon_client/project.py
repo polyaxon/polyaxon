@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
-
 from polyaxon_client.base import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonException
+from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 
 
 class ProjectClient(PolyaxonClient):
@@ -32,7 +31,8 @@ class ProjectClient(PolyaxonClient):
 
     def create_project(self, project_config):
         try:
-            response = self.post(self._get_http_url('/projects'), json_data=project_config.to_dict())
+            response = self.post(self._get_http_url('/projects'),
+                                 json_data=project_config.to_dict())
             return ProjectConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while creating project')
@@ -56,14 +56,14 @@ class ProjectClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while deleting project')
             return None
 
-    def upload_repo(self, username, project_name, files, files_size=None, async=True):
+    def upload_repo(self, username, project_name, files, files_size=None, upload_async=True):
         """Uploads code data related for this project from the current dir."""
         request_url = self._build_url(
             self._get_http_url(), username, project_name, 'repo', 'upload')
 
         json_data = None
-        if async is False:
-            json_data = {'async': async}
+        if upload_async is False:
+            json_data = {'async': upload_async}
         try:
             response = self.upload(request_url,
                                    files=files,
