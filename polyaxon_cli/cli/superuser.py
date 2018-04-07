@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
 import sys
 
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+import click
 
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 @click.group()

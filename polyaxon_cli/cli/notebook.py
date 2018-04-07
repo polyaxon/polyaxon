@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
 import sys
 
+import click
 import clint
-from polyaxon_client.exceptions import PolyaxonShouldExitError, PolyaxonHTTPError
-from polyaxon_schemas.plugins import PluginJobConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile
-from polyaxon_cli.cli.project import get_project_or_local, equal_projects
+from polyaxon_cli.cli.project import equal_projects, get_project_or_local
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_schemas.plugins import PluginJobConfig
 
 
 @click.group()
@@ -61,7 +61,7 @@ def url(ctx):
 @click.option('-u', is_flag=True, default=False,
               help='To upload the repo before running.')
 @click.pass_context
-def start(ctx, file, u):
+def start(ctx, file, u):  # pylint:disable=redefined-builtin
     """Start a notebook deployment for this project.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -96,8 +96,9 @@ def start(ctx, file, u):
                                 'than the one set in this repo.')
             sys.exit(1)
 
-        plugin_job = PluginJobConfig(content=plx_file._data,
-                                     config=plx_file.parsed_data)
+        plugin_job = PluginJobConfig(
+            content=plx_file._data,  # pylint:disable=protected-access
+            config=plx_file.parsed_data)
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         PolyaxonClients().project.start_notebook(user, project_name, plugin_job)

@@ -23,7 +23,7 @@ class BaseConfigManager(object):
             except OSError:
                 # Except permission denied and potential race conditions
                 # in multi-threaded environments.
-                logger.error('Could not create config directory `{}`'.format(dir_path))
+                logger.error('Could not create config directory `%s`', dir_path)
 
     @classmethod
     def get_config_file_path(cls, create=True):
@@ -61,18 +61,18 @@ class BaseConfigManager(object):
         config_file_path = cls.get_config_file_path()
 
         if os.path.isfile(config_file_path) and init:
-            logger.debug("{} file already present at {}".format(
-                cls.CONFIG_FILE_NAME, config_file_path))
+            logger.debug("%s file already present at %s",
+                         cls.CONFIG_FILE_NAME, config_file_path)
             return
 
         with open(config_file_path, "w") as config_file:
             if hasattr(config, 'to_dict'):
                 logger.debug(
-                    "Setting {} in the file {}".format(config.to_dict(), cls.CONFIG_FILE_NAME))
+                    "Setting %s in the file %s", config.to_dict(), cls.CONFIG_FILE_NAME)
                 config_file.write(json.dumps(config.to_dict()))
             else:
                 logger.debug(
-                    "Setting {} in the file {}".format(config, cls.CONFIG_FILE_NAME))
+                    "Setting %s in the file %s", config, cls.CONFIG_FILE_NAME)
                 config_file.write(config)
 
     @classmethod
@@ -88,7 +88,7 @@ class BaseConfigManager(object):
     @classmethod
     def get_config_or_default(cls):
         if not cls.is_initialized():
-            return cls.CONFIG()
+            return cls.CONFIG()  # pylint:disable=not-callable
 
         return cls.get_config()
 
@@ -99,7 +99,7 @@ class BaseConfigManager(object):
             if hasattr(config, key):
                 return getattr(config, key)
             else:
-                logger.warning("Config `{}` has no key `{}`".format(cls.CONFIG.__name__, key))
+                logger.warning("Config `%s` has no key `%s`", cls.CONFIG.__name__, key)
 
         return None
 
@@ -108,6 +108,6 @@ class BaseConfigManager(object):
         config_file_path = cls.get_config_file_path()
 
         if not os.path.isfile(config_file_path):
-            return True
+            return
 
         os.remove(config_file_path)

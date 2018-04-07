@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
-
 import sys
 
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-
-from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
+import click
 
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 
 
 @click.command()

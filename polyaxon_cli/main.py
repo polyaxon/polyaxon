@@ -3,23 +3,23 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
-from polyaxon_cli.cli.notebook import notebook
-from polyaxon_cli.cli.tensorboard import tensorboard
-from polyaxon_cli.cli.dashboard import dashboard
-from polyaxon_cli.cli.job import job
-from polyaxon_cli.cli.run import run
-from polyaxon_cli.cli.superuser import superuser
-from polyaxon_cli.cli.upload import upload
+from polyaxon_cli.cli.auth import login, logout, whoami
+from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.cluster import cluster
+from polyaxon_cli.cli.config import config
+from polyaxon_cli.cli.dashboard import dashboard
 from polyaxon_cli.cli.experiment import experiment
 from polyaxon_cli.cli.experiment_group import group
 from polyaxon_cli.cli.init import init
-from polyaxon_cli.cli.check import check
-from polyaxon_cli.cli.auth import login, logout, whoami
-from polyaxon_cli.cli.config import config
+from polyaxon_cli.cli.job import job
+from polyaxon_cli.cli.notebook import notebook
 from polyaxon_cli.cli.project import project
+from polyaxon_cli.cli.run import run
+from polyaxon_cli.cli.superuser import superuser
+from polyaxon_cli.cli.tensorboard import tensorboard
+from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.cli.user import user
-from polyaxon_cli.cli.version import version, upgrade, check_cli_version
+from polyaxon_cli.cli.version import check_cli_version, upgrade, version
 from polyaxon_cli.logger import configure_logger
 from polyaxon_cli.managers.config import GlobalConfigManager
 

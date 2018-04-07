@@ -30,7 +30,7 @@ class IgnoreManager(BaseConfigManager):
 
     @classmethod
     def _unescape(cls, line):
-        """allow escaping file names that start with !, #, or \ """
+        """allow escaping file names that start with !, #, or '\' """
         line = line[1:] if line.startswith('\\') else line
         return cls._remove_slash_prefix(line)
 

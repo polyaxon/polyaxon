@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import click
 
 from polyaxon_cli.managers.config import GlobalConfigManager
-from polyaxon_cli.utils.formatting import dict_tabulate, Printer
+from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
 
 def validate_options(ctx, param, value):
@@ -17,12 +17,12 @@ def validate_options(ctx, param, value):
 
 @click.group(invoke_without_command=True)
 @click.option('--list', '-l', is_flag=True, help='List all global config values.')
-def config(list):
+def config(list):  # pylint:disable=redefined-builtin
     """Set and get the global configurations."""
     if list:
-        config = GlobalConfigManager.get_config()
+        _config = GlobalConfigManager.get_config()
         Printer.print_header('Current config:')
-        dict_tabulate(config.to_dict())
+        dict_tabulate(_config.to_dict())
 
 
 @config.command()
@@ -37,15 +37,15 @@ def get(keys):
     $ polyaxon config get host http_port
     ```
     """
-    config = GlobalConfigManager.get_config_or_default()
+    _config = GlobalConfigManager.get_config_or_default()
 
-    if len(keys) == 0:
+    if not keys:
         return
 
     print_values = {}
     for key in keys:
-        if hasattr(config, key):
-            print_values[key] = getattr(config, key)
+        if hasattr(_config, key):
+            print_values[key] = getattr(_config, key)
         else:
             click.echo('Key `{}` is not recognised.'.format(key))
 
@@ -58,7 +58,7 @@ def get(keys):
 @click.option('--http_port', type=int, help='To set the http port.')
 @click.option('--ws_port', type=int, help='To set the stream port.')
 @click.option('--use_https', type=bool, help='To set the https.')
-def set(verbose, host, http_port, ws_port, use_https):
+def set(verbose, host, http_port, ws_port, use_https):  # pylint:disable=redefined-builtin
     """Set the global config values.
 
     Example:
@@ -68,22 +68,22 @@ def set(verbose, host, http_port, ws_port, use_https):
     $ polyaxon config set --hots=localhost http_port=80
     ```
     """
-    config = GlobalConfigManager.get_config_or_default()
+    _config = GlobalConfigManager.get_config_or_default()
 
     if verbose is not None:
-        config.verbose = verbose
+        _config.verbose = verbose
 
     if host is not None:
-        config.host = host
+        _config.host = host
 
     if http_port is not None:
-        config.http_port = http_port
+        _config.http_port = http_port
 
     if ws_port is not None:
-        config.ws_port = ws_port
+        _config.ws_port = ws_port
 
     if use_https is not None:
-        config.use_https = use_https
+        _config.use_https = use_https
 
-    GlobalConfigManager.set_config(config)
+    GlobalConfigManager.set_config(_config)
     Printer.print_success('Config was update.')

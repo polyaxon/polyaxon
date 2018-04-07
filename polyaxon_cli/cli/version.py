@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from distutils.version import LooseVersion
+import sys
 
+from distutils.version import LooseVersion  # pylint:disable=import-error
+
+import click
 import clint
 import pip
 import pkg_resources
-import click
-import sys
-
-from polyaxon_client.exceptions import (
-    PolyaxonHTTPError,
-    PolyaxonShouldExitError,
-    AuthorizationError
-)
 
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
+from polyaxon_client.exceptions import (
+    AuthorizationError,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError
+)
 
 PROJECT_CLI_NAME = "polyaxon-cli"
 PROJECT_LIB_NAME = "polyaxon-lib"
@@ -37,10 +37,9 @@ def session_expired():
 
 def get_version(pkg):
     try:
-        version = pkg_resources.get_distribution(pkg).version
-        return version
+        return pkg_resources.get_distribution(pkg).version
     except pkg_resources.DistributionNotFound:
-        logger.error('`{}` is not installed'.format(pkg))
+        logger.error('`%s` is not installed', pkg)
 
 
 def check_cli_version():
@@ -51,6 +50,7 @@ def check_cli_version():
         server_version = PolyaxonClients().version.get_cli_version()
     except AuthorizationError:
         session_expired()
+        sys.exit(1)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get cli version.')
         Printer.print_error('Error message `{}`.'.format(e))
@@ -98,8 +98,8 @@ def version(cli, platform, lib):
             Printer.print_error('Could not get cli version.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
-        version = get_version(PROJECT_CLI_NAME)
-        Printer.print_header('Current cli version: {}.'.format(version))
+        cli_version = get_version(PROJECT_CLI_NAME)
+        Printer.print_header('Current cli version: {}.'.format(cli_version))
         Printer.print_header('Supported cli versions:')
         dict_tabulate(server_version.to_dict())
 
@@ -112,8 +112,8 @@ def version(cli, platform, lib):
             Printer.print_error('Could not get lib version.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
-        version = get_version(PROJECT_LIB_NAME)
-        Printer.print_header('Current lib version: {}.'.format(version))
+        lib_version = get_version(PROJECT_LIB_NAME)
+        Printer.print_header('Current lib version: {}.'.format(lib_version))
         Printer.print_header('Supported lib versions:')
         dict_tabulate(server_version.to_dict())
 

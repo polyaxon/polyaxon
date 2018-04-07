@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import OrderedDict
-
-import click
 import six
 import sys
 
-from polyaxon_schemas.experiment import ContainerResourcesConfig
-from polyaxon_schemas.environments import K8SResourcesConfig
-from polyaxon_schemas.utils import to_list, to_percentage, to_unit_memory
+from collections import OrderedDict
+
+import click
+
 from tabulate import tabulate
+
+from polyaxon_schemas.environments import K8SResourcesConfig
+from polyaxon_schemas.experiment import ContainerResourcesConfig
+from polyaxon_schemas.utils import to_list, to_percentage, to_unit_memory
 
 
 def get_meta_response(response):

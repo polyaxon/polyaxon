@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
 import sys
 
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+import click
 
 from polyaxon_cli.cli.experiment import get_experiment_or_local
 from polyaxon_cli.managers.job import JobManager
@@ -14,12 +13,15 @@ from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
     get_meta_response,
-    list_dicts_to_tabulate,
     get_resources,
+    list_dicts_to_tabulate
 )
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
-def get_job_or_local(project=None, experiment=None, job=None):
+def get_job_or_local(project=None,
+                     experiment=None,
+                     job=None):  # pylint:disable=redefined-outer-name
     user, project_name, experiment = get_experiment_or_local(project, experiment)
     job = job or JobManager.get_config_or_raise().sequence
     return user, project_name, experiment, job
@@ -30,7 +32,7 @@ def get_job_or_local(project=None, experiment=None, job=None):
 @click.option('--experiment', '-xp', type=int, help="The sequence number of the experiment")
 @click.option('--job', '-j', type=int, help="The job sequence.")
 @click.pass_context
-def job(ctx, project, experiment, job):
+def job(ctx, project, experiment, job):  # pylint:disable=redefined-outer-name
     """Commands for jobs."""
     ctx.obj = ctx.obj or {}
     ctx.obj['project'] = project
@@ -57,16 +59,16 @@ def get(ctx):
     $ polyaxon job --job=1 --project=project_name get
     ```
     """
-    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
-                                                           ctx.obj['experiment'],
-                                                           ctx.obj['job'])
+    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
+                                                            ctx.obj['experiment'],
+                                                            ctx.obj['job'])
     try:
-        response = PolyaxonClients().job.get_job(user, project_name, experiment, job)
+        response = PolyaxonClients().job.get_job(user, project_name, experiment, _job)
         # Set caching only if we have an initialized project
         if ProjectManager.is_initialized():
             JobManager.set_config(response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get job `{}`.'.format(job))
+        Printer.print_error('Could not get job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -95,11 +97,11 @@ def statuses(ctx):
     $ polyaxon job -xp 1 -j 2 statuses
     ```
     """
-    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
-                                                           ctx.obj['experiment'],
-                                                           ctx.obj['job'])
+    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
+                                                            ctx.obj['experiment'],
+                                                            ctx.obj['job'])
     try:
-        response = PolyaxonClients().job.get_statuses(user, project_name, experiment, job)
+        response = PolyaxonClients().job.get_statuses(user, project_name, experiment, _job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not get status for job `{}`.'.format(job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -107,11 +109,11 @@ def statuses(ctx):
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Statuses for Job `{}`.'.format(job))
+        Printer.print_header('Statuses for Job `{}`.'.format(_job))
         Printer.print_header('Navigation:')
         dict_tabulate(meta)
     else:
-        Printer.print_header('No statuses found for job `{}`.'.format(job))
+        Printer.print_header('No statuses found for job `{}`.'.format(_job))
 
     objects = list_dicts_to_tabulate([Printer.handle_statuses(o.to_light_dict(humanize_values=True))
                                       for o in response['results']])
@@ -143,18 +145,18 @@ def resources(ctx, gpu):
     $ polyaxon job -j 2 resources --gpu
     ```
     """
-    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
-                                                           ctx.obj['experiment'],
-                                                           ctx.obj['job'])
+    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
+                                                            ctx.obj['experiment'],
+                                                            ctx.obj['job'])
     try:
         message_handler = Printer.gpu_resources if gpu else Printer.resources
         PolyaxonClients().job.resources(user,
                                         project_name,
                                         experiment,
-                                        job,
+                                        _job,
                                         message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get resources for job `{}`.'.format(job))
+        Printer.print_error('Could not get resources for job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -178,9 +180,9 @@ def logs(ctx):
     $ polyaxon job logs
     ```
     """
-    user, project_name, experiment, job = get_job_or_local(ctx.obj['project'],
-                                                           ctx.obj['experiment'],
-                                                           ctx.obj['job'])
+    user, project_name, experiment, _job = get_job_or_local(ctx.obj['project'],
+                                                            ctx.obj['experiment'],
+                                                            ctx.obj['job'])
 
     def message_handler(log_line):
         Printer.log(log_line['log_line'])
@@ -189,8 +191,9 @@ def logs(ctx):
         PolyaxonClients().job.logs(user,
                                    project_name,
                                    experiment,
-                                   job,
+                                   _job,
                                    message_handler=message_handler)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get logs for job `{}`.'.format(job))
+        Printer.print_error('Could not get logs for job `{}`.'.format(_job))
+        Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)

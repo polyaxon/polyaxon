@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
 import sys
 
+import click
 import clint
-from polyaxon_client.exceptions import PolyaxonShouldExitError, PolyaxonHTTPError
-from polyaxon_schemas.plugins import PluginJobConfig
 
 from polyaxon_cli.cli.check import check_polyaxonfile
-from polyaxon_cli.cli.project import get_project_or_local, equal_projects
+from polyaxon_cli.cli.project import equal_projects, get_project_or_local
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_schemas.plugins import PluginJobConfig
 
 
 @click.group()
@@ -58,7 +58,7 @@ def url(ctx):
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to run.')
 @click.pass_context
-def start(ctx, file):
+def start(ctx, file):  # pylint:disable=redefined-builtin
     """Start a tensorboard deployment for this project.
 
     It will show a tensorboard with all experiments under the project.
@@ -91,7 +91,7 @@ def start(ctx, file):
                                 'than the one set in this repo.')
             sys.exit(1)
 
-        plugin_job = PluginJobConfig(content=plx_file._data,
+        plugin_job = PluginJobConfig(content=plx_file._data,  # pylint:disable=protected-access
                                      config=plx_file.parsed_data)
 
     user, project_name = get_project_or_local(ctx.obj['project'])

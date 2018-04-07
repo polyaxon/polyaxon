@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
 import sys
 
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+import click
 
 from polyaxon_cli.utils.clients import PolyaxonClients
-from polyaxon_cli.utils.formatting import Printer, list_dicts_to_tabulate, dict_tabulate
+from polyaxon_cli.utils.formatting import Printer, dict_tabulate, list_dicts_to_tabulate
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 def get_cluster_info(cluster_config):
@@ -60,7 +60,7 @@ def cluster(node):
         try:
             cluster_config = cluster_client.get_cluster()
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-            Printer.print_error('Could not load cluster info.'.format(node))
+            Printer.print_error('Could not load cluster info.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
         get_cluster_info(cluster_config)

@@ -1,27 +1,28 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
 import sys
+
+import click
 
 from marshmallow import ValidationError
 
+from polyaxon_cli.managers.auth import AuthConfigManager
+from polyaxon_cli.managers.project import ProjectManager
+from polyaxon_cli.utils import constants
+from polyaxon_cli.utils.clients import PolyaxonClients
+from polyaxon_cli.utils.formatting import (
+    Printer,
+    dict_tabulate,
+    get_experiments_with_metrics,
+    get_meta_response,
+    list_dicts_to_tabulate
+)
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_schemas.project import ProjectConfig
 
-from polyaxon_cli.managers.auth import AuthConfigManager
-from polyaxon_cli.managers.project import ProjectManager
-from polyaxon_cli.utils.clients import PolyaxonClients
-from polyaxon_cli.utils import constants
-from polyaxon_cli.utils.formatting import (
-    Printer,
-    get_meta_response,
-    list_dicts_to_tabulate,
-    dict_tabulate,
-    get_experiments_with_metrics)
 
-
-def get_project_info(project):
+def get_project_info(project):  # pylint:disable=redefined-outer-name
     parts = project.replace('.', '/').split('/')
     if len(parts) == 2:
         user, project_name = parts
@@ -38,7 +39,7 @@ def equal_projects(project1, project2):
     return project1_info == project2_info
 
 
-def get_project_or_local(project=None):
+def get_project_or_local(project=None):  # pylint:disable=redefined-outer-name
     if not project and not ProjectManager.is_initialized():
         Printer.print_error('Please provide a valid project, or init a new project. '
                             ' {}'.format(constants.INIT_COMMAND))
@@ -57,7 +58,7 @@ def get_project_or_local(project=None):
     return user, project_name
 
 
-def get_project_details(project):
+def get_project_details(project):  # pylint:disable=redefined-outer-name
     if project.description:
         Printer.print_header("Project description:")
         click.echo('{}\n'.format(project.description))
@@ -73,7 +74,7 @@ def get_project_details(project):
 @click.group()
 @click.option('--project', '-p', type=str)
 @click.pass_context
-def project(ctx, project):
+def project(ctx, project):  # pylint:disable=redefined-outer-name
     """Commands for projects."""
     if ctx.invoked_subcommand not in ['create', 'list']:
         ctx.obj = ctx.obj or {}
@@ -94,7 +95,7 @@ def create(name, description, private):
 
     \b
     ```bash
-    $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with Deep Learning"
+    $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
     ```
     """
     try:
@@ -105,18 +106,18 @@ def create(name, description, private):
         sys.exit(1)
 
     try:
-        project = PolyaxonClients().project.create_project(project_config)
+        _project = PolyaxonClients().project.create_project(project_config)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not create project `{}`.'.format(name))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    Printer.print_success("Project `{}` was created successfully.".format(project.name))
+    Printer.print_success("Project `{}` was created successfully.".format(_project.name))
 
 
 @project.command()
 @click.option('--page', type=int, help='To paginate through the list of projects.')
-def list(page):
+def list(page):  # pylint:disable=redefined-builtin
     """List projects.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -226,12 +227,12 @@ def update(ctx, name, description, private):
 
     \b
     ```bash
-    $ polyaxon update foobar --description="Image Classification with Deep Learning using TensorFlow"
+    $ polyaxon update foobar --description="Image Classification with DL using TensorFlow"
     ```
 
     \b
     ```bash
-    $ polyaxon update mike1/foobar --description="Image Classification with Deep Learning using TensorFlow"
+    $ polyaxon update mike1/foobar --description="Image Classification with DL using TensorFlow"
     ```
     """
     user, project_name = get_project_or_local(ctx.obj['project'])

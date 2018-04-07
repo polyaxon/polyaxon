@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_cli.managers.auth import AuthConfigManager
+from polyaxon_cli.managers.config import GlobalConfigManager
 from polyaxon_client.auth import AuthClient
 from polyaxon_client.cluster import ClusterClient
 from polyaxon_client.experiment import ExperimentClient
 from polyaxon_client.experiment_group import ExperimentGroupClient
 from polyaxon_client.jobs import JobClient
 from polyaxon_client.project import ProjectClient
-from polyaxon_client.version import VersionClient
 from polyaxon_client.user import UserClient
-
-from polyaxon_cli.managers.auth import AuthConfigManager
-from polyaxon_cli.managers.config import GlobalConfigManager
+from polyaxon_client.version import VersionClient
 
 
 class PolyaxonClients(object):

@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import click
 import sys
 
-from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+import click
 
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.managers.experiment_group import GroupManager
@@ -12,19 +11,21 @@ from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import (
     Printer,
-    get_meta_response,
     dict_tabulate,
-    list_dicts_to_tabulate,
-    get_experiments_with_metrics)
+    get_experiments_with_metrics,
+    get_meta_response,
+    list_dicts_to_tabulate
+)
+from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
-def get_group_or_local(project=None, group=None):
+def get_group_or_local(project=None, group=None):  # pylint:disable=redefined-outer-name
     user, project_name = get_project_or_local(project)
     group = group or GroupManager.get_config_or_raise().sequence
     return user, project_name, group
 
 
-def get_group_details(group):
+def get_group_details(group):  # pylint:disable=redefined-outer-name
     if group.description:
         Printer.print_header("Experiment group description:")
         click.echo('{}\n'.format(group.description))
@@ -41,7 +42,7 @@ def get_group_details(group):
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
 @click.option('--group', '-g', type=int, help="The group sequence number.")
 @click.pass_context
-def group(ctx, project, group):
+def group(ctx, project, group):  # pylint:disable=redefined-outer-name
     """Commands for experiment groups."""
     ctx.obj = ctx.obj or {}
     ctx.obj['project'] = project
@@ -62,15 +63,15 @@ def get(ctx):
     $ polyaxon group -g 13 get
     ```
     """
-    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
     try:
         response = PolyaxonClients().experiment_group.get_experiment_group(
-            user, project_name, group)
+            user, project_name, _group)
         # Set caching only if we have an initialized project
         if ProjectManager.is_initialized():
             GroupManager.set_config(response)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get experiment group `{}`.'.format(group))
+        Printer.print_error('Could not get experiment group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -84,24 +85,24 @@ def delete(ctx):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
 
-    if not click.confirm("Are sure you want to delete experiment group `{}`".format(group)):
+    if not click.confirm("Are sure you want to delete experiment group `{}`".format(_group)):
         click.echo('Existing without deleting experiment group.')
         sys.exit(0)
 
     try:
         response = PolyaxonClients().experiment_group.delete_experiment_group(
-            user, project_name, group)
+            user, project_name, _group)
         # Purge caching
         GroupManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not delete experiment group `{}`.'.format(group))
+        Printer.print_error('Could not delete experiment group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     if response.status_code == 204:
-        Printer.print_success("Experiment group `{}` was delete successfully".format(group))
+        Printer.print_success("Experiment group `{}` was delete successfully".format(_group))
 
 
 @group.command()
@@ -119,7 +120,7 @@ def update(ctx, description):
     $ polyaxon group -g 2 update --description="new description for my experiments"
     ```
     """
-    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
     update_dict = {}
 
     if description:
@@ -131,9 +132,9 @@ def update(ctx, description):
 
     try:
         response = PolyaxonClients().experiment_group.update_experiment_group(
-            user, project_name, group, update_dict)
+            user, project_name, _group, update_dict)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not update experiment group `{}`.'.format(group))
+        Printer.print_error('Could not update experiment group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
@@ -150,23 +151,23 @@ def experiments(ctx, page, metrics):
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
     """
-    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
     page = page or 1
     try:
         response = PolyaxonClients().experiment_group.list_experiments(
-            user, project_name, group, page=page)
+            user, project_name, _group, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not get experiments for group `{}`.'.format(group))
+        Printer.print_error('Could not get experiments for group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Experiments for experiment group `{}`.'.format(group))
+        Printer.print_header('Experiments for experiment group `{}`.'.format(_group))
         Printer.print_header('Navigation:')
         dict_tabulate(meta)
     else:
-        Printer.print_header('No experiments found for experiment group `{}`.'.format(group))
+        Printer.print_header('No experiments found for experiment group `{}`.'.format(_group))
 
     if metrics:
         objects = get_experiments_with_metrics(response)
@@ -213,16 +214,17 @@ def stop(ctx, yes, pending):
     $ polyaxon group -g 2 stop
     ```
     """
-    user, project_name, group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
+    user, project_name, _group = get_group_or_local(ctx.obj['project'], ctx.obj['group'])
 
-    if not yes and not click.confirm("Are sure you want to stop experiments in group `{}`".format(group)):
+    if not yes and not click.confirm("Are sure you want to stop experiments "
+                                     "in group `{}`".format(_group)):
         click.echo('Existing without stopping experiments in group.')
         sys.exit(0)
 
     try:
-        PolyaxonClients().experiment_group.stop(user, project_name, group, pending=pending)
+        PolyaxonClients().experiment_group.stop(user, project_name, _group, pending=pending)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not stop experiments in group `{}`.'.format(group))
+        Printer.print_error('Could not stop experiments in group `{}`.'.format(_group))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 

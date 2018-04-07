@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+import sys
+
 from collections import OrderedDict
 
 import click
-import sys
 
-import os
+from polyaxon_cli.utils import constants
+from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 from polyaxon_schemas.utils import to_list
 
-from polyaxon_cli.utils import constants
-from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
-
-def check_polyaxonfile(file, log=True, is_plugin=False):
+def check_polyaxonfile(file, log=True, is_plugin=False):  # pylint:disable=redefined-builtin
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]
 
@@ -27,12 +27,13 @@ def check_polyaxonfile(file, log=True, is_plugin=False):
     try:
         plx_file = PolyaxonFile.read(file)
         if is_plugin:
-            plx_file = PluginSpecification.read(plx_file._data)
+            plx_file = PluginSpecification.read(plx_file._data)  # pylint:disable=protected-access
         if log:
             Printer.print_success("Polyaxonfile valid")
         return plx_file
     except Exception as e:
-        Printer.print_error("Polyaxonfile is not valid")
+        Printer.print_error("Polyaxonfile is not valid ")
+        Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
 
@@ -62,7 +63,13 @@ def get_group_experiments_info(matrix_space, n_experiments, concurrency, search_
               help='Checks and prints the matrix space of experiments.')
 @click.option('--matrix', '-m', is_flag=True, default=False,
               help='Checks and prints the matrix def.')
-def check(file, all, version, run_type, project, matrix, experiments):
+def check(file,  # pylint:disable=redefined-builtin
+          all,  # pylint:disable=redefined-builtin
+          version,
+          run_type,
+          project,
+          matrix,
+          experiments):
     """Check a polyaxonfile."""
     file = file or 'polyaxonfile.yml'
     plx_file = check_polyaxonfile(file)
