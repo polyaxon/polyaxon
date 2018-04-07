@@ -4,31 +4,35 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import six
 
-from marshmallow import Schema, fields, post_load, post_dump
-from numpy.random.mtrand import normal
+from numpy.random.mtrand import normal  # noqa
+
+from marshmallow import Schema, fields, post_dump, post_load
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import (
-    Range,
-    LinSpace,
     GeomSpace,
-    LogSpace,
-    Uniform,
-    QUniform,
-    LogUniform,
-    QLogUniform,
-    Normal,
-    QNormal,
+    LinSpace,
     LogNormal,
-    QLogNormal,
-    quniform,
-    loguniform,
-    qloguniform,
-    lognormal,
-    qnormal,
-    qlognormal,
+    LogSpace,
+    LogUniform,
+    Normal,
     PValue,
-    pvalues)
+    QLogNormal,
+    QLogUniform,
+    QNormal,
+    QUniform,
+    Range,
+    Uniform,
+    lognormal,
+    loguniform,
+    pvalues,
+    qlognormal,
+    qloguniform,
+    qnormal,
+    quniform
+)
+
+# pylint:disable=redefined-outer-name
 
 
 class MatrixSchema(Schema):
@@ -88,7 +92,7 @@ class MatrixConfig(BaseConfig):
     def __init__(self,
                  values=None,
                  pvalues=None,
-                 range=None,
+                 range=None,  # noqa
                  linspace=None,
                  logspace=None,
                  geomspace=None,
@@ -126,6 +130,6 @@ class MatrixConfig(BaseConfig):
         if key == 'values':
             return value
         if key == 'pvalues':
-            return pvalues(pvalues=value)
+            return pvalues(values=value)
 
         return self.NUMPY_MAPPING[key](**value)

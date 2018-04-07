@@ -2,19 +2,21 @@
 from __future__ import absolute_import, division, print_function
 
 import uuid
+
 from unittest import TestCase
 
 from polyaxon_schemas.experiment import (
-    ExperimentConfig,
-    JobLabelConfig,
-    PodStateConfig,
-    JobStateConfig,
     ContainerGPUResourcesConfig,
     ContainerResourcesConfig,
+    ExperimentConfig,
     ExperimentJobConfig,
-    ExperimentStatusConfig,
+    ExperimentJobStatusConfig,
     ExperimentMetricConfig,
-    ExperimentJobStatusConfig)
+    ExperimentStatusConfig,
+    JobLabelConfig,
+    JobStateConfig,
+    PodStateConfig
+)
 from polyaxon_schemas.utils import local_now
 
 

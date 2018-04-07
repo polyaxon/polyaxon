@@ -4,15 +4,11 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from marshmallow.exceptions import ValidationError
+from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.logging import LoggingConfig
-from polyaxon_schemas.settings import (
-    SettingsConfig,
-    EarlyStoppingMetricConfig,
-)
-from polyaxon_schemas.utils import Optimization, EarlyStoppingPolicy
-
-from tests.utils import assert_equal_dict
+from polyaxon_schemas.settings import EarlyStoppingMetricConfig, SettingsConfig
+from polyaxon_schemas.utils import EarlyStoppingPolicy, Optimization
 
 
 class TestSettingConfigs(TestCase):

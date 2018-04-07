@@ -3,12 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.regularizations import (
-    L1RegularizerConfig,
-    L2RegularizerConfig,
-    L1L2RegularizerConfig
-)
 from tests.utils import assert_equal_dict
+
+from polyaxon_schemas.regularizations import (
+    L1L2RegularizerConfig,
+    L1RegularizerConfig,
+    L2RegularizerConfig
+)
 
 
 class TestRegularizationConfigs(TestCase):

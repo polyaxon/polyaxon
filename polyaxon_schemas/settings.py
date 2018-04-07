@@ -5,18 +5,18 @@ import six
 
 from marshmallow import (
     Schema,
+    ValidationError,
     fields,
+    post_dump,
     post_load,
     validate,
-    post_dump,
-    validates_schema,
-    ValidationError,
+    validates_schema
 )
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.logging import LoggingSchema, LoggingConfig
+from polyaxon_schemas.logging import LoggingConfig, LoggingSchema
 from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.utils import Optimization, EarlyStoppingPolicy
+from polyaxon_schemas.utils import EarlyStoppingPolicy, Optimization
 
 
 class EarlyStoppingMetricSchema(Schema):

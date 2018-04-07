@@ -3,15 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 import ast
 import copy
-
 import jinja2
 import six
 
 from collections import Mapping, defaultdict
 
+from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.utils import deep_update
 from polyaxon_schemas.utils import to_list
-from polyaxon_schemas.exceptions import PolyaxonfileError
 
 
 class Parser(object):
@@ -81,7 +80,7 @@ class Parser(object):
                     return cls._parse_operator(spec, {key: value}, declarations)
                 if check_graph and key in ['graph', 'encoder', 'decoder']:
                     return {key: cls._parse_graph(spec, value, declarations)}
-                if check_graph and key == 'feature_processors':
+                if check_graph and key == 'feature_processors':  # noqa, no-else-return
                     return {
                         key: {
                             cls.parse_expression(spec, f_key, declarations):
@@ -133,7 +132,7 @@ class Parser(object):
         return key in spec.OPERATORS
 
     @classmethod
-    def _parse_graph(cls, spec, graph, declarations):
+    def _parse_graph(cls, spec, graph, declarations):  # noqa, too-many-branches
         input_layers = to_list(graph['input_layers'])
         layer_names = set(input_layers)
         tags = {}
@@ -201,7 +200,8 @@ class Parser(object):
                 # Check the layers inputs
                 if not layer_value.get('inbound_nodes'):
                     if last_layer is not None:
-                        layer_value['inbound_nodes'] = [last_layer['name']]
+                        layer_value['inbound_nodes'] = [
+                            last_layer['name']]  # noqa, unsubscriptable-object
                     if first_layer and len(input_layers) == 1:
                         layer_value['inbound_nodes'] = input_layers
                     if first_layer and len(input_layers) > 1:

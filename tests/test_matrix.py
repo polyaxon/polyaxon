@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from unittest import TestCase
-
 import numpy as np
+
+from unittest import TestCase
 
 from polyaxon_schemas.matrix import MatrixConfig
 
@@ -144,4 +144,3 @@ class TestMatrixConfigs(TestCase):
         config_dict['logspace'] = {'start': 1.2, 'stop': 1.8, 'num': 0.1, 'base': 2}
         config = MatrixConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
-

@@ -28,6 +28,7 @@ install:
 
 script:
   - python setup.py test
+  - prospector
 
 after_success:
   - codecovv

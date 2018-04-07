@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.graph import GraphConfig
 from tests.utils import assert_equal_graphs
+
+from polyaxon_schemas.graph import GraphConfig
 
 
 class TestGraphConfigs(TestCase):

@@ -3,13 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
-from polyaxon_schemas.eval import EvalConfig
-from polyaxon_schemas.run_exec import RunExecConfig
-from polyaxon_schemas.models import ModelConfig
 from polyaxon_schemas.environments import EnvironmentConfig
+from polyaxon_schemas.eval import EvalConfig
+from polyaxon_schemas.models import ModelConfig
+from polyaxon_schemas.project import ProjectConfig
+from polyaxon_schemas.run_exec import RunExecConfig
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.train import TrainConfig
-from polyaxon_schemas.project import ProjectConfig
 
 
 def validate_headers(spec, data):

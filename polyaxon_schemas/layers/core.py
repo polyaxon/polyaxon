@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, validate, post_dump
+from marshmallow import fields, post_dump, post_load, validate
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import (
-    InitializerSchema,
     GlorotNormalInitializerConfig,
-    ZerosInitializerConfig,
+    InitializerSchema,
+    ZerosInitializerConfig
 )
+from polyaxon_schemas.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.regularizations import RegularizerSchema
-from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
-from polyaxon_schemas.utils import StrOrFct, DType, ACTIVATION_VALUES
+from polyaxon_schemas.utils import ACTIVATION_VALUES, DType, StrOrFct
 
 
 class MaskingSchema(BaseLayerSchema):
@@ -144,7 +144,7 @@ class SpatialDropout1DConfig(DropoutConfig):
     activations and will otherwise just result in an effective learning rate
     decrease. In this case, SpatialDropout1D will help promote independence
     between feature maps and should be used instead.
-    
+
     Args:
         rate: float between 0 and 1. Fraction of the input units to drop.
 
@@ -196,7 +196,7 @@ class SpatialDropout2DConfig(DropoutConfig):
     activations and will otherwise just result in an effective learning rate
     decrease. In this case, SpatialDropout2D will help promote independence
     between feature maps and should be used instead.
-    
+
     Args:
         rate: float between 0 and 1. Fraction of the input units to drop.
         data_format: 'channels_first' or 'channels_last'.
@@ -259,7 +259,7 @@ class SpatialDropout3DConfig(DropoutConfig):
     activations and will otherwise just result in an effective learning rate
     decrease. In this case, SpatialDropout3D will help promote independence
     between feature maps and should be used instead.
-    
+
     Args:
         rate: float between 0 and 1. Fraction of the input units to drop.
         data_format: 'channels_first' or 'channels_last'.
@@ -312,7 +312,7 @@ class ActivationSchema(BaseLayerSchema):
 
 class ActivationConfig(BaseLayerConfig):
     """Applies an activation function to an output.
-    
+
     Args:
         activation: name of activation function.
 
@@ -483,7 +483,7 @@ class FlattenConfig(BaseLayerConfig):
     x = Flatten()(x)
     # now: x.output_shape == (None, 65536)
     ```
-    
+
     Polyaxonfile usage:
 
     ```yaml
@@ -531,7 +531,7 @@ class RepeatVectorConfig(BaseLayerConfig):
 
     Output shape:
         3D tensor of shape `(num_samples, n, features)`.
-        
+
     Polyaxonfile usage:
 
     ```yaml

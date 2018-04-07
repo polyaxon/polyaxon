@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, validate, post_dump
+from marshmallow import fields, post_dump, post_load, validate
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import InitializerSchema
-from polyaxon_schemas.layers.recurrent import RecurrentSchema, RecurrentConfig
+from polyaxon_schemas.layers.recurrent import RecurrentConfig, RecurrentSchema
 from polyaxon_schemas.regularizations import RegularizerSchema
-from polyaxon_schemas.utils import ObjectOrListObject, ACTIVATION_VALUES
+from polyaxon_schemas.utils import ACTIVATION_VALUES, ObjectOrListObject
 
 
 class ConvRecurrent2DSchema(RecurrentSchema):

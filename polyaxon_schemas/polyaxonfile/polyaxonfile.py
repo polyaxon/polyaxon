@@ -3,10 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon_schemas.exceptions import (
-    PolyaxonfileError,
-    PolyaxonConfigurationError,
-)
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.polyaxonfile import reader
 from polyaxon_schemas.polyaxonfile.specification import SPECIFICATION_BY_KIND
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification

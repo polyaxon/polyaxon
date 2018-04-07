@@ -5,7 +5,7 @@ import datetime
 
 from unittest import TestCase
 
-from polyaxon_schemas.utils import humanize_timesince, local_now, to_percentage, humanize_timedelta
+from polyaxon_schemas.utils import humanize_timedelta, humanize_timesince, local_now, to_percentage
 
 
 class HumanizeTimesinceTest(TestCase):

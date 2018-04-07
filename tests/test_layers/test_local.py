@@ -3,10 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.initializations import ZerosInitializerConfig, GlorotUniformInitializerConfig
-from polyaxon_schemas.layers.local import LocallyConnected1DConfig, LocallyConnected2DConfig
-
 from tests.utils import assert_equal_layers
+
+from polyaxon_schemas.initializations import GlorotUniformInitializerConfig, ZerosInitializerConfig
+from polyaxon_schemas.layers.local import LocallyConnected1DConfig, LocallyConnected2DConfig
 
 
 class TestLocalConfigs(TestCase):

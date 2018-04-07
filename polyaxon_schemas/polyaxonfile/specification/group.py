@@ -6,8 +6,8 @@ import six
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile import validator
 from polyaxon_schemas.polyaxonfile.parser import Parser
-from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
+from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
@@ -55,6 +55,7 @@ class GroupSpecification(BaseSpecification):
     def matrix(self):
         if self.settings:
             return self.settings.matrix
+        return None
 
     @cached_property
     def matrix_space(self):

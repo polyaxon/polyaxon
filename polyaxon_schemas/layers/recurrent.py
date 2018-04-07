@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate, post_load, post_dump
+from marshmallow import fields, post_dump, post_load, validate
 
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import (
-    InitializerSchema,
-    ZerosInitializerConfig,
-    OrthogonalInitializerConfig,
     GlorotUniformInitializerConfig,
+    InitializerSchema,
+    OrthogonalInitializerConfig,
+    ZerosInitializerConfig
 )
+from polyaxon_schemas.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.regularizations import RegularizerSchema
-from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
-from polyaxon_schemas.utils import StrOrFct, ACTIVATION_VALUES
+from polyaxon_schemas.utils import ACTIVATION_VALUES, StrOrFct
 
 
 class RecurrentSchema(BaseLayerSchema):

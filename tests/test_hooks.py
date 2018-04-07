@@ -3,13 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.hooks import (
-    GlobalStepWaiterHookConfig,
-    FinalOpsHookConfig,
-    StepLoggingTensorHookConfig,
-    EpisodeLoggingTensorHookConfig,
-)
 from tests.utils import assert_equal_dict
+
+from polyaxon_schemas.hooks import (
+    EpisodeLoggingTensorHookConfig,
+    FinalOpsHookConfig,
+    GlobalStepWaiterHookConfig,
+    StepLoggingTensorHookConfig
+)
 
 
 class TestHookConfigs(TestCase):
@@ -47,5 +48,3 @@ class TestHookConfigs(TestCase):
         config = EpisodeLoggingTensorHookConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert_equal_dict(config_to_dict, config_dict)
-
-

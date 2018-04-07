@@ -3,14 +3,15 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_layers
+
 from polyaxon_schemas.initializations import ZerosInitializerConfig
 from polyaxon_schemas.layers.advanced_activations import (
     ELUConfig,
     LeakyReLUConfig,
     PReLUConfig,
-    ThresholdedReLUConfig,
+    ThresholdedReLUConfig
 )
-from tests.utils import assert_equal_layers
 
 
 class TestAdvancedActivationConfigs(TestCase):
@@ -44,4 +45,3 @@ class TestAdvancedActivationConfigs(TestCase):
         }
         config = ThresholdedReLUConfig.from_dict(config_dict)
         assert_equal_layers(config, config_dict)
-

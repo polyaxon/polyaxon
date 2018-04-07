@@ -3,19 +3,19 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_layers
+
 from polyaxon_schemas.initializations import (
     GlorotUniformInitializerConfig,
     OrthogonalInitializerConfig,
-    ZerosInitializerConfig,
+    ZerosInitializerConfig
 )
 from polyaxon_schemas.layers.recurrent import (
     GRUConfig,
     LSTMConfig,
     RecurrentConfig,
-    SimpleRNNConfig,
+    SimpleRNNConfig
 )
-
-from tests.utils import assert_equal_layers
 
 
 class TestRecurrentConfigs(TestCase):

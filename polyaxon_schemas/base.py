@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping, OrderedDict
-
 import six
 
-from marshmallow import Schema, ValidationError, post_load, post_dump
+from collections import Mapping, OrderedDict
+
+from marshmallow import Schema, ValidationError, post_dump, post_load
 from marshmallow.utils import utc
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
-from polyaxon_schemas.utils import to_camel_case, TIME_ZONE, humanize_timesince, to_percentage, \
+from polyaxon_schemas.utils import (
+    TIME_ZONE,
+    humanize_timesince,
+    to_camel_case,
+    to_percentage,
     to_unit_memory
+)
 
 
 class BaseConfig(object):

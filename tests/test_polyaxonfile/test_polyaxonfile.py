@@ -2,37 +2,35 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+
 from unittest import TestCase
 
 from polyaxon_schemas.bridges import NoOpBridgeConfig
-from polyaxon_schemas.run_exec import RunExecConfig
+from polyaxon_schemas.environments import (
+    EnvironmentConfig,
+    K8SResourcesConfig,
+    PodResourcesConfig,
+    RunConfig,
+    SessionConfig
+)
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
 from polyaxon_schemas.logging import LoggingConfig
-from polyaxon_schemas.losses import MeanSquaredErrorConfig, AbsoluteDifferenceConfig
+from polyaxon_schemas.losses import AbsoluteDifferenceConfig, MeanSquaredErrorConfig
 from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.models import ClassifierConfig, RegressorConfig, GeneratorConfig
+from polyaxon_schemas.models import ClassifierConfig, GeneratorConfig, RegressorConfig
 from polyaxon_schemas.optimizers import AdamConfig
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
-    TensorflowSpecification,
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,
+    TensorflowSpecification
 )
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
-from polyaxon_schemas.environments import (
-    EnvironmentConfig,
-    RunConfig,
-    SessionConfig,
-    PodResourcesConfig,
-    K8SResourcesConfig,
-)
-from polyaxon_schemas.settings import (
-    SettingsConfig,
-    EarlyStoppingMetricConfig,
-)
-from polyaxon_schemas.utils import TaskType, SearchAlgorithms, Frameworks
+from polyaxon_schemas.run_exec import RunExecConfig
+from polyaxon_schemas.settings import EarlyStoppingMetricConfig, SettingsConfig
+from polyaxon_schemas.utils import Frameworks, SearchAlgorithms, TaskType
 
 
 class TestPolyaxonfile(TestCase):

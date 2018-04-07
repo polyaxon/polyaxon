@@ -3,10 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.initializations import ZerosInitializerConfig, OnesInitializerConfig
-from polyaxon_schemas.layers.normalization import BatchNormalizationConfig
-
 from tests.utils import assert_equal_layers
+
+from polyaxon_schemas.initializations import OnesInitializerConfig, ZerosInitializerConfig
+from polyaxon_schemas.layers.normalization import BatchNormalizationConfig
 
 
 class TestNormalizationConfigs(TestCase):

@@ -4,10 +4,10 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from polyaxon_schemas.version import (
-    CliVersionConfig,
-    PlatformVersionConfig,
-    LibVersionConfig,
     ChartVersionConfig,
+    CliVersionConfig,
+    LibVersionConfig,
+    PlatformVersionConfig
 )
 
 

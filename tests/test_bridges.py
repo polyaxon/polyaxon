@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.bridges import NoOpBridgeConfig, LatentBridgeConfig
+from polyaxon_schemas.bridges import LatentBridgeConfig, NoOpBridgeConfig
 
 
 class TestConstraintConfigs(TestCase):

@@ -3,20 +3,21 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_dict, assert_tensors
+
 from polyaxon_schemas.losses import (
     AbsoluteDifferenceConfig,
-    MeanSquaredErrorConfig,
-    LogLossConfig,
-    HuberLossConfig,
     ClippedDeltaLossConfig,
-    SoftmaxCrossEntropyConfig,
-    SigmoidCrossEntropyConfig,
-    HingeLossConfig,
     CosineDistanceConfig,
+    HingeLossConfig,
+    HuberLossConfig,
     KullbackLeiberDivergenceConfig,
+    LogLossConfig,
+    MeanSquaredErrorConfig,
     PoissonLossConfig,
+    SigmoidCrossEntropyConfig,
+    SoftmaxCrossEntropyConfig
 )
-from tests.utils import assert_equal_dict, assert_tensors
 
 
 class TestLossConfigs(TestCase):
@@ -141,4 +142,3 @@ class TestLossConfigs(TestCase):
         }
         config = KullbackLeiberDivergenceConfig.from_dict(config_dict)
         self.assert_equal_losses(config.to_dict(), config_dict)
-

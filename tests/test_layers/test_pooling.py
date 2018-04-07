@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_layers
+
 from polyaxon_schemas.layers.pooling import (
     AveragePooling1DConfig,
     AveragePooling2DConfig,
@@ -15,10 +17,8 @@ from polyaxon_schemas.layers.pooling import (
     GlobalMaxPooling3DConfig,
     MaxPooling1DConfig,
     MaxPooling2DConfig,
-    MaxPooling3DConfig,
+    MaxPooling3DConfig
 )
-
-from tests.utils import assert_equal_layers
 
 
 class TestPoolingConfigs(TestCase):

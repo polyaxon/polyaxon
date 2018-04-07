@@ -2,10 +2,11 @@
 from __future__ import absolute_import, division, print_function
 
 import uuid
+
 from datetime import datetime
 from unittest import TestCase
 
-from polyaxon_schemas.data import DataDetailsConfig, DataConfig, DatasetConfig
+from polyaxon_schemas.data import DataConfig, DataDetailsConfig, DatasetConfig
 from polyaxon_schemas.utils import local_now
 
 

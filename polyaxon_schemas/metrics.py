@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, validate, post_load, post_dump
+from marshmallow import Schema, fields, post_dump, post_load, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema
 from polyaxon_schemas.utils import Tensor
+
+# pylint:disable=too-many-lines
 
 
 class BaseMetricSchema(Schema):
@@ -289,7 +291,6 @@ class FalseNegativesConfig(BaseMetricConfig):
 
 
 class MeanSchema(BaseTensorMetricSchema):
-
     class Meta:
         ordered = True
 
@@ -354,7 +355,6 @@ class MeanConfig(BaseTensorMetricConfig):
 
 
 class MeanTensorSchema(BaseTensorMetricSchema):
-
     class Meta:
         ordered = True
 
@@ -1125,7 +1125,7 @@ class SparseRecallAtKConfig(BaseMetricConfig):
         ValueError: If `weights` is not `None` and its shape doesn't match
         `predictions`, or if either `metrics_collections` or `updates_collections`
         are not a list or tuple.
-        
+
     Polyaxonfile usage:
 
     ```yaml
@@ -1226,7 +1226,7 @@ class SparsePrecisionAtKConfig(BaseMetricConfig):
         ValueError: If `weights` is not `None` and its shape doesn't match
             `predictions`, or if either `metrics_collections` or `updates_collections`
             are not a list or tuple.
-            
+
     Polyaxonfile usage:
 
     ```yaml
@@ -1300,7 +1300,7 @@ class MeanAbsoluteErrorConfig(BaseMetricConfig):
         ValueError: If `predictions` and `labels` have mismatched shapes, or if
             `weights` is not `None` and its shape doesn't match `predictions`, or if
             either `metrics_collections` or `updates_collections` are not a list or tuple.
-            
+
     Polyaxonfile usage:
 
     ```yaml
@@ -1372,7 +1372,7 @@ class MeanRelativeErrorConfig(BaseMetricConfig):
         ValueError: If `predictions` and `labels` have mismatched shapes, or if
             `weights` is not `None` and its shape doesn't match `predictions`, or if
             either `metrics_collections` or `updates_collections` are not a list or tuple.
-            
+
     Polyaxonfile usage:
 
     ```yaml
@@ -1446,9 +1446,9 @@ class MeanSquaredErrorConfig(BaseMetricConfig):
         ValueError: If `predictions` and `labels` have mismatched shapes, or if
             `weights` is not `None` and its shape doesn't match `predictions`, or if
             either `metrics_collections` or `updates_collections` are not a list or tuple.
-        
+
     Polyaxonfile usage:
-    
+
     ```yaml
     model:
       # other model properties
@@ -1515,9 +1515,9 @@ class RootMeanSquaredErrorConfig(BaseMetricConfig):
         ValueError: If `predictions` and `labels` have mismatched shapes, or if
             `weights` is not `None` and its shape doesn't match `predictions`, or if
             either `metrics_collections` or `updates_collections` are not a list or tuple.
-    
+
     Polyaxonfile usage:
-    
+
     ```yaml
     model:
       # other model properties
@@ -1568,7 +1568,7 @@ class CovarianceConfig(BaseMetricConfig):
     To facilitate the computation of covariance across multiple batches of data,
     the function creates an `update_op` operation, which updates underlying
     variables and returns the updated covariance.
-    
+
     Args:
         input_layer: A `Tensor` of the same shape as `predictions`.
         output_layer: A `Tensor` of arbitrary shape.
@@ -1589,9 +1589,9 @@ class CovarianceConfig(BaseMetricConfig):
     Raises:
         ValueError: If labels and predictions are of different sizes or if either
             `metrics_collections` or `updates_collections` are not a list or tuple.
-    
+
     Polyaxonfile usage:
-    
+
     ```yaml
     model:
       # other model properties
@@ -1660,9 +1660,9 @@ class PearsonCorrelationConfig(BaseMetricConfig):
         ValueError: If `labels` and `predictions` are of different sizes, or if
             `weights` is the wrong size, or if either `metrics_collections` or
             `updates_collections` are not a `list` or `tuple`.
-            
+
     Polyaxonfile usage:
-    
+
     ```yaml
     model:
       # other model properties
@@ -1726,9 +1726,9 @@ class MeanCosineDistanceConfig(BaseMetricConfig):
         ValueError: If `predictions` and `labels` have mismatched shapes, or if
             `weights` is not `None` and its shape doesn't match `predictions`, or if
             either `metrics_collections` or `updates_collections` are not a list or tuple.
-            
+
     Polyaxonfile usage:
-    
+
     ```yaml
     model:
       # other model properties

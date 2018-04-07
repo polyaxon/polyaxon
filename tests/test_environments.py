@@ -4,26 +4,25 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from marshmallow import ValidationError
+from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.environments import (
+    EnvironmentConfig,
     GPUOptionsConfig,
+    HorovodClusterConfig,
+    HorovodConfig,
+    K8SResourcesConfig,
+    MXNetClusterConfig,
+    MXNetConfig,
+    PodResourcesConfig,
+    PytorchClusterConfig,
+    PytorchConfig,
     RunConfig,
     SessionConfig,
     TensorflowClusterConfig,
-    HorovodClusterConfig,
-    MXNetClusterConfig,
-    EnvironmentConfig,
-    K8SResourcesConfig,
-    PodResourcesConfig,
-    TensorflowConfig,
-    HorovodConfig,
-    MXNetConfig,
-    PytorchClusterConfig,
-    PytorchConfig,
+    TensorflowConfig
 )
 from polyaxon_schemas.utils import TaskType
-
-from tests.utils import assert_equal_dict
 
 
 class TestEnvironmentsConfigs(TestCase):

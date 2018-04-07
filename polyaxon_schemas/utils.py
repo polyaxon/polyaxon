@@ -2,15 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 import ast
-
-import six
-from datetime import datetime
-from collections import Mapping
-
 import numpy as np
+import six
+
+from collections import Mapping
+from datetime import datetime
 from pytz import timezone
 
-from marshmallow import fields, validate, ValidationError, post_dump, post_load
+from marshmallow import ValidationError, fields, post_dump, post_load, validate
 from marshmallow.base import FieldABC
 from marshmallow.utils import _Missing
 
@@ -36,7 +35,7 @@ class UUID(fields.UUID):
 
     def _serialize(self, value, attr, obj):
         validated = str(self._validated(value).hex) if value is not None else None
-        return super(fields.String, self)._serialize(validated, attr, obj)
+        return super(fields.String, self)._serialize(validated, attr, obj)  # noqa
 
 
 class ObjectOrListObject(fields.Field):
@@ -187,9 +186,9 @@ def qlognormal(loc, scale, size=None):
     return np.exp(draw)
 
 
-def pvalues(pvalues, size=None):
-    keys = list(six.iterkeys(pvalues))
-    dists = list(six.itervalues(pvalues))
+def pvalues(values, size=None):
+    keys = list(six.iterkeys(values))
+    dists = list(six.itervalues(values))
     indices = np.random.multinomial(1, dists, size=size)
     return [keys[ind.argmax()] for ind in indices]
 
@@ -498,17 +497,17 @@ def to_percentage(number, rounding=2):
 
 def to_unit_memory(number):
     """Creates a string representation of memory size given `number`."""
-    Kb = 1024
+    kb = 1024
 
-    number /= Kb
+    number /= kb
 
     if number < 100:
         return '{} Kb'.format(round(number, 2))
 
-    number /= Kb
+    number /= kb
     if number < 300:
         return '{} Mb'.format(round(number, 2))
 
-    number /= Kb
+    number /= kb
 
     return '{} Gb'.format(round(number, 2))

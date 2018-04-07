@@ -3,10 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.initializations import GlorotNormalInitializerConfig
-from polyaxon_schemas.initializations import ZerosInitializerConfig
+from tests.utils import assert_equal_layers
+
+from polyaxon_schemas.initializations import GlorotNormalInitializerConfig, ZerosInitializerConfig
 from polyaxon_schemas.layers.core import (
     ActivationConfig,
+    ActivityRegularizationConfig,
+    CastConfig,
     DenseConfig,
     DropoutConfig,
     FlattenConfig,
@@ -16,11 +19,8 @@ from polyaxon_schemas.layers.core import (
     ReshapeConfig,
     SpatialDropout1DConfig,
     SpatialDropout2DConfig,
-    SpatialDropout3DConfig,
-    ActivityRegularizationConfig,
-    CastConfig,
+    SpatialDropout3DConfig
 )
-from tests.utils import assert_equal_layers
 
 
 class TestCoreConfigs(TestCase):

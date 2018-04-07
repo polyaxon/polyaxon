@@ -7,11 +7,10 @@ import six
 from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.polyaxonfile import validator
-from polyaxon_schemas.polyaxonfile import reader
+from polyaxon_schemas.operators import ForConfig, IfConfig
+from polyaxon_schemas.polyaxonfile import reader, validator
 from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.operators import ForConfig, IfConfig
 from polyaxon_schemas.utils import to_list
 
 
@@ -89,7 +88,7 @@ class BaseSpecification(object):
     def check_version(cls, data):
         if cls.VERSION not in data:
             raise PolyaxonfileError("The Polyaxonfile `version` must be specified.")
-        if not (cls.MIN_VERSION <= data[cls.VERSION] <= cls.MAX_VERSION):
+        if not cls.MIN_VERSION <= data[cls.VERSION] <= cls.MAX_VERSION:
             raise PolyaxonfileError(
                 "The Polyaxonfile's version specified is not supported by your current CLI."
                 "Your CLI support Polyaxonfile versions between: {} {}."
@@ -114,7 +113,7 @@ class BaseSpecification(object):
             raise PolyaxonfileError(
                 "The specification used `{}` is incompatible with the kind `{}`.".format(
                     self.__class__.__name__, data[self.KIND]))
-        for key in (set(six.iterkeys(data)) - set(self.SECTIONS)):
+        for key in set(six.iterkeys(data)) - set(self.SECTIONS):
             raise PolyaxonfileError("Unexpected section `{}` in Polyaxonfile version `{}`. "
                                     "Please check the Polyaxonfile specification "
                                     "for this version.".format(key, 'v1'))

@@ -3,9 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import random
 import uuid
+
 from unittest import TestCase
 
-from polyaxon_schemas.clusters import NodeGPUConfig, ClusterNodeConfig, PolyaxonClusterConfig
+from polyaxon_schemas.clusters import ClusterNodeConfig, NodeGPUConfig, PolyaxonClusterConfig
 
 
 class TestClusterConfigs(TestCase):

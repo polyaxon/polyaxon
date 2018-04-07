@@ -6,9 +6,9 @@ doc-warnings: true
 
 max-line-length: 100
 
-
 ignore-patterns:
   - __init__.py
+  - src
 
 pep257:
   run: false
@@ -32,6 +32,8 @@ pylint:
     - too-many-instance-attributes
     - too-many-locals
     - unused-argument
+    - too-many-return-statements
+    - inconsistent-return-statements
   enable:
     - missing-final-newline
   options:

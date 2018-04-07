@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
-
 import six
+
+from collections import Mapping
 
 
 def assert_equal_dict(dict1, dict2):

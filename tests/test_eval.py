@@ -3,10 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.hooks import StepLoggingTensorHookConfig
-from polyaxon_schemas.eval import EvalConfig
-from polyaxon_schemas.processing.pipelines import TFRecordSequencePipelineConfig
 from tests.utils import assert_equal_dict
+
+from polyaxon_schemas.eval import EvalConfig
+from polyaxon_schemas.hooks import StepLoggingTensorHookConfig
+from polyaxon_schemas.processing.pipelines import TFRecordSequencePipelineConfig
 
 
 class TestEvalConfigs(TestCase):

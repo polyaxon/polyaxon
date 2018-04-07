@@ -3,17 +3,18 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_dict
+
 from polyaxon_schemas.rl.environments import GymEnvironmentConfig
 from polyaxon_schemas.rl.explorations import (
     ConstantExplorationConfig,
-    GreedyExplorationConfig,
-    RandomExplorationConfig,
     DecayExplorationConfig,
+    GreedyExplorationConfig,
+    OrnsteinUhlenbeckExplorationConfig,
     RandomDecayExplorationConfig,
-    OrnsteinUhlenbeckExplorationConfig
+    RandomExplorationConfig
 )
 from polyaxon_schemas.rl.memories import BatchMemoryConfig
-from tests.utils import assert_equal_dict
 
 
 class TestMemoryConfigs(TestCase):

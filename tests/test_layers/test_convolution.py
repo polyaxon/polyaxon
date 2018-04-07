@@ -3,28 +3,28 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_layers
+
 from polyaxon_schemas.constraints import MaxNormConfig
-from polyaxon_schemas.initializations import ZerosInitializerConfig, GlorotNormalInitializerConfig
+from polyaxon_schemas.initializations import GlorotNormalInitializerConfig, ZerosInitializerConfig
 from polyaxon_schemas.layers.convolutional import (
     Conv1DConfig,
     Conv2DConfig,
-    Conv3DConfig,
     Conv2DTransposeConfig,
+    Conv3DConfig,
     Conv3DTransposeConfig,
-    SeparableConv2DConfig,
-    UpSampling1DConfig,
-    UpSampling3DConfig,
-    UpSampling2DConfig,
-    ZeroPadding3DConfig,
-    ZeroPadding2DConfig,
-    ZeroPadding1DConfig,
     Cropping1DConfig,
     Cropping2DConfig,
     Cropping3DConfig,
+    SeparableConv2DConfig,
+    UpSampling1DConfig,
+    UpSampling2DConfig,
+    UpSampling3DConfig,
+    ZeroPadding1DConfig,
+    ZeroPadding2DConfig,
+    ZeroPadding3DConfig
 )
 from polyaxon_schemas.regularizations import L1L2RegularizerConfig, L1RegularizerConfig
-
-from tests.utils import assert_equal_layers
 
 
 class TestConvolutionConfigs(TestCase):

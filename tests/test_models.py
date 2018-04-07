@@ -3,16 +3,18 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_dict, assert_equal_graphs
+
 from polyaxon_schemas.bridges import NoOpBridgeConfig
-from polyaxon_schemas.losses import SoftmaxCrossEntropyConfig, MeanSquaredErrorConfig
+from polyaxon_schemas.losses import MeanSquaredErrorConfig, SoftmaxCrossEntropyConfig
 from polyaxon_schemas.metrics import AccuracyConfig, PrecisionConfig
 from polyaxon_schemas.models import (
     BaseModelConfig,
     ClassifierConfig,
-    RegressorConfig,
-    GeneratorConfig)
+    GeneratorConfig,
+    RegressorConfig
+)
 from polyaxon_schemas.optimizers import AdamConfig
-from tests.utils import assert_equal_graphs, assert_equal_dict
 
 
 class TestModelConfigs(TestCase):

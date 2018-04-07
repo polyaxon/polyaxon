@@ -3,13 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_layers
+
 from polyaxon_schemas.layers.noise import (
     AlphaDropoutConfig,
     GaussianDropoutConfig,
-    GaussianNoiseConfig,
+    GaussianNoiseConfig
 )
-
-from tests.utils import assert_equal_layers
 
 
 class TestNoiseConfigs(TestCase):

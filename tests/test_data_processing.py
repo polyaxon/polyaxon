@@ -3,37 +3,37 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_feature_processors, assert_equal_layers
+
 from polyaxon_schemas.processing.feature_processors import FeatureProcessorsConfig
 from polyaxon_schemas.processing.image import (
-    ResizeConfig,
-    CentralCropConfig,
-    RandomCropConfig,
-    ExtractGlimpseConfig,
-    ToBoundingBoxConfig,
-    FlipConfig,
-    TransposeConfig,
-    Rotate90Config,
-    ConvertColorSpaceConfig,
-    ConvertImagesDtypeConfig,
     AdjustBrightnessConfig,
     AdjustContrastConfig,
+    AdjustGammaConfig,
     AdjustHueConfig,
     AdjustSaturationConfig,
-    AdjustGammaConfig,
-    StandardizationConfig,
+    CentralCropConfig,
+    ConvertColorSpaceConfig,
+    ConvertImagesDtypeConfig,
     DrawBoundingBoxesConfig,
+    ExtractGlimpseConfig,
+    FlipConfig,
+    RandomCropConfig,
+    ResizeConfig,
+    Rotate90Config,
+    StandardizationConfig,
+    ToBoundingBoxConfig,
     TotalVariationConfig,
+    TransposeConfig
 )
 from polyaxon_schemas.processing.pipelines import (
     BasePipelineConfig,
+    ImageCaptioningPipelineConfig,
+    ParallelTextPipelineConfig,
     TFRecordImagePipelineConfig,
     TFRecordSequencePipelineConfig,
-    ParallelTextPipelineConfig,
-    TFRecordSourceSequencePipelineConfig,
-    ImageCaptioningPipelineConfig,
+    TFRecordSourceSequencePipelineConfig
 )
-
-from tests.utils import assert_equal_feature_processors, assert_equal_layers
 
 
 class TestFeatureProcessorsConfigs(TestCase):

@@ -3,10 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_layers
+
 from polyaxon_schemas.initializations import UniformInitializerConfig
 from polyaxon_schemas.layers.embeddings import EmbeddingConfig
-
-from tests.utils import assert_equal_layers
 
 
 class TestEmbeddingConfigs(TestCase):

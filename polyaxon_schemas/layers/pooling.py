@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate, post_load, post_dump
+from marshmallow import fields, post_dump, post_load, validate
 
+from polyaxon_schemas.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.utils import ObjectOrListObject
-from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
 
 
 class MaxPooling1DSchema(BaseLayerSchema):

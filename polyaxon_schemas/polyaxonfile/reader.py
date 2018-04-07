@@ -3,12 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import json
 import os
-
-from collections import Mapping
-
 import six
 import yaml
-from yaml.scanner import ScannerError
+
+from collections import Mapping
+from yaml.scanner import ScannerError  # noqa
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.utils import deep_update

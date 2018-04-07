@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.run_exec import RunExecConfig
 from tests.utils import assert_equal_dict
+
+from polyaxon_schemas.run_exec import RunExecConfig
 
 
 class TestRunExecConfigs(TestCase):

@@ -3,17 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_layers
+
 from polyaxon_schemas.initializations import (
     GlorotNormalInitializerConfig,
     OrthogonalInitializerConfig,
+    ZerosInitializerConfig
 )
-from polyaxon_schemas.initializations import ZerosInitializerConfig
-from polyaxon_schemas.layers.convolutional_recurrent import (
-    ConvRecurrent2DConfig,
-    ConvLSTM2DConfig,
-)
-
-from tests.utils import assert_equal_layers
+from polyaxon_schemas.layers.convolutional_recurrent import ConvLSTM2DConfig, ConvRecurrent2DConfig
 
 
 class TestConvolutionalRecurrentConfigs(TestCase):

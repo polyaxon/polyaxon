@@ -4,13 +4,13 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
-    TensorflowSpecification,
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,
+    TensorflowSpecification
 )
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.utils import TaskType, Frameworks
+from polyaxon_schemas.utils import Frameworks, TaskType
 
 
 class ExperimentSpecification(BaseSpecification):
@@ -47,9 +47,10 @@ class ExperimentSpecification(BaseSpecification):
     def is_runnable(self):
         """Checks of the sections required to run experiment exist."""
         sections = set(self.validated_data.keys())
-        if (self.RUN_EXEC in sections or
-            {self.MODEL, self.TRAIN} <= sections or
-            {self.MODEL, self.EVAL} <= sections):
+        condition = (self.RUN_EXEC in sections or
+                     {self.MODEL, self.TRAIN} <= sections or
+                     {self.MODEL, self.EVAL} <= sections)
+        if condition:
             return True
         return False
 

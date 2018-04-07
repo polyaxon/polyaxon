@@ -2,14 +2,15 @@
 from __future__ import absolute_import, division, print_function
 
 import uuid
+
 from unittest import TestCase
 
 from marshmallow import ValidationError
+from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.experiment import ExperimentConfig
-from polyaxon_schemas.project import ProjectConfig, ExperimentGroupConfig
+from polyaxon_schemas.project import ExperimentGroupConfig, ProjectConfig
 from polyaxon_schemas.utils import local_now
-from tests.utils import assert_equal_dict
 
 
 class TestProjectConfigs(TestCase):

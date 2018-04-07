@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import Schema, fields, post_load, post_dump, validate
+from marshmallow import Schema, fields, post_dump, post_load, validate
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.environments import PodResourcesSchema
@@ -77,7 +77,7 @@ class ExperimentJobConfig(BaseConfig):
         self.is_running = is_running
         self.is_done = is_done
         self.resources = resources
-        self.total_run = None
+        self.total_run = total_run
         if all([self.started_at, self.finished_at]):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
@@ -323,7 +323,7 @@ class JobLabelConfig(BaseConfig):
                  project_name,
                  project_uuid,
                  role,
-                 type,
+                 type,  # pylint:disable=redefined-builtin
                  experiment_name=None,
                  experiment_uuid=None,
                  app=None,

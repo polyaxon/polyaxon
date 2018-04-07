@@ -3,17 +3,18 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_dict
+
 from polyaxon_schemas.optimizers import (
-    SGDConfig,
+    AdadeltaConfig,
+    AdagradConfig,
+    AdamConfig,
+    FtrlConfig,
     MomentumConfig,
     NestrovConfig,
     RMSPropConfig,
-    AdamConfig,
-    AdagradConfig,
-    AdadeltaConfig,
-    FtrlConfig
+    SGDConfig
 )
-from tests.utils import assert_equal_dict
 
 
 class TestOptimizerConfigs(TestCase):

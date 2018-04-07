@@ -3,33 +3,34 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from tests.utils import assert_equal_dict, assert_tensors
+
 from polyaxon_schemas.metrics import (
-    TruePositivesConfig,
-    TrueNegativesConfig,
+    AccuracyConfig,
+    AUCConfig,
+    CovarianceConfig,
     FalseNegativesConfig,
     FalsePositivesConfig,
-    MeanConfig,
-    MeanTensorConfig,
-    AccuracyConfig,
-    PrecisionConfig,
-    RecallConfig,
-    AUCConfig,
-    SpecificityAtSensitivityConfig,
-    SensitivityAtSpecificityConfig,
-    PrecisionAtThresholdsConfig,
-    RecallAtThresholdsConfig,
-    SparsePrecisionAtKConfig,
     MeanAbsoluteErrorConfig,
+    MeanConfig,
+    MeanCosineDistanceConfig,
+    MeanIOUConfig,
     MeanRelativeErrorConfig,
     MeanSquaredErrorConfig,
-    RootMeanSquaredErrorConfig,
-    CovarianceConfig,
+    MeanTensorConfig,
     PearsonCorrelationConfig,
-    MeanCosineDistanceConfig,
     PercentageLessConfig,
-    MeanIOUConfig,
+    PrecisionAtThresholdsConfig,
+    PrecisionConfig,
+    RecallAtThresholdsConfig,
+    RecallConfig,
+    RootMeanSquaredErrorConfig,
+    SensitivityAtSpecificityConfig,
+    SparsePrecisionAtKConfig,
+    SpecificityAtSensitivityConfig,
+    TrueNegativesConfig,
+    TruePositivesConfig
 )
-from tests.utils import assert_tensors, assert_equal_dict
 
 
 class TestMetricConfigs(TestCase):

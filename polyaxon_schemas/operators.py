@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import itertools
 
-from marshmallow import Schema, post_load, post_dump
+from marshmallow import Schema, post_dump, post_load
 
 from polyaxon_schemas.base import BaseConfig
 
@@ -26,7 +26,7 @@ class ForConfig(BaseConfig):
     SCHEMA = ForSchema
     IDENTIFIER = 'for'
 
-    def __init__(self, len, do, index='index'):
+    def __init__(self, len, do, index='index'):  # noqa, redefined-builtin `len`
         self.len = len
         self.do = do
         self.index = index

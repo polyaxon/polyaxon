@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
-
 import six
 
-from marshmallow import Schema, post_load, ValidationError
-from marshmallow import post_dump
+from collections import Mapping
+
+from marshmallow import Schema, ValidationError, post_dump, post_load
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.graph import GraphConfig

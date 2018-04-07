@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, post_load, post_dump
+from marshmallow import fields, post_dump, post_load
 
-from polyaxon_schemas.utils import ObjectOrListObject
 from polyaxon_schemas.constraints import ConstraintSchema
 from polyaxon_schemas.initializations import InitializerSchema, ZerosInitializerConfig
+from polyaxon_schemas.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.regularizations import RegularizerSchema
-from polyaxon_schemas.layers.base import BaseLayerSchema, BaseLayerConfig
+from polyaxon_schemas.utils import ObjectOrListObject
 
 
 class LeakyReLUSchema(BaseLayerSchema):

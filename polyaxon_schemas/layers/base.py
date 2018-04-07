@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, Schema
+from marshmallow import Schema, fields
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.utils import get_value, ObjectOrListObject, Tensor, DType
+from polyaxon_schemas.utils import DType, ObjectOrListObject, Tensor, get_value
 
 
 class BaseLayerSchema(Schema):

@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.operators import ForConfig, IfConfig
+from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 
 
