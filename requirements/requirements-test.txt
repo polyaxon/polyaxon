@@ -1,13 +1,5 @@
 -r requirements-dev.txt
+-r requirements-base-test.txt
 
-coverage==4.4.1
-flaky==3.4.0
 fake-factory==0.7.2
 httpretty==0.8.14
-isort==4.2.15
-mock==2.0.0
-prospector==0.12.7
-pyflakes==1.6.0
-pytest==3.5.0
-pylint==1.7.2
-tox==2.9.1
