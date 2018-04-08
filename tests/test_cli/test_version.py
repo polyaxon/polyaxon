@@ -1,17 +1,13 @@
-import unittest
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
 from mock import patch
 
-from click.testing import CliRunner
-
 from polyaxon_cli.cli.version import upgrade, version
+from tests.test_cli.utils import BaseCommandTestCase
 
 
-class TestVersion(unittest.TestCase):
-
-    def setUp(self):
-        self.runner = CliRunner()
-
+class TestVersion(BaseCommandTestCase):
     @patch('polyaxon_cli.cli.version.pip_upgrade')
     @patch('polyaxon_cli.cli.version.sys')
     def test_upgrade(self, mock_sys, pip_upgrade):

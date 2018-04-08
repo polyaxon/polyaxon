@@ -1,16 +1,13 @@
-import unittest
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
 from mock import patch
 
-from click.testing import CliRunner
-
 from polyaxon_cli.cli.cluster import cluster
+from tests.test_cli.utils import BaseCommandTestCase
 
 
-class TestCluster(unittest.TestCase):
-    def setUp(self):
-        self.runner = CliRunner()
-
+class TestCluster(BaseCommandTestCase):
     @patch('polyaxon_client.cluster.ClusterClient.get_cluster')
     @patch('polyaxon_cli.cli.cluster.get_cluster_info')
     def test_get_cluster(self, get_cluster_info, get_cluster):
