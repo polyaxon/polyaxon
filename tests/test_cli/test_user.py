@@ -3,21 +3,21 @@ from __future__ import absolute_import, division, print_function
 
 
 from mock import patch
-from polyaxon_cli.cli.user import user
+from polyaxon_cli.cli.superuser import superuser
 from tests.test_cli.utils import BaseCommandTestCase
 
 
-class TestUser(BaseCommandTestCase):
-    @patch('polyaxon_client.user.UserClient.activate_user')
+class TestSuperUser(BaseCommandTestCase):
+    @patch('polyaxon_client.user.UserClient.grant_superuser')
     @patch('polyaxon_cli.cli.check.Printer.print_success')
-    def test_activate(self, print_success, activate_user):
-        self.runner.invoke(user, ['activate', 'username'])
-        assert activate_user.call_count == 1
+    def test_grant(self, print_success, grant_superuser):
+        self.runner.invoke(superuser, ['grant', 'username'])
+        assert grant_superuser.call_count == 1
         assert print_success.call_count == 1
 
-    @patch('polyaxon_client.user.UserClient.delete_user')
+    @patch('polyaxon_client.user.UserClient.revoke_superuser')
     @patch('polyaxon_cli.cli.check.Printer.print_success')
-    def test_delete(self, print_success, delete_user):
-        self.runner.invoke(user, ['delete', 'username'])
-        assert delete_user.call_count == 1
+    def test_revoke(self, print_success, revoke_superuser):
+        self.runner.invoke(superuser, ['revoke', 'username'])
+        assert revoke_superuser.call_count == 1
         assert print_success.call_count == 1
