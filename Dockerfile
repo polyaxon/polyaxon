@@ -10,6 +10,7 @@ RUN apt-get -y update && \
 COPY requirements/requirements-base.txt /requirements/
 COPY requirements/requirements.txt /requirements/
 COPY requirements/requirements-dev.txt /requirements/
+COPY requirements/requirements-base-test.txt /requirements/
 COPY requirements/requirements-test.txt /requirements/
 RUN pip3 install --no-cache-dir -r /requirements/requirements-test.txt
 
