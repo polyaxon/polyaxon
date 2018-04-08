@@ -22,7 +22,6 @@ from polyaxon_client.exceptions import (
 )
 
 PROJECT_CLI_NAME = "polyaxon-cli"
-PROJECT_LIB_NAME = "polyaxon-lib"
 
 
 def pip_upgrade(project_name=PROJECT_CLI_NAME):
@@ -83,17 +82,17 @@ def check_cli_version():
 @click.command()
 @click.option('--cli', is_flag=True, default=False, help='Version of the Polyaxon cli.')
 @click.option('--platform', is_flag=True, default=False, help='Version of the Polyaxon cli.')
-@click.option('--lib', is_flag=True, default=False, help='Version of the Polyaxon cli.')
-def version(cli, platform, lib):
-    """Print the current version of the cli, platform, and lib."""
+def version(cli, platform):
+    """Print the current version of the cli and platform."""
 
     version_client = PolyaxonClients().version
-    cli = cli or not any([cli, platform, lib])
+    cli = cli or not any([cli, platform])
     if cli:
         try:
             server_version = version_client.get_cli_version()
         except AuthorizationError:
             session_expired()
+            sys.exit(1)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get cli version.')
             Printer.print_error('Error message `{}`.'.format(e))
@@ -103,25 +102,12 @@ def version(cli, platform, lib):
         Printer.print_header('Supported cli versions:')
         dict_tabulate(server_version.to_dict())
 
-    if lib:
-        try:
-            server_version = version_client.get_lib_version()
-        except AuthorizationError:
-            session_expired()
-        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-            Printer.print_error('Could not get lib version.')
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-        lib_version = get_version(PROJECT_LIB_NAME)
-        Printer.print_header('Current lib version: {}.'.format(lib_version))
-        Printer.print_header('Supported lib versions:')
-        dict_tabulate(server_version.to_dict())
-
     if platform:
         try:
             platform_version = version_client.get_platform_version()
         except AuthorizationError:
             session_expired()
+            sys.exit(1)
         except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
             Printer.print_error('Could not get platform version.')
             Printer.print_error('Error message `{}`.'.format(e))
@@ -133,13 +119,9 @@ def version(cli, platform, lib):
 
 
 @click.command()
-@click.option('--lib', '-a', is_flag=True, default=False,
-              help='Upgrade the project, if True upgrade the cli '
-                   'otherwise upgrade the polyaxon library.')
-def upgrade(lib):
-    """Install/Upgrade polyxon-cli or polyaxon-lib."""
+def upgrade():
+    """Install/Upgrade polyxon-cli."""
     try:
-        project_name = PROJECT_LIB_NAME if lib else PROJECT_CLI_NAME
-        pip_upgrade(project_name)
+        pip_upgrade(PROJECT_CLI_NAME)
     except Exception as e:
         logger.error(e)
