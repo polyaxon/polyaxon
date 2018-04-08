@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-
 from mock import patch
-from polyaxon_cli.cli.auth import logout, whoami
+
 from tests.test_cli.utils import BaseCommandTestCase
+
+from polyaxon_cli.cli.auth import logout, whoami
 
 
 class TestAuth(BaseCommandTestCase):

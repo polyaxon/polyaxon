@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from mock import patch
 
-from polyaxon_cli.cli.version import upgrade, version
 from tests.test_cli.utils import BaseCommandTestCase
+
+from polyaxon_cli.cli.version import upgrade, version
 
 
 class TestVersion(BaseCommandTestCase):
