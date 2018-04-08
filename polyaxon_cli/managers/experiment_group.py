@@ -5,7 +5,7 @@ import sys
 
 from polyaxon_cli.managers.base import BaseConfigManager
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_schemas.experiment import ExperimentConfig
+from polyaxon_schemas.project import ExperimentGroupConfig
 
 
 class GroupManager(BaseConfigManager):
@@ -14,7 +14,7 @@ class GroupManager(BaseConfigManager):
     IS_GLOBAL = False
     IS_POLYAXON_DIR = True
     CONFIG_FILE_NAME = '.polyaxongroup'
-    CONFIG = ExperimentConfig
+    CONFIG = ExperimentGroupConfig
 
     @classmethod
     def get_config_or_raise(cls):
