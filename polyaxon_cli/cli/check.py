@@ -61,14 +61,11 @@ def get_group_experiments_info(matrix_space, n_experiments, concurrency, search_
               help='Checks and prints the project def.')
 @click.option('--experiments', '-x', is_flag=True, default=False,
               help='Checks and prints the matrix space of experiments.')
-@click.option('--matrix', '-m', is_flag=True, default=False,
-              help='Checks and prints the matrix def.')
 def check(file,  # pylint:disable=redefined-builtin
           all,  # pylint:disable=redefined-builtin
           version,
           run_type,
           project,
-          matrix,
           experiments):
     """Check a polyaxonfile."""
     file = file or 'polyaxonfile.yml'
