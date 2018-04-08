@@ -8,7 +8,6 @@ from polyaxon_cli.cli.version import upgrade, version
 
 
 class TestVersion(unittest.TestCase):
-    """Tests cli utils helper functions"""
 
     def setUp(self):
         self.runner = CliRunner()

@@ -6,9 +6,6 @@ from polyaxon_cli.cli.auth import login, logout, whoami
 
 
 class TestAuthClient(unittest.TestCase):
-    """
-    Tests Experiment CLI functionality
-    """
     def setUp(self):
         self.runner = CliRunner()
 
