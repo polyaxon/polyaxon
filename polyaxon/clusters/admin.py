@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from clusters.models import Cluster, ClusterNode, NodeGPU, ClusterEvent
+from clusters.models import Cluster, ClusterEvent, ClusterNode, NodeGPU
 from libs.admin import ReadOnlyAdmin
 
 
