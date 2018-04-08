@@ -2,10 +2,10 @@ from click.testing import CliRunner
 import unittest
 
 from mock import patch
-from polyaxon_cli.cli.auth import login, logout, whoami
+from polyaxon_cli.cli.auth import logout, whoami
 
 
-class TestAuthClient(unittest.TestCase):
+class TestAuth(unittest.TestCase):
     def setUp(self):
         self.runner = CliRunner()
 
