@@ -225,8 +225,8 @@ class Consumer(SocketManager):
             body = json.loads(body.decode('utf-8'))
             body = json.dumps(body)
             self.messages.append(body)
-        logger.debug('out ws : {}'.format(len(self.ws)))
-        logger.debug('out messages : {}'.format(len(self.messages)))
+        logger.debug('out ws : %s', len(self.ws))
+        logger.debug('out messages : %s', len(self.messages))
         self.acknowledge_message(basic_deliver.delivery_tag)
 
     def on_cancelok(self, unused_frame):

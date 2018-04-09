@@ -25,8 +25,8 @@ class IsDatasetOwnerOrPublicReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Check object type
         if not isinstance(obj, Dataset):
-            logger.warning('Trying to check datasets permission against {}'.format(
-                obj.__class__.__name__))
+            logger.warning('Trying to check datasets permission against %s',
+                           obj.__class__.__name__)
             return False
 
         return has_dataset_permissions(user=request.user,

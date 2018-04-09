@@ -16,7 +16,7 @@ def update_job_containers(event, status, job_container_name):
     if JobLifeCycle.is_done(status):
         # Remove the job monitoring
         job_uuid = event['metadata']['labels']['job_uuid']
-        logger.info('Stop monitoring job_uuid: {}'.format(job_uuid))
+        logger.info('Stop monitoring job_uuid: %s', job_uuid)
         RedisJobContainers.remove_job(job_uuid)
 
     if event['status']['container_statuses'] is None:
@@ -37,8 +37,8 @@ def update_job_containers(event, status, job_container_name):
         if container_id:
             job_uuid = event['metadata']['labels']['job_uuid']
             if container_status['state']['running'] is not None:
-                logger.info('Monitoring (container_id, job_uuid): ({}, {})'.format(container_id,
-                                                                                   job_uuid))
+                logger.info('Monitoring (container_id, job_uuid): (%s, %s)',
+                            container_id, job_uuid)
                 RedisJobContainers.monitor(container_id=container_id, job_uuid=job_uuid)
             else:
 
@@ -59,7 +59,7 @@ def run(k8s_manager):
     for event in w.stream(k8s_manager.k8s_api.list_namespaced_pod,
                           namespace=k8s_manager.namespace,
                           label_selector=get_label_selector()):
-        logger.debug("Received event: {}".format(event['type']))
+        logger.debug("Received event: %s", event['type'])
         event_object = event['object'].to_dict()
         job_state = get_job_state(
             event_type=event['type'],
@@ -72,7 +72,7 @@ def run(k8s_manager):
             labels = None
             if job_state.details and job_state.details.labels:
                 labels = job_state.details.labels.to_dict()
-            logger.info("Updating job container {}, {}".format(status, labels))
+            logger.info("Updating job container %s, %s", status, labels)
             logger.debug(event_object)
             job_state = job_state.to_dict()
             logger.debug(job_state)

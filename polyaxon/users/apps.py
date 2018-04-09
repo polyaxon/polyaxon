@@ -6,4 +6,4 @@ class UsersConfig(AppConfig):
     verbose_name = 'Users'
 
     def ready(self):
-        from users.signals import create_auth_token
+        from users.signals import create_auth_token  # noqa

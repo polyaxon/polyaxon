@@ -9,7 +9,8 @@ class SanicTokenAuthentication(TokenAuthentication):
 
     def authenticate(self, request):
         # Check headers
-        token = request.headers.get(self.AUTHORIZATION_HEADER) or request.headers.get(self.AUTHORIZATION_HEADER.lower())
+        token = (request.headers.get(self.AUTHORIZATION_HEADER) or
+                 request.headers.get(self.AUTHORIZATION_HEADER.lower()))
         if token:
             token = token.split(' ')
             if len(token) == 2 and (token[0] == self.keyword or token[0] == self.keyword.lower()):
@@ -39,9 +40,9 @@ def authorized():
                 request.app.user = authorization[0]
                 response = await f(request, *args, **kwargs)
                 return response
-            else:
-                # the user is not authorized.
-                return json({'status': 'not_authorized'}, 403)
+
+            # the user is not authorized.
+            return json({'status': 'not_authorized'}, 403)
 
         return decorated_function
 

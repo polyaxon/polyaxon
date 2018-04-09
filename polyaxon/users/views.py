@@ -35,7 +35,7 @@ class AuthTokenLogin(ObtainAuthToken):
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
         response = Response({'token': token.key})
         if request.data.get('login'):
             auth_login(self.request, user)
@@ -63,7 +63,7 @@ class LoginView(AuthLoginView):
     def dispatch(self, request, *args, **kwargs):
         response = super(LoginView, self).dispatch(request, *args, **kwargs)
         if request.user.is_authenticated:
-            token, created = Token.objects.get_or_create(user=request.user)
+            token, _ = Token.objects.get_or_create(user=request.user)
             response.set_cookie('token', value=token)
             response.set_cookie('user', value=request.user.username)
         return response
@@ -222,7 +222,7 @@ class ActivationView(TemplateView):
         doesn't.
 
         """
-        User = get_user_model()
+        User = get_user_model()  # noqa
         try:
             user = User.objects.get(**{
                 User.USERNAME_FIELD: username,
@@ -232,7 +232,7 @@ class ActivationView(TemplateView):
         except User.DoesNotExist:
             return None
 
-    def get(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         """The base activation logic; subclasses should leave this method
         alone and implement activate(), which is called from this method.
         """
@@ -241,10 +241,10 @@ class ActivationView(TemplateView):
             signals.user_activated.send(
                 sender=self.__class__,
                 user=activated_user,
-                request=self.request
+                request=request
             )
             return redirect(self.success_url)
-        return super(ActivationView, self).get(*args, **kwargs)
+        return super(ActivationView, self).get(request, *args, **kwargs)
 
 
 class PasswordResetView(auth_views.PasswordResetView):

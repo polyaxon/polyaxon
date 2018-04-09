@@ -14,6 +14,6 @@ def normalize_email(email):
 def validate_new_email(email):
     """Validates a "new" email address by checking if it is already used by other users."""
     email = normalize_email(email)
-    User = get_user_model()
+    User = get_user_model()  # noqa
     if User.objects.filter(email=email).exists():
         raise ValidationError('The given email address is already registered.')

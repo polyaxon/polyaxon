@@ -6,6 +6,7 @@ class ReadOnlyAdmin(ModelAdmin):
 
     def __init__(self, *args, **kwargs):
         super(ReadOnlyAdmin, self).__init__(*args, **kwargs)
+        # pylint:disable=protected-access
         self.readonly_fields = [field.name for field in self.model._meta.get_fields()]
 
     def get_actions(self, request):

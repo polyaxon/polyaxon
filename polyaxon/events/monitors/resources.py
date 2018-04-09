@@ -25,7 +25,7 @@ docker_client = docker.from_env(version="auto", timeout=10)
 def get_gpu_resources():
     try:
         return polyaxon_gpustat.query()
-    except:
+    except:  # noqa
         return []
 
 
@@ -43,7 +43,7 @@ def get_container(containers, container_id):
     try:  # we check first that the container is visible in this node
         container = docker_client.containers.get(container_id)
     except NotFound:
-        logger.info("container `{}` was not found".format(container_id))
+        logger.info("container `%s` was not found", container_id)
         return None
 
     if container_id in containers:
@@ -59,25 +59,24 @@ def get_container(containers, container_id):
 def get_container_resources(node, container, gpu_resources):
     # Check if the container is running
     if container.status != ContainerStatuses.RUNNING:
-        logger.info("`{}` container is not running".format(container.name))
+        logger.info("`%s` container is not running", container.name)
         RedisJobContainers.remove_container(container.id)
         return
 
     job_uuid, experiment_uuid = RedisJobContainers.get_job(container.id)
 
     if not job_uuid:
-        logger.info("`{}` container is not recognised".format(container.name))
+        logger.info("`%s` container is not recognised", container.name)
         return
 
-    logger.info("Streaming resources for container {} "
-                "in (job, experiment) (`{}`, `{}`) ".format(container.id,
-                                                            job_uuid,
-                                                            experiment_uuid))
+    logger.info(
+        "Streaming resources for container %s in (job, experiment) (`%s`, `%s`) ",
+        container.id, job_uuid, experiment_uuid)
 
     try:
         stats = container.stats(decode=True, stream=False)
     except NotFound:
-        logger.info("`{}` was not found".format(container.name))
+        logger.info("`%s` was not found", container.name)
         RedisJobContainers.remove_container(container.id)
         return
     except requests.ReadTimeout:
@@ -97,9 +96,8 @@ def get_container_resources(node, container, gpu_resources):
     percpu_usage = cpu_stats['cpu_usage']['percpu_usage']
     num_cpu_cores = len(percpu_usage)
     if num_cpu_cores >= node.cpu * 1.5:
-        logger.warning('Docker reporting num cpus `{}` and kubernetes reporting `{}`'.format(
-            num_cpu_cores, node.cpu
-        ))
+        logger.warning('Docker reporting num cpus `%s` and kubernetes reporting `%s`',
+                       num_cpu_cores, node.cpu)
         num_cpu_cores = node.cpu
     cpu_percentage = 0.
     percpu_percentage = [0.] * num_cpu_cores

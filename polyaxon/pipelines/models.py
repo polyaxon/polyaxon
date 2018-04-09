@@ -215,8 +215,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
                 max(2 ** retries, retry_delay),  # Exp. backoff
                 self.max_retry_delay  # The countdown should be more the max allowed
             )
-        else:
-            return retry_delay
+        return retry_delay
 
     def get_run_params(self):
         """Return the params to run the celery task."""
@@ -327,8 +326,8 @@ class RunModel(DiffModel, LastStatusMixin):
         """
         if not self.STATUSES.can_transition(status_from=self.last_status, status_to=status):
             logger.info(
-                '`{}` tried to transition from status `{}` to non permitted status `{}`'.format(
-                    str(self), self.last_status, status))
+                '`%s` tried to transition from status `%s` to non permitted status `%s`',
+                str(self), self.last_status, status)
             return False
 
         return True
@@ -415,7 +414,10 @@ class PipelineRun(RunModel):
         return self.pipeline.concurrency - self.running_operation_runs.count()
 
     def check_concurrency(self):
-        """Checks the concurrency of the pipeline run to validate if we can start a new operation run.
+        """ Check the pipeline concurrency.
+
+        Checks the concurrency of the pipeline run
+        to validate if we can start a new operation run.
 
         Returns:
             boolean: Whether to start a new operation run or not.
@@ -461,7 +463,10 @@ class OperationRun(RunModel):
             OperationRunStatus.objects.create(operation_run=self, status=status, message=message)
 
     def check_concurrency(self):
-        """Checks the concurrency of the operation run to validate if we can start a new operation run.
+        """Checks the concurrency of the operation run.
+
+        Checks the concurrency of the operation run
+        to validate if we can start a new operation run.
 
         Returns:
             boolean: Whether to start a new operation run or not.
@@ -469,7 +474,8 @@ class OperationRun(RunModel):
         if not self.operation.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation.runs.filter(status__status__in=self.STATUSES.RUNNING_STATUS).count()
+        ops_count = self.operation.runs.filter(
+            status__status__in=self.STATUSES.RUNNING_STATUS).count()
         return ops_count < self.operation.concurrency
 
     def check_upstream_trigger(self):
@@ -552,7 +558,7 @@ class OperationRun(RunModel):
         """Start the celery task of this operation."""
         kwargs = self.celery_task_context
         # Update we the operation run id
-        kwargs['operation_run_id'] = self.id
+        kwargs['operation_run_id'] = self.id  # pylint:disable=unsupported-assignment-operation
 
         async_result = celery_app.send_task(
             self.operation.celery_task,

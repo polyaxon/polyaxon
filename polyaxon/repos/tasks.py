@@ -19,11 +19,11 @@ def handle_new_files(user_id, repo_id, tar_file_name):
     if not tarfile.is_tarfile(tar_file_name):
         raise ValueError('Received wrong file format.')
 
-    User = get_user_model()
+    User = get_user_model()  # noqa
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-        logger.warning('User with id `{}` does not exist anymore.'.format(user_id))
+        logger.warning('User with id `%s` does not exist anymore.', user_id)
         return
 
     try:
@@ -31,7 +31,7 @@ def handle_new_files(user_id, repo_id, tar_file_name):
         # Checkout to master
         git.checkout_commit(repo.path)
     except User.DoesNotExist:
-        logger.warning('Repo with id `{}` does not exist anymore.'.format(repo_id))
+        logger.warning('Repo with id `%s` does not exist anymore.', repo_id)
         return
 
     # Destination files

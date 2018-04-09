@@ -1,1 +1,1 @@
-from polyaxon.config_settings import *
+from polyaxon.config_settings import *  # noqa

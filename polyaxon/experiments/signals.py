@@ -77,7 +77,7 @@ def new_experiment(sender, **kwargs):
 def experiment_deleted(sender, **kwargs):
     instance = kwargs['instance']
     try:
-        _ = instance.experiment_group
+        _ = instance.experiment_group  # noqa
         # Delete all jobs from DB before sending a signal to k8s,
         # this way no statuses will be updated in the meanwhile
         instance.jobs.all().delete()
@@ -153,8 +153,8 @@ def new_experiment_status(sender, **kwargs):
                 job.set_status(JobLifeCycle.SUCCEEDED, message='Master is done.')
 
     if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
-        logger.info('One of the workers failed or Master for experiment `{}` is done, '
-                    'send signal to other workers to stop.'.format(experiment.unique_name))
+        logger.info('One of the workers failed or Master for experiment `%s` is done, '
+                    'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
         experiment_scheduler.stop_experiment(experiment, update_status=False)
 

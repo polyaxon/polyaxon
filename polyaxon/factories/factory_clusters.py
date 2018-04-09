@@ -13,7 +13,7 @@ class ClusterNodeFactory(factory.DjangoModelFactory):
     kubelet_version = 'v1.7.5'
     os_image = 'Buildroot 2017.02'
     kernel_version = '4.9.13'
-    name = factory.Sequence(lambda i: 'name {}'.format(i))
+    name = factory.Sequence('name {}'.format)
     sequence = factory.Sequence(lambda i: i)
     memory = factory.Sequence(lambda x: x)
     cpu = factory.Sequence(lambda x: x)
@@ -29,8 +29,8 @@ def get_cluster_node(**kwargs):
 
 
 class GPUFactory(factory.DjangoModelFactory):
-    serial = factory.Sequence(lambda i: '{}'.format(i))
-    name = factory.Sequence(lambda i: 'Tesla-{}'.format(i))
+    serial = factory.Sequence('{}'.format)
+    name = factory.Sequence('Tesla-{}'.format)
     memory = factory.Sequence(lambda x: x)
     index = factory.Sequence(lambda i: i)
 

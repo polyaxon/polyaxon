@@ -14,14 +14,14 @@ logger = logging.getLogger('polyaxon.tasks.events')
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_NAMESPACE)
 def handle_events_namespace(cluster_id, payload):
-    logger.info('handling events namespace for cluster: {}'.format(cluster_id))
+    logger.info('handling events namespace for cluster: %s', cluster_id)
     ClusterEvent.objects.create(cluster_id=cluster_id, **payload)
 
 
 @celery_app.task(name=CeleryTasks.EVENTS_HANDLE_RESOURCES)
 def handle_events_resources(payload, persist):
     # here we must persist resources if requested
-    logger.info('handling events resources with persist:{}'.format(persist))
+    logger.info('handling events resources with persist:%s', persist)
     logger.info(payload)
 
 
@@ -30,12 +30,12 @@ def handle_events_job_statues(payload):
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
-    logger.debug('handling events status for job_uuid: {}'.format(job_uuid))
+    logger.debug('handling events status for job_uuid: %s', job_uuid)
 
     try:
         job = ExperimentJob.objects.get(uuid=job_uuid)
     except ExperimentJob.DoesNotExist:
-        logger.info('Job uuid`{}` does not exist'.format(job_uuid))
+        logger.info('Job uuid`%s` does not exist', job_uuid)
         return
 
     # Set the new status
@@ -49,7 +49,7 @@ def handle_events_plugin_job_statues(payload):
     app = details['labels']['app']
     project_uuid = details['labels']['project_uuid']
     project_name = details['labels']['project_name']
-    logger.debug('handling events status for project {} {}'.format(project_name, app))
+    logger.debug('handling events status for project %s %s', project_name, app)
 
     try:
         project = Project.objects.get(uuid=project_uuid)
@@ -58,13 +58,13 @@ def handle_events_plugin_job_statues(payload):
         elif app == settings.APP_LABELS_NOTEBOOK:
             job = project.notebook
         else:
-            logger.info('Plugin job `{}` does not exist'.format(app))
+            logger.info('Plugin job `%s` does not exist', app)
             return
         if job is None:
-            logger.info('Project `{}` Job `{}` does not exist'.format(project_name, app))
+            logger.info('Project `%s` Job `%s` does not exist', project_name, app)
             return
     except Project.DoesNotExist:
-        logger.info('Project `{}` does not exist'.format(project_name))
+        logger.info('Project `%s` does not exist', project_name)
         return
 
     # Set the new status
@@ -81,7 +81,7 @@ def handle_events_job_logs(experiment_name,
     # Must persist resources if logs according to the config
     if not Experiment.objects.filter(uuid=experiment_uuid).exists():
         return
-    logger.debug('handling log event for {} {}'.format(experiment_uuid, job_uuid))
+    logger.debug('handling log event for %s %s', experiment_uuid, job_uuid)
     if task_type and task_idx:
         log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
     xp_logger = logging.getLogger(experiment_name)

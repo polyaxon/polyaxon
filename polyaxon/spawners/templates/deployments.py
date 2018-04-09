@@ -6,6 +6,7 @@ from spawners.templates import constants, pods
 
 
 def get_labels(app, project_name, project_uuid, role=None, type=None):
+    # pylint:disable=redefined-builtin
     labels = {'app': app, 'project_name': project_name, 'project_uuid': project_uuid}
     if role:
         labels['role'] = role
@@ -59,7 +60,7 @@ def get_deployment_spec(namespace,
                         container_name=None,
                         resources=None,
                         role=None,
-                        type=None,
+                        type=None,  # pylint:disable=redefined-builtin
                         replicas=1):
     labels = get_labels(app=app,
                         project_name=project_name,
@@ -96,7 +97,7 @@ def get_deployment(namespace,
                    container_name,
                    resources=None,
                    role=None,
-                   type=None,
+                   type=None,  # pylint:disable=redefined-builtin
                    replicas=1):
     labels = get_labels(app=app,
                         project_name=project_name,

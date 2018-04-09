@@ -5,7 +5,7 @@ from projects.models import Project
 
 
 class ProjectFactory(factory.DjangoModelFactory):
-    name = factory.Sequence(lambda x: "project-{}".format(x))
+    name = factory.Sequence("project-{}".format)
 
     user = factory.SubFactory(UserFactory)
 

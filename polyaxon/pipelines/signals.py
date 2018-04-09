@@ -83,7 +83,9 @@ def new_operation_run_status(sender, **kwargs):
                                     message=instance.message)
     if operation_run.is_done:
         # Notify downstream that instance is done, and that its dependency can start.
-        for op_run in operation_run.downstream_runs.filter(status__status=OperationStatuses.CREATED):
+        downstream_runs = operation_run.downstream_runs.filter(
+            status__status=OperationStatuses.CREATED)
+        for op_run in downstream_runs:
             start_operation_run.delay(operation_run_id=op_run.id)
 
 

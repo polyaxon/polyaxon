@@ -18,7 +18,7 @@ def get_valid_project(project_id):
     try:
         return Project.objects.get(id=project_id)
     except Project.DoesNotExist:
-        logger.info('Project id `{}` does not exist'.format(project_id))
+        logger.info('Project id `%s` does not exist', project_id)
         return None
 
 
@@ -56,13 +56,13 @@ def build_notebook(project_id):
         logger.warning('Failed to build notebook %s', e)
         job.set_status(
             JobLifeCycle.FAILED,
-            message='Failed to build image for notebook.'.format(project.unique_name))
+            message='Failed to build image for notebook.')
         return
     except Repo.DoesNotExist:
         logger.warning('No code was found for this project')
         job.set_status(
             JobLifeCycle.FAILED,
-            message='Failed to build image for notebook.'.format(project.unique_name))
+            message='Failed to build image for notebook.')
         return
 
     if not status:
@@ -84,7 +84,7 @@ def start_notebook(project_id):
         logger.warning('Could not start the notebook, %s', e)
         return
     job_docker_image = '{}:{}'.format(image_name, image_tag)
-    logger.info('Start notebook with built image `{}`'.format(job_docker_image))
+    logger.info('Start notebook with built image `%s`', job_docker_image)
 
     notebook_scheduler.start_notebook(project, image=job_docker_image)
 

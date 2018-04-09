@@ -34,7 +34,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '{}/polyaxon_{}.log'.format(LOG_DIRECTORY, os.getpid()),
-            'maxBytes': 1024*1024*8,  # 8 MByte
+            'maxBytes': 1024 * 1024 * 8,  # 8 MByte
             'backupCount': 5,
             'formatter': 'standard',
         },

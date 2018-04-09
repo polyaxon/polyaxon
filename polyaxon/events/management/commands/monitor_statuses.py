@@ -24,7 +24,7 @@ class Command(BaseMonitorCommand):
                 statuses.run(k8s_manager)
             except ApiException as e:
                 statuses.logger.error(
-                    "Exception when calling CoreV1Api->list_namespaced_pod: %s\n" % e)
+                    "Exception when calling CoreV1Api->list_namespaced_pod: %s\n", e)
                 time.sleep(log_sleep_interval)
             except Exception as e:
-                statuses.logger.exception("Unhandled exception occurred %s\n" % e)
+                statuses.logger.exception("Unhandled exception occurred %s\n", e)

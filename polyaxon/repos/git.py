@@ -18,7 +18,7 @@ logger = logging.getLogger('polyaxon.repos.git')
 def get_repos(user):
     user_repos_root = os.path.join(settings.REPOS_ROOT, user)
     repos = [get_git_repo(os.path.join(user, dir)) for dir in os.listdir(user_repos_root)]
-    return [repo for repo in repos if not (repo is None)]
+    return [repo for repo in repos if repo is not None]
 
 
 def get_git_repo(repo_path, init=False):
@@ -65,13 +65,13 @@ def get_last_commit(repo_path):
     return (commit_hash, get_commit(repo_path, commit_hash)) if commit_hash else None
 
 
-def get_commit(repo_path, commit):
+def get_commit(repo_path, commit):  # pylint:disable=redefined-outer-name
     repo = get_git_repo(repo_path)
     commit = repo.commit(commit)
     return commit
 
 
-def get_committed_files(repo_path, commit):
+def get_committed_files(repo_path, commit):  # pylint:disable=redefined-outer-name
     files_committed = run_command(
         cmd='git diff-tree --no-commit-id --name-only -r {}'.format(commit),
         data=None, location=repo_path, chw=True).split('\n')
@@ -97,7 +97,7 @@ def archive_repo(repo, repo_name):
         repo.archive(fp)
 
 
-def checkout_commit(repo_path, commit=None):
+def checkout_commit(repo_path, commit=None):  # pylint:disable=redefined-outer-name
     """Checkout to a specific commit.
 
     If commit is None then checkout to master.

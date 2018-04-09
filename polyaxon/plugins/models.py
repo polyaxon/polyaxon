@@ -43,6 +43,7 @@ class PluginJobBase(Job):
         return self.__str__()
 
     def _set_status(self, status_model, logger, status, message=None, details=None):
+        # pylint:disable=redefined-outer-name
         current_status = self.last_status
         if status != current_status:
             # Add new status to the job
@@ -68,14 +69,14 @@ class TensorboardJob(PluginJobBase):
     def __str__(self):
         if hasattr(self, 'project'):
             return '{} tensorboard<{}>'.format(self.project, self.image)
-        logger.warning('Tensorboard with id `{}` is orphan.'.format(self.id))
+        logger.warning('Tensorboard with id `%s` is orphan.', self.id)
         return 'Tensorboard {}'.format(self.id)
 
     @cached_property
     def image(self):
         return self.compiled_spec.run_exec.image
 
-    def set_status(self, status, message=None, details=None):
+    def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=TensorboardJobStatus,
                                 logger=logger,
                                 status=status,
@@ -97,10 +98,10 @@ class NotebookJob(PluginJobBase):
     def __str__(self):
         if hasattr(self, 'project'):
             return '{} notebook'.format(self.project)
-        logger.warning('Notebook with id `{}` is orphan.'.format(self.id))
+        logger.warning('Notebook with id `%s` is orphan.', self.id)
         return 'Notebook {}'.format(self.id)
 
-    def set_status(self, status, message=None, details=None):
+    def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=NotebookJobStatus,
                                 logger=logger,
                                 status=status,

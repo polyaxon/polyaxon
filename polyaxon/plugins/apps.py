@@ -6,7 +6,7 @@ class PluginsConfig(AppConfig):
     verbose_name = 'Plugins'
 
     def ready(self):
-        from plugins.signals import (
+        from plugins.signals import (  # noqa
             new_tensorboard_job,
             new_notebook_job,
             new_tensorboard_job_status,

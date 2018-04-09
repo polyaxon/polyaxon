@@ -39,13 +39,13 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
             try:
                 project = Project.objects.get(id=self.project_id)
             except Project.DoesNotExist:
-                logger.info('Project `{}` does not exist anymore, stopping build'.format(
-                    self.project_name))
+                logger.info('Project `%s` does not exist anymore, stopping build',
+                            self.project_name)
                 return check_pulse, True
 
             if not project.notebook or not project.notebook.is_running:
-                logger.info('Project `{}` does not have a notebook anymore, stopping build'.format(
-                    self.project_name))
+                logger.info('Project `%s` does not have a notebook anymore, stopping build',
+                            self.project_name)
                 return check_pulse, True
             else:
                 check_pulse = 0

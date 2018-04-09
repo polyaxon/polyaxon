@@ -66,7 +66,6 @@ class ProjectExperimentListView(ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-
 class GroupExperimentListView(ListAPIView):
     """List all experiments under a group"""
     queryset = Experiment.objects.all()

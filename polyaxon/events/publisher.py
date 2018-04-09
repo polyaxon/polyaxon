@@ -25,9 +25,7 @@ def publish_log(log_line,
     except AttributeError:
         pass
 
-    logger.info("Publishing log event for task: {}.{}, {}".format(task_type,
-                                                                  task_idx,
-                                                                  experiment_name))
+    logger.info("Publishing log event for task: %s.%s, %s", task_type, task_idx, experiment_name)
     handle_events_job_logs.delay(experiment_name=experiment_name,
                                  experiment_uuid=experiment_uuid,
                                  job_uuid=job_uuid,
@@ -40,7 +38,7 @@ def publish_log(log_line,
     except RedisError:
         should_stream = False
     if should_stream:
-        logger.info("Streaming new log event for experiment: {}".format(experiment_uuid))
+        logger.info("Streaming new log event for experiment: %s", experiment_uuid)
 
         with celery_app.producer_or_acquire(None) as producer:
             try:

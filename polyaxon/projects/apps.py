@@ -6,7 +6,4 @@ class ProjectsConfig(AppConfig):
     verbose_name = 'Projects'
 
     def ready(self):
-        from projects.signals import (
-            new_project,
-            project_deleted,
-        )
+        from projects.signals import new_project, project_deleted  # noqa

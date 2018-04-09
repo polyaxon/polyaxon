@@ -1,5 +1,7 @@
 from django.conf import settings
 
+# pylint:disable=line-too-long
+
 start_experiment_value = {
     'master':
         {'pod': {'api_version': 'v1', 'kind': 'Pod',

@@ -77,7 +77,7 @@ class BaseDockerBuilder(object):
                               registry=registry_host,
                               reauth=True)
         except DockerException as e:
-            logger.exception('Failed to connect to registry %s\n' % e)
+            logger.exception('Failed to connect to registry %s\n', e)
 
     def _handle_logs(self, log_line):
         raise NotImplementedError
@@ -121,7 +121,7 @@ class BaseDockerBuilder(object):
         )
 
     def build(self, memory_limit=None):
-        logger.debug('Starting build in `{}`'.format(self.build_repo_path))
+        logger.debug('Starting build in `%s`', self.build_repo_path)
         # Checkout to the correct commit
         if self.image_tag != self.LATEST_IMAGE_TAG:
             git.checkout_commit(repo_path=self.build_repo_path, commit=self.image_tag)

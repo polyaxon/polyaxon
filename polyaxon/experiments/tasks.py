@@ -23,11 +23,11 @@ def build_experiment(self, experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         if self.request.retries < 2:
-            logger.info('Trying again for Experiment `{}`.'.format(experiment_id))
+            logger.info('Trying again for Experiment `%s`.', experiment_id)
             self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
         logger.info('Something went wrong, '
-                    'the Experiment `{}` does not exist anymore.'.format(experiment_id))
+                    'the Experiment `%s` does not exist anymore.', experiment_id)
         return
 
     # No need to build the image, start the experiment directly
@@ -37,8 +37,8 @@ def build_experiment(self, experiment_id):
 
     if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
                                               status_to=ExperimentLifeCycle.BUILDING):
-        logger.info('Experiment id `{}` cannot transition from `{}` to `{}`.'.format(
-            experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING))
+        logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
+                    experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
         return None
 
     # Update experiment status to show that its building
@@ -70,13 +70,13 @@ def start_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         logger.info('Something went wrong, '
-                    'the Experiment `{}` does not exist anymore.'.format(experiment_id))
+                    'the Experiment `%s` does not exist anymore.', experiment_id)
         return
 
     if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
                                               status_to=ExperimentLifeCycle.SCHEDULED):
-        logger.info('Experiment id `{}` cannot transition from `{}` to `{}`.'.format(
-            experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING))
+        logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
+                    experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
         return None
 
     # Check if we need to restart an experiment
@@ -93,7 +93,7 @@ def stop_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         logger.info('Something went wrong, '
-                    'the Experiment `{}` does not exist anymore.'.format(experiment_id))
+                    'the Experiment `%s` does not exist anymore.', experiment_id)
         return
 
     experiment_scheduler.stop_experiment(experiment, update_status=True)
@@ -110,7 +110,7 @@ def set_metrics(experiment_uuid, metrics, created_at=None):
     try:
         experiment = Experiment.objects.get(uuid=experiment_uuid)
     except Experiment.DoesNotExist:
-        logger.info('Experiment uuid `{}` does not exist'.format(experiment_uuid))
+        logger.info('Experiment uuid `%s` does not exist', experiment_uuid)
         return None
 
     kwargs = {}

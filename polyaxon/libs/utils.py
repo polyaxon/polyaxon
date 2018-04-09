@@ -1,4 +1,4 @@
-from distutils.util import strtobool
+from distutils.util import strtobool  # pylint:disable=import-error
 
 from django.utils.crypto import salted_hmac
 

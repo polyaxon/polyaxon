@@ -18,6 +18,8 @@ from django.test.client import FakePayload
 from factories.factory_users import UserFactory
 from polyaxon.config_settings import RedisPools
 
+# pylint:disable=arguments-differ
+
 # Stores the currently valid tokens to check against
 _valid_tokens = dict()
 CONTENT_TYPE_APPLICATION_JSON = 'application/json'

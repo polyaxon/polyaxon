@@ -14,7 +14,7 @@ def delete_path(path):
         else:
             shutil.rmtree(path)
     except OSError:
-        logger.warning('Could not delete path `{}`'.format(path))
+        logger.warning('Could not delete path `%s`', path)
 
 
 def create_path(path):
@@ -23,7 +23,7 @@ def create_path(path):
     except FileExistsError:
         pass
     except OSError as e:
-        logger.warning('Could not create path `{}`, exception %s', e)
+        logger.warning('Could not create path `%s`, exception %s', path, e)
 
 
 def get_tmp_path(path):

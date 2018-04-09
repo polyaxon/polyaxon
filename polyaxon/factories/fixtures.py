@@ -1,5 +1,7 @@
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, PluginSpecification
 
+# flake8: noqa
+
 experiment_group_spec_content = """---
     version: 1
     

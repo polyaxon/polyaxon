@@ -1,5 +1,4 @@
 import math
-import numpy as np
 
 from experiment_groups import search_algorithms
 from experiment_groups.search_algorithms.base import BaseSearchAlgorithm
@@ -52,10 +51,12 @@ class HyperBandSearch(BaseSearchAlgorithm):
 
     def __init__(self, specification):
         super(HyperBandSearch, self).__init__(specification=specification)
-        self.max_iter = self.specification.hp.hyperband.max_iter  # Maximum iterations per configuration
-        self.eta = self.specification.hp.hyperband.eta  # Defines configuration downsampling/elimination rate (default = 3)
-        self.s_max = int(
-            math.log(self.max_iter) / math.log(self.eta)) + 1  # number of times to run hyperband (brackets)
+        # Maximum iterations per configuration
+        self.max_iter = self.specification.hp.hyperband.max_iter
+        # Defines configuration downsampling/elimination rate (default = 3)
+        self.eta = self.specification.hp.hyperband.eta
+        # number of times to run hyperband (brackets)
+        self.s_max = int(math.log(self.max_iter) / math.log(self.eta)) + 1
         # i.e.  # of times to repeat the outer loops over the tradeoffs `s`
         self.B = self.s_max * self.max_iter  # budget per bracket of successive halving
 

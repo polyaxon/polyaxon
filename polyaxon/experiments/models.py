@@ -89,7 +89,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         ordering = ['sequence']
         unique_together = (('project', 'sequence'),)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
             last = Experiment.objects.filter(project=self.project).last()
             self.sequence = 1
@@ -267,7 +267,7 @@ class ExperimentJob(Job):
     def unique_name(self):
         return '{}.{}.{}'.format(self.experiment.unique_name, self.sequence, self.role)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
             last = ExperimentJob.objects.filter(experiment=self.experiment).last()
             self.sequence = 1
@@ -276,7 +276,7 @@ class ExperimentJob(Job):
 
         super(ExperimentJob, self).save(*args, **kwargs)
 
-    def set_status(self, status, message=None, details=None):
+    def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=ExperimentJobStatus,
                                 logger=logger,
                                 status=status,

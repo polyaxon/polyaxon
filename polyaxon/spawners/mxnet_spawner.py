@@ -71,7 +71,7 @@ class MXNetSpawner(ExperimentSpawner):
         self.delete_multi_jobs(task_type=TaskType.SERVER, has_service=self.SERVER_SERVICE)
 
     def get_cluster(self):
-        cluster_def, is_distributed = self.spec.cluster_def
+        cluster_def, _ = self.spec.cluster_def
 
         job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
         cluster_config = {

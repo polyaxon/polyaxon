@@ -51,7 +51,7 @@ class UploadFilesView(UploadView):
                                                      upload_filename='repo')
         except (IOError, os.error) as e:  # pragma: no cover
             logger.warning(
-                'IOError while trying to save posted data ({}): {}'.format(e.errno, e.strerror))
+                'IOError while trying to save posted data (%s): %s', e.errno, e.strerror)
             return HttpResponseServerError()
 
         json_data = self._handle_json_data(request)

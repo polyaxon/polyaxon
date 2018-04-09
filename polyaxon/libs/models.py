@@ -39,21 +39,21 @@ class Singleton(DiffModel):
     def set_cache(self):
         cache.set(self.__class__.__name__, self)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         self.pk = 1
         super(Singleton, self).save(*args, **kwargs)
         self.set_cache()
 
-    def delete(self, *args, **kwargs):
+    def delete(self, *args, **kwargs):  # pylint:disable=arguments-differ
         pass
 
     @classmethod
     def may_be_update(cls, obj):
-        raise NotImplementedError
+        raise NotImplementedError  # noqa
 
     @classmethod
     def load(cls):
-        raise NotImplementedError
+        raise NotImplementedError  # noqa
 
 
 class StatusModel(models.Model):
@@ -111,7 +111,7 @@ class LastStatusMixin(object):
 
     @property
     def last_status(self):
-        raise NotImplemented
+        raise NotImplemented  # noqa
 
     @property
     def is_running(self):
@@ -135,11 +135,11 @@ class LastStatusMixin(object):
 
     @property
     def finished_at(self):
-        raise NotImplemented
+        raise NotImplemented  # noqa
 
     @property
     def started_at(self):
-        raise NotImplemented
+        raise NotImplemented  # noqa
 
     def set_status(self, status, message=None, **kwargs):
-        raise NotImplemented
+        raise NotImplemented  # noqa

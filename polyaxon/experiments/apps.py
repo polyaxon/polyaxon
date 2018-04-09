@@ -6,10 +6,10 @@ class ExperimentsConfig(AppConfig):
     verbose_name = "Experiments"
 
     def ready(self):
-        from experiments.signals import (
+        from experiments.signals import (  # noqa
             new_experiment,
             experiment_deleted,
             new_experiment_job,
             new_experiment_job_status,
-            new_experiment_metric,
+            new_experiment_metric
         )

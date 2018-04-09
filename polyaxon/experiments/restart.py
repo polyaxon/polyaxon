@@ -32,6 +32,5 @@ def handle_restarted_experiment(experiment):
             job_uuid='all',
         )
         logger.warning(
-            'Could not copy the outputs of experiment `{}` into experiment `{}`'.format(
-                experiment.original_experiment.unique_name, experiment.unique_name
-            ))
+            'Could not copy the outputs of experiment `%s` into experiment `%s`',
+            experiment.original_experiment.unique_name, experiment.unique_name)

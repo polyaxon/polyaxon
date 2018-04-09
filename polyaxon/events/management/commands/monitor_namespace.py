@@ -26,7 +26,7 @@ class Command(BaseMonitorCommand):
                 namespace.run(k8s_manager, cluster)
             except ApiException as e:
                 namespace.logger.error(
-                    "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n" % e)
+                    "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n", e)
                 time.sleep(log_sleep_interval)
             except Exception as e:
-                namespace.logger.exception("Unhandled exception occurred: %s\n" % e)
+                namespace.logger.exception("Unhandled exception occurred: %s\n", e)

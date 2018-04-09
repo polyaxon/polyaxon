@@ -1,6 +1,5 @@
 import logging
 
-from experiment_groups import search_algorithms
 from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
 from experiments.tasks import build_experiment, stop_experiment
@@ -18,11 +17,11 @@ def _get_group_or_retry(experiment_group_id, task):
 
     # We retry if experiment group does not exist
     if task.request.retries < 2:
-        logger.info('Trying again for ExperimentGroup `{}`.'.format(experiment_group_id))
+        logger.info('Trying again for ExperimentGroup `%s`.', experiment_group_id)
         task.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
     logger.info('Something went wrong, '
-                'the ExperimentGroup `{}` does not exist anymore.'.format(experiment_group_id))
+                'the ExperimentGroup `%s` does not exist anymore.', experiment_group_id)
     return None
 
 
@@ -37,7 +36,7 @@ def create_group_experiments(self, experiment_group_id, iteration=0):
     suggestions = experiment_group.get_suggestions(iteration=iteration)
 
     if not suggestions:
-        logger.warning('Search algorithm was not found `{}`'.format(specification.search_algorithm))
+        logger.warning('Search algorithm was not found `%s`', specification.search_algorithm)
         return
 
     for suggestion in suggestions:

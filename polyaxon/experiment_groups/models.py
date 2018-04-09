@@ -51,7 +51,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         ordering = ['sequence']
         unique_together = (('project', 'sequence'),)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
             last = ExperimentGroup.objects.filter(project=self.project).last()
             self.sequence = 1

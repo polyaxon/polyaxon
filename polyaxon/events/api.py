@@ -43,13 +43,13 @@ def _get_job(experiment, job_sequence):
     try:
         job = ExperimentJob.objects.get(experiment=experiment, sequence=job_sequence)
     except (ExperimentJob.DoesNotExist, ValidationError):
-        logger.info('Job with experiment:`{}` sequence:`{}` does not exist'.format(
-            experiment.unique_name, job_sequence))
+        logger.info('Job with experiment:`%s` sequence:`%s` does not exist',
+                    experiment.unique_name, job_sequence)
         raise exceptions.NotFound('Experiment was not found')
 
     if not job.is_running:
-        logger.info('Job with experiment:`{}` sequence:`{}` is not currently running'.format(
-            experiment.unique_name, job_sequence))
+        logger.info('Job with experiment:`%s` sequence:`%s` is not currently running',
+                    experiment.unique_name, job_sequence)
         raise exceptions.NotFound('Job was not running')
 
     return job
@@ -58,9 +58,8 @@ def _get_job(experiment, job_sequence):
 def _get_validated_experiment(project, experiment_sequence):
     experiment = _get_experiment(project, experiment_sequence)
     if not experiment.is_running:
-        logger.info('Experiment project `{}` num `{}` is not currently running'.format(
-            project.name, experiment.sequence
-        ))
+        logger.info('Experiment project `%s` num `%s` is not currently running',
+                    project.name, experiment.sequence)
         raise exceptions.NotFound('Experiment was not running')
 
     return experiment
@@ -77,8 +76,7 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
     job_name = '{}.{}'.format(job.role, job.sequence)
 
     if not RedisToStream.is_monitored_job_resources(job_uuid=job_uuid):
-        logger.info(
-            'Job resources with uuid `{}` is now being monitored'.format(job_name))
+        logger.info('Job resources with uuid `%s` is now being monitored', job_name)
         RedisToStream.monitor_job_resources(job_uuid=job_uuid)
 
     if job_uuid in request.app.job_resources_ws_mangers:
@@ -89,12 +87,12 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
 
     def handle_job_disconnected_ws(ws):
         ws_manager.remove_sockets(ws)
-        if len(ws_manager.ws) == 0:
-            logger.info('Stopping resources monitor for job {}'.format(job_name))
+        if not ws_manager.ws:
+            logger.info('Stopping resources monitor for job %s', job_name)
             RedisToStream.remove_job_resources(job_uuid=job_uuid)
             request.app.job_resources_ws_mangers.pop(job_uuid, None)
 
-        logger.info('Quitting resources socket for job {}'.format(job_name))
+        logger.info('Quitting resources socket for job %s', job_name)
 
     ws_manager.add_socket(ws)
     should_check = 0
@@ -106,7 +104,7 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
         if should_check > RESOURCES_CHECK:
             job.refresh_from_db()
             if job.is_done:
-                logger.info('removing all socket because the job `{}` is done'.format(job_name))
+                logger.info('removing all socket because the job `%s` is done', job_name)
                 ws_manager.ws = set([])
                 handle_job_disconnected_ws(ws)
                 return
@@ -121,7 +119,7 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
                 return
 
         # Just to check if connection closed
-        if ws._connection_lost:
+        if ws._connection_lost:  # pylint:disable=protected-access
             handle_job_disconnected_ws(ws)
             return
         await asyncio.sleep(SOCKET_SLEEP)
@@ -137,7 +135,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
 
     if not RedisToStream.is_monitored_experiment_resources(experiment_uuid=experiment_uuid):
         logger.info(
-            'Experiment resource with uuid `{}` is now being monitored'.format(experiment_uuid))
+            'Experiment resource with uuid `%s` is now being monitored', experiment_uuid)
         RedisToStream.monitor_experiment_resources(experiment_uuid=experiment_uuid)
 
     if experiment_uuid in request.app.experiment_resources_ws_mangers:
@@ -148,12 +146,12 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
 
     def handle_experiment_disconnected_ws(ws):
         ws_manager.remove_sockets(ws)
-        if len(ws_manager.ws) == 0:
-            logger.info('Stopping resources monitor for uuid {}'.format(experiment_uuid))
+        if not ws_manager.ws:
+            logger.info('Stopping resources monitor for uuid %s', experiment_uuid)
             RedisToStream.remove_experiment_resources(experiment_uuid=experiment_uuid)
             request.app.experiment_resources_ws_mangers.pop(experiment_uuid, None)
 
-        logger.info('Quitting resources socket for uuid {}'.format(experiment_uuid))
+        logger.info('Quitting resources socket for uuid %s', experiment_uuid)
 
     jobs = []
     for job in experiment.jobs.values('uuid', 'role', 'sequence'):
@@ -170,8 +168,8 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
         if should_check > RESOURCES_CHECK:
             experiment.refresh_from_db()
             if experiment.is_done:
-                logger.info('removing all socket because the experiment `{}` is done'.format(
-                    experiment_uuid))
+                logger.info(
+                    'removing all socket because the experiment `%s` is done', experiment_uuid)
                 ws_manager.ws = set([])
                 handle_experiment_disconnected_ws(ws)
                 return
@@ -186,7 +184,7 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
                 return
 
         # Just to check if connection closed
-        if ws._connection_lost:
+        if ws._connection_lost:  # pylint:disable=protected-access
             handle_experiment_disconnected_ws(ws)
             return
 
@@ -203,14 +201,14 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
     job_uuid = job.uuid.hex
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
-        logger.info('Job uuid `{}` logs is now being monitored'.format(job_uuid))
+        logger.info('Job uuid `%s` logs is now being monitored', job_uuid)
         RedisToStream.monitor_job_logs(job_uuid=job_uuid)
 
     # start consumer
     if job_uuid in request.app.job_logs_consumers:
         consumer = request.app.job_logs_consumers[job_uuid]
     else:
-        logger.info('Add job log consumer for {}'.format(job_uuid))
+        logger.info('Add job log consumer for %s', job_uuid)
         consumer = Consumer(
             routing_key='{}.{}.{}'.format(RoutingKeys.LOGS_SIDECARS,
                                           experiment.uuid.hex,
@@ -239,20 +237,19 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
         if num_message_retries > MAX_RETRIES:
             job.refresh_from_db()
             if job.is_done:
-                logger.info('removing all socket because the job `{}` is done'.format(
-                    job_uuid))
+                logger.info('removing all socket because the job `%s` is done', job_uuid)
                 consumer.ws = set([])
             else:
                 num_message_retries -= CHECK_DELAY
 
         # Just to check if connection closed
-        if ws._connection_lost:
-            logger.info('Quitting logs socket for job uuid {}'.format(job_uuid))
+        if ws._connection_lost:  # pylint:disable=protected-access
+            logger.info('Quitting logs socket for job uuid %s', job_uuid)
             consumer.remove_sockets({ws, })
             should_quite = True
 
-        if len(consumer.ws) == 0:
-            logger.info('Stopping logs monitor for job uuid {}'.format(job_uuid))
+        if not consumer.ws:
+            logger.info('Stopping logs monitor for job uuid %s', job_uuid)
             RedisToStream.remove_job_logs(job_uuid=job_uuid)
             # if job_uuid in request.app.job_logs_consumers:
             #     consumer = request.app.job_logs_consumers.pop(job_uuid, None)
@@ -275,14 +272,14 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
     experiment_uuid = experiment.uuid.hex
 
     if not RedisToStream.is_monitored_experiment_logs(experiment_uuid=experiment_uuid):
-        logger.info('Experiment uuid `{}` logs is now being monitored'.format(experiment_uuid))
+        logger.info('Experiment uuid `%s` logs is now being monitored', experiment_uuid)
         RedisToStream.monitor_experiment_logs(experiment_uuid=experiment_uuid)
 
     # start consumer
     if experiment_uuid in request.app.experiment_logs_consumers:
         consumer = request.app.experiment_logs_consumers[experiment_uuid]
     else:
-        logger.info('Add experiment log consumer for {}'.format(experiment_uuid))
+        logger.info('Add experiment log consumer for %s', experiment_uuid)
         consumer = Consumer(
             routing_key='{}.{}.*'.format(RoutingKeys.LOGS_SIDECARS, experiment_uuid),
             queue='{}.{}'.format(CeleryQueues.STREAM_LOGS_SIDECARS, experiment_uuid))
@@ -309,20 +306,20 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
         if num_message_retries > MAX_RETRIES:
             experiment.refresh_from_db()
             if experiment.is_done:
-                logger.info('removing all socket because the experiment `{}` is done'.format(
-                    experiment_uuid))
+                logger.info(
+                    'removing all socket because the experiment `%s` is done', experiment_uuid)
                 consumer.ws = set([])
             else:
                 num_message_retries -= CHECK_DELAY
 
         # Just to check if connection closed
-        if ws._connection_lost:
-            logger.info('Quitting logs socket for experiment uuid {}'.format(experiment_uuid))
+        if ws._connection_lost:  # pylint:disable=protected-access
+            logger.info('Quitting logs socket for experiment uuid %s', experiment_uuid)
             consumer.remove_sockets({ws, })
             should_quite = True
 
-        if len(consumer.ws) == 0:
-            logger.info('Stopping logs monitor for experiment uuid {}'.format(experiment_uuid))
+        if not consumer.ws:
+            logger.info('Stopping logs monitor for experiment uuid %s', experiment_uuid)
             RedisToStream.remove_experiment_logs(experiment_uuid=experiment_uuid)
             # if experiment_uuid in request.app.experiment_logs_consumers:
             #     consumer = request.app.experiment_logs_consumers.pop(experiment_uuid, None)
@@ -336,40 +333,43 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
         await asyncio.sleep(SOCKET_SLEEP)
 
 
+EXPERIMENT_URL = '/v1/<username>/<project_name>/experiments/<experiment_sequence>'
+WS_EXPERIMENT_URL = '/ws{}'.format(EXPERIMENT_URL)
+
 # Job urls
 app.add_websocket_route(
     job_resources,
-    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/resources')
+    '{}/jobs/<job_sequence>/resources'.format(EXPERIMENT_URL))
 app.add_websocket_route(
     job_resources,
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/resources')
+    '{}/jobs/<job_sequence>/resources'.format(WS_EXPERIMENT_URL))
 
 app.add_websocket_route(
     job_logs,
-    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/logs')
+    '{}/jobs/<job_sequence>/logs'.format(EXPERIMENT_URL))
 app.add_websocket_route(
     job_logs,
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/jobs/<job_sequence>/logs')
+    '{}/jobs/<job_sequence>/logs'.format(WS_EXPERIMENT_URL))
 
 
 # Experiment urls
 app.add_websocket_route(
     experiment_resources,
-    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/resources')
+    '{}/resources'.format(EXPERIMENT_URL))
 app.add_websocket_route(
     experiment_resources,
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/resources')
+    '{}/resources'.format(WS_EXPERIMENT_URL))
 
 app.add_websocket_route(
     experiment_logs,
-    '/v1/<username>/<project_name>/experiments/<experiment_sequence>/logs')
+    '{}/logs'.format(EXPERIMENT_URL))
 app.add_websocket_route(
     experiment_logs,
-    '/ws/v1/<username>/<project_name>/experiments/<experiment_sequence>/logs')
+    '{}/logs'.format(WS_EXPERIMENT_URL))
 
 
 @app.listener('after_server_start')
-async def notify_server_started(app, loop):
+async def notify_server_started(app, loop):  # pylint:disable=redefined-outer-name
     app.job_resources_ws_mangers = {}
     app.experiment_resources_ws_mangers = {}
     app.job_logs_consumers = {}
@@ -377,7 +377,7 @@ async def notify_server_started(app, loop):
 
 
 @app.listener('after_server_stop')
-async def notify_server_stopped(app, loop):
+async def notify_server_stopped(app, loop):  # pylint:disable=redefined-outer-name
     app.job_resources_ws_mangers = {}
     app.experiment_resources_ws_manger = {}
 

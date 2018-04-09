@@ -18,8 +18,8 @@ def get_experiment_image_info(experiment):
                                             git_url=experiment_spec.run_exec.git)
         except ExternalRepo.DoesNotExist:
             logger.error(
-                'Something went wrong, '
-                'the external repo `{}` was not found'.format(experiment_spec.run_exec.git))
+                'Something went wrong, the external repo `%s` was not found',
+                experiment_spec.run_exec.git)
             raise ValueError('Repo was not found for `{}`.'.format(experiment_spec.run_exec.git))
 
         repo_name = repo.name
@@ -42,8 +42,8 @@ def get_job_image_info(project, job):
                                             git_url=job_spec.run_exec.git)
         except ExternalRepo.DoesNotExist:
             logger.error(
-                'Something went wrong, '
-                'the external repo `{}` was not found'.format(job_spec.run_exec.git))
+                'Something went wrong, the external repo `%s` was not found',
+                job_spec.run_exec.git)
             raise ValueError('Repo was not found for `{}`.'.format(job_spec.run_exec.git))
 
         repo_name = repo.name
@@ -60,5 +60,5 @@ def get_job_image_info(project, job):
 
 def get_notebook_image_info(project, job):
     """Return the image name and image tag for a job"""
-    image_name, image_tag = get_job_image_info(project, job)
+    image_name, _ = get_job_image_info(project, job)
     return image_name, NotebookDockerBuilder.LATEST_IMAGE_TAG

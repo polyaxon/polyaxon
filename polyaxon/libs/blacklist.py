@@ -39,7 +39,7 @@ NAME_BLACKLIST = [
 def validate_blacklist_name(name):
     """Validates slug name against a blacklist"""
     if name is None:
-        raise ValidationError(_('A short name must be supplied.'))
+        raise ValidationError('A short name must be supplied.')
 
     if name in NAME_BLACKLIST:
         raise ValidationError('The short name is a reserved word or already taken.')

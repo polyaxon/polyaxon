@@ -1,6 +1,6 @@
 import os
 
-from distutils.util import strtobool
+from distutils.util import strtobool  # pylint:disable=import-error
 
 from unipath import Path
 
@@ -24,8 +24,8 @@ class SettingConfig(object):
         self._secret_keys = set()
 
     @classmethod
-    def read_configs(cls, config_values):
-        config = reader.read(config_values)
+    def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
+        config = reader.read(config_values)  # pylint:disable=redefined-outer-name
         return cls(**config) if config else None
 
     def get_requested_params(self, include_secrets=False, to_str=False):
@@ -48,7 +48,7 @@ class SettingConfig(object):
         """
         return self._get_typed_value(key=key,
                                      target_type=int,
-                                     type_convert=lambda x: int(x),
+                                     type_convert=int,
                                      is_optional=is_optional,
                                      is_secret=is_secret)
 
@@ -63,7 +63,7 @@ class SettingConfig(object):
         """
         return self._get_typed_value(key=key,
                                      target_type=float,
-                                     type_convert=lambda x: float(x),
+                                     type_convert=float,
                                      is_optional=is_optional,
                                      is_secret=is_secret)
 
@@ -93,7 +93,7 @@ class SettingConfig(object):
         """
         return self._get_typed_value(key=key,
                                      target_type=str,
-                                     type_convert=lambda x: str(x),
+                                     type_convert=str,
                                      is_optional=is_optional,
                                      is_secret=is_secret)
 

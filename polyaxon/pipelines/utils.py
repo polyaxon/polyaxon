@@ -53,8 +53,8 @@ def get_pipeline_run(pipeline_run_id=None, pipeline_run_uuid=None):
     try:
         if pipeline_run_uuid:
             return PipelineRun.objects.get(uuid=pipeline_run_uuid)
-        else:
-            return PipelineRun.objects.get(id=pipeline_run_id)
+
+        return PipelineRun.objects.get(id=pipeline_run_id)
     except PipelineRun.DoesNotExist:
         return None
 
@@ -67,8 +67,8 @@ def get_operation_run(operation_run_id=None, operation_run_uuid=None):
     try:
         if operation_run_uuid:
             return OperationRun.objects.get(uuid=operation_run_uuid)
-        else:
-            return OperationRun.objects.get(id=operation_run_id)
+
+        return OperationRun.objects.get(id=operation_run_id)
     except OperationRun.DoesNotExist:
         return None
 

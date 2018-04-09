@@ -14,7 +14,7 @@ def get_job_repo_path(job, project):
         except ExternalRepo.DoesNotExist:
             logger.error(
                 'Something went wrong, '
-                'the external repo `{}` was not found'.format(job_spec.run_exec.git))
+                'the external repo `%s` was not found', job_spec.run_exec.git)
             raise ValueError('Repo was not found for `{}`.'.format(job_spec.run_exec.git))
 
         repo_path = repo.path

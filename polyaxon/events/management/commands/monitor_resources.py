@@ -32,7 +32,7 @@ class Command(BaseMonitorCommand):
             try:
                 resources.run(containers, node, persist)
             except Exception as e:
-                resources.logger.exception("Unhandled exception occurred %s\n" % e)
+                resources.logger.exception("Unhandled exception occurred %s\n", e)
 
             time.sleep(log_sleep_interval)
             if node:

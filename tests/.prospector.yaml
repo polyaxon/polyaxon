@@ -1,0 +1,6 @@
+inherits:
+  - ../config/.prospector.yaml
+
+pylint:
+  disable:
+    - import-error

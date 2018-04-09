@@ -23,7 +23,9 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.UserModel = get_user_model()
+        # pylint:disable= protected-access
         self.username_field = self.UserModel._meta.get_field(self.UserModel.USERNAME_FIELD)
+        # pylint:disable= protected-access
         self.email_field = self.UserModel._meta.get_field('email')
 
     def add_arguments(self, parser):

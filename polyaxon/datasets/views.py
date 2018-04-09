@@ -4,11 +4,7 @@ import os
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from django.conf import settings
-from django.http import HttpResponseServerError
 
 from datasets.models import Dataset
 from datasets.permissions import IsDatasetOwnerOrPublicReadOnly, has_dataset_permissions
@@ -49,22 +45,22 @@ class UploadDataView(APIView):
                 destination.write(chunk)
         return filename
 
-    def put(self, request, *args, **kwargs):
-        user = request.user
-        dataset = self.get_object()
-        path = os.path.join(settings.UPLOAD_ROOT, user.username)
-        if not os.path.exists(path):
-            os.makedirs(path)
-        try:
-            tar_file_name = self._handle_posted_data(request, repo, path)
-        except (IOError, os.error) as e:  # pragma: no cover
-            logger.warning(
-                'IOError while trying to save posted data ({}): {}'.format(e.errno, e.strerror))
-            return HttpResponseServerError()
-
-        # handle_new_data.delay(user_id=user.id,
-        #                       dataset_id=dataset.id,
-        #                       tar_file_name=tar_file_name)
-
-        # do some stuff with uploaded file
-        return Response(status=204)
+    # def put(self, request, *args, **kwargs):
+    #     user = request.user
+    #     dataset = self.get_object()
+    #     path = os.path.join(settings.UPLOAD_ROOT, user.username)
+    #     if not os.path.exists(path):
+    #         os.makedirs(path)
+    #     try:
+    #         tar_file_name = self._handle_posted_data(request, repo, path)
+    #     except (IOError, os.error) as e:  # pragma: no cover
+    #         logger.warning(
+    #             'IOError while trying to save posted data (%s): %s', e.errno, e.strerror)
+    #         return HttpResponseServerError()
+    #
+    #     # handle_new_data.delay(user_id=user.id,
+    #     #                       dataset_id=dataset.id,
+    #     #                       tar_file_name=tar_file_name)
+    #
+    #     # do some stuff with uploaded file
+    #     return Response(status=204)

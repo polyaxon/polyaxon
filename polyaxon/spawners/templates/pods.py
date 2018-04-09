@@ -57,13 +57,14 @@ def get_volume(volume, claim_name=None, volume_mount=None):
     if claim_name:
         pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name)
         return client.V1Volume(name=volume, persistent_volume_claim=pv_claim)
-    elif volume_mount:
+
+    if volume_mount:
         return client.V1Volume(
             name=volume,
             host_path=client.V1HostPathVolumeSource(path=volume_mount))
-    else:
-        empty_dir = client.V1EmptyDirVolumeSource()
-        return client.V1Volume(name=volume, empty_dir=empty_dir)
+
+    empty_dir = client.V1EmptyDirVolumeSource()
+    return client.V1Volume(name=volume, empty_dir=empty_dir)
 
 
 def get_resources(resources):

@@ -15,7 +15,8 @@ class ScheduleExperimentTask(ClassBasedTask):
         experiment_id = kwargs['experiment_id']
         experiment = get_valid_experiment(experiment_id=experiment_id)
         if not experiment:
-            raise OperationRunError('The Experiment `{}` does not exist anymore.'.format(experiment_id))
+            raise OperationRunError(
+                'The Experiment `{}` does not exist anymore.'.format(experiment_id))
         build_experiment.apply_async(experiment_id=experiment_id)
 
 

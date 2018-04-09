@@ -18,7 +18,7 @@ logger = logging.getLogger('polyaxon.tasks.pipelines')
 def start_pipeline_run(self, pipeline_run_id):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `{}` does not exist any more.'.format(pipeline_run_id))
+        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     pipeline_run.on_schedule()
     dag, op_runs = pipeline_run.dag
@@ -44,7 +44,7 @@ def start_pipeline_run(self, pipeline_run_id):
 def start_operation_run(operation_run_id):
     operation_run = get_operation_run(operation_run_id=operation_run_id)
     if not operation_run:
-        logger.info('Operation `{}` does not exist any more.'.format(operation_run_id))
+        logger.info('Operation `%s` does not exist any more.', operation_run_id)
 
     operation_run.schedule_start()
 
@@ -53,7 +53,7 @@ def start_operation_run(operation_run_id):
 def stop_pipeline_operation_runs(pipeline_run_id, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `{}` does not exist any more.'.format(pipeline_run_id))
+        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     stop_operation_runs_for_pipeline_run(pipeline_run, message=message)
 
@@ -62,7 +62,7 @@ def stop_pipeline_operation_runs(pipeline_run_id, message=None):
 def skip_pipeline_operation_runs(pipeline_run_id, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `{}` does not exist any more.'.format(pipeline_run_id))
+        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     # We stop all op runs first
     stop_operation_runs_for_pipeline_run(pipeline_run, message=message)
@@ -74,7 +74,7 @@ def skip_pipeline_operation_runs(pipeline_run_id, message=None):
 def check_pipeline_run_status(pipeline_run_id, status, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `{}` does not exist any more.'.format(pipeline_run_id))
+        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     if status in OperationStatuses.DONE_STATUS:
         status = PipelineStatuses.FINISHED

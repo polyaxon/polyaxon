@@ -95,7 +95,7 @@ class ClusterNode(models.Model):
     def __str__(self):
         return '{}/{}'.format(self.cluster, self.name)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
             last = ClusterNode.objects.filter(cluster=self.cluster).last()
             self.sequence = 1

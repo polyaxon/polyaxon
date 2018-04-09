@@ -30,9 +30,9 @@ class ProjectListView(ListAPIView):
         if self.request.user.is_staff or self.request.user.username == username:
             # User checking own projects
             return queryset.filter(user__username=username)
-        else:
-            # Use checking other user public projects
-            return queryset.filter(user__username=username, is_public=True)
+
+        # Use checking other user public projects
+        return queryset.filter(user__username=username, is_public=True)
 
 
 class ProjectDetailView(RetrieveUpdateDestroyAPIView):

@@ -268,7 +268,7 @@ def start_experiment(experiment):
                                   message='External git repo was note found.')
             return
         job_docker_image = '{}:{}'.format(image_name, image_tag)
-        logger.info('Start experiment with built image `{}`'.format(job_docker_image))
+        logger.info('Start experiment with built image `%s`', job_docker_image)
     else:
         logger.info('Start experiment with default image.')
 

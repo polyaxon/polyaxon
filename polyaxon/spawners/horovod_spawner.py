@@ -12,9 +12,6 @@ class HorovodSpawner(ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True
 
-    def get_env_vars(self, task_type, task_idx):
-        raise NotImplemented
-
     @property
     def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
@@ -45,7 +42,7 @@ class HorovodSpawner(ExperimentSpawner):
         self.delete_multi_jobs(task_type=TaskType.WORKER, has_service=self.WORKER_SERVICE)
 
     def get_cluster(self):
-        cluster_def, is_distributed = self.spec.cluster_def
+        cluster_def, _ = self.spec.cluster_def
 
         job_name = self.pod_manager.get_job_name(task_type=TaskType.MASTER, task_idx=0)
         cluster_config = {

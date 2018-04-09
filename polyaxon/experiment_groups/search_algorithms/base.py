@@ -5,4 +5,4 @@ class BaseSearchAlgorithm(object):
         self.specification = specification
 
     def get_suggestions(self):
-        raise NotImplemented
+        raise NotImplemented  # noqa

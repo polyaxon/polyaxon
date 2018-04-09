@@ -6,7 +6,6 @@ doc-warnings: true
 
 max-line-length: 100
 
-
 ignore-patterns:
   - __init__.py
   - (^|/)migrations(/|$)
@@ -35,6 +34,7 @@ pylint:
     - too-many-locals
     - unused-argument
     - too-many-return-statements
+    - inconsistent-return-statements
   enable:
     - missing-final-newline
   options:

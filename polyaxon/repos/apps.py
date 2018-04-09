@@ -6,4 +6,4 @@ class ReposConfig(AppConfig):
     verbose_name = 'Repos'
 
     def ready(self):
-        from repos.signals import new_repo, new_external_repo, repo_deleted, external_repo_deleted
+        from repos.signals import new_repo, new_external_repo, repo_deleted, external_repo_deleted   # noqa
