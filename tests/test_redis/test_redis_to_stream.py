@@ -1,8 +1,7 @@
 import uuid
 
-from tests.utils import BaseTest
-
 from libs.redis_db import RedisToStream
+from tests.utils import BaseTest
 
 
 class TestRedisToStream(BaseTest):

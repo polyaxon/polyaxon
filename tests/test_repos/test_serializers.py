@@ -1,8 +1,7 @@
-from tests.utils import BaseTest
-
 from factories.factory_repos import RepoFactory
 from repos.models import Repo
 from repos.serializers import RepoSerializer
+from tests.utils import BaseTest
 
 
 class TestRepoSerializer(BaseTest):

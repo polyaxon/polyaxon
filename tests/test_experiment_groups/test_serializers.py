@@ -1,8 +1,7 @@
-from tests.utils import BaseTest
-
 from experiment_groups.models import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from factories.factory_experiment_groups import ExperimentGroupFactory
+from tests.utils import BaseTest
 
 
 class TestExperimentGroupSerializer(BaseTest):

@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 from rest_framework import status
-from tests.utils import BaseViewTest
 
 from experiment_groups.models import ExperimentGroup
 from experiments.models import Experiment
@@ -10,6 +9,7 @@ from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
 from projects.models import Project
 from projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from tests.utils import BaseViewTest
 
 
 class TestProjectCreateViewV1(BaseViewTest):

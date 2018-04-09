@@ -2,9 +2,6 @@ from unittest.mock import patch
 
 from rest_framework import status
 
-from factories.factory_repos import RepoFactory
-from tests.utils import BaseViewTest
-
 from experiments.models import (
     Experiment,
     ExperimentJob,
@@ -30,9 +27,11 @@ from factories.factory_experiments import (
     ExperimentStatusFactory
 )
 from factories.factory_projects import ProjectFactory
+from factories.factory_repos import RepoFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
 from polyaxon.urls import API_V1
 from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
+from tests.utils import BaseViewTest
 
 
 class TestProjectExperimentListViewV1(BaseViewTest):

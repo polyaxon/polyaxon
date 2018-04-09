@@ -1,9 +1,8 @@
-from tests.utils import BaseTest
-
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.fixtures import plugin_spec_parsed_content
 from plugins.models import NotebookJob, TensorboardJob
 from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
+from tests.utils import BaseTest
 
 
 class BasePluginJobSerializerTest(BaseTest):

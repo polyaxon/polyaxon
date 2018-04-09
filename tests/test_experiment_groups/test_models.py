@@ -1,13 +1,12 @@
 from unittest.mock import patch
 
-from tests.utils import BaseTest
-
 from experiment_groups.tasks import stop_group_experiments
 from experiments.models import Experiment, ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 from spawners.utils.constants import ExperimentLifeCycle
+from tests.utils import BaseTest
 
 
 class TestExperimentGroupModel(BaseTest):

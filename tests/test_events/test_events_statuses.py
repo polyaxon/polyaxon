@@ -1,13 +1,3 @@
-from tests.fixtures import (
-    status_experiment_job_event,
-    status_experiment_job_event_with_conditions,
-    status_notebook_job_event,
-    status_notebook_job_event_with_conditions,
-    status_tensorboard_job_event,
-    status_tensorboard_job_event_with_conditions
-)
-from tests.utils import BaseTest
-
 from django.conf import settings
 
 from events.tasks import handle_events_job_statues, handle_events_plugin_job_statues
@@ -18,6 +8,15 @@ from factories.factory_projects import ProjectFactory
 from plugins.models import NotebookJobStatus, TensorboardJobStatus
 from spawners.utils.constants import JobLifeCycle
 from spawners.utils.jobs import get_job_state
+from tests.fixtures import (
+    status_experiment_job_event,
+    status_experiment_job_event_with_conditions,
+    status_notebook_job_event,
+    status_notebook_job_event_with_conditions,
+    status_tensorboard_job_event,
+    status_tensorboard_job_event_with_conditions
+)
+from tests.utils import BaseTest
 
 
 class TestEventsBaseJobsStatusesHandling(BaseTest):

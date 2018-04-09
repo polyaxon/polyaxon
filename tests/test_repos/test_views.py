@@ -4,7 +4,6 @@ import os
 from unittest.mock import patch
 
 from rest_framework import status
-from tests.utils import BaseViewTest
 
 from django.conf import settings
 from django.core.files import File
@@ -18,6 +17,7 @@ from polyaxon.urls import API_V1
 from repos import git
 from repos.models import Repo
 from repos.serializers import RepoSerializer
+from tests.utils import BaseViewTest
 
 
 class TestRepoDetailViewV1(BaseViewTest):

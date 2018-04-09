@@ -1,5 +1,3 @@
-from tests.utils import BaseTest
-
 from clusters.models import Cluster, ClusterNode, NodeGPU
 from clusters.serializers import (
     ClusterNodeDetailSerializer,
@@ -8,6 +6,7 @@ from clusters.serializers import (
     GPUSerializer
 )
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
+from tests.utils import BaseTest
 
 
 class TestGPUSerializer(BaseTest):

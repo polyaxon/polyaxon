@@ -4,9 +4,6 @@ from unittest.mock import patch
 
 import mock
 
-from tests.fixtures import start_experiment_value
-from tests.utils import BaseTest, BaseViewTest
-
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
@@ -35,6 +32,8 @@ from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
+from tests.fixtures import start_experiment_value
+from tests.utils import BaseTest, BaseViewTest
 
 
 class TestExperimentModel(BaseTest):

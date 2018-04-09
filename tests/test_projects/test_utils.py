@@ -2,8 +2,6 @@ import os
 
 from unittest.mock import patch
 
-from tests.utils import BaseTest
-
 from experiments.paths import (
     create_experiment_outputs_path,
     get_experiment_logs_path,
@@ -18,6 +16,7 @@ from projects.paths import (
     get_project_logs_path,
     get_project_outputs_path
 )
+from tests.utils import BaseTest
 
 
 class TestProjectUtils(BaseTest):

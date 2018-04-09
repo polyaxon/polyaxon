@@ -3,7 +3,6 @@ from unittest.mock import patch
 import mock
 
 from rest_framework import status
-from tests.utils import BaseViewTest
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
@@ -18,6 +17,7 @@ from spawners.project_spawner import ProjectSpawner
 from spawners.templates.constants import DEPLOYMENT_NAME
 from spawners.tensorboard_spawner import TensorboardSpawner
 from spawners.utils.constants import JobLifeCycle
+from tests.utils import BaseViewTest
 
 
 class TestStartTensorboardViewV1(BaseViewTest):

@@ -1,5 +1,4 @@
 from rest_framework import status
-from tests.utils import BaseViewTest
 
 from clusters.models import Cluster, ClusterNode, NodeGPU
 from clusters.serializers import (
@@ -11,6 +10,7 @@ from clusters.serializers import (
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
 from polyaxon.urls import API_V1
 from spawners.utils.constants import NodeRoles
+from tests.utils import BaseViewTest
 
 
 class TestClusterDetailViewV1(BaseViewTest):

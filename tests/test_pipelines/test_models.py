@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 from mock import patch
-from tests.utils import BaseTest
 
 from django.conf import settings
 from django.utils import timezone
@@ -14,6 +13,7 @@ from factories.pipelines import (
 )
 from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
 from pipelines.models import OperationRunStatus, PipelineRunStatus
+from tests.utils import BaseTest
 
 
 class TestPipelineModel(BaseTest):

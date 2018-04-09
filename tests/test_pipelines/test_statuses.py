@@ -1,6 +1,5 @@
-from tests.utils import BaseTest
-
 from pipelines.constants import OperationStatuses, PipelineStatuses
+from tests.utils import BaseTest
 
 
 class TestStatusesTransition(BaseTest):

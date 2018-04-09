@@ -1,10 +1,10 @@
 from mock import patch
-from tests.utils import BaseTest
 
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from spawners.utils.constants import JobLifeCycle
+from tests.utils import BaseTest
 
 
 class TestPluginsModel(BaseTest):

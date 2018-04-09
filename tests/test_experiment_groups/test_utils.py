@@ -2,8 +2,6 @@ import os
 
 from unittest.mock import patch
 
-from tests.utils import BaseTest
-
 from experiment_groups.paths import (
     delete_experiment_group_logs,
     delete_experiment_group_outputs,
@@ -17,6 +15,7 @@ from experiments.paths import (
 )
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
+from tests.utils import BaseTest
 
 
 class TestExperimentGroupUtils(BaseTest):

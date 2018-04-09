@@ -1,6 +1,3 @@
-from tests.fixtures import status_experiment_job_event, status_experiment_job_event_with_conditions
-from tests.utils import BaseTest
-
 from django.conf import settings
 
 from events.monitors.statuses import update_job_containers
@@ -10,6 +7,8 @@ from libs.redis_db import RedisJobContainers
 from polyaxon_schemas.experiment import JobStateConfig, PodStateConfig
 from spawners.utils.constants import EventTypes, JobLifeCycle, PodConditions, PodLifeCycle
 from spawners.utils.jobs import get_job_state
+from tests.fixtures import status_experiment_job_event, status_experiment_job_event_with_conditions
+from tests.utils import BaseTest
 
 
 class TestSpawner(BaseTest):

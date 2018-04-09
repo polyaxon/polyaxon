@@ -1,7 +1,5 @@
 from unittest.mock import patch
 
-from tests.utils import BaseTest
-
 from experiments.models import Experiment, ExperimentJob, ExperimentStatus
 from experiments.serializers import (
     ExperimentDetailSerializer,
@@ -16,6 +14,7 @@ from factories.factory_experiments import (
     ExperimentStatusFactory
 )
 from spawners.utils.constants import ExperimentLifeCycle
+from tests.utils import BaseTest
 
 
 class TestExperimentSerializer(BaseTest):

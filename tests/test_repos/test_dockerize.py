@@ -3,11 +3,10 @@ import uuid
 
 from pathlib import Path
 
-from tests.utils import BaseTest
-
 from django.conf import settings
 
 from dockerizer.builders.experiments import ExperimentDockerBuilder
+from tests.utils import BaseTest
 
 
 class TestRepoDockerize(BaseTest):
