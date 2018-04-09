@@ -9,7 +9,7 @@ from experiments.models import (
     ExperimentStatus
 )
 from jobs.serializers import JobResourcesSerializer
-from libs.spec_validation import validate_spec_content
+from libs.spec_validation import validate_experiment_spec_content
 
 
 class ExperimentJobStatusSerializer(serializers.ModelSerializer):
@@ -152,7 +152,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
         if not content:
             return content
 
-        spec = validate_spec_content(content)
+        spec = validate_experiment_spec_content(content)
 
         if spec.matrix_space == 1:
             # Resume normal creation

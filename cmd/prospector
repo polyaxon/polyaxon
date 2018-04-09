@@ -4,7 +4,7 @@ source $DIR/environment
 
 $DIR/check
 if [ $? -eq 0 ]; then
-    docker-compose -p web-testing -f docker-compose.yml -f docker-compose.testing.yml run web isort -rc --check-only  .
+    docker-compose -p web-testing -f docker-compose.yml -f docker-compose.testing.yml run web isort -rc --check-only .
     docker-compose -p web-testing -f docker-compose.yml -f docker-compose.testing.yml run --no-deps web prospector
     docker-compose -p web-testing -f docker-compose.yml -f docker-compose.testing.yml run web polyaxon/manage.py check
 fi

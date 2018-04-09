@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 
 from experiment_groups import search_algorithms
 from libs.models import DescribableModel, DiffModel
-from libs.spec_validation import validate_spec_content
+from libs.spec_validation import validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
@@ -34,7 +34,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         help_text='The sequence number of this group within the project.', )
     content = models.TextField(
         help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_spec_content])
+        validators=[validate_group_spec_content])
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,

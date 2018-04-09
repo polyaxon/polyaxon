@@ -76,6 +76,8 @@ experiment_group_spec_content_early_stopping = """---
 
     settings:
       concurrent_experiments: 2
+      random_search:
+        n_experiments: 2
       early_stopping:
         - metric: precision
           value: 0.9
@@ -84,7 +86,7 @@ experiment_group_spec_content_early_stopping = """---
           optimization: minimize 
       matrix:
         lr:
-          values: [0.01, 0.1]
+          values: [0.01, 0.1, 0.5]
 
     run:
       image: my_image

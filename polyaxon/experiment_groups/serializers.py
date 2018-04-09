@@ -2,7 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from experiment_groups.models import ExperimentGroup
-from libs.spec_validation import validate_spec_content
+from libs.spec_validation import validate_group_spec_content
 
 
 class ExperimentGroupSerializer(serializers.ModelSerializer):
@@ -64,7 +64,7 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
         return obj.stopped_experiments.count()
 
     def validate_content(self, content):
-        spec = validate_spec_content(content)
+        spec = validate_group_spec_content(content)
 
         if spec.matrix_space > 1:
             # Resume normal creation

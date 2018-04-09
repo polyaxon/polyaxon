@@ -1,6 +1,8 @@
 from unittest.mock import patch
 
 from rest_framework import status
+
+from factories.factory_repos import RepoFactory
 from tests.utils import BaseViewTest
 
 from experiments.models import (
@@ -109,14 +111,17 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
-    def test_create(self):
+    def test_create_Sdf(self):
         data = {}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {'config': exec_experiment_spec_parsed_content.parsed_data}
-        resp = self.auth_client.post(self.url, data)
+        with patch('experiments.tasks.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
         assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
         assert self.queryset.count() == self.num_objects + 1
 
         # Test other

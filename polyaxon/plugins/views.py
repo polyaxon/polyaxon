@@ -32,6 +32,7 @@ class StartTensorboardView(CreateAPIView):
         return {
             'config': {
                 'version': 1,
+                'kind': 'plugin',
                 'project': {'name': project.name},
                 'run': {'image': settings.TENSORBOARD_DOCKER_IMAGE}
             }
