@@ -6,7 +6,7 @@ import six
 
 from numpy.random.mtrand import normal  # noqa
 
-from marshmallow import Schema, fields, post_dump, post_load
+from marshmallow import Schema, fields, post_dump, post_load, validates_schema
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import (
@@ -33,6 +33,12 @@ from polyaxon_schemas.utils import (
 )
 
 # pylint:disable=redefined-outer-name
+
+
+def validate_matrix(values):
+    v = sum(map(lambda x: 1 if x else 0, values))
+    if v == 0 or v > 1:
+        raise ValueError("Matrix element is not valid, one and only one option is required.")
 
 
 class MatrixSchema(Schema):
@@ -63,6 +69,25 @@ class MatrixSchema(Schema):
     @post_dump
     def unmake(self, data):
         return MatrixConfig.remove_reduced_attrs(data)
+
+    @validates_schema
+    def validate_matrix(self, data):
+        validate_matrix([
+            data.get('values'),
+            data.get('pvalues'),
+            data.get('range'),
+            data.get('linspace'),
+            data.get('logspace'),
+            data.get('geomspace'),
+            data.get('uniform'),
+            data.get('quniform'),
+            data.get('loguniform'),
+            data.get('qloguniform'),
+            data.get('normal'),
+            data.get('qnormal'),
+            data.get('lognormal'),
+            data.get('qlognormal'),
+        ])
 
 
 class MatrixConfig(BaseConfig):
@@ -119,11 +144,9 @@ class MatrixConfig(BaseConfig):
         self.lognormal = lognormal
         self.qlognormal = qlognormal
 
-        v = sum(map(lambda x: 1 if x else 0,
-                    [values, pvalues, range, linspace, logspace, geomspace, uniform, quniform,
-                     loguniform, qloguniform, normal, qnormal, lognormal, qlognormal]))
-        if v == 0 or v > 1:
-            raise ValueError("Matrix element is not valid, one and only one option is required.")
+        validate_matrix([
+            values, pvalues, range, linspace, logspace, geomspace, uniform, quniform,
+            loguniform, qloguniform, normal, qnormal, lognormal, qlognormal])
 
     def to_numpy(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
@@ -132,4 +155,19 @@ class MatrixConfig(BaseConfig):
         if key == 'pvalues':
             return pvalues(values=value)
 
+        return self.NUMPY_MAPPING[key](**value)
+
+    def sample(self, size=None, rand_generator=None):
+        size = None if size == 1 else size
+        key, value = list(six.iteritems(self.to_dict()))[0]
+        if key in {'values', 'range', 'linspace', 'logspace', 'geomspace'}:
+            value = self.to_numpy()
+            rand_generator = rand_generator or np.random
+            return rand_generator.choice(value, size=size)
+
+        if key == 'pvalues':
+            return pvalues(values=value, size=size, rand_generator=rand_generator)
+
+        value['size'] = size
+        value['rand_generator'] = rand_generator
         return self.NUMPY_MAPPING[key](**value)

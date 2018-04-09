@@ -157,39 +157,44 @@ class LogSpace(Range):
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-def quniform(low, high, q, size=None):
-    value = np.random.uniform(low=low, high=high, size=size)
+def quniform(low, high, q, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    value = rand_generator.uniform(low=low, high=high, size=size)
     return np.round(value // q) * q
 
 
-def loguniform(low, high, size=None):
-    value = np.random.uniform(low=low, high=high, size=size)
+def loguniform(low, high, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    value = rand_generator.uniform(low=low, high=high, size=size)
     return np.exp(value)
 
 
-def qloguniform(low, high, q, size=None):
-    value = loguniform(low=low, high=high, size=size)
+def qloguniform(low, high, q, size=None, rand_generator=None):
+    value = loguniform(low=low, high=high, size=size, rand_generator=rand_generator)
     return np.round(value // q) * q
 
 
-def qnormal(loc, scale, q, size=None):
-    draw = np.random.normal(loc=loc, scale=scale, size=size)
+def qnormal(loc, scale, q, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    draw = rand_generator.normal(loc=loc, scale=scale, size=size)
     return np.round(draw // q) * q
 
 
-def lognormal(loc, scale, size=None):
-    return np.random.lognormal(mean=loc, sigma=scale, size=size)
+def lognormal(loc, scale, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    return rand_generator.lognormal(mean=loc, sigma=scale, size=size)
 
 
-def qlognormal(loc, scale, size=None):
-    draw = lognormal(loc=loc, scale=scale, size=size)
+def qlognormal(loc, scale, size=None, rand_generator=None):
+    draw = lognormal(loc=loc, scale=scale, size=size, rand_generator=rand_generator)
     return np.exp(draw)
 
 
-def pvalues(values, size=None):
+def pvalues(values, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
     keys = list(six.iterkeys(values))
     dists = list(six.itervalues(values))
-    indices = np.random.multinomial(1, dists, size=size)
+    indices = rand_generator.multinomial(1, dists, size=size)
     return [keys[ind.argmax()] for ind in indices]
 
 
@@ -229,7 +234,7 @@ class LogNormal(Range):
 
 
 class QLogNormal(Range):
-    REQUIRED_KEYS = ['start', 'stop', 'num']
+    REQUIRED_KEYS = ['start', 'stop', 'size']
     KEYS = REQUIRED_KEYS
 
 
