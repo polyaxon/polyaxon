@@ -5,7 +5,7 @@ from experiments.models import Experiment, ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
-from spawners.utils.constants import ExperimentLifeCycle
+from runner.spawners.utils.constants import ExperimentLifeCycle
 from tests.utils import BaseTest
 
 
@@ -38,7 +38,7 @@ class TestExperimentGroupModel(BaseTest):
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
 
-        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_fct:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_fct:
             experiment_group.delete()
 
         assert mock_fct.call_count == 2
@@ -117,7 +117,7 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.experiments.count() == 3
         assert experiment_group.stopped_experiments.count() == 0
 
-        with patch('schedulers.experiment_scheduler.stop_experiment') as spawner_mock_fct:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as spawner_mock_fct:
             stop_group_experiments(experiment_group_id=experiment_group.id, pending=False)
 
         assert experiment_group.pending_experiments.count() == 0

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from django.conf import settings
 
-from dockerizer.builders.experiments import ExperimentDockerBuilder
+from runner.dockerizer.builders.experiments import ExperimentDockerBuilder
 from tests.utils import BaseTest
 
 

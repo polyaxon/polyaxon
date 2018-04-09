@@ -18,8 +18,8 @@ from experiments.paths import (
 )
 from experiments.tasks import build_experiment, check_experiment_status
 from libs.decorators import ignore_raw
-from schedulers import experiment_scheduler
-from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
+from runner.schedulers import experiment_scheduler
+from runner.spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 logger = logging.getLogger('polyaxon.experiments')
 

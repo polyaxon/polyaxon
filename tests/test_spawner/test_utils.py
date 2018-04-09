@@ -5,8 +5,8 @@ from experiments.models import ExperimentJob
 from factories.factory_experiments import ExperimentJobFactory
 from libs.redis_db import RedisJobContainers
 from polyaxon_schemas.experiment import JobStateConfig, PodStateConfig
-from spawners.utils.constants import EventTypes, JobLifeCycle, PodConditions, PodLifeCycle
-from spawners.utils.jobs import get_job_state
+from runner.spawners.utils.constants import EventTypes, JobLifeCycle, PodConditions, PodLifeCycle
+from runner.spawners.utils.jobs import get_job_state
 from tests.fixtures import status_experiment_job_event, status_experiment_job_event_with_conditions
 from tests.utils import BaseTest
 

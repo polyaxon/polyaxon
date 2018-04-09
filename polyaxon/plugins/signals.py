@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 from libs.decorators import ignore_raw
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
-from spawners.utils.constants import JobLifeCycle
+from runner.spawners.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.plugins')
 

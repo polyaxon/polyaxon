@@ -5,7 +5,7 @@ from experiment_groups.models import ExperimentGroup
 from experiment_groups.paths import delete_experiment_group_logs, delete_experiment_group_outputs
 from experiment_groups.tasks import create_group_experiments
 from libs.decorators import ignore_raw
-from schedulers import experiment_scheduler
+from runner.schedulers import experiment_scheduler
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")

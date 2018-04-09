@@ -14,7 +14,7 @@ from libs.spec_validation import validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
-from spawners.utils.constants import ExperimentLifeCycle
+from runner.spawners.utils.constants import ExperimentLifeCycle
 
 
 class ExperimentGroup(DiffModel, DescribableModel):

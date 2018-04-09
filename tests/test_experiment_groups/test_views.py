@@ -9,7 +9,7 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
-from spawners.utils.constants import ExperimentLifeCycle
+from runner.spawners.utils.constants import ExperimentLifeCycle
 from tests.utils import BaseViewTest
 
 
@@ -31,8 +31,8 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
                                                     self.other_project.user.username,
                                                     self.other_project.name)
 
-        with patch('dockerizer.builders.experiments.build_experiment') as _:
-            with patch('schedulers.experiment_scheduler.start_experiment') as _:
+        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
+            with patch('runner.schedulers.experiment_scheduler.start_experiment') as _:
                 self.objects = [self.factory_class(project=self.project)
                                 for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
@@ -190,7 +190,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert Experiment.objects.count() == 4
-        with patch('schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
             with patch('experiments.paths.delete_path') as outputs_mock_stop:
                 resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 4
@@ -230,7 +230,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
 
         # Execute the function
-        with patch('schedulers.experiment_scheduler.stop_experiment') as _:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_200_OK

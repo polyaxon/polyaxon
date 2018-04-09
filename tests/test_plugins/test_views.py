@@ -11,12 +11,12 @@ from libs.views import ProtectedView
 from plugins.models import NotebookJob, TensorboardJob
 from polyaxon.urls import API_V1
 from projects.models import Project
-from schedulers import notebook_scheduler
-from spawners.notebook_spawner import NotebookSpawner
-from spawners.project_spawner import ProjectSpawner
-from spawners.templates.constants import DEPLOYMENT_NAME
-from spawners.tensorboard_spawner import TensorboardSpawner
-from spawners.utils.constants import JobLifeCycle
+from runner.schedulers import notebook_scheduler
+from runner.spawners.notebook_spawner import NotebookSpawner
+from runner.spawners.project_spawner import ProjectSpawner
+from runner.spawners.templates.constants import DEPLOYMENT_NAME
+from runner.spawners.tensorboard_spawner import TensorboardSpawner
+from runner.spawners.utils.constants import JobLifeCycle
 from tests.utils import BaseViewTest
 
 
@@ -47,7 +47,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
 
     def test_spawner_start(self):
         assert self.queryset.count() == 1
-        with patch('schedulers.tensorboard_scheduler.start_tensorboard') as mock_fct:
+        with patch('runner.schedulers.tensorboard_scheduler.start_tensorboard') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
@@ -130,7 +130,7 @@ class TestStopTensorboardViewV1(BaseViewTest):
     def test_spawner_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as mock_fct:
+        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
@@ -170,7 +170,7 @@ class TestStartNotebookViewV1(BaseViewTest):
     def test_start(self):
         data = {'config': plugin_spec_parsed_content.parsed_data}
         assert self.queryset.count() == 1
-        with patch('dockerizer.builders.notebooks.build_notebook_job') as build_mock_fct:
+        with patch('runner.dockerizer.builders.notebooks.build_notebook_job') as build_mock_fct:
             with patch('projects.tasks.start_notebook.delay') as mock_fct:
                 resp = self.auth_client.post(self.url, data)
         assert build_mock_fct.call_count == 1
@@ -279,7 +279,7 @@ class TestStopNotebookViewV1(BaseViewTest):
     def test_spawner_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('schedulers.notebook_scheduler.stop_notebook') as mock_fct:
+        with patch('runner.schedulers.notebook_scheduler.stop_notebook') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
@@ -329,13 +329,13 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
 
     def test_project_requests_tensorboard_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
-        with patch('schedulers.tensorboard_scheduler.get_tensorboard_url') as mock_fct:
+        with patch('runner.schedulers.tensorboard_scheduler.get_tensorboard_url') as mock_fct:
             response = self.auth_client.get(self._get_url(project))
 
         assert mock_fct.call_count == 1
         assert response.status_code == 200
 
-    @mock.patch('schedulers.tensorboard_scheduler.TensorboardSpawner')
+    @mock.patch('runner.schedulers.tensorboard_scheduler.TensorboardSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -350,7 +350,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/'.format(service_url)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
-    @mock.patch('schedulers.tensorboard_scheduler.TensorboardSpawner')
+    @mock.patch('runner.schedulers.tensorboard_scheduler.TensorboardSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -386,15 +386,15 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
 
     def test_project_requests_notebook_url(self):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
-        with patch('schedulers.notebook_scheduler.get_notebook_url') as mock_url_fct:
-            with patch('schedulers.notebook_scheduler.get_notebook_token') as mock_token_fct:
+        with patch('runner.schedulers.notebook_scheduler.get_notebook_url') as mock_url_fct:
+            with patch('runner.schedulers.notebook_scheduler.get_notebook_token') as mock_token_fct:
                 response = self.auth_client.get(self._get_url(project))
 
         assert mock_url_fct.call_count == 1
         assert mock_token_fct.call_count == 1
         assert response.status_code == 200
 
-    @mock.patch('schedulers.notebook_scheduler.NotebookSpawner')
+    @mock.patch('runner.schedulers.notebook_scheduler.NotebookSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(
@@ -413,7 +413,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
-    @mock.patch('schedulers.notebook_scheduler.NotebookSpawner')
+    @mock.patch('runner.schedulers.notebook_scheduler.NotebookSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
         project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
         deployment_name = DEPLOYMENT_NAME.format(

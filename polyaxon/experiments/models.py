@@ -12,7 +12,7 @@ from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusMode
 from libs.spec_validation import validate_experiment_spec_content
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
-from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
+from runner.spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 logger = logging.getLogger('polyaxon.experiments')
 

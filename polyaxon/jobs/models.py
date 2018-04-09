@@ -3,7 +3,7 @@ from django.db import models
 
 from libs.models import DiffModel, LastStatusMixin, StatusModel
 from libs.resource_validation import validate_resource
-from spawners.utils.constants import JobLifeCycle
+from runner.spawners.utils.constants import JobLifeCycle
 
 
 class JobResources(models.Model):

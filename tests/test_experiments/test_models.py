@@ -31,7 +31,7 @@ from jobs.models import JobResources
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
-from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
+from runner.spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 from tests.fixtures import start_experiment_value
 from tests.utils import BaseTest, BaseViewTest
 
@@ -85,7 +85,7 @@ class TestExperimentModel(BaseTest):
         # Create a repo for the project
         repo = RepoFactory()
 
-        with patch('dockerizer.builders.experiments.build_experiment') as mock_docker_build:
+        with patch('runner.dockerizer.builders.experiments.build_experiment') as mock_docker_build:
             experiment = ExperimentFactory(config=content.parsed_data, project=repo.project)
 
         assert mock_docker_build.call_count == 1
@@ -100,7 +100,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
-    @mock.patch('schedulers.experiment_scheduler.ExperimentSpawner')
+    @mock.patch('runner.schedulers.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
         content = ExperimentSpecification.read(experiment_spec_content)
 
@@ -131,7 +131,7 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @mock.patch('schedulers.experiment_scheduler.TensorflowSpawner')
+    @mock.patch('runner.schedulers.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
         content = ExperimentSpecification.read(exec_experiment_resources_content)
 
@@ -164,7 +164,7 @@ class TestExperimentModel(BaseTest):
 
     def test_delete_experiment_triggers_experiment_stop_mocks(self):
         experiment = ExperimentFactory()
-        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_fct:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()
 
         assert mock_fct.call_count == 1
@@ -216,7 +216,7 @@ class TestExperimentModel(BaseTest):
         done_xp, no_jobs_xp, xp_with_jobs = experiments
 
         # Set done status
-        with patch('schedulers.experiment_scheduler.stop_experiment') as _:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
             ExperimentStatusFactory(experiment=done_xp, status=JobLifeCycle.FAILED)
 
         # Create jobs for xp_with_jobs and update status, and do not update the xp status
@@ -281,7 +281,7 @@ class TestExperimentCommit(BaseViewTest):
 
     def create_experiment(self, content):
         config = ExperimentSpecification.read(content)
-        with patch('dockerizer.builders.experiments.build_experiment') as _:
+        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
             return ExperimentFactory(config=config.parsed_data, project=self.project)
 
     def test_experiment_is_saved_with_commit(self):

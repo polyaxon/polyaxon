@@ -13,7 +13,7 @@ from factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentStatusFactory
 )
-from spawners.utils.constants import ExperimentLifeCycle
+from runner.spawners.utils.constants import ExperimentLifeCycle
 from tests.utils import BaseTest
 
 
@@ -56,7 +56,7 @@ class TestExperimentSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        with patch('dockerizer.builders.experiments.build_experiment') as _:
+        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
             obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
@@ -71,7 +71,7 @@ class TestExperimentSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_stop:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_stop:
             ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
@@ -166,7 +166,7 @@ class TestExperimentDetailSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        with patch('dockerizer.builders.experiments.build_experiment') as _:
+        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
             obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
@@ -181,7 +181,7 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        with patch('schedulers.experiment_scheduler.stop_experiment') as mock_stop:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_stop:
             ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 

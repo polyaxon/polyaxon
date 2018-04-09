@@ -169,9 +169,9 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
-        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as tensorboard_mock_fct:
-            with patch('schedulers.notebook_scheduler.stop_notebook') as notebook_mock_fct:
-                with patch('schedulers.experiment_scheduler.stop_experiment') as xp_mock_stop:
+        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as tensorboard_mock_fct:
+            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as notebook_mock_fct:
+                with patch('runner.schedulers.experiment_scheduler.stop_experiment') as xp_mock_stop:
                     with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
                         with patch('experiment_groups.paths.delete_path') as delete_path_group_mock_stop:
                             with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
