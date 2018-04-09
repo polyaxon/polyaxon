@@ -8,7 +8,7 @@
 #
 # from factories.factory_projects import ProjectFactory
 # from spawners import K8SSpawner
-# from spawners.templates.constants import DEFAULT_PORT
+# from runner.spawners.templates.constants import DEFAULT_PORT
 #
 # from factories.factory_experiments import ExperimentFactory
 #

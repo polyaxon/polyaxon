@@ -9,12 +9,12 @@ from django.db.models import Q
 from django.utils.functional import cached_property
 
 from experiment_groups import search_algorithms
+from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel
 from libs.spec_validation import validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
-from spawners.utils.constants import ExperimentLifeCycle
 
 
 class ExperimentGroup(DiffModel, DescribableModel):

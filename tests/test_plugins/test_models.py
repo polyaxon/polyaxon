@@ -2,8 +2,8 @@ from mock import patch
 
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
+from jobs.statuses import JobLifeCycle
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
-from spawners.utils.constants import JobLifeCycle
 from tests.utils import BaseTest
 
 
@@ -15,8 +15,8 @@ class TestPluginsModel(BaseTest):
         project.save()
         assert TensorboardJob.objects.count() == 1
 
-        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as _:
-            with patch('schedulers.notebook_scheduler.stop_notebook') as _:
+        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:
+            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:
                 project.delete()
         assert TensorboardJob.objects.count() == 0
 
@@ -27,8 +27,8 @@ class TestPluginsModel(BaseTest):
         project.save()
         assert NotebookJob.objects.count() == 1
 
-        with patch('schedulers.tensorboard_scheduler.stop_tensorboard') as _:
-            with patch('schedulers.notebook_scheduler.stop_notebook') as _:
+        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:
+            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:
                 project.delete()
         assert NotebookJob.objects.count() == 0
 

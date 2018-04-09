@@ -7,12 +7,13 @@ from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
 
+from experiments.statuses import ExperimentLifeCycle
 from jobs.models import Job, JobResources, JobStatus
+from jobs.statuses import JobLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_experiment_spec_content
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
-from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 logger = logging.getLogger('polyaxon.experiments')
 

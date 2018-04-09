@@ -5,9 +5,9 @@ from experiments.models import ExperimentJobStatus
 from factories.factory_experiments import ExperimentJobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
+from jobs.statuses import JobLifeCycle
 from plugins.models import NotebookJobStatus, TensorboardJobStatus
-from spawners.utils.constants import JobLifeCycle
-from spawners.utils.jobs import get_job_state
+from runner.spawners.utils.jobs import get_job_state
 from tests.fixtures import (
     status_experiment_job_event,
     status_experiment_job_event_with_conditions,

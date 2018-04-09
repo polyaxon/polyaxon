@@ -18,6 +18,7 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
+from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -30,7 +31,8 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
 from polyaxon.urls import API_V1
-from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
+
+from jobs.statuses import JobLifeCycle
 from tests.utils import BaseViewTest
 
 
@@ -333,7 +335,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
-        with patch('schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
             with patch('experiments.paths.delete_path') as outputs_mock_stop:
                 resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1

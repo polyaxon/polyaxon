@@ -9,7 +9,7 @@ from clusters.serializers import (
 )
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
 from polyaxon.urls import API_V1
-from spawners.utils.constants import NodeRoles
+from runner.spawners.utils.constants import NodeRoles
 from tests.utils import BaseViewTest
 
 

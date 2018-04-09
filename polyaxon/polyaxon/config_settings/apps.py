@@ -10,11 +10,9 @@ PROJECT_APPS = (
     'experiment_groups.apps.ExperimentGroupsConfig',
     'experiments.apps.ExperimentsConfig',
     'repos.apps.ReposConfig',
-    'dockerizer.apps.DockerizerConfig',
+    'runner.apps.RunnerConfig',
     'versions.apps.VersionsConfig',
     'events.apps.EventsConfig',
-    'spawners.apps.SpawnersConfig',
-    'schedulers.apps.SchedulersConfig',
 )
 
 THIRD_PARTY_APPS = (
