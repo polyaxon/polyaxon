@@ -8,7 +8,7 @@ class Suggestion(object):
         self.params = params
 
     def __eq__(self, other):
-        if self.params.keys() != other.keys():
+        if self.params.keys() != other.params.keys():
             return False
 
         for key, value in self.params.items():
