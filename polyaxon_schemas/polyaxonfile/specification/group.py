@@ -76,19 +76,6 @@ class GroupSpecification(BaseSpecification):
         return early_stopping or []
 
     @cached_property
-    def n_experiments(self):
-        condition = (not self.settings or
-                     not self.settings.searc or
-                     not self.settings.n_experiments or
-                     not self.matrix_space)
-        if condition:
-            return None
-
-        n_experiments = self.settings.n_experiments
-
-        return int(n_experiments) if n_experiments < self.matrix_space else None
-
-    @cached_property
     def search_algorithm(self):
         if not self.matrix:
             raise PolyaxonConfigurationError('a search algorithm requires a matrix definition.')
@@ -111,7 +98,6 @@ class GroupSpecification(BaseSpecification):
         # TODO Rework this
         return (
             self.matrix_space,
-            self.n_experiments,
             self.concurrent_experiments,
             self.search_algorithm
         )
