@@ -1,8 +1,7 @@
 from kubernetes import client
 
-from polyaxon_schemas.utils import to_list
-
 from polyaxon_k8s import constants as k8s_constants
+from polyaxon_schemas.utils import to_list
 
 
 def get_service(namespace, name, labels, ports, target_ports,

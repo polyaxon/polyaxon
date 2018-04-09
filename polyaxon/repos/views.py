@@ -1,18 +1,18 @@
 import logging
 import os
 
-from django.conf import settings
-from django.http import HttpResponseServerError
-
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from django.conf import settings
+from django.http import HttpResponseServerError
+
 from libs.views import UploadView
 from projects.permissions import get_permissible_project
+from repos.models import Repo
 from repos.serializers import RepoSerializer
 from repos.tasks import handle_new_files
-from repos.models import Repo
 
 logger = logging.getLogger(__name__)
 

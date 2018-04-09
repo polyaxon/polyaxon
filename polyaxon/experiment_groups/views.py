@@ -1,23 +1,14 @@
 from rest_framework import status
-from rest_framework.generics import (
-    RetrieveUpdateDestroyAPIView,
-    CreateAPIView,
-)
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from experiment_groups.models import ExperimentGroup
-from experiment_groups.serializers import (
-    ExperimentGroupSerializer,
-    ExperimentGroupDetailSerializer,
-)
+from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from experiment_groups.tasks import stop_group_experiments
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
-from projects.permissions import (
-    get_permissible_project,
-    IsItemProjectOwnerOrPublicReadOnly,
-)
+from projects.permissions import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 
 
 class ExperimentGroupListView(ListCreateAPIView):

@@ -1,16 +1,17 @@
-from unittest.mock import patch
-
 import os
 
+from unittest.mock import patch
+
+from tests.utils import BaseTest
+
 from experiments.paths import (
-    get_experiment_logs_path,
-    delete_experiment_logs,
-    get_experiment_outputs_path,
     create_experiment_outputs_path,
+    delete_experiment_logs,
     delete_experiment_outputs,
+    get_experiment_logs_path,
+    get_experiment_outputs_path
 )
 from factories.factory_experiments import ExperimentFactory
-from tests.utils import BaseTest
 
 
 class TestExperimentUtils(BaseTest):

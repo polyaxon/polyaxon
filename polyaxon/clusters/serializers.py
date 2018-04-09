@@ -38,4 +38,3 @@ class ClusterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cluster
         fields = ('uuid', 'version_api', 'created_at', 'updated_at', 'nodes', )
-

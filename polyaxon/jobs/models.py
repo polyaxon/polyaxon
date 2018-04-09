@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-from libs.models import DiffModel, StatusModel, LastStatusMixin
+from libs.models import DiffModel, LastStatusMixin, StatusModel
 from libs.resource_validation import validate_resource
 from spawners.utils.constants import JobLifeCycle
 

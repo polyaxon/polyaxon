@@ -3,25 +3,23 @@ import logging
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
+from experiment_groups.models import ExperimentGroup
 from experiments.models import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,
-    ExperimentStatus,
     ExperimentMetric,
+    ExperimentStatus
 )
 from experiments.paths import (
-    delete_experiment_outputs,
-    delete_experiment_logs,
     create_experiment_logs_path,
+    delete_experiment_logs,
+    delete_experiment_outputs
 )
+from experiments.tasks import build_experiment, check_experiment_status
 from libs.decorators import ignore_raw
-from experiment_groups.models import ExperimentGroup
 from schedulers import experiment_scheduler
-from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
-
-from experiments.tasks import check_experiment_status, build_experiment
-
+from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 logger = logging.getLogger('polyaxon.experiments')
 

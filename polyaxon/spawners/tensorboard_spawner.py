@@ -7,10 +7,7 @@ from django.conf import settings
 from projects.paths import get_project_outputs_path
 from spawners.base import get_pod_volumes
 from spawners.project_spawner import ProjectSpawner
-from spawners.templates import constants
-from spawners.templates import deployments
-from spawners.templates import services
-from spawners.templates import ingresses
+from spawners.templates import constants, deployments, ingresses, services
 
 logger = logging.getLogger('polyaxon.spawners.tensorboard')
 

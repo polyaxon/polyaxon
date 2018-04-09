@@ -1,11 +1,14 @@
 import logging
 import os
 import shlex
+
 from subprocess import PIPE
 
-from django.conf import settings
-from git import Repo as GitRepo, InvalidGitRepositoryError
+from git import InvalidGitRepositoryError
+from git import Repo as GitRepo
 from psutil import Popen
+
+from django.conf import settings
 
 from libs.paths import create_path, delete_path
 

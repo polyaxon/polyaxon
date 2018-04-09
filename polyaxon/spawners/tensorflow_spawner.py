@@ -1,10 +1,9 @@
 import logging
 
+from experiments.paths import get_experiment_outputs_path
 from polyaxon_schemas.environments import TensorflowClusterConfig
 from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.utils import TaskType
-
-from experiments.paths import get_experiment_outputs_path
 from spawners.experiment_spawner import ExperimentSpawner
 from spawners.templates.config_maps import get_env_var
 

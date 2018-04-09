@@ -1,13 +1,10 @@
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from libs.decorators import ignore_raw
 from experiment_groups.models import ExperimentGroup
+from experiment_groups.paths import delete_experiment_group_logs, delete_experiment_group_outputs
 from experiment_groups.tasks import create_group_experiments
-from experiment_groups.paths import (
-    delete_experiment_group_outputs,
-    delete_experiment_group_logs,
-)
+from libs.decorators import ignore_raw
 from schedulers import experiment_scheduler
 
 

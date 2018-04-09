@@ -1,7 +1,7 @@
 import uuid
 
-from django.db import models
 from django.core.cache import cache
+from django.db import models
 
 
 class DescribableModel(models.Model):

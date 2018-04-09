@@ -1,13 +1,12 @@
 import time
 
-from django.conf import settings
-
 from kubernetes.client.rest import ApiException
 
-from polyaxon_k8s.manager import K8SManager
+from django.conf import settings
 
 from events.management.commands._base_monitor import BaseMonitorCommand
 from events.monitors import statuses
+from polyaxon_k8s.manager import K8SManager
 
 
 class Command(BaseMonitorCommand):

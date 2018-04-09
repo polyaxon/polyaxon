@@ -1,11 +1,8 @@
-from projects.models import Project
-from projects.serializers import (
-    ProjectSerializer,
-    ProjectDetailSerializer,
-)
-from factories.factory_projects import ProjectFactory
-
 from tests.utils import BaseTest
+
+from factories.factory_projects import ProjectFactory
+from projects.models import Project
+from projects.serializers import ProjectDetailSerializer, ProjectSerializer
 
 
 class TestProjectSerializer(BaseTest):

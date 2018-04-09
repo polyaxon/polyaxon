@@ -1,9 +1,9 @@
 import factory
 
+from experiment_groups.models import ExperimentGroup
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from factories.fixtures import experiment_group_spec_content_2_xps
-from experiment_groups.models import ExperimentGroup
 
 
 class ExperimentGroupFactory(factory.DjangoModelFactory):

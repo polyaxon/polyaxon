@@ -1,18 +1,10 @@
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import (
-    RetrieveUpdateDestroyAPIView,
-    CreateAPIView,
-    ListAPIView,
-)
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
+
 from projects.models import Project
-from projects.permissions import (
-    IsProjectOwnerOrPublicReadOnly,
-)
-from projects.serializers import (
-    ProjectSerializer,
-    ProjectDetailSerializer,
-)
+from projects.permissions import IsProjectOwnerOrPublicReadOnly
+from projects.serializers import ProjectDetailSerializer, ProjectSerializer
 
 
 class ProjectCreateView(CreateAPIView):

@@ -1,9 +1,9 @@
-from factories.fixtures import plugin_spec_parsed_content
-from plugins.models import TensorboardJob, NotebookJob
-from plugins.serializers import TensorboardJobSerializer, NotebookJobSerializer
-from factories.factory_plugins import TensorboardJobFactory, NotebookJobFactory
-
 from tests.utils import BaseTest
+
+from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
+from factories.fixtures import plugin_spec_parsed_content
+from plugins.models import NotebookJob, TensorboardJob
+from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 
 
 class BasePluginJobSerializerTest(BaseTest):

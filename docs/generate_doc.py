@@ -4,14 +4,15 @@ import re
 import shutil
 
 from polyaxon_schemas import (
+    bridges,
     constraints,
     initializations,
-    metrics,
     losses,
-    regularizations,
-    optimizers, bridges)
-
-from polyaxon_schemas import models
+    metrics,
+    models,
+    optimizers,
+    regularizations
+)
 from polyaxon_schemas.layers import (
     advanced_activations,
     convolutional,
@@ -24,34 +25,34 @@ from polyaxon_schemas.layers import (
     normalization,
     pooling,
     recurrent,
-    wrappers,
+    wrappers
 )
 from polyaxon_schemas.processing.image import (
-    ResizeConfig,
-    CentralCropConfig,
-    RandomCropConfig,
-    ExtractGlimpseConfig,
-    ToBoundingBoxConfig,
-    FlipConfig,
-    TransposeConfig,
-    Rotate90Config,
-    ConvertColorSpaceConfig,
-    ConvertImagesDtypeConfig,
     AdjustBrightnessConfig,
     AdjustContrastConfig,
+    AdjustGammaConfig,
     AdjustHueConfig,
     AdjustSaturationConfig,
-    AdjustGammaConfig,
-    StandardizationConfig,
+    CentralCropConfig,
+    ConvertColorSpaceConfig,
+    ConvertImagesDtypeConfig,
     DrawBoundingBoxesConfig,
+    ExtractGlimpseConfig,
+    FlipConfig,
+    RandomCropConfig,
+    ResizeConfig,
+    Rotate90Config,
+    StandardizationConfig,
+    ToBoundingBoxConfig,
     TotalVariationConfig,
+    TransposeConfig
 )
 from polyaxon_schemas.processing.pipelines import (
+    ImageCaptioningPipelineConfig,
+    ParallelTextPipelineConfig,
     TFRecordImagePipelineConfig,
     TFRecordSequencePipelineConfig,
-    ParallelTextPipelineConfig,
-    TFRecordSourceSequencePipelineConfig,
-    ImageCaptioningPipelineConfig,
+    TFRecordSourceSequencePipelineConfig
 )
 
 ROOT = 'https://docs.polyaxon.com/'

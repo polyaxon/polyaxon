@@ -1,12 +1,11 @@
-from django.urls import re_path
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView
-
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from polyaxon.config_settings import registration
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
+from django.urls import re_path
+from django.views.generic import TemplateView
 
+from polyaxon.config_settings import registration
 from users import views
 
 if registration.REGISTRATION_WORKFLOW == registration.REGISTRATION_SUPERUSER_VALIDATION_WORKFLOW:

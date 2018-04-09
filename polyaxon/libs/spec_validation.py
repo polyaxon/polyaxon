@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
-from polyaxon_schemas.exceptions import PolyaxonfileError, PolyaxonConfigurationError
+
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification, PluginSpecification
 
 

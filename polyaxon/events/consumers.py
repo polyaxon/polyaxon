@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+
 import pika
 
 from pika import adapters

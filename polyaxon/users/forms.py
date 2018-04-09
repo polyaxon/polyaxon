@@ -1,5 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import validate_slug
 
 from libs.blacklist import validate_blacklist_name

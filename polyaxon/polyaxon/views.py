@@ -1,9 +1,9 @@
-from django.views.generic import TemplateView
-
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+
+from django.views.generic import TemplateView
 
 
 class HealthRateThrottle(AnonRateThrottle):

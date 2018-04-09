@@ -1,15 +1,16 @@
 from django.conf import settings
-from django.urls import include, re_path
 from django.contrib import admin
+from django.urls import include, re_path
 
 from polyaxon.views import (
-    Handler404View,
+    Handler50xView,
     Handler403View,
+    Handler404View,
     HealthView,
     IndexView,
-    ReactIndexView,
-    Handler50xView)
-from users.views import LogoutView, LoginView
+    ReactIndexView
+)
+from users.views import LoginView, LogoutView
 
 API_V1 = 'api/v1'
 

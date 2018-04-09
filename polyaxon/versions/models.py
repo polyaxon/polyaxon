@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.db import models
 from django.core.cache import cache
+from django.db import models
 
 from libs.models import Singleton
 

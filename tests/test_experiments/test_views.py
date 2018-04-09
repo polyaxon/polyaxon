@@ -1,37 +1,36 @@
 from unittest.mock import patch
 
 from rest_framework import status
+from tests.utils import BaseViewTest
 
+from experiments.models import (
+    Experiment,
+    ExperimentJob,
+    ExperimentJobStatus,
+    ExperimentMetric,
+    ExperimentStatus
+)
+from experiments.serializers import (
+    ExperimentDetailSerializer,
+    ExperimentJobDetailSerializer,
+    ExperimentJobSerializer,
+    ExperimentJobStatusSerializer,
+    ExperimentMetricSerializer,
+    ExperimentSerializer,
+    ExperimentStatusSerializer
+)
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
-    ExperimentStatusFactory,
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
     ExperimentMetricFactory,
+    ExperimentStatusFactory
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
 from polyaxon.urls import API_V1
-from experiments.models import (
-    Experiment,
-    ExperimentStatus,
-    ExperimentJob,
-    ExperimentJobStatus,
-    ExperimentMetric,
-)
-from experiments.serializers import (
-    ExperimentSerializer,
-    ExperimentStatusSerializer,
-    ExperimentJobSerializer,
-    ExperimentJobDetailSerializer,
-    ExperimentJobStatusSerializer,
-    ExperimentMetricSerializer,
-    ExperimentDetailSerializer,
-)
-from spawners.utils.constants import JobLifeCycle, ExperimentLifeCycle
-
-from tests.utils import BaseViewTest
+from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 
 class TestProjectExperimentListViewV1(BaseViewTest):

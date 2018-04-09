@@ -1,10 +1,8 @@
 from kubernetes import client
 
-from polyaxon_k8s import constants as k8s_constants
-
 from libs.utils import get_list
-from spawners.templates import constants
-from spawners.templates import pods
+from polyaxon_k8s import constants as k8s_constants
+from spawners.templates import constants, pods
 
 
 def get_labels(app, project_name, project_uuid, role=None, type=None):

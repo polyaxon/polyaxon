@@ -8,9 +8,8 @@ from events import publisher
 from experiments.utils import is_experiment_still_running
 from libs.registry import get_registry_host
 from repos import git
-from repos.models import Repo, ExternalRepo
+from repos.models import ExternalRepo, Repo
 from spawners.utils.constants import ExperimentLifeCycle
-
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')
 

@@ -1,9 +1,9 @@
-import factory
-
 from faker import Factory as FakerFactory
 
-from repos.models import Repo
+import factory
+
 from factories.factory_projects import ProjectFactory
+from repos.models import Repo
 
 fake = FakerFactory.create()
 

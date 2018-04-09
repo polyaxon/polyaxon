@@ -3,7 +3,6 @@ import logging
 from django.conf import settings
 
 from polyaxon_k8s.manager import K8SManager
-
 from spawners.templates import constants
 
 logger = logging.getLogger('polyaxon.spawners.project')

@@ -1,7 +1,8 @@
 import datetime
 
-from clusters.models import Cluster
 from tests.utils import BaseTest
+
+from clusters.models import Cluster
 
 
 class TestClusterModel(BaseTest):

@@ -2,30 +2,28 @@ import json
 import logging
 import uuid
 
-from django.conf import settings
 from kubernetes.client.rest import ApiException
+from rest_framework import fields
 
+from django.conf import settings
+
+from dockerizer.images import get_experiment_image_info
+from experiments.models import ExperimentJob
+from experiments.serializers import ExperimentJobDetailSerializer
+from jobs.models import JobResources
+from polyaxon.utils import config
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
-    TensorflowSpecification,
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,
+    TensorflowSpecification
 )
-
-from polyaxon_schemas.utils import TaskType, Frameworks
-from rest_framework import fields
-
-from jobs.models import JobResources
-from polyaxon.utils import config
-from experiments.serializers import ExperimentJobDetailSerializer
-from dockerizer.images import get_experiment_image_info
-
+from polyaxon_schemas.utils import Frameworks, TaskType
 from spawners.experiment_spawner import ExperimentSpawner
 from spawners.horovod_spawner import HorovodSpawner
 from spawners.mxnet_spawner import MXNetSpawner
 from spawners.pytorch_spawner import PytorchSpawner
 from spawners.tensorflow_spawner import TensorflowSpawner
-from experiments.models import ExperimentJob
 from spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.schedulers.experiment')

@@ -1,10 +1,8 @@
 from django.conf import settings
 
-
-from polyaxon_k8s.manager import K8SManager
-
 from events.management.commands._base_monitor import BaseMonitorCommand
 from events.monitors import sidecar
+from polyaxon_k8s.manager import K8SManager
 
 
 class Command(BaseMonitorCommand):

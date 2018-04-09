@@ -4,8 +4,8 @@ from experiment_groups import search_algorithms
 from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
 from experiments.tasks import build_experiment, stop_experiment
-from polyaxon.settings import CeleryTasks, Intervals
 from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks, Intervals
 from spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.experiment_groups')

@@ -1,13 +1,14 @@
 import logging
 
 from amqp import AMQPError
-from django.conf import settings
 from redis import RedisError
 
-from polyaxon.config_settings import RoutingKeys
-from polyaxon.celery_api import app as celery_app
-from libs.redis_db import RedisToStream
+from django.conf import settings
+
 from events.tasks import handle_events_job_logs
+from libs.redis_db import RedisToStream
+from polyaxon.celery_api import app as celery_app
+from polyaxon.config_settings import RoutingKeys
 
 logger = logging.getLogger('polyaxon.monitors.publisher')
 
@@ -59,4 +60,3 @@ def publish_log(log_line,
                 )
             except (TimeoutError, AMQPError):
                 pass
-

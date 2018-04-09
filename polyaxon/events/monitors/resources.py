@@ -1,19 +1,20 @@
 import logging
-
 import re
+import requests
 
 import docker
-import requests
-from django.conf import settings
+
 from docker.errors import NotFound
 
+from django.conf import settings
+
 import polyaxon_gpustat
-from polyaxon_schemas.experiment import ContainerResourcesConfig
 
 from clusters.models import ClusterNode, NodeGPU
 from clusters.tasks import update_system_info, update_system_nodes
-from libs.redis_db import RedisJobContainers, RedisToStream
 from events.tasks import handle_events_resources
+from libs.redis_db import RedisJobContainers, RedisToStream
+from polyaxon_schemas.experiment import ContainerResourcesConfig
 from spawners.utils.constants import ContainerStatuses
 
 logger = logging.getLogger('polyaxon.monitors.resources')

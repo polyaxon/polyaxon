@@ -2,11 +2,11 @@ import logging
 
 from django.conf import settings
 
-from experiments.paths import get_experiment_logs_path
-from polyaxon.settings import CeleryTasks
-from polyaxon.celery_api import app as celery_app
 from clusters.models import ClusterEvent
-from experiments.models import ExperimentJob, Experiment
+from experiments.models import Experiment, ExperimentJob
+from experiments.paths import get_experiment_logs_path
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks
 from projects.models import Project
 
 logger = logging.getLogger('polyaxon.tasks.events')

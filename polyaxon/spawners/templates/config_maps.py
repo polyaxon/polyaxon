@@ -1,12 +1,12 @@
 import base64
 import json
 
-from django.conf import settings
 from kubernetes import client
 
-from polyaxon_k8s import constants as k8s_constants
+from django.conf import settings
 
-from experiments.paths import get_experiment_outputs_path, get_experiment_logs_path
+from experiments.paths import get_experiment_logs_path, get_experiment_outputs_path
+from polyaxon_k8s import constants as k8s_constants
 from projects.paths import get_project_data_path
 from spawners.templates import constants
 

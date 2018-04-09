@@ -3,7 +3,7 @@ import shutil
 
 from django.conf import settings
 
-from libs.paths import delete_path, create_path
+from libs.paths import create_path, delete_path
 
 
 def get_experiment_outputs_path(experiment_name):

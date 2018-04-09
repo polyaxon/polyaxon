@@ -1,14 +1,14 @@
 import logging
+import requests
 import uuid
 
-import requests
 from django.conf import settings
 from django.db.models import Count, Sum
-from polyaxon_k8s.manager import K8SManager
 
+from clusters.models import Cluster, ClusterNode
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks
-from clusters.models import Cluster, ClusterNode
+from polyaxon_k8s.manager import K8SManager
 
 logger = logging.getLogger('polyaxon.tasks.clusters')
 

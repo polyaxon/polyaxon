@@ -1,16 +1,15 @@
 import json
 import os
 
-from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.core import exceptions as django_exceptions
-
 from rest_framework import exceptions as rest_exceptions
-
 from rest_framework import generics
+from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser
+
+from django.conf import settings
+from django.core import exceptions as django_exceptions
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 
 
 class ListCreateAPIView(generics.ListCreateAPIView):

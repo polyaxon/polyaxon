@@ -1,4 +1,4 @@
-from versions.models import CliVersion, PlatformVersion, LibVersion, ChartVersion
+from versions.models import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 
 def versions(request):

@@ -1,19 +1,17 @@
 import asyncio
 import logging
 
-from django.core.exceptions import ValidationError
-
-from sanic import Sanic
-from sanic import exceptions
-
+from sanic import Sanic, exceptions
 from websockets import ConnectionClosed
 
-from polyaxon.config_settings.celery_settings import RoutingKeys, CeleryQueues
+from django.core.exceptions import ValidationError
+
 from events.authentication import authorized
 from events.consumers import Consumer
 from events.socket_manager import SocketManager
-from experiments.models import ExperimentJob, Experiment
+from experiments.models import Experiment, ExperimentJob
 from libs.redis_db import RedisToStream
+from polyaxon.config_settings.celery_settings import CeleryQueues, RoutingKeys
 from projects.models import Project
 from projects.permissions import has_project_permissions
 

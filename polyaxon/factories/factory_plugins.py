@@ -1,10 +1,10 @@
-import factory
-
 from faker import Factory as FakerFactory
+
+import factory
 
 from factories.factory_users import UserFactory
 from factories.fixtures import plugin_spec_parsed_content
-from plugins.models import TensorboardJob, NotebookJob
+from plugins.models import NotebookJob, TensorboardJob
 
 fake = FakerFactory.create()
 

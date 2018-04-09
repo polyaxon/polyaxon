@@ -1,16 +1,14 @@
 import json
 import logging
-
 import uuid
 
-from django.conf import settings
 from kubernetes import client
 
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-
-from polyaxon_k8s import constants as k8s_constants
+from django.conf import settings
 
 from libs.utils import get_list
+from polyaxon_k8s import constants as k8s_constants
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from spawners.templates import constants
 
 logger = logging.getLogger('polyaxon.spawners.spawners')

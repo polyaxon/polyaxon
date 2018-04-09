@@ -1,32 +1,34 @@
 from rest_framework import status
 from rest_framework.generics import (
-    RetrieveAPIView,
     CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
     RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView,
-    get_object_or_404,
-    ListAPIView)
+    get_object_or_404
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from experiment_groups.models import ExperimentGroup
 from experiments.models import (
     Experiment,
     ExperimentJob,
-    ExperimentStatus,
     ExperimentJobStatus,
-    ExperimentMetric)
+    ExperimentMetric,
+    ExperimentStatus
+)
 from experiments.serializers import (
-    ExperimentSerializer,
     ExperimentCreateSerializer,
-    ExperimentStatusSerializer,
-    ExperimentJobSerializer,
+    ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
+    ExperimentJobSerializer,
     ExperimentJobStatusSerializer,
     ExperimentMetricSerializer,
-    ExperimentDetailSerializer,
+    ExperimentSerializer,
+    ExperimentStatusSerializer
 )
 from experiments.tasks import stop_experiment
-from experiment_groups.models import ExperimentGroup
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
 from projects.permissions import get_permissible_project

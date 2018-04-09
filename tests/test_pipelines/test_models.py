@@ -1,18 +1,19 @@
 from datetime import timedelta
 
+from mock import patch
+from tests.utils import BaseTest
+
 from django.conf import settings
 from django.utils import timezone
-from mock import patch
 
 from factories.pipelines import (
     OperationFactory,
-    PipelineFactory,
-    PipelineRunFactory,
     OperationRunFactory,
+    PipelineFactory,
+    PipelineRunFactory
 )
-from pipelines.constants import OperationStatuses, TriggerPolicy, PipelineStatuses
+from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
 from pipelines.models import OperationRunStatus, PipelineRunStatus
-from tests.utils import BaseTest
 
 
 class TestPipelineModel(BaseTest):
@@ -834,7 +835,3 @@ class TestOperationRunModel(BaseTest):
 
         new_operation_run.refresh_from_db()
         assert new_operation_run.last_status == OperationStatuses.CREATED
-
-
-
-

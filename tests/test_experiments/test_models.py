@@ -1,42 +1,40 @@
+import os
+
 from unittest.mock import patch
 
 import mock
-import os
 
-from django.test.client import MULTIPART_CONTENT
+from tests.fixtures import start_experiment_value
+from tests.utils import BaseTest, BaseViewTest
+
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
 
-from polyaxon_schemas.polyaxonfile.specification import Specification
-from polyaxon_schemas.utils import TaskType
-
-from experiments.models import ExperimentStatus, ExperimentJob, Experiment
+from experiments.models import Experiment, ExperimentJob, ExperimentStatus
+from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from experiments.restart import handle_restarted_experiment
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
-from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from factories.factory_experiment_groups import ExperimentGroupFactory
-from factories.factory_repos import RepoFactory
-from factories.fixtures import (
-    experiment_spec_content,
-    exec_experiment_spec_content,
-    exec_experiment_resources_content,
-)
-from jobs.models import JobResources
-from polyaxon.urls import API_V1
-from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
-
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
     ExperimentJobStatusFactory,
-    ExperimentStatusFactory,
+    ExperimentStatusFactory
 )
 from factories.factory_projects import ProjectFactory
-from tests.fixtures import (
-    start_experiment_value,
+from factories.factory_repos import RepoFactory
+from factories.fixtures import (
+    exec_experiment_resources_content,
+    exec_experiment_spec_content,
+    experiment_spec_content
 )
-from tests.utils import BaseTest, BaseViewTest
+from jobs.models import JobResources
+from polyaxon.urls import API_V1
+from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.utils import TaskType
+from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
 
 class TestExperimentModel(BaseTest):

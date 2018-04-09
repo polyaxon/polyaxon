@@ -1,23 +1,23 @@
-import mock
-
 from unittest.mock import patch
 
-from rest_framework import status
+import mock
 
+from rest_framework import status
+from tests.utils import BaseViewTest
+
+from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import plugin_spec_parsed_content
 from libs.views import ProtectedView
-from plugins.models import TensorboardJob, NotebookJob
+from plugins.models import NotebookJob, TensorboardJob
 from polyaxon.urls import API_V1
 from projects.models import Project
-from factories.factory_projects import ProjectFactory
 from schedulers import notebook_scheduler
-from spawners.project_spawner import ProjectSpawner
-from spawners.tensorboard_spawner import TensorboardSpawner
 from spawners.notebook_spawner import NotebookSpawner
+from spawners.project_spawner import ProjectSpawner
 from spawners.templates.constants import DEPLOYMENT_NAME
+from spawners.tensorboard_spawner import TensorboardSpawner
 from spawners.utils.constants import JobLifeCycle
-from tests.utils import BaseViewTest
 
 
 class TestStartTensorboardViewV1(BaseViewTest):

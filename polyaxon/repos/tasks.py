@@ -1,14 +1,13 @@
 import logging
-import tarfile
-
 import os
 import shutil
+import tarfile
 
 from django.contrib.auth import get_user_model
 
 from libs.paths import delete_path
-from polyaxon.settings import CeleryTasks
 from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks
 from repos import git
 from repos.models import Repo
 

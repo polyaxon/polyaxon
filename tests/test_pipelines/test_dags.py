@@ -1,6 +1,7 @@
+from tests.utils import BaseTest
+
 from factories.pipelines import OperationFactory
 from pipelines import dags
-from tests.utils import BaseTest
 
 
 class TestDags(BaseTest):

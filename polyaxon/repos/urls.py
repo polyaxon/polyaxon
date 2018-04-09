@@ -1,8 +1,8 @@
-from django.urls import re_path
-
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from libs.urls import USERNAME_PATTERN, NAME_PATTERN
+from django.urls import re_path
+
+from libs.urls import NAME_PATTERN, USERNAME_PATTERN
 from repos import views
 
 urlpatterns = [

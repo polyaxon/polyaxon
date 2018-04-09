@@ -1,8 +1,8 @@
 import uuid
 
-from libs.redis_db import RedisToStream
-
 from tests.utils import BaseTest
+
+from libs.redis_db import RedisToStream
 
 
 class TestRedisToStream(BaseTest):
@@ -103,4 +103,3 @@ class TestRedisToStream(BaseTest):
         assert RedisToStream.is_monitored_experiment_logs(experiment_uuid) is True
         RedisToStream.remove_experiment_logs(experiment_uuid)
         assert RedisToStream.is_monitored_experiment_logs(experiment_uuid) is False
-

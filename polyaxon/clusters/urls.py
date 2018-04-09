@@ -1,9 +1,9 @@
-from django.urls import re_path
-
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from libs.urls import SEQUENCE_PATTERN, INDEX_PATTERN
+from django.urls import re_path
+
 from clusters import views
+from libs.urls import INDEX_PATTERN, SEQUENCE_PATTERN
 
 clusters_urlpatterns = [
     re_path(r'^cluster/?$',

@@ -4,9 +4,9 @@ from tests.utils import BaseTest
 
 from django.conf import settings
 
-from libs.paths import copy_to_tmp_dir, get_tmp_path
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
+from libs.paths import copy_to_tmp_dir, get_tmp_path
 
 
 class TestPaths(BaseTest):

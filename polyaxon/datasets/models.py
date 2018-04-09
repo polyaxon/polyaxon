@@ -5,7 +5,7 @@ from django.core.validators import validate_slug
 from django.db import models
 
 from libs.blacklist import validate_blacklist_name
-from libs.models import DiffModel, DescribableModel
+from libs.models import DescribableModel, DiffModel
 
 
 class Dataset(DiffModel, DescribableModel):

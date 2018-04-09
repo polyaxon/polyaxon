@@ -2,10 +2,10 @@ from django.contrib import admin
 
 from experiments.models import (
     Experiment,
-    ExperimentStatus,
     ExperimentJob,
     ExperimentJobStatus,
-    ExperimentMetric
+    ExperimentMetric,
+    ExperimentStatus
 )
 from jobs.admin import JobStatusAdmin
 

@@ -2,22 +2,21 @@ import datetime
 import json
 import tempfile
 import uuid
-import redis
 
 from urllib.parse import urlparse
-from unittest.mock import patch
 
+import redis
+
+from rest_framework import status
+from rest_framework.authtoken.models import Token
 
 from django.conf import settings
 from django.core.cache import cache
 from django.test import Client, TestCase
 from django.test.client import FakePayload
-from rest_framework import status
 
-from rest_framework.authtoken.models import Token
-
-from polyaxon.config_settings import RedisPools
 from factories.factory_users import UserFactory
+from polyaxon.config_settings import RedisPools
 
 # Stores the currently valid tokens to check against
 _valid_tokens = dict()

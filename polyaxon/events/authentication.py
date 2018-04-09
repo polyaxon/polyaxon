@@ -1,7 +1,6 @@
 from functools import wraps
 
 from rest_framework.authentication import TokenAuthentication
-
 from sanic.response import json
 
 

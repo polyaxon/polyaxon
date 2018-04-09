@@ -10,4 +10,3 @@ email_host_password = config.get_string('POLYAXON_EMAIL_HOST_PASSWORD',
 EMAIL_BACKEND = config.get_string('POLYAXON_EMAIL_BACKEND', is_optional=True)
 if EMAIL_BACKEND is None:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-

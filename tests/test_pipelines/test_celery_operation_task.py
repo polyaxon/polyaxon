@@ -1,8 +1,9 @@
+from tests.utils import BaseTest
+
 from factories.pipelines import OperationRunFactory
+from pipelines.celery_task import ClassBasedTask, OperationTask
 from pipelines.constants import OperationStatuses, PipelineStatuses
 from polyaxon.celery_api import app as celery_app
-from pipelines.celery_task import OperationTask, ClassBasedTask
-from tests.utils import BaseTest
 
 
 class TestOperationTask(BaseTest):

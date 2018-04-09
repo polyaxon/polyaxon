@@ -1,5 +1,5 @@
-import uuid
 import functools
+import uuid
 
 from operator import __or__ as OR
 
@@ -8,12 +8,11 @@ from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
+from experiment_groups import search_algorithms
+from libs.models import DescribableModel, DiffModel
+from libs.spec_validation import validate_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
-
-from experiment_groups import search_algorithms
-from libs.models import DiffModel, DescribableModel
-from libs.spec_validation import validate_spec_content
 from projects.models import Project
 from spawners.utils.constants import ExperimentLifeCycle
 

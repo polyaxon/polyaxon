@@ -13,4 +13,3 @@ class PipelinesConfig(AppConfig):
             new_operation_run_status,
             operation_run_deleted
         )
-

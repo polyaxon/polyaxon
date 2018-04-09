@@ -1,21 +1,22 @@
-from unittest.mock import patch
-
 import os
 
-from experiments.paths import (
-    get_experiment_logs_path,
-    get_experiment_outputs_path,
-    create_experiment_outputs_path,
-)
-from factories.factory_experiments import ExperimentFactory
-from factories.factory_experiment_groups import ExperimentGroupFactory
-from experiment_groups.paths import (
-    get_experiment_group_logs_path,
-    delete_experiment_group_logs,
-    get_experiment_group_outputs_path,
-    delete_experiment_group_outputs,
-)
+from unittest.mock import patch
+
 from tests.utils import BaseTest
+
+from experiment_groups.paths import (
+    delete_experiment_group_logs,
+    delete_experiment_group_outputs,
+    get_experiment_group_logs_path,
+    get_experiment_group_outputs_path
+)
+from experiments.paths import (
+    create_experiment_outputs_path,
+    get_experiment_logs_path,
+    get_experiment_outputs_path
+)
+from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiments import ExperimentFactory
 
 
 class TestExperimentGroupUtils(BaseTest):

@@ -3,11 +3,7 @@ from django.dispatch import receiver
 
 from libs.decorators import ignore_raw
 from projects.models import Project
-from projects.paths import (
-    delete_project_outputs,
-    delete_project_logs,
-    delete_project_repos,
-)
+from projects.paths import delete_project_logs, delete_project_outputs, delete_project_repos
 from schedulers import notebook_scheduler, tensorboard_scheduler
 
 

@@ -1,23 +1,16 @@
 from unittest.mock import patch
 
 from rest_framework import status
+from tests.utils import BaseViewTest
 
+from experiment_groups.models import ExperimentGroup
+from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from experiments.models import Experiment
-from factories.factory_experiments import ExperimentStatusFactory, ExperimentFactory
+from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
-from experiment_groups.models import (
-    ExperimentGroup,
-)
-from experiment_groups.serializers import (
-    ExperimentGroupSerializer,
-    ExperimentGroupDetailSerializer,
-)
-from factories.factory_experiment_groups import (
-    ExperimentGroupFactory,
-)
 from spawners.utils.constants import ExperimentLifeCycle
-from tests.utils import BaseViewTest
 
 
 class TestProjectExperimentGroupListViewV1(BaseViewTest):

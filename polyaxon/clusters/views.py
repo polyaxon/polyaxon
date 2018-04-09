@@ -1,16 +1,14 @@
-from rest_framework.generics import (
-    get_object_or_404,
-    RetrieveUpdateDestroyAPIView,
-    RetrieveAPIView)
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.generics import RetrieveAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
-from libs.views import ListCreateAPIView
 from clusters.models import Cluster, ClusterNode, NodeGPU
 from clusters.serializers import (
-    ClusterSerializer,
-    ClusterNodeSerializer,
     ClusterNodeDetailSerializer,
-    GPUSerializer)
+    ClusterNodeSerializer,
+    ClusterSerializer,
+    GPUSerializer
+)
+from libs.views import ListCreateAPIView
 
 
 class ClusterDetailView(RetrieveAPIView):

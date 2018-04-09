@@ -1,13 +1,11 @@
 import os
+
 from kubernetes import client
 
 from polyaxon_k8s import constants as k8s_constants
-
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.utils import RunTypes, to_list
-
 from spawners.templates import constants
-
 
 STORAGE_BY_VOLUME = {
     constants.DATA_VOLUME: '1Gi',

@@ -1,10 +1,10 @@
-from django.urls import re_path
-
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from libs.urls import USERNAME_PATTERN, NAME_PATTERN
-from experiments import views as experiments_views
+from django.urls import re_path
+
 from experiment_groups import views as groups_views
+from experiments import views as experiments_views
+from libs.urls import NAME_PATTERN, USERNAME_PATTERN
 from plugins import views as plugins_views
 from projects import views
 

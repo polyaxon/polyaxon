@@ -2,10 +2,10 @@ import time
 
 from django.conf import settings
 
-from clusters.models import ClusterNode, Cluster
-from libs.utils import to_bool
+from clusters.models import Cluster, ClusterNode
 from events.management.commands._base_monitor import BaseMonitorCommand
 from events.monitors import resources
+from libs.utils import to_bool
 
 
 class Command(BaseMonitorCommand):

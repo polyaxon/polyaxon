@@ -1,10 +1,9 @@
 import math
-
 import numpy as np
 
+from experiment_groups import search_algorithms
 from experiment_groups.search_algorithms.base import BaseSearchAlgorithm
 from experiment_groups.search_algorithms.utils import Suggestion
-from experiment_groups import search_algorithms
 
 
 def get_best_config():

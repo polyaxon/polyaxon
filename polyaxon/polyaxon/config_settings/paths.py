@@ -23,4 +23,3 @@ if MOUNT_PATHS_NVIDIA:
     if 'bin' in MOUNT_PATHS_NVIDIA:
         # Update PATH with the nvidia bin
         os.environ['PATH'] = '{}:{}'.format(os.getenv('PATH', ''), MOUNT_PATHS_NVIDIA['bin'])
-

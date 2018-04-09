@@ -1,5 +1,4 @@
-from polyaxon_schemas.polyaxonfile.specification import Specification, PluginSpecification
-
+from polyaxon_schemas.polyaxonfile.specification import PluginSpecification, Specification
 
 experiment_group_spec_content = """---
     version: 1

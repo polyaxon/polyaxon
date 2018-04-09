@@ -1,4 +1,4 @@
-from polyaxon.utils import config, ROOT_DIR
+from polyaxon.utils import ROOT_DIR, config
 
 DEBUG = config.get_boolean('POLYAXON_DEBUG')
 

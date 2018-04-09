@@ -1,11 +1,18 @@
+from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.generics import CreateAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from django.conf import settings
-from django.contrib.auth import (
-    views as auth_views,
-    get_user_model,
-    login as auth_login,
-    logout as auth_logout,
-)
-from django.contrib.auth.views import LogoutView as AuthLogoutView, LoginView as AuthLoginView
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LoginView as AuthLoginView
+from django.contrib.auth.views import LogoutView as AuthLogoutView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import signing
 from django.shortcuts import redirect
@@ -15,20 +22,11 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic import TemplateView, FormView
-
-from rest_framework import status
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.generics import RetrieveAPIView, CreateAPIView, DestroyAPIView
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.views.generic import FormView, TemplateView
 
 from polyaxon_schemas.user import UserConfig
-
-from users.forms import RegistrationForm
 from users import signals
+from users.forms import RegistrationForm
 
 
 class AuthTokenLogin(ObtainAuthToken):

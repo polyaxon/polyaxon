@@ -1,9 +1,9 @@
-import factory
 from faker import Factory as FakerFactory
 
-from spawners.utils.constants import NodeRoles
+import factory
 
-from clusters.models import NodeGPU, ClusterNode, ClusterEvent, Cluster
+from clusters.models import Cluster, ClusterEvent, ClusterNode, NodeGPU
+from spawners.utils.constants import NodeRoles
 
 fake = FakerFactory.create()
 

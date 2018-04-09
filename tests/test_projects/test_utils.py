@@ -1,22 +1,23 @@
-from unittest.mock import patch
-
 import os
 
+from unittest.mock import patch
+
+from tests.utils import BaseTest
+
 from experiments.paths import (
-    get_experiment_logs_path,
-    get_experiment_outputs_path,
     create_experiment_outputs_path,
+    get_experiment_logs_path,
+    get_experiment_outputs_path
 )
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from projects.paths import (
     delete_project_logs,
-    get_project_logs_path,
     delete_project_outputs,
-    get_project_outputs_path,
+    get_project_logs_path,
+    get_project_outputs_path
 )
-from tests.utils import BaseTest
 
 
 class TestProjectUtils(BaseTest):

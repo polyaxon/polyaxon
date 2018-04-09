@@ -2,10 +2,10 @@ import factory
 
 from experiments.models import (
     Experiment,
-    ExperimentStatus,
     ExperimentJob,
     ExperimentJobStatus,
     ExperimentMetric,
+    ExperimentStatus
 )
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory

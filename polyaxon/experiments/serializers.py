@@ -4,9 +4,9 @@ from rest_framework.exceptions import ValidationError
 from experiments.models import (
     Experiment,
     ExperimentJob,
-    ExperimentStatus,
     ExperimentJobStatus,
-    ExperimentMetric
+    ExperimentMetric,
+    ExperimentStatus
 )
 from jobs.serializers import JobResourcesSerializer
 from libs.spec_validation import validate_spec_content

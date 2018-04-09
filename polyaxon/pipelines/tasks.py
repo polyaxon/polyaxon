@@ -1,15 +1,14 @@
 import logging
 
-from pipelines.utils import (
-    get_pipeline_run,
-    stop_operation_runs_for_pipeline_run,
-    skip_operation_runs_for_pipeline_run,
-    get_operation_run,
-)
-from polyaxon.celery_api import app as celery_app
-
 from pipelines import dags
 from pipelines.constants import OperationStatuses, PipelineStatuses
+from pipelines.utils import (
+    get_operation_run,
+    get_pipeline_run,
+    skip_operation_runs_for_pipeline_run,
+    stop_operation_runs_for_pipeline_run
+)
+from polyaxon.celery_api import app as celery_app
 from polyaxon.config_settings import CeleryTasks, Intervals
 
 logger = logging.getLogger('polyaxon.tasks.pipelines')

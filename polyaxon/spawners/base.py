@@ -1,7 +1,6 @@
 from django.conf import settings
 
-from spawners.templates import constants
-from spawners.templates import pods
+from spawners.templates import constants, pods
 
 
 def get_pod_volumes():

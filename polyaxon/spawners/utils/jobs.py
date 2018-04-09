@@ -1,7 +1,6 @@
 from polyaxon_schemas.experiment import JobStateConfig
-
-from spawners.utils.constants import PodLifeCycle, JobLifeCycle, ContainerStatuses, PodConditions
 from spawners.utils import pods
+from spawners.utils.constants import ContainerStatuses, JobLifeCycle, PodConditions, PodLifeCycle
 
 
 def get_job_status(pod_state, job_container_names):

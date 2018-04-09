@@ -4,10 +4,10 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
-from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
 from jobs.models import Job, JobStatus
 from libs.spec_validation import validate_tensorboard_spec_content
+from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
 logger = logging.getLogger('polyaxon.plugins')
 

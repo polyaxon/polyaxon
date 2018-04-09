@@ -1,13 +1,13 @@
 from django.contrib import admin
 
 from pipelines.models import (
-    Schedule,
     Operation,
-    Pipeline,
     OperationRun,
+    OperationRunStatus,
+    Pipeline,
     PipelineRun,
     PipelineRunStatus,
-    OperationRunStatus,
+    Schedule
 )
 
 

@@ -1,16 +1,17 @@
-from django.conf import settings
-from django.http import Http404
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from django.conf import settings
+from django.http import Http404
+
 from libs.utils import to_bool
 from libs.views import ProtectedView
-from plugins.serializers import TensorboardJobSerializer, NotebookJobSerializer
+from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from projects.models import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible_project
-from projects.tasks import start_tensorboard, stop_tensorboard, build_notebook, stop_notebook
+from projects.tasks import build_notebook, start_tensorboard, stop_notebook, stop_tensorboard
 from repos import git
 from schedulers import notebook_scheduler, tensorboard_scheduler
 from spawners.utils.constants import ExperimentLifeCycle

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from jobs.admin import JobStatusAdmin
-from plugins.models import TensorboardJob, NotebookJob, TensorboardJobStatus, NotebookJobStatus
+from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 
 
 class TensorboardJobAdmin(admin.ModelAdmin):

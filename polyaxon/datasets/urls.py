@@ -1,9 +1,9 @@
-from django.urls import re_path
-
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from libs.urls import USERNAME_PATTERN, NAME_PATTERN
+from django.urls import re_path
+
 from datasets import views
+from libs.urls import NAME_PATTERN, USERNAME_PATTERN
 
 urlpatterns = [
     re_path(r'^{}/{}/datasets/?$'.format(USERNAME_PATTERN, NAME_PATTERN),

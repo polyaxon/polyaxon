@@ -1,9 +1,8 @@
 from rest_framework import status
+from tests.utils import BaseViewTest
 
 from polyaxon.urls import API_V1
-from versions.models import CliVersion, PlatformVersion, LibVersion, ChartVersion
-
-from tests.utils import BaseViewTest
+from versions.models import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 
 class TestCliVersionViewV1(BaseViewTest):

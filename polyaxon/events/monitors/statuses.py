@@ -1,11 +1,11 @@
 import logging
 
-from django.conf import settings
-
 from kubernetes import watch
 
-from libs.redis_db import RedisJobContainers
+from django.conf import settings
+
 from events.tasks import handle_events_job_statues, handle_events_plugin_job_statues
+from libs.redis_db import RedisJobContainers
 from spawners.utils.constants import JobLifeCycle
 from spawners.utils.jobs import get_job_state
 

@@ -2,8 +2,9 @@ import os
 
 from distutils.util import strtobool
 
-from polyaxon_schemas.polyaxonfile import reader
 from unipath import Path
+
+from polyaxon_schemas.polyaxonfile import reader
 
 
 def base_directory():

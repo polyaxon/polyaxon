@@ -1,14 +1,15 @@
-from django.urls import re_path
-
 from rest_framework.urlpatterns import format_suffix_patterns
+
+from django.urls import re_path
 
 from experiments import views
 from libs.urls import (
-    UUID_PATTERN,
-    USERNAME_PATTERN,
+    EXPERIMENT_SEQUENCE_PATTERN,
     NAME_PATTERN,
     SEQUENCE_PATTERN,
-    EXPERIMENT_SEQUENCE_PATTERN)
+    USERNAME_PATTERN,
+    UUID_PATTERN
+)
 
 experiments_urlpatterns = [
     # Get all experiments

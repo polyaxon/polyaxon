@@ -1,5 +1,4 @@
 import logging
-
 import uuid
 
 from celery.result import AsyncResult
@@ -11,12 +10,11 @@ from django.db import models
 from django.dispatch import Signal
 
 from libs.blacklist import validate_blacklist_name
+from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from pipelines import dags
+from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
-
-from libs.models import DiffModel, DescribableModel, StatusModel, LastStatusMixin
-from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
 from projects.models import Project
 
 logger = logging.getLogger('polyaxon.pipelines')

@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from dockerizer.builders.base import BaseDockerBuilder
 from libs.registry import get_registry_host
 from repos import git
-from repos.models import Repo, ExternalRepo
+from repos.models import ExternalRepo, Repo
 from spawners.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')

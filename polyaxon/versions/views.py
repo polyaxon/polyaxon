@@ -2,13 +2,12 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 
 from polyaxon_schemas.version import (
+    ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,
-    PlatformVersionConfig,
-    ChartVersionConfig
+    PlatformVersionConfig
 )
-
-from versions.models import CliVersion, PlatformVersion, LibVersion, ChartVersion
+from versions.models import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 
 class CliVersionView(RetrieveAPIView):
