@@ -132,9 +132,9 @@ class ExperimentGroup(DiffModel, DescribableModel):
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
 
+    def should_reschedule(self):
+        return False
+
     def get_suggestions(self, iteration=0):
-        search_algorithm = search_algorithms.init(self.specification)
-        return search_algorithms.get_suggestions(
-            search_algorithm=self.specification.search_algorithm,
-            matrix=self.specification.matrix,
-            n_suggestions=self.specification.n_experiments)
+        search_algorithm = search_algorithms.get_search_algorithm(specification=self.specification)
+        return search_algorithm.get_suggestions()

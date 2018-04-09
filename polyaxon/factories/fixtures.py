@@ -7,10 +7,11 @@ experiment_group_spec_content = """---
 
     project:
       name: project1
-      
-    matrix:
-      lr:
-        logspace: 0.01:0.1:5
+    
+    settings:
+      matrix:
+        lr:
+          logspace: 0.01:0.1:5
 
     model:
       model_type: regressor
@@ -56,10 +57,9 @@ experiment_group_spec_content_2_xps = """---
       
     settings:
       concurrent_experiments: 2
-      
-    matrix:
-      lr:
-        values: [0.01, 0.1]
+      matrix:
+        lr:
+          values: [0.01, 0.1]
 
     run:
       image: my_image
@@ -76,18 +76,15 @@ experiment_group_spec_content_early_stopping = """---
 
     settings:
       concurrent_experiments: 2
-      n_experiments: 2
       early_stopping:
         - metric: precision
           value: 0.9
         - metric: loss
           value: 0.1
           optimization: minimize 
-
-
-    matrix:
-      lr:
-        values: [0.01, 0.1, 0.2]
+      matrix:
+        lr:
+          values: [0.01, 0.1]
 
     run:
       image: my_image

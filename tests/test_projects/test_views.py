@@ -267,6 +267,9 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         content = """---
 version: 1
+
+kind: group
+
 project:
   name: project1
 
@@ -294,15 +297,17 @@ model:
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         content = """---
 version: 1
+
+kind: group
+
 project:
   name: project1
   
 settings:
     concurrent_experiments: 3
-    
-matrix:
-  lr:
-    values: [0.1, 0.2, 0.3]
+    matrix:
+      lr:
+        values: [0.1, 0.2, 0.3]
 
 model:
   model_type: classifier

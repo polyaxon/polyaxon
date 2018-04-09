@@ -180,9 +180,9 @@ Experiment group was created
 
 ## Maximum number of experiments
 
-Sometimes you don't wish to explore the matrix space exhaustively. 
+Sometimes you don't wish to explore the matrix space exhaustively.
 In that case, you can define a maximum number of experiments to explore form the matrix space.
-The value must be of course less than the total number of experiments in the matrix space, 
+The value must be of course less than the total number of experiments in the matrix space,
 or a float value between 0 and 1 defining a percentage of the total number of experiments.
 
 In order to activate this option, you must update your polyaxonfile's `settings` section with `n_experiments`
@@ -195,8 +195,8 @@ version: 1
 
 settings:
   concurrent_experiments: 2
-  search_method: random
-  n_experiments: 4
+  random_search:
+    n_experiments: 4
 ```
 
 This will start a maximum of 4 experiments in this group independently of how big is the total number of experiments in matrix space.
@@ -210,8 +210,8 @@ version: 1
 
 settings:
   concurrent_experiments: 2
-  search_method: random
-  n_experiments: 0.4
+  random_search:
+    n_experiments: 0.4
 ```
 
 This will start 40% of total number of experiments.
@@ -232,8 +232,8 @@ version: 1
 
 settings:
   concurrent_experiments: 2
-  search_method: random
-  n_experiments: 4
+  random_search:
+    n_experiments: 4
   early_stopping:
     - metric: accuracy
       value: 0.9
@@ -244,7 +244,7 @@ settings:
 ```
 
 In this case, the scheduler will not start any more experiment, if one of the experiments in the group validate the following condition:
- 
+
  * An accuracy >= 0.9
  * Or a loss <= 0.05
 

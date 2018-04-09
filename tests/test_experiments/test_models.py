@@ -68,7 +68,7 @@ class TestExperimentModel(BaseTest):
         assert mock_fct2.call_count == 1
 
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
-        content = Specification.read(experiment_spec_content)
+        content = ExperimentSpecification.read(experiment_spec_content)
         experiment = ExperimentFactory(config=content.parsed_data)
         assert experiment.is_independent is True
 
@@ -82,7 +82,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
     def test_independent_experiment_creation_with_run_triggers_experiment_building_scheduling(self):
-        content = Specification.read(exec_experiment_spec_content)
+        content = ExperimentSpecification.read(exec_experiment_spec_content)
         # Create a repo for the project
         repo = RepoFactory()
 
@@ -103,7 +103,7 @@ class TestExperimentModel(BaseTest):
 
     @mock.patch('schedulers.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
-        content = Specification.read(experiment_spec_content)
+        content = ExperimentSpecification.read(experiment_spec_content)
 
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
@@ -134,7 +134,7 @@ class TestExperimentModel(BaseTest):
 
     @mock.patch('schedulers.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
-        content = Specification.read(exec_experiment_resources_content)
+        content = ExperimentSpecification.read(exec_experiment_resources_content)
 
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
@@ -171,7 +171,7 @@ class TestExperimentModel(BaseTest):
         assert mock_fct.call_count == 1
 
     def test_set_metrics(self):
-        content = Specification.read(experiment_spec_content)
+        content = ExperimentSpecification.read(experiment_spec_content)
         experiment = ExperimentFactory(config=content.parsed_data)
         assert experiment.metrics.count() == 0
 
@@ -281,7 +281,7 @@ class TestExperimentCommit(BaseViewTest):
                                   content_type='multipart/form-data')
 
     def create_experiment(self, content):
-        config = Specification.read(content)
+        config = ExperimentSpecification.read(content)
         with patch('dockerizer.builders.experiments.build_experiment') as _:
             return ExperimentFactory(config=config.parsed_data, project=self.project)
 

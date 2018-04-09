@@ -135,13 +135,16 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         super().setUp()
         content = """---
     version: 1
+    
+    kind: group
 
     project:
       name: project1
       
-    matrix:
-      lr:
-        linspace: '1.:3.:3'
+    settings:
+      matrix:
+        lr:
+          linspace: '1.:3.:3'
     
     model:
       model_type: regressor

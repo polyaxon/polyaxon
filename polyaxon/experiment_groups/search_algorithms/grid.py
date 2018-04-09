@@ -13,7 +13,7 @@ class GridSearch(BaseSearchAlgorithm):
             n_suggestions: number of suggestions to make.
         """
         matrix = self.specification.matrix
-        n_suggestions = self.specification.n_experiments
+        n_suggestions = self.specification.matrix_space
 
         suggestions = []
         keys = list(matrix.keys())

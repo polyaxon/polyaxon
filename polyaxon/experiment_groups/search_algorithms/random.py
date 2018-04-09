@@ -12,7 +12,7 @@ class RandomSearch(BaseSearchAlgorithm):
             n_suggestions: number of suggestions to make.
         """
         matrix = self.specification.matrix
-        n_suggestions = self.specification.n_experiments
+        n_suggestions = self.specification.settings.random_search.n_experiments
 
         if not n_suggestions:
             raise ValueError('This search algorithm requires `n_experiments`.')

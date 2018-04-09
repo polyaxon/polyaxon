@@ -34,10 +34,7 @@ def create_group_experiments(self, experiment_group_id, iteration=0):
 
     # Parse polyaxonfile content and create the experiments
     specification = experiment_group.specification
-    suggestions = search_algorithms.get_suggestions(
-        search_algorithm=specification.search_algorithm,
-        matrix=specification.matrix,
-        n_suggestions=specification.n_experiments)
+    suggestions = experiment_group.get_suggestions(iteration=iteration)
 
     if not suggestions:
         logger.warning('Search algorithm was not found `{}`'.format(specification.search_algorithm))
@@ -81,9 +78,9 @@ def start_group_experiments(self, experiment_group_id):
     elif experiment_group.should_reschedule():
         create_group_experiments.delay(experiment_group_id=experiment_group_id)
 
-    elif experiment_group.reduce_experiments_to_restart():
-        # Schedule another task
-        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+    # elif experiment_group.reduce_experiments_to_restart():
+    #     # Schedule another task
+    #     self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
 @celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)

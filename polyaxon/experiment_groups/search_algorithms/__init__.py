@@ -1,11 +1,14 @@
 from experiment_groups.search_algorithms import grid, hyperband, random
 from polyaxon_schemas.utils import SearchAlgorithms
 
+from experiment_groups.search_algorithms.grid import GridSearch
+from experiment_groups.search_algorithms.random import RandomSearch
 
-def get_suggestions(search_algorithm, matrix, n_suggestions, n_resumes):
-    if SearchAlgorithms.is_grid(search_algorithm):
-        return grid.get_suggestions(matrix=matrix, n_suggestions=n_suggestions, n_resumes=n_resumes)
-    elif SearchAlgorithms.is_random(search_algorithm):
-        return random.get_suggestions(matrix=matrix, n_suggestions=n_suggestions, n_resumes=n_resumes)
+
+def get_search_algorithm(specification):
+    if SearchAlgorithms.is_grid(specification.search_algorithm):
+        return GridSearch(specification=specification)
+    elif SearchAlgorithms.is_random(specification.search_algorithm):
+        return RandomSearch(specification=specification)
 
     return None
