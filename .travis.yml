@@ -50,6 +50,8 @@ before_script:
 
 script:
   - py.test tests -v
+  - prospector polyaxon
+  - prospector tests
 
 notifications:
   slack:
