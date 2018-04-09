@@ -12,6 +12,7 @@ from django.utils import timezone
 from experiments.models import Experiment, ExperimentJob, ExperimentStatus
 from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from experiments.restart import handle_restarted_experiment
+from experiments.statuses import ExperimentLifeCycle
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
@@ -31,7 +32,8 @@ from jobs.models import JobResources
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
-from runner.spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
+
+from jobs.statuses import JobLifeCycle
 from tests.fixtures import start_experiment_value
 from tests.utils import BaseTest, BaseViewTest
 

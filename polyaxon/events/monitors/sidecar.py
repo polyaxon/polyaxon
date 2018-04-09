@@ -3,7 +3,9 @@ import time
 
 from events import publisher
 from polyaxon_schemas.experiment import JobLabelConfig
-from runner.spawners.utils.constants import ExperimentLifeCycle, PodLifeCycle
+
+from experiments.statuses import ExperimentLifeCycle
+from runner.spawners.utils.constants import PodLifeCycle
 
 logger = logging.getLogger('polyaxon.monitors.sidecar')
 

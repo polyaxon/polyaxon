@@ -2,8 +2,8 @@ from django.core.management import BaseCommand
 from django.db import ProgrammingError
 
 from experiments.models import Experiment
+from experiments.statuses import ExperimentLifeCycle
 from runner.schedulers import experiment_scheduler
-from runner.spawners.utils.constants import ExperimentLifeCycle
 
 
 class Command(BaseCommand):

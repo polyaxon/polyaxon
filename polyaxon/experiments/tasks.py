@@ -7,13 +7,13 @@ from django.db.models import Count
 from experiments.models import Experiment, ExperimentMetric
 from experiments.paths import create_experiment_outputs_path
 from experiments.restart import handle_restarted_experiment
+from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import get_valid_experiment
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks, Intervals
 from repos.models import Repo
 from runner.dockerizer.builders import experiments as experiments_builder
 from runner.schedulers import experiment_scheduler
-from runner.spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.experiments')
 

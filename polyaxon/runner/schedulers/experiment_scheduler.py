@@ -9,6 +9,7 @@ from django.conf import settings
 
 from experiments.models import ExperimentJob
 from experiments.serializers import ExperimentJobDetailSerializer
+from experiments.statuses import ExperimentLifeCycle
 from jobs.models import JobResources
 from polyaxon.utils import config
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
@@ -24,7 +25,6 @@ from runner.spawners.horovod_spawner import HorovodSpawner
 from runner.spawners.mxnet_spawner import MXNetSpawner
 from runner.spawners.pytorch_spawner import PytorchSpawner
 from runner.spawners.tensorflow_spawner import TensorflowSpawner
-from runner.spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.schedulers.experiment')
 

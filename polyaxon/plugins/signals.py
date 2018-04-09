@@ -3,9 +3,9 @@ import logging
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from jobs.statuses import JobLifeCycle
 from libs.decorators import ignore_raw
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
-from runner.spawners.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.plugins')
 

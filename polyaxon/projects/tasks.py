@@ -4,12 +4,13 @@ from docker.errors import DockerException
 
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks
+
+from jobs.statuses import JobLifeCycle
 from projects.models import Project
 from repos.models import Repo
 from runner.dockerizer.builders import notebooks as notebooks_builder
 from runner.dockerizer.images import get_notebook_image_info
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler
-from runner.spawners.utils.constants import JobLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.projects')
 

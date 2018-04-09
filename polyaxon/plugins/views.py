@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from django.conf import settings
 from django.http import Http404
 
+from experiments.statuses import ExperimentLifeCycle
 from libs.utils import to_bool
 from libs.views import ProtectedView
 from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
@@ -14,7 +15,6 @@ from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible
 from projects.tasks import build_notebook, start_tensorboard, stop_notebook, stop_tensorboard
 from repos import git
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler
-from runner.spawners.utils.constants import ExperimentLifeCycle
 
 
 class StartTensorboardView(CreateAPIView):

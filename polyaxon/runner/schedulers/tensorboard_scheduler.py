@@ -2,8 +2,8 @@ import logging
 
 from django.conf import settings
 
+from experiments.statuses import ExperimentLifeCycle
 from runner.spawners.tensorboard_spawner import TensorboardSpawner
-from runner.spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.schedulers.tensorboard')
 

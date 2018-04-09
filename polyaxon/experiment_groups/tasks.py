@@ -2,10 +2,10 @@ import logging
 
 from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
+from experiments.statuses import ExperimentLifeCycle
 from experiments.tasks import build_experiment, stop_experiment
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks, Intervals
-from runner.spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.experiment_groups')
 

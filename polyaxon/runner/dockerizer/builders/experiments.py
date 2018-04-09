@@ -4,12 +4,12 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from events import publisher
+from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import is_experiment_still_running
 from libs.registry import get_registry_host
 from repos import git
 from repos.models import ExternalRepo, Repo
 from runner.dockerizer.builders.base import BaseDockerBuilder
-from runner.spawners.utils.constants import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')
 

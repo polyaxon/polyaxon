@@ -7,6 +7,7 @@ from rest_framework import status
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import plugin_spec_parsed_content
+from jobs.statuses import JobLifeCycle
 from libs.views import ProtectedView
 from plugins.models import NotebookJob, TensorboardJob
 from polyaxon.urls import API_V1
@@ -16,7 +17,6 @@ from runner.spawners.notebook_spawner import NotebookSpawner
 from runner.spawners.project_spawner import ProjectSpawner
 from runner.spawners.templates.constants import DEPLOYMENT_NAME
 from runner.spawners.tensorboard_spawner import TensorboardSpawner
-from runner.spawners.utils.constants import JobLifeCycle
 from tests.utils import BaseViewTest
 
 

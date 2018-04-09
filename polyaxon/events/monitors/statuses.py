@@ -5,8 +5,8 @@ from kubernetes import watch
 from django.conf import settings
 
 from events.tasks import handle_events_job_statues, handle_events_plugin_job_statues
+from jobs.statuses import JobLifeCycle
 from libs.redis_db import RedisJobContainers
-from runner.spawners.utils.constants import JobLifeCycle
 from runner.spawners.utils.jobs import get_job_state
 
 logger = logging.getLogger('polyaxon.monitors.statuses')

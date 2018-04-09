@@ -2,8 +2,8 @@ from mock import patch
 
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
+from jobs.statuses import JobLifeCycle
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
-from runner.spawners.utils.constants import JobLifeCycle
 from tests.utils import BaseTest
 
 
