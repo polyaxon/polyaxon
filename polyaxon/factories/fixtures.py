@@ -1,7 +1,9 @@
-from polyaxon_schemas.polyaxonfile.specification import PluginSpecification, Specification
+from polyaxon_schemas.polyaxonfile.specification import PluginSpecification, ExperimentSpecification
 
 experiment_group_spec_content = """---
     version: 1
+    
+    kind: group
 
     project:
       name: project1
@@ -46,6 +48,8 @@ experiment_group_spec_content = """---
 
 experiment_group_spec_content_2_xps = """---
     version: 1
+    
+    kind: group
 
     project:
       name: project1
@@ -64,6 +68,8 @@ experiment_group_spec_content_2_xps = """---
 
 experiment_group_spec_content_early_stopping = """---
     version: 1
+    
+    kind: group
 
     project:
       name: project1
@@ -90,6 +96,8 @@ experiment_group_spec_content_early_stopping = """---
 
 experiment_spec_content = """---
     version: 1
+    
+    kind: experiment
 
     project:
       name: project1
@@ -127,10 +135,12 @@ experiment_spec_content = """---
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-experiment_spec_parsed_content = Specification.read(experiment_spec_content)
+experiment_spec_parsed_content = ExperimentSpecification.read(experiment_spec_content)
 
 exec_experiment_spec_content = """---
     version: 1
+    
+    kind: experiment
 
     project:
       name: project1
@@ -140,11 +150,13 @@ exec_experiment_spec_content = """---
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
-exec_experiment_spec_parsed_content = Specification.read(exec_experiment_spec_content)
+exec_experiment_spec_parsed_content = ExperimentSpecification.read(exec_experiment_spec_content)
 
 
 exec_experiment_resources_content = """---
     version: 1
+    
+    kind: experiment
 
     project:
       name: project1
@@ -213,12 +225,13 @@ exec_experiment_resources_content = """---
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-
-exec_experiment_resources_parsed_content = Specification.read(exec_experiment_resources_content)
+exec_experiment_resources_parsed_content = ExperimentSpecification.read(exec_experiment_resources_content)
 
 
 plugin_spec_content = """---
     version: 1
+    
+    kind: plugin
 
     project:
       name: project1

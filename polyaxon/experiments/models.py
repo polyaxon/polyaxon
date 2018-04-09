@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 from jobs.models import Job, JobResources, JobStatus
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_spec_content
-from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
@@ -109,7 +109,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def compiled_spec(self):
-        return Specification(values=self.config)
+        return ExperimentSpecification(values=self.config)
 
     @cached_property
     def declarations(self):

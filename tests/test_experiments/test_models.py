@@ -32,7 +32,7 @@ from factories.fixtures import (
 )
 from jobs.models import JobResources
 from polyaxon.urls import API_V1
-from polyaxon_schemas.polyaxonfile.specification import Specification
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 from spawners.utils.constants import ExperimentLifeCycle, JobLifeCycle
 
