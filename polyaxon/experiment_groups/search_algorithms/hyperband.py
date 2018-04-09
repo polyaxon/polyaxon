@@ -1,8 +1,7 @@
 import math
 
-from experiment_groups import search_algorithms
 from experiment_groups.search_algorithms.base import BaseSearchAlgorithm
-from experiment_groups.search_algorithms.utils import Suggestion
+from experiment_groups.search_algorithms.utils import get_random_suggestions
 
 
 def get_best_config():
@@ -73,9 +72,9 @@ class HyperBandSearch(BaseSearchAlgorithm):
         # r: initial number of iterations/resources per config
         return self.max_iter * (self.eta ** (-bracket))
 
-    def get_bracket(self, n_resumes):
+    def get_bracket(self, iteration):
         """This defined the bracket `s` in outerloop `for s in reversed(range(self.s_max + 1))`."""
-        return self.s_max - n_resumes
+        return self.s_max - iteration
 
     def get_n_config_to_keep(self, n_suggestions, bracket_iteration):
         """Number of configs to keep and resume."""
@@ -86,19 +85,16 @@ class HyperBandSearch(BaseSearchAlgorithm):
         """Number of iterations to run for this barcket_i"""
         return n_resources * self.eta ** bracket_iteration
 
+    def get_suggestions(self, iteration=None):
+        """Return a list of suggestions/arms based on hyperband.
 
-def get_suggestions(hyperband_config, matrix, n_suggestions, n_resumes):
-    """Return a list of suggestions/arms based on hyperband.
-
-    Params:
-        hyperband_config: `HyperBandConfig`.
-        matrix: `dict` representing the {hyperparam: hyperparam matrix config}.
-        n_suggestions: number of suggestions to make.
-        n_resumes: number of times the group asked for a suggestion.
-    """
-    bracket = hyperband_config.get_bracket(n_resumes=n_resumes)
-    n_configs = hyperband_config.get_number_of_configs(bracket=bracket)
-    n_resources = hyperband_config.get_resources(bracket=bracket)
-    search_algorithms.random.get_suggestions(matrix=matrix,
-                                             n_suggestions=n_configs,
-                                             n_resumes=n_resumes)
+        Params:
+            matrix: `dict` representing the {hyperparam: hyperparam matrix config}.
+            n_suggestions: number of suggestions to make.
+            n_resumes: number of times the group asked for a suggestion.
+        """
+        bracket = self.get_bracket(iteration=iteration)
+        n_configs = self.get_number_of_configs(bracket=bracket)
+        # n_resources = self.get_resources(bracket=bracket)
+        return get_random_suggestions(matrix=self.specification.matrix,
+                                      n_suggestions=n_configs)

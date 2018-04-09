@@ -4,5 +4,5 @@ class BaseSearchAlgorithm(object):
     def __init__(self, specification):
         self.specification = specification
 
-    def get_suggestions(self):
+    def get_suggestions(self, iteration=None):
         raise NotImplemented  # noqa

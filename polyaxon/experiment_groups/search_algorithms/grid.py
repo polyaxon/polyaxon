@@ -5,7 +5,7 @@ from experiment_groups.search_algorithms.base import BaseSearchAlgorithm
 
 class GridSearch(BaseSearchAlgorithm):
     """Grid search algorithm for hyperparameter optimization."""
-    def get_suggestions(self):
+    def get_suggestions(self, iteration=None):
         """Return a list of suggestions based on grid search.
 
         Params:

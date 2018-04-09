@@ -137,4 +137,4 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     def get_suggestions(self, iteration=0):
         search_algorithm = search_algorithms.get_search_algorithm(specification=self.specification)
-        return search_algorithm.get_suggestions()
+        return search_algorithm.get_suggestions(iteration=iteration)
