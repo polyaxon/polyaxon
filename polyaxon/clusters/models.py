@@ -17,7 +17,7 @@ class Cluster(Singleton):
         editable=False,
         unique=True,
         null=False)
-    version_api = JSONField(help_text='The cluster version api infos')
+    version_api = JSONField(help_text='The cluster version api info')
 
     def __str__(self):
         return 'Cluster: {}'.format(self.uuid.hex)
