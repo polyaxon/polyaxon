@@ -7,7 +7,7 @@ from experiment_groups.models import ExperimentGroup
 from experiments.models import Experiment, ExperimentStatus
 from experiments.statuses import ExperimentLifeCycle
 from experiments.tasks import build_experiment
-from libs.decorators import ignore_raw, runner_signal
+from libs.decorators import ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
 
 logger = logging.getLogger('polyaxon.runner.experiments')
@@ -15,15 +15,10 @@ logger = logging.getLogger('polyaxon.runner.experiments')
 
 @receiver(post_save, sender=Experiment, dispatch_uid="start_new_experiment")
 @runner_signal
+@ignore_updates
 @ignore_raw
 def start_new_experiment(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    # Check if the experiment is newly created and that we can start it independently
-    if not created:
-        return
-
     if instance.is_independent:
         # Start building the experiment and then Schedule it to be picked by the spawners
         build_experiment.apply_async((instance.id, ), countdown=1)

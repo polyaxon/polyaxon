@@ -30,13 +30,12 @@ from factories.fixtures import (
     experiment_spec_content
 )
 from jobs.models import JobResources
+from jobs.statuses import JobLifeCycle
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
-
-from jobs.statuses import JobLifeCycle
 from tests.fixtures import start_experiment_value
-from tests.utils import BaseTest, BaseViewTest, RUNNER_TEST
+from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
 
 class TestExperimentModel(BaseTest):

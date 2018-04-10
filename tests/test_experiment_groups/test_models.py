@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from django.test import tag, override_settings
+from django.test import override_settings, tag
 
 from experiment_groups.tasks import stop_group_experiments
 from experiments.models import Experiment, ExperimentMetric
@@ -8,7 +8,7 @@ from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
-from tests.utils import BaseTest, RUNNER_TEST
+from tests.utils import RUNNER_TEST, BaseTest
 
 
 class TestExperimentGroupModel(BaseTest):

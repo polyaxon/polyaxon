@@ -1,21 +1,17 @@
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from libs.decorators import ignore_raw
+from libs.decorators import ignore_raw, ignore_updates
 from projects.models import Project
 from projects.paths import delete_project_logs, delete_project_outputs, delete_project_repos
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler
 
 
 @receiver(post_save, sender=Project, dispatch_uid="project_saved")
+@ignore_updates
 @ignore_raw
 def new_project(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    if not created:
-        return
-
     # Clean outputs, logs, and repos
     delete_project_outputs(instance.unique_name)
     delete_project_logs(instance.unique_name)

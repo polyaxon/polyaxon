@@ -3,24 +3,17 @@ import os
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
+from libs.decorators import ignore_raw, ignore_updates
 from libs.paths import create_path, delete_path
 from repos import git
 from repos.models import ExternalRepo, Repo
 
 
 @receiver(post_save, sender=Repo, dispatch_uid="repo_saved")
+@ignore_updates
+@ignore_raw
 def new_repo(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    # Check if the experiment is newly created and that we can start it independently
-    if not created:
-        return
-
     # Check that the user has a dir
     if not os.path.isdir(instance.user_path):
         create_path(instance.user_path)
@@ -46,17 +39,10 @@ def repo_deleted(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExternalRepo, dispatch_uid="external_repo_saved")
+@ignore_updates
+@ignore_raw
 def new_external_repo(sender, **kwargs):
-    if kwargs.get('raw'):
-        # Ignore signal handling for fixture loading
-        return
-
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    # Check if the experiment is newly created and that we can start it independently
-    if not created:
-        return
 
     # Check that the user has a dir
     if not os.path.isdir(instance.user_path):

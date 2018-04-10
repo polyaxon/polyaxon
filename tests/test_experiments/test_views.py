@@ -1,7 +1,8 @@
 from unittest.mock import patch
 
-from django.test import tag, override_settings
 from rest_framework import status
+
+from django.test import override_settings, tag
 
 from experiments.models import (
     Experiment,
@@ -31,10 +32,9 @@ from factories.factory_experiments import (
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
-from polyaxon.urls import API_V1
-
 from jobs.statuses import JobLifeCycle
-from tests.utils import BaseViewTest, RUNNER_TEST
+from polyaxon.urls import API_V1
+from tests.utils import RUNNER_TEST, BaseViewTest
 
 
 class TestProjectExperimentListViewV1(BaseViewTest):
