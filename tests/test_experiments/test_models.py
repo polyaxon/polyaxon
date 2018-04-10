@@ -6,6 +6,7 @@ import mock
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
 
@@ -35,11 +36,18 @@ from polyaxon_schemas.utils import TaskType
 
 from jobs.statuses import JobLifeCycle
 from tests.fixtures import start_experiment_value
-from tests.utils import BaseTest, BaseViewTest
+from tests.utils import BaseTest, BaseViewTest, RUNNER_TEST
 
 
 class TestExperimentModel(BaseTest):
+    @override_settings(DEPLOY_RUNNER=False)
     def test_experiment_creation_triggers_status_creation_mocks(self):
+        with patch.object(Experiment, 'set_status') as mock_fct2:
+            ExperimentFactory()
+        assert mock_fct2.call_count == 1
+
+    @tag(RUNNER_TEST)
+    def test_non_independent_experiment_creation_doesnt_trigger_start(self):
         with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
@@ -50,15 +58,14 @@ class TestExperimentModel(BaseTest):
         assert mock_fct.call_count == 0
         assert mock_fct2.call_count == 1
 
+    @override_settings(DEPLOY_RUNNER=False)
     def test_experiment_creation_triggers_status_creation(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
-            experiment_group = ExperimentGroupFactory()
-
-        experiment = ExperimentFactory(experiment_group=experiment_group)
+        experiment = ExperimentFactory()
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
         assert experiment.last_status == ExperimentLifeCycle.CREATED
 
+    @tag(RUNNER_TEST)
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
         with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
             with patch('experiments.tasks.build_experiment.apply_async') as mock_fct:
@@ -68,6 +75,7 @@ class TestExperimentModel(BaseTest):
         assert mock_fct.call_count == 1
         assert mock_fct2.call_count == 1
 
+    @tag(RUNNER_TEST)
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
         content = ExperimentSpecification.read(experiment_spec_content)
         experiment = ExperimentFactory(config=content.parsed_data)
@@ -82,6 +90,7 @@ class TestExperimentModel(BaseTest):
         # Assert also that experiment is monitored
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
+    @tag(RUNNER_TEST)
     def test_independent_experiment_creation_with_run_triggers_experiment_building_scheduling(self):
         content = ExperimentSpecification.read(exec_experiment_spec_content)
         # Create a repo for the project
@@ -102,6 +111,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
+    @tag(RUNNER_TEST)
     @mock.patch('runner.schedulers.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
         content = ExperimentSpecification.read(experiment_spec_content)
@@ -133,6 +143,7 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
+    @tag(RUNNER_TEST)
     @mock.patch('runner.schedulers.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
         content = ExperimentSpecification.read(exec_experiment_resources_content)
@@ -164,6 +175,14 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
+    @override_settings(DEPLOY_RUNNER=False)
+    @patch('experiments.paths.delete_path')
+    def test_delete_experiment_triggers_experiment_stop_mocks(self, delete_path):
+        experiment = ExperimentFactory()
+        experiment.delete()
+        assert delete_path.call_count == 2
+
+    @tag(RUNNER_TEST)
     def test_delete_experiment_triggers_experiment_stop_mocks(self):
         experiment = ExperimentFactory()
         with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_fct:
@@ -183,6 +202,7 @@ class TestExperimentModel(BaseTest):
 
         assert experiment.metrics.count() == 1
 
+    @tag(RUNNER_TEST)
     def test_master_success_influences_other_experiment_workers_status(self):
         with patch('experiments.tasks.start_experiment.delay') as _:
             with patch.object(Experiment, 'set_status') as _:
@@ -210,6 +230,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SUCCEEDED
 
+    @tag(RUNNER_TEST)
     def test_sync_experiments_and_jobs_statuses(self):
         with patch('experiments.tasks.start_experiment.delay') as _:
             with patch.object(Experiment, 'set_status') as _:
@@ -244,6 +265,7 @@ class TestExperimentModel(BaseTest):
         assert no_jobs_xp.last_status is None
         assert xp_with_jobs.last_status == ExperimentLifeCycle.RUNNING
 
+    @tag(RUNNER_TEST)
     def test_restarting_an_experiment(self):
         with patch('experiments.tasks.build_experiment.apply_async') as _:
             experiment1 = ExperimentFactory()
@@ -281,10 +303,10 @@ class TestExperimentCommit(BaseViewTest):
         return SimpleUploadedFile(filename, file.read(),
                                   content_type='multipart/form-data')
 
+    @override_settings(DEPLOY_RUNNER=False)
     def create_experiment(self, content):
         config = ExperimentSpecification.read(content)
-        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
-            return ExperimentFactory(config=config.parsed_data, project=self.project)
+        return ExperimentFactory(config=config.parsed_data, project=self.project)
 
     def test_experiment_is_saved_with_commit(self):
         uploaded_file = self.get_upload_file()

@@ -3,7 +3,6 @@ import logging
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
-from experiment_groups.models import ExperimentGroup
 from experiments.models import (
     Experiment,
     ExperimentJob,
@@ -17,10 +16,9 @@ from experiments.paths import (
     delete_experiment_outputs
 )
 from experiments.statuses import ExperimentLifeCycle
-from experiments.tasks import build_experiment, check_experiment_status
+from experiments.tasks import check_experiment_status
 from jobs.statuses import JobLifeCycle
-from libs.decorators import ignore_raw
-from runner.schedulers import experiment_scheduler
+from libs.decorators import ignore_raw, ignore_updates
 
 logger = logging.getLogger('polyaxon.experiments')
 
@@ -50,15 +48,10 @@ def add_experiment_commit(sender, **kwargs):
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")
+@ignore_updates
 @ignore_raw
 def new_experiment(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    # Check if the experiment is newly created and that we can start it independently
-    if not created:
-        return
-
     instance.set_status(ExperimentLifeCycle.CREATED)
 
     # Clean outputs and logs
@@ -68,40 +61,21 @@ def new_experiment(sender, **kwargs):
     # Create logs path
     create_experiment_logs_path(instance.unique_name)
 
-    if instance.is_independent:
-        # Start building the experiment and then Schedule it to be picked by the spawners
-        build_experiment.apply_async((instance.id, ), countdown=1)
-
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_deleted")
 @ignore_raw
 def experiment_deleted(sender, **kwargs):
     instance = kwargs['instance']
-    try:
-        _ = instance.experiment_group  # noqa
-        # Delete all jobs from DB before sending a signal to k8s,
-        # this way no statuses will be updated in the meanwhile
-        instance.jobs.all().delete()
-        experiment_scheduler.stop_experiment(instance, update_status=False)
-    except ExperimentGroup.DoesNotExist:
-        # The experiment was already stopped when the group was deleted
-        pass
-
     # Delete outputs and logs
     delete_experiment_outputs(instance.unique_name)
     delete_experiment_logs(instance.unique_name)
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
+@ignore_updates
 @ignore_raw
 def new_experiment_job(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    # Check if the experiment job
-    if not created:
-        return
-
     instance.set_status(status=JobLifeCycle.CREATED)
 
 
@@ -153,21 +127,13 @@ def new_experiment_status(sender, **kwargs):
             if not job.is_done:
                 job.set_status(JobLifeCycle.SUCCEEDED, message='Master is done.')
 
-    if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
-        logger.info('One of the workers failed or Master for experiment `%s` is done, '
-                    'send signal to other workers to stop.', experiment.unique_name)
-        # Schedule stop for this experiment because other jobs may be still running
-        experiment_scheduler.stop_experiment(experiment, update_status=False)
-
 
 @receiver(post_save, sender=ExperimentMetric, dispatch_uid="experiment_metric_saved")
+@ignore_updates
 @ignore_raw
 def new_experiment_metric(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
     experiment = instance.experiment
-
-    if created:
-        # update experiment last_metric
-        experiment.experiment_metric = instance
-        experiment.save()
+    # update experiment last_metric
+    experiment.experiment_metric = instance
+    experiment.save()

@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from django.test import tag, override_settings
 from rest_framework import status
 
 from experiments.models import (
@@ -33,7 +34,7 @@ from factories.fixtures import exec_experiment_spec_parsed_content
 from polyaxon.urls import API_V1
 
 from jobs.statuses import JobLifeCycle
-from tests.utils import BaseViewTest
+from tests.utils import BaseViewTest, RUNNER_TEST
 
 
 class TestProjectExperimentListViewV1(BaseViewTest):
@@ -112,7 +113,24 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
-    def test_create_Sdf(self):
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        data = {'config': exec_experiment_spec_parsed_content.parsed_data}
+        resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 1
+
+        # Test other
+        resp = self.auth_client.post(self.other_url, data)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    @tag(RUNNER_TEST)
+    def test_create_with_runner(self):
         data = {}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
@@ -130,7 +148,63 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentGroupExperimentListViewV1(BaseViewTest):
+    serializer_class = ExperimentSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    num_objects = 3
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.experiment_group = ExperimentGroupFactory()
+        self.objects = [self.factory_class(experiment_group=self.experiment_group)
+                        for _ in range(self.num_objects)]
+        self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
+                                                             self.experiment_group.project.user,
+                                                             self.experiment_group.project.name,
+                                                             self.experiment_group.sequence)
+        # one object that does not belong to the filter
+        self.factory_class()
+        self.queryset = self.model_class.objects.filter(experiment_group=self.experiment_group)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next = resp.data.get('next')
+        assert next is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+
+@tag(RUNNER_TEST)
+class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -332,7 +406,19 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert new_object.is_clone is True
         assert new_object.original_experiment == new_experiment
 
+    @override_settings(DEPLOY_RUNNER=False)
     def test_delete(self):
+        assert self.model_class.objects.count() == 1
+        assert ExperimentJob.objects.count() == 2
+        with patch('experiments.paths.delete_path') as outputs_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert outputs_mock_stop.call_count == 2  # Outputs and Logs
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.count() == 0
+        assert ExperimentJob.objects.count() == 0
+
+    @tag(RUNNER_TEST)
+    def test_delete_triggers_runner(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
         with patch('runner.schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
@@ -434,7 +520,7 @@ class TestExperimentMetricListViewV1(BaseViewTest):
                                                               project.user.username,
                                                               project.name,
                                                               self.experiment.sequence)
-        self.objects = [self.factory_class(experiment=self.experiment, values = {'accuracy': i/10})
+        self.objects = [self.factory_class(experiment=self.experiment, values={'accuracy': i / 10})
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
 
