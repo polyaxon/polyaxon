@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.conf import settings
 from kombu import Exchange, Queue
 
 from polyaxon.utils import config
@@ -85,8 +86,6 @@ class CeleryTasks(object):
     PROJECTS_NOTEBOOK_BUILD = 'projects_notebook_build'
     PROJECTS_NOTEBOOK_START = 'projects_notebook_start'
     PROJECTS_NOTEBOOK_STOP = 'projects_notebook_stop'
-    CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
-    CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
     PIPELINES_START = 'pipelines_start'
     PIPELINES_START_OPERATION = 'pipelines_start_operation'
@@ -99,6 +98,16 @@ class CeleryTasks(object):
     EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
     EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
     REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
+
+
+class RunnerCeleryTasks(object):
+    """Runner celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
+    CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
+    CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
+    CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
 
 
 class CeleryOperationTasks(object):
@@ -166,8 +175,6 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.PROJECTS_NOTEBOOK_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.PROJECTS_NOTEBOOK_START: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.PROJECTS_NOTEBOOK_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
-    CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
     CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
 
     # Monitors
@@ -193,20 +200,6 @@ CELERY_TASK_ROUTES = {
 }
 
 CELERY_BEAT_SCHEDULE = {
-    CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO + '_beat': {
-        'task': CeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
-        'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
-        'options': {
-            'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
-        },
-    },
-    CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES + '_beat': {
-        'task': CeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
-        'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
-        'options': {
-            'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
-        },
-    },
     CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE + '_beat': {
         'task': CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE,
         'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
@@ -222,3 +215,34 @@ CELERY_BEAT_SCHEDULE = {
         },
     },
 }
+
+if settings.DEPLOY_RUNNER:
+    CELERY_TASK_ROUTES.update({
+        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
+        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
+        RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
+    })
+
+    CELERY_BEAT_SCHEDULE.update({
+        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO + '_beat': {
+            'task': RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
+            'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
+            'options': {
+                'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
+            },
+        },
+        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES + '_beat': {
+            'task': RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
+            'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
+            'options': {
+                'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
+            },
+        },
+        RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE + '_beat': {
+            'task': RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
+            'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
+            'options': {
+                'expires': Intervals.get_expires(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
+            },
+        },
+    })

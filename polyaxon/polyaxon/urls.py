@@ -21,6 +21,15 @@ api_patterns = [
         ('versions.urls', 'versions'), namespace='versions')),
     re_path(r'', include(
         ('users.api_urls', 'users'), namespace='users')),
+]
+
+if settings.DEPLOY_RUNNER:
+    api_patterns += [
+        re_path(r'', include(
+            ('runner.nodes.urls', 'nodes'), namespace='nodes')),
+    ]
+
+api_patterns += [
     # always include project last because of it's patterns
     re_path(r'', include(
         ('experiments.urls', 'experiments'), namespace='experiments')),

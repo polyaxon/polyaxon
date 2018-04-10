@@ -18,7 +18,10 @@ PROJECT_APPS = (
 
 DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True) or True
 if DEPLOY_RUNNER:
-    PROJECT_APPS += ('runner.apps.RunnerConfig',)
+    PROJECT_APPS += (
+        'runner.apps.RunnerConfig',
+        'runner.nodes.apps.NodesConfig',
+    )
 
 THIRD_PARTY_APPS = (
     'rest_framework',
