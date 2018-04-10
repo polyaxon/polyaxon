@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from django.test import override_settings, tag
 from rest_framework import status
 
 from experiment_groups.models import ExperimentGroup
@@ -10,7 +11,7 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
-from tests.utils import BaseViewTest
+from tests.utils import BaseViewTest, RUNNER_TEST
 
 
 class TestProjectExperimentGroupListViewV1(BaseViewTest):
@@ -147,6 +148,7 @@ model:
         assert last_object.content == data['content']
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentGroupDetailViewV1(BaseViewTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup
@@ -156,7 +158,58 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+        self.object = self.factory_class(project=project)
+        self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
+                                                 project.user.username,
+                                                 project.name,
+                                                 self.object.sequence)
+        self.queryset = self.model_class.objects.all()
+
+        # Add 2 experiments
+        for i in range(2):
+            ExperimentFactory(experiment_group=self.object)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.object.refresh_from_db()
+        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data['num_pending_experiments'] == 2
+
+    def test_patch(self):
+        new_description = 'updated_xp_name'
+        data = {'description': new_description}
+        assert self.object.description != data['description']
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.user == self.object.user
+        assert new_object.description != self.object.description
+        assert new_object.description == new_description
+        assert new_object.experiments.count() == 2
+
+    def test_delete(self):
+        assert self.model_class.objects.count() == 1
+        assert Experiment.objects.count() == 2
+        with patch('experiments.paths.delete_path') as outputs_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert outputs_mock_stop.call_count == 8  # Outputs and Logs * 4
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.model_class.objects.count() == 0
+        assert Experiment.objects.count() == 0
+
+
+@tag(RUNNER_TEST)
+class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
+    serializer_class = ExperimentGroupDetailSerializer
+    model_class = ExperimentGroup
+    factory_class = ExperimentGroupFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
             self.object = self.factory_class(project=project)
         self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
                                                  project.user.username,
@@ -200,6 +253,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 0
 
 
+@tag(RUNNER_TEST)
 class TestStopExperimentGroupViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
