@@ -1,4 +1,4 @@
-from django.test import tag, override_settings
+from django.test import override_settings, tag
 
 from clusters.models import Cluster
 from clusters.serializers import ClusterSerializer
@@ -7,9 +7,10 @@ from runner.nodes.models import ClusterNode, NodeGPU
 from runner.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
-    GPUSerializer,
-    ClusterRunnerSerializer)
-from tests.utils import BaseTest, RUNNER_TEST
+    ClusterRunnerSerializer,
+    GPUSerializer
+)
+from tests.utils import RUNNER_TEST, BaseTest
 
 
 @tag(RUNNER_TEST)

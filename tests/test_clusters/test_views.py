@@ -1,5 +1,6 @@
-from django.test import override_settings, tag
 from rest_framework import status
+
+from django.test import override_settings, tag
 
 from clusters.models import Cluster
 from clusters.serializers import ClusterSerializer
@@ -9,10 +10,11 @@ from runner.nodes.models import ClusterNode, NodeGPU
 from runner.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
-    GPUSerializer,
-    ClusterRunnerSerializer)
+    ClusterRunnerSerializer,
+    GPUSerializer
+)
 from runner.spawners.utils.constants import NodeRoles
-from tests.utils import BaseViewTest, RUNNER_TEST
+from tests.utils import RUNNER_TEST, BaseViewTest
 
 
 @override_settings(DEPLOY_RUNNER=False)

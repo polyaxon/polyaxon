@@ -3,7 +3,7 @@ from faker import Factory as FakerFactory
 import factory
 
 from clusters.models import Cluster
-from runner.nodes.models import ClusterNode, NodeGPU, ClusterEvent
+from runner.nodes.models import ClusterEvent, ClusterNode, NodeGPU
 from runner.spawners.utils.constants import NodeRoles
 
 fake = FakerFactory.create()

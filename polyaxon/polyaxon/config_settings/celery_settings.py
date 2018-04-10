@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-from django.conf import settings
 from kombu import Exchange, Queue
 
 from polyaxon.utils import config
