@@ -2,21 +2,17 @@ from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
 
 from experiment_groups.models import ExperimentGroup
-from libs.decorators import ignore_raw, runner_signal
+from libs.decorators import ignore_raw, runner_signal, ignore_updates
 from runner.schedulers import experiment_scheduler
 from experiment_groups.tasks import create_group_experiments
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_create_experiments")
 @runner_signal
+@ignore_updates
 @ignore_raw
-def new_experiment_group(sender, **kwargs):
+def experiment_group_create_experiments(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    if not created:
-        return
-
     create_group_experiments.apply_async((instance.id,), countdown=1)
 
 
