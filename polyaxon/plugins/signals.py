@@ -12,7 +12,6 @@ logger = logging.getLogger('polyaxon.plugins')
 
 @receiver(post_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_saved")
 @ignore_updates
-
 @ignore_raw
 def new_tensorboard_job(sender, **kwargs):
     instance = kwargs['instance']

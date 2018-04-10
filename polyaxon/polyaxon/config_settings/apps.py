@@ -16,7 +16,7 @@ PROJECT_APPS = (
     'events.apps.EventsConfig',
 )
 
-DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True) or True
+DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True)
 if DEPLOY_RUNNER:
     PROJECT_APPS += (
         'runner.apps.RunnerConfig',

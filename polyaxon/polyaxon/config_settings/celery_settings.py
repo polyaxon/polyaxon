@@ -22,31 +22,41 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 CELERY_IGNORE_RESULT = True
-CELERY_HARD_TIME_LIMIT_DELAY = config.get_int(
-    'POLYAXON_CELERY_HARD_TIME_LIMIT_DELAY', is_optional=True) or 180
+CELERY_HARD_TIME_LIMIT_DELAY = config.get_int('POLYAXON_CELERY_HARD_TIME_LIMIT_DELAY',
+                                              is_optional=True,
+                                              default=180)
 
 
 class Intervals(object):
     """All intervals are in seconds"""
     OPERATIONS_DEFAULT_RETRY_DELAY = config.get_int(
-        'POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY', is_optional=True) or 60
+        'POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY',
+        is_optional=True,
+        default=60)
     OPERATIONS_MAX_RETRY_DELAY = config.get_int(
-        'POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY', is_optional=True) or 60 * 60
+        'POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY',
+        is_optional=True,
+        default=60 * 60)
     PIPELINES_SCHEDULER = config.get_int(
         'POLYAXON_INTERVALS_PIPELINES_SCHEDULER',
-        is_optional=True) or 30
+        is_optional=True,
+        default=30)
     EXPERIMENTS_SCHEDULER = config.get_int(
         'POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER',
-        is_optional=True) or 30
+        is_optional=True,
+        default=30)
     EXPERIMENTS_SYNC = config.get_int(
         'POLYAXON_INTERVALS_EXPERIMENTS_SYNC',
-        is_optional=True) or 30
+        is_optional=True,
+        default=30)
     CLUSTERS_UPDATE_SYSTEM_INFO = config.get_int(
         'POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO',
-        is_optional=True) or 150
+        is_optional=True,
+        default=150)
     CLUSTERS_UPDATE_SYSTEM_NODES = config.get_int(
         'POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_NODES',
-        is_optional=True) or 150
+        is_optional=True,
+        default=150)
     CLUSTERS_NOTIFICATION_ALIVE = 150
 
     @staticmethod
@@ -125,31 +135,40 @@ class CeleryQueues(object):
     """
     API_EXPERIMENTS = config.get_string(
         'POLYAXON_QUEUES_API_EXPERIMENTS',
-        is_optional=True) or 'api.experiments'
+        is_optional=True,
+        default='api.experiments')
     API_EXPERIMENTS_SYNC = config.get_string(
         'POLYAXON_QUEUES_API_EXPERIMENTS_SYNC',
-        is_optional=True) or 'api.sync_experiments'
+        is_optional=True,
+        default='api.sync_experiments')
     API_CLUSTERS = config.get_string(
         'POLYAXON_QUEUES_API_CLUSTERS',
-        is_optional=True) or 'api.clusters'
+        is_optional=True,
+        default='api.clusters')
     API_PIPELINES = config.get_string(
         'POLYAXON_QUEUES_API_PIPELINES',
-        is_optional=True) or 'api.pipelines'
+        is_optional=True,
+        default='api.pipelines')
     EVENTS_NAMESPACE = config.get_string(
         'POLYAXON_QUEUES_EVENTS_NAMESPACE',
-        is_optional=True) or 'events.namespace'
+        is_optional=True,
+        default='events.namespace')
     EVENTS_RESOURCES = config.get_string(
         'POLYAXON_QUEUES_EVENTS_RESOURCES',
-        is_optional=True) or 'events.resources'
+        is_optional=True,
+        default='events.resources')
     EVENTS_JOB_STATUSES = config.get_string(
         'POLYAXON_QUEUES_EVENTS_JOB_STATUSES',
-        is_optional=True) or 'events.statuses'
+        is_optional=True,
+        default='events.statuses')
     LOGS_SIDECARS = config.get_string(
         'POLYAXON_QUEUES_LOGS_SIDECARS',
-        is_optional=True) or 'logs.sidecars'
+        is_optional=True,
+        default='logs.sidecars')
     STREAM_LOGS_SIDECARS = config.get_string(
         'POLYAXON_QUEUES_STREAM_LOGS_SIDECARS',
-        is_optional=True) or 'stream.logs.sidecars'
+        is_optional=True,
+        default='stream.logs.sidecars')
 
 
 # Queues on non default exchange
@@ -216,7 +235,7 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-if settings.DEPLOY_RUNNER:
+if config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True):
     CELERY_TASK_ROUTES.update({
         RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
         RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
