@@ -1,3 +1,5 @@
+from polyaxon.utils import config
+
 PROJECT_APPS = (
     'polyaxon',
     'libs.apps.LibsConfig',
@@ -10,10 +12,13 @@ PROJECT_APPS = (
     'experiment_groups.apps.ExperimentGroupsConfig',
     'experiments.apps.ExperimentsConfig',
     'repos.apps.ReposConfig',
-    'runner.apps.RunnerConfig',
     'versions.apps.VersionsConfig',
     'events.apps.EventsConfig',
 )
+
+DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True) or True
+if DEPLOY_RUNNER:
+    PROJECT_APPS += ('runner.apps.RunnerConfig',)
 
 THIRD_PARTY_APPS = (
     'rest_framework',
