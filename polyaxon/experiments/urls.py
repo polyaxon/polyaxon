@@ -16,9 +16,6 @@ experiments_urlpatterns = [
     re_path(r'^experiments/?$', views.ExperimentListView.as_view()),
     re_path(r'^{}/{}/experiments/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
             views.ExperimentDetailView.as_view()),
-    re_path(
-        r'^{}/{}/experiments/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
-        views.ExperimentStopView.as_view()),
     re_path(r'^{}/{}/experiments/{}/restart/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentRestartView.as_view()),

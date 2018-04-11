@@ -29,6 +29,8 @@ if settings.DEPLOY_RUNNER:
             ('runner.nodes.urls', 'nodes'), namespace='nodes')),
         # always include project related urls last because of the used patterns
         re_path(r'', include(
+            ('runner.urls.experiments', 'experiments'), namespace='experiments')),
+        re_path(r'', include(
             ('runner.urls.experiment_groups', 'experiment_groups'), namespace='experiment_groups')),
         re_path(r'', include(
             ('plugins.api_urls', 'plugins'), namespace='plugins')),

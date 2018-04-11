@@ -31,7 +31,6 @@ from experiments.serializers import (
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
 from projects.permissions import get_permissible_project
-from runner.tasks.experiments import stop_experiment
 
 
 class ExperimentListView(ListAPIView):
@@ -116,21 +115,6 @@ class ExperimentRestartView(CreateAPIView):
         )
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
-
-
-class ExperimentStopView(CreateAPIView):
-    queryset = Experiment.objects.all()
-    serializer_class = ExperimentSerializer
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'sequence'
-
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
-
-    def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        stop_experiment.delay(experiment_id=obj.id)
-        return Response(status=status.HTTP_200_OK)
 
 
 class ExperimentViewMixin(object):
