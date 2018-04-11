@@ -16,6 +16,7 @@ def validate_headers(spec, data):
     """Validates headers data and creates the config objects"""
     validated_data = {
         spec.VERSION: data[spec.VERSION],
+        spec.KIND: data[spec.KIND],
         spec.PROJECT: ProjectConfig.from_dict(data[spec.PROJECT]),
     }
     if data.get(spec.SETTINGS):
