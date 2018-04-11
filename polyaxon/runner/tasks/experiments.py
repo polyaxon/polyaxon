@@ -7,7 +7,7 @@ from experiments.restart import handle_restarted_experiment
 from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import get_valid_experiment
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks, Intervals
+from polyaxon.settings import Intervals, RunnerCeleryTasks
 from repos.models import Repo
 from runner.dockerizer.builders import experiments as experiments_builder
 from runner.schedulers import experiment_scheduler
@@ -15,7 +15,7 @@ from runner.schedulers import experiment_scheduler
 logger = logging.getLogger('polyaxon.tasks.runner.experiments')
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_BUILD, bind=True, max_retries=3)
+@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_BUILD, bind=True, max_retries=3)
 def build_experiment(self, experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -62,7 +62,7 @@ def build_experiment(self, experiment_id):
     start_experiment.delay(experiment_id=experiment_id)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_START, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_START, ignore_result=True)
 def start_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -85,7 +85,7 @@ def start_experiment(experiment_id):
     experiment_scheduler.start_experiment(experiment)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
 def stop_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:

@@ -5,27 +5,27 @@ from django.conf import settings
 from experiments.models import Experiment, ExperimentJob
 from experiments.paths import get_experiment_logs_path
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks
+from polyaxon.settings import RunnerCeleryTasks
 from projects.models import Project
 from runner.nodes.models import ClusterEvent
 
 logger = logging.getLogger('polyaxon.tasks.events')
 
 
-@celery_app.task(name=CeleryTasks.EVENTS_HANDLE_NAMESPACE)
+@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_NAMESPACE)
 def handle_events_namespace(cluster_id, payload):
     logger.info('handling events namespace for cluster: %s', cluster_id)
     ClusterEvent.objects.create(cluster_id=cluster_id, **payload)
 
 
-@celery_app.task(name=CeleryTasks.EVENTS_HANDLE_RESOURCES)
+@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_RESOURCES)
 def handle_events_resources(payload, persist):
     # here we must persist resources if requested
     logger.info('handling events resources with persist:%s', persist)
     logger.info(payload)
 
 
-@celery_app.task(name=CeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
+@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
 def handle_events_job_statues(payload):
     """Experiment jobs statuses"""
     details = payload['details']
@@ -42,7 +42,7 @@ def handle_events_job_statues(payload):
     job.set_status(status=payload['status'], message=payload['message'], details=details)
 
 
-@celery_app.task(name=CeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
+@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
 def handle_events_plugin_job_statues(payload):
     """Project Plugin jobs statuses"""
     details = payload['details']
@@ -71,7 +71,7 @@ def handle_events_plugin_job_statues(payload):
     job.set_status(status=payload['status'], message=payload['message'], details=details)
 
 
-@celery_app.task(name=CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)
+@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)
 def handle_events_job_logs(experiment_name,
                            experiment_uuid,
                            job_uuid,

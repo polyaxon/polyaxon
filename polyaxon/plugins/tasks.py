@@ -4,7 +4,7 @@ from docker.errors import DockerException
 
 from jobs.statuses import JobLifeCycle
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks
+from polyaxon.settings import RunnerCeleryTasks
 from projects.utils import get_valid_project
 from repos.models import Repo
 from runner.dockerizer.builders import notebooks as notebooks_builder
@@ -14,7 +14,7 @@ from runner.schedulers import notebook_scheduler, tensorboard_scheduler
 logger = logging.getLogger('polyaxon.tasks.projects')
 
 
-@celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
 def start_tensorboard(project_id):
     project = get_valid_project(project_id)
     if not project or not project.tensorboard or project.has_tensorboard:
@@ -22,7 +22,7 @@ def start_tensorboard(project_id):
     tensorboard_scheduler.start_tensorboard(project)
 
 
-@celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_STOP, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.PROJECTS_TENSORBOARD_STOP, ignore_result=True)
 def stop_tensorboard(project_id):
     project = get_valid_project(project_id)
     if not project:
@@ -30,7 +30,7 @@ def stop_tensorboard(project_id):
     tensorboard_scheduler.stop_tensorboard(project, update_status=True)
 
 
-@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
 def build_notebook(project_id):
     project = get_valid_project(project_id)
     if not project or not project.notebook:
@@ -64,7 +64,7 @@ def build_notebook(project_id):
     start_notebook.delay(project_id=project_id)
 
 
-@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
 def start_notebook(project_id):
     project = get_valid_project(project_id)
     if not project or not project.notebook or project.has_notebook:
@@ -81,7 +81,7 @@ def start_notebook(project_id):
     notebook_scheduler.start_notebook(project, image=job_docker_image)
 
 
-@celery_app.task(name=CeleryTasks.PROJECTS_NOTEBOOK_STOP, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.PROJECTS_NOTEBOOK_STOP, ignore_result=True)
 def stop_notebook(project_id):
     project = get_valid_project(project_id)
     if not project:

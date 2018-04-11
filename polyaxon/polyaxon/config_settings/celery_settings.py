@@ -81,32 +81,19 @@ class CeleryTasks(object):
 
     N.B. make sure that the task name is not < 128.
     """
-    EXPERIMENTS_BUILD = 'experiments_build'
-    EXPERIMENTS_START = 'experiments_start'
-    EXPERIMENTS_STOP = 'experiments_stop'
-    EXPERIMENTS_GROUP_START = 'experiments_group_start'
-    EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
-    EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
     EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
     EXPERIMENTS_SYNC_JOBS_STATUSES = 'experiments_sync_jobs_statuses'
-    PROJECTS_TENSORBOARD_START = 'projects_tensorboard_start'
-    PROJECTS_TENSORBOARD_STOP = 'projects_tensorboard_stop'
-    PROJECTS_NOTEBOOK_BUILD = 'projects_notebook_build'
-    PROJECTS_NOTEBOOK_START = 'projects_notebook_start'
-    PROJECTS_NOTEBOOK_STOP = 'projects_notebook_stop'
+
+    REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
+
     CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
+
     PIPELINES_START = 'pipelines_start'
     PIPELINES_START_OPERATION = 'pipelines_start_operation'
     PIPELINES_STOP_OPERATIONS = 'pipelines_stop_operations'
     PIPELINES_SKIP_OPERATIONS = 'pipelines_skip_operations'
     PIPELINES_CHECK_STATUS = 'pipelines_check_statuses'
-    EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
-    EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
-    EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
-    EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
-    EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
-    REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
 
 
 class RunnerCeleryTasks(object):
@@ -117,6 +104,26 @@ class RunnerCeleryTasks(object):
     CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
+
+    EXPERIMENTS_BUILD = 'experiments_build'
+    EXPERIMENTS_START = 'experiments_start'
+    EXPERIMENTS_STOP = 'experiments_stop'
+
+    EXPERIMENTS_GROUP_START = 'experiments_group_start'
+    EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
+    EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
+
+    PROJECTS_TENSORBOARD_START = 'projects_tensorboard_start'
+    PROJECTS_TENSORBOARD_STOP = 'projects_tensorboard_stop'
+    PROJECTS_NOTEBOOK_BUILD = 'projects_notebook_build'
+    PROJECTS_NOTEBOOK_START = 'projects_notebook_start'
+    PROJECTS_NOTEBOOK_STOP = 'projects_notebook_stop'
+
+    EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
+    EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
+    EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
+    EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
+    EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
 
 
 class CeleryOperationTasks(object):
@@ -178,29 +185,11 @@ CELERY_TASK_QUEUES = (
 )
 
 CELERY_TASK_ROUTES = {
-    CeleryTasks.EXPERIMENTS_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_GROUP_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_GROUP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.REPOS_HANDLE_FILE_UPLOAD: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_SET_METRICS: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES: {'queue': CeleryQueues.API_EXPERIMENTS_SYNC},
-    CeleryTasks.PROJECTS_TENSORBOARD_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.PROJECTS_TENSORBOARD_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.PROJECTS_NOTEBOOK_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.PROJECTS_NOTEBOOK_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.PROJECTS_NOTEBOOK_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
     CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
-
-    # Monitors
-    CeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
-    CeleryTasks.EVENTS_HANDLE_RESOURCES: {'queue': CeleryQueues.EVENTS_RESOURCES},
-    CeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-    CeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-    CeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR: {'queue': CeleryQueues.LOGS_SIDECARS},
 
     # Pipelines
     CeleryTasks.PIPELINES_START: {'queue': CeleryQueues.API_PIPELINES},
@@ -239,6 +228,29 @@ if config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True):
         RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
         RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
         RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
+
+        RunnerCeleryTasks.EXPERIMENTS_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.EXPERIMENTS_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.EXPERIMENTS_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
+
+        RunnerCeleryTasks.EXPERIMENTS_GROUP_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.EXPERIMENTS_GROUP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS:
+            {'queue': CeleryQueues.API_EXPERIMENTS},
+
+        RunnerCeleryTasks.PROJECTS_TENSORBOARD_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.PROJECTS_TENSORBOARD_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.PROJECTS_NOTEBOOK_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.PROJECTS_NOTEBOOK_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.PROJECTS_NOTEBOOK_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
+
+        # Monitors
+        RunnerCeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
+        RunnerCeleryTasks.EVENTS_HANDLE_RESOURCES: {'queue': CeleryQueues.EVENTS_RESOURCES},
+        RunnerCeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
+        RunnerCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
+            {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
+        RunnerCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR: {'queue': CeleryQueues.LOGS_SIDECARS},
     })
 
     CELERY_BEAT_SCHEDULE.update({
