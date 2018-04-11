@@ -52,8 +52,7 @@ class StartTensorboardView(CreateAPIView):
         config = self.request.data or self._get_default_tensorboard_config(project)
         serializer = self.get_serializer(instance=project.tensorboard, data=config)
         serializer.is_valid(raise_exception=True)
-        project.tensorboard = serializer.save(user=self.request.user, project=project)
-        project.save()
+        serializer.save(user=self.request.user, project=project)
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -103,8 +102,7 @@ class StartNotebookView(CreateAPIView):
             return
         serializer = self.get_serializer(instance=project.notebook, data=self.request.data)
         serializer.is_valid(raise_exception=True)
-        project.notebook = serializer.save(user=self.request.user, project=project)
-        project.save()
+        serializer.save(user=self.request.user, project=project)
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()

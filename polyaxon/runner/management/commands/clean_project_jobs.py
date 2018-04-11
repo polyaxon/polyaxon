@@ -9,7 +9,7 @@ from runner.schedulers import notebook_scheduler, tensorboard_scheduler
 class Command(BaseCommand):
     @staticmethod
     def _clean():
-        for project in Project.objects.filter(Q(has_tensorboard=True) | Q(has_notebook=True)):
+        for project in Project.objects.exclude(Q(tensorboard=None) | Q(notebook=None)):
             if project.has_notebook:
                 notebook_scheduler.stop_notebook(project, update_status=False)
             if project.has_tensorboard:

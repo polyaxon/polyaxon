@@ -1,9 +1,11 @@
 from unittest.mock import patch
 
 import mock
+from django.test import tag
 
 from rest_framework import status
 
+from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import plugin_spec_parsed_content
@@ -17,9 +19,10 @@ from runner.spawners.notebook_spawner import NotebookSpawner
 from runner.spawners.project_spawner import ProjectSpawner
 from runner.spawners.templates.constants import DEPLOYMENT_NAME
 from runner.spawners.tensorboard_spawner import TensorboardSpawner
-from tests.utils import BaseViewTest
+from tests.utils import BaseViewTest, RUNNER_TEST
 
 
+@tag(RUNNER_TEST)
 class TestStartTensorboardViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -63,8 +66,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         config = self.object.tensorboard.config
 
         # Simulate stop the tensorboard
-        self.object.has_tensorboard = False
-        self.object.save()
+        self.object.tensorboard.delete()
 
         # Starting the tensorboard without config should pass
         with patch('projects.tasks.start_tensorboard.delay') as mock_fct:
@@ -72,11 +74,11 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
         # Check that still using same config
-        self.object.tensorboard.refresh_from_db()
+        self.object.refresh_from_db()
         assert config == self.object.tensorboard.config
 
         # Simulate stop the tensorboard
-        self.object.has_tensorboard = False
+        self.object.tensorboard.delete()
         self.object.save()
 
         # Starting again the tensorboard with different config
@@ -86,7 +88,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
-        self.object.tensorboard.refresh_from_db()
+        self.object.refresh_from_db()
         # Check that the image was update
         assert config != self.object.tensorboard.config
 
@@ -104,6 +106,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert start_mock.call_count == 0
 
 
+@tag(RUNNER_TEST)
 class TestStopTensorboardViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -111,12 +114,14 @@ class TestStopTensorboardViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class(user=self.auth_client.user, has_tensorboard=True)
+        self.object = self.factory_class(user=self.auth_client.user)
+        tensorboard = TensorboardJobFactory(project=self.object)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
         self.url = '/{}/{}/{}/tensorboard/stop'.format(
             API_V1,
             self.object.user.username,
             self.object.name)
-        self.queryset = self.model_class.objects.all()
+        self.queryset = TensorboardJob.objects.all()
 
     def test_stop(self):
         data = {}
@@ -137,6 +142,7 @@ class TestStopTensorboardViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
+@tag(RUNNER_TEST)
 class TestStartNotebookViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -190,29 +196,24 @@ class TestStartNotebookViewV1(BaseViewTest):
         config = self.object.notebook.config
 
         # Simulate stop the notebook
-        self.object.has_notebook = False
-        self.object.save()
+        self.object.notebook.delete()
 
-        # Starting the notebook without config should pass
+        # Starting the notebook without config should not pass
         with patch('projects.tasks.build_notebook.delay') as mock_fct:
             resp = self.auth_client.post(self.url)
 
-        assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
         # Check that still using same config
-        self.object.notebook.refresh_from_db()
-        assert config == self.object.notebook.config
-
-        # Simulate stop the notebook
-        self.object.has_notebook = False
-        self.object.save()
+        self.object.refresh_from_db()
+        assert self.object.notebook is None
 
         # Starting again the notebook with different config
         data['config']['run']['image'] = 'image_v2'
         with patch('projects.tasks.build_notebook.delay') as _:
             self.auth_client.post(self.url, data)
 
-        self.object.notebook.refresh_from_db()
+        self.object.refresh_from_db()
         # Check that the image was update
         assert config != self.object.notebook.config
 
@@ -235,6 +236,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert start_mock.call_count == 0
 
 
+@tag(RUNNER_TEST)
 class TestStopNotebookViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -242,7 +244,9 @@ class TestStopNotebookViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.object = self.factory_class(user=self.auth_client.user, has_notebook=True)
+        self.object = self.factory_class(user=self.auth_client.user)
+        tensorboard = NotebookJobFactory(project=self.object)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
         RepoFactory(project=self.object)
         self.url = '/{}/{}/{}/notebook/stop'.format(
             API_V1,
@@ -286,6 +290,7 @@ class TestStopNotebookViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
+@tag(RUNNER_TEST)
 class BaseTestPluginViewV1(BaseViewTest):
     plugin_app = ''
 
@@ -324,11 +329,14 @@ class BaseTestPluginViewV1(BaseViewTest):
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
+@tag(RUNNER_TEST)
 class TestTensorboardViewV1(BaseTestPluginViewV1):
     plugin_app = TensorboardSpawner.TENSORBOARD_JOB_NAME
 
     def test_project_requests_tensorboard_url(self):
-        project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
+        project = ProjectFactory(user=self.auth_client.user)
+        tensorboard = TensorboardJobFactory(project=project)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
         with patch('runner.schedulers.tensorboard_scheduler.get_tensorboard_url') as mock_fct:
             response = self.auth_client.get(self._get_url(project))
 
@@ -337,7 +345,9 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
 
     @mock.patch('runner.schedulers.tensorboard_scheduler.TensorboardSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
-        project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
+        project = ProjectFactory(user=self.auth_client.user)
+        tensorboard = TensorboardJobFactory(project=project)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)
@@ -352,7 +362,9 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
 
     @mock.patch('runner.schedulers.tensorboard_scheduler.TensorboardSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
-        project = ProjectFactory(user=self.auth_client.user, has_tensorboard=True)
+        project = ProjectFactory(user=self.auth_client.user)
+        tensorboard = TensorboardJobFactory(project=project)
+        tensorboard.set_status(status=JobLifeCycle.RUNNING)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)
@@ -381,11 +393,14 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
 
+@tag(RUNNER_TEST)
 class TestNotebookViewV1(BaseTestPluginViewV1):
     plugin_app = NotebookSpawner.NOTEBOOK_JOB_NAME
 
     def test_project_requests_notebook_url(self):
-        project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
+        project = ProjectFactory(user=self.auth_client.user)
+        notebook = NotebookJobFactory(project=project)
+        notebook.set_status(status=JobLifeCycle.RUNNING)
         with patch('runner.schedulers.notebook_scheduler.get_notebook_url') as mock_url_fct:
             with patch('runner.schedulers.notebook_scheduler.get_notebook_token') as mock_token_fct:
                 response = self.auth_client.get(self._get_url(project))
@@ -396,7 +411,9 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
 
     @mock.patch('runner.schedulers.notebook_scheduler.NotebookSpawner')
     def test_redirects_to_proxy_protected_url(self, spawner_mock):
-        project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
+        project = ProjectFactory(user=self.auth_client.user)
+        notebook = NotebookJobFactory(project=project)
+        notebook.set_status(status=JobLifeCycle.RUNNING)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)
@@ -415,7 +432,9 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
 
     @mock.patch('runner.schedulers.notebook_scheduler.NotebookSpawner')
     def test_redirects_to_proxy_protected_url_with_extra_path(self, spawner_mock):
-        project = ProjectFactory(user=self.auth_client.user, has_notebook=True)
+        project = ProjectFactory(user=self.auth_client.user)
+        notebook = NotebookJobFactory(project=project)
+        notebook.set_status(status=JobLifeCycle.RUNNING)
         deployment_name = DEPLOYMENT_NAME.format(
             project_uuid=project.uuid.hex, name=self.plugin_app)
         service_url = self._get_service_url(deployment_name=deployment_name)

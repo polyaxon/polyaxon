@@ -1,11 +1,13 @@
 import logging
 
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from jobs.statuses import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
+from projects.models import Project
+from runner.schedulers import notebook_scheduler, tensorboard_scheduler
 
 logger = logging.getLogger('polyaxon.plugins')
 
@@ -46,3 +48,11 @@ def new_notebook_job_status(sender, **kwargs):
     # Update job last_status
     job.job_status = instance
     job.save()
+
+
+@receiver(pre_delete, sender=Project, dispatch_uid="project_stop_plugins")
+@ignore_raw
+def project_stop_plugins(sender, **kwargs):
+    instance = kwargs['instance']
+    tensorboard_scheduler.stop_tensorboard(instance, update_status=False)
+    notebook_scheduler.stop_notebook(instance, update_status=False)

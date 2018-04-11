@@ -57,7 +57,10 @@ class PluginJobBase(Job):
 
 class TensorboardJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
-
+    project = models.ForeignKey(
+        'projects.Project',
+        on_delete=models.CASCADE,
+        related_name='tensorboard_jobs')
     job_status = models.OneToOneField(
         'TensorboardJobStatus',
         related_name='+',
@@ -67,10 +70,7 @@ class TensorboardJob(PluginJobBase):
         on_delete=models.SET_NULL)
 
     def __str__(self):
-        if hasattr(self, 'project'):
-            return '{} tensorboard<{}>'.format(self.project, self.image)
-        logger.warning('Tensorboard with id `%s` is orphan.', self.id)
-        return 'Tensorboard {}'.format(self.id)
+        return '{} tensorboard<{}>'.format(self.project, self.image)
 
     @cached_property
     def image(self):
@@ -86,7 +86,10 @@ class TensorboardJob(PluginJobBase):
 
 class NotebookJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
-
+    project = models.ForeignKey(
+        'projects.Project',
+        on_delete=models.CASCADE,
+        related_name='notebook_jobs')
     job_status = models.OneToOneField(
         'NotebookJobStatus',
         related_name='+',
@@ -96,10 +99,7 @@ class NotebookJob(PluginJobBase):
         on_delete=models.SET_NULL)
 
     def __str__(self):
-        if hasattr(self, 'project'):
-            return '{} notebook'.format(self.project)
-        logger.warning('Notebook with id `%s` is orphan.', self.id)
-        return 'Notebook {}'.format(self.id)
+        return '{} notebook'.format(self.project)
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=NotebookJobStatus,

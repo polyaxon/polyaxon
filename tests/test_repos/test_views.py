@@ -10,9 +10,11 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
+from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.factory_users import UserFactory
+from jobs.statuses import JobLifeCycle
 from polyaxon.urls import API_V1
 from repos import git
 from repos.models import Repo
@@ -270,8 +272,8 @@ class TestUploadFilesView(BaseViewTest):
         repo_name = self.project.name
 
         # Update project with has_notebook True
-        self.project.has_notebook = True
-        self.project.save()
+        notebook = NotebookJobFactory(project=self.project)
+        notebook.set_status(status=JobLifeCycle.RUNNING)
 
         assert self.model_class.objects.count() == 0
 

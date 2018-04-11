@@ -27,6 +27,8 @@ if settings.DEPLOY_RUNNER:
     api_patterns += [
         re_path(r'', include(
             ('runner.nodes.urls', 'nodes'), namespace='nodes')),
+        re_path(r'', include(
+            ('plugins.api_urls', 'plugins'), namespace='plugins')),
     ]
 
 api_patterns += [

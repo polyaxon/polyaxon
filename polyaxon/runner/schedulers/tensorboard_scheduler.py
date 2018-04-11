@@ -18,7 +18,6 @@ def start_tensorboard(project):
 
     spawner.start_tensorboard(image=project.tensorboard.image,
                               resources=project.tensorboard.compiled_spec.resources)
-    project.has_tensorboard = True
     project.save()
 
 
@@ -31,8 +30,6 @@ def stop_tensorboard(project, update_status=False):
         in_cluster=True)
 
     spawner.stop_tensorboard()
-    project.has_tensorboard = False
-    project.save()
     if update_status:
         # Update experiment status to show that its stopped
         project.tensorboard.set_status(status=ExperimentLifeCycle.STOPPED,

@@ -88,7 +88,8 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
-        return ProjectFactory(uuid=project_uuid, tensorboard=TensorboardJobFactory()).tensorboard
+        project = ProjectFactory(uuid=project_uuid)
+        return TensorboardJobFactory(project=project)
 
 
 class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
@@ -100,7 +101,8 @@ class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling)
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
-        return ProjectFactory(uuid=project_uuid, notebook=NotebookJobFactory()).notebook
+        project = ProjectFactory(uuid=project_uuid)
+        return NotebookJobFactory(project=project)
 
 
 # Prevent this base class from running tests
