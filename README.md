@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/polyaxon/polyaxon.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/polyaxon/polyaxon)
-![Release](https://img.shields.io/badge/release-0.0.6-green.svg)
+[![Build Status](https://travis-ci.org/polyaxon/polyaxon.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon)
+![Release](https://img.shields.io/badge/release-0.0.6-green.svg?longCache=true)
+[![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
 
 # Polyaxon
 
@@ -118,8 +118,8 @@ Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to s
 
 # Distributed training
 
-Polyaxon supports and simplifies distributed training. 
-Depending on the framework you are using, you need to adapt your code to enable the distributed training, 
+Polyaxon supports and simplifies distributed training.
+Depending on the framework you are using, you need to adapt your code to enable the distributed training,
 and update your polyaxonfile with an environment section.
 
 By default polyaxon creates a master job, so you only need to provide the workers  and/or parameter servers.
