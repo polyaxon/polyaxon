@@ -15,7 +15,7 @@ logger = logging.getLogger('polyaxon.tasks.clusters')
 def cluster_analytics():
     cluster = Cluster.load()
     notification = uuid.uuid4()
-    notification_url = settings.POLYAXON_NOTIFICATION_ALIVE_URL.format(
+    notification_url = settings.POLYAXON_NOTIFICATION_CLUSTER_ALIVE_URL.format(
         url=settings.CLUSTER_NOTIFICATION_URL,
         cluster_uuid=cluster.created_at.date(),
         notification=notification,

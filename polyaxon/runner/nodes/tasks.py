@@ -68,6 +68,7 @@ def cluster_nodes_analytics():
         n_gpus=Sum('nodes__n_gpus')).first()
     notification = uuid.uuid4()
     notification_url = settings.POLYAXON_NOTIFICATION_CLUSTER_NODES_URL.format(
+        url=settings.CLUSTER_NOTIFICATION_URL,
         cluster_uuid=cluster.uuid.hex,
         n_nodes=cluster.n_nodes,
         n_cpus=cluster.n_cpus,
