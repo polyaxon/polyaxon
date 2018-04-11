@@ -14,7 +14,9 @@ from runner.nodes.models import ClusterNode
 logger = logging.getLogger('polyaxon.tasks.clusters')
 
 
-@celery_app.task(name=RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO, time_limit=150, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
+                 time_limit=150,
+                 ignore_result=True)
 def update_system_info():
     k8s_manager = K8SManager(in_cluster=True)
     version_api = k8s_manager.get_version()
@@ -24,7 +26,9 @@ def update_system_info():
         cluster.save()
 
 
-@celery_app.task(name=RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES, time_limit=150, ignore_result=True)
+@celery_app.task(name=RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
+                 time_limit=150,
+                 ignore_result=True)
 def update_system_nodes():
     k8s_manager = K8SManager(in_cluster=True)
     nodes = k8s_manager.list_nodes()

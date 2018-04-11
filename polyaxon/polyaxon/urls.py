@@ -39,9 +39,9 @@ if settings.DEPLOY_RUNNER:
 api_patterns += [
     # always include project related urls last because of the used patterns
     re_path(r'', include(
-        ('experiments.urls', 'experiments'), namespace='experiments')),
+        ('experiments.urls', 'experiments'), namespace='runner_experiments')),
     re_path(r'', include(
-        ('experiment_groups.urls', 'experiment_groups'), namespace='experiment_groups')),
+        ('experiment_groups.urls', 'experiment_groups'), namespace='runner_experiment_groups')),
     re_path(r'', include(
         ('repos.urls', 'repos'), namespace='repos')),
     re_path(r'', include(

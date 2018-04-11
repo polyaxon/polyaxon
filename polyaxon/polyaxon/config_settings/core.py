@@ -63,7 +63,6 @@ if JS_DEBUG:
     def js_debug_processor(request):
         return {'js_debug': True}
 
-
     LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.js_debug_processor',)
 
 TEMPLATES = [
