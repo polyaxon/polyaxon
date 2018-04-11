@@ -154,12 +154,12 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
 
         spec = validate_experiment_spec_content(content)
 
-        if spec.matrix_space == 1:
+        if spec.is_experiment == 1:
             # Resume normal creation
             return content
 
         # Raise an error to tell the use to use experiment creation instead
         raise ValidationError('Current experiment creation could not be performed.\n'
                               'The reason is that the specification sent correspond '
-                              'to a group experiment.\n'
-                              'Please use `create group experiment endpoint`.')
+                              'to a `{}`.\n'
+                              'Please use `create group experiment endpoint`.'.format(spec.kind))
