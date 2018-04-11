@@ -7,7 +7,6 @@ import sys
 import click
 
 from marshmallow import ValidationError
-from polyaxon_schemas.exceptions import PolyaxonfileError
 
 from polyaxon_cli.cli.project import equal_projects, get_project_or_local
 from polyaxon_cli.managers.ignore import IgnoreManager
@@ -17,6 +16,7 @@ from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.files import create_init_file
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
 
 
