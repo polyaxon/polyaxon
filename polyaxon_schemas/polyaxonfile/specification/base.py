@@ -134,6 +134,22 @@ class BaseSpecification(object):
             return values
         return cls(values)
 
+    @cached_property
+    def is_experiment(self):
+        return self.kind == self._EXPERIMENT
+
+    @cached_property
+    def is_group(self):
+        return self.kind == self._GROUP
+
+    @cached_property
+    def is_job(self):
+        return self.kind == self._JOB
+
+    @cached_property
+    def is_plugin(self):
+        return self.kind == self._PLUGIN
+
     @property
     def values(self):
         return self._values
