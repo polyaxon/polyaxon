@@ -5,21 +5,14 @@ from docker.errors import DockerException
 from jobs.statuses import JobLifeCycle
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks
-from projects.models import Project
+
+from projects.utils import get_valid_project
 from repos.models import Repo
 from runner.dockerizer.builders import notebooks as notebooks_builder
 from runner.dockerizer.images import get_notebook_image_info
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler
 
 logger = logging.getLogger('polyaxon.tasks.projects')
-
-
-def get_valid_project(project_id):
-    try:
-        return Project.objects.get(id=project_id)
-    except Project.DoesNotExist:
-        logger.info('Project id `%s` does not exist', project_id)
-        return None
 
 
 @celery_app.task(name=CeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
