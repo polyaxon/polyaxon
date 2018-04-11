@@ -1,9 +1,12 @@
+from django.test import override_settings
+
 from experiment_groups.models import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from tests.utils import BaseTest
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentGroupSerializer(BaseTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
@@ -42,6 +45,7 @@ class TestExperimentGroupSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentGroupDetailSerializer(BaseTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup

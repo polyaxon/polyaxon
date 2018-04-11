@@ -11,4 +11,5 @@ class PluginsConfig(AppConfig):
             new_notebook_job,
             new_tensorboard_job_status,
             new_notebook_job_status,
+            project_stop_plugins
         )

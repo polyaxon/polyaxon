@@ -37,12 +37,14 @@ class SettingConfig(object):
             params[key] = '{}'.format(value) if to_str else value
         return params
 
-    def get_int(self, key, is_optional=False, is_secret=False):
+    def get_int(self, key, is_optional=False, is_secret=False, default=None):
         """Get a the value corresponding to the key and converts it to `int`.
 
         Args:
             key: the dict key.
             is_optional: To raise  an error if key was not found.
+            is_secret: If the key is a secret.
+            default: default value if is_optional is True.
         Return:
             `int`: value corresponding to the key.
         """
@@ -50,14 +52,17 @@ class SettingConfig(object):
                                      target_type=int,
                                      type_convert=int,
                                      is_optional=is_optional,
-                                     is_secret=is_secret)
+                                     is_secret=is_secret,
+                                     default=default)
 
-    def get_float(self, key, is_optional=False, is_secret=False):
+    def get_float(self, key, is_optional=False, is_secret=False, default=None):
         """Get a the value corresponding to the key and converts it to `float`.
 
         Args:
             key: the dict key.
             is_optional: To raise  an error if key was not found.
+            is_secret: If the key is a secret.
+            default: default value if is_optional is True.
         Return:
             `float`: value corresponding to the key.
         """
@@ -65,14 +70,17 @@ class SettingConfig(object):
                                      target_type=float,
                                      type_convert=float,
                                      is_optional=is_optional,
-                                     is_secret=is_secret)
+                                     is_secret=is_secret,
+                                     default=default)
 
-    def get_boolean(self, key, is_optional=False, is_secret=False):
+    def get_boolean(self, key, is_optional=False, is_secret=False, default=None):
         """Get a the value corresponding to the key and converts it to `bool`.
 
         Args:
             key: the dict key.
             is_optional: To raise  an error if key was not found.
+            is_secret: If the key is a secret.
+            default: default value if is_optional is True.
         Return:
             `bool`: value corresponding to the key.
         """
@@ -80,14 +88,17 @@ class SettingConfig(object):
                                      target_type=bool,
                                      type_convert=lambda x: bool(strtobool(x)),
                                      is_optional=is_optional,
-                                     is_secret=is_secret)
+                                     is_secret=is_secret,
+                                     default=default)
 
-    def get_string(self, key, is_optional=False, is_secret=False):
+    def get_string(self, key, is_optional=False, is_secret=False, default=None):
         """Get a the value corresponding to the key and converts it to `str`.
 
         Args:
             key: the dict key.
             is_optional: To raise  an error if key was not found.
+            is_secret: If the key is a secret.
+            default: default value if is_optional is True.
         Return:
             `str`: value corresponding to the key.
         """
@@ -95,7 +106,8 @@ class SettingConfig(object):
                                      target_type=str,
                                      type_convert=str,
                                      is_optional=is_optional,
-                                     is_secret=is_secret)
+                                     is_secret=is_secret,
+                                     default=default)
 
     def _get(self, key):
         """Gets key from the dictionary made out of the configs passed.
@@ -114,7 +126,13 @@ class SettingConfig(object):
         if is_secret:
             self._secret_keys.add(key)
 
-    def _get_typed_value(self, key, target_type, type_convert, is_optional=False, is_secret=False):
+    def _get_typed_value(self,
+                         key,
+                         target_type,
+                         type_convert,
+                         is_optional=False,
+                         is_secret=False,
+                         default=None):
         """Returns the value corresponding to the key converted to the given type.
 
         Args:
@@ -122,6 +140,8 @@ class SettingConfig(object):
             target_type: The type we expect the variable or key to be in.
             type_convert: A lambda expression that converts the key to the desired type.
             is_optional: To raise  an error if key was not found.
+            is_secret: If the key is a secret.
+            default: default value if is_optional is True.
 
         Returns:
             The corresponding value of the key converted.
@@ -131,7 +151,7 @@ class SettingConfig(object):
         except KeyError:
             if not is_optional:
                 raise
-            return None
+            return default
 
         if isinstance(value, str):
             try:

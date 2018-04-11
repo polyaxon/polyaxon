@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+from django.test import override_settings
+
 from experiments.models import Experiment, ExperimentJob, ExperimentStatus
 from experiments.serializers import (
     ExperimentDetailSerializer,
@@ -17,6 +19,7 @@ from factories.factory_experiments import (
 from tests.utils import BaseTest
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentSerializer(BaseTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
@@ -56,8 +59,7 @@ class TestExperimentSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
-            obj1 = self.factory_class()
+        obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
@@ -71,11 +73,9 @@ class TestExperimentSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_stop:
-            ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
-        assert mock_stop.call_count == 1
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
         assert data['finished_at'] is not None
@@ -102,6 +102,7 @@ class TestExperimentSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentDetailSerializer(BaseTest):
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
@@ -166,8 +167,7 @@ class TestExperimentDetailSerializer(BaseTest):
             assert getattr(self.obj1, k) == v
 
     def test_serialize_one_with_status(self):
-        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
-            obj1 = self.factory_class()
+        obj1 = self.factory_class()
         data = self.serializer_class(obj1).data
 
         assert set(data.keys()) == self.expected_keys
@@ -181,11 +181,9 @@ class TestExperimentDetailSerializer(BaseTest):
         assert data['started_at'] is not None
         assert data['finished_at'] is None
 
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_stop:
-            ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
+        ExperimentStatus.objects.create(experiment=obj1, status=ExperimentLifeCycle.SUCCEEDED)
         data = self.serializer_class(obj1).data
 
-        assert mock_stop.call_count == 1
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
         assert data['finished_at'] is not None
@@ -284,6 +282,7 @@ class TestExperimentJobDetailsSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentStatusSerializer(BaseTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
@@ -293,9 +292,8 @@ class TestExperimentStatusSerializer(BaseTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
-            with patch('experiments.tasks.start_experiment.delay') as _:
-                self.obj1 = self.factory_class()
-                self.obj2 = self.factory_class()
+            self.obj1 = self.factory_class()
+            self.obj2 = self.factory_class()
 
     def test_serialize_one(self):
         data = self.serializer_class(self.obj1).data

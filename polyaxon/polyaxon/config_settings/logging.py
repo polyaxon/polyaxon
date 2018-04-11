@@ -62,3 +62,5 @@ LOGGING = {
         },
     },
 }
+
+CLUSTER_NOTIFICATION_URL = "https://www.google-analytics.com/collect?v=1&tid=UA-89493331-1"

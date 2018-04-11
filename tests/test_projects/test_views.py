@@ -2,6 +2,8 @@ from unittest.mock import patch
 
 from rest_framework import status
 
+from django.test import override_settings, tag
+
 from experiment_groups.models import ExperimentGroup
 from experiments.models import Experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -9,7 +11,7 @@ from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
 from projects.models import Project
 from projects.serializers import ProjectDetailSerializer, ProjectSerializer
-from tests.utils import BaseViewTest
+from tests.utils import RUNNER_TEST, BaseViewTest
 
 
 class TestProjectCreateViewV1(BaseViewTest):
@@ -165,6 +167,35 @@ class TestProjectDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url_private)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_delete(self):
+        assert self.queryset.count() == 1
+        assert ExperimentGroup.objects.count() == 2
+        assert Experiment.objects.count() == 4
+
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as xp_mock_stop:
+            with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
+                with patch('experiment_groups.paths.delete_path') as delete_path_group_mock_stop:
+                    with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
+                        resp = self.auth_client.delete(self.url)
+        assert xp_mock_stop.call_count == 4
+        # 2 * project + 1 repo
+        assert delete_path_project_mock_stop.call_count == 3
+        # 2 * 2 * groups
+        assert delete_path_group_mock_stop.call_count
+        assert delete_path_xp_mock_stop.call_count == 8  # 2 * 4  * groups
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        assert self.queryset.count() == 0
+        assert ExperimentGroup.objects.count() == 0
+        assert Experiment.objects.count() == 0
+
+        # Delete does not work for other project public and private
+        resp = self.auth_client.delete(self.url_other)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+        resp = self.auth_client.delete(self.url_private)
+        assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    @tag(RUNNER_TEST)
     def test_delete(self):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2

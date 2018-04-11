@@ -1,6 +1,6 @@
 import os
 
-from unittest.mock import patch
+from django.test import override_settings
 
 from experiments.paths import (
     create_experiment_outputs_path,
@@ -13,11 +13,11 @@ from factories.factory_experiments import ExperimentFactory
 from tests.utils import BaseTest
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentUtils(BaseTest):
     def setUp(self):
         super().setUp()
-        with patch('experiments.tasks.build_experiment.apply_async') as _:
-            self.experiment = ExperimentFactory()
+        self.experiment = ExperimentFactory()
 
     def test_experiment_logs_path_creation_deletion(self):
         experiment_logs_path = get_experiment_logs_path(self.experiment.unique_name)

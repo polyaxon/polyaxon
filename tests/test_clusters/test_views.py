@@ -1,20 +1,47 @@
 from rest_framework import status
 
-from clusters.models import Cluster, ClusterNode, NodeGPU
-from clusters.serializers import (
-    ClusterNodeDetailSerializer,
-    ClusterNodeSerializer,
-    ClusterSerializer,
-    GPUSerializer
-)
+from django.test import override_settings, tag
+
+from clusters.models import Cluster
+from clusters.serializers import ClusterSerializer
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
 from polyaxon.urls import API_V1
+from runner.nodes.models import ClusterNode, NodeGPU
+from runner.nodes.serializers import (
+    ClusterNodeDetailSerializer,
+    ClusterNodeSerializer,
+    ClusterRunnerSerializer,
+    GPUSerializer
+)
 from runner.spawners.utils.constants import NodeRoles
-from tests.utils import BaseViewTest
+from tests.utils import RUNNER_TEST, BaseViewTest
 
 
+@override_settings(DEPLOY_RUNNER=False)
 class TestClusterDetailViewV1(BaseViewTest):
     serializer_class = ClusterSerializer
+    model_class = Cluster
+    HAS_AUTH = True
+    ADMIN_USER = True
+
+    def setUp(self):
+        super().setUp()
+        self.object = Cluster.load()
+        self.url = '/{}/cluster/'.format(API_V1)
+
+        # Create related fields
+        for i in range(2):
+            ClusterNodeFactory(cluster=self.object)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(self.object).data
+
+
+@tag(RUNNER_TEST)
+class TestRunnerClusterDetailViewV1(BaseViewTest):
+    serializer_class = ClusterRunnerSerializer
     model_class = Cluster
     HAS_AUTH = True
     ADMIN_USER = True
@@ -36,6 +63,7 @@ class TestClusterDetailViewV1(BaseViewTest):
         assert resp.data['nodes'] == ClusterNodeSerializer(self.object.nodes.all(), many=True).data
 
 
+@tag(RUNNER_TEST)
 class TestClusterNodeListViewV1(BaseViewTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
@@ -113,6 +141,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
         assert last_object.n_gpus == 0
 
 
+@tag(RUNNER_TEST)
 class TestClusterNodeDetailViewV1(BaseViewTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
@@ -160,6 +189,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         assert NodeGPU.objects.count() == 0
 
 
+@tag(RUNNER_TEST)
 class TestClusterNodeGPUListViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
@@ -231,6 +261,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
         assert last_object.index == data['index']
 
 
+@tag(RUNNER_TEST)
 class TestClusterNodeGPUDetailViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU

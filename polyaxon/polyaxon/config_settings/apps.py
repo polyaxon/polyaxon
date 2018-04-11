@@ -1,19 +1,27 @@
+from polyaxon.utils import config
+
 PROJECT_APPS = (
     'polyaxon',
     'libs.apps.LibsConfig',
     'users.apps.UsersConfig',
+    'versions.apps.VersionsConfig',
     'clusters.apps.ClustersConfig',
-    'pipelines.apps.PipelinesConfig',
-    'jobs.apps.JobsConfig',
-    'plugins.apps.PluginsConfig',
     'projects.apps.ProjectsConfig',
+    'repos.apps.ReposConfig',
+    'jobs.apps.JobsConfig',
     'experiment_groups.apps.ExperimentGroupsConfig',
     'experiments.apps.ExperimentsConfig',
-    'repos.apps.ReposConfig',
-    'runner.apps.RunnerConfig',
-    'versions.apps.VersionsConfig',
+    'pipelines.apps.PipelinesConfig',
     'events.apps.EventsConfig',
 )
+
+DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True)
+if DEPLOY_RUNNER:
+    PROJECT_APPS += (
+        'plugins.apps.PluginsConfig',
+        'runner.apps.RunnerConfig',
+        'runner.nodes.apps.NodesConfig',
+    )
 
 THIRD_PARTY_APPS = (
     'rest_framework',

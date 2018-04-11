@@ -15,7 +15,6 @@ from pipelines import dags
 from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
-from projects.models import Project
 
 logger = logging.getLogger('polyaxon.pipelines')
 
@@ -100,7 +99,7 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
         blank=True,
         related_name='pipelines')
     project = models.ForeignKey(
-        Project,
+        'projects.Project',
         on_delete=models.CASCADE,
         null=True,
         blank=True,

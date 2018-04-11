@@ -21,11 +21,27 @@ api_patterns = [
         ('versions.urls', 'versions'), namespace='versions')),
     re_path(r'', include(
         ('users.api_urls', 'users'), namespace='users')),
-    # always include project last because of it's patterns
+]
+
+if settings.DEPLOY_RUNNER:
+    api_patterns += [
+        re_path(r'', include(
+            ('runner.nodes.urls', 'nodes'), namespace='nodes')),
+        # always include project related urls last because of the used patterns
+        re_path(r'', include(
+            ('runner.urls.experiments', 'experiments'), namespace='experiments')),
+        re_path(r'', include(
+            ('runner.urls.experiment_groups', 'experiment_groups'), namespace='experiment_groups')),
+        re_path(r'', include(
+            ('plugins.api_urls', 'plugins'), namespace='plugins')),
+    ]
+
+api_patterns += [
+    # always include project related urls last because of the used patterns
     re_path(r'', include(
-        ('experiments.urls', 'experiments'), namespace='experiments')),
+        ('experiments.urls', 'experiments'), namespace='runner_experiments')),
     re_path(r'', include(
-        ('experiment_groups.urls', 'experiment_groups'), namespace='experiment_groups')),
+        ('experiment_groups.urls', 'experiment_groups'), namespace='runner_experiment_groups')),
     re_path(r'', include(
         ('repos.urls', 'repos'), namespace='repos')),
     re_path(r'', include(

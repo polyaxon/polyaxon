@@ -1,24 +1,43 @@
 from unittest.mock import patch
 
-from experiment_groups.tasks import stop_group_experiments
+from django.test import override_settings, tag
+
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
-from tests.utils import BaseTest
+from runner.tasks.experiment_groups import stop_group_experiments
+from tests.utils import RUNNER_TEST, BaseTest
 
 
 class TestExperimentGroupModel(BaseTest):
+    @override_settings(DEPLOY_RUNNER=False)
+    @patch('experiment_groups.paths.delete_path')
+    def test_experiment_group_creation_deletes_old_data(self, delete_path):
+        ExperimentGroupFactory()
+
+        assert delete_path.call_count == 2  # outputs + logs
+
+    @override_settings(DEPLOY_RUNNER=False)
+    @patch('experiment_groups.paths.delete_path')
+    def test_experiment_group_deletion_deletes_old_data(self, delete_path):
+        experiment_group = ExperimentGroupFactory()
+        assert delete_path.call_count == 2  # outputs + logs
+        experiment_group.delete()
+        assert delete_path.call_count == 2 + 2  # outputs + logs
+
+    @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
-        with patch('experiment_groups.tasks.create_group_experiments.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.create_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
         assert mock_fct.call_count == 1
 
+    @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
@@ -30,8 +49,9 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.pending_experiments.count() == 1
         assert experiment_group.running_experiments.count() == 1
 
+    @tag(RUNNER_TEST)
     def test_experiment_group_deletion_triggers_experiments_deletion(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert mock_fct.call_count == 1
@@ -45,8 +65,9 @@ class TestExperimentGroupModel(BaseTest):
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
 
+    @tag(RUNNER_TEST)
     def test_experiment_create_a_max_of_experiments(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -54,8 +75,9 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.specification.matrix_space == 3
         assert experiment_group.experiments.count() == 2
 
+    @tag(RUNNER_TEST)
     def test_experiment_group_should_stop_early(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -90,8 +112,9 @@ class TestExperimentGroupModel(BaseTest):
         # Check again that early stopping still works
         assert experiment_group.should_stop_early() is False
 
+    @tag(RUNNER_TEST)
     def test_stop_pending_experiments(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -102,8 +125,9 @@ class TestExperimentGroupModel(BaseTest):
 
         assert experiment_group.pending_experiments.count() == 0
 
+    @tag(RUNNER_TEST)
     def test_stop_all_experiments(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 

@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from libs.decorators import ignore_raw
+from libs.decorators import ignore_raw, ignore_updates
 from pipelines.constants import OperationStatuses, PipelineStatuses
 from pipelines.models import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
 from pipelines.tasks import (
@@ -13,38 +13,26 @@ from pipelines.tasks import (
 
 
 @receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_saved")
+@ignore_updates
 @ignore_raw
 def new_pipeline_run(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    if not created:
-        return
-
     instance.set_status(PipelineStatuses.CREATED)
 
 
 @receiver(post_save, sender=OperationRun, dispatch_uid="operation_run_saved")
+@ignore_updates
 @ignore_raw
 def new_operation_run(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    if not created:
-        return
-
     instance.set_status(OperationStatuses.CREATED)
 
 
 @receiver(post_save, sender=PipelineRunStatus, dispatch_uid="new_pipeline_run_status_saved")
+@ignore_updates
 @ignore_raw
 def new_pipeline_run_status(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    if not created:
-        return
-
     pipeline_run = instance.pipeline_run
     # Update job last_status
     pipeline_run.status = instance
@@ -59,14 +47,10 @@ def new_pipeline_run_status(sender, **kwargs):
 
 
 @receiver(post_save, sender=OperationRunStatus, dispatch_uid="new_operation_run_status_saved")
+@ignore_updates
 @ignore_raw
 def new_operation_run_status(sender, **kwargs):
     instance = kwargs['instance']
-    created = kwargs.get('created', False)
-
-    if not created:
-        return
-
     operation_run = instance.operation_run
     pipeline_run = operation_run.pipeline_run
     # Update job last_status

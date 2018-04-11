@@ -17,8 +17,6 @@ def start_notebook(project, image):
         in_cluster=True)
 
     spawner.start_notebook(image=image, resources=project.notebook.compiled_spec.resources)
-    project.has_notebook = True
-    project.save()
 
 
 def stop_notebook(project, update_status=False):
@@ -30,8 +28,6 @@ def stop_notebook(project, update_status=False):
         in_cluster=True)
 
     spawner.stop_notebook()
-    project.has_notebook = False
-    project.save()
     if update_status:
         # Update experiment status to show that its stopped
         project.notebook.set_status(status=ExperimentLifeCycle.STOPPED,

@@ -23,6 +23,7 @@ from polyaxon.config_settings import RedisPools
 # Stores the currently valid tokens to check against
 _valid_tokens = dict()
 CONTENT_TYPE_APPLICATION_JSON = 'application/json'
+RUNNER_TEST = 'runner'
 
 
 class AuthorizedClient(Client):

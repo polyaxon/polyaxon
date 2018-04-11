@@ -7,6 +7,6 @@ email_host_user = config.get_string('POLYAXON_EMAIL_HOST_USER', is_optional=True
 email_host_password = config.get_string('POLYAXON_EMAIL_HOST_PASSWORD',
                                         is_optional=True,
                                         is_secret=True)
-EMAIL_BACKEND = config.get_string('POLYAXON_EMAIL_BACKEND', is_optional=True)
-if EMAIL_BACKEND is None:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = config.get_string('POLYAXON_EMAIL_BACKEND',
+                                  is_optional=True,
+                                  default='django.core.mail.backends.console.EmailBackend')

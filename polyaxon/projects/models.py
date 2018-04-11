@@ -6,7 +6,6 @@ from django.db import models
 
 from libs.blacklist import validate_blacklist_name
 from libs.models import DescribableModel, DiffModel
-from plugins.models import NotebookJob, TensorboardJob
 
 
 class Project(DiffModel, DescribableModel):
@@ -26,22 +25,6 @@ class Project(DiffModel, DescribableModel):
     is_public = models.BooleanField(
         default=True,
         help_text='If project is public or private.')
-    tensorboard = models.OneToOneField(
-        TensorboardJob,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
-    notebook = models.OneToOneField(
-        NotebookJob,
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
-    has_tensorboard = models.BooleanField(
-        default=False,
-        help_text='If project has a tensorboard.')
-    has_notebook = models.BooleanField(
-        default=False,
-        help_text='If project has a notebook.')
 
     def __str__(self):
         return self.unique_name
@@ -56,3 +39,25 @@ class Project(DiffModel, DescribableModel):
     @property
     def has_code(self):
         return hasattr(self, 'repo')
+
+    @property
+    def tensorboard(self):
+        if settings.DEPLOY_RUNNER:
+            return self.tensorboard_jobs.last()
+        return None
+
+    @property
+    def notebook(self):
+        if settings.DEPLOY_RUNNER:
+            return self.notebook_jobs.last()
+        return None
+
+    @property
+    def has_tensorboard(self):
+        tensorboard = self.tensorboard
+        return tensorboard and tensorboard.is_running
+
+    @property
+    def has_notebook(self):
+        notebook = self.notebook
+        return notebook and notebook.is_running

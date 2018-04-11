@@ -1,14 +1,5 @@
 from django.contrib import admin
 
-from clusters.models import Cluster, ClusterEvent, ClusterNode, NodeGPU
-from libs.admin import ReadOnlyAdmin
-
-
-class ClusterEventAdmin(ReadOnlyAdmin):
-    pass
-
+from clusters.models import Cluster
 
 admin.site.register(Cluster)
-admin.site.register(ClusterNode)
-admin.site.register(NodeGPU)
-admin.site.register(ClusterEvent, ClusterEventAdmin)

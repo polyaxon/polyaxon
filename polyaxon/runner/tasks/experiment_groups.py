@@ -3,9 +3,9 @@ import logging
 from experiment_groups.utils import get_valid_experiment_group
 from experiments.models import Experiment
 from experiments.statuses import ExperimentLifeCycle
-from experiments.tasks import build_experiment, stop_experiment
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks, Intervals
+from polyaxon.settings import Intervals, RunnerCeleryTasks
+from runner.tasks.experiments import build_experiment, stop_experiment
 
 logger = logging.getLogger('polyaxon.tasks.experiment_groups')
 
@@ -25,7 +25,7 @@ def _get_group_or_retry(experiment_group_id, task):
     return None
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
+@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
 def create_group_experiments(self, experiment_group_id, iteration=0):
     experiment_group = _get_group_or_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
@@ -50,7 +50,7 @@ def create_group_experiments(self, experiment_group_id, iteration=0):
     start_group_experiments.apply_async((experiment_group.id,), countdown=1)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_START, bind=True, max_retries=None)
+@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_START, bind=True, max_retries=None)
 def start_group_experiments(self, experiment_group_id):
     experiment_group = _get_group_or_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
@@ -82,7 +82,7 @@ def start_group_experiments(self, experiment_group_id):
     #     self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
+@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
 def stop_group_experiments(experiment_group_id, pending, message=None):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
