@@ -83,7 +83,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
     plx_file = None
     plugin_job = None
     if file:
-        plx_file = check_polyaxonfile(file, log=False, is_plugin=True)
+        plx_file = check_polyaxonfile(file, log=False)
 
     # Check if we need to upload
     if u:

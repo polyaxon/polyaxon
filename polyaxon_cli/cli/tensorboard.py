@@ -82,7 +82,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
     plx_file = None
     plugin_job = None
     if file:
-        plx_file = check_polyaxonfile(file, log=False, is_plugin=True)
+        plx_file = check_polyaxonfile(file, log=False)
 
     if plx_file:
         project = ProjectManager.get_config_or_raise()
