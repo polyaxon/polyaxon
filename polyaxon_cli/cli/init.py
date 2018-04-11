@@ -7,6 +7,7 @@ import sys
 import click
 
 from marshmallow import ValidationError
+from polyaxon_schemas.exceptions import PolyaxonfileError
 
 from polyaxon_cli.cli.project import equal_projects, get_project_or_local
 from polyaxon_cli.managers.ignore import IgnoreManager
@@ -66,11 +67,12 @@ def init(project, run, model):
 
     # file was already there, let's check if the project passed correspond to this file
     try:
-        spec = PolyaxonFile.read(constants.INIT_FILE)
-    except ValidationError:
+        spec = PolyaxonFile(constants.INIT_FILE).specification
+    except (PolyaxonfileError, ValidationError) as e:
         Printer.print_error(
             "Something went wrong, init command did not create a file.\n"
             "Another file already exist with.")
+        Printer.print_error('Error message: `{}`.'.format(e))
         sys.exit(1)
 
     if not equal_projects(spec.project.name, project_config.unique_name):

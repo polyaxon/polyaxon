@@ -11,11 +11,10 @@ import click
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
-from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 from polyaxon_schemas.utils import to_list
 
 
-def check_polyaxonfile(file, log=True, is_plugin=False):  # pylint:disable=redefined-builtin
+def check_polyaxonfile(file, log=True):  # pylint:disable=redefined-builtin
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]
 
@@ -25,9 +24,7 @@ def check_polyaxonfile(file, log=True, is_plugin=False):  # pylint:disable=redef
         sys.exit(1)
 
     try:
-        plx_file = PolyaxonFile.read(file)
-        if is_plugin:
-            plx_file = PluginSpecification.read(plx_file._data)  # pylint:disable=protected-access
+        plx_file = PolyaxonFile(file)
         if log:
             Printer.print_success("Polyaxonfile valid")
         return plx_file
@@ -69,25 +66,25 @@ def check(file,  # pylint:disable=redefined-builtin
           experiments):
     """Check a polyaxonfile."""
     file = file or 'polyaxonfile.yml'
-    plx_file = check_polyaxonfile(file)
+    specification = check_polyaxonfile(file).specification
 
     if version:
         Printer.decorate_format_value('The version is: {}',
-                                      plx_file.version,
+                                      specification.version,
                                       'yellow')
 
     if run_type:
         Printer.decorate_format_value('The run-type is: {}',
-                                      plx_file.run_type,
+                                      specification.run_type,
                                       'yellow')
 
     if project:
         Printer.decorate_format_value('The project is: {}',
-                                      plx_file.project.name,
+                                      specification.project.name,
                                       'yellow')
 
     if experiments:
-        matrix_space, n_experiments, concurrency, search_method = plx_file.experiments_def
+        matrix_space, n_experiments, concurrency, search_method = specification.experiments_def
         if matrix_space == 1:
             Printer.decorate_format_value('This polyaxon specification has {}',
                                           'One experiment',
@@ -98,6 +95,6 @@ def check(file,  # pylint:disable=redefined-builtin
             get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method)
 
     if all:
-        click.echo("Validated file:\n{}".format(plx_file.parsed_data))
+        click.echo("Validated file:\n{}".format(specification.parsed_data))
 
-    return plx_file
+    return specification

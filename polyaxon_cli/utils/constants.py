@@ -25,6 +25,8 @@ INIT_FILE_PROJECT_SECTION = ("# set you project name here. "
 INIT_FILE_MODEL_TEMPLATE = """---
 version: 1
 
+kind: experiment
+
 project:
   name: {}
 
@@ -38,6 +40,8 @@ model:
 
 INIT_FILE_RUN_TEMPLATE = """---
 version: 1
+
+kind: experiment
 
 project:
   name: {}

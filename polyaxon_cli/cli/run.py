@@ -43,25 +43,25 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
 
     """
     file = file or 'polyaxonfile.yml'
-    plx_file = check_polyaxonfile(file, log=False)
+    specification = check_polyaxonfile(file, log=False).specification
 
     # Check if we need to upload
     if u:
         ctx.invoke(upload, async=False)
 
-    matrix_space, n_experiments, concurrency, search_method = plx_file.experiments_def
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
-    if not equal_projects(plx_file.project.name, project.unique_name):
+    if not equal_projects(specification.project.name, project.unique_name):
         Printer.print_error('Your polyaxonfile defined a different project '
                             'than the one set in this repo.')
         sys.exit(1)
-    if matrix_space == 1:
+
+    if specification.is_experiment:
         click.echo('Creating an independent experiment.')
         experiment = ExperimentConfig(
             description=description,
-            content=plx_file.specification._data,  # pylint:disable=protected-access
-            config=plx_file.specification.parsed_data)  # pylint:disable=protected-access
+            content=specification._data,  # pylint:disable=protected-access
+            config=specification.parsed_data)  # pylint:disable=protected-access
         try:
             project_client.create_experiment(project.user,
                                              project.name,
@@ -73,10 +73,11 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
         Printer.print_success('Experiment was created')
     else:
         click.echo('Creating an experiment group with the following definition:')
+        matrix_space, n_experiments, concurrency, search_method = specification.experiments_def
         get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method)
         experiment_group = ExperimentGroupConfig(
             description=description,
-            content=plx_file._data)  # pylint:disable=protected-access
+            content=specification._data)  # pylint:disable=protected-access
         try:
             project_client.create_experiment_group(project.user,
                                                    project.name,
