@@ -15,8 +15,10 @@ and information for training and monitoring your deep learning applications.
 
 We do our best to make this documentation clear and user friendly,
 if you see anything that is incorrect or have any questions,
-feel free to reach out at the [issues page](https://github.com/polyaxon/polyaxon/issues),
-[forum](https://gitter.im/polyaxon/polyaxon) or [contact us](mailto:contact@polyaxon.com).
+feel free to reach out at the
+[issues page](https://github.com/polyaxon/polyaxon/issues),
+[forum](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
+or [contact us](mailto:contact@polyaxon.com).
 
 
 ## Get Started
