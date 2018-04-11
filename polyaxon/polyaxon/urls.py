@@ -27,12 +27,15 @@ if settings.DEPLOY_RUNNER:
     api_patterns += [
         re_path(r'', include(
             ('runner.nodes.urls', 'nodes'), namespace='nodes')),
+        # always include project related urls last because of the used patterns
+        re_path(r'', include(
+            ('runner.urls.experiment_groups', 'experiment_groups'), namespace='experiment_groups')),
         re_path(r'', include(
             ('plugins.api_urls', 'plugins'), namespace='plugins')),
     ]
 
 api_patterns += [
-    # always include project last because of it's patterns
+    # always include project related urls last because of the used patterns
     re_path(r'', include(
         ('experiments.urls', 'experiments'), namespace='experiments')),
     re_path(r'', include(
