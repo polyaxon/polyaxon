@@ -2,9 +2,9 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from experiment_groups.models import ExperimentGroup
-from experiment_groups.tasks import create_group_experiments
 from libs.decorators import ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
+from runner.tasks.experiment_groups import create_group_experiments
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_create_experiments")

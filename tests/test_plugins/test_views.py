@@ -1,9 +1,10 @@
 from unittest.mock import patch
 
 import mock
-from django.test import tag
 
 from rest_framework import status
+
+from django.test import tag
 
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
@@ -19,7 +20,7 @@ from runner.spawners.notebook_spawner import NotebookSpawner
 from runner.spawners.project_spawner import ProjectSpawner
 from runner.spawners.templates.constants import DEPLOYMENT_NAME
 from runner.spawners.tensorboard_spawner import TensorboardSpawner
-from tests.utils import BaseViewTest, RUNNER_TEST
+from tests.utils import RUNNER_TEST, BaseViewTest
 
 
 @tag(RUNNER_TEST)

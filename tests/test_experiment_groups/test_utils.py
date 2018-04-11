@@ -24,7 +24,7 @@ from tests.utils import BaseTest
 class TestExperimentGroupUtils(BaseTest):
     def setUp(self):
         super().setUp()
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
             self.experiment_group = ExperimentGroupFactory()
         self.project = self.experiment_group.project
 

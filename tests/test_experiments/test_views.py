@@ -135,7 +135,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {'config': exec_experiment_spec_parsed_content.parsed_data}
-        with patch('experiments.tasks.build_experiment.apply_async') as mock_fct:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -258,7 +258,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        with patch('experiment_groups.tasks.start_group_experiments.retry') as _:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.retry') as _:
             self.experiment_group = ExperimentGroupFactory(content=content)
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
@@ -440,7 +440,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
-            with patch('experiments.tasks.start_experiment.delay') as _:
+            with patch('runner.tasks.experiments.start_experiment.delay') as _:
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/statuses/'.format(API_V1,
@@ -512,7 +512,7 @@ class TestExperimentMetricListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
-            with patch('experiments.tasks.start_experiment.delay') as _:
+            with patch('runner.tasks.experiments.start_experiment.delay') as _:
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/metrics/'.format(API_V1,
@@ -579,7 +579,7 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
-            with patch('experiments.tasks.start_experiment.delay') as _:
+            with patch('runner.tasks.experiments.start_experiment.delay') as _:
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
         self.url = '/{}/{}/{}/experiments/{}/statuses/{}/'.format(
@@ -730,7 +730,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('experiments.tasks.start_experiment.delay') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:
             with patch.object(ExperimentJob, 'set_status') as _:
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
@@ -804,7 +804,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('experiments.tasks.start_experiment.delay') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:
             with patch.object(ExperimentJob, 'set_status') as _:
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
@@ -866,7 +866,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
     def test_restart(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('experiments.tasks.start_experiment.delay') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 2
@@ -891,7 +891,7 @@ class TestStopExperimentViewV1(BaseViewTest):
     def test_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('experiments.tasks.stop_experiment.delay') as mock_fct:
+        with patch('runner.tasks.experiments.stop_experiment.delay') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK

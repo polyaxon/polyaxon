@@ -17,7 +17,7 @@ class TestEventsLogsHandling(BaseTest):
         return len([_ for _ in open(filename)])
 
     def test_handle_events_job_logs_create_one_handler(self):
-        with patch('experiments.tasks.build_experiment.apply_async') as mock_fct:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
             experiment = ExperimentFactory()
 
         params = dict(experiment_name=experiment.unique_name,

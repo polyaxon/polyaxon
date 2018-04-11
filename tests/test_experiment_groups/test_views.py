@@ -210,7 +210,7 @@ class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
             self.object = self.factory_class(project=project)
         self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
                                                  project.user.username,
@@ -263,7 +263,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
             self.object = self.factory_class(project=project)
         # Add a running experiment
         experiment = ExperimentFactory(experiment_group=self.object)
@@ -279,7 +279,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert self.object.stopped_experiments.count() == 0
 
         # Check that is calling the correct function
-        with patch('experiment_groups.tasks.stop_group_experiments.delay') as mock_fct:
+        with patch('runner.tasks.experiment_groups.stop_group_experiments.delay') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1
@@ -296,7 +296,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert self.object.stopped_experiments.count() == 0
 
         # Check that is calling the correct function
-        with patch('experiment_groups.tasks.stop_group_experiments.delay') as mock_fct:
+        with patch('runner.tasks.experiment_groups.stop_group_experiments.delay') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1

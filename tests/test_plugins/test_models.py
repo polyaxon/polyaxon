@@ -1,11 +1,12 @@
-from django.test import tag
 from mock import patch
+
+from django.test import tag
 
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from jobs.statuses import JobLifeCycle
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
-from tests.utils import BaseTest, RUNNER_TEST
+from tests.utils import RUNNER_TEST, BaseTest
 
 
 @tag(RUNNER_TEST)

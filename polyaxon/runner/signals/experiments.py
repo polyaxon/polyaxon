@@ -6,9 +6,9 @@ from django.dispatch import receiver
 from experiment_groups.models import ExperimentGroup
 from experiments.models import Experiment, ExperimentStatus
 from experiments.statuses import ExperimentLifeCycle
-from experiments.tasks import build_experiment
 from libs.decorators import ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
+from runner.tasks.experiments import build_experiment
 
 logger = logging.getLogger('polyaxon.runner.experiments')
 

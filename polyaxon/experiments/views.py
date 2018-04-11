@@ -28,10 +28,10 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from experiments.tasks import stop_experiment
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
 from projects.permissions import get_permissible_project
+from runner.tasks.experiments import stop_experiment
 
 
 class ExperimentListView(ListAPIView):

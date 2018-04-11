@@ -47,10 +47,10 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
-        with patch('experiments.tasks.start_experiment.delay') as mock_fct:
+        with patch('runner.tasks.experiments.start_experiment.delay') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
                 ExperimentFactory(experiment_group=experiment_group)
 
@@ -66,8 +66,8 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
-        with patch('experiment_groups.tasks.start_group_experiments.apply_async') as _:
-            with patch('experiments.tasks.build_experiment.apply_async') as mock_fct:
+        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
+            with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
                 with patch.object(Experiment, 'set_status') as mock_fct2:
                     ExperimentFactory()
 
@@ -203,7 +203,7 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_master_success_influences_other_experiment_workers_status(self):
-        with patch('experiments.tasks.start_experiment.delay') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:
             with patch.object(Experiment, 'set_status') as _:
                 experiment = ExperimentFactory()
 
@@ -231,7 +231,7 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_sync_experiments_and_jobs_statuses(self):
-        with patch('experiments.tasks.start_experiment.delay') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:
             with patch.object(Experiment, 'set_status') as _:
                 experiments = [ExperimentFactory() for _ in range(3)]
 
@@ -266,7 +266,7 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_restarting_an_experiment(self):
-        with patch('experiments.tasks.build_experiment.apply_async') as _:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:
             experiment1 = ExperimentFactory()
 
         # We create some outputs files for the experiment
@@ -274,7 +274,7 @@ class TestExperimentModel(BaseTest):
         open(os.path.join(path, 'file'), 'w+')
 
         # Create a new experiment that is a clone of the previous
-        with patch('experiments.tasks.build_experiment.apply_async') as _:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:
             experiment2 = ExperimentFactory(original_experiment=experiment1)
 
         # Check that outputs path for experiment2 does not exist yet

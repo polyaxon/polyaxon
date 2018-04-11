@@ -5,10 +5,10 @@ from rest_framework.response import Response
 
 from experiment_groups.models import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
-from experiment_groups.tasks import stop_group_experiments
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
 from projects.permissions import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
+from runner.tasks.experiment_groups import stop_group_experiments
 
 
 class ExperimentGroupListView(ListCreateAPIView):
