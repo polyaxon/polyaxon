@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest.mock import patch
 
+from polyaxon_schemas.polyaxonfile.specification import Specification
 from rest_framework import status
 
 from polyaxon.urls import API_V1
@@ -299,6 +300,37 @@ class TestExperimentDetailViewV1(BaseViewTest):
         self.object.refresh_from_db()
         assert resp.data == self.serializer_class(self.object).data
         assert resp.data['num_jobs'] == 2
+
+    def test_get_2(self):
+        # Fix bug: error when specify resources without framework in environment
+        spec_content = """---
+            version: 1
+
+            project:
+              name: project1
+
+            environment:
+              resources:
+                gpu:
+                  requests: 1
+                  limits: 1
+            run:
+              image: my_image
+              cmd: video_prediction_train --model=DNA --num_masks=1
+        """
+        spec_parsed_content = Specification.read(spec_content)
+
+        project = ProjectFactory(user=self.auth_client.user)
+        object = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
+        url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
+                                                project.user.username,
+                                                project.name,
+                                                object.sequence)
+
+        resp = self.auth_client.get(url)
+        assert resp.status_code == status.HTTP_200_OK
+        object.refresh_from_db()
+        assert resp.data == self.serializer_class(object).data
 
     def test_patch(self):
         new_description = 'updated_xp_name'
