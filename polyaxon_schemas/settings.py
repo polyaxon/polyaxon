@@ -171,6 +171,13 @@ class SettingsConfig(BaseConfig):
         self.hyperband = hyperband
         self.early_stopping = early_stopping
 
+    def to_dict(self, humanize_values=False):
+        results = super(SettingsConfig, self).to_dict(humanize_values=humanize_values)
+        if not results.get('matrix'):
+            return results
+        results['matrix'] = {k: v.to_dict() for k, v in six.iteritems(results['matrix'])}
+        return results
+
     @classmethod
     def get_experiment_settings(cls, data):
         _data = {}
