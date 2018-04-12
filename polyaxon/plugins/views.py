@@ -92,7 +92,7 @@ class StartNotebookView(CreateAPIView):
         self._create_notebook(obj)
         if not obj.notebook.is_running:
             build_notebook.delay(project_id=obj.id)
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class StopNotebookView(CreateAPIView):

@@ -44,7 +44,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         with patch('plugins.tasks.start_tensorboard.delay') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
         self.object.refresh_from_db()
         assert isinstance(self.object.tensorboard, TensorboardJob)
@@ -54,14 +54,14 @@ class TestStartTensorboardViewV1(BaseViewTest):
         with patch('runner.schedulers.tensorboard_scheduler.start_tensorboard') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
 
     def test_start_with_updated_config(self):
         with patch('plugins.tasks.start_tensorboard.delay') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
         self.object.refresh_from_db()
         config = self.object.tensorboard.config
@@ -73,7 +73,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         with patch('plugins.tasks.start_tensorboard.delay') as mock_fct:
             resp = self.auth_client.post(self.url)
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         # Check that still using same config
         self.object.refresh_from_db()
         assert config == self.object.tensorboard.config
@@ -88,10 +88,20 @@ class TestStartTensorboardViewV1(BaseViewTest):
                                          data={'config': plugin_spec_parsed_content.parsed_data})
 
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         self.object.refresh_from_db()
         # Check that the image was update
         assert config != self.object.tensorboard.config
+
+        # Trying to start an already running job returns 200
+        # Starting again the tensorboard with different config
+        self.object.tensorboard.set_status(status=JobLifeCycle.BUILDING)
+        with patch('plugins.tasks.start_tensorboard.delay') as mock_fct:
+            resp = self.auth_client.post(self.url,
+                                         data={'config': plugin_spec_parsed_content.parsed_data})
+
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
 
     def test_start_during_build_process(self):
         with patch('plugins.tasks.start_tensorboard.delay') as start_mock:
@@ -169,7 +179,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         with patch('plugins.tasks.build_notebook.delay') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
         self.object.refresh_from_db()
         assert isinstance(self.object.notebook, NotebookJob)
@@ -182,7 +192,7 @@ class TestStartNotebookViewV1(BaseViewTest):
                 resp = self.auth_client.post(self.url, data)
         assert build_mock_fct.call_count == 1
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
 
     def test_build_with_updated_config(self):
@@ -191,7 +201,7 @@ class TestStartNotebookViewV1(BaseViewTest):
             resp = self.auth_client.post(self.url, data)
 
         assert mock_fct.call_count == 1
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
         self.object.refresh_from_db()
         config = self.object.notebook.config
@@ -218,12 +228,21 @@ class TestStartNotebookViewV1(BaseViewTest):
         # Check that the image was update
         assert config != self.object.notebook.config
 
+        # Trying to start an already running job returns 200
+        # Starting again the tensorboard with different config
+        self.object.notebook.set_status(status=JobLifeCycle.BUILDING)
+        with patch('plugins.tasks.build_notebook.delay') as mock_fct:
+            resp = self.auth_client.post(self.url, data=data)
+
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+
     def test_start_during_build_process(self):
         data = {'config': plugin_spec_parsed_content.parsed_data}
         with patch('plugins.tasks.build_notebook.delay') as start_mock:
             resp = self.auth_client.post(self.url, data=data)
 
-        assert resp.status_code == status.HTTP_200_OK
+        assert resp.status_code == status.HTTP_201_CREATED
         self.object.refresh_from_db()
         assert start_mock.call_count == 1
         assert self.object.notebook.last_status == JobLifeCycle.CREATED
