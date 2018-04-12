@@ -103,7 +103,6 @@ class ExperimentSchema(Schema):
     is_done = fields.Bool(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
-    content = fields.Str(allow_none=True)
     num_jobs = fields.Int(allow_none=True)
     declarations = fields.Dict(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
@@ -150,7 +149,6 @@ class ExperimentConfig(BaseConfig):
                  is_running=None,
                  is_done=None,
                  config=None,
-                 content=None,
                  num_jobs=0,
                  declarations=None,
                  resources=None,
@@ -175,7 +173,6 @@ class ExperimentConfig(BaseConfig):
         self.is_done = is_done
         self.is_clone = is_clone
         self.config = config  # The json compiled content of this experiment
-        self.content = content  # The yaml content when the experiment is independent
         self.num_jobs = num_jobs
         self.declarations = declarations
         self.resources = resources

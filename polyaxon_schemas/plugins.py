@@ -8,7 +8,6 @@ from polyaxon_schemas.base import BaseConfig
 
 class PluginJobSchema(Schema):
     config = fields.Dict(allow_none=True)
-    content = fields.Str(allow_none=True)
 
     class Meta:
         ordered = True
@@ -26,6 +25,5 @@ class PluginJobConfig(BaseConfig):
     SCHEMA = PluginJobSchema
     IDENTIFIER = 'plugin_job'
 
-    def __init__(self, config=None, content=None):
+    def __init__(self, config=None):
         self.config = config  # The json compiled content of this experiment
-        self.content = content  # The yaml content when the experiment is independent

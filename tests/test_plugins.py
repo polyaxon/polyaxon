@@ -9,7 +9,6 @@ from polyaxon_schemas.plugins import PluginJobConfig
 class TestPluginConfigs(TestCase):
     def test_plugin_config(self):
         config_dict = {
-            'content': 'content',
             'config': {'k': 'v'},
         }
         config = PluginJobConfig.from_dict(config_dict)

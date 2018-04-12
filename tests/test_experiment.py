@@ -31,7 +31,6 @@ class TestExperimentConfigs(TestCase):
             'unique_name': 'user.proj.1',
             'last_status': 'Running',
             'description': 'description',
-            'content': 'content',
             'config': {'k': 'v'},
             'num_jobs': 1,
             'created_at': local_now().isoformat(),
@@ -56,7 +55,6 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         config_dict.pop('uuid')
         config_dict.pop('description')
-        config_dict.pop('content')
         config_dict.pop('config')
         config_dict.pop('project')
         config_dict.pop('experiment_group')
@@ -78,7 +76,6 @@ class TestExperimentConfigs(TestCase):
     def test_experiment_with_jobs_config(self):
         config_dict = {'sequence': 2,
                        'config': {},
-                       'content': '',
                        'unique_name': 'adam.proj.1',
                        'uuid': uuid.uuid4().hex,
                        'project': uuid.uuid4().hex,
