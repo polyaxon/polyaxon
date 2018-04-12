@@ -4,6 +4,7 @@ import uuid
 from operator import __or__ as OR
 
 from django.conf import settings
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
@@ -11,7 +12,7 @@ from django.utils.functional import cached_property
 from experiment_groups import search_algorithms
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel
-from libs.spec_validation import validate_group_spec_content
+from libs.spec_validation import validate_group_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
@@ -32,14 +33,19 @@ class ExperimentGroup(DiffModel, DescribableModel):
         editable=False,
         null=False,
         help_text='The sequence number of this group within the project.', )
-    content = models.TextField(
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_group_spec_content])
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
+    content = models.TextField(
+        help_text='The yaml content of the polyaxonfile/specification.',
+        validators=[validate_group_spec_content])
+    config = JSONField(
+        help_text='The experiment group hyper params congig.',
+        null=True,
+        blank=True,
+        validators=[validate_group_config])
     code_reference = models.ForeignKey(
         'repos.CodeReference',
         on_delete=models.SET_NULL,
