@@ -8,7 +8,7 @@ from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import is_experiment_still_running
 from libs.registry import get_registry_host
 from repos import git
-from repos.models import ExternalRepo, Repo
+from repos.models import CodeReference, ExternalRepo, Repo
 from runner.dockerizer.builders.base import BaseDockerBuilder
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')
@@ -74,9 +74,11 @@ def get_experiment_repo_info(experiment):
         if not is_created:
             # If the repo already exist, we just need to refetch it
             git.fetch(git_url=repo.git_url, repo_path=repo.path)
-        if not experiment.commit:
+        if not experiment.code_reference.commit:
             # Update experiment commit if not set already
-            experiment.commit = repo.last_commit[0]
+            code_reference, _ = CodeReference.objects.get_or_create(repo=repo,
+                                                                    commit=repo.last_commit[0])
+            experiment.code_reference = code_reference
             experiment.save()
 
         repo_path = repo.path
@@ -86,7 +88,7 @@ def get_experiment_repo_info(experiment):
         repo_name = project_name
 
     image_name = '{}/{}'.format(get_registry_host(), repo_name)
-    image_tag = experiment.commit
+    image_tag = experiment.code_reference.commit
     if not image_tag:
         raise Repo.DoesNotExist
     return {

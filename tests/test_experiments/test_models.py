@@ -320,7 +320,8 @@ class TestExperimentCommit(BaseViewTest):
         # Check experiment is created with commit
         experiment = self.create_experiment(exec_experiment_spec_content)
 
-        assert experiment.commit == last_commit[0]
+        assert experiment.code_reference.commit == last_commit[0]
+        assert experiment.code_reference.repo == self.project.repo
 
         # Make a new upload with repo_new.tar.gz containing 2 files
         new_uploaded_file = self.get_upload_file('updated_repo')
@@ -334,7 +335,8 @@ class TestExperimentCommit(BaseViewTest):
 
         # Check new experiment is created with new commit
         new_experiment = self.create_experiment(exec_experiment_spec_content)
-        assert new_experiment.commit == new_commit[0]
+        assert new_experiment.code_reference.commit == new_commit[0]
+        assert new_experiment.code_reference.repo == self.project.repo
 
         # Cloning an experiment does not assign commit
         clone_experiment = Experiment.objects.create(
@@ -344,11 +346,11 @@ class TestExperimentCommit(BaseViewTest):
             experiment_group=experiment.experiment_group,
             config=experiment.config,
             original_experiment=experiment,
-            commit=experiment.commit
+            code_reference=experiment.code_reference
         )
 
-        assert clone_experiment.commit == experiment.commit
+        assert clone_experiment.code_reference == experiment.code_reference
 
         # Model experiments should not get a commit
         model_experiment = self.create_experiment(experiment_spec_content)
-        assert model_experiment.commit is None
+        assert model_experiment.code_reference is None

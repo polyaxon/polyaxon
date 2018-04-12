@@ -27,7 +27,7 @@ def get_experiment_image_info(experiment):
         repo_name = project_name
 
     image_name = '{}/{}'.format(get_registry_host(), repo_name)
-    image_tag = experiment.commit
+    image_tag = experiment.code_reference.commit
     return image_name, image_tag
 
 

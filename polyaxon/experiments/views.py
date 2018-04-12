@@ -111,7 +111,7 @@ class ExperimentRestartView(CreateAPIView):
             config=obj.config,
             content=obj.content,
             original_experiment=obj,
-            commit=obj.commit
+            code_reference=obj.code_reference
         )
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)

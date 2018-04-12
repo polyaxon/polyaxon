@@ -42,10 +42,11 @@ def create_group_experiments(self, experiment_group_id, iteration=0):
     for suggestion in suggestions:
         # We need to check if we should create or restart
         Experiment.objects.create(
-            project=experiment_group.project,
-            user=experiment_group.user,
+            project_id=experiment_group.project_id,
+            user_id=experiment_group.user_id,
             experiment_group=experiment_group,
-            config=specification.get_experiment_spec(matrix_declaration=suggestion).parsed_data)
+            config=specification.get_experiment_spec(matrix_declaration=suggestion).parsed_data,
+            code_reference_id=experiment_group.code_reference_id)
 
     start_group_experiments.apply_async((experiment_group.id,), countdown=1)
 

@@ -18,33 +18,36 @@ from experiments.paths import (
 from experiments.statuses import ExperimentLifeCycle
 from experiments.tasks import check_experiment_status
 from jobs.statuses import JobLifeCycle
-from libs.decorators import ignore_raw, ignore_updates
+from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
+from repos.models import CodeReference
 
 logger = logging.getLogger('polyaxon.experiments')
 
 
 @receiver(pre_save, sender=Experiment, dispatch_uid="experiment_saved")
+@ignore_updates_pre
 @ignore_raw
-def add_experiment_commit(sender, **kwargs):
+def add_experiment_code_reference(sender, **kwargs):
     instance = kwargs['instance']
-
     # Check if :
     # the experiment is new
     # that it has an exec section
     # that it's not cloned
     # that is not an external repo (because we did not clone it yet)
     # if the instance has a primary key then is getting updated
-    if (instance.pk or
-            not instance.compiled_spec.run_exec or
-            instance.compiled_spec.run_exec.git or
-            instance.is_clone or
-            not instance.project.has_code):
+    condition = (not instance.compiled_spec.run_exec or
+                 instance.compiled_spec.run_exec.git or
+                 instance.is_clone or
+                 not instance.project.has_code)
+    if condition:
         return
 
-    # Set the code commit to the experiment
-    last_commit = instance.project.repo.last_commit
+    # Set the code reference to the experiment
+    repo = instance.project.repo
+    last_commit = repo.last_commit
     if last_commit:
-        instance.commit = last_commit[0]
+        code_reference, _ = CodeReference.objects.get_or_create(repo=repo, commit=last_commit[0])
+        instance.code_reference = code_reference
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")

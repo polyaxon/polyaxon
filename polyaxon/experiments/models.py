@@ -75,10 +75,6 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
-    commit = models.CharField(
-        max_length=40,
-        blank=True,
-        null=True)
     code_reference = models.ForeignKey(
         'repos.CodeReference',
         on_delete=models.SET_NULL,
