@@ -50,7 +50,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         blank=True,
         null=True,
         help_text='The dockerfile used to train this experiment.')
-    params = JSONField(
+    declarations = JSONField(
         blank=True,
         null=True,
         help_text='The parameters used for this experiment.')
@@ -116,10 +116,6 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
     @cached_property
     def compiled_spec(self):
         return ExperimentSpecification(values=self.config)
-
-    @cached_property
-    def declarations(self):
-        return self.compiled_spec.declarations
 
     @cached_property
     def resources(self):
