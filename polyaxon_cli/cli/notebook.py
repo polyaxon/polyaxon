@@ -6,7 +6,7 @@ import sys
 import click
 import clint
 
-from polyaxon_cli.cli.check import check_polyaxonfile
+from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import equal_projects, get_project_or_local
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.managers.project import ProjectManager
@@ -80,25 +80,27 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
     $ polyaxon -p user12/mnist notebook start -f file -u
     ```
     """
-    plx_file = None
+    specification = None
     plugin_job = None
     if file:
-        plx_file = check_polyaxonfile(file, log=False)
+        specification = check_polyaxonfile(file, log=False).specification
 
     # Check if we need to upload
     if u:
         ctx.invoke(upload, async=False)
 
-    if plx_file:
+    if specification:
+        # pylint:disable=protected-access
+        check_polyaxonfile_kind(specification=specification, kind=specification._PLUGIN)
         project = ProjectManager.get_config_or_raise()
-        if not equal_projects(plx_file.project.name, project.unique_name):
+        if not equal_projects(specification.project.name, project.unique_name):
             Printer.print_error('Your polyaxonfile defined a different project '
                                 'than the one set in this repo.')
             sys.exit(1)
 
         plugin_job = PluginJobConfig(
-            content=plx_file._data,  # pylint:disable=protected-access
-            config=plx_file.parsed_data)
+            content=specification._data,  # pylint:disable=protected-access
+            config=specification.parsed_data)
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
         PolyaxonClients().project.start_notebook(user, project_name, plugin_job)

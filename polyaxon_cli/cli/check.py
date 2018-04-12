@@ -34,6 +34,13 @@ def check_polyaxonfile(file, log=True):  # pylint:disable=redefined-builtin
         sys.exit(1)
 
 
+def check_polyaxonfile_kind(specification, kind):
+    if specification.kind != kind:
+        Printer.print_error(
+            'Your polyaxonfile must be of kind: `{}`, '
+            'received: `{}`.'.format(kind, specification.kind))
+
+
 def get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method):
     info = OrderedDict()
     info['Matrix space contains'] = '{} experiments'.format(matrix_space)
