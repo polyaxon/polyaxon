@@ -47,7 +47,7 @@ def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
     response = experiment.to_light_dict(
         humanize_values=True,
         exclude_attrs=[
-            'uuid', 'content', 'config', 'project', 'experiments', 'description',
+            'uuid', 'config', 'project', 'experiments', 'description',
             'declarations', 'last_metric', 'resources', 'jobs'
         ])
 

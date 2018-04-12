@@ -96,9 +96,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                                 'than the one set in this repo.')
             sys.exit(1)
 
-        plugin_job = PluginJobConfig(
-            content=specification._data,  # pylint:disable=protected-access
-            config=specification.parsed_data)
+        plugin_job = PluginJobConfig(config=specification.parsed_data)
 
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:

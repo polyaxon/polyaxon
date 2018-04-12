@@ -60,8 +60,7 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
         click.echo('Creating an independent experiment.')
         experiment = ExperimentConfig(
             description=description,
-            content=specification._data,  # pylint:disable=protected-access
-            config=specification.parsed_data)  # pylint:disable=protected-access
+            config=specification.parsed_data)
         try:
             project_client.create_experiment(project.user,
                                              project.name,
