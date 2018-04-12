@@ -45,7 +45,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name='groups')
+        related_name='+')
 
     class Meta:
         ordering = ['sequence']

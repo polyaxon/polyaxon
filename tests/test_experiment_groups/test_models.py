@@ -1,10 +1,9 @@
 from unittest.mock import patch
 
-from django.test import override_settings, tag
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, GroupSpecification
 
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
@@ -181,7 +180,7 @@ class TestExperimentGroupCommit(BaseViewTest):
     def create_experiment_group(self):
         return ExperimentGroupFactory(project=self.project)
 
-    def test_experiment_is_saved_with_commit(self):
+    def test_experiment_group_is_saved_with_commit(self):
         uploaded_file = self.get_upload_file()
 
         self.auth_client.put(self.url,
@@ -213,7 +212,7 @@ class TestExperimentGroupCommit(BaseViewTest):
         assert new_experiment_group.code_reference.repo == self.project.repo
 
     @tag(RUNNER_TEST)
-    def test_check_experiment_code_reference(self):
+    def test_check_experiments_have_same_code_reference_as_group(self):
         uploaded_file = self.get_upload_file()
 
         self.auth_client.put(self.url,

@@ -26,6 +26,12 @@ class PluginJobBase(Job):
     config = JSONField(
         help_text='The compiled polyaxonfile for tensorboard.',
         validators=[validate_tensorboard_spec_content])
+    code_reference = models.ForeignKey(
+        'repos.CodeReference',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='+')
 
     class Meta:
         abstract = True

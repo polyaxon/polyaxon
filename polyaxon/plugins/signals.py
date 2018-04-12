@@ -1,15 +1,23 @@
 import logging
 
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
 from jobs.statuses import JobLifeCycle
-from libs.decorators import ignore_raw, ignore_updates
+from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from projects.models import Project
+from repos.utils import assign_code_reference
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler
 
 logger = logging.getLogger('polyaxon.plugins')
+
+
+@receiver(pre_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_saved")
+@ignore_updates_pre
+@ignore_raw
+def add_tensorboard_code_reference(sender, **kwargs):
+    assign_code_reference(kwargs['instance'])
 
 
 @receiver(post_save, sender=TensorboardJob, dispatch_uid="tensorboard_job_saved")
@@ -18,6 +26,13 @@ logger = logging.getLogger('polyaxon.plugins')
 def new_tensorboard_job(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(status=JobLifeCycle.CREATED)
+
+
+@receiver(pre_save, sender=NotebookJob, dispatch_uid="notebook_job_saved")
+@ignore_updates_pre
+@ignore_raw
+def add_notebook_code_reference(sender, **kwargs):
+    assign_code_reference(kwargs['instance'])
 
 
 @receiver(post_save, sender=NotebookJob, dispatch_uid="notebook_job_saved")

@@ -80,7 +80,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name='experients')
+        related_name='+')
 
     class Meta:
         ordering = ['sequence']

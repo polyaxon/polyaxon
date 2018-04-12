@@ -19,7 +19,7 @@ from experiments.statuses import ExperimentLifeCycle
 from experiments.tasks import check_experiment_status
 from jobs.statuses import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
-from repos.models import CodeReference
+from repos.utils import assign_code_reference
 
 logger = logging.getLogger('polyaxon.experiments')
 
@@ -42,12 +42,7 @@ def add_experiment_code_reference(sender, **kwargs):
     if condition:
         return
 
-    # Set the code reference to the experiment
-    repo = instance.project.repo
-    last_commit = repo.last_commit
-    if last_commit:
-        code_reference, _ = CodeReference.objects.get_or_create(repo=repo, commit=last_commit[0])
-        instance.code_reference = code_reference
+    assign_code_reference(instance)
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="experiment_saved")
