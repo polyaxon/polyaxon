@@ -1,0 +1,15 @@
+---
+version: 1
+
+project:
+  name: test
+
+environment:
+  resources:
+    gpu:
+      requests: 1
+      limits: 1
+
+run:
+  image: test
+  cmd: python test.py

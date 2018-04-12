@@ -140,6 +140,9 @@ class Specification(BaseSpecification):
                 cluster=cluster,
                 pytorch_config=environment.pytorch)
 
+        # No specified framework, It should return default standalone mode cluster definition
+        return cluster, is_distributed
+
     @cached_property
     def total_resources(self):
         environment = self.environment
