@@ -28,7 +28,7 @@ def build_experiment(self, experiment_id):
         return
 
     # No need to build the image, start the experiment directly
-    if not experiment.compiled_spec.run_exec:
+    if not experiment.specification.run_exec:
         start_experiment.delay(experiment_id=experiment_id)
         return
 

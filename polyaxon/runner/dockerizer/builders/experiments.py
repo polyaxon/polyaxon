@@ -66,7 +66,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
 def get_experiment_repo_info(experiment):
     """Returns information required to create a build for an experiment."""
     project_name = experiment.project.name
-    experiment_spec = experiment.compiled_spec
+    experiment_spec = experiment.specification
     if experiment_spec.run_exec.git:  # We need to fetch the repo first
 
         repo, is_created = ExternalRepo.objects.get_or_create(project=experiment.project,
@@ -100,7 +100,7 @@ def get_experiment_repo_info(experiment):
 
 def build_experiment(experiment, image_tag=None):
     """Build necessary code for an experiment to run"""
-    experiment_spec = experiment.compiled_spec
+    experiment_spec = experiment.specification
     build_info = get_experiment_repo_info(experiment)
 
     # Build the image

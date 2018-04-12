@@ -10,7 +10,7 @@ logger = logging.getLogger('polyaxon.dockerizer.images')
 def get_experiment_image_info(experiment):
     """Return the image name and image tag for an experiment"""
     project_name = experiment.project.name
-    experiment_spec = experiment.compiled_spec
+    experiment_spec = experiment.specification
     if experiment_spec.run_exec.git:
 
         try:
@@ -34,7 +34,7 @@ def get_experiment_image_info(experiment):
 def get_job_image_info(project, job):
     """Return the image name and image tag for a job"""
     project_name = project.name
-    job_spec = job.compiled_spec
+    job_spec = job.specification
     if job_spec.run_exec.git:
 
         try:

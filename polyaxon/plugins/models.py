@@ -32,12 +32,12 @@ class PluginJobBase(Job):
         abstract = True
 
     @cached_property
-    def compiled_spec(self):
+    def specification(self):
         return PluginSpecification(values=self.config)
 
     @cached_property
     def resources(self):
-        return self.compiled_spec.total_resources
+        return self.specification.total_resources
 
     @cached_property
     def unique_name(self):
@@ -75,7 +75,7 @@ class TensorboardJob(PluginJobBase):
 
     @cached_property
     def image(self):
-        return self.compiled_spec.run_exec.image
+        return self.specification.run_exec.image
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=TensorboardJobStatus,

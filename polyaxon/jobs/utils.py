@@ -6,7 +6,7 @@ logger = logging.getLogger('polyaxon.jobs.utils')
 
 
 def get_job_repo_path(job, project):
-    job_spec = job.compiled_spec
+    job_spec = job.specification
     if job_spec.run_exec.git:  # We need to fetch the repo first
         try:
             repo = ExternalRepo.objects.get(project=project,

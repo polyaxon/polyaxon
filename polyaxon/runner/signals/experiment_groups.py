@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from experiment_groups.models import ExperimentGroup
-from libs.decorators import ignore_raw, ignore_updates, runner_signal, check_specification
+from libs.decorators import check_specification, ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
 from runner.tasks.experiment_groups import create_group_experiments
 

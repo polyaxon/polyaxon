@@ -49,7 +49,7 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
 
 def get_job_repo_info(project, job):
     project_name = project.name
-    job_spec = job.compiled_spec
+    job_spec = job.specification
     if job_spec.run_exec.git:  # We need to fetch the repo first
 
         repo, is_created = ExternalRepo.objects.get_or_create(project=project,
@@ -79,7 +79,7 @@ def get_job_repo_info(project, job):
 
 def build_job(project, job, job_builder, image_tag=None):
     """Build necessary code for a job to run"""
-    job_spec = job.compiled_spec
+    job_spec = job.specification
     build_info = get_job_repo_info(project, job)
 
     # Build the image

@@ -17,7 +17,7 @@ def start_tensorboard(project):
         in_cluster=True)
 
     spawner.start_tensorboard(image=project.tensorboard.image,
-                              resources=project.tensorboard.compiled_spec.resources)
+                              resources=project.tensorboard.specification.resources)
     project.save()
 
 

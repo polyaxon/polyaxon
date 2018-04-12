@@ -234,7 +234,7 @@ def handle_base_experiment(experiment, spawner, response):
 
 
 def handle_experiment(experiment, spawner, response):
-    framework = experiment.compiled_spec.framework
+    framework = experiment.specification.framework
     if framework == Frameworks.TENSORFLOW:
         handle_tensorflow_experiment(experiment=experiment, spawner=spawner, response=response)
         return
@@ -259,7 +259,7 @@ def start_experiment(experiment):
     group = experiment.experiment_group
 
     job_docker_image = None  # This will force the spawners to use the default docker image
-    if experiment.compiled_spec.run_exec:
+    if experiment.specification.run_exec:
         try:
             image_name, image_tag = get_experiment_image_info(experiment=experiment)
         except ValueError as e:
@@ -272,7 +272,7 @@ def start_experiment(experiment):
     else:
         logger.info('Start experiment with default image.')
 
-    spawner_class = get_spawner_class(experiment.compiled_spec.framework)
+    spawner_class = get_spawner_class(experiment.specification.framework)
 
     # Use spawners to start the experiment
     spawner = spawner_class(project_name=project.unique_name,
@@ -281,7 +281,7 @@ def start_experiment(experiment):
                             project_uuid=project.uuid.hex,
                             experiment_group_uuid=group.uuid.hex if group else None,
                             experiment_uuid=experiment.uuid.hex,
-                            spec=experiment.compiled_spec,
+                            spec=experiment.specification,
                             k8s_config=settings.K8S_CONFIG,
                             namespace=settings.K8S_NAMESPACE,
                             in_cluster=True,
@@ -312,7 +312,7 @@ def stop_experiment(experiment, update_status=False):
     project = experiment.project
     group = experiment.experiment_group
 
-    spawner_class = get_spawner_class(experiment.compiled_spec.framework)
+    spawner_class = get_spawner_class(experiment.specification.framework)
 
     spawner = spawner_class(project_name=project.unique_name,
                             experiment_name=experiment.unique_name,
@@ -320,7 +320,7 @@ def stop_experiment(experiment, update_status=False):
                             project_uuid=project.uuid.hex,
                             experiment_group_uuid=group.uuid.hex if group else None,
                             experiment_uuid=experiment.uuid.hex,
-                            spec=experiment.compiled_spec,
+                            spec=experiment.specification,
                             k8s_config=settings.K8S_CONFIG,
                             namespace=settings.K8S_NAMESPACE,
                             in_cluster=True,

@@ -114,14 +114,14 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         return '{}.{}'.format(self.project.unique_name, self.sequence)
 
     @cached_property
-    def compiled_spec(self):
+    def specification(self):
         return ExperimentSpecification(values=self.config) if self.config else None
 
     @cached_property
     def resources(self):
         if not self.config:
             return None
-        return self.compiled_spec.total_resources
+        return self.specification.total_resources
 
     @property
     def last_job_statuses(self):

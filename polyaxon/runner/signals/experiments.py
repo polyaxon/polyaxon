@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from experiment_groups.models import ExperimentGroup
 from experiments.models import Experiment, ExperimentStatus
 from experiments.statuses import ExperimentLifeCycle
-from libs.decorators import ignore_raw, ignore_updates, runner_signal, check_specification
+from libs.decorators import check_specification, ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
 from runner.tasks.experiments import build_experiment
 
@@ -44,11 +44,12 @@ def stop_running_experiment(sender, **kwargs):
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="handle_new_experiment_status")
 @runner_signal
-@check_specification
 @ignore_raw
 def handle_new_experiment_status(sender, **kwargs):
     instance = kwargs['instance']
     experiment = instance.experiment
+    if not experiment.specification:
+        return
 
     if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
         logger.info('One of the workers failed or Master for experiment `%s` is done, '
