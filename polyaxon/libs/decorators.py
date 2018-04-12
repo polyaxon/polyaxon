@@ -71,6 +71,30 @@ class IgnoreUpdatesDecorator(object):
         return self.f(*args, **kwargs)
 
 
+class IgnoreUpdatesPreDecorator(object):
+    """The `IgnoreUpdatesPreDecorator` is a decorator to ignore signals for updates.
+
+    usage example:
+        @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+        @ignore_updates_pre
+        @ignore_raw
+        def my_signal_handler(sender, instance=None, created=False, **kwargs):
+            ...
+            return ...
+    """
+
+    def __init__(self, f):
+        self.f = f
+
+    def __call__(self, *args, **kwargs):
+        if kwargs['instance'].pk:
+            # Ignore signal handling for updates
+            return
+
+        return self.f(*args, **kwargs)
+
+
 ignore_raw = IgnoreRawDecorator
 runner_signal = RunnerSignalDecorator
 ignore_updates = IgnoreUpdatesDecorator
+ignore_updates_pre = IgnoreUpdatesPreDecorator
