@@ -2,13 +2,14 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from experiment_groups.models import ExperimentGroup
-from libs.decorators import ignore_raw, ignore_updates, runner_signal
+from libs.decorators import ignore_raw, ignore_updates, runner_signal, check_specification
 from runner.schedulers import experiment_scheduler
 from runner.tasks.experiment_groups import create_group_experiments
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_create_experiments")
 @runner_signal
+@check_specification
 @ignore_updates
 @ignore_raw
 def experiment_group_create_experiments(sender, **kwargs):
@@ -18,6 +19,7 @@ def experiment_group_create_experiments(sender, **kwargs):
 
 @receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_stop_experiments")
 @runner_signal
+@check_specification
 @ignore_raw
 def experiment_group_stop_experiments(sender, **kwargs):
     """Stop all experiments before deleting the group."""

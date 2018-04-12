@@ -137,7 +137,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'user', 'description', 'config', 'original_experiment')
+            'user', 'description', 'original_experiment', 'config', 'declarations', 'dockerfile')
 
     def get_user(self, obj):
         return obj.user.username
@@ -163,3 +163,15 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
                               'The reason is that the specification sent correspond '
                               'to a `{}`.\n'
                               'Please use `create group experiment endpoint`.'.format(spec.kind))
+
+    def validate(self, data):
+        if self.initial_data.get('check_specification') and not data.get('config'):
+            raise ValidationError('Experiment expects a `config`.')
+        return data
+
+    def create(self, validated_data):
+        """Check the params or set the value from the specification."""
+        if not validated_data.get('declarations') and validated_data.get('config'):
+            config = validate_experiment_spec_config(validated_data['config'])
+            validated_data['declarations'] = config.declarations
+        return super(ExperimentCreateSerializer, self).create(validated_data=validated_data)

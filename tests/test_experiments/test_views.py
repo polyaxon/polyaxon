@@ -114,7 +114,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
     @override_settings(DEPLOY_RUNNER=False)
     def test_create(self):
-        data = {}
+        data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -130,7 +130,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
     @tag(RUNNER_TEST)
     def test_create_with_runner(self):
-        data = {}
+        data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -145,6 +145,37 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         # Test other
         resp = self.auth_client.post(self.other_url, data)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_create_without_config_passes_if_no_spec_validation_requested(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.project == self.project
+        assert last_object.config is None
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_create_with_declarations_and_dockerfile(self):
+        data = {
+            'declarations': {
+                'lr': 0.1,
+                'dropout': 0.5
+            },
+            'dockerfile': 'test'
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.project == self.project
+        assert last_object.config is None
+        assert last_object.declarations == {
+            'lr': 0.1,
+            'dropout': 0.5
+        }
+        assert last_object.dockerfile == 'test'
 
 
 @override_settings(DEPLOY_RUNNER=False)

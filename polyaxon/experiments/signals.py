@@ -35,10 +35,12 @@ def add_experiment_code_reference(sender, **kwargs):
     # that it's not cloned
     # that is not an external repo (because we did not clone it yet)
     # if the instance has a primary key then is getting updated
-    condition = (not instance.compiled_spec.run_exec or
-                 instance.compiled_spec.run_exec.git or
-                 instance.is_clone or
-                 not instance.project.has_code)
+    condition = (
+        not instance.compiled_spec or
+        not instance.compiled_spec.run_exec or
+        instance.compiled_spec.run_exec.git or
+        instance.is_clone or
+        not instance.project.has_code)
     if condition:
         return
 

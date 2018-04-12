@@ -115,10 +115,12 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def compiled_spec(self):
-        return ExperimentSpecification(values=self.config)
+        return ExperimentSpecification(values=self.config) if self.config else None
 
     @cached_property
     def resources(self):
+        if not self.config:
+            return None
         return self.compiled_spec.total_resources
 
     @property

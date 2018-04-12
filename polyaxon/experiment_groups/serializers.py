@@ -48,7 +48,7 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
-            'content', 'num_scheduled_experiments', 'num_succeeded_experiments',
+            'content', 'params', 'num_scheduled_experiments', 'num_succeeded_experiments',
             'num_failed_experiments', 'num_stopped_experiments')
 
     def get_num_scheduled_experiments(self, obj):
@@ -75,3 +75,17 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
                               'The reason is that the specification sent correspond '
                               'to an independent experiment.\n'
                               'Please use `create experiment endpoint`.')
+
+    def validate(self, data):
+        if self.initial_data.get('check_specification') and not data.get('content'):
+            raise ValidationError('Experiment group expects `content`.')
+        return data
+
+    def create(self, validated_data):
+        """Check the params or set the value from the specification."""
+        if not validated_data.get('params') and validated_data.get('content'):
+            config = validate_group_spec_content(validated_data['content'])
+            if config.settings:
+                params = config.settings.to_light_dict(exclude_attrs=['logging'])
+                validated_data['params'] = params
+        return super(ExperimentGroupDetailSerializer, self).create(validated_data=validated_data)

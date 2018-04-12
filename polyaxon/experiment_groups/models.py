@@ -77,16 +77,20 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     @cached_property
     def specification(self):
-        return GroupSpecification.read(self.content)
+        return GroupSpecification.read(self.content) if self.content else None
 
     @cached_property
     def concurrency(self):
+        if not self.specification:
+            return None
         if self.specification.settings:
             return self.specification.settings.concurrent_experiments
         return 1
 
     @cached_property
     def search_algorithm(self):
+        if not self.specification:
+            return None
         if self.specification.settings:
             return self.specification.settings.search_algorithm
         return None

@@ -80,7 +80,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
     def test_create_raises_with_content_for_independent_experiment(self):
-        data = {}
+        data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         content = """---
@@ -109,8 +109,9 @@ model:
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         assert self.queryset.count() == self.num_objects
 
+    @tag(RUNNER_TEST)
     def test_create_with_valid_group(self):
-        data = {}
+        data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         content = """---
@@ -147,6 +148,36 @@ model:
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
         assert last_object.content == data['content']
+        assert last_object.params is not None
+        assert last_object.params['concurrent_experiments'] == 3
+        assert last_object.params['matrix']['lr'] is not None
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_create_without_content_passes_if_no_spec_validation_requested(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.project == self.project
+        assert last_object.content is None
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_create_with_params(self):
+        data = {
+            'params': {
+                'concurrent_experiments': 3,
+                'matrix': {
+                    'lr': {'values': [0.1, 0.2, 0.3]}
+                }
+            }
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.project == self.project
+        assert last_object.content is None
 
 
 @override_settings(DEPLOY_RUNNER=False)
