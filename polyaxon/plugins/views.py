@@ -38,17 +38,7 @@ class StartTensorboardView(CreateAPIView):
             }
         }
 
-    def _should_create_tensorboard_job(self, project):
-        # If the project already has a tensorboard specification
-        # and no data is provided to update
-        # then we do not need to create a TensorboardJob
-        if project.tensorboard and not self.request.data:
-            return False
-        return True
-
     def _create_tensorboard(self, project):
-        if not self._should_create_tensorboard_job(project):
-            return
         config = self.request.data or self._get_default_tensorboard_config(project)
         serializer = self.get_serializer(instance=project.tensorboard, data=config)
         serializer.is_valid(raise_exception=True)
@@ -56,11 +46,12 @@ class StartTensorboardView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        if not obj.has_tensorboard:
-            self._create_tensorboard(obj)
-            if not obj.tensorboard.is_running:
-                start_tensorboard.delay(project_id=obj.id)
-        return Response(status=status.HTTP_200_OK)
+        if obj.has_tensorboard:
+            return Response(data='Tensorboard is already running', status=status.HTTP_200_OK)
+        self._create_tensorboard(obj)
+        if not obj.tensorboard.is_running:
+            start_tensorboard.delay(project_id=obj.id)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class StopTensorboardView(CreateAPIView):
@@ -89,27 +80,18 @@ class StartNotebookView(CreateAPIView):
         username = self.kwargs['username']
         return queryset.filter(user__username=username)
 
-    def _should_create_notebook_job(self, project):
-        # If the project already has a notebook specification
-        # and no data is provided to update
-        # then we do not need to create a TensorboardJob
-        if project.notebook and not self.request.data:
-            return False
-        return True
-
     def _create_notebook(self, project):
-        if not self._should_create_notebook_job(project):
-            return
         serializer = self.get_serializer(instance=project.notebook, data=self.request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, project=project)
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        if not obj.has_notebook:
-            self._create_notebook(obj)
-            if not obj.notebook.is_running:
-                build_notebook.delay(project_id=obj.id)
+        if obj.has_notebook:
+            return Response(data='Notebook is already running', status=status.HTTP_200_OK)
+        self._create_notebook(obj)
+        if not obj.notebook.is_running:
+            build_notebook.delay(project_id=obj.id)
         return Response(status=status.HTTP_200_OK)
 
 

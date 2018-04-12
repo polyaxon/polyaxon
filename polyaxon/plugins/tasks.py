@@ -17,7 +17,12 @@ logger = logging.getLogger('polyaxon.tasks.projects')
 @celery_app.task(name=RunnerCeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
 def start_tensorboard(project_id):
     project = get_valid_project(project_id)
-    if not project or not project.tensorboard or project.has_tensorboard:
+    if not project or not project.tensorboard:
+        logger.warning('Project does not have a tensorboard.')
+        return None
+
+    if project.tensorboard.last_status == JobLifeCycle.RUNNING:
+        logger.warning('Tensorboard is already running.')
         return None
     tensorboard_scheduler.start_tensorboard(project)
 
@@ -67,7 +72,12 @@ def build_notebook(project_id):
 @celery_app.task(name=RunnerCeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
 def start_notebook(project_id):
     project = get_valid_project(project_id)
-    if not project or not project.notebook or project.has_notebook:
+    if not project or not project.notebook:
+        logger.warning('Project does not have a notebook.')
+        return None
+
+    if project.notebook.last_status == JobLifeCycle.RUNNING:
+        logger.warning('Tensorboard is already running.')
         return None
 
     try:
