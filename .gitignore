@@ -111,3 +111,4 @@ client/css/
 client/polyaxon/**/*.js
 client/polyaxon/**/*.js.map
 /examples/polyaxon-logs/
+lastfailed
