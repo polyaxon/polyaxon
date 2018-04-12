@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from jobs.models import Job, JobStatus
-from libs.spec_validation import validate_tensorboard_spec_content
+from libs.spec_validation import validate_plugin_spec_config
 from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
 logger = logging.getLogger('polyaxon.plugins')
@@ -18,14 +18,9 @@ class PluginJobBase(Job):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='+')
-    content = models.TextField(
-        blank=True,
-        null=True,
-        help_text='The yaml content of the plugin polyaxonfile/specification.',
-        validators=[validate_tensorboard_spec_content])
     config = JSONField(
-        help_text='The compiled polyaxonfile for tensorboard.',
-        validators=[validate_tensorboard_spec_content])
+        help_text='The compiled polyaxonfile for plugin job.',
+        validators=[validate_plugin_spec_config])
     code_reference = models.ForeignKey(
         'repos.CodeReference',
         on_delete=models.SET_NULL,

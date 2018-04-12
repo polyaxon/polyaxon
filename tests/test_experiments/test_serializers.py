@@ -121,7 +121,6 @@ class TestExperimentDetailSerializer(BaseTest):
         'description',
         'experiment_group',
         'experiment_group_name',
-        'content',
         'config',
         'started_at',
         'finished_at',

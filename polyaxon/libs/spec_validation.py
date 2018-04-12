@@ -11,11 +11,11 @@ from polyaxon_schemas.polyaxonfile.specification import (
 from polyaxon_schemas.settings import SettingsConfig
 
 
-def validate_experiment_spec_content(content):
+def validate_experiment_spec_config(config):
     try:
-        spec = ExperimentSpecification.read(content)
+        spec = ExperimentSpecification.read(config)
     except (PolyaxonfileError, PolyaxonConfigurationError):
-        raise ValidationError('Received non valid specification content.')
+        raise ValidationError('Received non valid specification config.')
 
     return spec
 
@@ -29,17 +29,17 @@ def validate_group_spec_content(content):
     return spec
 
 
-def validate_group_config(content):
+def validate_group_params_config(config):
     try:
-        SettingsConfig.from_dict(content)
+        SettingsConfig.from_dict(config)
     except MarshmallowValidationError as e:
         raise ValidationError(e)
 
 
-def validate_tensorboard_spec_content(content):
+def validate_plugin_spec_config(config):
     try:
-        spec = PluginSpecification.read(content)
+        spec = PluginSpecification.read(config)
     except (PolyaxonfileError, PolyaxonConfigurationError):
-        raise ValidationError('Received non valid tensorboard specification content.')
+        raise ValidationError('Received non valid tensorboard specification config.')
 
     return spec

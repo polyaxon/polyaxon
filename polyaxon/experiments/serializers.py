@@ -9,7 +9,7 @@ from experiments.models import (
     ExperimentStatus
 )
 from jobs.serializers import JobResourcesSerializer
-from libs.spec_validation import validate_experiment_spec_content
+from libs.spec_validation import validate_experiment_spec_config
 
 
 class ExperimentJobStatusSerializer(serializers.ModelSerializer):
@@ -122,7 +122,7 @@ class ExperimentDetailSerializer(ExperimentSerializer):
 
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
-            'content', 'config', 'original', 'original_experiment',
+            'config', 'original', 'original_experiment',
             'description', 'config', 'declarations', 'resources',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
@@ -137,26 +137,26 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
         fields = (
-            'user', 'description', 'content', 'config', 'original_experiment')
+            'user', 'description', 'config', 'original_experiment')
 
     def get_user(self, obj):
         return obj.user.username
 
-    def validate_content(self, content):
-        """We only validate the content if passed.
+    def validate_config(self, config):
+        """We only validate the config if passed.
 
-        Also we use the GroupSpecification to check if this content was
+        Also we use the GroupSpecification to check if this config was
         intended as Group experiments.
         """
-        # content is optional
-        if not content:
-            return content
+        # config is optional
+        if not config:
+            return config
 
-        spec = validate_experiment_spec_content(content)
+        spec = validate_experiment_spec_config(config)
 
         if spec.is_experiment == 1:
             # Resume normal creation
-            return content
+            return config
 
         # Raise an error to tell the use to use experiment creation instead
         raise ValidationError('Current experiment creation could not be performed.\n'

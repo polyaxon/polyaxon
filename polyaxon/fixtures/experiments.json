@@ -13,7 +13,6 @@
             "admin"
         ],
         "experiment_group": null,
-        "content": "{'project': {'name': 'cats-vs-dogs'}, 'version': 1, 'run': {'image': 'tensorflow/tensorflow', 'cmd': 'python code.py', 'install': ['pip install pandas']}, 'settings': {'run_type': 'minikube'}}",
         "config": {
             "settings": {
                 "run_type": "minikube"
@@ -61,7 +60,6 @@
             "admin"
         ],
         "experiment_group": null,
-        "content": "{'project': {'name': 'cats-vs-dogs'}, 'version': 1, 'run': {'image': 'tensorflow/tensorflow', 'cmd': 'python code.py', 'install': ['pip install pandas']}, 'settings': {'run_type': 'minikube'}}",
         "config": {
             "settings": {
                 "run_type": "minikube"
@@ -98,7 +96,6 @@
             "admin"
         ],
         "experiment_group": null,
-        "content": "{'project': {'name': 'cats-vs-dogs'}, 'version': 1, 'run': {'image': 'tensorflow/tensorflow', 'cmd': 'python code.py', 'install': ['pip install pandas']}, 'settings': {'run_type': 'minikube'}}",
         "config": {
             "settings": {
                 "run_type": "minikube"
@@ -135,7 +132,6 @@
             "admin"
         ],
         "experiment_group": null,
-        "content": "{'project': {'name': 'cats-vs-dogs'}, 'version': 1, 'run': {'image': 'tensorflow/tensorflow', 'cmd': 'python code.py', 'install': ['pip install pandas']}, 'settings': {'run_type': 'minikube'}}",
         "config": {
             "settings": {
                 "run_type": "minikube"
@@ -172,7 +168,6 @@
             "admin"
         ],
         "experiment_group": 1,
-        "content": null,
         "config": {
             "settings": {
                 "run_type": "minikube",
@@ -421,7 +416,6 @@
             "admin"
         ],
         "experiment_group": 1,
-        "content": null,
         "config": {
             "settings": {
                 "run_type": "minikube",

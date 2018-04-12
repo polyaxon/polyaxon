@@ -11,7 +11,7 @@ from experiments.statuses import ExperimentLifeCycle
 from jobs.models import Job, JobResources, JobStatus
 from jobs.statuses import JobLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
-from libs.spec_validation import validate_experiment_spec_content
+from libs.spec_validation import validate_experiment_spec_config
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 
@@ -58,14 +58,9 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
     #     editable=False,
     #     null=False,
     #     blank=True)
-    content = models.TextField(
-        blank=True,
-        null=True,
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_experiment_spec_content])
     config = JSONField(
         help_text='The compiled polyaxon with specific values for this experiment.',
-        validators=[validate_experiment_spec_content])
+        validators=[validate_experiment_spec_config])
     original_experiment = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,

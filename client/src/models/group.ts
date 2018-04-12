@@ -7,7 +7,7 @@ export class GroupModel {
   public project_name: string;
   public user: string;
   public concurrency: number;
-  public content: number;
+  public content: string;
   public num_scheduled_experiments?: number;
   public num_pending_experiments?: number;
   public num_running_experiments?: number;

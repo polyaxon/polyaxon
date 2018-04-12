@@ -12,7 +12,7 @@ from django.utils.functional import cached_property
 from experiment_groups import search_algorithms
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel
-from libs.spec_validation import validate_group_config, validate_group_spec_content
+from libs.spec_validation import validate_group_params_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
@@ -41,11 +41,11 @@ class ExperimentGroup(DiffModel, DescribableModel):
     content = models.TextField(
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_group_spec_content])
-    config = JSONField(
+    params = JSONField(
         help_text='The experiment group hyper params congig.',
         null=True,
         blank=True,
-        validators=[validate_group_config])
+        validators=[validate_group_params_config])
     code_reference = models.ForeignKey(
         'repos.CodeReference',
         on_delete=models.SET_NULL,

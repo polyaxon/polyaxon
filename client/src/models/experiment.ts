@@ -5,7 +5,7 @@ export class ExperimentModel {
   public description: string;
   public experiment_group_name: string;
   public user: string;
-  public content: string;
+  public config: string;
   public num_jobs: number;
   public last_status: string;
   public project_name: string;

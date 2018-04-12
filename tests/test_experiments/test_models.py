@@ -91,12 +91,12 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_independent_experiment_creation_with_run_triggers_experiment_building_scheduling(self):
-        content = ExperimentSpecification.read(exec_experiment_spec_content)
+        config = ExperimentSpecification.read(exec_experiment_spec_content)
         # Create a repo for the project
         repo = RepoFactory()
 
         with patch('runner.dockerizer.builders.experiments.build_experiment') as mock_docker_build:
-            experiment = ExperimentFactory(config=content.parsed_data, project=repo.project)
+            experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
 
         assert mock_docker_build.call_count == 1
         assert experiment.project.repo is not None
@@ -113,13 +113,13 @@ class TestExperimentModel(BaseTest):
     @tag(RUNNER_TEST)
     @mock.patch('runner.schedulers.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
-        content = ExperimentSpecification.read(experiment_spec_content)
+        config = ExperimentSpecification.read(experiment_spec_content)
 
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
-        mock_instance.spec = content
+        mock_instance.spec = config
 
-        experiment = ExperimentFactory(config=content.parsed_data)
+        experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -145,13 +145,13 @@ class TestExperimentModel(BaseTest):
     @tag(RUNNER_TEST)
     @mock.patch('runner.schedulers.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
-        content = ExperimentSpecification.read(exec_experiment_resources_content)
+        config = ExperimentSpecification.read(exec_experiment_resources_content)
 
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
-        mock_instance.spec = content
+        mock_instance.spec = config
 
-        experiment = ExperimentFactory(config=content.parsed_data)
+        experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -190,8 +190,8 @@ class TestExperimentModel(BaseTest):
         assert mock_fct.call_count == 1
 
     def test_set_metrics(self):
-        content = ExperimentSpecification.read(experiment_spec_content)
-        experiment = ExperimentFactory(config=content.parsed_data)
+        config = ExperimentSpecification.read(experiment_spec_content)
+        experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.metrics.count() == 0
 
         create_at = timezone.now()
@@ -303,8 +303,8 @@ class TestExperimentCommit(BaseViewTest):
                                   content_type='multipart/form-data')
 
     @override_settings(DEPLOY_RUNNER=False)
-    def create_experiment(self, content):
-        config = ExperimentSpecification.read(content)
+    def create_experiment(self, config):
+        config = ExperimentSpecification.read(config)
         return ExperimentFactory(config=config.parsed_data, project=self.project)
 
     def test_experiment_is_saved_with_commit(self):
