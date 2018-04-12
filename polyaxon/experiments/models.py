@@ -59,6 +59,8 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
     #     null=False,
     #     blank=True)
     config = JSONField(
+        null=True,
+        blank=True,
         help_text='The compiled polyaxon with specific values for this experiment.',
         validators=[validate_experiment_spec_config])
     original_experiment = models.ForeignKey(

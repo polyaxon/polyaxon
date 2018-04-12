@@ -39,6 +39,8 @@ class ExperimentGroup(DiffModel, DescribableModel):
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
     content = models.TextField(
+        null=True,
+        blank=True,
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_group_spec_content])
     params = JSONField(
