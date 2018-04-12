@@ -1,14 +1,20 @@
 from unittest.mock import patch
 
 from django.test import override_settings, tag
+from django.core.files import File
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test.client import MULTIPART_CONTENT
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, GroupSpecification
 
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
+from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
+from polyaxon.urls import API_V1
 from runner.tasks.experiment_groups import stop_group_experiments
-from tests.utils import RUNNER_TEST, BaseTest
+from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
 
 class TestExperimentGroupModel(BaseTest):
@@ -29,7 +35,8 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
-        with patch('runner.tasks.experiment_groups.create_group_experiments.apply_async') as mock_fct:
+        with patch(
+            'runner.tasks.experiment_groups.create_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
@@ -37,7 +44,8 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch(
+            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
@@ -51,7 +59,8 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_group_deletion_triggers_experiments_deletion(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch(
+            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert mock_fct.call_count == 1
@@ -67,7 +76,8 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_create_a_max_of_experiments(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch(
+            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -77,7 +87,8 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_group_should_stop_early(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch(
+            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -114,7 +125,8 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_stop_pending_experiments(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch(
+            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -127,7 +139,8 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_stop_all_experiments(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch(
+            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -148,3 +161,77 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.running_experiments.count() == 1
         assert spawner_mock_fct.call_count == 1  # Should be stopped with ths function
         assert experiment_group.stopped_experiments.count() == 2
+
+
+class TestExperimentGroupCommit(BaseViewTest):
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.url = '/{}/{}/{}/repo/upload'.format(API_V1,
+                                                  self.project.user.username,
+                                                  self.project.name)
+
+    @staticmethod
+    def get_upload_file(filename='repo'):
+        file = File(open('./tests/fixtures_static/{}.tar.gz'.format(filename), 'rb'))
+        return SimpleUploadedFile(filename, file.read(),
+                                  content_type='multipart/form-data')
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def create_experiment_group(self):
+        return ExperimentGroupFactory(project=self.project)
+
+    def test_experiment_is_saved_with_commit(self):
+        uploaded_file = self.get_upload_file()
+
+        self.auth_client.put(self.url,
+                             data={'repo': uploaded_file},
+                             content_type=MULTIPART_CONTENT)
+
+        last_commit = self.project.repo.last_commit
+        assert last_commit is not None
+
+        # Check experiment is created with commit
+        experiment_group = self.create_experiment_group()
+
+        assert experiment_group.code_reference.commit == last_commit[0]
+        assert experiment_group.code_reference.repo == self.project.repo
+
+        # Make a new upload with repo_new.tar.gz containing 2 files
+        new_uploaded_file = self.get_upload_file('updated_repo')
+        self.auth_client.put(self.url,
+                             data={'repo': new_uploaded_file},
+                             content_type=MULTIPART_CONTENT)
+
+        new_commit = self.project.repo.last_commit
+        assert new_commit is not None
+        assert new_commit[0] != last_commit[0]
+
+        # Check new experiment is created with new commit
+        new_experiment_group = self.create_experiment_group()
+        assert new_experiment_group.code_reference.commit == new_commit[0]
+        assert new_experiment_group.code_reference.repo == self.project.repo
+
+    @tag(RUNNER_TEST)
+    def test_check_experiment_code_reference(self):
+        uploaded_file = self.get_upload_file()
+
+        self.auth_client.put(self.url,
+                             data={'repo': uploaded_file},
+                             content_type=MULTIPART_CONTENT)
+
+        last_commit = self.project.repo.last_commit
+        assert last_commit is not None
+
+        with patch(
+            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+            experiment_group = ExperimentGroupFactory(project=self.project)
+
+        assert mock_fct.call_count == 1
+        assert experiment_group.experiments.count() == 2
+
+        assert experiment_group.code_reference is not None
+
+        experiment_code_references = {xp.code_reference
+                                      for xp in experiment_group.experiments.all()}
+        assert experiment_code_references == {experiment_group.code_reference}
