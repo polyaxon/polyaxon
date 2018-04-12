@@ -17,7 +17,8 @@ def cluster_analytics():
     notification = uuid.uuid4()
     notification_url = settings.POLYAXON_NOTIFICATION_CLUSTER_ALIVE_URL.format(
         url=settings.CLUSTER_NOTIFICATION_URL,
-        cluster_uuid=cluster.created_at.date(),
+        cluster_uuid=cluster.uuid.hex,
+        create_at=cluster.created_at.date(),
         notification=notification,
         version=settings.CHART_VERSION)
     try:
