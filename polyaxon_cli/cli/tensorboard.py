@@ -15,6 +15,10 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 from polyaxon_schemas.plugins import PluginJobConfig
 
 
+def get_tensorboard_url(user, project_name):
+    return "{}/tensorboard/{}/{}/\n".format(PolyaxonClients().auth.http_host, user, project_name)
+
+
 @click.group()
 @click.option('--project', '-p', type=str)
 @click.pass_context
@@ -46,8 +50,7 @@ def url(ctx):
         sys.exit(1)
 
     if response.has_tensorboard:
-        click.echo("{}/tensorboard/{}/{}/\n".format(
-            PolyaxonClients().auth.http_host, user, project_name))
+        click.echo(get_tensorboard_url(user, project_name))
     else:
         Printer.print_warning(
             'This project `{}` does not have a running tensorboard.'.format(project_name))
@@ -99,18 +102,26 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
 
     user, project_name = get_project_or_local(ctx.obj['project'])
     try:
-        PolyaxonClients().project.start_tensorboard(user, project_name, plugin_job)
+        response = PolyaxonClients().project.start_tensorboard(user, project_name, plugin_job)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not start tensorboard project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    if response.status_code == 200:
+        Printer.print_header("A notebook for this project is already running on:")
+        click.echo(get_tensorboard_url(user, project_name))
+        sys.exit(0)
+
+    if response.status_code != 201:
+        Printer.print_error('Something went wrong, Tensorboard was not created.')
         sys.exit(1)
 
     Printer.print_success('Tensorboard is being deployed for project `{}`'.format(project_name))
     clint.textui.puts("It may take some time before you can access tensorboard.\n")
     clint.textui.puts("Your tensorboard will be available on:\n")
     with clint.textui.indent(4):
-        clint.textui.puts("{}/tensorboard/{}/{}/\n".format(
-            PolyaxonClients().auth.http_host, user, project_name))
+        clint.textui.puts(get_tensorboard_url(user, project_name))
 
 
 @tensorboard.command()
