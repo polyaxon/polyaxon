@@ -73,7 +73,8 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
         Printer.print_success('Experiment was created')
     else:
         click.echo('Creating an experiment group with the following definition:')
-        matrix_space, n_experiments, concurrency, search_method = specification.experiments_def
+        matrix_space, concurrency, search_method = specification.experiments_def
+        n_experiments = specification.settings.random_search.n_experiments
         get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method)
         experiment_group = ExperimentGroupConfig(
             description=description,
