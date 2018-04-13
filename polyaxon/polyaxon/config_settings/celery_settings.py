@@ -12,7 +12,7 @@ RABBITMQ_USER = config.get_string(
 RABBITMQ_PASSWORD = config.get_string(
     'POLYAXON_RABBITMQ_PASSWORD', is_secret=True, is_optional=True)
 if RABBITMQ_USER and RABBITMQ_PASSWORD:
-    CELERY_BROKER_URL = 'amqp://{user}:{password}/{url}'.format(
+    CELERY_BROKER_URL = 'amqp://{user}:{password}@{url}'.format(
         user=RABBITMQ_USER,
         password=RABBITMQ_PASSWORD,
         url=AMQP_URL
