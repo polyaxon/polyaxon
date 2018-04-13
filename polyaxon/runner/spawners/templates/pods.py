@@ -161,8 +161,9 @@ class PodManager(object):
         return client.V1EnvVar(name=key_name, value_from=value)
 
     @staticmethod
-    def get_from_app_secret(key_name, key):
-        secret_key_ref = client.V1SecretKeySelector(name=settings.POLYAXON_K8S_APP_SECRET_NAME,
+    def get_from_app_secret(key_name, key, secret_ref_name=None):
+        secret_ref_name = secret_ref_name or settings.POLYAXON_K8S_APP_SECRET_NAME
+        secret_key_ref = client.V1SecretKeySelector(name=secret_ref_name,
                                                     key=key)
         value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
         return client.V1EnvVar(name=key_name, value_from=value)
@@ -215,7 +216,10 @@ class PodManager(object):
             client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
             client.V1EnvVar(name='POLYAXON_POD_ID', value=job_name),
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
-            self.get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret')
+            self.get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret'),
+            self.get_from_app_secret('POLYAXON_RABBITMQ_PASSWORD',
+                                     'rabbitmq-password',
+                                     settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME)
         ]
         for k, v in self.sidecar_config.items():
             env_vars.append(client.V1EnvVar(name=k, value=v))
