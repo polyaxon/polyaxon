@@ -6,7 +6,20 @@ from polyaxon.utils import config
 
 CELERY_TRACK_STARTED = True
 
-CELERY_BROKER_URL = config.get_string('POLYAXON_AMQP_URL')
+AMQP_URL = config.get_string('POLYAXON_AMQP_URL')
+RABBITMQ_USER = config.get_string(
+    'POLYAXON_RABBITMQ_USER', is_optional=True)
+RABBITMQ_PASSWORD = config.get_string(
+    'POLYAXON_RABBITMQ_PASSWORD', is_secret=True, is_optional=True)
+if RABBITMQ_USER and RABBITMQ_PASSWORD:
+    CELERY_BROKER_URL = 'amqp://{user}:{password}/{url}'.format(
+        user=RABBITMQ_USER,
+        password=RABBITMQ_PASSWORD,
+        url=AMQP_URL
+    )
+else:
+    CELERY_BROKER_URL = 'amqp://{url}'.format(url=AMQP_URL)
+
 INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE')
 
 # CELERY_RESULT_BACKEND = config.get_string('POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL')
