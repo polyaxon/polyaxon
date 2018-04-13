@@ -164,10 +164,10 @@ class ExperimentCreateSerializer(serializers.ModelSerializer):
                               'to a `{}`.\n'
                               'Please use `create group experiment endpoint`.'.format(spec.kind))
 
-    def validate(self, data):
-        if self.initial_data.get('check_specification') and not data.get('config'):
+    def validate(self, attrs):
+        if self.initial_data.get('check_specification') and not attrs.get('config'):
             raise ValidationError('Experiment expects a `config`.')
-        return data
+        return attrs
 
     def create(self, validated_data):
         """Check the params or set the value from the specification."""

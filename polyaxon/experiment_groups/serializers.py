@@ -76,10 +76,10 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
                               'to an independent experiment.\n'
                               'Please use `create experiment endpoint`.')
 
-    def validate(self, data):
-        if self.initial_data.get('check_specification') and not data.get('content'):
+    def validate(self, attrs):
+        if self.initial_data.get('check_specification') and not attrs.get('content'):
             raise ValidationError('Experiment group expects `content`.')
-        return data
+        return attrs
 
     def create(self, validated_data):
         """Check the params or set the value from the specification."""
