@@ -36,6 +36,7 @@
                 }
             },
             "version": 1,
+            "kind": "experiment",
             "project": {
                 "name": "cats-vs-dogs"
             }
@@ -43,7 +44,7 @@
         "original_experiment": null,
         "experiment_status": 6,
         "experiment_metric": 1,
-        "commit": null
+        "code_reference": null
     }
 },
 {
@@ -72,6 +73,7 @@
                 "cmd": "python code.py"
             },
             "version": 1,
+            "kind": "experiment",
             "project": {
                 "name": "cats-vs-dogs"
             }
@@ -79,7 +81,7 @@
         "original_experiment": null,
         "experiment_status": 14,
         "experiment_metric": 2,
-        "commit": null
+        "code_reference": null
     }
 },
 {
@@ -108,6 +110,7 @@
                 "cmd": "python code.py"
             },
             "version": 1,
+            "kind": "experiment",
             "project": {
                 "name": "cats-vs-dogs"
             }
@@ -115,7 +118,7 @@
         "original_experiment": null,
         "experiment_status": 22,
         "experiment_metric": null,
-        "commit": null
+        "code_reference": null
     }
 },
 {
@@ -144,6 +147,7 @@
                 "cmd": "python code.py"
             },
             "version": 1,
+            "kind": "experiment",
             "project": {
                 "name": "cats-vs-dogs"
             }
@@ -151,7 +155,7 @@
         "original_experiment": null,
         "experiment_status": 29,
         "experiment_metric": null,
-        "commit": null
+        "code_reference": null
     }
 },
 {
@@ -223,6 +227,7 @@
                 "lr": 1.023292992280754
             },
             "version": 1,
+            "kind": "experiment",
             "model": {
                 "classifier": {
                     "metrics": [
@@ -399,7 +404,7 @@
         "original_experiment": null,
         "experiment_status": 39,
         "experiment_metric": null,
-        "commit": null
+        "code_reference": null
     }
 },
 {
@@ -471,6 +476,7 @@
                 "lr": 1.2589254117941673
             },
             "version": 1,
+            "kind": "experiment",
             "model": {
                 "classifier": {
                     "metrics": [
@@ -647,7 +653,7 @@
         "original_experiment": null,
         "experiment_status": 37,
         "experiment_metric": null,
-        "commit": null
+        "code_reference": null
     }
 },
 {
