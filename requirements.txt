@@ -15,6 +15,6 @@ Unipath==1.1
 uWSGI==2.0.15
 websockets==3.4
 
-polyaxon-schemas==0.0.6
+-e git+https://github.com/gzcf/polyaxon-schemas.git@4777c7daa2cfd12ed3f9b599b0791943af3d07d8#egg=polyaxon-schemas==0.0.6
 polyaxon-k8s==0.0.6
 polyaxon-gpustat==0.0.6
