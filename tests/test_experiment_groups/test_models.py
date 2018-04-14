@@ -44,9 +44,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
@@ -60,9 +58,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_group_deletion_triggers_experiments_deletion(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert mock_fct.call_count == 1
@@ -78,9 +74,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_create_a_max_of_experiments(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -90,9 +84,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_group_should_stop_early(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -129,9 +121,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_stop_pending_experiments(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -144,9 +134,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_stop_all_experiments(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -229,8 +217,7 @@ class TestExperimentGroupCommit(BaseViewTest):
         last_commit = self.project.repo.last_commit
         assert last_commit is not None
 
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(project=self.project)
 
         assert mock_fct.call_count == 1

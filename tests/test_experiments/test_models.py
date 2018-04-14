@@ -47,7 +47,7 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
         with patch('runner.tasks.experiments.start_experiment.delay') as mock_fct:
@@ -66,10 +66,9 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
-            with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
-                with patch.object(Experiment, 'set_status') as mock_fct2:
-                    ExperimentFactory()
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            with patch.object(Experiment, 'set_status') as mock_fct2:
+                ExperimentFactory()
 
         assert mock_fct.call_count == 1
         assert mock_fct2.call_count == 1

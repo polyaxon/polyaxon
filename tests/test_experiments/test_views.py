@@ -289,8 +289,10 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        with patch('runner.tasks.experiment_groups.start_group_experiments.retry') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.retry') as mock_fct:
             self.experiment_group = ExperimentGroupFactory(content=content)
+
+        assert mock_fct.call_count == 1
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
                                                              self.experiment_group.project.user,

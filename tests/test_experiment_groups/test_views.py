@@ -241,8 +241,10 @@ class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             self.object = self.factory_class(project=project)
+
+        assert mock_fct.call_count == 1
         self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
                                                  project.user.username,
                                                  project.name,
@@ -294,8 +296,10 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             self.object = self.factory_class(project=project)
+
+        assert mock_fct.call_count == 1
         # Add a running experiment
         experiment = ExperimentFactory(experiment_group=self.object)
         ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
