@@ -5,8 +5,10 @@ from runner.hp_search import base
 
 
 def create(experiment_group):
-    base.create_group_experiments(experiment_group=experiment_group)
-
+    experiments = base.create_group_experiments(experiment_group=experiment_group)
+    experiment_group.iteration_manager.create_iteration(
+        experiment_group=experiment_group,
+        experiment_ids=[xp.id for xp in experiments])
     hp_hyperband_start.apply_async((experiment_group.id,), countdown=1)
 
 
@@ -39,13 +41,18 @@ def hp_hyperband_iterate(experiment_group_id):
     if not experiment_group:
         return
 
-    iteration_config = experiment_group.get_iteration_config()
+    iteration_config = experiment_group.iteration_config
+    iteration_manager = experiment_group.iteration_manager
     search_manager = experiment_group.search_manager
 
-    if search_manager.should_reschedule(iteration=iteration_config.iteration):
+    iteration_manager.update_iteration()
+
+    if search_manager.should_reschedule(iteration=iteration_config.iteration,
+                                        bracket_iteration=iteration_config.bracket_iteration):
         hp_hyperband_create.delay(experiment_group_id=experiment_group_id)
         return
 
     if search_manager.should_reduce_configs(iteration=iteration_config.iteration,
                                             bracket_iteration=iteration_config.bracket_iteration):
-        return
+        iteration_manager.reduce_configs(experiment_group=experiment_group)
+        hp_hyperband_start.delay(experiment_group_id=experiment_group_id)
