@@ -8,8 +8,9 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
+from polyaxon_schemas.settings import SettingsConfig
 
-from experiment_groups import search_managers
+from experiment_groups import search_managers, iteration_managers, schemas
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
@@ -74,6 +75,10 @@ class ExperimentGroup(DiffModel, DescribableModel):
     @property
     def unique_name(self):
         return '{}.{}'.format(self.project.unique_name, self.sequence)
+
+    @cached_property
+    def params_config(self):
+        return SettingsConfig.from_dict(self.params)
 
     @cached_property
     def specification(self):
@@ -150,17 +155,33 @@ class ExperimentGroup(DiffModel, DescribableModel):
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
 
+    def get_ordered_experiments_by_metric(self, experiment_ids, metric, optimization):
+        metric_order_by = '{}experiment_metric__values__{}'.format(
+            metric,
+            '-' if Optimization.maximize(optimization) else '')
+        return self.experiments.filter(id__in=experiment_ids).order_by(metric_order_by)
+
+    def get_experiments_metrics(self, experiment_ids, metric):
+        return self.experiments.filter(id__in=experiment_ids).values_list(
+            'id',
+            'experiment_metric__values__{}'.format(metric))
+
     @cached_property
     def search_manager(self):
         return search_managers.get_search_algorithm_manager(specification=self.specification)
 
-    def get_iteration_config(self):
-        return search_managers.get_iteration_config(
+    @cached_property
+    def iteration_manager(self):
+        return iteration_managers.get_search_iteration_manager(experiment_group=self)
+
+    @property
+    def iteration_config(self):
+        return schemas.get_iteration_config(
             search_algorithm=self.search_algorithm,
             iteration=self.iteration_data)
 
     def get_suggestions(self):
-        iteration_config = self.get_iteration_config()
+        iteration_config = self.iteration_config
         if iteration_config:
             return self.search_manager.get_suggestions(iteration=iteration_config.iteration)
         return self.search_manager.get_suggestions()
