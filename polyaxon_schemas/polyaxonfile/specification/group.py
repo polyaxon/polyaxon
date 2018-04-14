@@ -10,7 +10,6 @@ from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.settings import SettingsConfig
-from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class GroupSpecification(BaseSpecification):
