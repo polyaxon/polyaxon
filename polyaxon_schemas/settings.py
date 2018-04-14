@@ -53,7 +53,7 @@ class EarlyStoppingMetricConfig(BaseConfig):
 
 
 class RandomSearchSchema(Schema):
-    n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
+    n_experiments = fields.Int(validate=validate.Range(min=1))
 
     class Meta:
         ordered = True
@@ -75,29 +75,83 @@ class RandomSearchConfig(BaseConfig):
         self.n_experiments = n_experiments
 
 
-class HyperBandSchema(Schema):
-    max_iter = fields.Int(allow_none=True, validate=validate.Range(min=1))
-    eta = fields.Int(allow_none=True, validate=validate.Range(min=0))
+class GridSearchSchema(Schema):
+    n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
 
     class Meta:
         ordered = True
 
     @post_load
     def make(self, data):
-        return HyperBandConfig(**data)
+        return GridSearchConfig(**data)
 
     @post_dump
     def unmake(self, data):
-        return HyperBandConfig.remove_reduced_attrs(data)
+        return GridSearchConfig.remove_reduced_attrs(data)
 
 
-class HyperBandConfig(BaseConfig):
-    SCHEMA = HyperBandSchema
+class GridSearchConfig(BaseConfig):
+    SCHEMA = GridSearchSchema
+    IDENTIFIER = 'grid_search'
+
+    def __init__(self, n_experiments=None):
+        self.n_experiments = n_experiments
+
+
+class SearchMetricSchema(Schema):
+    name = fields.Str()
+    optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return SearchMetricConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return SearchMetricConfig.remove_reduced_attrs(data)
+
+
+class SearchMetricConfig(BaseConfig):
+    SCHEMA = SearchMetricSchema
+    IDENTIFIER = 'search_metric'
+
+    def __init__(self,
+                 name,
+                 optimization=Optimization.MAXIMIZE):
+        self.name = name
+        self.optimization = optimization
+
+
+class HyperbandSchema(Schema):
+    max_iter = fields.Int(validate=validate.Range(min=1))
+    eta = fields.Float(validate=validate.Range(min=0))
+    resource = fields.Str()
+    metric = fields.Nested(SearchMetricSchema)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return HyperbandConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return HyperbandConfig.remove_reduced_attrs(data)
+
+
+class HyperbandConfig(BaseConfig):
+    SCHEMA = HyperbandSchema
     IDENTIFIER = 'hyperband'
 
-    def __init__(self, max_iter, eta=3):
+    def __init__(self, max_iter, eta, resource, metric):
         self.max_iter = max_iter
         self.eta = eta
+        self.resource = resource
+        self.metric = metric
 
 
 def validate_search_algorithm(algorithms):
@@ -121,8 +175,9 @@ class SettingsSchema(Schema):
     seed = fields.Int(allow_none=True)
     matrix = fields.Dict(allow_none=True)
     concurrent_experiments = fields.Int(allow_none=True)
+    grid_search = fields.Nested(GridSearchSchema, allow_none=None)
     random_search = fields.Nested(RandomSearchSchema, allow_none=None)
-    hyperband = fields.Nested(HyperBandSchema, allow_none=None)
+    hyperband = fields.Nested(HyperbandSchema, allow_none=None)
     early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
 
     class Meta:
@@ -138,10 +193,9 @@ class SettingsSchema(Schema):
 
     @validates_schema
     def validate_quantity(self, data):
-        validate_search_algorithm([data.get('random_search'),
-                                   data.get('hyperband'),
-                                   data.get('pytorch'),
-                                   data.get('horovod')])
+        validate_search_algorithm([data.get('grid_search'),
+                                   data.get('random_search'),
+                                   data.get('hyperband')])
 
     @validates_schema
     def validate_matrix(self, data):
@@ -158,6 +212,7 @@ class SettingsConfig(BaseConfig):
                  seed=None,
                  matrix=None,
                  concurrent_experiments=1,
+                 grid_search=None,
                  random_search=None,
                  hyperband=None,
                  early_stopping=None):
@@ -166,7 +221,8 @@ class SettingsConfig(BaseConfig):
         matrix = validate_matrix(matrix)
         self.matrix = matrix
         self.concurrent_experiments = concurrent_experiments
-        validate_search_algorithm([random_search, hyperband])
+        validate_search_algorithm([grid_search, random_search, hyperband])
+        self.grid_search = grid_search
         self.random_search = random_search
         self.hyperband = hyperband
         self.early_stopping = early_stopping

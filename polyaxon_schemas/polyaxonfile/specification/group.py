@@ -83,6 +83,8 @@ class GroupSpecification(BaseSpecification):
             return SearchAlgorithms.RANDOM
         if self.settings.hyperband:
             return SearchAlgorithms.HYPERBAND
+        if self.settings.grid_search:
+            return SearchAlgorithms.GRID
         # Default value
         return SearchAlgorithms.GRID
 
