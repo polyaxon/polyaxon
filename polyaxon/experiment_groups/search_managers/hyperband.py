@@ -1,15 +1,15 @@
 import math
 
-from experiment_groups.search_algorithms.base import BaseSearchAlgorithm
-from experiment_groups.search_algorithms.utils import get_random_suggestions
+from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
+from experiment_groups.search_managers.utils import get_random_suggestions
 
 
 def get_best_config():
     pass
 
 
-class HyperBandSearch(BaseSearchAlgorithm):
-    """Hyperband search algorithm for hyperparameter optimization.
+class HyperBandSearchManager(BaseSearchAlgorithmManager):
+    """Hyperband search algorithm manager for hyperparameter optimization.
 
     The algorithm runs in the following way:
 
@@ -49,7 +49,7 @@ class HyperBandSearch(BaseSearchAlgorithm):
     """
 
     def __init__(self, specification):
-        super(HyperBandSearch, self).__init__(specification=specification)
+        super(HyperBandSearchManager, self).__init__(specification=specification)
         # Maximum iterations per configuration
         self.max_iter = self.specification.hp.hyperband.max_iter
         # Defines configuration downsampling/elimination rate (default = 3)
@@ -86,15 +86,17 @@ class HyperBandSearch(BaseSearchAlgorithm):
         return n_resources * self.eta ** bracket_iteration
 
     def get_suggestions(self, iteration=None):
-        """Return a list of suggestions/arms based on hyperband.
-
-        Params:
-            matrix: `dict` representing the {hyperparam: hyperparam matrix config}.
-            n_suggestions: number of suggestions to make.
-            n_resumes: number of times the group asked for a suggestion.
-        """
+        """Return a list of suggestions/arms based on hyperband."""
         bracket = self.get_bracket(iteration=iteration)
         n_configs = self.get_number_of_configs(bracket=bracket)
         # n_resources = self.get_resources(bracket=bracket)
         return get_random_suggestions(matrix=self.specification.matrix,
                                       n_suggestions=n_configs)
+
+    def should_reschedule(self, iteration):
+        """Return a boolean to indicate if we need to reschedule another iteration."""
+        pass
+
+    def should_reduce_configs(self, iteration, bracket_iteration):
+        """Return a boolean to indicate if we need to reschedule another bracket iteration."""
+        pass

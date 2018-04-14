@@ -1,4 +1,4 @@
-class BaseSearchAlgorithm(object):
+class BaseSearchAlgorithmManager(object):
     NAME = None
 
     def __init__(self, specification):

@@ -1,10 +1,10 @@
 import itertools
 
-from experiment_groups.search_algorithms.base import BaseSearchAlgorithm
+from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 
 
-class GridSearch(BaseSearchAlgorithm):
-    """Grid search algorithm for hyperparameter optimization."""
+class GridSearchManager(BaseSearchAlgorithmManager):
+    """Grid search algorithm manager for hyperparameter optimization."""
     def get_suggestions(self, iteration=None):
         """Return a list of suggestions based on grid search.
 
