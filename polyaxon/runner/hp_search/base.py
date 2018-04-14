@@ -15,14 +15,18 @@ def create_group_experiments(experiment_group):
         logger.warning('Search algorithm was not found `%s`', specification.search_algorithm)
         return
 
+    experiments = []
     for suggestion in suggestions:
         # We need to check if we should create or restart
-        Experiment.objects.create(
+        experiment = Experiment.objects.create(
             project_id=experiment_group.project_id,
             user_id=experiment_group.user_id,
             experiment_group=experiment_group,
             config=specification.get_experiment_spec(matrix_declaration=suggestion).parsed_data,
             code_reference_id=experiment_group.code_reference_id)
+        experiments.append(experiment)
+
+    return experiments
 
 
 def start_group_experiments(experiment_group):
