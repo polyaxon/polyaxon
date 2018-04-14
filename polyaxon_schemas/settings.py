@@ -130,6 +130,7 @@ class HyperbandSchema(Schema):
     eta = fields.Float(validate=validate.Range(min=0))
     resource = fields.Str()
     metric = fields.Nested(SearchMetricSchema)
+    resume = fields.Boolean(allow_none=True)
 
     class Meta:
         ordered = True
@@ -147,11 +148,12 @@ class HyperbandConfig(BaseConfig):
     SCHEMA = HyperbandSchema
     IDENTIFIER = 'hyperband'
 
-    def __init__(self, max_iter, eta, resource, metric):
+    def __init__(self, max_iter, eta, resource, metric, resume=False):
         self.max_iter = max_iter
         self.eta = eta
         self.resource = resource
         self.metric = metric
+        self.resume = resume
 
 
 def validate_search_algorithm(algorithms):

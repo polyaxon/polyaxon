@@ -81,6 +81,7 @@ class TestSettingConfigs(TestCase):
             'max_iter': 10,
             'eta': 3,
             'resource': 'steps',
+            'resume': False,
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict()
         }
         config = HyperbandConfig.from_dict(config_dict)
@@ -133,6 +134,7 @@ class TestSettingConfigs(TestCase):
             'max_iter': 10,
             'eta': 3,
             'resource': 'steps',
+            'resume': False,
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict()
         }
         with self.assertRaises(ValidationError):
