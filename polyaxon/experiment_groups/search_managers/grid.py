@@ -13,7 +13,6 @@ class GridSearchManager(BaseSearchAlgorithmManager):
             n_suggestions: number of suggestions to make.
         """
         matrix = self.specification.matrix
-        n_suggestions = self.specification.matrix_space
 
         suggestions = []
         keys = list(matrix.keys())
@@ -21,6 +20,8 @@ class GridSearchManager(BaseSearchAlgorithmManager):
         for v in itertools.product(*values):
             suggestions.append(dict(zip(keys, v)))
 
-        if n_suggestions:
-            return suggestions[:n_suggestions]
+        if self.specification.settings.grid_search:
+            n_suggestions = self.specification.settings.grid_search.n_experiments
+            if n_suggestions:
+                return suggestions[:n_suggestions]
         return suggestions
