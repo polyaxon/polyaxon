@@ -54,10 +54,6 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         blank=True,
         null=True,
         help_text='The parameters used for this experiment.')
-    # signature = models.UUIDField(
-    #     editable=False,
-    #     null=False,
-    #     blank=True)
     config = JSONField(
         null=True,
         blank=True,
@@ -187,6 +183,37 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     def set_status(self, status, message=None, **kwargs):
         ExperimentStatus.objects.create(experiment=self, status=status, message=message)
+
+    def resume(self, config=None, declarations=None, message=None):
+        updated = False
+        if config:
+            self.config = config
+            updated = True
+        if declarations:
+            self.declarations = declarations
+            updated = True
+
+        if updated:
+            self.save()
+
+        self.set_status(status=ExperimentLifeCycle.RESUMING, message=message)
+
+    def restart(self,
+                user=None,
+                description=None,
+                config=None,
+                declarations=None,
+                code_reference=None,
+                experiment_group=None):
+        return Experiment.objects.create(
+            project=self.project,
+            user=user or self.user,
+            experiment_group=experiment_group,
+            description=description or self.description,
+            config=config or self.config,
+            declarations=declarations or self.declarations,
+            original_experiment=self,
+            code_reference=code_reference or self.code_reference)
 
 
 class ExperimentStatus(StatusModel):

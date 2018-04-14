@@ -104,14 +104,7 @@ class ExperimentRestartView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        new_obj = Experiment.objects.create(
-            project=obj.project,
-            user=self.request.user,
-            description=obj.description,
-            config=obj.config,
-            original_experiment=obj,
-            code_reference=obj.code_reference
-        )
+        new_obj = obj.restart(user=self.request.user)
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
