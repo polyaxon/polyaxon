@@ -8,7 +8,7 @@ def get_best_config():
     pass
 
 
-class HyperBandSearchManager(BaseSearchAlgorithmManager):
+class HyperbandSearchManager(BaseSearchAlgorithmManager):
     """Hyperband search algorithm manager for hyperparameter optimization.
 
     The algorithm runs in the following way:
@@ -49,7 +49,7 @@ class HyperBandSearchManager(BaseSearchAlgorithmManager):
     """
 
     def __init__(self, specification):
-        super(HyperBandSearchManager, self).__init__(specification=specification)
+        super(HyperbandSearchManager, self).__init__(specification=specification)
         # Maximum iterations per configuration
         self.max_iter = self.specification.hp.hyperband.max_iter
         # Defines configuration downsampling/elimination rate (default = 3)
@@ -73,17 +73,32 @@ class HyperBandSearchManager(BaseSearchAlgorithmManager):
         return self.max_iter * (self.eta ** (-bracket))
 
     def get_bracket(self, iteration):
-        """This defined the bracket `s` in outerloop `for s in reversed(range(self.s_max + 1))`."""
+        """This defines the bracket `s` in outerloop `for s in reversed(range(self.s_max))`."""
         return self.s_max - iteration
 
     def get_n_config_to_keep(self, n_suggestions, bracket_iteration):
-        """Number of configs to keep and resume."""
+        """Return the number of configs to keep and resume."""
         n_configs = n_suggestions * self.eta ** (-bracket_iteration)
         return int(n_configs / self.eta)
 
     def get_n_iteration(self, n_resources, bracket_iteration):
-        """Number of iterations to run for this barcket_i"""
+        """Returb the number of iterations to run for this barcket_i"""
         return n_resources * self.eta ** bracket_iteration
+
+    def get_iteration_n_config_to_keep(self, iteration, bracket_iteration):
+        """Return the number of configs to keep for an iteration and iteration bracket.
+
+        This is just util function around `get_n_config_to_keep`
+        """
+        bracket = self.get_bracket(iteration=iteration)
+        bracket_iteration += 1
+        if bracket_iteration == bracket:
+            # End of loop `for bracket_iteration in range(bracket + 1):`
+            return False
+
+        n_configs = self.get_number_of_configs(bracket=bracket)
+        return self.get_n_config_to_keep(
+            n_suggestions=n_configs, bracket_iteration=bracket_iteration)
 
     def get_suggestions(self, iteration=None):
         """Return a list of suggestions/arms based on hyperband."""
@@ -93,10 +108,17 @@ class HyperBandSearchManager(BaseSearchAlgorithmManager):
         return get_random_suggestions(matrix=self.specification.matrix,
                                       n_suggestions=n_configs)
 
-    def should_reschedule(self, iteration):
+    def should_reschedule(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
-        pass
+        if bracket_iteration >= 0:
+            # The bracket is still processing
+            return False
+
+        # We can only reschedule if we can create a new bracket
+        return self.get_bracket(iteration=iteration + 1) >= 0
 
     def should_reduce_configs(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another bracket iteration."""
-        pass
+        n_configs_to_keep = self.get_iteration_n_config_to_keep(
+            iteration=iteration, bracket_iteration=bracket_iteration)
+        return n_configs_to_keep > 0
