@@ -1,10 +1,10 @@
 class BaseStatuses(object):
-    VALUES = []
+    VALUES = set([])
     CHOICES = ()
-    STARTING_STATUS = []
-    DONE_STATUS = []
-    RUNNING_STATUS = []
-    FAILED_STATUS = []
+    STARTING_STATUS = set([])
+    DONE_STATUS = set([])
+    RUNNING_STATUS = set([])
+    FAILED_STATUS = set([])
     # Defines the transition matrix: {desired_status: set(possible_statuses)}
     TRANSITION_MATRIX = {}
 

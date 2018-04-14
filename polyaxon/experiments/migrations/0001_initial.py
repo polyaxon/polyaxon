@@ -96,7 +96,7 @@ class Migration(migrations.Migration):
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
-                ('status', models.CharField(blank=True, choices=[('Created', 'Created'), ('Building', 'Building'), ('Scheduled', 'Scheduled'), ('Starting', 'Starting'), ('Running', 'Running'), ('Succeeded', 'Succeeded'), ('Failed', 'Failed'), ('Stopped', 'Stopped'), ('UNKNOWN', 'UNKNOWN')], default='Created', max_length=64, null=True)),
+                ('status', models.CharField(blank=True, choices=[('Created', 'Created'), ('Resuming', 'Resuming'), ('Building', 'Building'), ('Scheduled', 'Scheduled'), ('Starting', 'Starting'), ('Running', 'Running'), ('Succeeded', 'Succeeded'), ('Failed', 'Failed'),('Stopped', 'Stopped'), ('UNKNOWN', 'UNKNOWN')], default='Created', max_length=64, null=True)),
                 ('experiment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='experiments.Experiment')),
             ],
             options={

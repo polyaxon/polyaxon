@@ -1,7 +1,6 @@
-from polyaxon_schemas.utils import Optimization
-
 from experiment_groups.iteration_managers.base import BaseIterationManger
 from experiment_groups.schemas import HyperbandIterationConfig
+from polyaxon_schemas.utils import Optimization
 
 
 class HyperbandIterationManager(BaseIterationManger):
@@ -36,7 +35,7 @@ class HyperbandIterationManager(BaseIterationManger):
         search_manager = self.experiment_group.search_manager
 
         # Get the number of experiments to keep
-        n_configs_to_keep = search_manager.get_iteration_n_config_to_keep(
+        n_configs_to_keep = search_manager.get_n_config_to_keep_for_iteration(
             iteration=iteration_config.iteration,
             bracket_iteration=iteration_config.bracket_iteration)
 
@@ -54,9 +53,26 @@ class HyperbandIterationManager(BaseIterationManger):
     def reduce_configs(self):
         """Reduce the experiments to restart."""
         experiment_ids = self.get_reduced_configs()
+        experiments = self.experiment_group.experiments.filter(id__in=experiment_ids)
+        iteration_config = self.experiment_group.iteration_config
+        status_message = 'Hyperband iteration: {}, bracket iteration: {}'.format(
+            iteration_config.iteration,
+            iteration_config.bracket_iteration
+        )
+        resource_value = self.experiment_group.search_manager.get_resources_for_iteration(
+            iteration=iteration_config.iteration)
+        resource_name = self.experiment_group.params_config.heyperband.resource
 
         # Check if we need to resume or restart the experiments
         if self.experiment_group.params_config.heyperband.resume:
-            pass
+            for experiment in experiments:
+                declarations = experiment.declarations
+                declarations[resource_name] = resource_value
+                experiment.resume(declarations=declarations, message=status_message)
         else:
-            pass
+            for experiment in experiments:
+                declarations = experiment.declarations
+                declarations[resource_name] = resource_value
+                experiment.restart(
+                    experiment_group=self.experiment_group,
+                    declarations=declarations)

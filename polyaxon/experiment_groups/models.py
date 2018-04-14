@@ -8,13 +8,13 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
-from polyaxon_schemas.settings import SettingsConfig
 
-from experiment_groups import search_managers, iteration_managers, schemas
+from experiment_groups import iteration_managers, schemas, search_managers
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
+from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
 
@@ -121,7 +121,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     @property
     def pending_experiments(self):
         return self.experiments.filter(
-            experiment_status__status=ExperimentLifeCycle.CREATED).distinct()
+            experiment_status__status__in=ExperimentLifeCycle.PENDING_STATUS).distinct()
 
     @property
     def running_experiments(self):

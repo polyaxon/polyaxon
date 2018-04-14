@@ -85,7 +85,11 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
         """Returb the number of iterations to run for this barcket_i"""
         return n_resources * self.eta ** bracket_iteration
 
-    def get_iteration_n_config_to_keep(self, iteration, bracket_iteration):
+    def get_resources_for_iteration(self, iteration):
+        bracket = self.get_bracket(iteration=iteration)
+        return self.max_iter * (self.eta ** (-bracket))
+
+    def get_n_config_to_keep_for_iteration(self, iteration, bracket_iteration):
         """Return the number of configs to keep for an iteration and iteration bracket.
 
         This is just util function around `get_n_config_to_keep`
@@ -119,6 +123,6 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
 
     def should_reduce_configs(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another bracket iteration."""
-        n_configs_to_keep = self.get_iteration_n_config_to_keep(
+        n_configs_to_keep = self.get_n_config_to_keep_for_iteration(
             iteration=iteration, bracket_iteration=bracket_iteration)
         return n_configs_to_keep > 0
