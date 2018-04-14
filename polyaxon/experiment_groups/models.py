@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
-from experiment_groups import search_algorithms
+from experiment_groups import search_managers
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
@@ -44,7 +44,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_group_spec_content])
     params = JSONField(
-        help_text='The experiment group hyper params congig.',
+        help_text='The experiment group hyper params config.',
         null=True,
         blank=True,
         validators=[validate_group_params_config])
@@ -91,9 +91,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     def search_algorithm(self):
         if not self.specification:
             return None
-        if self.specification.settings:
-            return self.specification.settings.search_algorithm
-        return None
+        return self.specification.search_algorithm
 
     @property
     def scheduled_experiments(self):
@@ -132,6 +130,14 @@ class ExperimentGroup(DiffModel, DescribableModel):
         """
         return self.concurrency - self.running_experiments.count()
 
+    @property
+    def iteration(self):
+        return self.iterations.last()
+
+    @property
+    def iteration_data(self):
+        return self.iteration.data if self.iteration else None
+
     def should_stop_early(self):
         filters = []
         for early_stopping_metric in self.specification.early_stopping:
@@ -144,9 +150,30 @@ class ExperimentGroup(DiffModel, DescribableModel):
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
 
-    def should_reschedule(self):
-        return False
+    @cached_property
+    def search_manager(self):
+        return search_managers.get_search_algorithm_manager(specification=self.specification)
 
-    def get_suggestions(self, iteration=0):
-        search_algorithm = search_algorithms.get_search_algorithm(specification=self.specification)
-        return search_algorithm.get_suggestions(iteration=iteration)
+    def get_iteration_config(self):
+        return search_managers.get_iteration_config(
+            search_algorithm=self.search_algorithm,
+            iteration=self.iteration_data)
+
+    def get_suggestions(self):
+        iteration_config = self.get_iteration_config()
+        if iteration_config:
+            return self.search_manager.get_suggestions(iteration=iteration_config.iteration)
+        return self.search_manager.get_suggestions()
+
+
+class ExperimentGroupIteration(DiffModel):
+    experiment_group = models.ForeignKey(
+        ExperimentGroup,
+        on_delete=models.CASCADE,
+        related_name='iterations',
+        help_text='The experiment group.')
+    data = JSONField(
+        help_text='The experiment group iteration meta data.')
+
+    class Meta:
+        ordering = ['updated_at']
