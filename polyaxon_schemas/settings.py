@@ -14,9 +14,11 @@ from marshmallow import (
 )
 
 from polyaxon_schemas.base import BaseConfig
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.logging import LoggingConfig, LoggingSchema
 from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.utils import EarlyStoppingPolicy, Optimization
+from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.utils import EarlyStoppingPolicy, Optimization, SearchAlgorithms
 
 
 class EarlyStoppingMetricSchema(Schema):
@@ -251,3 +253,16 @@ class SettingsConfig(BaseConfig):
             _data['early_stopping'] = early_stopping
 
         return _data or None
+
+    @cached_property
+    def search_algorithm(self):
+        if not self.matrix:
+            raise PolyaxonConfigurationError('a search algorithm requires a matrix definition.')
+        if self.random_search:
+            return SearchAlgorithms.RANDOM
+        if self.hyperband:
+            return SearchAlgorithms.HYPERBAND
+        if self.grid_search:
+            return SearchAlgorithms.GRID
+        # Default value
+        return SearchAlgorithms.GRID

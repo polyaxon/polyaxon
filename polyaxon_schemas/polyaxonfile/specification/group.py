@@ -77,16 +77,7 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def search_algorithm(self):
-        if not self.matrix:
-            raise PolyaxonConfigurationError('a search algorithm requires a matrix definition.')
-        if self.settings.random_search:
-            return SearchAlgorithms.RANDOM
-        if self.settings.hyperband:
-            return SearchAlgorithms.HYPERBAND
-        if self.settings.grid_search:
-            return SearchAlgorithms.GRID
-        # Default value
-        return SearchAlgorithms.GRID
+        return self.settings.search_algorithm
 
     @cached_property
     def concurrent_experiments(self):
