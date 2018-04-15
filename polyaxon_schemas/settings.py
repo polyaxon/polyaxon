@@ -181,7 +181,7 @@ class SettingsSchema(Schema):
     logging = fields.Nested(LoggingSchema, allow_none=True)
     seed = fields.Int(allow_none=True)
     matrix = fields.Dict(allow_none=True)
-    concurrent_experiments = fields.Int(allow_none=True)
+    concurrency = fields.Int(allow_none=True)
     grid_search = fields.Nested(GridSearchSchema, allow_none=None)
     random_search = fields.Nested(RandomSearchSchema, allow_none=None)
     hyperband = fields.Nested(HyperbandSchema, allow_none=None)
@@ -221,7 +221,7 @@ class SettingsConfig(BaseConfig):
                  logging=LoggingConfig(),
                  seed=None,
                  matrix=None,
-                 concurrent_experiments=1,
+                 concurrency=1,
                  grid_search=None,
                  random_search=None,
                  hyperband=None,
@@ -230,7 +230,7 @@ class SettingsConfig(BaseConfig):
         self.seed = seed
         matrix = validate_matrix(matrix)
         self.matrix = matrix
-        self.concurrent_experiments = concurrent_experiments
+        self.concurrency = concurrency
         validate_search_algorithm(
             algorithms=[grid_search, random_search, hyperband],
             matrix=matrix)

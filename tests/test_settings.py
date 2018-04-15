@@ -109,7 +109,7 @@ class TestSettingConfigs(TestCase):
     def test_settings_random_search_config(self):
         config_dict = {
             'logging': LoggingConfig().to_dict(),
-            'concurrent_experiments': 2,
+            'concurrency': 2,
         }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

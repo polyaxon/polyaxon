@@ -7,7 +7,7 @@ project:
   name: project1
 
 settings:
-  concurrent_experiments: 2
+  concurrency: 2
   random_search:
     n_experiments: 5
   early_stopping:

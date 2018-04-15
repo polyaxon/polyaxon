@@ -286,7 +286,7 @@ class TestPolyaxonfile(TestCase):
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 10
         assert isinstance(spec.settings, SettingsConfig)
-        assert spec.settings.concurrent_experiments == 2
+        assert spec.settings.concurrency == 2
         assert spec.search_algorithm == SearchAlgorithms.GRID
         assert spec.settings.early_stopping is None
         assert spec.early_stopping == []
@@ -327,7 +327,7 @@ class TestPolyaxonfile(TestCase):
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 10
         assert isinstance(spec.settings, SettingsConfig)
-        assert spec.settings.concurrent_experiments == 2
+        assert spec.settings.concurrency == 2
         assert spec.settings.random_search.n_experiments == 5
         assert spec.early_stopping == spec.settings.early_stopping
         assert len(spec.settings.early_stopping) == 1
@@ -371,7 +371,7 @@ class TestPolyaxonfile(TestCase):
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 10
         assert isinstance(spec.settings, SettingsConfig)
-        assert spec.settings.concurrent_experiments == 2
+        assert spec.settings.concurrency == 2
         assert spec.search_algorithm == SearchAlgorithms.RANDOM
         assert spec.settings.random_search.n_experiments == 300
         assert spec.early_stopping == []
