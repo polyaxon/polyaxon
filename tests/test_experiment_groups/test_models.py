@@ -4,7 +4,12 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
+from polyaxon_schemas.matrix import MatrixConfig
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
+from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.utils import SearchAlgorithms
 
+from experiment_groups.models import ExperimentGroup
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -31,6 +36,57 @@ class TestExperimentGroupModel(BaseTest):
         assert delete_path.call_count == 2  # outputs + logs
         experiment_group.delete()
         assert delete_path.call_count == 2 + 2  # outputs + logs
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_experiment_group_without_spec_and_pramas(self):
+        # Create group without params and spec works
+        project = ProjectFactory()
+        experiment_group = ExperimentGroup.objects.create(
+            user=project.user,
+            project=project)
+        assert experiment_group.specification is None
+        assert experiment_group.params is None
+        assert experiment_group.params_config is None
+        assert experiment_group.concurrency is None
+        assert experiment_group.search_algorithm is None
+        assert experiment_group.early_stopping is None
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_experiment_group_with_spec_create_params(self):
+        # Create group with spec creates params
+        project = ProjectFactory()
+        experiment_group = ExperimentGroup.objects.create(
+            user=project.user,
+            project=project,
+            content=experiment_group_spec_content_early_stopping)
+        assert isinstance(experiment_group.specification, GroupSpecification)
+        assert experiment_group.params == experiment_group.specification.settings.to_dict()
+        assert isinstance(experiment_group.params_config, SettingsConfig)
+        assert experiment_group.concurrency == 2
+        assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
+        assert len(experiment_group.early_stopping) == 2
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_experiment_group_with_params(self):
+        # Create group with spec creates params
+        project = ProjectFactory()
+        params = {
+            'concurrent_experiments': 2,
+            'random_search': {'n_experiments': 10},
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group = ExperimentGroup.objects.create(
+            user=project.user,
+            project=project,
+            params=params)
+
+        assert experiment_group.specification is None
+        assert experiment_group.params == params
+        assert isinstance(experiment_group.params_config, SettingsConfig)
+        assert experiment_group.concurrency == 2
+        assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
+        assert experiment_group.params_config.random_search.n_experiments == 10
+        assert isinstance(experiment_group.params_config.matrix['lr'], MatrixConfig)
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
