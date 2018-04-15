@@ -4,9 +4,8 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import six
 
-from numpy.random.mtrand import normal  # noqa
-
 from marshmallow import Schema, fields, post_dump, post_load, validates_schema
+from marshmallow.exceptions import ValidationError
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.utils import (
@@ -25,11 +24,14 @@ from polyaxon_schemas.utils import (
     Uniform,
     lognormal,
     loguniform,
+    normal,
     pvalues,
     qlognormal,
     qloguniform,
     qnormal,
-    quniform
+    quniform,
+    uniform,
+    validate_pvalues
 )
 
 # pylint:disable=redefined-outer-name
@@ -38,7 +40,7 @@ from polyaxon_schemas.utils import (
 def validate_matrix(values):
     v = sum(map(lambda x: 1 if x else 0, values))
     if v == 0 or v > 1:
-        raise ValueError("Matrix element is not valid, one and only one option is required.")
+        raise ValidationError("Matrix element is not valid, one and only one option is required.")
 
 
 class MatrixSchema(Schema):
@@ -69,6 +71,11 @@ class MatrixSchema(Schema):
     @post_dump
     def unmake(self, data):
         return MatrixConfig.remove_reduced_attrs(data)
+
+    @validates_schema
+    def validate_pvalues(self, data):
+        if data.get('pvalues'):
+            validate_pvalues(values=[v[1] for v in data['pvalues'] if v])
 
     @validates_schema
     def validate_matrix(self, data):
@@ -104,7 +111,7 @@ class MatrixConfig(BaseConfig):
         'linspace': np.linspace,
         'logspace': np.logspace,
         'geomspace': np.geomspace,
-        'uniform': np.random.uniform(),
+        'uniform': uniform,
         'quniform': quniform,
         'loguniform': loguniform,
         'qloguniform': qloguniform,
@@ -112,6 +119,12 @@ class MatrixConfig(BaseConfig):
         'qnormal': qnormal,
         'lognormal': lognormal,
         'qlognormal': qlognormal,
+    }
+
+    DISTRIBUTIONS = {
+        'pvalues',
+        'uniform', 'quniform', 'loguniform', 'qloguniform',
+        'normal', 'qnormal', 'lognormal', 'qlognormal'
     }
 
     def __init__(self,
@@ -148,12 +161,18 @@ class MatrixConfig(BaseConfig):
             values, pvalues, range, linspace, logspace, geomspace, uniform, quniform,
             loguniform, qloguniform, normal, qnormal, lognormal, qlognormal])
 
+    def is_distribution(self):
+        key = list(six.iterkeys(self.to_dict()))[0]
+        return key in self.DISTRIBUTIONS
+
     def to_numpy(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
         if key == 'values':
             return value
-        if key == 'pvalues':
-            return pvalues(values=value)
+
+        if key in self.DISTRIBUTIONS:
+            raise ValidationError('Distribution should not call `to_numpy`, '
+                                  'instead it should call `sample`.')
 
         return self.NUMPY_MAPPING[key](**value)
 

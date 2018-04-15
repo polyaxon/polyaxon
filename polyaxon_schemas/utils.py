@@ -77,9 +77,9 @@ class Tensor(fields.Field):
 class PValue(fields.Field):
     def _deserialize(self, value, attr, data):
         if isinstance(value, (list, tuple)) and len(value) == 2:
-            if isinstance(value[1], float):
+            if isinstance(value[1], float) and 0 <= value[1] < 1:
                 return value
-        raise ValidationError("This field expects a str or a list of [str, int].")
+        raise ValidationError("This field expects a list of [value<Any>, dist<float>].")
 
 
 class Range(fields.Field):
@@ -106,7 +106,8 @@ class Range(fields.Field):
                 " * list: {}".format(
                     self.__class__.__name__,
                     ':'.join(self.REQUIRED_KEYS),
-                    dict(zip(self.REQUIRED_KEYS, ['v1', 'v2', 'v3'])),
+                    dict(zip(self.REQUIRED_KEYS,
+                             ['v{}'.format(i) for i in range(len(self.REQUIRED_KEYS))])),
                     self.REQUIRED_KEYS))
 
         if len(value) != len(self.REQUIRED_KEYS) and len(value) != len(self.KEYS):
@@ -129,12 +130,14 @@ class Range(fields.Field):
 
         # Check that lower value is  smaller than higher value
         if value[0] >= value[1]:
-            raise ValidationError("{} value must strictly higher that {} value, "
-                                  "received instead min: {}, max: {}".format(self.REQUIRED_KEYS[1],
-                                                                             self.REQUIRED_KEYS[0],
-                                                                             value[0],
-                                                                             value[1]))
-        if value[2] == 0:
+            raise ValidationError(
+                "{key2} value must strictly higher that {key1} value, "
+                "received instead {key1}: {val1}, {key2}: {val2}".format(
+                    key1=self.REQUIRED_KEYS[0],
+                    key2=self.REQUIRED_KEYS[1],
+                    val1=value[0],
+                    val2=value[1]))
+        if len(self.REQUIRED_KEYS) == 3 and value[2] == 0:
             raise ValidationError("{} cannot be 0".format(self.REQUIRED_KEYS[2]))
 
         value = dict(zip(self.KEYS, value))
@@ -157,15 +160,18 @@ class LogSpace(Range):
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-def quniform(low, high, q, size=None, rand_generator=None):
+def uniform(low, high, size=None, rand_generator=None):
     rand_generator = rand_generator or np.random
-    value = rand_generator.uniform(low=low, high=high, size=size)
+    return rand_generator.uniform(low=low, high=high, size=size)
+
+
+def quniform(low, high, q, size=None, rand_generator=None):
+    value = uniform(low=low, high=high, size=size, rand_generator=rand_generator)
     return np.round(value // q) * q
 
 
 def loguniform(low, high, size=None, rand_generator=None):
-    rand_generator = rand_generator or np.random
-    value = rand_generator.uniform(low=low, high=high, size=size)
+    value = uniform(low=low, high=high, size=size, rand_generator=rand_generator)
     return np.exp(value)
 
 
@@ -174,9 +180,13 @@ def qloguniform(low, high, q, size=None, rand_generator=None):
     return np.round(value // q) * q
 
 
-def qnormal(loc, scale, q, size=None, rand_generator=None):
+def normal(loc, scale, size=None, rand_generator=None):
     rand_generator = rand_generator or np.random
-    draw = rand_generator.normal(loc=loc, scale=scale, size=size)
+    return rand_generator.normal(loc=loc, scale=scale, size=size)
+
+
+def qnormal(loc, scale, q, size=None, rand_generator=None):
+    draw = normal(loc=loc, scale=scale, size=size, rand_generator=rand_generator)
     return np.round(draw // q) * q
 
 
@@ -185,57 +195,74 @@ def lognormal(loc, scale, size=None, rand_generator=None):
     return rand_generator.lognormal(mean=loc, sigma=scale, size=size)
 
 
-def qlognormal(loc, scale, size=None, rand_generator=None):
+def qlognormal(loc, scale, q, size=None, rand_generator=None):
     draw = lognormal(loc=loc, scale=scale, size=size, rand_generator=rand_generator)
     return np.exp(draw)
 
 
+def validate_pvalues(values):
+    dists = [v for v in values if v]
+    if sum(dists) > 1:
+        raise ValidationError('The distribution of different outcomes should sum to 1.')
+
+
 def pvalues(values, size=None, rand_generator=None):
     rand_generator = rand_generator or np.random
-    keys = list(six.iterkeys(values))
-    dists = list(six.itervalues(values))
+    keys = [v[0] for v in values]
+    dists = [v[1] for v in values]
+    validate_pvalues(dists)
     indices = rand_generator.multinomial(1, dists, size=size)
+    if size is None:
+        return keys[indices.argmax()]
     return [keys[ind.argmax()] for ind in indices]
 
 
 class Uniform(Range):
-    REQUIRED_KEYS = ['low', 'high', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['low', 'high']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QUniform(Range):
-    REQUIRED_KEYS = ['low', 'high', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['low', 'high', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class LogUniform(Range):
-    REQUIRED_KEYS = ['low', 'high', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['low', 'high']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QLogUniform(Range):
-    REQUIRED_KEYS = ['low', 'high', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['low', 'high', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class Normal(Range):
-    REQUIRED_KEYS = ['loc', 'scale', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['loc', 'scale']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QNormal(Range):
-    REQUIRED_KEYS = ['loc', 'scale', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['loc', 'scale', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class LogNormal(Range):
-    REQUIRED_KEYS = ['loc', 'scale', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['loc', 'scale']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QLogNormal(Range):
-    REQUIRED_KEYS = ['start', 'stop', 'size']
-    KEYS = REQUIRED_KEYS
+    REQUIRED_KEYS = ['loc', 'scale', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class StrOrFct(fields.Str):

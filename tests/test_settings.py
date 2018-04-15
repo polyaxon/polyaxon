@@ -106,7 +106,7 @@ class TestSettingConfigs(TestCase):
         config = HyperbandConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-    def test_settings_random_search_config(self):
+    def test_settings_config_raise_conditions(self):
         config_dict = {
             'logging': LoggingConfig().to_dict(),
             'concurrency': 2,
@@ -119,6 +119,13 @@ class TestSettingConfigs(TestCase):
 
         # Add random_search without matrix should raise
         config_dict['random_search'] = {'n_experiments': 10}
+        with self.assertRaises(ValidationError):
+            SettingsConfig.from_dict(config_dict)
+
+        # Add a matrix definition with 2 methods
+        config_dict['matrix'] = {
+            'lr': {'values': [1, 2, 3], 'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
+        }
         with self.assertRaises(ValidationError):
             SettingsConfig.from_dict(config_dict)
 
@@ -136,6 +143,20 @@ class TestSettingConfigs(TestCase):
 
         # Remove random_search should pass
         del config_dict['random_search']
+        config = SettingsConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Adding a distribution should raise
+        config_dict['matrix'] = {
+            'lr': {'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
+        }
+        with self.assertRaises(ValidationError):
+            SettingsConfig.from_dict(config_dict)
+
+        # Updating the matrix should pass
+        config_dict['matrix'] = {
+            'lr': {'values': [1, 2, 3]}
+        }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
@@ -170,6 +191,13 @@ class TestSettingConfigs(TestCase):
                 'policy': EarlyStoppingPolicy.EXPERIMENT
             }
         ]
+        config = SettingsConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Using a distribution with random search should pass
+        config_dict['matrix'] = {
+            'lr': {'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
+        }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 

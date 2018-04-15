@@ -168,13 +168,20 @@ def validate_search_algorithm(algorithms, matrix):
         raise ValidationError('Search algorithms need a matrix definition.')
 
 
-def validate_matrix(matrix):
+def validate_matrix(matrix, allow_distributions=True):
     if not matrix:
         return None
 
     matrix_data = {}
     for key, value in six.iteritems(matrix):
-        matrix_data[key] = MatrixConfig.from_dict(value)
+        if not isinstance(value, MatrixConfig):
+            matrix_data[key] = MatrixConfig.from_dict(value)
+        else:
+            matrix_data[key] = value
+
+        if not allow_distributions and matrix_data[key].is_distribution():
+            raise ValidationError('`{}` defines a distribution, '
+                                  'and it cannot be used with grid search.'.format(key))
 
     return matrix_data
 
@@ -201,7 +208,7 @@ class SettingsSchema(Schema):
         return SettingsConfig.remove_reduced_attrs(data)
 
     @validates_schema
-    def validate_quantity(self, data):
+    def validate_search_algorithm(self, data):
         validate_search_algorithm(
             algorithms=[data.get('grid_search'),
                         data.get('random_search'),
@@ -211,7 +218,8 @@ class SettingsSchema(Schema):
     @validates_schema
     def validate_matrix(self, data):
         """Validates matrix data and creates the config objects"""
-        validate_matrix(data.get('matrix'))
+        allow_distributions = data.get('grid_search') is None
+        validate_matrix(data.get('matrix'), allow_distributions=allow_distributions)
 
 
 class SettingsConfig(BaseConfig):
@@ -230,7 +238,7 @@ class SettingsConfig(BaseConfig):
                  early_stopping=None):
         self.logging = logging
         self.seed = seed
-        matrix = validate_matrix(matrix)
+        matrix = validate_matrix(matrix, allow_distributions=grid_search is None)
         self.matrix = matrix
         self.concurrency = concurrency
         validate_search_algorithm(
