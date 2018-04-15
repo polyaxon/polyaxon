@@ -1,6 +1,10 @@
+import logging
+
 from experiment_groups.iteration_managers.base import BaseIterationManger
 from experiment_groups.schemas import HyperbandIterationConfig
 from polyaxon_schemas.utils import Optimization
+
+logger = logging.getLogger('polyaxon.experiments_groups.iteration_manager')
 
 
 class HyperbandIterationManager(BaseIterationManger):
@@ -22,17 +26,28 @@ class HyperbandIterationManager(BaseIterationManger):
     def update_iteration(self):
         """Update the last experiment group's iteration with experiment performance."""
         iteration_config = self.experiment_group.iteration_config
+        if iteration_config is None:
+            logger.warning(
+                'Experiment group `%s` attempt to update, but has no iteration',
+                self.experiment_group.id)
+            return
         experiments_metrics = self.experiment_group.get_experiments_metrics(
             experiment_ids=iteration_config.experiment_ids,
-            metric=self.experiment_group.params_config.heyperband.metric.name,
+            metric=self.experiment_group.params_config.hyperband.metric.name,
         )
-        iteration_config.experiments_metrics = experiments_metrics
-        self.experiment_group.iteration.data = iteration_config.to_dict()
-        self.experiment_group.iteration.save()
+        iteration_config.experiments_metrics = [m for m in experiments_metrics if m[1] is not None]
+        iteration = self.experiment_group.iteration
+        iteration.data = iteration_config.to_dict()
+        iteration.save()
 
     def get_reduced_configs(self):
         """Reduce the experiments to restart."""
         iteration_config = self.experiment_group.iteration_config
+        if iteration_config is None:
+            logger.warning(
+                'Experiment group `%s` attempt to update, but has no iteration',
+                self.experiment_group.id)
+            return
         search_manager = self.experiment_group.search_manager
 
         # Get the number of experiments to keep
@@ -41,7 +56,7 @@ class HyperbandIterationManager(BaseIterationManger):
             bracket_iteration=iteration_config.bracket_iteration)
 
         # Get the last group's experiments metrics
-        experiments_metrics = self.experiment_group.iteration_data.experiments_metrics
+        experiments_metrics = self.experiment_group.iteration_config.experiments_metrics
 
         # Order the experiments
         reverse = Optimization.maximize(
@@ -62,10 +77,10 @@ class HyperbandIterationManager(BaseIterationManger):
         )
         resource_value = self.experiment_group.search_manager.get_resources_for_iteration(
             iteration=iteration_config.iteration)
-        resource_name = self.experiment_group.params_config.heyperband.resource
+        resource_name = self.experiment_group.params_config.hyperband.resource
 
         # Check if we need to resume or restart the experiments
-        if self.experiment_group.params_config.heyperband.resume:
+        if self.experiment_group.params_config.hyperband.resume:
             for experiment in experiments:
                 declarations = experiment.declarations
                 declarations[resource_name] = resource_value

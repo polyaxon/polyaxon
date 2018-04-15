@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('experiment_group', models.ForeignKey(help_text='The experiment group.', on_delete=django.db.models.deletion.CASCADE, related_name='iterations', to='experiment_groups.ExperimentGroup')),
             ],
             options={
-                'ordering': ['updated_at'],
+                'ordering': ['created_at'],
             },
         ),
         migrations.AlterUniqueTogether(

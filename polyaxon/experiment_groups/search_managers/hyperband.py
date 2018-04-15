@@ -98,7 +98,7 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
         bracket_iteration += 1
         if bracket_iteration == bracket:
             # End of loop `for bracket_iteration in range(bracket + 1):`
-            return False
+            return 0
 
         n_configs = self.get_number_of_configs(bracket=bracket)
         return self.get_n_config_to_keep(
