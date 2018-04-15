@@ -8,7 +8,7 @@ project:
 
 run:
   image: my_image
-  steps:
+  build_steps:
     - pip install package1
   env_vars:
     - ['KEY1', 'en_US.UTF-8']

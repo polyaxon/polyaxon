@@ -33,7 +33,7 @@ class TestRunExecConfigs(TestCase):
                    '--hparams_set=transformer_base_single_gpu '
                    '--output_dir=~/t2t_train/base',
             'image': 'tensorflow:1.3.0',
-            'steps': ['pip install tensor2tensor'],
+            'build_steps': ['pip install tensor2tensor'],
             'env_vars': [['LC_ALL', 'en_US.UTF-8']],
             'git': 'https://github.com/tensorflow/tensor2tensor.git'
         }

@@ -9,7 +9,7 @@ from polyaxon_schemas.base import BaseConfig
 class RunExecSchema(Schema):
     image = fields.Str()
     cmd = fields.Str(allow_none=True)
-    steps = fields.List(fields.Str(), allow_none=True)
+    build_steps = fields.List(fields.Str(), allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
     git = fields.Str(allow_none=True)
@@ -29,11 +29,11 @@ class RunExecSchema(Schema):
 class RunExecConfig(BaseConfig):
     SCHEMA = RunExecSchema
     IDENTIFIER = 'run'
-    REDUCED_ATTRIBUTES = ['steps', 'env_vars', 'git']
+    REDUCED_ATTRIBUTES = ['build_steps', 'env_vars', 'git']
 
-    def __init__(self, image, cmd=None, steps=None, env_vars=None, git=None):
+    def __init__(self, image, cmd=None, build_steps=None, env_vars=None, git=None):
         self.cmd = cmd
         self.image = image
-        self.steps = steps
+        self.build_steps = build_steps
         self.env_vars = env_vars
         self.git = git
