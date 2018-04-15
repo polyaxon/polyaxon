@@ -1,16 +1,18 @@
 import random
+
 from unittest.mock import patch
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
-from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
-from polyaxon_schemas.settings import SettingsConfig
-from polyaxon_schemas.utils import SearchAlgorithms
 
 from experiment_groups.models import ExperimentGroup, ExperimentGroupIteration
+from experiment_groups.search_managers import (
+    GridSearchManager,
+    HyperbandSearchManager,
+    RandomSearchManager
+)
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -18,6 +20,10 @@ from factories.factory_experiments import ExperimentFactory, ExperimentStatusFac
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 from polyaxon.urls import API_V1
+from polyaxon_schemas.matrix import MatrixConfig
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
+from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.utils import SearchAlgorithms
 from runner.tasks.experiment_groups import stop_group_experiments
 from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
@@ -224,7 +230,6 @@ class TestExperimentGroupModel(BaseTest):
         assert len(experiment_metrics) == 5
         metrics = [m[1] for m in experiment_metrics if m[1] is not None]
         assert len(metrics) == 2
-        assert sorted(metrics, reverse=True) == metrics
 
         experiment_metrics = experiment_group.get_experiments_metrics(
             experiment_ids=experiment_ids,
@@ -233,7 +238,6 @@ class TestExperimentGroupModel(BaseTest):
         assert len(experiment_metrics) == 5
         metrics = [m[1] for m in experiment_metrics if m[1] is not None]
         assert len(metrics) == 3
-        assert sorted(metrics) == metrics
 
         experiment_metrics = experiment_group.get_experiments_metrics(
             experiment_ids=experiment_ids,
@@ -242,6 +246,47 @@ class TestExperimentGroupModel(BaseTest):
 
         assert len(experiment_metrics) == 5
         assert len([m for m in experiment_metrics if m[1] is not None]) == 0
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_managers(self):
+        experiment_group = ExperimentGroupFactory(content=None, params=None)
+        assert experiment_group.search_manager is None
+
+        # Adding params
+        experiment_group.params = {
+            'concurrent_experiments': 2,
+            'grid_search': {'n_experiments': 10},
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group.save()
+        assert isinstance(experiment_group.search_manager, GridSearchManager)
+        assert experiment_group.iteration_manager is None
+
+        # Adding params
+        experiment_group.params = {
+            'concurrent_experiments': 2,
+            'random_search': {'n_experiments': 10},
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group.save()
+        assert isinstance(experiment_group.search_manager, RandomSearchManager)
+        assert experiment_group.iteration_manager is None
+
+        # Adding params
+        experiment_group.params = {
+            'concurrent_experiments': 2,
+            'hyperband': {
+                'max_iter': 10,
+                'eta': 3,
+                'resource': 'steps',
+                'resume': False,
+                'metric': {'name': 'loss', 'optimization': 'minimize'}
+            },
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group.save()
+        assert isinstance(experiment_group.search_manager, HyperbandSearchManager)
+        assert isinstance(experiment_group.iteration_manager, HyperbandIterationManager)
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):

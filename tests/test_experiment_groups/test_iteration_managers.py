@@ -1,13 +1,17 @@
 from django.test import override_settings, tag
 
-from experiment_groups.iteration_managers import get_search_iteration_manager, \
-    HyperbandIterationManager
+from experiment_groups.iteration_managers import (
+    HyperbandIterationManager,
+    get_search_iteration_manager
+)
 from experiment_groups.models import ExperimentGroupIteration
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
-from factories.fixtures import experiment_group_spec_content_early_stopping, \
+from factories.fixtures import (
+    experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
-from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
+)
+from tests.utils import BaseTest
 
 
 @override_settings(DEPLOY_RUNNER=False)
