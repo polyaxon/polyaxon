@@ -33,17 +33,9 @@ project:
 
 ## settings
 
-Settings defines `run_type`, `concurrency`, `search_method`, `n_experiments`, `early_stopping`, and `logging`.
+Settings defines `concurrency`, `search_method`, `n_experiments`, `early_stopping`, and `logging`.
 In general the settings defines some values that must be unique for
 all experiments created based on the polyaxonfile.
-
-### run_type
-
-Currently polyaxon supports three different run types:
-
- * `kubernetes` (default value): If your cluster is running on Kubernetes.
- * `minikube`: if your cluster is running on a minikube.
- * `local`: In this case the polyaxonfile is supposed to be used with `polyaxon-lib`.
 
 ### concurrency
 
@@ -116,7 +108,6 @@ Example:
 settings:
   logging:
     level: INFO
-  run_type: minikube
 ```
 
 ```yaml
@@ -420,7 +411,7 @@ This section defines the following values/subsections:
 ```yaml
 run:
   image: my_image
-  steps:
+  build_steps:
     - pip install PILLOW
     - pip install scikit-learn
   cmd: video_prediction_train --num_masks=1

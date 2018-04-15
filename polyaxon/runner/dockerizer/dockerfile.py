@@ -22,8 +22,8 @@ COPY {{ polyaxon_requirements_path }} {{ workdir }}
 COPY {{ polyaxon_setup_path }} {{ workdir }}
 {% endif -%}
 
-{% if steps -%}
-{% for step in steps -%}
+{% if build_steps -%}
+{% for step in build_steps -%}
 RUN {{ step }}
 {% endfor -%}
 {% endif -%}

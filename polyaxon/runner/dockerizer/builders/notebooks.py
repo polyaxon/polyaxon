@@ -16,7 +16,7 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
                  image_tag,
                  copy_code=False,
                  in_tmp_repo=False,
-                 steps=None,
+                 build_steps=None,
                  env_vars=None,
                  dockerfile_name='Dockerfile'):
         super(NotebookDockerBuilder, self).__init__(
@@ -28,7 +28,7 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
             image_tag=image_tag,
             copy_code=copy_code,
             in_tmp_repo=in_tmp_repo,
-            steps=steps,
+            build_steps=build_steps,
             env_vars=env_vars,
             dockerfile_name=dockerfile_name)
 

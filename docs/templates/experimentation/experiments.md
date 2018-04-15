@@ -17,14 +17,14 @@ the polyaxonfile.yml `run` section could look something like this
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
-  steps:
+  v:
     - pip install scikit-learn
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
 If the code requires many python dependencies, Polyaxon provides an elegant way to install these requirements,
-instead of specifying every single library in the `steps` part of the `run` section,
-we can create a requirements file with the name `polyaxon_requirements.txt` and just create one command in the steps `pip install -r polyaxon_requirements.txt`
+instead of specifying every single library in the `build_steps` part of the `run` section,
+we can create a requirements file with the name `polyaxon_requirements.txt` and just create one command in the build_steps `pip install -r polyaxon_requirements.txt`
 and Polyaxon will automatically detect it and install the requirements.
 
 Polyaxon also allows you to specify a `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
@@ -52,7 +52,7 @@ declarations:
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
-  steps:
+  build_steps:
     - pip install -r polyaxon_requirements.txt
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
@@ -193,7 +193,7 @@ It will create a new experiment based on experiment 2 last saved checked point.
 
 !!! caution
     This section is oriented for users who want to run experiments with multiple jobs
-    based on Tensorflow. Polyaxon supports also MXNet, Pytorch, and Horovod, 
+    based on Tensorflow. Polyaxon supports also MXNet, Pytorch, and Horovod,
     you can find more details in the [distributed experiments](distributed_experiments)'s section.
 
 After modifying our `train.py` we want to run the experiment with 1 master 4 workers and 1 parameter server.
@@ -314,8 +314,8 @@ Experiment was created.
 ```
 
 Polyaxon currently supports distributed runs for Tensorflow, MXNet, Pytorch, and Horovod.
-Please go to the [distributed experiments](distributed_experiments)'s section to learn more how 
-to configure your experiment for the different frameworks. 
+Please go to the [distributed experiments](distributed_experiments)'s section to learn more how
+to configure your experiment for the different frameworks.
 
 ## Experiment jobs
 

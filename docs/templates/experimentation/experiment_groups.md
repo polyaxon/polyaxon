@@ -20,7 +20,7 @@ the polyaxonfile.yml `run` section could look something like this
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
-  steps:
+  build_steps:
     - pip install scikit-learn
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
@@ -53,7 +53,7 @@ matrix:
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
-  steps:
+  build_steps:
     - pip install scikit-learn
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
