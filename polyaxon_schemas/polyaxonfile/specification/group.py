@@ -10,6 +10,7 @@ from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class GroupSpecification(BaseSpecification):
@@ -87,11 +88,19 @@ class GroupSpecification(BaseSpecification):
 
     @cached_property
     def experiments_def(self):
-        return {
+        definition = {
             'search_algorithm': self.search_algorithm,
             'early_stopping': True if self.early_stopping else False,
             'concurrency': self.concurrency
         }
+        if SearchAlgorithms.is_grid(self.search_algorithm):
+            if self.settings.grid and self.settings.grid.n_experiments:
+                definition['n_experiments'] = self.settings.grid.n_experiments
+        if SearchAlgorithms.is_random(self.search_algorithm):
+            if self.settings.random and self.settings.random.n_experiments:
+                definition['n_experiments'] = self.settings.random.n_experiments
+
+        return definition
 
     @cached_property
     def matrix_declaration_test(self):
