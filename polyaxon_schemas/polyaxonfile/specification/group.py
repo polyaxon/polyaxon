@@ -79,20 +79,19 @@ class GroupSpecification(BaseSpecification):
         return self.settings.search_algorithm
 
     @cached_property
-    def concurrent_experiments(self):
-        concurrent_experiments = None
+    def concurrency(self):
+        concurrency = None
         if self.settings:
-            concurrent_experiments = self.settings.concurrent_experiments
-        return concurrent_experiments or 1
+            concurrency = self.settings.concurrency
+        return concurrency or 1
 
     @cached_property
     def experiments_def(self):
-        # TODO Rework this
-        return (
-            self.matrix_space,
-            self.concurrent_experiments,
-            self.search_algorithm
-        )
+        return {
+            'search_algorithm': self.search_algorithm,
+            'early_stopping': True if self.early_stopping else False,
+            'concurrency': self.concurrency
+        }
 
     @cached_property
     def matrix_declaration_test(self):
