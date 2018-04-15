@@ -24,8 +24,7 @@ from tests.utils import BaseTest
 class TestExperimentGroupUtils(BaseTest):
     def setUp(self):
         super().setUp()
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
-            self.experiment_group = ExperimentGroupFactory()
+        self.experiment_group = ExperimentGroupFactory()
         self.project = self.experiment_group.project
 
     def test_experiment_group_logs_path_creation_deletion(self):

@@ -9,7 +9,6 @@ settings:
   logging:
     level: INFO
     path: /mypath/project1
-  run_type: minikube
 
 environment:
   n_workers: 5
@@ -80,7 +79,7 @@ model:
           units: 10
           activation: softmax
           name: super_dense
-        
+
 train:
   steps: 100
   data_pipeline:

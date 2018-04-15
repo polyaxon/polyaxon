@@ -30,7 +30,7 @@ class BaseDockerBuilder(object):
                  image_tag,
                  copy_code=True,
                  in_tmp_repo=True,
-                 steps=None,
+                 build_steps=None,
                  env_vars=None,
                  dockerfile_name='Dockerfile'):
         self.from_image = from_image
@@ -46,7 +46,7 @@ class BaseDockerBuilder(object):
             self.build_repo_path = self.repo_path
 
         self.build_path = '/'.join(self.build_repo_path.split('/')[:-1])
-        self.steps = get_list(steps)
+        self.build_steps = get_list(build_steps)
         self.env_vars = get_list(env_vars)
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
@@ -112,7 +112,7 @@ class BaseDockerBuilder(object):
             from_image=self.from_image,
             polyaxon_requirements_path=self.polyaxon_requirements_path,
             polyaxon_setup_path=self.polyaxon_setup_path,
-            steps=self.steps,
+            build_steps=self.build_steps,
             env_vars=self.env_vars,
             folder_name=self.folder_name,
             workdir=self.WORKDIR,

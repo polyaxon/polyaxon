@@ -26,7 +26,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
                  image_tag,
                  copy_code=True,
                  in_tmp_repo=True,
-                 steps=None,
+                 build_steps=None,
                  env_vars=None,
                  dockerfile_name='Dockerfile'):
         self.experiment_name = experiment_name
@@ -38,7 +38,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
             image_tag=image_tag,
             copy_code=copy_code,
             in_tmp_repo=in_tmp_repo,
-            steps=steps,
+            build_steps=build_steps,
             env_vars=env_vars,
             dockerfile_name=dockerfile_name)
 
@@ -110,7 +110,7 @@ def build_experiment(experiment, image_tag=None):
                                              from_image=experiment_spec.run_exec.image,
                                              image_name=build_info['image_name'],
                                              image_tag=image_tag or build_info['image_tag'],
-                                             steps=experiment_spec.run_exec.steps,
+                                             build_steps=experiment_spec.run_exec.build_steps,
                                              env_vars=experiment_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,

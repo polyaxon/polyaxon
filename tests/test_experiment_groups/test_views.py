@@ -123,7 +123,7 @@ project:
   name: project1
 
 settings:
-    concurrent_experiments: 3
+    concurrency: 3
     matrix:
       lr:
         values: [0.1, 0.2, 0.3]
@@ -149,7 +149,7 @@ model:
         assert last_object.project == self.project
         assert last_object.content == data['content']
         assert last_object.params is not None
-        assert last_object.params['concurrent_experiments'] == 3
+        assert last_object.params['concurrency'] == 3
         assert last_object.params['matrix']['lr'] is not None
 
     @override_settings(DEPLOY_RUNNER=False)
@@ -166,7 +166,7 @@ model:
     def test_create_with_params(self):
         data = {
             'params': {
-                'concurrent_experiments': 3,
+                'concurrency': 3,
                 'matrix': {
                     'lr': {'values': [0.1, 0.2, 0.3]}
                 }
@@ -241,8 +241,10 @@ class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             self.object = self.factory_class(project=project)
+
+        assert mock_fct.call_count == 1
         self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
                                                  project.user.username,
                                                  project.name,
@@ -294,8 +296,10 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             self.object = self.factory_class(project=project)
+
+        assert mock_fct.call_count == 1
         # Add a running experiment
         experiment = ExperimentFactory(experiment_group=self.object)
         ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)

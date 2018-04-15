@@ -29,7 +29,7 @@ project:
 
 run:
   image: python:3
-  steps:
+  build_steps:
     - pip3 install jupyter
 ```
 
@@ -83,7 +83,7 @@ environment:
 
 run:
   image: python:3
-  steps:
+  build_steps:
     - pip3 install jupyter
 ```
 

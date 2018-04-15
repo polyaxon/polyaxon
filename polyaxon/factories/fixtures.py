@@ -58,7 +58,7 @@ experiment_group_spec_content_2_xps = """---
       name: project1
       
     settings:
-      concurrent_experiments: 2
+      concurrency: 2
       matrix:
         lr:
           values: [0.01, 0.1]
@@ -77,9 +77,42 @@ experiment_group_spec_content_early_stopping = """---
       name: project1
 
     settings:
-      concurrent_experiments: 2
+      concurrency: 2
       random_search:
         n_experiments: 2
+      early_stopping:
+        - metric: precision
+          value: 0.9
+        - metric: loss
+          value: 0.1
+          optimization: minimize 
+      matrix:
+        lr:
+          values: [0.01, 0.1, 0.5]
+
+    run:
+      image: my_image
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
+experiment_group_spec_content_hyperband = """---
+    version: 1
+
+    kind: group
+
+    project:
+      name: project1
+
+    settings:
+      concurrency: 2
+      hyperband:
+        max_iter: 5
+        eta: 3
+        resource: steps
+        metric: 
+          name: loss
+          optimization: minimize
+        resume: False
       early_stopping:
         - metric: precision
           value: 0.9
@@ -161,6 +194,10 @@ exec_experiment_resources_content = """---
 
     project:
       name: project1
+      
+    declarations:
+      lr: 0.1
+      dropout: 0.5
     
     environment:
       resources:

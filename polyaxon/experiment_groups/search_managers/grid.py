@@ -1,10 +1,10 @@
 import itertools
 
-from experiment_groups.search_algorithms.base import BaseSearchAlgorithm
+from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 
 
-class GridSearch(BaseSearchAlgorithm):
-    """Grid search algorithm for hyperparameter optimization."""
+class GridSearchManager(BaseSearchAlgorithmManager):
+    """Grid search algorithm manager for hyperparameter optimization."""
     def get_suggestions(self, iteration=None):
         """Return a list of suggestions based on grid search.
 
@@ -12,8 +12,7 @@ class GridSearch(BaseSearchAlgorithm):
             matrix: `dict` representing the {hyperparam: hyperparam matrix config}.
             n_suggestions: number of suggestions to make.
         """
-        matrix = self.specification.matrix
-        n_suggestions = self.specification.matrix_space
+        matrix = self.params_config.matrix
 
         suggestions = []
         keys = list(matrix.keys())
@@ -21,6 +20,8 @@ class GridSearch(BaseSearchAlgorithm):
         for v in itertools.product(*values):
             suggestions.append(dict(zip(keys, v)))
 
-        if n_suggestions:
-            return suggestions[:n_suggestions]
+        if self.params_config.grid_search:
+            n_suggestions = self.params_config.grid_search.n_experiments
+            if n_suggestions:
+                return suggestions[:n_suggestions]
         return suggestions

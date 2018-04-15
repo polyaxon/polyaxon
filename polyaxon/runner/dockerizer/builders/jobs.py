@@ -24,7 +24,7 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
                  image_tag,
                  copy_code=True,
                  in_tmp_repo=True,
-                 steps=None,
+                 build_steps=None,
                  env_vars=None,
                  dockerfile_name='Dockerfile'):
         self.project_id = project_id
@@ -36,7 +36,7 @@ class BaseJobDockerBuilder(BaseDockerBuilder):
             image_tag=image_tag,
             copy_code=copy_code,
             in_tmp_repo=in_tmp_repo,
-            steps=steps,
+            build_steps=build_steps,
             env_vars=env_vars,
             dockerfile_name=dockerfile_name)
 
@@ -89,7 +89,7 @@ def build_job(project, job, job_builder, image_tag=None):
                                  from_image=job_spec.run_exec.image,
                                  image_name=build_info['image_name'],
                                  image_tag=image_tag or build_info['image_tag'],
-                                 steps=job_spec.run_exec.steps,
+                                 build_steps=job_spec.run_exec.build_steps,
                                  env_vars=job_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,

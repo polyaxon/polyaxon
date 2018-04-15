@@ -26,6 +26,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import (
     exec_experiment_resources_content,
+    exec_experiment_resources_parsed_content,
     exec_experiment_spec_content,
     experiment_spec_content
 )
@@ -40,6 +41,22 @@ from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
 class TestExperimentModel(BaseTest):
     @override_settings(DEPLOY_RUNNER=False)
+    def test_create_experiment_with_no_spec_or_declarations(self):
+        experiment = ExperimentFactory(declarations=None, config=None)
+        assert experiment.declarations is None
+        assert experiment.specification is None
+
+    def test_create_experiment_with_no_spec_and_declarations(self):
+        experiment = ExperimentFactory(declarations={'lr': 0.1, 'dropout': 0.5}, config=None)
+        assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
+        assert experiment.specification is None
+
+    def test_create_experiment_with_spec_trigger_declarations_creation(self):
+        experiment = ExperimentFactory(config=exec_experiment_resources_parsed_content.parsed_data)
+        assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
+        assert isinstance(experiment.specification, ExperimentSpecification)
+
+    @override_settings(DEPLOY_RUNNER=False)
     def test_experiment_creation_triggers_status_creation_mocks(self):
         with patch.object(Experiment, 'set_status') as mock_fct2:
             ExperimentFactory()
@@ -47,7 +64,7 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as _:
             experiment_group = ExperimentGroupFactory()
 
         with patch('runner.tasks.experiments.start_experiment.delay') as mock_fct:
@@ -66,10 +83,9 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
-        with patch('runner.tasks.experiment_groups.start_group_experiments.apply_async') as _:
-            with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
-                with patch.object(Experiment, 'set_status') as mock_fct2:
-                    ExperimentFactory()
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            with patch.object(Experiment, 'set_status') as mock_fct2:
+                ExperimentFactory()
 
         assert mock_fct.call_count == 1
         assert mock_fct2.call_count == 1

@@ -122,7 +122,6 @@ class RunnerCeleryTasks(object):
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_STOP = 'experiments_stop'
 
-    EXPERIMENTS_GROUP_START = 'experiments_group_start'
     EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
     EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
 
@@ -137,6 +136,22 @@ class RunnerCeleryTasks(object):
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
     EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
     EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
+
+
+class HPCeleryTasks(object):
+    """Hyperparams celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
+    HP_GRID_SEARCH_CREATE = 'hp_grid_search_create'
+    HP_GRID_SEARCH_START = 'hp_grid_search_start'
+
+    HP_RANDOM_SEARCH_CREATE = 'hp_random_search_create'
+    HP_RANDOM_SEARCH_START = 'hp_random_search_start'
+
+    HP_HYPERBAND_CREATE = 'hp_hyperband_create'
+    HP_HYPERBAND_START = 'hp_hyperband_start'
+    HP_HYPERBAND_ITERATE = 'hp_hyperband_iterate'
 
 
 class CeleryOperationTasks(object):
@@ -246,10 +261,17 @@ if config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True):
         RunnerCeleryTasks.EXPERIMENTS_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
         RunnerCeleryTasks.EXPERIMENTS_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
 
-        RunnerCeleryTasks.EXPERIMENTS_GROUP_START: {'queue': CeleryQueues.API_EXPERIMENTS},
         RunnerCeleryTasks.EXPERIMENTS_GROUP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
         RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS:
             {'queue': CeleryQueues.API_EXPERIMENTS},
+
+        HPCeleryTasks.HP_GRID_SEARCH_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_GRID_SEARCH_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_RANDOM_SEARCH_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_RANDOM_SEARCH_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_HYPERBAND_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_HYPERBAND_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_HYPERBAND_ITERATE: {'queue': CeleryQueues.API_EXPERIMENTS},
 
         RunnerCeleryTasks.PROJECTS_TENSORBOARD_START: {'queue': CeleryQueues.API_EXPERIMENTS},
         RunnerCeleryTasks.PROJECTS_TENSORBOARD_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},

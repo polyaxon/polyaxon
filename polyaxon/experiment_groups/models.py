@@ -5,15 +5,17 @@ from operator import __or__ as OR
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields.jsonb import KeyTransform
 from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
-from experiment_groups import search_algorithms
+from experiment_groups import iteration_managers, schemas, search_managers
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
+from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
 
@@ -44,7 +46,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_group_spec_content])
     params = JSONField(
-        help_text='The experiment group hyper params congig.',
+        help_text='The experiment group hyper params config.',
         null=True,
         blank=True,
         validators=[validate_group_params_config])
@@ -76,24 +78,30 @@ class ExperimentGroup(DiffModel, DescribableModel):
         return '{}.{}'.format(self.project.unique_name, self.sequence)
 
     @cached_property
+    def params_config(self):
+        return SettingsConfig.from_dict(self.params) if self.params else None
+
+    @cached_property
     def specification(self):
         return GroupSpecification.read(self.content) if self.content else None
 
     @cached_property
     def concurrency(self):
-        if not self.specification:
+        if not self.params_config:
             return None
-        if self.specification.settings:
-            return self.specification.settings.concurrent_experiments
-        return 1
+        return self.params_config.concurrency
 
     @cached_property
     def search_algorithm(self):
-        if not self.specification:
+        if not self.params_config:
             return None
-        if self.specification.settings:
-            return self.specification.settings.search_algorithm
-        return None
+        return self.params_config.search_algorithm
+
+    @cached_property
+    def early_stopping(self):
+        if not self.params_config:
+            return None
+        return self.params_config.early_stopping or []
 
     @property
     def scheduled_experiments(self):
@@ -118,7 +126,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     @property
     def pending_experiments(self):
         return self.experiments.filter(
-            experiment_status__status=ExperimentLifeCycle.CREATED).distinct()
+            experiment_status__status__in=ExperimentLifeCycle.PENDING_STATUS).distinct()
 
     @property
     def running_experiments(self):
@@ -132,9 +140,17 @@ class ExperimentGroup(DiffModel, DescribableModel):
         """
         return self.concurrency - self.running_experiments.count()
 
+    @property
+    def iteration(self):
+        return self.iterations.last()
+
+    @property
+    def iteration_data(self):
+        return self.iteration.data if self.iteration else None
+
     def should_stop_early(self):
         filters = []
-        for early_stopping_metric in self.specification.early_stopping:
+        for early_stopping_metric in self.early_stopping:
             comparison = (
                 'gte' if Optimization.maximize(early_stopping_metric.optimization) else 'lte')
             metric_filter = 'experiment_metric__values__{}__{}'.format(
@@ -144,9 +160,62 @@ class ExperimentGroup(DiffModel, DescribableModel):
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
 
-    def should_reschedule(self):
-        return False
+    def get_annotated_experiments_with_metric(self, metric, experiment_ids=None):
+        query = self.experiments
+        if experiment_ids:
+            query = query.filter(id__in=experiment_ids)
+        annotation = {
+            metric: KeyTransform(metric, 'experiment_metric__values')
+        }
+        return query.annotate(**annotation)
 
-    def get_suggestions(self, iteration=0):
-        search_algorithm = search_algorithms.get_search_algorithm(specification=self.specification)
-        return search_algorithm.get_suggestions(iteration=iteration)
+    def get_ordered_experiments_by_metric(self, experiment_ids, metric, optimization):
+        query = self.get_annotated_experiments_with_metric(
+            metric=metric,
+            experiment_ids=experiment_ids)
+
+        metric_order_by = '{}{}'.format(
+            '-' if Optimization.maximize(optimization) else '',
+            metric)
+        return query.order_by(metric_order_by)
+
+    def get_experiments_metrics(self, metric, experiment_ids=None):
+        query = self.get_annotated_experiments_with_metric(
+            metric=metric,
+            experiment_ids=experiment_ids)
+        return query.values_list('id', metric)
+
+    @cached_property
+    def search_manager(self):
+        return search_managers.get_search_algorithm_manager(params_config=self.params_config)
+
+    @cached_property
+    def iteration_manager(self):
+        return iteration_managers.get_search_iteration_manager(experiment_group=self)
+
+    @property
+    def iteration_config(self):
+        if self.iteration_data and self.search_algorithm:
+            return schemas.get_iteration_config(
+                search_algorithm=self.search_algorithm,
+                iteration=self.iteration_data)
+        return None
+
+    def get_suggestions(self):
+        iteration_config = self.iteration_config
+        if iteration_config:
+            return self.search_manager.get_suggestions(iteration=iteration_config.iteration)
+        return self.search_manager.get_suggestions()
+
+
+class ExperimentGroupIteration(DiffModel):
+    experiment_group = models.ForeignKey(
+        ExperimentGroup,
+        on_delete=models.CASCADE,
+        related_name='iterations',
+        help_text='The experiment group.')
+    data = JSONField(
+        help_text='The experiment group iteration meta data.')
+
+    class Meta:
+        ordering = ['created_at']

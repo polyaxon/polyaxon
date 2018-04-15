@@ -76,7 +76,7 @@ class TestRepoDockerize(BaseTest):
         Path(os.path.join(repo_path, 'polyaxon_requirements.txt')).touch()
         Path(os.path.join(repo_path, 'polyaxon_setup.sh')).touch()
         # Add step to act on them
-        steps = [
+        build_steps = [
             'pip install -r polyaxon_requirements.txt',
             './polyaxon_setup.sh'
         ]
@@ -87,7 +87,7 @@ class TestRepoDockerize(BaseTest):
                                           from_image='busybox',
                                           image_name='busycube/tets',
                                           image_tag='alpha.1',
-                                          steps=steps)
+                                          build_steps=build_steps)
 
         dockerfile = builder.render()
         assert 'COPY {} {}'.format(
@@ -95,6 +95,6 @@ class TestRepoDockerize(BaseTest):
         assert 'COPY {} {}'.format(
             builder.polyaxon_setup_path, builder.WORKDIR) in dockerfile
 
-        assert 'RUN {}'.format(steps[0]) in dockerfile
-        assert 'RUN {}'.format(steps[1]) in dockerfile
+        assert 'RUN {}'.format(build_steps[0]) in dockerfile
+        assert 'RUN {}'.format(build_steps[1]) in dockerfile
         builder.clean()

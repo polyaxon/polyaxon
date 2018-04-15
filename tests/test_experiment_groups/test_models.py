@@ -1,3 +1,5 @@
+import random
+
 from unittest.mock import patch
 
 from django.core.files import File
@@ -5,6 +7,13 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 
+from experiment_groups.iteration_managers import HyperbandIterationManager
+from experiment_groups.models import ExperimentGroup, ExperimentGroupIteration
+from experiment_groups.search_managers import (
+    GridSearchManager,
+    HyperbandSearchManager,
+    RandomSearchManager
+)
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -12,6 +21,10 @@ from factories.factory_experiments import ExperimentFactory, ExperimentStatusFac
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
 from polyaxon.urls import API_V1
+from polyaxon_schemas.matrix import MatrixConfig
+from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
+from polyaxon_schemas.settings import SettingsConfig
+from polyaxon_schemas.utils import SearchAlgorithms
 from runner.tasks.experiment_groups import stop_group_experiments
 from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
@@ -32,6 +45,253 @@ class TestExperimentGroupModel(BaseTest):
         experiment_group.delete()
         assert delete_path.call_count == 2 + 2  # outputs + logs
 
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_experiment_group_without_spec_and_pramas(self):
+        # Create group without params and spec works
+        project = ProjectFactory()
+        experiment_group = ExperimentGroup.objects.create(
+            user=project.user,
+            project=project)
+        assert experiment_group.specification is None
+        assert experiment_group.params is None
+        assert experiment_group.params_config is None
+        assert experiment_group.concurrency is None
+        assert experiment_group.search_algorithm is None
+        assert experiment_group.early_stopping is None
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_experiment_group_with_spec_create_params(self):
+        # Create group with spec creates params
+        project = ProjectFactory()
+        experiment_group = ExperimentGroup.objects.create(
+            user=project.user,
+            project=project,
+            content=experiment_group_spec_content_early_stopping)
+        assert isinstance(experiment_group.specification, GroupSpecification)
+        assert experiment_group.params == experiment_group.specification.settings.to_dict()
+        assert isinstance(experiment_group.params_config, SettingsConfig)
+        assert experiment_group.concurrency == 2
+        assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
+        assert len(experiment_group.early_stopping) == 2
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_experiment_group_with_params(self):
+        # Create group with spec creates params
+        project = ProjectFactory()
+        params = {
+            'concurrency': 2,
+            'random_search': {'n_experiments': 10},
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group = ExperimentGroup.objects.create(
+            user=project.user,
+            project=project,
+            params=params)
+
+        assert experiment_group.specification is None
+        assert experiment_group.params == params
+        assert isinstance(experiment_group.params_config, SettingsConfig)
+        assert experiment_group.concurrency == 2
+        assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
+        assert experiment_group.params_config.random_search.n_experiments == 10
+        assert isinstance(experiment_group.params_config.matrix['lr'], MatrixConfig)
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_iteration(self):
+        experiment_group = ExperimentGroupFactory()
+        assert experiment_group.iteration is None
+        assert experiment_group.iteration_data is None
+
+        # Add iteration
+        iteration = ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={'dummy': 10})
+
+        assert experiment_group.iteration == iteration
+        assert experiment_group.iteration_data == {'dummy': 10}
+
+        # Update data
+        iteration.data['foo'] = 'bar'
+        iteration.save()
+
+        assert experiment_group.iteration.data == {'dummy': 10, 'foo': 'bar'}
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_should_stop_early(self):
+        # Experiment group with no early stopping
+        experiment_group = ExperimentGroupFactory()
+        assert experiment_group.should_stop_early() is False
+
+        # Experiment group with early stopping
+        experiment_group = ExperimentGroupFactory(
+            content=None,
+            params={
+                'concurrency': 2,
+                'random_search': {'n_experiments': 10},
+                'early_stopping': [
+                    {'metric': 'precision',
+                     'value': 0.9,
+                     'optimization': 'maximize'}
+                ],
+                'matrix': {'lr': {'values': [1, 2, 3]}}
+            })
+        assert experiment_group.should_stop_early() is False
+
+        # Create experiments and metrics
+        experiments = [ExperimentFactory(experiment_group=experiment_group) for _ in range(2)]
+        ExperimentMetric.objects.create(experiment=experiments[0], values={'precision': 0.8})
+
+        assert experiment_group.should_stop_early() is False
+
+        # Create a metric that triggers early stopping
+        ExperimentMetric.objects.create(experiment=experiments[0], values={'precision': 0.91})
+
+        assert experiment_group.should_stop_early() is True
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_get_ordered_experiments_by_metric(self):
+        experiment_group = ExperimentGroupFactory()
+
+        assert len(experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=[],
+            metric='precision',
+            optimization='maximize'
+        )) == 0
+
+        experiments = []
+        experiment_ids = []
+        for _ in range(5):
+            experiment = ExperimentFactory(experiment_group=experiment_group)
+            experiments.append(experiment)
+            experiment_ids.append(experiment.id)
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'precision': random.random()})
+
+        for experiment in experiments[:3]:
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'loss': random.random()})
+
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='precision',
+            optimization='maximize'
+        )
+
+        assert len(experiment_metrics) == 5
+        metrics = [m.precision for m in experiment_metrics if m.precision is not None]
+        assert len(metrics) == 2
+        assert sorted(metrics, reverse=True) == metrics
+
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='loss',
+            optimization='minimize'
+        )
+        assert len(experiment_metrics) == 5
+        metrics = [m.loss for m in experiment_metrics if m.loss is not None]
+        assert len(metrics) == 3
+        assert sorted(metrics) == metrics
+
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='accuracy',
+            optimization='maximize'
+        )
+
+        assert len(experiment_metrics) == 5
+        assert len([m for m in experiment_metrics if m.accuracy is not None]) == 0
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_get_experiments_metrics(self):
+        experiment_group = ExperimentGroupFactory()
+
+        assert len(experiment_group.get_experiments_metrics(
+            experiment_ids=[],
+            metric='precision'
+        )) == 0
+
+        experiments = []
+        experiment_ids = []
+        for _ in range(5):
+            experiment = ExperimentFactory(experiment_group=experiment_group)
+            experiments.append(experiment)
+            experiment_ids.append(experiment.id)
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'precision': random.random()})
+
+        for experiment in experiments[:3]:
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'loss': random.random()})
+
+        experiment_metrics = experiment_group.get_experiments_metrics(
+            experiment_ids=experiment_ids,
+            metric='precision'
+        )
+
+        assert len(experiment_metrics) == 5
+        metrics = [m[1] for m in experiment_metrics if m[1] is not None]
+        assert len(metrics) == 2
+
+        experiment_metrics = experiment_group.get_experiments_metrics(
+            experiment_ids=experiment_ids,
+            metric='loss'
+        )
+        assert len(experiment_metrics) == 5
+        metrics = [m[1] for m in experiment_metrics if m[1] is not None]
+        assert len(metrics) == 3
+
+        experiment_metrics = experiment_group.get_experiments_metrics(
+            experiment_ids=experiment_ids,
+            metric='accuracy'
+        )
+
+        assert len(experiment_metrics) == 5
+        assert len([m for m in experiment_metrics if m[1] is not None]) == 0
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_managers(self):
+        experiment_group = ExperimentGroupFactory(content=None, params=None)
+        assert experiment_group.search_manager is None
+
+        # Adding params
+        experiment_group.params = {
+            'concurrency': 2,
+            'grid_search': {'n_experiments': 10},
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group.save()
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
+        assert isinstance(experiment_group.search_manager, GridSearchManager)
+        assert experiment_group.iteration_manager is None
+
+        # Adding params
+        experiment_group.params = {
+            'concurrency': 2,
+            'random_search': {'n_experiments': 10},
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group.save()
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
+        assert isinstance(experiment_group.search_manager, RandomSearchManager)
+        assert experiment_group.iteration_manager is None
+
+        # Adding params
+        experiment_group.params = {
+            'concurrency': 2,
+            'hyperband': {
+                'max_iter': 10,
+                'eta': 3,
+                'resource': 'steps',
+                'resume': False,
+                'metric': {'name': 'loss', 'optimization': 'minimize'}
+            },
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group.save()
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
+        assert isinstance(experiment_group.search_manager, HyperbandSearchManager)
+        assert isinstance(experiment_group.iteration_manager, HyperbandIterationManager)
+
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
         with patch(
@@ -44,9 +304,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_creations_and_scheduling(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 2
@@ -60,9 +318,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_group_deletion_triggers_experiments_deletion(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
 
         assert mock_fct.call_count == 1
@@ -78,9 +334,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_create_a_max_of_experiments(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -90,9 +344,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_experiment_group_should_stop_early(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -129,9 +381,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_stop_pending_experiments(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -144,9 +394,7 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_stop_all_experiments(self):
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async'
-        ) as mock_fct:
+        with patch('runner.hp_search.random.hp_random_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_early_stopping)
 
@@ -229,8 +477,7 @@ class TestExperimentGroupCommit(BaseViewTest):
         last_commit = self.project.repo.last_commit
         assert last_commit is not None
 
-        with patch(
-            'runner.tasks.experiment_groups.start_group_experiments.apply_async') as mock_fct:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(project=self.project)
 
         assert mock_fct.call_count == 1
