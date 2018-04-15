@@ -61,7 +61,7 @@ def get_group_experiments_info(search_algorithm, concurrency, early_stopping=Fal
 @click.option('--project', '-p', is_flag=True, default=False,
               help='Checks and prints the project def.')
 @click.option('--definition', '-def', is_flag=True, default=False,
-              help='Checks and prints the matrix space of experiments.')
+              help='Checks and prints the file definition.')
 def check(file,  # pylint:disable=redefined-builtin
           version,
           project,
