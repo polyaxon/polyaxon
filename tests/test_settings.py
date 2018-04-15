@@ -117,8 +117,15 @@ class TestSettingConfigs(TestCase):
         config = SettingsConfig.from_dict(config.to_dict())
         assert_equal_dict(config.to_dict(), config_dict)
 
-        # Add random_search
+        # Add random_search without matrix should raise
         config_dict['random_search'] = {'n_experiments': 10}
+        with self.assertRaises(ValidationError):
+            SettingsConfig.from_dict(config_dict)
+
+        # Add matrix definition should pass
+        config_dict['matrix'] = {
+            'lr': {'values': [1, 2, 3]}
+        }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 

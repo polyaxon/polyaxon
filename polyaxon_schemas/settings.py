@@ -158,9 +158,12 @@ class HyperbandConfig(BaseConfig):
         self.resume = resume
 
 
-def validate_search_algorithm(algorithms):
-    if sum([1 for f in algorithms if f is not None]) > 1:
+def validate_search_algorithm(algorithms, matrix):
+    used_algorithms = sum([1 for f in algorithms if f is not None])
+    if used_algorithms > 1:
         raise ValidationError('Only one search algorithm can be used.')
+    if used_algorithms and not matrix:
+        raise ValidationError('Search algorithms need a matrix definition.')
 
 
 def validate_matrix(matrix):
@@ -197,9 +200,11 @@ class SettingsSchema(Schema):
 
     @validates_schema
     def validate_quantity(self, data):
-        validate_search_algorithm([data.get('grid_search'),
-                                   data.get('random_search'),
-                                   data.get('hyperband')])
+        validate_search_algorithm(
+            algorithms=[data.get('grid_search'),
+                        data.get('random_search'),
+                        data.get('hyperband')],
+            matrix=data.get('matrix'))
 
     @validates_schema
     def validate_matrix(self, data):
@@ -226,7 +231,9 @@ class SettingsConfig(BaseConfig):
         matrix = validate_matrix(matrix)
         self.matrix = matrix
         self.concurrent_experiments = concurrent_experiments
-        validate_search_algorithm([grid_search, random_search, hyperband])
+        validate_search_algorithm(
+            algorithms=[grid_search, random_search, hyperband],
+            matrix=matrix)
         self.grid_search = grid_search
         self.random_search = random_search
         self.hyperband = hyperband
