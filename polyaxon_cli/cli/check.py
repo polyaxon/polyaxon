@@ -41,15 +41,15 @@ def check_polyaxonfile_kind(specification, kind):
             'received: `{}`.'.format(kind, specification.kind))
 
 
-def get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method):
+def get_group_experiments_info(search_algorithm, concurrency, early_stopping=False, **kwargs):
     info = OrderedDict()
-    info['Matrix space contains'] = '{} experiments'.format(matrix_space)
-    if n_experiments:
-        info['Exploring a maximum of'] = '{} experiments'.format(n_experiments)
-    info['Search method'] = search_method.lower()
+    info['Search algorithm'] = search_algorithm.lower()
     info['Concurrency'] = ('{} runs'.format('sequential')
                            if concurrency == 1 else
                            '{} concurrent runs'.format(concurrency))
+    info['Early stopping'] = 'activated' if early_stopping else 'deactivated'
+    if 'n_experiments' in kwargs:
+        info['Experiment to create'] = kwargs['n_experiments']
 
     dict_tabulate(info)
 
@@ -57,20 +57,15 @@ def get_group_experiments_info(matrix_space, n_experiments, concurrency, search_
 @click.command()
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon file to check.')
-@click.option('--all', '-a', is_flag=True, default=False,
-              help='Checks and prints the validated file.')
 @click.option('--version', '-v', is_flag=True, default=False, help='Checks and prints the version.')
-@click.option('--run-type', is_flag=True, default=False, help='Checks and prints the run_type.')
 @click.option('--project', '-p', is_flag=True, default=False,
               help='Checks and prints the project def.')
-@click.option('--experiments', '-x', is_flag=True, default=False,
+@click.option('--definition', '-def', is_flag=True, default=False,
               help='Checks and prints the matrix space of experiments.')
 def check(file,  # pylint:disable=redefined-builtin
-          all,  # pylint:disable=redefined-builtin
           version,
-          run_type,
           project,
-          experiments):
+          definition):
     """Check a polyaxonfile."""
     file = file or 'polyaxonfile.yml'
     specification = check_polyaxonfile(file).specification
@@ -80,28 +75,24 @@ def check(file,  # pylint:disable=redefined-builtin
                                       specification.version,
                                       'yellow')
 
-    if run_type:
-        Printer.decorate_format_value('The run-type is: {}',
-                                      specification.run_type,
-                                      'yellow')
-
     if project:
         Printer.decorate_format_value('The project is: {}',
                                       specification.project.name,
                                       'yellow')
 
-    if experiments:
-        matrix_space, n_experiments, concurrency, search_method = specification.experiments_def
-        if matrix_space == 1:
+    if definition:
+        if specification.is_experiment:
             Printer.decorate_format_value('This polyaxon specification has {}',
                                           'One experiment',
                                           'yellow')
-        else:
+        if specification.is_plugin:
+            Printer.decorate_format_value('This is {} polyaxon specification has',
+                                          'plugin job',
+                                          'yellow')
+        if specification.is_group:
+            experiments_def = specification.experiments_def
             click.echo(
                 'This polyaxon specification has experiment group with the following definition:')
-            get_group_experiments_info(matrix_space, n_experiments, concurrency, search_method)
-
-    if all:
-        click.echo("Validated file:\n{}".format(specification.parsed_data))
+            get_group_experiments_info(**experiments_def)
 
     return specification
