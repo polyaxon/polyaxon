@@ -5,7 +5,7 @@ from polyaxon_schemas.utils import Optimization
 
 class HyperbandIterationManager(BaseIterationManger):
     def create_iteration(self, experiment_ids):
-        """Create the an iteration for the experiment group."""
+        """Create an iteration for the experiment group."""
         from experiment_groups.models import ExperimentGroupIteration
 
         iteration_config = self.experiment_group.iteration_config

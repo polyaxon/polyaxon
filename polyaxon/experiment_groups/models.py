@@ -78,7 +78,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     @cached_property
     def params_config(self):
-        return SettingsConfig.from_dict(self.params)
+        return SettingsConfig.from_dict(self.params) if self.params else None
 
     @cached_property
     def specification(self):
@@ -86,17 +86,21 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     @cached_property
     def concurrency(self):
-        if not self.specification:
+        if not self.params_config:
             return None
-        if self.specification.settings:
-            return self.specification.settings.concurrent_experiments
-        return 1
+        return self.params_config.concurrent_experiments
 
     @cached_property
     def search_algorithm(self):
-        if not self.specification:
+        if not self.params_config:
             return None
-        return self.specification.search_algorithm
+        return self.params_config.search_algorithm
+
+    @cached_property
+    def early_stopping(self):
+        if not self.params_config:
+            return None
+        return self.params_config.early_stopping or []
 
     @property
     def scheduled_experiments(self):
@@ -145,7 +149,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     def should_stop_early(self):
         filters = []
-        for early_stopping_metric in self.specification.early_stopping:
+        for early_stopping_metric in self.early_stopping:
             comparison = (
                 'gte' if Optimization.maximize(early_stopping_metric.optimization) else 'lte')
             metric_filter = 'experiment_metric__values__{}__{}'.format(
@@ -168,7 +172,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     @cached_property
     def search_manager(self):
-        return search_managers.get_search_algorithm_manager(specification=self.specification)
+        return search_managers.get_search_algorithm_manager(params_config=self.params_config)
 
     @cached_property
     def iteration_manager(self):

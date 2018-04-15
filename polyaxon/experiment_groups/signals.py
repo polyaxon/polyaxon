@@ -11,7 +11,11 @@ from repos.utils import assign_code_reference
 @ignore_updates_pre
 @ignore_raw
 def add_experiment_group_code_reference(sender, **kwargs):
-    assign_code_reference(kwargs['instance'])
+    instance = kwargs['instance']
+    assign_code_reference(instance)
+    # set params
+    if not instance.params and instance.specification:
+        instance.params = instance.specification.settings.to_dict()
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
