@@ -5,6 +5,7 @@ from operator import __or__ as OR
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields.jsonb import KeyTransform
 from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
@@ -159,16 +160,30 @@ class ExperimentGroup(DiffModel, DescribableModel):
             return self.experiments.filter(functools.reduce(OR, [Q(**f) for f in filters])).exists()
         return False
 
-    def get_ordered_experiments_by_metric(self, experiment_ids, metric, optimization):
-        metric_order_by = '{}experiment_metric__values__{}'.format(
-            metric,
-            '-' if Optimization.maximize(optimization) else '')
-        return self.experiments.filter(id__in=experiment_ids).order_by(metric_order_by)
+    def get_annotated_experiments_with_metric(self, metric, experiment_ids=None):
+        query = self.experiments
+        if experiment_ids:
+            query = query.filter(id__in=experiment_ids)
+        annotation = {
+            metric: KeyTransform(metric, 'experiment_metric__values')
+        }
+        return query.annotate(**annotation)
 
-    def get_experiments_metrics(self, experiment_ids, metric):
-        return self.experiments.filter(id__in=experiment_ids).values_list(
-            'id',
-            'experiment_metric__values__{}'.format(metric))
+    def get_ordered_experiments_by_metric(self, experiment_ids, metric, optimization):
+        query = self.get_annotated_experiments_with_metric(
+            metric=metric,
+            experiment_ids=experiment_ids)
+
+        metric_order_by = '{}{}'.format(
+            '-' if Optimization.maximize(optimization) else '',
+            metric)
+        return query.order_by(metric_order_by)
+
+    def get_experiments_metrics(self, metric, experiment_ids=None):
+        query = self.get_annotated_experiments_with_metric(
+            metric=metric,
+            experiment_ids=experiment_ids)
+        return query.values_list('id', metric)
 
     @cached_property
     def search_manager(self):

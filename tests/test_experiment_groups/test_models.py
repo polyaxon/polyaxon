@@ -1,3 +1,4 @@
+import random
 from unittest.mock import patch
 
 from django.core.files import File
@@ -139,6 +140,108 @@ class TestExperimentGroupModel(BaseTest):
         ExperimentMetric.objects.create(experiment=experiments[0], values={'precision': 0.91})
 
         assert experiment_group.should_stop_early() is True
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_get_ordered_experiments_by_metric(self):
+        experiment_group = ExperimentGroupFactory()
+
+        assert len(experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=[],
+            metric='precision',
+            optimization='maximize'
+        )) == 0
+
+        experiments = []
+        experiment_ids = []
+        for _ in range(5):
+            experiment = ExperimentFactory(experiment_group=experiment_group)
+            experiments.append(experiment)
+            experiment_ids.append(experiment.id)
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'precision': random.random()})
+
+        for experiment in experiments[:3]:
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'loss': random.random()})
+
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='precision',
+            optimization='maximize'
+        )
+
+        assert len(experiment_metrics) == 5
+        metrics = [m.precision for m in experiment_metrics if m.precision is not None]
+        assert len(metrics) == 2
+        assert sorted(metrics, reverse=True) == metrics
+
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='loss',
+            optimization='minimize'
+        )
+        assert len(experiment_metrics) == 5
+        metrics = [m.loss for m in experiment_metrics if m.loss is not None]
+        assert len(metrics) == 3
+        assert sorted(metrics) == metrics
+
+        experiment_metrics = experiment_group.get_ordered_experiments_by_metric(
+            experiment_ids=experiment_ids,
+            metric='accuracy',
+            optimization='maximize'
+        )
+
+        assert len(experiment_metrics) == 5
+        assert len([m for m in experiment_metrics if m.accuracy is not None]) == 0
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_get_experiments_metrics(self):
+        experiment_group = ExperimentGroupFactory()
+
+        assert len(experiment_group.get_experiments_metrics(
+            experiment_ids=[],
+            metric='precision'
+        )) == 0
+
+        experiments = []
+        experiment_ids = []
+        for _ in range(5):
+            experiment = ExperimentFactory(experiment_group=experiment_group)
+            experiments.append(experiment)
+            experiment_ids.append(experiment.id)
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'precision': random.random()})
+
+        for experiment in experiments[:3]:
+            ExperimentMetric.objects.create(experiment=experiment,
+                                            values={'loss': random.random()})
+
+        experiment_metrics = experiment_group.get_experiments_metrics(
+            experiment_ids=experiment_ids,
+            metric='precision'
+        )
+
+        assert len(experiment_metrics) == 5
+        metrics = [m[1] for m in experiment_metrics if m[1] is not None]
+        assert len(metrics) == 2
+        assert sorted(metrics, reverse=True) == metrics
+
+        experiment_metrics = experiment_group.get_experiments_metrics(
+            experiment_ids=experiment_ids,
+            metric='loss'
+        )
+        assert len(experiment_metrics) == 5
+        metrics = [m[1] for m in experiment_metrics if m[1] is not None]
+        assert len(metrics) == 3
+        assert sorted(metrics) == metrics
+
+        experiment_metrics = experiment_group.get_experiments_metrics(
+            experiment_ids=experiment_ids,
+            metric='accuracy'
+        )
+
+        assert len(experiment_metrics) == 5
+        assert len([m for m in experiment_metrics if m[1] is not None]) == 0
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
