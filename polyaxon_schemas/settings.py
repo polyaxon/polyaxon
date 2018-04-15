@@ -210,6 +210,7 @@ class SettingsSchema(Schema):
 class SettingsConfig(BaseConfig):
     SCHEMA = SettingsSchema
     IDENTIFIER = 'settings'
+    REDUCED_ATTRIBUTES = ['grid_search', 'random_search', 'hyperband']
 
     def __init__(self,
                  logging=LoggingConfig(),

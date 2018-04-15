@@ -114,6 +114,9 @@ class TestSettingConfigs(TestCase):
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
+        config = SettingsConfig.from_dict(config.to_dict())
+        assert_equal_dict(config.to_dict(), config_dict)
+
         # Add random_search
         config_dict['random_search'] = {'n_experiments': 10}
         config = SettingsConfig.from_dict(config_dict)
