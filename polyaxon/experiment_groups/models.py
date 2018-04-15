@@ -218,4 +218,4 @@ class ExperimentGroupIteration(DiffModel):
         help_text='The experiment group iteration meta data.')
 
     class Meta:
-        ordering = ['updated_at']
+        ordering = ['created_at']

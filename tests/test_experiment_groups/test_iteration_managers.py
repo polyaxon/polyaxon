@@ -1,4 +1,4 @@
-from django.test import override_settings, tag
+from django.test import override_settings
 
 from experiment_groups.iteration_managers import (
     HyperbandIterationManager,
