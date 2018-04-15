@@ -12,7 +12,7 @@ class GridSearchManager(BaseSearchAlgorithmManager):
             matrix: `dict` representing the {hyperparam: hyperparam matrix config}.
             n_suggestions: number of suggestions to make.
         """
-        matrix = self.specification.matrix
+        matrix = self.params_config.matrix
 
         suggestions = []
         keys = list(matrix.keys())
@@ -20,8 +20,8 @@ class GridSearchManager(BaseSearchAlgorithmManager):
         for v in itertools.product(*values):
             suggestions.append(dict(zip(keys, v)))
 
-        if self.specification.settings.grid_search:
-            n_suggestions = self.specification.settings.grid_search.n_experiments
+        if self.params_config.grid_search:
+            n_suggestions = self.params_config.grid_search.n_experiments
             if n_suggestions:
                 return suggestions[:n_suggestions]
         return suggestions
