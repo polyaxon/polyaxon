@@ -89,7 +89,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     def concurrency(self):
         if not self.params_config:
             return None
-        return self.params_config.concurrent_experiments
+        return self.params_config.concurrency
 
     @cached_property
     def search_algorithm(self):

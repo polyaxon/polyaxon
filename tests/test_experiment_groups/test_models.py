@@ -79,7 +79,7 @@ class TestExperimentGroupModel(BaseTest):
         # Create group with spec creates params
         project = ProjectFactory()
         params = {
-            'concurrent_experiments': 2,
+            'concurrency': 2,
             'random_search': {'n_experiments': 10},
             'matrix': {'lr': {'values': [1, 2, 3]}}
         }
@@ -126,7 +126,7 @@ class TestExperimentGroupModel(BaseTest):
         experiment_group = ExperimentGroupFactory(
             content=None,
             params={
-                'concurrent_experiments': 2,
+                'concurrency': 2,
                 'random_search': {'n_experiments': 10},
                 'early_stopping': [
                     {'metric': 'precision',
@@ -255,7 +255,7 @@ class TestExperimentGroupModel(BaseTest):
 
         # Adding params
         experiment_group.params = {
-            'concurrent_experiments': 2,
+            'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {'lr': {'values': [1, 2, 3]}}
         }
@@ -266,7 +266,7 @@ class TestExperimentGroupModel(BaseTest):
 
         # Adding params
         experiment_group.params = {
-            'concurrent_experiments': 2,
+            'concurrency': 2,
             'random_search': {'n_experiments': 10},
             'matrix': {'lr': {'values': [1, 2, 3]}}
         }
@@ -277,7 +277,7 @@ class TestExperimentGroupModel(BaseTest):
 
         # Adding params
         experiment_group.params = {
-            'concurrent_experiments': 2,
+            'concurrency': 2,
             'hyperband': {
                 'max_iter': 10,
                 'eta': 3,

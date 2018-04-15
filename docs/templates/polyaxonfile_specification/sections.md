@@ -33,7 +33,7 @@ project:
 
 ## settings
 
-Settings defines `run_type`, `concurrent_experiments`, `search_method`, `n_experiments`, `early_stopping`, and `logging`.
+Settings defines `run_type`, `concurrency`, `search_method`, `n_experiments`, `early_stopping`, and `logging`.
 In general the settings defines some values that must be unique for
 all experiments created based on the polyaxonfile.
 
@@ -45,14 +45,14 @@ Currently polyaxon supports three different run types:
  * `minikube`: if your cluster is running on a minikube.
  * `local`: In this case the polyaxonfile is supposed to be used with `polyaxon-lib`.
 
-### concurrent_experiments
+### concurrency
 
 Defines how many experiments to run concurrently when the polyaxon file use a `matrix` section.
 This option will be ignored if the polyaxon file only have one independent experiment.
 
 ### search_method
 
-Same as `concurrent_experiments`, it defines the search method to use when running hyperparameters search.
+Same as `concurrency`, it defines the search method to use when running hyperparameters search.
 Currently, the supported methods are:
 
  * `grid` (default value)
@@ -73,13 +73,13 @@ Default value is `None` which means will translate to an exhaustive search.
 
 Example:
 
-Value 
+Value
 
 ```yaml
 n_experiments: 10
 ```
 
-Percentage 
+Percentage
 
 ```yaml
 n_experiments: 0.3
@@ -123,8 +123,7 @@ settings:
 settings:
   logging:
     level: WARNING
-  run_type: kubernetes
-  concurrent_experiments: 5
+  concurrency: 5
 ```
 
 ## Environment
@@ -145,7 +144,7 @@ A resources definition, is optional and made of three optional fields:
  * cpu: {limits: value, requests: value}
  * memory: {limits: value, requests: value}
  * gpu: {limits: value, requests: value}
- 
+
 To enable a distributed run, the user can define one of the following framework:
 
 ### tensorflow
@@ -202,7 +201,7 @@ environment:
         gpu:
           request: 1
           limits: 1
-    
+
       worker_resources:
         - index: 2
           cpu:
@@ -211,7 +210,7 @@ environment:
           memory:
             requests: 256
             limits: 1024
-    
+
       ps_resources:
         - index: 0
           cpu:

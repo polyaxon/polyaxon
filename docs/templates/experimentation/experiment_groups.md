@@ -154,8 +154,9 @@ And past the following settings section.
 version: 1
 
 settings:
-  concurrent_experiments: 2
-  search_method: random
+  concurrency: 2
+  random_search:
+    n_experiments: 5
 ```
 
 If we run again the `check` command with `-x` or `--experiments` option, we will get
@@ -194,7 +195,7 @@ In order to activate this option, you must update your polyaxonfile's `settings`
 version: 1
 
 settings:
-  concurrent_experiments: 2
+  concurrency: 2
   random_search:
     n_experiments: 4
 ```
@@ -209,7 +210,7 @@ Or, alternatively you can provide a percentage:
 version: 1
 
 settings:
-  concurrent_experiments: 2
+  concurrency: 2
   random_search:
     n_experiments: 0.4
 ```
@@ -231,7 +232,7 @@ In order to activate this option, you must update your polyaxonfile's `settings`
 version: 1
 
 settings:
-  concurrent_experiments: 2
+  concurrency: 2
   random_search:
     n_experiments: 4
   early_stopping:

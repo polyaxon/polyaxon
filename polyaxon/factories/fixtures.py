@@ -58,7 +58,7 @@ experiment_group_spec_content_2_xps = """---
       name: project1
       
     settings:
-      concurrent_experiments: 2
+      concurrency: 2
       matrix:
         lr:
           values: [0.01, 0.1]
@@ -77,7 +77,7 @@ experiment_group_spec_content_early_stopping = """---
       name: project1
 
     settings:
-      concurrent_experiments: 2
+      concurrency: 2
       random_search:
         n_experiments: 2
       early_stopping:
@@ -104,7 +104,7 @@ experiment_group_spec_content_hyperband = """---
       name: project1
 
     settings:
-      concurrent_experiments: 2
+      concurrency: 2
       hyperband:
         max_iter: 5
         eta: 3

@@ -123,7 +123,7 @@ project:
   name: project1
 
 settings:
-    concurrent_experiments: 3
+    concurrency: 3
     matrix:
       lr:
         values: [0.1, 0.2, 0.3]
@@ -149,7 +149,7 @@ model:
         assert last_object.project == self.project
         assert last_object.content == data['content']
         assert last_object.params is not None
-        assert last_object.params['concurrent_experiments'] == 3
+        assert last_object.params['concurrency'] == 3
         assert last_object.params['matrix']['lr'] is not None
 
     @override_settings(DEPLOY_RUNNER=False)
@@ -166,7 +166,7 @@ model:
     def test_create_with_params(self):
         data = {
             'params': {
-                'concurrent_experiments': 3,
+                'concurrency': 3,
                 'matrix': {
                     'lr': {'values': [0.1, 0.2, 0.3]}
                 }

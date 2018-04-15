@@ -1,19 +1,23 @@
 from django.test import override_settings
-from polyaxon_schemas.settings import SettingsConfig
 
 from experiment_groups.iteration_managers import (
     HyperbandIterationManager,
     get_search_iteration_manager
 )
 from experiment_groups.models import ExperimentGroupIteration
-from experiment_groups.search_managers import GridSearchManager, get_search_algorithm_manager, \
-    RandomSearchManager, HyperbandSearchManager
+from experiment_groups.search_managers import (
+    GridSearchManager,
+    HyperbandSearchManager,
+    RandomSearchManager,
+    get_search_algorithm_manager
+)
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.fixtures import (
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
+from polyaxon_schemas.settings import SettingsConfig
 from tests.utils import BaseTest
 
 
@@ -42,7 +46,7 @@ class TestIterationManagers(BaseTest):
 class TestGridSearchManager(BaseTest):
     def test_get_suggestions(self):
         params_config = SettingsConfig.from_dict({
-            'concurrent_experiments': 2,
+            'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {'feature': {'values': [1, 2, 3]}}
         })
@@ -50,7 +54,7 @@ class TestGridSearchManager(BaseTest):
         assert len(manager.get_suggestions()) == 3
 
         params_config = SettingsConfig.from_dict({
-            'concurrent_experiments': 2,
+            'concurrency': 2,
             'grid_search': {'n_experiments': 10},
             'matrix': {
                 'feature1': {'values': [1, 2, 3]},

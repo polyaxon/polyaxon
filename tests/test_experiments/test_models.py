@@ -26,9 +26,10 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import (
     exec_experiment_resources_content,
+    exec_experiment_resources_parsed_content,
     exec_experiment_spec_content,
-    experiment_spec_content,
-    exec_experiment_resources_parsed_content)
+    experiment_spec_content
+)
 from jobs.models import JobResources
 from jobs.statuses import JobLifeCycle
 from polyaxon.urls import API_V1
