@@ -180,9 +180,11 @@ class ExperimentGroup(DiffModel, DescribableModel):
 
     @property
     def iteration_config(self):
-        return schemas.get_iteration_config(
-            search_algorithm=self.search_algorithm,
-            iteration=self.iteration_data)
+        if self.iteration_data and self.search_algorithm:
+            return schemas.get_iteration_config(
+                search_algorithm=self.search_algorithm,
+                iteration=self.iteration_data)
+        return None
 
     def get_suggestions(self):
         iteration_config = self.iteration_config
