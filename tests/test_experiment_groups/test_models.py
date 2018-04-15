@@ -9,7 +9,7 @@ from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
 
-from experiment_groups.models import ExperimentGroup
+from experiment_groups.models import ExperimentGroup, ExperimentGroupIteration
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -87,6 +87,58 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
         assert experiment_group.params_config.random_search.n_experiments == 10
         assert isinstance(experiment_group.params_config.matrix['lr'], MatrixConfig)
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_iteration(self):
+        experiment_group = ExperimentGroupFactory()
+        assert experiment_group.iteration is None
+        assert experiment_group.iteration_data is None
+
+        # Add iteration
+        iteration = ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={'dummy': 10})
+
+        assert experiment_group.iteration == iteration
+        assert experiment_group.iteration_data == {'dummy': 10}
+
+        # Update data
+        iteration.data['foo'] = 'bar'
+        iteration.save()
+
+        assert experiment_group.iteration.data == {'dummy': 10, 'foo': 'bar'}
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_should_stop_early(self):
+        # Experiment group with no early stopping
+        experiment_group = ExperimentGroupFactory()
+        assert experiment_group.should_stop_early() is False
+
+        # Experiment group with early stopping
+        experiment_group = ExperimentGroupFactory(
+            content=None,
+            params={
+                'concurrent_experiments': 2,
+                'random_search': {'n_experiments': 10},
+                'early_stopping': [
+                    {'metric': 'precision',
+                     'value': 0.9,
+                     'optimization': 'maximize'}
+                ],
+                'matrix': {'lr': {'values': [1, 2, 3]}}
+            })
+        assert experiment_group.should_stop_early() is False
+
+        # Create experiments and metrics
+        experiments = [ExperimentFactory(experiment_group=experiment_group) for _ in range(2)]
+        ExperimentMetric.objects.create(experiment=experiments[0], values={'precision': 0.8})
+
+        assert experiment_group.should_stop_early() is False
+
+        # Create a metric that triggers early stopping
+        ExperimentMetric.objects.create(experiment=experiments[0], values={'precision': 0.91})
+
+        assert experiment_group.should_stop_early() is True
 
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
