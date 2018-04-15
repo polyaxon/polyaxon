@@ -15,8 +15,9 @@ class HyperbandIterationManager(BaseIterationManger):
             iteration=1 if iteration_config is None else iteration_config.iteration,
             bracket_iteration=0,
             experiment_ids=experiment_ids)
-        ExperimentGroupIteration.objects.create(experiment_group=self.experiment_group,
-                                                data=iteration_config.to_dict())
+        return ExperimentGroupIteration.objects.create(
+            experiment_group=self.experiment_group,
+            data=iteration_config.to_dict())
 
     def update_iteration(self):
         """Update the last experiment group's iteration with experiment performance."""
