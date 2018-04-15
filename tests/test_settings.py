@@ -172,3 +172,15 @@ class TestSettingConfigs(TestCase):
         ]
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
+
+    def test_random_and_grid_search_without_n_experiments(self):
+        config_dict = {
+            'logging': LoggingConfig().to_dict(),
+            'concurrency': 1,
+            'matrix': {'lr': {'values': [1, 2, 3]}},
+            'random_search': {},
+            'early_stopping': [],
+            'seed': None
+        }
+        config = SettingsConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict

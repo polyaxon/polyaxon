@@ -55,7 +55,7 @@ class EarlyStoppingMetricConfig(BaseConfig):
 
 
 class RandomSearchSchema(Schema):
-    n_experiments = fields.Int(validate=validate.Range(min=1))
+    n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
 
     class Meta:
         ordered = True
@@ -72,8 +72,9 @@ class RandomSearchSchema(Schema):
 class RandomSearchConfig(BaseConfig):
     SCHEMA = RandomSearchSchema
     IDENTIFIER = 'random_search'
+    REDUCED_ATTRIBUTES = ['n_experiments']
 
-    def __init__(self, n_experiments):
+    def __init__(self, n_experiments=None):
         self.n_experiments = n_experiments
 
 
@@ -95,6 +96,7 @@ class GridSearchSchema(Schema):
 class GridSearchConfig(BaseConfig):
     SCHEMA = GridSearchSchema
     IDENTIFIER = 'grid_search'
+    REDUCED_ATTRIBUTES = ['n_experiments']
 
     def __init__(self, n_experiments=None):
         self.n_experiments = n_experiments
