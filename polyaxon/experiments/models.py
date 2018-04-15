@@ -115,7 +115,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def resources(self):
-        if not self.config:
+        if not self.specification:
             return None
         return self.specification.total_resources
 

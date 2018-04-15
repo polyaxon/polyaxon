@@ -24,11 +24,16 @@ from repos.utils import assign_code_reference
 logger = logging.getLogger('polyaxon.experiments')
 
 
-@receiver(pre_save, sender=Experiment, dispatch_uid="experiment_saved")
+@receiver(pre_save, sender=Experiment, dispatch_uid="experiment_pre_save")
 @ignore_updates_pre
 @ignore_raw
-def add_experiment_code_reference(sender, **kwargs):
+def add_experiment_pre_save(sender, **kwargs):
     instance = kwargs['instance']
+    # Check if declarations need to be set
+    if not instance.declarations and instance.specification:
+        instance.declarations = instance.specification.declarations
+
+    # Add code reference
     # Check if :
     # the experiment is new
     # that it has an exec section

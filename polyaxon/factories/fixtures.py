@@ -194,6 +194,10 @@ exec_experiment_resources_content = """---
 
     project:
       name: project1
+      
+    declarations:
+      lr: 0.1
+      dropout: 0.5
     
     environment:
       resources:

@@ -27,8 +27,8 @@ from factories.factory_repos import RepoFactory
 from factories.fixtures import (
     exec_experiment_resources_content,
     exec_experiment_spec_content,
-    experiment_spec_content
-)
+    experiment_spec_content,
+    exec_experiment_resources_parsed_content)
 from jobs.models import JobResources
 from jobs.statuses import JobLifeCycle
 from polyaxon.urls import API_V1
@@ -39,6 +39,22 @@ from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
 
 class TestExperimentModel(BaseTest):
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_create_experiment_with_no_spec_or_declarations(self):
+        experiment = ExperimentFactory(declarations=None, config=None)
+        assert experiment.declarations is None
+        assert experiment.specification is None
+
+    def test_create_experiment_with_no_spec_and_declarations(self):
+        experiment = ExperimentFactory(declarations={'lr': 0.1, 'dropout': 0.5}, config=None)
+        assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
+        assert experiment.specification is None
+
+    def test_create_experiment_with_spec_trigger_declarations_creation(self):
+        experiment = ExperimentFactory(config=exec_experiment_resources_parsed_content.parsed_data)
+        assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
+        assert isinstance(experiment.specification, ExperimentSpecification)
+
     @override_settings(DEPLOY_RUNNER=False)
     def test_experiment_creation_triggers_status_creation_mocks(self):
         with patch.object(Experiment, 'set_status') as mock_fct2:

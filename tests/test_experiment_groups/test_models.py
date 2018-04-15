@@ -7,6 +7,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 
+from experiment_groups.iteration_managers import HyperbandIterationManager
 from experiment_groups.models import ExperimentGroup, ExperimentGroupIteration
 from experiment_groups.search_managers import (
     GridSearchManager,
@@ -259,6 +260,7 @@ class TestExperimentGroupModel(BaseTest):
             'matrix': {'lr': {'values': [1, 2, 3]}}
         }
         experiment_group.save()
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
         assert isinstance(experiment_group.search_manager, GridSearchManager)
         assert experiment_group.iteration_manager is None
 
@@ -269,6 +271,7 @@ class TestExperimentGroupModel(BaseTest):
             'matrix': {'lr': {'values': [1, 2, 3]}}
         }
         experiment_group.save()
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
         assert isinstance(experiment_group.search_manager, RandomSearchManager)
         assert experiment_group.iteration_manager is None
 
@@ -285,6 +288,7 @@ class TestExperimentGroupModel(BaseTest):
             'matrix': {'lr': {'values': [1, 2, 3]}}
         }
         experiment_group.save()
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
         assert isinstance(experiment_group.search_manager, HyperbandSearchManager)
         assert isinstance(experiment_group.iteration_manager, HyperbandIterationManager)
 

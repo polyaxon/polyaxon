@@ -7,13 +7,14 @@ from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from repos.utils import assign_code_reference
 
 
-@receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
+@receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")
 @ignore_updates_pre
 @ignore_raw
-def add_experiment_group_code_reference(sender, **kwargs):
+def experiment_group_pre_save(sender, **kwargs):
     instance = kwargs['instance']
+    # Add code reference
     assign_code_reference(instance)
-    # set params
+    # Check if params need to be set
     if not instance.params and instance.specification:
         instance.params = instance.specification.settings.to_dict()
 
