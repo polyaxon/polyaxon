@@ -94,11 +94,11 @@ class GroupSpecification(BaseSpecification):
             'concurrency': self.concurrency
         }
         if SearchAlgorithms.is_grid(self.search_algorithm):
-            if self.settings.grid and self.settings.grid.n_experiments:
-                definition['n_experiments'] = self.settings.grid.n_experiments
+            if self.settings.grid_search and self.settings.grid_search.n_experiments:
+                definition['n_experiments'] = self.settings.grid_search.n_experiments
         if SearchAlgorithms.is_random(self.search_algorithm):
-            if self.settings.random and self.settings.random.n_experiments:
-                definition['n_experiments'] = self.settings.random.n_experiments
+            if self.settings.random_search and self.settings.random_search.n_experiments:
+                definition['n_experiments'] = self.settings.random_search.n_experiments
 
         return definition
 
