@@ -34,7 +34,7 @@ class UploadFilesView(UploadView):
             self.permission_denied(
                 self.request,
                 'The Project `{}` is currently running a Notebook. '
-                'You must stop it before uploading a new version of the code.')
+                'You must stop it before uploading a new version of the code.'.format(project.name))
         repo, _ = Repo.objects.get_or_create(project=project)
         return repo
 
