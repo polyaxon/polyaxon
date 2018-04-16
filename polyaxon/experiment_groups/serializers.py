@@ -64,17 +64,8 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
         return obj.stopped_experiments.count()
 
     def validate_content(self, content):
-        spec = validate_group_spec_content(content)
-
-        if spec.matrix_space > 1:
-            # Resume normal creation
-            return content
-
-        # Raise an error to tell the use to use experiment creation instead
-        raise ValidationError('Current experiment group creation could not be performed.\n'
-                              'The reason is that the specification sent correspond '
-                              'to an independent experiment.\n'
-                              'Please use `create experiment endpoint`.')
+        validate_group_spec_content(content)
+        return content
 
     def validate(self, attrs):
         if self.initial_data.get('check_specification') and not attrs.get('content'):
