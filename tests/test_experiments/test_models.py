@@ -46,11 +46,13 @@ class TestExperimentModel(BaseTest):
         assert experiment.declarations is None
         assert experiment.specification is None
 
+    @override_settings(DEPLOY_RUNNER=False)
     def test_create_experiment_with_no_spec_and_declarations(self):
         experiment = ExperimentFactory(declarations={'lr': 0.1, 'dropout': 0.5}, config=None)
         assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
         assert experiment.specification is None
 
+    @override_settings(DEPLOY_RUNNER=False)
     def test_create_experiment_with_spec_trigger_declarations_creation(self):
         experiment = ExperimentFactory(config=exec_experiment_resources_parsed_content.parsed_data)
         assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
@@ -61,6 +63,64 @@ class TestExperimentModel(BaseTest):
         with patch.object(Experiment, 'set_status') as mock_fct2:
             ExperimentFactory()
         assert mock_fct2.call_count == 1
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_restart(self):
+        experiment = ExperimentFactory()
+        new_experiment = experiment.restart()
+        assert new_experiment.project == experiment.project
+        assert new_experiment.user == experiment.user
+        assert new_experiment.description == experiment.description
+        assert new_experiment.config == experiment.config
+        assert new_experiment.declarations == experiment.declarations
+        assert new_experiment.code_reference == experiment.code_reference
+
+        # Restart with different declarations and description
+        declarations = {
+            'lr': 0.1,
+            'dropout': 0.5
+        }
+        description = 'new description'
+        new_experiment = experiment.restart(declarations=declarations, description=description)
+        assert new_experiment.project == experiment.project
+        assert new_experiment.user == experiment.user
+        assert new_experiment.description == description
+        assert new_experiment.config == experiment.config
+        assert new_experiment.declarations == declarations
+        assert new_experiment.code_reference == experiment.code_reference
+
+    @override_settings(DEPLOY_RUNNER=False)
+    def test_resume(self):
+        experiment = ExperimentFactory()
+        count_experiment = Experiment.objects.count()
+        ExperimentStatus.objects.create(experiment=experiment, status=ExperimentLifeCycle.STOPPED)
+        assert experiment.last_status == ExperimentLifeCycle.STOPPED
+
+        config = experiment.config
+        declarations = experiment.declarations
+
+        # Resume with same config
+        experiment.resume()
+        experiment.refresh_from_db()
+        assert experiment.last_status == ExperimentLifeCycle.RESUMING
+        assert experiment.config == config
+        assert experiment.declarations == declarations
+        assert Experiment.objects.count() == count_experiment
+
+        ExperimentStatus.objects.create(experiment=experiment, status=ExperimentLifeCycle.STOPPED)
+        assert experiment.last_status == ExperimentLifeCycle.STOPPED
+        # Resume with different config
+        new_declarations = {
+            'lr': 0.1,
+            'dropout': 0.5
+        }
+        experiment.resume(declarations=new_declarations)
+        experiment.refresh_from_db()
+        assert experiment.last_status == ExperimentLifeCycle.RESUMING
+        assert Experiment.objects.count() == count_experiment
+        assert experiment.config == config
+        assert experiment.declarations != declarations
+        assert experiment.declarations == new_declarations
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
