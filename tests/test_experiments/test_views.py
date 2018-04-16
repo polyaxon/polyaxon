@@ -1,6 +1,5 @@
 from unittest.mock import patch
 
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from rest_framework import status
 
 from django.test import override_settings, tag
@@ -34,6 +33,7 @@ from factories.factory_projects import ProjectFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
 from jobs.statuses import JobLifeCycle
 from polyaxon.urls import API_V1
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from tests.utils import RUNNER_TEST, BaseViewTest
 
 
@@ -414,8 +414,9 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert resp.data == self.serializer_class(self.object).data
         assert resp.data['num_jobs'] == 2
 
-    def test_get_2(self):
-        # Fix issue#90: Failed to getting experiment when specify resources without framework in environment
+    def test_get_with_resource_reg_90(self):
+        # Fix issue#90:
+        # Failed to getting experiment when specify resources without framework in environment
         spec_content = """---
             version: 1
 
@@ -438,9 +439,9 @@ class TestExperimentDetailViewV1(BaseViewTest):
         project = ProjectFactory(user=self.auth_client.user)
         object = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
         url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
-                                                project.user.username,
-                                                project.name,
-                                                object.sequence)
+                                                 project.user.username,
+                                                 project.name,
+                                                 object.sequence)
 
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
