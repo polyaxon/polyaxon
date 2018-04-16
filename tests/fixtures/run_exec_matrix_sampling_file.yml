@@ -1,0 +1,31 @@
+---
+version: 1
+
+kind: group
+
+project:
+  name: video_prediction
+
+settings:
+  logging:
+    level: INFO
+  matrix:
+    learning_rate:
+      normal: [0, 0.9]
+    dropout:
+      qloguniform: [0, 0.8, 0.1]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+    model:
+      values: [CDNA, DNA, STP]
+
+run:
+  image: my_image
+  install:
+    - pip install some_lib
+  cmd:
+    if:
+      cond: "'DNA' == '{{ model }}'"
+      do: video_prediction_train --model="{{ model }}" --num_masks=1
+      else_do: video_prediction_train --model="{{ model }}" --num_masks=10
+...

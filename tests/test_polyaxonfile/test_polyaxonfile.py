@@ -468,6 +468,37 @@ class TestPolyaxonfile(TestCase):
             **declarations
         )
 
+    def test_run_matrix_sampling_file_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_sampling_file.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.project.name == 'video_prediction'
+        assert isinstance(spec.settings.matrix['model'], MatrixConfig)
+        assert spec.settings.matrix['learning_rate'].to_dict() == {
+            'normal': {'loc': 0, 'scale': 0.9}}
+        assert spec.settings.matrix['dropout'].to_dict() == {
+            'qloguniform': {'high': 0.8, 'low': 0, 'q': 0.1}}
+        assert spec.settings.matrix['activation'].to_dict() == {
+            'pvalues': [['relu', 0.1], ['sigmoid', 0.8]]}
+        assert spec.settings.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
+        assert isinstance(spec.settings, SettingsConfig)
+        declarations = spec.matrix_declaration_test
+        spec = spec.get_experiment_spec(declarations)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.settings is not None
+        assert spec.settings.logging is not None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.model is None
+        run_exec = spec.run_exec
+        assert isinstance(run_exec, RunExecConfig)
+        declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
+        assert run_exec.cmd == ('video_prediction_train '
+                                '--model="{model}" '
+                                '--num_masks={num_masks}').format(
+            **declarations
+        )
+
     def test_distributed_tensorflow_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/distributed_tensorflow_file.yml'))

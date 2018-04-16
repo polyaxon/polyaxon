@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import copy
+
 import numpy as np
 import six
 
@@ -179,6 +181,7 @@ class MatrixConfig(BaseConfig):
     def sample(self, size=None, rand_generator=None):
         size = None if size == 1 else size
         key, value = list(six.iteritems(self.to_dict()))[0]
+        value = copy.deepcopy(value)
         if key in {'values', 'range', 'linspace', 'logspace', 'geomspace'}:
             value = self.to_numpy()
             rand_generator = rand_generator or np.random
