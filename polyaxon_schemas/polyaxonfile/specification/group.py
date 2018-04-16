@@ -107,4 +107,4 @@ class GroupSpecification(BaseSpecification):
         if not self.matrix:
             return {}
 
-        return {k: v.to_numpy()[0] for k, v in six.iteritems(self.matrix)}
+        return {k: v.sample() for k, v in six.iteritems(self.matrix)}
