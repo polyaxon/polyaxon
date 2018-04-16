@@ -123,7 +123,7 @@ class ExperimentDetailSerializer(ExperimentSerializer):
     class Meta(ExperimentSerializer.Meta):
         fields = ExperimentSerializer.Meta.fields + (
             'config', 'original', 'original_experiment',
-            'description', 'config', 'declarations', 'resources',
+            'description', 'config', 'declarations'
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}
 
