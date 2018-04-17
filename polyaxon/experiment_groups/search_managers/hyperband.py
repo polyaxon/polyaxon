@@ -56,9 +56,9 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
         # Defines configuration downsampling/elimination rate (default = 3)
         self.eta = self.params_config.hyperband.eta
         # number of times to run hyperband (brackets)
-        self.s_max = int(math.log(self.max_iter) / math.log(self.eta)) + 1
+        self.s_max = int(math.log(self.max_iter) / math.log(self.eta))
         # i.e.  # of times to repeat the outer loops over the tradeoffs `s`
-        self.B = self.s_max * self.max_iter  # budget per bracket of successive halving
+        self.B = (self.s_max + 1) * self.max_iter  # budget per bracket of successive halving
 
         # if bounded:
         #     B = int(numpy.floor(logeta(max_units / min_units)) + 1) * max_units
@@ -83,7 +83,7 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
 
     def get_n_config_to_keep(self, n_suggestions, bracket_iteration):
         """Return the number of configs to keep and resume."""
-        n_configs = n_suggestions * self.eta ** (-bracket_iteration)
+        n_configs = n_suggestions * (self.eta ** -bracket_iteration)
         return int(n_configs / self.eta)
 
     def get_n_config_to_keep_for_iteration(self, iteration, bracket_iteration):
