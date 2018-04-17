@@ -16,6 +16,8 @@ theme:
 
 extra:
   social:
+    - type: 'globe'
+      link: 'https://polyaxon.com'
     - type: 'github'
       link: 'https://github.com/polyaxon'
     - type: 'cubes'

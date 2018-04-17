@@ -23,3 +23,16 @@
 .md-typeset .codehilite, .md-typeset .highlight {
     background-color: hsla(0, 0.3%, 93%, .5);
 }
+
+.md-footer-nav {
+    background: #485563;
+}
+
+@media only screen and (min-width: 76.25em) {
+  .md-main__inner {
+    max-width: none;
+  }
+  .md-sidebar--secondary {
+    margin-left: 100% !important;
+  }
+}
