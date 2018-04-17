@@ -19,15 +19,16 @@ from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
-from factories.fixtures import experiment_group_spec_content_early_stopping, \
-    experiment_group_spec_content_hyperband, \
+from factories.fixtures import (
+    experiment_group_spec_content_early_stopping,
+    experiment_group_spec_content_hyperband,
     experiment_group_spec_content_hyperband_trigger_reschedule
+)
 from polyaxon.urls import API_V1
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
-
 from runner.hp_search.hyperband import hp_hyperband_start
 from runner.tasks.experiment_groups import stop_group_experiments
 from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest

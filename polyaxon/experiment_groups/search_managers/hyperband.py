@@ -1,10 +1,9 @@
 import math
 
-from polyaxon_schemas.utils import SearchAlgorithms
-
 from experiment_groups.schemas import HyperbandIterationConfig
 from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 from experiment_groups.search_managers.utils import get_random_suggestions
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class HyperbandSearchManager(BaseSearchAlgorithmManager):

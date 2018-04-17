@@ -1,9 +1,8 @@
 import math
 
-from django.test import override_settings
 from unittest.mock import patch
 
-from polyaxon_schemas.matrix import MatrixConfig
+from django.test import override_settings
 
 from experiment_groups.models import ExperimentGroupIteration
 from experiment_groups.search_managers import (
@@ -17,6 +16,7 @@ from factories.fixtures import (
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
+from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.settings import SettingsConfig
 from tests.utils import BaseTest
 
