@@ -1,9 +1,14 @@
+from polyaxon_schemas.utils import SearchAlgorithms
+
 from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 from experiment_groups.search_managers.utils import get_random_suggestions
 
 
 class RandomSearchManager(BaseSearchAlgorithmManager):
     """Random search algorithm manager for hyperparameter optimization."""
+
+    NAME = SearchAlgorithms.RANDOM
+
     def get_suggestions(self, iteration=None):
         """Return a list of suggestions based on random search.
 

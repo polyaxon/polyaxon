@@ -1,10 +1,14 @@
 import itertools
 
 from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class GridSearchManager(BaseSearchAlgorithmManager):
     """Grid search algorithm manager for hyperparameter optimization."""
+
+    NAME = SearchAlgorithms.GRID
+
     def get_suggestions(self, iteration=None):
         """Return a list of suggestions based on grid search.
 

@@ -1,11 +1,9 @@
 import math
 
+from polyaxon_schemas.utils import SearchAlgorithms
+
 from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 from experiment_groups.search_managers.utils import get_random_suggestions
-
-
-def get_best_config():
-    pass
 
 
 class HyperbandSearchManager(BaseSearchAlgorithmManager):
@@ -47,6 +45,8 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
 
         return results
     """
+
+    NAME = SearchAlgorithms.HYPERBAND
 
     def __init__(self, params_config):
         super(HyperbandSearchManager, self).__init__(params_config=params_config)
