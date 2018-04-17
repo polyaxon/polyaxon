@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from polyaxon_schemas.matrix import MatrixConfig
 
+from experiment_groups.models import ExperimentGroupIteration
 from experiment_groups.search_managers import (
     GridSearchManager,
     HyperbandSearchManager,
@@ -176,14 +177,15 @@ class TestHyperbandSearchManager(BaseTest):
             'hyperband': {
                 'max_iter': 81,
                 'eta': 3,
-                'resource': 'steps',
+                'resource': 'size',
                 'resume': False,
                 'metric': {'name': 'loss', 'optimization': 'minimize'}
             },
             'matrix': {
                 'feature1': {'values': [1, 2, 3]},
                 'feature2': {'linspace': [1, 2, 5]},
-                'feature3': {'range': [1, 5, 1]}
+                'feature3': {'range': [1, 5, 1]},
+                'feature4': {'range': [1, 5, 1]}
             }
         })
         self.manager2 = HyperbandSearchManager(params_config=params_config)
@@ -487,3 +489,108 @@ class TestHyperbandSearchManager(BaseTest):
         assert self.manager1.should_reduce_configs(iteration=2, bracket_iteration=0) is True
         assert self.manager1.should_reduce_configs(iteration=2, bracket_iteration=1) is False
         assert self.manager1.should_reduce_configs(iteration=5, bracket_iteration=0) is False
+
+    def test_get_suggestions_raises_for_wrong_iterations(self):
+        with self.assertRaises(ValueError):
+            self.manager1.get_suggestions()
+
+        with self.assertRaises(ValueError):
+            self.manager1.get_suggestions(1)
+
+    def test_get_suggestions_ff(self):
+        # Manager1
+        experiment_group = ExperimentGroupFactory(
+            params=self.manager1.params_config.to_dict()
+        )
+        # Fake iteration
+        ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={
+                'iteration': 0,
+                'bracket_iteration': 2
+            })
+        suggestions = self.manager1.get_suggestions(
+            iteration_config=experiment_group.iteration_config)
+
+        assert len(suggestions) == 9
+        for suggestion in suggestions:
+            assert 'steps' in suggestion
+            self.almost_equal(suggestion['steps'], 9.99)
+            assert 'feature1' in suggestion
+            assert 'feature2' in suggestion
+            assert 'feature3' in suggestion
+
+        # Fake iteration
+        ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={
+                'iteration': 1,
+                'bracket_iteration': 0
+            })
+        suggestions = self.manager1.get_suggestions(
+            iteration_config=experiment_group.iteration_config)
+        assert len(suggestions) == 5
+        for suggestion in suggestions:
+            assert 'steps' in suggestion
+            self.almost_equal(suggestion['steps'], 3.33)
+            assert 'feature1' in suggestion
+            assert 'feature2' in suggestion
+            assert 'feature3' in suggestion
+
+        # Fake iteration
+        ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={
+                'iteration': 2,
+                'bracket_iteration': 0
+            })
+        suggestions = self.manager1.get_suggestions(
+            iteration_config=experiment_group.iteration_config)
+        assert len(suggestions) == 3
+        for suggestion in suggestions:
+            assert 'steps' in suggestion
+            self.almost_equal(suggestion['steps'], 9.99)
+            assert 'feature1' in suggestion
+            assert 'feature2' in suggestion
+            assert 'feature3' in suggestion
+
+        # Manager2
+        experiment_group = ExperimentGroupFactory(
+            params=self.manager2.params_config.to_dict()
+        )
+
+        # Fake iteration
+        ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={
+                'iteration': 2,
+                'bracket_iteration': 0
+            })
+        suggestions = self.manager2.get_suggestions(
+            iteration_config=experiment_group.iteration_config)
+        assert len(suggestions) == 15
+        for suggestion in suggestions:
+            assert 'size' in suggestion
+            self.almost_equal(suggestion['size'], 9)
+            assert 'feature1' in suggestion
+            assert 'feature2' in suggestion
+            assert 'feature3' in suggestion
+            assert 'feature4' in suggestion
+
+        # Fake iteration
+        ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={
+                'iteration': 4,
+                'bracket_iteration': 0
+            })
+        suggestions = self.manager2.get_suggestions(
+            iteration_config=experiment_group.iteration_config)
+        assert len(suggestions) == 5
+        for suggestion in suggestions:
+            assert 'size' in suggestion
+            self.almost_equal(suggestion['size'], 81)
+            assert 'feature1' in suggestion
+            assert 'feature2' in suggestion
+            assert 'feature3' in suggestion
+            assert 'feature4' in suggestion

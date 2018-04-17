@@ -9,7 +9,7 @@ from polyaxon_schemas.base import BaseConfig
 class HyperbandIterationSchema(Schema):
     iteration = fields.Int()
     bracket_iteration = fields.Int()
-    experiment_ids = fields.List(fields.Int())
+    experiment_ids = fields.List(fields.Int(), allow_none=True)
     experiments_metrics = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                                       allow_none=True)
 
@@ -28,7 +28,7 @@ class HyperbandIterationSchema(Schema):
 class HyperbandIterationConfig(BaseConfig):
     SCHEMA = HyperbandIterationSchema
 
-    def __init__(self, iteration, bracket_iteration, experiment_ids, experiments_metrics=None):
+    def __init__(self, iteration, bracket_iteration, experiment_ids=None, experiments_metrics=None):
         self.iteration = iteration
         self.bracket_iteration = bracket_iteration
         self.experiment_ids = experiment_ids

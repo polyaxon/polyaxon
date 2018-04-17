@@ -123,7 +123,7 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
             iteration=iteration_config.iteration,
             bracket_iteration=iteration_config.bracket_iteration)
         suggestion_params = {
-            self.params_config.resource: n_resources
+            self.params_config.hyperband.resource: n_resources
         }
         return get_random_suggestions(matrix=self.params_config.matrix,
                                       n_suggestions=n_configs,
