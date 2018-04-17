@@ -14,7 +14,7 @@ from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 
 
 @click.command()
-@click.option('--async', is_flag=True, default=True, help='Upload synchronously.')
+@click.option('--async', is_flag=True, default=False, help='Upload asynchronously.')
 def upload(async):  # pylint:disable=assign-to-new-keyword
     """Upload code of the current directory while respecting the .polyaxonignore file."""
     project = ProjectManager.get_config_or_raise()
