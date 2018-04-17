@@ -2,6 +2,7 @@ import math
 
 from polyaxon_schemas.utils import SearchAlgorithms
 
+from experiment_groups.schemas import HyperbandIterationConfig
 from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 from experiment_groups.search_managers.utils import get_random_suggestions
 
@@ -112,15 +113,21 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
         n_resources = self.get_resources(bracket=bracket)
         return self.get_n_resources(n_resources=n_resources, bracket_iteration=bracket_iteration)
 
-    def get_suggestions(self, iteration=None):
+    def get_suggestions(self, iteration_config=None):
         """Return a list of suggestions/arms based on hyperband."""
-        bracket = self.get_bracket(iteration=iteration)
+        if not iteration_config or not isinstance(iteration_config, HyperbandIterationConfig):
+            raise ValueError('Hyperband get suggestions requires an iteration.')
+        bracket = self.get_bracket(iteration=iteration_config.iteration)
         n_configs = self.get_n_configs(bracket=bracket)
-        # n_resources = self.get_resources(bracket=bracket)
-        # get_n_iteration_resources = self.get_n_resources(
-        #     n_resources=n_resources, bracket_iteration=)
+        n_resources = self.get_n_resources_for_iteration(
+            iteration=iteration_config.iteration,
+            bracket_iteration=iteration_config.bracket_iteration)
+        suggestion_params = {
+            self.params_config.resource: n_resources
+        }
         return get_random_suggestions(matrix=self.params_config.matrix,
-                                      n_suggestions=n_configs)
+                                      n_suggestions=n_configs,
+                                      suggestion_params=suggestion_params)
 
     def should_reschedule(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""

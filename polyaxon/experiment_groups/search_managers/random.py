@@ -9,7 +9,7 @@ class RandomSearchManager(BaseSearchAlgorithmManager):
 
     NAME = SearchAlgorithms.RANDOM
 
-    def get_suggestions(self, iteration=None):
+    def get_suggestions(self, iteration_config=None):
         """Return a list of suggestions based on random search.
 
         Params:

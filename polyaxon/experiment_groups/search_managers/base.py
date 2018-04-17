@@ -9,5 +9,5 @@ class BaseSearchAlgorithmManager(object):
                 'with the search algorithm `{}` defined in the config.'.format(
                     self.NAME, self.params_config.search_algorithm))
 
-    def get_suggestions(self, iteration=None):
+    def get_suggestions(self, iteration_config=None):
         raise NotImplemented  # noqa

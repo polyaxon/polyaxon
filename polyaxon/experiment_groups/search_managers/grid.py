@@ -9,7 +9,7 @@ class GridSearchManager(BaseSearchAlgorithmManager):
 
     NAME = SearchAlgorithms.GRID
 
-    def get_suggestions(self, iteration=None):
+    def get_suggestions(self, iteration_config=None):
         """Return a list of suggestions based on grid search.
 
         Params:

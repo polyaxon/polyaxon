@@ -1,3 +1,4 @@
+import copy
 import uuid
 
 
@@ -29,12 +30,14 @@ class Suggestion(object):
         return uuid.uuid5(uuid.NAMESPACE_DNS, self.__repr__())
 
 
-def get_random_suggestions(matrix, n_suggestions):
+def get_random_suggestions(matrix, n_suggestions, suggestion_params=None):
     if not n_suggestions:
         raise ValueError('This search algorithm requires `n_experiments`.')
     suggestions = []
+    suggestion_params = suggestion_params or {}
     while n_suggestions > 0:
-        params = {k: v.sample() for k, v in matrix.items()}
+        params = copy.deepcopy(suggestion_params)
+        params.update({k: v.sample() for k, v in matrix.items()})
         suggestion = Suggestion(params=params)
         if suggestion not in suggestions:
             suggestions.append(suggestion)

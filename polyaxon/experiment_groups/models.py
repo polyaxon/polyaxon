@@ -204,7 +204,7 @@ class ExperimentGroup(DiffModel, DescribableModel):
     def get_suggestions(self):
         iteration_config = self.iteration_config
         if iteration_config:
-            return self.search_manager.get_suggestions(iteration=iteration_config.iteration)
+            return self.search_manager.get_suggestions(iteration_config=iteration_config)
         return self.search_manager.get_suggestions()
 
 
