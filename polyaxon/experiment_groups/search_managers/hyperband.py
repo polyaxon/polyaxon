@@ -132,7 +132,7 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
     def should_reschedule(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
         bracket = self.get_bracket(iteration=iteration)
-        if bracket_iteration <= bracket:
+        if bracket_iteration < bracket:
             # The bracket is still processing
             return False
 

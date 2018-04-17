@@ -463,3 +463,27 @@ class TestHyperbandSearchManager(BaseTest):
 
         self.almost_equal(
             self.manager2.get_n_resources_for_iteration(iteration=4, bracket_iteration=0), 81)
+
+    def test_should_reschedule(self):
+        assert self.manager1.should_reschedule(iteration=0, bracket_iteration=0) is False
+        assert self.manager1.should_reschedule(iteration=0, bracket_iteration=1) is False
+        assert self.manager1.should_reschedule(iteration=0, bracket_iteration=2) is True
+        assert self.manager1.should_reschedule(iteration=0, bracket_iteration=3) is True
+        assert self.manager1.should_reschedule(iteration=1, bracket_iteration=0) is False
+        assert self.manager1.should_reschedule(iteration=1, bracket_iteration=1) is True
+        assert self.manager1.should_reschedule(iteration=1, bracket_iteration=2) is True
+        assert self.manager1.should_reschedule(iteration=2, bracket_iteration=0) is False
+        assert self.manager1.should_reschedule(iteration=2, bracket_iteration=1) is False
+        assert self.manager1.should_reschedule(iteration=5, bracket_iteration=0) is False
+
+    def test_should_reduce_configs(self):
+        assert self.manager1.should_reduce_configs(iteration=0, bracket_iteration=0) is True
+        assert self.manager1.should_reduce_configs(iteration=0, bracket_iteration=1) is True
+        assert self.manager1.should_reduce_configs(iteration=0, bracket_iteration=2) is False
+        assert self.manager1.should_reduce_configs(iteration=0, bracket_iteration=3) is False
+        assert self.manager1.should_reduce_configs(iteration=1, bracket_iteration=0) is True
+        assert self.manager1.should_reduce_configs(iteration=1, bracket_iteration=1) is False
+        assert self.manager1.should_reduce_configs(iteration=1, bracket_iteration=2) is False
+        assert self.manager1.should_reduce_configs(iteration=2, bracket_iteration=0) is True
+        assert self.manager1.should_reduce_configs(iteration=2, bracket_iteration=1) is False
+        assert self.manager1.should_reduce_configs(iteration=5, bracket_iteration=0) is False
