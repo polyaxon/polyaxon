@@ -52,6 +52,7 @@ class TestHyperbandIterationManagers(BaseTest):
         assert iteration.data == {
             'iteration': 1,
             'bracket_iteration': 0,
+            'experiment_ids': None,
             'experiments_metrics': None,
         }
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
