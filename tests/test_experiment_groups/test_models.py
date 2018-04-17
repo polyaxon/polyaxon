@@ -19,12 +19,16 @@ from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
-from factories.fixtures import experiment_group_spec_content_early_stopping
+from factories.fixtures import experiment_group_spec_content_early_stopping, \
+    experiment_group_spec_content_hyperband, \
+    experiment_group_spec_content_hyperband_trigger_reschedule
 from polyaxon.urls import API_V1
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
+
+from runner.hp_search.hyperband import hp_hyperband_start
 from runner.tasks.experiment_groups import stop_group_experiments
 from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
@@ -424,6 +428,53 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.running_experiments.count() == 1
         assert spawner_mock_fct.call_count == 1  # Should be stopped with ths function
         assert experiment_group.stopped_experiments.count() == 2
+
+    @tag(RUNNER_TEST)
+    def test_hyperband_rescheduling(self):
+        with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct:
+            ExperimentGroupFactory(content=experiment_group_spec_content_hyperband)
+
+        assert mock_fct.call_count == 1
+
+        with patch('runner.hp_search.hyperband.hp_hyperband_iterate.delay') as mock_fct1:
+            with patch('runner.tasks.experiments.build_experiment.delay') as mock_fct2:
+                ExperimentGroupFactory(
+                    content=experiment_group_spec_content_hyperband_trigger_reschedule)
+
+        assert mock_fct1.call_count == 1
+        assert mock_fct2.call_count == 5
+
+        # Fake reschedule
+        with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct:
+            experiment_group = ExperimentGroupFactory(
+                content=experiment_group_spec_content_hyperband_trigger_reschedule)
+        assert mock_fct.call_count == 1
+        ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={
+                'iteration': 1,
+                'bracket_iteration': 21
+            })
+        with patch('runner.hp_search.hyperband.hp_hyperband_create.delay') as mock_fct1:
+            with patch('runner.tasks.experiments.build_experiment.delay') as mock_fct2:
+                hp_hyperband_start(experiment_group.id)
+
+        assert mock_fct1.call_count == 1
+        assert mock_fct2.call_count == 5
+
+        # Fake reduce
+        with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct:
+            experiment_group = ExperimentGroupFactory(
+                content=experiment_group_spec_content_hyperband_trigger_reschedule)
+        assert mock_fct.call_count == 1
+
+        with patch('runner.tasks.experiments.build_experiment.delay') as mock_fct1:
+            with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct2:
+                with patch.object(HyperbandIterationManager, 'reduce_configs') as mock_fct3:
+                    hp_hyperband_start(experiment_group.id)
+        assert mock_fct1.call_count == 5
+        assert mock_fct2.call_count == 1
+        assert mock_fct3.call_count == 1
 
 
 class TestExperimentGroupCommit(BaseViewTest):

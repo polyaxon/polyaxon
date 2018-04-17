@@ -45,10 +45,17 @@ class TestHyperbandIterationManagers(BaseTest):
     def test_create_iteration(self):
         assert ExperimentGroupIteration.objects.count() == 0
         experiment_ids = [self.experiment_group.experiments.first().id]
-        iteration = self.iteration_manager.create_iteration(experiment_ids=experiment_ids)
+        iteration = self.iteration_manager.create_iteration()
         assert isinstance(iteration, ExperimentGroupIteration)
         assert ExperimentGroupIteration.objects.count() == 1
         assert iteration.experiment_group == self.experiment_group
+        assert iteration.data == {
+            'iteration': 1,
+            'bracket_iteration': 0,
+            'experiments_metrics': None,
+        }
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
+        iteration.refresh_from_db()
         assert iteration.data == {
             'iteration': 1,
             'bracket_iteration': 0,
@@ -63,7 +70,8 @@ class TestHyperbandIterationManagers(BaseTest):
     def test_update_iteration(self):
         assert ExperimentGroupIteration.objects.count() == 0
         experiment_ids = [self.experiment_group.experiments.first().id]
-        iteration = self.iteration_manager.create_iteration(experiment_ids=experiment_ids)
+        iteration = self.iteration_manager.create_iteration()
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
         assert iteration.data['experiments_metrics'] is None
         self.iteration_manager.update_iteration()
         assert ExperimentGroupIteration.objects.count() == 1
@@ -81,7 +89,8 @@ class TestHyperbandIterationManagers(BaseTest):
     def test_get_reduced_configs(self):
         assert ExperimentGroupIteration.objects.count() == 0
         experiment_ids = [self.experiment_group.experiments.first().id]
-        iteration = self.iteration_manager.create_iteration(experiment_ids=experiment_ids)
+        iteration = self.iteration_manager.create_iteration()
+        self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
         assert iteration.data['experiments_metrics'] is None
         self.iteration_manager.update_iteration()
         assert ExperimentGroupIteration.objects.count() == 1

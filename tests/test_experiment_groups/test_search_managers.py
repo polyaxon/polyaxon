@@ -497,7 +497,7 @@ class TestHyperbandSearchManager(BaseTest):
         with self.assertRaises(ValueError):
             self.manager1.get_suggestions(1)
 
-    def test_get_suggestions_ff(self):
+    def test_get_suggestions(self):
         # Manager1
         experiment_group = ExperimentGroupFactory(
             params=self.manager1.params_config.to_dict()

@@ -5,9 +5,9 @@ from runner.hp_search import base
 
 
 def create(experiment_group):
+    experiment_group.iteration_manager.create_iteration()
     experiments = base.create_group_experiments(experiment_group=experiment_group)
-    experiment_group.iteration_manager.create_iteration(
-        experiment_group=experiment_group,
+    experiment_group.iteration_manager.add_iteration_experiments(
         experiment_ids=[xp.id for xp in experiments])
     hp_hyperband_start.apply_async((experiment_group.id,), countdown=1)
 

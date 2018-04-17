@@ -128,6 +128,47 @@ experiment_group_spec_content_hyperband = """---
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
+
+experiment_group_spec_content_hyperband_trigger_reschedule = """---
+    version: 1
+
+    kind: group
+
+    project:
+      name: project1
+
+    settings:
+      concurrency: 200
+      hyperband:
+        max_iter: 10
+        eta: 3
+        resource: steps
+        metric: 
+          name: loss
+          optimization: minimize
+        resume: False
+      early_stopping:
+        - metric: precision
+          value: 0.9
+        - metric: loss
+          value: 0.1
+          optimization: minimize 
+      matrix:
+        lr:
+          values: [0.01, 0.1, 0.5]
+        feature2': 
+          linspace: [1, 2, 5]
+        feature3': 
+          range: [1, 5, 1]
+        feature4': 
+          range: [1, 5, 1]
+
+    run:
+      image: my_image
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
+
 experiment_spec_content = """---
     version: 1
     
