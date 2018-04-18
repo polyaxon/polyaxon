@@ -160,6 +160,13 @@ class ResourceConfig(BaseConfig):
         self.name = name
         self.type = type
 
+    def cast_value(self, value):
+        if ResourceTypes.is_int(self.type):
+            return int(value)
+        if ResourceTypes.is_float(self.type):
+            return float(value)
+        return value
+
 
 class HyperbandSchema(Schema):
     max_iter = fields.Int(validate=validate.Range(min=1))
