@@ -3,7 +3,7 @@ import math
 from experiment_groups.schemas import HyperbandIterationConfig
 from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 from experiment_groups.search_managers.utils import get_random_suggestions
-from polyaxon_schemas.utils import ResourceTypes, SearchAlgorithms
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class HyperbandSearchManager(BaseSearchAlgorithmManager):
@@ -121,10 +121,7 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
         n_resources = self.get_n_resources_for_iteration(
             iteration=iteration_config.iteration,
             bracket_iteration=iteration_config.bracket_iteration)
-        if ResourceTypes.is_int(self.params_config.hyperband.resource.name):
-            n_resources = int(n_resources)
-        elif ResourceTypes.is_float(self.params_config.hyperband.resource.name):
-            n_resources = float(n_resources)
+        n_resources = self.params_config.hyperband.resource.cast_value(n_resources)
         suggestion_params = {
             self.params_config.hyperband.resource.name: n_resources
         }

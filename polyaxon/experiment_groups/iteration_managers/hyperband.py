@@ -87,16 +87,18 @@ class HyperbandIterationManager(BaseIterationManger):
         experiment_ids = self.get_reduced_configs()
         experiments = self.experiment_group.experiments.filter(id__in=experiment_ids)
         iteration_config = self.experiment_group.iteration_config
+        params_config = self.experiment_group.params_config
         status_message = 'Hyperband iteration: {}, bracket iteration: {}'.format(
             iteration_config.iteration,
             iteration_config.bracket_iteration
         )
         resource_value = self.experiment_group.search_manager.get_resources_for_iteration(
             iteration=iteration_config.iteration)
-        resource_name = self.experiment_group.params_config.hyperband.resource
+        resource_name = params_config.hyperband.resource.name
+        resource_value = params_config.hyperband.resource.cast_value(resource_value)
 
         # Check if we need to resume or restart the experiments
-        if self.experiment_group.params_config.hyperband.resume:
+        if params_config.hyperband.resume:
             for experiment in experiments:
                 declarations = experiment.declarations
                 declarations[resource_name] = resource_value
