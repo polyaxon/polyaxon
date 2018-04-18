@@ -54,5 +54,5 @@ def hp_hyperband_iterate(experiment_group_id):
 
     if search_manager.should_reduce_configs(iteration=iteration_config.iteration,
                                             bracket_iteration=iteration_config.bracket_iteration):
-        iteration_manager.reduce_configs(experiment_group=experiment_group)
+        iteration_manager.reduce_configs()
         hp_hyperband_start.delay(experiment_group_id=experiment_group_id)
