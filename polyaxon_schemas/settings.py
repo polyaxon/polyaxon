@@ -156,7 +156,7 @@ class ResourceConfig(BaseConfig):
 
     def __init__(self,
                  name,
-                 type=ResourceTypes.FLOAT):
+                 type=ResourceTypes.FLOAT):  # noqa, redefined-builtin `len`
         self.name = name
         self.type = type
 
