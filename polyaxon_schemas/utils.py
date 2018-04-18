@@ -399,6 +399,24 @@ class Optimization(object):
         return value in cls.MINIMIZE_VALUES
 
 
+class ResourceTypes(object):
+    INT = 'int'
+    FLOAT = 'float'
+
+    INT_VALUES = [INT, INT.upper(), INT.capitalize()]
+    FLOAT_VALUES = [FLOAT, FLOAT.upper(), FLOAT.capitalize()]
+
+    VALUES = INT_VALUES + FLOAT_VALUES
+
+    @classmethod
+    def is_int(cls, value):
+        return value in cls.INT_VALUES
+
+    @classmethod
+    def is_float(cls, value):
+        return value in cls.FLOAT_VALUES
+
+
 class EarlyStoppingPolicy(object):
     EXPERIMENT = 'experiment'
     GROUP = 'group'

@@ -80,7 +80,7 @@ class TestSettingConfigs(TestCase):
         config_dict = {
             'max_iter': 10,
             'eta': 3,
-            'resource': 'steps',
+            'resource': {'name': 'steps', 'type': 'int'},
             'resume': False,
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict()
         }
@@ -164,7 +164,7 @@ class TestSettingConfigs(TestCase):
         config_dict['hyperband'] = {
             'max_iter': 10,
             'eta': 3,
-            'resource': 'steps',
+            'resource': {'name': 'steps', 'type': 'int'},
             'resume': False,
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict()
         }

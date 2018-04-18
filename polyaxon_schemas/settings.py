@@ -18,7 +18,12 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.logging import LoggingConfig, LoggingSchema
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.utils import EarlyStoppingPolicy, Optimization, SearchAlgorithms
+from polyaxon_schemas.utils import (
+    EarlyStoppingPolicy,
+    Optimization,
+    ResourceTypes,
+    SearchAlgorithms
+)
 
 
 class EarlyStoppingMetricSchema(Schema):
@@ -129,10 +134,37 @@ class SearchMetricConfig(BaseConfig):
         self.optimization = optimization
 
 
+class ResourceSchema(Schema):
+    name = fields.Str()
+    type = fields.Str(allow_none=True, validate=validate.OneOf(ResourceTypes.VALUES))
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return ResourceConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return ResourceConfig.remove_reduced_attrs(data)
+
+
+class ResourceConfig(BaseConfig):
+    SCHEMA = ResourceSchema
+    IDENTIFIER = 'resource'
+
+    def __init__(self,
+                 name,
+                 type=ResourceTypes.FLOAT):
+        self.name = name
+        self.type = type
+
+
 class HyperbandSchema(Schema):
     max_iter = fields.Int(validate=validate.Range(min=1))
     eta = fields.Float(validate=validate.Range(min=0))
-    resource = fields.Str()
+    resource = fields.Nested(ResourceSchema)
     metric = fields.Nested(SearchMetricSchema)
     resume = fields.Boolean(allow_none=True)
 
