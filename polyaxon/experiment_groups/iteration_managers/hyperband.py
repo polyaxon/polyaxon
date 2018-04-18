@@ -1,5 +1,7 @@
 import logging
 
+from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
+
 from experiment_groups.iteration_managers.base import BaseIterationManger
 from experiment_groups.schemas import HyperbandIterationConfig
 from polyaxon_schemas.utils import Optimization
@@ -98,15 +100,19 @@ class HyperbandIterationManager(BaseIterationManger):
         resource_value = params_config.hyperband.resource.cast_value(resource_value)
 
         # Check if we need to resume or restart the experiments
-        if params_config.hyperband.resume:
-            for experiment in experiments:
-                declarations = experiment.declarations
-                declarations[resource_name] = resource_value
-                experiment.resume(declarations=declarations, message=status_message)
-        else:
-            for experiment in experiments:
-                declarations = experiment.declarations
-                declarations[resource_name] = resource_value
+        for experiment in experiments:
+            declarations = experiment.declarations
+            declarations[resource_name] = resource_value
+            specification = ExperimentSpecification(
+                values=[experiment.specification.parsed_data, declarations])
+
+            if params_config.hyperband.resume:
+                experiment.resume(
+                    declarations=declarations,
+                    config=specification.parsed_data,
+                    message=status_message)
+            else:
                 experiment.restart(
                     experiment_group=self.experiment_group,
+                    config=specification.parsed_data,
                     declarations=declarations)
