@@ -286,7 +286,7 @@ class TestExperimentGroupModel(BaseTest):
             'hyperband': {
                 'max_iter': 10,
                 'eta': 3,
-                'resource': 'steps',
+                'resource': {'name': 'steps', 'type': 'int'},
                 'resume': False,
                 'metric': {'name': 'loss', 'optimization': 'minimize'}
             },

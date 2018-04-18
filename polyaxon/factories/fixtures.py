@@ -108,7 +108,9 @@ experiment_group_spec_content_hyperband = """---
       hyperband:
         max_iter: 5
         eta: 3
-        resource: steps
+        resource:
+          name: steps
+          type: int
         metric: 
           name: loss
           optimization: minimize
@@ -142,7 +144,9 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
       hyperband:
         max_iter: 10
         eta: 3
-        resource: steps
+        resource:
+          name: steps
+          type: int
         metric: 
           name: loss
           optimization: minimize

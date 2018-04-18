@@ -160,7 +160,7 @@ class TestHyperbandSearchManager(BaseTest):
             'hyperband': {
                 'max_iter': 10,
                 'eta': 3,
-                'resource': 'steps',
+                'resource': {'name': 'steps', 'type': 'int'},
                 'resume': False,
                 'metric': {'name': 'loss', 'optimization': 'minimize'}
             },
@@ -177,7 +177,7 @@ class TestHyperbandSearchManager(BaseTest):
             'hyperband': {
                 'max_iter': 81,
                 'eta': 3,
-                'resource': 'size',
+                'resource': {'name': 'size', 'type': 'int'},
                 'resume': False,
                 'metric': {'name': 'loss', 'optimization': 'minimize'}
             },
