@@ -123,9 +123,9 @@ class HyperbandIterationManager(BaseIterationManger):
         for experiment in experiments:
             declarations = experiment.declarations
             declarations[resource_name] = resource_value
-            declarations = {'declarations': declarations}
+            declarations_spec = {'declarations': declarations}
             specification = ExperimentSpecification(
-                values=[experiment.specification.parsed_data, declarations])
+                values=[experiment.specification.parsed_data, declarations_spec])
             status_message = 'Hyperband iteration: {}, bracket iteration: {}'.format(
                 iteration_config.iteration,
                 iteration_config.bracket_iteration)
@@ -138,5 +138,5 @@ class HyperbandIterationManager(BaseIterationManger):
             else:
                 experiment.restart(
                     experiment_group=self.experiment_group,
-                    config=specification.parsed_data,
-                    declarations=declarations)
+                    declarations=declarations,
+                    config=specification.parsed_data)
