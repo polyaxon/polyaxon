@@ -199,20 +199,20 @@ If no persistence is used Polyaxon will use an empty dir `{}`.
 | `persistence.repos.accessMode`    | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteOnce`
 
 
-**uploads**: temporary volume where Polyaxon uploaded data, code, files, ...
+**upload**: temporary volume where Polyaxon uploaded data, code, files, ...
 
 If no persistence is used Polyaxon will use an empty dir `{}`.
 
 | Parameter                           | Description                                       | Default
 | ------------------------------------| --------------------------------------------------| ----------------------------------------------------------
-| `persistence.uploads.enabled`       | use persistence for uploads                       | `false`
-| `persistence.uploads.name`          | Name of the PVC                                   | `polyaxon-pvc-repos`
-| `persistence.uploads.storageClass`  | Storage class of backing PVC                      | ``
-| `persistence.uploads.existingClaim` | Name of an existing PVC                           | ``
-| `persistence.uploads.size`          | Size of data volume                               | `5Gi`
-| `persistence.uploads.mountPath`     | Path to mount the volume at, to use other image   | `/repos`
-| `persistence.uploads.subPath`       | Subpath to mount the volume at.                   | ``
-| `persistence.uploads.accessMode`    | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteOnce`
+| `persistence.upload.enabled`        | use persistence for upload                        | `false`
+| `persistence.upload.name`           | Name of the PVC                                   | `polyaxon-pvc-repos`
+| `persistence.upload.storageClass`   | Storage class of backing PVC                      | ``
+| `persistence.upload.existingClaim`  | Name of an existing PVC                           | ``
+| `persistence.upload.size`           | Size of data volume                               | `5Gi`
+| `persistence.upload.mountPath`      | Path to mount the volume at, to use other image   | `/repos`
+| `persistence.upload.subPath`        | Subpath to mount the volume at.                   | ``
+| `persistence.upload.accessMode`     | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteOnce`
 
 
 ### Node and Deployment manipulation
