@@ -83,5 +83,10 @@ def logout():
 @click.command()
 def whoami():
     """Show current logged Polyaxon user."""
-    user = PolyaxonClients().auth.get_user()
+    try:
+        user = PolyaxonClients().auth.get_user()
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not load user info.')
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
     click.echo("\nUsername: {username}, Email: {email}\n".format(**user.to_dict()))
