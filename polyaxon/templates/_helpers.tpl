@@ -132,6 +132,8 @@ global config
   value: {{ .Values.api.service.externalPort | quote }}
 - name: POLYAXON_K8S_APP_SECRET_NAME
   value: {{ template "polyaxon.fullname" . }}-secret
+- name: POLYAXON_K8S_RABBITMQ_SECRET_NAME
+  value: {{ template "rabbitmq.fullname" . }}
 - name: POLYAXON_K8S_APP_CONFIG_NAME
   value: {{ template "polyaxon.fullname" . }}-config
 - name: POLYAXON_K8S_SERVICE_ACCOUNT_NAME

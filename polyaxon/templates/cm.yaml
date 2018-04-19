@@ -13,7 +13,7 @@ data:
   debug: {{ .Values.debug | quote }}
   cluster-id: ""
   node-selectors-experiments: {{ toJson .Values.nodeSelectors.experiments | quote }}
-  amqp-url: amqp://{{ template "rabbitmq.fullname" . }}:5672
+  amqp-url: {{ template "rabbitmq.fullname" . }}:5672
   redis-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
   redis-job-containers-url: redis://{{ template "redis.fullname" . }}:6379/3
   redis-to-stream-url: redis://{{ template "redis.fullname" . }}:6379/4
