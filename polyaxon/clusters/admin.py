@@ -1,5 +1,11 @@
 from django.contrib import admin
 
 from clusters.models import Cluster
+from libs.admin import DiffModelAdmin
 
-admin.site.register(Cluster)
+
+class ClusterAdmin(DiffModelAdmin):
+    pass
+
+
+admin.site.register(Cluster, ClusterAdmin)

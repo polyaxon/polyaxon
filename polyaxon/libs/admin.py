@@ -28,3 +28,8 @@ class ReadOnlyAdmin(ModelAdmin):
 
     def save_related(self, request, form, formsets, change):
         pass
+
+
+class DiffModelAdmin(ModelAdmin):
+    """Make diff model fields read-only."""
+    readonly_fields = ('created_at', 'updated_at')

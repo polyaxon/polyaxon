@@ -8,11 +8,12 @@ from experiments.models import (
     ExperimentStatus
 )
 from jobs.admin import JobStatusAdmin
+from libs.admin import DiffModelAdmin
 
 
-class ExperimentAdmin(admin.ModelAdmin):
-    readonly_fields = (
-        'sequence', 'unique_name', 'last_status', 'last_status', 'created_at', 'updated_at')
+class ExperimentAdmin(DiffModelAdmin):
+    readonly_fields = DiffModelAdmin.readonly_fields + (
+        'sequence', 'unique_name', 'last_status', 'last_status')
 
 
 class ExperimentStatusAdmin(admin.ModelAdmin):
@@ -23,8 +24,8 @@ class ExperimentMetricAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
 
 
-class ExperimentJobAdmin(admin.ModelAdmin):
-    readonly_fields = ('sequence', 'unique_name', 'last_status', 'created_at', 'updated_at')
+class ExperimentJobAdmin(DiffModelAdmin):
+    readonly_fields = DiffModelAdmin.readonly_fields + ('sequence', 'unique_name', 'last_status')
 
 
 class ExperimentJobStatusAdmin(JobStatusAdmin):

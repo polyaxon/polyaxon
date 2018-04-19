@@ -1,15 +1,16 @@
 from django.contrib import admin
 
 from jobs.admin import JobStatusAdmin
+from libs.admin import DiffModelAdmin
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 
 
-class TensorboardJobAdmin(admin.ModelAdmin):
-    readonly_fields = ('created_at', 'updated_at')
+class TensorboardJobAdmin(DiffModelAdmin):
+    pass
 
 
-class NotebookJobAdmin(admin.ModelAdmin):
-    readonly_fields = ('created_at', 'updated_at')
+class NotebookJobAdmin(DiffModelAdmin):
+    pass
 
 
 class TensorboardJobStatusAdmin(JobStatusAdmin):
