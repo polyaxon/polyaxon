@@ -31,7 +31,7 @@ class HyperbandIterationManager(BaseIterationManger):
                 bracket_iteration = 0
             elif should_reduce_configs:
                 iteration = iteration_config.iteration
-                bracket_iteration = iteration_config.bracket_iteration
+                bracket_iteration = iteration_config.bracket_iteration + 1
             else:
                 raise ValueError(
                     'Hyperband create iteration failed for `{}`, '
