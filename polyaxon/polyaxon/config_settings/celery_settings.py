@@ -17,8 +17,8 @@ if RABBITMQ_USER and RABBITMQ_PASSWORD:
         password=RABBITMQ_PASSWORD,
         url=AMQP_URL
     )
-else:
-    CELERY_BROKER_URL = 'amqp://{url}'.format(url=AMQP_URL)
+
+CELERY_BROKER_URL = 'amqp://{url}'.format(url=AMQP_URL)
 
 INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE')
 
