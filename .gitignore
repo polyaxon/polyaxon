@@ -119,6 +119,7 @@ client/node_modules/
 client/css/
 client/polyaxon/**/*.js
 client/polyaxon/**/*.js.map
+client/npm-debug.log
 /examples/polyaxon-logs/
 # don't ignore static dist
 !/static/dist
