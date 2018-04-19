@@ -219,3 +219,6 @@ class ExperimentGroupIteration(DiffModel):
 
     class Meta:
         ordering = ['created_at']
+
+    def __str__(self):
+        return '{} <{}>'.format(self.experiment_group, self.created_at)
