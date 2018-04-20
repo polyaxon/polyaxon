@@ -1,6 +1,6 @@
+from faker import Faker
 from unittest.mock import patch
 
-from faker import Faker
 from rest_framework import status
 
 from django.test import override_settings, tag

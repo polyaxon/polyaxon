@@ -1,9 +1,9 @@
 import logging
 import mimetypes
 import os
+
 from wsgiref.util import FileWrapper
 
-from django.http import StreamingHttpResponse
 from rest_framework import status
 from rest_framework.generics import (
     CreateAPIView,
@@ -15,6 +15,8 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
+from django.http import StreamingHttpResponse
 
 from experiment_groups.models import ExperimentGroup
 from experiments.models import (
