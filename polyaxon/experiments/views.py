@@ -191,7 +191,7 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
             response = StreamingHttpResponse(wrapped_file,
                                              content_type=mimetypes.guess_type(log_path)[0])
             response['Content-Length'] = os.path.getsize(log_path)
-            response['Content-Disposition'] = "attachment; filename=%s".format(filename)
+            response['Content-Disposition'] = "attachment; filename={}".format(filename)
             return response
         except FileNotFoundError:
             logger.warning('Log file not found: log_path=%s', log_path)
