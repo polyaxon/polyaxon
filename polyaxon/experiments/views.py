@@ -11,7 +11,6 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.settings import api_settings
 from rest_framework.views import APIView
 
 from experiment_groups.models import ExperimentGroup
@@ -38,6 +37,7 @@ from libs.views import ListCreateAPIView
 from projects.permissions import get_permissible_project
 
 logger = logging.getLogger("polyaxon.experiments.views")
+
 
 class ExperimentListView(ListAPIView):
     """List all experiments"""
