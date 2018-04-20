@@ -39,13 +39,7 @@ export function fetchLogs(projectUniqueName: string, experimentSequence: number)
 
     let logsUrl =
       BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/logs';
-    // setTimeout(() => {
-    //   const logs: string[] = []
-    //   for (let i = 1; i < 10; i++) {
-    //     logs.push('This is a log message')
-    //   }
-    //   dispatch(receiveLogsActionCreator(logs))
-    // }, 500);
+
     return fetch(logsUrl, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
