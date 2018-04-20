@@ -210,7 +210,7 @@ class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIVie
     lookup_field = 'uuid'
 
 
-class ExperimentLogListView(ExperimentViewMixin, APIView):
+class ExperimentLogsView(ExperimentViewMixin, APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, username, name, experiment_sequence):

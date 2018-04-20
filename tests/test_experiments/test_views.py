@@ -968,7 +968,7 @@ class TestStopExperimentViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
-class TestExperimentLogListViewV1(BaseViewTest):
+class TestExperimentLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
 
