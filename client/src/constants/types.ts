@@ -19,7 +19,7 @@ export interface AppState {
   users: UserStateSchema;
   form: FormReducer;
   pagination: PaginationStateSchema;
-  logs: string[];
+  logs: string;
 }
 
 export const AppEmptyState = {

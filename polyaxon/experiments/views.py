@@ -1,4 +1,8 @@
 import logging
+import mimetypes
+import os
+
+from wsgiref.util import FileWrapper
 
 from rest_framework import status
 from rest_framework.generics import (
@@ -11,7 +15,8 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
+
+from django.http import StreamingHttpResponse
 
 from experiment_groups.models import ExperimentGroup
 from experiments.models import (
@@ -172,6 +177,28 @@ class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView)
     lookup_field = 'sequence'
 
 
+class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        experiment = self.get_experiment()
+        log_path = get_experiment_logs_path(experiment.unique_name)
+
+        filename = os.path.basename(log_path)
+        chunk_size = 8192
+        try:
+            wrapped_file = FileWrapper(open(log_path, 'rb'), chunk_size)
+            response = StreamingHttpResponse(wrapped_file,
+                                             content_type=mimetypes.guess_type(log_path)[0])
+            response['Content-Length'] = os.path.getsize(log_path)
+            response['Content-Disposition'] = "attachment; filename={}".format(filename)
+            return response
+        except FileNotFoundError:
+            logger.warning('Log file not found: log_path=%s', log_path)
+            return Response(status=status.HTTP_404_NOT_FOUND,
+                            data='Log file not found: log_path={}'.format(log_path))
+
+
 class ExperimentJobViewMixin(object):
     """A mixin to filter by experiment job."""
 
@@ -208,20 +235,3 @@ class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIVie
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
-
-
-class ExperimentLogsView(ExperimentViewMixin, APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, username, name, experiment_sequence):
-        experiment = self.get_experiment()
-        log_path = get_experiment_logs_path(experiment.unique_name)
-        logs = []
-
-        try:
-            with open(log_path, 'r') as file:
-                logs = [line.rstrip('\n') for line in file]
-        except FileNotFoundError:
-            logger.warning('Log file not found: log_path=%s', log_path)
-
-        return Response(logs)
