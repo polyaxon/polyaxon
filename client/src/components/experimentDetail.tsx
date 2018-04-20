@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import { ExperimentModel } from '../models/experiment';
 import Jobs from '../containers/jobs';
+import Logs from '../containers/logs';
 import {
   getGroupUrl,
   getProjectUrl,
@@ -136,6 +137,8 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
           </div>
           <h4 className="polyaxon-header">Jobs</h4>
           <Jobs fetchData={() => null} user={experiment.user} experiment={experiment}/>
+          <h4 className="polyaxon-header">Logs</h4>
+          <Logs fetchData={() => null} logs={[]} user={experiment.user} experiment={experiment}/>
         </div>
       </div>
     );

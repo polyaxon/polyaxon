@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import status
 from rest_framework.generics import (
     CreateAPIView,
@@ -9,6 +11,7 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from experiment_groups.models import ExperimentGroup
 from experiments.models import (
@@ -18,6 +21,7 @@ from experiments.models import (
     ExperimentMetric,
     ExperimentStatus
 )
+from experiments.paths import get_experiment_logs_path
 from experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentDetailSerializer,
@@ -31,6 +35,8 @@ from experiments.serializers import (
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
 from projects.permissions import get_permissible_project
+
+logger = logging.getLogger("polyaxon.experiments.views")
 
 
 class ExperimentListView(ListAPIView):
@@ -202,3 +208,20 @@ class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIVie
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
+
+
+class ExperimentLogsView(ExperimentViewMixin, APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, username, name, experiment_sequence):
+        experiment = self.get_experiment()
+        log_path = get_experiment_logs_path(experiment.unique_name)
+        logs = []
+
+        try:
+            with open(log_path, 'r') as file:
+                logs = [line.rstrip('\n') for line in file]
+        except FileNotFoundError:
+            logger.warning('Log file not found: log_path=%s', log_path)
+
+        return Response(logs)
