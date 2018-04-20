@@ -49,6 +49,6 @@ export function fetchLogs(projectUniqueName: string, experimentSequence: number)
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.text())
       .then(text => dispatch(receiveLogsActionCreator(text)))
-      .catch(error => handleAuthError);
+      .catch(error => undefined);
   };
 }
