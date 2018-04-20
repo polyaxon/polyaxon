@@ -251,3 +251,23 @@ class TestExperimentClient(TestCase):
             status=200)
         result = self.client.stop('username', 'project_name', 1)
         assert result.status_code == 200
+
+    @httpretty.activate
+    def test_experiment_logs(self):
+        httpretty.register_uri(
+            httpretty.GET,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'logs'
+            ),
+            body='some text',
+            content_type='text/plain',
+            status=200)
+
+        response = self.client.logs('username', 'project_name', 1, stream=False)
+        assert response.content.decode() == 'some text'

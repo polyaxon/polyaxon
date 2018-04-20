@@ -164,12 +164,26 @@ class ExperimentClient(PolyaxonClient):
                                       'resources')
         self.socket(request_url, message_handler=message_handler)
 
-    def logs(self, username, project_name, experiment_sequence, message_handler=None):
+    def logs(self, username, project_name, experiment_sequence, stream=True, message_handler=None):
         """Streams experiments logs using websockets.
 
         message_handler: handles the messages received from server.
             e.g. def f(x): print(x)
         """
+        if not stream:
+            request_url = self._build_url(self._get_http_url(),
+                                          username,
+                                          project_name,
+                                          'experiments',
+                                          experiment_sequence,
+                                          'logs')
+
+            try:
+                return self.get(request_url)
+            except PolyaxonException as e:
+                self.handle_exception(e=e, log_message='Error while retrieving jobs')
+                return []
+
         request_url = self._build_url(self._get_ws_url(),
                                       username,
                                       project_name,
