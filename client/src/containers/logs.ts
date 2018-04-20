@@ -5,7 +5,7 @@ import * as actions from '../actions/logs';
 import Logs from '../components/logs';
 
 export function mapStateToProps(state: AppState, params: any) {
-  return {logs: state.logs}
+  return {logs: state.logs};
 }
 
 export interface DispatchProps {

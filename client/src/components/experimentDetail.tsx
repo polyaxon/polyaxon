@@ -138,7 +138,7 @@ export default class ExperimentDetail extends React.Component<Props, Object> {
           <h4 className="polyaxon-header">Jobs</h4>
           <Jobs fetchData={() => null} user={experiment.user} experiment={experiment}/>
           <h4 className="polyaxon-header">Logs</h4>
-          <Logs fetchData={() => null} logs={[]} user={experiment.user} experiment={experiment}/>
+          <Logs fetchData={() => null} logs={''} user={experiment.user} experiment={experiment}/>
         </div>
       </div>
     );
