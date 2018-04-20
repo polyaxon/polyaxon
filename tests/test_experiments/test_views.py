@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from faker import Faker
 from rest_framework import status
 
 from django.test import override_settings, tag
@@ -11,6 +12,7 @@ from experiments.models import (
     ExperimentMetric,
     ExperimentStatus
 )
+from experiments.paths import get_experiment_logs_path
 from experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
@@ -964,3 +966,37 @@ class TestStopExperimentViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
+
+
+class TestExperimentLogListViewV1(BaseViewTest):
+    num_log_lines = 10
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        with patch('experiments.tasks.start_experiment.delay') as _:
+            project = ProjectFactory(user=self.auth_client.user)
+            experiment = ExperimentFactory(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/logs'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            experiment.sequence)
+
+        log_path = get_experiment_logs_path(experiment.unique_name)
+        fake = Faker()
+        self.logs = []
+        for _ in range(self.num_log_lines):
+            self.logs.append(fake.sentence())
+        with open(log_path, 'w') as file:
+            for line in self.logs:
+                file.write(line)
+                file.write('\n')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        data = resp.data
+        assert len(data) == len(self.logs)
+        assert data == self.logs

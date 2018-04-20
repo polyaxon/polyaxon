@@ -53,7 +53,7 @@ export function fetchLogs(projectUniqueName: string, experimentSequence: number)
     })
       .then(response => handleAuthError(response, dispatch))
       .then(response => response.json())
-      .then(json => dispatch(receiveLogsActionCreator(json.results)))
+      .then(json => dispatch(receiveLogsActionCreator(json)))
       .catch(error => undefined);
   };
 }
