@@ -335,8 +335,10 @@ def resources(ctx, gpu):
 
 
 @experiment.command()
+@click.option('--past', is_flag=True, help='Show the past logs.')
+@click.option('--follow', is_flag=True, default=True, help='Stream logs after showing past logs.')
 @click.pass_context
-def logs(ctx):
+def logs(ctx, past, follow):
     """Get experiment logs.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -396,6 +398,21 @@ def logs(ctx):
             sys.stdout.flush()
         else:
             Printer.log('{} -- {}'.format(status, log_line))
+
+    if past:
+        try:
+            response = PolyaxonClients().experiment.logs(
+                user, project_name, _experiment, stream=False)
+            for log_line in response.content.decode().split('\n'):
+                Printer.log(log_line)
+                print()
+
+            if not follow:
+                return
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not get logs for experiment `{}`.'.format(_experiment))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
 
     try:
         PolyaxonClients().experiment.logs(
