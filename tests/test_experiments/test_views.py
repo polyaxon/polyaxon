@@ -997,6 +997,7 @@ class TestExperimentLogsViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
-        data = resp.data
+        data = [i for i in resp._iterator]
+        data = [d for d in data[0].decode('utf-8').split('\n') if d]
         assert len(data) == len(self.logs)
         assert data == self.logs
