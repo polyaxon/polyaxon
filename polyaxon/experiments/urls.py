@@ -31,6 +31,9 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/jobs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentJobListView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/logs/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
+        views.ExperimentLogListView.as_view()),
 ]
 
 jobs_urlpatterns = [

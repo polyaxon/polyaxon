@@ -974,7 +974,7 @@ class TestExperimentLogListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('experiments.tasks.start_experiment.delay') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:
             project = ProjectFactory(user=self.auth_client.user)
             experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/logs'.format(
