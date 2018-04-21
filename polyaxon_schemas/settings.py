@@ -19,7 +19,9 @@ from polyaxon_schemas.logging import LoggingConfig, LoggingSchema
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import (
+    AcquisitionFunctions,
     EarlyStoppingPolicy,
+    GaussianProcessesKernels,
     Optimization,
     ResourceTypes,
     SearchAlgorithms
@@ -199,6 +201,110 @@ class HyperbandConfig(BaseConfig):
         self.resume = resume
 
 
+class GaussianProcessSchema(Schema):
+    kernel = fields.Str(allow_none=True, validate=validate.OneOf(GaussianProcessesKernels.VALUES))
+    length_scale = fields.Float(allow_none=True)
+    nu = fields.Float(allow_none=True)
+    n_restarts_optimizer = fields.Int(allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return GaussianProcessConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return GaussianProcessConfig.remove_reduced_attrs(data)
+
+
+class GaussianProcessConfig(BaseConfig):
+    SCHEMA = GaussianProcessSchema
+    IDENTIFIER = 'gaussian_process'
+
+    def __init__(self,
+                 kernel=GaussianProcessesKernels.MATERN,
+                 length_scale=1.0,
+                 nu=1.5,
+                 n_restarts_optimizer=0):
+        self.kernel = kernel
+        self.length_scale = length_scale
+        self.nu = nu
+        self.n_restarts_optimizer = n_restarts_optimizer
+
+
+def validate_utility_function(acquisition_function, kappa):
+    if AcquisitionFunctions.is_ucb(acquisition_function) and kappa is None:
+        raise ValidationError('the acquisition function `ucb` requires a parameter `kappa`')
+
+
+class UtilityFunctionSchema(Schema):
+    acquisition_function = fields.Str(allow_none=True,
+                                      validate=validate.OneOf(AcquisitionFunctions.VALUES))
+    gaussian_process = fields.Nested(GaussianProcessSchema, allow_none=True)
+    kappa = fields.Float(allow_none=True)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return UtilityFunctionConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return UtilityFunctionConfig.remove_reduced_attrs(data)
+
+    @validates_schema
+    def validate_utility_function(self, data):
+        validate_utility_function(
+            acquisition_function=data.get('acquisition_function'),
+            kappa=data.get('kappa'))
+
+
+class UtilityFunctionConfig(BaseConfig):
+    SCHEMA = UtilityFunctionSchema
+    IDENTIFIER = 'utility_function'
+
+    def __init__(self,
+                 acquisition_function=AcquisitionFunctions.UCB,
+                 gaussian_process=None,
+                 kappa=None):
+        validate_utility_function(
+            acquisition_function=acquisition_function,
+            kappa=kappa)
+
+        self.acquisition_function = acquisition_function
+        self.gaussian_process = gaussian_process
+        self.kappa = kappa
+
+
+class BOSchema(Schema):
+    utility_function = fields.Nested(UtilityFunctionSchema, allow_none=True)
+    metric = fields.Nested(SearchMetricSchema)
+
+    class Meta:
+        ordered = True
+
+    @post_load
+    def make(self, data):
+        return BOConfig(**data)
+
+    @post_dump
+    def unmake(self, data):
+        return BOConfig.remove_reduced_attrs(data)
+
+
+class BOConfig(BaseConfig):
+    SCHEMA = BOSchema
+    IDENTIFIER = 'bo'
+
+    def __init__(self, metric, utility_function=None):
+        self.utility_function = utility_function
+        self.metric = metric
+
+
 def validate_search_algorithm(algorithms, matrix):
     used_algorithms = sum([1 for f in algorithms if f is not None])
     if used_algorithms > 1:
@@ -233,6 +339,7 @@ class SettingsSchema(Schema):
     grid_search = fields.Nested(GridSearchSchema, allow_none=None)
     random_search = fields.Nested(RandomSearchSchema, allow_none=None)
     hyperband = fields.Nested(HyperbandSchema, allow_none=None)
+    bo = fields.Nested(BOSchema, allow_none=None)
     early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
 
     class Meta:
@@ -251,7 +358,8 @@ class SettingsSchema(Schema):
         validate_search_algorithm(
             algorithms=[data.get('grid_search'),
                         data.get('random_search'),
-                        data.get('hyperband')],
+                        data.get('hyperband'),
+                        data.get('bo')],
             matrix=data.get('matrix'))
 
     @validates_schema
@@ -264,7 +372,7 @@ class SettingsSchema(Schema):
 class SettingsConfig(BaseConfig):
     SCHEMA = SettingsSchema
     IDENTIFIER = 'settings'
-    REDUCED_ATTRIBUTES = ['grid_search', 'random_search', 'hyperband']
+    REDUCED_ATTRIBUTES = ['grid_search', 'random_search', 'hyperband', 'bo']
 
     def __init__(self,
                  logging=LoggingConfig(),
@@ -274,6 +382,7 @@ class SettingsConfig(BaseConfig):
                  grid_search=None,
                  random_search=None,
                  hyperband=None,
+                 bo=None,
                  early_stopping=None):
         self.logging = logging
         self.seed = seed
@@ -281,11 +390,12 @@ class SettingsConfig(BaseConfig):
         self.matrix = matrix
         self.concurrency = concurrency
         validate_search_algorithm(
-            algorithms=[grid_search, random_search, hyperband],
+            algorithms=[grid_search, random_search, hyperband, bo],
             matrix=matrix)
         self.grid_search = grid_search
         self.random_search = random_search
         self.hyperband = hyperband
+        self.bo = bo
         self.early_stopping = early_stopping
 
     def to_dict(self, humanize_values=False):
@@ -321,5 +431,7 @@ class SettingsConfig(BaseConfig):
             return SearchAlgorithms.HYPERBAND
         if self.grid_search:
             return SearchAlgorithms.GRID
+        if self.bo:
+            return SearchAlgorithms.BO
         # Default value
         return SearchAlgorithms.GRID

@@ -8,14 +8,22 @@ from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.settings import (
+    BOConfig,
     EarlyStoppingMetricConfig,
+    GaussianProcessConfig,
     GridSearchConfig,
     HyperbandConfig,
     RandomSearchConfig,
     SearchMetricConfig,
-    SettingsConfig
+    SettingsConfig,
+    UtilityFunctionConfig
 )
-from polyaxon_schemas.utils import EarlyStoppingPolicy, Optimization
+from polyaxon_schemas.utils import (
+    AcquisitionFunctions,
+    EarlyStoppingPolicy,
+    GaussianProcessesKernels,
+    Optimization
+)
 
 
 class TestSettingConfigs(TestCase):
@@ -104,6 +112,53 @@ class TestSettingConfigs(TestCase):
 
         config_dict['eta'] = 2.9
         config = HyperbandConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+    def test_gaussian_process_config(self):
+        config_dict = {
+            'kernel': GaussianProcessesKernels.MATERN,
+            'length_scale': 1.0,
+            'nu': 1.9,
+            'n_restarts_optimizer': 2
+        }
+        config = GaussianProcessConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+    def test_utility_function_config(self):
+        config_dict = {
+            'acquisition_function': AcquisitionFunctions.UCB,
+        }
+        with self.assertRaises(ValidationError):
+            UtilityFunctionConfig.from_dict(config_dict)
+
+        config_dict = {
+            'acquisition_function': AcquisitionFunctions.UCB,
+            'kappa': 1.2,
+            'gaussian_process': {
+                'kernel': GaussianProcessesKernels.MATERN,
+                'length_scale': 1.0,
+                'nu': 1.9,
+                'n_restarts_optimizer': 2
+            }
+        }
+        config = UtilityFunctionConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+    def test_bo_config(self):
+        config_dict = {
+            'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict(),
+            'utility_function': {
+                'acquisition_function': AcquisitionFunctions.UCB,
+                'kappa': 1.2,
+                'gaussian_process': {
+                    'kernel': GaussianProcessesKernels.MATERN,
+                    'length_scale': 1.0,
+                    'nu': 1.9,
+                    'n_restarts_optimizer': 2
+                }
+            }
+        }
+        config = BOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
     def test_settings_config_raise_conditions(self):
@@ -200,6 +255,23 @@ class TestSettingConfigs(TestCase):
         }
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
+
+        # Add bo should raise
+        config_dict['bo'] = {
+            'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict(),
+            'utility_function': {
+                'acquisition_function': AcquisitionFunctions.UCB,
+                'kappa': 1.2,
+                'gaussian_process': {
+                    'kernel': GaussianProcessesKernels.MATERN,
+                    'length_scale': 1.0,
+                    'nu': 1.9,
+                    'n_restarts_optimizer': 2
+                }
+            }
+        }
+        with self.assertRaises(ValidationError):
+            SettingsConfig.from_dict(config_dict)
 
     def test_random_and_grid_search_without_n_experiments(self):
         config_dict = {
