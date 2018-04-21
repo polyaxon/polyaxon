@@ -361,12 +361,14 @@ class SearchAlgorithms(object):
     GRID = 'grid'
     RANDOM = 'random'
     HYPERBAND = 'hyperband'
+    BO = 'bo'  # bayesian optimization
 
     GRID_VALUES = [GRID, GRID.upper(), GRID.capitalize()]
     RANDOM_VALUES = [RANDOM, RANDOM.upper(), RANDOM.capitalize()]
     HYPERBAND_VALUES = [HYPERBAND, HYPERBAND.upper(), HYPERBAND.capitalize()]
+    BO_VALUES = [BO, BO.upper(), BO.capitalize()]
 
-    VALUES = GRID_VALUES + RANDOM_VALUES + HYPERBAND_VALUES
+    VALUES = GRID_VALUES + RANDOM_VALUES + HYPERBAND_VALUES + BO_VALUES
 
     @classmethod
     def is_grid(cls, value):
@@ -379,6 +381,10 @@ class SearchAlgorithms(object):
     @classmethod
     def is_hyperband(cls, value):
         return value in cls.HYPERBAND_VALUES
+
+    @classmethod
+    def is_bo(cls, value):
+        return value in cls.BO_VALUES
 
 
 class Optimization(object):

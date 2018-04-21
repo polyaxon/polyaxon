@@ -291,12 +291,11 @@ class TestPolyaxonfile(TestCase):
         assert spec.settings.early_stopping is None
         assert spec.early_stopping == []
 
-        # assert spec.experiments_def == (
-        #     10,
-        #     None,
-        #     2,
-        #     SearchAlgorithms.GRID
-        # )
+        assert spec.experiments_def == {
+            'search_algorithm': SearchAlgorithms.GRID,
+            'early_stopping': False,
+            'concurrency': 2,
+        }
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
@@ -333,12 +332,12 @@ class TestPolyaxonfile(TestCase):
         assert len(spec.settings.early_stopping) == 1
         assert isinstance(spec.settings.early_stopping[0], EarlyStoppingMetricConfig)
 
-        # assert spec.experiments_def == (
-        #     10,
-        #     5,
-        #     2,
-        #     SearchAlgorithms.RANDOM
-        # )
+        assert spec.experiments_def == {
+            'search_algorithm': SearchAlgorithms.RANDOM,
+            'early_stopping': True,
+            'concurrency': 2,
+            'n_experiments': 5
+        }
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
@@ -376,12 +375,12 @@ class TestPolyaxonfile(TestCase):
         assert spec.settings.random_search.n_experiments == 300
         assert spec.early_stopping == []
 
-        # assert plxfile.experiments_def == (
-        #     10,
-        #     None,
-        #     2,
-        #     SearchAlgorithms.GRID
-        # )
+        assert spec.experiments_def == {
+            'search_algorithm': SearchAlgorithms.RANDOM,
+            'early_stopping': False,
+            'concurrency': 2,
+            'n_experiments': 300
+        }
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.is_runnable
