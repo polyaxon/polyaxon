@@ -166,6 +166,7 @@ class TestSettingConfigs(TestCase):
     def test_bo_config(self):
         config_dict = {
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict(),
+            'n_initial_trials': 2,
             'utility_function': {
                 'acquisition_function': AcquisitionFunctions.UCB,
                 'kappa': 1.2,
@@ -278,6 +279,7 @@ class TestSettingConfigs(TestCase):
         # Add bo should raise
         config_dict['bo'] = {
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict(),
+            'n_initial_trials': 2,
             'utility_function': {
                 'acquisition_function': AcquisitionFunctions.UCB,
                 'kappa': 1.2,
