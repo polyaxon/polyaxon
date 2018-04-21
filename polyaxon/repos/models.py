@@ -44,6 +44,9 @@ class Repo(DiffModel, RepoMixin):
         related_name='repo')
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 
+    def __str__(self):
+        return '{} <repo>'.format(self.project)
+
 
 class ExternalRepo(DiffModel, RepoMixin):
     """A model that represents an external repository containing code."""
@@ -56,6 +59,9 @@ class ExternalRepo(DiffModel, RepoMixin):
 
     class Meta:
         unique_together = (('project', 'git_url'),)
+
+    def __str__(self):
+        return '{} - {}'.format(self.project, self.name)
 
     @property
     def name(self):
@@ -87,3 +93,6 @@ class CodeReference(DiffModel):
         max_length=40,
         blank=True,
         null=True)
+
+    def __str__(self):
+        return '{} <{}>'.format(self.repo, self.commit)
