@@ -167,6 +167,7 @@ class TestSettingConfigs(TestCase):
         config_dict = {
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict(),
             'n_initial_trials': 2,
+            'n_iterations': 19,
             'utility_function': {
                 'acquisition_function': AcquisitionFunctions.UCB,
                 'kappa': 1.2,
@@ -280,6 +281,7 @@ class TestSettingConfigs(TestCase):
         config_dict['bo'] = {
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict(),
             'n_initial_trials': 2,
+            'n_iterations': 10,
             'utility_function': {
                 'acquisition_function': AcquisitionFunctions.UCB,
                 'kappa': 1.2,

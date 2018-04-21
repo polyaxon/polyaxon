@@ -297,6 +297,7 @@ class UtilityFunctionConfig(BaseConfig):
 class BOSchema(Schema):
     utility_function = fields.Nested(UtilityFunctionSchema, allow_none=True)
     n_initial_trials = fields.Int()
+    n_iterations = fields.Int()
     metric = fields.Nested(SearchMetricSchema)
 
     class Meta:
@@ -315,8 +316,9 @@ class BOConfig(BaseConfig):
     SCHEMA = BOSchema
     IDENTIFIER = 'bo'
 
-    def __init__(self, n_initial_trials, metric, utility_function=None):
+    def __init__(self, n_initial_trials, n_iterations, metric, utility_function=None):
         self.n_initial_trials = n_initial_trials
+        self.n_iterations = n_iterations
         self.utility_function = utility_function
         self.metric = metric
 
