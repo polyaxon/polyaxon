@@ -132,8 +132,27 @@ class TestSettingConfigs(TestCase):
             UtilityFunctionConfig.from_dict(config_dict)
 
         config_dict = {
+            'acquisition_function': AcquisitionFunctions.POI,
+        }
+        with self.assertRaises(ValidationError):
+            UtilityFunctionConfig.from_dict(config_dict)
+
+        config_dict = {
             'acquisition_function': AcquisitionFunctions.UCB,
             'kappa': 1.2,
+            'gaussian_process': {
+                'kernel': GaussianProcessesKernels.MATERN,
+                'length_scale': 1.0,
+                'nu': 1.9,
+                'n_restarts_optimizer': 2
+            }
+        }
+        config = UtilityFunctionConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        config_dict = {
+            'acquisition_function': AcquisitionFunctions.EI,
+            'xi': 1.2,
             'gaussian_process': {
                 'kernel': GaussianProcessesKernels.MATERN,
                 'length_scale': 1.0,
