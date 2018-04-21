@@ -387,6 +387,48 @@ class SearchAlgorithms(object):
         return value in cls.BO_VALUES
 
 
+class AcquisitionFunctions(object):
+    UCB = 'ucb'
+    EI = 'ei'
+    POI = 'poi'
+
+    UCB_VALUES = [UCB, UCB.upper(), UCB.capitalize()]
+    EI_VALUES = [EI, EI.upper(), EI.capitalize()]
+    POI_VALUES = [POI, POI.upper(), POI.capitalize()]
+
+    VALUES = UCB_VALUES + EI_VALUES + POI_VALUES
+
+    @classmethod
+    def is_ucb(cls, value):
+        return value in cls.UCB_VALUES
+
+    @classmethod
+    def is_ei(cls, value):
+        return value in cls.EI_VALUES
+
+    @classmethod
+    def is_poi(cls, value):
+        return value in cls.POI_VALUES
+
+
+class GaussianProcessesKernels(object):
+    RBF = 'rbf'
+    MATERN = 'matern'
+
+    RBF_VALUES = [RBF, RBF.upper(), RBF.capitalize()]
+    MATERN_VALUES = [MATERN, MATERN.upper(), MATERN.capitalize()]
+
+    VALUES = RBF_VALUES + MATERN_VALUES
+
+    @classmethod
+    def is_rbf(cls, value):
+        return value in cls.RBF_VALUES
+
+    @classmethod
+    def is_mattern(cls, value):
+        return value in cls.MATERN_VALUES
+
+
 class Optimization(object):
     MAXIMIZE = 'maximize'
     MINIMIZE = 'minimize'
