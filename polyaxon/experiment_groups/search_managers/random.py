@@ -17,4 +17,5 @@ class RandomSearchManager(BaseSearchAlgorithmManager):
         """
         matrix = self.params_config.matrix
         n_suggestions = self.params_config.random_search.n_experiments
-        return get_random_suggestions(matrix=matrix, n_suggestions=n_suggestions)
+        seed = self.params_config.seed
+        return get_random_suggestions(matrix=matrix, n_suggestions=n_suggestions, seed=seed)

@@ -127,7 +127,8 @@ class HyperbandSearchManager(BaseSearchAlgorithmManager):
         }
         return get_random_suggestions(matrix=self.params_config.matrix,
                                       n_suggestions=n_configs,
-                                      suggestion_params=suggestion_params)
+                                      suggestion_params=suggestion_params,
+                                      seed=self.params_config.seed)
 
     def should_reschedule(self, iteration, bracket_iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
