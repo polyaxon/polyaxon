@@ -9,6 +9,7 @@ export enum actionTypes {
 
 export interface RequestLogsAction extends Action {
   type: actionTypes.REQUEST_LOGS;
+  logs: string;
 }
 
 export interface ReceiveLogsAction extends Action {
@@ -19,6 +20,7 @@ export interface ReceiveLogsAction extends Action {
 export function requestLogsActionCreator(): RequestLogsAction {
   return {
     type: actionTypes.REQUEST_LOGS,
+    logs: ''
   };
 }
 
