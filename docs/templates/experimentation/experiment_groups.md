@@ -131,7 +131,7 @@ Experiment group was created
 
 Now one thing we did not discuss is how many experiments we want to run in parallel,
 and how we want to perform the hyperparameters search. Be default, Polyaxon
-will schedule your experiments sequentially and also explore the space in a grid search.
+will schedule your experiments sequentially and explore the space in grid search algorithm.
 
 
 ## Running concurrent experiments
@@ -192,9 +192,8 @@ Experiment group was created
 ## Maximum number of experiments
 
 Sometimes you don't wish to explore the matrix space exhaustively.
-In that case, you can define a maximum number of experiments to explore form the matrix space.
-The value must be of course less than the total number of experiments in the matrix space,
-or a float value between 0 and 1 defining a percentage of the total number of experiments.
+In that case, you can define a maximum number of experiments to explore from the matrix space.
+The value must be of course less than the total number of experiments in the matrix space.
 
 In order to activate this option, you must update your polyaxonfile's `settings` section with `n_experiments`
 
@@ -206,31 +205,15 @@ version: 1
 
 settings:
   concurrency: 2
-  random_search:
+  grid_search:
     n_experiments: 4
 ```
 
 This will start a maximum of 4 experiments in this group independently of how big is the total number of experiments in matrix space.
 
-Or, alternatively you can provide a percentage:
-
-```yaml
-
----
-version: 1
-
-settings:
-  concurrency: 2
-  random_search:
-    n_experiments: 0.4
-```
-
-This will start 40% of total number of experiments.
-
-
 ## Early stopping
 
-Another way to stop the exhaustive search is to provide a condition for early stopping.
+Another way to stop the search algorithm is to provide a condition for early stopping.
 Obviously in this case early stopping is only responsible for the number of experiments to run.
 For an early stopping related to the number of steps or epochs, you should be able to provide such logic in your code.
 
@@ -322,69 +305,10 @@ In this introductory sections we demonstrated how to conduct hyperparameters tun
 grid search and random search.
 
 Sometimes you might have a large search space where you want to use advanced search algorithms.
-Polyaxon supports, in addtion to grid and random search, Hyperband and Bayesian Optimization.
+Polyaxon supports, in addition to grid and random search, Hyperband and Bayesian Optimization.
 
-### Hyperband
+For more information on hyperparameters tuning and optimization please go to [hyperparameters search](hyperparameters_search).
 
-In order to use, you need to update your polyaxonfile `settings` section with a `hyperband` subsection the same way we declared `random_search`.
-
-Example:
-
-```yaml
-...
-
-settings:
-  concurrency: 2
-  hyperband:
-    max_iter: 81
-    eta: 3
-    resource:
-      name: num_steps
-      type: int
-    metric:
-      name: loss
-      optimization: minimize
-    resume: False
-
-  matrix:
-    learning_rate:
-      uniform: [0, 0.9]
-    dropout:
-      values: [0.25, 0.3]
-    activation:
-      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
-```
-
-### Bayesian Optimization
-
-```yaml
-...
-
-settings:
-  concurrency: 2
-  bo:
-    n_iterations: 15
-    n_initial_trials: 30
-    metric:
-      name: loss
-      optimization: minimize
-    utility_function:
-      acquisition_function: ucb
-      kappa: 1.2
-      gaussian_process:
-        kernel: matern
-        length_scale: 1.0
-        nu: 1.9
-        n_restarts_optimizer: 0
-
-  matrix:
-    learning_rate:
-      uniform: [0, 0.9]
-    dropout:
-      values: [0.25, 0.3]
-    activation:
-      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
-```
 
 !!! info "More details"
     For more details about this command please run `polyaxon group --help`,

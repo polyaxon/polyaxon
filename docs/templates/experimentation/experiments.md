@@ -43,6 +43,8 @@ And modify the polyaxonfile.yml to install our requirements
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: mnist
 

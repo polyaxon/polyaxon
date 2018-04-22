@@ -79,10 +79,11 @@ pages:
 - Experimentation Workflow:
   - Polyaxon Concepts: experimentation/concepts.md
   - Projects: experimentation/projects.md
-  - Experiment Groups & Hyperparams Search: experimentation/experiment_groups.md
+  - Experiment Groups: experimentation/experiment_groups.md
   - Experiments: experimentation/experiments.md
   - Jobs: experimentation/jobs.md
   - Distributed Experiments: experimentation/distributed_experiments.md
+  - Hyperparams Search: experimentation/hyperparameters_search.md
   - Project Plugins: experimentation/project_plugins.md
 - Tutorials:
   - Introduction: tutorials/index.md
