@@ -159,8 +159,20 @@ $ polyaxon experiment logs
 ```
 
 ```bash
+$ polyaxon experiment logs --past --follow
+```
+
+```bash
 $ polyaxon experiment -xp 10 -p mnist logs
 ```
+
+Options:
+
+option | type | description
+-------|------|------------
+  --past | |  Show the past logs.
+  --follow | | Stream logs after showing past logs.
+  --help | | Show this message and exit.
 
 ## resources
 
