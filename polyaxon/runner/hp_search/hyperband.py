@@ -35,11 +35,15 @@ def hp_hyperband_start(self, experiment_group_id):
     hp_hyperband_iterate.delay(experiment_group_id=experiment_group_id)
 
 
-@celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_ITERATE)
-def hp_hyperband_iterate(experiment_group_id):
+@celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_ITERATE, bind=True, max_retries=None)
+def hp_hyperband_iterate(self, experiment_group_id):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return
+
+    if experiment_group.non_done_experiments > 0:
+        # Schedule another task, because all experiment must be done
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
     iteration_config = experiment_group.iteration_config
     iteration_manager = experiment_group.iteration_manager
