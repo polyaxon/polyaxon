@@ -15,6 +15,7 @@ We assume that you have already a [project](projects) created and initialized, a
 Starting notebook is similar to running any other Polyaxon job, i.e. you need to define polyaxonfile containing:
 
  * [version](/polyaxonfile_specification/sections#version)
+ * [kind](/polyaxonfile_specification/sections#kind): in this case this value should be `plugin`.
  * [project](/polyaxonfile_specification/sections#project)
  * [run](/polyaxonfile_specification/sections#version)
 
@@ -23,6 +24,8 @@ Let's create a simple polyaxonfile_notebook.yml
 ```yaml
 ---
 version: 1
+
+kind: plugin
 
 project:
   name: mnist
@@ -65,6 +68,8 @@ Since the notebook is create with polyaxonfile, it can be customized in the same
 ```yaml
 ---
 version: 1
+
+kind: plugin
 
 project:
   name: mnist
@@ -139,6 +144,8 @@ For example to start tensorboard with Tensorflow 1.6, you need to define a new p
 ```yaml
 ---
 version: 1
+
+kind: plugin
 
 project:
   name: mnist
