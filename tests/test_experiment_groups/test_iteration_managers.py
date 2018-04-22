@@ -50,7 +50,7 @@ class TestHyperbandIterationManagers(BaseTest):
         assert ExperimentGroupIteration.objects.count() == 1
         assert iteration.experiment_group == self.experiment_group
         assert iteration.data == {
-            'iteration': 1,
+            'iteration': 0,
             'bracket_iteration': 0,
             'experiment_ids': None,
             'experiments_metrics': None,
@@ -58,7 +58,7 @@ class TestHyperbandIterationManagers(BaseTest):
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_ids)
         iteration.refresh_from_db()
         assert iteration.data == {
-            'iteration': 1,
+            'iteration': 0,
             'bracket_iteration': 0,
             'experiment_ids': experiment_ids,
             'experiments_metrics': None,

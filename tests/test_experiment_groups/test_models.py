@@ -443,7 +443,7 @@ class TestExperimentGroupModel(BaseTest):
                     content=experiment_group_spec_content_hyperband_trigger_reschedule)
 
         assert mock_fct1.call_count == 1
-        assert mock_fct2.call_count == 5
+        assert mock_fct2.call_count == 9
 
         # Fake reschedule
         with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct:
@@ -453,7 +453,7 @@ class TestExperimentGroupModel(BaseTest):
         ExperimentGroupIteration.objects.create(
             experiment_group=experiment_group,
             data={
-                'iteration': 1,
+                'iteration': 0,
                 'bracket_iteration': 21
             })
 
@@ -471,7 +471,7 @@ class TestExperimentGroupModel(BaseTest):
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
         assert mock_fct.call_count == 1
-        assert experiment_group.non_done_experiments.count() == 5
+        assert experiment_group.non_done_experiments.count() == 9
 
         # Mark experiment as done
         with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
