@@ -76,8 +76,7 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     run:
       image: tensorflow/tensorflow:1.4.1-py3
       build_steps:
-        - apt-get -y update && apt-get -y install git
-        - pip3 install --no-cache-dir -U -e git+https://github.com/polyaxon/polyaxon-helper.git@master#egg=polyaxon-helper
+        - pip3 install polyaxon-helper
       cmd: python model.py
     ```
 
