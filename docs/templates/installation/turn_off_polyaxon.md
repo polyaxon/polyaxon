@@ -5,7 +5,7 @@ You can also decide to completely turn off Polyaxon and remove the namespace and
 
 ## Stop/Delete running experiments/jobs
 
-Polyaxon will run by default stop all running jobs/experiments before a tear down.
+Polyaxon will by default stop all running jobs/experiments before a tear down.
 
 
 ## Delete Helm release
