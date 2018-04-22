@@ -78,14 +78,14 @@ There are other options that we could have used such as
 
 And distributions, when using random, hyperband, or bayesian optimization search:
 
- * `uniform`
- * `quniform`
- * `loguniform`
- * `qloguniform`
- * `normal`
- * `qnormal`
- * `lognormal`
- * `qlognormal`
+ * `uniform`: [low, high]
+ * `quniform`: [low, high]
+ * `loguniform`: [low, high]
+ * `qloguniform`: [low, high]
+ * `normal`: [loc, scale]
+ * `qnormal`: [loc, scale]
+ * `lognormal`: [loc, scale]
+ * `qlognormal`: [loc, scale]
 
 You can check all the options available on the [matrix section reference](/polyaxonfile_specification/sections#matrix).
 
