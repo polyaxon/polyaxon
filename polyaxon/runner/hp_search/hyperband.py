@@ -41,7 +41,7 @@ def hp_hyperband_iterate(self, experiment_group_id):
     if not experiment_group:
         return
 
-    if experiment_group.non_done_experiments > 0:
+    if experiment_group.non_done_experiments.count() > 0:
         # Schedule another task, because all experiment must be done
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 

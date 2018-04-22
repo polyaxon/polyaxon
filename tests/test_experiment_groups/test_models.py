@@ -456,24 +456,30 @@ class TestExperimentGroupModel(BaseTest):
                 'iteration': 1,
                 'bracket_iteration': 21
             })
+
+        # Mark experiment as done
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
+            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+             for xp in experiment_group.experiments.all()]
         with patch('runner.hp_search.hyperband.hp_hyperband_create.delay') as mock_fct1:
-            with patch('runner.tasks.experiments.build_experiment.delay') as mock_fct2:
-                hp_hyperband_start(experiment_group.id)
+            hp_hyperband_start(experiment_group.id)
 
         assert mock_fct1.call_count == 1
-        assert mock_fct2.call_count == 5
 
         # Fake reduce
         with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
         assert mock_fct.call_count == 1
+        assert experiment_group.non_done_experiments.count() == 5
 
-        with patch('runner.tasks.experiments.build_experiment.delay') as mock_fct1:
-            with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct2:
-                with patch.object(HyperbandIterationManager, 'reduce_configs') as mock_fct3:
-                    hp_hyperband_start(experiment_group.id)
-        assert mock_fct1.call_count == 5
+        # Mark experiment as done
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
+            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+             for xp in experiment_group.experiments.all()]
+        with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct2:
+            with patch.object(HyperbandIterationManager, 'reduce_configs') as mock_fct3:
+                hp_hyperband_start(experiment_group.id)
         assert mock_fct2.call_count == 1
         assert mock_fct3.call_count == 1
 
