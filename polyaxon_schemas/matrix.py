@@ -122,6 +122,10 @@ class MatrixConfig(BaseConfig):
         'qlognormal': qlognormal,
     }
 
+    RANGES = {
+        'range', 'linspace', 'logspace', 'geomspace'
+    }
+
     DISTRIBUTIONS = {
         'pvalues',
         'uniform', 'quniform', 'loguniform', 'qloguniform',
@@ -172,12 +176,58 @@ class MatrixConfig(BaseConfig):
         return not self.is_distribution
 
     @property
+    def is_range(self):
+        key = list(six.iterkeys(self.to_dict()))[0]
+        return key in self.RANGES
+
+    @property
     def is_categorical(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
         if key != 'values':
             return False
 
         return any([v for v in value if isinstance(v, six.string_types)])
+
+    @property
+    def is_uniform(self):
+        key = list(six.iterkeys(self.to_dict()))[0]
+        return key == 'uniform'
+
+    @property
+    def min(self):
+        if self.is_categorical:
+            return None
+
+        if self.is_range:
+            value = list(six.itervalues(self.to_dict()))[0]
+            return value.get('start')
+
+        if self.is_discrete:
+            return min(self.to_numpy())
+
+        if self.is_uniform:
+            value = list(six.itervalues(self.to_dict()))[0]
+            return value.get('low')
+
+        return None
+
+    @property
+    def max(self):
+        if self.is_categorical:
+            return None
+
+        if self.is_range:
+            value = list(six.itervalues(self.to_dict()))[0]
+            return value.get('stop')
+
+        if self.is_discrete:
+            return max(self.to_numpy())
+
+        if self.is_uniform:
+            value = list(six.itervalues(self.to_dict()))[0]
+            return value.get('high')
+
+        return None
 
     def to_numpy(self):
         key, value = list(six.iteritems(self.to_dict()))[0]

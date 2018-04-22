@@ -32,12 +32,26 @@ class TestMatrixConfigs(TestCase):
         assert config.to_dict() == config_dict
         assert config.to_numpy() == config_dict['values']
         assert config.sample() in [1, 2, 3]
+        assert config.is_categorical is False
+        assert config.is_distribution is False
+        assert config.is_range is False
+        assert config.is_uniform is False
+        assert config.is_discrete is True
+        assert config.min == 1
+        assert config.max == 3
 
         config_dict['values'] = ['ok', 'nook']
         config = MatrixConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.to_numpy() == config_dict['values']
         assert config.sample() in ['ok', 'nook']
+        assert config.is_categorical is True
+        assert config.is_distribution is False
+        assert config.is_range is False
+        assert config.is_uniform is False
+        assert config.is_discrete is True
+        assert config.min is None
+        assert config.max is None
 
     def test_matrix_pvalues_option(self):
         config_dict = {
@@ -71,6 +85,13 @@ class TestMatrixConfigs(TestCase):
         with self.assertRaises(ValidationError):
             config.to_numpy()
         assert config.sample() in [1, 2, 3]
+        assert config.is_categorical is False
+        assert config.is_distribution is True
+        assert config.is_range is False
+        assert config.is_uniform is False
+        assert config.is_discrete is False
+        assert config.min is None
+        assert config.max is None
 
     def test_matrix_range_option(self):
         def assert_equal(config, v1, v2, v3):
@@ -78,6 +99,13 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['range'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.arange(**result))
             assert config.sample() in np.arange(**result)
+            assert config.is_categorical is False
+            assert config.is_distribution is False
+            assert config.is_range is True
+            assert config.is_uniform is False
+            assert config.is_discrete is True
+            assert config.min == v1
+            assert config.max == v2
 
         # as list
         config_dict = {
@@ -102,6 +130,13 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['linspace'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.linspace(**result))
             assert config.sample() in np.linspace(**result)
+            assert config.is_categorical is False
+            assert config.is_distribution is False
+            assert config.is_range is True
+            assert config.is_uniform is False
+            assert config.is_discrete is True
+            assert config.min == v1
+            assert config.max == v2
 
         # as list
         config_dict = {
@@ -126,6 +161,13 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['geomspace'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.geomspace(**result))
             assert config.sample() in np.geomspace(**result)
+            assert config.is_categorical is False
+            assert config.is_distribution is False
+            assert config.is_range is True
+            assert config.is_uniform is False
+            assert config.is_discrete is True
+            assert config.min == v1
+            assert config.max == v2
 
         # as list
         config_dict = {
@@ -153,6 +195,13 @@ class TestMatrixConfigs(TestCase):
             assert config.to_dict()['logspace'] == result
             np.testing.assert_array_equal(config.to_numpy(), np.logspace(**result))
             assert config.sample() in np.logspace(**result)
+            assert config.is_categorical is False
+            assert config.is_distribution is False
+            assert config.is_range is True
+            assert config.is_uniform is False
+            assert config.is_discrete is True
+            assert config.min == v1
+            assert config.max == v2
 
         # as list
         config_dict = {
@@ -195,6 +244,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert v1 <= config.sample() <= v2
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is True
+            assert config.is_discrete is False
+            assert config.min == v1
+            assert config.max == v2
 
         # as list
         config_dict = {
@@ -222,6 +278,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert isinstance(config.sample(), float)
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is False
+            assert config.is_discrete is False
+            assert config.min is None
+            assert config.max is None
 
         # as list
         config_dict = {
@@ -249,6 +312,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert isinstance(config.sample(), float)
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is False
+            assert config.is_discrete is False
+            assert config.min is None
+            assert config.max is None
 
         # as list
         config_dict = {
@@ -276,6 +346,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert isinstance(config.sample(), float)
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is False
+            assert config.is_discrete is False
+            assert config.min is None
+            assert config.max is None
 
         # as list
         config_dict = {
@@ -303,6 +380,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert isinstance(config.sample(), float)
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is False
+            assert config.is_discrete is False
+            assert config.min is None
+            assert config.max is None
 
         # as list
         config_dict = {
@@ -330,6 +414,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert isinstance(config.sample(), float)
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is False
+            assert config.is_discrete is False
+            assert config.min is None
+            assert config.max is None
 
         # as list
         config_dict = {
@@ -357,6 +448,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert isinstance(config.sample(), float)
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is False
+            assert config.is_discrete is False
+            assert config.min is None
+            assert config.max is None
 
         # as list
         config_dict = {
@@ -384,6 +482,13 @@ class TestMatrixConfigs(TestCase):
             with self.assertRaises(ValidationError):
                 config.to_numpy()
             assert isinstance(config.sample(), float)
+            assert config.is_categorical is False
+            assert config.is_distribution is True
+            assert config.is_range is False
+            assert config.is_uniform is False
+            assert config.is_discrete is False
+            assert config.min is None
+            assert config.max is None
 
         # as list
         config_dict = {
