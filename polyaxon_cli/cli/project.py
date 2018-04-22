@@ -342,9 +342,3 @@ def experiments(ctx, page, metrics):
 @click.pass_context
 def clone(ctx):
     pass
-
-
-@project.command()
-@click.pass_context
-def notebook(ctx):
-    pass
