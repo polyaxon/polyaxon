@@ -17,7 +17,7 @@ class HyperbandIterationManager(BaseIterationManger):
         iteration_config = self.experiment_group.iteration_config
 
         if iteration_config is None:
-            iteration = 1
+            iteration = 0
             bracket_iteration = 0
         else:
             should_reschedule = search_manager.should_reschedule(
