@@ -166,6 +166,13 @@ class MatrixConfig(BaseConfig):
         key = list(six.iterkeys(self.to_dict()))[0]
         return key in self.DISTRIBUTIONS
 
+    def is_categorical(self):
+        key, value = list(six.iteritems(self.to_dict()))[0]
+        if key != 'values':
+            return False
+
+        return any([v for v in value if isinstance(v, six.string_types)])
+
     def to_numpy(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
         if key == 'values':
