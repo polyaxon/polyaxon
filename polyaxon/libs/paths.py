@@ -42,5 +42,8 @@ def copy_to_tmp_dir(path, dir_name):
     tmp_path = get_tmp_path(dir_name)
     if os.path.exists(tmp_path):
         return tmp_path
-    shutil.copytree(path, tmp_path)
+    try:
+        shutil.copytree(path, tmp_path)
+    except FileExistsError as e:
+        logger.warning('Path already exists `%s`, exception %s', path, e)
     return tmp_path
