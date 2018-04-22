@@ -53,14 +53,7 @@ run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }} --dropout={{ dropout }}
 ```
 
-Other possible matrix options that can be used are:
-
-
- * `values`: [value1, value2, value3, ...]
- * `range`: [start, stop, step]
- * `logspace`: [start, stop, step]
- * `linspace`: [start, stop, num]
- * `geomspace`: [start, stop, num]
+Other possible matrix options that can be found [here](/polyaxonfile_specification/sections#discrete-values).
 
 The previous example will define 10 experiments based on the cartesian product of `lr` and `dropout` possible values.
 
