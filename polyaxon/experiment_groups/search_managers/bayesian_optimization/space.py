@@ -32,7 +32,7 @@ class SearchSpace(object):
             if value.is_categorical:
                 values = value.to_numpy()
                 num_feasible = len(values)
-                for i in range(num_feasible):
+                for _ in range(num_feasible):
                     self._lowerbound.append(0)
                     self._upperbound.append(1)
                 self._categorical_info[key] = {
