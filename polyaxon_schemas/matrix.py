@@ -162,10 +162,16 @@ class MatrixConfig(BaseConfig):
             values, pvalues, range, linspace, logspace, geomspace, uniform, quniform,
             loguniform, qloguniform, normal, qnormal, lognormal, qlognormal])
 
+    @property
     def is_distribution(self):
         key = list(six.iterkeys(self.to_dict()))[0]
         return key in self.DISTRIBUTIONS
 
+    @property
+    def is_discrete(self):
+        return not self.is_distribution
+
+    @property
     def is_categorical(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
         if key != 'values':

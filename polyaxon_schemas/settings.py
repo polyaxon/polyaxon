@@ -342,7 +342,7 @@ def validate_matrix(matrix, allow_distributions=True):
         else:
             matrix_data[key] = value
 
-        if not allow_distributions and matrix_data[key].is_distribution():
+        if not allow_distributions and matrix_data[key].is_distribution:
             raise ValidationError('`{}` defines a distribution, '
                                   'and it cannot be used with grid search.'.format(key))
 
