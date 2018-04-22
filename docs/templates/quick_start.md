@@ -70,6 +70,8 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ---
     version: 1
 
+    kind: experiment
+
     project:
       name: quick-start
 
@@ -177,26 +179,19 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
     ```bash
     $ polyaxon check -f polyaxonfile_hyperparams.yml -x
 
-    Polyaxonfile valid
-
-    The matrix-space has 20 experiments, with 2 concurrent runs, and random search.
-    ```
-
-    Check the matrix definition:
-
-    ```bash
-    $ polyaxon check -f polyaxonfile_hyperparams.yml -m
 
     Polyaxonfile valid
 
-    The matrix definition is:
-    {'learning_rate': 0.001, 'activation': 'relu', 'dropout': 0.25}
-    {'learning_rate': 0.001, 'activation': 'sigmoid', 'dropout': 0.25}
-    {'learning_rate': 0.001, 'activation': 'relu', 'dropout': 0.3}
-    {'learning_rate': 0.001, 'activation': 'sigmoid', 'dropout': 0.3}
-    ...
-    ...
+    This polyaxon specification has experiment group with the following definition:
+    --------------------  -----------------
+    Search algorithm      random
+    Concurrency           2 concurrent runs
+    Early stopping        deactivated
+    Experiment to create  10
+    --------------------  -----------------
     ```
+
+    Start the experiments group
 
     ```bash
     $ polyaxon run -f polyaxonfile_declarations.yml
@@ -343,13 +338,11 @@ And you are logged in to your Polyaxon account through the [polyaxon-cli](polyax
 
      Tensorboard is being deployed for project `quick-start`
 
-        It may take some time before you can access the dashboard.
+    It may take some time before you can access tensorboard.
 
-        If you used an ingress, your dashboard will be available at:
+    Your tensorboard will be available on:
 
-            http://52.226.37.54:80/tensorboard/root/quick-start
-
-        Ohterwise you can use kubectl to get the url.
+        http://192.168.64.14:32566/tensorboard/root/quick-start/
      ```
 
 Congratulations! You've trained your first experiments with Polyaxon. Behind the scene a couple of things have happened:
