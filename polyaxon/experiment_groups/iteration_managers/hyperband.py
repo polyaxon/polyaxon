@@ -112,6 +112,7 @@ class HyperbandIterationManager(BaseIterationManger):
         experiment_ids = self.get_reduced_configs()
         experiments = self.experiment_group.experiments.filter(id__in=experiment_ids)
         self.create_iteration(experiment_ids=experiment_ids)
+        self.experiment_group.refresh_from_db()
         iteration_config = self.experiment_group.iteration_config
         params_config = self.experiment_group.params_config
         resource_value = self.experiment_group.search_manager.get_resources_for_iteration(
