@@ -22,6 +22,8 @@ For example
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: mnist
 
@@ -44,6 +46,8 @@ For example
 
 ---
 version: 1
+
+kind: experiment
 
 project:
   name: mnist
@@ -79,6 +83,8 @@ Polyaxon also provides, an easy way to install multiple python libraries:
     ---
     version: 1
 
+    kind: experiment
+
     project:
       name: mnist
 
@@ -102,6 +108,8 @@ Polyaxon allows you to specify a `polyaxon_setup.sh` file, and a command to exec
 
 ---
 version: 1
+
+kind: experiment
 
 project:
   name: mnist
