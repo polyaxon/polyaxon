@@ -26,7 +26,6 @@ class SearchSpace(object):
         self.set_bounds()
 
     def set_bounds(self):
-        """ extract info from the study configuration """
         for key, value in self.params_config.matrix.items():
             self._names.append(key)
             # one hot encoding for categorical type
@@ -55,7 +54,6 @@ class SearchSpace(object):
                 self._upperbound.append(float(value.max))
 
     def parse_y(self, y):
-        """ parse the metric to the dictionary """
         if not y:
             return y
         y_values = []
@@ -91,7 +89,6 @@ class SearchSpace(object):
         return results, counter + self._categorical_info[name]["number"]
 
     def get_next_suggestion(self, suggestion):
-        """ parse the next suggestion to the proper format """
         counter = 0
         results = []
         for name in self._names:
