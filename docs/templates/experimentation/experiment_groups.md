@@ -33,7 +33,7 @@ This declares a section to run our `train.py` file by passing two values, the `l
 Now you need to declare this values, and for that you will add 2 more sections to the polyaxonfile.yml
 
  * A [declarations section](/polyaxonfile_specification/sections#declarations), to declare a constant value for `batch_size`
- * A [matrix section](/polyaxonfile_specification/sections#matrix), to declare the values for `lr`
+ * A [settings section](/polyaxonfile_specification/sections#settings) with [matrix subsection](/polyaxonfile_specification/sections#matrix), to declare the values for `lr`
 
 The new `polyaxonfile.yml` after the update
 
@@ -41,15 +41,18 @@ The new `polyaxonfile.yml` after the update
 ---
 version: 1
 
+kind: group
+
 project:
   name: mnist
 
 declarations:
   batch_size: 128
 
-matrix:
-  lr:
-    logspace: 0.01:0.1:5
+settings:
+    matrix:
+      lr:
+        logspace: 0.01:0.1:5
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
@@ -62,33 +65,46 @@ run:
     The declarations section was not completely necessary,
     we could have also just passed the value directly `--batch-size=128`
 
-So what we did is we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
+So what we did is that we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
 
 There are other options that we could have used such as
 
- * `values`: [value1, value2, value3]
+ * `values`: [value1, value2, value3, ...]
+ * `pvalues`: [(value1, prob1), (value2, prob12), (value3, prob3), ...]
  * `range`: [start, stop, step]
+ * `logspace`: [start, stop, step]
  * `linspace`: [start, stop, num]
  * `geomspace`: [start, stop, num]
+
+And distributions, when using random, hyperband, or bayesian optimization search:
+
+ * `uniform`
+ * `quniform`
+ * `loguniform`
+ * `qloguniform`
+ * `normal`
+ * `qnormal`
+ * `lognormal`
+ * `qlognormal`
 
 You can check all the options available on the [matrix section reference](/polyaxonfile_specification/sections#matrix).
 
 To make sure that the polyaxon file is valid, and creates multiple values for `lr`, we can run the following
 
 ```bash
-$ polyaxon check -f polyaxonfile.yml -m
+$ polyaxon check -f polyaxonfile.yml --definition
 
 Polyaxonfile valid
 
-The matrix definition is:
-{'lr': 1.0232929922807541}
-{'lr': 1.0777052536943219}
-{'lr': 1.1350108156723151}
-{'lr': 1.1953635256737185}
-{'lr': 1.2589254117941673}
+This polyaxon specification has experiment group with the following definition:
+----------------  -----------------
+Search algorithm  grid
+Concurrency       2 concurrent runs
+Early stopping    deactivated
+----------------  -----------------
 ```
 
-This command validate the polyaxon file, and the option `-m` returns the matrix space.
+This command validate the polyaxon file, and the option `-def` returns the group definition.
 
 !!! info "More details"
     For more details about this command please run `polyaxon check --help`,
@@ -115,23 +131,13 @@ Experiment group was created
 
 Now one thing we did not discuss is how many experiments we want to run in parallel,
 and how we want to perform the hyperparameters search. Be default, Polyaxon
-will schedule your experiments sequentially and also go through the matrix space sequentially.
-
-We could have checked that with the check command before
-
-```bash
-polyaxon check -f polyaxonfile.yml -x
-
-The matrix-space has 5 experiments, with sequential runs
-```
+will schedule your experiments sequentially and also explore the space in a grid search.
 
 
 ## Running concurrent experiments
 
 Now imagine we have enough resources on our cluster to run experiments in parallel.
 And we want to run 2 experiments concurrently, and explore the space randomly instead of sequentially.
-
-For this purpose we need a new [settings section](/polyaxonfile_specification/sections#settings).
 
 Although we can modify the `polyaxonfile.yml` to include this new section,
 we will do something different this time and override this value with a new file, same way you would do with `docker/docker-compose`.
@@ -159,14 +165,18 @@ settings:
     n_experiments: 5
 ```
 
-If we run again the `check` command with `-x` or `--experiments` option, we will get
+If we run again the `check` command with `-def` or `--definition` option, we will get
 
 ```bash
 polyaxon check -f polyaxonfile.yml -f polyaxonfile_override.yml -x
 
-Polyaxonfile valid
-
-The matrix-space has 5 experiments, with 2 concurrent runs, and a random search
+This polyaxon specification has experiment group with the following definition:
+--------------------  -----------------
+Search algorithm      random
+Concurrency           2 concurrent runs
+Early stopping        deactivated
+Experiment to create  5
+--------------------  -----------------
 ```
 
 Let's run our new version
@@ -304,6 +314,76 @@ Experiments:
          8  admin.mnist.2.8   admin   Starting       a few seconds ago  False                0                 a few seconds ago
          9  admin.mnist.2.9   admin   Created        a few seconds ago  False                0
         10  admin.mnist.2.10  admin   Building       a few seconds ago  False                0                 a few seconds ago
+```
+
+## Experiment group search algorithms
+
+In this introductory sections we demonstrated how to conduct hyperparameters tuning with 2 algorithms;
+grid search and random search.
+
+Sometimes you might have a large search space where you want to use advanced search algorithms.
+Polyaxon supports, in addtion to grid and random search, Hyperband and Bayesian Optimization.
+
+### Hyperband
+
+In order to use, you need to update your polyaxonfile `settings` section with a `hyperband` subsection the same way we declared `random_search`.
+
+Example:
+
+```yaml
+...
+
+settings:
+  concurrency: 2
+  hyperband:
+    max_iter: 81
+    eta: 3
+    resource:
+      name: num_steps
+      type: int
+    metric:
+      name: loss
+      optimization: minimize
+    resume: False
+
+  matrix:
+    learning_rate:
+      uniform: [0, 0.9]
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+```
+
+### Bayesian Optimization
+
+```yaml
+...
+
+settings:
+  concurrency: 2
+  bo:
+    n_iterations: 15
+    n_initial_trials: 30
+    metric:
+      name: loss
+      optimization: minimize
+    utility_function:
+      acquisition_function: ucb
+      kappa: 1.2
+      gaussian_process:
+        kernel: matern
+        length_scale: 1.0
+        nu: 1.9
+        n_restarts_optimizer: 0
+
+  matrix:
+    learning_rate:
+      uniform: [0, 0.9]
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
 ```
 
 !!! info "More details"
