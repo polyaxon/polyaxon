@@ -1,15 +1,17 @@
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: mnist
 
 environment:
   pytorch:
-    n_workers: 3
+    n_workers: 1
 
 run:
   image: pytorch/pytorch:latest
-  steps:
+  build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
   cmd: python distributed_run.py

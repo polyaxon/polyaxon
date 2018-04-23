@@ -1,11 +1,13 @@
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: cifar10
 
 run:
   image: polyaxon/mxnetkv
-  steps:
+  build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
   cmd:  python run.py --network resnet --num-layers 110 --batch-size 128

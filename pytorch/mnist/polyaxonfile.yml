@@ -1,11 +1,13 @@
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: mnist
 
 run:
   image: pytorch/pytorch:latest
-  steps:
+  build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
   cmd:  python run.py --epochs=8

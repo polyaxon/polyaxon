@@ -1,6 +1,8 @@
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: cifar10
 
@@ -12,6 +14,6 @@ environment:
 
 run:
   image: tensorflow/tensorflow:1.4.1-gpu
-  steps:
+  build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
   cmd:  python run.py --num-gpus=1 --train-steps=400

@@ -1,11 +1,13 @@
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: cifar10
 
 run:
   image: tensorflow/tensorflow:1.4.1
-  steps:
+  build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
   cmd:  python run.py --train-steps=400

@@ -1,6 +1,8 @@
 ---
 version: 1
 
+kind: experiment
+
 project:
   name: cifar10
 
@@ -11,7 +13,7 @@ environment:
 
 run:
   image: polyaxon/mxnetkv
-  steps:
+  build_steps:
     - pip install --no-cache-dir -U polyaxon-helper
   env_vars:
     - ['PS_VERBOSE', 2]
