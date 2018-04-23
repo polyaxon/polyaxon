@@ -18,7 +18,7 @@ class UtilityFunction(object):
             raise ValueError('Received a non valid configuration.')
 
         self.config = config
-        self.xi = config.xi
+        self.eps = config.eps
         self.kappa = config.kappa
         self.acquisition_function = config.acquisition_function
         self.gaussian_process = self.get_gaussian_process(config=config.gaussian_process, seed=seed)
@@ -56,10 +56,10 @@ class UtilityFunction(object):
 
     def compute_ei(self, x, y_max):
         mean, std = self.gaussian_process.predict(x, return_std=True)
-        z = (mean - y_max - self.xi) / std
-        return (mean - y_max - self.xi) * norm.cdf(z) + std * norm.pdf(z)
+        z = (mean - y_max - self.eps) / std
+        return (mean - y_max - self.eps) * norm.cdf(z) + std * norm.pdf(z)
 
     def compute_poi(self, x, y_max):
         mean, std = self.gaussian_process.predict(x, return_std=True)
-        z = (mean - y_max - self.xi) / std
+        z = (mean - y_max - self.eps) / std
         return norm.cdf(z)
