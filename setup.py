@@ -19,7 +19,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-cli',
-      version='0.0.6',
+      version='0.0.7',
       description='Command Line Interface (CLI) for Polyaxon.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mouradmourafiq@gmail.com',
@@ -42,8 +42,8 @@ setup(name='polyaxon-cli',
           'kubernetes',
       ],
       install_requires=[
-          "click>=6.7",
-          "polyaxon-client==0.0.6",
+          "click==6.7",
+          "polyaxon-client==0.0.7",
           "pathlib==1.0.1",
           "tabulate==0.8.2",
           "six==1.11.0",
