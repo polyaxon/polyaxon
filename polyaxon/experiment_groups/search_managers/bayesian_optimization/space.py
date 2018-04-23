@@ -5,16 +5,9 @@ import numpy as np
 from polyaxon_schemas.utils import Optimization
 
 
-def deal_with_categorical(feasible_values, one_hot_values):
-    """ function to do the one hot encoding of the categorical values """
-    index = np.argmax(one_hot_values)
-    return feasible_values[index]
-
-
 class SearchSpace(object):
-    def __init__(self, params_config, iteration_config):
+    def __init__(self, params_config):
         self.params_config = params_config
-        self.iteration_config = iteration_config
         self._dim = 0
         self._lowerbound = []
         self._upperbound = []
@@ -110,5 +103,5 @@ class SearchSpace(object):
                 counter = counter + 1
         return results
 
-    def to_dict(self, x_next):
-        return dict(zip(self._names, x_next))
+    def to_dict(self, suggestion):
+        return dict(zip(self._names, suggestion))
