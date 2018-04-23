@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.managers.config import GlobalConfigManager
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
@@ -87,3 +88,5 @@ def set(verbose, host, http_port, ws_port, use_https):  # pylint:disable=redefin
 
     GlobalConfigManager.set_config(_config)
     Printer.print_success('Config was update.')
+    # Reset cli config
+    CliConfigManager.purge()
