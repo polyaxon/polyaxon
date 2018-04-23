@@ -88,12 +88,23 @@ if an experiment run in a distributed way it will create multiple instances of `
     Please refer to the [jobs section](jobs) for more details.
 
 
-### Distributed Experiment
+### Distributed Experiments
 
 A `Distrubted Experiment` is the execution of your model in distributed fashion and depends on the framework you are using.
 
 !!! info "More details"
     Please refer to the [distributed experiments](distributed_experiments) for more details.
+
+
+### Hyperparameters search
+
+Finding good hyperparameters involves can be very challenging,
+and requires to efficiently search the space of possible hyperparameters as well as
+how to manage a large set of experiments for hyperparameter tuning.
+
+!!! info "More details"
+    Please refer to the [hyperparameters search](hyperparameters_search) for more details.
+
 
 
 ### Project Plugins
