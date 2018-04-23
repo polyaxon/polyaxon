@@ -234,16 +234,16 @@ class GaussianProcessConfig(BaseConfig):
         self.n_restarts_optimizer = n_restarts_optimizer
 
 
-def validate_utility_function(acquisition_function, kappa, xi):
+def validate_utility_function(acquisition_function, kappa, eps):
     condition = AcquisitionFunctions.is_ucb(acquisition_function) and kappa is None
     if condition:
         raise ValidationError('the acquisition function `ucb` requires a parameter `kappa`')
 
     condition = ((AcquisitionFunctions.is_ei(acquisition_function) or
                   AcquisitionFunctions.is_poi(acquisition_function)) and
-                 xi is None)
+                 eps is None)
     if condition:
-        raise ValidationError('the acquisition function `{}` requires a parameter `xi`'.format(
+        raise ValidationError('the acquisition function `{}` requires a parameter `eps`'.format(
             acquisition_function
         ))
 
@@ -253,7 +253,7 @@ class UtilityFunctionSchema(Schema):
                                       validate=validate.OneOf(AcquisitionFunctions.VALUES))
     gaussian_process = fields.Nested(GaussianProcessSchema, allow_none=True)
     kappa = fields.Float(allow_none=True)
-    xi = fields.Float(allow_none=True)
+    eps = fields.Float(allow_none=True)
 
     class Meta:
         ordered = True
@@ -271,7 +271,7 @@ class UtilityFunctionSchema(Schema):
         validate_utility_function(
             acquisition_function=data.get('acquisition_function'),
             kappa=data.get('kappa'),
-            xi=data.get('xi'))
+            eps=data.get('eps'))
 
 
 class UtilityFunctionConfig(BaseConfig):
@@ -282,16 +282,16 @@ class UtilityFunctionConfig(BaseConfig):
                  acquisition_function=AcquisitionFunctions.UCB,
                  gaussian_process=None,
                  kappa=None,
-                 xi=None):
+                 eps=None):
         validate_utility_function(
             acquisition_function=acquisition_function,
             kappa=kappa,
-            xi=xi)
+            eps=eps)
 
         self.acquisition_function = acquisition_function
         self.gaussian_process = gaussian_process
         self.kappa = kappa
-        self.xi = xi
+        self.eps = eps
 
 
 class BOSchema(Schema):

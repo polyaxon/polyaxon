@@ -152,7 +152,7 @@ class TestSettingConfigs(TestCase):
 
         config_dict = {
             'acquisition_function': AcquisitionFunctions.EI,
-            'xi': 1.2,
+            'eps': 1.2,
             'gaussian_process': {
                 'kernel': GaussianProcessesKernels.MATERN,
                 'length_scale': 1.0,
