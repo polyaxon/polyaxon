@@ -1,18 +1,26 @@
 ---
 version: 1
 
-kind: experiment
+kind: group
 
 project:
   name: quick-start
 
+settings:
+  concurrency: 2
+
+  matrix:
+    learning_rate:
+      linspace: 0.001:0.1:5
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      values: [relu, sigmoid]
+
 declarations:
   batch_size: 128
   num_steps: 500
-  learning_rate: 0.001
-  dropout: 0.25
   num_epochs: 1
-  activation: relu
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3

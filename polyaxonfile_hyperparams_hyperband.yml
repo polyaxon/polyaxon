@@ -1,18 +1,35 @@
 ---
 version: 1
 
-kind: experiment
+kind: group
 
 project:
   name: quick-start
 
+settings:
+  concurrency: 2
+  hyperband:
+    max_iter: 81
+    eta: 3
+    resource:
+      name: num_steps
+      type: int
+    metric:
+      name: loss
+      optimization: minimize
+    resume: False
+
+  matrix:
+    learning_rate:
+      uniform: [0, 0.01]
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+
 declarations:
   batch_size: 128
-  num_steps: 500
-  learning_rate: 0.001
-  dropout: 0.25
   num_epochs: 1
-  activation: relu
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
