@@ -3,12 +3,12 @@ This section assumes that you have already familiarized yourself with the concep
 Hyperparameters selection is crucial for creating robust models,
 since they heavily influence the behavior of the learned model.
 Finding good hyperparameters involves can be very challenging,
-and requires to efficiently search the space of possible hyperparameters as well as h
-ow to manage a large set of experiments for hyperparameter tuning.
+and requires to efficiently search the space of possible hyperparameters as well as
+how to manage a large set of experiments for hyperparameter tuning.
 
-The way Polyaxon performs hyperparameters tuning is by providing to the data scientists a selection of search algorithms,
-Polyaxon supports both simple approaches such as `random search` and `grid search`, but it also provides a simple interface for
-to advance approaches, such as `Hyperband` and `Bayesian Optimization`.
+The way Polyaxon performs hyperparameters tuning is by providing to the data scientists a selection of search algorithms.
+Polyaxon supports both simple approaches such as `random search` and `grid search`, and provides a simple interface for
+advanced approaches, such as `Hyperband` and `Bayesian Optimization`.
 
 All these search algorithms run in an asynchronous way, and support concurrency to leverage your cluster's resources to the maximum.
 
@@ -18,12 +18,12 @@ In order to search a hyperparameter space, all search algorithms require a `sett
 they also share some subsections such as: `matrix` definition of hyperparameters, `early_stopping`, and `concurrency`.
 Each one of this algorithms has a dedicated subsection to define the required options.
 
-# Grid search
+## Grid search
 
 The grid search is the default algorithm used by Polyaxon in case no other algorithm is defined.
-and it has support one optional parameter `n_experiments` in case the user does not want to traverse the whole space search.
+and it accepts one optional parameter `n_experiments` in case the user does not want to traverse the whole space search.
 
-The grid search does not allow the use of distribution, and requires that all matrix definition are wither values or ranges.
+The grid search does not allow the use of distribution, and requires that all matrix definition are values or ranges.
 
 Here's an example of a
 
@@ -57,7 +57,7 @@ Other possible matrix options that can be found [here](/polyaxonfile_specificati
 
 The previous example will define 10 experiments based on the cartesian product of `lr` and `dropout` possible values.
 
-We can restrict the number of experiments to be created and tried by using `n_experiments`,
+We can restrict the number of experiments torun by using `n_experiments`,
 the update version:
 
 
@@ -92,7 +92,7 @@ run:
 
 This updated example will create only 4 experiments from the total number of possible experiments.
 
-# Random search
+## Random search
 
 Random search requires a parameter `n_experiments`, this is essential because Polyaxon needs to know how many experiments to sample.
 
@@ -145,15 +145,45 @@ run:
                         --param1={{ param1 }}
 ```
 
-### Hyperband
+## Hyperband
 
 Hyperband is a relatively new method for tuning iterative algorithms.
 It performs random sampling and attempts to gain an edge by using time spent optimizing in the best way.
 
 In order to configure this search algorithm correctly, you need to have as one of the hyperparameters,
-a resource, this could be the number of steps or epochs, and metric that you want to maximize or minimize.
+a resource, this could be the number of steps or epochs, and a metric that you want to maximize or minimize.
+You can also indicate if the experiments should be restarted from scratch or resumed from the last check point.
 
-Example:
+The way Hyperband works is by discarding poor performing
+configurations leaving more resources for more promising configurations during successive halving.
+In order to use Hyperband correctly, you must define a metric called `resource` that the algorithm
+will increase iteratively. Here's an example of resource definitions:
+
+```yaml
+resource:
+  name: num_steps
+  type: int
+```
+
+You can also have a resource with type float.
+
+Another important concept is the metric to optimize, for example:
+
+```yaml
+metric:
+  name: loss
+  optimization: minimize
+```
+
+or
+
+```yaml
+metric:
+  name: accuracy
+  optimization: maximize
+```
+
+A complete definition of the settings section:
 
 ```yaml
 ...
@@ -181,11 +211,83 @@ settings:
       pvalues: [[relu, 0.1], [sigmoid, 0.8]]
 ```
 
-### Bayesian Optimization
+You can also use early stopping with hyperband:
+
+
+```yaml
+...
+
+settings:
+  concurrency: 2
+
+  hyperband:
+    max_iter: 81
+    eta: 3
+    resource:
+      name: num_steps
+      type: int
+    metric:
+      name: loss
+      optimization: minimize
+    resume: False
+
+  matrix:
+    learning_rate:
+      uniform: [0, 0.9]
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+
+  early_stopping:
+    - metric: accuracy
+      value: 0.9
+      optimization: maximize
+    - metric: loss
+      value: 0.05
+      optimization: minimize
+```
+
+## Bayesian Optimization
 
 Bayesian optimization is an extremely powerful technique.
 The main idea behind it is to compute a posterior distribution over the objective function based on the data,
 and then select good points to try with respect to this distribution.
+
+The way Polyaxon performs bayesian optimization is by measuring the expected increase in the maximum objective value
+seen over all experiments in the group, given the next point we pick.
+
+Since the bayesian optimization leverages previous experiments, the algorithm requires a metric to optimize (`maximize` or `minimize`).
+
+To use bayesian optimization the user must define a utility function. This utility defines what acquisition function and bayesian process to use.
+
+### Acquisition functions
+
+A couple of acquisition functions can be used: `ucb`, `ei` or `poi`.
+
+  * `ucb`: Upper Confidence Bound,
+  * `ei`: Expected Improvement
+  * `poi`: Probability of Improvement
+
+When using `ucb` as acquisition function, a tunable parameter `kappa` is also required, to balance exploitation
+against exploration, increasing kappa will make the optimized hyperparameters pursuing exploration.
+
+When using `ei` or `poi` as acquisition function, a tunable parameter `eps` is also required,
+to balance exploitation against exploration, increasing epsilon will
+make the optimized hyperparameters are more spread out across the whole range.
+
+### Gaussian process
+
+Polyaxon allows to tune the gaussian process.
+
+ * kernel: `matern` or `rbf`.
+ * length_scale: float
+ * nu: float
+ * n_restarts_optimizer: int
+
+
+Example :
+
 
 ```yaml
 ...
@@ -214,4 +316,43 @@ settings:
       values: [0.25, 0.3]
     activation:
       pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+```
+
+Example with early stopping:
+
+```yaml
+...
+
+settings:
+  concurrency: 2
+  bo:
+    n_iterations: 15
+    n_initial_trials: 30
+    metric:
+      name: loss
+      optimization: minimize
+    utility_function:
+      acquisition_function: ei
+      eps: 1.2
+      gaussian_process:
+        kernel: rbf
+        length_scale: 1.0
+        nu: 1.9
+        n_restarts_optimizer: 0
+
+  matrix:
+    learning_rate:
+      uniform: [0, 0.9]
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+
+  early_stopping:
+    - metric: accuracy
+      value: 0.9
+      optimization: maximize
+    - metric: loss
+      value: 0.05
+      optimization: minimize
 ```

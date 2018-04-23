@@ -76,7 +76,7 @@ There are other options that we could have used such as
  * `linspace`: [start, stop, num]
  * `geomspace`: [start, stop, num]
 
-And distributions, when using random, hyperband, or bayesian optimization search:
+And distributions, when using random search, hyperband, or bayesian optimization:
 
  * `uniform`: [low, high]
  * `quniform`: [low, high]
