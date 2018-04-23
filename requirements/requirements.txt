@@ -1,5 +1,5 @@
 -r requirements-base.txt
 
-polyaxon-schemas==0.0.6
-polyaxon-k8s==0.0.6
-polyaxon-gpustat==0.0.6
+polyaxon-schemas==0.0.7
+polyaxon-k8s==0.0.7
+polyaxon-gpustat==0.0.7
