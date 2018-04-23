@@ -47,40 +47,6 @@ class HyperbandIterationManager(BaseIterationManger):
             experiment_group=self.experiment_group,
             data=iteration_config.to_dict())
 
-    def get_iteration_config(self):
-        iteration_config = self.experiment_group.iteration_config
-        if iteration_config is None:
-            logger.warning(
-                'Experiment group `%s` attempt to update, but has no iteration',
-                self.experiment_group.id)
-            return None
-        return iteration_config
-
-    def _update_config(self, iteration_config):
-        iteration = self.experiment_group.iteration
-        iteration.data = iteration_config.to_dict()
-        iteration.save()
-
-    def add_iteration_experiments(self, experiment_ids):
-        iteration_config = self.get_iteration_config()
-        if not iteration_config:
-            return
-
-        iteration_config.experiment_ids = experiment_ids
-        self._update_config(iteration_config)
-
-    def update_iteration(self):
-        """Update the last experiment group's iteration with experiment performance."""
-        iteration_config = self.get_iteration_config()
-        if not iteration_config:
-            return
-        experiments_metrics = self.experiment_group.get_experiments_metrics(
-            experiment_ids=iteration_config.experiment_ids,
-            metric=self.experiment_group.params_config.hyperband.metric.name,
-        )
-        iteration_config.experiments_metrics = [m for m in experiments_metrics if m[1] is not None]
-        self._update_config(iteration_config)
-
     def get_reduced_configs(self):
         """Reduce the experiments to restart."""
         iteration_config = self.experiment_group.iteration_config
