@@ -1,3 +1,5 @@
+import numpy as np
+
 from unittest.mock import patch
 
 from django.test import override_settings
@@ -12,6 +14,7 @@ from experiment_groups.search_managers import (
     get_search_algorithm_manager
 )
 from experiment_groups.search_managers.bayesian_optimization.optimizer import BOOptimizer
+from experiment_groups.search_managers.bayesian_optimization.space import SearchSpace
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
     experiment_group_spec_content_bo,
@@ -641,8 +644,8 @@ class TestBOSearchManager(BaseTest):
                 'n_iterations': 4,
                 'n_initial_trials': 4,
                 'metric': {
-                    'name': 'loss',
-                    'optimization': 'minimize'
+                    'name': 'accuracy',
+                    'optimization': 'maximize'
                 },
                 'utility_function': {
                     'acquisition_function': 'ei',
@@ -656,9 +659,11 @@ class TestBOSearchManager(BaseTest):
                 }
             },
             'matrix': {
-                'feature1': {'values': [1, 2, 3]},
-                'feature2': {'linspace': [1, 2, 5]},
-                'feature3': {'range': [1, 5, 1]}
+                'feature1': {'values': [1, 2, 3, 4, 5]},
+                'feature2': {'linspace': [1, 5, 5]},
+                'feature3': {'range': [1, 6, 1]},
+                'feature4': {'uniform': [1, 5]},
+                'feature5': {'values': ['a', 'b', 'c']},
             }
         })
         self.manager2 = BOSearchManager(params_config=params_config)
@@ -683,3 +688,169 @@ class TestBOSearchManager(BaseTest):
             self.manager1.get_suggestions(iteration_config)
 
         assert get_suggestion_mock.call_count == 1
+
+    def test_space_search(self):
+        # Space 1
+        space1 = SearchSpace(params_config=self.manager1.params_config)
+
+        assert space1.dim == 3
+        assert len(space1.bounds) == 3
+        assert len(space1.discrete_features) == 3
+        assert len(space1.categorical_features) == 0
+
+        for i, feature in enumerate(space1.features):
+            # Bounds
+            if feature == 'feature1':
+                assert np.all(space1.bounds[i] == [1, 3])
+            elif feature == 'feature2':
+                assert np.all(space1.bounds[i] == [1, 2])
+            elif feature == 'feature3':
+                assert np.all(space1.bounds[i] == [1, 5])
+
+        for feature in space1.features:
+            # Features
+            if feature == 'feature1':
+                assert np.all(space1.discrete_features['feature1']['values'] == [1, 2, 3])
+            elif feature == 'feature2':
+                assert np.all(
+                    space1.discrete_features['feature2']['values'] ==
+                    np.asarray([1., 1.25, 1.5, 1.75, 2.]))
+            elif feature == 'feature3':
+                assert np.all(
+                    space1.discrete_features['feature3']['values'] ==
+                    np.asarray([1, 2, 3, 4]))
+
+        # Space 2
+        space2 = SearchSpace(params_config=self.manager2.params_config)
+
+        assert space2.dim == 7
+        assert len(space2.bounds) == 7
+        assert len(space2.discrete_features) == 3
+        assert len(space2.categorical_features) == 1
+        assert len(space2.features) == 5
+
+        for i, feature in enumerate(space2.features):
+            # Bounds
+            if feature == 'feature1':
+                assert np.all(space2.bounds[i] == [1, 5])
+            elif feature == 'feature2':
+                assert np.all(space2.bounds[i] == [1, 5])
+            elif feature == 'feature3':
+                assert np.all(space2.bounds[i] == [1, 6])
+            elif feature == 'feature4':
+                assert np.all(space2.bounds[i] == [1, 5])
+            elif feature == 'feature5':
+                assert np.all(space2.bounds[i] == [0, 1])
+
+        # One feature left is continuous
+
+        # One categorical Features
+        assert space2.categorical_features == {
+            'feature5': {'values': ['a', 'b', 'c'], 'number': 3}
+        }
+
+        # 3 discrete Features
+        assert space2.discrete_features['feature1']['values'] == [1, 2, 3, 4, 5]
+        assert np.all(
+            space2.discrete_features['feature2']['values'] ==
+            np.asarray([1, 2, 3, 4, 5]))
+        assert np.all(
+            space2.discrete_features['feature3']['values'] ==
+            np.asarray([1, 2, 3, 4, 5]))
+
+    def test_add_observation_to_space_search(self):
+        space1 = SearchSpace(params_config=self.manager1.params_config)
+
+        assert space1.x == []
+        assert space1.y == []
+
+        configs = [
+            {'feature1': 1, 'feature2': 1, 'feature3': 1},
+            {'feature1': 2, 'feature2': 1.2, 'feature3': 2},
+            {'feature1': 3, 'feature2': 1.3, 'feature3': 3}
+        ]
+        metrics = [1, 2, 3]
+
+        space1.add_observations(
+            configs=configs,
+            metrics=metrics
+        )
+
+        assert len(space1.x) == 3
+        assert len(space1.y) == 3
+
+        for i, feature in enumerate(space1.features):
+            if feature == 'feature1':
+                assert np.all(space1.x[:, i] == [1, 2, 3])
+            elif feature == 'feature2':
+                assert np.all(space1.x[:, i] == [1, 1.2, 1.3])
+            elif feature == 'feature3':
+                assert np.all(space1.x[:, i] == [1, 2, 3])
+
+        assert np.all(space1.y == np.array([-1, -2, -3]))
+
+        space2 = SearchSpace(params_config=self.manager2.params_config)
+
+        configs = [
+            {'feature1': 1, 'feature2': 1, 'feature3': 1, 'feature4': 1, 'feature5': 'a'},
+            {'feature1': 2, 'feature2': 1.2, 'feature3': 2, 'feature4': 4, 'feature5': 'b'},
+            {'feature1': 3, 'feature2': 1.3, 'feature3': 3, 'feature4': 3, 'feature5': 'a'}
+        ]
+        metrics = [1, 2, 3]
+
+        space2.add_observations(
+            configs=configs,
+            metrics=metrics
+        )
+
+        assert len(space2.x) == 3
+        assert len(space2.y) == 3
+
+        for i, feature in enumerate(space2.features):
+            if feature == 'feature1':
+                assert np.all(space2.x[:, i] == [1, 2, 3])
+            elif feature == 'feature2':
+                assert np.all(space2.x[:, i] == [1, 1.2, 1.3])
+            elif feature == 'feature3':
+                assert np.all(space2.x[:, i] == [1, 2, 3])
+            elif feature == 'feature4':
+                assert np.all(space2.x[:, i] == [1, 4, 3])
+            elif feature == 'feature5':
+                assert np.all(space2.x[:, i:i + 3] == [[1, 0, 0], [0, 1, 0], [1, 0, 0]])
+
+        assert np.all(space2.y == np.array(metrics))
+
+    def test_space_get_suggestion(self):
+        space1 = SearchSpace(params_config=self.manager1.params_config)
+
+        suggestion = space1.get_suggestion(suggestion=[1, 1, 1])
+        assert suggestion == {'feature1': 1, 'feature2': 1, 'feature3': 1}
+
+        suggestion = space1.get_suggestion(suggestion=[1, 1.2, 2])
+        assert suggestion == {'feature1': 1, 'feature2': 1.25, 'feature3': 2}
+
+        suggestion = space1.get_suggestion(suggestion=[1, 1.5, 3])
+        assert suggestion == {'feature1': 1, 'feature2': 1.5, 'feature3': 3}
+
+        space2 = SearchSpace(params_config=self.manager2.params_config)
+
+        suggestion = space2.get_suggestion(suggestion=[1, 1, 1, 1, 1, 0, 0])
+        assert suggestion == {'feature1': 1,
+                              'feature2': 1,
+                              'feature3': 1,
+                              'feature4': 1,
+                              'feature5': 'a'}
+
+        suggestion = space2.get_suggestion(suggestion=[1, 1.2, 2, 3, 0, 0, 1])
+        assert suggestion == {'feature1': 1,
+                              'feature2': 1,
+                              'feature3': 2,
+                              'feature4': 3,
+                              'feature5': 'c'}
+
+        suggestion = space2.get_suggestion(suggestion=[1, 1.8, 3, 3, 0, 1, 0])
+        assert suggestion == {'feature1': 1,
+                              'feature2': 2,
+                              'feature3': 3,
+                              'feature4': 3,
+                              'feature5': 'b'}

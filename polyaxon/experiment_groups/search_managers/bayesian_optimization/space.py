@@ -25,6 +25,10 @@ class SearchSpace(object):
         return self._y
 
     @property
+    def dim(self):
+        return self._dim
+
+    @property
     def features(self):
         return self._features
 
@@ -42,7 +46,8 @@ class SearchSpace(object):
 
     def set_bounds(self):
         bounds = []
-        for key, value in self.params_config.matrix.items():
+        for key in sorted(self.params_config.matrix.keys()):
+            value = self.params_config.matrix[key]
             self._features.append(key)
             # one hot encoding for categorical type
             if value.is_categorical:
@@ -84,12 +89,14 @@ class SearchSpace(object):
             return configs
         x = []
         for config in configs:
+            x_config = []
             for feature in self._features:
-                if feature in self._discrete_features:
-                    x += [1 if v == config[feature] else 0
-                          for v in self._discrete_features[feature]['values']]
+                if feature in self._categorical_features:
+                    x_config += [1 if v == config[feature] else 0
+                          for v in self._categorical_features[feature]['values']]
                 elif feature in self._features:
-                    x.append(config[feature])
+                    x_config.append(config[feature])
+            x.append(x_config)
         return np.array(x)
 
     def add_observations(self, configs, metrics):
@@ -108,7 +115,7 @@ class SearchSpace(object):
     def _get_categorical_suggestion(self, feature, suggestion, counter):
         one_hot_values = suggestion[counter:counter + self._categorical_features[feature]["number"]]
         index = np.argmax(one_hot_values)
-        feasible_values = self._discrete_features[feature]["values"]
+        feasible_values = self._categorical_features[feature]["values"]
         results = feasible_values[index]
         return results, counter + self._categorical_features[feature]["number"]
 

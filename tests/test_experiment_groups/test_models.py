@@ -7,13 +7,13 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 
-from experiment_groups.iteration_managers import HyperbandIterationManager
+from experiment_groups.iteration_managers import HyperbandIterationManager, BOIterationManager
 from experiment_groups.models import ExperimentGroup, ExperimentGroupIteration
 from experiment_groups.search_managers import (
     GridSearchManager,
     HyperbandSearchManager,
-    RandomSearchManager
-)
+    RandomSearchManager,
+    BOSearchManager)
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -297,6 +297,34 @@ class TestExperimentGroupModel(BaseTest):
         assert isinstance(experiment_group.search_manager, HyperbandSearchManager)
         assert isinstance(experiment_group.iteration_manager, HyperbandIterationManager)
 
+        # Adding params
+        experiment_group.params = {
+            'concurrency': 2,
+            'bo': {
+                'n_iterations': 4,
+                'n_initial_trials': 4,
+                'metric': {
+                    'name': 'loss',
+                    'optimization': 'minimize'
+                },
+                'utility_function': {
+                    'acquisition_function': 'ei',
+                    'eps': 1.2,
+                    'gaussian_process': {
+                        'kernel': 'matern',
+                        'length_scale': 1.0,
+                        'nu': 1.9,
+                        'n_restarts_optimizer': 0
+                    }
+                }
+            },
+            'matrix': {'lr': {'values': [1, 2, 3]}}
+        }
+        experiment_group.save()
+        experiment_group = ExperimentGroup.objects.get(id=experiment_group.id)
+        assert isinstance(experiment_group.search_manager, BOSearchManager)
+        assert isinstance(experiment_group.iteration_manager, BOIterationManager)
+
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
         with patch(
@@ -482,6 +510,10 @@ class TestExperimentGroupModel(BaseTest):
                 hp_hyperband_start(experiment_group.id)
         assert mock_fct2.call_count == 1
         assert mock_fct3.call_count == 1
+
+    @tag(RUNNER_TEST)
+    def test_bo_rescheduling(self):
+        raise NotImplemented
 
 
 class TestExperimentGroupCommit(BaseViewTest):
