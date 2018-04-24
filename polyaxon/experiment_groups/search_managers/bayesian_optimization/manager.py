@@ -12,6 +12,7 @@ class BOSearchManager(BaseSearchAlgorithmManager):
     def __init__(self, params_config):
         super(BOSearchManager, self).__init__(params_config=params_config)
         self.n_initial_trials = self.params_config.bo.n_initial_trials
+        self.n_iterations = self.params_config.bo.n_iterations
 
     def get_suggestions(self, iteration_config=None):
         if not iteration_config:
@@ -29,3 +30,7 @@ class BOSearchManager(BaseSearchAlgorithmManager):
         optimizer = BOOptimizer(params_config=self.params_config)
         optimizer.add_observations(configs=configs, metrics=metrics)
         return [optimizer.get_suggestion()]
+
+    def should_reschedule(self, iteration):
+        """Return a boolean to indicate if we need to reschedule another iteration."""
+        return iteration < self.n_iterations

@@ -1,6 +1,6 @@
 from polyaxon_schemas.utils import SearchAlgorithms
 
-from runner.hp_search import grid, random, hyperband
+from runner.hp_search import bo, grid, random, hyperband
 
 
 def create(experiment_group):
@@ -10,4 +10,6 @@ def create(experiment_group):
         return random.create(experiment_group=experiment_group)
     elif SearchAlgorithms.is_hyperband(experiment_group.search_algorithm):
         return hyperband.create(experiment_group=experiment_group)
+    elif SearchAlgorithms.is_bo(experiment_group.search_algorithm):
+        return bo.create(experiment_group=experiment_group)
     return None

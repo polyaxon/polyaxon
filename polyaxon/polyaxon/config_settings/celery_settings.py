@@ -153,6 +153,10 @@ class HPCeleryTasks(object):
     HP_HYPERBAND_START = 'hp_hyperband_start'
     HP_HYPERBAND_ITERATE = 'hp_hyperband_iterate'
 
+    HP_BO_CREATE = 'hp_bo_create'
+    HP_BO_START = 'hp_bo_start'
+    HP_BO_ITERATE = 'hp_bo_iterate'
+
 
 class CeleryOperationTasks(object):
     """Celery operation tasks.
@@ -272,6 +276,9 @@ if config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True):
         HPCeleryTasks.HP_HYPERBAND_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
         HPCeleryTasks.HP_HYPERBAND_START: {'queue': CeleryQueues.API_EXPERIMENTS},
         HPCeleryTasks.HP_HYPERBAND_ITERATE: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_BO_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_BO_START: {'queue': CeleryQueues.API_EXPERIMENTS},
+        HPCeleryTasks.HP_BO_ITERATE: {'queue': CeleryQueues.API_EXPERIMENTS},
 
         RunnerCeleryTasks.PROJECTS_TENSORBOARD_START: {'queue': CeleryQueues.API_EXPERIMENTS},
         RunnerCeleryTasks.PROJECTS_TENSORBOARD_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
