@@ -1,11 +1,12 @@
 from django.test import override_settings
 
-from experiment_groups.schemas import HyperbandIterationConfig, get_iteration_config
+from experiment_groups.schemas import HyperbandIterationConfig, get_iteration_config, \
+    BOIterationConfig
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
     experiment_group_spec_content_early_stopping,
-    experiment_group_spec_content_hyperband
-)
+    experiment_group_spec_content_hyperband,
+    experiment_group_spec_content_bo)
 from tests.utils import BaseTest
 
 
@@ -34,6 +35,19 @@ class TestSearchManagers(BaseTest):
                                                iteration=iteration),
                           HyperbandIterationConfig)
 
+        # BO
+        experiment_group = ExperimentGroupFactory(
+            content=experiment_group_spec_content_bo)
+        iteration = {
+            'iteration': 1,
+            'experiment_ids': [1, 2, 3],
+            'experiment_configs': [[1, {1: 1}], [2, {2: 2}], [3, {3: 3}]],
+            'experiments_metrics': None
+        }
+        assert isinstance(get_iteration_config(experiment_group.search_algorithm,
+                                               iteration=iteration),
+                          BOIterationConfig)
+
 
 @override_settings(DEPLOY_RUNNER=False)
 class TestHyperbandIterationConfig(BaseTest):
@@ -42,10 +56,27 @@ class TestHyperbandIterationConfig(BaseTest):
             'iteration': 1,
             'bracket_iteration': 0,
             'experiment_ids': [1, 2, 3],
-            'experiments_metrics': [
-                ['loss', 0.5],
-                ['accuracy', 0.8]
-            ],
+            'experiments_metrics': [[1, 0.5], [2, 0.8], [3, 0.8]],
         }
 
         assert HyperbandIterationConfig.from_dict(config).to_dict() == config
+
+
+@override_settings(DEPLOY_RUNNER=False)
+class TestBOIterationConfig(BaseTest):
+    def test_bo_iteration_config(self):
+        config = {
+            'iteration': 2,
+            'experiment_ids': [5, 6, 7],
+            'experiments_configs': [
+                [5, {'param1': 0.5}], [6, {'param1': 0.5}], [7, {'param1': 0.5}]],
+            'experiments_metrics': [
+                [5, 0.5], [6, 0.8], [7, 0.8]],
+            'old_experiment_ids': [1, 2, 3],
+            'old_experiments_configs': [
+                [1, {'param1': 0.5}], [2, {'param1': 0.5}], [3, {'param1': 0.5}]],
+            'old_experiments_metrics': [
+                [1, 0.5], [2, 0.8], [3, 0.8]],
+        }
+
+        assert BOIterationConfig.from_dict(config).to_dict() == config
