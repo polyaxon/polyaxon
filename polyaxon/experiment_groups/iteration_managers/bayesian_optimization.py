@@ -10,24 +10,6 @@ class BOIterationManager(BaseIterationManger):
     def get_metric_name(self):
         return self.experiment_group.params_config.bo.metric.name
 
-    @staticmethod
-    def get_combined_experiment_ids(iteration_config):
-        experiment_ids = iteration_config.old_experiment_ids or []
-        experiment_ids += iteration_config.experiment_ids or []
-        return experiment_ids
-
-    @staticmethod
-    def get_combined_experiments_configs(iteration_config):
-        experiments_configs = iteration_config.old_experiments_configs or []
-        experiments_configs += iteration_config.experiments_configs or []
-        return experiments_configs
-
-    @staticmethod
-    def get_combined_experiments_metrics(iteration_config):
-        experiments_metrics = iteration_config.old_experiments_metrics or []
-        experiments_metrics += iteration_config.experiments_metrics or []
-        return experiments_metrics
-
     def create_iteration(self, experiment_ids, experiments_configs):
         """Create an iteration for the experiment group."""
         from experiment_groups.models import ExperimentGroupIteration
@@ -41,9 +23,9 @@ class BOIterationManager(BaseIterationManger):
             old_experiments_metrics = None
         else:
             iteration = iteration_config.iteration + 1
-            old_experiment_ids = self.get_combined_experiment_ids(iteration_config)
-            old_experiments_configs = self.get_combined_experiments_configs(iteration_config)
-            old_experiments_metrics = self.get_combined_experiments_metrics(iteration_config)
+            old_experiment_ids = iteration_config.combined_experiment_ids
+            old_experiments_configs = iteration_config.combined_experiments_configs
+            old_experiments_metrics = iteration_config.combined_experiments_metrics
 
         # Create a new iteration config
         iteration_config = BOIterationConfig(

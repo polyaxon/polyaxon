@@ -1,12 +1,16 @@
 from django.test import override_settings
 
-from experiment_groups.schemas import HyperbandIterationConfig, get_iteration_config, \
-    BOIterationConfig
+from experiment_groups.schemas import (
+    BOIterationConfig,
+    HyperbandIterationConfig,
+    get_iteration_config
+)
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
+    experiment_group_spec_content_bo,
     experiment_group_spec_content_early_stopping,
-    experiment_group_spec_content_hyperband,
-    experiment_group_spec_content_bo)
+    experiment_group_spec_content_hyperband
+)
 from tests.utils import BaseTest
 
 

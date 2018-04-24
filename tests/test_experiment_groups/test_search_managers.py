@@ -1,18 +1,20 @@
-import math
-
 from unittest.mock import patch
 
 from django.test import override_settings
 
 from experiment_groups.models import ExperimentGroupIteration
+from experiment_groups.schemas import BOIterationConfig
 from experiment_groups.search_managers import (
+    BOSearchManager,
     GridSearchManager,
     HyperbandSearchManager,
     RandomSearchManager,
     get_search_algorithm_manager
 )
+from experiment_groups.search_managers.bayesian_optimization.optimizer import BOOptimizer
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
+    experiment_group_spec_content_bo,
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
@@ -40,6 +42,12 @@ class TestIterationManagers(BaseTest):
             content=experiment_group_spec_content_hyperband)
         assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
                           HyperbandSearchManager)
+
+        # BO
+        experiment_group = ExperimentGroupFactory(
+            content=experiment_group_spec_content_bo)
+        assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
+                          BOSearchManager)
 
 
 @override_settings(DEPLOY_RUNNER=False)
@@ -594,3 +602,84 @@ class TestHyperbandSearchManager(BaseTest):
             assert 'feature2' in suggestion
             assert 'feature3' in suggestion
             assert 'feature4' in suggestion
+
+
+@override_settings(DEPLOY_RUNNER=False)
+class TestBOSearchManager(BaseTest):
+    def setUp(self):
+        params_config = SettingsConfig.from_dict({
+            'concurrency': 2,
+            'bo': {
+                'n_iterations': 5,
+                'n_initial_trials': 5,
+                'metric': {
+                    'name': 'loss',
+                    'optimization': 'minimize'
+                },
+                'utility_function': {
+                    'acquisition_function': 'ucb',
+                    'kappa': 1.2,
+                    'gaussian_process': {
+                        'kernel': 'matern',
+                        'length_scale': 1.0,
+                        'nu': 1.9,
+                        'n_restarts_optimizer': 0
+                    }
+                }
+            },
+            'matrix': {
+                'feature1': {'values': [1, 2, 3]},
+                'feature2': {'linspace': [1, 2, 5]},
+                'feature3': {'range': [1, 5, 1]}
+            }
+        })
+        self.manager1 = BOSearchManager(params_config=params_config)
+
+        params_config = SettingsConfig.from_dict({
+            'concurrency': 2,
+            'bo': {
+                'n_iterations': 4,
+                'n_initial_trials': 4,
+                'metric': {
+                    'name': 'loss',
+                    'optimization': 'minimize'
+                },
+                'utility_function': {
+                    'acquisition_function': 'ei',
+                    'eps': 1.2,
+                    'gaussian_process': {
+                        'kernel': 'matern',
+                        'length_scale': 1.0,
+                        'nu': 1.9,
+                        'n_restarts_optimizer': 0
+                    }
+                }
+            },
+            'matrix': {
+                'feature1': {'values': [1, 2, 3]},
+                'feature2': {'linspace': [1, 2, 5]},
+                'feature3': {'range': [1, 5, 1]}
+            }
+        })
+        self.manager2 = BOSearchManager(params_config=params_config)
+
+    def test_first_get_suggestions_returns_initial_random_suggestion(self):
+        assert len(self.manager1.get_suggestions()) == 5
+        assert len(self.manager2.get_suggestions()) == 4
+
+    def test_iteration_suggestions_calls_optimizer(self):
+        iteration_config = BOIterationConfig.from_dict({
+            'iteration': 2,
+            'old_experiment_ids': [1, 2, 3],
+            'old_experiments_configs': [[1, {'feature1': 1, 'feature2': 1, 'feature3': 1}],
+                                        [2, {'feature1': 2, 'feature2': 1.2, 'feature3': 2}],
+                                        [3, {'feature1': 3, 'feature2': 1.3, 'feature3': 3}]],
+            'old_experiments_metrics': [[1, 1], [2, 2], [3, 3]],
+            'experiment_ids': [4],
+            'experiments_configs': [[4, {'feature1': 2, 'feature2': 1.5, 'feature3': 4}]],
+            'experiments_metrics': [[4, 4]]
+        })
+        with patch.object(BOOptimizer, 'get_suggestion') as get_suggestion_mock:
+            self.manager1.get_suggestions(iteration_config)
+
+        assert get_suggestion_mock.call_count == 1

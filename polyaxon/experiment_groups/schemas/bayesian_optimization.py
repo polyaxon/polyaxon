@@ -53,3 +53,21 @@ class BOIterationConfig(BaseConfig):
         self.experiment_ids = experiment_ids
         self.experiments_configs = experiments_configs
         self.experiments_metrics = experiments_metrics
+
+    @property
+    def combined_experiment_ids(self):
+        experiment_ids = self.old_experiment_ids or []
+        experiment_ids += self.experiment_ids or []
+        return experiment_ids
+
+    @property
+    def combined_experiments_configs(self):
+        experiments_configs = self.old_experiments_configs or []
+        experiments_configs += self.experiments_configs or []
+        return experiments_configs
+
+    @property
+    def combined_experiments_metrics(self):
+        experiments_metrics = self.old_experiments_metrics or []
+        experiments_metrics += self.experiments_metrics or []
+        return experiments_metrics
