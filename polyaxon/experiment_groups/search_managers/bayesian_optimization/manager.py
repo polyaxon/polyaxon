@@ -2,10 +2,9 @@ from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
 from experiment_groups.search_managers.bayesian_optimization.acquisition_function import (
     UtilityFunction
 )
-from polyaxon_schemas.utils import SearchAlgorithms
-
 from experiment_groups.search_managers.bayesian_optimization.space import SearchSpace
 from experiment_groups.search_managers.utils import get_random_suggestions
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class BOSearchManager(BaseSearchAlgorithmManager):

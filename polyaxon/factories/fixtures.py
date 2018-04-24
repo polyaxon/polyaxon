@@ -173,6 +173,46 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
 """
 
 
+experiment_group_spec_content_bo = """---
+    version: 1
+
+    kind: group
+
+    project:
+      name: project1
+
+    settings:
+      concurrency: 2
+      bo:
+        n_iterations: 5
+        n_initial_trials: 2
+        metric: 
+          name: loss
+          optimization: minimize
+        utility_function:
+          acquisition_function: ucb
+          kappa: 1.2
+          gaussian_process:
+            kernel: matern
+            length_scale: 1.0
+            nu: 1.9
+            n_restarts_optimizer: 0
+      early_stopping:
+        - metric: precision
+          value: 0.9
+        - metric: loss
+          value: 0.1
+          optimization: minimize 
+      matrix:
+        lr:
+          values: [0.01, 0.1, 0.5]
+
+    run:
+      image: my_image
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
+
 experiment_spec_content = """---
     version: 1
     
