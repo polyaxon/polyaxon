@@ -886,9 +886,9 @@ class TestBOSearchManager(BaseTest):
 
         optimizer1.add_observations(configs=configs, metrics=metrics)
         suggestion = optimizer1.get_suggestion()
-        assert 1 <= suggestion['feature1'] < 3
-        assert 1 <= suggestion['feature2'] < 2
-        assert 1 <= suggestion['feature3'] < 5
+        assert 1 <= suggestion['feature1'] <= 3
+        assert 1 <= suggestion['feature2'] <= 2
+        assert 1 <= suggestion['feature3'] <= 5
 
         # Manager 2
         optimizer2 = BOOptimizer(params_config=self.manager2.params_config)
@@ -902,8 +902,8 @@ class TestBOSearchManager(BaseTest):
 
         optimizer2.add_observations(configs=configs, metrics=metrics)
         suggestion = optimizer2.get_suggestion()
-        assert 1 <= suggestion['feature1'] < 5
-        assert 1 <= suggestion['feature2'] < 5
-        assert 1 <= suggestion['feature3'] < 6
-        assert 1 <= suggestion['feature4'] < 5
+        assert 1 <= suggestion['feature1'] <= 5
+        assert 1 <= suggestion['feature2'] <= 5
+        assert 1 <= suggestion['feature3'] <= 6
+        assert 1 <= suggestion['feature4'] <= 5
         assert suggestion['feature5'] in ['a', 'b', 'c']
