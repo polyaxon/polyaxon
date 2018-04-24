@@ -11,10 +11,6 @@ from polyaxon_schemas.utils import AcquisitionFunctions, GaussianProcessesKernel
 
 
 class UtilityFunction(object):
-    UCB = 'ucb'
-    EI = 'ei'
-    POI = 'poi'
-    FUNCTIONS = {UCB, EI, POI}
 
     def __init__(self, config, seed=None):
         if not isinstance(config, UtilityFunctionConfig):
