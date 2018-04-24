@@ -1,5 +1,3 @@
-""" module for algorithm manager """
-
 import numpy as np
 
 from polyaxon_schemas.utils import Optimization
@@ -10,9 +8,9 @@ class SearchSpace(object):
         self.params_config = params_config
         self._dim = 0
         self._bounds = []
-        self._names = []
-        self._discrete_info = {}
-        self._categorical_info = {}
+        self._features = []
+        self._discrete_features = {}
+        self._categorical_features = {}
         self._x = []
         self._y = []
 
@@ -27,20 +25,32 @@ class SearchSpace(object):
         return self._y
 
     @property
+    def features(self):
+        return self._features
+
+    @property
+    def discrete_features(self):
+        return self._discrete_features
+
+    @property
+    def categorical_features(self):
+        return self._categorical_features
+
+    @property
     def bounds(self):
         return self._bounds
 
     def set_bounds(self):
         bounds = []
         for key, value in self.params_config.matrix.items():
-            self._names.append(key)
+            self._features.append(key)
             # one hot encoding for categorical type
             if value.is_categorical:
                 values = value.to_numpy()
                 num_feasible = len(values)
                 for _ in range(num_feasible):
                     bounds.append((0, 1))
-                self._categorical_info[key] = {
+                self._categorical_features[key] = {
                     "values": values,
                     "number": num_feasible,
                 }
@@ -49,10 +59,10 @@ class SearchSpace(object):
                 self._dim = self._dim + 1
                 discrete_values = value.to_numpy()
                 bounds.append((value.min, value.max))
-                self._discrete_info[key] = {
+                self._discrete_features[key] = {
                     "values": discrete_values,
                 }
-            elif value.is_unifrom:
+            elif value.is_uniform:
                 self._dim = self._dim + 1
                 bounds.append((float(value.min), float(value.max)))
         self._bounds = np.asarray(bounds)
@@ -74,20 +84,20 @@ class SearchSpace(object):
             return configs
         x = []
         for config in configs:
-            for name in self._names:
-                if name in self._discrete_info:
-                    x += [1 if v == config[name] else 0
-                          for v in self._discrete_info[name]['values']]
-                elif name in self._names:
-                    x.append(config[name])
+            for feature in self._features:
+                if feature in self._discrete_features:
+                    x += [1 if v == config[feature] else 0
+                          for v in self._discrete_features[feature]['values']]
+                elif feature in self._features:
+                    x.append(config[feature])
         return np.array(x)
 
     def add_observations(self, configs, metrics):
         self._x = self.parse_x(configs=configs)
         self._y = self.parse_y(metrics=metrics)
 
-    def _get_discrete_suggestion(self, name, suggestion, counter):
-        feasible_values = self._discrete_info[name]["values"]
+    def _get_discrete_suggestion(self, feature, suggestion, counter):
+        feasible_values = self._discrete_features[feature]["values"]
         current_value = suggestion[counter]
 
         diff = np.subtract(feasible_values, current_value)
@@ -95,31 +105,31 @@ class SearchSpace(object):
         results = feasible_values[np.argmin(diff)]
         return results, counter + 1
 
-    def _get_categorical_suggestion(self, name, suggestion, counter):
-        one_hot_values = suggestion[counter:counter + self._categorical_info[name]["number"]]
+    def _get_categorical_suggestion(self, feature, suggestion, counter):
+        one_hot_values = suggestion[counter:counter + self._categorical_features[feature]["number"]]
         index = np.argmax(one_hot_values)
-        feasible_values = self._discrete_info[name]["values"]
+        feasible_values = self._discrete_features[feature]["values"]
         results = feasible_values[index]
-        return results, counter + self._categorical_info[name]["number"]
+        return results, counter + self._categorical_features[feature]["number"]
 
     def get_suggestion(self, suggestion):
         counter = 0
         results = []
-        for name in self._names:
-            if name in self._discrete_info:
+        for feature in self._features:
+            if feature in self._discrete_features:
                 result, counter = self._get_discrete_suggestion(
-                    name=name,
+                    feature=feature,
                     suggestion=suggestion,
                     counter=counter)
                 results.append(result)
 
-            elif name in self._categorical_info:
+            elif feature in self._categorical_features:
                 result, counter = self._get_categorical_suggestion(
-                    name=name,
+                    feature=feature,
                     suggestion=suggestion,
                     counter=counter)
                 results.append(result)
             else:
                 results.append(suggestion[counter])
                 counter = counter + 1
-        return dict(zip(self._names, results))
+        return dict(zip(self._features, results))
