@@ -9,6 +9,9 @@ logger = logging.getLogger('polyaxon.experiments_groups.iteration_manager')
 
 
 class HyperbandIterationManager(BaseIterationManger):
+    def get_metric_name(self):
+        return self.experiment_group.params_config.hyperband.metric.name
+
     def create_iteration(self, experiment_ids=None):
         """Create an iteration for the experiment group."""
         from experiment_groups.models import ExperimentGroupIteration

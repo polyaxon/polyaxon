@@ -7,6 +7,9 @@ class BaseIterationManger(object):
     def __init__(self, experiment_group):
         self.experiment_group = experiment_group
 
+    def get_metric_name(self):
+        return None
+
     def get_iteration_config(self):
         iteration_config = self.experiment_group.iteration_config
         if iteration_config is None:
@@ -28,7 +31,7 @@ class BaseIterationManger(object):
             return
         experiments_metrics = self.experiment_group.get_experiments_metrics(
             experiment_ids=iteration_config.experiment_ids,
-            metric=self.experiment_group.params_config.hyperband.metric.name,
+            metric=self.get_metric_name()
         )
         iteration_config.experiments_metrics = [m for m in experiments_metrics if m[1] is not None]
         self._update_config(iteration_config)
