@@ -7,19 +7,21 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 
-from experiment_groups.iteration_managers import HyperbandIterationManager, BOIterationManager
+from experiment_groups.iteration_managers import BOIterationManager, HyperbandIterationManager
 from experiment_groups.models import ExperimentGroup, ExperimentGroupIteration
 from experiment_groups.search_managers import (
+    BOSearchManager,
     GridSearchManager,
     HyperbandSearchManager,
-    RandomSearchManager,
-    BOSearchManager)
+    RandomSearchManager
+)
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
+    experiment_group_spec_content_bo,
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband,
     experiment_group_spec_content_hyperband_trigger_reschedule
@@ -29,6 +31,7 @@ from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
+from runner.hp_search.bo import hp_bo_start
 from runner.hp_search.hyperband import hp_hyperband_start
 from runner.tasks.experiment_groups import stop_group_experiments
 from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
@@ -513,7 +516,41 @@ class TestExperimentGroupModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_bo_rescheduling(self):
-        raise NotImplemented
+        with patch('runner.hp_search.bo.hp_bo_start.apply_async') as mock_fct:
+            ExperimentGroupFactory(content=experiment_group_spec_content_bo)
+
+        assert mock_fct.call_count == 1
+
+        with patch('runner.hp_search.bo.hp_bo_iterate.delay') as mock_fct1:
+            with patch('runner.tasks.experiments.build_experiment.delay') as mock_fct2:
+                ExperimentGroupFactory(
+                    content=experiment_group_spec_content_bo)
+
+        assert mock_fct1.call_count == 1
+        assert mock_fct2.call_count == 2
+
+        # Fake
+        with patch('runner.hp_search.bo.hp_bo_start.apply_async') as mock_fct:
+            experiment_group = ExperimentGroupFactory(
+                content=experiment_group_spec_content_bo)
+        assert mock_fct.call_count == 1
+        assert experiment_group.non_done_experiments.count() == 2
+
+        # Mark experiment as done
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
+            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+             for xp in experiment_group.experiments.all()]
+        with patch('runner.hp_search.bo.hp_bo_iterate.delay') as mock_fct1:
+            hp_bo_start(experiment_group.id)
+        assert mock_fct1.call_count == 1
+
+        # Mark experiment as done
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
+            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+             for xp in experiment_group.experiments.all()]
+        with patch('runner.hp_search.bo.hp_bo_create.delay') as mock_fct1:
+            hp_bo_start(experiment_group.id)
+        assert mock_fct1.call_count == 1
 
 
 class TestExperimentGroupCommit(BaseViewTest):
