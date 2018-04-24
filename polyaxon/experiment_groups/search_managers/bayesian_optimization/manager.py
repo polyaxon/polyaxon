@@ -8,13 +8,13 @@ from experiment_groups.search_managers.bayesian_optimization.space import Search
 from experiment_groups.search_managers.utils import get_random_suggestions
 
 
-class BOManager(BaseSearchAlgorithmManager):
+class BOSearchManager(BaseSearchAlgorithmManager):
     """Bayesian optimization algorithm manager for hyperparameter optimization."""
 
     NAME = SearchAlgorithms.BO
 
     def __init__(self, params_config):
-        super(BOManager, self).__init__(params_config=params_config)
+        super(BOSearchManager, self).__init__(params_config=params_config)
         self.n_initial_trials = self.params_config.bo.n_initial_trials
         self.space = SearchSpace(params_config=params_config)
         self.utility_function = UtilityFunction(
