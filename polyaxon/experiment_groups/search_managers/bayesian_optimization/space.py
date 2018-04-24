@@ -9,10 +9,8 @@ class SearchSpace(object):
     def __init__(self, params_config):
         self.params_config = params_config
         self._dim = 0
-        self._lowerbound = []
-        self._upperbound = []
+        self._bounds = []
         self._names = []
-        # record all the feasible values of discrete type variables
         self._discrete_info = {}
         self._categorical_info = {}
         self._x = []
@@ -28,7 +26,12 @@ class SearchSpace(object):
     def y(self):
         return self._y
 
+    @property
+    def bounds(self):
+        return self._bounds
+
     def set_bounds(self):
+        bounds = []
         for key, value in self.params_config.matrix.items():
             self._names.append(key)
             # one hot encoding for categorical type
@@ -36,8 +39,7 @@ class SearchSpace(object):
                 values = value.to_numpy()
                 num_feasible = len(values)
                 for _ in range(num_feasible):
-                    self._lowerbound.append(0)
-                    self._upperbound.append(1)
+                    bounds.append((0, 1))
                 self._categorical_info[key] = {
                     "values": values,
                     "number": num_feasible,
@@ -46,15 +48,14 @@ class SearchSpace(object):
             elif value.is_discrete:
                 self._dim = self._dim + 1
                 discrete_values = value.to_numpy()
-                self._lowerbound.append(value.min)
-                self._upperbound.append(value.max)
+                bounds.append((value.min, value.max))
                 self._discrete_info[key] = {
                     "values": discrete_values,
                 }
             elif value.is_unifrom:
                 self._dim = self._dim + 1
-                self._lowerbound.append(float(value.min))
-                self._upperbound.append(float(value.max))
+                bounds.append((float(value.min), float(value.max)))
+        self._bounds = np.asarray(bounds)
 
     def parse_y(self, metrics):
         if not metrics:
@@ -108,20 +109,17 @@ class SearchSpace(object):
             if name in self._discrete_info:
                 result, counter = self._get_discrete_suggestion(
                     name=name,
-                    suggestion=suggestion[counter],
+                    suggestion=suggestion,
                     counter=counter)
                 results.append(result)
 
             elif name in self._categorical_info:
                 result, counter = self._get_categorical_suggestion(
                     name=name,
-                    suggestion=suggestion[counter],
+                    suggestion=suggestion,
                     counter=counter)
                 results.append(result)
             else:
                 results.append(suggestion[counter])
                 counter = counter + 1
-        return results
-
-    def to_dict(self, suggestion):
-        return dict(zip(self._names, suggestion))
+        return dict(zip(self._names, results))
