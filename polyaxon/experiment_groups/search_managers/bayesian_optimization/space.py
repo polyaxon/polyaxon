@@ -93,7 +93,7 @@ class SearchSpace(object):
             for feature in self._features:
                 if feature in self._categorical_features:
                     x_config += [1 if v == config[feature] else 0
-                          for v in self._categorical_features[feature]['values']]
+                                 for v in self._categorical_features[feature]['values']]
                 elif feature in self._features:
                     x_config.append(config[feature])
             x.append(x_config)
