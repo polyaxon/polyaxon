@@ -15,8 +15,18 @@ class SearchSpace(object):
         # record all the feasible values of discrete type variables
         self._discrete_info = {}
         self._categorical_info = {}
+        self._x = []
+        self._y = []
 
         self.set_bounds()
+
+    @property
+    def x(self):
+        return self._x
+
+    @property
+    def y(self):
+        return self._y
 
     def set_bounds(self):
         for key, value in self.params_config.matrix.items():
@@ -46,11 +56,11 @@ class SearchSpace(object):
                 self._lowerbound.append(float(value.min))
                 self._upperbound.append(float(value.max))
 
-    def parse_y(self, y):
-        if not y:
-            return y
+    def parse_y(self, metrics):
+        if not metrics:
+            return metrics
         y_values = []
-        for value in y:
+        for value in metrics:
             if Optimization.maximize(self.params_config.bo.metric.optimization):
                 y_values.append(float(value))
             else:
@@ -58,12 +68,22 @@ class SearchSpace(object):
 
         return y_values
 
-    @staticmethod
-    def parse_x(x):
-        if not x:
-            return x
-
+    def parse_x(self, configs):
+        if not configs:
+            return configs
+        x = []
+        for config in configs:
+            for name in self._names:
+                if name in self._discrete_info:
+                    x += [1 if v == config[name] else 0
+                          for v in self._discrete_info[name]['values']]
+                elif name in self._names:
+                    x.append(config[name])
         return np.array(x)
+
+    def add_observations(self, configs, metrics):
+        self._x = self.parse_x(configs=configs)
+        self._y = self.parse_y(metrics=metrics)
 
     def _get_discrete_suggestion(self, name, suggestion, counter):
         feasible_values = self._discrete_info[name]["values"]
@@ -81,7 +101,7 @@ class SearchSpace(object):
         results = feasible_values[index]
         return results, counter + self._categorical_info[name]["number"]
 
-    def get_next_suggestion(self, suggestion):
+    def get_suggestion(self, suggestion):
         counter = 0
         results = []
         for name in self._names:
