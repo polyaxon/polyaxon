@@ -854,3 +854,56 @@ class TestBOSearchManager(BaseTest):
                               'feature3': 3,
                               'feature4': 3,
                               'feature5': 'b'}
+
+    def test_optimizer_add_observations_calls_space_add_observations(self):
+        optimizer = BOOptimizer(params_config=self.manager1.params_config)
+        with patch.object(SearchSpace, 'add_observations') as add_observations_mock:
+            optimizer.add_observations(configs=[], metrics=[])
+
+        assert add_observations_mock.call_count == 1
+
+    def test_optimizer_get_suggestion(self):
+        # Manager 1
+        optimizer1 = BOOptimizer(params_config=self.manager1.params_config)
+
+        configs = [
+            {'feature1': 1, 'feature2': 1, 'feature3': 1},
+            {'feature1': 1, 'feature2': 1.2, 'feature3': 1},
+            {'feature1': 1, 'feature2': 1, 'feature3': 1},
+            {'feature1': 1, 'feature2': 1.11, 'feature3': 1},
+            {'feature1': 1, 'feature2': 1.1, 'feature3': 1},
+            {'feature1': 1, 'feature2': 1.21, 'feature3': 1},
+            {'feature1': 2, 'feature2': 2, 'feature3': 2},
+            {'feature1': 3, 'feature2': 2, 'feature3': 2},
+            {'feature1': 2, 'feature2': 1.8, 'feature3': 3},
+            {'feature1': 3, 'feature2': 2, 'feature3': 3},
+            {'feature1': 2, 'feature2': 2, 'feature3': 2},
+            {'feature1': 3, 'feature2': 2, 'feature3': 2},
+            {'feature1': 2, 'feature2': 1.8, 'feature3': 3},
+            {'feature1': 3, 'feature2': 2, 'feature3': 3}
+        ]
+        metrics = [0, 1.1, 0.1, 0.1, 1.09, 0.4, 100, 200, 200, 300, 110, 210, 210, 310]
+
+        optimizer1.add_observations(configs=configs, metrics=metrics)
+        suggestion = optimizer1.get_suggestion()
+        assert 1 <= suggestion['feature1'] < 3
+        assert 1 <= suggestion['feature2'] < 2
+        assert 1 <= suggestion['feature3'] < 5
+
+        # Manager 2
+        optimizer2 = BOOptimizer(params_config=self.manager2.params_config)
+
+        configs = [
+            {'feature1': 1, 'feature2': 1, 'feature3': 1, 'feature4': 1, 'feature5': 'a'},
+            {'feature1': 2, 'feature2': 1.2, 'feature3': 2, 'feature4': 4, 'feature5': 'b'},
+            {'feature1': 3, 'feature2': 1.3, 'feature3': 3, 'feature4': 3, 'feature5': 'a'}
+        ]
+        metrics = [1, 2, 3]
+
+        optimizer2.add_observations(configs=configs, metrics=metrics)
+        suggestion = optimizer2.get_suggestion()
+        assert 1 <= suggestion['feature1'] < 5
+        assert 1 <= suggestion['feature2'] < 5
+        assert 1 <= suggestion['feature3'] < 6
+        assert 1 <= suggestion['feature4'] < 5
+        assert suggestion['feature5'] in ['a', 'b', 'c']

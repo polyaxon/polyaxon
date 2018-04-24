@@ -32,7 +32,7 @@ class Suggestion(object):
 
 
 def get_random_generator(seed=None):
-    return np.random.RandomState(seed) if seed else None
+    return np.random.RandomState(seed) if seed else np.random
 
 
 def get_random_suggestions(matrix, n_suggestions, suggestion_params=None, seed=None):

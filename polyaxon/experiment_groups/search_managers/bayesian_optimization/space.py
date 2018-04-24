@@ -82,7 +82,7 @@ class SearchSpace(object):
             else:
                 y_values.append(-float(value))
 
-        return y_values
+        return np.array(y_values)
 
     def parse_x(self, configs):
         if not configs:
