@@ -74,7 +74,7 @@ class UtilityFunction(object):
         Params:
             y_max: The current maximum known value of the target function.
             bounds: The variables bounds to limit the search of the acq max.
-            n_warmup: The number of times to randomly sample the aquisition function
+            n_warmup: The number of times to randomly sample the acquisition function
             n_iter: The number of times to run scipy.minimize
 
         Returns

@@ -865,6 +865,8 @@ class TestBOSearchManager(BaseTest):
     def test_optimizer_get_suggestion(self):
         # Manager 1
         optimizer1 = BOOptimizer(params_config=self.manager1.params_config)
+        optimizer1.N_ITER = 1
+        optimizer1.N_WARMUP = 1
 
         configs = [
             {'feature1': 1, 'feature2': 1, 'feature3': 1},
@@ -892,6 +894,8 @@ class TestBOSearchManager(BaseTest):
 
         # Manager 2
         optimizer2 = BOOptimizer(params_config=self.manager2.params_config)
+        optimizer2.N_ITER = 1
+        optimizer2.N_WARMUP = 1
 
         configs = [
             {'feature1': 1, 'feature2': 1, 'feature3': 1, 'feature4': 1, 'feature5': 'a'},
@@ -907,3 +911,137 @@ class TestBOSearchManager(BaseTest):
         assert 1 <= suggestion['feature3'] <= 6
         assert 1 <= suggestion['feature4'] <= 5
         assert suggestion['feature5'] in ['a', 'b', 'c']
+
+    def test_concrete_example(self):
+        params_config = SettingsConfig.from_dict({
+            'concurrency': 2,
+            'bo': {
+                'n_iterations': 5,
+                'n_initial_trials': 10,
+                'metric': {
+                    'name': 'loss',
+                    'optimization': 'minimize'
+                },
+                'utility_function': {
+                    'acquisition_function': 'ucb',
+                    'kappa': 2.576,
+                    'gaussian_process': {
+                        'kernel': 'matern',
+                        'length_scale': 1.0,
+                        'nu': 1.9,
+                        'n_restarts_optimizer': 0
+                    }
+                }
+            },
+            'matrix': {
+                'learning_rate': {'uniform': [0.001, 0.01]},
+                'dropout': {'values': [0.25, 0.3]},
+                'activation': {'values': ['relu', 'sigmoid']}
+            }
+        })
+        optimizer = BOOptimizer(params_config=params_config)
+        optimizer.N_ITER = 1
+        optimizer.N_WARMUP = 1
+
+        configs = [
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.004544653508229265,
+                "activation": "sigmoid",
+                "dropout": 0.3
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.005615296199690899,
+                "activation": "sigmoid",
+                "dropout": 0.3
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.008784330869587902,
+                "activation": "sigmoid",
+                "dropout": 0.25
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.0058591075447430065,
+                "activation": "sigmoid",
+                "dropout": 0.3
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.007464080062927171,
+                "activation": "sigmoid",
+                "dropout": 0.25
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.0024763129571936738,
+                "activation": "relu",
+                "dropout": 0.3
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.0074881581817925705,
+                "activation": "sigmoid",
+                "dropout": 0.3
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.003360405779075163,
+                "activation": "relu",
+                "dropout": 0.3
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.009916904455792564,
+                "activation": "sigmoid",
+                "dropout": 0.25
+            },
+            {
+                "num_epochs": 1,
+                "num_steps": 300,
+                "batch_size": 128,
+                "learning_rate": 0.000881723263162717,
+                "activation": "sigmoid",
+                "dropout": 0.3
+            }
+        ]
+        metrics = [
+            2.3018131256103516,
+            2.302884340286255,
+            2.3071441650390625,
+            2.3034636974334717,
+            2.301487922668457,
+            0.05087224021553993,
+            2.3032383918762207,
+            0.06383182853460312,
+            2.3120572566986084,
+            0.7617478370666504
+        ]
+
+        optimizer.add_observations(configs=configs, metrics=metrics)
+        suggestion = optimizer.get_suggestion()
+
+        assert 0.001 <= suggestion['learning_rate'] <= 0.01
+        assert suggestion['dropout'] in [0.25, 0.3]
+        assert suggestion['activation'] in ['relu', 'sigmoid']
+

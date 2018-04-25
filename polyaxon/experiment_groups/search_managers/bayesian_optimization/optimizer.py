@@ -5,6 +5,9 @@ from experiment_groups.search_managers.bayesian_optimization.space import Search
 
 
 class BOOptimizer(object):
+    N_WARMUP = 100000
+    N_ITER = 250
+
     def __init__(self, params_config):
         self.params_config = params_config
         self.n_initial_trials = self.params_config.bo.n_initial_trials
@@ -18,7 +21,10 @@ class BOOptimizer(object):
             return None
         y_max = self.space.y.max()
         self.utility_function.gaussian_process.fit(self.space.x, self.space.y)
-        return self.utility_function.max_compute(y_max=y_max, bounds=self.space.bounds)
+        return self.utility_function.max_compute(y_max=y_max,
+                                                 bounds=self.space.bounds,
+                                                 n_warmup=self.N_WARMUP,
+                                                 n_iter=self.N_ITER)
 
     def add_observations(self, configs, metrics):
         # Turn configs and metrics into data points
