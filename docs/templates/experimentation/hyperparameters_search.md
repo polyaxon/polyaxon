@@ -155,7 +155,7 @@ a resource, this could be the number of steps or epochs, and a metric that you w
 You can also indicate if the experiments should be restarted from scratch or resumed from the last check point.
 
 The way Hyperband works is by discarding poor performing
-configurations leaving more resources for more promising configurations during successive halving.
+configurations leaving more resources for more promising configurations during the successive halving.
 In order to use Hyperband correctly, you must define a metric called `resource` that the algorithm
 will increase iteratively. Here's an example of resource definitions:
 
