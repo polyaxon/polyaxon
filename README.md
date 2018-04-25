@@ -88,7 +88,7 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
 
  * Notebook
     ```bash
-    # Start Jupyter notebook for your porject
+    # Start Jupyter notebook for your project
     $ polyaxon notebook start -f polyaxon_notebook.yml
 
     Notebook is being deployed for project `quick-start`
