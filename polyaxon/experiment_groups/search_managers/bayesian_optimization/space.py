@@ -36,7 +36,6 @@ class SearchSpace(object):
 
         return True
 
-
     @property
     def x(self):
         return self._x
@@ -141,7 +140,7 @@ class SearchSpace(object):
         return results, counter + self._categorical_features[feature]["number"]
 
     def get_suggestion(self, suggestion):
-        if not suggestion:
+        if suggestion is None:
             return suggestion
         counter = 0
         results = []
