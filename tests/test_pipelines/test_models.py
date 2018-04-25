@@ -5,7 +5,7 @@ from mock import patch
 from django.conf import settings
 from django.utils import timezone
 
-from factories.pipelines import (
+from factories.factory_pipelines import (
     OperationFactory,
     OperationRunFactory,
     PipelineFactory,

@@ -1,4 +1,4 @@
-from factories.pipelines import OperationFactory
+from factories.factory_pipelines import OperationFactory
 from pipelines import dags
 from tests.utils import BaseTest
 
