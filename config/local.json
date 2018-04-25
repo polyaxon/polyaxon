@@ -1,4 +1,5 @@
 {
+  "TESTING": 1,
   "POLYAXON_DEBUG": false,
   "POLYAXON_JS_DEBUG": false,
   "POLYAXON_DB_NAME": "travis_ci_test",
