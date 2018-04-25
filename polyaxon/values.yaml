@@ -290,7 +290,7 @@ postgresql:
             topologyKey: "kubernetes.io/hostname"
 
 redis:
-  image: redis:4.0.2
+  image: redis:4.0.9
   usePassword: false
   persistence:
     enabled: false
@@ -310,7 +310,7 @@ redis:
             topologyKey: "kubernetes.io/hostname"
 
 rabbitmq:
-  image: "rabbitmq:3.6.12-management"
+  image: rabbitmq:3.7.4-management
   imagePullPolicy: IfNotPresent
   rabbitmqUsername: polyaxon
   persistence:
