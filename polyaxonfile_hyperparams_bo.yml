@@ -33,6 +33,7 @@ settings:
 
 declarations:
   batch_size: 128
+  num_steps: 300
   num_epochs: 1
 
 run:
