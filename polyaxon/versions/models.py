@@ -51,7 +51,7 @@ class CliVersion(BaseValidationVersion):
 
 
 class PlatformVersion(BaseValidationVersion):
-    """A model that represents the polyaxon platfom version."""
+    """A model that represents the polyaxon platform version."""
     LATEST_VERSION = settings.PLATFORM_LATEST_VERSION
     MIN_VERSION = settings.PLATFORM_MIN_VERSION
 
