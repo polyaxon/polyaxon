@@ -331,7 +331,7 @@ def validate_search_algorithm(algorithms, matrix):
         raise ValidationError('Search algorithms need a matrix definition.')
 
 
-def validate_matrix(matrix, allow_distributions=True):
+def validate_bo_matrix(matrix):
     if not matrix:
         return None
 
@@ -342,9 +342,31 @@ def validate_matrix(matrix, allow_distributions=True):
         else:
             matrix_data[key] = value
 
-        if not allow_distributions and matrix_data[key].is_distribution:
+        if matrix_data[key].is_distribution and not matrix_data[key].is_uniform:
+            raise ValidationError('`{}` defines a non uniform distribution, '
+                                  'and it cannot be used with bayesian optimization.'.format(key))
+
+    return matrix_data
+
+
+def validate_matrix(matrix, is_grid_search=False, is_bo=False):
+    if not matrix:
+        return None
+
+    matrix_data = {}
+    for key, value in six.iteritems(matrix):
+        if not isinstance(value, MatrixConfig):
+            matrix_data[key] = MatrixConfig.from_dict(value)
+        else:
+            matrix_data[key] = value
+
+        if is_grid_search and matrix_data[key].is_distribution:
             raise ValidationError('`{}` defines a distribution, '
                                   'and it cannot be used with grid search.'.format(key))
+
+        if is_bo and matrix_data[key].is_distribution and not matrix_data[key].is_uniform:
+            raise ValidationError('`{}` defines a non uniform distribution, '
+                                  'and it cannot be used with bayesian optimization.'.format(key))
 
     return matrix_data
 
@@ -383,8 +405,9 @@ class SettingsSchema(Schema):
     @validates_schema
     def validate_matrix(self, data):
         """Validates matrix data and creates the config objects"""
-        allow_distributions = data.get('grid_search') is None
-        validate_matrix(data.get('matrix'), allow_distributions=allow_distributions)
+        is_grid_search = data.get('grid_search') is not None
+        is_bo = data.get('bo') is not None
+        validate_matrix(data.get('matrix'), is_grid_search=is_grid_search, is_bo=is_bo)
 
 
 class SettingsConfig(BaseConfig):
@@ -404,7 +427,9 @@ class SettingsConfig(BaseConfig):
                  early_stopping=None):
         self.logging = logging
         self.seed = seed
-        matrix = validate_matrix(matrix, allow_distributions=grid_search is None)
+        matrix = validate_matrix(matrix,
+                                 is_grid_search=grid_search is not None,
+                                 is_bo=bo is not None)
         self.matrix = matrix
         self.concurrency = concurrency
         validate_search_algorithm(

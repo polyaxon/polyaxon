@@ -205,6 +205,13 @@ class TestSettingConfigs(TestCase):
         with self.assertRaises(ValidationError):
             SettingsConfig.from_dict(config_dict)
 
+        # Using a distribution with random search should pass
+        config_dict['matrix'] = {
+            'lr': {'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
+        }
+        config = SettingsConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
         # Add matrix definition should pass
         config_dict['matrix'] = {
             'lr': {'values': [1, 2, 3]}
@@ -247,7 +254,7 @@ class TestSettingConfigs(TestCase):
         with self.assertRaises(ValidationError):
             SettingsConfig.from_dict(config_dict)
 
-        # Remove random_search should pass
+        # Remove grid_search should pass
         del config_dict['grid_search']
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -270,13 +277,6 @@ class TestSettingConfigs(TestCase):
         config = SettingsConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-        # Using a distribution with random search should pass
-        config_dict['matrix'] = {
-            'lr': {'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
-        }
-        config = SettingsConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
-
         # Add bo should raise
         config_dict['bo'] = {
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict(),
@@ -295,6 +295,32 @@ class TestSettingConfigs(TestCase):
         }
         with self.assertRaises(ValidationError):
             SettingsConfig.from_dict(config_dict)
+
+        # Remove hyperband should pass
+        del config_dict['hyperband']
+        config = SettingsConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
+
+        # Using non uniform distribution should raise
+        # Updating the matrix should pass
+        config_dict['matrix'] = {
+            'lr': {'pvalues': [[0.1, 0.1], [0.2, 0.9]]}
+        }
+        with self.assertRaises(ValidationError):
+            SettingsConfig.from_dict(config_dict)
+
+        config_dict['matrix'] = {
+            'lr': {'normal': [0.1, 0.2]}
+        }
+        with self.assertRaises(ValidationError):
+            SettingsConfig.from_dict(config_dict)
+
+        # Using uniform distribution should raise
+        config_dict['matrix'] = {
+            'lr': {'uniform': {'low': 0.1, 'high': 0.2}}
+        }
+        config = SettingsConfig.from_dict(config_dict)
+        assert_equal_dict(config.to_dict(), config_dict)
 
     def test_random_and_grid_search_without_n_experiments(self):
         config_dict = {
