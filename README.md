@@ -18,6 +18,25 @@ $ pip install -U polyaxon-cli
 
 Please check the [polyaxon cli reference](https://docs.polyaxon.com/polyaxon_cli/introduction/)
 
+
+## Commands References
+
+ * [Auth](https://docs.polyaxon.com/polyaxon_cli/commands/auth)
+ * [Check](https://docs.polyaxon.com/polyaxon_cli/commands/check)
+ * [Config](https://docs.polyaxon.com/polyaxon_cli/commands/config)
+ * [Init](https://docs.polyaxon.com/polyaxon_cli/commands/init)
+ * [Project](https://docs.polyaxon.com/polyaxon_cli/commands/project)
+ * [Upload](https://docs.polyaxon.com/polyaxon_cli/commands/upload)
+ * [Run](https://docs.polyaxon.com/polyaxon_cli/commands/run)
+ * [Experiment Group](https://docs.polyaxon.com/polyaxon_cli/commands/experiment_group)
+ * [Experiment](https://docs.polyaxon.com/polyaxon_cli/commands/experiment)
+ * [Job](https://docs.polyaxon.com/polyaxon_cli/commands/job)
+ * [Dashboard](https://docs.polyaxon.com/polyaxon_cli/commands/dashboard)
+ * [Tensorboard](https://docs.polyaxon.com/polyaxon_cli/commands/tensorboard)
+ * [Notebook](https://docs.polyaxon.com/polyaxon_cli/commands/notebook)
+ * [Cluster](https://docs.polyaxon.com/polyaxon_cli/commands/cluster)
+ * [Version](https://docs.polyaxon.com/polyaxon_cli/commands/version)
+
 ## Install polyaxon
 
 Please check [polyaxon installation guide](https://docs.polyaxon.com/installation/introduction)
