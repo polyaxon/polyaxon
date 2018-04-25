@@ -342,11 +342,11 @@ settings:
 
   matrix:
     learning_rate:
-      uniform: [0, 0.9]
+      uniform: [0.001, 0.09]
     dropout:
       values: [0.25, 0.3]
     activation:
-      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+      values: [relu, sigmoid]
 
   early_stopping:
     - metric: accuracy
