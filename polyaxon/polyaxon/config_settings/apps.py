@@ -24,6 +24,7 @@ if DEPLOY_RUNNER:
     )
 
 THIRD_PARTY_APPS = (
+    'raven.contrib.django.raven_compat',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',

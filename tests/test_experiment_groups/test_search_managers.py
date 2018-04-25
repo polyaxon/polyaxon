@@ -1044,4 +1044,3 @@ class TestBOSearchManager(BaseTest):
         assert 0.001 <= suggestion['learning_rate'] <= 0.01
         assert suggestion['dropout'] in [0.25, 0.3]
         assert suggestion['activation'] in ['relu', 'sigmoid']
-

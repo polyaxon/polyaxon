@@ -1,11 +1,10 @@
 import os
 
-from polyaxon.utils import ROOT_DIR
+from polyaxon.utils import ROOT_DIR, TESTING, config
 
 LOG_DIRECTORY = ROOT_DIR.child('logs')
 if not os.path.exists(LOG_DIRECTORY):
     os.makedirs(LOG_DIRECTORY)
-
 
 LOGGING = {
     'version': 1,
@@ -31,7 +30,7 @@ LOGGING = {
     },
     'handlers': {
         'logfile': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '{}/polyaxon_{}.log'.format(LOG_DIRECTORY, os.getpid()),
             'maxBytes': 1024 * 1024 * 8,  # 8 MByte
@@ -39,14 +38,13 @@ LOGGING = {
             'formatter': 'standard',
         },
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
-        'mail_admins': {
+        'sentry': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
         },
     },
     'loggers': {
@@ -63,4 +61,13 @@ LOGGING = {
     },
 }
 
-CLUSTER_NOTIFICATION_URL = "https://www.google-analytics.com/collect?v=1&tid=UA-89493331-1"
+RAVEN_CONFIG = {}
+
+if not TESTING:
+    RAVEN_CONFIG['dsn'] = config.platform_dns
+    RAVEN_CONFIG['transport'] = "raven.transport.threaded_requests.ThreadedRequestsHTTPTransport"
+    RAVEN_CONFIG['release'] = config.get_string('POLYAXON_CHART_VERSION',
+                                                is_optional=True,
+                                                default='0.0.0')
+
+CLUSTER_NOTIFICATION_URL = config.notification_url

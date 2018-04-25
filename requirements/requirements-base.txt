@@ -7,6 +7,8 @@ GitPython==2.1.7
 Jinja2==2.9.6
 pika==0.11.0
 psycopg2-binary==2.7.4
+raven==6.7.0
+rncryptor==3.2.0
 redis==2.10.6
 sanic==0.6.0
 scikit-learn==0.19.1
