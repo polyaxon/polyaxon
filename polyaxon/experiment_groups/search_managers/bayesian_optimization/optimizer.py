@@ -14,6 +14,8 @@ class BOOptimizer(object):
 
     def _maximize(self):
         """ Find argmax of the acquisition function."""
+        if not self.space.is_observations_valid():
+            return None
         y_max = self.space.y.max()
         self.utility_function.gaussian_process.fit(self.space.x, self.space.y)
         return self.utility_function.max_compute(y_max=y_max, bounds=self.space.bounds)

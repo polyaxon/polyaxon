@@ -29,7 +29,8 @@ class BOSearchManager(BaseSearchAlgorithmManager):
             metrics.append(experiments_metrics[key])
         optimizer = BOOptimizer(params_config=self.params_config)
         optimizer.add_observations(configs=configs, metrics=metrics)
-        return [optimizer.get_suggestion()]
+        suggestion = optimizer.get_suggestion()
+        return [suggestion] if suggestion else None
 
     def should_reschedule(self, iteration):
         """Return a boolean to indicate if we need to reschedule another iteration."""
