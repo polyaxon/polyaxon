@@ -62,12 +62,12 @@ LOGGING = {
 }
 
 RAVEN_CONFIG = {}
-
-if not TESTING:
+if not config.is_testing:
     RAVEN_CONFIG['dsn'] = config.platform_dns
     RAVEN_CONFIG['transport'] = "raven.transport.threaded_requests.ThreadedRequestsHTTPTransport"
     RAVEN_CONFIG['release'] = config.get_string('POLYAXON_CHART_VERSION',
                                                 is_optional=True,
                                                 default='0.0.0')
+    RAVEN_CONFIG['environment'] = config.env
 
 CLUSTER_NOTIFICATION_URL = config.notification_url
