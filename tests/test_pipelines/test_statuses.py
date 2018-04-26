@@ -3,7 +3,7 @@ from tests.utils import BaseTest
 
 
 class TestStatusesTransition(BaseTest):
-    def test_pipeline_statuses_transition(self):
+    def test_pipeline_statuses_transition(self):  # pylint:disable=too-many-branches
         # Cannot transition to `CREATED`
         for status in PipelineStatuses.VALUES:
             assert PipelineStatuses.can_transition(
@@ -60,7 +60,7 @@ class TestStatusesTransition(BaseTest):
             else:
                 assert can_transition is False
 
-    def test_operation_statuses_transition(self):
+    def test_operation_statuses_transition(self):  # pylint:disable=too-many-branches
         # Cannot transition to `CREATED`
         for status in OperationStatuses.VALUES:
             assert OperationStatuses.can_transition(

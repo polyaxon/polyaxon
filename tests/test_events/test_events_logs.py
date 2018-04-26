@@ -17,7 +17,7 @@ class TestEventsLogsHandling(BaseTest):
         return len([_ for _ in open(filename)])
 
     def test_handle_events_job_logs_create_one_handler(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment = ExperimentFactory()
 
         params = dict(experiment_name=experiment.unique_name,
@@ -34,13 +34,13 @@ class TestEventsLogsHandling(BaseTest):
 
         # Check the logger has no file handler, and one line created
         xp_logger = logging.getLogger(experiment.unique_name)
-        assert len(xp_logger.handlers) == 0
-        assert self.file_line_count(log_path) == 1
+        assert len(xp_logger.handlers) == 0  # pylint:disable=len-as-condition
+        assert self.file_line_count(log_path) == 1  # pylint:disable=len-as-condition
 
         # Calling again the task should not reuse handler, and create a new line
         handle_events_job_logs(**params)
 
         # Check the logger has no file handler, and one line created
         xp_logger = logging.getLogger(experiment.unique_name)
-        assert len(xp_logger.handlers) == 0
+        assert len(xp_logger.handlers) == 0  # pylint:disable=len-as-condition
         assert self.file_line_count(log_path) == 2

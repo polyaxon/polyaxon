@@ -46,7 +46,8 @@ class TestHyperbandIterationManagers(BaseTest):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_hyperband)
-        [ExperimentFactory(experiment_group=self.experiment_group) for _ in range(3)]
+        for _ in range(3):
+            ExperimentFactory(experiment_group=self.experiment_group)
         self.iteration_manager = HyperbandIterationManager(experiment_group=self.experiment_group)
 
     def test_create_iteration(self):

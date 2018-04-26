@@ -30,7 +30,7 @@ class TestClusterDetailViewV1(BaseViewTest):
         self.url = '/{}/cluster/'.format(API_V1)
 
         # Create related fields
-        for i in range(2):
+        for _ in range(2):
             ClusterNodeFactory(cluster=self.object)
 
     def test_get(self):
@@ -52,7 +52,7 @@ class TestRunnerClusterDetailViewV1(BaseViewTest):
         self.url = '/{}/cluster/'.format(API_V1)
 
         # Create related fields
-        for i in range(2):
+        for _ in range(2):
             ClusterNodeFactory(cluster=self.object)
 
     def test_get(self):
@@ -96,8 +96,8 @@ class TestClusterNodeListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
@@ -106,7 +106,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
         for i in data:
             assert i in query_data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -157,7 +157,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
-        for i in range(2):
+        for _ in range(2):
             GPUFactory(cluster_node=self.object)
 
     def test_get(self):
@@ -222,15 +222,15 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None

@@ -21,8 +21,8 @@ class TestPluginsModel(BaseTest):
         TensorboardJobFactory(project=project)
         assert TensorboardJob.objects.count() == 1
 
-        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:
-            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:
+        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:  # noqa
+            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:  # noqa
                 project.delete()
         assert TensorboardJob.objects.count() == 0
 
@@ -32,8 +32,8 @@ class TestPluginsModel(BaseTest):
         NotebookJobFactory(project=project)
         assert NotebookJob.objects.count() == 1
 
-        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:
-            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:
+        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:  # noqa
+            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:  # noqa
                 project.delete()
         assert NotebookJob.objects.count() == 0
 
@@ -82,7 +82,7 @@ class TestPluginJobCommit(BaseViewTest):
         assert last_commit is not None
 
         # Check plugin job is created with commit
-        plugin_job = self.factory_class(project=self.project)
+        plugin_job = self.factory_class(project=self.project)  # pylint:disable=not-callable
 
         assert plugin_job.code_reference.commit == last_commit[0]
         assert plugin_job.code_reference.repo == self.project.repo
@@ -98,7 +98,7 @@ class TestPluginJobCommit(BaseViewTest):
         assert new_commit[0] != last_commit[0]
 
         # Check new plugin job is created with new commit
-        new_plugin_job = self.factory_class(project=self.project)
+        new_plugin_job = self.factory_class(project=self.project)  # pylint:disable=not-callable
         assert new_plugin_job.code_reference.commit == new_commit[0]
         assert new_plugin_job.code_reference.repo == self.project.repo
 

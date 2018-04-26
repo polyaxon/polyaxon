@@ -1,3 +1,4 @@
+# pylint:disable=too-many-lines
 import numpy as np
 
 from unittest.mock import patch
@@ -696,7 +697,7 @@ class TestBOSearchManager(BaseTest):
         assert space1.dim == 3
         assert len(space1.bounds) == 3
         assert len(space1.discrete_features) == 3
-        assert len(space1.categorical_features) == 0
+        assert len(space1.categorical_features) == 0  # pylint:disable=len-as-condition
 
         for i, feature in enumerate(space1.features):
             # Bounds

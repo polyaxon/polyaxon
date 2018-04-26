@@ -124,7 +124,7 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
-        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as _:
+        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as _:  # noqa
             experiment_group = ExperimentGroupFactory()
 
         with patch('runner.tasks.experiments.start_experiment.delay') as mock_fct:
@@ -258,7 +258,7 @@ class TestExperimentModel(BaseTest):
         assert delete_path.call_count == 2
 
     @tag(RUNNER_TEST)
-    def test_delete_experiment_triggers_experiment_stop_mocks(self):
+    def test_delete_experiment_triggers_experiment_stop_mocks_runner(self):
         experiment = ExperimentFactory()
         with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()
@@ -279,8 +279,8 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_master_success_influences_other_experiment_workers_status(self):
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:
-            with patch.object(Experiment, 'set_status') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+            with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiment = ExperimentFactory()
 
         assert ExperimentLifeCycle.is_done(experiment.last_status) is False
@@ -307,18 +307,18 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_sync_experiments_and_jobs_statuses(self):
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:
-            with patch.object(Experiment, 'set_status') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+            with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiments = [ExperimentFactory() for _ in range(3)]
 
         done_xp, no_jobs_xp, xp_with_jobs = experiments
 
         # Set done status
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
             ExperimentStatusFactory(experiment=done_xp, status=JobLifeCycle.FAILED)
 
         # Create jobs for xp_with_jobs and update status, and do not update the xp status
-        with patch.object(Experiment, 'set_status') as _:
+        with patch.object(Experiment, 'set_status') as _:  # noqa
             job = ExperimentJobFactory(experiment=xp_with_jobs)
             ExperimentJobStatusFactory(job=job, status=JobLifeCycle.RUNNING)
 
@@ -342,7 +342,7 @@ class TestExperimentModel(BaseTest):
 
     @tag(RUNNER_TEST)
     def test_restarting_an_experiment(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment1 = ExperimentFactory()
 
         # We create some outputs files for the experiment
@@ -350,7 +350,7 @@ class TestExperimentModel(BaseTest):
         open(os.path.join(path, 'file'), 'w+')
 
         # Create a new experiment that is a clone of the previous
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment2 = ExperimentFactory(original_experiment=experiment1)
 
         # Check that outputs path for experiment2 does not exist yet

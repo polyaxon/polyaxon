@@ -86,15 +86,15 @@ class TestProjectListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -117,7 +117,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(user=self.object.user)
 
         # Create related fields
-        for i in range(2):
+        for _ in range(2):
             ExperimentGroupFactory(project=self.object)
 
         # creating the default factory should trigger the creation of 2 experiments per group
@@ -198,15 +198,19 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
     @tag(RUNNER_TEST)
-    def test_delete(self):
+    def test_delete_runner(self):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
-        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as tensorboard_mock_fct:
-            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as notebook_mock_fct:
-                with patch('runner.schedulers.experiment_scheduler.stop_experiment') as xp_mock_stop:
+        with patch('runner.schedulers.tensorboard_scheduler.'
+                   'stop_tensorboard') as tensorboard_mock_fct:
+            with patch('runner.schedulers.notebook_scheduler.'
+                       'stop_notebook') as notebook_mock_fct:
+                with patch('runner.schedulers.experiment_scheduler.'
+                           'stop_experiment') as xp_mock_stop:
                     with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
-                        with patch('experiment_groups.paths.delete_path') as delete_path_group_mock_stop:
+                        with patch('experiment_groups.paths.'
+                                   'delete_path') as delete_path_group_mock_stop:
                             with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
                                 resp = self.auth_client.delete(self.url)
         assert xp_mock_stop.call_count == 4

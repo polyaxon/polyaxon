@@ -26,7 +26,7 @@ class TestProjectUtils(BaseTest):
         self.repo = RepoFactory(project=self.project)
 
     def test_project_logs_path_creation_deletion(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
         open(experiment_logs_path, '+w')
@@ -42,7 +42,7 @@ class TestProjectUtils(BaseTest):
         assert os.path.exists(project_repos_path) is False
 
     def test_project_outputs_path_creation_deletion(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         create_experiment_outputs_path(experiment.unique_name)
         experiment_outputs_path = get_experiment_outputs_path(experiment.unique_name)

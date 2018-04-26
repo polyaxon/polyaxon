@@ -290,7 +290,7 @@ class TestExperimentStatusSerializer(BaseTest):
 
     def setUp(self):
         super().setUp()
-        with patch.object(Experiment, 'set_status') as _:
+        with patch.object(Experiment, 'set_status') as _:  # noqa
             self.obj1 = self.factory_class()
             self.obj2 = self.factory_class()
 

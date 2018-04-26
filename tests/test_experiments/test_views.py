@@ -1,3 +1,4 @@
+# pylint:disable=too-many-lines
 from faker import Faker
 from unittest.mock import patch
 
@@ -98,15 +99,15 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -218,15 +219,15 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -248,17 +249,17 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         super().setUp()
         content = """---
     version: 1
-    
+
     kind: group
 
     project:
       name: project1
-      
+
     settings:
       matrix:
         lr:
           linspace: '1.:3.:3'
-    
+
     model:
       model_type: regressor
       loss:
@@ -281,7 +282,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           - Dense:
               units: 10
               activation: softmax
-            
+
     train:
       data_pipeline:
         TFRecordImagePipeline:
@@ -321,15 +322,15 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -371,15 +372,15 @@ class TestExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -406,7 +407,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.all()
 
         # Create related fields
-        for i in range(2):
+        for _ in range(2):
             ExperimentJobFactory(experiment=self.object)
 
     def test_get(self):
@@ -439,16 +440,16 @@ class TestExperimentDetailViewV1(BaseViewTest):
         spec_parsed_content = ExperimentSpecification.read(spec_content)
 
         project = ProjectFactory(user=self.auth_client.user)
-        object = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
+        exp = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
         url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
                                                  project.user.username,
                                                  project.name,
-                                                 object.sequence)
+                                                 exp.sequence)
 
         resp = self.auth_client.get(url)
         assert resp.status_code == status.HTTP_200_OK
-        object.refresh_from_db()
-        assert resp.data == self.serializer_class(object).data
+        exp.refresh_from_db()
+        assert resp.data == self.serializer_class(exp).data
 
     def test_patch(self):
         new_description = 'updated_xp_name'
@@ -510,7 +511,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
-            with patch('runner.tasks.experiments.start_experiment.delay') as _:
+            with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/statuses/'.format(API_V1,
@@ -538,15 +539,15 @@ class TestExperimentStatusListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -581,8 +582,8 @@ class TestExperimentMetricListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch.object(Experiment, 'set_status') as _:
-            with patch('runner.tasks.experiments.start_experiment.delay') as _:
+        with patch.object(Experiment, 'set_status') as _:  # noqa
+            with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/metrics/'.format(API_V1,
@@ -609,15 +610,15 @@ class TestExperimentMetricListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -648,8 +649,8 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch.object(Experiment, 'set_status') as _:
-            with patch('runner.tasks.experiments.start_experiment.delay') as _:
+        with patch.object(Experiment, 'set_status') as _:  # noqa
+            with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
         self.url = '/{}/{}/{}/experiments/{}/statuses/{}/'.format(
@@ -713,15 +714,15 @@ class TestExperimentJobListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -800,8 +801,8 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:
-            with patch.object(ExperimentJob, 'set_status') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+            with patch.object(ExperimentJob, 'set_status') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
@@ -832,15 +833,15 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -874,8 +875,8 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:
-            with patch.object(ExperimentJob, 'set_status') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+            with patch.object(ExperimentJob, 'set_status') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
@@ -936,7 +937,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
     def test_restart(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:
+        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 2
@@ -997,7 +998,7 @@ class TestExperimentLogsViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
-        data = [i for i in resp._iterator]
+        data = [i for i in resp._iterator]  # pylint:disable=protected-access
         data = [d for d in data[0].decode('utf-8').split('\n') if d]
         assert len(data) == len(self.logs)
         assert data == self.logs

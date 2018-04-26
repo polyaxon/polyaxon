@@ -221,7 +221,7 @@ class TestStartNotebookViewV1(BaseViewTest):
 
         # Starting again the notebook with different config
         data['config']['run']['image'] = 'image_v2'
-        with patch('plugins.tasks.build_notebook.delay') as _:
+        with patch('plugins.tasks.build_notebook.delay') as _:  # noqa
             self.auth_client.post(self.url, data)
 
         self.object.refresh_from_db()
@@ -327,7 +327,7 @@ class BaseTestPluginViewV1(BaseViewTest):
 
     @classmethod
     def _get_service_url(cls, deployment_name):
-        return ProjectSpawner._get_proxy_url(
+        return ProjectSpawner._get_proxy_url(  # pylint:disable=protected-access
             namespace='polyaxon',
             job_name=cls.plugin_app,
             deployment_name=deployment_name,

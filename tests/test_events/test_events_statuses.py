@@ -27,41 +27,44 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
     STATUS_HANDLER = None
 
     def get_job_object(self, job_state):
-        raise NotImplemented
+        raise NotImplemented  # noqa
 
     def test_handle_events_job_statuses_for_non_existing_job(self):
         assert self.STATUS_MODEL.objects.count() == 0
-        job_state = get_job_state(event_type=self.EVENT['type'],
-                                  event=self.EVENT['object'],
-                                  job_container_names=(self.CONTAINER_NAME,),
-                                  experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
-        self.STATUS_HANDLER(job_state.to_dict())
+        job_state = get_job_state(
+            event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
+            event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
+            job_container_names=(self.CONTAINER_NAME,),
+            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+        self.STATUS_HANDLER(job_state.to_dict())  # pylint:disable=not-callable
         assert self.STATUS_MODEL.objects.count() == 0
 
     def test_handle_events_job_statuses_for_existing_job_with_unknown_conditions(self):
         assert self.STATUS_MODEL.objects.count() == 0
-        job_state = get_job_state(event_type=self.EVENT['type'],
-                                  event=self.EVENT['object'],
-                                  job_container_names=(self.CONTAINER_NAME,),
-                                  experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+        job_state = get_job_state(
+            event_type=self.EVENT['type'],  # pylint:disable=unsubscriptable-object
+            event=self.EVENT['object'],  # pylint:disable=unsubscriptable-object
+            job_container_names=(self.CONTAINER_NAME,),
+            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
 
         job = self.get_job_object(job_state)
 
-        self.STATUS_HANDLER(job_state.to_dict())
+        self.STATUS_HANDLER(job_state.to_dict())  # pylint:disable=not-callable
         assert self.STATUS_MODEL.objects.count() == 2
         statuses = self.STATUS_MODEL.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.UNKNOWN}
 
     def test_handle_events_job_statuses_for_existing_job_with_known_conditions(self):
         assert self.STATUS_MODEL.objects.count() == 0
-        job_state = get_job_state(event_type=self.EVENT_WITH_CONDITIONS['type'],
-                                  event=self.EVENT_WITH_CONDITIONS['object'],
-                                  job_container_names=(self.CONTAINER_NAME,),
-                                  experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
+        job_state = get_job_state(
+            event_type=self.EVENT_WITH_CONDITIONS['type'],  # pylint:disable=unsubscriptable-object
+            event=self.EVENT_WITH_CONDITIONS['object'],  # pylint:disable=unsubscriptable-object
+            job_container_names=(self.CONTAINER_NAME,),
+            experiment_type_label=settings.TYPE_LABELS_EXPERIMENT)
 
         job = self.get_job_object(job_state)
 
-        self.STATUS_HANDLER(job_state.to_dict())
+        self.STATUS_HANDLER(job_state.to_dict())  # pylint:disable=not-callable
         assert self.STATUS_MODEL.objects.count() == 2
         statuses = self.STATUS_MODEL.objects.filter(job=job).values_list('status', flat=True)
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.FAILED}

@@ -53,14 +53,14 @@ class TestSpawner(BaseTest):
         update_job_containers(event=status_experiment_job_event['object'],
                               status=JobLifeCycle.BUILDING,
                               job_container_name=settings.CONTAINER_NAME_JOB)
-        assert len(RedisJobContainers.get_containers()) == 0
+        assert len(RedisJobContainers.get_containers()) == 0  # pylint:disable=len-as-condition
 
     def test_update_job_containers(self):
         update_job_containers(event=status_experiment_job_event_with_conditions['object'],
                               status=JobLifeCycle.BUILDING,
                               job_container_name=settings.CONTAINER_NAME_JOB)
         # Assert it's still 0 because no job was created with that job_uuid
-        assert len(RedisJobContainers.get_containers()) == 0
+        assert len(RedisJobContainers.get_containers()) == 0  # pylint:disable=len-as-condition
 
         # Create a job with a specific uuid
         labels = status_experiment_job_event_with_conditions['object']['metadata']['labels']

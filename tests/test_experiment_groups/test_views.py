@@ -33,8 +33,8 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
                                                     self.other_project.user.username,
                                                     self.other_project.name)
 
-        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:
-            with patch('runner.schedulers.experiment_scheduler.start_experiment') as _:
+        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:  # noqa
+            with patch('runner.schedulers.experiment_scheduler.start_experiment') as _:  # noqa
                 self.objects = [self.factory_class(project=self.project)
                                 for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
@@ -62,15 +62,15 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
         assert resp.status_code == status.HTTP_200_OK
 
-        next = resp.data.get('next')
-        assert next is not None
+        next_page = resp.data.get('next')
+        assert next_page is not None
         assert resp.data['count'] == self.queryset.count()
 
         data = resp.data['results']
         assert len(data) == limit
         assert data == self.serializer_class(self.queryset[:limit], many=True).data
 
-        resp = self.auth_client.get(next)
+        resp = self.auth_client.get(next_page)
         assert resp.status_code == status.HTTP_200_OK
 
         assert resp.data['next'] is None
@@ -198,7 +198,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.all()
 
         # Add 2 experiments
-        for i in range(2):
+        for _ in range(2):
             ExperimentFactory(experiment_group=self.object)
 
     def test_get(self):
@@ -252,7 +252,7 @@ class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.all()
 
         # Add 2 more experiments
-        for i in range(2):
+        for _ in range(2):
             ExperimentFactory(experiment_group=self.object)
 
     def test_get(self):
@@ -320,7 +320,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
 
         # Execute the function
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_200_OK

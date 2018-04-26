@@ -160,11 +160,12 @@ class TestExperimentGroupModel(BaseTest):
     def test_get_ordered_experiments_by_metric(self):
         experiment_group = ExperimentGroupFactory()
 
-        assert len(experiment_group.get_ordered_experiments_by_metric(
-            experiment_ids=[],
-            metric='precision',
-            optimization='maximize'
-        )) == 0
+        assert len(  # pylint:disable=len-as-condition
+            experiment_group.get_ordered_experiments_by_metric(
+                experiment_ids=[],
+                metric='precision',
+                optimization='maximize'
+            )) == 0
 
         experiments = []
         experiment_ids = []
@@ -206,14 +207,15 @@ class TestExperimentGroupModel(BaseTest):
             optimization='maximize'
         )
 
-        assert len(experiment_metrics) == 5
-        assert len([m for m in experiment_metrics if m.accuracy is not None]) == 0
+        assert len(experiment_metrics) == 5  # pylint:disable=len-as-condition
+        assert len(  # pylint:disable=len-as-condition
+            [m for m in experiment_metrics if m.accuracy is not None]) == 0
 
     @override_settings(DEPLOY_RUNNER=False)
     def test_get_experiments_metrics(self):
         experiment_group = ExperimentGroupFactory()
 
-        assert len(experiment_group.get_experiments_metrics(
+        assert len(experiment_group.get_experiments_metrics(  # pylint:disable=len-as-condition
             experiment_ids=[],
             metric='precision'
         )) == 0
@@ -254,7 +256,8 @@ class TestExperimentGroupModel(BaseTest):
         )
 
         assert len(experiment_metrics) == 5
-        assert len([m for m in experiment_metrics if m[1] is not None]) == 0
+        assert len(  # pylint:disable=len-as-condition
+            [m for m in experiment_metrics if m[1] is not None]) == 0
 
     @override_settings(DEPLOY_RUNNER=False)
     def test_managers(self):
@@ -351,7 +354,7 @@ class TestExperimentGroupModel(BaseTest):
         ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
         assert experiment_group.pending_experiments.count() == 1
         assert experiment_group.running_experiments.count() == 1
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
             ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.SUCCEEDED)
         assert experiment_group.pending_experiments.count() == 1
         assert experiment_group.running_experiments.count() == 0
@@ -489,9 +492,9 @@ class TestExperimentGroupModel(BaseTest):
             })
 
         # Mark experiment as done
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
-            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
-             for xp in experiment_group.experiments.all()]
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
+            for xp in experiment_group.experiments.all():
+                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
         with patch('runner.hp_search.hyperband.hp_hyperband_create.delay') as mock_fct1:
             hp_hyperband_start(experiment_group.id)
 
@@ -505,9 +508,9 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.non_done_experiments.count() == 9
 
         # Mark experiment as done
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
-            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
-             for xp in experiment_group.experiments.all()]
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
+            for xp in experiment_group.experiments.all():
+                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
         with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct2:
             with patch.object(HyperbandIterationManager, 'reduce_configs') as mock_fct3:
                 hp_hyperband_start(experiment_group.id)
@@ -537,17 +540,17 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.non_done_experiments.count() == 2
 
         # Mark experiment as done
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
-            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
-             for xp in experiment_group.experiments.all()]
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
+            for xp in experiment_group.experiments.all():
+                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
         with patch('runner.hp_search.bo.hp_bo_iterate.delay') as mock_fct1:
             hp_bo_start(experiment_group.id)
         assert mock_fct1.call_count == 1
 
         # Mark experiment as done
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:
-            [ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
-             for xp in experiment_group.experiments.all()]
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
+            for xp in experiment_group.experiments.all():
+                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
         with patch('runner.hp_search.bo.hp_bo_create.delay') as mock_fct1:
             hp_bo_start(experiment_group.id)
         assert mock_fct1.call_count == 1

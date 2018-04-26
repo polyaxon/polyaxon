@@ -104,7 +104,8 @@ class TestPipelineRunModel(BaseTest):
 
     def test_stopping_pipeline_run_stops_operation_runs(self):
         pipeline_run = PipelineRunFactory()
-        [OperationRunFactory(pipeline_run=pipeline_run) for _ in range(2)]
+        for _ in range(2):
+            OperationRunFactory(pipeline_run=pipeline_run)
         assert pipeline_run.statuses.count() == 1
         assert pipeline_run.last_status == PipelineStatuses.CREATED
         assert OperationRunStatus.objects.filter().count() == 2
@@ -121,7 +122,8 @@ class TestPipelineRunModel(BaseTest):
 
     def test_skipping_pipeline_run_stops_operation_runs(self):
         pipeline_run = PipelineRunFactory()
-        [OperationRunFactory(pipeline_run=pipeline_run) for _ in range(2)]
+        for _ in range(2):
+            OperationRunFactory(pipeline_run=pipeline_run)
         assert pipeline_run.statuses.count() == 1
         assert pipeline_run.last_status == PipelineStatuses.CREATED
         assert OperationRunStatus.objects.filter().count() == 2
@@ -156,7 +158,9 @@ class TestPipelineRunModel(BaseTest):
 
         # Add operations outside the dag
         operation_run1 = OperationRunFactory()
-        operation_run1.downstream_runs.set([operation_runs[1], operation_runs[2], operation_runs[3]])
+        operation_run1.downstream_runs.set([operation_runs[1],
+                                            operation_runs[2],
+                                            operation_runs[3]])
 
         operation_run2 = OperationRunFactory()
         operation_run2.upstream_runs.set([operation_runs[0], operation_runs[2]])
@@ -165,7 +169,9 @@ class TestPipelineRunModel(BaseTest):
             {
                 operation_runs[0].id: {operation_run2.id, },
                 operation_runs[1].id: set(),
-                operation_runs[2].id: {operation_runs[0].id, operation_runs[1].id, operation_run2.id},
+                operation_runs[2].id: {operation_runs[0].id,
+                                       operation_runs[1].id,
+                                       operation_run2.id},
                 operation_runs[3].id: {operation_runs[0].id, operation_runs[1].id},
             },
             operation_by_ids
@@ -468,7 +474,10 @@ class TestOperationRunModel(BaseTest):
 
         # Add another upstream still True
         upstream_run4 = OperationRunFactory()
-        operation_run.upstream_runs.set([upstream_run1, upstream_run2, upstream_run3, upstream_run4])
+        operation_run.upstream_runs.set([upstream_run1,
+                                         upstream_run2,
+                                         upstream_run3,
+                                         upstream_run4])
         assert operation_run.check_upstream_trigger() is True
 
     def test_trigger_policy_one_failed(self):
@@ -511,7 +520,10 @@ class TestOperationRunModel(BaseTest):
 
         # Add another upstream still True
         upstream_run4 = OperationRunFactory()
-        operation_run.upstream_runs.set([upstream_run1, upstream_run2, upstream_run3, upstream_run4])
+        operation_run.upstream_runs.set([upstream_run1,
+                                         upstream_run2,
+                                         upstream_run3,
+                                         upstream_run4])
         assert operation_run.check_upstream_trigger() is True
 
     def test_trigger_policy_all_done(self):
