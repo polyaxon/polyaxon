@@ -2,9 +2,9 @@ import os
 
 from distutils.util import strtobool  # pylint:disable=import-error
 
-from unipath import Path
-
 import rncryptor
+
+from unipath import Path
 
 from polyaxon_schemas.polyaxonfile import reader
 

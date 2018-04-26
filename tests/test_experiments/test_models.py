@@ -254,8 +254,9 @@ class TestExperimentModel(BaseTest):
     @patch('experiments.paths.delete_path')
     def test_delete_experiment_triggers_experiment_stop_mocks(self, delete_path):
         experiment = ExperimentFactory()
+        assert delete_path.call_count == 2  # outputs + logs
         experiment.delete()
-        assert delete_path.call_count == 2
+        assert delete_path.call_count == 2 + 2  # outputs + logs
 
     @tag(RUNNER_TEST)
     def test_delete_experiment_triggers_experiment_stop_mocks_runner(self):

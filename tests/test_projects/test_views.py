@@ -175,12 +175,10 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
 
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as xp_mock_stop:
-            with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
-                with patch('experiment_groups.paths.delete_path') as delete_path_group_mock_stop:
-                    with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
-                        resp = self.auth_client.delete(self.url)
-        assert xp_mock_stop.call_count == 4
+        with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
+            with patch('experiment_groups.paths.delete_path') as delete_path_group_mock_stop:
+                with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
+                    resp = self.auth_client.delete(self.url)
         # 2 * project + 1 repo
         assert delete_path_project_mock_stop.call_count == 3
         # 2 * 2 * groups

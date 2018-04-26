@@ -4,7 +4,7 @@ from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
 from jobs.statuses import JobLifeCycle
-from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
+from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runner_signal
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from projects.models import Project
 from repos.utils import assign_code_reference
@@ -66,6 +66,7 @@ def new_notebook_job_status(sender, **kwargs):
 
 
 @receiver(pre_delete, sender=Project, dispatch_uid="project_stop_plugins")
+@runner_signal
 @ignore_raw
 def project_stop_plugins(sender, **kwargs):
     instance = kwargs['instance']
