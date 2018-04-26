@@ -10,6 +10,7 @@ env:
     - DJANGO_SETTINGS_MODULE=polyaxon.settings
     - PYTHONPATH=$HOME/builds/polyaxon
     - PIP_USE_MIRRORS=true
+    - TESTING=1
 
 services:
   - postgresql
