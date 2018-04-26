@@ -144,6 +144,12 @@ global config
 {{- else }}
   value: "alpha.kubernetes.io/nvidia-gpu"
 {{- end }}
+- name: POLYAXON_ENVIRONMENT
+{{- if .Values.environment }}
+  value:  {{ .Values.environment | quote }}
+{{- else }}
+  value: "production"
+{{- end }}
 - name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
   valueFrom:
     configMapKeyRef:
