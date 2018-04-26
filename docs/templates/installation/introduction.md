@@ -7,6 +7,7 @@ This guide will help you connect and configure the following things:
  * install Kubernetes
  * setup helm
  * deploy polyaxon
+ * deploy polyaxon on Minikube
  * install polyaxon cli
  * turn off polyaxon
 

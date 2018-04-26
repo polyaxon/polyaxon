@@ -125,3 +125,31 @@ Next step we will [install the CLI](install_polyaxon_cli) and configure the host
 
 You can also check how you can [extend this deployment](/customization/extend_deployments)
 in [many ways](/reference_polyaxon_helm).
+
+
+## Install Polyaxon On Minikube
+
+For [Minikube](https://github.com/kubernetes/minikube), we recommend Virtualbox/VMware drivers, but you can also use other drivers.
+
+We recommend also to increase the amount of resources allocates:
+
+```bash
+minikube start --cpus 4 --memory 8192 --disk-size=40g
+```
+
+By default Minikube allocates 2Gb of RAM, this not enough fo Polyaxon and we recommend at least 6Gb.
+
+By default Polyaxon uses ingress and RBAC, you might need to disable one / both of them in your `config.yml`/`polyaxon_config.yml`:
+
+```yaml
+isMinikube: true
+
+rbac:
+  enabled: false
+
+ingress:
+  enabled: false
+
+serviceType: LoadBalancer
+```
+
