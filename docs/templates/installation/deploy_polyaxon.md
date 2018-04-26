@@ -137,9 +137,9 @@ We recommend also to increase the amount of resources allocates:
 minikube start --cpus 4 --memory 8192 --disk-size=40g
 ```
 
-By default Minikube allocates 2Gb of RAM, this not enough fo Polyaxon and we recommend at least 6Gb.
+By default Minikube allocates 2Gb of RAM, this not enough for Polyaxon and we recommend at least 6Gb.
 
-By default Polyaxon uses ingress and RBAC, you might need to disable one / both of them in your `config.yml`/`polyaxon_config.yml`:
+By default Polyaxon uses ingress (with serviceType ClusterIP) and RBAC, you might need to disable one / both of them in your `config.yml`/`polyaxon_config.yml`:
 
 ```yaml
 isMinikube: true
