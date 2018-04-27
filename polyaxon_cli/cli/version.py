@@ -30,6 +30,7 @@ def pip_upgrade(project_name=PROJECT_CLI_NAME):
 
 def session_expired():
     AuthConfigManager.purge()
+    CliConfigManager.purge()
     click.echo('Session has expired, please try again.')
     sys.exit(1)
 
@@ -41,12 +42,13 @@ def get_version(pkg):
         logger.error('`%s` is not installed', pkg)
 
 
-def check_cli_version():
-    """Check if the current cli version satisfies the server requirements"""
-    if not CliConfigManager.should_check():
-        return
+def get_current_version():
+    return pkg_resources.get_distribution(PROJECT_CLI_NAME).version
+
+
+def get_server_version():
     try:
-        server_version = PolyaxonClients().version.get_cli_version()
+        return PolyaxonClients().version.get_cli_version()
     except AuthorizationError:
         session_expired()
         sys.exit(1)
@@ -55,7 +57,17 @@ def check_cli_version():
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
 
-    current_version = pkg_resources.get_distribution(PROJECT_CLI_NAME).version
+
+def check_cli_version():
+    """Check if the current cli version satisfies the server requirements"""
+    if not CliConfigManager.should_check():
+        return
+
+    server_version = get_server_version()
+    current_version = get_current_version()
+    CliConfigManager.reset(current_version=current_version,
+                           min_version=server_version.min_version)
+
     if LooseVersion(current_version) < LooseVersion(server_version.min_version):
         click.echo("""Your version of CLI ({}) is no longer compatible with server.""".format(
             current_version))

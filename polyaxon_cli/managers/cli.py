@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from distutils.version import LooseVersion  # pylint:disable=import-error
+
 from polyaxon_cli.managers.base import BaseConfigManager
 from polyaxon_cli.schemas.cli_configuration import CliConfigurationConfig
 
@@ -11,7 +13,7 @@ class CliConfigManager(BaseConfigManager):
     IS_GLOBAL = True
     CONFIG_FILE_NAME = '.polyaxoncli'
     CONFIG = CliConfigurationConfig
-    FREQUENCY = 5
+    FREQUENCY = 3
 
     @classmethod
     def _get_count(cls):
@@ -19,14 +21,27 @@ class CliConfigManager(BaseConfigManager):
         return config.check_count + 1
 
     @classmethod
-    def _set_new_count(cls, count):
-        if count > cls.FREQUENCY:
-            count = 0
-        config = cls.CONFIG(check_count=count)
-        cls.set_config(config=config)
+    def reset(cls, check_count=None, current_version=None, min_version=None):
+        params = {}
+        if check_count is not None:
+            params['check_count'] = check_count
+        if current_version is not None:
+            params['current_version'] = current_version
+        if min_version is not None:
+            params['min_version'] = min_version
+
+        if params:
+            config = cls.CONFIG(**params)
+            CliConfigManager.set_config(config=config)
 
     @classmethod
     def should_check(cls):
         count = cls._get_count()
-        cls._set_new_count(count)
-        return count > cls.FREQUENCY
+        cls.reset(check_count=count)
+        if count > cls.FREQUENCY:
+            return True
+
+        config = cls.get_config_or_default()
+        if config.current_version is None or config.min_version is None:
+            return True
+        return LooseVersion(config.current_version) < LooseVersion(config.min_version)

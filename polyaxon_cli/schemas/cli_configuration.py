@@ -8,6 +8,8 @@ from polyaxon_schemas.base import BaseConfig
 
 class CliConfigurationSchema(Schema):
     check_count = fields.Int(allow_none=True)
+    current_version = fields.Str(allow_none=True)
+    min_version = fields.Str(allow_none=True)
 
     class Meta:
         ordered = True
@@ -25,5 +27,7 @@ class CliConfigurationConfig(BaseConfig):
     SCHEMA = CliConfigurationSchema
     IDENTIFIER = 'cli'
 
-    def __init__(self, check_count=0):
+    def __init__(self, check_count=0, current_version=None, min_version=None):
         self.check_count = check_count
+        self.current_version = current_version
+        self.min_version = min_version
