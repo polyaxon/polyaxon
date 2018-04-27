@@ -1,8 +1,8 @@
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
 
-import { TokenStateSchema } from '../models/token';
-import { fetchUser } from '../actions/user';
+import {TokenStateSchema} from '../models/token';
+import {fetchUser} from '../actions/user';
 
 export const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
@@ -212,3 +212,10 @@ export function humanizeTimeDelta(startDate: string | Date, endtDate: string | D
 export const delay = (ms?: number) => new Promise(resolve =>
   setTimeout(resolve, ms || 0)
 );
+
+export function b64DecodeUnicode(str: string) {
+  // Going backwards: from bytestream, to percent-encoding, to original string.
+  return decodeURIComponent(atob(str).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+}
