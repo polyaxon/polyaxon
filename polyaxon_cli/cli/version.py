@@ -10,7 +10,7 @@ import clint
 import pip
 import pkg_resources
 
-from polyaxon_cli.logger import logger, clean_outputs
+from polyaxon_cli.logger import clean_outputs, logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients

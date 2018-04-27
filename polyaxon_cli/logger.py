@@ -4,12 +4,13 @@ from __future__ import absolute_import, division, print_function
 import logging
 import sys
 
+from functools import wraps
+
 try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
 
-from functools import wraps
 
 logger = logging.getLogger('polyaxon.cli')
 
@@ -31,6 +32,7 @@ def configure_logger(verbose):
                 environment=cli_config.log_handler.environment,
                 tags=cli_config.log_handler.tags,
                 processors=('raven.processors.SanitizePasswordsProcessor',))
+        return None
 
     set_raven_client()
 
@@ -46,12 +48,10 @@ def clean_outputs(fn):
         try:
             return fn(*args, **kwargs)
         except SystemExit as e:
-            if True:
-                sys.stdout = StringIO()
+            sys.stdout = StringIO()
             sys.exit(e.code)  # make sure we still exit with the proper code
         except Exception as e:
-            if True:
-                sys.stdout = StringIO()
+            sys.stdout = StringIO()
             raise e
 
     return clean_outputs_wrapper

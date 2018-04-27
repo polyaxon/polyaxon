@@ -6,7 +6,7 @@ import sys
 import click
 
 from polyaxon_cli.cli.version import get_current_version, get_log_handler, get_server_version
-from polyaxon_cli.logger import logger, clean_outputs
+from polyaxon_cli.logger import clean_outputs, logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients

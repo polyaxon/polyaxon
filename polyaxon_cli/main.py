@@ -20,7 +20,7 @@ from polyaxon_cli.cli.tensorboard import tensorboard
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.cli.user import user
 from polyaxon_cli.cli.version import check_cli_version, upgrade, version
-from polyaxon_cli.logger import configure_logger, clean_outputs
+from polyaxon_cli.logger import clean_outputs, configure_logger
 from polyaxon_cli.managers.config import GlobalConfigManager
 
 
