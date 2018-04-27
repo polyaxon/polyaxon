@@ -55,7 +55,7 @@ class SettingConfig(object):
             b'\xcc\x9d\xaa\xf8\xd4\xaf\xd9\xf9P\x89\xf4\xa1\xe0[\x05I#\xe7rBb'
             b'\xcf\x0e\x13\x1e\xa7\xf8O\x92\x9b7.\x1c*\xf96`\x97\xe2B\xbd\x81\xe0\xf9\x99,'
             b'\xdc\xed\xcbJ\xbbN\x98\x87>E?n[\xde;\xef\xe7\xaf')
-        return rncryptor.decrypt(notification, self._PASS)
+        return self._decrypt(notification)
 
     @property
     def platform_dns(self):
@@ -67,7 +67,7 @@ class SettingConfig(object):
             b'\x9f0Z#\x87\xdb\x15G\x1d\\\xe3\xc0\xbbO\x15_\xdc\xeb\x1b,`\rO\x83\xbb^\x1f\xbbl'
             b'\x94\r\xb4\xf7\xbf\xc0J\x88\x94\x06_p\xb5\xb7^\x88P,,`\xd2\xa2\tG'
             b'\xf4\xaa"\x9a\x7f\xbc>\xe8<\xffl')
-        return rncryptor.decrypt(dns, self._PASS)
+        return self._decrypt(dns)
 
     @property
     def cli_dns(self):
@@ -79,8 +79,7 @@ class SettingConfig(object):
             b'\xb8\xb1\xd1\xe8\xfe\xaf\x80\x83S\xab%\xd0\xe7\xc4\x03\xcbL[\xe3|\xdd'
             b'\x1es\xfe\x17\x10\xef\xbb\xb7\xe8\x92\x12x\x1b\x05\xd7[\xa6H\xc1\xcd'
             b'\xcd\x91\xc7\x19\xa0\x82z\x8cm\xb72\x19h')
-        dns = rncryptor.decrypt(dns, self._PASS)
-        return base64.b64encode(dns.encode('utf-8'))
+        return self._encode(self._decrypt(dns))
 
     def get_requested_params(self, include_secrets=False, to_str=False):
         params = {}
@@ -219,6 +218,12 @@ class SettingConfig(object):
             self._add_key(key, is_secret)
             return value
         raise TypeError(key, value, target_type)
+
+    def _decrypt(self, value):
+        return rncryptor.decrypt(value, self._PASS)
+
+    def _encode(self, value):
+        return base64.b64encode(value.encode('utf-8'))
 
 
 config_values = [
