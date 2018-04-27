@@ -1,11 +1,12 @@
 from rest_framework import status
 
 from polyaxon.urls import API_V1
+from polyaxon.utils import config
 from tests.utils import BaseViewTest
 from versions.models import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 
-class TestCliVersionViewV1(BaseViewTest):
+class TestVersionViewsV1(BaseViewTest):
     HAS_AUTH = False
 
     def setUp(self):
@@ -18,6 +19,7 @@ class TestCliVersionViewV1(BaseViewTest):
         self.platform_url = '/{}/versions/platform'.format(API_V1)
         self.lib_url = '/{}/versions/lib'.format(API_V1)
         self.chart_url = '/{}/versions/chart'.format(API_V1)
+        self.log_handler_url = '/{}/log_handler'.format(API_V1)
 
     def test_get_cli_version(self):
         resp = self.auth_client.get(self.cli_url)
@@ -41,3 +43,16 @@ class TestCliVersionViewV1(BaseViewTest):
         resp = self.auth_client.get(self.chart_url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['version'] == self.chart_version.version
+
+    def test_get_log_handler(self):
+        resp = self.auth_client.get(self.log_handler_url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert bytes(resp.data['dns'].encode('utf-8')) == config.cli_dns
+        assert resp.data['environment'] == config.env
+        assert resp.data['tags'] == {
+            'chart_version': self.chart_version.version,
+            'cli_min_version': self.cli_version.min_version,
+            'cli_latest_version': self.cli_version.latest_version,
+            'platform_min_version': self.platform_version.min_version,
+            'platform_latest_version': self.platform_version.latest_version
+        }
