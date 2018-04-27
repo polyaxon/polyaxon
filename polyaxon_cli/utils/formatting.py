@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
+
 import six
 import sys
 
@@ -44,6 +46,15 @@ def dict_tabulate(dict_value, is_list_dict=False):
         click.echo(tabulate(dict_value, headers=headers))
     else:
         click.echo(tabulate(six.iteritems(dict_value)))
+
+
+def pprint(value):
+    """Prints as formatted JSON"""
+    click.echo(
+        json.dumps(value,
+                   sort_keys=True,
+                   indent=4,
+                   separators=(',', ': ')))
 
 
 class Printer(object):
