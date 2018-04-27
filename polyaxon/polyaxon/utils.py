@@ -223,7 +223,7 @@ class SettingConfig(object):
         return rncryptor.decrypt(value, self._PASS)
 
     def _encode(self, value):
-        return base64.b64encode(value.encode('utf-8'))
+        return base64.b64encode(value.encode('utf-8')).decode('utf-8')
 
 
 config_values = [
