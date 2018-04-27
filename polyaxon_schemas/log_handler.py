@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import base64
+
 from marshmallow import Schema, fields, post_dump, post_load
 
 from polyaxon_schemas.base import BaseConfig
@@ -31,3 +33,7 @@ class LogHandlerConfig(BaseConfig):
         self.dns = dns
         self.environment = environment
         self.tags = tags
+
+    @property
+    def decoded_dns(self):
+        return base64.b64decode(self.dns.encode('utf-8')).decode('utf-8')
