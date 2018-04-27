@@ -8,6 +8,7 @@ from faker import Faker
 from unittest import TestCase
 
 from polyaxon_client.version import VersionClient
+from polyaxon_schemas.log_handler import LogHandlerConfig
 from polyaxon_schemas.version import (
     ChartVersionConfig,
     CliVersionConfig,
@@ -70,7 +71,7 @@ class TestVersionClient(TestCase):
         assert object == result.to_dict()
 
     @httpretty.activate
-    def test_get_lib_version(self):
+    def test_get_chart_version(self):
         object = ChartVersionConfig(version='1.0').to_dict()
         httpretty.register_uri(
             httpretty.GET,
@@ -81,4 +82,27 @@ class TestVersionClient(TestCase):
             body=json.dumps(object),
             content_type='application/json', status=200)
         result = self.client.get_chart_version()
+        assert object == result.to_dict()
+
+    @httpretty.activate
+    def test_get_log_handler(self):
+        object = LogHandlerConfig(
+            dns='test',
+            environment='staging',
+            tags={
+                'cli_min_version': '0.0.1',
+                'cli_latest_version': '0.0.2',
+                'platform_min_version': '0.0.1',
+                'platform_latest_version': '0.0.1',
+                'chart_version': '0.0.1'
+            }
+        ).to_dict()
+        httpretty.register_uri(
+            httpretty.GET,
+            VersionClient._build_url(
+                self.client.base_url,
+                '/log_handler'),
+            body=json.dumps(object),
+            content_type='application/json', status=200)
+        result = self.client.get_log_handler()
         assert object == result.to_dict()
