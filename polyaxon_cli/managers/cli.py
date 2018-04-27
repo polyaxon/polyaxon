@@ -21,7 +21,7 @@ class CliConfigManager(BaseConfigManager):
         return config.check_count + 1
 
     @classmethod
-    def reset(cls, check_count=None, current_version=None, min_version=None):
+    def reset(cls, check_count=None, current_version=None, min_version=None, log_handler=None):
         params = {}
         if check_count is not None:
             params['check_count'] = check_count
@@ -29,6 +29,8 @@ class CliConfigManager(BaseConfigManager):
             params['current_version'] = current_version
         if min_version is not None:
             params['min_version'] = min_version
+        if log_handler is not None:
+            params['log_handler'] = log_handler
 
         if params:
             config = cls.CONFIG(**params)

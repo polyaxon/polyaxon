@@ -58,6 +58,18 @@ def get_server_version():
         sys.exit(1)
 
 
+def get_log_handler():
+    try:
+        return PolyaxonClients().version.get_log_handler()
+    except AuthorizationError:
+        session_expired()
+        sys.exit(1)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not get cli version.')
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+
 def check_cli_version():
     """Check if the current cli version satisfies the server requirements"""
     if not CliConfigManager.should_check():

@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from polyaxon_cli.cli.version import get_current_version, get_server_version
+from polyaxon_cli.cli.version import get_current_version, get_server_version, get_log_handler
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
@@ -77,9 +77,11 @@ def login(token, username, password):
     # Reset current cli
     server_version = get_server_version()
     current_version = get_current_version()
+    log_handler = get_log_handler()
     CliConfigManager.reset(check_count=0,
                            current_version=current_version,
-                           min_version=server_version.min_version)
+                           min_version=server_version.min_version,
+                           log_handler=log_handler)
 
 
 @click.command()
