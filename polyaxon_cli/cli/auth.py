@@ -5,8 +5,10 @@ import sys
 
 import click
 
+from polyaxon_cli.cli.version import get_server_version, get_current_version
 from polyaxon_cli.logger import logger
 from polyaxon_cli.managers.auth import AuthConfigManager
+from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
@@ -60,6 +62,7 @@ def login(token, username, password):
 
         access_code = token.strip(" ")
 
+    # Set user
     try:
         AuthConfigManager.purge()
         user = PolyaxonClients().auth.get_user(token=access_code)
@@ -69,8 +72,14 @@ def login(token, username, password):
         sys.exit(1)
     access_token = AccessTokenConfig(username=user.username, token=access_code)
     AuthConfigManager.set_config(access_token)
-
     Printer.print_success("Login Successful")
+
+    # Reset current cli
+    server_version = get_server_version()
+    current_version = get_current_version()
+    CliConfigManager.reset(check_count=0,
+                           current_version=current_version,
+                           min_version=server_version.min_version)
 
 
 @click.command()
