@@ -47,7 +47,7 @@ class TestVersionViewsV1(BaseViewTest):
     def test_get_log_handler(self):
         resp = self.auth_client.get(self.log_handler_url)
         assert resp.status_code == status.HTTP_200_OK
-        assert bytes(resp.data['dns'].encode('utf-8')) == config.cli_dns
+        assert resp.data['dns'] == config.cli_dns
         assert resp.data['environment'] == config.env
         assert resp.data['tags'] == {
             'chart_version': self.chart_version.version,
