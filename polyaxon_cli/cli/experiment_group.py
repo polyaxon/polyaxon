@@ -6,6 +6,7 @@ import sys
 import click
 
 from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -42,6 +43,7 @@ def get_group_details(group):  # pylint:disable=redefined-outer-name
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
 @click.option('--group', '-g', type=int, help="The group sequence number.")
 @click.pass_context
+@clean_outputs
 def group(ctx, project, group):  # pylint:disable=redefined-outer-name
     """Commands for experiment groups."""
     ctx.obj = ctx.obj or {}
@@ -51,6 +53,7 @@ def group(ctx, project, group):  # pylint:disable=redefined-outer-name
 
 @group.command()
 @click.pass_context
+@clean_outputs
 def get(ctx):
     """Get experiment group by uuid.
 
@@ -80,6 +83,7 @@ def get(ctx):
 
 @group.command()
 @click.pass_context
+@clean_outputs
 def delete(ctx):
     """Delete experiment group.
 
@@ -108,6 +112,7 @@ def delete(ctx):
 @group.command()
 @click.option('--description', type=str, help='Description of the project,')
 @click.pass_context
+@clean_outputs
 def update(ctx, description):
     """Update experiment group.
 
@@ -146,6 +151,7 @@ def update(ctx, description):
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 @click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
 @click.pass_context
+@clean_outputs
 def experiments(ctx, page, metrics):
     """List experiments for this experiment group
 
@@ -190,6 +196,7 @@ def experiments(ctx, page, metrics):
 @click.option('--pending', is_flag=True, default=False,
               help='To stop only pending experiments, i.e. leave currently running one intact.')
 @click.pass_context
+@clean_outputs
 def stop(ctx, yes, pending):
     """Stop experiments in the group.
 

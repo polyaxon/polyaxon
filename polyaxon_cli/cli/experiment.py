@@ -9,6 +9,7 @@ from collections import deque
 import click
 
 from polyaxon_cli.cli.project import get_project_or_local
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -59,6 +60,7 @@ def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
 @click.option('--project', '-p', type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'.")
 @click.option('--experiment', '-xp', type=int, help="The experiment sequence number.")
 @click.pass_context
+@clean_outputs
 def experiment(ctx, project, experiment):  # pylint:disable=redefined-outer-name
     """Commands for experiments."""
     ctx.obj = ctx.obj or {}
@@ -68,6 +70,7 @@ def experiment(ctx, project, experiment):  # pylint:disable=redefined-outer-name
 
 @experiment.command()
 @click.pass_context
+@clean_outputs
 def get(ctx):
     """Get experiment.
 
@@ -112,6 +115,7 @@ def get(ctx):
 
 @experiment.command()
 @click.pass_context
+@clean_outputs
 def delete(ctx):
     """Delete experiment.
 
@@ -149,6 +153,7 @@ def delete(ctx):
               help='Automatic yes to prompts. '
                    'Assume "yes" as answer to all prompts and run non-interactively.')
 @click.pass_context
+@clean_outputs
 def stop(ctx, yes):
     """Stop experiment.
 
@@ -185,6 +190,7 @@ def stop(ctx, yes):
 
 @experiment.command()
 @click.pass_context
+@clean_outputs
 def restart(ctx):
     """Restart experiment.
 
@@ -213,6 +219,7 @@ def restart(ctx):
 @experiment.command()
 @click.option('--page', type=int, help='To paginate through the list of jobs.')
 @click.pass_context
+@clean_outputs
 def jobs(ctx, page):
     """List jobs for experiment.
 
@@ -256,6 +263,7 @@ def jobs(ctx, page):
 @experiment.command()
 @click.option('--page', type=int, help='To paginate through the list of statuses.')
 @click.pass_context
+@clean_outputs
 def statuses(ctx, page):
     """Get experiment status.
 
@@ -303,6 +311,7 @@ def statuses(ctx, page):
 @experiment.command()
 @click.option('--gpu', '-g', is_flag=True, help='List experiment GPU resources.')
 @click.pass_context
+@clean_outputs
 def resources(ctx, gpu):
     """Get experiment resources.
 
@@ -338,6 +347,7 @@ def resources(ctx, gpu):
 @click.option('--past', is_flag=True, help='Show the past logs.')
 @click.option('--follow', is_flag=True, default=False, help='Stream logs after showing past logs.')
 @click.pass_context
+@clean_outputs
 def logs(ctx, past, follow):
     """Get experiment logs.
 
@@ -424,5 +434,6 @@ def logs(ctx, past, follow):
 
 
 @experiment.command()
+@clean_outputs
 def outputs(ctx):
     pass

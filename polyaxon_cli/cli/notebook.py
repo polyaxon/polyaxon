@@ -9,6 +9,7 @@ import clint
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import equal_projects, get_project_or_local
 from polyaxon_cli.cli.upload import upload
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
@@ -23,6 +24,7 @@ def get_notebook_url(user, project_name):
 @click.group()
 @click.option('--project', '-p', type=str)
 @click.pass_context
+@clean_outputs
 def notebook(ctx, project):
     ctx.obj = ctx.obj or {}
     ctx.obj['project'] = project
@@ -30,6 +32,7 @@ def notebook(ctx, project):
 
 @notebook.command()
 @click.pass_context
+@clean_outputs
 def url(ctx):
     """Prints the notebook url for this project.
 
@@ -64,6 +67,7 @@ def url(ctx):
 @click.option('-u', is_flag=True, default=False,
               help='To upload the repo before running.')
 @click.pass_context
+@clean_outputs
 def start(ctx, file, u):  # pylint:disable=redefined-builtin
     """Start a notebook deployment for this project.
 
@@ -133,6 +137,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
               help='Automatic yes to prompts. '
                    'Assume "yes" as answer to all prompts and run non-interactively.')
 @click.pass_context
+@clean_outputs
 def stop(ctx, commit, yes):
     """Stops the notebook deployment for this project if it exists.
 

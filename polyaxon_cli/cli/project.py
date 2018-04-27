@@ -7,6 +7,7 @@ import click
 
 from marshmallow import ValidationError
 
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils import constants
@@ -74,6 +75,7 @@ def get_project_details(project):  # pylint:disable=redefined-outer-name
 @click.group()
 @click.option('--project', '-p', type=str)
 @click.pass_context
+@clean_outputs
 def project(ctx, project):  # pylint:disable=redefined-outer-name
     """Commands for projects."""
     if ctx.invoked_subcommand not in ['create', 'list']:
@@ -86,6 +88,7 @@ def project(ctx, project):  # pylint:disable=redefined-outer-name
               help='Name of the project, must be unique for the same user')
 @click.option('--description', type=str, help='Description of the project,')
 @click.option('--private', is_flag=True, help='Set the visibility of the project to private.')
+@clean_outputs
 def create(name, description, private):
     """Create a new project.
 
@@ -117,6 +120,7 @@ def create(name, description, private):
 
 @project.command()
 @click.option('--page', type=int, help='To paginate through the list of projects.')
+@clean_outputs
 def list(page):  # pylint:disable=redefined-builtin
     """List projects.
 
@@ -151,6 +155,7 @@ def list(page):  # pylint:disable=redefined-builtin
 
 @project.command()
 @click.pass_context
+@clean_outputs
 def get(ctx):
     """Get info for current project, by project_name, or user/project_name.
 
@@ -186,6 +191,7 @@ def get(ctx):
 
 @project.command()
 @click.pass_context
+@clean_outputs
 def delete(ctx):
     """Delete project.
 
@@ -218,6 +224,7 @@ def delete(ctx):
 @click.option('--description', type=str, help='Description of the project,')
 @click.option('--private', type=bool, help='Set the visibility of the project to private/public.')
 @click.pass_context
+@clean_outputs
 def update(ctx, name, description, private):
     """Update project.
 
@@ -265,6 +272,7 @@ def update(ctx, name, description, private):
 @project.command()
 @click.option('--page', type=int, help='To paginate through the list of groups.')
 @click.pass_context
+@clean_outputs
 def groups(ctx, page):
     """List experiment groups for this project.
 
@@ -303,6 +311,8 @@ def groups(ctx, page):
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 @click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
 @click.pass_context
+@clean_outputs
+@clean_outputs
 def experiments(ctx, page, metrics):
     """List experiments for this project.
 
@@ -340,5 +350,6 @@ def experiments(ctx, page, metrics):
 
 @project.command()
 @click.pass_context
+@clean_outputs
 def clone(ctx):
     pass

@@ -6,7 +6,7 @@ import sys
 import click
 
 from polyaxon_cli.cli.version import get_current_version, get_log_handler, get_server_version
-from polyaxon_cli.logger import logger
+from polyaxon_cli.logger import logger, clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -19,6 +19,7 @@ from polyaxon_schemas.authentication import AccessTokenConfig, CredentialsConfig
 @click.option('--token', '-t', help='Polyaxon token.')
 @click.option('--username', '-u', help='Polyaxon username.')
 @click.option('--password', '-p', help='Polyaxon password.')
+@clean_outputs
 def login(token, username, password):
     """Login to Polyaxon."""
     auth_client = PolyaxonClients().auth
@@ -85,6 +86,7 @@ def login(token, username, password):
 
 
 @click.command()
+@clean_outputs
 def logout():
     """Logout of Polyaxon."""
     AuthConfigManager.purge()
@@ -93,6 +95,7 @@ def logout():
 
 
 @click.command()
+@clean_outputs
 def whoami():
     """Show current logged Polyaxon user."""
     try:

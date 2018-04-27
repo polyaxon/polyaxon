@@ -8,6 +8,7 @@ import click
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
 from polyaxon_cli.cli.project import equal_projects
 from polyaxon_cli.cli.upload import upload
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
@@ -24,6 +25,7 @@ from polyaxon_schemas.project import ExperimentGroupConfig
 @click.option('-u', is_flag=True, default=False,
               help='To upload the repo before running.')
 @click.pass_context
+@clean_outputs
 def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
     """Run polyaxonfile specification.
 

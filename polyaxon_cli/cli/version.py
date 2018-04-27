@@ -10,7 +10,7 @@ import clint
 import pip
 import pkg_resources
 
-from polyaxon_cli.logger import logger
+from polyaxon_cli.logger import logger, clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -106,9 +106,9 @@ def check_cli_version():
 @click.command()
 @click.option('--cli', is_flag=True, default=False, help='Version of the Polyaxon cli.')
 @click.option('--platform', is_flag=True, default=False, help='Version of the Polyaxon cli.')
+@clean_outputs
 def version(cli, platform):
     """Print the current version of the cli and platform."""
-
     version_client = PolyaxonClients().version
     cli = cli or not any([cli, platform])
     if cli:
@@ -143,8 +143,9 @@ def version(cli, platform):
 
 
 @click.command()
+@clean_outputs
 def upgrade():
-    """Install/Upgrade polyxon-cli."""
+    """Install/Upgrade polyaxon-cli."""
     try:
         pip_upgrade(PROJECT_CLI_NAME)
     except Exception as e:

@@ -8,6 +8,7 @@ import clint
 
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import equal_projects, get_project_or_local
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
@@ -22,6 +23,7 @@ def get_tensorboard_url(user, project_name):
 @click.group()
 @click.option('--project', '-p', type=str)
 @click.pass_context
+@clean_outputs
 def tensorboard(ctx, project):
     ctx.obj = ctx.obj or {}
     ctx.obj['project'] = project
@@ -29,6 +31,7 @@ def tensorboard(ctx, project):
 
 @tensorboard.command()
 @click.pass_context
+@clean_outputs
 def url(ctx):
     """Prints the tensorboard url for this project.
 
@@ -61,6 +64,7 @@ def url(ctx):
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to run.')
 @click.pass_context
+@clean_outputs
 def start(ctx, file):  # pylint:disable=redefined-builtin
     """Start a tensorboard deployment for this project.
 
@@ -127,6 +131,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
               help='Automatic yes to prompts. '
                    'Assume "yes" as answer to all prompts and run non-interactively.')
 @click.pass_context
+@clean_outputs
 def stop(ctx, yes):
     """Stops the tensorboard deployment for this project if it exists.
 

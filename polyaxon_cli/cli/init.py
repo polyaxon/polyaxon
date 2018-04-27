@@ -9,6 +9,7 @@ import click
 from marshmallow import ValidationError
 
 from polyaxon_cli.cli.project import equal_projects, get_project_or_local
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils import constants
@@ -26,6 +27,7 @@ from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
               help='Init a polyaxon file with `exec` step template.')
 @click.option('--model', is_flag=True, default=False, show_default=True,
               help='Init a polyaxon file with `model` step template.')
+@clean_outputs
 def init(project, run, model):
     """Initialize a new polyaxonfile specification."""
     user, project_name = get_project_or_local(project)

@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.cli import CliConfigManager
 from polyaxon_cli.managers.config import GlobalConfigManager
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
@@ -18,6 +19,7 @@ def validate_options(ctx, param, value):
 
 @click.group(invoke_without_command=True)
 @click.option('--list', '-l', is_flag=True, help='List all global config values.')
+@clean_outputs
 def config(list):  # pylint:disable=redefined-builtin
     """Set and get the global configurations."""
     if list:
@@ -28,6 +30,7 @@ def config(list):  # pylint:disable=redefined-builtin
 
 @config.command()
 @click.argument('keys', type=str, nargs=-1)
+@clean_outputs
 def get(keys):
     """Get the global config values by keys.
 
@@ -59,6 +62,7 @@ def get(keys):
 @click.option('--http_port', type=int, help='To set the http port.')
 @click.option('--ws_port', type=int, help='To set the stream port.')
 @click.option('--use_https', type=bool, help='To set the https.')
+@clean_outputs
 def set(verbose, host, http_port, ws_port, use_https):  # pylint:disable=redefined-builtin
     """Set the global config values.
 

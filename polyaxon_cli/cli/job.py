@@ -6,6 +6,7 @@ import sys
 import click
 
 from polyaxon_cli.cli.experiment import get_experiment_or_local
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
@@ -32,6 +33,7 @@ def get_job_or_local(project=None,
 @click.option('--experiment', '-xp', type=int, help="The sequence number of the experiment")
 @click.option('--job', '-j', type=int, help="The job sequence.")
 @click.pass_context
+@clean_outputs
 def job(ctx, project, experiment, job):  # pylint:disable=redefined-outer-name
     """Commands for jobs."""
     ctx.obj = ctx.obj or {}
@@ -42,6 +44,7 @@ def job(ctx, project, experiment, job):  # pylint:disable=redefined-outer-name
 
 @job.command()
 @click.pass_context
+@clean_outputs
 def get(ctx):
     """Get job.
 

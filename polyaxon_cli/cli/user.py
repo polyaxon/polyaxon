@@ -5,18 +5,21 @@ import sys
 
 import click
 
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 
 
 @click.group()
+@clean_outputs
 def user():
     """Commands for user management."""
 
 
 @user.command()
 @click.argument('username', type=str)
+@clean_outputs
 def activate(username):
     """Activate a user.
 
@@ -39,6 +42,7 @@ def activate(username):
 
 @user.command()
 @click.argument('username', type=str)
+@clean_outputs
 def delete(username):
     """Delete a user.
 

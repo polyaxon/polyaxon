@@ -8,6 +8,7 @@ from collections import OrderedDict
 
 import click
 
+from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 from polyaxon_schemas.polyaxonfile.polyaxonfile import PolyaxonFile
@@ -62,6 +63,7 @@ def get_group_experiments_info(search_algorithm, concurrency, early_stopping=Fal
               help='Checks and prints the project def.')
 @click.option('--definition', '-def', is_flag=True, default=False,
               help='Checks and prints the file definition.')
+@clean_outputs
 def check(file,  # pylint:disable=redefined-builtin
           version,
           project,
