@@ -6,7 +6,6 @@ import copy
 from polyaxon_schemas.environments import EnvironmentConfig
 from polyaxon_schemas.eval import EvalConfig
 from polyaxon_schemas.models import ModelConfig
-from polyaxon_schemas.project import ProjectConfig
 from polyaxon_schemas.run_exec import RunExecConfig
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.train import TrainConfig
@@ -17,7 +16,6 @@ def validate_headers(spec, data):
     validated_data = {
         spec.VERSION: data[spec.VERSION],
         spec.KIND: data[spec.KIND],
-        spec.PROJECT: ProjectConfig.from_dict(data[spec.PROJECT]),
     }
     if data.get(spec.SETTINGS):
         validated_data[spec.SETTINGS] = SettingsConfig.from_dict(

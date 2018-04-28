@@ -38,14 +38,6 @@ class TestPolyaxonfile(TestCase):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_version.yml'))
 
-    def test_wrong_project_name_raises(self):
-        with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath('tests/fixtures/wrong_project_name.yml'))
-
-    def test_missing_project_raises(self):
-        with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath('tests/fixtures/missing_project.yml'))
-
     def test_missing_kind_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/missing_kind.yml'))
@@ -54,7 +46,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert spec.settings is None
         assert spec.environment is None
         assert spec.framework is None
@@ -75,7 +66,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_generator_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert spec.settings is None
         assert spec.environment is None
         assert spec.framework is None
@@ -94,7 +84,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/advanced_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings, SettingsConfig)
         assert isinstance(spec.settings.logging, LoggingConfig)
         assert spec.settings.matrix is None
@@ -165,7 +154,6 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/advanced_file_with_custom_configs_and_resources.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings, SettingsConfig)
         assert isinstance(spec.settings.logging, LoggingConfig)
         assert spec.settings.matrix is None
@@ -277,7 +265,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings.matrix['lr'], MatrixConfig)
         assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
         assert spec.settings.matrix['lr'].to_dict() == {
@@ -317,7 +304,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings.matrix['lr'], MatrixConfig)
         assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
         assert spec.settings.matrix['lr'].to_dict() == {
@@ -361,7 +347,6 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath('tests/fixtures/matrix_file_ignored_n_experiments.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings.matrix['lr'], MatrixConfig)
         assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
         assert spec.settings.matrix['lr'].to_dict() == {
@@ -403,7 +388,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert spec.settings is not None
         assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
         assert spec.settings.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
@@ -430,7 +414,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'video_prediction'
         assert spec.settings is None
         assert spec.is_runnable
         assert spec.environment is None
@@ -445,7 +428,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'video_prediction'
         assert isinstance(spec.settings.matrix['model'], MatrixConfig)
         assert spec.settings.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert spec.matrix_space == 3
@@ -471,7 +453,6 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_sampling_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'video_prediction'
         assert isinstance(spec.settings.matrix['model'], MatrixConfig)
         assert spec.settings.matrix['learning_rate'].to_dict() == {
             'normal': {'loc': 0, 'scale': 0.9}}
@@ -503,7 +484,6 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_tensorflow_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings, SettingsConfig)
         assert isinstance(spec.settings.logging, LoggingConfig)
         assert spec.settings.matrix is None
@@ -585,7 +565,6 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_horovod_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings, SettingsConfig)
         assert isinstance(spec.settings.logging, LoggingConfig)
         assert spec.settings.matrix is None
@@ -644,7 +623,6 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_pytorch_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings, SettingsConfig)
         assert isinstance(spec.settings.logging, LoggingConfig)
         assert spec.settings.matrix is None
@@ -703,7 +681,6 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_mxnet_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.project.name == 'project1'
         assert isinstance(spec.settings, SettingsConfig)
         assert isinstance(spec.settings.logging, LoggingConfig)
         assert spec.settings.matrix is None

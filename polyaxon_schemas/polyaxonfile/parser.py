@@ -36,7 +36,6 @@ class Parser(object):
         parsed_data = {
             spec.VERSION: data[spec.VERSION],
             spec.KIND: data[spec.KIND],
-            spec.PROJECT: data[spec.PROJECT],
         }
 
         if declarations:

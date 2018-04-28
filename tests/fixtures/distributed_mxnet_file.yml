@@ -3,11 +3,6 @@ version: 1
 
 kind: experiment
 
-project:
-  name: project1
-  description: this is a test project
-
-
 settings:
   logging:
     level: INFO

@@ -11,7 +11,6 @@ class PluginSpecification(BaseSpecification):
 
     SECTIONS:
         VERSION: defines the version of the file to be parsed and validated.
-        PROJECT: defines the project name this specification belongs to (must be unique).
         ENVIRONMENT: defines the run environment for experiment.
         RUN_EXEC: defines the run step where the user can set a docker image to execute
     """

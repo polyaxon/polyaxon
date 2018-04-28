@@ -2,7 +2,4 @@
 version: 1
 
 kind: plugin
-
-project:
-  name: video_prediction
 ...

@@ -3,9 +3,6 @@ version: 1
 
 kind: plugin
 
-project:
-  name: video_prediction
-
 run:
   image: my_image
   build_steps:

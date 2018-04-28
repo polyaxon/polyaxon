@@ -3,9 +3,6 @@ version: 1
 
 kind: experiment
 
-project:
-  name: project1
-
 model:
   generator:
     loss:

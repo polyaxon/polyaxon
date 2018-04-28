@@ -3,9 +3,6 @@ version: 1
 
 kind: group
 
-project:
-  name: project1
-
 settings:
   concurrency: 2
   random_search:

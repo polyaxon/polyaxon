@@ -1,7 +1,4 @@
 ---
-project:
-  name: project1
-
 kind: experiment
 
 model:

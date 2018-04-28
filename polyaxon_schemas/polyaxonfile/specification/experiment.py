@@ -18,7 +18,6 @@ class ExperimentSpecification(BaseSpecification):
 
     SECTIONS:
         VERSION: defines the version of the file to be parsed and validated.
-        PROJECT: defines the project name this specification belongs to (must be unique).
         SETTINGS: defines the logging, run type and concurrent runs.
         ENVIRONMENT: defines the run environment for experiment.
         DECLARATIONS: variables/modules that can be reused.

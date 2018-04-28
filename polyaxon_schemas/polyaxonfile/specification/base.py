@@ -30,7 +30,6 @@ class BaseSpecification(object):
     MIN_VERSION = 1.0  # Max Polyaxonfile specification version this CLI supports
 
     VERSION = 'version'
-    PROJECT = 'project'
     KIND = 'kind'
     SETTINGS = 'settings'
     DECLARATIONS = 'declarations'
@@ -41,11 +40,11 @@ class BaseSpecification(object):
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, PROJECT, KIND, ENVIRONMENT, DECLARATIONS, SETTINGS, RUN_EXEC, MODEL, TRAIN, EVAL
+        VERSION, KIND, ENVIRONMENT, DECLARATIONS, SETTINGS, RUN_EXEC, MODEL, TRAIN, EVAL
     )
 
     HEADER_SECTIONS = (
-        VERSION, PROJECT, KIND, SETTINGS
+        VERSION, KIND, SETTINGS
     )
 
     GRAPH_SECTIONS = (
@@ -53,7 +52,7 @@ class BaseSpecification(object):
     )
 
     REQUIRED_SECTIONS = (
-        VERSION, PROJECT, KIND
+        VERSION, KIND
     )
 
     OPERATORS = {
@@ -169,10 +168,6 @@ class BaseSpecification(object):
     @cached_property
     def version(self):
         return self.headers[self.VERSION]
-
-    @cached_property
-    def project(self):
-        return self.headers[self.PROJECT]
 
     @cached_property
     def kind(self):
