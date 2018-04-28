@@ -115,6 +115,25 @@ Examples:
 $ polyaxon experiment --experiment=1 restart
 ```
 
+
+## resume
+
+Usage:
+
+```bash
+$ polyaxon experiment resume
+```
+
+Resume experiment.
+
+Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+Examples:
+
+```bash
+$ polyaxon experiment --experiment=1 resume
+```
+
 ## jobs
 
 Usage:
