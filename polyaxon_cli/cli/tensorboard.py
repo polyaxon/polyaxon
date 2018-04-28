@@ -7,9 +7,8 @@ import click
 import clint
 
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
-from polyaxon_cli.cli.project import equal_projects, get_project_or_local
+from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
-from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.utils.clients import PolyaxonClients
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
@@ -94,12 +93,6 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
     if specification:
         # pylint:disable=protected-access
         check_polyaxonfile_kind(specification=specification, kind=specification._PLUGIN)
-        project = ProjectManager.get_config_or_raise()
-        if not equal_projects(specification.project.name, project.unique_name):
-            Printer.print_error('Your polyaxonfile defined a different project '
-                                'than the one set in this repo.')
-            sys.exit(1)
-
         plugin_job = PluginJobConfig(config=specification.parsed_data)
 
     user, project_name = get_project_or_local(ctx.obj['project'])

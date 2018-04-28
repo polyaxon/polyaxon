@@ -25,13 +25,12 @@ def unix_style_path(path):
     return path
 
 
-def create_init_file(init_file_type, project=None):
-    project = project or constants.INIT_FILE_PROJECT_SECTION
+def create_init_file(init_file_type):
     if os.path.exists(constants.INIT_FILE):
         return False
 
     with open(constants.INIT_FILE, 'w') as f:
-        f.write(constants.INIT_FILE_TEMPLATES[init_file_type].format(project))
+        f.write(constants.INIT_FILE_TEMPLATES[init_file_type])
 
     return True
 

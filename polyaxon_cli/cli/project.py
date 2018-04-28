@@ -34,12 +34,6 @@ def get_project_info(project):  # pylint:disable=redefined-outer-name
     return user, project_name
 
 
-def equal_projects(project1, project2):
-    project1_info = get_project_info(project1)
-    project2_info = get_project_info(project2)
-    return project1_info == project2_info
-
-
 def get_project_or_local(project=None):  # pylint:disable=redefined-outer-name
     if not project and not ProjectManager.is_initialized():
         Printer.print_error('Please provide a valid project, or init a new project. '

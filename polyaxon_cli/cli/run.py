@@ -6,7 +6,6 @@ import sys
 import click
 
 from polyaxon_cli.cli.check import check_polyaxonfile, get_group_experiments_info
-from polyaxon_cli.cli.project import equal_projects
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.project import ProjectManager
@@ -53,10 +52,6 @@ def run(ctx, file, description, u):  # pylint:disable=redefined-builtin
 
     project = ProjectManager.get_config_or_raise()
     project_client = PolyaxonClients().project
-    if not equal_projects(specification.project.name, project.unique_name):
-        Printer.print_error('Your polyaxonfile defined a different project '
-                            'than the one set in this repo.')
-        sys.exit(1)
 
     if specification.is_experiment:
         click.echo('Creating an independent experiment.')

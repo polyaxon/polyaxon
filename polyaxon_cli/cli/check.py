@@ -59,14 +59,11 @@ def get_group_experiments_info(search_algorithm, concurrency, early_stopping=Fal
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon file to check.')
 @click.option('--version', '-v', is_flag=True, default=False, help='Checks and prints the version.')
-@click.option('--project', '-p', is_flag=True, default=False,
-              help='Checks and prints the project def.')
 @click.option('--definition', '-def', is_flag=True, default=False,
               help='Checks and prints the file definition.')
 @clean_outputs
 def check(file,  # pylint:disable=redefined-builtin
           version,
-          project,
           definition):
     """Check a polyaxonfile."""
     file = file or 'polyaxonfile.yml'
@@ -75,11 +72,6 @@ def check(file,  # pylint:disable=redefined-builtin
     if version:
         Printer.decorate_format_value('The version is: {}',
                                       specification.version,
-                                      'yellow')
-
-    if project:
-        Printer.decorate_format_value('The project is: {}',
-                                      specification.project.name,
                                       'yellow')
 
     if definition:
