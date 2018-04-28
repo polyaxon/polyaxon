@@ -120,6 +120,22 @@ class ExperimentRestartView(CreateAPIView):
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
 
+class ExperimentResumeView(CreateAPIView):
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'sequence'
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(project=get_permissible_project(view=self))
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        new_obj = obj.resume_immediately()
+        serializer = self.get_serializer(new_obj)
+        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+
 class ExperimentViewMixin(object):
     """A mixin to filter by experiment."""
 

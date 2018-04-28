@@ -937,10 +937,43 @@ class TestRestartExperimentViewV1(BaseViewTest):
     def test_restart(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
         assert self.queryset.count() == 2
+
+
+class TestResumeExperimentViewV1(BaseViewTest):
+    serializer_class = ExperimentSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/resume'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.object.sequence)
+        self.queryset = self.model_class.objects.all()
+
+    def test_resume(self):
+        data = {}
+        assert self.queryset.count() == 1
+        count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
+            'status', flat=True).count()
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
+        assert self.queryset.count() == 1
+        new_count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
+            'status', flat=True).count()
+        assert new_count_statuses == count_statuses + 1  # + RESUMING status
 
 
 class TestStopExperimentViewV1(BaseViewTest):
