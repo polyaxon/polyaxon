@@ -110,3 +110,21 @@ export function discardToken(): any {
     ).catch((error: any) => reject(error))
     });
 }
+
+export function refreshSession(): any {
+  function handleErrors(response: any) {
+    if (!response.ok) {
+      return Promise.reject(response.statusText);
+    }
+    return response;
+  }
+
+  return (dispatch: any, getState: any) => fetch(BASE_URL + '/users/session/refresh', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'token ' + getState().auth.token
+    },
+    credentials: 'include'
+  })
+    .then(handleErrors);
+}

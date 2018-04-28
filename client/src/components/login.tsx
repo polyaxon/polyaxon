@@ -7,6 +7,7 @@ export interface Props {
   history: any;
   fetchUser: () => any;
   login: (username: string, password: string) => any;
+  refreshSession: () =>any;
 }
 
 export default class Login extends React.Component<Props, Object> {
@@ -33,11 +34,13 @@ export default class Login extends React.Component<Props, Object> {
     this.props.fetchUser().then(
       () => {
         if (this.props.isLoggedIn) {
-          if (this.props.next) {
-            window.location.replace(this.props.next);
-          } else {
-            this.props.history.push(getHomeUrl());
-          }
+          this.props.refreshSession().then(() => {
+            if (this.props.next) {
+              window.location.replace(this.props.next);
+            } else {
+              this.props.history.push(getHomeUrl());
+            }
+          });
         }
       });
   }
