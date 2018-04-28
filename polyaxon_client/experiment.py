@@ -134,7 +134,23 @@ class ExperimentClient(PolyaxonClient):
             response = self.post(request_url)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
-            self.handle_exception(e=e, log_message='Error while restarting experiment')
+            self.handle_exception(e=e, log_message='Error while restarting the experiment')
+            return None
+
+    def resume(self, username, project_name, experiment_sequence):
+        """Restart an experiment."""
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'resume')
+
+        try:
+            response = self.post(request_url)
+            return ExperimentConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while resuming the experiment')
             return None
 
     def stop(self, username, project_name, experiment_sequence):

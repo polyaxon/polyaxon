@@ -47,7 +47,7 @@ class TestProjectClient(TestCase):
 
     @httpretty.activate
     def test_get_project(self):
-        object = ProjectConfig(faker.word()).to_dict()
+        obj = ProjectConfig(faker.word()).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             ProjectClient._build_url(
@@ -55,29 +55,29 @@ class TestProjectClient(TestCase):
                 ProjectClient.ENDPOINT,
                 'user',
                 'project'),
-            body=json.dumps(object),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
         result = self.client.get_project('user', 'project')
-        assert object == result.to_dict()
+        assert obj == result.to_dict()
 
     @httpretty.activate
     def test_create_project(self):
-        object = ProjectConfig(faker.word())
+        obj = ProjectConfig(faker.word())
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
                 self.client.base_url,
                 'projects'),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_project(object)
-        assert result.to_dict() == object.to_dict()
+        result = self.client.create_project(obj)
+        assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
     def test_update_project(self):
-        object = ProjectConfig(faker.word())
+        obj = ProjectConfig(faker.word())
         httpretty.register_uri(
             httpretty.PATCH,
             ProjectClient._build_url(
@@ -85,11 +85,11 @@ class TestProjectClient(TestCase):
                 ProjectClient.ENDPOINT,
                 'user',
                 'project'),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
         result = self.client.update_project('user', 'project', {'name': 'new'})
-        assert result.to_dict() == object.to_dict()
+        assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
     def test_delete_project(self):
@@ -171,7 +171,7 @@ class TestProjectClient(TestCase):
     @httpretty.activate
     def test_create_experiment_group(self):
         project_uuid = uuid.uuid4().hex
-        object = ExperimentGroupConfig(content=faker.word(), project=project_uuid)
+        obj = ExperimentGroupConfig(content=faker.word(), project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
@@ -180,11 +180,11 @@ class TestProjectClient(TestCase):
                 'user',
                 'project',
                 'groups'),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment_group('user', 'project', object)
-        assert result.to_dict() == object.to_dict()
+        result = self.client.create_experiment_group('user', 'project', obj)
+        assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
     def test_list_experiments(self):
@@ -227,7 +227,7 @@ class TestProjectClient(TestCase):
     @httpretty.activate
     def test_create_experiment(self):
         project_uuid = uuid.uuid4().hex
-        object = ExperimentConfig(project=project_uuid, config={})
+        obj = ExperimentConfig(project=project_uuid, config={})
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
@@ -236,11 +236,11 @@ class TestProjectClient(TestCase):
                 'user',
                 'project',
                 'experiments'),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.create_experiment('user', 'project', object)
-        assert result.to_dict() == object.to_dict()
+        result = self.client.create_experiment('user', 'project', obj)
+        assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
     def test_start_tensorboard(self):
@@ -260,7 +260,7 @@ class TestProjectClient(TestCase):
 
     @httpretty.activate
     def test_start_tensorboard_with_config(self):
-        object = PluginJobConfig(config={})
+        obj = PluginJobConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
@@ -270,10 +270,10 @@ class TestProjectClient(TestCase):
                 'project_name',
                 'tensorboard',
                 'start'),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.start_tensorboard('username', 'project_name', object)
+        result = self.client.start_tensorboard('username', 'project_name', obj)
         assert result.status_code == 200
 
     @httpretty.activate
@@ -310,7 +310,7 @@ class TestProjectClient(TestCase):
 
     @httpretty.activate
     def test_start_notebook_with_config(self):
-        object = PluginJobConfig(config={})
+        obj = PluginJobConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
             ProjectClient._build_url(
@@ -320,10 +320,10 @@ class TestProjectClient(TestCase):
                 'project_name',
                 'notebook',
                 'start'),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
-        result = self.client.start_notebook('username', 'project_name', object)
+        result = self.client.start_notebook('username', 'project_name', obj)
         assert result.status_code == 200
 
     @httpretty.activate

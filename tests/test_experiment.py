@@ -48,7 +48,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment(self):
-        object = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig(config={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             ExperimentClient._build_url(
@@ -59,15 +59,15 @@ class TestExperimentClient(TestCase):
                 'experiments',
                 1
             ),
-            body=json.dumps(object),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
         result = self.client.get_experiment('username', 'project_name', 1)
-        assert object == result.to_dict()
+        assert exp == result.to_dict()
 
     @httpretty.activate
     def test_update_project(self):
-        object = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={})
         httpretty.register_uri(
             httpretty.PATCH,
             ExperimentClient._build_url(
@@ -77,11 +77,11 @@ class TestExperimentClient(TestCase):
                 'project_name',
                 'experiments',
                 1),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
         result = self.client.update_experiment('username', 'project_name', 1, {'name': 'new'})
-        assert result.to_dict() == object.to_dict()
+        assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
     def test_delete_experiment(self):
@@ -102,7 +102,7 @@ class TestExperimentClient(TestCase):
     @httpretty.activate
     def test_get_experiment_statuses(self):
         experiment_uuid = uuid.uuid4().hex
-        object = ExperimentStatusConfig(uuid=experiment_uuid,
+        exp = ExperimentStatusConfig(uuid=experiment_uuid,
                                         experiment=experiment_uuid,
                                         created_at=datetime.datetime.now(),
                                         status='Running').to_dict()
@@ -116,7 +116,7 @@ class TestExperimentClient(TestCase):
                 'experiments',
                 1,
                 'statuses'),
-            body=json.dumps({'results': [object], 'count': 1, 'next': None}),
+            body=json.dumps({'results': [exp], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
         response = self.client.get_statuses('username', 'project_name', 1)
@@ -125,7 +125,7 @@ class TestExperimentClient(TestCase):
     @httpretty.activate
     def test_get_experiment_metrics(self):
         experiment_uuid = uuid.uuid4().hex
-        object = ExperimentMetricConfig(uuid=experiment_uuid,
+        exp = ExperimentMetricConfig(uuid=experiment_uuid,
                                         experiment=experiment_uuid,
                                         created_at=datetime.datetime.now(),
                                         values={'accuracy': 0.9}).to_dict()
@@ -139,7 +139,7 @@ class TestExperimentClient(TestCase):
                 'experiments',
                 1,
                 'metrics'),
-            body=json.dumps({'results': [object], 'count': 1, 'next': None}),
+            body=json.dumps({'results': [exp], 'count': 1, 'next': None}),
             content_type='application/json',
             status=200)
         response = self.client.get_metrics('username', 'project_name', 1)
@@ -148,7 +148,7 @@ class TestExperimentClient(TestCase):
     @httpretty.activate
     def test_create_experiment_metric(self):
         experiment_uuid = uuid.uuid4().hex
-        object = ExperimentMetricConfig(uuid=experiment_uuid,
+        exp = ExperimentMetricConfig(uuid=experiment_uuid,
                                         experiment=experiment_uuid,
                                         created_at=datetime.datetime.now(),
                                         values={'accuracy': 0.9}).to_dict()
@@ -162,12 +162,12 @@ class TestExperimentClient(TestCase):
                 'experiments',
                 1,
                 'metrics'),
-            body=json.dumps(object),
+            body=json.dumps(exp),
             content_type='application/json',
             status=200)
         response = self.client.create_metric('username', 'project_name', 1,
                                              values={'accuracy': 0.9})
-        assert response.to_dict() == object
+        assert response.to_dict() == exp
 
     @httpretty.activate
     def test_list_experiment_jobs(self):
@@ -218,7 +218,7 @@ class TestExperimentClient(TestCase):
 
     @httpretty.activate
     def test_restart_experiment(self):
-        object = ExperimentConfig(config={})
+        exp = ExperimentConfig(config={})
         httpretty.register_uri(
             httpretty.POST,
             ExperimentClient._build_url(
@@ -229,11 +229,30 @@ class TestExperimentClient(TestCase):
                 'experiments',
                 1,
                 'restart'),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(exp.to_dict()),
             content_type='application/json',
             status=200)
         result = self.client.restart('username', 'project_name', 1)
-        assert result.to_dict() == object.to_dict()
+        assert result.to_dict() == exp.to_dict()
+
+    @httpretty.activate
+    def test_resume_experiment(self):
+        exp = ExperimentConfig(config={})
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'resume'),
+            body=json.dumps(exp.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.resume('username', 'project_name', 1)
+        assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
     def test_stop_experiment(self):

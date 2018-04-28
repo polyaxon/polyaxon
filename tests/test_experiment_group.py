@@ -26,9 +26,9 @@ class TestExperimentGroupClient(TestCase):
 
     @httpretty.activate
     def test_get_experiment_group(self):
-        object = ExperimentGroupConfig(content=faker.word(),
-                                       uuid=uuid.uuid4().hex,
-                                       project=uuid.uuid4().hex).to_dict()
+        obj = ExperimentGroupConfig(content=faker.word(),
+                                    uuid=uuid.uuid4().hex,
+                                    project=uuid.uuid4().hex).to_dict()
         httpretty.register_uri(
             httpretty.GET,
             ExperimentGroupClient._build_url(
@@ -38,11 +38,11 @@ class TestExperimentGroupClient(TestCase):
                 'project_name',
                 'groups',
                 1),
-            body=json.dumps(object),
+            body=json.dumps(obj),
             content_type='application/json',
             status=200)
         result = self.client.get_experiment_group('username', 'project_name', 1)
-        assert object == result.to_dict()
+        assert obj == result.to_dict()
 
     @httpretty.activate
     def test_list_experiments(self):
@@ -95,9 +95,9 @@ class TestExperimentGroupClient(TestCase):
 
     @httpretty.activate
     def test_update_experiment_group(self):
-        object = ExperimentGroupConfig(content=faker.word(),
-                                       uuid=uuid.uuid4().hex,
-                                       project=uuid.uuid4().hex)
+        obj = ExperimentGroupConfig(content=faker.word(),
+                                    uuid=uuid.uuid4().hex,
+                                    project=uuid.uuid4().hex)
         httpretty.register_uri(
             httpretty.PATCH,
             ExperimentGroupClient._build_url(
@@ -107,12 +107,12 @@ class TestExperimentGroupClient(TestCase):
                 'project_name',
                 'groups',
                 1),
-            body=json.dumps(object.to_dict()),
+            body=json.dumps(obj.to_dict()),
             content_type='application/json',
             status=200)
         result = self.client.update_experiment_group(
             'username', 'project_name', 1, {'content': 'new'})
-        assert result.to_dict() == object.to_dict()
+        assert result.to_dict() == obj.to_dict()
 
     @httpretty.activate
     def test_delete_experiment_group(self):
