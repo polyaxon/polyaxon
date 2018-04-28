@@ -217,6 +217,34 @@ def restart(ctx):
 
 
 @experiment.command()
+@click.pass_context
+@clean_outputs
+def resume(ctx):
+    """Resume experiment.
+
+    Uses [Caching](/polyaxon_cli/introduction#Caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon experiment --experiment=1 resume
+    ```
+    """
+    user, project_name, _experiment = get_experiment_or_local(ctx.obj['project'],
+                                                              ctx.obj['experiment'])
+    try:
+        response = PolyaxonClients().experiment.resume(
+            user, project_name, _experiment)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+        Printer.print_error('Could not resume experiment `{}`.'.format(_experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    get_experiment_details(response)
+
+
+@experiment.command()
 @click.option('--page', type=int, help='To paginate through the list of jobs.')
 @click.pass_context
 @clean_outputs
