@@ -1,10 +1,6 @@
 ---
 version: 1
 
-project:
-  name: project1
-  description: this is a test project
-
 settings:
   logging:
     level: INFO

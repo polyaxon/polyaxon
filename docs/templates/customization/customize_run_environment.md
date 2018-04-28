@@ -24,9 +24,6 @@ version: 1
 
 kind: experiment
 
-project:
-  name: mnist
-
 declarations:
   batch_size: 128
   lr: 0.1
@@ -48,9 +45,6 @@ For example
 version: 1
 
 kind: experiment
-
-project:
-  name: mnist
 
 declarations:
   batch_size: 128
@@ -85,9 +79,6 @@ Polyaxon also provides, an easy way to install multiple python libraries:
 
     kind: experiment
 
-    project:
-      name: mnist
-
     declarations:
       batch_size: 128
       lr: 0.1
@@ -110,9 +101,6 @@ Polyaxon allows you to specify a `polyaxon_setup.sh` file, and a command to exec
 version: 1
 
 kind: experiment
-
-project:
-  name: mnist
 
 declarations:
   batch_size: 128

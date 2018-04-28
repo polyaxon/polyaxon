@@ -252,9 +252,6 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
 
     kind: group
 
-    project:
-      name: project1
-
     settings:
       matrix:
         lr:
@@ -422,9 +419,6 @@ class TestExperimentDetailViewV1(BaseViewTest):
         # Failed to getting experiment when specify resources without framework in environment
         spec_content = """---
             version: 1
-
-            project:
-              name: project1
 
             kind: experiment
 

@@ -33,10 +33,7 @@
                 }
             },
             "version": 1,
-            "kind": "experiment",
-            "project": {
-                "name": "cats-vs-dogs"
-            }
+            "kind": "experiment"
         },
         "original_experiment": null,
         "experiment_status": 6,
@@ -67,10 +64,7 @@
                 "cmd": "python code.py"
             },
             "version": 1,
-            "kind": "experiment",
-            "project": {
-                "name": "cats-vs-dogs"
-            }
+            "kind": "experiment"
         },
         "original_experiment": null,
         "experiment_status": 14,
@@ -101,10 +95,7 @@
                 "cmd": "python code.py"
             },
             "version": 1,
-            "kind": "experiment",
-            "project": {
-                "name": "cats-vs-dogs"
-            }
+            "kind": "experiment"
         },
         "original_experiment": null,
         "experiment_status": 22,
@@ -135,10 +126,7 @@
                 "cmd": "python code.py"
             },
             "version": 1,
-            "kind": "experiment",
-            "project": {
-                "name": "cats-vs-dogs"
-            }
+            "kind": "experiment"
         },
         "original_experiment": null,
         "experiment_status": 29,
@@ -383,9 +371,6 @@
                     }
                 },
                 "steps": 500
-            },
-            "project": {
-                "name": "cats-vs-dogs"
             }
         },
         "original_experiment": null,
@@ -631,9 +616,6 @@
                     }
                 },
                 "steps": 500
-            },
-            "project": {
-                "name": "cats-vs-dogs"
             }
         },
         "original_experiment": null,

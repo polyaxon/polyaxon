@@ -18,29 +18,6 @@ Example:
 kine: experiment
 ```
 
-## project
-
-Represents the project namespace where we want to run the polyaxonfile.
-The project must be [created on Polyaxon](/experimentation/projects##create-a-project).
-
-This section requires one attribute name, which is the name of the project.
-You can specify the name of the project in 2 different ways:
-
- * short version: `project_name`, in this case the username is inferred automatically as the current logged in user.
- * long version: `username/project_name` in this case the project is uniquely defined.
-
-Example:
-
-```yaml
-project:
-  name: mnist
-```
-
-```yaml
-project:
-  name: adam/mnist
-```
-
 ## settings
 
 Settings defines `seed`, `concurrency`, `search algorithm`, `early_stopping`, `matrix`, and `logging`.

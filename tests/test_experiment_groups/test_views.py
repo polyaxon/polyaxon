@@ -88,9 +88,6 @@ version: 1
 
 kind: group
 
-project:
-  name: project1
-
 model:
   model_type: classifier
 
@@ -118,9 +115,6 @@ model:
 version: 1
 
 kind: group
-
-project:
-  name: project1
 
 settings:
     concurrency: 3

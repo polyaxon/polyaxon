@@ -45,9 +45,6 @@ version: 1
 
 kind: experiment
 
-project:
-  name: mnist
-
 declarations:
   lr: 0.01
   batch_size: 128

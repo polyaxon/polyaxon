@@ -27,9 +27,6 @@ version: 1
 
 kind: plugin
 
-project:
-  name: mnist
-
 run:
   image: python:3
   build_steps:
@@ -70,9 +67,6 @@ Since the notebook is create with polyaxonfile, it can be customized in the same
 version: 1
 
 kind: plugin
-
-project:
-  name: mnist
 
 environment:
   resources:
@@ -146,9 +140,6 @@ For example to start tensorboard with Tensorflow 1.6, you need to define a new p
 version: 1
 
 kind: plugin
-
-project:
-  name: mnist
 
 environment:
   resources:

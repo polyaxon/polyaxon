@@ -33,9 +33,6 @@ version: 1
 
 kind: group
 
-project:
-  name: mnist
-
 declarations:
   batch_size: 128
 
@@ -66,9 +63,6 @@ the update version:
 version: 1
 
 kind: group
-
-project:
-  name: mnist
 
 declarations:
   batch_size: 128
@@ -103,9 +97,6 @@ Here's an example of a
 version: 1
 
 kind: group
-
-project:
-  name: mnist
 
 declarations:
   batch_size: 128

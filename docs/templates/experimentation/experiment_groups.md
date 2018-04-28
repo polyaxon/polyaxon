@@ -43,9 +43,6 @@ version: 1
 
 kind: group
 
-project:
-  name: mnist
-
 declarations:
   batch_size: 128
 

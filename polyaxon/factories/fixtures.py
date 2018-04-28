@@ -7,9 +7,6 @@ experiment_group_spec_content = """---
     
     kind: group
 
-    project:
-      name: project1
-    
     settings:
       matrix:
         lr:
@@ -53,9 +50,6 @@ experiment_group_spec_content_2_xps = """---
     version: 1
     
     kind: group
-
-    project:
-      name: project1
       
     settings:
       concurrency: 2
@@ -72,9 +66,6 @@ experiment_group_spec_content_early_stopping = """---
     version: 1
     
     kind: group
-
-    project:
-      name: project1
 
     settings:
       concurrency: 2
@@ -99,9 +90,6 @@ experiment_group_spec_content_hyperband = """---
     version: 1
 
     kind: group
-
-    project:
-      name: project1
 
     settings:
       concurrency: 2
@@ -135,9 +123,6 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
     version: 1
 
     kind: group
-
-    project:
-      name: project1
 
     settings:
       concurrency: 200
@@ -178,9 +163,6 @@ experiment_group_spec_content_bo = """---
 
     kind: group
 
-    project:
-      name: project1
-
     settings:
       concurrency: 2
       bo:
@@ -217,9 +199,6 @@ experiment_spec_content = """---
     version: 1
     
     kind: experiment
-
-    project:
-      name: project1
 
     model:
       model_type: regressor
@@ -261,9 +240,6 @@ exec_experiment_spec_content = """---
     
     kind: experiment
 
-    project:
-      name: project1
-
     run:
       image: my_image
       cmd: video_prediction_train --model=DNA --num_masks=1
@@ -277,9 +253,6 @@ exec_experiment_resources_content = """---
     
     kind: experiment
 
-    project:
-      name: project1
-      
     declarations:
       lr: 0.1
       dropout: 0.5
@@ -355,9 +328,6 @@ plugin_spec_content = """---
     version: 1
     
     kind: plugin
-
-    project:
-      name: project1
 
     run:
       image: my_image

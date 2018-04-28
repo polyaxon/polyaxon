@@ -28,18 +28,17 @@ class StartTensorboardView(CreateAPIView):
         return queryset.filter(user__username=username)
 
     @staticmethod
-    def _get_default_tensorboard_config(project):
+    def _get_default_tensorboard_config():
         return {
             'config': {
                 'version': 1,
                 'kind': 'plugin',
-                'project': {'name': project.name},
                 'run': {'image': settings.TENSORBOARD_DOCKER_IMAGE}
             }
         }
 
     def _create_tensorboard(self, project):
-        config = self.request.data or self._get_default_tensorboard_config(project)
+        config = self.request.data or self._get_default_tensorboard_config()
         serializer = self.get_serializer(instance=project.tensorboard, data=config)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user, project=project)
