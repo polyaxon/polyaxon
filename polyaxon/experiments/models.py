@@ -198,6 +198,10 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
         self.set_status(status=ExperimentLifeCycle.RESUMING, message=message)
 
+    def resume_immediately(self, config=None, declarations=None):
+        message = ExperimentLifeCycle.RESUME_IMMEDIATELY_MESSAGE
+        self.resume(config=config, declarations=declarations, message=message)
+
     def restart(self,
                 user=None,
                 description=None,
