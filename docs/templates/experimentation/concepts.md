@@ -105,6 +105,17 @@ how to manage a large set of experiments for hyperparameter tuning.
 !!! info "More details"
     Please refer to the [hyperparameters search](hyperparameters_search) for more details.
 
+### Checkpointing, resuming and restarting experiments
+
+Checkpointing is a very important concept in machine learning, it prevents losing progress.
+It also provide the possibility to resume an experiment from a specific state.
+
+Polyaxon provides some structure and organization regarding checkpointing and outputs saving.
+
+
+!!! info "More details"
+    Please refer to the [save, resume & restart](save_resume_restart) for more details.
+
 
 
 ### Project Plugins
