@@ -90,7 +90,7 @@ if an experiment run in a distributed way it will create multiple instances of `
 
 ### Distributed Experiments
 
-A `Distrubted Experiment` is the execution of your model in distributed fashion and depends on the framework you are using.
+A `Distributed Experiment` is the execution of a model or a computation graph across a cluster.
 
 !!! info "More details"
     Please refer to the [distributed experiments](distributed_experiments) for more details.
