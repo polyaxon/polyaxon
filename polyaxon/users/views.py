@@ -56,6 +56,13 @@ class AuthTokenLogout(APIView):
         return response
 
 
+class RefreshSessionView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request, *args, **kwargs):
+        auth_login(self.request, request.user)
+        return Response()
+
+
 class LoginView(AuthLoginView):
     @method_decorator(sensitive_post_parameters())
     @method_decorator(csrf_protect)

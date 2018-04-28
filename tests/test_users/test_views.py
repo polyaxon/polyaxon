@@ -127,3 +127,17 @@ class TestRevokeSuperuserViewV1(BaseViewTest):
         user = self.model_class.objects.get(pk=self.other_admin_user.pk)
         assert user.is_staff is False
         assert user.is_superuser is False
+
+
+class TestRefreshSessionView(BaseViewTest):
+
+    def setUp(self):
+        super().setUp()
+        self.url = '/{}/users/refreshSession'.format(API_V1)
+
+    def test_post(self):
+        resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.cookies
+        assert 'sessionid' in resp.cookies
+        assert 'csrftoken' in resp.cookies
