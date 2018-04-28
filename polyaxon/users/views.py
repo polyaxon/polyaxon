@@ -58,6 +58,7 @@ class AuthTokenLogout(APIView):
 
 class RefreshSessionView(APIView):
     permission_classes = (IsAuthenticated,)
+
     def post(self, request, *args, **kwargs):
         auth_login(self.request, request.user)
         return Response()

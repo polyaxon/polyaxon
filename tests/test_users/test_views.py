@@ -133,7 +133,7 @@ class TestRefreshSessionView(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        self.url = '/{}/users/refreshSession'.format(API_V1)
+        self.url = '/{}/users/session/refresh'.format(API_V1)
 
     def test_post(self):
         resp = self.auth_client.post(self.url)

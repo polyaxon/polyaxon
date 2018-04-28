@@ -119,7 +119,7 @@ export function refreshSession(): any {
     return response;
   }
 
-  return (dispatch: any, getState: any) => fetch(BASE_URL + '/users/refreshSession', {
+  return (dispatch: any, getState: any) => fetch(BASE_URL + '/users/session/refresh', {
     method: 'POST',
     headers: {
         'Authorization': 'token ' + getState().auth.token
