@@ -122,6 +122,10 @@ class BaseSpecification(object):
                 raise PolyaxonfileError("{} is a required section for a valid Polyaxonfile".format(
                     key))
 
+    def patch(self, values):
+        values = [self._parsed_data] + to_list(values)
+        return self.read(values=values)
+
     @classmethod
     def get_kind(cls, data):
         cls.check_kind(data=data)
