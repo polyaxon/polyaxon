@@ -33,6 +33,7 @@ from factories.factory_experiments import (
     ExperimentStatusFactory
 )
 from factories.factory_projects import ProjectFactory
+from factories.factory_repos import RepoFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
 from jobs.statuses import JobLifeCycle
 from polyaxon.urls import API_V1
@@ -937,6 +938,28 @@ class TestRestartExperimentViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert self.queryset.count() == 2
 
+    def test_restart_patch_config(self):
+        data = {'config': {'declarations': {'lr': 0.1}}}
+        assert self.queryset.first().declarations is None
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
+        assert self.queryset.count() == 2
+        assert self.queryset.first().declarations is None
+        assert self.queryset.last().declarations == data['config']['declarations']
+
+    def test_restart_patch_wrong_config_raises(self):
+        data = {'config': {'lr': 0.1}}
+        assert self.queryset.first().declarations is None
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert mock_fct.call_count == 0
+        assert self.queryset.count() == 1
+
 
 class TestResumeExperimentViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
@@ -968,6 +991,33 @@ class TestResumeExperimentViewV1(BaseViewTest):
         new_count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
             'status', flat=True).count()
         assert new_count_statuses == count_statuses + 1  # + RESUMING status
+        assert self.queryset.last().declarations is None
+
+    def test_resume_patch_config(self):
+        data = {'config': {'declarations': {'lr': 0.1}}}
+        assert self.queryset.count() == 1
+        assert self.queryset.last().declarations is None
+        count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
+            'status', flat=True).count()
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
+        new_count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
+            'status', flat=True).count()
+        assert new_count_statuses == count_statuses + 1  # + RESUMING status
+        assert self.queryset.count() == 1
+        assert self.queryset.last().declarations == data['config']['declarations']
+
+    def test_resume_patch_wrong_config_raises(self):
+        data = {'config': {'lr': 0.1}}
+        assert self.queryset.first().declarations is None
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert mock_fct.call_count == 0
+        assert self.queryset.count() == 1
 
 
 class TestStopExperimentViewV1(BaseViewTest):

@@ -37,6 +37,7 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
+from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
 from libs.views import ListCreateAPIView
 from projects.permissions import get_permissible_project
@@ -115,7 +116,21 @@ class ExperimentRestartView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        new_obj = obj.restart(user=self.request.user)
+
+        config = None
+        declarations = None
+        update_code_reference = False
+        if 'config' in request.data:
+            spec = validate_experiment_spec_config(
+                [obj.specification.parsed_data, request.data['config']], raise_for_rest=True)
+            config = spec.parsed_data
+            declarations = spec.declarations
+        if 'update_code' in request.data:
+            update_code_reference = request.data['update_code']
+        new_obj = obj.restart(user=self.request.user,
+                              config=config,
+                              declarations=declarations,
+                              update_code_reference=update_code_reference)
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
@@ -131,7 +146,14 @@ class ExperimentResumeView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
-        new_obj = obj.resume_immediately()
+        config = None
+        declarations = None
+        if 'config' in request.data:
+            spec = validate_experiment_spec_config(
+                [obj.specification.parsed_data, request.data['config']], raise_for_rest=True)
+            config = spec.parsed_data
+            declarations = spec.declarations
+        new_obj = obj.resume_immediately(config=config, declarations=declarations)
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 

@@ -208,7 +208,14 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
                 config=None,
                 declarations=None,
                 code_reference=None,
+                update_code_reference=False,
                 experiment_group=None):
+        if not code_reference:
+            if update_code_reference:
+                from repos.utils import get_latest_code_reference
+                code_reference = get_latest_code_reference(instance=self)
+            else:
+                code_reference = self.code_reference
         return Experiment.objects.create(
             project=self.project,
             user=user or self.user,
@@ -217,7 +224,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
             config=config or self.config,
             declarations=declarations or self.declarations,
             original_experiment=self,
-            code_reference=code_reference or self.code_reference)
+            code_reference=code_reference)
 
 
 class ExperimentStatus(StatusModel):

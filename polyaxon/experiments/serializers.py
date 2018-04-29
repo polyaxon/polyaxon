@@ -132,9 +132,7 @@ class ExperimentDetailSerializer(ExperimentSerializer):
         return obj.original_experiment.unique_name if obj.original_experiment else None
 
     def get_resources(self, obj):
-        if obj.resources:
-            obj.resources.to_dict()
-        return None
+        return obj.resources.to_dict() if obj.resources else None
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer):
