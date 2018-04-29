@@ -5,7 +5,7 @@ import os
 
 from unittest import TestCase
 
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, PluginSpecification
 from polyaxon_schemas.utils import TaskType
 
@@ -55,3 +55,8 @@ class TestSpecifications(TestCase):
         matrix = {'settings': {'matrix': {'lr': {'values': [0.1, 0.2]}}}}
         with self.assertRaises(PolyaxonConfigurationError):
             spec.patch(values=matrix)
+
+        # Patch with unsupported spec
+        wrong_config = {'lr': {'values': [0.1, 0.2]}}
+        with self.assertRaises(PolyaxonfileError):
+            spec.patch(values=wrong_config)
