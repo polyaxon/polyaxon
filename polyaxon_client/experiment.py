@@ -137,7 +137,7 @@ class ExperimentClient(PolyaxonClient):
             data['update_code'] = update_code
 
         try:
-            response = self.post(request_url, data=data)
+            response = self.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while restarting the experiment')
@@ -157,7 +157,7 @@ class ExperimentClient(PolyaxonClient):
             data['config'] = config
 
         try:
-            response = self.post(request_url, data=data)
+            response = self.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while resuming the experiment')
