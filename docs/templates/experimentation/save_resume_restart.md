@@ -81,6 +81,8 @@ Polyaxon provides the possibility to resume the training of an already stopped e
 
 In order for to resume an experiment, the experiment should have some checkpoints to resume from.
 
+You can also resume an experiment with an updated environment or some parameters.
+
 ### Resuming with Tensorflow
 
 If you used the Estimator api, you don't need to do anything because the Estimator will take care of resuming your training.
@@ -136,9 +138,23 @@ $ polyaxon experiment -xp 23 resume
 
 ## Restarting
 
-Sometimes you don't want to resume an experiment, and you wish to keep it, and restart it with different code or parameters.
+Sometimes you don't want to resume an experiment, and you wish to keep it and restart training with the same or different code or parameters.
 Polyaxon provides a way to do that:
 
 ```bash
 $ polyaxon experiment -xp 23 restart
 ```
+
+To restart with an experiment with latest code:
+
+```bash
+$ polyaxon experiment -xp 23 restart -u
+```
+
+To override the config of the experiment you wish to restart, you need to create a polyaxonfile with the override section/params:
+
+```bash
+$ polyaxon experiment -xp 23 restart -f polyaxonfile_override.yml
+```
+
+For example you can restart an experiment with gpu or with a different learning rate.
