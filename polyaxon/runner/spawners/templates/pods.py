@@ -86,10 +86,10 @@ def get_resources(resources):
         if resources.cpu.requests:
             requests['cpu'] = resources.cpu.requests
 
-    if resources.cpu:
-        if resources.cpu.limits:
+    if resources.memory:
+        if resources.memory.limits:
             limits['memory'] = '{}Mi'.format(resources.memory.limits)
-        if resources.cpu.requests:
+        if resources.memory.requests:
             requests['memory'] = '{}Mi'.format(resources.memory.requests)
 
     if resources.gpu:
