@@ -50,3 +50,8 @@ class TestSpecifications(TestCase):
         spec = spec.patch(values=env)
         assert spec.declarations == declarations['declarations']
         assert spec.environment.resources.gpu.to_dict() == env['environment']['resources']['gpu']
+
+        # Patch with unsupported spec
+        matrix = {'settings': {'matrix': {'lr': {'values': [0.1, 0.2]}}}}
+        with self.assertRaises(PolyaxonConfigurationError):
+            spec.patch(values=matrix)
