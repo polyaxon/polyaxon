@@ -236,6 +236,26 @@ class TestExperimentClient(TestCase):
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
+    def test_resume_experiment_with_config(self):
+        exp = ExperimentConfig(config={})
+        config = {'config': {'declarations': {'lr': 0.1}}}
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'resume'),
+            body=json.dumps(exp.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.restart('username', 'project_name', 1, config, update_code=True)
+        assert result.to_dict() == exp.to_dict()
+
+    @httpretty.activate
     def test_resume_experiment(self):
         exp = ExperimentConfig(config={})
         httpretty.register_uri(
@@ -252,6 +272,26 @@ class TestExperimentClient(TestCase):
             content_type='application/json',
             status=200)
         result = self.client.resume('username', 'project_name', 1)
+        assert result.to_dict() == exp.to_dict()
+
+    @httpretty.activate
+    def test_resume_experiment_with_config(self):
+        exp = ExperimentConfig(config={})
+        config = {'config': {'declarations': {'lr': 0.1}}}
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'resume'),
+            body=json.dumps(exp.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.resume('username', 'project_name', 1, config)
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
