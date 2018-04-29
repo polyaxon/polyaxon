@@ -2,7 +2,6 @@ import logging
 
 from experiment_groups.iteration_managers.base import BaseIterationManger
 from experiment_groups.schemas import HyperbandIterationConfig
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import Optimization
 
 logger = logging.getLogger('polyaxon.experiments_groups.iteration_manager')

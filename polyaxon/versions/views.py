@@ -1,6 +1,7 @@
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 
+from polyaxon.utils import config
 from polyaxon_schemas.log_handler import LogHandlerConfig
 from polyaxon_schemas.version import (
     ChartVersionConfig,
@@ -8,7 +9,6 @@ from polyaxon_schemas.version import (
     LibVersionConfig,
     PlatformVersionConfig
 )
-from polyaxon.utils import config
 from versions.models import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 

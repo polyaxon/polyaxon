@@ -1,4 +1,5 @@
 from marshmallow.exceptions import ValidationError as MarshmallowValidationError
+from rest_framework.exceptions import ValidationError
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 
@@ -9,7 +10,6 @@ from polyaxon_schemas.polyaxonfile.specification import (
     PluginSpecification
 )
 from polyaxon_schemas.settings import SettingsConfig
-from rest_framework.exceptions import ValidationError
 
 
 def validate_experiment_spec_config(config, raise_for_rest=False):
