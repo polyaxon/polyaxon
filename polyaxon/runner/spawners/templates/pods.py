@@ -144,10 +144,6 @@ class PodManager(object):
                                          task_idx=task_idx,
                                          experiment_uuid=self.experiment_uuid)
 
-    def get_job_uuid(self, task_type, task_idx):
-        name = self.get_job_name(task_type, task_idx)
-        return uuid.uuid5(uuid.NAMESPACE_DNS, name).hex
-
     def get_from_experiment_config_map(self, key_name):
         name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         config_map_key_ref = client.V1ConfigMapKeySelector(name=name, key=key_name)
@@ -288,7 +284,7 @@ class PodManager(object):
                   'experiment_uuid': self.experiment_uuid,
                   'task_type': task_type,
                   'task_idx': '{}'.format(task_idx),
-                  'job_uuid': self.get_job_uuid(task_type, task_idx),
+                  'job_uuid': uuid.uuid4().hex,
                   'role': self.role_label,
                   'type': self.type_label}
         if self.experiment_group_uuid:
