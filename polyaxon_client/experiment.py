@@ -143,7 +143,7 @@ class ExperimentClient(PolyaxonClient):
             self.handle_exception(e=e, log_message='Error while restarting the experiment')
             return None
 
-    def resume(self, username, project_name, experiment_sequence, config=None):
+    def resume(self, username, project_name, experiment_sequence, config=None, update_code=None):
         """Restart an experiment."""
         request_url = self._build_url(self._get_http_url(),
                                       username,
@@ -155,12 +155,36 @@ class ExperimentClient(PolyaxonClient):
         data = {}
         if config:
             data['config'] = config
+        if update_code:
+            data['update_code'] = update_code
 
         try:
             response = self.post(request_url, json_data=data)
             return ExperimentConfig.from_dict(response.json())
         except PolyaxonException as e:
             self.handle_exception(e=e, log_message='Error while resuming the experiment')
+            return None
+
+    def copy(self, username, project_name, experiment_sequence, config=None, update_code=None):
+        """Restart an experiment."""
+        request_url = self._build_url(self._get_http_url(),
+                                      username,
+                                      project_name,
+                                      'experiments',
+                                      experiment_sequence,
+                                      'copy')
+
+        data = {}
+        if config:
+            data['config'] = config
+        if update_code:
+            data['update_code'] = update_code
+
+        try:
+            response = self.post(request_url, json_data=data)
+            return ExperimentConfig.from_dict(response.json())
+        except PolyaxonException as e:
+            self.handle_exception(e=e, log_message='Error while copying the experiment')
             return None
 
     def stop(self, username, project_name, experiment_sequence):

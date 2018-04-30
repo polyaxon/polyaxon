@@ -295,6 +295,45 @@ class TestExperimentClient(TestCase):
         assert result.to_dict() == exp.to_dict()
 
     @httpretty.activate
+    def test_copy_experiment(self):
+        exp = ExperimentConfig(config={})
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'copy'),
+            body=json.dumps(exp.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.copy('username', 'project_name', 1)
+        assert result.to_dict() == exp.to_dict()
+
+    @httpretty.activate
+    def test_copy_experiment_with_config(self):
+        exp = ExperimentConfig(config={})
+        config = {'config': {'declarations': {'lr': 0.1}}}
+        httpretty.register_uri(
+            httpretty.POST,
+            ExperimentClient._build_url(
+                self.client.base_url,
+                ExperimentClient.ENDPOINT,
+                'username',
+                'project_name',
+                'experiments',
+                1,
+                'copy'),
+            body=json.dumps(exp.to_dict()),
+            content_type='application/json',
+            status=200)
+        result = self.client.copy('username', 'project_name', 1, config)
+        assert result.to_dict() == exp.to_dict()
+
+    @httpretty.activate
     def test_stop_experiment(self):
         httpretty.register_uri(
             httpretty.POST,
