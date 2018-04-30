@@ -3,8 +3,5 @@ version: 1
 
 kind: plugin
 
-project:
-  name: quick-start
-
 run:
   image: tensorflow/tensorflow:1.6.0-py3

@@ -3,9 +3,6 @@ version: 1
 
 kind: experiment
 
-project:
-  name: quick-start
-
 run:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:

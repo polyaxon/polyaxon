@@ -3,9 +3,6 @@ version: 1
 
 kind: group
 
-project:
-  name: quick-start
-
 settings:
   concurrency: 2
 

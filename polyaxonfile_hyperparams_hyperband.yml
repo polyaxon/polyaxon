@@ -3,13 +3,10 @@ version: 1
 
 kind: group
 
-project:
-  name: quick-start
-
 settings:
   concurrency: 2
   hyperband:
-    max_iter: 81
+    max_iter: 10
     eta: 3
     resource:
       name: num_steps
