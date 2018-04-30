@@ -1,4 +1,4 @@
-Polyaxon chart is a Helm charts for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.
+Polyaxon chart is a Helm chart for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.
 
 ## Introduction
 
