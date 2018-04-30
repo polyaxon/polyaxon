@@ -10,9 +10,10 @@ from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
 
+from experiments.clone import CloningStrategy
 from experiments.models import Experiment, ExperimentJob, ExperimentStatus
 from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
-from experiments.restart import handle_restarted_experiment
+from experiments.copy import copy_experiment
 from experiments.statuses import ExperimentLifeCycle
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -90,6 +91,31 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.code_reference == experiment.code_reference
 
     @override_settings(DEPLOY_RUNNER=False)
+    def test_copy(self):
+        experiment = ExperimentFactory()
+        new_experiment = experiment.copy()
+        assert new_experiment.project == experiment.project
+        assert new_experiment.user == experiment.user
+        assert new_experiment.description == experiment.description
+        assert new_experiment.config == experiment.config
+        assert new_experiment.declarations == experiment.declarations
+        assert new_experiment.code_reference == experiment.code_reference
+
+        # Restart with different declarations and description
+        declarations = {
+            'lr': 0.1,
+            'dropout': 0.5
+        }
+        description = 'new description'
+        new_experiment = experiment.copy(declarations=declarations, description=description)
+        assert new_experiment.project == experiment.project
+        assert new_experiment.user == experiment.user
+        assert new_experiment.description == description
+        assert new_experiment.config == experiment.config
+        assert new_experiment.declarations == declarations
+        assert new_experiment.code_reference == experiment.code_reference
+
+    @override_settings(DEPLOY_RUNNER=False)
     def test_resume(self):
         experiment = ExperimentFactory()
         count_experiment = Experiment.objects.count()
@@ -102,13 +128,13 @@ class TestExperimentModel(BaseTest):
         # Resume with same config
         experiment.resume()
         experiment.refresh_from_db()
-        assert experiment.last_status == ExperimentLifeCycle.RESUMING
-        assert experiment.config == config
-        assert experiment.declarations == declarations
-        assert Experiment.objects.count() == count_experiment
-
-        ExperimentStatus.objects.create(experiment=experiment, status=ExperimentLifeCycle.STOPPED)
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
+        last_resumed_experiment = experiment.clones.filter(
+            cloning_strategy=CloningStrategy.RESUME).last()
+        assert last_resumed_experiment.config == config
+        assert last_resumed_experiment.declarations == declarations
+        assert Experiment.objects.count() == count_experiment + 1
+
         # Resume with different config
         new_declarations = {
             'lr': 0.1,
@@ -116,11 +142,13 @@ class TestExperimentModel(BaseTest):
         }
         experiment.resume(declarations=new_declarations)
         experiment.refresh_from_db()
-        assert experiment.last_status == ExperimentLifeCycle.RESUMING
-        assert Experiment.objects.count() == count_experiment
-        assert experiment.config == config
-        assert experiment.declarations != declarations
-        assert experiment.declarations == new_declarations
+        assert experiment.last_status == ExperimentLifeCycle.STOPPED
+        last_resumed_experiment = experiment.clones.filter(
+            cloning_strategy=CloningStrategy.RESUME).last()
+        assert last_resumed_experiment.config == config
+        assert last_resumed_experiment.declarations != declarations
+        assert last_resumed_experiment.declarations == new_declarations
+        assert Experiment.objects.count() == count_experiment + 2
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
@@ -342,7 +370,7 @@ class TestExperimentModel(BaseTest):
         assert xp_with_jobs.last_status == ExperimentLifeCycle.RUNNING
 
     @tag(RUNNER_TEST)
-    def test_restarting_an_experiment(self):
+    def test_copying_an_experiment(self):
         with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment1 = ExperimentFactory()
 
@@ -359,7 +387,7 @@ class TestExperimentModel(BaseTest):
         assert os.path.exists(experiment2_outputs_path) is False
 
         # Handle restart should create the outputs and copy the content of experiment 1
-        handle_restarted_experiment(experiment2)
+        copy_experiment(experiment2)
 
         assert os.path.exists(experiment2_outputs_path) is True
         assert os.path.exists(os.path.join(experiment2_outputs_path, 'file')) is True

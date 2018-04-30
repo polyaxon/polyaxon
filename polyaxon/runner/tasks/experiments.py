@@ -3,7 +3,7 @@ import logging
 from docker.errors import DockerException
 
 from experiments.paths import create_experiment_outputs_path
-from experiments.restart import handle_restarted_experiment
+from experiments.copy import copy_experiment
 from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import get_valid_experiment
 from polyaxon.celery_api import app as celery_app
@@ -76,9 +76,9 @@ def start_experiment(experiment_id):
                     experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
         return None
 
-    # Check if we need to restart an experiment
-    if experiment.is_clone:
-        handle_restarted_experiment(experiment)
+    # Check if we need to copy an experiment
+    if experiment.is_copy:
+        copy_experiment(experiment)
     else:
         create_experiment_outputs_path(experiment.unique_name)
 

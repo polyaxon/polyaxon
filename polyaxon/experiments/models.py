@@ -7,6 +7,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
 
+from experiments.clone import CloningStrategy
 from experiments.statuses import ExperimentLifeCycle
 from jobs.models import Job, JobResources, JobStatus
 from jobs.statuses import JobLifeCycle
@@ -66,6 +67,12 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         blank=True,
         related_name='clones',
         help_text='The original experiment that was cloned from.')
+    cloning_strategy = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=CloningStrategy.RESTART,
+        choices=CloningStrategy.CHOICES)
     experiment_status = models.OneToOneField(
         'ExperimentStatus',
         related_name='+',
@@ -168,6 +175,22 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         return self.original_experiment is not None
 
     @property
+    def original_unique_name(self):
+        return self.original_experiment.unique_name if self.original_experiment else None
+
+    @property
+    def is_restart(self):
+        return self.is_clone and self.cloning_strategy == CloningStrategy.RESTART
+
+    @property
+    def is_resume(self):
+        return self.is_clone and self.cloning_strategy == CloningStrategy.RESUME
+
+    @property
+    def is_copy(self):
+        return self.is_clone and self.cloning_strategy == CloningStrategy.COPY
+
+    @property
     def is_independent(self):
         """If the experiment belongs to a experiment_group or is independently created."""
         return self.experiment_group is None
@@ -184,24 +207,44 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
     def set_status(self, status, message=None, **kwargs):
         ExperimentStatus.objects.create(experiment=self, status=status, message=message)
 
-    def resume(self, config=None, declarations=None, message=None):
-        updated = False
-        if config:
-            self.config = config
-            updated = True
-        if declarations:
-            self.declarations = declarations
-            updated = True
+    def _clone(self,
+               cloning_strategy,
+               user=None,
+               description=None,
+               config=None,
+               declarations=None,
+               code_reference=None,
+               update_code_reference=False,
+               experiment_group=None):
+        if not code_reference and not update_code_reference:
+            code_reference = self.code_reference
+        return Experiment.objects.create(
+            project=self.project,
+            user=user or self.user,
+            experiment_group=experiment_group,
+            description=description or self.description,
+            config=config or self.config,
+            declarations=declarations or self.declarations,
+            original_experiment=self,
+            cloning_strategy=cloning_strategy,
+            code_reference=code_reference)
 
-        if updated:
-            self.save()
-
-        self.set_status(status=ExperimentLifeCycle.RESUMING, message=message)
-        return self
-
-    def resume_immediately(self, config=None, declarations=None):
-        message = ExperimentLifeCycle.RESUME_IMMEDIATELY_MESSAGE
-        return self.resume(config=config, declarations=declarations, message=message)
+    def resume(self,
+               user=None,
+               description=None,
+               config=None,
+               declarations=None,
+               code_reference=None,
+               update_code_reference=False,
+               experiment_group=None):
+        return self._clone(cloning_strategy=CloningStrategy.RESUME,
+                           user=user,
+                           description=description,
+                           config=config,
+                           declarations=declarations,
+                           code_reference=code_reference,
+                           update_code_reference=update_code_reference,
+                           experiment_group=experiment_group or self.experiment_group)
 
     def restart(self,
                 user=None,
@@ -211,21 +254,31 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
                 code_reference=None,
                 update_code_reference=False,
                 experiment_group=None):
-        if not code_reference:
-            if update_code_reference:
-                from repos.utils import get_latest_code_reference
-                code_reference = get_latest_code_reference(instance=self)
-            else:
-                code_reference = self.code_reference
-        return Experiment.objects.create(
-            project=self.project,
-            user=user or self.user,
-            experiment_group=experiment_group,
-            description=description or self.description,
-            config=config or self.config,
-            declarations=declarations or self.declarations,
-            original_experiment=self,
-            code_reference=code_reference)
+        return self._clone(cloning_strategy=CloningStrategy.RESTART,
+                           user=user,
+                           description=description,
+                           config=config,
+                           declarations=declarations,
+                           code_reference=code_reference,
+                           update_code_reference=update_code_reference,
+                           experiment_group=experiment_group)
+
+    def copy(self,
+             user=None,
+             description=None,
+             config=None,
+             declarations=None,
+             code_reference=None,
+             update_code_reference=False,
+             experiment_group=None):
+        return self._clone(cloning_strategy=CloningStrategy.COPY,
+                           user=user,
+                           description=description,
+                           config=config,
+                           declarations=declarations,
+                           code_reference=code_reference,
+                           update_code_reference=update_code_reference,
+                           experiment_group=experiment_group)
 
 
 class ExperimentStatus(StatusModel):

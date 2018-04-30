@@ -362,7 +362,7 @@ class TestExperimentGroupModel(BaseTest):
         experiment.resume()
         assert experiment_group.pending_experiments.count() == 2
         assert experiment_group.running_experiments.count() == 0
-        assert experiment_group.succeeded_experiments.count() == 0
+        assert experiment_group.succeeded_experiments.count() == 1
 
     @tag(RUNNER_TEST)
     def test_experiment_group_deletion_triggers_experiments_deletion(self):
