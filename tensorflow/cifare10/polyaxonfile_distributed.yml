@@ -3,9 +3,6 @@ version: 1
 
 kind: experiment
 
-project:
-  name: cifar10
-
 environment:
   tensorflow:
     n_workers: 3

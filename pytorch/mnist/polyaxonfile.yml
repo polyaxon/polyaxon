@@ -3,9 +3,6 @@ version: 1
 
 kind: experiment
 
-project:
-  name: mnist
-
 run:
   image: pytorch/pytorch:latest
   build_steps:
