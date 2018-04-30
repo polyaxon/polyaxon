@@ -84,6 +84,7 @@ pages:
   - Jobs: experimentation/jobs.md
   - Distributed Experiments: experimentation/distributed_experiments.md
   - Hyperparams Search: experimentation/hyperparameters_search.md
+  - Save Restart Resume: experimentation/save_resume_restart.md
   - Project Plugins: experimentation/project_plugins.md
 - Tutorials:
   - Introduction: tutorials/index.md

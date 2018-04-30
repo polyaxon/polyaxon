@@ -136,6 +136,21 @@ and you need to call:
 $ polyaxon experiment -xp 23 resume
 ```
 
+To resume an experiment with latest code:
+
+```bash
+$ polyaxon experiment -xp 23 resume -u
+```
+
+To override the config of the experiment you wish to resume, you need to create a polyaxonfile with the override section/params:
+
+```bash
+$ polyaxon experiment -xp 23 resume -f polyaxonfile_override.yml
+```
+
+When you resume an experiment the outputs of the resuming experiment is added to the outputs of the original experiments.
+
+
 ## Restarting
 
 Sometimes you don't want to resume an experiment, and you wish to keep it and restart training with the same or different code or parameters.
@@ -145,7 +160,7 @@ Polyaxon provides a way to do that:
 $ polyaxon experiment -xp 23 restart
 ```
 
-To restart with an experiment with latest code:
+To restart an experiment with latest code:
 
 ```bash
 $ polyaxon experiment -xp 23 restart -u
@@ -158,3 +173,27 @@ $ polyaxon experiment -xp 23 restart -f polyaxonfile_override.yml
 ```
 
 For example you can restart an experiment with gpu or with a different learning rate.
+
+
+## Copying
+
+Another option that Polyaxon offers is to copy an experiment before restarting it.
+This option is useful if the user wants to resume the training of an experiment with multiple updated versions of her code or parameters,
+what it does is basically it copies all outputs from the experiment to the new experiments.
+
+
+```bash
+$ polyaxon experiment -xp 23 --copy
+```
+
+To copy an experiment with latest code:
+
+```bash
+$ polyaxon experiment -xp 23 restart --copy -u
+```
+
+To override the config of the experiment you wish to copy, you need to create a polyaxonfile with the override section/params:
+
+```bash
+$ polyaxon experiment -xp 23 --copy restart -f polyaxonfile_override.yml
+```
