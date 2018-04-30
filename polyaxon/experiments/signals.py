@@ -44,7 +44,7 @@ def add_experiment_pre_save(sender, **kwargs):
         not instance.specification or
         not instance.specification.run_exec or
         instance.specification.run_exec.git or
-        instance.is_clone or
+        instance.code_reference or
         not instance.project.has_code)
     if condition:
         return
