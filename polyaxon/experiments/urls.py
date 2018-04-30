@@ -22,6 +22,9 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/resume/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentResumeView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/copy/?$'.format(
+        USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
+        views.ExperimentCopyView.as_view()),
     re_path(r'^{}/{}/experiments/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentStatusListView.as_view()),

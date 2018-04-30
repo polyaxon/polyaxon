@@ -937,6 +937,14 @@ class TestRestartExperimentViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert self.queryset.count() == 2
 
+        last_experiment = self.queryset.last()
+        assert last_experiment.is_clone is True
+        assert last_experiment.is_restart is True
+        assert last_experiment.is_copy is False
+        assert last_experiment.is_resume is False
+        assert last_experiment.original_experiment == self.object
+        assert last_experiment.original_unique_name == self.object.unique_name
+
     def test_restart_patch_config(self):
         data = {'config': {'declarations': {'lr': 0.1}}}
         assert self.queryset.first().declarations is None
@@ -948,6 +956,14 @@ class TestRestartExperimentViewV1(BaseViewTest):
         assert self.queryset.count() == 2
         assert self.queryset.first().declarations is None
         assert self.queryset.last().declarations == data['config']['declarations']
+
+        last_experiment = self.queryset.last()
+        assert last_experiment.is_clone is True
+        assert last_experiment.is_restart is True
+        assert last_experiment.is_copy is False
+        assert last_experiment.is_resume is False
+        assert last_experiment.original_experiment == self.object
+        assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_restart_patch_wrong_config_raises(self):
         data = {'config': {'lr': 0.1}}
@@ -980,33 +996,104 @@ class TestResumeExperimentViewV1(BaseViewTest):
     def test_resume(self):
         data = {}
         assert self.queryset.count() == 1
-        count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
-            'status', flat=True).count()
         with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert mock_fct.call_count == 1
-        assert self.queryset.count() == 1
-        new_count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
-            'status', flat=True).count()
-        assert new_count_statuses == count_statuses + 1  # + RESUMING status
-        assert self.queryset.last().declarations is None
+        assert self.queryset.count() == 2
+
+        last_experiment = self.queryset.last()
+        assert last_experiment.is_clone is True
+        assert last_experiment.is_restart is False
+        assert last_experiment.is_copy is False
+        assert last_experiment.is_resume is True
+        assert last_experiment.original_experiment == self.object
+        assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_resume_patch_config(self):
         data = {'config': {'declarations': {'lr': 0.1}}}
+        assert self.queryset.first().declarations is None
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
+        assert self.queryset.count() == 2
+        assert self.queryset.first().declarations is None
+        assert self.queryset.last().declarations == data['config']['declarations']
+
+        last_experiment = self.queryset.last()
+        assert last_experiment.is_clone is True
+        assert last_experiment.is_restart is False
+        assert last_experiment.is_copy is False
+        assert last_experiment.is_resume is True
+        assert last_experiment.original_experiment == self.object
+        assert last_experiment.original_unique_name == self.object.unique_name
+
+    def test_resume_patch_wrong_config_raises(self):
+        data = {'config': {'lr': 0.1}}
+        assert self.queryset.first().declarations is None
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        assert mock_fct.call_count == 0
         assert self.queryset.count() == 1
-        assert self.queryset.last().declarations is None
-        count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
-            'status', flat=True).count()
+
+
+class TestCopyExperimentViewV1(BaseViewTest):
+    serializer_class = ExperimentSerializer
+    model_class = Experiment
+    factory_class = ExperimentFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=project)
+        self.url = '/{}/{}/{}/experiments/{}/copy'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.object.sequence)
+        self.queryset = self.model_class.objects.all()
+
+    def test_resume(self):
+        data = {}
+        assert self.queryset.count() == 1
         with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert mock_fct.call_count == 1
-        new_count_statuses = ExperimentStatus.objects.filter(experiment=self.object).values_list(
-            'status', flat=True).count()
-        assert new_count_statuses == count_statuses + 1  # + RESUMING status
-        assert self.queryset.count() == 1
+        assert self.queryset.count() == 2
+
+        last_experiment = self.queryset.last()
+        assert last_experiment.is_clone is True
+        assert last_experiment.is_restart is False
+        assert last_experiment.is_copy is True
+        assert last_experiment.is_resume is False
+        assert last_experiment.original_experiment == self.object
+        assert last_experiment.original_unique_name == self.object.unique_name
+
+    def test_resume_patch_config(self):
+        data = {'config': {'declarations': {'lr': 0.1}}}
+        assert self.queryset.first().declarations is None
+        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
+        assert self.queryset.count() == 2
+        assert self.queryset.first().declarations is None
         assert self.queryset.last().declarations == data['config']['declarations']
+
+        last_experiment = self.queryset.last()
+        assert last_experiment.is_clone is True
+        assert last_experiment.is_restart is False
+        assert last_experiment.is_copy is True
+        assert last_experiment.is_resume is False
+        assert last_experiment.original_experiment == self.object
+        assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_resume_patch_wrong_config_raises(self):
         data = {'config': {'lr': 0.1}}

@@ -5,6 +5,7 @@ import os
 from wsgiref.util import FileWrapper
 
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
@@ -105,7 +106,7 @@ class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
         return queryset.filter(project=get_permissible_project(view=self))
 
 
-class ExperimentRestartView(CreateAPIView):
+class ExperimentCloneView(CreateAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
@@ -114,9 +115,13 @@ class ExperimentRestartView(CreateAPIView):
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))
 
+    def clone(self, obj, config, declarations, update_code_reference, description):
+        pass
+
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
 
+        description = None
         config = None
         declarations = None
         update_code_reference = False
@@ -126,36 +131,61 @@ class ExperimentRestartView(CreateAPIView):
             config = spec.parsed_data
             declarations = spec.declarations
         if 'update_code' in request.data:
-            update_code_reference = request.data['update_code']
-        new_obj = obj.restart(user=self.request.user,
-                              config=config,
-                              declarations=declarations,
-                              update_code_reference=update_code_reference)
+            try:
+                update_code_reference = to_bool(request.data['update_code'])
+            except TypeError:
+                raise ValidationError('update_code should be a boolean')
+        if 'description' in request.data:
+            description = request.data['description']
+        new_obj = self.clone(obj=obj,
+                             config=config,
+                             declarations=declarations,
+                             update_code_reference=update_code_reference,
+                             description=description)
         serializer = self.get_serializer(new_obj)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
 
-class ExperimentResumeView(CreateAPIView):
+class ExperimentRestartView(ExperimentCloneView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
 
-    def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
+    def clone(self, obj, config, declarations, update_code_reference, description):
+        return obj.restart(user=self.request.user,
+                           config=config,
+                           declarations=declarations,
+                           update_code_reference=update_code_reference,
+                           description=description)
 
-    def post(self, request, *args, **kwargs):
-        obj = self.get_object()
-        config = None
-        declarations = None
-        if 'config' in request.data:
-            spec = validate_experiment_spec_config(
-                [obj.specification.parsed_data, request.data['config']], raise_for_rest=True)
-            config = spec.parsed_data
-            declarations = spec.declarations
-        new_obj = obj.resume_immediately(config=config, declarations=declarations)
-        serializer = self.get_serializer(new_obj)
-        return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+class ExperimentResumeView(ExperimentCloneView):
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'sequence'
+
+    def clone(self, obj, config, declarations, update_code_reference, description):
+        return obj.resume(user=self.request.user,
+                          config=config,
+                          declarations=declarations,
+                          update_code_reference=update_code_reference,
+                          description=description)
+
+
+class ExperimentCopyView(ExperimentCloneView):
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'sequence'
+
+    def clone(self, obj, config, declarations, update_code_reference, description):
+        return obj.copy(user=self.request.user,
+                        config=config,
+                        declarations=declarations,
+                        update_code_reference=update_code_reference,
+                        description=description)
 
 
 class ExperimentViewMixin(object):
