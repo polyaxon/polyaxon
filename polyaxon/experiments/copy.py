@@ -7,7 +7,7 @@ from experiments.statuses import ExperimentLifeCycle
 logger = logging.getLogger('polyaxon.tasks.experiments')
 
 
-def handle_restarted_experiment(experiment):
+def copy_experiment(experiment):
     """If experiment is a restart, we should resume from last check point"""
     try:
         publisher.publish_log(
