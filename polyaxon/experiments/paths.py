@@ -3,11 +3,14 @@ import shutil
 
 from django.conf import settings
 
+from experiments.clone import CloningStrategy
 from libs.paths import create_path, delete_path
 
 
-def get_experiment_outputs_path(experiment_name):
+def get_experiment_outputs_path(experiment_name, original_name=None, cloning_strategy=None):
     values = experiment_name.split('.')
+    if original_name is not None and cloning_strategy == CloningStrategy.RESUME:
+        values = original_name.split('.')
     if len(values) == 3:
         values.insert(2, 'independents')
     return os.path.join(settings.OUTPUTS_ROOT, '/'.join(values))
