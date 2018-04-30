@@ -191,13 +191,15 @@ def stop(ctx, yes):
 
 
 @experiment.command()
+@click.option('--copy', '-c', is_flag=True, default=False,
+              help='To copy the experiment before restarting.')
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to update with.')
 @click.option('-u', is_flag=True, default=False,
-              help='To upload the repo before running.')
+              help='To upload the repo before restarting.')
 @click.pass_context
 @clean_outputs
-def restart(ctx, file, u):  # pylint:disable=redefined-builtin
+def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     """Restart experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -222,8 +224,12 @@ def restart(ctx, file, u):  # pylint:disable=redefined-builtin
     user, project_name, _experiment = get_experiment_or_local(ctx.obj['project'],
                                                               ctx.obj['experiment'])
     try:
-        response = PolyaxonClients().experiment.restart(
-            user, project_name, _experiment, config=config, update_code=update_code)
+        if copy:
+            response = PolyaxonClients().experiment.copy(
+                user, project_name, _experiment, config=config, update_code=update_code)
+        else:
+            response = PolyaxonClients().experiment.restart(
+                user, project_name, _experiment, config=config, update_code=update_code)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not restart experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -235,9 +241,11 @@ def restart(ctx, file, u):  # pylint:disable=redefined-builtin
 @experiment.command()
 @click.option('--file', '-f', multiple=True, type=click.Path(exists=True),
               help='The polyaxon files to update with.')
+@click.option('-u', is_flag=True, default=False,
+              help='To upload the repo before resuming.')
 @click.pass_context
 @clean_outputs
-def resume(ctx, file):  # pylint:disable=redefined-builtin
+def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     """Resume experiment.
 
     Uses [Caching](/polyaxon_cli/introduction#Caching)
@@ -250,14 +258,20 @@ def resume(ctx, file):  # pylint:disable=redefined-builtin
     ```
     """
     config = None
+    update_code = None
     if file:
         config = reader.read(file)
+
+    # Check if we need to upload
+    if u:
+        ctx.invoke(upload, async=False)
+        update_code = True
 
     user, project_name, _experiment = get_experiment_or_local(ctx.obj['project'],
                                                               ctx.obj['experiment'])
     try:
         response = PolyaxonClients().experiment.resume(
-            user, project_name, _experiment, config=config)
+            user, project_name, _experiment, config=config, update_code=update_code)
     except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
         Printer.print_error('Could not resume experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
