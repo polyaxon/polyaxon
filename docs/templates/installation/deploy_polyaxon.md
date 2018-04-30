@@ -17,21 +17,32 @@ If you would like to use a different name, you must keep im mind to update the `
 ## Configuration
 
 This section will guide you through how you can create a configuration file to deploy Polyaxon.
-
-Since you are going to use this configuration file in the future, we recommend to save it somewhere safe.
+Polyaxon ships with [default values](/reference_polyaxon_helm), however and depending on your use case
+you might need to override some of these values.
+To do so, you need to create a configuration file and we recommend to save it somewhere safe so that you can reuse it in the future.
 
 Create a config file `config.yml` or `polyaxon_config.yml`,
 and set up all information you want to override in the default config.
 
-e.g.
+Example, updating the user data:
 
 ```yaml
-polyaxonSecret: "RANDOM_STRING"
-
 user:
   username: "root"
   email: "root@polyaxon.local"
   password: "dummypassword"
+```
+
+Example, disabling ingress and RBAC
+
+```yaml
+rbac:
+  enabled: false
+
+ingress:
+  enabled: false
+
+serviceType: LoadBalancer
 ```
 
 ## Install Polyaxon
