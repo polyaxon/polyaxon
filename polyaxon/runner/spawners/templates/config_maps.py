@@ -46,6 +46,8 @@ def get_config_map(namespace,
                    project_uuid,
                    experiment_group_uuid,
                    experiment_uuid,
+                   original_name,
+                   cloning_strategy,
                    cluster_def,
                    declarations,
                    log_level):
@@ -57,7 +59,9 @@ def get_config_map(namespace,
                             experiment_group_uuid,
                             experiment_uuid)
     metadata = client.V1ObjectMeta(name=name, labels=labels, namespace=namespace)
-    experiment_outputs_path = get_experiment_outputs_path(experiment_name)
+    experiment_outputs_path = get_experiment_outputs_path(experiment_name=experiment_name,
+                                                          original_name=original_name,
+                                                          cloning_strategy=cloning_strategy)
     experiment_logs_path = get_experiment_logs_path(experiment_name)
     experiment_data_path = get_project_data_path(project_name)
     data = {

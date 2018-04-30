@@ -19,6 +19,8 @@ class ExperimentSpawner(K8SManager):
                  spec,
                  experiment_group_uuid=None,
                  experiment_group_name=None,
+                 original_name=None,
+                 cloning_strategy=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -40,6 +42,8 @@ class ExperimentSpawner(K8SManager):
         self.project_uuid = project_uuid
         self.experiment_group_uuid = experiment_group_uuid
         self.experiment_uuid = experiment_uuid
+        self.original_name = original_name
+        self.cloning_strategy = cloning_strategy
         self.pod_manager = pods.PodManager(namespace=namespace,
                                            project_name=self.project_name,
                                            experiment_group_name=self.experiment_group_name,
@@ -174,6 +178,8 @@ class ExperimentSpawner(K8SManager):
             project_uuid=self.project_uuid,
             experiment_group_uuid=self.experiment_group_uuid,
             experiment_uuid=self.experiment_uuid,
+            original_name=self.original_name,
+            cloning_strategy=self.cloning_strategy,
             cluster_def=self.get_cluster(),
             declarations=self.spec.declarations,
             log_level=self.spec.log_level
