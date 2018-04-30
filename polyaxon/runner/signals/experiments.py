@@ -56,8 +56,3 @@ def handle_new_experiment_status(sender, **kwargs):
                     'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
         experiment_scheduler.stop_experiment(experiment, update_status=False)
-
-    resume_condition = (instance.status == ExperimentLifeCycle.RESUMING and
-                        instance.message == ExperimentLifeCycle.RESUME_IMMEDIATELY_MESSAGE)
-    if resume_condition:
-        build_experiment.apply_async((experiment.id,), countdown=1)

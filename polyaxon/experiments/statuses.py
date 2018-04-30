@@ -28,8 +28,6 @@ class ExperimentLifeCycle(BaseStatuses):
     STOPPED = 'Stopped'
     UNKNOWN = UNKNOWN
 
-    RESUME_IMMEDIATELY_MESSAGE = 'resume immediately'
-
     CHOICES = (
         (CREATED, CREATED),
         (RESUMING, RESUMING),
