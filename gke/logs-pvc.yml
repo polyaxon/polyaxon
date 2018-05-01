@@ -9,10 +9,9 @@ spec:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  azureFile:
-    secretName: azure-secret
-    shareName: logs
-    readOnly: false
+  nfs:
+    server: 10.59.248.162  # Use the right IP
+    path: "/"
   claimRef:
     namespace: polyaxon
     name: polyaxon-pvc-logs

@@ -9,10 +9,9 @@ spec:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  azureFile:
-    secretName: azure-secret
-    shareName: outputs 
-    readOnly: false
+  nfs:
+    server: 10.128.0.5  # Use the right IP
+    path: "/outputs"
   claimRef:
     namespace: polyaxon 
     name: polyaxon-pvc-outputs
