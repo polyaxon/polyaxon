@@ -33,7 +33,7 @@ class ClusterNode(models.Model):
         blank=True,
         null=True)
     role = models.CharField(
-        max_length=6,
+        max_length=16,
         choices=NodeRoles.CHOICES,
         help_text='The role of the node')
     docker_version = models.CharField(
@@ -41,7 +41,7 @@ class ClusterNode(models.Model):
         blank=True,
         null=True)
     kubelet_version = models.CharField(
-        max_length=10)
+        max_length=64)
     os_image = models.CharField(max_length=128)
     kernel_version = models.CharField(max_length=128)
     schedulable_taints = models.BooleanField(default=False)
