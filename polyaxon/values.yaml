@@ -48,7 +48,7 @@ persistence:
   outputs:
     existingClaim:
     accessMode: ReadWriteMany
-    size: 5Gi
+    size: 10Gi
     mountPath: "/outputs"
     subPath: ""
   logs:
@@ -63,8 +63,8 @@ persistence:
     storageClass:
     existingClaim:
     accessMode: ReadWriteOnce
-    size: 5Gi
-    mountPath: "/repos"
+    size: 10Gi
+    mountPath: "/tmp/plx/repos"
     subPath: ""
   upload:
     enabled: false
@@ -73,7 +73,7 @@ persistence:
     existingClaim:
     accessMode: ReadWriteOnce
     size: 10Gi
-    mountPath: "/tmp/plx"
+    mountPath: "/tmp/plx/uploads"
     subPath: ""
 
 nodeSelectors:
