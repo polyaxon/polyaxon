@@ -3,7 +3,7 @@
 
 execnet==1.5.0
 django-debug-panel==0.8.3
-django-debug-toolbar
+django-debug-toolbar==1.9.1
 factory-boy
 fake-factory==0.7.2
 responses==0.5.1
