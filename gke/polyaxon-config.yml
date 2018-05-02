@@ -14,6 +14,12 @@ persistence:
   logs:
     existingClaim: polyaxon-pvc-logs
   repos:
+    enabled: true
     existingClaim: polyaxon-pvc-repos
+    mountPath: "/repos"
+    accessMode: ReadWriteMany
   upload:
+    enabled: true
     existingClaim: polyaxon-pvc-upload
+    mountPath: "/upload"
+    accessMode: ReadWriteMany
