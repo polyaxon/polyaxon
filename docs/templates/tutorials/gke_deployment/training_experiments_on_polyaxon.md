@@ -20,7 +20,7 @@ Before we can train our experiments we need to deploy Polyaxon.
     with the values we just created. It also sets the compatible NVidia paths with azure GPU nodes.
 
     ```bash
-    $ helm install polyaxon/polyaxon --name=polyaxon --namespace=polyaxon -f ../gke/polyaxon-config.yml
+    $ helm install polyaxon/polyaxon --name=polyaxon --namespace=polyaxon -f ../../gke/polyaxon-config.yml
     ```
 
 3. Configure Polyaxon-CLI
