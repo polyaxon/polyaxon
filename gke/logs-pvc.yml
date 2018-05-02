@@ -2,16 +2,14 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: polyaxon-pv-logs
-  annotations:
-    pv.beta.kubernetes.io/gid: "1234"
 spec:
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.59.248.162  # Use the right IP
-    path: "/"
+    server: 10.128.0.7  # Use the right IP
+    path: "/data"
   claimRef:
     namespace: polyaxon
     name: polyaxon-pvc-logs

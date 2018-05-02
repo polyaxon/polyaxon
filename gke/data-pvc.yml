@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.128.0.3  # Use the right IP
+    server: 10.128.0.8  # Use the right IP
     path: "/data"
   claimRef:
     namespace: polyaxon
