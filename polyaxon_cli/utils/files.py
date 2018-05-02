@@ -9,6 +9,7 @@ from contextlib import contextmanager
 from polyaxon_cli.utils import constants
 
 
+@contextmanager
 def get_files_in_current_directory(file_type, file_paths):
     local_files = []
     total_file_size = 0
@@ -18,7 +19,11 @@ def get_files_in_current_directory(file_type, file_paths):
                             (unix_style_path(file_path), open(file_path, 'rb'), 'text/plain')))
         total_file_size += os.path.getsize(file_path)
 
-    return local_files, total_file_size
+    yield local_files, total_file_size
+
+    # close all files to avoid WindowsError: [Error 32]
+    for file in local_files:
+        file[1][1].close()
 
 
 def unix_style_path(path):
