@@ -41,12 +41,14 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
 
     ```bash
     $ cd /data
-    $ mkdir data
-    $ mkdir outputs
-    $ mkdir logs
-    $ mkdir repos
-    $ mkdir upload
+    $ mkdir -m 777 data
+    $ mkdir -m 777 outputs
+    $ mkdir -m 777 logs
+    $ mkdir -m 777 repos
+    $ mkdir -m 777 upload
     ```
+
+    This is just a tutorial, please consult with your devops team on how to setup an NFS server with correct security.
 
 4. Get the ip address of the filers:
 
