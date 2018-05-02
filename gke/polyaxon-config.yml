@@ -13,16 +13,7 @@ persistence:
     existingClaim: polyaxon-pvc-outputs
   logs:
     existingClaim: polyaxon-pvc-logs
-
   repos:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    mountPath: "/tmp/plx/repos"
-    subPath: ""
+    existingClaim: polyaxon-pvc-repos
   upload:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    mountPath: "/tmp/plx/upload"
-    subPath: ""
+    existingClaim: polyaxon-pvc-upload

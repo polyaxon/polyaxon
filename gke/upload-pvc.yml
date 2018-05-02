@@ -1,23 +1,23 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: polyaxon-pv-logs
+  name: polyaxon-pv-upload
 spec:
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.138.0.3  # Use the right IP
-    path: "/data/logs"
+    server: 10.138.0.5  # Use the right IP
+    path: "/data/upload"
   claimRef:
-    namespace: polyaxon
-    name: polyaxon-pvc-logs
+    namespace: polyaxon 
+    name: polyaxon-pvc-upload
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: polyaxon-pvc-logs
+  name: polyaxon-pvc-upload 
 spec:
   accessModes:
     - ReadWriteMany

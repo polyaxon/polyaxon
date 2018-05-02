@@ -8,8 +8,8 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.128.0.6  # Use the right IP
-    path: "/data"
+    server: 10.138.0.3  # Use the right IP
+    path: "/data/outputs"
   claimRef:
     namespace: polyaxon 
     name: polyaxon-pvc-outputs
