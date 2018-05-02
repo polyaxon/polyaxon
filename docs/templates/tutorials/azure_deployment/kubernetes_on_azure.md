@@ -118,7 +118,7 @@ Now we will deploy the custom cluster based on a template in the examples repo.
     $ STORAGE_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP --account-name $STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
     ```
 
-13. Create 2 shares on this storage (`data`, `outputs`, and `logs`)
+13. Create 3 shares on this storage (`data`, `outputs`, and `logs`)
 
     ```bash
     $ az storage share create --name data --account-name $STORAGE_ACCOUNT_NAME --account-key $STORAGE_KEY

@@ -91,10 +91,10 @@ pages:
   - Azure:
     - Kubernetes cluster On Azure: tutorials/azure_deployment/kubernetes_on_azure.md
     - Storage and Persistent Volumes: tutorials/azure_deployment/persistent_volumes.md
+    - Training Experiments On Polyaxon : tutorials/azure_deployment/training_experiments_on_polyaxon.md
   - GKE:
-    - Kubernetes cluster On Azure: tutorials/gke_deployment/kubernetes_on_azure.md
-    - Storage and Persistent Volumes: tutorials/gke_deployment/persistent_volumes.md
-  - Training Experiments On Polyaxon : tutorials/training_experiments_on_polyaxon.md
+    - Kubernetes cluster On GKE: tutorials/gke_deployment/kubernetes_on_gke.md
+    - Training Experiments On Polyaxon : tutorials/gke_deployment/training_experiments_on_polyaxon.md
 - Management:
   - Intorduction: management/introduction.md
   - SuperUsers: management/superusers.md
