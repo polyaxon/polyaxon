@@ -1,6 +1,6 @@
 In order to create a Kubernetes cluster on GKE you will need gcloud CLI and kubectl.
 
-## Clone repo
+## Clone the examples repo
 
 Please clone the [Polyaxon examples repo](https://github.com/polyaxon/polyaxon-examples)
 
@@ -50,7 +50,7 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
 
     This is just a tutorial, please consult with your devops team on how to setup an NFS server with correct security.
 
-4. Get the ip address of the filers:
+4. Get the ip address of the filer:
 
     ```bash
     $ gcloud --project "polyaxon-test" compute instances describe polyaxon-nfs-vm --zone=us-central1-b --format='value(networkInterfaces[0].networkIP)'
@@ -88,7 +88,7 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
     $ kubectl create namespace polyaxon
     ```
 
-7. Use kubectl to create the PVCs based on the shares created
+7. Use kubectl to create the PVCs based on the nfs server
 
 
     ```bash
