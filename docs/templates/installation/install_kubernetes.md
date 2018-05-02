@@ -12,7 +12,7 @@ a setup in various cloud providers.
     for information about keeping your Kubernetes infrastructure secure.
 
 
-## Install Kubernetes on [Google Kubernetes Engin](https://cloud.google.com/kubernetes-engine/)
+## Install Kubernetes on [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)
 
 Google Kubernetes Engine (GKE) is the simplest and most common way of setting up a Kubernetes Cluster.
 You may be able to receive free credits for trying it out.

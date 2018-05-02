@@ -88,8 +88,12 @@ pages:
   - Project Plugins: experimentation/project_plugins.md
 - Tutorials:
   - Introduction: tutorials/index.md
-  - Kubernetes cluster On Azure: tutorials/kubernetes_on_azure.md
-  - Storage and Persistent Volumes: tutorials/persistent_volumes.md
+  - Azure:
+    - Kubernetes cluster On Azure: tutorials/azure_deployment/kubernetes_on_azure.md
+    - Storage and Persistent Volumes: tutorials/azure_deployment/persistent_volumes.md
+  - GKE:
+    - Kubernetes cluster On Azure: tutorials/gke_deployment/kubernetes_on_azure.md
+    - Storage and Persistent Volumes: tutorials/gke_deployment/persistent_volumes.md
   - Training Experiments On Polyaxon : tutorials/training_experiments_on_polyaxon.md
 - Management:
   - Intorduction: management/introduction.md
