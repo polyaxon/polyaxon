@@ -26,9 +26,11 @@ $ git clone https://github.com/polyaxon/polyaxon-examples.git
 
 2. Create 3 Single Node Filers (`data`, `outputs`, and `logs`)
 
-    The [click-to-deploy single-node file server ](https://console.cloud.google.com/launcher/details/click-to-deploy-images/singlefs) provides a ZFS file server running on a single Google Compute Engine instance.
+    The [click-to-deploy single-node file server ](https://console.cloud.google.com/launcher/details/click-to-deploy-images/singlefs)
+    provides a ZFS file server running on a single Google Compute Engine instance.
 
-    You need to create 3 SNFs: `plx-data`, `plx-outputs`, `plx-logs` for the storage name, and keep the default value `data` for all of them, and check `enable NFS sharing`.
+    You need to create 3 SNFs: `plx-data`, `plx-outputs`, `plx-logs` for the storage name,
+    and keep the default value `data` for all of them, and check `enable NFS sharing`. You can set the storage to 10GB.
 
 
 3. Get the ip address of the filers:
