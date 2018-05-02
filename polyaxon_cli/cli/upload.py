@@ -21,16 +21,17 @@ def upload(async):  # pylint:disable=assign-to-new-keyword
     """Upload code of the current directory while respecting the .polyaxonignore file."""
     project = ProjectManager.get_config_or_raise()
     files = IgnoreManager.get_unignored_file_paths()
-    file_path = create_tarfile(files, project.name)
-    files, files_size = get_files_in_current_directory('repo', [file_path])
-    try:
-        PolyaxonClients().project.upload_repo(project.user,
-                                              project.name,
-                                              files,
-                                              files_size,
-                                              async)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
-        Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
-        Printer.print_error('Error message `{}`.'.format(e))
-        sys.exit(1)
-    Printer.print_success('Files uploaded.')
+    with create_tarfile(files, project.name) as file_path:
+        files, files_size = get_files_in_current_directory('repo', [file_path])
+        try:
+            PolyaxonClients().project.upload_repo(project.user, project.name, files, files_size, async)
+            PolyaxonClients().project.upload_repo(project.user,
+                                                  project.name,
+                                                  files,
+                                                  files_size,
+                                                  async)
+        except (PolyaxonHTTPError, PolyaxonShouldExitError) as e:
+            Printer.print_error('Could not upload code for project `{}`.'.format(project.name))
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
+        Printer.print_success('Files uploaded.')
