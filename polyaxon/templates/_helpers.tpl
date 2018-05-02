@@ -394,15 +394,15 @@ intervals config
 Config claim_names
 */}}
 {{- define "config.claim_names" }}
-- name: POLYAXON_CLAIM_NAMES_UPLOAD
-  value: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
 - name: POLYAXON_CLAIM_NAMES_DATA
   value: {{ .Values.persistence.data.existingClaim }}
 - name: POLYAXON_CLAIM_NAMES_OUTPUTS
   value: {{ .Values.persistence.outputs.existingClaim }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
-{{- if .Values.persistence.logs.enabled }}
   value: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
+- name: POLYAXON_CLAIM_NAMES_UPLOAD
+{{- if .Values.persistence.upload.enabled }}
+  value: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
 {{- else }}
   value: ""
 {{- end }}

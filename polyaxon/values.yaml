@@ -62,7 +62,7 @@ persistence:
     name: "polyaxon-pvc-repos"
     storageClass:
     existingClaim:
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 10Gi
     mountPath: "/tmp/plx/repos"
     subPath: ""
@@ -71,7 +71,7 @@ persistence:
     name: "polyaxon-pvc-upload"
     storageClass:
     existingClaim:
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 10Gi
     mountPath: "/tmp/plx/uploads"
     subPath: ""
