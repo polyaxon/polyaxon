@@ -16,6 +16,6 @@ The tutorial will also provide a step by step guide to:
 
  * Setup Kubernetes on:
 
-    * [create a Kubernetes cluster on GKE](/tutorials/gke_deployment/kubernetes_on_azure)
+    * [create a Kubernetes cluster on GKE](/tutorials/gke_deployment/kubernetes_on_gke)
     * [create volumes for data, outputs and logs based on NFS](/tutorials/gke_deployment/persistent_volumes)
     * [train experiments with Polyaxon](/tutorials/gke_deployment/training_experiments_on_polyaxon/)
