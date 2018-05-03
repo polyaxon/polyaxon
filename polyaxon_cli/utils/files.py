@@ -3,10 +3,13 @@ from __future__ import absolute_import, division, print_function
 
 import os
 import tarfile
+import tempfile
+from contextlib import contextmanager
 
 from polyaxon_cli.utils import constants
 
 
+@contextmanager
 def get_files_in_current_directory(file_type, file_paths):
     local_files = []
     total_file_size = 0
@@ -16,7 +19,11 @@ def get_files_in_current_directory(file_type, file_paths):
                             (unix_style_path(file_path), open(file_path, 'rb'), 'text/plain')))
         total_file_size += os.path.getsize(file_path)
 
-    return local_files, total_file_size
+    yield local_files, total_file_size
+
+    # close all files to avoid WindowsError: [Error 32]
+    for f in local_files:
+        f[1][1].close()
 
 
 def unix_style_path(path):
@@ -35,11 +42,16 @@ def create_init_file(init_file_type):
     return True
 
 
+@contextmanager
 def create_tarfile(files, project_name):
     """Create a tar file based on the list of files passed"""
-    filename = "/tmp/{}.tar.gz".format(project_name)
+    fd, filename = tempfile.mkstemp(prefix="polyaxon_{}".format(project_name), suffix='.tar.gz')
     with tarfile.open(filename, "w:gz") as tar:
         for f in files:
             tar.add(f)
 
-    return filename
+    yield filename
+
+    # clear
+    os.close(fd)
+    os.remove(filename)
