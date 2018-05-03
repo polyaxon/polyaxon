@@ -356,9 +356,6 @@ docker-registry:
             topologyKey: "kubernetes.io/hostname"
 
 debug: 0
-celery:
-  always_eager: false
-  celeryd_prefetch_multiplier: 4
 
 types:
   core: "polyaxon-core"
@@ -403,23 +400,3 @@ queues:
   streamEventsResources: 'stream.events.resources'
   streamEventsStatuses: 'stream.events.statuses'
   streamLogsSidecars: 'stream.logs.sidecars'
-
-routingKeys:
-  eventsStatuses: events.statuses
-  eventsNamespace: events.namespace
-  eventsResources: events.resources
-  logsSidecars: logs.sidecars
-
-exchanges:
-  internal: 'internal'
-
-versions:
-  cli:
-    min: 0.0.8
-    latest: 0.0.8
-  platform:
-    min: 0.0.8
-    latest: 0.0.8
-  lib:
-    min: 0.0.2
-    latest: 0.0.5

@@ -178,17 +178,17 @@ versions config
 */}}
 {{- define "config.versions" }}
 - name: POLYAXON_CLI_MIN_VERSION
-  value: {{ .Values.versions.cli.min | quote }}
+  value: "0.0.8"
 - name: POLYAXON_CLI_LATEST_VERSION
-  value: {{ .Values.versions.cli.latest | quote }}
+  value: "0.0.8"
 - name: POLYAXON_PLATFORM_MIN_VERSION
-  value: {{ .Values.versions.platform.min | quote }}
+  value: "0.0.8"
 - name: POLYAXON_PLATFORM_LATEST_VERSION
-  value: {{ .Values.versions.platform.latest | quote }}
+  value: "0.0.8"
 - name: POLYAXON_LIB_MIN_VERSION
-  value: {{ .Values.versions.lib.min | quote }}
+  value: "0.0.2"
 - name: POLYAXON_LIB_LATEST_VERSION
-  value: {{ .Values.versions.lib.latest | quote }}
+  value: "0.0.5"
 - name: POLYAXON_CHART_VERSION
   value: {{ .Chart.Version | quote }}
 {{- end -}}
@@ -203,9 +203,9 @@ django config
       name: {{ template "polyaxon.fullname" . }}-secret
       key: polyaxon-secret
 - name: POLYAXON_CELERY_ALWAYS_EAGER
-  value: {{ .Values.celery.always_eager | quote }}
+  value: "false"
 - name: POLYAXON_CELERYD_PREFETCH_MULTIPLIER
-  value: {{ .Values.celery.celeryd_prefetch_multiplier | quote }}
+  value: "4"
 - name: POLYAXON_PASSWORD_LENGTH
   value: {{ default "6" .Values.passwordLength | quote }}
 - name: POLYAXON_ADMIN_NAME
@@ -325,16 +325,16 @@ Routing keys config
 */}}
 {{- define "config.routingKeys" }}
 - name: POLYAXON_ROUTING_KEYS_EVENTS_NAMESPACE
-  value: {{ .Values.routingKeys.eventsNamespace | quote }}
+  value: "events.namespace"
 - name: POLYAXON_ROUTING_KEYS_EVENTS_RESOURCES
-  value: {{ .Values.routingKeys.eventsResources | quote }}
+  value: "events.resources"
 - name: POLYAXON_ROUTING_KEYS_EVENTS_JOB_STATUSES
-  value: {{ .Values.routingKeys.eventsStatuses | quote }}
+  value: "events.statuses"
 - name: POLYAXON_ROUTING_KEYS_LOGS_SIDECARS
-  value: {{ .Values.routingKeys.logsSidecars | quote }}
+  value: "logs.sidecars"
 #  other infos
 - name: POLYAXON_INTERNAL_EXCHANGE
-  value: {{ .Values.exchanges.internal | quote }}
+  value: "internal"
 {{- end -}}
 
 
