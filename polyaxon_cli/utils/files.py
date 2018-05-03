@@ -22,8 +22,8 @@ def get_files_in_current_directory(file_type, file_paths):
     yield local_files, total_file_size
 
     # close all files to avoid WindowsError: [Error 32]
-    for file in local_files:
-        file[1][1].close()
+    for f in local_files:
+        f[1][1].close()
 
 
 def unix_style_path(path):
