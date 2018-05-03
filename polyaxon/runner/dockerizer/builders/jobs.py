@@ -93,7 +93,8 @@ def build_job(project, job, job_builder, image_tag=None):
                                  env_vars=job_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
-                         registry_host=get_registry_host())
+                         registry_host=get_registry_host(),
+                         registry_host_local=settings.REGISTRY_HOST_LOCAL)
     if not docker_builder.build():
         docker_builder.clean()
         return False

@@ -2,6 +2,7 @@ import os
 import uuid
 
 from pathlib import Path
+from unittest.mock import patch
 
 from django.conf import settings
 
@@ -10,7 +11,8 @@ from tests.utils import BaseTest
 
 
 class TestRepoDockerize(BaseTest):
-    def test_get_requirements_and_setup_path_works_as_expected(self):
+    @patch('runner.dockerizer.builders.base.APIClient')
+    def test_get_requirements_and_setup_path_works_as_expected(self, _):
         # Create a repo folder
         repo_path = os.path.join(settings.REPOS_ROOT, 'repo')
         os.mkdir(repo_path)
@@ -39,7 +41,8 @@ class TestRepoDockerize(BaseTest):
         assert builder.polyaxon_setup_path == 'repo/polyaxon_setup.sh'
         builder.clean()
 
-    def test_render_works_as_expected(self):
+    @patch('runner.dockerizer.builders.base.APIClient')
+    def test_render_works_as_expected(self, _):
         # Create a repo folder
         repo_path = os.path.join(settings.REPOS_ROOT, 'repo')
         os.mkdir(repo_path)

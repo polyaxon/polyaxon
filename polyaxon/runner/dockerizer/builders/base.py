@@ -51,7 +51,9 @@ class BaseDockerBuilder(object):
         self.dockerfile_path = os.path.join(self.build_path, dockerfile_name)
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_setup_path = self._get_setup_path()
-        self.docker = None
+        self.docker = APIClient(version='auto')
+        self.registry_host = None
+        self.docker_url = None
 
     def create_tmp_repo(self):
         # Create a tmp copy of the repo before starting the build
@@ -65,19 +67,21 @@ class BaseDockerBuilder(object):
         if self.in_tmp_repo and self.copy_code:
             delete_tmp_dir(self.image_tag)
 
-    def connect(self):
-        if not self.docker:
-            self.docker = APIClient(version='auto')
-
-    def login(self, registry_user, registry_password, registry_host):
-        self.connect()
+    def login(self, registry_user, registry_password, registry_host, registry_host_local):
         try:
             self.docker.login(username=registry_user,
                               password=registry_password,
                               registry=registry_host,
                               reauth=True)
-        except DockerException as e:
-            logger.exception('Failed to connect to registry %s\n', e)
+            return
+        except DockerException:
+            try:
+                self.docker.login(username=registry_user,
+                                  password=registry_password,
+                                  registry=registry_host_local,
+                                  reauth=True)
+            except DockerException as e:
+                logger.exception('Failed to connect to registry %s\n', e)
 
     def _handle_logs(self, log_line):
         raise NotImplementedError
@@ -138,7 +142,6 @@ class BaseDockerBuilder(object):
         with open(self.dockerfile_path, 'w') as dockerfile:
             dockerfile.write(self.render())
 
-        self.connect()
         check_pulse = 0
         for log_line in self.docker.build(
             path=self.build_path,
@@ -167,7 +170,6 @@ class BaseDockerBuilder(object):
         # Build a progress setup for each layer, and only emit per-layer info every 1.5s
         layers = {}
         last_emit_time = time.time()
-        self.connect()
         check_pulse = 0
         for log_line in self.docker.push(self.image_name, tag=self.image_tag, stream=True):
             lines = [l for l in log_line.decode('utf-8').split('\r\n') if l]
