@@ -191,6 +191,10 @@ versions config
   value: "0.0.5"
 - name: POLYAXON_CHART_VERSION
   value: {{ .Chart.Version | quote }}
+- name: POLYAXON_CHART_IS_UPGRADE
+  value: {{ .Release.IsUpgrade | quote }}
+- name: POLYAXON_CHART_REVISION
+  value: {{ .Release.Revision | quote }}
 {{- end -}}
 
 {{/*
