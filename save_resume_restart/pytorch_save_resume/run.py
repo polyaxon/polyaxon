@@ -6,7 +6,7 @@ from data import get_data_loaders
 from eval import eval_model
 from network import load_model, get_model
 from train import train_model
-from utils import set_seed, save_checkpoint, get_weight_filename
+from utils import set_seed, get_weight_filename
 
 from polyaxon_helper import send_metrics
 
