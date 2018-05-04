@@ -1,0 +1,22 @@
+---
+version: 1
+
+kind: experiment
+
+declarations:
+  batch_size: 32
+  epochs: 200
+  data_augmentation: true
+  num_classes: 10
+  version: 1
+
+run:
+  image: tensorflow/tensorflow:1.4.1
+  build_steps:
+    - pip install keras
+    - pip install --no-cache-dir -U polyaxon-helper
+  cmd:  python run.py --batch-size={{ batch_size }} \
+                      --epochs={{ epochs }} \
+                      --data-augmentation={{ data_augmentation }} \
+                      --num-classes={{ num_classes }}
+                      --version={{ version }}
