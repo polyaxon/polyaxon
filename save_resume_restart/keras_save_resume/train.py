@@ -7,7 +7,7 @@ from keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from keras.callbacks import ReduceLROnPlateau
 from keras.preprocessing.image import ImageDataGenerator
 
-from polyaxon_helper import get_data_path, get_outputs_path
+from polyaxon_helper import get_outputs_path
 
 # Training parameters
 from .utils import lr_schedule
