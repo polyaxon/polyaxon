@@ -115,7 +115,7 @@ $ polyaxon experiment -xp 23 resume
 ### Resuming with Pytorch
 
 Depending on how you saved your model with pytorch, i.e. overriding or creating multiple checkpoints,
-you can resume training, by using the pytorch load function
+you can resume training by using the pytorch load function
 
 ```python
 the_model = TheModelClass(*args, **kwargs)
@@ -183,7 +183,7 @@ what it does is basically it copies all outputs from the experiment to the new e
 
 
 ```bash
-$ polyaxon experiment -xp 23 --copy
+$ polyaxon experiment -xp 23 restart --copy
 ```
 
 To copy an experiment with latest code:
