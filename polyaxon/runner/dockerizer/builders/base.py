@@ -55,9 +55,15 @@ class BaseDockerBuilder(object):
         self.registry_host = None
         self.docker_url = None
 
+    def get_tagged_image(self):
+        return '{}:{}'.format(self.image_name, self.image_tag)
+
     def create_tmp_repo(self):
         # Create a tmp copy of the repo before starting the build
         return copy_to_tmp_dir(self.repo_path, os.path.join(self.image_tag, self.folder_name))
+
+    def check_image(self):
+        return self.docker.images(self.get_tagged_image())
 
     def clean(self):
         # Clean dockerfile
@@ -138,7 +144,7 @@ class BaseDockerBuilder(object):
         check_pulse = 0
         for log_line in self.docker.build(
             path=self.build_path,
-            tag='{}:{}'.format(self.image_name, self.image_tag),
+            tag=self.get_tagged_image(),
             buildargs={},
             decode=True,
             forcerm=True,

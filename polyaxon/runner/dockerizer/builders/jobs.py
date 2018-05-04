@@ -93,6 +93,10 @@ def build_job(project, job, job_builder, image_tag=None):
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
                          registry_host=settings.REGISTRY_HOST)
+    if docker_builder.check_image():
+        # Image already built
+        docker_builder.clean()
+        return True
     if not docker_builder.build():
         docker_builder.clean()
         return False
