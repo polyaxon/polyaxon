@@ -270,6 +270,8 @@ registry config
   value: {{ template "docker-registry.fullname" . }}
 - name: POLYAXON_REGISTRY_PORT
   value: {{ (index .Values "docker-registry").service.port | quote }}
+- name: POLYAXON_REGISTRY_NODE_PORT
+  value: {{ (index .Values "docker-registry").service.nodePort | quote }}
 {{- end }}
 
 {{/*
@@ -399,19 +401,19 @@ Config claim_names
 */}}
 {{- define "config.claim_names" }}
 - name: POLYAXON_CLAIM_NAMES_DATA
-  value: {{ .Values.persistence.data.existingClaim }}
+  value: {{ .Values.persistence.data.existingClaim | default .Values.persistence.data.name }}
 - name: POLYAXON_CLAIM_NAMES_OUTPUTS
-  value: {{ .Values.persistence.outputs.existingClaim }}
+  value: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
   value: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
 - name: POLYAXON_CLAIM_NAMES_UPLOAD
-{{- if .Values.persistence.upload.enabled }}
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.upload.existingClaim }}
   value: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
 {{- else }}
   value: ""
 {{- end }}
 - name: POLYAXON_CLAIM_NAMES_REPOS
-{{- if .Values.persistence.repos.enabled }}
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.repos.existingClaim }}
   value: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
 {{- else }}
   value: ""

@@ -41,36 +41,35 @@ mountPaths:
 persistence:
   data:
     existingClaim:
+    name: "polyaxon-pvc-data"
     accessMode: ReadWriteMany
     size: 10Gi
     mountPath: "/data"
     subPath: ""
   outputs:
     existingClaim:
+    name: "polyaxon-pvc-outputs"
     accessMode: ReadWriteMany
     size: 10Gi
     mountPath: "/outputs"
     subPath: ""
   logs:
     existingClaim:
+    name: "polyaxon-pvc-logs"
     accessMode: ReadWriteMany
     size: 5Gi
     mountPath: "/logs"
     subPath: ""
   repos:
-    enabled: false
-    name: "polyaxon-pvc-repos"
-    storageClass:
     existingClaim:
+    name: "polyaxon-pvc-repos"
     accessMode: ReadWriteMany
     size: 10Gi
-    mountPath: "/tmp/plx/repos"
+    mountPath: "/repos"
     subPath: ""
   upload:
-    enabled: false
-    name: "polyaxon-pvc-upload"
-    storageClass:
     existingClaim:
+    name: "polyaxon-pvc-upload"
     accessMode: ReadWriteMany
     size: 10Gi
     mountPath: "/tmp/plx/uploads"
@@ -354,6 +353,30 @@ docker-registry:
                 values:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
+
+nfs-server-provisioner:
+  enabled: false
+  persistence:
+    enabled: true
+    size: 50Gi
+  storageClass:
+    create: true
+    provisionerName: polyaxon.nfs
+    name: polyaxon-nfs
+
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - "polyaxon-core"
+            topologyKey: "kubernetes.io/hostname"
+
 
 debug: 0
 

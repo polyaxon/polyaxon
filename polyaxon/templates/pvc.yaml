@@ -1,0 +1,99 @@
+{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.repos.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.persistence.repos.name }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.repos.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.repos.size | quote }}
+  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+{{- end }}
+---
+{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.logs.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.persistence.logs.name }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.logs.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.logs.size | quote }}
+  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+{{- end }}
+---
+{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.upload.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.persistence.upload.name }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.upload.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.upload.size | quote }}
+  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+{{- end }}
+---
+{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.outputs.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.persistence.outputs.name }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.outputs.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.outputs.size | quote }}
+  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+{{- end }}
+---
+{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.data.existingClaim) -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Values.persistence.data.name }}
+  labels:
+    app: {{ template "polyaxon.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.data.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.data.size | quote }}
+  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+{{- end }}

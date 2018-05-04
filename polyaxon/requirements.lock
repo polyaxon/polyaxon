@@ -5,5 +5,14 @@ dependencies:
 - name: rabbitmq
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.6.15
-digest: sha256:d108b73a0494ee30da750e8ded5c8b4063460b0fe176170547dfd9cb43d0ca87
-generated: 2018-01-15T14:05:59.258789165+01:00
+- name: redis
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 1.1.7
+- name: docker-registry
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 1.0.1
+- name: nfs-server-provisioner
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 0.1.2
+digest: sha256:9453c507a4e820540edbde75a0bbde5f0ce2738f08eefd459e01ec8f8bba36a2
+generated: 2018-05-03T15:55:17.547261885+02:00
