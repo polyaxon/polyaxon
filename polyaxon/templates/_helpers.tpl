@@ -401,9 +401,17 @@ Config claim_names
 */}}
 {{- define "config.claim_names" }}
 - name: POLYAXON_CLAIM_NAMES_DATA
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.data.existingClaim }}
   value: {{ .Values.persistence.data.existingClaim | default .Values.persistence.data.name }}
+{{- else }}
+  value: ""
+{{- end }}
 - name: POLYAXON_CLAIM_NAMES_OUTPUTS
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.data.existingClaim }}
   value: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
+{{- else }}
+  value: ""
+{{- end }}
 - name: POLYAXON_CLAIM_NAMES_LOGS
   value: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
 - name: POLYAXON_CLAIM_NAMES_UPLOAD

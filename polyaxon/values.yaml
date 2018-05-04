@@ -72,7 +72,7 @@ persistence:
     name: "polyaxon-pvc-upload"
     accessMode: ReadWriteMany
     size: 10Gi
-    mountPath: "/tmp/plx/uploads"
+    mountPath: "/uploads"
     subPath: ""
 
 nodeSelectors:
