@@ -74,7 +74,7 @@ class BaseDockerBuilder(object):
                               registry=registry_host,
                               reauth=True)
         except DockerException as e:
-                logger.exception('Failed to connect to registry %s\n', e)
+            logger.exception('Failed to connect to registry %s\n', e)
 
     def _handle_logs(self, log_line):
         raise NotImplementedError
