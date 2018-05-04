@@ -538,7 +538,7 @@ Volumes
 */}}
 {{- define "volumes.volumes" }}
 - name: upload
-{{- if .Values.persistence.upload.enabled }}
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.upload.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.upload.existingClaim | default .Values.persistence.upload.name }}
 {{- else }}
@@ -546,7 +546,7 @@ Volumes
     path:  {{ .Values.persistence.upload.mountPath }}
 {{ end }}
 - name: repos
-{{- if .Values.persistence.repos.enabled }}
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.repos.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.repos.existingClaim | default .Values.persistence.repos.name }}
 {{- else }}
@@ -554,7 +554,7 @@ Volumes
     path: {{ .Values.persistence.repos.mountPath }}
 {{ end }}
 - name: logs
-{{- if .Values.persistence.logs.existingClaim }}
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.logs.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.logs.existingClaim }}
 {{- else }}
@@ -562,7 +562,7 @@ Volumes
     path: {{ .Values.persistence.logs.mountPath }}
 {{ end }}
 - name: data
-{{- if .Values.persistence.data.existingClaim }}
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.data.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.data.existingClaim }}
 {{- else }}
@@ -570,7 +570,7 @@ Volumes
     path: {{ .Values.persistence.data.mountPath }}
 {{ end }}
 - name: outputs
-{{- if .Values.persistence.outputs.existingClaim }}
+{{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.outputs.existingClaim }}
   persistentVolumeClaim:
     claimName: {{ .Values.persistence.outputs.existingClaim | default .Values.persistence.outputs.name }}
 {{- else }}
