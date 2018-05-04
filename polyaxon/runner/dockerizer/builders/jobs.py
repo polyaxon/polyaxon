@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from jobs.statuses import JobLifeCycle
-from libs.registry import get_registry_host
 from repos import git
 from repos.models import ExternalRepo, Repo
 from runner.dockerizer.builders.base import BaseDockerBuilder
@@ -66,7 +65,7 @@ def get_job_repo_info(project, job):
         last_commit = project.repo.last_commit
         repo_name = project_name
 
-    image_name = '{}/{}'.format(get_registry_host(), repo_name)
+    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     if not last_commit:
         raise Repo.DoesNotExist
     image_tag = last_commit[0]
@@ -93,8 +92,7 @@ def build_job(project, job, job_builder, image_tag=None):
                                  env_vars=job_spec.run_exec.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
-                         registry_host=get_registry_host(),
-                         registry_host_local=settings.REGISTRY_HOST_LOCAL)
+                         registry_host=settings.REGISTRY_HOST)
     if not docker_builder.build():
         docker_builder.clean()
         return False

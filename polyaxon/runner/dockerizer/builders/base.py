@@ -67,20 +67,13 @@ class BaseDockerBuilder(object):
         if self.in_tmp_repo and self.copy_code:
             delete_tmp_dir(self.image_tag)
 
-    def login(self, registry_user, registry_password, registry_host, registry_host_local):
+    def login(self, registry_user, registry_password, registry_host):
         try:
             self.docker.login(username=registry_user,
                               password=registry_password,
                               registry=registry_host,
                               reauth=True)
-            return
-        except DockerException:
-            try:
-                self.docker.login(username=registry_user,
-                                  password=registry_password,
-                                  registry=registry_host_local,
-                                  reauth=True)
-            except DockerException as e:
+        except DockerException as e:
                 logger.exception('Failed to connect to registry %s\n', e)
 
     def _handle_logs(self, log_line):

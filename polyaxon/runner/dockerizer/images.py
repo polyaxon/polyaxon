@@ -1,6 +1,7 @@
 import logging
 
-from libs.registry import get_registry_host
+from django.conf import settings
+
 from repos.models import ExternalRepo
 from runner.dockerizer.builders.notebooks import NotebookDockerBuilder
 
@@ -26,7 +27,7 @@ def get_experiment_image_info(experiment):
     else:
         repo_name = project_name
 
-    image_name = '{}/{}'.format(get_registry_host(), repo_name)
+    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     image_tag = experiment.code_reference.commit
     return image_name, image_tag
 
@@ -52,7 +53,7 @@ def get_job_image_info(project, job):
         repo_name = project_name
         last_commit = project.repo.last_commit
 
-    image_name = '{}/{}'.format(get_registry_host(), repo_name)
+    image_name = '{}/{}'.format(settings.REGISTRY_HOST, repo_name)
     if not last_commit:
         raise ValueError('Repo was not found for project `{}`.'.format(project))
     return image_name, last_commit[0]
