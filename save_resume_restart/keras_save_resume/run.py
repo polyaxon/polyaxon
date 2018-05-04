@@ -7,6 +7,7 @@ from models import get_model
 from train import train
 from utils import get_depth
 
+from polyaxon_helper import send_metrics
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -75,3 +76,4 @@ if __name__ == '__main__':
     scores = model.evaluate(test_data['x'], test_data['y'], verbose=1)
     print('Test loss:', scores[0])
     print('Test accuracy:', scores[1])
+    send_metrics(loss=scores[0], accuracy=scores[1])
