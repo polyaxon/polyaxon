@@ -556,7 +556,7 @@ Volumes
 - name: logs
 {{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.logs.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.logs.existingClaim }}
+    claimName: {{ .Values.persistence.logs.existingClaim | default .Values.persistence.logs.name }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.logs.mountPath }}
@@ -564,7 +564,7 @@ Volumes
 - name: data
 {{- if or (index .Values "nfs-server-provisioner").enabled .Values.persistence.data.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.data.existingClaim }}
+    claimName: {{ .Values.persistence.data.existingClaim | default .Values.persistence.data.name }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.data.mountPath }}
