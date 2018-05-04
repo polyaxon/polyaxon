@@ -32,7 +32,7 @@ The Estimator takes care of saving checkpoints automatically,
 you only need to specify the top-level directory in which the Estimator stores its information,
 This is done by assigning a value to the optional `model_dir` argument of any Estimator's constructor.
 
-In this case of Polyaxon you should assign provided path `POLYAXON_OUTPUTS_PATH`, e.g.
+In the case of Polyaxon you should assign provided path `POLYAXON_OUTPUTS_PATH`, e.g.
 
 ```python
 classifier = tf.estimator.DNNClassifier(
