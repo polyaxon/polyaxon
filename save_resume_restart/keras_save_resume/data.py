@@ -6,13 +6,10 @@ import keras
 
 from keras.datasets import cifar10
 
-from polyaxon_helper import get_data_path
-
 
 def get_data(subtract_pixel_mean, num_classes):
     # Load the CIFAR10 data.
-    data_path = '{}/{}'.format(get_data_path(), "imdb.npz")
-    (x_train, y_train), (x_test, y_test) = cifar10.load_data(path=data_path)
+    (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
     # Input image dimensions.
     input_shape = x_train.shape[1:]
