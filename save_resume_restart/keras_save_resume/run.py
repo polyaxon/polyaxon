@@ -2,10 +2,10 @@ from __future__ import print_function
 
 import argparse
 
-from .data import get_data
-from .models import get_model
-from .train import train
-from .utils import get_depth
+from data import get_data
+from models import get_model
+from train import train
+from utils import get_depth
 
 
 if __name__ == '__main__':

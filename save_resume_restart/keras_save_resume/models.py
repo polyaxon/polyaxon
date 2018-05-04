@@ -7,7 +7,7 @@ from keras.layers import AveragePooling2D, Input, Flatten
 from keras.models import Model
 from keras.optimizers import Adam
 
-from .utils import lr_schedule
+from utils import lr_schedule
 
 
 def resnet_layer(inputs,

@@ -10,7 +10,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from polyaxon_helper import get_outputs_path
 
 # Training parameters
-from .utils import lr_schedule
+from utils import lr_schedule
 
 
 def get_callbacks(model_type):
