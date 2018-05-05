@@ -22,10 +22,11 @@ class Command(BaseMonitorCommand):
         return None
 
     def get_node_or_wait(self, log_sleep_interval):
-        try:
-            return self.get_node()
-        except ProgrammingError:
-            time.sleep(log_sleep_interval * 2)
+        while True:
+            try:
+                return self.get_node()
+            except ProgrammingError:
+                time.sleep(log_sleep_interval * 2)
 
     def handle(self, *args, **options):
         log_sleep_interval = options['log_sleep_interval']
