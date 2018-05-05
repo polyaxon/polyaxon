@@ -1,4 +1,5 @@
 import functools
+import logging
 import uuid
 
 from operator import __or__ as OR
@@ -11,8 +12,9 @@ from django.db.models import Q
 from django.utils.functional import cached_property
 
 from experiment_groups import iteration_managers, schemas, search_managers
+from experiment_groups.statuses import ExperimentGroupLifeCycle
 from experiments.statuses import ExperimentLifeCycle
-from libs.models import DescribableModel, DiffModel
+from libs.models import DescribableModel, DiffModel, StatusModel, LastStatusMixin
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
@@ -20,7 +22,10 @@ from polyaxon_schemas.utils import Optimization
 from projects.models import Project
 
 
-class ExperimentGroup(DiffModel, DescribableModel):
+logger = logging.getLogger('polyaxon.experiment_groups')
+
+
+class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
     """A model that saves Specification/Polyaxonfiles."""
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -56,6 +61,13 @@ class ExperimentGroup(DiffModel, DescribableModel):
         blank=True,
         null=True,
         related_name='+')
+    status = models.OneToOneField(
+        'ExperimentGroupStatus',
+        related_name='+',
+        blank=True,
+        null=True,
+        editable=True,
+        on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ['sequence']
@@ -76,6 +88,44 @@ class ExperimentGroup(DiffModel, DescribableModel):
     @property
     def unique_name(self):
         return '{}.{}'.format(self.project.unique_name, self.sequence)
+
+    @property
+    def last_status(self):
+        return self.status.status if self.status else None
+
+    @property
+    def finished_at(self):
+        status = self.statuses.filter(status__in=ExperimentGroupLifeCycle.DONE_STATUS).first()
+        if status:
+            return status.created_at
+        return None
+
+    @property
+    def started_at(self):
+        status = self.statuses.filter(status=ExperimentGroupLifeCycle.STARTING).first()
+        if status:
+            return status.created_at
+        return None
+
+    def can_transition(self, status):
+        """Update the status of the current instance.
+
+        Returns:
+            boolean: if the instance is updated.
+        """
+        if not self.STATUSES.can_transition(status_from=self.last_status, status_to=status):
+            logger.info(
+                '`%s` tried to transition from status `%s` to non permitted status `%s`',
+                str(self), self.last_status, status)
+            return False
+
+        return True
+
+    def set_status(self, status, message=None, **kwargs):
+        if not self.can_transition(status):
+            return
+
+        ExperimentGroupStatus.objects.create(experiment=self, status=status, message=message)
 
     @cached_property
     def params_config(self):
@@ -232,3 +282,26 @@ class ExperimentGroupIteration(DiffModel):
 
     def __str__(self):
         return '{} <{}>'.format(self.experiment_group, self.created_at)
+
+
+class ExperimentGroupStatus(StatusModel):
+    """A model that represents an experiment group status at certain time."""
+    STATUSES = ExperimentGroupLifeCycle
+
+    experiment_group = models.ForeignKey(
+        ExperimentGroup,
+        on_delete=models.CASCADE,
+        related_name='statuses')
+    status = models.CharField(
+        max_length=64,
+        blank=True,
+        null=True,
+        default=STATUSES.CREATED,
+        choices=STATUSES.CHOICES)
+
+    class Meta:
+        verbose_name_plural = 'Experiment Statuses'
+        ordering = ['created_at']
+
+    def __str__(self):
+        return '{} <{}>'.format(self.experiment_group.unique_name, self.status)
