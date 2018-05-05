@@ -1,7 +1,7 @@
 import time
 
 from django.conf import settings
-from django.db import InterfaceError, ProgrammingError
+from django.db import InterfaceError, ProgrammingError, OperationalError  # noqa
 
 from clusters.models import Cluster
 from events.management.commands._base_monitor import BaseMonitorCommand
@@ -22,11 +22,14 @@ class Command(BaseMonitorCommand):
         return None
 
     def get_node_or_wait(self, log_sleep_interval):
-        while True:
+        max_trials = 10
+        trials = 0
+        while trials < max_trials:
             try:
                 return self.get_node()
-            except ProgrammingError:
-                # Database is not synced yet
+            except (ProgrammingError, OperationalError) as e:
+                resources.logger.exception("Database is not synced yet %s\n", e)
+                trials += 1
                 time.sleep(log_sleep_interval * 2)
 
     def handle(self, *args, **options):
@@ -40,7 +43,8 @@ class Command(BaseMonitorCommand):
         containers = {}
         while True:
             try:
-                resources.run(containers, node, persist)
+                if node:
+                    resources.run(containers, node, persist)
             except Exception as e:
                 resources.logger.exception("Unhandled exception occurred %s\n", e)
 
@@ -50,6 +54,6 @@ class Command(BaseMonitorCommand):
                     node.refresh_from_db()
                 else:
                     node = self.get_node()
-            except InterfaceError as e:
+            except (InterfaceError, OperationalError) as e:
                 resources.logger.exception("Database connection is probably already closed %s\n", e)
                 return
