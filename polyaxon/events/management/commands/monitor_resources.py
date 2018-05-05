@@ -1,7 +1,7 @@
 import time
 
 from django.conf import settings
-from django.db import ProgrammingError
+from django.db import InterfaceError, ProgrammingError
 
 from clusters.models import Cluster
 from events.management.commands._base_monitor import BaseMonitorCommand
@@ -26,6 +26,7 @@ class Command(BaseMonitorCommand):
             try:
                 return self.get_node()
             except ProgrammingError:
+                # Database is not synced yet
                 time.sleep(log_sleep_interval * 2)
 
     def handle(self, *args, **options):
@@ -44,7 +45,11 @@ class Command(BaseMonitorCommand):
                 resources.logger.exception("Unhandled exception occurred %s\n", e)
 
             time.sleep(log_sleep_interval)
-            if node:
-                node.refresh_from_db()
-            else:
-                node = self.get_node()
+            try:
+                if node:
+                    node.refresh_from_db()
+                else:
+                    node = self.get_node()
+            except InterfaceError as e:
+                resources.logger.exception("Database connection is probably already closed %s\n", e)
+                return
