@@ -1,6 +1,7 @@
 import time
 
 from django.conf import settings
+from django.db import ProgrammingError
 
 from clusters.models import Cluster
 from events.management.commands._base_monitor import BaseMonitorCommand
@@ -20,10 +21,16 @@ class Command(BaseMonitorCommand):
             return node.first()
         return None
 
+    def get_node_or_wait(self, log_sleep_interval):
+        try:
+            return self.get_node()
+        except ProgrammingError:
+            time.sleep(log_sleep_interval * 2)
+
     def handle(self, *args, **options):
         log_sleep_interval = options['log_sleep_interval']
         persist = to_bool(options['persist'])
-        node = self.get_node()
+        node = self.get_node_or_wait(log_sleep_interval)
         self.stdout.write(
             "Started a new resources monitor with, "
             "log sleep interval: `{}` and persist: `{}`".format(log_sleep_interval, persist),
