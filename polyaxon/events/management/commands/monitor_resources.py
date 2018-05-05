@@ -27,7 +27,7 @@ class Command(BaseMonitorCommand):
         while trials < max_trials:
             try:
                 return self.get_node()
-            except (ProgrammingError, OperationalError) as e:
+            except (InterfaceError, ProgrammingError, OperationalError) as e:
                 resources.logger.exception("Database is not synced yet %s\n", e)
                 trials += 1
                 time.sleep(log_sleep_interval * 2)
@@ -55,6 +55,6 @@ class Command(BaseMonitorCommand):
                     node.refresh_from_db()
                 else:
                     node = self.get_node()
-            except (InterfaceError, OperationalError) as e:
+            except (InterfaceError, ProgrammingError, OperationalError) as e:
                 resources.logger.exception("Database connection is probably already closed %s\n", e)
                 return
