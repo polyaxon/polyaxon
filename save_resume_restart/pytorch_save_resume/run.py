@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import argparse
 
 import torch
@@ -9,7 +11,6 @@ from train import train_model
 from utils import set_seed, get_weight_filename
 
 from polyaxon_helper import send_metrics
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
