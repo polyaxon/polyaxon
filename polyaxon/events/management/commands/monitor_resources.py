@@ -1,7 +1,7 @@
 import time
 
 from django.conf import settings
-from django.db import InterfaceError, ProgrammingError, OperationalError  # noqa
+from django.db import InterfaceError, ProgrammingError, OperationalError
 
 from clusters.models import Cluster
 from events.management.commands._base_monitor import BaseMonitorCommand
@@ -31,6 +31,7 @@ class Command(BaseMonitorCommand):
                 resources.logger.exception("Database is not synced yet %s\n", e)
                 trials += 1
                 time.sleep(log_sleep_interval * 2)
+        return None
 
     def handle(self, *args, **options):
         log_sleep_interval = options['log_sleep_interval']
