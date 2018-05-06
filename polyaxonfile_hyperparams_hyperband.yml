@@ -6,7 +6,7 @@ kind: group
 settings:
   concurrency: 2
   hyperband:
-    max_iter: 10
+    max_iter: 81
     eta: 3
     resource:
       name: num_steps
