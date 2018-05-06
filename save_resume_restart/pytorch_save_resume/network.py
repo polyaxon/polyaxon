@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import logging
 import os
 
 import torch
@@ -7,6 +8,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from utils import get_weight_filename
+
+logging.basicConfig(level=logging.INFO)
 
 
 class Network(nn.Module):
@@ -53,7 +56,7 @@ def load_model(model, cuda):
     if not os.path.isfile(filename):
         return 0, torch.FloatTensor([0])
 
-    print('Loading model from {}'.format(filename))
+    logging.info('Loading model from {}'.format(filename))
     if cuda:
         checkpoint = torch.load(filename)
     else:
@@ -61,5 +64,5 @@ def load_model(model, cuda):
     start_epoch = checkpoint['epoch']
     best_accuracy = checkpoint['accuracy']
     model.load_state_dict(checkpoint['state'])
-    print('Last epoch: {}'.format(start_epoch))
+    logging.info('Last epoch: {}'.format(start_epoch))
     return start_epoch, best_accuracy

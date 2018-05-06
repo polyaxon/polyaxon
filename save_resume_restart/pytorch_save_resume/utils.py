@@ -1,8 +1,12 @@
 from __future__ import print_function
 
+import logging
+
 import torch
 
 from polyaxon_helper import get_outputs_path
+
+logging.basicConfig(level=logging.INFO)
 
 
 def get_weight_filename():

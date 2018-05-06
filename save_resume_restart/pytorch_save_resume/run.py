@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import logging
 
 import torch
 
@@ -11,6 +12,8 @@ from train import train_model
 from utils import set_seed, get_weight_filename
 
 from polyaxon_helper import send_metrics
+
+logging.basicConfig(level=logging.INFO)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -64,14 +67,14 @@ if __name__ == '__main__':
         accuracy = eval_model(model=model, test_loader=test_loader, cuda=cuda)
         accuracy = 100. * accuracy / len(test_loader.dataset)
 
-        print('Test Accuracy: {:.2f}%'.format(accuracy))
+        logging.info('Test Accuracy: {:.2f}%'.format(accuracy))
         send_metrics(accuracy=accuracy)
 
         # Save checkpoint logic
         accuracy = torch.FloatTensor([accuracy])
         best_accuracy = torch.FloatTensor(max(accuracy.numpy(), best_accuracy.numpy()))
         if bool(accuracy.numpy() > best_accuracy.numpy()):
-            print('Saving new state for epoch {}'.format(epoch))
+            logging.info('Saving new state for epoch {}'.format(epoch))
             state = {
                 'epoch': epoch + 1,
                 'state': model.state_dict(),
@@ -79,4 +82,4 @@ if __name__ == '__main__':
             }
             torch.save(state, get_weight_filename())
         else:
-            print('State did not change for epoch {}'.format(epoch))
+            logging.info('State did not change for epoch {}'.format(epoch))

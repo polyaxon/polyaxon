@@ -1,8 +1,11 @@
 from __future__ import print_function
 
+import logging
 import time
 
 from torch.autograd import Variable
+
+logging.basicConfig(level=logging.INFO)
 
 
 def train_model(model,
@@ -45,7 +48,7 @@ def train_model(model,
         accuracy = prediction.eq(labels.data).sum() / batch_size * 100
 
         if (i + 1) % notify == 0:
-            print(
+            logging.info(
                 'Epoch: [%d/%d], Step: [%d/%d], Loss: %.4f, Accuracy: %.4f, Batch time: %f' % (
                     epoch + 1,
                     num_epochs,

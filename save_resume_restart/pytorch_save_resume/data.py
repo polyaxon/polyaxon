@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import logging
 import os
 
 import torch
@@ -8,6 +9,8 @@ from torchvision import datasets
 from torchvision import transforms
 
 from polyaxon_helper import get_data_path
+
+logging.basicConfig(level=logging.INFO)
 
 
 def get_data_loaders(batch_size):
@@ -27,8 +30,8 @@ def get_data_loaders(batch_size):
     x_test_mnist = test_dataset.test_data.type(torch.FloatTensor)
     y_test_mnist = test_dataset.test_labels
 
-    print('Training Data Size: ', x_train_mnist.size(), '-', y_train_mnist.size())
-    print('Testing Data Size: ', x_test_mnist.size(), '-', y_test_mnist.size())
+    logging.info('Training Data Size: ', x_train_mnist.size(), '-', y_train_mnist.size())
+    logging.info('Testing Data Size: ', x_test_mnist.size(), '-', y_test_mnist.size())
 
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                                batch_size=batch_size,
