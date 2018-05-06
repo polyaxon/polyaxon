@@ -134,13 +134,14 @@ class TestExperimentModel(BaseTest):
         assert last_resumed_experiment.config == config
         assert last_resumed_experiment.declarations == declarations
         assert Experiment.objects.count() == count_experiment + 1
+        assert experiment.clones.count() == 1
 
         # Resume with different config
         new_declarations = {
             'lr': 0.1,
             'dropout': 0.5
         }
-        experiment.resume(declarations=new_declarations)
+        new_experiment = experiment.resume(declarations=new_declarations)
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
         last_resumed_experiment = experiment.clones.filter(
@@ -149,6 +150,22 @@ class TestExperimentModel(BaseTest):
         assert last_resumed_experiment.declarations != declarations
         assert last_resumed_experiment.declarations == new_declarations
         assert Experiment.objects.count() == count_experiment + 2
+        assert experiment.clones.count() == 2
+
+        # Resuming a resumed experiment
+        new_experiment.resume()
+        experiment.refresh_from_db()
+        assert experiment.last_status == ExperimentLifeCycle.STOPPED
+        new_last_resumed_experiment = experiment.clones.filter(
+            cloning_strategy=CloningStrategy.RESUME).last()
+        assert new_last_resumed_experiment.original_experiment.pk != last_resumed_experiment.pk
+        assert (new_last_resumed_experiment.original_experiment.pk ==
+                last_resumed_experiment.original_experiment.pk)
+        assert last_resumed_experiment.config == config
+        assert last_resumed_experiment.declarations != declarations
+        assert last_resumed_experiment.declarations == new_declarations
+        assert Experiment.objects.count() == count_experiment + 3
+        assert experiment.clones.count() == 3
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
