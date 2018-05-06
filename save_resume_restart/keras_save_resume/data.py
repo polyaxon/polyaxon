@@ -4,12 +4,12 @@ import numpy as np
 
 import keras
 
-from keras.datasets import cifar10
+from keras.datasets.cifar10 import load_data
 
 
 def get_data(subtract_pixel_mean, num_classes):
     # Load the CIFAR10 data.
-    (x_train, y_train), (x_test, y_test) = cifar10.load_data()
+    (x_train, y_train), (x_test, y_test) = load_data()
 
     # Input image dimensions.
     input_shape = x_train.shape[1:]

@@ -19,7 +19,7 @@ import os
 import argparse
 import logging
 
-from common import find_mxnet, data, fit
+from common import data, fit
 from common.util import download_file
 
 logging.basicConfig(level=logging.DEBUG)
