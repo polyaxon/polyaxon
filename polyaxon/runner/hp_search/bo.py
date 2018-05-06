@@ -1,4 +1,4 @@
-from experiment_groups.utils import get_valid_experiment_group
+from experiment_groups.utils import get_running_experiment_group
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 from runner.hp_search import base
@@ -16,7 +16,7 @@ def create(experiment_group):
 
 @celery_app.task(name=HPCeleryTasks.HP_BO_CREATE)
 def hp_bo_create(experiment_group_id):
-    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return
 
@@ -25,7 +25,7 @@ def hp_bo_create(experiment_group_id):
 
 @celery_app.task(name=HPCeleryTasks.HP_BO_START, bind=True, max_retries=None)
 def hp_bo_start(self, experiment_group_id):
-    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return
 
@@ -39,7 +39,7 @@ def hp_bo_start(self, experiment_group_id):
 
 @celery_app.task(name=HPCeleryTasks.HP_BO_ITERATE, bind=True, max_retries=None)
 def hp_bo_iterate(self, experiment_group_id):
-    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
         return
 
