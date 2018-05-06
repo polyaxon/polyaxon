@@ -11,8 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "polyaxon.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "polyaxon" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 
@@ -52,6 +51,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- $name := "rabbitmq" -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+Define a template for RBAC
+*/}}
+{{- define "rbac.enabled" -}}true{{- end -}}
 
 
 {{/*
