@@ -15,9 +15,10 @@ from experiment_groups.search_managers import (
     HyperbandSearchManager,
     RandomSearchManager
 )
+from experiment_groups.statuses import ExperimentGroupLifeCycle
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
-from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
@@ -463,6 +464,31 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.running_experiments.count() == 1
         assert spawner_mock_fct.call_count == 1  # Should be stopped with ths function
         assert experiment_group.stopped_experiments.count() == 2
+
+    @tag(RUNNER_TEST)
+    def test_stopping_group_stops_iteration(self):
+        # Fake reschedule
+        with patch('runner.hp_search.hyperband.hp_hyperband_start.apply_async') as mock_fct:
+            experiment_group = ExperimentGroupFactory(
+                content=experiment_group_spec_content_hyperband_trigger_reschedule)
+        assert mock_fct.call_count == 1
+        ExperimentGroupIteration.objects.create(
+            experiment_group=experiment_group,
+            data={
+                'iteration': 0,
+                'bracket_iteration': 21
+            })
+        # Mark experiment as done
+        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
+            for xp in experiment_group.experiments.all():
+                ExperimentStatusFactory(experiment=xp, status=ExperimentLifeCycle.SUCCEEDED)
+        # Mark group as stopped
+        ExperimentGroupStatusFactory(experiment_group=experiment_group,
+                                     status=ExperimentGroupLifeCycle.STOPPED)
+        with patch('runner.hp_search.hyperband.hp_hyperband_create.delay') as mock_fct1:
+            hp_hyperband_start(experiment_group.id)
+
+        assert mock_fct1.call_count == 0
 
     @tag(RUNNER_TEST)
     def test_hyperband_rescheduling(self):
