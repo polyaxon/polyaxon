@@ -1,4 +1,4 @@
-{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.repos.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.repos.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -15,10 +15,10 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.repos.size | quote }}
-  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+  storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.logs.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.logs.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -35,10 +35,10 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.logs.size | quote }}
-  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+  storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.upload.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.upload.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -55,10 +55,10 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.upload.size | quote }}
-  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+  storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.outputs.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.outputs.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -75,10 +75,10 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.outputs.size | quote }}
-  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+  storageClassName: polyaxon-nfs
 {{- end }}
 ---
-{{- if and (index .Values "nfs-server-provisioner").enabled (not .Values.persistence.data.existingClaim) -}}
+{{- if and .Values.nfsProvisioner.enabled (not .Values.persistence.data.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -95,5 +95,5 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.data.size | quote }}
-  storageClassName: {{ (index .Values "nfs-server-provisioner").storageClass.name | quote }}
+  storageClassName: polyaxon-nfs
 {{- end }}

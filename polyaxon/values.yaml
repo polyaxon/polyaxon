@@ -359,6 +359,7 @@ nfsProvisioner:
   persistence:
     enabled: false
     size: 50Gi
+    accessMode: ReadWriteOnce
 
   resources: {}
   image:
