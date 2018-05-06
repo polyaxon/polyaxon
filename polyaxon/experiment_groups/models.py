@@ -14,13 +14,12 @@ from django.utils.functional import cached_property
 from experiment_groups import iteration_managers, schemas, search_managers
 from experiment_groups.statuses import ExperimentGroupLifeCycle
 from experiments.statuses import ExperimentLifeCycle
-from libs.models import DescribableModel, DiffModel, StatusModel, LastStatusMixin
+from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import Optimization
 from projects.models import Project
-
 
 logger = logging.getLogger('polyaxon.experiment_groups')
 

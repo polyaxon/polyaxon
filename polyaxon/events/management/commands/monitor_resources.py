@@ -1,7 +1,7 @@
 import time
 
 from django.conf import settings
-from django.db import InterfaceError, ProgrammingError, OperationalError
+from django.db import InterfaceError, OperationalError, ProgrammingError
 
 from clusters.models import Cluster
 from events.management.commands._base_monitor import BaseMonitorCommand
