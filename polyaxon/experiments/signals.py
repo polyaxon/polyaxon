@@ -3,6 +3,7 @@ import logging
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
+from experiments.clone import CloningStrategy
 from experiments.models import (
     Experiment,
     ExperimentJob,
@@ -74,6 +75,10 @@ def experiment_deleted(sender, **kwargs):
     # Delete outputs and logs
     delete_experiment_outputs(instance.unique_name)
     delete_experiment_logs(instance.unique_name)
+
+    # Delete clones
+    for experiment in instance.clones.filter(cloning_strategy=CloningStrategy.RESUME):
+        experiment.delete()
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")

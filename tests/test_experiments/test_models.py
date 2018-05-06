@@ -156,16 +156,24 @@ class TestExperimentModel(BaseTest):
         new_experiment.resume()
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
-        new_last_resumed_experiment = experiment.clones.filter(
+        last_resumed_experiment_new = experiment.clones.filter(
             cloning_strategy=CloningStrategy.RESUME).last()
-        assert new_last_resumed_experiment.original_experiment.pk != last_resumed_experiment.pk
-        assert (new_last_resumed_experiment.original_experiment.pk ==
+        assert last_resumed_experiment_new.original_experiment.pk != last_resumed_experiment.pk
+        assert (last_resumed_experiment_new.original_experiment.pk ==
                 last_resumed_experiment.original_experiment.pk)
         assert last_resumed_experiment.config == config
         assert last_resumed_experiment.declarations != declarations
         assert last_resumed_experiment.declarations == new_declarations
         assert Experiment.objects.count() == count_experiment + 3
         assert experiment.clones.count() == 3
+
+        # Deleting a resumed experiment does not delete other experiments
+        last_resumed_experiment_new.delete()
+        assert experiment.clones.count() == 2
+
+        # Deleting original experiment deletes all
+        experiment.delete()
+        assert Experiment.objects.count() == 0
 
     @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
