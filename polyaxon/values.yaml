@@ -357,12 +357,8 @@ docker-registry:
 nfs-server-provisioner:
   enabled: false
   persistence:
-    enabled: true
+    enabled: false
     size: 50Gi
-  storageClass:
-    create: true
-    provisionerName: polyaxon.nfs
-    name: polyaxon-nfs
 
   affinity:
     podAffinity:
