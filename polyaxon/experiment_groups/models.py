@@ -27,6 +27,8 @@ logger = logging.getLogger('polyaxon.experiment_groups')
 
 class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
     """A model that saves Specification/Polyaxonfiles."""
+    STATUSES = ExperimentGroupLifeCycle
+
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
@@ -125,7 +127,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         if not self.can_transition(status):
             return
 
-        ExperimentGroupStatus.objects.create(experiment=self, status=status, message=message)
+        ExperimentGroupStatus.objects.create(experiment_group=self, status=status, message=message)
 
     @cached_property
     def params_config(self):
