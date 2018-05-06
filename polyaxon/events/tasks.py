@@ -86,10 +86,14 @@ def handle_events_job_logs(experiment_name,
         log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
     xp_logger = logging.getLogger(experiment_name)
     log_path = get_experiment_logs_path(experiment_name)
-    log_handler = logging.FileHandler(log_path)
-    log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-    log_handler.setFormatter(log_formatter)
-    xp_logger.addHandler(log_handler)
-    xp_logger.setLevel(logging.INFO)
-    xp_logger.info(log_line)
-    xp_logger.handlers = []
+    try:
+        log_handler = logging.FileHandler(log_path)
+        log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+        log_handler.setFormatter(log_formatter)
+        xp_logger.addHandler(log_handler)
+        xp_logger.setLevel(logging.INFO)
+        xp_logger.info(log_line)
+        xp_logger.handlers = []
+    except OSError:
+        # TODO: retry instead?
+        pass
