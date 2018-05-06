@@ -1,10 +1,11 @@
+{{- if .Values.nfsProvisioner.enabled }}
 apiVersion: extensions/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: nfs-provisioner
   labels:
-    app: {{ template "nfs-provisioner.name" . }}
-    chart: {{ template "nfs-provisioner.chart" . }}
+    app: {{ template "polyaxon.fullname" . }}-nfs
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
 spec:
@@ -26,3 +27,4 @@ spec:
   - persistentVolumeClaim
   - secret
   - hostPath
+{{ end -}}

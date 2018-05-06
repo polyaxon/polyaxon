@@ -354,11 +354,23 @@ docker-registry:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
 
-nfs-server-provisioner:
+nfsProvisioner:
   enabled: false
   persistence:
     enabled: false
     size: 50Gi
+
+  resources: {}
+  image:
+    repository: quay.io/kubernetes_incubator/nfs-provisioner
+    tag: v1.0.9
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+
+    nfsPort: 2049
+    mountdPort: 20048
+    rpcbindPort: 51413
 
   affinity:
     podAffinity:

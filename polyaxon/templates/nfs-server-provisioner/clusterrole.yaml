@@ -1,12 +1,11 @@
-{{- $rbac :=  include "rbac.enabled" . -}}
-{{- if $rbac }}
+{{- if and .Values.rbac.enabled .Values.nfsProvisioner.enabled }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ template "nfs-provisioner.fullname" . }}
+  name: {{ template "polyaxon.fullname" . }}-nfs
   labels:
-    app: {{ template "nfs-provisioner.name" . }}
-    chart: {{ template "nfs-provisioner.chart" . }}
+    app: {{ template "polyaxon.fullname" . }}-nfs
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
 rules:

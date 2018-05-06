@@ -53,12 +53,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Define a template for RBAC
-*/}}
-{{- define "rbac.enabled" -}}true{{- end -}}
-
-
-{{/*
 global config
 */}}
 {{- define "config.global" }}

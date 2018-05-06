@@ -11,8 +11,5 @@ dependencies:
 - name: docker-registry
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 1.0.1
-- name: nfs-server-provisioner
-  repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 0.1.2
-digest: sha256:9453c507a4e820540edbde75a0bbde5f0ce2738f08eefd459e01ec8f8bba36a2
-generated: 2018-05-03T15:55:17.547261885+02:00
+digest: sha256:75d5d69db5500262d88e4e43855c31e1ffcbfda652149688e3b0b222a1ebeda0
+generated: 2018-05-06T17:11:56.104888402+02:00

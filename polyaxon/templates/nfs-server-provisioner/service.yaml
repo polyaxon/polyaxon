@@ -1,0 +1,45 @@
+{{- if .Values.nfsProvisioner.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "polyaxon.fullname" . }}-nfs
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-nfs
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  type: {{ .Values.nfsProvisioner.service.type }}
+  ports:
+    - port: {{ .Values.nfsProvisioner.service.nfsPort }}
+      targetPort: nfs
+      protocol: TCP
+      name: nfs
+{{- if (and (eq .Values.nfsProvisioner.service.type "NodePort") (not (empty .Values.nfsProvisioner.service.nfsNodePort))) }}
+      nodePort: {{ .Values.nfsProvisioner.service.nfsNodePort }}
+{{- end }}
+    - port: {{ .Values.nfsProvisioner.service.mountdPort }}
+      targetPort: mountd
+      protocol: TCP
+      name: mountd
+{{- if (and (eq .Values.nfsProvisioner.service.type "NodePort") (not (empty .Values.nfsProvisioner.service.mountdNodePort))) }}
+      nodePort: {{ .Values.nfsProvisioner.service.mountdNodePort }}
+{{- end }}
+    - port: {{ .Values.nfsProvisioner.service.rpcbindPort }}
+      targetPort: rpcbind-tcp
+      protocol: TCP
+      name: rpcbind-tcp
+{{- if (and (eq .Values.nfsProvisioner.service.type "NodePort") (not (empty .Values.nfsProvisioner.service.rpcbindNodePort))) }}
+      nodePort: {{ .Values.nfsProvisioner.service.rpcbindNodePort }}
+{{- end }}
+    - port: {{ .Values.nfsProvisioner.service.rpcbindPort }}
+      targetPort: rpcbind-udp
+      protocol: UDP
+      name: rpcbind-udp
+{{- if (and (eq .Values.nfsProvisioner.service.type "NodePort") (not (empty .Values.nfsProvisioner.service.rpcbindNodePort))) }}
+      nodePort: {{ .Values.nfsProvisioner.service.rpcbindNodePort }}
+{{- end }}
+  selector:
+    app: {{ template "polyaxon.fullname" . }}-nfs
+    release: {{ .Release.Name }}
+{{ end -}}

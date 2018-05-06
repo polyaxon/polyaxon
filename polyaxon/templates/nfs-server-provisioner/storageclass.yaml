@@ -1,0 +1,12 @@
+{{- if .Values.nfsProvisioner.enabled }}
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: polyaxon-nfs
+  labels:
+    app: {{ template "polyaxon.fullname" . }}-nfs
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+provisioner: polyaxon.nfs
+{{ end -}}
