@@ -248,16 +248,16 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
                 update_code_reference=update_code_reference,
                 experiment_group=experiment_group or self.experiment_group
             )
-        else:
-            # Resume normal workflow
-            return self._clone(cloning_strategy=CloningStrategy.RESUME,
-                               user=user,
-                               description=description,
-                               config=config,
-                               declarations=declarations,
-                               code_reference=code_reference,
-                               update_code_reference=update_code_reference,
-                               experiment_group=experiment_group or self.experiment_group)
+
+        # Resume normal workflow
+        return self._clone(cloning_strategy=CloningStrategy.RESUME,
+                           user=user,
+                           description=description,
+                           config=config,
+                           declarations=declarations,
+                           code_reference=code_reference,
+                           update_code_reference=update_code_reference,
+                           experiment_group=experiment_group or self.experiment_group)
 
     def restart(self,
                 user=None,
