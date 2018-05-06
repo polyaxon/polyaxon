@@ -55,6 +55,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         resp = self.auth_client.get(self.other_url)
         assert resp.status_code == status.HTTP_200_OK
         data = resp.data['results']
+        self.other_object.refresh_from_db()
         assert data[0] == self.serializer_class(self.other_object).data
 
     def test_pagination(self):
