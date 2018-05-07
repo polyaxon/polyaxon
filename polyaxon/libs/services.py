@@ -27,6 +27,34 @@ class Service(object):
         """Initialize this service."""
 
 
+class EventService(Service):
+    __all__ = ('record', 'validate')
+
+    event_manager = None
+    EventModel = None
+
+    def record(self, event_or_event_type, instance=None, **kwargs):
+        """
+        >>> record(Event())
+        >>> record('event.action', object_instance)
+        """
+        if isinstance(event_or_event_type, str):
+            event = self.event_manager.get(
+                event_or_event_type,
+            ).from_instance(instance, **kwargs)
+        elif isinstance(event_or_event_type, self.EventModel):
+            event = event_or_event_type.from_instance(instance, **kwargs)
+        else:
+            return
+        self.record_event(event)
+
+    def record_event(self, event):
+        """
+        >>> record_event(Event())
+        """
+        pass
+
+
 class LazyServiceWrapper(LazyObject):
     """Lazyily instantiates a Polyaxon standard service class.
 
@@ -42,7 +70,7 @@ class LazyServiceWrapper(LazyObject):
         super(LazyServiceWrapper, self).__init__()
         self.__dict__.update(
             {
-                'backend_base': backend_base,
+                '_backend_base': backend_base,
                 '_backend_path': backend_path,
                 '_options': options,
             }
@@ -60,7 +88,7 @@ class LazyServiceWrapper(LazyObject):
         self._wrapped = instance
 
     def expose(self, context):
-        base = self.backend_base
+        base = self._backend_base
         for key in itertools.chain(base.__all__, ('validate', 'setup')):
             if inspect.ismethod(getattr(base, key)):
                 context[key] = (lambda f: lambda *a, **k: getattr(self, f)(*a, **k))(key)
