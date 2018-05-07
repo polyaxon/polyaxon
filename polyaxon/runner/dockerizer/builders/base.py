@@ -1,11 +1,10 @@
-import uuid
-
 import jinja2
 import json
 import logging
 import os
 import stat
 import time
+import uuid
 
 from docker import APIClient
 from docker.errors import DockerException

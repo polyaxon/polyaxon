@@ -67,7 +67,18 @@ class Command(BaseCommand):
             help='To force create the user even if the user is not valid.',
         )
 
-    def handle(self, *args, **options):
+    def validate_password(self, password, user_data, force):
+        try:
+            validate_password(password, self.UserModel(**user_data))
+        except ValidationError as e:
+            logger.warning('The password provided is not valid %s', e)
+            if force:
+                logger.warning(
+                    'The user will be created although the password does not meet the validation.')
+            else:
+                raise e
+
+    def handle(self, *args, **options):  # pylint:disable=too-many-branches
         username = options[self.UserModel.USERNAME_FIELD].strip()
         password = options['password'].strip()
         email = options['email'].strip()
@@ -114,15 +125,7 @@ class Command(BaseCommand):
             'email': email,
         }
 
-        try:
-            validate_password(password, self.UserModel(**user_data))
-        except ValidationError as e:
-            logger.warning('The password provided is not valid %s', e)
-            if force:
-                logger.warning(
-                    'The user will be created although the password does not meet the validation.')
-            else:
-                raise e
+        self.validate_password(password=password, user_data=user_data, force=force)
         user_data['password'] = password
 
         if is_superuser:
