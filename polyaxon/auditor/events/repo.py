@@ -12,4 +12,4 @@ class RepoNewCommitEvent(Event):
 
 
 auditor.register(RepoCreatedEvent)
-auditor.register(RepoNewCommit)
+auditor.register(RepoNewCommitEvent)
