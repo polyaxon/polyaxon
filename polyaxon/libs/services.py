@@ -6,7 +6,6 @@ from django.utils.functional import empty, LazyObject
 
 from libs.imports import import_string
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -25,34 +24,6 @@ class Service(object):
 
     def setup(self):
         """Initialize this service."""
-
-
-class EventService(Service):
-    __all__ = ('record', 'validate')
-
-    event_manager = None
-    EventModel = None
-
-    def record(self, event_or_event_type, instance=None, **kwargs):
-        """
-        >>> record(Event())
-        >>> record('event.action', object_instance)
-        """
-        if isinstance(event_or_event_type, str):
-            event = self.event_manager.get(
-                event_or_event_type,
-            ).from_instance(instance, **kwargs)
-        elif isinstance(event_or_event_type, self.EventModel):
-            event = event_or_event_type.from_instance(instance, **kwargs)
-        else:
-            return
-        self.record_event(event)
-
-    def record_event(self, event):
-        """
-        >>> record_event(Event())
-        """
-        pass
 
 
 class LazyServiceWrapper(LazyObject):

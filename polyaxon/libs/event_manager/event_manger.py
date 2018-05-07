@@ -12,5 +12,8 @@ class EventManager(object):
         else:
             self._event_types[event_type] = event_cls
 
+    def knows(self, event_type):
+        return event_type in self._event_types
+
     def get(self, event_type):
         return self._event_types[event_type]
