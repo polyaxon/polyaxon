@@ -1,9 +1,14 @@
+import logging
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
+from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
 
 from libs.utils import to_bool
+
+logger = logging.getLogger('polyaxon.commands')
 
 
 class NotRunningInTTYException(Exception):
@@ -54,11 +59,19 @@ class Command(BaseCommand):
             default=False,
             help='Specifies a user or superuser.',
         )
+        parser.add_argument(
+            '--force',
+            dest='force',
+            action="store_true",
+            default=False,
+            help='To force create the user even if the user is not valid.',
+        )
 
     def handle(self, *args, **options):
         username = options[self.UserModel.USERNAME_FIELD].strip()
         password = options['password'].strip()
         email = options['email'].strip()
+        force = options['is_superuser']
         is_superuser = to_bool(options['is_superuser'])
 
         try:
@@ -101,7 +114,15 @@ class Command(BaseCommand):
             'email': email,
         }
 
-        validate_password(password, self.UserModel(**user_data))
+        try:
+            validate_password(password, self.UserModel(**user_data))
+        except ValidationError as e:
+            logger.warning('The password provided is not valid %s', e)
+            if force:
+                logger.warning(
+                    'The user will be created although the password does not meet the validation.')
+            else:
+                raise e
         user_data['password'] = password
 
         if is_superuser:
