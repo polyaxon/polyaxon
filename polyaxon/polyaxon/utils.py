@@ -8,6 +8,10 @@ from unipath import Path
 from polyaxon_schemas.polyaxonfile import reader
 
 
+class ConfigurationError(Exception):
+    pass
+
+
 def base_directory():
     return Path(__file__).ancestor(3)
 
@@ -79,7 +83,7 @@ class SettingConfig(object):
             params[key] = '{}'.format(value) if to_str else value
         return params
 
-    def get_int(self, key, is_optional=False, is_secret=False, default=None):
+    def get_int(self, key, is_optional=False, is_secret=False, default=None, options=None):
         """Get a the value corresponding to the key and converts it to `int`.
 
         Args:
@@ -87,6 +91,7 @@ class SettingConfig(object):
             is_optional: To raise  an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
         Return:
             `int`: value corresponding to the key.
         """
@@ -95,9 +100,10 @@ class SettingConfig(object):
                                      type_convert=int,
                                      is_optional=is_optional,
                                      is_secret=is_secret,
-                                     default=default)
+                                     default=default,
+                                     options=options)
 
-    def get_float(self, key, is_optional=False, is_secret=False, default=None):
+    def get_float(self, key, is_optional=False, is_secret=False, default=None, options=None):
         """Get a the value corresponding to the key and converts it to `float`.
 
         Args:
@@ -113,9 +119,10 @@ class SettingConfig(object):
                                      type_convert=float,
                                      is_optional=is_optional,
                                      is_secret=is_secret,
-                                     default=default)
+                                     default=default,
+                                     options=options)
 
-    def get_boolean(self, key, is_optional=False, is_secret=False, default=None):
+    def get_boolean(self, key, is_optional=False, is_secret=False, default=None, options=None):
         """Get a the value corresponding to the key and converts it to `bool`.
 
         Args:
@@ -123,6 +130,7 @@ class SettingConfig(object):
             is_optional: To raise  an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
         Return:
             `bool`: value corresponding to the key.
         """
@@ -131,9 +139,10 @@ class SettingConfig(object):
                                      type_convert=lambda x: bool(strtobool(x)),
                                      is_optional=is_optional,
                                      is_secret=is_secret,
-                                     default=default)
+                                     default=default,
+                                     options=options)
 
-    def get_string(self, key, is_optional=False, is_secret=False, default=None):
+    def get_string(self, key, is_optional=False, is_secret=False, default=None, options=None):
         """Get a the value corresponding to the key and converts it to `str`.
 
         Args:
@@ -141,6 +150,7 @@ class SettingConfig(object):
             is_optional: To raise  an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
         Return:
             `str`: value corresponding to the key.
         """
@@ -149,7 +159,8 @@ class SettingConfig(object):
                                      type_convert=str,
                                      is_optional=is_optional,
                                      is_secret=is_secret,
-                                     default=default)
+                                     default=default,
+                                     options=options)
 
     def _get(self, key):
         """Gets key from the dictionary made out of the configs passed.
@@ -168,13 +179,21 @@ class SettingConfig(object):
         if is_secret:
             self._secret_keys.add(key)
 
+    @staticmethod
+    def _check_options(key, value, options):
+        if options and value not in options:
+            raise ConfigurationError(
+                'The value `{}` provided for key `{}` '
+                'is not one of the possible values.'.format(value, key))
+
     def _get_typed_value(self,
                          key,
                          target_type,
                          type_convert,
                          is_optional=False,
                          is_secret=False,
-                         default=None):
+                         default=None,
+                         options=None):
         """Returns the value corresponding to the key converted to the given type.
 
         Args:
@@ -184,6 +203,7 @@ class SettingConfig(object):
             is_optional: To raise  an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
 
         Returns:
             The corresponding value of the key converted.
@@ -192,21 +212,24 @@ class SettingConfig(object):
             value = self._get(key)
         except KeyError:
             if not is_optional:
-                raise
+                raise ConfigurationError(
+                    'No value was provided for the non optional key `{}`.'.format(key))
             return default
 
         if isinstance(value, str):
             try:
                 self._add_key(key, is_secret)
+                self._check_options(key=key, value=value, options=options)
                 return type_convert(value)
             except ValueError:
-                raise ValueError("Cannot convert value `{}` (key: `{}`)"
-                                 "to `{}`".format(value, key, target_type))
+                raise ConfigurationError("Cannot convert value `{}` (key: `{}`)"
+                                         "to `{}`".format(value, key, target_type))
 
         if isinstance(value, target_type):
             self._add_key(key, is_secret)
+            self._check_options(key=key, value=value, options=options)
             return value
-        raise TypeError(key, value, target_type)
+        raise ConfigurationError(key, value, target_type)
 
     @staticmethod
     def _decode(value):
