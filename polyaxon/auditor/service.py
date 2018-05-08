@@ -26,4 +26,4 @@ class AuditorService(EventService):
 
     def setup(self):
         # Load default event types
-        pass
+        import auditor.events  # noqa

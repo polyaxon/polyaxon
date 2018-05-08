@@ -11,6 +11,6 @@ Running Tracker is a voluntary effort, in other words: it operates on an opt-in 
 
 What will we do with this information?
 The information reported by Tracker, in aggregate,
-will help the Polyaxon development teams prioritize our efforts. T
-he better we understand what people are doing, the better we can focus on the important issues.
+will help the Polyaxon development teams prioritize our efforts.
+The better we understand what people are doing, the better we can focus on the important issues.
 
