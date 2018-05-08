@@ -1,34 +1,8 @@
 import auditor
-from libs.event_manager import event_types
-from libs.event_manager.event import Event
+from libs.event_manager.base_events import cluster
 
-
-class ClusterCreatedEvent(Event):
-    type = event_types.CLUSTER_CREATED
-
-
-class ClusterUpdatedEvent(Event):
-    type = event_types.CLUSTER_UPDATED
-
-
-class ClusterNodeCreatedEvent(Event):
-    type = event_types.CLUSTER_NODE_CREATED
-
-
-class ClusterNodeUpdatedEvent(Event):
-    type = event_types.CLUSTER_NODE_UPDATED
-
-
-class ClusterNodeDeletedEvent(Event):
-    type = event_types.CLUSTER_NODE_DELETED
-
-
-class ClusterNodeGPU(Event):
-    type = event_types.CLUSTER_NODE_GPU
-
-
-auditor.register(ClusterCreatedEvent)
-auditor.register(ClusterUpdatedEvent)
-auditor.register(ClusterNodeCreatedEvent)
-auditor.register(ClusterNodeUpdatedEvent)
-auditor.register(ClusterNodeGPU)
+auditor.register(cluster.ClusterCreatedEvent)
+auditor.register(cluster.ClusterUpdatedEvent)
+auditor.register(cluster.ClusterNodeCreatedEvent)
+auditor.register(cluster.ClusterNodeUpdatedEvent)
+auditor.register(cluster.ClusterNodeGPU)
