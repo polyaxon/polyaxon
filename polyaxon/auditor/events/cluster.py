@@ -23,7 +23,12 @@ class ClusterNodeDeletedEvent(Event):
     type = event_types.CLUSTER_NODE_DELETED
 
 
+class ClusterNodeGPU(Event):
+    type = event_types.CLUSTER_NODE_GPU
+
+
 auditor.register(ClusterCreatedEvent)
 auditor.register(ClusterUpdatedEvent)
 auditor.register(ClusterNodeCreatedEvent)
 auditor.register(ClusterNodeUpdatedEvent)
+auditor.register(ClusterNodeGPU)
