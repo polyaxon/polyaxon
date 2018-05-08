@@ -10,7 +10,7 @@ class RepoCreatedEvent(Event):
         Attribute('repo_uuid', is_uuid=True),
         Attribute('project_uuid', is_uuid=True),
         Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True)
+        Attribute('actor_uuid', is_uuid=True),
     )
 
 
@@ -21,5 +21,4 @@ class RepoNewCommitEvent(Event):
         Attribute('project_uuid', is_uuid=True),
         Attribute('project_owner_uuid', is_uuid=True),
         Attribute('actor_uuid', is_uuid=True),
-        Attribute('failed', is_required=False)
     )

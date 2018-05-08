@@ -1,42 +1,91 @@
-from event_manager.event import Event
+from event_manager.event import Event, Attribute
 
 PROJECT_CREATED = 'project.created'
 PROJECT_UPDATED = 'project.updated'
-PROJECT_SET_PUBLIC = 'project.set_public'  # params same user, other user, access granted
-PROJECT_SET_PRIVATE = 'project.set_private'  # params same user, other user, access granted
-PROJECT_DELETED = 'project.deleted'  # params same user, other user, access granted
-PROJECT_VIEWED = 'project.viewed'  # params same user, other user, access granted
+PROJECT_SET_PUBLIC = 'project.set_public'
+PROJECT_SET_PRIVATE = 'project.set_private'
+PROJECT_DELETED = 'project.deleted'
+PROJECT_VIEWED = 'project.viewed'
 PROJECT_EXPERIMENTS_VIEWED = 'project.experiments_viewed'
 PROJECT_EXPERIMENT_GROUPS_VIEWED = 'project.experiment_groups_viewed'
 
 
 class ProjectCreatedEvent(Event):
     type = PROJECT_CREATED
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('created_at', is_datetime=True),
+        Attribute('has_description', attr_type=bool),
+        Attribute('is_public', attr_type=bool),
+    )
 
 
 class ProjectUpdatedEvent(Event):
     type = PROJECT_UPDATED
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('has_description', attr_type=bool),
+        Attribute('is_public', attr_type=bool),
+    )
 
 
 class ProjectDeletedEvent(Event):
     type = PROJECT_DELETED
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True),
+        Attribute('is_public', attr_type=bool),
+    )
 
 
 class ProjectViewedEvent(Event):
     type = PROJECT_VIEWED
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True),
+        Attribute('is_public', attr_type=bool),
+    )
 
 
 class ProjectSetPublicEvent(Event):
     type = PROJECT_SET_PUBLIC
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True),
+    )
 
 
 class ProjectSetPrivateEvent(Event):
     type = PROJECT_SET_PRIVATE
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True),
+    )
 
 
 class ProjectExperimentsViewedEvent(Event):
     type = PROJECT_EXPERIMENTS_VIEWED
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True),
+        Attribute('is_public', attr_type=bool),
+    )
 
 
 class ProjectExperimentGroupsViewedEvent(Event):
     type = PROJECT_EXPERIMENT_GROUPS_VIEWED
+    attributes = (
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('user_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True),
+        Attribute('is_public', attr_type=bool),
+    )
