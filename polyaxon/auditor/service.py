@@ -1,4 +1,5 @@
-import analytics
+import tracker
+
 from auditor.manager import default_manager
 from event_manager.event import Event
 from event_manager.event_service import EventService
@@ -19,9 +20,9 @@ class AuditorService(EventService):
         }
 
     def record_event(self, event):
-        analytics.record(event_type=event['event_type'],
-                         instance=event['instance'],
-                         **event['kwargs'])
+        tracker.record(event_type=event['event_type'],
+                       instance=event['instance'],
+                       **event['kwargs'])
 
     def setup(self):
         # Load default event types

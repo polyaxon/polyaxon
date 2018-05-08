@@ -1,0 +1,23 @@
+import tracker
+from event_manager.events import experiment
+
+tracker.subscribe(experiment.ExperimentCreatedEvent)
+tracker.subscribe(experiment.ExperimentUpdatedEvent)
+tracker.subscribe(experiment.ExperimentDeletedEvent)
+tracker.subscribe(experiment.ExperimentViewedEvent)
+tracker.subscribe(experiment.ExperimentStoppedEvent)
+tracker.subscribe(experiment.ExperimentResumedEvent)
+tracker.subscribe(experiment.ExperimentRestartedEvent)
+tracker.subscribe(experiment.ExperimentCopiedEvent)
+tracker.subscribe(experiment.ExperimentNewStatusEvent)
+tracker.subscribe(experiment.ExperimentSucceededEvent)
+tracker.subscribe(experiment.ExperimentFailedEvent)
+tracker.subscribe(experiment.ExperimentResourcesViewedEvent)
+tracker.subscribe(experiment.ExperimentLogsViewedEvent)
+tracker.subscribe(experiment.ExperimentStatusesViewedEvent)
+tracker.subscribe(experiment.ExperimentJobsViewedEvent)
+
+tracker.subscribe(experiment.ExperimentJobViewedEvent)
+tracker.subscribe(experiment.ExperimentJobResourcesViewedEvent)
+tracker.subscribe(experiment.ExperimentJobLogsViewedEvent)
+tracker.subscribe(experiment.ExperimentJobStatusesViewedEvent)

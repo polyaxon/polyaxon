@@ -1,0 +1,12 @@
+import tracker
+from event_manager.events import permission
+
+tracker.subscribe(permission.PermissionProjectDeniedEvent)
+tracker.subscribe(permission.PermissionRepoDeniedEvent)
+tracker.subscribe(permission.PermissionExperimentGroupDeniedEvent)
+tracker.subscribe(permission.PermissionExperimentDeniedEvent)
+tracker.subscribe(permission.PermissionTensorboardDeniedEvent)
+tracker.subscribe(permission.PermissionNotebookDeniedEvent)
+tracker.subscribe(permission.PermissionExperimentJobDeniedEvent)
+tracker.subscribe(permission.PermissionClusterDeniedEvent)
+tracker.subscribe(permission.PermissionUserRoleEvent)

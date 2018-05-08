@@ -1,23 +1,22 @@
 from django.conf import settings
 
-from analytics.manager import default_manager
-from analytics.service import AnalyticService
+from tracker.manager import default_manager
+from tracker.service import AnalyticService
 from libs.services import LazyServiceWrapper
-from polyaxon.utils import config
 
 
-def get_analytics_backend():
+def get_tracker_backend():
     if settings.ANALYTICS_BACKEND == settings.ANALYTICS_BACKEND_NOOP:
-        return 'analytics.service.AnalyticService'
+        return 'tracker.service.AnalyticService'
     if settings.ANALYTICS_BACKEND == settings.ANALYTICS_BACKEND_PUBLISHER:
-        return 'analytics.publisher.PublisherAnalyticsService'
+        return 'tracker.publisher.PublisherAnalyticsService'
     return ''
 
 
 backend = LazyServiceWrapper(
     backend_base=AnalyticService,
-    backend_path=get_analytics_backend,
-    options=config.get_analytics_backend_options()
+    backend_path=get_tracker_backend(),
+    options={}
 )
 backend.expose(locals())
 

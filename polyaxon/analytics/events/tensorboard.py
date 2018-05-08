@@ -1,7 +1,0 @@
-import analytics
-from event_manager.events import tensorboard
-
-analytics.subscribe(tensorboard.TensorboardStartedEvent)
-analytics.subscribe(tensorboard.TensorboardSoppedEvent)
-analytics.subscribe(tensorboard.TensorboardViewedEvent)
-analytics.subscribe(tensorboard.TensorboardNewStatusEvent)

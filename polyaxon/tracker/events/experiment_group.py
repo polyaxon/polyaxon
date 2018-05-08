@@ -1,0 +1,16 @@
+import tracker
+from event_manager.events import experiment_group
+
+tracker.subscribe(experiment_group.ExperimentGroupCreatedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupUpdatedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupDeletedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupViewedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupStoppedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupResumedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupFinishedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupExperimentsViewedEvent)
+tracker.subscribe(experiment_group.ExperimentGroupIterationEvent)
+tracker.subscribe(experiment_group.ExperimentGroupRandomEvent)
+tracker.subscribe(experiment_group.ExperimentGroupGridEvent)
+tracker.subscribe(experiment_group.ExperimentGroupHyperbandEvent)
+tracker.subscribe(experiment_group.ExperimentGroupBOEvent)

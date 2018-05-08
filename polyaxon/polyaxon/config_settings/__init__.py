@@ -1,6 +1,6 @@
 from .admin import *
 from .apps import *
-from .analytics import *
+from .tracker import *
 from .assets import *
 from .celery_settings import *
 from .core import *
