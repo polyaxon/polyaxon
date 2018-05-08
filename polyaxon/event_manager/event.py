@@ -8,10 +8,11 @@ from libs.json_utils import dumps_htmlsafe
 
 
 class Attribute(object):
-    def __init__(self, name, attr_type=str, is_datetime=False, is_required=True):
+    def __init__(self, name, attr_type=str, is_datetime=False, is_uuid=False, is_required=True):
         self.name = name
         self.attr_type = attr_type
         self.is_datetime = is_datetime
+        self.is_uuid = is_uuid
         self.is_required = is_required
 
     def extract(self, value):
@@ -19,6 +20,8 @@ class Attribute(object):
             return value
         if self.is_datetime:
             return to_timestamp(value)
+        if self.is_uuid and not isinstance(value, str):
+            return value.hex
         return self.attr_type(value)
 
 
