@@ -25,6 +25,10 @@ class UserUpdatedEvent(Event):
 class UserActivatedEvent(Event):
     type = USER_ACTIVATED
 
+    attributes = (
+        Attribute('actor')
+    )
+
 
 class UserDeletedEvent(Event):
     type = USER_DELETED
