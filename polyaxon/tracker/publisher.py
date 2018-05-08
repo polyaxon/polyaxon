@@ -1,9 +1,9 @@
 import analytics
 
-from tracker import AnalyticService
+from tracker import TrackerService
 
 
-class PublisherAnalyticsService(AnalyticService):
+class PublisherService(TrackerService):
     def __init__(self):
         self.cluster_id = None
         self.publisher = analytics
