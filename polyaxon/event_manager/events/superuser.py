@@ -1,4 +1,4 @@
-from libs.event_manager.event import Event
+from event_manager.event import Event
 
 SUPERUSER_ROLE_GRANTED = 'superuser.role.granted'
 SUPERUSER_ROLE_REVOKED = 'superuser.role.revoked'

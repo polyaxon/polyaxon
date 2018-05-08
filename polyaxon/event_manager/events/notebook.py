@@ -1,4 +1,4 @@
-from libs.event_manager.event import Event
+from event_manager.event import Event
 
 NOTEBOOK_STARTED = 'notebook.started'
 NOTEBOOK_STOPPED = 'notebook.stopped'

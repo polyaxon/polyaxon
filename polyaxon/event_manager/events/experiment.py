@@ -1,4 +1,4 @@
-from libs.event_manager.event import Event
+from event_manager.event import Event
 
 EXPERIMENT_CREATED = 'experiment.created'
 EXPERIMENT_UPDATED = 'experiment.updated'  # params same user, other user, access granted

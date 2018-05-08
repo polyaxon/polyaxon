@@ -1,4 +1,4 @@
-from libs.event_manager.event import Attribute, Event
+from event_manager.event import Attribute, Event
 
 USER_REGISTERED = 'user.registered'
 USER_UPDATED = 'user.updated'

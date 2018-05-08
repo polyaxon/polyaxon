@@ -1,7 +1,7 @@
 import analytics
 from auditor.manager import default_manager
-from libs.event_manager.event import Event
-from libs.event_manager.event_service import EventService
+from event_manager.event import Event
+from event_manager.event_service import EventService
 
 
 class AuditorService(EventService):
@@ -25,4 +25,4 @@ class AuditorService(EventService):
 
     def setup(self):
         # Load default event types
-        import auditor.events  # NOQA
+        pass

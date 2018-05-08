@@ -1,5 +1,5 @@
 import analytics
-from libs.event_manager.base_events import cluster
+from event_manager.events import cluster
 
 analytics.register(cluster.ClusterCreatedEvent)
 analytics.register(cluster.ClusterUpdatedEvent)

@@ -1,5 +1,5 @@
 import analytics
-from libs.event_manager.base_events import experiment
+from event_manager.events import experiment
 
 analytics.register(experiment.ExperimentCreatedEvent)
 analytics.register(experiment.ExperimentUpdatedEvent)

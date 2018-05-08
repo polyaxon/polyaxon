@@ -1,4 +1,4 @@
-from libs.event_manager.event import Event
+from event_manager.event import Event
 
 EXPERIMENT_GROUP_CREATED = 'experiment_group.created'
 EXPERIMENT_GROUP_UPDATED = 'experiment_group.updated'

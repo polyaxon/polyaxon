@@ -1,6 +1,5 @@
 import auditor
-from libs.event_manager.base_events import notebook
-
+from event_manager.events import notebook
 
 auditor.register(notebook.NotebookStartedEvent)
 auditor.register(notebook.NotebookSoppedEvent)

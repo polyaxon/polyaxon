@@ -1,3 +1,3 @@
-from libs.event_manager.event_manger import EventManager
+from event_manager.event_manger import EventManager
 
 default_manager = EventManager()

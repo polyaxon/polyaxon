@@ -1,4 +1,4 @@
-from libs.event_manager.event import Event
+from event_manager.event import Event
 
 REPO_CREATED = 'repo.created'
 REPO_NEW_COMMIT = 'repo.new_commit'  # attempt, fullfilled

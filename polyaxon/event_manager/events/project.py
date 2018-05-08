@@ -1,4 +1,4 @@
-from libs.event_manager.event import Event
+from event_manager.event import Event
 
 PROJECT_CREATED = 'project.created'
 PROJECT_UPDATED = 'project.updated'

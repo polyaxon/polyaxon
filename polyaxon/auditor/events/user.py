@@ -1,5 +1,5 @@
 import auditor
-from libs.event_manager.base_events import user
+from event_manager.events import user
 
 auditor.register(user.UserRegisteredEvent)
 auditor.register(user.UserUpdatedEvent)

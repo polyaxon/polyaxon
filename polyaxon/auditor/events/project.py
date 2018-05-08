@@ -1,5 +1,5 @@
 import auditor
-from libs.event_manager.base_events import project
+from event_manager.events import project
 
 auditor.register(project.ProjectCreatedEvent)
 auditor.register(project.ProjectUpdatedEvent)

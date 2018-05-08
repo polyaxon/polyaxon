@@ -1,5 +1,5 @@
 import analytics
-from libs.event_manager.base_events import user
+from event_manager.events import user
 
 analytics.register(user.UserRegisteredEvent)
 analytics.register(user.UserUpdatedEvent)

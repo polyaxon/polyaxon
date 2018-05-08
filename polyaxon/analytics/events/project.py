@@ -1,5 +1,5 @@
 import analytics
-from libs.event_manager.base_events import project
+from event_manager.events import project
 
 analytics.register(project.ProjectCreatedEvent)
 analytics.register(project.ProjectUpdatedEvent)

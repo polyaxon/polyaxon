@@ -1,5 +1,5 @@
 import auditor
-from libs.event_manager.base_events import cluster
+from event_manager.events import cluster
 
 auditor.register(cluster.ClusterCreatedEvent)
 auditor.register(cluster.ClusterUpdatedEvent)

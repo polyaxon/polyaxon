@@ -1,5 +1,5 @@
 import auditor
-from libs.event_manager.base_events import experiment_group
+from event_manager.events import experiment_group
 
 auditor.register(experiment_group.ExperimentGroupCreatedEvent)
 auditor.register(experiment_group.ExperimentGroupUpdatedEvent)

@@ -1,6 +1,6 @@
 from analytics.manager import default_manager
-from libs.event_manager.event import Event
-from libs.event_manager.event_service import EventService
+from event_manager.event import Event
+from event_manager.event_service import EventService
 
 
 class AnalyticService(EventService):
@@ -11,4 +11,4 @@ class AnalyticService(EventService):
 
     def setup(self):
         # Load default event types
-        import analytics.events  # NOQA
+        pass

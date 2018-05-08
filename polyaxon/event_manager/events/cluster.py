@@ -1,4 +1,4 @@
-from libs.event_manager.event import Attribute, Event
+from event_manager.event import Attribute, Event
 
 CLUSTER_CREATED = 'cluster.created'
 CLUSTER_UPDATED = 'cluster.updated'
