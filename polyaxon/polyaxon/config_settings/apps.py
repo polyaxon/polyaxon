@@ -12,7 +12,7 @@ PROJECT_APPS = (
     'experiment_groups.apps.ExperimentGroupsConfig',
     'experiments.apps.ExperimentsConfig',
     'pipelines.apps.PipelinesConfig',
-    'events_monitors.apps.EventsMonitorsConfig',
+    'event_monitors.apps.EventMonitorsConfig',
 )
 
 DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True)

@@ -6,9 +6,9 @@ from websockets import ConnectionClosed
 
 from django.core.exceptions import ValidationError
 
-from events.authentication import authorized
-from events.consumers import Consumer
-from events.socket_manager import SocketManager
+from event_monitors.authentication import authorized
+from event_monitors.consumers import Consumer
+from event_monitors.socket_manager import SocketManager
 from experiments.models import Experiment, ExperimentJob
 from libs.redis_db import RedisToStream
 from polyaxon.config_settings.celery_settings import CeleryQueues, RoutingKeys

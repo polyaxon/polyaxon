@@ -6,8 +6,8 @@ from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
 
 from clusters.models import Cluster
-from events.management.commands._base_monitor import BaseMonitorCommand
-from events.monitors import namespace
+from event_monitors.management.commands._base_monitor import BaseMonitorCommand
+from event_monitors.monitors import namespace
 from polyaxon_k8s.manager import K8SManager
 
 

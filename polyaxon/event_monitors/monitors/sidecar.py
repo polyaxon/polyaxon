@@ -1,7 +1,7 @@
 import logging
 import time
 
-from events import publisher
+from event_monitors import publisher
 from experiments.statuses import ExperimentLifeCycle
 from polyaxon_schemas.experiment import JobLabelConfig
 from runner.spawners.utils.constants import PodLifeCycle

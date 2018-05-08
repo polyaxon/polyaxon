@@ -3,7 +3,7 @@ import logging
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from events import publisher
+from event_monitors import publisher
 from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import is_experiment_still_running
 from repos import git

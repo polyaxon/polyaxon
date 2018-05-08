@@ -9,7 +9,7 @@ from polyaxon.settings import RunnerCeleryTasks
 from projects.models import Project
 from runner.nodes.models import ClusterEvent
 
-logger = logging.getLogger('polyaxon.tasks.events')
+logger = logging.getLogger('polyaxon.tasks.event_monitors')
 
 
 @celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_NAMESPACE)

@@ -1,7 +1,7 @@
 from django.conf import settings
 
-from events.management.commands._base_monitor import BaseMonitorCommand
-from events.monitors import sidecar
+from event_monitors.management.commands._base_monitor import BaseMonitorCommand
+from event_monitors.monitors import sidecar
 from polyaxon_k8s.manager import K8SManager
 
 
@@ -25,7 +25,7 @@ class Command(BaseMonitorCommand):
         is_running, labels = sidecar.can_log(k8s_manager, pod_id, log_sleep_interval)
         if not is_running:
             sidecar.logger.info('Jobs is not running anymore.')
-            return 
+            return
 
         sidecar.run(k8s_manager=k8s_manager,
                     pod_id=pod_id,

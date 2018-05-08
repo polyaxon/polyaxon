@@ -9,7 +9,7 @@ from pika.exceptions import AMQPConnectionError
 
 from django.conf import settings
 
-from events.socket_manager import SocketManager
+from event_monitors.socket_manager import SocketManager
 
 logger = logging.getLogger("polyaxon.monitors.events")
 

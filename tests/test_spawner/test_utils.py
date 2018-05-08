@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from events.monitors.statuses import update_job_containers
+from event_monitors.monitors.statuses import update_job_containers
 from experiments.models import ExperimentJob
 from factories.factory_experiments import ExperimentJobFactory
 from jobs.statuses import JobLifeCycle

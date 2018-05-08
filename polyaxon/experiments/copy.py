@@ -1,6 +1,6 @@
 import logging
 
-from events import publisher
+from event_monitors import publisher
 from experiments.paths import copy_experiment_outputs
 from experiments.statuses import ExperimentLifeCycle
 

@@ -4,8 +4,8 @@ from kubernetes.client.rest import ApiException
 
 from django.conf import settings
 
-from events.management.commands._base_monitor import BaseMonitorCommand
-from events.monitors import statuses
+from event_monitors.management.commands._base_monitor import BaseMonitorCommand
+from event_monitors.monitors import statuses
 from polyaxon_k8s.manager import K8SManager
 
 

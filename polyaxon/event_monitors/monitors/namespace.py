@@ -2,7 +2,7 @@ import logging
 
 from kubernetes import watch
 
-from events.tasks import handle_events_namespace
+from event_monitors.tasks import handle_events_namespace
 
 logger = logging.getLogger('polyaxon.monitors.namespace')
 

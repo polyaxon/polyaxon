@@ -10,7 +10,7 @@ from django.conf import settings
 
 import polyaxon_gpustat
 
-from events.tasks import handle_events_resources
+from event_monitors.tasks import handle_events_resources
 from libs.redis_db import RedisJobContainers, RedisToStream
 from polyaxon_schemas.experiment import ContainerResourcesConfig
 from runner.nodes.models import ClusterNode, NodeGPU
