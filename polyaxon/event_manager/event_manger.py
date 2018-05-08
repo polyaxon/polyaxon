@@ -2,9 +2,9 @@ class EventManager(object):
     def __init__(self):
         self._event_types = {}
 
-    def register(self, event_cls):
+    def subscribe(self, event_cls):
         """
-        >>> register(SomeEvent)
+        >>> subscribe(SomeEvent)
         """
         event_type = event_cls.event_type
         if event_type in self._event_types:

@@ -1,11 +1,11 @@
 import auditor
 from event_manager.events import project
 
-auditor.register(project.ProjectCreatedEvent)
-auditor.register(project.ProjectUpdatedEvent)
-auditor.register(project.ProjectDeletedEvent)
-auditor.register(project.ProjectViewedEvent)
-auditor.register(project.ProjectSetPublicEvent)
-auditor.register(project.ProjectSetPrivateEvent)
-auditor.register(project.ProjectExperimentsViewedEvent)
-auditor.register(project.ProjectExperimentGroupsViewedEvent)
+auditor.subscribe(project.ProjectCreatedEvent)
+auditor.subscribe(project.ProjectUpdatedEvent)
+auditor.subscribe(project.ProjectDeletedEvent)
+auditor.subscribe(project.ProjectViewedEvent)
+auditor.subscribe(project.ProjectSetPublicEvent)
+auditor.subscribe(project.ProjectSetPrivateEvent)
+auditor.subscribe(project.ProjectExperimentsViewedEvent)
+auditor.subscribe(project.ProjectExperimentGroupsViewedEvent)

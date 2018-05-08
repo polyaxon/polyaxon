@@ -1,8 +1,8 @@
 import analytics
 from event_manager.events import cluster
 
-analytics.register(cluster.ClusterCreatedEvent)
-analytics.register(cluster.ClusterUpdatedEvent)
-analytics.register(cluster.ClusterNodeCreatedEvent)
-analytics.register(cluster.ClusterNodeUpdatedEvent)
-analytics.register(cluster.ClusterNodeGPU)
+analytics.subscribe(cluster.ClusterCreatedEvent)
+analytics.subscribe(cluster.ClusterUpdatedEvent)
+analytics.subscribe(cluster.ClusterNodeCreatedEvent)
+analytics.subscribe(cluster.ClusterNodeUpdatedEvent)
+analytics.subscribe(cluster.ClusterNodeGPU)

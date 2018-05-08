@@ -21,4 +21,4 @@ backend = LazyServiceWrapper(
 )
 backend.expose(locals())
 
-register = default_manager.register
+subscribe = default_manager.subscribe
