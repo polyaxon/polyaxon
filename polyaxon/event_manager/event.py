@@ -57,6 +57,17 @@ class Event(object):
 
         self.data = data
 
+    @property
+    def event_subject(self):
+        """Return the first part of the event_type
+
+        e.g.
+
+        >>> Event.event_type = 'experiment.deleted'
+        >>> Event.event_subject == 'experiment'
+        """
+        return self.event_type.split('.')[0]
+
     def serialize(self, dumps=True):
         data = {
             'uuid': b64encode(self.uuid.bytes),
