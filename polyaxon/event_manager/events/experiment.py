@@ -14,11 +14,11 @@ EXPERIMENT_FAILED = 'experiment.failed'
 EXPERIMENT_RESOURCES_VIEWED = 'experiment.resources_viewed'
 EXPERIMENT_LOGS_VIEWED = 'experiment.logs_viewed'
 EXPERIMENT_STATUSES_VIEWED = 'experiment.statuses_viewed'
-EXPERIMENT_JOBS_VIEWED = 'experiment.jobs_viewed'
-EXPERIMENT_JOB_VIEWED = 'experiment.job.viewed'
-EXPERIMENT_JOB_RESOURCES_VIEWED = 'experiment.job.resources_viewed'
-EXPERIMENT_JOB_LOGS_VIEWED = 'experiment.job.logs_viewed'
-EXPERIMENT_JOB_STATUSES_VIEWED = 'experiment.job.statuses_viewed'
+EXPERIMENT_JOBS_VIEWED = 'experiment_jobs_viewed'
+EXPERIMENT_JOB_VIEWED = 'experiment_job.viewed'
+EXPERIMENT_JOB_RESOURCES_VIEWED = 'experiment_job.resources_viewed'
+EXPERIMENT_JOB_LOGS_VIEWED = 'experiment_job.logs_viewed'
+EXPERIMENT_JOB_STATUSES_VIEWED = 'experiment_job.statuses_viewed'
 
 
 class ExperimentCreatedEvent(Event):
