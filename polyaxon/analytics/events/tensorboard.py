@@ -1,6 +1,7 @@
-import auditor
+import analytics
 from event_manager.events import tensorboard
 
-auditor.register(tensorboard.TensorboardStartedEvent)
-auditor.register(tensorboard.TensorboardSoppedEvent)
-auditor.register(tensorboard.TensorboardNewStatusEvent)
+analytics.register(tensorboard.TensorboardStartedEvent)
+analytics.register(tensorboard.TensorboardSoppedEvent)
+analytics.register(tensorboard.TensorboardViewedEvent)
+analytics.register(tensorboard.TensorboardNewStatusEvent)

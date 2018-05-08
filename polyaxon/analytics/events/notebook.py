@@ -1,6 +1,7 @@
-import auditor
+import analytics
 from event_manager.events import notebook
 
-auditor.register(notebook.NotebookStartedEvent)
-auditor.register(notebook.NotebookSoppedEvent)
-auditor.register(notebook.NotebookNewStatusEvent)
+analytics.register(notebook.NotebookStartedEvent)
+analytics.register(notebook.NotebookSoppedEvent)
+analytics.register(notebook.NotebookViewedEvent)
+analytics.register(notebook.NotebookNewStatusEvent)

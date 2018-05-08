@@ -2,6 +2,7 @@ from event_manager.event import Event, Attribute
 
 TENSORBOARD_STARTED = 'tensorboard.started'
 TENSORBOARD_STOPPED = 'tensorboard.stopped'
+TENSORBOARD_VIEWED = 'tensorboard.viewed'
 TENSORBOARD_NEW_STATUS = 'tensorboard.new_status'
 
 
@@ -17,6 +18,16 @@ class TensorboardStartedEvent(Event):
 
 class TensorboardSoppedEvent(Event):
     type = TENSORBOARD_STOPPED
+    attributes = (
+        Attribute('tensorboard_uuid', is_uuid=True),
+        Attribute('project_uuid', is_uuid=True),
+        Attribute('project_owner_uuid', is_uuid=True),
+        Attribute('actor_uuid', is_uuid=True)
+    )
+
+
+class TensorboardViewedEvent(Event):
+    type = TENSORBOARD_VIEWED
     attributes = (
         Attribute('tensorboard_uuid', is_uuid=True),
         Attribute('project_uuid', is_uuid=True),
