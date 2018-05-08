@@ -11,7 +11,7 @@ class NotebookStartedEvent(Event):
         Attribute('notebook_uuid', is_uuid=True),
         Attribute('project_uuid', is_uuid=True),
         Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid')
+        Attribute('actor_uuid', is_uuid=True)
     )
 
 
@@ -21,7 +21,7 @@ class NotebookSoppedEvent(Event):
         Attribute('notebook_uuid', is_uuid=True),
         Attribute('project_uuid', is_uuid=True),
         Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid')
+        Attribute('actor_uuid', is_uuid=True)
     )
 
 

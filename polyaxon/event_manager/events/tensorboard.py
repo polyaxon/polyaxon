@@ -11,7 +11,7 @@ class TensorboardStartedEvent(Event):
         Attribute('tensorboard_uuid', is_uuid=True),
         Attribute('project_uuid', is_uuid=True),
         Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid')
+        Attribute('actor_uuid', is_uuid=True)
     )
 
 
@@ -21,7 +21,7 @@ class TensorboardSoppedEvent(Event):
         Attribute('tensorboard_uuid', is_uuid=True),
         Attribute('project_uuid', is_uuid=True),
         Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid')
+        Attribute('actor_uuid', is_uuid=True)
     )
 
 
