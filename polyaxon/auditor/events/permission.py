@@ -1,0 +1,12 @@
+import auditor
+from event_manager.events import permission
+
+auditor.subscribe(permission.PermissionProjectDeniedEvent)
+auditor.subscribe(permission.PermissionRepoDeniedEvent)
+auditor.subscribe(permission.PermissionExperimentGroupDeniedEvent)
+auditor.subscribe(permission.PermissionExperimentDeniedEvent)
+auditor.subscribe(permission.PermissionTensorboardDeniedEvent)
+auditor.subscribe(permission.PermissionNotebookDeniedEvent)
+auditor.subscribe(permission.PermissionExperimentJobDeniedEvent)
+auditor.subscribe(permission.PermissionClusterDeniedEvent)
+auditor.subscribe(permission.PermissionUserRoleEvent)
