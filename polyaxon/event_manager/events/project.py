@@ -2,10 +2,10 @@ from event_manager.event import Event, Attribute
 
 PROJECT_CREATED = 'project.created'
 PROJECT_UPDATED = 'project.updated'
-PROJECT_SET_PUBLIC = 'project.set_public'
-PROJECT_SET_PRIVATE = 'project.set_private'
 PROJECT_DELETED = 'project.deleted'
 PROJECT_VIEWED = 'project.viewed'
+PROJECT_SET_PUBLIC = 'project.set_public'
+PROJECT_SET_PRIVATE = 'project.set_private'
 PROJECT_EXPERIMENTS_VIEWED = 'project.experiments_viewed'
 PROJECT_EXPERIMENT_GROUPS_VIEWED = 'project.experiment_groups_viewed'
 

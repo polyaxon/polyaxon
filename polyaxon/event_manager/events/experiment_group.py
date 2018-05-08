@@ -6,13 +6,13 @@ EXPERIMENT_GROUP_DELETED = 'experiment_group.deleted'
 EXPERIMENT_GROUP_VIEWED = 'experiment_group.viewed'
 EXPERIMENT_GROUP_STOPPED = 'experiment_group.stopped'
 EXPERIMENT_GROUP_RESUMED = 'experiment_group.resumed'
+EXPERIMENT_GROUP_FINISHED = 'experiment_group.finished'
+EXPERIMENT_GROUP_EXPERIMENTS = 'experiment_group.experiments'
+EXPERIMENT_GROUP_ITERATION = 'experiment_group.iteration'
 EXPERIMENT_GROUP_RANDOM = 'experiment_group.random'
 EXPERIMENT_GROUP_GRID = 'experiment_group.grid'
 EXPERIMENT_GROUP_HYPERBAND = 'experiment_group.hyperband'
 EXPERIMENT_GROUP_BO = 'experiment_group.bo'
-EXPERIMENT_GROUP_ITERATION = 'experiment_group.iteration'
-EXPERIMENT_GROUP_FINISHED = 'experiment_group.finished'
-EXPERIMENT_GROUP_EXPERIMENTS = 'experiment_group.experiments'
 
 
 class ExperimentGroupCreatedEvent(Event):
