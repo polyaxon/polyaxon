@@ -69,6 +69,7 @@ class TestProjectListViewV1(BaseViewTest):
         assert len(data) == self.queryset.count()
         assert data == self.serializer_class(self.queryset, many=True).data
 
+    @flaky(max_runs=3)
     def test_get_others(self):
         resp = self.auth_client.get(self.url_other)
         assert resp.status_code == status.HTTP_200_OK
