@@ -1,13 +1,10 @@
 import analytics
-from libs.event_manager import event_types
-from libs.event_manager.event import Event, Attribute
+from libs.event_manager.base_events import cluster
+from libs.event_manager.event import Attribute
 
 
-class ClusterCreatedEvent(Event):
-    type = event_types.CLUSTER_CREATED
-
+class ClusterCreatedEvent(cluster.ClusterCreatedEvent):
     attributes = (
-        Attribute('cluster_uuid'),
         Attribute('created_at', is_datetime=True),
         Attribute('namespace'),
         Attribute('environment'),
@@ -31,11 +28,8 @@ class ClusterCreatedEvent(Event):
     )
 
 
-class ClusterUpdatedEvent(Event):
-    type = event_types.CLUSTER_UPDATED
-
+class ClusterUpdatedEvent(cluster.ClusterUpdatedEvent):
     attributes = (
-        Attribute('cluster_uuid'),
         Attribute('updated_at', is_datetime=True),
         Attribute('is_upgrade'),
         Attribute('cpu', attr_type=float),
@@ -44,11 +38,8 @@ class ClusterUpdatedEvent(Event):
     )
 
 
-class ClusterNodeCreatedEvent(Event):
-    type = event_types.CLUSTER_NODE_CREATED
-
+class ClusterNodeCreatedEvent(cluster.ClusterNodeCreatedEvent):
     attributes = (
-        Attribute('cluster_uuid'),
         Attribute('node_uuid'),
         Attribute('created_at', is_datetime=True),
         Attribute('role'),
@@ -63,11 +54,8 @@ class ClusterNodeCreatedEvent(Event):
     )
 
 
-class ClusterNodeUpdatedEvent(Event):
-    type = event_types.CLUSTER_NODE_UPDATED
-
+class ClusterNodeUpdatedEvent(cluster.ClusterNodeUpdatedEvent):
     attributes = (
-        Attribute('cluster_uuid'),
         Attribute('node_uuid'),
         Attribute('update_at', is_datetime=True),
         Attribute('role'),
@@ -82,21 +70,14 @@ class ClusterNodeUpdatedEvent(Event):
     )
 
 
-class ClusterNodeDeletedEvent(Event):
-    type = event_types.CLUSTER_NODE_DELETED
-
+class ClusterNodeDeletedEvent(cluster.ClusterNodeDeletedEvent):
     attributes = (
-        Attribute('cluster_uuid'),
         Attribute('node_uuid'),
     )
-
-
-class ClusterNodeGPU(Event):
-    type = event_types.CLUSTER_NODE_GPU
 
 
 analytics.register(ClusterCreatedEvent)
 analytics.register(ClusterUpdatedEvent)
 analytics.register(ClusterNodeCreatedEvent)
 analytics.register(ClusterNodeUpdatedEvent)
-analytics.register(ClusterNodeGPU)
+analytics.register(cluster.ClusterNodeGPU)
