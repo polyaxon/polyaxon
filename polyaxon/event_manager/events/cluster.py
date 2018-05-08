@@ -48,7 +48,7 @@ class ClusterUpdatedEvent(Event):
 class ClusterNodeCreatedEvent(Event):
     type = CLUSTER_NODE_CREATED
     attributes = (
-        Attribute('node_uuid', is_uuid=True),
+        Attribute('id'),
         Attribute('created_at', is_datetime=True),
         Attribute('role'),
         Attribute('sequence', attr_type=int),
@@ -65,7 +65,7 @@ class ClusterNodeCreatedEvent(Event):
 class ClusterNodeUpdatedEvent(Event):
     type = CLUSTER_NODE_UPDATED
     attributes = (
-        Attribute('node_uuid', is_uuid=True),
+        Attribute('id'),
         Attribute('update_at', is_datetime=True),
         Attribute('role'),
         Attribute('sequence', attr_type=int),
@@ -82,7 +82,7 @@ class ClusterNodeUpdatedEvent(Event):
 class ClusterNodeDeletedEvent(Event):
     type = CLUSTER_NODE_DELETED
     attributes = (
-        Attribute('node_uuid', is_uuid=True),
+        Attribute('id'),
     )
 
 

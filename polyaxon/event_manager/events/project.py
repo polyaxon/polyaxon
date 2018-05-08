@@ -13,8 +13,8 @@ PROJECT_EXPERIMENT_GROUPS_VIEWED = 'project.experiment_groups_viewed'
 class ProjectCreatedEvent(Event):
     type = PROJECT_CREATED
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('is_public', attr_type=bool),
@@ -24,9 +24,9 @@ class ProjectCreatedEvent(Event):
 class ProjectUpdatedEvent(Event):
     type = PROJECT_UPDATED
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('is_public', attr_type=bool),
@@ -36,9 +36,9 @@ class ProjectUpdatedEvent(Event):
 class ProjectDeletedEvent(Event):
     type = PROJECT_DELETED
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
@@ -46,9 +46,9 @@ class ProjectDeletedEvent(Event):
 class ProjectViewedEvent(Event):
     type = PROJECT_VIEWED
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
@@ -56,27 +56,27 @@ class ProjectViewedEvent(Event):
 class ProjectSetPublicEvent(Event):
     type = PROJECT_SET_PUBLIC
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
     )
 
 
 class ProjectSetPrivateEvent(Event):
     type = PROJECT_SET_PRIVATE
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
     )
 
 
 class ProjectExperimentsViewedEvent(Event):
     type = PROJECT_EXPERIMENTS_VIEWED
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )
 
@@ -84,8 +84,8 @@ class ProjectExperimentsViewedEvent(Event):
 class ProjectExperimentGroupsViewedEvent(Event):
     type = PROJECT_EXPERIMENT_GROUPS_VIEWED
     attributes = (
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('user_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True),
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
         Attribute('is_public', attr_type=bool),
     )

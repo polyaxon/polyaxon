@@ -9,37 +9,39 @@ TENSORBOARD_NEW_STATUS = 'tensorboard.new_status'
 class TensorboardStartedEvent(Event):
     type = TENSORBOARD_STARTED
     attributes = (
-        Attribute('tensorboard_uuid', is_uuid=True),
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True)
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('actor_id')
     )
 
 
 class TensorboardSoppedEvent(Event):
     type = TENSORBOARD_STOPPED
     attributes = (
-        Attribute('tensorboard_uuid', is_uuid=True),
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True)
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('actor_id'),
+        Attribute('status'),
     )
 
 
 class TensorboardViewedEvent(Event):
     type = TENSORBOARD_VIEWED
     attributes = (
-        Attribute('tensorboard_uuid', is_uuid=True),
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('project_owner_uuid', is_uuid=True),
-        Attribute('actor_uuid', is_uuid=True)
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('actor_id'),
+        Attribute('status'),
     )
 
 
 class TensorboardNewStatusEvent(Event):
     type = TENSORBOARD_NEW_STATUS
     attributes = (
-        Attribute('tensorboard_uuid', is_uuid=True),
-        Attribute('project_uuid', is_uuid=True),
-        Attribute('statue')
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('status'),
     )
