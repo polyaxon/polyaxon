@@ -1,4 +1,4 @@
-from event_manager.event import Event, Attribute
+from event_manager.event import Attribute, Event
 
 TENSORBOARD_STARTED = 'tensorboard.started'
 TENSORBOARD_STOPPED = 'tensorboard.stopped'

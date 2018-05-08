@@ -1,4 +1,4 @@
-from event_manager.event import Event, Attribute
+from event_manager.event import Attribute, Event
 
 PROJECT_CREATED = 'project.created'
 PROJECT_UPDATED = 'project.updated'

@@ -1,4 +1,5 @@
 import tracker
+
 from event_manager.events import notebook
 
 tracker.subscribe(notebook.NotebookStartedEvent)

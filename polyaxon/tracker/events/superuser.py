@@ -1,4 +1,5 @@
 import tracker
+
 from event_manager.events import superuser
 
 tracker.subscribe(superuser.SuperUserRoleGrantedEvent)

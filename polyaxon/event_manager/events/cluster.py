@@ -94,4 +94,3 @@ class ClusterNodeGPU(Event):
         Attribute('name'),
         Attribute('memory', attr_type=int),
     )
-

@@ -1,4 +1,5 @@
 import auditor
+
 from event_manager.events import user
 
 auditor.subscribe(user.UserRegisteredEvent)

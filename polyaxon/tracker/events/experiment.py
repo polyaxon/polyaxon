@@ -1,4 +1,5 @@
 import tracker
+
 from event_manager.events import experiment
 
 tracker.subscribe(experiment.ExperimentCreatedEvent)

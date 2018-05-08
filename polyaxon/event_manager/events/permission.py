@@ -1,4 +1,4 @@
-from event_manager.event import Event, Attribute
+from event_manager.event import Attribute, Event
 
 PERMISSION_PROJECT_DENIED = 'permission.project.denied'
 PERMISSION_REPO_DENIED = 'permission.repo.denied'

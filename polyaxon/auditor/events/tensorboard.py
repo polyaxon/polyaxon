@@ -1,4 +1,5 @@
 import auditor
+
 from event_manager.events import tensorboard
 
 auditor.subscribe(tensorboard.TensorboardStartedEvent)

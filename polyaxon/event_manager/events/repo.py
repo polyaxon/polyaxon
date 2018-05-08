@@ -1,4 +1,4 @@
-from event_manager.event import Event, Attribute
+from event_manager.event import Attribute, Event
 
 REPO_CREATED = 'repo.created'
 REPO_NEW_COMMIT = 'repo.new_commit'

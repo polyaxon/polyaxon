@@ -2,7 +2,7 @@ import inspect
 import itertools
 import logging
 
-from django.utils.functional import empty, LazyObject
+from django.utils.functional import LazyObject, empty
 
 from libs.imports import import_string
 

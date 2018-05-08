@@ -1,4 +1,5 @@
 import tracker
+
 from event_manager.events import repo
 
 tracker.subscribe(repo.RepoCreatedEvent)

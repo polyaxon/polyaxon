@@ -1,4 +1,4 @@
-from event_manager.event import Event, Attribute
+from event_manager.event import Attribute, Event
 
 EXPERIMENT_CREATED = 'experiment.created'
 EXPERIMENT_UPDATED = 'experiment.updated'

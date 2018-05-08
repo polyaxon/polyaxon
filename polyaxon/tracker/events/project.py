@@ -1,4 +1,5 @@
 import tracker
+
 from event_manager.events import project
 
 tracker.subscribe(project.ProjectCreatedEvent)
@@ -9,4 +10,3 @@ tracker.subscribe(project.ProjectSetPublicEvent)
 tracker.subscribe(project.ProjectSetPrivateEvent)
 tracker.subscribe(project.ProjectExperimentsViewedEvent)
 tracker.subscribe(project.ProjectExperimentGroupsViewedEvent)
-

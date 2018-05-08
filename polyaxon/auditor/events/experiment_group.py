@@ -1,4 +1,5 @@
 import auditor
+
 from event_manager.events import experiment_group
 
 auditor.subscribe(experiment_group.ExperimentGroupCreatedEvent)
