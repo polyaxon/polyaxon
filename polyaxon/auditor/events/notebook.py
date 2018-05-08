@@ -11,5 +11,10 @@ class NotebookSoppedEvent(Event):
     type = event_types.NOTEBOOK_STOPPED
 
 
+class NotebookNewStatusEvent(Event):
+    type = event_types.NOTEBOOK_NEW_STATUS
+
+
 auditor.register(NotebookStartedEvent)
 auditor.register(NotebookSoppedEvent)
+auditor.register(NotebookNewStatusEvent)

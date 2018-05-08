@@ -11,5 +11,10 @@ class TensorboardSoppedEvent(Event):
     type = event_types.TENSORBOARD_STOPPED
 
 
+class TensorboardNewStatusEvent(Event):
+    type = event_types.TENSORBOARD_NEW_STATUS
+
+
 auditor.register(TensorboardStartedEvent)
 auditor.register(TensorboardSoppedEvent)
+auditor.register(TensorboardNewStatusEvent)

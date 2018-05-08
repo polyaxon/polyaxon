@@ -35,6 +35,10 @@ class ExperimentCopiedEvent(Event):
     type = event_types.EXPERIMENT_COPIED
 
 
+class ExperimentNewStatusEvent(Event):
+    type = event_types.EXPERIMENT_NEW_STATUS
+
+
 class ExperimentSucceededEvent(Event):
     type = event_types.EXPERIMENT_SUCCEEDED
 
@@ -83,6 +87,7 @@ auditor.register(ExperimentStoppedEvent)
 auditor.register(ExperimentResumedEvent)
 auditor.register(ExperimentRestartedEvent)
 auditor.register(ExperimentCopiedEvent)
+auditor.register(ExperimentNewStatusEvent)
 auditor.register(ExperimentSucceededEvent)
 auditor.register(ExperimentFailedEvent)
 auditor.register(ExperimentResourcesViewedEvent)
