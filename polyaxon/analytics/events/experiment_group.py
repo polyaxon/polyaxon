@@ -1,0 +1,16 @@
+import analytics
+from libs.event_manager.base_events import experiment_group
+
+analytics.register(experiment_group.ExperimentGroupCreatedEvent)
+analytics.register(experiment_group.ExperimentGroupUpdatedEvent)
+analytics.register(experiment_group.ExperimentGroupDeletedEvent)
+analytics.register(experiment_group.ExperimentGroupViewedEvent)
+analytics.register(experiment_group.ExperimentGroupStoppedEvent)
+analytics.register(experiment_group.ExperimentGroupResumedEvent)
+analytics.register(experiment_group.ExperimentGroupFinishedEvent)
+analytics.register(experiment_group.ExperimentGroupExperimentsViewedEvent)
+analytics.register(experiment_group.ExperimentGroupIterationEvent)
+analytics.register(experiment_group.ExperimentGroupRandomEvent)
+analytics.register(experiment_group.ExperimentGroupGridEvent)
+analytics.register(experiment_group.ExperimentGroupHyperbandEvent)
+analytics.register(experiment_group.ExperimentGroupBOEvent)

@@ -1,0 +1,23 @@
+import analytics
+from libs.event_manager.base_events import experiment
+
+analytics.register(experiment.ExperimentCreatedEvent)
+analytics.register(experiment.ExperimentUpdatedEvent)
+analytics.register(experiment.ExperimentDeletedEvent)
+analytics.register(experiment.ExperimentViewedEvent)
+analytics.register(experiment.ExperimentStoppedEvent)
+analytics.register(experiment.ExperimentResumedEvent)
+analytics.register(experiment.ExperimentRestartedEvent)
+analytics.register(experiment.ExperimentCopiedEvent)
+analytics.register(experiment.ExperimentNewStatusEvent)
+analytics.register(experiment.ExperimentSucceededEvent)
+analytics.register(experiment.ExperimentFailedEvent)
+analytics.register(experiment.ExperimentResourcesViewedEvent)
+analytics.register(experiment.ExperimentLogsViewedEvent)
+analytics.register(experiment.ExperimentStatusesViewedEvent)
+analytics.register(experiment.ExperimentJobsViewedEvent)
+
+analytics.register(experiment.ExperimentJobViewedEvent)
+analytics.register(experiment.ExperimentJobResourcesViewedEvent)
+analytics.register(experiment.ExperimentJobLogsViewedEvent)
+analytics.register(experiment.ExperimentJobStatusesViewedEvent)
