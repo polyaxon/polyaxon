@@ -1,0 +1,17 @@
+import activitylogs
+
+from event_manager.events import experiment_group
+
+activitylogs.subscribe(experiment_group.ExperimentGroupCreatedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupUpdatedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupDeletedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupViewedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupStoppedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupResumedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupFinishedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupExperimentsViewedEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupIterationEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupRandomEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupGridEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupHyperbandEvent)
+activitylogs.subscribe(experiment_group.ExperimentGroupBOEvent)

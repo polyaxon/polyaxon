@@ -1,0 +1,12 @@
+import activitylogs
+
+from event_manager.events import project
+
+activitylogs.subscribe(project.ProjectCreatedEvent)
+activitylogs.subscribe(project.ProjectUpdatedEvent)
+activitylogs.subscribe(project.ProjectDeletedEvent)
+activitylogs.subscribe(project.ProjectViewedEvent)
+activitylogs.subscribe(project.ProjectSetPublicEvent)
+activitylogs.subscribe(project.ProjectSetPrivateEvent)
+activitylogs.subscribe(project.ProjectExperimentsViewedEvent)
+activitylogs.subscribe(project.ProjectExperimentGroupsViewedEvent)

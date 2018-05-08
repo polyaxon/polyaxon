@@ -14,7 +14,6 @@ class InvalidService(Exception):
 
 
 class Service(object):
-    __all__ = ()
 
     def validate(self):
         """Validate the settings for this backend (i.e. such as proper connection info).

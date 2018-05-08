@@ -3,7 +3,6 @@ from tracker.manager import default_manager
 
 
 class TrackerService(EventService):
-    __all__ = ('record', 'validate')
 
     event_manager = default_manager
 

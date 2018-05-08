@@ -6,7 +6,6 @@ from event_manager.event_service import EventService
 
 class AuditorService(EventService):
     """An service that just passes the event to author services."""
-    __all__ = ('record', 'validate')
 
     event_manager = default_manager
 

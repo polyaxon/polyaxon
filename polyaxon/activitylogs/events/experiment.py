@@ -1,0 +1,24 @@
+import activitylogs
+
+from event_manager.events import experiment
+
+activitylogs.subscribe(experiment.ExperimentCreatedEvent)
+activitylogs.subscribe(experiment.ExperimentUpdatedEvent)
+activitylogs.subscribe(experiment.ExperimentDeletedEvent)
+activitylogs.subscribe(experiment.ExperimentViewedEvent)
+activitylogs.subscribe(experiment.ExperimentStoppedEvent)
+activitylogs.subscribe(experiment.ExperimentResumedEvent)
+activitylogs.subscribe(experiment.ExperimentRestartedEvent)
+activitylogs.subscribe(experiment.ExperimentCopiedEvent)
+activitylogs.subscribe(experiment.ExperimentNewStatusEvent)
+activitylogs.subscribe(experiment.ExperimentSucceededEvent)
+activitylogs.subscribe(experiment.ExperimentFailedEvent)
+activitylogs.subscribe(experiment.ExperimentResourcesViewedEvent)
+activitylogs.subscribe(experiment.ExperimentLogsViewedEvent)
+activitylogs.subscribe(experiment.ExperimentStatusesViewedEvent)
+activitylogs.subscribe(experiment.ExperimentJobsViewedEvent)
+
+activitylogs.subscribe(experiment.ExperimentJobViewedEvent)
+activitylogs.subscribe(experiment.ExperimentJobResourcesViewedEvent)
+activitylogs.subscribe(experiment.ExperimentJobLogsViewedEvent)
+activitylogs.subscribe(experiment.ExperimentJobStatusesViewedEvent)

@@ -1,0 +1,8 @@
+import activitylogs
+
+from event_manager.events import tensorboard
+
+activitylogs.subscribe(tensorboard.TensorboardStartedEvent)
+activitylogs.subscribe(tensorboard.TensorboardSoppedEvent)
+activitylogs.subscribe(tensorboard.TensorboardViewedEvent)
+activitylogs.subscribe(tensorboard.TensorboardNewStatusEvent)

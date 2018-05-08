@@ -2,7 +2,6 @@ from libs.services import Service
 
 
 class EventService(Service):
-    __all__ = ('record', 'validate')
 
     event_manager = None
 
