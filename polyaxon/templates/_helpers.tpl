@@ -107,6 +107,8 @@ global config
   value: {{ toJson .Values.ingress.annotations | quote }}
 - name: POLYAXON_K8S_RBAC_ENABLED
   value: {{ .Values.rbac.enabled | quote }}
+- name: POLYAXON_K8S_PROVISIONER_ENABLED
+  value: {{ .Values.nfsProvisioner.enabled | quote }
 {{- if .Values.k8s.authorisation }}
 - name: POLYAXON_K8S_AUTHORISATION
   valueFrom:
