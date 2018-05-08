@@ -8,14 +8,17 @@ from libs.json_utils import dumps_htmlsafe
 
 
 class Attribute(object):
-    def __init__(self, name, attr_type=str, is_required=True):
+    def __init__(self, name, attr_type=str, is_datetime=False, is_required=True):
         self.name = name
         self.attr_type = attr_type
+        self.is_datetime = is_datetime
         self.is_required = is_required
 
     def extract(self, value):
         if value is None:
             return value
+        if self.is_datetime:
+            return to_timestamp(value)
         return self.attr_type(value)
 
 
@@ -23,7 +26,6 @@ class Event(object):
     __slots__ = ['uuid', 'attributes', 'data', 'datetime', 'event_type']
 
     event_type = None
-
     attributes = ()
 
     def __init__(self, event_type=None, datetime=None, **items):
