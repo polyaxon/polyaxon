@@ -206,7 +206,7 @@ beat:
       cpu: 50m
       memory: 128Mi
 
-events:
+eventMonitors:
   namespace:
     enabled: true
     image: polyaxon/polyaxon-monitor-namespace

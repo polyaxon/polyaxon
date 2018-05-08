@@ -12,7 +12,7 @@ metadata:
     type: {{ .Values.types.core }}
     role: {{ .Values.roles.log }}
 spec:
-  replicas: {{ .Values.events.replicas }}
+  replicas: {{ .Values.eventMonitors.replicas }}
   template:
     metadata:
       labels:
@@ -35,12 +35,12 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      {{- if .Values.events.namespace.enabled }}
-      # namespace events
+      {{- if .Values.eventMonitors.namespace.enabled }}
+      # namespace event monitor
       - name: {{ .Chart.Name }}-namespace
-        image: "{{ .Values.events.namespace.image }}:{{ .Values.events.namespace.imageTag }}"
-        imagePullPolicy: {{ .Values.events.namespace.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.events.namespace.logSleepInterval }}", "--persist={{ .Values.events.namespace.persists }}"]
+        image: "{{ .Values.eventMonitors.namespace.image }}:{{ .Values.eventMonitors.namespace.imageTag }}"
+        imagePullPolicy: {{ .Values.eventMonitors.namespace.imagePullPolicy }}
+        args: ["--log_sleep_interval={{ .Values.eventMonitors.namespace.logSleepInterval }}", "--persist={{ .Values.eventMonitors.namespace.persists }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -57,14 +57,14 @@ spec:
         {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
         resources:
-{{ toYaml .Values.events.namespace.resources | indent 10 }}
+{{ toYaml .Values.eventMonitors.namespace.resources | indent 10 }}
       {{- end }}
-      # statuses events
-      {{- if .Values.events.statuses.enabled }}
+      # statuses event monitor
+      {{- if .Values.eventMonitors.statuses.enabled }}
       - name: {{ .Chart.Name }}-statuses
-        image: "{{ .Values.events.statuses.image }}:{{ .Values.events.statuses.imageTag }}"
-        imagePullPolicy: {{ .Values.events.statuses.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.events.statuses.logSleepInterval }}", "--persist={{ .Values.events.statuses.persists }}"]
+        image: "{{ .Values.eventMonitors.statuses.image }}:{{ .Values.eventMonitors.statuses.imageTag }}"
+        imagePullPolicy: {{ .Values.eventMonitors.statuses.imagePullPolicy }}
+        args: ["--log_sleep_interval={{ .Values.eventMonitors.statuses.logSleepInterval }}", "--persist={{ .Values.eventMonitors.statuses.persists }}"]
         env:
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
@@ -81,5 +81,5 @@ spec:
         {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
         resources:
-{{ toYaml .Values.events.statuses.resources | indent 10 }}
+{{ toYaml .Values.eventMonitors.statuses.resources | indent 10 }}
       {{- end }}
