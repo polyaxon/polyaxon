@@ -1,7 +1,6 @@
 import tracker
 
 from auditor.manager import default_manager
-from event_manager.event import Event
 from event_manager.event_service import EventService
 
 
@@ -10,7 +9,6 @@ class AuditorService(EventService):
     __all__ = ('record', 'validate')
 
     event_manager = default_manager
-    EventModel = Event
 
     def get_event(self, event_type, instance, **kwargs):
         return {
