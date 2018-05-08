@@ -1,4 +1,4 @@
-import tracker
+import analytics
 
 from tracker import AnalyticService
 
@@ -6,7 +6,9 @@ from tracker import AnalyticService
 class PublisherAnalyticsService(AnalyticService):
     def __init__(self):
         self.cluster_id = None
-        self.publisher = None
+        self.publisher = analytics
+        # Set key
+        analytics.write_key = ''
 
     def get_cluster_id(self):
         if self.cluster_id:
@@ -18,7 +20,7 @@ class PublisherAnalyticsService(AnalyticService):
         return self.cluster_id
 
     def record_event(self, event):
-        self.publisher.publish(
+        self.publisher.track(
             self.cluster_id,  # Add to data
             data=event.serialize(dumps=True),
         )
