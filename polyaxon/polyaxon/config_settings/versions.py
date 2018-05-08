@@ -21,4 +21,4 @@ LIB_LATEST_VERSION = config.get_string('POLYAXON_LIB_LATEST_VERSION',
 CHART_VERSION = config.get_string('POLYAXON_CHART_VERSION',
                                   is_optional=True,
                                   default='0.0.0')
-CHART_IS_UPGRADE = config.get_string('POLYAXON_CHART_IS_UPGRADE')
+CHART_IS_UPGRADE = config.get_boolean('POLYAXON_CHART_IS_UPGRADE')
