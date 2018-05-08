@@ -70,5 +70,6 @@ class Event(object):
     def from_instance(cls, instance, **kwargs):
         values = {}
         for attr in cls.attributes:
+            # TODO: add support for automatic dot props, e.g. 'user.id'
             values[attr.name] = kwargs.get(attr.name, getattr(instance, attr.name, None))
         return cls(**values)

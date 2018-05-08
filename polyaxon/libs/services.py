@@ -62,6 +62,8 @@ class LazyServiceWrapper(LazyObject):
         base = self._backend_base
         for key in itertools.chain(base.__all__, ('validate', 'setup')):
             if inspect.ismethod(getattr(base, key)):
+                # pylint:disable=unnecessary-lambda
+                # pylint:disable=undefined-variable
                 context[key] = (lambda f: lambda *a, **k: getattr(self, f)(*a, **k))(key)
             else:
                 context[key] = getattr(base, key)

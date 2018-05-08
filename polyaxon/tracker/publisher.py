@@ -20,6 +20,11 @@ class PublisherAnalyticsService(AnalyticService):
         return self.cluster_id
 
     def record_event(self, event):
+        if event.event_type == 'cluster.created':
+            self.publisher.identify(
+                self.cluster_id,  # Add to data
+                data=event.serialize(dumps=True),
+            )
         self.publisher.track(
             self.cluster_id,  # Add to data
             data=event.serialize(dumps=True),

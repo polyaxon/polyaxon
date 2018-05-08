@@ -43,8 +43,7 @@ class JSONEncoderForHTML(JSONEncoder):
         chunks = self.iterencode(o, True)
         if self.ensure_ascii:
             return ''.join(chunks)
-        else:
-            return u''.join(chunks)
+        return u''.join(chunks)
 
     def iterencode(self, o, _one_shot=False):
         chunks = super(JSONEncoderForHTML, self).iterencode(o, _one_shot)

@@ -34,7 +34,7 @@ def import_submodules(context, root_module, path):
 
     >>> import_submodules(locals(), __name__, __path__)
     """
-    for loader, module_name, is_pkg in pkgutil.walk_packages(path, root_module + '.'):
+    for _, module_name, _ in pkgutil.walk_packages(path, root_module + '.'):
         # this causes a Runtime error with model conflicts
         # module = loader.find_module(module_name).load_module(module_name)
         module = __import__(module_name, globals(), locals(), ['__name__'])
