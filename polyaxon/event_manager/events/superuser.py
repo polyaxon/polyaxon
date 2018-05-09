@@ -1,4 +1,4 @@
-from event_manager import event_subjects, event_actions
+from event_manager import event_actions, event_subjects
 from event_manager.event import Attribute, Event
 
 SUPERUSER_ROLE_GRANTED = '{}.{}'.format(event_subjects.SUPERUSER, event_actions.GRANTED)
