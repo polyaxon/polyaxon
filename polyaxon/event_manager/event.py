@@ -73,6 +73,19 @@ class Event(object):
         """
         return cls.event_type.split('.')[0]
 
+    @classmethod
+    def get_event_action(cls):
+        """Return the second part of the event_type
+
+        e.g.
+
+        >>> Event.event_type = 'experiment.deleted'
+        >>> Event.get_event_action() == 'deleted'
+        """
+        if not cls.actor_id:
+            return None
+        return cls.event_type.split('.')[1]
+
     def serialize(self, dumps=True):
         data = {
             'uuid': self.uuid.hex,

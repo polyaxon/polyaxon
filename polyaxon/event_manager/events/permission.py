@@ -25,7 +25,7 @@ PERMISSION_EXPERIMENT_JOB_DENIED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_J
 PERMISSION_CLUSTER_DENIED = '{}.{}.{}'.format(event_subjects.CLUSTER,
                                               event_actions.DENIED,
                                               event_subjects.PERMISSION)
-PERMISSION_USER_ROLE_DENIED = '{}.{}.{}'.format(event_subjects.SUPER_USER,
+PERMISSION_USER_ROLE_DENIED = '{}.{}.{}'.format(event_subjects.SUPERUSER,
                                                 event_actions.DENIED,
                                                 event_subjects.PERMISSION)
 
