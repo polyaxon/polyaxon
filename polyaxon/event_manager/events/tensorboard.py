@@ -8,6 +8,7 @@ TENSORBOARD_NEW_STATUS = 'tensorboard.new_status'
 
 class TensorboardStartedEvent(Event):
     event_type = TENSORBOARD_STARTED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -18,6 +19,7 @@ class TensorboardStartedEvent(Event):
 
 class TensorboardSoppedEvent(Event):
     event_type = TENSORBOARD_STOPPED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -29,6 +31,7 @@ class TensorboardSoppedEvent(Event):
 
 class TensorboardViewedEvent(Event):
     event_type = TENSORBOARD_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('project.id'),

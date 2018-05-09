@@ -19,6 +19,7 @@ EXPERIMENT_JOBS_VIEWED = 'experiment.jobs_viewed'
 
 class ExperimentCreatedEvent(Event):
     event_type = EXPERIMENT_CREATED
+    actor_id = 'user.id'
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -36,6 +37,7 @@ class ExperimentCreatedEvent(Event):
 
 class ExperimentUpdatedEvent(Event):
     event_type = EXPERIMENT_UPDATED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -53,6 +55,7 @@ class ExperimentUpdatedEvent(Event):
 
 class ExperimentDeletedEvent(Event):
     event_type = EXPERIMENT_DELETED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -70,6 +73,7 @@ class ExperimentDeletedEvent(Event):
 
 class ExperimentViewedEvent(Event):
     event_type = EXPERIMENT_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -86,6 +90,7 @@ class ExperimentViewedEvent(Event):
 
 class ExperimentStoppedEvent(Event):
     event_type = EXPERIMENT_STOPPED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -102,6 +107,7 @@ class ExperimentStoppedEvent(Event):
 
 class ExperimentResumedEvent(Event):
     event_type = EXPERIMENT_RESUMED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -118,6 +124,7 @@ class ExperimentResumedEvent(Event):
 
 class ExperimentRestartedEvent(Event):
     event_type = EXPERIMENT_RESTARTED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -134,6 +141,7 @@ class ExperimentRestartedEvent(Event):
 
 class ExperimentCopiedEvent(Event):
     event_type = EXPERIMENT_COPIED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -181,6 +189,7 @@ class ExperimentFailedEvent(Event):
 
 class ExperimentResourcesViewedEvent(Event):
     event_type = EXPERIMENT_RESOURCES_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -196,6 +205,7 @@ class ExperimentResourcesViewedEvent(Event):
 
 class ExperimentLogsViewedEvent(Event):
     event_type = EXPERIMENT_LOGS_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -211,6 +221,7 @@ class ExperimentLogsViewedEvent(Event):
 
 class ExperimentStatusesViewedEvent(Event):
     event_type = EXPERIMENT_STATUSES_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -226,6 +237,7 @@ class ExperimentStatusesViewedEvent(Event):
 
 class ExperimentJobsViewedEvent(Event):
     event_type = EXPERIMENT_JOBS_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),

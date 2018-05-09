@@ -8,6 +8,7 @@ EXPERIMENT_JOB_STATUSES_VIEWED = 'experiment_job.statuses_viewed'
 
 class ExperimentJobViewedEvent(Event):
     event_type = EXPERIMENT_JOB_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -21,6 +22,7 @@ class ExperimentJobViewedEvent(Event):
 
 class ExperimentJobResourcesViewedEvent(Event):
     event_type = EXPERIMENT_JOB_RESOURCES_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -33,6 +35,7 @@ class ExperimentJobResourcesViewedEvent(Event):
 
 class ExperimentJobLogsViewedEvent(Event):
     event_type = EXPERIMENT_JOB_LOGS_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -45,6 +48,7 @@ class ExperimentJobLogsViewedEvent(Event):
 
 class ExperimentJobStatusesViewedEvent(Event):
     event_type = EXPERIMENT_JOB_STATUSES_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),

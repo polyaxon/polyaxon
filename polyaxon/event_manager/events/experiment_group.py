@@ -17,6 +17,7 @@ EXPERIMENT_GROUP_BO = 'experiment_group.bo'
 
 class ExperimentGroupCreatedEvent(Event):
     event_type = EXPERIMENT_GROUP_CREATED
+    actor_id = 'user.id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -35,6 +36,7 @@ class ExperimentGroupCreatedEvent(Event):
 
 class ExperimentGroupUpdatedEvent(Event):
     event_type = EXPERIMENT_GROUP_UPDATED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -55,6 +57,7 @@ class ExperimentGroupUpdatedEvent(Event):
 
 class ExperimentGroupDeletedEvent(Event):
     event_type = EXPERIMENT_GROUP_DELETED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -75,6 +78,7 @@ class ExperimentGroupDeletedEvent(Event):
 
 class ExperimentGroupViewedEvent(Event):
     event_type = EXPERIMENT_GROUP_VIEWED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -95,6 +99,7 @@ class ExperimentGroupViewedEvent(Event):
 
 class ExperimentGroupStoppedEvent(Event):
     event_type = EXPERIMENT_GROUP_STOPPED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -115,6 +120,7 @@ class ExperimentGroupStoppedEvent(Event):
 
 class ExperimentGroupResumedEvent(Event):
     event_type = EXPERIMENT_GROUP_RESUMED
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -141,7 +147,6 @@ class ExperimentGroupFinishedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency'),
         Attribute('search_algorithm'),
@@ -161,7 +166,6 @@ class ExperimentGroupIterationEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency'),
         Attribute('search_algorithm'),
@@ -175,6 +179,7 @@ class ExperimentGroupIterationEvent(Event):
 
 class ExperimentGroupExperimentsViewedEvent(Event):
     event_type = EXPERIMENT_GROUP_EXPERIMENTS
+    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
