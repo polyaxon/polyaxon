@@ -13,11 +13,8 @@ class ActivityLog(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='+')
-    context = JSONField(
-        blank=True,
-        null=True,
-        help_text='Extra context information.')
-    created_at = models.DateTimeField(auto_now_add=True)
+    context = JSONField(help_text='Extra context information.')
+    created_at = models.DateTimeField()
 
     content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL)
     object_id = models.PositiveIntegerField()
