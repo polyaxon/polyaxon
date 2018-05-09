@@ -7,7 +7,6 @@ from tests.utils import BaseTest
 
 
 class DummyEventService(EventService):
-    event_manager = EventManager()
 
     def __init__(self):
         self.events = []
@@ -33,6 +32,8 @@ class DummyObject(object):
 class TestEventService(BaseTest):
     def setUp(self):
         self.service = DummyEventService()
+        self.service.event_manager = EventManager()
+        super(TestEventService, self).setUp()
 
     def test_can_handle(self):
         # Test handles only str event types
