@@ -8,12 +8,13 @@ class ActivityLogService(EventService):
     event_manager = default_manager
 
     def record_event(self, event):
+        assert event.actor_id is not None
         return ActivityLog.objects.create(
-            event=event.event_type,
-            actor_id=event.data['id'],
+            event_type=event.event_type,
+            actor_id=event.data[event.actor_id],
             context=event.data,
-            # content_type=content_type_mapping[event.get_event_subject()],
-            object_id=event.data['id']
+            created_at=event.datetime,
+            content_object=event.instance,
         )
 
     def setup(self):
