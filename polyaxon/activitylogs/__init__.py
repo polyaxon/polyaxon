@@ -4,7 +4,7 @@ from libs.services import LazyServiceWrapper
 
 backend = LazyServiceWrapper(
     backend_base=ActivityLogService,
-    backend_path='auditor.service.ActivityLogService',
+    backend_path='activitylogs.service.ActivityLogService',
     options={}
 )
 backend.expose(locals())
