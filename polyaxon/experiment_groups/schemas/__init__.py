@@ -1,7 +1,6 @@
-from polyaxon_schemas.utils import SearchAlgorithms
-
 from experiment_groups.schemas.bayesian_optimization import BOIterationConfig
 from experiment_groups.schemas.hyperband import HyperbandIterationConfig
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 def get_iteration_config(search_algorithm, iteration=None):

@@ -1,6 +1,6 @@
-from __future__ import absolute_import
-
 from unittest.mock import patch
+
+# pylint:disable=ungrouped-imports
 
 import auditor
 import tracker

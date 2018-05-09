@@ -10,19 +10,22 @@ class TestEventManager(BaseTest):
         self.manager = EventManager()
 
     def test_subscribe(self):
+        # pylint:disable=protected-access
+        # pylint:disable=len-as-condition
         assert len(self.manager._event_by_types) == 0
         self.manager.subscribe(ClusterCreatedEvent)
-        assert len(self.manager._event_by_types) == 1
+        assert len(self.manager._event_by_types) == 1  # pylint:disable=protected-access
+        # pylint:disable=protected-access
         assert ClusterCreatedEvent.event_type in self.manager._event_by_types
         assert self.manager._event_by_types[ClusterCreatedEvent.event_type] == ClusterCreatedEvent
 
         # Adding the same event
         self.manager.subscribe(ClusterCreatedEvent)
-        assert len(self.manager._event_by_types) == 1
+        assert len(self.manager._event_by_types) == 1  # pylint:disable=protected-access
 
         # Adding new event
         self.manager.subscribe(ClusterUpdatedEvent)
-        assert len(self.manager._event_by_types) == 2
+        assert len(self.manager._event_by_types) == 2  # pylint:disable=protected-access
 
         # Adding new event with same event type
         class DummyEvent(ClusterCreatedEvent):
@@ -48,4 +51,4 @@ class TestEventManager(BaseTest):
     def test_get(self):
         assert self.manager.get(event_type=ClusterCreatedEvent.event_type) is None
         self.manager.subscribe(ClusterCreatedEvent)
-        assert (self.manager.get(event_type=ClusterCreatedEvent.event_type) == ClusterCreatedEvent)
+        assert self.manager.get(event_type=ClusterCreatedEvent.event_type) == ClusterCreatedEvent

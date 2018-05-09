@@ -1,9 +1,8 @@
-from polyaxon_schemas.utils import SearchAlgorithms
-
 from experiment_groups.search_managers.bayesian_optimization.manager import BOSearchManager
 from experiment_groups.search_managers.grid import GridSearchManager
-from experiment_groups.search_managers.random import RandomSearchManager
 from experiment_groups.search_managers.hyperband import HyperbandSearchManager
+from experiment_groups.search_managers.random import RandomSearchManager
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 def get_search_algorithm_manager(params_config):
@@ -20,4 +19,3 @@ def get_search_algorithm_manager(params_config):
         return BOSearchManager(params_config=params_config)
 
     return None
-

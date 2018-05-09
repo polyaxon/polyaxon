@@ -1,6 +1,5 @@
 from polyaxon_schemas.utils import SearchAlgorithms
-
-from runner.hp_search import bo, grid, random, hyperband
+from runner.hp_search import bo, grid, hyperband, random
 
 
 def create(experiment_group):

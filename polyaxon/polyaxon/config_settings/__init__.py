@@ -1,6 +1,5 @@
 from .admin import *
 from .apps import *
-from .tracker import *
 from .assets import *
 from .celery_settings import *
 from .core import *
@@ -15,4 +14,5 @@ from .registry import *
 from .rest import *
 from .secrets import *
 from .spawner import *
+from .tracker import *
 from .versions import *

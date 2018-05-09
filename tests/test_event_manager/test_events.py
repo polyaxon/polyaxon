@@ -17,7 +17,7 @@ from tests.utils import BaseTest
 
 
 class TestEvents(BaseTest):
-    def test_events_subjects(self):
+    def test_events_subjects(self):  # pylint:disable=too-many-statements
         # Cluster
         assert cluster.ClusterCreatedEvent.get_event_subject() == 'cluster'
         assert cluster.ClusterUpdatedEvent.get_event_subject() == 'cluster'
@@ -44,26 +44,38 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentJobsViewedEvent.get_event_subject() == 'experiment'
 
         # Experiment group
-        assert experiment_group.ExperimentGroupCreatedEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupUpdatedEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupDeletedEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupViewedEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupStoppedEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupResumedEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupFinishedEvent.get_event_subject() == 'experiment_group'
+        assert (experiment_group.ExperimentGroupCreatedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupUpdatedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupDeletedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupViewedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupStoppedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupResumedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupFinishedEvent.get_event_subject() ==
+                'experiment_group')
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_subject() ==
                 'experiment_group')
-        assert experiment_group.ExperimentGroupIterationEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupRandomEvent.get_event_subject() == 'experiment_group'
+        assert (experiment_group.ExperimentGroupIterationEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupRandomEvent.get_event_subject() ==
+                'experiment_group')
         assert experiment_group.ExperimentGroupGridEvent.get_event_subject() == 'experiment_group'
-        assert experiment_group.ExperimentGroupHyperbandEvent.get_event_subject() == 'experiment_group'
+        assert (experiment_group.ExperimentGroupHyperbandEvent.get_event_subject() ==
+                'experiment_group')
         assert experiment_group.ExperimentGroupBOEvent.get_event_subject() == 'experiment_group'
 
         # Experiment job
         assert experiment_job.ExperimentJobViewedEvent.get_event_subject() == 'experiment_job'
-        assert experiment_job.ExperimentJobResourcesViewedEvent.get_event_subject() == 'experiment_job'
+        assert (experiment_job.ExperimentJobResourcesViewedEvent.get_event_subject() ==
+                'experiment_job')
         assert experiment_job.ExperimentJobLogsViewedEvent.get_event_subject() == 'experiment_job'
-        assert experiment_job.ExperimentJobStatusesViewedEvent.get_event_subject() == 'experiment_job'
+        assert (experiment_job.ExperimentJobStatusesViewedEvent.get_event_subject() ==
+                'experiment_job')
 
         # Notebook
         assert notebook.NotebookStartedEvent.get_event_subject() == 'notebook'

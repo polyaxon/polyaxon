@@ -1,7 +1,6 @@
-from polyaxon_schemas.utils import SearchAlgorithms
-
 from experiment_groups.iteration_managers.bayesian_optimization import BOIterationManager
 from experiment_groups.iteration_managers.hyperband import HyperbandIterationManager
+from polyaxon_schemas.utils import SearchAlgorithms
 
 
 def get_search_iteration_manager(experiment_group):

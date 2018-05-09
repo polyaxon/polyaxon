@@ -1,8 +1,8 @@
 from django.conf import settings
 
+from libs.services import LazyServiceWrapper
 from tracker.manager import default_manager
 from tracker.service import TrackerService
-from libs.services import LazyServiceWrapper
 
 
 def get_tracker_backend():
