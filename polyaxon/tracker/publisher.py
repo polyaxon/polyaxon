@@ -22,12 +22,13 @@ class PublisherService(TrackerService):
     def record_event(self, event):
         if event.event_type == 'cluster.created':
             self.publisher.identify(
-                self.cluster_id,  # Add to data
+                self.get_cluster_id(),
                 data=event.serialize(dumps=True),
             )
         self.publisher.track(
-            self.cluster_id,  # Add to data
-            data=event.serialize(dumps=True),
+            self.cluster_id,
+            event.event_type,
+            event.serialize(dumps=True),
         )
 
     def setup(self):
