@@ -17,8 +17,3 @@ activitylogs.subscribe(experiment.ExperimentResourcesViewedEvent)
 activitylogs.subscribe(experiment.ExperimentLogsViewedEvent)
 activitylogs.subscribe(experiment.ExperimentStatusesViewedEvent)
 activitylogs.subscribe(experiment.ExperimentJobsViewedEvent)
-
-activitylogs.subscribe(experiment.ExperimentJobViewedEvent)
-activitylogs.subscribe(experiment.ExperimentJobResourcesViewedEvent)
-activitylogs.subscribe(experiment.ExperimentJobLogsViewedEvent)
-activitylogs.subscribe(experiment.ExperimentJobStatusesViewedEvent)

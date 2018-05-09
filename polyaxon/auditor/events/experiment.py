@@ -17,8 +17,3 @@ auditor.subscribe(experiment.ExperimentResourcesViewedEvent)
 auditor.subscribe(experiment.ExperimentLogsViewedEvent)
 auditor.subscribe(experiment.ExperimentStatusesViewedEvent)
 auditor.subscribe(experiment.ExperimentJobsViewedEvent)
-
-auditor.subscribe(experiment.ExperimentJobViewedEvent)
-auditor.subscribe(experiment.ExperimentJobResourcesViewedEvent)
-auditor.subscribe(experiment.ExperimentJobLogsViewedEvent)
-auditor.subscribe(experiment.ExperimentJobStatusesViewedEvent)

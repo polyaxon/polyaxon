@@ -17,8 +17,3 @@ tracker.subscribe(experiment.ExperimentResourcesViewedEvent)
 tracker.subscribe(experiment.ExperimentLogsViewedEvent)
 tracker.subscribe(experiment.ExperimentStatusesViewedEvent)
 tracker.subscribe(experiment.ExperimentJobsViewedEvent)
-
-tracker.subscribe(experiment.ExperimentJobViewedEvent)
-tracker.subscribe(experiment.ExperimentJobResourcesViewedEvent)
-tracker.subscribe(experiment.ExperimentJobLogsViewedEvent)
-tracker.subscribe(experiment.ExperimentJobStatusesViewedEvent)
