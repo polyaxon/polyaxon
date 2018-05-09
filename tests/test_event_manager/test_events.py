@@ -36,6 +36,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentRestartedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentCopiedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentNewStatusEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentNewMetricEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentSucceededEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentFailedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentResourcesViewedEvent.get_event_subject() == 'experiment'
@@ -57,6 +58,8 @@ class TestEvents(BaseTest):
         assert (experiment_group.ExperimentGroupResumedEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupFinishedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupNewStatusEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_subject() ==
                 'experiment_group')
@@ -144,6 +147,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentRestartedEvent.get_event_action() == 'restarted'
         assert experiment.ExperimentCopiedEvent.get_event_action() == 'copied'
         assert experiment.ExperimentNewStatusEvent.get_event_action() is None
+        assert experiment.ExperimentNewMetricEvent.get_event_action() is None
         assert experiment.ExperimentSucceededEvent.get_event_action() is None
         assert experiment.ExperimentFailedEvent.get_event_action() is None
         assert experiment.ExperimentResourcesViewedEvent.get_event_action() == 'resources_viewed'
@@ -159,6 +163,7 @@ class TestEvents(BaseTest):
         assert experiment_group.ExperimentGroupStoppedEvent.get_event_action() == 'stopped'
         assert experiment_group.ExperimentGroupResumedEvent.get_event_action() == 'resumed'
         assert experiment_group.ExperimentGroupFinishedEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupNewStatusEvent.get_event_action() is None
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_action() ==
                 'experiments_viewed')
         assert experiment_group.ExperimentGroupIterationEvent.get_event_action() is None
