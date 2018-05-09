@@ -42,7 +42,7 @@ class Event(object):
         data = {}
         for attr in self.attributes:
             nv = items.pop(attr.name, None)
-            if attr.required and nv is None:
+            if attr.is_required and nv is None:
                 raise ValueError('{} is required (cannot be None)'.format(
                     attr.name,
                 ))
