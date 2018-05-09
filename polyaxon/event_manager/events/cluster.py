@@ -9,7 +9,7 @@ CLUSTER_NODE_GPU = 'cluster.node.gpu'
 
 
 class ClusterCreatedEvent(Event):
-    type = CLUSTER_CREATED
+    event_type = CLUSTER_CREATED
     attributes = (
         Attribute('created_at', is_datetime=True),
         Attribute('namespace'),
@@ -35,7 +35,7 @@ class ClusterCreatedEvent(Event):
 
 
 class ClusterUpdatedEvent(Event):
-    type = CLUSTER_UPDATED
+    event_type = CLUSTER_UPDATED
     attributes = (
         Attribute('updated_at', is_datetime=True),
         Attribute('is_upgrade'),
@@ -46,7 +46,7 @@ class ClusterUpdatedEvent(Event):
 
 
 class ClusterNodeCreatedEvent(Event):
-    type = CLUSTER_NODE_CREATED
+    event_type = CLUSTER_NODE_CREATED
     attributes = (
         Attribute('id'),
         Attribute('created_at', is_datetime=True),
@@ -63,7 +63,7 @@ class ClusterNodeCreatedEvent(Event):
 
 
 class ClusterNodeUpdatedEvent(Event):
-    type = CLUSTER_NODE_UPDATED
+    event_type = CLUSTER_NODE_UPDATED
     attributes = (
         Attribute('id'),
         Attribute('update_at', is_datetime=True),
@@ -80,14 +80,14 @@ class ClusterNodeUpdatedEvent(Event):
 
 
 class ClusterNodeDeletedEvent(Event):
-    type = CLUSTER_NODE_DELETED
+    event_type = CLUSTER_NODE_DELETED
     attributes = (
         Attribute('id'),
     )
 
 
 class ClusterNodeGPU(Event):
-    type = CLUSTER_NODE_GPU
+    event_type = CLUSTER_NODE_GPU
     attributes = (
         Attribute('created_at', is_datetime=True),
         Attribute('serial'),

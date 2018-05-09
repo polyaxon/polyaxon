@@ -11,7 +11,7 @@ PROJECT_EXPERIMENT_GROUPS_VIEWED = 'project.experiment_groups_viewed'
 
 
 class ProjectCreatedEvent(Event):
-    type = PROJECT_CREATED
+    event_type = PROJECT_CREATED
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -22,7 +22,7 @@ class ProjectCreatedEvent(Event):
 
 
 class ProjectUpdatedEvent(Event):
-    type = PROJECT_UPDATED
+    event_type = PROJECT_UPDATED
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -34,7 +34,7 @@ class ProjectUpdatedEvent(Event):
 
 
 class ProjectDeletedEvent(Event):
-    type = PROJECT_DELETED
+    event_type = PROJECT_DELETED
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -44,7 +44,7 @@ class ProjectDeletedEvent(Event):
 
 
 class ProjectViewedEvent(Event):
-    type = PROJECT_VIEWED
+    event_type = PROJECT_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -54,7 +54,7 @@ class ProjectViewedEvent(Event):
 
 
 class ProjectSetPublicEvent(Event):
-    type = PROJECT_SET_PUBLIC
+    event_type = PROJECT_SET_PUBLIC
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -63,7 +63,7 @@ class ProjectSetPublicEvent(Event):
 
 
 class ProjectSetPrivateEvent(Event):
-    type = PROJECT_SET_PRIVATE
+    event_type = PROJECT_SET_PRIVATE
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -72,7 +72,7 @@ class ProjectSetPrivateEvent(Event):
 
 
 class ProjectExperimentsViewedEvent(Event):
-    type = PROJECT_EXPERIMENTS_VIEWED
+    event_type = PROJECT_EXPERIMENTS_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -82,7 +82,7 @@ class ProjectExperimentsViewedEvent(Event):
 
 
 class ProjectExperimentGroupsViewedEvent(Event):
-    type = PROJECT_EXPERIMENT_GROUPS_VIEWED
+    event_type = PROJECT_EXPERIMENT_GROUPS_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('user.id'),

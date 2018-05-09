@@ -5,7 +5,7 @@ SUPERUSER_ROLE_REVOKED = 'superuser.role.revoked'
 
 
 class SuperUserRoleGrantedEvent(Event):
-    type = SUPERUSER_ROLE_GRANTED
+    event_type = SUPERUSER_ROLE_GRANTED
     attributes = (
         Attribute('id'),
         Attribute('actor_id')
@@ -13,7 +13,7 @@ class SuperUserRoleGrantedEvent(Event):
 
 
 class SuperUserRoleRevokedEvent(Event):
-    type = SUPERUSER_ROLE_REVOKED
+    event_type = SUPERUSER_ROLE_REVOKED
     attributes = (
         Attribute('id'),
         Attribute('actor_id')

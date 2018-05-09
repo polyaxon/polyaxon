@@ -5,7 +5,7 @@ REPO_NEW_COMMIT = 'repo.new_commit'
 
 
 class RepoCreatedEvent(Event):
-    type = REPO_CREATED
+    event_type = REPO_CREATED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -15,7 +15,7 @@ class RepoCreatedEvent(Event):
 
 
 class RepoNewCommitEvent(Event):
-    type = REPO_NEW_COMMIT
+    event_type = REPO_NEW_COMMIT
     attributes = (
         Attribute('id'),
         Attribute('project.id'),

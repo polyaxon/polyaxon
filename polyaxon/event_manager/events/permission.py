@@ -12,7 +12,7 @@ PERMISSION_USER_ROLE_DENIED = 'permission.user_role.denied'
 
 
 class PermissionProjectDeniedEvent(Event):
-    type = PERMISSION_PROJECT_DENIED
+    event_type = PERMISSION_PROJECT_DENIED
     attributes = (
         Attribute('id'),
         Attribute('user.id'),
@@ -22,7 +22,7 @@ class PermissionProjectDeniedEvent(Event):
 
 
 class PermissionRepoDeniedEvent(Event):
-    type = PERMISSION_REPO_DENIED
+    event_type = PERMISSION_REPO_DENIED
     attributes = (
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -32,7 +32,7 @@ class PermissionRepoDeniedEvent(Event):
 
 
 class PermissionExperimentGroupDeniedEvent(Event):
-    type = PERMISSION_EXPERIMENT_GROUP_DENIED
+    event_type = PERMISSION_EXPERIMENT_GROUP_DENIED
     attributes = (
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -42,7 +42,7 @@ class PermissionExperimentGroupDeniedEvent(Event):
 
 
 class PermissionExperimentDeniedEvent(Event):
-    type = PERMISSION_EXPERIMENT_DENIED
+    event_type = PERMISSION_EXPERIMENT_DENIED
     attributes = (
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -52,7 +52,7 @@ class PermissionExperimentDeniedEvent(Event):
 
 
 class PermissionTensorboardDeniedEvent(Event):
-    type = PERMISSION_TENSORBOARD_DENIED
+    event_type = PERMISSION_TENSORBOARD_DENIED
     attributes = (
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -62,7 +62,7 @@ class PermissionTensorboardDeniedEvent(Event):
 
 
 class PermissionNotebookDeniedEvent(Event):
-    type = PERMISSION_NOTEBOOK_DENIED
+    event_type = PERMISSION_NOTEBOOK_DENIED
     attributes = (
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -72,7 +72,7 @@ class PermissionNotebookDeniedEvent(Event):
 
 
 class PermissionExperimentJobDeniedEvent(Event):
-    type = PERMISSION_EXPERIMENT_JOB_DENIED
+    event_type = PERMISSION_EXPERIMENT_JOB_DENIED
     attributes = (
         Attribute('project.id'),
         Attribute('project.user.id'),
@@ -82,7 +82,7 @@ class PermissionExperimentJobDeniedEvent(Event):
 
 
 class PermissionClusterDeniedEvent(Event):
-    type = PERMISSION_CLUSTER_DENIED
+    event_type = PERMISSION_CLUSTER_DENIED
     attributes = (
         Attribute('actor_id'),
         Attribute('event')
@@ -90,7 +90,7 @@ class PermissionClusterDeniedEvent(Event):
 
 
 class PermissionUserRoleEvent(Event):
-    type = PERMISSION_USER_ROLE_DENIED
+    event_type = PERMISSION_USER_ROLE_DENIED
     attributes = (
         Attribute('user_id'),
         Attribute('actor_id'),

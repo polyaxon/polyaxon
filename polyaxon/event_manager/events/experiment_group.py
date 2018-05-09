@@ -16,7 +16,7 @@ EXPERIMENT_GROUP_BO = 'experiment_group.bo'
 
 
 class ExperimentGroupCreatedEvent(Event):
-    type = EXPERIMENT_GROUP_CREATED
+    event_type = EXPERIMENT_GROUP_CREATED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -34,7 +34,7 @@ class ExperimentGroupCreatedEvent(Event):
 
 
 class ExperimentGroupUpdatedEvent(Event):
-    type = EXPERIMENT_GROUP_UPDATED
+    event_type = EXPERIMENT_GROUP_UPDATED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -54,7 +54,7 @@ class ExperimentGroupUpdatedEvent(Event):
 
 
 class ExperimentGroupDeletedEvent(Event):
-    type = EXPERIMENT_GROUP_DELETED
+    event_type = EXPERIMENT_GROUP_DELETED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -74,7 +74,7 @@ class ExperimentGroupDeletedEvent(Event):
 
 
 class ExperimentGroupViewedEvent(Event):
-    type = EXPERIMENT_GROUP_VIEWED
+    event_type = EXPERIMENT_GROUP_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -94,7 +94,7 @@ class ExperimentGroupViewedEvent(Event):
 
 
 class ExperimentGroupStoppedEvent(Event):
-    type = EXPERIMENT_GROUP_STOPPED
+    event_type = EXPERIMENT_GROUP_STOPPED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -114,7 +114,7 @@ class ExperimentGroupStoppedEvent(Event):
 
 
 class ExperimentGroupResumedEvent(Event):
-    type = EXPERIMENT_GROUP_RESUMED
+    event_type = EXPERIMENT_GROUP_RESUMED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -134,7 +134,7 @@ class ExperimentGroupResumedEvent(Event):
 
 
 class ExperimentGroupFinishedEvent(Event):
-    type = EXPERIMENT_GROUP_FINISHED
+    event_type = EXPERIMENT_GROUP_FINISHED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -154,7 +154,7 @@ class ExperimentGroupFinishedEvent(Event):
 
 
 class ExperimentGroupIterationEvent(Event):
-    type = EXPERIMENT_GROUP_ITERATION
+    event_type = EXPERIMENT_GROUP_ITERATION
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -174,7 +174,7 @@ class ExperimentGroupIterationEvent(Event):
 
 
 class ExperimentGroupExperimentsViewedEvent(Event):
-    type = EXPERIMENT_GROUP_EXPERIMENTS
+    event_type = EXPERIMENT_GROUP_EXPERIMENTS
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -194,16 +194,16 @@ class ExperimentGroupExperimentsViewedEvent(Event):
 
 
 class ExperimentGroupRandomEvent(Event):
-    type = EXPERIMENT_GROUP_RANDOM
+    event_type = EXPERIMENT_GROUP_RANDOM
 
 
 class ExperimentGroupGridEvent(Event):
-    type = EXPERIMENT_GROUP_GRID
+    event_type = EXPERIMENT_GROUP_GRID
 
 
 class ExperimentGroupHyperbandEvent(Event):
-    type = EXPERIMENT_GROUP_HYPERBAND
+    event_type = EXPERIMENT_GROUP_HYPERBAND
 
 
 class ExperimentGroupBOEvent(Event):
-    type = EXPERIMENT_GROUP_BO
+    event_type = EXPERIMENT_GROUP_BO

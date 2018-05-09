@@ -7,7 +7,7 @@ NOTEBOOK_NEW_STATUS = 'notebook.new_status'
 
 
 class NotebookStartedEvent(Event):
-    type = NOTEBOOK_STARTED
+    event_type = NOTEBOOK_STARTED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -17,7 +17,7 @@ class NotebookStartedEvent(Event):
 
 
 class NotebookSoppedEvent(Event):
-    type = NOTEBOOK_STOPPED
+    event_type = NOTEBOOK_STOPPED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -28,7 +28,7 @@ class NotebookSoppedEvent(Event):
 
 
 class NotebookViewedEvent(Event):
-    type = NOTEBOOK_VIEWED
+    event_type = NOTEBOOK_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -39,7 +39,7 @@ class NotebookViewedEvent(Event):
 
 
 class NotebookNewStatusEvent(Event):
-    type = NOTEBOOK_NEW_STATUS
+    event_type = NOTEBOOK_NEW_STATUS
     attributes = (
         Attribute('id'),
         Attribute('project.id'),

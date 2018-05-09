@@ -7,7 +7,7 @@ USER_DELETED = 'user.deleted'
 
 
 class UserRegisteredEvent(Event):
-    type = USER_REGISTERED
+    event_type = USER_REGISTERED
 
     attributes = (
         Attribute('id', is_uuid=True),
@@ -16,7 +16,7 @@ class UserRegisteredEvent(Event):
 
 
 class UserUpdatedEvent(Event):
-    type = USER_UPDATED
+    event_type = USER_UPDATED
 
     attributes = (
         Attribute('id', is_uuid=True),
@@ -25,7 +25,7 @@ class UserUpdatedEvent(Event):
 
 
 class UserActivatedEvent(Event):
-    type = USER_ACTIVATED
+    event_type = USER_ACTIVATED
 
     attributes = (
         Attribute('id', is_uuid=True),
@@ -34,7 +34,7 @@ class UserActivatedEvent(Event):
 
 
 class UserDeletedEvent(Event):
-    type = USER_DELETED
+    event_type = USER_DELETED
     attributes = (
         Attribute('id', is_uuid=True),
         Attribute('actor_id', is_uuid=True)

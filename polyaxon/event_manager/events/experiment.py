@@ -22,7 +22,7 @@ EXPERIMENT_JOB_STATUSES_VIEWED = 'experiment_job.statuses_viewed'
 
 
 class ExperimentCreatedEvent(Event):
-    type = EXPERIMENT_CREATED
+    event_type = EXPERIMENT_CREATED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -39,7 +39,7 @@ class ExperimentCreatedEvent(Event):
 
 
 class ExperimentUpdatedEvent(Event):
-    type = EXPERIMENT_UPDATED
+    event_type = EXPERIMENT_UPDATED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -56,7 +56,7 @@ class ExperimentUpdatedEvent(Event):
 
 
 class ExperimentDeletedEvent(Event):
-    type = EXPERIMENT_DELETED
+    event_type = EXPERIMENT_DELETED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -73,7 +73,7 @@ class ExperimentDeletedEvent(Event):
 
 
 class ExperimentViewedEvent(Event):
-    type = EXPERIMENT_VIEWED
+    event_type = EXPERIMENT_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -89,7 +89,7 @@ class ExperimentViewedEvent(Event):
 
 
 class ExperimentStoppedEvent(Event):
-    type = EXPERIMENT_STOPPED
+    event_type = EXPERIMENT_STOPPED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -105,7 +105,7 @@ class ExperimentStoppedEvent(Event):
 
 
 class ExperimentResumedEvent(Event):
-    type = EXPERIMENT_RESUMED
+    event_type = EXPERIMENT_RESUMED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -121,7 +121,7 @@ class ExperimentResumedEvent(Event):
 
 
 class ExperimentRestartedEvent(Event):
-    type = EXPERIMENT_RESTARTED
+    event_type = EXPERIMENT_RESTARTED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -137,7 +137,7 @@ class ExperimentRestartedEvent(Event):
 
 
 class ExperimentCopiedEvent(Event):
-    type = EXPERIMENT_COPIED
+    event_type = EXPERIMENT_COPIED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -153,7 +153,7 @@ class ExperimentCopiedEvent(Event):
 
 
 class ExperimentNewStatusEvent(Event):
-    type = EXPERIMENT_NEW_STATUS
+    event_type = EXPERIMENT_NEW_STATUS
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -164,7 +164,7 @@ class ExperimentNewStatusEvent(Event):
 
 
 class ExperimentSucceededEvent(Event):
-    type = EXPERIMENT_SUCCEEDED
+    event_type = EXPERIMENT_SUCCEEDED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -174,7 +174,7 @@ class ExperimentSucceededEvent(Event):
 
 
 class ExperimentFailedEvent(Event):
-    type = EXPERIMENT_FAILED
+    event_type = EXPERIMENT_FAILED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -184,7 +184,7 @@ class ExperimentFailedEvent(Event):
 
 
 class ExperimentResourcesViewedEvent(Event):
-    type = EXPERIMENT_RESOURCES_VIEWED
+    event_type = EXPERIMENT_RESOURCES_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -199,7 +199,7 @@ class ExperimentResourcesViewedEvent(Event):
 
 
 class ExperimentLogsViewedEvent(Event):
-    type = EXPERIMENT_LOGS_VIEWED
+    event_type = EXPERIMENT_LOGS_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -214,7 +214,7 @@ class ExperimentLogsViewedEvent(Event):
 
 
 class ExperimentStatusesViewedEvent(Event):
-    type = EXPERIMENT_STATUSES_VIEWED
+    event_type = EXPERIMENT_STATUSES_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -229,7 +229,7 @@ class ExperimentStatusesViewedEvent(Event):
 
 
 class ExperimentJobsViewedEvent(Event):
-    type = EXPERIMENT_JOBS_VIEWED
+    event_type = EXPERIMENT_JOBS_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -244,7 +244,7 @@ class ExperimentJobsViewedEvent(Event):
 
 
 class ExperimentJobViewedEvent(Event):
-    type = EXPERIMENT_JOB_VIEWED
+    event_type = EXPERIMENT_JOB_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -257,7 +257,7 @@ class ExperimentJobViewedEvent(Event):
 
 
 class ExperimentJobResourcesViewedEvent(Event):
-    type = EXPERIMENT_JOB_RESOURCES_VIEWED
+    event_type = EXPERIMENT_JOB_RESOURCES_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -269,7 +269,7 @@ class ExperimentJobResourcesViewedEvent(Event):
 
 
 class ExperimentJobLogsViewedEvent(Event):
-    type = EXPERIMENT_JOB_LOGS_VIEWED
+    event_type = EXPERIMENT_JOB_LOGS_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -281,7 +281,7 @@ class ExperimentJobLogsViewedEvent(Event):
 
 
 class ExperimentJobStatusesViewedEvent(Event):
-    type = EXPERIMENT_JOB_STATUSES_VIEWED
+    event_type = EXPERIMENT_JOB_STATUSES_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('sequence'),

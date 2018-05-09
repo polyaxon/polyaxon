@@ -7,7 +7,7 @@ TENSORBOARD_NEW_STATUS = 'tensorboard.new_status'
 
 
 class TensorboardStartedEvent(Event):
-    type = TENSORBOARD_STARTED
+    event_type = TENSORBOARD_STARTED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -17,7 +17,7 @@ class TensorboardStartedEvent(Event):
 
 
 class TensorboardSoppedEvent(Event):
-    type = TENSORBOARD_STOPPED
+    event_type = TENSORBOARD_STOPPED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -28,7 +28,7 @@ class TensorboardSoppedEvent(Event):
 
 
 class TensorboardViewedEvent(Event):
-    type = TENSORBOARD_VIEWED
+    event_type = TENSORBOARD_VIEWED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
@@ -39,7 +39,7 @@ class TensorboardViewedEvent(Event):
 
 
 class TensorboardNewStatusEvent(Event):
-    type = TENSORBOARD_NEW_STATUS
+    event_type = TENSORBOARD_NEW_STATUS
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
