@@ -15,6 +15,8 @@ EXPERIMENT_GROUP_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.RESUMED)
 EXPERIMENT_GROUP_FINISHED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                            event_actions.FINISHED)
+EXPERIMENT_GROUP_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                             event_actions.NEW_STATUS)
 EXPERIMENT_GROUP_EXPERIMENTS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                                      event_actions.EXPERIMENTS_VIEWED)
 EXPERIMENT_GROUP_ITERATION = '{}.new_iteration'.format(event_subjects.EXPERIMENT_GROUP)
@@ -150,6 +152,25 @@ class ExperimentGroupResumedEvent(Event):
 
 class ExperimentGroupFinishedEvent(Event):
     event_type = EXPERIMENT_GROUP_FINISHED
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency'),
+        Attribute('search_algorithm'),
+        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('has_description', attr_type=bool),
+        Attribute('is_resume', attr_type=bool),
+        Attribute('is_restart', attr_type=bool),
+        Attribute('status'),
+    )
+
+
+class ExperimentGroupNewStatusEvent(Event):
+    event_type = EXPERIMENT_GROUP_NEW_STATUS
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
