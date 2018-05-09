@@ -14,6 +14,7 @@ class InvalidService(Exception):
 
 
 class Service(object):
+    __all__ = ()
 
     def validate(self):
         """Validate the settings for this backend (i.e. such as proper connection info).
@@ -60,7 +61,7 @@ class LazyServiceWrapper(LazyObject):
     def expose(self, context):
         base = self._backend_base
         for key in itertools.chain(base.__all__, ('validate', 'setup')):
-            if inspect.ismethod(getattr(base, key)):
+            if inspect.isfunction(getattr(base, key)):
                 # pylint:disable=unnecessary-lambda
                 # pylint:disable=undefined-variable
                 context[key] = (lambda f: lambda *a, **k: getattr(self, f)(*a, **k))(key)

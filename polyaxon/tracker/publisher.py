@@ -29,3 +29,7 @@ class PublisherService(TrackerService):
             self.cluster_id,  # Add to data
             data=event.serialize(dumps=True),
         )
+
+    def setup(self):
+        super(self, PublisherService).setup()
+        self.cluster_id = self.get_cluster_id()

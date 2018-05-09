@@ -2,6 +2,7 @@ from libs.services import Service
 
 
 class EventService(Service):
+    __all__ = ('record', 'setup')
 
     event_manager = None
 
@@ -15,6 +16,7 @@ class EventService(Service):
 
     def record(self, event_type, instance=None, **kwargs):
         """ Validate and record an event.
+
         >>> record('event.action', object_instance)
         """
         if not self.can_handle(event_type=event_type):
@@ -25,6 +27,7 @@ class EventService(Service):
 
     def record_event(self, event):
         """ Record an event.
+
         >>> record_event(Event())
         """
         pass
