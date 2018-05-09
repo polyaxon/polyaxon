@@ -8,6 +8,7 @@ from libs.json_utils import dumps_htmlsafe
 
 class Attribute(object):
     def __init__(self, name, attr_type=str, is_datetime=False, is_uuid=False, is_required=True):
+        assert name != 'instance'
         self.name = name
         self.attr_type = attr_type
         self.is_datetime = is_datetime
@@ -25,15 +26,16 @@ class Attribute(object):
 
 
 class Event(object):
-    __slots__ = ['uuid', 'data', 'datetime']
+    __slots__ = ['uuid', 'data', 'datetime', 'instance']
 
     event_type = None  # The event type should ideally follow subject.action
     attributes = ()
     actor_id = None
 
-    def __init__(self, datetime=None, **items):
+    def __init__(self, datetime=None, instance=None, **items):
         self.uuid = uuid1()
         self.datetime = datetime or timezone.now()
+        self.instance = instance
 
         if self.event_type is None:
             raise ValueError('Event is missing a type')
@@ -97,7 +99,7 @@ class Event(object):
 
     @classmethod
     def from_instance(cls, instance, **kwargs):
-        values = {}
+        values = {'instance': instance}
         for attr in cls.attributes:
             # TODO: add support for automatic dot props, e.g. 'user.id'
             values[attr.name] = kwargs.get(attr.name, getattr(instance, attr.name, None))
