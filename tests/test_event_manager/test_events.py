@@ -1,6 +1,17 @@
-from event_manager.event import Event, Attribute
-from event_manager.events import cluster, experiment, experiment_group, experiment_job, notebook, \
-    permission, project, repo, superuser, tensorboard, user
+from event_manager.event import Attribute, Event
+from event_manager.events import (
+    cluster,
+    experiment,
+    experiment_group,
+    experiment_job,
+    notebook,
+    permission,
+    project,
+    repo,
+    superuser,
+    tensorboard,
+    user
+)
 from libs.json_utils import loads
 from tests.utils import BaseTest
 

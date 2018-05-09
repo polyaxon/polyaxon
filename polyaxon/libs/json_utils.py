@@ -35,15 +35,6 @@ def better_default_encoder(o):
 
 
 class JSONEncoderForHTML(JSONEncoder):
-    # Our variant of JSONEncoderForHTML that also accounts for apostrophes
-    # See: https://github.com/simplejson/simplejson/blob/master/simplejson/encoder.py#L380-L386
-    def encode(self, o):
-        # Override JSONEncoder.encode because it has hacks for
-        # performance that make things more complicated.
-        chunks = self.iterencode(o, True)
-        if self.ensure_ascii:
-            return ''.join(chunks)
-        return u''.join(chunks)
 
     def iterencode(self, o, _one_shot=False):
         chunks = super(JSONEncoderForHTML, self).iterencode(o, _one_shot)
