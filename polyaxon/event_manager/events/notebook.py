@@ -2,7 +2,7 @@ from event_manager.event import Attribute, Event
 
 NOTEBOOK_STARTED = 'notebook.started'
 NOTEBOOK_STOPPED = 'notebook.stopped'
-NOTEBOOK_VIEWED = 'notebook.stopped'
+NOTEBOOK_VIEWED = 'notebook.viewed'
 NOTEBOOK_NEW_STATUS = 'notebook.new_status'
 
 

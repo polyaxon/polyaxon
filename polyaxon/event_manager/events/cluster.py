@@ -30,7 +30,7 @@ class ClusterCreatedEvent(Event):
         Attribute('cpu', attr_type=float),
         Attribute('memory', attr_type=float),
         Attribute('gpu', attr_type=float),
-        Attribute('api_version', attr_type=dict)
+        Attribute('version_api', attr_type=dict)
     )
 
 
