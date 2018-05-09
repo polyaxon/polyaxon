@@ -2,10 +2,10 @@ from event_manager.event import Attribute, Event
 
 CLUSTER_CREATED = 'cluster.created'
 CLUSTER_UPDATED = 'cluster.updated'
-CLUSTER_NODE_CREATED = 'cluster.node.created'
-CLUSTER_NODE_UPDATED = 'cluster.node.updated'
-CLUSTER_NODE_DELETED = 'cluster.node.deleted'
-CLUSTER_NODE_GPU = 'cluster.node.gpu'
+CLUSTER_NODE_CREATED = 'cluster_node.created'
+CLUSTER_NODE_UPDATED = 'cluster_node.updated'
+CLUSTER_NODE_DELETED = 'cluster_node.deleted'
+CLUSTER_NODE_GPU = 'cluster_node.gpu'
 
 
 class ClusterCreatedEvent(Event):

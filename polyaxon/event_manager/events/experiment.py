@@ -14,7 +14,7 @@ EXPERIMENT_FAILED = 'experiment.failed'
 EXPERIMENT_RESOURCES_VIEWED = 'experiment.resources_viewed'
 EXPERIMENT_LOGS_VIEWED = 'experiment.logs_viewed'
 EXPERIMENT_STATUSES_VIEWED = 'experiment.statuses_viewed'
-EXPERIMENT_JOBS_VIEWED = 'experiment_jobs_viewed'
+EXPERIMENT_JOBS_VIEWED = 'experiment.jobs_viewed'
 
 
 class ExperimentCreatedEvent(Event):

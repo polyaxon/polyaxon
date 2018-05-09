@@ -28,7 +28,7 @@ class Attribute(object):
 class Event(object):
     __slots__ = ['uuid', 'data', 'datetime']
 
-    event_type = None
+    event_type = None  # The event type should ideally follow subject.action
     attributes = ()
 
     def __init__(self, datetime=None, **items):
