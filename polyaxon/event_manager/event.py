@@ -26,20 +26,18 @@ class Attribute(object):
 
 
 class Event(object):
-    __slots__ = ['uuid', 'attributes', 'data', 'datetime', 'event_type']
+    __slots__ = ['uuid', 'data', 'datetime']
 
     event_type = None
     attributes = ()
 
-    def __init__(self, event_type=None, datetime=None, **items):
+    def __init__(self, datetime=None, **items):
         self.uuid = uuid1()
 
         self.datetime = datetime or timezone.now()
-        if event_type is not None:
-            self.event_type = event_type
 
         if self.event_type is None:
-            raise ValueError('Event is missing type')
+            raise ValueError('Event is missing a type')
 
         data = {}
         for attr in self.attributes:
