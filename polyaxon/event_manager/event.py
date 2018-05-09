@@ -1,4 +1,3 @@
-from base64 import b64encode
 from uuid import uuid1
 
 from django.utils import timezone
@@ -55,20 +54,20 @@ class Event(object):
 
         self.data = data
 
-    @property
-    def event_subject(self):
+    @classmethod
+    def get_event_subject(cls):
         """Return the first part of the event_type
 
         e.g.
 
         >>> Event.event_type = 'experiment.deleted'
-        >>> Event.event_subject == 'experiment'
+        >>> Event.get_event_subject() == 'experiment'
         """
-        return self.event_type.split('.')[0]
+        return cls.event_type.split('.')[0]
 
     def serialize(self, dumps=True):
         data = {
-            'uuid': b64encode(self.uuid.bytes),
+            'uuid': self.uuid.hex,
             'timestamp': to_timestamp(self.datetime),
             'type': self.event_type,
             'data': self.data,

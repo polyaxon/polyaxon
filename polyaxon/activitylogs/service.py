@@ -12,7 +12,7 @@ class ActivityLogService(EventService):
             event=event.event_type,
             actor_id=event.data['id'],
             context=event.data,
-            # content_type=content_type_mapping[event.event_subject],
+            # content_type=content_type_mapping[event.get_event_subject()],
             object_id=event.data['id']
         )
 
