@@ -9,6 +9,10 @@ from tests.utils import BaseTest
 
 
 class TestAttribute(BaseTest):
+    def test_name_should_not_be_instance(self):
+        with self.assertRaises(AssertionError):
+            Attribute(name='instance')
+
     def test_props(self):
         attr = Attribute(name='test')
         assert attr.name == 'test'
