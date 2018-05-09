@@ -1,9 +1,10 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-TENSORBOARD_STARTED = 'tensorboard.started'
-TENSORBOARD_STOPPED = 'tensorboard.stopped'
-TENSORBOARD_VIEWED = 'tensorboard.viewed'
-TENSORBOARD_NEW_STATUS = 'tensorboard.new_status'
+TENSORBOARD_STARTED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.STARTED)
+TENSORBOARD_STOPPED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.STOPPED)
+TENSORBOARD_VIEWED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.VIEWED)
+TENSORBOARD_NEW_STATUS = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.NEW_STATUS)
 
 
 class TensorboardStartedEvent(Event):

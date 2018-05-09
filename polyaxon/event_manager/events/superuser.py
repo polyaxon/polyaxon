@@ -1,7 +1,8 @@
+from event_manager import event_subjects
 from event_manager.event import Attribute, Event
 
-SUPERUSER_ROLE_GRANTED = 'superuser.role.granted'
-SUPERUSER_ROLE_REVOKED = 'superuser.role.revoked'
+SUPERUSER_ROLE_GRANTED = '{}.role.granted'.format(event_subjects.SUPER_USER)
+SUPERUSER_ROLE_REVOKED = '{}.role.revoked'.format(event_subjects.SUPER_USER)
 
 
 class SuperUserRoleGrantedEvent(Event):

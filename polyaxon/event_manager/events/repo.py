@@ -1,7 +1,8 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-REPO_CREATED = 'repo.created'
-REPO_NEW_COMMIT = 'repo.new_commit'
+REPO_CREATED = '{}.{}'.format(event_subjects.REPO, event_actions.CREATED)
+REPO_NEW_COMMIT = '{}.new_commit'.format(event_subjects.REPO)
 
 
 class RepoCreatedEvent(Event):

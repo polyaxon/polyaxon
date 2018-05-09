@@ -1,9 +1,10 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-USER_REGISTERED = 'user.registered'
-USER_UPDATED = 'user.updated'
-USER_ACTIVATED = 'user.activated'
-USER_DELETED = 'user.deleted'
+USER_REGISTERED = '{}.{}'.format(event_subjects.USER, event_actions.REGISTERED)
+USER_UPDATED = '{}.{}'.format(event_subjects.USER, event_actions.UPDATED)
+USER_ACTIVATED = '{}.{}'.format(event_subjects.USER, event_actions.ACTIVATED)
+USER_DELETED = '{}.{}'.format(event_subjects.USER, event_actions.DELETED)
 
 
 class UserRegisteredEvent(Event):

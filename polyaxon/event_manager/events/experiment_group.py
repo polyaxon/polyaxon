@@ -1,18 +1,27 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-EXPERIMENT_GROUP_CREATED = 'experiment_group.created'
-EXPERIMENT_GROUP_UPDATED = 'experiment_group.updated'
-EXPERIMENT_GROUP_DELETED = 'experiment_group.deleted'
-EXPERIMENT_GROUP_VIEWED = 'experiment_group.viewed'
-EXPERIMENT_GROUP_STOPPED = 'experiment_group.stopped'
-EXPERIMENT_GROUP_RESUMED = 'experiment_group.resumed'
-EXPERIMENT_GROUP_FINISHED = 'experiment_group.finished'
-EXPERIMENT_GROUP_EXPERIMENTS = 'experiment_group.experiments'
-EXPERIMENT_GROUP_ITERATION = 'experiment_group.iteration'
-EXPERIMENT_GROUP_RANDOM = 'experiment_group.random'
-EXPERIMENT_GROUP_GRID = 'experiment_group.grid'
-EXPERIMENT_GROUP_HYPERBAND = 'experiment_group.hyperband'
-EXPERIMENT_GROUP_BO = 'experiment_group.bo'
+EXPERIMENT_GROUP_CREATED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                          event_actions.CREATED)
+EXPERIMENT_GROUP_UPDATED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                          event_actions.UPDATED)
+EXPERIMENT_GROUP_DELETED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                          event_actions.DELETED)
+EXPERIMENT_GROUP_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                         event_actions.VIEWED)
+EXPERIMENT_GROUP_STOPPED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                          event_actions.STOPPED)
+EXPERIMENT_GROUP_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                          event_actions.RESUMED)
+EXPERIMENT_GROUP_FINISHED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                           event_actions.FINISHED)
+EXPERIMENT_GROUP_EXPERIMENTS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                                     event_actions.EXPERIMENTS_VIEWED)
+EXPERIMENT_GROUP_ITERATION = '{}.new_iteration'.format(event_subjects.EXPERIMENT_GROUP)
+EXPERIMENT_GROUP_RANDOM = '{}.random'.format(event_subjects.EXPERIMENT_GROUP)
+EXPERIMENT_GROUP_GRID = '{}.grid'.format(event_subjects.EXPERIMENT_GROUP)
+EXPERIMENT_GROUP_HYPERBAND = '{}.hyperband'.format(event_subjects.EXPERIMENT_GROUP)
+EXPERIMENT_GROUP_BO = '{}.bo'.format(event_subjects.EXPERIMENT_GROUP)
 
 
 class ExperimentGroupCreatedEvent(Event):
@@ -178,7 +187,7 @@ class ExperimentGroupIterationEvent(Event):
 
 
 class ExperimentGroupExperimentsViewedEvent(Event):
-    event_type = EXPERIMENT_GROUP_EXPERIMENTS
+    event_type = EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

@@ -1,9 +1,10 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-NOTEBOOK_STARTED = 'notebook.started'
-NOTEBOOK_STOPPED = 'notebook.stopped'
-NOTEBOOK_VIEWED = 'notebook.viewed'
-NOTEBOOK_NEW_STATUS = 'notebook.new_status'
+NOTEBOOK_STARTED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.STARTED)
+NOTEBOOK_STOPPED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.STOPPED)
+NOTEBOOK_VIEWED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.VIEWED)
+NOTEBOOK_NEW_STATUS = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.NEW_STATUS)
 
 
 class NotebookStartedEvent(Event):

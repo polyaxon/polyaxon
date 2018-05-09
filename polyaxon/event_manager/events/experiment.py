@@ -1,20 +1,36 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-EXPERIMENT_CREATED = 'experiment.created'
-EXPERIMENT_UPDATED = 'experiment.updated'
-EXPERIMENT_DELETED = 'experiment.deleted'
-EXPERIMENT_VIEWED = 'experiment.viewed'
-EXPERIMENT_STOPPED = 'experiment.stopped'
-EXPERIMENT_RESUMED = 'experiment.resumed'
-EXPERIMENT_RESTARTED = 'experiment.restarted'
-EXPERIMENT_COPIED = 'experiment.copied'
-EXPERIMENT_NEW_STATUS = 'experiment.new_status'
-EXPERIMENT_SUCCEEDED = 'experiment.succeeded'
-EXPERIMENT_FAILED = 'experiment.failed'
-EXPERIMENT_RESOURCES_VIEWED = 'experiment.resources_viewed'
-EXPERIMENT_LOGS_VIEWED = 'experiment.logs_viewed'
-EXPERIMENT_STATUSES_VIEWED = 'experiment.statuses_viewed'
-EXPERIMENT_JOBS_VIEWED = 'experiment.jobs_viewed'
+EXPERIMENT_CREATED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                    event_actions.CREATED)
+EXPERIMENT_UPDATED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                    event_actions.UPDATED)
+EXPERIMENT_DELETED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                    event_actions.DELETED)
+EXPERIMENT_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                   event_actions.VIEWED)
+EXPERIMENT_STOPPED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                    event_actions.STOPPED)
+EXPERIMENT_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                    event_actions.RESUMED)
+EXPERIMENT_RESTARTED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                      event_actions.RESTARTED)
+EXPERIMENT_COPIED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                   event_actions.COPIED)
+EXPERIMENT_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                       event_actions.NEW_STATUS)
+EXPERIMENT_SUCCEEDED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                      event_actions.SUCCEEDED)
+EXPERIMENT_FAILED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                   event_actions.FAILED)
+EXPERIMENT_RESOURCES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                             event_actions.RESOURCES_VIEWED)
+EXPERIMENT_LOGS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                        event_actions.LOGS_VIEWED)
+EXPERIMENT_STATUSES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                            event_actions.STATUSES_VIEWED)
+EXPERIMENT_JOBS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                        event_actions.JOBS_VIEWED)
 
 
 class ExperimentCreatedEvent(Event):

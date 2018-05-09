@@ -1,9 +1,14 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-EXPERIMENT_JOB_VIEWED = 'experiment_job.viewed'
-EXPERIMENT_JOB_RESOURCES_VIEWED = 'experiment_job.resources_viewed'
-EXPERIMENT_JOB_LOGS_VIEWED = 'experiment_job.logs_viewed'
-EXPERIMENT_JOB_STATUSES_VIEWED = 'experiment_job.statuses_viewed'
+EXPERIMENT_JOB_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
+                                       event_actions.VIEWED)
+EXPERIMENT_JOB_RESOURCES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
+                                                 event_actions.RESOURCES_VIEWED)
+EXPERIMENT_JOB_LOGS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
+                                            event_actions.LOGS_VIEWED)
+EXPERIMENT_JOB_STATUSES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
+                                                event_actions.STATUSES_VIEWED)
 
 
 class ExperimentJobViewedEvent(Event):

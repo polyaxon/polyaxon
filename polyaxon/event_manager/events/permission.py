@@ -1,14 +1,33 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-PERMISSION_PROJECT_DENIED = 'permission.project.denied'
-PERMISSION_REPO_DENIED = 'permission.repo.denied'
-PERMISSION_EXPERIMENT_GROUP_DENIED = 'permission.experiment_group.denied'
-PERMISSION_EXPERIMENT_DENIED = 'permission.experiment.denied'
-PERMISSION_TENSORBOARD_DENIED = 'permission.tensorboard.denied'
-PERMISSION_NOTEBOOK_DENIED = 'permission.notebook.denied'
-PERMISSION_EXPERIMENT_JOB_DENIED = 'permission.experiment.job.denied'
-PERMISSION_CLUSTER_DENIED = 'permission.cluster.denied'
-PERMISSION_USER_ROLE_DENIED = 'permission.user_role.denied'
+PERMISSION_PROJECT_DENIED = '{}.{}.{}'.format(event_subjects.PROJECT,
+                                              event_actions.DENIED,
+                                              event_subjects.PERMISSION)
+PERMISSION_REPO_DENIED = '{}.{}.{}'.format(event_subjects.REPO,
+                                           event_actions.DENIED,
+                                           event_subjects.PERMISSION)
+PERMISSION_EXPERIMENT_GROUP_DENIED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                                       event_actions.DENIED,
+                                                       event_subjects.PERMISSION)
+PERMISSION_EXPERIMENT_DENIED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+                                                 event_actions.DENIED,
+                                                 event_subjects.PERMISSION)
+PERMISSION_TENSORBOARD_DENIED = '{}.{}.{}'.format(event_subjects.TENSORBOARD,
+                                                  event_actions.DENIED,
+                                                  event_subjects.PERMISSION)
+PERMISSION_NOTEBOOK_DENIED = '{}.{}.{}'.format(event_subjects.NOTEBOOK,
+                                               event_actions.DENIED,
+                                               event_subjects.PERMISSION)
+PERMISSION_EXPERIMENT_JOB_DENIED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_JOB,
+                                                     event_actions.DENIED,
+                                                     event_subjects.PERMISSION)
+PERMISSION_CLUSTER_DENIED = '{}.{}.{}'.format(event_subjects.CLUSTER,
+                                              event_actions.DENIED,
+                                              event_subjects.PERMISSION)
+PERMISSION_USER_ROLE_DENIED = '{}.{}.{}'.format(event_subjects.SUPER_USER,
+                                                event_actions.DENIED,
+                                                event_subjects.PERMISSION)
 
 
 class PermissionProjectDeniedEvent(Event):

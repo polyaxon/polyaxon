@@ -1,13 +1,16 @@
+from event_manager import event_subjects, event_actions
 from event_manager.event import Attribute, Event
 
-PROJECT_CREATED = 'project.created'
-PROJECT_UPDATED = 'project.updated'
-PROJECT_DELETED = 'project.deleted'
-PROJECT_VIEWED = 'project.viewed'
-PROJECT_SET_PUBLIC = 'project.set_public'
-PROJECT_SET_PRIVATE = 'project.set_private'
-PROJECT_EXPERIMENTS_VIEWED = 'project.experiments_viewed'
-PROJECT_EXPERIMENT_GROUPS_VIEWED = 'project.experiment_groups_viewed'
+PROJECT_CREATED = '{}.{}'.format(event_subjects.PROJECT, event_actions.CREATED)
+PROJECT_UPDATED = '{}.{}'.format(event_subjects.PROJECT, event_actions.UPDATED)
+PROJECT_DELETED = '{}.{}'.format(event_subjects.PROJECT, event_actions.DELETED)
+PROJECT_VIEWED = '{}.{}'.format(event_subjects.PROJECT, event_actions.VIEWED)
+PROJECT_SET_PUBLIC = '{}.set_public'.format(event_subjects.PROJECT)
+PROJECT_SET_PRIVATE = '{}.set_private'.format(event_subjects.PROJECT)
+PROJECT_EXPERIMENTS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
+                                            event_actions.EXPERIMENTS_VIEWED)
+PROJECT_EXPERIMENT_GROUPS_VIEWED = '{}.{}'.format(event_subjects.PROJECT,
+                                                  event_actions.EXPERIMENT_GROUPS_VIEWED)
 
 
 class ProjectCreatedEvent(Event):
