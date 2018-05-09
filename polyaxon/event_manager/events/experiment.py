@@ -19,6 +19,8 @@ EXPERIMENT_COPIED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                    event_actions.COPIED)
 EXPERIMENT_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT,
                                        event_actions.NEW_STATUS)
+EXPERIMENT_NEW_METRIC = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                       event_actions.NEW_METRIC)
 EXPERIMENT_SUCCEEDED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                       event_actions.SUCCEEDED)
 EXPERIMENT_FAILED = '{}.{}'.format(event_subjects.EXPERIMENT,
@@ -180,6 +182,17 @@ class ExperimentNewStatusEvent(Event):
         Attribute('project.id'),
         Attribute('experiment_group.id'),
         Attribute('status'),
+    )
+
+
+class ExperimentNewMetricEvent(Event):
+    event_type = EXPERIMENT_NEW_METRIC
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('experiment_group.id'),
+        Attribute('metric'),
     )
 
 
