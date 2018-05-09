@@ -20,7 +20,7 @@ class UserUpdatedEvent(Event):
     event_type = USER_UPDATED
     actor_id = 'id'
     attributes = (
-        Attribute('id', is_uuid=True),
+        Attribute('id'),
         Attribute('updated_at', is_datetime=True)
     )
 
@@ -29,8 +29,8 @@ class UserActivatedEvent(Event):
     event_type = USER_ACTIVATED
     actor_id = 'actor_id'
     attributes = (
-        Attribute('id', is_uuid=True),
-        Attribute('actor_id', is_uuid=True)
+        Attribute('id'),
+        Attribute('actor_id')
     )
 
 
@@ -38,6 +38,6 @@ class UserDeletedEvent(Event):
     event_type = USER_DELETED
     actor_id = 'actor_id'
     attributes = (
-        Attribute('id', is_uuid=True),
-        Attribute('actor_id', is_uuid=True)
+        Attribute('id'),
+        Attribute('actor_id')
     )
