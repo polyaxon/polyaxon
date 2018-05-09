@@ -29,23 +29,31 @@ class Event(object):
 
     event_type = None  # The event type should ideally follow subject.action
     attributes = ()
+    actor_id = None
 
     def __init__(self, datetime=None, **items):
         self.uuid = uuid1()
-
         self.datetime = datetime or timezone.now()
 
         if self.event_type is None:
             raise ValueError('Event is missing a type')
 
         data = {}
+        has_actor = False
         for attr in self.attributes:
-            nv = items.pop(attr.name, None)
-            if attr.is_required and nv is None:
+            item_value = items.pop(attr.name, None)
+            if attr.is_required and item_value is None:
                 raise ValueError('{} is required (cannot be None)'.format(
                     attr.name,
                 ))
-            data[attr.name] = attr.extract(nv)
+            if self.actor_id and attr.name == self.actor_id:
+                has_actor = True
+            data[attr.name] = attr.extract(item_value)
+
+        if self.actor_id and not has_actor:
+            raise ValueError('Event {} requires an attribute specifying the actor id'.format(
+                self.event_type
+            ))
 
         if items:
             raise ValueError('Unknown attributes: {}'.format(

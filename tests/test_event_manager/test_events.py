@@ -158,3 +158,18 @@ class TestEvents(BaseTest):
         assert event_serialized['uuid'] is not None
         assert event_serialized['timestamp'] is not None
         assert event_serialized['data']['attr1'] == 'test'
+
+    def test_actor(self):
+        class DummyEvent(Event):
+            event_type = 'dummy.event'
+            actor_id = 'actor_id'
+            attributes = (
+                Attribute('attr1'),
+            )
+
+        class DummyObject(object):
+            attr1 = 'test'
+
+        obj = DummyObject()
+        with self.assertRaises(ValueError):
+            DummyEvent.from_instance(obj)
