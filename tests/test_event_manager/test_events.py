@@ -84,15 +84,16 @@ class TestEvents(BaseTest):
         assert notebook.NotebookNewStatusEvent.get_event_subject() == 'notebook'
 
         # Permission
-        assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionRepoDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionExperimentGroupDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionExperimentDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionTensorboardDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionNotebookDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionExperimentJobDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionClusterDeniedEvent.get_event_subject() == 'permission'
-        assert permission.PermissionUserRoleEvent.get_event_subject() == 'permission'
+        assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
+        assert permission.PermissionRepoDeniedEvent.get_event_subject() == 'repo'
+        assert (permission.PermissionExperimentGroupDeniedEvent.get_event_subject() ==
+                'experiment_group')
+        assert permission.PermissionExperimentDeniedEvent.get_event_subject() == 'experiment'
+        assert permission.PermissionTensorboardDeniedEvent.get_event_subject() == 'tensorboard'
+        assert permission.PermissionNotebookDeniedEvent.get_event_subject() == 'notebook'
+        assert permission.PermissionExperimentJobDeniedEvent.get_event_subject() == 'experiment_job'
+        assert permission.PermissionClusterDeniedEvent.get_event_subject() == 'cluster'
+        assert permission.PermissionUserRoleEvent.get_event_subject() == 'superuser'
 
         # Project
         assert project.ProjectCreatedEvent.get_event_subject() == 'project'
@@ -123,6 +124,104 @@ class TestEvents(BaseTest):
         assert user.UserUpdatedEvent.get_event_subject() == 'user'
         assert user.UserActivatedEvent.get_event_subject() == 'user'
         assert user.UserDeletedEvent.get_event_subject() == 'user'
+
+    def test_events_actions(self):  # pylint:disable=too-many-statements
+        # Cluster
+        assert cluster.ClusterCreatedEvent.get_event_action() is None
+        assert cluster.ClusterUpdatedEvent.get_event_action() is None
+        assert cluster.ClusterNodeCreatedEvent.get_event_action() is None
+        assert cluster.ClusterNodeUpdatedEvent.get_event_action() is None
+        assert cluster.ClusterNodeDeletedEvent.get_event_action() is None
+        assert cluster.ClusterNodeGPU.get_event_action() is None
+
+        # Experiment
+        assert experiment.ExperimentCreatedEvent.get_event_action() == 'created'
+        assert experiment.ExperimentUpdatedEvent.get_event_action() == 'updated'
+        assert experiment.ExperimentDeletedEvent.get_event_action() == 'deleted'
+        assert experiment.ExperimentViewedEvent.get_event_action() == 'viewed'
+        assert experiment.ExperimentStoppedEvent.get_event_action() == 'stopped'
+        assert experiment.ExperimentResumedEvent.get_event_action() == 'resumed'
+        assert experiment.ExperimentRestartedEvent.get_event_action() == 'restarted'
+        assert experiment.ExperimentCopiedEvent.get_event_action() == 'copied'
+        assert experiment.ExperimentNewStatusEvent.get_event_action() is None
+        assert experiment.ExperimentSucceededEvent.get_event_action() is None
+        assert experiment.ExperimentFailedEvent.get_event_action() is None
+        assert experiment.ExperimentResourcesViewedEvent.get_event_action() == 'resources_viewed'
+        assert experiment.ExperimentLogsViewedEvent.get_event_action() == 'logs_viewed'
+        assert experiment.ExperimentStatusesViewedEvent.get_event_action() == 'statuses_viewed'
+        assert experiment.ExperimentJobsViewedEvent.get_event_action() == 'jobs_viewed'
+
+        # Experiment group
+        assert experiment_group.ExperimentGroupCreatedEvent.get_event_action() == 'created'
+        assert experiment_group.ExperimentGroupUpdatedEvent.get_event_action() == 'updated'
+        assert experiment_group.ExperimentGroupDeletedEvent.get_event_action() == 'deleted'
+        assert experiment_group.ExperimentGroupViewedEvent.get_event_action() == 'viewed'
+        assert experiment_group.ExperimentGroupStoppedEvent.get_event_action() == 'stopped'
+        assert experiment_group.ExperimentGroupResumedEvent.get_event_action() == 'resumed'
+        assert experiment_group.ExperimentGroupFinishedEvent.get_event_action() is None
+        assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_action() ==
+                'experiments_viewed')
+        assert experiment_group.ExperimentGroupIterationEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupRandomEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupGridEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupHyperbandEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupBOEvent.get_event_action() is None
+
+        # Experiment job
+        assert experiment_job.ExperimentJobViewedEvent.get_event_action() == 'viewed'
+        assert (experiment_job.ExperimentJobResourcesViewedEvent.get_event_action() ==
+                'resources_viewed')
+        assert experiment_job.ExperimentJobLogsViewedEvent.get_event_action() == 'logs_viewed'
+        assert (experiment_job.ExperimentJobStatusesViewedEvent.get_event_action() ==
+                'statuses_viewed')
+
+        # Notebook
+        assert notebook.NotebookStartedEvent.get_event_action() == 'started'
+        assert notebook.NotebookSoppedEvent.get_event_action() == 'stopped'
+        assert notebook.NotebookViewedEvent.get_event_action() == 'viewed'
+        assert notebook.NotebookNewStatusEvent.get_event_action() is None
+
+        # Permission
+        assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionRepoDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionExperimentGroupDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionExperimentDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionTensorboardDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionNotebookDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionExperimentJobDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionClusterDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionUserRoleEvent.get_event_action() == 'denied'
+
+        # Project
+        assert project.ProjectCreatedEvent.get_event_action() == 'created'
+        assert project.ProjectUpdatedEvent.get_event_action() == 'updated'
+        assert project.ProjectDeletedEvent.get_event_action() == 'deleted'
+        assert project.ProjectViewedEvent.get_event_action() == 'viewed'
+        assert project.ProjectSetPublicEvent.get_event_action() == 'set_public'
+        assert project.ProjectSetPrivateEvent.get_event_action() == 'set_private'
+        assert project.ProjectExperimentsViewedEvent.get_event_action() == 'experiments_viewed'
+        assert (project.ProjectExperimentGroupsViewedEvent.get_event_action() ==
+                'experiment_groups_viewed')
+
+        # Repo
+        assert repo.RepoCreatedEvent.get_event_action() == 'created'
+        assert repo.RepoNewCommitEvent.get_event_action() == 'new_commit'
+
+        # Superuser
+        assert superuser.SuperUserRoleGrantedEvent.get_event_action() == 'granted'
+        assert superuser.SuperUserRoleRevokedEvent.get_event_action() == 'revoked'
+
+        # Tensorboard
+        assert tensorboard.TensorboardStartedEvent.get_event_action() == 'started'
+        assert tensorboard.TensorboardSoppedEvent.get_event_action() == 'stopped'
+        assert tensorboard.TensorboardViewedEvent.get_event_action() == 'viewed'
+        assert tensorboard.TensorboardNewStatusEvent.get_event_action() is None
+
+        # User
+        assert user.UserRegisteredEvent.get_event_action() == 'registered'
+        assert user.UserUpdatedEvent.get_event_action() == 'updated'
+        assert user.UserActivatedEvent.get_event_action() == 'activated'
+        assert user.UserDeletedEvent.get_event_action() == 'deleted'
 
     def test_serialize(self):
         class DummyEvent(Event):
