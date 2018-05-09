@@ -14,16 +14,7 @@ from repos.models import ExternalRepo, Repo
 @ignore_raw
 def new_repo(sender, **kwargs):
     instance = kwargs['instance']
-    # Check that the user has a dir
-    if not os.path.isdir(instance.user_path):
-        create_path(instance.user_path)
-
-    # Check that the project has a dir
-    if not os.path.isdir(instance.project_path):
-        create_path(instance.project_path)
-
-    # Create a new repo
-    git.get_git_repo(repo_path=instance.path, init=True)
+    git.set_git_repo(instance)
 
 
 @receiver(post_delete, sender=ExternalRepo, dispatch_uid="repo_deleted")

@@ -38,6 +38,19 @@ def get_git_repo(repo_path, init=False):
     raise ValueError('Could not create a repo on this path {}'.format(repo_path))
 
 
+def set_git_repo(repo):
+    # Check that the user has a dir
+    if not os.path.isdir(repo.user_path):
+        create_path(repo.user_path)
+
+    # Check that the project has a dir
+    if not os.path.isdir(repo.project_path):
+        create_path(repo.project_path)
+
+    # Create a new repo
+    get_git_repo(repo_path=repo.path, init=True)
+
+
 def clone_git_repo(repo_path, git_url):
     return GitRepo.clone_from(url=git_url, to_path=repo_path)
 

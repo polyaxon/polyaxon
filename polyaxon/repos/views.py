@@ -10,6 +10,7 @@ from django.http import HttpResponseServerError
 
 from libs.views import UploadView
 from projects.permissions import get_permissible_project
+from repos.git import set_git_repo
 from repos.models import Repo
 from repos.serializers import RepoSerializer
 from repos.tasks import handle_new_files
@@ -35,7 +36,9 @@ class UploadFilesView(UploadView):
                 self.request,
                 'The Project `{}` is currently running a Notebook. '
                 'You must stop it before uploading a new version of the code.'.format(project.name))
-        repo, _ = Repo.objects.get_or_create(project=project)
+        repo, created = Repo.objects.get_or_create(project=project)
+        if not created and not os.path.isdir(repo.user_path):
+            set_git_repo(repo)
         return repo
 
     def put(self, request, *args, **kwargs):
