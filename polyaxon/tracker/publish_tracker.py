@@ -15,11 +15,17 @@ class PublishTrackerService(TrackerService):
             return self.cluster_id
 
         from clusters.models import Cluster
-        cluster_uuid = Cluster.load().uuid.hex
-        self.cluster_id = cluster_uuid
+        try:
+            cluster_uuid = Cluster.load().uuid.hex
+            self.cluster_id = cluster_uuid
+        except Cluster.DoesNotExist:
+            pass
         return self.cluster_id
 
     def record_event(self, event):
+        if not self.cluster_id:
+            return
+
         if event.event_type == 'cluster.created':
             self.analytics.identify(
                 self.get_cluster_id(),

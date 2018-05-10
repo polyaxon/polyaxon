@@ -79,6 +79,8 @@ TEMPLATES = [
     },
 ]
 
+POLYAXON_ENVIRONMENT = config.env
+
 POLYAXON_NOTIFICATION_CLUSTER_ALIVE_URL = (
     "{url}&cid={cluster_uuid}&t=pageview&"
     "dp=%2Fplatform%2F{cluster_uuid}"
@@ -89,6 +91,6 @@ POLYAXON_NOTIFICATION_CLUSTER_ALIVE_URL = (
 POLYAXON_NOTIFICATION_CLUSTER_NODES_URL = (
     "{url}&cid={cluster_uuid}&t=pageview&"
     "dp=%2Fplatform%2F{cluster_uuid}%2F{n_nodes}"
-    "%2F{n_cpus}%2F{n_gpus}%2F{version}&"
+    "%2F{n_cpus}%2F{memory}%2F{n_gpus}%2F{version}&"
     "ds=app&z={notification}&"
     "an=polyaxon&aid=com.polyaxon.app&av={version}")

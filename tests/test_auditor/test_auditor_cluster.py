@@ -35,13 +35,12 @@ class AuditorClusterTest(BaseTest):
                        namespace='test',
                        environment='test',
                        is_upgrade='test',
-                       use_provisioner=False,
+                       provisioner_enabled=False,
                        use_data_claim=False,
                        use_outputs_claim=False,
                        use_logs_claim=False,
                        use_repos_claim=False,
                        use_upload_claim=False,
-                       cli_version='',
                        cli_min_version='',
                        cli_latest_version='',
                        platform_min_version='',
@@ -59,10 +58,20 @@ class AuditorClusterTest(BaseTest):
     def test_cluster_updated(self, activitylogs_record, tracker_record):
         auditor.record(event_type=cluster_events.CLUSTER_UPDATED,
                        instance=self.cluster,
-                       is_upgrade=True,
-                       cpu=0,
+                       is_upgrade=True)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_cluster_resources_updated(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=cluster_events.CLUSTER_RESOURCES_UPDATED,
+                       instance=self.cluster,
+                       n_nodes=0,
+                       n_cpus=0,
                        memory=0,
-                       gpu=0)
+                       n_gpus=0)
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
