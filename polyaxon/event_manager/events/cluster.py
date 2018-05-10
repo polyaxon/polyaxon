@@ -16,12 +16,12 @@ class ClusterCreatedEvent(Event):
         Attribute('namespace'),
         Attribute('environment'),
         Attribute('is_upgrade'),
-        Attribute('use_provisioner'),
-        Attribute('use_data_claim'),
-        Attribute('use_outputs_claim'),
-        Attribute('use_logs_claim'),
-        Attribute('use_repos_claim'),
-        Attribute('use_upload_claim'),
+        Attribute('use_provisioner', attr_type=bool),
+        Attribute('use_data_claim', attr_type=bool),
+        Attribute('use_outputs_claim', attr_type=bool),
+        Attribute('use_logs_claim', attr_type=bool),
+        Attribute('use_repos_claim', attr_type=bool),
+        Attribute('use_upload_claim', attr_type=bool),
         Attribute('cli_version'),
         Attribute('cli_min_version'),
         Attribute('cli_latest_version'),
@@ -39,7 +39,7 @@ class ClusterUpdatedEvent(Event):
     event_type = CLUSTER_UPDATED
     attributes = (
         Attribute('updated_at', is_datetime=True),
-        Attribute('is_upgrade'),
+        Attribute('is_upgrade', attr_type=bool),
         Attribute('cpu', attr_type=float),
         Attribute('memory', attr_type=float),
         Attribute('gpu', attr_type=float),
@@ -50,16 +50,15 @@ class ClusterNodeCreatedEvent(Event):
     event_type = CLUSTER_NODE_CREATED
     attributes = (
         Attribute('id'),
-        Attribute('created_at', is_datetime=True),
         Attribute('role'),
         Attribute('sequence', attr_type=int),
-        Attribute('docker_version'),
+        Attribute('docker_version', is_required=False),
         Attribute('kubelet_version'),
         Attribute('os_image'),
         Attribute('kernel_version'),
         Attribute('cpu', attr_type=float),
         Attribute('memory', attr_type=float),
-        Attribute('n_gpu', attr_type=int),
+        Attribute('n_gpus', attr_type=int),
     )
 
 
@@ -67,7 +66,6 @@ class ClusterNodeUpdatedEvent(Event):
     event_type = CLUSTER_NODE_UPDATED
     attributes = (
         Attribute('id'),
-        Attribute('update_at', is_datetime=True),
         Attribute('role'),
         Attribute('sequence', attr_type=int),
         Attribute('docker_version'),
@@ -76,7 +74,7 @@ class ClusterNodeUpdatedEvent(Event):
         Attribute('kernel_version'),
         Attribute('cpu', attr_type=float),
         Attribute('memory', attr_type=float),
-        Attribute('n_gpu', attr_type=int),
+        Attribute('n_gpus', attr_type=int),
     )
 
 
