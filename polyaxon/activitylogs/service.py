@@ -1,5 +1,5 @@
-from event_manager.event_service import EventService
 from activitylogs.manager import default_manager
+from event_manager.event_service import EventService
 
 
 class ActivityLogService(EventService):

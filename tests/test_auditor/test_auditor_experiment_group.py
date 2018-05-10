@@ -159,4 +159,3 @@ class AuditorExperimentGroupTest(BaseTest):
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
-
