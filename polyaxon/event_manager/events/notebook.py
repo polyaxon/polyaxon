@@ -26,7 +26,7 @@ class NotebookSoppedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -38,7 +38,7 @@ class NotebookViewedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -47,5 +47,5 @@ class NotebookNewStatusEvent(Event):
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
-        Attribute('status')
+        Attribute('last_status')
     )
