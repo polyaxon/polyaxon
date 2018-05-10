@@ -11,8 +11,7 @@ class UserRegisteredEvent(Event):
     event_type = USER_REGISTERED
     actor_id = 'id'
     attributes = (
-        Attribute('id', is_uuid=True),
-        Attribute('created_at', is_datetime=True)
+        Attribute('id'),
     )
 
 
@@ -21,7 +20,6 @@ class UserUpdatedEvent(Event):
     actor_id = 'id'
     attributes = (
         Attribute('id'),
-        Attribute('updated_at', is_datetime=True)
     )
 
 
