@@ -41,6 +41,10 @@ class Project(DiffModel, DescribableModel):
         return hasattr(self, 'repo')
 
     @property
+    def has_description(self):
+        return bool(self.description)
+
+    @property
     def tensorboard(self):
         if settings.DEPLOY_RUNNER:
             return self.tensorboard_jobs.last()
