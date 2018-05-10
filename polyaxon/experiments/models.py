@@ -118,7 +118,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @property
     def has_description(self):
-        return self.description is not None
+        return bool(self.description)
 
     @cached_property
     def specification(self):

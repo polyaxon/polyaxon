@@ -149,10 +149,18 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         return self.params_config.search_algorithm
 
     @cached_property
+    def has_early_stopping(self):
+        return bool(self.early_stopping)
+
+    @cached_property
     def early_stopping(self):
         if not self.params_config:
             return None
         return self.params_config.early_stopping or []
+
+    @property
+    def has_description(self):
+        return bool(self.description)
 
     @property
     def scheduled_experiments(self):
