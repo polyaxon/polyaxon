@@ -56,6 +56,8 @@ class PermissionExperimentGroupDeniedEvent(Event):
     event_type = PERMISSION_EXPERIMENT_GROUP_DENIED
     actor_id = 'actor_id'
     attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
@@ -67,6 +69,8 @@ class PermissionExperimentDeniedEvent(Event):
     event_type = PERMISSION_EXPERIMENT_DENIED
     actor_id = 'actor_id'
     attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
@@ -78,6 +82,8 @@ class PermissionTensorboardDeniedEvent(Event):
     event_type = PERMISSION_TENSORBOARD_DENIED
     actor_id = 'actor_id'
     attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
@@ -89,6 +95,8 @@ class PermissionNotebookDeniedEvent(Event):
     event_type = PERMISSION_NOTEBOOK_DENIED
     actor_id = 'actor_id'
     attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
@@ -100,6 +108,8 @@ class PermissionExperimentJobDeniedEvent(Event):
     event_type = PERMISSION_EXPERIMENT_JOB_DENIED
     actor_id = 'actor_id'
     attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
