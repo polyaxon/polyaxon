@@ -9,7 +9,6 @@ import tracker
 from clusters.models import Cluster
 from event_manager.events import cluster as cluster_events
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
-from factories.factory_users import UserFactory
 from tests.utils import BaseTest
 
 
@@ -20,8 +19,6 @@ class AuditorClusterTest(BaseTest):
         self.cluster = Cluster.load()
         self.cluster_node = ClusterNodeFactory(cluster=self.cluster)
         self.node_gpu = GPUFactory(cluster_node=self.cluster_node)
-        self.admin = UserFactory(is_staff=True, is_superuser=True)
-        self.user = UserFactory()
         auditor.validate()
         auditor.setup()
         tracker.validate()

@@ -10,7 +10,6 @@ import tracker
 
 from event_manager.events import experiment as experiment_events
 from factories.factory_experiments import ExperimentFactory, ExperimentMetricFactory
-from factories.factory_users import UserFactory
 from tests.utils import BaseTest
 
 
@@ -20,7 +19,6 @@ class AuditorExperimentTest(BaseTest):
 
     def setUp(self):
         self.experiment = ExperimentFactory()
-        self.user = UserFactory()
         auditor.validate()
         auditor.setup()
         tracker.validate()
@@ -60,7 +58,7 @@ class AuditorExperimentTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_deleted(self, activitylogs_record, tracker_record):
+    def test_experiment_viewed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_VIEWED,
                        instance=self.experiment,
                        actor_id=1)
@@ -137,7 +135,7 @@ class AuditorExperimentTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_new_metric(self, activitylogs_record, tracker_record):
+    def test_experiment_succeeded(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_SUCCEEDED,
                        instance=self.experiment)
 
@@ -146,7 +144,7 @@ class AuditorExperimentTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_experiment_new_metric(self, activitylogs_record, tracker_record):
+    def test_experiment_failed(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_events.EXPERIMENT_FAILED,
                        instance=self.experiment)
 
