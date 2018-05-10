@@ -42,8 +42,8 @@ class ExperimentCreatedEvent(Event):
         Attribute('id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
@@ -61,13 +61,13 @@ class ExperimentUpdatedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
-        Attribute('update_at', is_datetime=True),
+        Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -79,13 +79,13 @@ class ExperimentDeletedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -97,12 +97,12 @@ class ExperimentViewedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -114,12 +114,12 @@ class ExperimentStoppedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -131,12 +131,12 @@ class ExperimentResumedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -148,12 +148,12 @@ class ExperimentRestartedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -165,12 +165,12 @@ class ExperimentCopiedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -180,8 +180,8 @@ class ExperimentNewStatusEvent(Event):
         Attribute('id'),
         Attribute('sequence'),
         Attribute('project.id'),
-        Attribute('experiment_group.id'),
-        Attribute('status'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('last_status'),
     )
 
 
@@ -191,8 +191,8 @@ class ExperimentNewMetricEvent(Event):
         Attribute('id'),
         Attribute('sequence'),
         Attribute('project.id'),
-        Attribute('experiment_group.id'),
-        Attribute('metric'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('last_metric', attr_type=dict, is_required=False),
     )
 
 
@@ -202,7 +202,7 @@ class ExperimentSucceededEvent(Event):
         Attribute('id'),
         Attribute('sequence'),
         Attribute('project.id'),
-        Attribute('experiment_group.id'),
+        Attribute('experiment_group.id', is_required=False),
     )
 
 
@@ -212,7 +212,7 @@ class ExperimentFailedEvent(Event):
         Attribute('id'),
         Attribute('sequence'),
         Attribute('project.id'),
-        Attribute('experiment_group.id'),
+        Attribute('experiment_group.id', is_required=False),
     )
 
 
@@ -224,11 +224,11 @@ class ExperimentResourcesViewedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -240,11 +240,11 @@ class ExperimentLogsViewedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -256,11 +256,11 @@ class ExperimentStatusesViewedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -272,9 +272,9 @@ class ExperimentJobsViewedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('experiment_group.id'),
-        Attribute('experiment_group.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
