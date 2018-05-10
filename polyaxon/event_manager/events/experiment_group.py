@@ -40,8 +40,6 @@ class ExperimentGroupCreatedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
     )
 
 
@@ -60,9 +58,7 @@ class ExperimentGroupUpdatedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -81,9 +77,7 @@ class ExperimentGroupDeletedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -102,9 +96,7 @@ class ExperimentGroupViewedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -123,9 +115,7 @@ class ExperimentGroupStoppedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -144,9 +134,7 @@ class ExperimentGroupResumedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -163,9 +151,7 @@ class ExperimentGroupFinishedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -182,9 +168,7 @@ class ExperimentGroupNewStatusEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -201,9 +185,7 @@ class ExperimentGroupIterationEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -222,9 +204,7 @@ class ExperimentGroupExperimentsViewedEvent(Event):
         Attribute('search_algorithm'),
         Attribute('has_early_stopping', attr_type=bool),
         Attribute('has_description', attr_type=bool),
-        Attribute('is_resume', attr_type=bool),
-        Attribute('is_restart', attr_type=bool),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
