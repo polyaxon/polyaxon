@@ -120,6 +120,7 @@ class ExperimentStoppedEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
     )
 
 
@@ -137,6 +138,7 @@ class ExperimentResumedEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
     )
 
 
@@ -182,6 +184,7 @@ class ExperimentNewStatusEvent(Event):
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
     )
 
 
@@ -203,6 +206,7 @@ class ExperimentSucceededEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
+        Attribute('previous_status', is_required=False),
     )
 
 
@@ -213,6 +217,7 @@ class ExperimentFailedEvent(Event):
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
+        Attribute('previous_status', is_required=False),
     )
 
 

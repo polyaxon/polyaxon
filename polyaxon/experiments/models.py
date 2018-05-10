@@ -252,8 +252,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
                 declarations=declarations,
                 code_reference=code_reference,
                 update_code_reference=update_code_reference,
-                experiment_group=experiment_group or self.experiment_group
-            )
+                experiment_group=experiment_group or self.experiment_group)
 
         # Resume normal workflow
         return self._clone(cloning_strategy=CloningStrategy.RESUME,
