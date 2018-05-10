@@ -28,7 +28,7 @@ class TensorboardSoppedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -41,7 +41,7 @@ class TensorboardViewedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -51,5 +51,5 @@ class TensorboardNewStatusEvent(Event):
         Attribute('id'),
         Attribute('user.id'),
         Attribute('project.id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
