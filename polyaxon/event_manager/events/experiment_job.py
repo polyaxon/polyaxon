@@ -21,7 +21,7 @@ class ExperimentJobViewedEvent(Event):
         Attribute('experiment.id'),
         Attribute('experiment.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -34,7 +34,7 @@ class ExperimentJobResourcesViewedEvent(Event):
         Attribute('experiment.id'),
         Attribute('experiment.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -47,7 +47,7 @@ class ExperimentJobLogsViewedEvent(Event):
         Attribute('experiment.id'),
         Attribute('experiment.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
 
 
@@ -60,5 +60,5 @@ class ExperimentJobStatusesViewedEvent(Event):
         Attribute('experiment.id'),
         Attribute('experiment.user.id'),
         Attribute('actor_id'),
-        Attribute('status'),
+        Attribute('last_status'),
     )
