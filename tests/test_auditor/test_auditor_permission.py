@@ -42,7 +42,7 @@ class AuditorPermissionTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_permission_project_denied(self, activitylogs_record, tracker_record):
+    def test_permission_repo_denied(self, activitylogs_record, tracker_record):
         auditor.record(event_type=permission_events.PERMISSION_REPO_DENIED,
                        project_id=1,
                        project_user_id=2,

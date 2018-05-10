@@ -68,7 +68,7 @@ class ClusterNodeUpdatedEvent(Event):
         Attribute('id'),
         Attribute('role'),
         Attribute('sequence', attr_type=int),
-        Attribute('docker_version'),
+        Attribute('docker_version', is_required=False),
         Attribute('kubelet_version'),
         Attribute('os_image'),
         Attribute('kernel_version'),

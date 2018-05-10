@@ -87,7 +87,7 @@ class AuditorClusterTest(BaseTest):
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_cluster_node_updated(self, activitylogs_record, tracker_record):
+    def test_cluster_node_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=cluster_events.CLUSTER_NODE_DELETED,
                        instance=self.cluster_node)
 
