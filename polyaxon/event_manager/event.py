@@ -43,7 +43,12 @@ class Event(object):
         data = {}
         has_actor = False
         for attr in self.attributes:
+            # Check plain attr name
             item_value = items.pop(attr.name, None)
+            if item_value is None:
+                # Convert dot notation
+                item_value = items.pop(attr.name.replace('.', '_'), None)
+
             if attr.is_required and item_value is None:
                 raise ValueError('{} is required (cannot be None)'.format(
                     attr.name,
@@ -99,6 +104,7 @@ class Event(object):
 
     @classmethod
     def get_value_from_instance(cls, attr, instance):
+        # Handle dot notation
         path = attr.split('.')
         value = instance
         for i in path:
@@ -112,7 +118,8 @@ class Event(object):
     def from_instance(cls, instance, **kwargs):
         values = {'instance': instance}
         for attr in cls.attributes:
-            value = kwargs.get(attr.name)
+            # Convert dot notation
+            value = kwargs.get(attr.name.replace('.', '_'))
             if value is None:
                 value = cls.get_value_from_instance(attr=attr.name, instance=instance)
             values[attr.name] = value
