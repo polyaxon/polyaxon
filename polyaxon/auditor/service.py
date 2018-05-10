@@ -1,6 +1,3 @@
-import activitylogs
-import tracker
-
 from auditor.manager import default_manager
 from event_manager.event_service import EventService
 
@@ -10,6 +7,10 @@ class AuditorService(EventService):
 
     event_manager = default_manager
 
+    def __init__(self):
+        self.tracker = None
+        self.activitylogs = None
+
     def get_event(self, event_type, instance, **kwargs):
         return {
             'event_type': event_type,
@@ -18,13 +19,19 @@ class AuditorService(EventService):
         }
 
     def record_event(self, event):
-        tracker.record(event_type=event['event_type'],
-                       instance=event['instance'],
-                       **event['kwargs'])
-        activitylogs.record(event_type=event['event_type'],
+        self.tracker.record(event_type=event['event_type'],
                             instance=event['instance'],
                             **event['kwargs'])
+        self.activitylogs.record(event_type=event['event_type'],
+                                 instance=event['instance'],
+                                 **event['kwargs'])
 
     def setup(self):
         # Load default event types
         import auditor.events  # noqa
+
+        import activitylogs
+        import tracker
+
+        self.tracker = tracker
+        self.activitylogs = activitylogs
