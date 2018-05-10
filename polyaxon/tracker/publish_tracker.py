@@ -3,10 +3,10 @@ import analytics
 from tracker import TrackerService
 
 
-class PublisherService(TrackerService):
+class PublishTrackerService(TrackerService):
     def __init__(self):
         self.cluster_id = None
-        self.publisher = analytics
+        self.analytics = analytics
         # Set key
         analytics.write_key = ''
 
@@ -21,16 +21,16 @@ class PublisherService(TrackerService):
 
     def record_event(self, event):
         if event.event_type == 'cluster.created':
-            self.publisher.identify(
+            self.analytics.identify(
                 self.get_cluster_id(),
                 data=event.serialize(dumps=True),
             )
-        self.publisher.track(
+        self.analytics.track(
             self.cluster_id,
             event.event_type,
             event.serialize(dumps=True),
         )
 
     def setup(self):
-        super(PublisherService, self).setup()
+        super(PublishTrackerService, self).setup()
         self.cluster_id = self.get_cluster_id()

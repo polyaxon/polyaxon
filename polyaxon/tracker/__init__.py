@@ -9,7 +9,7 @@ def get_tracker_backend():
     if settings.TRACKER_BACKEND == settings.TRACKER_BACKEND_NOOP:
         return 'tracker.service.TrackerService'
     if settings.TRACKER_BACKEND == settings.TRACKER_BACKEND_PUBLISHER:
-        return 'tracker.publisher.PublisherService'
+        return 'tracker.publish_tracker.PublishTrackerService'
     return ''
 
 
