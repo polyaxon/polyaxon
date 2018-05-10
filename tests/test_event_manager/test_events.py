@@ -245,7 +245,41 @@ class TestEvents(BaseTest):
         event_serialized_dump = event.serialize()
         assert event_serialized == loads(event_serialized_dump)
 
-    def test_from_instance(self):
+    def test_get_value_from_instance(self):
+        class DummyEvent(Event):
+            event_type = 'dummy.event'
+
+        class SimpleObject(object):
+            attr1 = 'test'
+
+        class ComposedObject(object):
+            attr2 = SimpleObject()
+
+        value = DummyEvent.get_value_from_instance(attr='attr1',
+                                                   instance=SimpleObject())
+        assert value == 'test'
+
+        value = DummyEvent.get_value_from_instance(attr='attr2',
+                                                   instance=SimpleObject())
+        assert value is None
+
+        value = DummyEvent.get_value_from_instance(attr='attr2.attr1',
+                                                   instance=ComposedObject())
+        assert value == 'test'
+
+        value = DummyEvent.get_value_from_instance(attr='attr2.attr3',
+                                                   instance=ComposedObject())
+        assert value is None
+
+        value = DummyEvent.get_value_from_instance(attr='attr2.attr1.attr3',
+                                                   instance=ComposedObject())
+        assert value is None
+
+        value = DummyEvent.get_value_from_instance(attr='attr2.attr4.attr3',
+                                                   instance=SimpleObject())
+        assert value is None
+
+    def test_from_instance_simple_event(self):
         class DummyEvent(Event):
             event_type = 'dummy.event'
             attributes = (
@@ -262,6 +296,32 @@ class TestEvents(BaseTest):
         assert event_serialized['uuid'] is not None
         assert event_serialized['timestamp'] is not None
         assert event_serialized['data']['attr1'] == 'test'
+
+    def test_from_instance_nested_event(self):
+        class DummyEvent(Event):
+            event_type = 'dummy.event'
+            attributes = (
+                Attribute('attr1'),
+                Attribute('attr2.attr3'),
+                Attribute('attr2.attr4', is_required=False),
+            )
+
+        class DummyObject(object):
+            class NestedObject(object):
+                attr3 = 'test2'
+
+            attr1 = 'test'
+            attr2 = NestedObject()
+
+        obj = DummyObject()
+        event = DummyEvent.from_instance(obj)
+        event_serialized = event.serialize(dumps=False)
+        assert event_serialized['type'] == 'dummy.event'
+        assert event_serialized['uuid'] is not None
+        assert event_serialized['timestamp'] is not None
+        assert event_serialized['data']['attr1'] == 'test'
+        assert event_serialized['data']['attr2.attr3'] == 'test2'
+        assert event_serialized['data']['attr2.attr4'] is None
 
     def test_actor(self):
         class DummyEvent(Event):

@@ -98,9 +98,22 @@ class Event(object):
         return dumps_htmlsafe(data) if dumps else data
 
     @classmethod
+    def get_value_from_instance(cls, attr, instance):
+        path = attr.split('.')
+        value = instance
+        for i in path:
+            value = getattr(value, i, None)
+            if value is None:
+                break
+
+        return value
+
+    @classmethod
     def from_instance(cls, instance, **kwargs):
         values = {'instance': instance}
         for attr in cls.attributes:
-            # TODO: add support for automatic dot props, e.g. 'user.id'
-            values[attr.name] = kwargs.get(attr.name, getattr(instance, attr.name, None))
+            value = kwargs.get(attr.name)
+            if value is None:
+                value = cls.get_value_from_instance(attr=attr.name, instance=instance)
+            values[attr.name] = value
         return cls(**values)
