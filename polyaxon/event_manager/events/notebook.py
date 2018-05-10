@@ -12,6 +12,7 @@ class NotebookStartedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id')
@@ -23,6 +24,7 @@ class NotebookSoppedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
@@ -35,6 +37,7 @@ class NotebookViewedEvent(Event):
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('actor_id'),
@@ -46,6 +49,7 @@ class NotebookNewStatusEvent(Event):
     event_type = NOTEBOOK_NEW_STATUS
     attributes = (
         Attribute('id'),
+        Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status')
     )
