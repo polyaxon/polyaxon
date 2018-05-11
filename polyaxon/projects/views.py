@@ -3,8 +3,13 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDe
 from rest_framework.permissions import IsAuthenticated
 
 import auditor
-from event_manager.events.project import PROJECT_CREATED, PROJECT_VIEWED, PROJECT_UPDATED, \
-    PROJECT_DELETED_TRIGGERED
+
+from event_manager.events.project import (
+    PROJECT_CREATED,
+    PROJECT_DELETED_TRIGGERED,
+    PROJECT_UPDATED,
+    PROJECT_VIEWED
+)
 from libs.views import AuditorMixinView
 from projects.models import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly

@@ -24,6 +24,10 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
 
+import auditor
+
+from event_manager.events.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
+from event_manager.events.user import USER_ACTIVATED, USER_DELETED
 from polyaxon_schemas.user import UserConfig
 from users import signals
 from users.forms import RegistrationForm
@@ -287,6 +291,9 @@ class ActivateView(CreateAPIView):
         user = self.get_object()
         user.is_active = True
         user.save()
+        auditor.record(event_type=USER_ACTIVATED,
+                       instance=user,
+                       actor_id=self.request.user.id)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -294,6 +301,14 @@ class DeleteView(DestroyAPIView):
     queryset = get_user_model()
     permission_classes = (IsAuthenticated, IsAdminUser,)
     lookup_field = 'username'
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        auditor.record(event_type=USER_DELETED,
+                       instance=instance,
+                       actor_id=self.request.user.id)
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class GrantSuperuserView(CreateAPIView):
@@ -306,6 +321,9 @@ class GrantSuperuserView(CreateAPIView):
         user.is_staff = True
         user.is_superuser = True
         user.save()
+        auditor.record(event_type=SUPERUSER_ROLE_GRANTED,
+                       instance=user,
+                       actor_id=self.request.user.id)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -319,4 +337,7 @@ class RevokeSuperuserView(CreateAPIView):
         user.is_staff = False
         user.is_superuser = False
         user.save()
+        auditor.record(event_type=SUPERUSER_ROLE_REVOKED,
+                       instance=user,
+                       actor_id=self.request.user.id)
         return Response(status=status.HTTP_200_OK)

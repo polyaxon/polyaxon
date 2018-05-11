@@ -9,6 +9,7 @@ from django.conf import settings
 from django.http import HttpResponseServerError
 
 import auditor
+
 from event_manager.events.repo import REPO_CREATED
 from libs.views import UploadView
 from projects.permissions import get_permissible_project
