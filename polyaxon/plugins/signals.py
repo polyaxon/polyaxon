@@ -11,6 +11,12 @@ from event_manager.events.notebook import (
     NOTEBOOK_STOPPED,
     NOTEBOOK_SUCCEEDED
 )
+from event_manager.events.tensorboard import (
+    TENSORBOARD_FAILED,
+    TENSORBOARD_NEW_STATUS,
+    TENSORBOARD_STOPPED,
+    TENSORBOARD_SUCCEEDED
+)
 from jobs.statuses import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runner_signal
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
@@ -57,9 +63,31 @@ def new_notebook_job(sender, **kwargs):
 def new_tensorboard_job_status(sender, **kwargs):
     instance = kwargs['instance']
     job = instance.job
+    previous_status = job.last_status
     # Update job last_status
     job.job_status = instance
     job.save()
+    auditor.record(event_type=TENSORBOARD_NEW_STATUS,
+                   instance=job,
+                   previous_status=previous_status,
+                   target='project')
+    if instance.status == JobLifeCycle.STOPPED:
+        auditor.record(event_type=TENSORBOARD_STOPPED,
+                       instance=job,
+                       previous_status=previous_status,
+                       target='project')
+
+    if instance.status == JobLifeCycle.FAILED:
+        auditor.record(event_type=TENSORBOARD_FAILED,
+                       instance=job,
+                       previous_status=previous_status,
+                       target='project')
+
+    if instance.status == JobLifeCycle.STOPPED:
+        auditor.record(event_type=TENSORBOARD_SUCCEEDED,
+                       instance=job,
+                       previous_status=previous_status,
+                       target='project')
 
 
 @receiver(post_save, sender=NotebookJobStatus, dispatch_uid="new_notebook_job_status_saved")

@@ -13,6 +13,11 @@ from event_manager.events.notebook import (
     NOTEBOOK_STOPPED_TRIGGERED,
     NOTEBOOK_VIEWED
 )
+from event_manager.events.tensorboard import (
+    TENSORBOARD_STARTED_TRIGGERED,
+    TENSORBOARD_STOPPED_TRIGGERED,
+    TENSORBOARD_VIEWED
+)
 from experiments.statuses import ExperimentLifeCycle
 from libs.utils import to_bool
 from libs.views import ProtectedView
@@ -48,7 +53,11 @@ class StartTensorboardView(CreateAPIView):
         config = self.request.data or self._get_default_tensorboard_config()
         serializer = self.get_serializer(instance=project.tensorboard, data=config)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=self.request.user, project=project)
+        instance = serializer.save(user=self.request.user, project=project)
+        auditor.record(event_type=TENSORBOARD_STARTED_TRIGGERED,
+                       instance=instance,
+                       target='project',
+                       actor_id=self.request.user.id)
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -73,6 +82,10 @@ class StopTensorboardView(CreateAPIView):
         obj = self.get_object()
         if obj.has_tensorboard:
             stop_tensorboard.delay(project_id=obj.id)
+            auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
+                           instance=obj.tensorboard,
+                           target='project',
+                           actor_id=self.request.user.id)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -209,3 +222,9 @@ class TensorboardView(PluginJobView):
 
     def has_plugin_job(self, project):
         return project.has_tensorboard
+
+    def audit(self, project):
+        auditor.record(event_type=TENSORBOARD_VIEWED,
+                       instance=project.tensorboard,
+                       target='project',
+                       actor_id=self.request.user.id)

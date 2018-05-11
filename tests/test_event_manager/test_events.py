@@ -134,9 +134,13 @@ class TestEvents(BaseTest):
 
         # Tensorboard
         assert tensorboard.TensorboardStartedEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardStartedTriggeredEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardSoppedEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardSoppedTriggeredEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardViewedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardNewStatusEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardFailedEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardSucceededEvent.get_event_subject() == 'tensorboard'
 
         # User
         assert user.UserRegisteredEvent.get_event_subject() == 'user'
@@ -246,10 +250,14 @@ class TestEvents(BaseTest):
         assert superuser.SuperUserRoleRevokedEvent.get_event_action() == 'revoked'
 
         # Tensorboard
-        assert tensorboard.TensorboardStartedEvent.get_event_action() == 'started'
-        assert tensorboard.TensorboardSoppedEvent.get_event_action() == 'stopped'
+        assert tensorboard.TensorboardStartedEvent.get_event_action() is None
+        assert tensorboard.TensorboardStartedTriggeredEvent.get_event_action() == 'started'
+        assert tensorboard.TensorboardSoppedEvent.get_event_action() is None
+        assert tensorboard.TensorboardSoppedTriggeredEvent.get_event_action() == 'stopped'
         assert tensorboard.TensorboardViewedEvent.get_event_action() == 'viewed'
         assert tensorboard.TensorboardNewStatusEvent.get_event_action() is None
+        assert tensorboard.TensorboardFailedEvent.get_event_action() is None
+        assert tensorboard.TensorboardSucceededEvent.get_event_action() is None
 
         # User
         assert user.UserRegisteredEvent.get_event_action() == 'registered'
