@@ -118,6 +118,7 @@ class TestEvents(BaseTest):
         assert project.ProjectCreatedEvent.get_event_subject() == 'project'
         assert project.ProjectUpdatedEvent.get_event_subject() == 'project'
         assert project.ProjectDeletedEvent.get_event_subject() == 'project'
+        assert project.ProjectDeletedTriggeredEvent.get_event_subject() == 'project'
         assert project.ProjectViewedEvent.get_event_subject() == 'project'
         assert project.ProjectSetPublicEvent.get_event_subject() == 'project'
         assert project.ProjectSetPrivateEvent.get_event_subject() == 'project'
@@ -233,10 +234,11 @@ class TestEvents(BaseTest):
         # Project
         assert project.ProjectCreatedEvent.get_event_action() == 'created'
         assert project.ProjectUpdatedEvent.get_event_action() == 'updated'
-        assert project.ProjectDeletedEvent.get_event_action() == 'deleted'
+        assert project.ProjectDeletedEvent.get_event_action() is None
+        assert project.ProjectDeletedTriggeredEvent.get_event_action() == 'deleted'
         assert project.ProjectViewedEvent.get_event_action() == 'viewed'
-        assert project.ProjectSetPublicEvent.get_event_action() == 'set_public'
-        assert project.ProjectSetPrivateEvent.get_event_action() == 'set_private'
+        assert project.ProjectSetPublicEvent.get_event_action() is None
+        assert project.ProjectSetPrivateEvent.get_event_action() is None
         assert project.ProjectExperimentsViewedEvent.get_event_action() == 'experiments_viewed'
         assert (project.ProjectExperimentGroupsViewedEvent.get_event_action() ==
                 'experiment_groups_viewed')

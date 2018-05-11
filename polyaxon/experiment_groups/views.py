@@ -8,6 +8,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_UPDATED,
     EXPERIMENT_GROUP_VIEWED
 )
+from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
 from experiment_groups.models import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from libs.views import AuditorMixinView, ListCreateAPIView
@@ -21,7 +22,11 @@ class ExperimentGroupListView(ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def filter_queryset(self, queryset):
-        return queryset.filter(project=get_permissible_project(view=self))
+        project = get_permissible_project(view=self)
+        auditor.record(event_type=PROJECT_EXPERIMENT_GROUPS_VIEWED,
+                       instance=project,
+                       actor_id=self.request.user.id)
+        return queryset.filter(project=project)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, project=get_permissible_project(view=self))

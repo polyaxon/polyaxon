@@ -38,6 +38,7 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_STATUSES_VIEWED,
     EXPERIMENT_JOB_VIEWED
 )
+from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from experiment_groups.models import ExperimentGroup
 from experiments.models import (
     Experiment,
@@ -84,7 +85,11 @@ class ProjectExperimentListView(ListCreateAPIView):
         filters = {}
         if independent is not None and to_bool(independent):
             filters['experiment_group__isnull'] = True
-        return queryset.filter(project=get_permissible_project(view=self), **filters)
+        project = get_permissible_project(view=self)
+        auditor.record(event_type=PROJECT_EXPERIMENTS_VIEWED,
+                       instance=project,
+                       actor_id=self.request.user.id)
+        return queryset.filter(project=project, **filters)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user, project=get_permissible_project(view=self))

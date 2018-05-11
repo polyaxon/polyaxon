@@ -50,6 +50,15 @@ class AuditorProjectTest(BaseTest):
     @patch('activitylogs.service.ActivityLogService.record_event')
     def test_project_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=project_events.PROJECT_DELETED,
+                       instance=self.project)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_project_deleted_triggered(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=project_events.PROJECT_DELETED_TRIGGERED,
                        instance=self.project,
                        actor_id=1)
 
@@ -74,7 +83,7 @@ class AuditorProjectTest(BaseTest):
                        actor_id=1)
 
         assert tracker_record.call_count == 1
-        assert activitylogs_record.call_count == 1
+        assert activitylogs_record.call_count == 0
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -84,7 +93,7 @@ class AuditorProjectTest(BaseTest):
                        actor_id=1)
 
         assert tracker_record.call_count == 1
-        assert activitylogs_record.call_count == 1
+        assert activitylogs_record.call_count == 0
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')

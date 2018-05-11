@@ -2,6 +2,10 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
+import auditor
+from event_manager.events.project import PROJECT_CREATED, PROJECT_VIEWED, PROJECT_UPDATED, \
+    PROJECT_DELETED_TRIGGERED
+from libs.views import AuditorMixinView
 from projects.models import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly
 from projects.serializers import ProjectDetailSerializer, ProjectSerializer
@@ -17,7 +21,8 @@ class ProjectCreateView(CreateAPIView):
         user = self.request.user
         if self.queryset.filter(user=user, name=project).count() > 0:
             raise ValidationError('A project with name `{}` already exists.'.format(project))
-        serializer.save(user=user)
+        instance = serializer.save(user=user)
+        auditor.record(event_type=PROJECT_CREATED, instance=instance)
 
 
 class ProjectListView(ListAPIView):
@@ -35,11 +40,14 @@ class ProjectListView(ListAPIView):
         return queryset.filter(user__username=username, is_public=True)
 
 
-class ProjectDetailView(RetrieveUpdateDestroyAPIView):
+class ProjectDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializer
     permission_classes = (IsAuthenticated, IsProjectOwnerOrPublicReadOnly)
     lookup_field = 'name'
+    get_event = PROJECT_VIEWED
+    update_event = PROJECT_UPDATED
+    delete_event = PROJECT_DELETED_TRIGGERED
 
     def filter_queryset(self, queryset):
         username = self.kwargs['username']
