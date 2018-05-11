@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from django.conf import settings
 from django.http import HttpResponseServerError
 
+import auditor
+from event_manager.events.repo import REPO_CREATED
 from libs.views import UploadView
 from projects.permissions import get_permissible_project
 from repos.git import set_git_repo
@@ -39,6 +41,8 @@ class UploadFilesView(UploadView):
         repo, created = Repo.objects.get_or_create(project=project)
         if not created and not os.path.isdir(repo.user_path):
             set_git_repo(repo)
+        else:
+            auditor.record(event_type=REPO_CREATED, instance=repo, actor_id=self.request.user.id)
         return repo
 
     def put(self, request, *args, **kwargs):

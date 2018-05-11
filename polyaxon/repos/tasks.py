@@ -5,6 +5,8 @@ import tarfile
 
 from django.contrib.auth import get_user_model
 
+import auditor
+from event_manager.events.repo import REPO_NEW_COMMIT
 from libs.paths import delete_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks
@@ -64,3 +66,4 @@ def handle_new_files(user_id, repo_id, tar_file_name):
 
     # commit changes
     git.commit(repo.path, user.email, user.username)
+    auditor.record(event_type=REPO_NEW_COMMIT, instance=repo, actor_id=user.id)
