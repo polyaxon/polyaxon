@@ -77,6 +77,12 @@ class TestEvents(BaseTest):
         assert (experiment_group.ExperimentGroupHyperbandEvent.get_event_subject() ==
                 'experiment_group')
         assert experiment_group.ExperimentGroupBOEvent.get_event_subject() == 'experiment_group'
+        assert (experiment_group.ExperimentGroupDeletedTriggeredEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupStoppedTriggeredEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupResumedTriggeredEvent.get_event_subject() ==
+                'experiment_group')
 
         # Experiment job
         assert experiment_job.ExperimentJobViewedEvent.get_event_subject() == 'experiment_job'
@@ -183,6 +189,9 @@ class TestEvents(BaseTest):
         assert experiment_group.ExperimentGroupGridEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupHyperbandEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupBOEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert experiment_group.ExperimentGroupStoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert experiment_group.ExperimentGroupResumedTriggeredEvent.get_event_action() == 'resumed'
 
         # Experiment job
         assert experiment_job.ExperimentJobViewedEvent.get_event_action() == 'viewed'

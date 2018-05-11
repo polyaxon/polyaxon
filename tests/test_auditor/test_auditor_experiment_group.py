@@ -50,11 +50,10 @@ class AuditorExperimentGroupTest(BaseTest):
     @patch('activitylogs.service.ActivityLogService.record_event')
     def test_experiment_group_deleted(self, activitylogs_record, tracker_record):
         auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_DELETED,
-                       instance=self.experiment_group,
-                       actor_id=1)
+                       instance=self.experiment_group)
 
         assert tracker_record.call_count == 1
-        assert activitylogs_record.call_count == 1
+        assert activitylogs_record.call_count == 0
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -74,7 +73,7 @@ class AuditorExperimentGroupTest(BaseTest):
                        actor_id=1)
 
         assert tracker_record.call_count == 1
-        assert activitylogs_record.call_count == 1
+        assert activitylogs_record.call_count == 0
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -84,7 +83,7 @@ class AuditorExperimentGroupTest(BaseTest):
                        actor_id=1)
 
         assert tracker_record.call_count == 1
-        assert activitylogs_record.call_count == 1
+        assert activitylogs_record.call_count == 0
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -159,3 +158,33 @@ class AuditorExperimentGroupTest(BaseTest):
 
         assert tracker_record.call_count == 1
         assert activitylogs_record.call_count == 0
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_group_deleted_triggered(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_DELETED_TRIGGERED,
+                       instance=self.experiment_group,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_group_stopped_triggered(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_STOPPED_TRIGGERED,
+                       instance=self.experiment_group,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_group_resumed_triggered(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_RESUMED_TRIGGERED,
+                       instance=self.experiment_group,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1

@@ -25,6 +25,16 @@ EXPERIMENT_GROUP_GRID = '{}.grid'.format(event_subjects.EXPERIMENT_GROUP)
 EXPERIMENT_GROUP_HYPERBAND = '{}.hyperband'.format(event_subjects.EXPERIMENT_GROUP)
 EXPERIMENT_GROUP_BO = '{}.bo'.format(event_subjects.EXPERIMENT_GROUP)
 
+EXPERIMENT_GROUP_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                                       event_actions.DELETED,
+                                                       event_subjects.TRIGGER)
+EXPERIMENT_GROUP_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                                       event_actions.STOPPED,
+                                                       event_subjects.TRIGGER)
+EXPERIMENT_GROUP_RESUMED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                                       event_actions.RESUMED,
+                                                       event_subjects.TRIGGER)
+
 
 class ExperimentGroupCreatedEvent(Event):
     event_type = EXPERIMENT_GROUP_CREATED
@@ -64,14 +74,9 @@ class ExperimentGroupUpdatedEvent(Event):
 
 class ExperimentGroupDeletedEvent(Event):
     event_type = EXPERIMENT_GROUP_DELETED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
-        Attribute('project.id'),
-        Attribute('project.user.id'),
-        Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency'),
         Attribute('search_algorithm'),
@@ -102,14 +107,12 @@ class ExperimentGroupViewedEvent(Event):
 
 class ExperimentGroupStoppedEvent(Event):
     event_type = EXPERIMENT_GROUP_STOPPED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency'),
         Attribute('search_algorithm'),
@@ -121,14 +124,12 @@ class ExperimentGroupStoppedEvent(Event):
 
 class ExperimentGroupResumedEvent(Event):
     event_type = EXPERIMENT_GROUP_RESUMED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
         Attribute('concurrency'),
         Attribute('search_algorithm'),
@@ -222,3 +223,60 @@ class ExperimentGroupHyperbandEvent(Event):
 
 class ExperimentGroupBOEvent(Event):
     event_type = EXPERIMENT_GROUP_BO
+
+
+class ExperimentGroupDeletedTriggeredEvent(Event):
+    event_type = EXPERIMENT_GROUP_DELETED_TRIGGERED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency'),
+        Attribute('search_algorithm'),
+        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentGroupStoppedTriggeredEvent(Event):
+    event_type = EXPERIMENT_GROUP_STOPPED_TRIGGERED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency'),
+        Attribute('search_algorithm'),
+        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentGroupResumedTriggeredEvent(Event):
+    event_type = EXPERIMENT_GROUP_RESUMED_TRIGGERED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency'),
+        Attribute('search_algorithm'),
+        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
