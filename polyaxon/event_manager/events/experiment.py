@@ -33,6 +33,23 @@ EXPERIMENT_STATUSES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                             event_actions.STATUSES_VIEWED)
 EXPERIMENT_JOBS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                         event_actions.JOBS_VIEWED)
+EXPERIMENT_METRICS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
+                                           event_actions.METRICS_VIEWED)
+EXPERIMENT_TRIGGERED_DELETED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+                                                 event_actions.DELETED,
+                                                 event_subjects.TRIGGER)
+EXPERIMENT_TRIGGERED_STOPPED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+                                                 event_actions.STOPPED,
+                                                 event_subjects.TRIGGER)
+EXPERIMENT_TRIGGERED_RESUMED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+                                                 event_actions.RESUMED,
+                                                 event_subjects.TRIGGER)
+EXPERIMENT_TRIGGERED_RESTARTED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+                                                   event_actions.RESTARTED,
+                                                   event_subjects.TRIGGER)
+EXPERIMENT_TRIGGERED_COPIED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+                                                event_actions.COPIED,
+                                                event_subjects.TRIGGER)
 
 
 class ExperimentCreatedEvent(Event):
@@ -73,19 +90,8 @@ class ExperimentUpdatedEvent(Event):
 
 class ExperimentDeletedEvent(Event):
     event_type = EXPERIMENT_DELETED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
-        Attribute('sequence'),
-        Attribute('project.id'),
-        Attribute('project.user.id'),
-        Attribute('experiment_group.id', is_required=False),
-        Attribute('experiment_group.user.id', is_required=False),
-        Attribute('user.id'),
-        Attribute('actor_id'),
-        Attribute('updated_at', is_datetime=True),
-        Attribute('has_description', attr_type=bool),
-        Attribute('last_status'),
     )
 
 
@@ -108,7 +114,6 @@ class ExperimentViewedEvent(Event):
 
 class ExperimentStoppedEvent(Event):
     event_type = EXPERIMENT_STOPPED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -117,7 +122,6 @@ class ExperimentStoppedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
@@ -126,7 +130,6 @@ class ExperimentStoppedEvent(Event):
 
 class ExperimentResumedEvent(Event):
     event_type = EXPERIMENT_RESUMED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -135,7 +138,6 @@ class ExperimentResumedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
@@ -144,7 +146,6 @@ class ExperimentResumedEvent(Event):
 
 class ExperimentRestartedEvent(Event):
     event_type = EXPERIMENT_RESTARTED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -153,7 +154,6 @@ class ExperimentRestartedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -161,7 +161,6 @@ class ExperimentRestartedEvent(Event):
 
 class ExperimentCopiedEvent(Event):
     event_type = EXPERIMENT_COPIED
-    actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
         Attribute('sequence'),
@@ -170,7 +169,6 @@ class ExperimentCopiedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
-        Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -281,5 +279,109 @@ class ExperimentJobsViewedEvent(Event):
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
         Attribute('actor_id'),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentMetricsViewedEvent(Event):
+    event_type = EXPERIMENT_METRICS_VIEWED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentTriggeredDeletedEvent(Event):
+    event_type = EXPERIMENT_TRIGGERED_DELETED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentTriggeredStoppedEvent(Event):
+    event_type = EXPERIMENT_TRIGGERED_STOPPED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
+    )
+
+
+class ExperimentTriggeredResumedEvent(Event):
+    event_type = EXPERIMENT_TRIGGERED_RESUMED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
+    )
+
+
+class ExperimentTriggeredRestartedEvent(Event):
+    event_type = EXPERIMENT_TRIGGERED_RESTARTED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+    )
+
+
+class ExperimentTriggeredCopiedEvent(Event):
+    event_type = EXPERIMENT_TRIGGERED_COPIED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('sequence'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('experiment_group.user.id', is_required=False),
+        Attribute('user.id'),
+        Attribute('actor_id'),
+        Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
