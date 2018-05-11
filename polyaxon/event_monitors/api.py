@@ -9,6 +9,10 @@ from django.core.exceptions import ValidationError
 import auditor
 
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
+from event_manager.events.experiment_job import (
+    EXPERIMENT_JOB_LOGS_VIEWED,
+    EXPERIMENT_JOB_RESOURCES_VIEWED
+)
 from event_monitors.authentication import authorized
 from event_monitors.consumers import Consumer
 from event_monitors.socket_manager import SocketManager
@@ -77,6 +81,9 @@ async def job_resources(request, ws, username, project_name, experiment_sequence
     job = _get_job(experiment, job_sequence)
     job_uuid = job.uuid.hex
     job_name = '{}.{}'.format(job.role, job.sequence)
+    auditor.record(event_type=EXPERIMENT_JOB_RESOURCES_VIEWED,
+                   instance=job,
+                   actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_job_resources(job_uuid=job_uuid):
         logger.info('Job resources with uuid `%s` is now being monitored', job_name)
@@ -205,6 +212,9 @@ async def job_logs(request, ws, username, project_name, experiment_sequence, job
     experiment = _get_validated_experiment(project, experiment_sequence)
     job = _get_job(experiment, job_sequence)
     job_uuid = job.uuid.hex
+    auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
+                   instance=job,
+                   actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_job_logs(job_uuid=job_uuid):
         logger.info('Job uuid `%s` logs is now being monitored', job_uuid)

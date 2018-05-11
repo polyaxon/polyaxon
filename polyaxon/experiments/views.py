@@ -34,6 +34,10 @@ from event_manager.events.experiment import (
     EXPERIMENT_VIEWED
 )
 from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
+from event_manager.events.experiment_job import (
+    EXPERIMENT_JOB_STATUSES_VIEWED,
+    EXPERIMENT_JOB_VIEWED
+)
 from experiment_groups.models import ExperimentGroup
 from experiments.models import (
     Experiment,
@@ -284,11 +288,12 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
         return response
 
 
-class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
+class ExperimentJobDetailView(AuditorMixinView, ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
     queryset = ExperimentJob.objects.all()
     serializer_class = ExperimentJobDetailSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
+    get_event = EXPERIMENT_JOB_VIEWED
 
 
 class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
@@ -318,20 +323,23 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
 
 class ExperimentJobViewMixin(object):
     """A mixin to filter by experiment job."""
+    project = None
+    experiment = None
+    job = None
 
     def get_experiment(self):
         # Get project and check access
-        project = get_permissible_project(view=self)
+        self.project = get_permissible_project(view=self)
         sequence = self.kwargs['experiment_sequence']
-        experiment = get_object_or_404(Experiment, project=project, sequence=sequence)
-        return experiment
+        self.experiment = get_object_or_404(Experiment, project=self.project, sequence=sequence)
+        return self.experiment
 
     def get_job(self):
         job_sequence = self.kwargs['sequence']
-        job = get_object_or_404(ExperimentJob,
-                                sequence=job_sequence,
-                                experiment=self.get_experiment())
-        return job
+        self.job = get_object_or_404(ExperimentJob,
+                                     sequence=job_sequence,
+                                     experiment=self.get_experiment())
+        return self.job
 
     def filter_queryset(self, queryset):
         queryset = super(ExperimentJobViewMixin, self).filter_queryset(queryset)
@@ -345,6 +353,13 @@ class ExperimentJobStatusListView(ExperimentJobViewMixin, ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(job=self.get_job())
+
+    def get(self, request, *args, **kwargs):
+        response = super(ExperimentJobStatusListView, self).get(request, *args, **kwargs)
+        auditor.record(event_type=EXPERIMENT_JOB_STATUSES_VIEWED,
+                       instance=self.job,
+                       actor_id=request.user.id)
+        return response
 
 
 class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIView):
