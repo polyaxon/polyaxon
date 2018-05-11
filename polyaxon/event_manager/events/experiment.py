@@ -35,19 +35,19 @@ EXPERIMENT_JOBS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                         event_actions.JOBS_VIEWED)
 EXPERIMENT_METRICS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT,
                                            event_actions.METRICS_VIEWED)
-EXPERIMENT_TRIGGERED_DELETED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+EXPERIMENT_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
                                                  event_actions.DELETED,
                                                  event_subjects.TRIGGER)
-EXPERIMENT_TRIGGERED_STOPPED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+EXPERIMENT_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
                                                  event_actions.STOPPED,
                                                  event_subjects.TRIGGER)
-EXPERIMENT_TRIGGERED_RESUMED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+EXPERIMENT_RESUMED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
                                                  event_actions.RESUMED,
                                                  event_subjects.TRIGGER)
-EXPERIMENT_TRIGGERED_RESTARTED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+EXPERIMENT_RESTARTED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
                                                    event_actions.RESTARTED,
                                                    event_subjects.TRIGGER)
-EXPERIMENT_TRIGGERED_COPIED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+EXPERIMENT_COPIED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
                                                 event_actions.COPIED,
                                                 event_subjects.TRIGGER)
 
@@ -299,8 +299,8 @@ class ExperimentMetricsViewedEvent(Event):
     )
 
 
-class ExperimentTriggeredDeletedEvent(Event):
-    event_type = EXPERIMENT_TRIGGERED_DELETED
+class ExperimentDeletedTriggeredEvent(Event):
+    event_type = EXPERIMENT_DELETED_TRIGGERED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
@@ -317,8 +317,8 @@ class ExperimentTriggeredDeletedEvent(Event):
     )
 
 
-class ExperimentTriggeredStoppedEvent(Event):
-    event_type = EXPERIMENT_TRIGGERED_STOPPED
+class ExperimentStoppedTriggeredEvent(Event):
+    event_type = EXPERIMENT_STOPPED_TRIGGERED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
@@ -335,8 +335,8 @@ class ExperimentTriggeredStoppedEvent(Event):
     )
 
 
-class ExperimentTriggeredResumedEvent(Event):
-    event_type = EXPERIMENT_TRIGGERED_RESUMED
+class ExperimentResumedTriggeredEvent(Event):
+    event_type = EXPERIMENT_RESUMED_TRIGGERED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
@@ -353,8 +353,8 @@ class ExperimentTriggeredResumedEvent(Event):
     )
 
 
-class ExperimentTriggeredRestartedEvent(Event):
-    event_type = EXPERIMENT_TRIGGERED_RESTARTED
+class ExperimentRestartedTriggeredEvent(Event):
+    event_type = EXPERIMENT_RESTARTED_TRIGGERED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
@@ -370,8 +370,8 @@ class ExperimentTriggeredRestartedEvent(Event):
     )
 
 
-class ExperimentTriggeredCopiedEvent(Event):
-    event_type = EXPERIMENT_TRIGGERED_COPIED
+class ExperimentCopiedTriggeredEvent(Event):
+    event_type = EXPERIMENT_COPIED_TRIGGERED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),

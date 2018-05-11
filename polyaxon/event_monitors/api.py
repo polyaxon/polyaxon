@@ -7,7 +7,8 @@ from websockets import ConnectionClosed
 from django.core.exceptions import ValidationError
 
 import auditor
-from event_manager.events.experiment import EXPERIMENT_RESOURCES_VIEWED, EXPERIMENT_LOGS_VIEWED
+
+from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
 from event_monitors.authentication import authorized
 from event_monitors.consumers import Consumer
 from event_monitors.socket_manager import SocketManager
@@ -134,7 +135,9 @@ async def experiment_resources(request, ws, username, project_name, experiment_s
         exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
     experiment_uuid = experiment.uuid.hex
-    auditor.record(event_type=EXPERIMENT_RESOURCES_VIEWED, instance=experiment)
+    auditor.record(event_type=EXPERIMENT_RESOURCES_VIEWED,
+                   instance=experiment,
+                   actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_experiment_resources(experiment_uuid=experiment_uuid):
         logger.info(
@@ -273,7 +276,9 @@ async def experiment_logs(request, ws, username, project_name, experiment_sequen
         exceptions.Forbidden("You don't have access to this project")
     experiment = _get_validated_experiment(project, experiment_sequence)
     experiment_uuid = experiment.uuid.hex
-    auditor.record(event_type=EXPERIMENT_LOGS_VIEWED, instance=experiment)
+    auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
+                   instance=experiment,
+                   actor_id=request.app.user.id)
 
     if not RedisToStream.is_monitored_experiment_logs(experiment_uuid=experiment_uuid):
         logger.info('Experiment uuid `%s` logs is now being monitored', experiment_uuid)

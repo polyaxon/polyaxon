@@ -43,6 +43,12 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentLogsViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentStatusesViewedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentJobsViewedEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentMetricsViewedEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentDeletedTriggeredEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentStoppedTriggeredEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentResumedTriggeredEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentRestartedTriggeredEvent.get_event_subject() == 'experiment'
+        assert experiment.ExperimentCopiedTriggeredEvent.get_event_subject() == 'experiment'
 
         # Experiment group
         assert (experiment_group.ExperimentGroupCreatedEvent.get_event_subject() ==
@@ -140,12 +146,12 @@ class TestEvents(BaseTest):
         # Experiment
         assert experiment.ExperimentCreatedEvent.get_event_action() == 'created'
         assert experiment.ExperimentUpdatedEvent.get_event_action() == 'updated'
-        assert experiment.ExperimentDeletedEvent.get_event_action() == 'deleted'
+        assert experiment.ExperimentDeletedEvent.get_event_action() is None
         assert experiment.ExperimentViewedEvent.get_event_action() == 'viewed'
-        assert experiment.ExperimentStoppedEvent.get_event_action() == 'stopped'
-        assert experiment.ExperimentResumedEvent.get_event_action() == 'resumed'
-        assert experiment.ExperimentRestartedEvent.get_event_action() == 'restarted'
-        assert experiment.ExperimentCopiedEvent.get_event_action() == 'copied'
+        assert experiment.ExperimentStoppedEvent.get_event_action() is None
+        assert experiment.ExperimentResumedEvent.get_event_action() is None
+        assert experiment.ExperimentRestartedEvent.get_event_action() is None
+        assert experiment.ExperimentCopiedEvent.get_event_action() is None
         assert experiment.ExperimentNewStatusEvent.get_event_action() is None
         assert experiment.ExperimentNewMetricEvent.get_event_action() is None
         assert experiment.ExperimentSucceededEvent.get_event_action() is None
@@ -154,6 +160,12 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentLogsViewedEvent.get_event_action() == 'logs_viewed'
         assert experiment.ExperimentStatusesViewedEvent.get_event_action() == 'statuses_viewed'
         assert experiment.ExperimentJobsViewedEvent.get_event_action() == 'jobs_viewed'
+        assert experiment.ExperimentMetricsViewedEvent.get_event_action() == 'metrics_viewed'
+        assert experiment.ExperimentDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert experiment.ExperimentStoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert experiment.ExperimentResumedTriggeredEvent.get_event_action() == 'resumed'
+        assert experiment.ExperimentRestartedTriggeredEvent.get_event_action() == 'restarted'
+        assert experiment.ExperimentCopiedTriggeredEvent.get_event_action() == 'copied'
 
         # Experiment group
         assert experiment_group.ExperimentGroupCreatedEvent.get_event_action() == 'created'

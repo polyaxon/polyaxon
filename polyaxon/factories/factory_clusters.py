@@ -30,8 +30,8 @@ def get_cluster_node(**kwargs):
 
 
 class GPUFactory(factory.DjangoModelFactory):
-    serial = factory.Sequence(lambda i: '{}'.format(i))
-    name = factory.Sequence(lambda i: 'Tesla-{}'.format(i))
+    serial = factory.Sequence('{}'.format)
+    name = factory.Sequence('Tesla-{}'.format)
     memory = factory.Sequence(lambda x: x)
     index = factory.Sequence(lambda i: i)
 

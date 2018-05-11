@@ -8,7 +8,8 @@ class ExperimentsConfig(AppConfig):
     def ready(self):
         from experiments.signals import (  # noqa
             new_experiment,
-            experiment_deleted,
+            experiment_pre_deleted,
+            experiment_post_deleted,
             new_experiment_job,
             new_experiment_job_status,
             new_experiment_metric

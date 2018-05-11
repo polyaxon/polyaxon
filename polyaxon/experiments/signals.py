@@ -1,11 +1,12 @@
 import logging
 
-from django.db.models.signals import post_save, pre_delete, pre_save
+from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
 import auditor
 
 from event_manager.events.experiment import (
+    EXPERIMENT_DELETED,
     EXPERIMENT_FAILED,
     EXPERIMENT_NEW_METRIC,
     EXPERIMENT_NEW_STATUS,
@@ -79,7 +80,7 @@ def new_experiment(sender, **kwargs):
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="experiment_deleted")
 @ignore_raw
-def experiment_deleted(sender, **kwargs):
+def experiment_pre_deleted(sender, **kwargs):
     instance = kwargs['instance']
     # Delete outputs and logs
     delete_experiment_outputs(instance.unique_name)
@@ -88,6 +89,13 @@ def experiment_deleted(sender, **kwargs):
     # Delete clones
     for experiment in instance.clones.filter(cloning_strategy=CloningStrategy.RESUME):
         experiment.delete()
+
+
+@receiver(post_delete, sender=Experiment, dispatch_uid="experiment_deleted")
+@ignore_raw
+def experiment_post_deleted(sender, **kwargs):
+    instance = kwargs['instance']
+    auditor.record(event_type=EXPERIMENT_DELETED, instance=instance)
 
 
 @receiver(post_save, sender=ExperimentJob, dispatch_uid="experiment_job_saved")
@@ -141,7 +149,7 @@ def new_experiment_status(sender, **kwargs):
         experiment.experiment_status = instance
         experiment.save()
         auditor.record(event_type=EXPERIMENT_NEW_STATUS,
-                       instance=instance,
+                       instance=experiment,
                        previous_status=previous_status)
 
     if instance.status == ExperimentLifeCycle.SUCCEEDED:
@@ -150,16 +158,16 @@ def new_experiment_status(sender, **kwargs):
             if not job.is_done:
                 job.set_status(JobLifeCycle.SUCCEEDED, message='Master is done.')
         auditor.record(event_type=EXPERIMENT_SUCCEEDED,
-                       instance=instance,
+                       instance=experiment,
                        previous_status=previous_status)
     if instance.status == ExperimentLifeCycle.FAILED:
         auditor.record(event_type=EXPERIMENT_FAILED,
-                       instance=instance,
+                       instance=experiment,
                        previous_status=previous_status)
 
     if instance.status == ExperimentLifeCycle.STOPPED:
         auditor.record(event_type=EXPERIMENT_STOPPED,
-                       instance=instance,
+                       instance=experiment,
                        previous_status=previous_status)
 
 
@@ -173,4 +181,4 @@ def new_experiment_metric(sender, **kwargs):
     experiment.experiment_metric = instance
     experiment.save()
     auditor.record(event_type=EXPERIMENT_NEW_METRIC,
-                   instance=instance)
+                   instance=experiment)

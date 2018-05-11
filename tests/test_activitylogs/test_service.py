@@ -3,7 +3,7 @@
 import activitylogs
 
 from activitylogs.models import ActivityLog
-from event_manager.events.experiment import EXPERIMENT_DELETED
+from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
 from event_manager.events.user import USER_ACTIVATED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_users import UserFactory
@@ -31,12 +31,12 @@ class ActivityLogsTest(BaseTest):
         assert activity.content_object == self.user
         assert activity.actor == self.admin
 
-        activitylogs.record(event_type=EXPERIMENT_DELETED,
+        activitylogs.record(event_type=EXPERIMENT_DELETED_TRIGGERED,
                             instance=self.experiment,
                             actor_id=self.admin.id)
 
         assert ActivityLog.objects.count() == 2
         activity = ActivityLog.objects.last()
-        assert activity.event_type == EXPERIMENT_DELETED
+        assert activity.event_type == EXPERIMENT_DELETED_TRIGGERED
         assert activity.content_object == self.experiment
         assert activity.actor == self.admin

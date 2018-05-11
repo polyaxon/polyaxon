@@ -33,6 +33,7 @@ class TestEventService(BaseTest):
     def setUp(self):
         self.service = DummyEventService()
         self.service.event_manager = EventManager()
+        self.service.setup()
         super(TestEventService, self).setUp()
 
     def test_can_handle(self):

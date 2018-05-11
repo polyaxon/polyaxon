@@ -23,13 +23,13 @@ def get_experiment_logs_path(experiment_name):
     return os.path.join(settings.LOGS_ROOT, '/'.join(values))
 
 
-def delete_experiment_logs(experiment_group_name):
-    path = get_experiment_logs_path(experiment_group_name)
+def delete_experiment_logs(experiment_name):
+    path = get_experiment_logs_path(experiment_name)
     delete_path(path)
 
 
-def delete_experiment_outputs(experiment_group_name):
-    path = get_experiment_outputs_path(experiment_group_name)
+def delete_experiment_outputs(experiment_name):
+    path = get_experiment_outputs_path(experiment_name)
     delete_path(path)
 
 

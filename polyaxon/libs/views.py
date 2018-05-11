@@ -11,6 +11,8 @@ from django.conf import settings
 from django.core import exceptions as django_exceptions
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 
+import auditor
+
 
 class ListCreateAPIView(generics.ListCreateAPIView):
     create_serializer_class = None
@@ -90,3 +92,28 @@ class UploadView(APIView):
         if json_data:
             return json.loads(json_data)
         return {}
+
+
+class AuditorMixinView(object):
+    get_event = None
+    update_event = None
+    delete_event = None
+
+    def get_object(self):
+        instance = super(AuditorMixinView, self).get_object()
+        method = self.request.method.lower()
+        if method == 'get':
+            auditor.record(event_type=self.get_event,
+                           instance=instance,
+                           actor_id=self.request.user.id)
+        elif method == 'delete':
+            auditor.record(event_type=self.delete_event,
+                           instance=instance,
+                           actor_id=self.request.user.id)
+        return instance
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        auditor.record(event_type=self.delete_event,
+                       instance=instance,
+                       actor_id=self.request.user.id)

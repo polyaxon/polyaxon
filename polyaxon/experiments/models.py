@@ -7,6 +7,13 @@ from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
 
+import auditor
+
+from event_manager.events.experiment import (
+    EXPERIMENT_COPIED,
+    EXPERIMENT_RESTARTED,
+    EXPERIMENT_RESUMED
+)
 from experiments.clone import CloningStrategy
 from experiments.statuses import ExperimentLifeCycle
 from jobs.models import Job, JobResources, JobStatus
@@ -213,6 +220,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     def _clone(self,
                cloning_strategy,
+               event_type,
                user=None,
                description=None,
                config=None,
@@ -222,7 +230,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
                experiment_group=None):
         if not code_reference and not update_code_reference:
             code_reference = self.code_reference
-        return Experiment.objects.create(
+        instance = Experiment.objects.create(
             project=self.project,
             user=user or self.user,
             experiment_group=experiment_group,
@@ -232,6 +240,8 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
             original_experiment=self,
             cloning_strategy=cloning_strategy,
             code_reference=code_reference)
+        auditor.record(event_type=event_type, instance=instance)
+        return instance
 
     def resume(self,
                user=None,
@@ -256,6 +266,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
         # Resume normal workflow
         return self._clone(cloning_strategy=CloningStrategy.RESUME,
+                           event_type=EXPERIMENT_RESUMED,
                            user=user,
                            description=description,
                            config=config,
@@ -273,6 +284,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
                 update_code_reference=False,
                 experiment_group=None):
         return self._clone(cloning_strategy=CloningStrategy.RESTART,
+                           event_type=EXPERIMENT_RESTARTED,
                            user=user,
                            description=description,
                            config=config,
@@ -290,6 +302,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
              update_code_reference=False,
              experiment_group=None):
         return self._clone(cloning_strategy=CloningStrategy.COPY,
+                           event_type=EXPERIMENT_COPIED,
                            user=user,
                            description=description,
                            config=config,

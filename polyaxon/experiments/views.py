@@ -19,6 +19,20 @@ from rest_framework.response import Response
 
 from django.http import StreamingHttpResponse
 
+import auditor
+
+from event_manager.events.experiment import (
+    EXPERIMENT_CREATED,
+    EXPERIMENT_JOBS_VIEWED,
+    EXPERIMENT_LOGS_VIEWED,
+    EXPERIMENT_STATUSES_VIEWED,
+    EXPERIMENT_COPIED_TRIGGERED,
+    EXPERIMENT_DELETED_TRIGGERED,
+    EXPERIMENT_RESTARTED_TRIGGERED,
+    EXPERIMENT_RESUMED_TRIGGERED,
+    EXPERIMENT_UPDATED,
+    EXPERIMENT_VIEWED
+)
 from experiment_groups.models import ExperimentGroup
 from experiments.models import (
     Experiment,
@@ -40,7 +54,7 @@ from experiments.serializers import (
 )
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
-from libs.views import ListCreateAPIView
+from libs.views import AuditorMixinView, ListCreateAPIView
 from projects.permissions import get_permissible_project
 
 logger = logging.getLogger("polyaxon.experiments.views")
@@ -68,12 +82,13 @@ class ProjectExperimentListView(ListCreateAPIView):
         return queryset.filter(project=get_permissible_project(view=self), **filters)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, project=get_permissible_project(view=self))
+        return serializer.save(user=self.request.user, project=get_permissible_project(view=self))
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        instance = self.perform_create(serializer)
+        auditor.record(event_type=EXPERIMENT_CREATED, instance=instance)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -96,11 +111,15 @@ class GroupExperimentListView(ListAPIView):
         return queryset.filter(experiment_group=self.get_group())
 
 
-class ExperimentDetailView(RetrieveUpdateDestroyAPIView):
+class ExperimentDetailView(AuditorMixinView, RetrieveUpdateDestroyAPIView):
     queryset = Experiment.objects.all()
     serializer_class = ExperimentDetailSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
+    instance = None
+    get_event = EXPERIMENT_VIEWED
+    update_event = EXPERIMENT_UPDATED
+    delete_event = EXPERIMENT_DELETED_TRIGGERED
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))
@@ -111,6 +130,7 @@ class ExperimentCloneView(CreateAPIView):
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
+    event_type = None
 
     def filter_queryset(self, queryset):
         return queryset.filter(project=get_permissible_project(view=self))
@@ -120,6 +140,9 @@ class ExperimentCloneView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
+        auditor.record(event_type=self.event_type,
+                       instance=obj,
+                       actor_id=self.request.user.id)
 
         description = None
         config = None
@@ -151,6 +174,7 @@ class ExperimentRestartView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
+    event_type = EXPERIMENT_RESTARTED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
         return obj.restart(user=self.request.user,
@@ -165,6 +189,7 @@ class ExperimentResumeView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
+    event_type = EXPERIMENT_RESUMED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
         return obj.resume(user=self.request.user,
@@ -179,6 +204,7 @@ class ExperimentCopyView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'sequence'
+    event_type = EXPERIMENT_COPIED_TRIGGERED
 
     def clone(self, obj, config, declarations, update_code_reference, description):
         return obj.copy(user=self.request.user,
@@ -190,13 +216,15 @@ class ExperimentCopyView(ExperimentCloneView):
 
 class ExperimentViewMixin(object):
     """A mixin to filter by experiment."""
+    project = None
+    experiment = None
 
     def get_experiment(self):
         # Get project and check access
-        project = get_permissible_project(view=self)
+        self.project = get_permissible_project(view=self)
         sequence = self.kwargs['experiment_sequence']
-        experiment = get_object_or_404(Experiment, project=project, sequence=sequence)
-        return experiment
+        self.experiment = get_object_or_404(Experiment, project=self.project, sequence=sequence)
+        return self.experiment
 
     def filter_queryset(self, queryset):
         queryset = super(ExperimentViewMixin, self).filter_queryset(queryset)
@@ -210,6 +238,13 @@ class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(experiment=self.get_experiment())
+
+    def get(self, request, *args, **kwargs):
+        response = super(ExperimentStatusListView, self).get(request, *args, **kwargs)
+        auditor.record(event_type=EXPERIMENT_STATUSES_VIEWED,
+                       instance=self.experiment,
+                       actor_id=request.user.id)
+        return response
 
 
 class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
@@ -237,6 +272,13 @@ class ExperimentJobListView(ExperimentViewMixin, ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(experiment=self.get_experiment())
 
+    def get(self, request, *args, **kwargs):
+        response = super(ExperimentJobListView, self).get(request, *args, **kwargs)
+        auditor.record(event_type=EXPERIMENT_JOBS_VIEWED,
+                       instance=self.experiment,
+                       actor_id=request.user.id)
+        return response
+
 
 class ExperimentJobDetailView(ExperimentViewMixin, RetrieveUpdateDestroyAPIView):
     queryset = ExperimentJob.objects.all()
@@ -250,6 +292,9 @@ class ExperimentLogsView(ExperimentViewMixin, RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         experiment = self.get_experiment()
+        auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
+                       instance=self.experiment,
+                       actor_id=request.user.id)
         log_path = get_experiment_logs_path(experiment.unique_name)
 
         filename = os.path.basename(log_path)
