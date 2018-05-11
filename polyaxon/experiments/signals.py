@@ -3,6 +3,15 @@ import logging
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
+import auditor
+
+from event_manager.events.experiment import (
+    EXPERIMENT_FAILED,
+    EXPERIMENT_NEW_METRIC,
+    EXPERIMENT_NEW_STATUS,
+    EXPERIMENT_STOPPED,
+    EXPERIMENT_SUCCEEDED
+)
 from experiments.clone import CloningStrategy
 from experiments.models import (
     Experiment,
@@ -125,17 +134,33 @@ def new_experiment_status(sender, **kwargs):
     instance = kwargs['instance']
     created = kwargs.get('created', False)
     experiment = instance.experiment
+    previous_status = experiment.last_status
 
     if created:
         # update experiment last_status
         experiment.experiment_status = instance
         experiment.save()
+        auditor.record(event_type=EXPERIMENT_NEW_STATUS,
+                       instance=instance,
+                       previous_status=previous_status)
 
     if instance.status == ExperimentLifeCycle.SUCCEEDED:
         # update all workers with succeeded status, since we will trigger a stop mechanism
         for job in experiment.jobs.all():
             if not job.is_done:
                 job.set_status(JobLifeCycle.SUCCEEDED, message='Master is done.')
+        auditor.record(event_type=EXPERIMENT_SUCCEEDED,
+                       instance=instance,
+                       previous_status=previous_status)
+    if instance.status == ExperimentLifeCycle.FAILED:
+        auditor.record(event_type=EXPERIMENT_FAILED,
+                       instance=instance,
+                       previous_status=previous_status)
+
+    if instance.status == ExperimentLifeCycle.STOPPED:
+        auditor.record(event_type=EXPERIMENT_STOPPED,
+                       instance=instance,
+                       previous_status=previous_status)
 
 
 @receiver(post_save, sender=ExperimentMetric, dispatch_uid="experiment_metric_saved")
@@ -147,3 +172,5 @@ def new_experiment_metric(sender, **kwargs):
     # update experiment last_metric
     experiment.experiment_metric = instance
     experiment.save()
+    auditor.record(event_type=EXPERIMENT_NEW_METRIC,
+                   instance=instance)
