@@ -15,6 +15,7 @@ class InvalidService(Exception):
 
 class Service(object):
     __all__ = ()
+    is_setup = False
 
     def validate(self):
         """Validate the settings for this backend (i.e. such as proper connection info).
@@ -24,6 +25,7 @@ class Service(object):
 
     def setup(self):
         """Initialize this service."""
+        self.is_setup = True
 
 
 class LazyServiceWrapper(LazyObject):

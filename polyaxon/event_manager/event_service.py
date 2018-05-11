@@ -19,6 +19,8 @@ class EventService(Service):
 
         >>> record('event.action', object_instance)
         """
+        if not self.is_setup:
+            return
         if not self.can_handle(event_type=event_type):
             return
 

@@ -7,5 +7,6 @@ class TrackerService(EventService):
     event_manager = default_manager
 
     def setup(self):
+        super(TrackerService, self).setup()
         # Load default event types
         import tracker.events  # noqa
