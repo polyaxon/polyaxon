@@ -3,6 +3,9 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+import auditor
+
+from event_manager.events.experiment_group import EXPERIMENT_GROUP_STOPPED_TRIGGERED
 from experiment_groups.models import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupSerializer
 from libs.utils import to_bool
@@ -23,6 +26,10 @@ class ExperimentGroupStopView(CreateAPIView):
         obj = self.get_object()
         pending = request.data.get('pending')
         pending = to_bool(pending) if pending is not None else False
+        auditor.record(event_type=EXPERIMENT_GROUP_STOPPED_TRIGGERED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       pending=pending)
         stop_group_experiments.delay(experiment_group_id=obj.id,
                                      pending=pending,
                                      message='User stopped experiment group')

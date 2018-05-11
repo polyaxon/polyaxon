@@ -45,10 +45,10 @@ class ExperimentGroupCreatedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('user.id'),
-        Attribute('created_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
     )
 
@@ -64,9 +64,9 @@ class ExperimentGroupUpdatedEvent(Event):
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -78,11 +78,10 @@ class ExperimentGroupDeletedEvent(Event):
         Attribute('id'),
         Attribute('sequence'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
-        Attribute('last_status'),
     )
 
 
@@ -97,9 +96,9 @@ class ExperimentGroupViewedEvent(Event):
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -114,11 +113,12 @@ class ExperimentGroupStoppedEvent(Event):
         Attribute('project.user.id'),
         Attribute('user.id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
     )
 
 
@@ -131,9 +131,9 @@ class ExperimentGroupResumedEvent(Event):
         Attribute('project.user.id'),
         Attribute('user.id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -148,11 +148,12 @@ class ExperimentGroupFinishedEvent(Event):
         Attribute('project.user.id'),
         Attribute('user.id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
     )
 
 
@@ -165,11 +166,12 @@ class ExperimentGroupNewStatusEvent(Event):
         Attribute('project.user.id'),
         Attribute('user.id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
     )
 
 
@@ -182,9 +184,9 @@ class ExperimentGroupIterationEvent(Event):
         Attribute('project.user.id'),
         Attribute('user.id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -201,9 +203,9 @@ class ExperimentGroupExperimentsViewedEvent(Event):
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -236,9 +238,9 @@ class ExperimentGroupDeletedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )
@@ -255,11 +257,12 @@ class ExperimentGroupStoppedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('pending', attr_type=bool, is_required=False),
     )
 
 
@@ -274,9 +277,9 @@ class ExperimentGroupResumedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('actor_id'),
         Attribute('updated_at', is_datetime=True),
-        Attribute('concurrency'),
-        Attribute('search_algorithm'),
-        Attribute('has_early_stopping', attr_type=bool),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
     )

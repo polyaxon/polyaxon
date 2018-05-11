@@ -22,17 +22,18 @@ from django.http import StreamingHttpResponse
 import auditor
 
 from event_manager.events.experiment import (
+    EXPERIMENT_COPIED_TRIGGERED,
     EXPERIMENT_CREATED,
+    EXPERIMENT_DELETED_TRIGGERED,
     EXPERIMENT_JOBS_VIEWED,
     EXPERIMENT_LOGS_VIEWED,
-    EXPERIMENT_STATUSES_VIEWED,
-    EXPERIMENT_COPIED_TRIGGERED,
-    EXPERIMENT_DELETED_TRIGGERED,
     EXPERIMENT_RESTARTED_TRIGGERED,
     EXPERIMENT_RESUMED_TRIGGERED,
+    EXPERIMENT_STATUSES_VIEWED,
     EXPERIMENT_UPDATED,
     EXPERIMENT_VIEWED
 )
+from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
 from experiment_groups.models import ExperimentGroup
 from experiments.models import (
     Experiment,
@@ -104,6 +105,9 @@ class GroupExperimentListView(ListAPIView):
         # Get project and check permissions
         project = get_permissible_project(view=self)
         group = get_object_or_404(ExperimentGroup, project=project, sequence=sequence)
+        auditor.record(event_type=EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
+                       instance=group,
+                       actor_id=self.request.user.id)
 
         return group
 

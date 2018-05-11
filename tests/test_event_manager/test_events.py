@@ -176,10 +176,10 @@ class TestEvents(BaseTest):
         # Experiment group
         assert experiment_group.ExperimentGroupCreatedEvent.get_event_action() == 'created'
         assert experiment_group.ExperimentGroupUpdatedEvent.get_event_action() == 'updated'
-        assert experiment_group.ExperimentGroupDeletedEvent.get_event_action() == 'deleted'
+        assert experiment_group.ExperimentGroupDeletedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupViewedEvent.get_event_action() == 'viewed'
-        assert experiment_group.ExperimentGroupStoppedEvent.get_event_action() == 'stopped'
-        assert experiment_group.ExperimentGroupResumedEvent.get_event_action() == 'resumed'
+        assert experiment_group.ExperimentGroupStoppedEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupResumedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupFinishedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupNewStatusEvent.get_event_action() is None
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_action() ==

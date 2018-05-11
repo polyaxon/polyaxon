@@ -1,3 +1,4 @@
+from experiment_groups.statuses import ExperimentGroupLifeCycle
 from experiment_groups.utils import get_running_experiment_group
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
@@ -31,6 +32,7 @@ def hp_hyperband_start(self, experiment_group_id):
     if should_retry:
         # Schedule another task
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
 
     hp_hyperband_iterate.delay(experiment_group_id=experiment_group_id)
 
@@ -44,6 +46,7 @@ def hp_hyperband_iterate(self, experiment_group_id):
     if experiment_group.non_done_experiments.count() > 0:
         # Schedule another task, because all experiment must be done
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
 
     iteration_config = experiment_group.iteration_config
     iteration_manager = experiment_group.iteration_manager
@@ -60,3 +63,6 @@ def hp_hyperband_iterate(self, experiment_group_id):
                                             bracket_iteration=iteration_config.bracket_iteration):
         iteration_manager.reduce_configs()
         hp_hyperband_start.delay(experiment_group_id=experiment_group_id)
+        return
+
+    experiment_group.set_status(status=ExperimentGroupLifeCycle.SUCCEEDED)
