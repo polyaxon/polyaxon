@@ -3,6 +3,14 @@ import logging
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
+import auditor
+
+from event_manager.events.notebook import (
+    NOTEBOOK_FAILED,
+    NOTEBOOK_NEW_STATUS,
+    NOTEBOOK_STOPPED,
+    NOTEBOOK_SUCCEEDED
+)
 from jobs.statuses import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runner_signal
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
@@ -60,9 +68,31 @@ def new_tensorboard_job_status(sender, **kwargs):
 def new_notebook_job_status(sender, **kwargs):
     instance = kwargs['instance']
     job = instance.job
+    previous_status = job.last_status
     # Update job last_status
     job.job_status = instance
     job.save()
+    auditor.record(event_type=NOTEBOOK_NEW_STATUS,
+                   instance=job,
+                   previous_status=previous_status,
+                   target='project')
+    if instance.status == JobLifeCycle.STOPPED:
+        auditor.record(event_type=NOTEBOOK_STOPPED,
+                       instance=job,
+                       previous_status=previous_status,
+                       target='project')
+
+    if instance.status == JobLifeCycle.FAILED:
+        auditor.record(event_type=NOTEBOOK_FAILED,
+                       instance=job,
+                       previous_status=previous_status,
+                       target='project')
+
+    if instance.status == JobLifeCycle.STOPPED:
+        auditor.record(event_type=NOTEBOOK_SUCCEEDED,
+                       instance=job,
+                       previous_status=previous_status,
+                       target='project')
 
 
 @receiver(pre_delete, sender=Project, dispatch_uid="project_stop_plugins")

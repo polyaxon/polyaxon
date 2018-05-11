@@ -94,9 +94,13 @@ class TestEvents(BaseTest):
 
         # Notebook
         assert notebook.NotebookStartedEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookStartedTriggeredEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSoppedEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookSoppedTriggeredEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookViewedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookNewStatusEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookFailedEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookSucceededEvent.get_event_subject() == 'notebook'
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
@@ -202,10 +206,14 @@ class TestEvents(BaseTest):
                 'statuses_viewed')
 
         # Notebook
-        assert notebook.NotebookStartedEvent.get_event_action() == 'started'
-        assert notebook.NotebookSoppedEvent.get_event_action() == 'stopped'
+        assert notebook.NotebookStartedEvent.get_event_action() is None
+        assert notebook.NotebookStartedTriggeredEvent.get_event_action() == 'started'
+        assert notebook.NotebookSoppedEvent.get_event_action() is None
+        assert notebook.NotebookSoppedTriggeredEvent.get_event_action() == 'stopped'
         assert notebook.NotebookViewedEvent.get_event_action() == 'viewed'
         assert notebook.NotebookNewStatusEvent.get_event_action() is None
+        assert notebook.NotebookFailedEvent.get_event_action() is None
+        assert notebook.NotebookSucceededEvent.get_event_action() is None
 
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'

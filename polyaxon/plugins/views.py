@@ -6,6 +6,13 @@ from rest_framework.response import Response
 from django.conf import settings
 from django.http import Http404
 
+import auditor
+
+from event_manager.events.notebook import (
+    NOTEBOOK_STARTED_TRIGGERED,
+    NOTEBOOK_STOPPED_TRIGGERED,
+    NOTEBOOK_VIEWED
+)
 from experiments.statuses import ExperimentLifeCycle
 from libs.utils import to_bool
 from libs.views import ProtectedView
@@ -82,7 +89,11 @@ class StartNotebookView(CreateAPIView):
     def _create_notebook(self, project):
         serializer = self.get_serializer(instance=project.notebook, data=self.request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=self.request.user, project=project)
+        instance = serializer.save(user=self.request.user, project=project)
+        auditor.record(event_type=NOTEBOOK_STARTED_TRIGGERED,
+                       instance=instance,
+                       target='project',
+                       actor_id=self.request.user.id)
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -115,6 +126,10 @@ class StopNotebookView(CreateAPIView):
                 # Reset changes
                 git.undo(obj.repo.path)
             stop_notebook.delay(project_id=obj.id)
+            auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
+                           instance=obj.notebook,
+                           target='project',
+                           actor_id=self.request.user.id)
         elif obj.notebook and obj.notebook.is_running:
             obj.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
                                     message='Notebook was stopped')
@@ -122,6 +137,9 @@ class StopNotebookView(CreateAPIView):
 
 
 class PluginJobView(ProtectedView):
+    def audit(self, project):
+        pass
+
     @staticmethod
     def get_base_path(project):
         return ''
@@ -143,6 +161,7 @@ class PluginJobView(ProtectedView):
         project = self.get_object()
         if not self.has_plugin_job(project):
             raise Http404
+        self.audit(project=project)
         service_url = self.get_service_url(project=project)
         path = '/{}'.format(service_url.strip('/'))
         base_path = self.get_base_path(project)
@@ -176,6 +195,12 @@ class NotebookView(PluginJobView):
 
     def has_plugin_job(self, project):
         return project.has_notebook
+
+    def audit(self, project):
+        auditor.record(event_type=NOTEBOOK_VIEWED,
+                       instance=project.notebook,
+                       target='project',
+                       actor_id=self.request.user.id)
 
 
 class TensorboardView(PluginJobView):

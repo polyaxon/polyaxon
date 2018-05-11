@@ -331,7 +331,6 @@ class ExperimentStoppedTriggeredEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
-        Attribute('previous_status', is_required=False),
     )
 
 
@@ -349,7 +348,6 @@ class ExperimentResumedTriggeredEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
-        Attribute('previous_status', is_required=False),
     )
 
 
