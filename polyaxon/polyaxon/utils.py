@@ -30,6 +30,9 @@ class SettingConfig(object):
         self._requested_keys = set()
         self._secret_keys = set()
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
+        self._enable_services = self.get_boolean('POLYAXON_ENABLE_SERVICES',
+                                                 is_optional=True,
+                                                 default=True)
 
     @property
     def env(self):
@@ -44,7 +47,7 @@ class SettingConfig(object):
         return False
 
     def setup_services(self):
-        if not self.is_testing:
+        if not self.is_testing and self._enable_services:
             import activitylogs
             import auditor
             import tracker
