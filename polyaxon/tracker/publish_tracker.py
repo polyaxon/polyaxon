@@ -1,7 +1,8 @@
 import analytics
-from django.db import OperationalError, ProgrammingError, InterfaceError
 
-from tracker import TrackerService
+from django.db import InterfaceError, OperationalError, ProgrammingError
+
+from tracker.service import TrackerService
 
 
 class PublishTrackerService(TrackerService):
@@ -29,12 +30,12 @@ class PublishTrackerService(TrackerService):
         if event.event_type == 'cluster.created':
             self.analytics.identify(
                 self.get_cluster_id(),
-                data=event.serialize(dumps=True),
+                data=event.serialize(dumps=False),
             )
         self.analytics.track(
-            self.cluster_id,
+            self.get_cluster_id(),
             event.event_type,
-            event.serialize(dumps=True),
+            event.serialize(dumps=False),
         )
 
     def setup(self):

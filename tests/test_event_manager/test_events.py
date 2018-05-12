@@ -281,7 +281,7 @@ class TestEvents(BaseTest):
         assert event_serialized['timestamp'] is not None
         assert event_serialized['data']['attr1'] == 'test'
 
-        event_serialized_dump = event.serialize()
+        event_serialized_dump = event.serialize(dumps=True)
         assert event_serialized == loads(event_serialized_dump)
 
     def test_get_value_from_instance(self):

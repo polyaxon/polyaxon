@@ -93,7 +93,7 @@ class Event(object):
             return None
         return cls.event_type.split('.')[1]
 
-    def serialize(self, dumps=True):
+    def serialize(self, dumps=False):
         data = {
             'uuid': self.uuid.hex,
             'timestamp': to_timestamp(self.datetime),
