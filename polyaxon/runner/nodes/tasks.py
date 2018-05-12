@@ -4,6 +4,7 @@ import uuid
 
 from django.conf import settings
 from django.db.models import Count, Sum
+from polyaxon_schemas.utils import to_unit_memory
 
 import auditor
 
@@ -93,7 +94,7 @@ def update_system_nodes():
         auditor.record(event_type=CLUSTER_RESOURCES_UPDATED,
                        instance=cluster,
                        n_nodes=cluster.n_nodes,
-                       memory=cluster.memory / (1000 ** 3),
+                       memory=round(cluster.memory / (1000 ** 3), 2),
                        n_cpus=cluster.n_cpus,
                        n_gpus=cluster.n_gpus)
 
@@ -109,7 +110,7 @@ def cluster_nodes_analytics():
         cluster_uuid=cluster.uuid.hex,
         n_nodes=cluster.n_nodes,
         n_cpus=cluster.n_cpus,
-        memory=cluster.memory / (1000 ** 3),
+        memory=to_unit_memory(cluster.memory),
         n_gpus=cluster.n_gpus,
         notification=notification,
         version=settings.CHART_VERSION)
