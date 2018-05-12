@@ -14,10 +14,18 @@ def get_tracker_backend():
     return ''
 
 
+def get_backend_options():
+    if settings.TRACKER_BACKEND == settings.TRACKER_BACKEND_NOOP:
+        return {}
+    if settings.TRACKER_BACKEND == settings.TRACKER_BACKEND_PUBLISHER:
+        return {'key': config.tracker_key}
+    return {}
+
+
 backend = LazyServiceWrapper(
     backend_base=TrackerService,
     backend_path=get_tracker_backend(),
-    options={'key': config.tracker_key}
+    options=get_backend_options()
 )
 backend.expose(locals())
 
