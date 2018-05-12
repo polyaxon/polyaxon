@@ -1,6 +1,7 @@
 from django.conf import settings
 
 from libs.services import LazyServiceWrapper
+from polyaxon.utils import config
 from tracker.manager import default_manager
 from tracker.service import TrackerService
 
@@ -16,7 +17,7 @@ def get_tracker_backend():
 backend = LazyServiceWrapper(
     backend_base=TrackerService,
     backend_path=get_tracker_backend(),
-    options={}
+    options={'key': config.tracker_key}
 )
 backend.expose(locals())
 

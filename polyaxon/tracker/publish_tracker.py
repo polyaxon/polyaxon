@@ -4,11 +4,10 @@ from tracker import TrackerService
 
 
 class PublishTrackerService(TrackerService):
-    def __init__(self):
+    def __init__(self, key=''):
         self.cluster_id = None
         self.analytics = analytics
-        # Set key
-        analytics.write_key = ''
+        self.analytics.write_key = key
 
     def get_cluster_id(self):
         if self.cluster_id:

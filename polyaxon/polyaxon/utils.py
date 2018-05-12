@@ -74,6 +74,11 @@ class SettingConfig(object):
             'aW8vMTE5NzQxNg==')
         return dns
 
+    @property
+    def tracker_key(self):
+        key = 'VXdvYlBQOUdoT2wzMmNoWkhtVDl4R05venk1ZWFVb1o='
+        return self._decode(key)
+
     def get_requested_params(self, include_secrets=False, to_str=False):
         params = {}
         for key in self._requested_keys:
