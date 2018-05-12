@@ -108,7 +108,7 @@ global config
 - name: POLYAXON_K8S_RBAC_ENABLED
   value: {{ .Values.rbac.enabled | quote }}
 - name: POLYAXON_K8S_PROVISIONER_ENABLED
-  value: {{ .Values.nfsProvisioner.enabled | quote }
+  value: {{ .Values.nfsProvisioner.enabled | quote }}
 {{- if .Values.k8s.authorisation }}
 - name: POLYAXON_K8S_AUTHORISATION
   valueFrom:
@@ -171,6 +171,8 @@ global config
   value: {{ .Values.apps.tensorboard }}
 - name: POLYAXON_APP_LABELS_NOTEBOOK
   value: {{ .Values.apps.notebook }}
+- name: POLYAXON_TRACKER_BACKEND
+  value: "publisher"
 {{- end -}}
 
 {{/*
