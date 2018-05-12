@@ -78,8 +78,12 @@ def update_system_nodes():
 
     for current_node, new_node in nodes_to_update.values():
         node_dict = ClusterNode.from_node_item(new_node)
+        node_updated = False
         for k, v in node_dict.items():
-            setattr(current_node, k, v)
+            if v != getattr(current_node, k):
+                setattr(current_node, k, v)
+                node_updated = True
+        if node_updated:
             current_node.save()
             cluster_updated = True
             auditor.record(event_type=CLUSTER_NODE_UPDATED, instance=current_node)
