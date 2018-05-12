@@ -43,6 +43,19 @@ class SettingConfig(object):
             return True
         return False
 
+    def setup_services(self):
+        if not self.is_testing:
+            import activitylogs
+            import auditor
+            import tracker
+
+            auditor.validate()
+            auditor.setup()
+            tracker.validate()
+            tracker.setup()
+            activitylogs.validate()
+            activitylogs.setup()
+
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
         config = reader.read(config_values)  # pylint:disable=redefined-outer-name
