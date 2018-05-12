@@ -1,4 +1,5 @@
 import analytics
+from django.db import OperationalError, ProgrammingError, InterfaceError
 
 from tracker import TrackerService
 
@@ -17,7 +18,7 @@ class PublishTrackerService(TrackerService):
         try:
             cluster_uuid = Cluster.load().uuid.hex
             self.cluster_id = cluster_uuid
-        except Cluster.DoesNotExist:
+        except (Cluster.DoesNotExist, InterfaceError, ProgrammingError, OperationalError):
             pass
         return self.cluster_id
 
