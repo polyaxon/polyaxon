@@ -42,7 +42,8 @@ def update_system_info():
         cluster.version_api = version_api
         cluster.save()
         auditor.record(event_type=CLUSTER_UPDATED,
-                       instance=cluster)
+                       instance=cluster,
+                       is_upgrade=settings.CHART_IS_UPGRADE)
 
 
 @celery_app.task(name=RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
@@ -71,9 +72,9 @@ def update_system_nodes():
     for node in nodes_to_create.values():
         node_dict = ClusterNode.from_node_item(node)
         node_dict['cluster'] = cluster
-        ClusterNode.objects.create(**node_dict)
+        instance = ClusterNode.objects.create(**node_dict)
         cluster_updated = True
-        auditor.record(event_type=CLUSTER_NODE_CREATED, instance=node)
+        auditor.record(event_type=CLUSTER_NODE_CREATED, instance=instance)
 
     for current_node, new_node in nodes_to_update.values():
         node_dict = ClusterNode.from_node_item(new_node)
@@ -81,7 +82,7 @@ def update_system_nodes():
             setattr(current_node, k, v)
             current_node.save()
             cluster_updated = True
-            auditor.record(event_type=CLUSTER_NODE_UPDATED, instance=node)
+            auditor.record(event_type=CLUSTER_NODE_UPDATED, instance=current_node)
 
     if cluster_updated:
         cluster = get_cluster_resources()
