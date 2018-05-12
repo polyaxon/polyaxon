@@ -128,6 +128,16 @@ By default polyaxon creates a master job, so you only need to provide the worker
  * [MXNet distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/mxnet/cifar10/polyaxonfile_distributed.yml)
  * [Pytorch distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/pytorch/mnist/polyaxonfile_distributed.yml)
 
+# Hyperparameters tuning
+
+Polyaxon has a concept for suggesting hyperparameters and managing their results very similar to Google Vizier called experiment groups.
+An experiment group in Polyaxon defines a search algorithm, a search space, and a model to train.
+
+ * [Grid search](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_grid.yml)
+ * [Random search with early stopping](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_early_stopping.yml)
+ * [Hyperband](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_hyperband.yml)
+ * [Bayesian Optimization](https://github.com/polyaxon/polyaxon-quick-start/blob/master/polyaxonfile_hyperparams_bo.yml)
+
 # Architecture
 
 ![Polyaxon architecture](config/polyaxon_architecture.png)
