@@ -14,9 +14,9 @@ PROJECT_APPS = (
     'pipelines.apps.PipelinesConfig',
     'event_monitors.apps.EventMonitorsConfig',
     'event_manager.apps.EventManagerConfig',
-    'auditor.apps.AuditorConfig',
-    'tracker.apps.TrackerConfig',
     'activitylogs.apps.ActivityLogsConfig',
+    'tracker.apps.TrackerConfig',
+    'auditor.apps.AuditorConfig',
 )
 
 DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True)
