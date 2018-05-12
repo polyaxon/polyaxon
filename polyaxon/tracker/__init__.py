@@ -30,3 +30,6 @@ backend = LazyServiceWrapper(
 backend.expose(locals())
 
 subscribe = default_manager.subscribe
+
+if not config.is_testing:
+    setup()
