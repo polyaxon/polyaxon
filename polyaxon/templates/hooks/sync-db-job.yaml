@@ -7,6 +7,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+    type: {{ .Values.types.core }}
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
@@ -21,6 +22,18 @@ spec:
         app: {{ template "polyaxon.fullname" . }}
         release: "{{ .Release.Name }}"
     spec:
+      {{- if .Values.nodeSelectors.core }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectors.core | indent 8 }}
+      {{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations.core }}
+      tolerations:
+{{ toYaml .Values.tolerations.core | indent 8 }}
+      {{- end }}
       restartPolicy: Never
       containers:
       - name: sync-db-job

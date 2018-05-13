@@ -21,7 +21,7 @@ spec:
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.api }}
     spec:
-    {{- if .Values.nodeSelectors.core }}
+      {{- if .Values.nodeSelectors.core }}
       nodeSelector:
 {{ toYaml .Values.nodeSelectors.core | indent 8 }}
       {{- end }}

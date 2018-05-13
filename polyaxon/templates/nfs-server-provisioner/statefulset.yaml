@@ -27,6 +27,18 @@ spec:
       # NOTE: This is 10 seconds longer than the default nfs-provisioner --grace-period value of 90sec
       terminationGracePeriodSeconds: 100
       serviceAccountName: {{ include "polyaxon.fullname" . }}-serviceaccount
+      {{- if .Values.nodeSelectors.core }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectors.core | indent 8 }}
+      {{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations.core }}
+      tolerations:
+{{ toYaml .Values.tolerations.core | indent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.nfsProvisioner.image.repository }}:{{ .Values.nfsProvisioner.image.tag }}"
@@ -70,18 +82,6 @@ spec:
           resources:
 {{ toYaml . | indent 12 }}
         {{- end }}
-    {{- with .Values.nfsProvisioner.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.nfsProvisioner.affinity }}
-      affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.nfsProvisioner.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
 
 {{- if not .Values.nfsProvisioner.persistence.enabled }}
       volumes:
