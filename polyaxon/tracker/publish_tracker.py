@@ -24,16 +24,17 @@ class PublishTrackerService(TrackerService):
         return self.cluster_id
 
     def record_event(self, event):
-        if not self.cluster_id:
+        cluster_id = self.get_cluster_id()
+        if not cluster_id:
             return
 
         if event.event_type == 'cluster.created':
             self.analytics.identify(
-                self.get_cluster_id(),
+                cluster_id,
                 event.serialize(dumps=False),
             )
         self.analytics.track(
-            self.get_cluster_id(),
+            cluster_id,
             event.event_type,
             event.serialize(dumps=False),
         )
