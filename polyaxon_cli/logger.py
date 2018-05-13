@@ -16,9 +16,6 @@ logger = logging.getLogger('polyaxon.cli')
 
 
 def configure_logger(verbose):
-    log_level = logging.DEBUG if verbose else logging.INFO
-    logging.basicConfig(format='%(message)s', level=log_level, stream=sys.stdout)
-
     def set_raven_client():
         from polyaxon_cli.managers.cli import CliConfigManager
 
@@ -35,6 +32,8 @@ def configure_logger(verbose):
         return None
 
     set_raven_client()
+    log_level = logging.DEBUG if verbose else logging.INFO
+    logging.basicConfig(format='%(message)s', level=log_level, stream=sys.stdout)
 
 
 def clean_outputs(fn):
