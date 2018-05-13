@@ -342,6 +342,14 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        # Add node selectors
+        config_dict['node_selectors'] = {
+            'polyaxon.com': 'master',
+        }
+
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add tensorflow
         config_dict['tensorflow'] = {
             'n_workers': 10,

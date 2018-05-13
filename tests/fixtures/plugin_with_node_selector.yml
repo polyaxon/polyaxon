@@ -1,0 +1,17 @@
+---
+version: 1
+
+kind: plugin
+
+environment:
+  node_selectors:
+    polyxon.com: node_for_plugin_jobs
+
+run:
+  image: my_image
+  build_steps:
+    - pip install package1
+  env_vars:
+    - ['KEY1', 'en_US.UTF-8']
+    - ['KEY2', 2]
+...

@@ -1,0 +1,51 @@
+---
+version: 1
+
+kind: experiment
+
+settings:
+  logging:
+    level: INFO
+
+environment:
+  node_selectors:
+    polyxon.com: node_for_specific_experiment
+
+  resources:
+    cpu:
+      requests: 1
+      limits: 2
+
+  tensorflow:
+    n_workers: 5
+    n_ps: 10
+
+    default_worker_resources:
+      cpu:
+        requests: 3
+        limits: 3
+      memory:
+          requests: 256
+          limits: 256
+
+    worker_resources:
+      - index: 3
+        memory:
+          requests: 300
+          limits: 300
+
+    default_ps_resources:
+      cpu:
+        requests: 2
+        limits: 4
+
+    ps_resources:
+      - index: 9
+        memory:
+          requests: 512
+          limits: 1024
+
+run:
+  image: my_image
+  cmd: video_prediction_train --model=DNA --num_masks=1
+...

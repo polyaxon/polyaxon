@@ -489,6 +489,89 @@ class TestPolyaxonfile(TestCase):
         assert spec.settings.matrix is None
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
+        assert spec.environment.node_selectors is None
+        assert spec.framework == Frameworks.TENSORFLOW
+        assert spec.environment.tensorflow.n_workers == 5
+        assert spec.environment.tensorflow.n_ps == 10
+
+        assert isinstance(spec.environment.resources, PodResourcesConfig)
+        assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
+        assert spec.environment.resources.cpu.requests == 1
+        assert spec.environment.resources.cpu.limits == 2
+
+        assert isinstance(spec.environment.tensorflow.default_worker_resources,
+                          PodResourcesConfig)
+        assert isinstance(spec.environment.tensorflow.default_worker_resources.cpu,
+                          K8SResourcesConfig)
+        assert spec.environment.tensorflow.default_worker_resources.cpu.requests == 3
+        assert spec.environment.tensorflow.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.environment.tensorflow.default_worker_resources.memory,
+                          K8SResourcesConfig)
+        assert spec.environment.tensorflow.default_worker_resources.memory.requests == 256
+        assert spec.environment.tensorflow.default_worker_resources.memory.limits == 256
+
+        assert isinstance(spec.environment.tensorflow.worker_resources[0], PodResourcesConfig)
+        assert isinstance(spec.environment.tensorflow.worker_resources[0].memory,
+                          K8SResourcesConfig)
+        assert spec.environment.tensorflow.worker_resources[0].index == 3
+        assert spec.environment.tensorflow.worker_resources[0].memory.requests == 300
+        assert spec.environment.tensorflow.worker_resources[0].memory.limits == 300
+
+        assert isinstance(spec.environment.tensorflow.default_ps_resources, PodResourcesConfig)
+        assert isinstance(spec.environment.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
+        assert spec.environment.tensorflow.default_ps_resources.cpu.requests == 2
+        assert spec.environment.tensorflow.default_ps_resources.cpu.limits == 4
+
+        assert isinstance(spec.environment.tensorflow.ps_resources[0], PodResourcesConfig)
+        assert isinstance(spec.environment.tensorflow.ps_resources[0].memory, K8SResourcesConfig)
+        assert spec.environment.tensorflow.ps_resources[0].index == 9
+        assert spec.environment.tensorflow.ps_resources[0].memory.requests == 512
+        assert spec.environment.tensorflow.ps_resources[0].memory.limits == 1024
+
+        # check that properties for return list of configs and resources is working
+        cluster, is_distributed = spec.cluster_def
+        worker_resources = TensorflowSpecification.get_worker_resources(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert len(worker_resources) == spec.environment.tensorflow.n_workers
+        assert set(worker_resources.values()) == {
+            spec.environment.tensorflow.default_worker_resources,
+            spec.environment.tensorflow.worker_resources[0]}
+
+        ps_resources = TensorflowSpecification.get_ps_resources(
+            environment=spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert len(ps_resources) == spec.environment.tensorflow.n_ps
+        assert set(ps_resources.values()) == {
+            spec.environment.tensorflow.default_ps_resources,
+            spec.environment.tensorflow.ps_resources[0]}
+
+        # Check total resources
+        assert spec.total_resources == {
+            'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
+            'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
+            'gpu': None
+        }
+
+        assert spec.cluster_def == ({TaskType.MASTER: 1,
+                                     TaskType.WORKER: 5,
+                                     TaskType.PS: 10}, True)
+
+    def test_distributed_tensorflow_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/distributed_tensorflow_with_node_selectors_file.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert isinstance(spec.settings, SettingsConfig)
+        assert isinstance(spec.settings.logging, LoggingConfig)
+        assert spec.settings.matrix is None
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.is_runnable
+        assert spec.environment.node_selectors == {'polyxon.com': 'node_for_specific_experiment'}
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
@@ -760,3 +843,12 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5,
                                      TaskType.SERVER: 10}, True)
+
+    def test_plugin_job_with_node_selectors(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/plugin_with_node_selector.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.settings is None
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.environment.node_selectors == {'polyxon.com': 'node_for_plugin_jobs'}
