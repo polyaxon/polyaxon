@@ -150,11 +150,10 @@ global config
 {{- else }}
   value: "production"
 {{- end }}
+- name: POLYAXON_NODE_SELECTORS_CORE
+  value: {{ toJson .Values.nodeSelectors.core | quote }}
 - name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: node-selectors-experiments
+  value: {{ toJson .Values.nodeSelectors.experiments | quote }}
 - name: POLYAXON_ROLE_LABELS_API
   value: {{ .Values.roles.api }}
 - name: POLYAXON_ROLE_LABELS_LOG
