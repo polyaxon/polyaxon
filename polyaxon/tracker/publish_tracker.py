@@ -30,7 +30,7 @@ class PublishTrackerService(TrackerService):
         if event.event_type == 'cluster.created':
             self.analytics.identify(
                 self.get_cluster_id(),
-                data=event.serialize(dumps=False),
+                event.serialize(dumps=False),
             )
         self.analytics.track(
             self.get_cluster_id(),
