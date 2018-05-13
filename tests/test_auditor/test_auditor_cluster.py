@@ -41,6 +41,8 @@ class AuditorClusterTest(BaseTest):
                        use_logs_claim=False,
                        use_repos_claim=False,
                        use_upload_claim=False,
+                       node_selector_core_enabled=False,
+                       node_selector_experiments_enabled=False,
                        cli_min_version='',
                        cli_latest_version='',
                        platform_min_version='',

@@ -18,6 +18,8 @@ class ClusterCreatedEvent(Event):
         Attribute('environment'),
         Attribute('is_upgrade'),
         Attribute('provisioner_enabled', attr_type=bool),
+        Attribute('node_selector_core_enabled', attr_type=bool),
+        Attribute('node_selector_experiments_enabled', attr_type=bool),
         Attribute('use_data_claim', attr_type=bool),
         Attribute('use_outputs_claim', attr_type=bool),
         Attribute('use_logs_claim', attr_type=bool),

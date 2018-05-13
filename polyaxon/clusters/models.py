@@ -40,6 +40,8 @@ class Cluster(Singleton):
                        use_logs_claim=bool(settings.LOGS_CLAIM_NAME),
                        use_repos_claim=bool(settings.REPOS_CLAIM_NAME),
                        use_upload_claim=bool(settings.UPLOAD_CLAIM_NAME),
+                       node_selector_core_enabled=bool(settings.NODE_SELECTORS_CORE),
+                       node_selector_experiments_enabled=bool(settings.NODE_SELECTORS_EXPERIMENTS),
                        cli_min_version=settings.CLI_MIN_VERSION,
                        cli_latest_version=settings.CLI_LATEST_VERSION,
                        platform_min_version=settings.PLATFORM_LATEST_VERSION,
