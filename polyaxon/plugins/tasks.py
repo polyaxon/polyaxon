@@ -61,6 +61,11 @@ def build_notebook(project_id):
             JobLifeCycle.FAILED,
             message='Failed to build image for notebook.')
         return
+    except Exception as e:  # Other exceptions
+        logger.warning('Failed to build notebook %s', e)
+        job.set_status(JobLifeCycle.FAILED,
+                       message='Failed to build image for notebook.')
+        return
 
     if not status:
         return
