@@ -45,6 +45,15 @@ ingress:
 serviceType: LoadBalancer
 ```
 
+Example, adding database persistence
+
+```yaml
+postgresql:
+  persistence:
+      enabled: true
+      size: 5Gi
+```
+
 ## Install Polyaxon
 
 First of all, you need to [add](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md) the [Polyaxon helm repository](https://charts.polyaxon.com/)
