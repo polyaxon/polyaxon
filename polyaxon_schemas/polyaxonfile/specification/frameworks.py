@@ -11,7 +11,94 @@ from polyaxon_schemas.polyaxonfile.specification.utils import (
 from polyaxon_schemas.utils import TaskType
 
 
-class TensorflowSpecification(object):
+class DistributedSpecificationInterface(object):
+    TASK_WORKER = TaskType.WORKER
+    TASK_PS = TaskType.PS
+
+    @staticmethod
+    def has_framework_environment(environment):
+        return False
+
+    @staticmethod
+    def get_framework_environment(environment):
+        pass
+
+    @staticmethod
+    def get_cluster_def(cluster, tensorflow_config):
+        pass
+
+    @classmethod
+    def get_worker_configs(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
+
+        return get_task_configs(cluster=cluster,
+                                is_distributed=is_distributed,
+                                configs=framework_environment.worker_configs,
+                                default_config=framework_environment.default_worker_config,
+                                task_type=cls.TASK_WORKER)
+
+    @classmethod
+    def get_ps_configs(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
+
+        return get_task_configs(cluster=cluster,
+                                is_distributed=is_distributed,
+                                configs=framework_environment.ps_configs,
+                                default_config=framework_environment.default_ps_config,
+                                task_type=cls.TASK_PS)
+
+    @classmethod
+    def get_worker_resources(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return None
+
+        return get_task_job_resources(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            resources=framework_environment.worker_resources,
+            default_resources=framework_environment.default_worker_resources,
+            task_type=cls.TASK_WORKER)
+
+    @classmethod
+    def get_ps_resources(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return None
+        return get_task_job_resources(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            resources=framework_environment.ps_resources,
+            default_resources=framework_environment.default_ps_resources,
+            task_type=cls.TASK_PS)
+
+    @classmethod
+    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+        pass
+
+    @staticmethod
+    def get_worker_node_selectors(environment, cluster, is_distributed):
+        pass
+
+    @staticmethod
+    def get_ps_node_selectors(environment, cluster, is_distributed):
+        pass
+
+
+class TensorflowSpecification(DistributedSpecificationInterface):
+    @staticmethod
+    def has_framework_environment(environment):
+        return environment is not None and environment.tensorflow is not None
+
+    @classmethod
+    def get_framework_environment(cls, environment):
+        if not cls.has_framework_environment(environment=environment):
+            return None
+        return environment.tensorflow
 
     @staticmethod
     def get_cluster_def(cluster, tensorflow_config):
@@ -25,48 +112,6 @@ class TensorflowSpecification(object):
             is_distributed = True
 
         return cluster, is_distributed
-
-    @staticmethod
-    def get_worker_configs(environment, cluster, is_distributed):
-        if environment is None or environment.tensorflow is None:
-            return {}
-        return get_task_configs(cluster=cluster,
-                                is_distributed=is_distributed,
-                                configs=environment.tensorflow.worker_configs,
-                                default_config=environment.tensorflow.default_worker_config,
-                                task_type=TaskType.WORKER)
-
-    @staticmethod
-    def get_ps_configs(environment, cluster, is_distributed):
-        if environment is None or environment.tensorflow is None:
-            return {}
-        return get_task_configs(cluster=cluster,
-                                is_distributed=is_distributed,
-                                configs=environment.tensorflow.ps_configs,
-                                default_config=environment.tensorflow.default_ps_config,
-                                task_type=TaskType.PS)
-
-    @staticmethod
-    def get_worker_resources(environment, cluster, is_distributed):
-        if environment is None or environment.tensorflow is None:
-            return None
-        return get_task_job_resources(
-            cluster=cluster,
-            is_distributed=is_distributed,
-            resources=environment.tensorflow.worker_resources,
-            default_resources=environment.tensorflow.default_worker_resources,
-            task_type=TaskType.WORKER)
-
-    @staticmethod
-    def get_ps_resources(environment, cluster, is_distributed):
-        if environment is None or environment.tensorflow is None:
-            return None
-        return get_task_job_resources(
-            cluster=cluster,
-            is_distributed=is_distributed,
-            resources=environment.tensorflow.ps_resources,
-            default_resources=environment.tensorflow.default_ps_resources,
-            task_type=TaskType.PS)
 
     @classmethod
     def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
@@ -97,7 +142,16 @@ class TensorflowSpecification(object):
         return total_resources.to_dict()
 
 
-class HorovodSpecification(object):
+class HorovodSpecification(DistributedSpecificationInterface):
+    @staticmethod
+    def has_framework_environment(environment):
+        return environment is not None and environment.horovod is not None
+
+    @classmethod
+    def get_framework_environment(cls, environment):
+        if not cls.has_framework_environment(environment=environment):
+            return None
+        return environment.horovod
 
     @staticmethod
     def get_cluster_def(cluster, horovod_config):
@@ -111,27 +165,6 @@ class HorovodSpecification(object):
 
         return cluster, is_distributed
 
-    @staticmethod
-    def get_worker_configs(environment, cluster, is_distributed):
-        if environment is None or environment.horovod is None:
-            return {}
-        return get_task_configs(cluster=cluster,
-                                is_distributed=is_distributed,
-                                configs=environment.horovod.worker_configs,
-                                default_config=environment.horovod.default_worker_config,
-                                task_type=TaskType.WORKER)
-
-    @staticmethod
-    def get_worker_resources(environment, cluster, is_distributed):
-        if environment is None or environment.horovod is None:
-            return None
-        return get_task_job_resources(
-            cluster=cluster,
-            is_distributed=is_distributed,
-            resources=environment.horovod.worker_resources,
-            default_resources=environment.horovod.default_worker_resources,
-            task_type=TaskType.WORKER)
-
     @classmethod
     def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
         worker_resources = cls.get_worker_resources(
@@ -154,7 +187,16 @@ class HorovodSpecification(object):
         return total_resources.to_dict()
 
 
-class PytorchSpecification(object):
+class PytorchSpecification(DistributedSpecificationInterface):
+    @staticmethod
+    def has_framework_environment(environment):
+        return environment is not None and environment.pytorch is not None
+
+    @classmethod
+    def get_framework_environment(cls, environment):
+        if not cls.has_framework_environment(environment=environment):
+            return None
+        return environment.pytorch
 
     @staticmethod
     def get_cluster_def(cluster, pytorch_config):
@@ -168,27 +210,6 @@ class PytorchSpecification(object):
 
         return cluster, is_distributed
 
-    @staticmethod
-    def get_worker_configs(environment, cluster, is_distributed):
-        if environment is None or environment.pytorch is None:
-            return {}
-        return get_task_configs(cluster=cluster,
-                                is_distributed=is_distributed,
-                                configs=environment.pytorch.worker_configs,
-                                default_config=environment.pytorch.default_worker_config,
-                                task_type=TaskType.WORKER)
-
-    @staticmethod
-    def get_worker_resources(environment, cluster, is_distributed):
-        if environment is None or environment.pytorch is None:
-            return None
-        return get_task_job_resources(
-            cluster=cluster,
-            is_distributed=is_distributed,
-            resources=environment.pytorch.worker_resources,
-            default_resources=environment.pytorch.default_worker_resources,
-            task_type=TaskType.WORKER)
-
     @classmethod
     def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
         worker_resources = cls.get_worker_resources(
@@ -211,7 +232,18 @@ class PytorchSpecification(object):
         return total_resources.to_dict()
 
 
-class MXNetSpecification(object):
+class MXNetSpecification(DistributedSpecificationInterface):
+    TASK_PS = TaskType.SERVER
+
+    @staticmethod
+    def has_framework_environment(environment):
+        return environment is not None and environment.mxnet is not None
+
+    @classmethod
+    def get_framework_environment(cls, environment):
+        if not cls.has_framework_environment(environment=environment):
+            return None
+        return environment.mxnet
 
     @staticmethod
     def get_cluster_def(cluster, mxnet_config):
@@ -225,28 +257,6 @@ class MXNetSpecification(object):
             is_distributed = True
 
         return cluster, is_distributed
-
-    @staticmethod
-    def get_worker_resources(environment, cluster, is_distributed):
-        if environment is None or environment.mxnet is None:
-            return None
-        return get_task_job_resources(
-            cluster=cluster,
-            is_distributed=is_distributed,
-            resources=environment.mxnet.worker_resources,
-            default_resources=environment.mxnet.default_worker_resources,
-            task_type=TaskType.WORKER)
-
-    @staticmethod
-    def get_ps_resources(environment, cluster, is_distributed):
-        if environment is None or environment.mxnet is None:
-            return None
-        return get_task_job_resources(
-            cluster=cluster,
-            is_distributed=is_distributed,
-            resources=environment.mxnet.ps_resources,
-            default_resources=environment.mxnet.default_ps_resources,
-            task_type=TaskType.SERVER)
 
     @classmethod
     def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
