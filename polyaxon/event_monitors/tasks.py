@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.db import IntegrityError
 
 from experiments.models import Experiment, ExperimentJob
 from experiments.paths import get_experiment_logs_path
@@ -26,7 +27,7 @@ def handle_events_resources(payload, persist):
 
 
 @celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
-def handle_events_job_statues(payload):
+def handle_events_job_statuses(payload):
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -39,11 +40,15 @@ def handle_events_job_statues(payload):
         return
 
     # Set the new status
-    job.set_status(status=payload['status'], message=payload['message'], details=details)
+    try:
+        job.set_status(status=payload['status'], message=payload['message'], details=details)
+    except IntegrityError:
+        # Due to concurrency this could happen, we just ignore it
+        pass
 
 
 @celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
-def handle_events_plugin_job_statues(payload):
+def handle_events_plugin_job_statuses(payload):
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
@@ -68,7 +73,11 @@ def handle_events_plugin_job_statues(payload):
         return
 
     # Set the new status
-    job.set_status(status=payload['status'], message=payload['message'], details=details)
+    try:
+        job.set_status(status=payload['status'], message=payload['message'], details=details)
+    except IntegrityError:
+        # Due to concurrency this could happen, we just ignore it
+        pass
 
 
 @celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)

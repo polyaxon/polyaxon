@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from event_monitors.tasks import handle_events_job_statues, handle_events_plugin_job_statues
+from event_monitors.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
 from experiments.models import ExperimentJobStatus
 from factories.factory_experiments import ExperimentJobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
@@ -75,7 +75,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_JOB
     STATUS_MODEL = ExperimentJobStatus
-    STATUS_HANDLER = handle_events_job_statues
+    STATUS_HANDLER = handle_events_job_statuses
 
     def get_job_object(self, job_state):
         job_uuid = job_state.details.labels.job_uuid.hex
@@ -87,7 +87,7 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = TensorboardJobStatus
-    STATUS_HANDLER = handle_events_plugin_job_statues
+    STATUS_HANDLER = handle_events_plugin_job_statuses
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
@@ -100,7 +100,7 @@ class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling)
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = NotebookJobStatus
-    STATUS_HANDLER = handle_events_plugin_job_statues
+    STATUS_HANDLER = handle_events_plugin_job_statuses
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
