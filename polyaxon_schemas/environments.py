@@ -339,12 +339,16 @@ class TensorflowSchema(Schema):
     run_config = fields.Nested(RunSchema, allow_none=True)
     default_worker_config = fields.Nested(SessionSchema, allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    default_worker_node_selectors = fields.Dict(allow_none=True)
     default_ps_config = fields.Nested(SessionSchema, allow_none=True)
     default_ps_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    default_ps_node_selectors = fields.Dict(allow_none=True)
     worker_configs = fields.Nested(SessionSchema, many=True, allow_none=True)
     worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
     ps_configs = fields.Nested(SessionSchema, many=True, allow_none=True)
     ps_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+    worker_node_selectors = fields.List(fields.Dict(), allow_none=True)
+    ps_node_selectors = fields.List(fields.Dict(), allow_none=True)
 
     class Meta:
         ordered = True
@@ -371,10 +375,14 @@ class TensorflowConfig(BaseConfig):
                  default_worker_resources=None,
                  default_ps_config=None,
                  default_ps_resources=None,
+                 default_worker_node_selectors=None,
+                 default_ps_node_selectors=None,
                  worker_configs=None,
                  worker_resources=None,
                  ps_configs=None,
-                 ps_resources=None):
+                 ps_resources=None,
+                 worker_node_selectors=None,
+                 ps_node_selectors=None):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.delay_workers_by_global_step = delay_workers_by_global_step
@@ -383,16 +391,22 @@ class TensorflowConfig(BaseConfig):
         self.default_worker_resources = default_worker_resources
         self.default_ps_config = default_ps_config
         self.default_ps_resources = default_ps_resources
+        self.default_worker_node_selectors = default_worker_node_selectors
+        self.default_ps_node_selectors = default_ps_node_selectors
         self.worker_configs = worker_configs
         self.worker_resources = worker_resources
         self.ps_configs = ps_configs
         self.ps_resources = ps_resources
+        self.worker_node_selectors = worker_node_selectors
+        self.ps_node_selectors = ps_node_selectors
 
 
 class HorovodSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    default_worker_node_selectors = fields.Dict(allow_none=True)
     worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+    worker_node_selectors = fields.List(fields.Dict(allow_none=True), allow_none=True)
 
     class Meta:
         ordered = True
@@ -413,16 +427,22 @@ class HorovodConfig(BaseConfig):
     def __init__(self,
                  n_workers=0,
                  default_worker_resources=None,
-                 worker_resources=None):
+                 default_worker_node_selectors=None,
+                 worker_resources=None,
+                 worker_node_selectors=None):
         self.n_workers = n_workers
         self.default_worker_resources = default_worker_resources
+        self.default_worker_node_selectors = default_worker_node_selectors
         self.worker_resources = worker_resources
+        self.worker_node_selectors = worker_node_selectors
 
 
 class PytorchSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    default_worker_node_selectors = fields.Dict(allow_none=True)
     worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+    worker_node_selectors = fields.List(fields.Dict(), allow_none=True)
 
     class Meta:
         ordered = True
@@ -443,10 +463,14 @@ class PytorchConfig(BaseConfig):
     def __init__(self,
                  n_workers=0,
                  default_worker_resources=None,
-                 worker_resources=None):
+                 default_worker_node_selectors=None,
+                 worker_resources=None,
+                 worker_node_selectors=None):
         self.n_workers = n_workers
         self.default_worker_resources = default_worker_resources
+        self.default_worker_node_selectors = default_worker_node_selectors
         self.worker_resources = worker_resources
+        self.worker_node_selectors = worker_node_selectors
 
 
 class MXNetSchema(Schema):
@@ -454,8 +478,12 @@ class MXNetSchema(Schema):
     n_ps = fields.Int(allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_ps_resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    default_worker_node_selectors = fields.Dict(allow_none=True)
+    default_ps_node_selectors = fields.Dict(allow_none=True)
     worker_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
     ps_resources = fields.Nested(PodResourcesSchema, many=True, allow_none=True)
+    worker_node_selectors = fields.List(fields.Dict(), allow_none=True)
+    ps_node_selectors = fields.List(fields.Dict(), allow_none=True)
 
     class Meta:
         ordered = True
@@ -478,14 +506,22 @@ class MXNetConfig(BaseConfig):
                  n_ps=0,
                  default_worker_resources=None,
                  default_ps_resources=None,
+                 default_worker_node_selectors=None,
+                 default_ps_node_selectors=None,
                  worker_resources=None,
-                 ps_resources=None):
+                 ps_resources=None,
+                 worker_node_selectors=None,
+                 ps_node_selectors=None):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.default_worker_resources = default_worker_resources
         self.default_ps_resources = default_ps_resources
+        self.default_worker_node_selectors = default_worker_node_selectors
+        self.default_ps_node_selectors = default_ps_node_selectors
         self.worker_resources = worker_resources
         self.ps_resources = ps_resources
+        self.worker_node_selectors = worker_node_selectors
+        self.ps_node_selectors = ps_node_selectors
 
 
 def validate_frameworks(frameworks):

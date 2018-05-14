@@ -6,6 +6,7 @@ import six
 from polyaxon_schemas.environments import PodResourcesConfig
 from polyaxon_schemas.polyaxonfile.specification.utils import (
     get_task_configs,
+    get_task_job_node_selectors,
     get_task_job_resources
 )
 from polyaxon_schemas.utils import TaskType
@@ -80,13 +81,31 @@ class DistributedSpecificationInterface(object):
     def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
         pass
 
-    @staticmethod
-    def get_worker_node_selectors(environment, cluster, is_distributed):
-        pass
+    @classmethod
+    def get_worker_node_selectors(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
 
-    @staticmethod
-    def get_ps_node_selectors(environment, cluster, is_distributed):
-        pass
+        return get_task_job_node_selectors(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            node_selectors=framework_environment.worker_node_selectors,
+            default_node_selectors=framework_environment.default_worker_node_selectors,
+            task_type=cls.TASK_WORKER)
+
+    @classmethod
+    def get_ps_node_selectors(cls, environment, cluster, is_distributed):
+        framework_environment = cls.get_framework_environment(environment=environment)
+        if not framework_environment:
+            return {}
+
+        return get_task_job_node_selectors(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            node_selectors=framework_environment.ps_node_selectors,
+            default_node_selectors=framework_environment.default_ps_node_selectors,
+            task_type=cls.TASK_PS)
 
 
 class TensorflowSpecification(DistributedSpecificationInterface):
