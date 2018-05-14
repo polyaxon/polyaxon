@@ -490,6 +490,7 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.environment.node_selectors is None
+        assert spec.master_node_selectors is None
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
@@ -571,7 +572,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.settings.matrix is None
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
-        assert spec.environment.node_selectors == {'polyxon.com': 'node_for_specific_experiment'}
+        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_specific_experiment'}
+        assert spec.master_node_selectors == {'polyaxon.com': 'node_for_specific_experiment'}
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
@@ -851,4 +853,5 @@ class TestPolyaxonfile(TestCase):
         assert spec.version == 1
         assert spec.settings is None
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.node_selectors == {'polyxon.com': 'node_for_plugin_jobs'}
+        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
+        assert spec.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
