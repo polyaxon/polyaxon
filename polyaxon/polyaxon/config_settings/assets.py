@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+import json
+
 from polyaxon.utils import ROOT_DIR, config
 
 MEDIA_ROOT = config.get_string('POLYAXON_MEDIA_ROOT')
@@ -24,6 +29,33 @@ DATA_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_DATA', is_optional=True)
 LOGS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_LOGS', is_optional=True)
 OUTPUTS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_OUTPUTS', is_optional=True)
 REPOS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_REPOS', is_optional=True)
+
+# Extra persistence volumes
+EXTRA_PERSISTENCES = config.get_string('POLYAXON_EXTRA_PERSISTENCES', is_optional=True)
+if EXTRA_PERSISTENCES:
+    EXTRA_PERSISTENCES = json.loads(EXTRA_PERSISTENCES)
+
+# EXTRA_PV_SLOTS_COUNT = 5
+#
+# EXTRA_MOUNT_PATH_1 = config.get_string('POLYAXON_MOUNT_PATHS_EXTRA_1', is_optional=True)
+# EXTRA_CLAIM_NAME_1 = config.get_string('POLYAXON_CLAIM_NAMES_EXTRA_1', is_optional=True)
+# EXTRA_HOST_PATH_1 = config.get_string('POLYAXON_HOST_PATH_EXTRA_1', is_optional=True)
+#
+# EXTRA_MOUNT_PATH_2 = config.get_string('POLYAXON_MOUNT_PATHS_EXTRA_2', is_optional=True)
+# EXTRA_CLAIM_NAME_2 = config.get_string('POLYAXON_CLAIM_NAMES_EXTRA_2', is_optional=True)
+# EXTRA_HOST_PATH_2 = config.get_string('POLYAXON_HOST_PATH_EXTRA_2', is_optional=True)
+#
+# EXTRA_MOUNT_PATH_3 = config.get_string('POLYAXON_MOUNT_PATHS_EXTRA_3', is_optional=True)
+# EXTRA_CLAIM_NAME_3 = config.get_string('POLYAXON_CLAIM_NAMES_EXTRA_3', is_optional=True)
+# EXTRA_HOST_PATH_3 = config.get_string('POLYAXON_HOST_PATH_EXTRA_3', is_optional=True)
+#
+# EXTRA_MOUNT_PATH_4 = config.get_string('POLYAXON_MOUNT_PATHS_EXTRA_4', is_optional=True)
+# EXTRA_CLAIM_NAME_4 = config.get_string('POLYAXON_CLAIM_NAMES_EXTRA_4', is_optional=True)
+# EXTRA_HOST_PATH_4 = config.get_string('POLYAXON_HOST_PATH_EXTRA_4', is_optional=True)
+#
+# EXTRA_MOUNT_PATH_5 = config.get_string('POLYAXON_MOUNT_PATHS_EXTRA_5', is_optional=True)
+# EXTRA_CLAIM_NAME_5 = config.get_string('POLYAXON_CLAIM_NAMES_EXTRA_5', is_optional=True)
+# EXTRA_HOST_PATH_5 = config.get_string('POLYAXON_HOST_PATH_EXTRA_5', is_optional=True)
 
 # Additional locations of static files
 STATICFILES_DIRS = (
