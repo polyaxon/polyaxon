@@ -277,7 +277,7 @@ The environment section allows to alter the
 resources and configuration of the runtime of your experiments.
 
 Based on this section you can define, how many workers/ps you want to run,
-the resources and configs of each job.
+the resources, the node selectors, and the configs of each job.
 
 The values of this section are:
 
@@ -289,8 +289,6 @@ A resources definition, is optional and made of three optional fields:
  * cpu: {limits: value, requests: value}
  * memory: {limits: value, requests: value}
  * gpu: {limits: value, requests: value}
-
-To enable a distributed run, the user can define one of the following framework:
 
 ### node selectors
 
@@ -304,6 +302,7 @@ environment:
     node_label: node_value
 ```
 
+To enable a distributed run, the user can define one of the following framework:
 
 ### tensorflow
 

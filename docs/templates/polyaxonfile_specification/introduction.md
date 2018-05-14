@@ -24,7 +24,7 @@ The Polyaxon specification is based on a list of sections, in this guide, we des
  * [kind](sections#kind) `required`: defines the kind of operation to run: group.
  * [project](sections#project) `required`: defines the project name (must be unique).
  * [settings](sections#settings) `required`: defines the logging, seed, concurrent runs, search algorithm, early stopping, matrix hyper parameters.
- * [environment](sections#environment): defines the run environment, resources, , node selectors, and distributed jobs definition.
+ * [environment](sections#environment): defines the run environment, resources, node selectors, and distributed jobs definition.
  * [declarations](sections#declarations): defines variables/modules that can be reused.
  * [run](sections#run) `required`: defines the how the user can set a docker image and a command to execute.
 
