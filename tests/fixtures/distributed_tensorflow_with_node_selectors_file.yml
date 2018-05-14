@@ -9,7 +9,7 @@ settings:
 
 environment:
   node_selectors:
-    polyxon.com: node_for_specific_experiment
+    polyaxon.com: node_for_specific_experiment
 
   resources:
     cpu:

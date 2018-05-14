@@ -5,7 +5,7 @@ kind: plugin
 
 environment:
   node_selectors:
-    polyxon.com: node_for_plugin_jobs
+    polyaxon.com: node_for_plugin_jobs
 
 run:
   image: my_image
