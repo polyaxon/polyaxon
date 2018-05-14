@@ -6,17 +6,18 @@ kind: experiment
 settings:
   logging:
     level: INFO
+    path: /mypath/project1
 
 environment:
-  node_selectors:
-    polyaxon.com: node_for_master_task
-
   resources:
     cpu:
       requests: 1
       limits: 2
 
-  tensorflow:
+  node_selectors:
+    polyaxon.com: node_for_master_task
+
+  mxnet:
     n_workers: 5
     n_ps: 10
 
@@ -58,6 +59,7 @@ environment:
     ps_node_selectors:
       - index: 2
         polyaxon.com: node_for_ps_task_2
+
 
 run:
   image: my_image

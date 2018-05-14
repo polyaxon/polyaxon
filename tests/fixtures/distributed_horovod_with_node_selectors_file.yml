@@ -6,19 +6,19 @@ kind: experiment
 settings:
   logging:
     level: INFO
+    path: /mypath/project1
 
 environment:
-  node_selectors:
-    polyaxon.com: node_for_master_task
-
   resources:
     cpu:
       requests: 1
       limits: 2
 
-  tensorflow:
+  node_selectors:
+    polyaxon.com: node_for_master_task
+
+  horovod:
     n_workers: 5
-    n_ps: 10
 
     default_worker_resources:
       cpu:
@@ -34,30 +34,12 @@ environment:
           requests: 300
           limits: 300
 
-    default_ps_resources:
-      cpu:
-        requests: 2
-        limits: 4
-
-    ps_resources:
-      - index: 9
-        memory:
-          requests: 512
-          limits: 1024
-
     default_worker_node_selectors:
       polyaxon.com: node_for_worker_tasks
 
     worker_node_selectors:
       - index: 2
         polyaxon.com: node_for_worker_task_2
-
-    default_ps_node_selectors:
-      polyaxon.com: node_for_ps_tasks
-
-    ps_node_selectors:
-      - index: 2
-        polyaxon.com: node_for_ps_task_2
 
 run:
   image: my_image
