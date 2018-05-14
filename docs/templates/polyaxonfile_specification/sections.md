@@ -292,6 +292,19 @@ A resources definition, is optional and made of three optional fields:
 
 To enable a distributed run, the user can define one of the following framework:
 
+### node selectors
+
+The labels to use as node selectors for scheduling the job on a specific node.
+This subsection provides a way to override the default behavior of Polyaxon,
+which schedules experiments and jobs based on node selectors provided during the deployment if they were provided.
+
+```yaml
+environment:
+  node_selectors:
+    node_label: node_value
+```
+
+
 ### tensorflow
 
 #### n_workers
@@ -318,12 +331,30 @@ Defines a specific resources definition for a worker indicated by the index of t
 
 Defines a specific resources definition for a ps indicated by the index of the ps.
 
+#### default_worker_node_selectors
+
+If specified, it will be the default workers node selectors.
+
+#### default_ps_node_selectors
+
+If specified, it will be the default ps node selectors.
+
+#### worker_node_selectors
+
+Defines a specific node selectors for a worker indicated by the index of the worker.
+
+#### ps_node_selectors
+
+Defines a specific node selectors for a ps indicated by the index of the ps.
 
 Example:
 
 ```yaml
 
 environment:
+
+  node_selectors:
+    polyaxon: experiments
 
   resources:
     cpu:
@@ -336,6 +367,11 @@ environment:
   tensorflow:
       n_workers: 4
       n_ps: 1
+
+      worker_node_selectors:
+        - index: 3
+          polyaxon: special_node
+
       default_worker_resources:
         cpu:
           requests: 1
@@ -392,6 +428,21 @@ Defines a specific resources definition for a worker indicated by the index of t
 
 Defines a specific resources definition for a ps indicated by the index of the ps.
 
+#### default_worker_node_selectors
+
+If specified, it will be the default workers node selectors.
+
+#### default_ps_node_selectors
+
+If specified, it will be the default ps node selectors.
+
+#### worker_node_selectors
+
+Defines a specific node selectors for a worker indicated by the index of the worker.
+
+#### ps_node_selectors
+
+Defines a specific node selectors for a ps indicated by the index of the ps.
 
 Example:
 
@@ -401,6 +452,9 @@ environment:
   mxnet:
     n_workers: 4
     n_ps: 1
+
+    default_ps_node_selectors:
+      polyaxon: nodes_for_param_servers
 ```
 
 ### pytorch
@@ -416,6 +470,14 @@ If specified, it will be the default workers resources.
 #### worker_resources
 
 Defines a specific resources definition for a worker indicated by the index of the worker.
+
+#### default_worker_node_selectors
+
+If specified, it will be the default workers node selectors.
+
+#### worker_node_selectors
+
+Defines a specific node selectors for a worker indicated by the index of the worker.
 
 Example:
 
@@ -439,6 +501,15 @@ If specified, it will be the default workers resources.
 #### worker_resources
 
 Defines a specific resources definition for a worker indicated by the index of the worker.
+
+#### default_worker_node_selectors
+
+If specified, it will be the default workers node selectors.
+
+#### worker_node_selectors
+
+Defines a specific node selectors for a worker indicated by the index of the worker.
+
 
 Example:
 
