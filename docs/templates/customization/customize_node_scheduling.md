@@ -34,8 +34,95 @@ kubectl label nodes worker_1 worker_2 polyaxon.com=experiments
 nodeSelectors:
   experiments:
     polyaxon.com: experiments
+```
+
+### Experiments and Jobs node selectors
+
+In some cases providing a default node selectors for scheduling experiments on some specific nodes is not enough,
+for example if the user has labelled 3 nodes with following label:
+
+```bash
+$ kubectl label nodes node1 node2 node3 polyaxon: experiments
+```
+
+And 1 of these nodes has a specific GPU that the user wishes to use for a particular experiment or for running a Jupyter notebook.
+
+The user can label that node with a label:
+
+```bash
+$ kubectl label nodes node3 polyaxon: specific-gpu
+```
+
+And use that label to override the default scheduling behavior:
+
+```yaml
+---
+version: 1
+
+kind: experiment
+
+environment:
+  node_selectors:
+    polyaxon: specific-gpu
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install --no-cache-dir -U polyaxon-helper
+  cmd:  python3 model.py  # Use default params
+```
+
+This will force Polyaxon to schedule this particular experiment on that specific node.
+
+This definition can be used in very similar way to schedule a notebook or a tensorboard on that node:
+
+Notebook:
+
+```yaml
+---
+version: 1
+
+kind: plugin
+
+environment:
+  node_selectors:
+    polyaxon: specific-gpu
+
+run:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install jupyter
+```
+
+You can even use that to schedule a particular job of distributed experiment on that node,
+for example we can imagine that if the user runs a distributed experiment with a master, 2 workers, and one ps,
+and the user wishes to schedule the worker on that node:
+
+```yaml
+---
+version: 1
+
+kind: experiment
+
+environment:
+  tensorflow:
+    n_workers: 2
+    n_ps: 1
+
+  worker_node_selectors:
+    - index: 1
+      polyaxon: specific-gpu
+
+run:
+  image: tensorflow/tensorflow:1.4.1
+  build_steps:
+    - pip install --no-cache-dir -U polyaxon-helper
+  cmd:  python run.py --train-steps=400 --sync
 
 ```
+
+This will schedule the master, the ps, and the first worker on any node experiment node,
+and will force the second worker to be scheduled on the node with the label `polyaxon=specific-gpu`
 
 ## Tolerations
 
