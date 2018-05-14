@@ -23,6 +23,7 @@ def get_project_pod_spec(volume_mounts,
                          args=None,
                          ports=None,
                          resources=None,
+                         node_selector=None,
                          env_vars=None,
                          restart_policy=None):
     """Pod spec to be used to create pods for project side: tensorboard, notebooks."""
@@ -43,7 +44,10 @@ def get_project_pod_spec(volume_mounts,
                                      env=env_vars,
                                      resources=pods.get_resources(resources),
                                      volume_mounts=volume_mounts)]
-    return client.V1PodSpec(restart_policy=restart_policy, containers=containers, volumes=volumes)
+    return client.V1PodSpec(restart_policy=restart_policy,
+                            containers=containers,
+                            volumes=volumes,
+                            node_selector=node_selector)
 
 
 def get_deployment_spec(namespace,
@@ -59,6 +63,7 @@ def get_deployment_spec(namespace,
                         ports,
                         container_name=None,
                         resources=None,
+                        node_selector=None,
                         role=None,
                         type=None,  # pylint:disable=redefined-builtin
                         replicas=1):
@@ -78,6 +83,7 @@ def get_deployment_spec(namespace,
                                     command=command,
                                     args=args,
                                     resources=resources,
+                                    node_selector=node_selector,
                                     ports=ports)
     template_spec = client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
     return client.AppsV1beta1DeploymentSpec(replicas=replicas, template=template_spec)
@@ -96,6 +102,7 @@ def get_deployment(namespace,
                    ports,
                    container_name,
                    resources=None,
+                   node_selector=None,
                    role=None,
                    type=None,  # pylint:disable=redefined-builtin
                    replicas=1):
@@ -121,6 +128,7 @@ def get_deployment(namespace,
                                ports=ports,
                                container_name=container_name,
                                resources=resources,
+                               node_selector=node_selector,
                                role=role,
                                type=type,
                                replicas=replicas)

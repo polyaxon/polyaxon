@@ -31,7 +31,7 @@ class TensorboardSpawner(ProjectSpawner):
             port = random.randint(*settings.TENSORBOARD_PORT_RANGE)
         return port
 
-    def start_tensorboard(self, image, resources=None):
+    def start_tensorboard(self, image, resources=None, node_selectors=None):
         ports = [self.request_tensorboard_port()]
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes()
@@ -50,6 +50,7 @@ class TensorboardSpawner(ProjectSpawner):
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
+            node_selector=node_selectors,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_name = constants.DEPLOYMENT_NAME.format(

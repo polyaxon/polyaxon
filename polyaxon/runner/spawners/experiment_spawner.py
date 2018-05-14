@@ -73,6 +73,9 @@ class ExperimentSpawner(K8SManager):
     def get_resources(self, task_type, task_idx):
         return self.spec.master_resources
 
+    def get_node_selectors(self, task_type, task_idx):
+        return self.spec.master_node_selectors
+
     def get_n_pods(self, task_type):
         return 0
 
@@ -85,6 +88,7 @@ class ExperimentSpawner(K8SManager):
                     sidecar_args_fn=None,
                     env_vars=None,
                     resources=None,
+                    node_selector=None,
                     restart_policy='Never'):
         job_name = self.pod_manager.get_job_name(task_type=task_type, task_idx=task_idx)
         sidecar_args = sidecar_args_fn(pod_id=job_name)
@@ -100,6 +104,7 @@ class ExperimentSpawner(K8SManager):
                                        args=args,
                                        sidecar_args=sidecar_args,
                                        resources=resources,
+                                       node_selector=node_selector,
                                        restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=job_name, data=pod)
 
@@ -122,6 +127,7 @@ class ExperimentSpawner(K8SManager):
             command, args = self.get_pod_command_args(task_type=task_type, task_idx=i)
             env_vars = self.get_env_vars(task_type=task_type, task_idx=i)
             resources = self.get_resources(task_type=task_type, task_idx=i)
+            node_selector = self.get_node_selectors(task_type=task_type, task_idx=i)
             resp.append(self._create_job(task_type=task_type,
                                          task_idx=i,
                                          command=command,
@@ -129,6 +135,7 @@ class ExperimentSpawner(K8SManager):
                                          sidecar_args_fn=self.sidecar_args_fn,
                                          env_vars=env_vars,
                                          resources=resources,
+                                         node_selector=node_selector,
                                          add_service=add_service))
         return resp
 
@@ -156,6 +163,7 @@ class ExperimentSpawner(K8SManager):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER, task_idx=0)
         env_vars = self.get_env_vars(task_type=TaskType.MASTER, task_idx=0)
         resources = self.get_resources(task_type=TaskType.MASTER, task_idx=0)
+        node_selector = self.get_node_selectors(task_type=TaskType.MASTER, task_idx=0)
         return self._create_job(task_type=TaskType.MASTER,
                                 task_idx=0,
                                 command=command,
@@ -163,6 +171,7 @@ class ExperimentSpawner(K8SManager):
                                 sidecar_args_fn=self.sidecar_args_fn,
                                 env_vars=env_vars,
                                 resources=resources,
+                                node_selector=node_selector,
                                 add_service=self.MASTER_SERVICE)
 
     def delete_master(self):

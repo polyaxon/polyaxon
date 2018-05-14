@@ -37,7 +37,11 @@ class PluginJobBase(Job):
 
     @cached_property
     def resources(self):
-        return self.specification.total_resources
+        return self.specification.resources
+
+    @cached_property
+    def node_selectors(self):
+        return self.specification.node_selectors
 
     @cached_property
     def unique_name(self):

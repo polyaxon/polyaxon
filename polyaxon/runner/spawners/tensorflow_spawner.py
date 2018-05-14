@@ -43,8 +43,30 @@ class TensorflowSpawner(ExperimentSpawner):
             TaskType.PS: ps_resources,
         }
 
+    @property
+    def node_selectors(self):
+        cluster, is_distributed, = self.spec.cluster_def
+        worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
+            environment=self.spec.environment,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        return {
+            TaskType.MASTER: {0: self.spec.master_node_selectors},
+            TaskType.WORKER: worker_node_selectors,
+            TaskType.PS: ps_node_selectors,
+        }
+
     def get_resources(self, task_type, task_idx):
         return self.resources.get(task_type, {}).get(task_idx)
+
+    def get_node_selectors(self, task_type, task_idx):
+        return self.node_selectors.get(task_type, {}).get(task_idx)
 
     def get_n_pods(self, task_type):
         return self.spec.cluster_def[0].get(task_type, 0)

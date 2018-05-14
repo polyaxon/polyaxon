@@ -234,6 +234,7 @@ class PodManager(object):
                           args=None,
                           sidecar_args=None,
                           resources=None,
+                          node_selector=None,
                           restart_policy='OnFailure'):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
         volume_mounts = get_list(volume_mounts)
@@ -265,8 +266,9 @@ class PodManager(object):
                                                            args=sidecar_args)
             containers.append(sidecar_container)
 
-        node_selector = settings.NODE_SELECTORS_EXPERIMENTS
-        node_selector = json.loads(node_selector) if node_selector else None
+        if not node_selector:
+            node_selector = settings.NODE_SELECTORS_EXPERIMENTS
+            node_selector = json.loads(node_selector) if node_selector else None
         service_account_name = None
         if settings.K8S_RBAC_ENABLED:
             service_account_name = settings.K8S_SERVICE_ACCOUNT_NAME
@@ -301,6 +303,7 @@ class PodManager(object):
                 args=None,
                 sidecar_args=None,
                 resources=None,
+                node_selector=None,
                 restart_policy=None):
         job_name = self.get_job_name(task_type=task_type, task_idx=task_idx)
         labels = self.get_labels(task_type=task_type, task_idx=task_idx)
@@ -316,6 +319,7 @@ class PodManager(object):
             args=args,
             sidecar_args=sidecar_args,
             resources=resources,
+            node_selector=node_selector,
             restart_policy=restart_policy)
         return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
                             kind=k8s_constants.K8S_POD_KIND,

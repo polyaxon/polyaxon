@@ -45,7 +45,7 @@ class NotebookSpawner(ProjectSpawner):
             port = random.randint(*settings.NOTEBOOK_PORT_RANGE)
         return port
 
-    def start_notebook(self, image, resources=None):
+    def start_notebook(self, image, resources=None, node_selectors=None):
         ports = [self.request_notebook_port()]
         target_ports = [self.PORT]
         volumes, volume_mounts = get_pod_volumes()
@@ -89,6 +89,7 @@ class NotebookSpawner(ProjectSpawner):
             ports=target_ports,
             container_name=settings.CONTAINER_NAME_PLUGIN_JOB,
             resources=resources,
+            node_selector=node_selectors,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_NOTEBOOK,

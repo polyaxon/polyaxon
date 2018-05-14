@@ -16,7 +16,9 @@ def start_notebook(project, image):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.start_notebook(image=image, resources=project.notebook.specification.resources)
+    spawner.start_notebook(image=image,
+                           resources=project.notebook.resources,
+                           node_selectors=project.notebook.node_selectors)
 
 
 def stop_notebook(project, update_status=False):
