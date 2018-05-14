@@ -22,10 +22,10 @@ class DistributedSpecificationInterface(object):
 
     @staticmethod
     def get_framework_environment(environment):
-        pass
+        return None
 
     @staticmethod
-    def get_cluster_def(cluster, tensorflow_config):
+    def get_cluster_def(cluster, framework_config):
         pass
 
     @classmethod
@@ -120,14 +120,14 @@ class TensorflowSpecification(DistributedSpecificationInterface):
         return environment.tensorflow
 
     @staticmethod
-    def get_cluster_def(cluster, tensorflow_config):
+    def get_cluster_def(cluster, framework_config):
         is_distributed = False
-        if not tensorflow_config:
+        if not framework_config:
             return cluster, is_distributed
 
-        cluster[TaskType.WORKER] = tensorflow_config.n_workers
-        cluster[TaskType.PS] = tensorflow_config.n_ps
-        if tensorflow_config.n_workers != 0 or tensorflow_config.n_ps != 0:
+        cluster[TaskType.WORKER] = framework_config.n_workers
+        cluster[TaskType.PS] = framework_config.n_ps
+        if framework_config.n_workers != 0 or framework_config.n_ps != 0:
             is_distributed = True
 
         return cluster, is_distributed
@@ -173,13 +173,13 @@ class HorovodSpecification(DistributedSpecificationInterface):
         return environment.horovod
 
     @staticmethod
-    def get_cluster_def(cluster, horovod_config):
+    def get_cluster_def(cluster, framework_config):
         is_distributed = False
-        if not horovod_config:
+        if not framework_config:
             return cluster, is_distributed
 
-        cluster[TaskType.WORKER] = horovod_config.n_workers
-        if horovod_config.n_workers != 0:
+        cluster[TaskType.WORKER] = framework_config.n_workers
+        if framework_config.n_workers != 0:
             is_distributed = True
 
         return cluster, is_distributed
@@ -218,13 +218,13 @@ class PytorchSpecification(DistributedSpecificationInterface):
         return environment.pytorch
 
     @staticmethod
-    def get_cluster_def(cluster, pytorch_config):
+    def get_cluster_def(cluster, framework_config):
         is_distributed = False
-        if not pytorch_config:
+        if not framework_config:
             return cluster, is_distributed
 
-        cluster[TaskType.WORKER] = pytorch_config.n_workers
-        if pytorch_config.n_workers != 0:
+        cluster[TaskType.WORKER] = framework_config.n_workers
+        if framework_config.n_workers != 0:
             is_distributed = True
 
         return cluster, is_distributed
@@ -265,14 +265,14 @@ class MXNetSpecification(DistributedSpecificationInterface):
         return environment.mxnet
 
     @staticmethod
-    def get_cluster_def(cluster, mxnet_config):
+    def get_cluster_def(cluster, framework_config):
         is_distributed = False
-        if not mxnet_config:
+        if not framework_config:
             return cluster, is_distributed
 
-        cluster[TaskType.WORKER] = mxnet_config.n_workers
-        cluster[TaskType.SERVER] = mxnet_config.n_ps
-        if mxnet_config.n_workers != 0 or mxnet_config.n_ps != 0:
+        cluster[TaskType.WORKER] = framework_config.n_workers
+        cluster[TaskType.SERVER] = framework_config.n_ps
+        if framework_config.n_workers != 0 or framework_config.n_ps != 0:
             is_distributed = True
 
         return cluster, is_distributed

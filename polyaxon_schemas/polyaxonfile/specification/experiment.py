@@ -108,19 +108,19 @@ class ExperimentSpecification(BaseSpecification):
         if environment.tensorflow:
             return TensorflowSpecification.get_cluster_def(
                 cluster=cluster,
-                tensorflow_config=environment.tensorflow)
+                framework_config=environment.tensorflow)
         if environment.horovod:
             return HorovodSpecification.get_cluster_def(
                 cluster=cluster,
-                horovod_config=environment.horovod)
+                framework_config=environment.horovod)
         if environment.mxnet:
             return MXNetSpecification.get_cluster_def(
                 cluster=cluster,
-                mxnet_config=environment.mxnet)
+                framework_config=environment.mxnet)
         if environment.pytorch:
             return PytorchSpecification.get_cluster_def(
                 cluster=cluster,
-                pytorch_config=environment.pytorch)
+                framework_config=environment.pytorch)
 
         # No specified framework, It should return default standalone mode cluster definition
         return cluster, is_distributed
