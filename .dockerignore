@@ -23,3 +23,4 @@ celerybeat.pid
 *.sock
 docs/
 cmd/
+kubecmd/
