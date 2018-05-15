@@ -110,7 +110,7 @@ def cluster_nodes_analytics():
         cluster_uuid=cluster.uuid.hex,
         n_nodes=cluster.n_nodes,
         n_cpus=cluster.n_cpus,
-        memory=to_unit_memory(cluster.memory),
+        memory=to_unit_memory(cluster.memory or 0),
         n_gpus=cluster.n_gpus,
         notification=notification,
         version=settings.CHART_VERSION)
