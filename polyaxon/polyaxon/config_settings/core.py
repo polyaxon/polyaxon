@@ -3,9 +3,16 @@ from polyaxon.utils import ROOT_DIR, config
 DEBUG = config.get_boolean('POLYAXON_DEBUG')
 
 ALLOWED_HOSTS = ['*']
+
+# session settings
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+SSL_ENABLE = config.get_boolean('POLYAXON_SSL_ENABLE', is_optional=True, default=False)
+if SSL_ENABLE:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 WSGI_APPLICATION = 'polyaxon.wsgi.application'
 TIME_ZONE = config.get_string('POLYAXON_TIME_ZONE', is_optional=True) or 'Europe/Berlin'
