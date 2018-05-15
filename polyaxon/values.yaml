@@ -74,6 +74,13 @@ persistence:
     size: 10Gi
     mountPath: "/uploads"
     subPath: ""
+  extra: []
+# e.g.
+  # extra:
+  #   - mountPath: "/storage/1"
+  #     hostPath: "/path/to/storage"
+  #   - mountPath: "/storage/2"
+  #     existingClaim: "storage-2-pvc"
 
 auth:
   ldap:
