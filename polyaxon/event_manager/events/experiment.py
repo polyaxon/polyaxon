@@ -67,6 +67,7 @@ class ExperimentCreatedEvent(Event):
         Attribute('is_resume', attr_type=bool),
         Attribute('is_restart', attr_type=bool),
         Attribute('is_copy', attr_type=bool),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -85,6 +86,7 @@ class ExperimentUpdatedEvent(Event):
         Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -109,6 +111,7 @@ class ExperimentViewedEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -125,6 +128,7 @@ class ExperimentStoppedEvent(Event):
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -141,6 +145,7 @@ class ExperimentResumedEvent(Event):
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -156,6 +161,7 @@ class ExperimentRestartedEvent(Event):
         Attribute('user.id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -171,6 +177,7 @@ class ExperimentCopiedEvent(Event):
         Attribute('user.id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -314,6 +321,7 @@ class ExperimentDeletedTriggeredEvent(Event):
         Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -331,6 +339,7 @@ class ExperimentStoppedTriggeredEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -348,6 +357,7 @@ class ExperimentResumedTriggeredEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -365,6 +375,7 @@ class ExperimentRestartedTriggeredEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
 
 
@@ -382,4 +393,5 @@ class ExperimentCopiedTriggeredEvent(Event):
         Attribute('actor_id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('framework', attr_type=bool, is_required=False),
     )
