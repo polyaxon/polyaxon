@@ -1,3 +1,4 @@
 kubectl delete --all deployments --grace-period=0 --force --namespace=$*
 kubectl delete --all jobs --grace-period=0 --force --namespace=$*
 kubectl delete --all pods --grace-period=0 --force --namespace=$*
+kubectl delete --all services --grace-period=0 --force --namespace=$*
