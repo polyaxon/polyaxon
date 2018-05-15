@@ -14,6 +14,8 @@ SSL_ENABLED = config.get_boolean('POLYAXON_SSL_ENABLED', is_optional=True, defau
 CORS_ORIGIN_WHITELIST = config.get_string('POLYAXON_CORS_ORIGIN_WHITELIST',
                                           is_optional=True,
                                           default=False)
+if CORS_ORIGIN_WHITELIST:
+    CORS_ORIGIN_WHITELIST = [i.strip() for i in CORS_ORIGIN_WHITELIST.split(',')]
 
 CORS_ALLOW_HEADERS = default_headers + (
     'x-polyaxon-cli-version',
