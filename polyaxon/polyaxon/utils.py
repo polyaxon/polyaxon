@@ -109,7 +109,7 @@ class SettingConfig(object):
 
         Args:
             key: the dict key.
-            is_optional: To raise  an error if key was not found.
+            is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
@@ -129,7 +129,7 @@ class SettingConfig(object):
 
         Args:
             key: the dict key.
-            is_optional: To raise  an error if key was not found.
+            is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
         Return:
@@ -148,7 +148,7 @@ class SettingConfig(object):
 
         Args:
             key: the dict key.
-            is_optional: To raise  an error if key was not found.
+            is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
@@ -168,7 +168,7 @@ class SettingConfig(object):
 
         Args:
             key: the dict key.
-            is_optional: To raise  an error if key was not found.
+            is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
@@ -221,7 +221,7 @@ class SettingConfig(object):
             key: the dict key.
             target_type: The type we expect the variable or key to be in.
             type_convert: A lambda expression that converts the key to the desired type.
-            is_optional: To raise  an error if key was not found.
+            is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
