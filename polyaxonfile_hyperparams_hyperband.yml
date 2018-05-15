@@ -26,7 +26,7 @@ settings:
 
 declarations:
   batch_size: 128
-  num_epochs: 1
+  num_epochs: 5
 
 run:
   image: tensorflow/tensorflow:1.4.1-py3
