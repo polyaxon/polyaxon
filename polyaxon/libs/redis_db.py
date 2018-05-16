@@ -216,6 +216,8 @@ class RedisSessions(BaseRedisDb):
     KEY_SESSION_CACHE = 'SESSION_CACHE:{}:{}'
     KEY_SESSION_KEYS = 'SESSION_KEYS:{}'
 
+    REDIS_POOL = RedisPools.SESSIONS
+
     def __init__(self, request, prefix, ttl=EXPIRATION_TTL):
         self.__dict__['request'] = request
         self.__dict__['prefix'] = prefix

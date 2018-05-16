@@ -51,6 +51,7 @@ services:
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis://redis:6379/3"
       POLYAXON_REDIS_TO_STREAM_URL: "redis://redis:6379/4"
+      POLYAXON_REDIS_SESSIONS_URL: "redis://redis:6379/5"
       POLYAXON_RABBITMQ_DEFAULT_USER: admin
       POLYAXON_RABBITMQ_DEFAULT_PASS: mypass
 
@@ -65,6 +66,7 @@ services:
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis://redis:6379/3"
       POLYAXON_REDIS_TO_STREAM_URL: "redis://redis:6379/4"
+      POLYAXON_REDIS_SESSIONS_URL: "redis://redis:6379/5"
     networks:
       - polyaxon
     depends_on:
