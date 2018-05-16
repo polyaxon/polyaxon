@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 import ast
 import copy
 import jinja2
-import six
 import numpy as np
+import six
 
 from collections import Mapping, defaultdict
 
