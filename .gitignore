@@ -106,9 +106,9 @@ data/
 polyaxon/polyaxon/env_vars/local.json
 
 # project
+logs/*
 setup.log
 reports/
-logs/
 media/
 static/debug_toolbar
 static/rest_framework

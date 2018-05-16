@@ -1,4 +1,3 @@
-mkdir /polyaxon/logs
 nginx -c /etc/nginx/nginx.conf -t
 service nginx status
 service nginx restart
