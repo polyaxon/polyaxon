@@ -5,6 +5,7 @@ import ast
 import copy
 import jinja2
 import six
+import numpy as np
 
 from collections import Mapping, defaultdict
 
@@ -68,7 +69,7 @@ class Parser(object):
                          declarations,
                          check_operators=False,
                          check_graph=False):
-        if isinstance(expression, (int, float, complex, type(None))):
+        if isinstance(expression, (int, float, complex, type(None), np.integer, np.floating)):
             return expression
         if isinstance(expression, Mapping):
             if len(expression) == 1:

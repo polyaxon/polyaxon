@@ -300,6 +300,41 @@ class TestPolyaxonfile(TestCase):
         assert model.graph.output_layers == [[last_layer, 0, 0]]
         assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
 
+    def test_matrix_file_passes_int_float_types(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/matrix_file_with_int_float_types.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert isinstance(spec.settings.matrix['param1'], MatrixConfig)
+        assert isinstance(spec.settings.matrix['param2'], MatrixConfig)
+        assert spec.settings.matrix['param1'].to_dict() == {'values': [1, 2]}
+        assert spec.settings.matrix['param2'].to_dict() == {'values': [3.3, 4.4]}
+        assert spec.matrix_space == 4
+        assert isinstance(spec.settings, SettingsConfig)
+        assert spec.settings.concurrency == 2
+        assert spec.search_algorithm == SearchAlgorithms.GRID
+        assert spec.settings.early_stopping is None
+        assert spec.early_stopping == []
+
+        assert spec.experiments_def == {
+            'search_algorithm': SearchAlgorithms.GRID,
+            'early_stopping': False,
+            'concurrency': 2,
+        }
+
+        spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
+        assert spec.is_runnable
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        model = spec.model
+        assert isinstance(model, RegressorConfig)
+        assert model.optimizer.learning_rate in [3.3, 4.4]
+        assert isinstance(model.graph, GraphConfig)
+        assert len(model.graph.layers) == 4
+        assert model.graph.input_layers == [['images', 0, 0]]
+        assert model.graph.layers[1].pool_size in ([1, 1], [2, 2])
+
     def test_matrix_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
         spec = plxfile.specification

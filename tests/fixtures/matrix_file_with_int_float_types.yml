@@ -1,0 +1,44 @@
+---
+version: 1
+
+kind: group
+
+settings:
+  concurrency: 2
+
+  matrix:
+    param1:
+      values: [1, 2]
+    param2:
+      values: [3.3, 4.4]
+
+model:
+  model_type: regressor
+  optimizer:
+    Adam:
+      learning_rate: "{{ param2 }}"
+  graph:
+    input_layers: images
+    layers:
+      - Conv2D:
+          filters: 64
+          kernel_size: [3, 3]
+          strides: [1, 1]
+          activation: relu
+      - MaxPooling2D:
+          kernels: "{{ param1 }}"
+      - Flatten:
+      - Dense:
+          units: 10
+          activation: softmax
+        
+train:
+  data_pipeline:
+    TFRecordImagePipeline:
+      batch_size: 64
+      num_epochs: 1
+      shuffle: true
+      dynamic_pad: false
+      data_files: ["../data/mnist/mnist_train.tfrecord"]
+      meta_data_file: "../data/mnist/meta_data.json"
+...
