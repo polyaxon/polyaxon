@@ -16,6 +16,7 @@ data:
   redis-result-backend-url: redis://{{ template "redis.fullname" . }}:6379/0
   redis-job-containers-url: redis://{{ template "redis.fullname" . }}:6379/3
   redis-to-stream-url: redis://{{ template "redis.fullname" . }}:6379/4
+  redis-sessions-url: redis://{{ template "redis.fullname" . }}:6379/5
   container-name-job: "polyaxon-experiment-job"
   container-name-sidecar: "polyaxon-experiment-job-sidecar"
   container-name-plugin-job: "polyaxon-plugin-job"

@@ -305,6 +305,11 @@ redis config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: redis-to-stream-url
+- name: POLYAXON_REDIS_SESSIONS_URL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: redis-sessions-url
 {{- end }}
 
 
