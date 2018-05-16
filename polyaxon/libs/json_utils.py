@@ -72,6 +72,13 @@ def dump(value, fp, **kwargs):
         fp.write(chunk)
 
 
+def dumps(value, escape=False, **kwargs):
+    # Prefer to use dumps_htmlsafe
+    if escape:
+        return _default_escaped_encoder.encode(value)
+    return _default_encoder.encode(value)
+
+
 def loads(value, **kwargs):
     return _default_decoder.decode(value)
 
