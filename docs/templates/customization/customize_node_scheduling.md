@@ -66,7 +66,7 @@ environment:
     polyaxon: specific-gpu
 
 run:
-  image: tensorflow/tensorflow:1.4.1-py3
+  image: tensorflow/tensorflow:1.4.1-gpu-py3
   build_steps:
     - pip3 install --no-cache-dir -U polyaxon-helper
   cmd:  python3 model.py  # Use default params
@@ -89,7 +89,7 @@ environment:
     polyaxon: specific-gpu
 
 run:
-  image: tensorflow/tensorflow:1.4.1-py3
+  image: tensorflow/tensorflow:1.4.1-gpu-py3
   build_steps:
     - pip3 install jupyter
 ```
