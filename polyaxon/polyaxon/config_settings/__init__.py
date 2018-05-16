@@ -16,3 +16,4 @@ from .secrets import *
 from .spawner import *
 from .tracker import *
 from .versions import *
+from .auth import *

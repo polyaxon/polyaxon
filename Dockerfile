@@ -4,7 +4,8 @@ MAINTAINER mourad mourafiq <mouradmourafiq@gmail.com>
 
 RUN apt-get -y update && \
     apt-get -y install git && \
-    apt-get -y install nginx
+    apt-get -y install nginx && \
+    apt-get -y install libldap2-dev libsasl2-dev
 
 
 COPY requirements/requirements-base.txt /requirements/
