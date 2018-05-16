@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from libs.models import DiffModel
-from sso.providers import PROVIDERS
+from sso.providers.constants import PROVIDERS
 
 
 class SSOProvider(DiffModel):
