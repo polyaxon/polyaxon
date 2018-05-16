@@ -1,5 +1,7 @@
 import json
+import uuid
 
+from libs.json_utils import dumps, loads
 from polyaxon.settings import RedisPools, redis
 
 
@@ -16,7 +18,7 @@ class RedisJobContainers(BaseRedisDb):
 
     KEY_CONTAINERS = 'CONTAINERS'  # Redis set: container ids
     KEY_CONTAINERS_TO_JOBS = 'CONTAINERS_TO_JOBS'  # Redis hash, maps container id to jobs
-    KEYF_JOBS_TO_CONTAINERS = 'JOBS_TO_CONTAINERS:{}'  # Redis set, maps jobs to containers
+    KEY_JOBS_TO_CONTAINERS = 'JOBS_TO_CONTAINERS:{}'  # Redis set, maps jobs to containers
     KEY_JOBS_TO_EXPERIMENTS = 'JOBS_TO_EXPERIMENTS:'  # Redis hash, maps jobs to experiments
 
     REDIS_POOL = RedisPools.JOB_CONTAINERS
@@ -55,7 +57,7 @@ class RedisJobContainers(BaseRedisDb):
     @classmethod
     def remove_job(cls, job_uuid):
         red = cls._get_redis()
-        key_jobs_to_containers = cls.KEYF_JOBS_TO_CONTAINERS.format(job_uuid)
+        key_jobs_to_containers = cls.KEY_JOBS_TO_CONTAINERS.format(job_uuid)
         containers = red.smembers(key_jobs_to_containers)
         for container_id in containers:
             container_id = container_id.decode('utf-8')
@@ -79,13 +81,13 @@ class RedisJobContainers(BaseRedisDb):
             red.sadd(cls.KEY_CONTAINERS, container_id)
             red.hset(cls.KEY_CONTAINERS_TO_JOBS, container_id, job_uuid)
             # Add container for job
-            red.sadd(cls.KEYF_JOBS_TO_CONTAINERS.format(job_uuid), container_id)
+            red.sadd(cls.KEY_JOBS_TO_CONTAINERS.format(job_uuid), container_id)
             # Add job to experiment
             red.hset(cls.KEY_JOBS_TO_EXPERIMENTS, job_uuid, job.experiment.uuid.hex)
 
 
 class RedisToStream(BaseRedisDb):
-    """Tracks resources and logs,  currently running and to be monitored."""
+    """Tracks resources and logs, currently running and to be monitored."""
 
     KEY_JOB_RESOURCES = 'JOB_RESOURCES'  # Redis set: job ids that we need to stream resources for
     KEY_EXPERIMENT_RESOURCES = 'EXPERIMENT_RESOURCES'  # Redis set: xp ids that
@@ -188,3 +190,90 @@ class RedisToStream(BaseRedisDb):
     def set_latest_job_resources(cls, job, payload):
         red = cls._get_redis()
         red.hset(cls.KEY_JOB_LATEST_STATS, job, json.dumps(payload))
+
+
+class RedisSessions(BaseRedisDb):
+    """ RedisSessions provides a db to store data related to a request session.
+    Useful for storing data too large to be stored into the session cookie.
+    The session store will expire if values are not modified within the provided ttl.
+
+    Example:
+        >>> store = RedisSessions(request, 'github')
+        >>> store.regenerate()
+        >>> store.some_value = 'some value'
+
+        The value will be available across requests as long as the same same store
+        name is used.
+
+        >>> store.some_value
+        'my value'
+
+        The store may be destroyed before it expires using the ``clear`` method.
+
+        >>> store.clear()
+    """
+    EXPIRATION_TTL = 10 * 60
+    KEY_SESSION_CACHE = 'SESSION_CACHE:{}:{}'
+    KEY_SESSION_KEYS = 'SESSION_KEYS:{}'
+
+    def __init__(self, request, prefix, ttl=EXPIRATION_TTL):
+        self.__dict__['request'] = request
+        self.__dict__['prefix'] = prefix
+        self.__dict__['ttl'] = ttl
+        self.__dict__['_red'] = self._get_redis()
+
+    @property
+    def session_key(self):
+        return self.KEY_SESSION_KEYS.format(self.prefix)
+
+    @property
+    def redis_key(self):
+        return self.request.session.get(self.session_key)
+
+    def regenerate(self, initial_state=None):
+        if initial_state is None:
+            initial_state = {}
+
+        redis_key = self.KEY_SESSION_CACHE.format(self.prefix, uuid.uuid4().hex)
+
+        self.request.session[self.session_key] = redis_key
+
+        value = dumps(initial_state)
+        self._red.setex(redis_key, self.ttl, value)
+
+    def clear(self):
+        if not self.redis_key:
+            return
+
+        self._red.delete(self.redis_key)
+        del self.request.session[self.session_key]
+
+    def is_valid(self):
+        return self.redis_key and self._red.get(self.redis_key)
+
+    def get_state(self):
+        if not self.redis_key:
+            return None
+
+        state_json = self._red.get(self.redis_key)
+        if not state_json:
+            return None
+
+        return loads(state_json)
+
+    def __getattr__(self, key):
+        state = self.get_state()
+
+        try:
+            return state[key] if state else None
+        except KeyError as e:
+            raise AttributeError(e)
+
+    def __setattr__(self, key, value):
+        state = self.get_state()
+
+        if state is None:
+            return
+
+        state[key] = value
+        self._red.setex(self.redis_key, self.ttl, dumps(state))
