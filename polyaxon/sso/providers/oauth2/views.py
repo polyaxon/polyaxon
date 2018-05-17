@@ -1,13 +1,12 @@
 import uuid
-from urllib.parse import urljoin, urlencode, parse_qsl
-from urllib.request import urlopen
+
+from urllib.parse import urlencode, parse_qsl
 
 from django.http import HttpResponseRedirect
 from django.views import View
 
+from libs.http import safe_urlopen
 from libs.json_utils import loads
-
-ERR_INVALID_STATE = 'An error occurred while validating your request.'
 
 
 class OAuth2LoginView(View):
@@ -47,12 +46,11 @@ class OAuth2LoginView(View):
 
         params = self.get_authorize_params(
             state=state,
-            redirect_uri=urljoin('/', wizard.redirect_url()),
+            redirect_uri=wizard.redirect_url(request=request),
         )
         redirect_uri = '{}?{}'.format(self.get_authorize_url(), urlencode(params))
 
         wizard.bind_state('state', state)
-
         return self.redirect(redirect_uri)
 
     def redirect(self, url):
@@ -85,10 +83,10 @@ class OAuth2CallbackView(View):
     def exchange_token(self, request, wizard, code):
         data = self.get_token_params(
             code=code,
-            redirect_uri=urljoin('/', wizard.redirect_url()),
+            redirect_uri=wizard.redirect_url(request=request),
         )
-        response = urlopen(self.access_token_url, data=data)
-        content = response.content
+        response = safe_urlopen(self.access_token_url, data=data)
+        content = response.content.decode()
         if response.headers['Content-Type'].startswith('application/x-www-form-urlencoded'):
             return dict(parse_qsl(content))
         return loads(content)
@@ -104,7 +102,7 @@ class OAuth2CallbackView(View):
 
         if state != wizard.fetch_state('state'):
             wizard.logger.info('identity.token-exchange-error', extra={'error': 'invalid_state'})
-            return wizard.error(ERR_INVALID_STATE)
+            return wizard.error('An error occurred while validating your request.')
 
         data = self.exchange_token(request, wizard, code)
 
