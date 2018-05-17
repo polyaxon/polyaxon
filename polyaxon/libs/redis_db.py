@@ -241,7 +241,7 @@ class RedisSessions(BaseRedisDb):
         self.request.session[self.session_key] = redis_key
 
         value = dumps(initial_state)
-        self._red.setex(redis_key, self.ttl, value)
+        self._red.setex(name=redis_key, time=self.ttl, value=value)
 
     def clear(self):
         if not self.redis_key:
@@ -261,7 +261,7 @@ class RedisSessions(BaseRedisDb):
         if not state_json:
             return None
 
-        return loads(state_json)
+        return loads(state_json.decode())
 
     def __getattr__(self, key):
         state = self.get_state()
@@ -278,4 +278,4 @@ class RedisSessions(BaseRedisDb):
             return
 
         state[key] = value
-        self._red.setex(self.redis_key, self.ttl, dumps(state))
+        self._red.setex(name=self.redis_key, time=self.ttl, value=dumps(state))
