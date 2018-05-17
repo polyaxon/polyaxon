@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from event_manager.event_manger import EventManager
+from event_manager.event_manager import EventManager
 from event_manager.events.cluster import ClusterCreatedEvent, ClusterUpdatedEvent
 from tests.utils import BaseTest
 
