@@ -88,7 +88,7 @@ class LogoutView(AuthLogoutView):
         response = super(LogoutView, self).dispatch(request, *args, **kwargs)
         response.delete_cookie('token')
         response.delete_cookie('user')
-        return HttpResponseRedirect(reverse('users:login'))
+        return response
 
 
 class RegistrationView(FormView):
