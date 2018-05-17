@@ -2,15 +2,18 @@
 {% load i18n %}
 {% load staticfiles %}
 
+{% block header %}
+    {% include "polyaxon/header.html" %}
+{% endblock %}
 {% block index %}
-<div id="root"></div>
+    <div id="root"></div>
 {% endblock %}
 {% block footer %}
-{% include "polyaxon/footer.html" %}
+    {% include "polyaxon/footer.html" %}
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'dist/js/react.production.min.js' %}"></script>
-<script src="{% static 'dist/js/react-dom.production.min.js' %}"></script>
-<script src="{% static 'dist/js/bundle.min.js' %}"></script>
+    <script src="{% static 'dist/js/react.production.min.js' %}"></script>
+    <script src="{% static 'dist/js/react-dom.production.min.js' %}"></script>
+    <script src="{% static 'dist/js/bundle.min.js' %}"></script>
 {% endblock %}

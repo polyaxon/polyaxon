@@ -14,7 +14,10 @@
 </head>
 
 <body>
+{% block header %}{% endblock %}
+<div class="container container-fluid">
 {% block index %}{% endblock %}
+</div>
 {% block footer %}{% endblock %}
 {% block scripts %}
 {% endblock %}
