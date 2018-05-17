@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, re_path
+from django.views.generic import RedirectView
 
 from polyaxon.views import (
     Handler50xView,
@@ -53,8 +54,12 @@ urlpatterns = [
         ('plugins.urls', 'plugins'), namespace='plugins')),
     re_path(r'^users/', include(
         ('users.urls', 'users'), namespace='users')),
+    re_path(r'^oauth/', include(
+        ('sso.urls', 'sso'), namespace='sso')),
     re_path(r'^_admin/logout/$', LogoutView.as_view(), name='logout'),
-    re_path(r'^_admin/login/$', LoginView.as_view(template_name='admin/login.html'), name='login'),
+    re_path(r'^_admin/login/$',
+            RedirectView.as_view(url=settings.LOGIN_URL, permanent=True, query_string=True),
+            name='login'),
     re_path(r'^_admin/', admin.site.urls),
     re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
     re_path(r'^{}/'.format(API_V1), include((api_patterns, 'v1'), namespace='v1')),

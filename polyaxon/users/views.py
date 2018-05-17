@@ -15,9 +15,10 @@ from django.contrib.auth.views import LoginView as AuthLoginView
 from django.contrib.auth.views import LogoutView as AuthLogoutView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import signing
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
@@ -87,7 +88,7 @@ class LogoutView(AuthLogoutView):
         response = super(LogoutView, self).dispatch(request, *args, **kwargs)
         response.delete_cookie('token')
         response.delete_cookie('user')
-        return response
+        return HttpResponseRedirect(reverse('users:login'))
 
 
 class RegistrationView(FormView):

@@ -18,6 +18,14 @@ if registration.REGISTRATION_WORKFLOW == registration.REGISTRATION_SUPERUSER_VAL
             r'^register/complete/?$',
             TemplateView.as_view(template_name='users/registration_simple_complete.html'),
             name='registration_complete'),
+        re_path(
+            r'^login/$',
+            views.LoginView.as_view(template_name='users/login.html'),
+            name='login'),
+        re_path(
+            r'^logout/$',
+            views.LogoutView.as_view(),
+            name='logout'),
     ]
 else:
     urlpatterns = [
