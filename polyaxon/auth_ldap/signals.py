@@ -1,9 +1,22 @@
 # -*- coding: utf-8 -*-
-import django_auth_ldap
+import logging
+
 from django.dispatch import receiver
 from django_auth_ldap.backend import populate_user
+
+logger = logging.getLogger('polyaxon.auth_ldap')
 
 @receiver(populate_user)
 def populate_user(sender, **kwargs):
     user = kwargs['user']
-    user.email = '%s@ldap-users.com' % user.username
+    ldap_user = user.ldap_user
+
+    # populate user with default email to prevent validation error
+    if not user.email:
+        try:
+            value = ldap_user.attrs['mail'][0]
+        except LookupError:
+            logger.warning("{} does not have a value for the attribute {}".format(ldap_user.dn, 'mail'))
+            user.email = '%s@polyaxon-ldap-users.com' % user.username
+        else:
+            user.email = value
