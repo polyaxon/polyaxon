@@ -131,6 +131,14 @@
   font-size: 14px;
 }
 
+.auth-form {
+  padding-bottom: 2em;
+}
+
+.auth-sso {
+  padding-top: 2em;
+}
+
 #top #top-nav-extra span,
 #top #top-nav-extra a {
   color: rgba(255, 255, 255, 0.7);
