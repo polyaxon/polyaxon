@@ -1,43 +1,90 @@
-{% extends "polyaxon/index.html" %}
-{% load i18n %}
-{% load staticfiles %}
+{% extends "users/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}"/>
+    {{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-offset-2 col-md-8">
-        <div class="jumbotron jumbotron-action">
-            <div id="signinLabel">
-                {% if invitation %}
-                <p>Your registration takes place with the email-address: {{ invitation.email }}</p>
-                <p>After logging on you can change your email-address anytime in the profile settings.</p>
-                {% else %}
-                <p>Please sign up to get access to Polyaxon.</p>
-                {% endif %}
+    {% if form.errors and not form.non_field_errors %}
+        <p class="errornote">
+            {% if form.errors.items|length == 1 %}
+                {% trans "Please correct the error below." %}{% else %}
+                {% trans "Please correct the errors below." %}{% endif %}
+        </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class="errornote">
+                {{ error }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+    <div id="content-main">
+
+        {% if user.is_authenticated %}
+            <p class="errornote">
+                You are authenticated as {{ username }}. Would you like to login to a different
+                account?
+            </p>
+        {% endif %}
+
+        <form action="{{ app_path }}" method="post" id="login-form"
+              class="auth-form">{% csrf_token %}
+            <div class="form-row">
+                {{ form.username.errors }}
+                {{ form.username.label_tag }} {{ form.username }}
             </div>
-            {% if form.non_field_errors %}
-            <div class="alert alert-danger">
-                <strong>Signing up failed!</strong>
-                {% for error in form.non_field_errors %}
-                <span>{{ error|escape }}</span>
-                {% endfor %}
+            <div class="form-row">
+                {{ form.email.errors }}
+                {{ form.email.label_tag }} {{ form.email}}
             </div>
-            {% endif %}
-            <form class="form-horizontal form-login" role="form" method="post" autocomplete="off" action="">
-                {% csrf_token %}
-                {% include 'users/formcontents.html' %}
-                <div class="form-group">
-                    <div class="col-md-offset-3 col-md-8">
-                        <button class="btn btn-primary btn-polyaxon" type="submit" id="id_signup"v>
-                            {% if invitation %}
-                                Accept invitation
-                            {% else %}
-                                Sign up
-                            {% endif %}
-                        </button>
-                    </div>
+            <div class="form-row">
+                {{ form.password1.errors }}
+                {{ form.password1.label_tag }} {{ form.password1 }}
+            </div>
+            <div class="form-row">
+                {{ form.password2.errors }}
+                {{ form.password2.label_tag }} {{ form.password2 }}
+                <input type="hidden" name="next" value="{{ next }}"/>
+            </div>
+            <div class="form-row">
+                {{ form.tos.errors }}
+                {{ form.tos.label_tag }} {{ form.tos }}
+                <input type="hidden" name="next" value="{{ next }}"/>
+            </div>
+            {% url 'admin_password_reset' as password_reset_url %}
+            {% if password_reset_url %}
+                <div class="password-reset-link">
+                    <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
                 </div>
+            {% endif %}
+            <div class="submit-row">
+                <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}"/>
+            </div>
+        </form>
+        <hr/>
+        <div id="signinLabel" class="auth-sso">
+            <p>Sign in with your github account.</p>
+            <form class="form-horizontal form-login" id="signin-github" method="post"
+                  action="{% url 'sso:create_identity' 'github' %}">
+                {% csrf_token %}
+                <label>&nbsp;</label><input type="submit" value="{% trans 'Log in with Github' %}"/>
             </form>
         </div>
+
     </div>
-</div>
 {% endblock %}
