@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 
+from libs.hashing import md5_text
 from libs.redis_db import RedisSessions
 
 
@@ -29,8 +30,8 @@ class Wizard(object):
             return None
 
         provider_model = None
-        if state.provider_model_id:
-            provider_model = cls.model_lcs.objects.get(id=state.provider_model_id)
+        # if state.provider_model_id:
+        #     provider_model = cls.model_lcs.objects.get(id=state.provider_model_id)
 
         provider_key = state.provider_key
         config = state.config
@@ -40,7 +41,7 @@ class Wizard(object):
     def __init__(self, request, provider_key, provider_model=None, config=None):
         self.request = request
         self.state = RedisSessions(request, self.name)
-        self.provider = self.manager.get(provider_key)
+        self.provider = self.manager.get(provider_key)()
         self.provider_model = provider_model
 
         self.config = config or {}
@@ -63,7 +64,7 @@ class Wizard(object):
 
     def initialize(self):
         self.state.regenerate({
-            'uid': self.request.user.id if self.request.user.is_authenticated() else None,  # TODO CHANGE TO user_id
+            'user_id': self.request.user.id if self.request.user.is_authenticated else None,
             'provider_model_id': self.provider_model.id if self.provider_model else None,
             'provider_key': self.provider.key,
             'step_index': 0,
