@@ -4,7 +4,7 @@ import random
 
 from django.conf import settings
 
-from libs.utils import get_hmac
+from libs.crypto import get_hmac
 from projects.paths import get_project_repos_path
 from runner.spawners.base import get_pod_volumes
 from runner.spawners.project_spawner import ProjectSpawner
