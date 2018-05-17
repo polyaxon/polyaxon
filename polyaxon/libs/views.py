@@ -1,6 +1,7 @@
 import json
 import os
 
+from django.urls import reverse
 from rest_framework import exceptions as rest_exceptions
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser
@@ -35,7 +36,8 @@ class ProtectedView(APIView):
         """Use custom exception handler for errors."""
         if isinstance(exc, (rest_exceptions.NotAuthenticated,
                             rest_exceptions.AuthenticationFailed)):
-            return HttpResponseRedirect('/app/auth/login?next={}'.format(
+            return HttpResponseRedirect('{}?next={}'.format(
+                reverse('users:login'),
                 self.request.get_full_path()))
 
         if isinstance(exc, Http404):
