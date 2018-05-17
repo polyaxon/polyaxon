@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from rest_framework.fields import JSONField
 
 from libs.models import DiffModel
 from sso.providers.constants import PROVIDERS
@@ -21,9 +22,17 @@ class SSOIdentity(DiffModel):
         on_delete=models.CASCADE,
         related_name='identities'
     )
+    provider = models.ForeignKey(
+        SSOProvider,
+        on_delete=models.CASCADE,
+        related_name='identities'
+    )
+    is_valid = models.BooleanField(default=False)
     auth_provider = models.ForeignKey(SSOProvider, models.CASCADE)
+    external_id = models.CharField(max_length=64, null=True)
     last_verified = models.DateTimeField(default=timezone.now)
     last_synced = models.DateTimeField(default=timezone.now)
+    data = JSONField()
 
     class Meta:
         unique_together = (('auth_provider', 'user'),)
