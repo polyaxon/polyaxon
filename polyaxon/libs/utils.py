@@ -1,7 +1,5 @@
 from distutils.util import strtobool  # pylint:disable=import-error
 
-from django.utils.crypto import salted_hmac
-
 from polyaxon_schemas.utils import to_list
 
 
@@ -16,10 +14,6 @@ def to_bool(value):
         return True
 
     raise TypeError('The value `{}` cannot be interpreted as boolean'.format(value))
-
-
-def get_hmac(key_salt, value):
-    return salted_hmac(key_salt, value).hexdigest()
 
 
 def get_list(values):
