@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
-import { BASE_URL } from '../constants/api';
+import { BASE_API_URL } from '../constants/api';
 
 export enum actionTypes {
   RECEIVE_LOGS = 'RECEIVE_LOGS',
@@ -40,7 +40,7 @@ export function fetchLogs(projectUniqueName: string, experimentSequence: number)
     dispatch(requestLogsActionCreator());
 
     let logsUrl =
-      BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/logs';
+      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/logs';
 
     return fetch(logsUrl, {
       headers: {
