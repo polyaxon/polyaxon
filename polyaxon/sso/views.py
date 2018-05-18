@@ -15,7 +15,7 @@ class AccountCreateIdentityView(View):
         if wizard is None or not wizard.is_valid():
             wizard = IdentityWizard(
                 provider_key=provider,
-                provider_model=SSOProvider,
+                provider_model=SSOProvider.objects.get(name=provider),
                 request=request,
             )
 

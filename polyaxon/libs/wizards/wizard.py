@@ -21,7 +21,7 @@ class Wizard(object):
     """
     name = None
     manager = None
-    model_lcs = None
+    model_cls = None
 
     @classmethod
     def get_for_request(cls, request):
@@ -30,8 +30,8 @@ class Wizard(object):
             return None
 
         provider_model = None
-        # if state.provider_model_id:
-        #     provider_model = cls.model_lcs.objects.get(id=state.provider_model_id)
+        if state.provider_model_id:
+            provider_model = cls.model_cls.objects.get(id=state.provider_model_id)
 
         provider_key = state.provider_key
         config = state.config

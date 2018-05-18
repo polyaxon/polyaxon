@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
 from rest_framework.fields import JSONField
@@ -32,6 +33,7 @@ class SSOIdentity(DiffModel):
     external_id = models.CharField(max_length=64, null=True)
     last_verified = models.DateTimeField(default=timezone.now)
     last_synced = models.DateTimeField(default=timezone.now)
+    scopes = ArrayField(models.CharField(max_length=200), blank=True, null=True)
     data = JSONField()
 
     class Meta:
