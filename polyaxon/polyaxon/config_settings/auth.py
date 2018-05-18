@@ -2,6 +2,7 @@
 import json
 
 import ldap
+import django_auth_ldap.config
 from django_auth_ldap.config import LDAPSearch
 
 from polyaxon.utils import config
@@ -49,3 +50,15 @@ if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
     user_attr_map = config.get_string('POLYAXON_AUTH_LDAP_USER_ATTR_MAP', is_optional=True)
     if user_attr_map:
         AUTH_LDAP_USER_ATTR_MAP = json.loads(user_attr_map)
+
+    # working with groups
+    group_base_dn = config.get_string('POLYAXON_AUTH_LDAP_GROUP_SEARCH_BASE_DN', is_optional=True)
+    group_type = config.get_string('POLYAXON_AUTH_LDAP_GROUP_SEARCH_GROUP_TYPE', is_optional=True)
+    if group_base_dn and group_type:
+        AUTH_LDAP_GROUP_SEARCH = LDAPSearch(group_base_dn,
+                                            ldap.SCOPE_SUBTREE, "(objectClass=%s)" % group_type
+                                            )
+        AUTH_LDAP_GROUP_TYPE = getattr(django_auth_ldap.config, group_type[0].upper() + group_type[1:] + 'Type')()
+
+    AUTH_LDAP_REQUIRE_GROUP = config.get_string('POLYAXON_AUTH_LDAP_REQUIRE_GROUP', is_optional=True)
+    AUTH_LDAP_DENY_GROUP = config.get_string('POLYAXON_AUTH_LDAP_DENY_GROUP', is_optional=True)
