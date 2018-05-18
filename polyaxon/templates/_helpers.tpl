@@ -503,12 +503,15 @@ Auth
 - name: POLYAXON_AUTH_LDAP_BIND_DN
   value: {{ .Values.auth.ldap.bindDN | quote }}
 - name: POLYAXON_AUTH_LDAP_BIND_PASSWORD
-  value: {{ .Values.auth.ldap.bindPassword | quote }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-ldap-bind-password
 - name: POLYAXON_AUTH_LDAP_USER_SEARCH_BASE_DN
   value: {{ .Values.auth.ldap.userSearchBaseDN | quote }}
 - name: POLYAXON_AUTH_LDAP_USER_SEARCH_FILTERSTR
   value: {{ .Values.auth.ldap.userSearchFilterStr | quote }}
-- name: POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE0
+- name: POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE
   value: {{ .Values.auth.ldap.userDNTemplate | quote }}
 - name: POLYAXON_AUTH_LDAP_START_TLS
   value: {{ .Values.auth.ldap.startTLS | quote }}
@@ -518,10 +521,14 @@ Auth
   value: {{ .Values.auth.ldap.groupSearchBaseDN | quote }}
 - name: POLYAXON_AUTH_LDAP_GROUP_SEARCH_GROUP_TYPE
   value: {{ .Values.auth.ldap.groupSearchGroupType | quote }}
+{{- if .Values.auth.ldap.requireGroup }}
 - name: POLYAXON_AUTH_LDAP_REQUIRE_GROUP
   value: {{ .Values.auth.ldap.requireGroup | quote }}
+{{- end }}
+{{- if .Values.auth.ldap.denyGroup }}
 - name: POLYAXON_AUTH_LDAP_DENY_GROUP
   value: {{ .Values.auth.ldap.denyGroup | quote }}
+{{- end }}
 {{- end }}
 {{- end -}}
 
