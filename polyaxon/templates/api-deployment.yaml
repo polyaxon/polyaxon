@@ -55,6 +55,7 @@ spec:
         {{ include "config.sub_paths" . | indent 8 }}
         {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.auth" . | indent 8 }}
         volumeMounts:
         {{ include "volumes.volumeMounts" . | indent 8}}
         {{ include "volumes.dirMounts" . | indent 8}}

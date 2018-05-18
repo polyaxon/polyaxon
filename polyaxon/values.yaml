@@ -75,6 +75,25 @@ persistence:
     mountPath: "/uploads"
     subPath: ""
 
+auth:
+  ldap:
+    enabled: false
+    serverUri:
+    globalOptions:
+    connectionOptions:
+    bindDN:
+    bindPassword:
+    userSearchBaseDN:
+    userSearchFilterStr:
+    userDNTemplate:
+    startTLS: false
+    userAttrMap:
+    groupSearchBaseDN:
+    groupSearchGroupType:
+    requireGroup:
+    denyGroup:
+
+
 nodeSelectors:
   core:
   experiments:
