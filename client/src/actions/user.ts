@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-import { BASE_URL } from '../constants/api';
+import { BASE_API_URL } from '../constants/api';
 import { UserModel } from '../models/user';
 import { discardToken } from '../actions/token';
 import { delay, getToken } from '../constants/utils';
@@ -49,7 +49,7 @@ export function fetchUser(): any {
       return dispatch(discardToken());
     }
 
-    return fetch(BASE_URL + '/users', {
+    return fetch(BASE_API_URL + '/users', {
       method: 'GET',
       headers: {
         'Accept': 'application/json, text/plain, */*',

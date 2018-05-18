@@ -3,7 +3,7 @@ import * as url from 'url';
 
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { GroupModel } from '../models/group';
-import { BASE_URL } from '../constants/api';
+import { BASE_API_URL } from '../constants/api';
 import * as paginationActions from '../actions/pagination';
 import { getOffset } from '../constants/paginate';
 
@@ -87,7 +87,7 @@ export function fetchGroups(projectUniqueName: string, currentPage?: number): an
   return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
     paginationActions.paginateGroup(dispatch, currentPage);
-    let groupsUrl = BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/';
+    let groupsUrl = BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/groups/';
     let offset = getOffset(currentPage);
     if (offset != null) {
       groupsUrl += url.format({query: {offset: offset}});
@@ -107,7 +107,7 @@ export function fetchGroups(projectUniqueName: string, currentPage?: number): an
 export function fetchGroup(user: string, projectName: string, groupSequence: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestGroupsActionCreator());
-    return fetch(BASE_URL + `/${user}` + `/${projectName}` + `/groups/` + `${groupSequence}`, {
+    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/groups/` + `${groupSequence}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

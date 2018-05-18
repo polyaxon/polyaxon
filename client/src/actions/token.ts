@@ -1,9 +1,8 @@
 import { Action } from 'redux';
 
 import { TokenModel } from '../models/token';
-import { BASE_URL } from '../constants/api';
+import { BASE_API_URL } from '../constants/api';
 import { discardUser, fetchUser } from '../actions/user';
-import { delay } from '../constants/utils';
 
 export enum actionTypes {
   FETCH_TOKEN = 'FETCH_TOKEN',
@@ -52,7 +51,7 @@ export function logout(): any {
   }
 
   return (dispatch: any) => {
-    return fetch(BASE_URL + '/users/logout', {
+    return fetch(BASE_API_URL + '/users/logout', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -85,7 +84,7 @@ export function fetchToken(username: string, password: string): any {
     login: true
   };
   return (dispatch: any) => {
-    return fetch(BASE_URL + '/users/token', {
+    return fetch(BASE_API_URL + '/users/token', {
       method: 'POST',
       body: JSON.stringify(credentials),
       headers: {
@@ -119,7 +118,7 @@ export function refreshSession(): any {
     return response;
   }
 
-  return (dispatch: any, getState: any) => fetch(BASE_URL + '/users/session/refresh', {
+  return (dispatch: any, getState: any) => fetch(BASE_API_URL + '/users/session/refresh', {
     method: 'POST',
     headers: {
         'Authorization': 'token ' + getState().auth.token

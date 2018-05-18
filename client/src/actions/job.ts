@@ -3,7 +3,7 @@ import * as url from 'url';
 
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { JobModel } from '../models/job';
-import { BASE_URL } from '../constants/api';
+import { BASE_API_URL } from '../constants/api';
 import * as paginationActions from '../actions/pagination';
 import { getOffset } from '../constants/paginate';
 
@@ -94,7 +94,7 @@ export function fetchJobs(projectUniqueName: string, experimentSequence: number,
     dispatch(requestJobsActionCreator());
     paginationActions.paginateJob(dispatch, currentPage);
     let jobsUrl =
-      BASE_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs';
+      BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}` + '/experiments/' + experimentSequence + '/jobs';
     let offset = getOffset(currentPage);
     if (offset != null) {
       jobsUrl += url.format({query: {offset: offset}});
@@ -116,7 +116,7 @@ export function fetchJob(user: string, projectName: string, experimentSequence: 
   return (dispatch: any, getState: any) => {
     dispatch(requestJobActionCreator());
     return fetch(
-      BASE_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobSequence, {
+      BASE_API_URL + `/${user}/${projectName}` + '/experiments/' + experimentSequence + '/jobs/' + jobSequence, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

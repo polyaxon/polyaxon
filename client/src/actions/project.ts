@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import { ProjectModel } from '../models/project';
-import { BASE_URL } from '../constants/api';
+import { BASE_API_URL } from '../constants/api';
 import { handleAuthError } from '../constants/utils';
 import { getOffset } from '../constants/paginate';
 import * as paginationActions from '../actions/pagination';
@@ -95,7 +95,7 @@ export function createProject(user: string, project: ProjectModel): any {
   return (dispatch: any, getState: any) => {
     // FIX ME: We need to add a first dispatch here so we show it to the user before
     // sending it to the backend: dispatch(createProjectActionCreator(project))
-    return fetch(BASE_URL + `/${user}`, {
+    return fetch(BASE_API_URL + `/${user}`, {
       method: 'POST',
       body: JSON.stringify(project),
       headers: {
@@ -113,7 +113,7 @@ export function createProject(user: string, project: ProjectModel): any {
 export function deleteProject(project: ProjectModel): any {
   return (dispatch: any, getState: any) => {
     dispatch(deleteProjectActionCreator(project));
-    return fetch(BASE_URL + `/${project.user}` + `/${project.name}`, {
+    return fetch(BASE_API_URL + `/${project.user}` + `/${project.name}`, {
       method: 'DELETE',
       headers: {
         'Authorization': 'token ' + getState().auth.token
@@ -128,7 +128,7 @@ export function fetchProjects(user: string, currentPage?: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectsActionCreator());
     paginationActions.paginateProject(dispatch, currentPage);
-    let projectsUrl = BASE_URL + `/${user}`;
+    let projectsUrl = BASE_API_URL + `/${user}`;
     let offset = getOffset(currentPage);
     if (offset != null) {
       projectsUrl += url.format({query: {offset: offset}});
@@ -148,7 +148,7 @@ export function fetchProjects(user: string, currentPage?: number): any {
 export function fetchProject(user: string, projectName: string): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestProjectActionCreator());
-    return fetch(BASE_URL + `/${user}` + `/${projectName}`, {
+    return fetch(BASE_API_URL + `/${user}` + `/${projectName}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }

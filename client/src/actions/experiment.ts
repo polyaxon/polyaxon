@@ -3,7 +3,7 @@ import * as url from 'url';
 
 import { handleAuthError, urlifyProjectName } from '../constants/utils';
 import { ExperimentModel } from '../models/experiment';
-import { BASE_URL } from '../constants/api';
+import { BASE_API_URL } from '../constants/api';
 import { getOffset } from '../constants/paginate';
 import * as paginationActions from '../actions/pagination';
 
@@ -86,7 +86,7 @@ export function fetchExperiments(projectUniqueName: string, currentPage?: number
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
     paginationActions.paginateExperiment(dispatch, currentPage);
-    let experimentsUrl = `${BASE_URL}/${urlifyProjectName(projectUniqueName)}`;
+    let experimentsUrl = `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}`;
     if (groupSequence) {
       experimentsUrl += `/groups/${groupSequence}/experiments/`;
     } else {
@@ -118,7 +118,7 @@ export function fetchExperiments(projectUniqueName: string, currentPage?: number
 export function fetchExperiment(user: string, projectName: string, experimentSequence: number): any {
   return (dispatch: any, getState: any) => {
     dispatch(requestExperimentsActionCreator());
-    return fetch(BASE_URL + `/${user}` + `/${projectName}` + `/experiments/` + `${experimentSequence}`, {
+    return fetch(BASE_API_URL + `/${user}` + `/${projectName}` + `/experiments/` + `${experimentSequence}`, {
       headers: {
         'Authorization': 'token ' + getState().auth.token
       }
