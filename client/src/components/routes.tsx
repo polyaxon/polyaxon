@@ -6,12 +6,9 @@ import ExperimentDetail from '../containers/experimentDetail';
 import GroupDetail from '../containers/groupDetail';
 import JobDetail from '../containers/jobDetail';
 import Projects from '../containers/projects';
-import Login from '../containers/login';
-import Logout from '../containers/logout';
 import Token from '../containers/token';
 
-import { isUserAuthenticated, getHomeUrl, getLoginUrl, getLogoutUrl } from '../constants/utils';
-
+import { getHomeUrl } from '../constants/utils';
 
 function Routes() {
   let tokenRoute = '/app/token';
@@ -21,86 +18,30 @@ function Routes() {
   let groupDetailRoute = '/app/:user/:projectName/groups/:groupSequence/';
   let jobDetailRoute = '/app/:user/:projectName/experiments/:experimentSequence/jobs/:jobSequence/';
 
+  /**
+   * in the future if we want to reactivate login redirection we can do something like this:
+   *       <Route
+   *         path={jobDetailRoute}
+   *         render={() => (
+   *           isUserAuthenticated() ? (
+   *             <Route path={jobDetailRoute} component={JobDetail}/>
+   *           ) : (
+   *             <Route component={({}, {}) => window.location.replace(getLoginUrl(true))} />;
+   *           )
+   *         )}
+   *       />
+   */
+
   return (
     <Switch>
-      <Route path={getLoginUrl()} component={Login}/>
-      <Route path={getLogoutUrl()} component={Logout}/>
-      <Route
-        path={tokenRoute}
-        render={() => (
-          isUserAuthenticated() ? (
-            <Route path={tokenRoute} component={Token}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}
-      />
+      <Route path={tokenRoute} component={Token}/>
+      <Route path={jobDetailRoute} component={JobDetail}/>
+      <Route path={groupDetailRoute} component={GroupDetail}/>
+      <Route path={experimentDetailRoute} component={ExperimentDetail}/>
+      <Route path={projectDetailRoute} component={ProjectDetail}/>
+      <Route path={projectsRoute} component={Projects}/>
 
-      <Route
-        path={jobDetailRoute}
-        render={() => (
-          isUserAuthenticated() ? (
-            <Route path={jobDetailRoute} component={JobDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}
-      />
-
-      <Route
-        path={groupDetailRoute}
-        render={() => (
-          isUserAuthenticated() ? (
-            <Route path={groupDetailRoute} component={GroupDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}
-      />
-
-      <Route
-        path={experimentDetailRoute}
-        render={() => (
-          isUserAuthenticated() ? (
-            <Route path={experimentDetailRoute} component={ExperimentDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}
-      />
-
-      <Route
-        path={projectDetailRoute}
-        render={() => (
-          isUserAuthenticated() ? (
-            <Route path={projectDetailRoute} component={ProjectDetail}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}
-      />
-
-      <Route
-        path={projectsRoute}
-        render={() => (
-          isUserAuthenticated() ? (
-            <Route path={projectsRoute} component={Projects}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}
-      />
-
-      <Route
-        path="*"
-        render={() => (
-          isUserAuthenticated() ? (
-            <Redirect to={getHomeUrl()}/>
-          ) : (
-            <Redirect to={getLoginUrl()}/>
-          )
-        )}
-      />
+      <Route path="*" render={() => <Redirect to={getHomeUrl()}/>}/>
     </Switch>
   );
 }

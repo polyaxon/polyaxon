@@ -1,8 +1,9 @@
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
 
-import {TokenStateSchema} from '../models/token';
-import {fetchUser} from '../actions/user';
+import { TokenStateSchema } from '../models/token';
+import { fetchUser } from '../actions/user';
+import { BASE_URL } from '../constants/api';
 
 export const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
@@ -64,12 +65,14 @@ export let getHomeUrl = function () {
   return `/app/${user}/`;
 };
 
-export let getLoginUrl = function () {
-  return '/app/auth/login/';
+export let getLoginUrl = function (external?: boolean) {
+  external = external || false;
+  let loginUrl = '/users/login/';
+  return external ? `${BASE_URL}${loginUrl}` : loginUrl;
 };
 
 export let getLogoutUrl = function () {
-  return '/app/auth/logout/';
+  return `/users/logout/`;
 };
 
 export let getUserUrl = function (username: string) {

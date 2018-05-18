@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import include, re_path
 from django.views.generic import RedirectView
 
@@ -65,7 +66,7 @@ urlpatterns = [
     re_path(r'^{}/'.format(API_V1), include((api_patterns, 'v1'), namespace='v1')),
     re_path(r'^$', IndexView.as_view(), name='index'),
     re_path(r'^^50x.html$', Handler50xView.as_view(), name='50x'),
-    re_path(r'^app.*/?', ReactIndexView.as_view(), name='react-index'),
+    re_path(r'^app.*/?', login_required(ReactIndexView.as_view()), name='react-index'),
 ]
 
 handler400 = Handler50xView.as_view()
