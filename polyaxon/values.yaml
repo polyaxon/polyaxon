@@ -79,15 +79,15 @@ auth:
   ldap:
     enabled: false
     serverUri:
-    globalOptions:
-    connectionOptions:
+    globalOptions: {}
+    connectionOptions: {}
     bindDN:
     bindPassword:
     userSearchBaseDN:
     userSearchFilterStr:
     userDNTemplate:
     startTLS: false
-    userAttrMap:
+    userAttrMap: {}
     groupSearchBaseDN:
     groupSearchGroupType:
     requireGroup:

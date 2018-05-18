@@ -511,7 +511,7 @@ Auth
 - name: POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE0
   value: {{ .Values.auth.ldap.userDNTemplate | quote }}
 - name: POLYAXON_AUTH_LDAP_START_TLS
-  value: {{ .Values.auth.ldap.startTLS }}
+  value: {{ .Values.auth.ldap.startTLS | quote }}
 - name: POLYAXON_AUTH_LDAP_USER_ATTR_MAP
   value: {{ toJson .Values.auth.ldap.userAttrMap | quote }}
 - name: POLYAXON_AUTH_LDAP_GROUP_SEARCH_BASE_DN
