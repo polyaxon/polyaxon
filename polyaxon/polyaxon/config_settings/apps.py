@@ -17,6 +17,7 @@ PROJECT_APPS = (
     'activitylogs.apps.ActivityLogsConfig',
     'tracker.apps.TrackerConfig',
     'auditor.apps.AuditorConfig',
+    'sso.apps.SSOConfig'
 )
 
 DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True)
