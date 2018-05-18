@@ -1,0 +1,141 @@
+.modal .form-row input[type=text],
+.modal .form-row input[type=password],
+.modal .form-row input[type=email],
+.modal .form-row input[type=url],
+.modal .form-row input[type=number],
+.modal .form-row input[type=tel] {
+  clear: both;
+  padding: 8px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 0;
+}
+
+.errornote {
+    font-size: 12px;
+    display: block;
+    padding: 10px 12px;
+    margin: 0 0 10px 0;
+    color: #ba2121;
+    border: 1px solid #ba2121;
+    border-radius: 4px;
+    background-color: #fff;
+    background-position: 5px 12px;
+}
+
+a.brand {
+  font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  text-decoration: none;
+  background: none;
+  width: 70px;
+  line-height: 11px;
+      font-weight: 300;
+  background-repeat: no-repeat;
+  color: #716c6c;
+}
+
+
+/* Buttons */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #485563;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active, .button:focus, input[type=submit]:focus, input[type=button]:focus, .button:hover, input[type=submit]:hover, input[type=button]:hover,
+.btn-polyaxon:hover,
+.module h2, .module caption, .inline-group h2, div.breadcrumbs {
+  background: #6c7c8c;
+}
+
+hr {
+    clear: both;
+    color: #eee;
+    background-color: #eee;
+    height: 1px;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1px;
+    line-height: 1px;
+}
+
+body.modal {
+    background: #f8f8f8;
+}
+
+.modal #header {
+    height: auto;
+    padding: 5px 16px;
+    line-height: 40px;
+    color: #ffc;
+    overflow: hidden;
+}
+
+.modal #header h1 {
+    font-size: 18px;
+    margin: 0 20px 0 0;
+}
+
+.modal #header h1 a {
+    color: #fff;
+}
+
+.modal #content {
+    padding: 20px 20px 0;
+}
+
+.modal #container {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 28em;
+    min-width: 300px;
+    margin: 100px auto;
+}
+
+.modal #content-main {
+    width: 100%;
+}
+
+.modal .form-row {
+    padding: 4px 0;
+    float: left;
+    width: 100%;
+    border-bottom: none;
+}
+
+.modal .form-row label {
+    padding-right: 0.5em;
+    line-height: 2em;
+    font-size: 1em;
+    clear: both;
+    color: #333;
+}
+
+
+.modal span.help {
+    font-size: 10px;
+    display: block;
+}
+
+.modal .submit-row {
+    clear: both;
+    padding: 1em 0 0 9.4em;
+    margin: 0;
+    border: none;
+    background: none;
+    text-align: left;
+}
+
+.modal .password-reset-link {
+    text-align: center;
+}
