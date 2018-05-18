@@ -2,6 +2,7 @@ body {
   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
   font-size: 15px;
 }
+
 .container-fluid {
   min-height: 55%;
 }
@@ -83,7 +84,7 @@ body {
   vertical-align: middle;
 }
 
-#top ul {
+#top #top-nav-main ul {
   list-style: none;
   display: flex;
   align-items: center;
@@ -134,7 +135,6 @@ body {
   margin-left: auto;
   font-size: 14px;
 }
-
 
 #top #top-nav-extra span,
 #top #top-nav-extra a {
@@ -223,4 +223,19 @@ a.brand {
 
 .jumbotron #main {
   text-align: center;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button, .btn-polyaxon {
+  background: #485563;
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active, .button:focus, input[type=submit]:focus, input[type=button]:focus, .button:hover, input[type=submit]:hover, input[type=button]:hover,
+.btn-polyaxon:hover,
+.module h2, .module caption, .inline-group h2, div.breadcrumbs {
+  background: #6c7c8c;
+}
+
+/* Dropdown */
+.header-user .dropdown-menu li.current-user {
+  padding: 5px 18px;
 }

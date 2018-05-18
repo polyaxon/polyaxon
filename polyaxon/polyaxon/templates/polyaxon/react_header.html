@@ -1,0 +1,42 @@
+{% load staticfiles %}
+
+<header id="top">
+    <div id="top-brand">
+        <a href="/app" title="home"><img src="{% static 'images/logo_white.svg' %}"
+                                         alt="Polyaxon">Polyaxon</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right" style="margin-left: auto;">
+        <li class="header-user dropdown">
+            <button class="btn btn-default dropdown-toggle"
+                    type="button"
+                    id="dropdownMenu1"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="true">
+                Profile
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li class="current-user">
+                    <div><strong>
+                        {{ user.username }}
+                    </strong></div>
+                    {{ user.email }}
+                </li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/app">Projects</a></li>
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                {% endif %}
+                <li role="separator" class="divider"></li>
+                <li><a href="https://polyaxon.com">Polyaxon</a></li>
+                <li><a href="https://docs.polyaxon.com">Docs</a></li>
+                <li><a href="https://github.com/polyaxon/">Github</a></li>
+                <li><a href="https://polyaxon.com/about/">About</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+
+</header>
