@@ -7,6 +7,7 @@ from .debug import *
 from .email import *
 from .k8s import *
 from .logging import *
+from .oauth import *
 from .paths import *
 from .redis_settings import *
 from .registration import *
