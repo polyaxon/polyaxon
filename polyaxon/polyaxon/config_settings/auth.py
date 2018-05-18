@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 import json
 
-import ldap
 import django_auth_ldap.config
+import ldap
 from django_auth_ldap.config import LDAPSearch
 
 from polyaxon.utils import config
-from .apps import INSTALLED_APPS
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-]
+if False and config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
+    AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+    ]
 
-if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
     AUTHENTICATION_BACKENDS = ['django_auth_ldap.backend.LDAPBackend'] + AUTHENTICATION_BACKENDS
 
     AUTH_LDAP_SERVER_URI = config.get_string('POLYAXON_AUTH_LDAP_SERVER_URI')
@@ -42,8 +41,6 @@ if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
         AUTH_LDAP_USER_SEARCH = LDAPSearch(base_dn, ldap.SCOPE_SUBTREE, filterstr)
 
     AUTH_LDAP_USER_DN_TEMPLATE = config.get_string('POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE', is_optional=True)
-
-    INSTALLED_APPS += ('auth_ldap.apps.AuthLdapConfig',)
 
     AUTH_LDAP_START_TLS = config.get_boolean('POLYAXON_AUTH_LDAP_START_TLS', is_optional=True)
 

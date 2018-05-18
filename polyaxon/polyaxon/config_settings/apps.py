@@ -1,5 +1,7 @@
 from polyaxon.utils import config
 
+from polyaxon.utils import config
+
 PROJECT_APPS = (
     'polyaxon',
     'libs.apps.LibsConfig',
@@ -26,6 +28,9 @@ if DEPLOY_RUNNER:
         'runner.apps.RunnerConfig',
         'runner.nodes.apps.NodesConfig',
     )
+
+if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
+    PROJECT_APPS += ('auth_ldap.apps.AuthLdapConfig',)
 
 THIRD_PARTY_APPS = (
     'raven.contrib.django.raven_compat',
