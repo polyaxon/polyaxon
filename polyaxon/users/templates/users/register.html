@@ -37,7 +37,7 @@
 
         {% if user.is_authenticated %}
             <p class="errornote">
-                You are authenticated as {{ username }}. Would you like to login to a different
+                You are authenticated as {{ user.username }}. Would you like to register a different
                 account?
             </p>
         {% endif %}
