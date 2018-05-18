@@ -1,20 +1,5 @@
-{% extends "users/base_site.html" %}
+{% extends "polyaxon/modal_index.html" %}
 {% load i18n static %}
-
-{% block extrastyle %}{{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}"/>
-    {{ form.media }}
-{% endblock %}
-
-{% block bodyclass %}{{ block.super }} login{% endblock %}
-
-{% block usertools %}{% endblock %}
-
-{% block nav-global %}{% endblock %}
-
-{% block content_title %}{% endblock %}
-
-{% block breadcrumbs %}{% endblock %}
 
 {% block content %}
     {% if form.errors and not form.non_field_errors %}
@@ -53,7 +38,6 @@
                 {{ form.password.label_tag }} {{ form.password }}
                 <input type="hidden" name="next" value="{{ next }}"/>
             </div>
-            {% url 'admin_password_reset' as password_reset_url %}
             {% if password_reset_url %}
                 <div class="password-reset-link">
                     <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
