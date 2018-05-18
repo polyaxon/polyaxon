@@ -1,3 +1,7 @@
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+}
 .container-fluid {
   min-height: 55%;
 }
@@ -131,24 +135,6 @@
   font-size: 14px;
 }
 
-.auth-form {
-  padding-bottom: 2em;
-}
-
-.auth-sso {
-  padding-top: 2em;
-}
-
-.login .form-row #id_password1, .login .form-row #id_password1,
-.login .form-row #id_password2, .login .form-row #id_password2,
-.login .form-row #id_email, .login .form-row #id_email {
-  clear: both;
-  padding: 8px;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 
 #top #top-nav-extra span,
 #top #top-nav-extra a {
@@ -237,14 +223,4 @@ a.brand {
 
 .jumbotron #main {
   text-align: center;
-}
-
-.button, input[type=submit], input[type=button], .submit-row input, a.button, .btn-polyaxon {
-  background: #485563;
-}
-
-.button:active, input[type=submit]:active, input[type=button]:active, .button:focus, input[type=submit]:focus, input[type=button]:focus, .button:hover, input[type=submit]:hover, input[type=button]:hover,
-.btn-polyaxon:hover,
-.module h2, .module caption, .inline-group h2, div.breadcrumbs {
-  background: #6c7c8c;
 }
