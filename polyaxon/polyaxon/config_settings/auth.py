@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import json
 
-import django_auth_ldap.config
+import django_auth_ldap.config as django_auth_ldap_config
 import ldap
-from django_auth_ldap.config import LDAPSearch
 
 from polyaxon.utils import config
 
@@ -34,13 +33,19 @@ if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
             AUTH_LDAP_CONNECTION_OPTIONS[option] = ldap_conn_options[option_name]
 
     AUTH_LDAP_BIND_DN = config.get_string('POLYAXON_AUTH_LDAP_BIND_DN', is_optional=True)
-    AUTH_LDAP_BIND_PASSWORD = config.get_string('POLYAXON_AUTH_LDAP_BIND_PASSWORD', is_optional=True)
+    AUTH_LDAP_BIND_PASSWORD = config.get_string('POLYAXON_AUTH_LDAP_BIND_PASSWORD',
+                                                is_optional=True)
     base_dn = config.get_string('POLYAXON_AUTH_LDAP_USER_SEARCH_BASE_DN', is_optional=True)
     filterstr = config.get_string('POLYAXON_AUTH_LDAP_USER_SEARCH_FILTERSTR', is_optional=True)
     if base_dn and filterstr:
-        AUTH_LDAP_USER_SEARCH = LDAPSearch(base_dn, ldap.SCOPE_SUBTREE, filterstr)
+        AUTH_LDAP_USER_SEARCH = django_auth_ldap_config.LDAPSearch(
+            base_dn,
+            ldap.SCOPE_SUBTREE,
+            filterstr
+        )
 
-    AUTH_LDAP_USER_DN_TEMPLATE = config.get_string('POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE', is_optional=True)
+    AUTH_LDAP_USER_DN_TEMPLATE = config.get_string('POLYAXON_AUTH_LDAP_USER_DN_TEMPLATE',
+                                                   is_optional=True)
 
     AUTH_LDAP_START_TLS = config.get_boolean('POLYAXON_AUTH_LDAP_START_TLS', is_optional=True)
 
@@ -52,10 +57,14 @@ if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
     group_base_dn = config.get_string('POLYAXON_AUTH_LDAP_GROUP_SEARCH_BASE_DN', is_optional=True)
     group_type = config.get_string('POLYAXON_AUTH_LDAP_GROUP_SEARCH_GROUP_TYPE', is_optional=True)
     if group_base_dn and group_type:
-        AUTH_LDAP_GROUP_SEARCH = LDAPSearch(group_base_dn,
-                                            ldap.SCOPE_SUBTREE, "(objectClass=%s)" % group_type
-                                            )
-        AUTH_LDAP_GROUP_TYPE = getattr(django_auth_ldap.config, group_type[0].upper() + group_type[1:] + 'Type')()
+        AUTH_LDAP_GROUP_SEARCH = django_auth_ldap_config.LDAPSearch(
+            group_base_dn,
+            ldap.SCOPE_SUBTREE,
+            "(objectClass=%s)" % group_type
+        )
+        AUTH_LDAP_GROUP_TYPE = getattr(django_auth_ldap_config,
+                                       group_type[0].upper() + group_type[1:] + 'Type')()
 
-    AUTH_LDAP_REQUIRE_GROUP = config.get_string('POLYAXON_AUTH_LDAP_REQUIRE_GROUP', is_optional=True)
+    AUTH_LDAP_REQUIRE_GROUP = config.get_string('POLYAXON_AUTH_LDAP_REQUIRE_GROUP',
+                                                is_optional=True)
     AUTH_LDAP_DENY_GROUP = config.get_string('POLYAXON_AUTH_LDAP_DENY_GROUP', is_optional=True)

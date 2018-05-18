@@ -7,6 +7,6 @@ class AuthLdapConfig(AppConfig):
     verbose_name = "AuthLdap"
 
     def ready(self):
-        from .signals import (
-            populate_user
+        from .signals import ( # noqa
+            populate_user_handler
         )

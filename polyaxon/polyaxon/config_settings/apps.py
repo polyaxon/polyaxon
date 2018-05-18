@@ -1,7 +1,5 @@
 from polyaxon.utils import config
 
-from polyaxon.utils import config
-
 PROJECT_APPS = (
     'polyaxon',
     'libs.apps.LibsConfig',
