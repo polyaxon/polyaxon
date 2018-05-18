@@ -7,11 +7,11 @@ from django_auth_ldap.config import LDAPSearch
 
 from polyaxon.utils import config
 
-if False and config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
-    AUTHENTICATION_BACKENDS = [
-        'django.contrib.auth.backends.ModelBackend',
-    ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
+if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
     AUTHENTICATION_BACKENDS = ['django_auth_ldap.backend.LDAPBackend'] + AUTHENTICATION_BACKENDS
 
     AUTH_LDAP_SERVER_URI = config.get_string('POLYAXON_AUTH_LDAP_SERVER_URI')
