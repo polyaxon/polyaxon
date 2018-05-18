@@ -1,0 +1,38 @@
+{% extends "polyaxon/root.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/global_modal.css" %}"/>
+{% endblock %}
+
+
+{% block bodyclass %}modal{% endblock %}
+
+<!-- Header -->
+{% block header %}
+<div id="header">
+    <div id="branding">
+        {% block branding %}
+        <h1 id="site-name">
+            <a class="brand" href="{% url 'index' %}">
+                <img src="{% static 'images/logo_white.svg' %}" alt="Polyaxon"> Polyaxon
+            </a>
+        </h1>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+<!-- END Header -->
+
+<!-- Content -->
+{% block index %}
+<div id="content" class="{% block coltype %}colM{% endblock %}">
+    {% block content %}{% endblock %}
+    <br class="clear"/>
+</div>
+{% endblock %}
+<!-- END Content -->
+
+{% block footer %}
+    <div id="footer"></div>
+{% endblock %}

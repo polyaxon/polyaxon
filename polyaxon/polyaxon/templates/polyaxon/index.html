@@ -1,45 +1,51 @@
 {% extends "polyaxon/root.html" %}
-{% load i18n %}
 {% load staticfiles %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+{% endblock %}
 
 {% block header %}
     {% include "polyaxon/header.html" %}
 {% endblock %}
+{% block containerclass %}container-fluid{% endblock %}
 {% block index %}
     {% block content %}
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="jumbotron jumbotron-action">
-                    <h3>Welcome to polyaxon</h3>
-                    <ul>
-                        <li>
-                            <a href="/app/">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="/_admin/">Administration</a>
-                        </li>
-                        <li>
-                            <a href="/users/register">Register</a>
-                        </li>
-                    </ul>
-                    <h3>Help</h3>
-                    <ul>
-                        <li>
-                            <a href="https://docs.polyaxon.com/quick_start/">Quick Start</a>
-                        </li>
-                        <li>
-                            <a href="https://docs.polyaxon.com/tutorials/">Tutorials</a>
-                        </li>
-                        <li>
-                            <a href="https://docs.polyaxon.com/">Documentation</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/polyaxon/polyaxon-examples">Examples</a>
-                        </li>
-                        <li>
-                            <a href="mailto:contact@polyaxon.com">contact us</a>
-                        </li>
-                    </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="jumbotron jumbotron-action">
+                        <h3>Welcome to polyaxon</h3>
+                        <ul>
+                            <li>
+                                <a href="/app/">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="/_admin/">Administration</a>
+                            </li>
+                            <li>
+                                <a href="/users/register">Register</a>
+                            </li>
+                        </ul>
+                        <h3>Help</h3>
+                        <ul>
+                            <li>
+                                <a href="https://docs.polyaxon.com/quick_start/">Quick Start</a>
+                            </li>
+                            <li>
+                                <a href="https://docs.polyaxon.com/tutorials/">Tutorials</a>
+                            </li>
+                            <li>
+                                <a href="https://docs.polyaxon.com/">Documentation</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/polyaxon/polyaxon-examples">Examples</a>
+                            </li>
+                            <li>
+                                <a href="mailto:contact@polyaxon.com">contact us</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

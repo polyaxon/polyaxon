@@ -1,12 +1,18 @@
 {% extends "polyaxon/root.html" %}
-{% load i18n %}
 {% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'dist/css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+{% endblock %}
 
 {% block header %}
     {% include "polyaxon/header.html" %}
 {% endblock %}
+{% block containerclass %}container-fluid{% endblock %}
 {% block index %}
-    <div id="root"></div>
+    <div class="container" id="root">
+    </div>
 {% endblock %}
 {% block footer %}
     {% include "polyaxon/footer.html" %}

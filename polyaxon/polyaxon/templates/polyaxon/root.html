@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="icon" href="{% static 'images/favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'dist/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Roboto Mono" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Dosis:500&amp;text=Polyaxon" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/global.css' %}" media="all" rel="stylesheet" type="text/css"/>
     <base href="/">
+    {% block styles %}
+    {% endblock %}
+    <link href="{% static 'css/global.css' %}" media="all" rel="stylesheet" type="text/css"/>
 </head>
 
-<body>
+<body class="{% block bodyclass %}{% endblock %}">
+<div id="container">
 {% block header %}{% endblock %}
-<div class="container container-fluid">
 {% block index %}{% endblock %}
-</div>
 {% block footer %}{% endblock %}
+</div>
 {% block scripts %}
 {% endblock %}
 </body>
