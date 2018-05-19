@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, Http404
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.views import View
 

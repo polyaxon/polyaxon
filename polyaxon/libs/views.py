@@ -1,7 +1,6 @@
 import json
 import os
 
-from django.urls import reverse
 from rest_framework import exceptions as rest_exceptions
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser
@@ -11,6 +10,7 @@ from rest_framework.views import APIView
 from django.conf import settings
 from django.core import exceptions as django_exceptions
 from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 import auditor
 

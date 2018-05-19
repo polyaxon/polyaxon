@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -16,6 +15,7 @@ from django.contrib.auth.views import LoginView as AuthLoginView
 from django.contrib.auth.views import LogoutView as AuthLogoutView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import signing
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
@@ -32,7 +32,7 @@ from event_manager.events.user import USER_ACTIVATED, USER_DELETED
 from polyaxon_schemas.user import UserConfig
 from users import signals
 from users.forms import RegistrationForm
-from users.utils import logout_user, login_user
+from users.utils import login_user, logout_user
 
 
 class AuthTokenLogin(ObtainAuthToken):

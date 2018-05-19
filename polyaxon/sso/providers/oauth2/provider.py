@@ -1,7 +1,7 @@
 from time import time
 
 from sso.providers.identity_provider import IdentityProvider
-from sso.providers.oauth2.views import OAuth2LoginView, OAuth2CallbackView
+from sso.providers.oauth2.views import OAuth2CallbackView, OAuth2LoginView
 
 
 class OAuth2Provider(IdentityProvider):

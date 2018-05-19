@@ -1,6 +1,6 @@
 import uuid
 
-from urllib.parse import urlencode, parse_qsl
+from urllib.parse import parse_qsl, urlencode
 
 from django.http import HttpResponseRedirect
 from django.views import View
