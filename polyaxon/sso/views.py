@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.views import View
 
-from sso.models import SSOProvider
 from sso.wizard import IdentityWizard
 
 
@@ -15,7 +14,6 @@ class AccountCreateIdentityView(View):
         if wizard is None or not wizard.is_valid():
             wizard = IdentityWizard(
                 provider_key=provider,
-                provider_model=SSOProvider.objects.get(name=provider),
                 request=request,
             )
 

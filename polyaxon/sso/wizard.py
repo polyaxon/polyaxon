@@ -1,14 +1,18 @@
 from __future__ import absolute_import, print_function
 
 import logging
+import uuid
 
+from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 
 from libs.wizards import Wizard
 from sso import providers
-from sso.models import SSOIdentity, SSOProvider
+from sso.models import SSOIdentity
+from users.utils import login_user
 
 logger = logging.getLogger('polyaxon.identity')
 
@@ -18,35 +22,69 @@ class IdentityWizard(Wizard):
 
     name = 'identity_wizard'
     manager = providers.default_manager
-    model_cls = SSOProvider
 
     def redirect_url(self, request):
-        associate_url = reverse('sso:create_identity')
+        associate_url = reverse('sso:create_identity', args=['github'])
 
         # Use configured redirect_url if specified for the pipeline if available
         associate_url = self.config.get('redirect_url', associate_url)
-        return '{}://{}{}'.format(request.schema, request.get_host(), associate_url)
+        return '{}://{}{}'.format('https' if request.is_secure() else 'http',
+                                  request.get_host(),
+                                  associate_url)
+
+    def get_or_create_user(self, identity):
+        # Check if request has already a user
+        if not self.request.user.is_anonymous:
+            return self.request.user
+
+        # Try to look for user:
+        # * 1. based on the external id
+        # * 2. based on an existing email
+        # * 3. based on an existing username
+
+        try:
+            sso_identity = SSOIdentity.objects.get(external_id=identity['id'])
+            return sso_identity.user
+        except SSOIdentity.DoesNotExist:
+            pass
+
+        User = get_user_model()
+        user = User.objects.filter(Q(email=identity['email']) | Q(username=identity['username']))
+        if user.count() > 0:
+            try:
+                user = User.objects.get(email=identity['email'])
+            except User.DoesNotExist:
+                user = User.objects.get(email=identity['username'])
+            return user
+        # Create a new user
+        return User.objects.create(
+                email=identity['email'],
+                username=identity['username'],
+                first_name=identity['first_name'],
+                last_name=identity['last_name'],
+                password='github.{}'.format(uuid.uuid4().hex)  # Generate a random password
+            )
 
     def finish_wizard(self):
         identity = self.provider.build_identity(self.state.data)
 
         defaults = {
-            'is_valid': True,
+            'valid': True,
             'scopes': identity.get('scopes', []),
             'data': identity.get('data', {}),
             'last_verified': timezone.now(),
         }
 
-        identity, created = SSOIdentity.objects.get_or_create(
-            idp=self.provider_model,
-            user=self.request.user,
+        user = self.get_or_create_user(identity=identity)
+        SSOIdentity.objects.update_or_create(
+            provider=self.provider.key,
+            user=user,
             external_id=identity['id'],
             defaults=defaults,
         )
 
-        if not created:
-            identity.update(**defaults)
-
         self.state.clear()
 
-        return HttpResponseRedirect('/')
+        response = HttpResponseRedirect('/')
+        login_user(request=self.request, response=response, user=user, login=True)
+        return response
