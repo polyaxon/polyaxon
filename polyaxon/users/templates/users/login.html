@@ -50,7 +50,8 @@
     {% if sso_enabled %}
         <hr/>
         <div id="signinLabel" class="auth-sso">
-            <p>Or use your github account</p>
+            <p>Or use a social account</p>
+            {% if sso_github %}
             <form class="form-horizontal form-login" id="signin-github" method="post"
                   action="{% url 'sso:create_identity' 'github' %}">
                 {% csrf_token %}
@@ -60,6 +61,16 @@
                     </svg>
                 </button>
             </form>
+            {% endif %}
+            {% if sso_bitbucket %}
+            <form class="form-horizontal form-login" id="signin-bitbucket" method="post"
+                  action="{% url 'sso:create_identity' 'bitbucket' %}">
+                {% csrf_token %}
+                <button type="submit" form="signin-bitbucket" value="Submit" style="position: relative;text-indent: 1.4em;" class="button"> Log in with Bitbucket
+                    <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" role="presentation" style="position: absolute;left: .4em;top: .4em;width: 2em;fill: white;"><defs><linearGradient x1="97.526%" y1="25.488%" x2="46.927%" y2="78.776%" id="a-79502e7d-1670-434e-a6da-9e3818af6ba5"><stop stop-color="inherit" stop-opacity=".4" offset="0%"></stop><stop stop-color="inherit" offset="100%"></stop></linearGradient></defs><path d="M20.063 9.297h-5.279l-.886 5.16h-3.656l-4.317 5.116a.763.763 0 0 0 .492.186h11.458a.562.562 0 0 0 .563-.472l1.625-9.99z" fill="url(#a-79502e7d-1670-434e-a6da-9e3818af6ba5)"></path><path d="M3.844 4a.563.563 0 0 0-.563.651L5.67 19.12a.763.763 0 0 0 .748.637l4.433-5.3h-.622l-.976-5.16h10.811l.76-4.64A.56.56 0 0 0 20.269 4H3.844z" fill="currentColor"></path></svg>
+                </button>
+            </form>
+            {% endif %}
         </div>
     {% endif %}
     </div>
