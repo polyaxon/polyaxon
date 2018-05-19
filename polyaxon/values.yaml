@@ -92,6 +92,10 @@ auth:
     groupSearchGroupType:
     requireGroup:
     denyGroup:
+  github:
+    enabled: false
+    clientId:
+    clientSecret:
 
 
 nodeSelectors:

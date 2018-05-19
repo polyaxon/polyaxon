@@ -493,7 +493,7 @@ Auth
 {{- define "config.auth" }}
 {{- if .Values.auth.ldap.enabled }}
 - name: POLYAXON_AUTH_LDAP
-  value: "1"
+  value: "true"
 - name: POLYAXON_AUTH_LDAP_SERVER_URI
   value: {{ .Values.auth.ldap.serverUri | quote }}
 - name: POLYAXON_AUTH_LDAP_GLOBAL_OPTIONS
@@ -529,6 +529,20 @@ Auth
 - name: POLYAXON_AUTH_LDAP_DENY_GROUP
   value: {{ .Values.auth.ldap.denyGroup | quote }}
 {{- end }}
+{{- end }}
+{{- if .Values.auth.github.enabled }}
+- name: POLYAXON_AUTH_GITHUB
+  value: "true"
+- name: POLYAXON_AUTH_GITHUB_CLIENT_ID
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-github-client-id
+- name: POLYAXON_AUTH_GITHUB_CLIENT_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-github-client-secret
 {{- end }}
 {{- end -}}
 
