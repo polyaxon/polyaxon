@@ -186,7 +186,7 @@ class SimpleRegistrationView(RegistrationView):
     def get(self, request, *args, **kwargs):
         if not request.user.is_anonymous:
             return HttpResponseRedirect('/')
-        super(SimpleRegistrationView, self).get(request, *args, **kwargs)
+        return super(SimpleRegistrationView, self).get(request, *args, **kwargs)
 
 
 class ActivationView(TemplateView):

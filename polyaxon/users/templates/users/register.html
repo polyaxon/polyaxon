@@ -62,6 +62,7 @@
                 <label>&nbsp;</label><input type="submit" value="Sing up"/>
             </div>
         </form>
+    {% if sso_enabled %}
         <hr/>
         <div id="signinLabel" class="auth-sso">
             <p>Or use your github account</p>
@@ -75,6 +76,6 @@
                 </button>
             </form>
         </div>
-
+    {% endif %}
     </div>
 {% endblock %}
