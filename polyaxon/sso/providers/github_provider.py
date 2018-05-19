@@ -53,8 +53,8 @@ class GitHubIdentityProvider(OAuth2Provider):
             last = ''
         return first, last
 
-    def build_identity(self, data):
-        data = data['data']
+    def build_identity(self, state_data):
+        data = state_data['data']
         access_token = data['access_token']
         user = self.get_user(access_token=access_token)
         username = user['login']

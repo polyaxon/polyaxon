@@ -7,7 +7,7 @@ class IdentityProvider(WizardProvider):
     def __init__(self, **kwargs):
         self.config = kwargs
 
-    def build_identity(self, state):
+    def build_identity(self, state_data):
         """Return a mapping containing the identity information.
 
         The resulting data captured by the pipeline

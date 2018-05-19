@@ -1,7 +1,7 @@
 from polyaxon.utils import config
 
 
-class OAUTH_PROVIDERS(object):
+class OAUTH_PROVIDERS(object):  # noqa
     class GITHUB(object):
         VERIFICATION_SCHEDULE = 0
         CLIENT_ID = config.get_string('POLYAXON_AUTH_GITHUB_CLIENT_ID',

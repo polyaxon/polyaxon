@@ -1,9 +1,9 @@
 import logging
 
-from django.dispatch import receiver
 from django_auth_ldap.backend import populate_user
 
 from django.conf import settings
+from django.dispatch import receiver
 
 logger = logging.getLogger('polyaxon.users.auth_ldap')
 

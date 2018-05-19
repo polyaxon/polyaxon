@@ -63,9 +63,8 @@ class OAuth2CallbackView(View):
     client_id = None
     client_secret = None
 
-    # pylint:disable=arguments-differ
-    def __init__(self, access_token_url=None, client_id=None, client_secret=None, *args, **kwargs):
-        super(OAuth2CallbackView, self).__init__(*args, **kwargs)
+    def __init__(self, access_token_url=None, client_id=None, client_secret=None, **kwargs):
+        super(OAuth2CallbackView, self).__init__(**kwargs)
         if access_token_url is not None:
             self.access_token_url = access_token_url
         if client_id is not None:

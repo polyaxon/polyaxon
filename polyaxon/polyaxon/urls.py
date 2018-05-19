@@ -12,7 +12,7 @@ from polyaxon.views import (
     IndexView,
     ReactIndexView
 )
-from users.views import LoginView, LogoutView
+from users.views import LogoutView
 
 API_V1 = 'api/v1'
 
