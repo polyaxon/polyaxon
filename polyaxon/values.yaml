@@ -96,6 +96,15 @@ auth:
     enabled: false
     clientId:
     clientSecret:
+  gitlab:
+    enabled: false
+    clientId:
+    clientSecret:
+  bitbucket:
+    enabled: false
+    url:
+    clientId:
+    clientSecret:
 
 
 nodeSelectors:

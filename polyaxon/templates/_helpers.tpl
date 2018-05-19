@@ -544,6 +544,36 @@ Auth
       name: {{ template "polyaxon.fullname" . }}-secret
       key: auth-github-client-secret
 {{- end }}
+{{- if .Values.auth.bitbucket.enabled }}
+- name: POLYAXON_AUTH_BITBUCKET
+  value: "true"
+- name: POLYAXON_AUTH_BITBUCKET_CLIENT_ID
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-bitbucket-client-id
+- name: POLYAXON_AUTH_BITBUCKET_CLIENT_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-bitbucket-client-secret
+{{- end }}
+{{- if .Values.auth.gitlab.enabled }}
+- name: POLYAXON_AUTH_GITLAB
+  value: "true"
+- name: POLYAXON_AUTH_GITLAB_URL
+  value: {{ .Values.auth.gitlab.url | quote }}
+- name: POLYAXON_AUTH_GITLAB_CLIENT_ID
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-gitlab-client-id
+- name: POLYAXON_AUTH_GITLAB_CLIENT_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: auth-gitlab-client-secret
+{{- end }}
 {{- end -}}
 
 {{/*
