@@ -20,10 +20,10 @@ class GitHubIdentityProvider(OAuth2Provider):
     oauth_scopes = ('read:user', 'user:email')
 
     def get_oauth_client_id(self):
-        return settings.OAUTH.GITHUB.CLIENT_ID
+        return settings.OAUTH_PROVIDERS.GITHUB.CLIENT_ID
 
     def get_oauth_client_secret(self):
-        return settings.OAUTH.GITHUB.CLIENT_SECRET
+        return settings.OAUTH_PROVIDERS.GITHUB.CLIENT_SECRET
 
     def get_user(self, access_token):
         resp = requests.get(self.user_url, params={'access_token': access_token})
