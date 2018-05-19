@@ -27,6 +27,9 @@ if DEPLOY_RUNNER:
         'runner.nodes.apps.NodesConfig',
     )
 
+if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
+    PROJECT_APPS += ('auth_ldap.apps.AuthLdapConfig',)
+
 THIRD_PARTY_APPS = (
     'raven.contrib.django.raven_compat',
     'rest_framework',

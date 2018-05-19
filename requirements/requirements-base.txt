@@ -16,3 +16,4 @@ scipy==1.0.1
 Unipath==1.1
 uWSGI==2.0.15
 websockets==3.4
+django-auth-ldap==1.5.0
