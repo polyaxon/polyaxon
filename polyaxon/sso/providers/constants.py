@@ -6,7 +6,7 @@ class PROVIDERS(object):
     BITBUCKET = 'bitbucket'
     GITLAB = 'gitlab'
 
-    VALUES = {GITHUB, BITBUCKET, GITHUB}
+    VALUES = {GITHUB, BITBUCKET, GITLAB}
 
     CHOICES = (
         (GITHUB, GITHUB),

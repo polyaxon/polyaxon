@@ -16,6 +16,12 @@ class OAUTH_PROVIDERS(object):  # noqa
 
     class BITBUCKET(object):
         VERIFICATION_SCHEDULE = 0
+        CLIENT_ID = config.get_string('POLYAXON_AUTH_BITBUCKET_CLIENT_ID',
+                                      is_optional=True,
+                                      is_secret=True)
+        CLIENT_SECRET = config.get_string('POLYAXON_AUTH_BITBUCKET_CLIENT_SECRET',
+                                          is_optional=True,
+                                          is_secret=True)
         ENABLED = config.get_boolean('POLYAXON_AUTH_BITBUCKET',
                                      is_optional=True,
                                      default=False)
