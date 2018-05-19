@@ -24,7 +24,8 @@
                     {{ user.email }}
                 </li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/app">Projects</a></li>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'react-index' %}">Projects</a></li>
                 {% if user.is_superuser %}
                     <li><a href="{% url 'admin:index' %}">Admin</a></li>
                 {% endif %}

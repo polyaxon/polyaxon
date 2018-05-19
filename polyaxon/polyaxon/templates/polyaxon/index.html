@@ -18,14 +18,17 @@
                         <h3>Welcome to polyaxon</h3>
                         <ul>
                             <li>
-                                <a href="/app/">Dashboard</a>
+                                <a href="{% url 'react-index' %}">Dashboard</a>
                             </li>
+                            {% if user.is_anonymous %}
                             <li>
-                                <a href="/_admin/">Administration</a>
+                                <a href="{% url 'users:registration_simple_register' %}">Register</a>
                             </li>
+                            {% else %}
                             <li>
-                                <a href="/users/register">Register</a>
+                                <a href="{% url 'users:logout' %}">logout</a>
                             </li>
+                            {% endif %}
                         </ul>
                         <h3>Help</h3>
                         <ul>
