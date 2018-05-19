@@ -24,7 +24,7 @@ class IdentityWizard(Wizard):
     manager = providers.default_manager
 
     def redirect_url(self, request):
-        associate_url = reverse('sso:create_identity', args=['github'])
+        associate_url = reverse('sso:create_identity', args=[self.provider.key])
 
         # Use configured redirect_url if specified for the pipeline if available
         associate_url = self.config.get('redirect_url', associate_url)
@@ -63,7 +63,8 @@ class IdentityWizard(Wizard):
             username=identity['username'],
             first_name=identity['first_name'],
             last_name=identity['last_name'],
-            password='github.{}'.format(uuid.uuid4().hex)  # Generate a random password
+            password='{}.{}'.format(
+                self.provider.key, uuid.uuid4().hex)  # Generate a random password
         )
 
     def finish_wizard(self):
