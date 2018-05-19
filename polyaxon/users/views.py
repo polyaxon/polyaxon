@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -15,10 +16,9 @@ from django.contrib.auth.views import LoginView as AuthLoginView
 from django.contrib.auth.views import LogoutView as AuthLogoutView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import signing
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
@@ -32,6 +32,7 @@ from event_manager.events.user import USER_ACTIVATED, USER_DELETED
 from polyaxon_schemas.user import UserConfig
 from users import signals
 from users.forms import RegistrationForm
+from users.utils import logout_user, login_user
 
 
 class AuthTokenLogin(ObtainAuthToken):
@@ -74,11 +75,10 @@ class LoginView(AuthLoginView):
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_anonymous:
+            return HttpResponseRedirect('/')
         response = super(LoginView, self).dispatch(request, *args, **kwargs)
-        if request.user.is_authenticated:
-            token, _ = Token.objects.get_or_create(user=request.user)
-            response.set_cookie('token', value=token)
-            response.set_cookie('user', value=request.user.username)
+        login_user(request=request, response=response, user=request.user, login=False)
         return response
 
 
@@ -86,8 +86,7 @@ class LogoutView(AuthLogoutView):
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
         response = super(LogoutView, self).dispatch(request, *args, **kwargs)
-        response.delete_cookie('token')
-        response.delete_cookie('user')
+        logout_user(request=request, response=response, logout=False)
         return response
 
 
@@ -183,6 +182,11 @@ class SimpleRegistrationView(RegistrationView):
         new_user.is_active = False
         new_user.save()
         return new_user
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_anonymous:
+            return HttpResponseRedirect('/')
+        super(SimpleRegistrationView, self).get(request, *args, **kwargs)
 
 
 class ActivationView(TemplateView):
