@@ -6,11 +6,15 @@ import ldap
 
 from polyaxon.utils import config
 
+DEFAULT_EMAIL_DOMAIN = 'local_polyaxon.com'
+
+AUTH_LDAP_ENABLED = config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True)
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
+if AUTH_LDAP_ENABLED:
     AUTHENTICATION_BACKENDS = ['django_auth_ldap.backend.LDAPBackend'] + AUTHENTICATION_BACKENDS
 
     AUTH_LDAP_SERVER_URI = config.get_string('POLYAXON_AUTH_LDAP_SERVER_URI')
@@ -34,6 +38,7 @@ if config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True):
 
     AUTH_LDAP_BIND_DN = config.get_string('POLYAXON_AUTH_LDAP_BIND_DN', is_optional=True)
     AUTH_LDAP_BIND_PASSWORD = config.get_string('POLYAXON_AUTH_LDAP_BIND_PASSWORD',
+                                                is_secret=True,
                                                 is_optional=True)
     base_dn = config.get_string('POLYAXON_AUTH_LDAP_USER_SEARCH_BASE_DN', is_optional=True)
     filterstr = config.get_string('POLYAXON_AUTH_LDAP_USER_SEARCH_FILTERSTR', is_optional=True)

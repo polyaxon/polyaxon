@@ -38,7 +38,8 @@ class GitHubIdentityProvider(OAuth2Provider):
     def get_email(self, access_token, username):
         emails = self.get_emails(access_token=access_token)
         email = [e for e in emails if e['primary']]
-        return email[0]['email'] if email else '{}@local.polyaxon.com'.format(username)
+        return email[0]['email'] if email else '{}@{}'.format(username,
+                                                              settings.DEFAULT_EMAIL_DOMAIN)
 
     @staticmethod
     def get_first_last_names(username, name):
