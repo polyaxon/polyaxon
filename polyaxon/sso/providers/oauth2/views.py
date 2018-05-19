@@ -14,6 +14,7 @@ class OAuth2LoginView(View):
     client_id = None
     scope = ''
 
+    # pylint:disable=keyword-arg-before-vararg
     def __init__(self, authorize_url=None, client_id=None, scope=None, *args, **kwargs):
         super(OAuth2LoginView, self).__init__(*args, **kwargs)
         if authorize_url is not None:
@@ -38,7 +39,7 @@ class OAuth2LoginView(View):
             'redirect_uri': redirect_uri,
         }
 
-    def dispatch(self, request, wizard, *args, **kwargs):
+    def dispatch(self, request, wizard, *args, **kwargs):  # pylint:disable=arguments-differ
         if 'code' in request.GET:
             return wizard.next_step()
 
@@ -62,6 +63,7 @@ class OAuth2CallbackView(View):
     client_id = None
     client_secret = None
 
+    # pylint:disable=arguments-differ
     def __init__(self, access_token_url=None, client_id=None, client_secret=None, *args, **kwargs):
         super(OAuth2CallbackView, self).__init__(*args, **kwargs)
         if access_token_url is not None:
@@ -91,7 +93,7 @@ class OAuth2CallbackView(View):
             return dict(parse_qsl(content))
         return loads(content)
 
-    def dispatch(self, request, wizard, *args, **kwargs):
+    def dispatch(self, request, wizard, *args, **kwargs):  # pylint:disable=arguments-differ
         error = request.GET.get('error')
         state = request.GET.get('state')
         code = request.GET.get('code')

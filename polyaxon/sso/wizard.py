@@ -48,22 +48,23 @@ class IdentityWizard(Wizard):
         except SSOIdentity.DoesNotExist:
             pass
 
-        User = get_user_model()
-        user = User.objects.filter(Q(email=identity['email']) | Q(username=identity['username']))
+        user_model_cls = get_user_model()
+        user = user_model_cls.objects.filter(Q(email=identity['email']) |
+                                             Q(username=identity['username']))
         if user.count() > 0:
             try:
-                user = User.objects.get(email=identity['email'])
-            except User.DoesNotExist:
-                user = User.objects.get(email=identity['username'])
+                user = user_model_cls.objects.get(email=identity['email'])
+            except user_model_cls.DoesNotExist:
+                user = user_model_cls.objects.get(email=identity['username'])
             return user
         # Create a new user
-        return User.objects.create(
-                email=identity['email'],
-                username=identity['username'],
-                first_name=identity['first_name'],
-                last_name=identity['last_name'],
-                password='github.{}'.format(uuid.uuid4().hex)  # Generate a random password
-            )
+        return user_model_cls.objects.create(
+            email=identity['email'],
+            username=identity['username'],
+            first_name=identity['first_name'],
+            last_name=identity['last_name'],
+            password='github.{}'.format(uuid.uuid4().hex)  # Generate a random password
+        )
 
     def finish_wizard(self):
         identity = self.provider.build_identity(self.state.data)

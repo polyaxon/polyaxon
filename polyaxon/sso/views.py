@@ -6,7 +6,7 @@ from sso.wizard import IdentityWizard
 
 
 class AccountCreateIdentityView(View):
-    def dispatch(self, request, provider, *args, **kwargs):
+    def dispatch(self, request, provider, *args, **kwargs):  # pylint:disable=arguments-differ
         if not IdentityWizard.manager.knows(provider):
             raise Http404
         wizard = IdentityWizard.get_for_request(request)

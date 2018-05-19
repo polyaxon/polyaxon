@@ -11,4 +11,4 @@ class WizardProvider(object):
 
     def set_config(self, config):
         """Used to allow additional provider configuration to be added to the provider instance."""
-        self.config = config
+        self.config = config  # pylint:disbale=attribute-defined-outside-init
