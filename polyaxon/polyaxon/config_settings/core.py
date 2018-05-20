@@ -62,11 +62,10 @@ DATABASES = {
         'PASSWORD': config.get_string('POLYAXON_DB_PASSWORD', is_secret=True),
         'HOST': config.get_string('POLYAXON_DB_HOST'),
         'PORT': config.get_string('POLYAXON_DB_PORT'),
-        'ATOMIC_REQUESTS': True
+        'ATOMIC_REQUESTS': True,
+        'CONN_MAX_AGE': config.get_int('POLYAXON_DB_CONN_MAX_AGE', is_optional=True, default=0),
     }
 }
-# Use persistent connections for postgres
-DATABASES['default']['CONN_MAX_AGE'] = 60
 
 LIST_TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
