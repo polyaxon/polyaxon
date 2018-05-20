@@ -65,6 +65,8 @@ DATABASES = {
         'ATOMIC_REQUESTS': True
     }
 }
+# Use persistent connections for postgres
+DATABASES['default']['CONN_MAX_AGE'] = 60
 
 LIST_TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
