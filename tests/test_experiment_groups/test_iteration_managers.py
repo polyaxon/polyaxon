@@ -126,6 +126,7 @@ class TestBOIterationManagers(BaseTest):
 
     def test_create_iteration(self):
         assert ExperimentGroupIteration.objects.count() == 0
+        assert self.experiment_group.current_iteration == 0
         experiment_iter1_ids = [experiment.id for experiment in self.experiments_iter1]
         experiments_iter1_configs = [[experiment.id, experiment.declarations]
                                      for experiment in self.experiments_iter1]
@@ -135,6 +136,7 @@ class TestBOIterationManagers(BaseTest):
         )
         assert isinstance(iteration, ExperimentGroupIteration)
         assert ExperimentGroupIteration.objects.count() == 1
+        assert self.experiment_group.current_iteration == 1
         assert iteration.experiment_group == self.experiment_group
         assert iteration.data == {
             'iteration': 0,
@@ -166,6 +168,7 @@ class TestBOIterationManagers(BaseTest):
             experiment_ids=experiment_iter2_ids,
             experiments_configs=experiments_iter2_configs
         )
+        assert self.experiment_group.current_iteration == 2
         assert iteration.data == {
             'iteration': 1,
             'old_experiment_ids': experiment_iter1_ids,
@@ -196,6 +199,7 @@ class TestBOIterationManagers(BaseTest):
             experiment_ids=experiment_iter3_ids,
             experiments_configs=experiments_iter3_configs
         )
+        assert self.experiment_group.current_iteration == 3
         assert iteration.data == {
             'iteration': 2,
             'old_experiment_ids': experiment_iter1_ids + experiment_iter2_ids,

@@ -13,7 +13,7 @@ class TestExperimentGroupSerializer(BaseTest):
     factory_class = ExperimentGroupFactory
     expected_keys = {
         'uuid', 'sequence', 'unique_name', 'description', 'project', 'project_name',
-        'user', 'created_at', 'updated_at', 'concurrency', 'num_experiments',
+        'user', 'created_at', 'updated_at', 'concurrency', 'num_experiments', 'last_status',
         'num_pending_experiments', 'num_running_experiments', }
 
     def setUp(self):
@@ -34,6 +34,7 @@ class TestExperimentGroupSerializer(BaseTest):
         assert data.pop('num_experiments') == self.obj1.experiments.count()
         assert data.pop('num_pending_experiments') == self.obj1.pending_experiments.count()
         assert data.pop('num_running_experiments') == self.obj1.running_experiments.count()
+        assert data.pop('last_status') == self.obj1.last_status
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -51,8 +52,9 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     expected_keys = {
-        'uuid', 'sequence', 'unique_name', 'description', 'content', 'params', 'project',
-        'project_name', 'user', 'created_at', 'updated_at', 'concurrency', 'num_experiments',
+        'uuid', 'sequence', 'unique_name', 'description', 'content', 
+        'params', 'project', 'project_name', 'user', 'created_at', 'updated_at', 
+        'concurrency', 'num_experiments', 'last_status', 'current_iteration',
         'num_pending_experiments', 'num_running_experiments', 'num_scheduled_experiments',
         'num_succeeded_experiments', 'num_failed_experiments', 'num_stopped_experiments'}
 
@@ -78,6 +80,8 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         assert data.pop('num_succeeded_experiments') == self.obj1.succeeded_experiments.count()
         assert data.pop('num_failed_experiments') == self.obj1.failed_experiments.count()
         assert data.pop('num_stopped_experiments') == self.obj1.stopped_experiments.count()
+        assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('current_iteration') == self.obj1.current_iteration
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

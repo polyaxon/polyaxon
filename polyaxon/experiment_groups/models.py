@@ -217,6 +217,10 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
     def iteration_data(self):
         return self.iteration.data if self.iteration else None
 
+    @property
+    def current_iteration(self):
+        return self.iterations.count()
+
     def should_stop_early(self):
         filters = []
         for early_stopping_metric in self.early_stopping:
