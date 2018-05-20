@@ -1,4 +1,3 @@
-from experiment_groups.statuses import ExperimentGroupLifeCycle
 from experiment_groups.utils import get_running_experiment_group
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
@@ -65,4 +64,4 @@ def hp_hyperband_iterate(self, experiment_group_id):
         hp_hyperband_start.delay(experiment_group_id=experiment_group_id)
         return
 
-    experiment_group.set_status(status=ExperimentGroupLifeCycle.SUCCEEDED)
+    base.check_group_experiments_finished(experiment_group_id)

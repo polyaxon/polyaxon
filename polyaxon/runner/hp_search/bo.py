@@ -1,7 +1,7 @@
-from experiment_groups.statuses import ExperimentGroupLifeCycle
 from experiment_groups.utils import get_running_experiment_group
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
+
 from runner.hp_search import base
 
 
@@ -59,4 +59,5 @@ def hp_bo_iterate(self, experiment_group_id):
     if search_manager.should_reschedule(iteration=iteration_config.iteration):
         hp_bo_create.delay(experiment_group_id=experiment_group_id)
         return
-    experiment_group.set_status(status=ExperimentGroupLifeCycle.SUCCEEDED)
+
+    base.check_group_experiments_finished(experiment_group_id)

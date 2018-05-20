@@ -124,6 +124,7 @@ class RunnerCeleryTasks(object):
 
     EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
     EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
+    EXPERIMENTS_GROUP_CHECK_FINISHED = 'experiments_group_check_finished'
 
     PROJECTS_TENSORBOARD_START = 'projects_tensorboard_start'
     PROJECTS_TENSORBOARD_STOP = 'projects_tensorboard_stop'
@@ -267,6 +268,8 @@ if config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True):
 
         RunnerCeleryTasks.EXPERIMENTS_GROUP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
         RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS:
+            {'queue': CeleryQueues.API_EXPERIMENTS},
+        RunnerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED:
             {'queue': CeleryQueues.API_EXPERIMENTS},
 
         HPCeleryTasks.HP_GRID_SEARCH_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},

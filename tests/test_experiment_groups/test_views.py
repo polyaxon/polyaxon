@@ -22,7 +22,10 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
 
-    def setUp(self):
+    @patch('runner.hp_search.base.check_group_experiments_finished')
+    @patch('runner.dockerizer.builders.experiments.build_experiment')
+    @patch('runner.schedulers.experiment_scheduler.start_experiment')
+    def setUp(self, _1, _2, _3):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.other_project = ProjectFactory()
@@ -33,10 +36,8 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
                                                     self.other_project.user.username,
                                                     self.other_project.name)
 
-        with patch('runner.dockerizer.builders.experiments.build_experiment') as _:  # noqa
-            with patch('runner.schedulers.experiment_scheduler.start_experiment') as _:  # noqa
-                self.objects = [self.factory_class(project=self.project)
-                                for _ in range(self.num_objects)]
+        self.objects = [self.factory_class(project=self.project)
+                        for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter(project=self.project)
         # Other objects
         self.other_object = self.factory_class(project=self.other_project)
@@ -137,7 +138,9 @@ model:
           kernel_initializer: Ones"""
 
         data = {'content': content, 'description': 'new-deep'}
-        resp = self.auth_client.post(self.url, data)
+        with patch('runner.hp_search.base.check_group_experiments_finished') as mock_check:
+            resp = self.auth_client.post(self.url, data)
+        assert mock_check.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1
         last_object = self.model_class.objects.last()

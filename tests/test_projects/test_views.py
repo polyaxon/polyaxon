@@ -111,7 +111,8 @@ class TestProjectDetailViewV1(BaseViewTest):
     factory_class = ProjectFactory
     HAS_AUTH = True
 
-    def setUp(self):
+    @patch('runner.hp_search.base.check_group_experiments_finished')
+    def setUp(self, _):
         super().setUp()
         self.object = self.factory_class(user=self.auth_client.user)
         self.url = '/{}/{}/{}/'.format(API_V1, self.object.user.username, self.object.name)

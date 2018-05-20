@@ -57,3 +57,14 @@ def stop_group_experiments(experiment_group_id, pending, message=None):
                 experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
 
     experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED)
+
+
+@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
+                 bind=True,
+                 max_retries=None)
+def check_group_finished(self, experiment_group_id):
+    experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
+    if not experiment_group.non_done_experiments.exists():
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
+    experiment_group.set_status(status=ExperimentGroupLifeCycle.SUCCEEDED)

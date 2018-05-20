@@ -1,6 +1,8 @@
 import logging
 
 from experiments.models import Experiment
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import Intervals, RunnerCeleryTasks
 from runner.tasks.experiments import build_experiment
 
 logger = logging.getLogger('polyaxon.runner.hp_search')
@@ -47,3 +49,8 @@ def start_group_experiments(experiment_group):
         build_experiment.delay(experiment_id=experiment.id)
 
     return n_pending_experiment - experiment_to_start > 0
+
+
+def check_group_experiments_finished(experiment_group_id):
+    celery_app.send_task(RunnerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
+                         kwargs={'experiment_group_id': experiment_group_id})

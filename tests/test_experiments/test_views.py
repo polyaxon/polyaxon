@@ -63,7 +63,8 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(project=self.project)
         self.other_object = self.factory_class(project=self.other_project)
 
-    def test_get(self):
+    @patch('runner.hp_search.base.check_group_experiments_finished')
+    def test_get(self, _):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
@@ -190,7 +191,8 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
 
-    def setUp(self):
+    @patch('runner.hp_search.base.check_group_experiments_finished')
+    def setUp(self, _):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()
         self.objects = [self.factory_class(experiment_group=self.experiment_group)
@@ -245,7 +247,8 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
 
-    def setUp(self):
+    @patch('runner.hp_search.base.check_group_experiments_finished')
+    def setUp(self, _):
         super().setUp()
         content = """---
     version: 1
