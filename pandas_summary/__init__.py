@@ -6,6 +6,7 @@ from collections import OrderedDict
 import numpy as np
 import pandas as pd
 from pandas.core import common
+from pandas.api import types
 
 
 class DataFrameSummary(object):
@@ -109,10 +110,10 @@ class DataFrameSummary(object):
                                         self.EXCLUDE,
                                         column_info['constant'].union(column_info['bool']))
         column_info[self.TYPE_NUMERIC] = pd.Index([c for c in rest_columns
-                                                   if common.is_numeric_dtype(self.df[c])])
+                                                   if types.is_numeric_dtype(self.df[c])])
         rest_columns = self.get_columns(self.df[rest_columns], self.EXCLUDE, column_info['numeric'])
         column_info[self.TYPE_DATE] = pd.Index([c for c in rest_columns
-                                                if common.is_datetime64_dtype(self.df[c])])
+                                                if types.is_datetime64_dtype(self.df[c])])
         rest_columns = self.get_columns(self.df[rest_columns], self.EXCLUDE, column_info['date'])
         unique_columns = stats['uniques'][rest_columns] == stats['counts'][rest_columns]
         column_info[self.TYPE_UNIQUE] = stats['uniques'][rest_columns][unique_columns].index
