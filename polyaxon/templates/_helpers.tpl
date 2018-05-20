@@ -260,6 +260,8 @@ db config
   value: {{ template "postgresql.fullname" . }}
 - name: POLYAXON_DB_PORT
   value: "5432"
+- name: POLYAXON_DB_CONN_MAX_AGE
+  value: "60"
 {{- end -}}
 
 
