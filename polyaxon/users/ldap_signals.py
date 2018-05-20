@@ -5,12 +5,16 @@ from django_auth_ldap.backend import populate_user
 from django.conf import settings
 from django.dispatch import receiver
 
+import auditor
+from event_manager.events.user import USER_LDAP
+
 logger = logging.getLogger('polyaxon.users.auth_ldap')
 
 
 @receiver(populate_user)
 def populate_user_handler(sender, **kwargs):
     user = kwargs['user']
+    auditor.record(event_type=USER_LDAP)
     ldap_user = user.ldap_user
 
     # populate user with default email to prevent validation error

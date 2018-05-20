@@ -2,6 +2,7 @@ import requests
 
 from django.conf import settings
 
+from event_manager.events.user import USER_BITBUCKET
 from sso.providers.constants import PROVIDERS
 from sso.providers.oauth2.provider import OAuth2Provider
 
@@ -9,6 +10,7 @@ from sso.providers.oauth2.provider import OAuth2Provider
 class BitbucketIdentityProvider(OAuth2Provider):
     key = 'bitbucket'
     name = 'Bitbucket'
+    event_type = USER_BITBUCKET
 
     web_url = 'https://bitbucket.org'
     api_url = 'https://api.bitbucket.org'

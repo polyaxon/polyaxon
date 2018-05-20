@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 
+import auditor
 from libs.wizards import Wizard
 from sso import providers
 from sso.models import SSOIdentity
@@ -78,12 +79,15 @@ class IdentityWizard(Wizard):
         }
 
         user = self.get_or_create_user(identity=identity)
-        SSOIdentity.objects.update_or_create(
+        _, created = SSOIdentity.objects.update_or_create(
             provider=self.provider.key,
             user=user,
             external_id=identity['id'],
             defaults=defaults,
         )
+
+        if created:
+            auditor.record(event_type=self.provider.event_type, instance=user)
 
         self.state.clear()
 

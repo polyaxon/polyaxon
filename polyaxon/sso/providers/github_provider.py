@@ -2,13 +2,15 @@ import requests
 
 from django.conf import settings
 
+from event_manager.events.user import USER_GITHUB
 from sso.providers.constants import PROVIDERS
 from sso.providers.oauth2.provider import OAuth2Provider
 
 
 class GitHubIdentityProvider(OAuth2Provider):
     key = 'github'
-    name = 'GitHub'
+    name = 'Github'
+    event_type = USER_GITHUB
 
     web_url = 'https://github.com'
     api_url = 'https://api.github.com'

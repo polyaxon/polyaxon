@@ -148,6 +148,10 @@ class TestEvents(BaseTest):
         assert user.UserUpdatedEvent.get_event_subject() == 'user'
         assert user.UserActivatedEvent.get_event_subject() == 'user'
         assert user.UserDeletedEvent.get_event_subject() == 'user'
+        assert user.UserLDAPEvent.get_event_subject() == 'user'
+        assert user.UserGITHUBEvent.get_event_subject() == 'user'
+        assert user.UserGITLABEvent.get_event_subject() == 'user'
+        assert user.UserBITBUCKETEvent.get_event_subject() == 'user'
 
     def test_events_actions(self):  # pylint:disable=too-many-statements
         # Cluster
@@ -266,6 +270,10 @@ class TestEvents(BaseTest):
         assert user.UserUpdatedEvent.get_event_action() == 'updated'
         assert user.UserActivatedEvent.get_event_action() == 'activated'
         assert user.UserDeletedEvent.get_event_action() == 'deleted'
+        assert user.UserLDAPEvent.get_event_action() is None
+        assert user.UserGITHUBEvent.get_event_action() == 'auth'
+        assert user.UserGITLABEvent.get_event_action() == 'auth'
+        assert user.UserBITBUCKETEvent.get_event_action() == 'auth'
 
     def test_serialize(self):
         class DummyEvent(Event):
