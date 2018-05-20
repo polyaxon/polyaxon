@@ -2,7 +2,11 @@ import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as moment from 'moment';
 
-import { getGroupUrl, splitProjectName } from '../constants/utils';
+import {
+  getCssClassForStatus,
+  getGroupUrl,
+  splitProjectName
+} from '../constants/utils';
 import { GroupModel } from '../models/group';
 
 export interface Props {
@@ -11,6 +15,7 @@ export interface Props {
 }
 
 function Group({group, onDelete}: Props) {
+  let statusCssClass = getCssClassForStatus(group.last_status);
   let values = splitProjectName(group.project_name);
   return (
     <div className="row">
@@ -19,6 +24,7 @@ function Group({group, onDelete}: Props) {
           <a className="title">
             <i className="fa fa-cubes icon" aria-hidden="true"/>
             {group.unique_name}
+            <span className={`status alert alert-${statusCssClass}`}>{group.last_status}</span>
           </a>
         </LinkContainer>
         <div className="meta-description">

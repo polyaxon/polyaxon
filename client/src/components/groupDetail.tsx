@@ -5,7 +5,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import { GroupModel } from '../models/group';
 import Experiments from '../containers/experiments';
-import { getProjectUrl, getUserUrl, splitProjectName } from '../constants/utils';
+import {
+  getCssClassForStatus,
+  getProjectUrl,
+  getUserUrl,
+  splitProjectName
+} from '../constants/utils';
 
 export interface Props {
   group: GroupModel;
@@ -23,6 +28,7 @@ export default class GroupDetail extends React.Component<Props, Object> {
     if (_.isNil(group)) {
       return (<div>Nothing</div>);
     }
+    let statusCssClass = getCssClassForStatus(group.last_status);
     let values = splitProjectName(group.project_name);
     return (
       <div className="row">
@@ -66,6 +72,15 @@ export default class GroupDetail extends React.Component<Props, Object> {
                 <i className="fa fa-share-alt icon" aria-hidden="true"/>
                 <span className="title">Concurrency:</span>
                 {group.concurrency}
+              </span>
+              {group.current_iteration > 0 &&
+              <span className="meta-info">
+                <i className="fa fa-refresh icon" aria-hidden="true"/>
+                <span className="title">Iteration:</span>
+                {group.current_iteration}
+              </span>
+              }
+              <span className={`status alert alert-${statusCssClass}`}>{group.last_status}
               </span>
             </div>
             <div className="meta">

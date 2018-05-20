@@ -17,6 +17,8 @@ export class GroupModel {
   public deleted?: boolean;
   public created_at: string;
   public updated_at: string;
+  public last_status: string;
+  public current_iteration: number; 
   public experiments: Array<string> = [];
 }
 
