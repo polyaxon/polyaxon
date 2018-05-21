@@ -47,6 +47,13 @@ function Group({group, onDelete}: Props) {
       <div className="col-md-2 block">
         <div className="row meta">
           <span className="meta-info">
+            <i className="fa fa-asterisk icon" aria-hidden="true"/>
+            <span className="title">Algorithm:</span>
+            {group.search_algorithm}
+          </span>
+        </div>
+        <div className="row meta">
+          <span className="meta-info">
             <i className="fa fa-cube icon" aria-hidden="true"/>
             <span className="title">Experiments:</span>
             {group.num_experiments}

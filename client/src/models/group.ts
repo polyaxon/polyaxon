@@ -17,8 +17,11 @@ export class GroupModel {
   public deleted?: boolean;
   public created_at: string;
   public updated_at: string;
+  public started_at: string;
+  public finished_at: string;
   public last_status: string;
-  public current_iteration: number; 
+  public current_iteration: number;
+  public search_algorithm: string;
   public experiments: Array<string> = [];
 }
 

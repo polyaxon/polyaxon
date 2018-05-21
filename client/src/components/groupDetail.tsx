@@ -11,6 +11,7 @@ import {
   getUserUrl,
   splitProjectName
 } from '../constants/utils';
+import TaskRunMetaInfo from './taskRunMetaInfo';
 
 export interface Props {
   group: GroupModel;
@@ -80,10 +81,16 @@ export default class GroupDetail extends React.Component<Props, Object> {
                 {group.current_iteration}
               </span>
               }
+              <TaskRunMetaInfo startedAt={group.started_at} finishedAt={group.finished_at} inline={true}/>
               <span className={`status alert alert-${statusCssClass}`}>{group.last_status}
               </span>
             </div>
             <div className="meta">
+              <span className="meta-info">
+                <i className="fa fa-asterisk icon" aria-hidden="true"/>
+                <span className="title">Algorithm:</span>
+                {group.search_algorithm}
+              </span>
               <span className="meta-info">
                 <i className="fa fa-cube icon" aria-hidden="true"/>
                 <span className="title">Experiments:</span>
