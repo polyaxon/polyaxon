@@ -100,9 +100,9 @@ auth:
     enabled: false
     clientId:
     clientSecret:
+    url:
   bitbucket:
     enabled: false
-    url:
     clientId:
     clientSecret:
 
