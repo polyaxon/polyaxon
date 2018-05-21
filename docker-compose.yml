@@ -47,7 +47,7 @@ services:
       MEMCACHE_LOCATION: "memcache:11211"
       SETTINGS_ENV_DIR: "dev"
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
-      POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
+      POLYAXON_AMQP_URL: "rabbitmq:5672"
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis://redis:6379/3"
       POLYAXON_REDIS_TO_STREAM_URL: "redis://redis:6379/4"
@@ -62,7 +62,7 @@ services:
     volumes:
       - .:/polyaxon
     environment:
-      POLYAXON_AMQP_URL: "amqp://rabbitmq:5672"
+      POLYAXON_AMQP_URL: "rabbitmq:5672"
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis://redis:6379/3"
       POLYAXON_REDIS_TO_STREAM_URL: "redis://redis:6379/4"
