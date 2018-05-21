@@ -5,8 +5,6 @@ from experiment_groups.search_managers.bayesian_optimization.space import Search
 
 
 class BOOptimizer(object):
-    N_WARMUP = 100000
-    N_ITER = 250
 
     def __init__(self, params_config):
         self.params_config = params_config
@@ -14,6 +12,8 @@ class BOOptimizer(object):
         self.space = SearchSpace(params_config=params_config)
         self.utility_function = UtilityFunction(
             config=params_config.bo.utility_function, seed=params_config.seed)
+        self.n_warmup = params_config.bo.utility_function.n_warmup or 5000
+        self.n_iter = params_config.bo.utility_function.n_iter or 150
 
     def _maximize(self):
         """ Find argmax of the acquisition function."""
@@ -23,8 +23,8 @@ class BOOptimizer(object):
         self.utility_function.gaussian_process.fit(self.space.x, self.space.y)
         return self.utility_function.max_compute(y_max=y_max,
                                                  bounds=self.space.bounds,
-                                                 n_warmup=self.N_WARMUP,
-                                                 n_iter=self.N_ITER)
+                                                 n_warmup=self.n_warmup,
+                                                 n_iter=self.n_iter)
 
     def add_observations(self, configs, metrics):
         # Turn configs and metrics into data points

@@ -931,7 +931,9 @@ class TestBOSearchManager(BaseTest):
                         'length_scale': 1.0,
                         'nu': 1.9,
                         'n_restarts_optimizer': 0
-                    }
+                    },
+                    'n_warmup': 1,
+                    'n_iter': 1
                 }
             },
             'matrix': {
@@ -941,8 +943,6 @@ class TestBOSearchManager(BaseTest):
             }
         })
         optimizer = BOOptimizer(params_config=params_config)
-        optimizer.N_ITER = 1
-        optimizer.N_WARMUP = 1
 
         configs = [
             {
