@@ -18,7 +18,7 @@ addons:
   postgresql: "9.6"
 
 before_install:
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
       ./config/build_docker.sh "$TRAVIS_BRANCH";
     fi
 
