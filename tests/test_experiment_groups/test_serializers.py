@@ -14,7 +14,7 @@ class TestExperimentGroupSerializer(BaseTest):
     expected_keys = {
         'uuid', 'sequence', 'unique_name', 'description', 'project', 'project_name',
         'user', 'created_at', 'updated_at', 'concurrency', 'num_experiments', 'last_status',
-        'num_pending_experiments', 'num_running_experiments', }
+        'search_algorithm', 'num_pending_experiments', 'num_running_experiments', }
 
     def setUp(self):
         super().setUp()
@@ -35,6 +35,7 @@ class TestExperimentGroupSerializer(BaseTest):
         assert data.pop('num_pending_experiments') == self.obj1.pending_experiments.count()
         assert data.pop('num_running_experiments') == self.obj1.running_experiments.count()
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('search_algorithm') == self.obj1.search_algorithm
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
@@ -52,9 +53,10 @@ class TestExperimentGroupDetailSerializer(BaseTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     expected_keys = {
-        'uuid', 'sequence', 'unique_name', 'description', 'content', 
-        'params', 'project', 'project_name', 'user', 'created_at', 'updated_at', 
-        'concurrency', 'num_experiments', 'last_status', 'current_iteration',
+        'uuid', 'sequence', 'unique_name', 'description', 'content',
+        'params', 'project', 'project_name', 'user',
+        'created_at', 'updated_at', 'started_at', 'finished_at',
+        'concurrency', 'num_experiments', 'last_status', 'current_iteration', 'search_algorithm',
         'num_pending_experiments', 'num_running_experiments', 'num_scheduled_experiments',
         'num_succeeded_experiments', 'num_failed_experiments', 'num_stopped_experiments'}
 
@@ -69,6 +71,8 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         data.pop('created_at')
         data.pop('updated_at')
+        data.pop('started_at')
+        data.pop('finished_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
         assert data.pop('project') == self.obj1.project.uuid.hex
         assert data.pop('project_name') == self.obj1.project.unique_name
@@ -82,6 +86,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         assert data.pop('num_stopped_experiments') == self.obj1.stopped_experiments.count()
         assert data.pop('last_status') == self.obj1.last_status
         assert data.pop('current_iteration') == self.obj1.current_iteration
+        assert data.pop('search_algorithm') == self.obj1.search_algorithm
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

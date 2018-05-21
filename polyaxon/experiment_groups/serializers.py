@@ -17,8 +17,9 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperimentGroup
         fields = (
-            'uuid', 'unique_name', 'user', 'sequence', 'description', 'last_status',
-            'project', 'project_name', 'created_at', 'updated_at', 'concurrency',
+            'uuid', 'unique_name', 'user', 'sequence', 'description',
+            'last_status', 'project', 'project_name',
+            'created_at', 'updated_at', 'concurrency', 'search_algorithm',
             'num_experiments', 'num_pending_experiments', 'num_running_experiments',)
 
     def get_project(self, obj):
@@ -48,7 +49,7 @@ class ExperimentGroupDetailSerializer(ExperimentGroupSerializer):
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
-            'current_iteration', 'content', 'params',
+            'current_iteration', 'content', 'params', 'started_at', 'finished_at',
             'num_scheduled_experiments', 'num_succeeded_experiments',
             'num_failed_experiments', 'num_stopped_experiments')
 
