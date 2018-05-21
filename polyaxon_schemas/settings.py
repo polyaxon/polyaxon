@@ -254,6 +254,8 @@ class UtilityFunctionSchema(Schema):
     gaussian_process = fields.Nested(GaussianProcessSchema, allow_none=True)
     kappa = fields.Float(allow_none=True)
     eps = fields.Float(allow_none=True)
+    n_warmup = fields.Int(allow_none=True)
+    n_iter = fields.Int(allow_none=True)
 
     class Meta:
         ordered = True
@@ -277,12 +279,15 @@ class UtilityFunctionSchema(Schema):
 class UtilityFunctionConfig(BaseConfig):
     SCHEMA = UtilityFunctionSchema
     IDENTIFIER = 'utility_function'
+    REDUCED_ATTRIBUTES = ['n_warmup', 'n_iter']
 
     def __init__(self,
                  acquisition_function=AcquisitionFunctions.UCB,
                  gaussian_process=None,
                  kappa=None,
-                 eps=None):
+                 eps=None,
+                 n_warmup=None,
+                 n_iter=None):
         validate_utility_function(
             acquisition_function=acquisition_function,
             kappa=kappa,
@@ -292,6 +297,8 @@ class UtilityFunctionConfig(BaseConfig):
         self.gaussian_process = gaussian_process
         self.kappa = kappa
         self.eps = eps
+        self.n_warmup = n_warmup
+        self.n_iter = n_iter
 
 
 class BOSchema(Schema):
