@@ -145,11 +145,11 @@ experiment_group_spec_content_hyperband_trigger_reschedule = """---
       matrix:
         lr:
           values: [0.01, 0.1, 0.5]
-        feature2': 
+        feature2: 
           linspace: [1, 2, 5]
-        feature3': 
+        feature3: 
           range: [1, 5, 1]
-        feature4': 
+        feature4: 
           range: [1, 5, 1]
 
     run:
