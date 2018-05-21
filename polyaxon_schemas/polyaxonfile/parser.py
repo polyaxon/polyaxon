@@ -69,8 +69,12 @@ class Parser(object):
                          declarations,
                          check_operators=False,
                          check_graph=False):
-        if isinstance(expression, (int, float, complex, type(None), np.integer, np.floating)):
+        if isinstance(expression, (int, float, complex, type(None))):
             return expression
+        if isinstance(expression, np.integer):
+            return int(expression)
+        if isinstance(expression, np.floating):
+            return float(expression)
         if isinstance(expression, Mapping):
             if len(expression) == 1:
                 old_key, value = list(six.iteritems(expression))[0]
