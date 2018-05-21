@@ -25,7 +25,8 @@ class SSOIdentity(DiffModel):
 
     class Meta:
         unique_together = (('provider', 'user'), ('provider', 'external_id'),)
-        verbose_name_plural = 'SSOIdentities'
+        verbose_name = 'SSO identity'
+        verbose_name_plural = 'SSO identities'
 
     def __str__(self):
         return '{} - {}'.format(self.user, self.provider)
