@@ -103,7 +103,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
     @property
     def started_at(self):
-        status = self.statuses.filter(status=ExperimentGroupLifeCycle.STARTING).first()
+        status = self.statuses.filter(status=ExperimentGroupLifeCycle.RUNNING).first()
         if status:
             return status.created_at
         return None
@@ -313,7 +313,7 @@ class ExperimentGroupStatus(StatusModel):
         choices=STATUSES.CHOICES)
 
     class Meta:
-        verbose_name_plural = 'Experiment Statuses'
+        verbose_name_plural = 'Experiment group Statuses'
         ordering = ['created_at']
 
     def __str__(self):
