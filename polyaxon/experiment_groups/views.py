@@ -9,7 +9,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
-from experiment_groups.models import ExperimentGroup
+from models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from libs.views import AuditorMixinView, ListCreateAPIView
 from projects.permissions import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project

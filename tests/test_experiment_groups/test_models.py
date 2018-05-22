@@ -8,7 +8,7 @@ from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 
 from experiment_groups.iteration_managers import BOIterationManager, HyperbandIterationManager
-from experiment_groups.models import ExperimentGroup, ExperimentGroupIteration
+from models.experiment_groups import ExperimentGroup, ExperimentGroupIteration
 from experiment_groups.search_managers import (
     BOSearchManager,
     GridSearchManager,

@@ -11,7 +11,6 @@ from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
-from experiment_groups import iteration_managers, schemas, search_managers
 from experiment_groups.statuses import ExperimentGroupLifeCycle
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
@@ -19,7 +18,6 @@ from libs.spec_validation import validate_group_params_config, validate_group_sp
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import Optimization
-from models.projects import Project
 
 logger = logging.getLogger('polyaxon.experiment_groups')
 
@@ -42,7 +40,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         null=False,
         help_text='The sequence number of this group within the project.', )
     project = models.ForeignKey(
-        Project,
+        'polyaxon.Project',
         on_delete=models.CASCADE,
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
@@ -57,13 +55,13 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         blank=True,
         validators=[validate_group_params_config])
     code_reference = models.ForeignKey(
-        'repos.CodeReference',
+        'polyaxon.CodeReference',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='+')
     status = models.OneToOneField(
-        'ExperimentGroupStatus',
+        'polyaxon.ExperimentGroupStatus',
         related_name='+',
         blank=True,
         null=True,
@@ -260,16 +258,22 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def search_manager(self):
-        return search_managers.get_search_algorithm_manager(params_config=self.params_config)
+        from experiment_groups.search_managers import  get_search_algorithm_manager
+
+        return get_search_algorithm_manager(params_config=self.params_config)
 
     @cached_property
     def iteration_manager(self):
-        return iteration_managers.get_search_iteration_manager(experiment_group=self)
+        from experiment_groups.iteration_managers import get_search_iteration_manager
+
+        return get_search_iteration_manager(experiment_group=self)
 
     @property
     def iteration_config(self):
+        from experiment_groups.schemas import get_iteration_config
+
         if self.iteration_data and self.search_algorithm:
-            return schemas.get_iteration_config(
+            return get_iteration_config(
                 search_algorithm=self.search_algorithm,
                 iteration=self.iteration_data)
         return None
@@ -283,7 +287,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
 class ExperimentGroupIteration(DiffModel):
     experiment_group = models.ForeignKey(
-        ExperimentGroup,
+        'polyaxon.ExperimentGroup',
         on_delete=models.CASCADE,
         related_name='iterations',
         help_text='The experiment group.')
@@ -302,7 +306,7 @@ class ExperimentGroupStatus(StatusModel):
     STATUSES = ExperimentGroupLifeCycle
 
     experiment_group = models.ForeignKey(
-        ExperimentGroup,
+        'polyaxon.ExperimentGroup',
         on_delete=models.CASCADE,
         related_name='statuses')
     status = models.CharField(

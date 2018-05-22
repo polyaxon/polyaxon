@@ -6,7 +6,7 @@ from rest_framework.response import Response
 import auditor
 
 from event_manager.events.experiment_group import EXPERIMENT_GROUP_STOPPED_TRIGGERED
-from experiment_groups.models import ExperimentGroup
+from models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupSerializer
 from libs.utils import to_bool
 from projects.permissions import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project

@@ -5,7 +5,7 @@ from experiment_groups.iteration_managers import (
     HyperbandIterationManager,
     get_search_iteration_manager
 )
-from experiment_groups.models import ExperimentGroupIteration
+from models.experiment_groups import ExperimentGroupIteration
 from experiments.models import ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory

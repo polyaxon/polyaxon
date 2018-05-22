@@ -4,7 +4,7 @@ from rest_framework import status
 
 from django.test import override_settings, tag
 
-from experiment_groups.models import ExperimentGroup
+from models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from experiments.models import Experiment
 from experiments.statuses import ExperimentLifeCycle
