@@ -13,7 +13,7 @@ from libs.admin import DiffModelAdmin
 
 class ExperimentAdmin(DiffModelAdmin):
     readonly_fields = DiffModelAdmin.readonly_fields + (
-        'sequence', 'unique_name', 'last_status', 'last_status')
+        'sequence', 'unique_name', 'last_status', 'dockerfile', 'cloning_strategy', 'declarations')
 
 
 class ExperimentStatusAdmin(admin.ModelAdmin):
