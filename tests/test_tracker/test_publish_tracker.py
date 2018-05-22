@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from event_manager.events.cluster import CLUSTER_CREATED
 from event_manager.events.user import USER_ACTIVATED
 from factories.factory_users import UserFactory

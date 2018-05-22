@@ -1,4 +1,4 @@
-from clusters.models import Cluster
+from models.clusters import Cluster
 
 
 def cluster(request):

@@ -1,6 +1,6 @@
 from django.test import override_settings, tag
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from clusters.serializers import ClusterSerializer
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
 from runner.nodes.models import ClusterNode, NodeGPU

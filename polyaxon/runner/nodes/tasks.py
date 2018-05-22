@@ -7,7 +7,7 @@ from django.db.models import Count, Sum
 
 import auditor
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from event_manager.events.cluster import (
     CLUSTER_NODE_CREATED,
     CLUSTER_NODE_DELETED,

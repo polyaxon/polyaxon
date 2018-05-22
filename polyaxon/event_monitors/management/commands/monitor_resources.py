@@ -3,7 +3,7 @@ import time
 from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from event_monitors.management.commands._base_monitor import BaseMonitorCommand
 from event_monitors.monitors import resources
 from libs.utils import to_bool

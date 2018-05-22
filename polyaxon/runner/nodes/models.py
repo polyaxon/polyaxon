@@ -3,7 +3,7 @@ import uuid
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from libs.models import DiffModel
 from runner.spawners.utils import nodes
 from runner.spawners.utils.constants import NodeLifeCycle, NodeRoles

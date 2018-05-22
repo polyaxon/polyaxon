@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from libs.admin import DiffModelAdmin
 
 

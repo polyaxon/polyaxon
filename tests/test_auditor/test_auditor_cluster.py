@@ -6,7 +6,7 @@ import activitylogs
 import auditor
 import tracker
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from event_manager.events import cluster as cluster_events
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
 from tests.utils import BaseTest

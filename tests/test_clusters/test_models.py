@@ -1,6 +1,6 @@
 import datetime
 
-from clusters.models import Cluster
+from models.clusters import Cluster
 from tests.utils import BaseTest
 
 
