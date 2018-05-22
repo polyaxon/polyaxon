@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from libs.admin import DiffModelAdmin
-from sso.models import SSOIdentity
+from models.sso import SSOIdentity
 
 
 class SSOIdentityAdmin(DiffModelAdmin):

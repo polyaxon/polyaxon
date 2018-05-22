@@ -3,7 +3,7 @@ import requests
 from django.conf import settings
 
 from event_manager.events.user import USER_GITLAB
-from sso.providers.constants import PROVIDERS
+from constants.sso_providers import Providers
 from sso.providers.oauth2.provider import OAuth2Provider
 
 
@@ -60,7 +60,7 @@ class GitLabIdentityProvider(OAuth2Provider):
         email = self.get_email(user.get('email'), username=username)
 
         return {
-            'type': PROVIDERS.GITLAB,
+            'type': Providers.GITLAB,
             'id': user['id'],
             'email': email,
             'username': username,

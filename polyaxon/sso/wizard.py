@@ -12,7 +12,7 @@ from django.utils import timezone
 import auditor
 from libs.wizards import Wizard
 from sso import providers
-from sso.models import SSOIdentity
+from models.sso import SSOIdentity
 from users.utils import login_user
 
 logger = logging.getLogger('polyaxon.identity')

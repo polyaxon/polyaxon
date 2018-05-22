@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 
 from libs.models import DiffModel
-from sso.providers.constants import PROVIDERS
+from constants.sso_providers import Providers
 
 
 class SSOIdentity(DiffModel):
@@ -15,7 +15,7 @@ class SSOIdentity(DiffModel):
     )
     provider = models.CharField(
         max_length=32,
-        choices=PROVIDERS.CHOICES)
+        choices=Providers.CHOICES)
     external_id = models.CharField(max_length=64, null=True)
     valid = models.BooleanField(default=False)
     last_verified = models.DateTimeField(default=timezone.now)
@@ -24,6 +24,7 @@ class SSOIdentity(DiffModel):
     data = JSONField()
 
     class Meta:
+        app_label = 'polyaxon'
         unique_together = (('provider', 'user'), ('provider', 'external_id'),)
         verbose_name = 'SSO identity'
         verbose_name_plural = 'SSO identities'
@@ -36,7 +37,7 @@ class SSOIdentity(DiffModel):
             return False
         if not self.last_verified:
             return False
-        verification_schedule = PROVIDERS.get_verification_schedule(self.provider)
+        verification_schedule = Providers.get_verification_schedule(self.provider)
         if self.last_verified < timezone.now() - verification_schedule:
             return False
         return True

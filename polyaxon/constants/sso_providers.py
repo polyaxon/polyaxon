@@ -1,7 +1,7 @@
 from django.conf import settings
 
 
-class PROVIDERS(object):
+class Providers(object):
     GITHUB = 'github'
     BITBUCKET = 'bitbucket'
     GITLAB = 'gitlab'
