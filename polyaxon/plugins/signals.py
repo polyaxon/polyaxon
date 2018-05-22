@@ -17,7 +17,7 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_STOPPED,
     TENSORBOARD_SUCCEEDED
 )
-from jobs.statuses import JobLifeCycle
+from statuses.jobs import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runner_signal
 from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from models.projects import Project

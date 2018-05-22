@@ -5,7 +5,7 @@ from kubernetes import watch
 from django.conf import settings
 
 from event_monitors.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
-from jobs.statuses import JobLifeCycle
+from statuses.jobs import JobLifeCycle
 from libs.redis_db import RedisJobContainers
 from runner.spawners.utils.jobs import get_job_state
 

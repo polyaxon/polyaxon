@@ -3,7 +3,7 @@ import logging
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from jobs.statuses import JobLifeCycle
+from statuses.jobs import JobLifeCycle
 from repos import git
 from repos.models import ExternalRepo, Repo
 from runner.dockerizer.builders.base import BaseDockerBuilder

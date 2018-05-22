@@ -28,7 +28,7 @@ from experiments.paths import (
 )
 from experiments.statuses import ExperimentLifeCycle
 from experiments.tasks import check_experiment_status
-from jobs.statuses import JobLifeCycle
+from statuses.jobs import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from repos.utils import assign_code_reference
 

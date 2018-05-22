@@ -1,4 +1,4 @@
-from jobs.statuses import JobLifeCycle
+from statuses.jobs import JobLifeCycle
 from libs.constants import UNKNOWN
 from libs.statuses import BaseStatuses
 

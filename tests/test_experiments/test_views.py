@@ -34,7 +34,7 @@ from factories.factory_experiments import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
-from jobs.statuses import JobLifeCycle
+from statuses.jobs import JobLifeCycle
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from tests.utils import RUNNER_TEST, BaseViewTest
