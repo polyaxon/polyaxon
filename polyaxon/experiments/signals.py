@@ -13,8 +13,8 @@ from event_manager.events.experiment import (
     EXPERIMENT_STOPPED,
     EXPERIMENT_SUCCEEDED
 )
-from experiments.clone import CloningStrategy
 from models.experiments import (
+    CloningStrategy,
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

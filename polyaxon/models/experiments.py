@@ -14,7 +14,6 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESTARTED,
     EXPERIMENT_RESUMED
 )
-from experiments.clone import CloningStrategy
 from statuses.experiments import ExperimentLifeCycle
 from models.jobs import Job, JobStatus
 from statuses.jobs import JobLifeCycle
@@ -24,6 +23,20 @@ from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 
 logger = logging.getLogger('polyaxon.experiments')
+
+
+class CloningStrategy(object):
+    COPY = 'copy'
+    RESTART = 'restart'
+    RESUME = 'resume'
+
+    VALUES = {COPY, RESTART, RESUME}
+
+    CHOICES = (
+        (COPY, COPY),
+        (RESTART, RESTART),
+        (RESUME, RESUME)
+    )
 
 
 class Experiment(DiffModel, DescribableModel, LastStatusMixin):
