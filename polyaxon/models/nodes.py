@@ -126,5 +126,8 @@ class ClusterEvent(models.Model):
     meta = JSONField()
     level = models.CharField(max_length=16)
 
+    class Meta:
+        app_label = 'polyaxon'
+
     def __str__(self):
         return 'Event {} at {}'.format(self.level, self.created_at)
