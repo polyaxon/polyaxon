@@ -23,7 +23,7 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from statuses.experiments import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -34,7 +34,7 @@ from factories.factory_experiments import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from tests.utils import RUNNER_TEST, BaseViewTest
@@ -511,7 +511,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
             with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
-        self.url = '/{}/{}/{}/experiments/{}/statuses/'.format(API_V1,
+        self.url = '/{}/{}/{}/experiments/{}/constants/'.format(API_V1,
                                                                project.user.username,
                                                                project.name,
                                                                self.experiment.sequence)
@@ -650,7 +650,7 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
             with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
-        self.url = '/{}/{}/{}/experiments/{}/statuses/{}/'.format(
+        self.url = '/{}/{}/{}/experiments/{}/constants/{}/'.format(
             API_V1,
             self.experiment.project.user.username,
             self.experiment.project.name,
@@ -803,7 +803,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
-        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/statuses/'.format(
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/constants/'.format(
             API_V1,
             project.user.username,
             project.name,
@@ -878,7 +878,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
                 self.object = self.factory_class(job=self.experiment_job)
-        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/statuses/{}'.format(
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/constants/{}'.format(
             API_V1,
             project.user.username,
             project.name,

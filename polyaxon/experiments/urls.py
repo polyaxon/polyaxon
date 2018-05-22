@@ -25,13 +25,13 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/copy/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentCopyView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/statuses/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/constants/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentStatusListView.as_view()),
     re_path(r'^{}/{}/experiments/{}/metrics/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentMetricListView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/statuses/{}/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/constants/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, UUID_PATTERN),
         views.ExperimentStatusDetailView.as_view()),
     re_path(r'^{}/{}/experiments/{}/jobs/?$'.format(
@@ -46,10 +46,10 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/jobs/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentJobDetailView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/jobs/{}/constants/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentJobStatusListView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/{}/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/jobs/{}/constants/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, SEQUENCE_PATTERN,
         UUID_PATTERN),
         views.ExperimentJobStatusDetailView.as_view()),

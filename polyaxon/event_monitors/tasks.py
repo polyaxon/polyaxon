@@ -28,7 +28,7 @@ def handle_events_resources(payload, persist):
 
 @celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
 def handle_events_job_statuses(payload):
-    """Experiment jobs statuses"""
+    """Experiment jobs constants"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
     logger.debug('handling events status for job_uuid: %s', job_uuid)
@@ -49,7 +49,7 @@ def handle_events_job_statuses(payload):
 
 @celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
 def handle_events_plugin_job_statuses(payload):
-    """Project Plugin jobs statuses"""
+    """Project Plugin jobs constants"""
     details = payload['details']
     app = details['labels']['app']
     project_uuid = details['labels']['project_uuid']

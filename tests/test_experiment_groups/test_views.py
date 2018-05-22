@@ -7,7 +7,7 @@ from django.test import override_settings, tag
 from models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from models.experiments import Experiment
-from statuses.experiments import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory

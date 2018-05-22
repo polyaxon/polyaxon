@@ -26,9 +26,9 @@ from experiments.paths import (
     delete_experiment_logs,
     delete_experiment_outputs
 )
-from statuses.experiments import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
 from experiments.tasks import check_experiment_status
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from repos.utils import assign_code_reference
 

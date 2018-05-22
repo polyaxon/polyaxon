@@ -199,7 +199,7 @@ class CeleryQueues(object):
     EVENTS_JOB_STATUSES = config.get_string(
         'POLYAXON_QUEUES_EVENTS_JOB_STATUSES',
         is_optional=True,
-        default='events.statuses')
+        default='events.constants')
     LOGS_SIDECARS = config.get_string(
         'POLYAXON_QUEUES_LOGS_SIDECARS',
         is_optional=True,

@@ -2,7 +2,7 @@ import logging
 
 from docker.errors import DockerException
 
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 from projects.utils import get_valid_project

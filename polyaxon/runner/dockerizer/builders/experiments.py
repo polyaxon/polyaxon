@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from event_monitors import publisher
-from statuses.experiments import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
 from experiments.utils import is_experiment_still_running
 from repos import git
 from models.repos import CodeReference, ExternalRepo, Repo

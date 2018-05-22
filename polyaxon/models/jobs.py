@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from libs.models import DiffModel, LastStatusMixin, StatusModel
 from libs.resource_validation import validate_resource
 
@@ -69,7 +69,7 @@ class Job(DiffModel, LastStatusMixin):
 
     def _set_status(self, status_model, logger, status, message=None, details=None):
         current_status = self.last_status
-        # We should not update statuses anymore
+        # We should not update constants anymore
         if JobLifeCycle.is_done(current_status):
             logger.info(
                 'Received a new status `{}` for job `{}`. '

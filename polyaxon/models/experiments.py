@@ -14,9 +14,9 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESTARTED,
     EXPERIMENT_RESUMED
 )
-from statuses.experiments import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
 from models.jobs import Job, JobStatus
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_experiment_spec_config
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
@@ -157,7 +157,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @property
     def last_job_statuses(self):
-        """The last statuses of the job in this experiment."""
+        """The last constants of the job in this experiment."""
         # TODO: use F to calculate this property in one query
 
         statuses = []
@@ -337,7 +337,7 @@ class ExperimentStatus(StatusModel):
     experiment = models.ForeignKey(
         'polyaxon.Experiment',
         on_delete=models.CASCADE,
-        related_name='statuses')
+        related_name='constants')
     status = models.CharField(
         max_length=64,
         blank=True,
@@ -437,7 +437,7 @@ class ExperimentJobStatus(JobStatus):
     job = models.ForeignKey(
         'polyaxon.ExperimentJob',
         on_delete=models.CASCADE,
-        related_name='statuses')
+        related_name='constants')
 
     class Meta(JobStatus.Meta):
         app_label = 'polyaxon'

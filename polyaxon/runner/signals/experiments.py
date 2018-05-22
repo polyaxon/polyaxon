@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 from models.experiment_groups import ExperimentGroup
 from models.experiments import Experiment, ExperimentStatus
-from statuses.experiments import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
 from libs.decorators import check_specification, ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
 from runner.tasks.experiments import build_experiment
@@ -34,7 +34,7 @@ def stop_running_experiment(sender, **kwargs):
     try:
         _ = instance.experiment_group  # noqa
         # Delete all jobs from DB before sending a signal to k8s,
-        # this way no statuses will be updated in the meanwhile
+        # this way no constants will be updated in the meanwhile
         instance.jobs.all().delete()
         experiment_scheduler.stop_experiment(instance, update_status=False)
     except ExperimentGroup.DoesNotExist:

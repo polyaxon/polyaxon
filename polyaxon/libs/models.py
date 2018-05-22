@@ -70,7 +70,7 @@ class StatusModel(models.Model):
         null=True,
         default=STATUSES.CREATED,
         choices=STATUSES.CHOICES)
-    # job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='statuses')
+    # job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='constants')
     """
     STATUSES = None
 

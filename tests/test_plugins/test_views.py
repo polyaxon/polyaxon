@@ -10,7 +10,7 @@ from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import plugin_spec_parsed_content
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from libs.views import ProtectedView
 from models.plugins import NotebookJob, TensorboardJob
 from polyaxon.urls import API_V1

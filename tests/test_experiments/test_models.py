@@ -13,7 +13,7 @@ from django.utils import timezone
 from experiments.copy import copy_experiment
 from models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
 from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
-from statuses.experiments import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
@@ -31,7 +31,7 @@ from factories.fixtures import (
     experiment_spec_content
 )
 from models.jobs import JobResources
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
@@ -378,13 +378,13 @@ class TestExperimentModel(BaseTest):
         xp_with_jobs.refresh_from_db()
         assert xp_with_jobs.last_status is None
 
-        # Mock sync experiments and jobs statuses
+        # Mock sync experiments and jobs constants
         with patch('experiments.tasks.check_experiment_status.delay') as check_status_mock:
             sync_experiments_and_jobs_statuses()
 
         assert check_status_mock.call_count == 1
 
-        # Call sync experiments and jobs statuses
+        # Call sync experiments and jobs constants
         sync_experiments_and_jobs_statuses()
         done_xp.refresh_from_db()
         no_jobs_xp.refresh_from_db()

@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('scheduled', 'scheduled'), ('running', 'running'), ('finished', 'finished'), ('stopped', 'stopped'), ('skipped', 'skipped')], default='created', max_length=64, null=True)),
-                ('operation_run', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='pipelines.OperationRun')),
+                ('operation_run', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='constants', to='pipelines.OperationRun')),
             ],
             options={
                 'ordering': ['created_at'],
@@ -117,7 +117,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
                 ('message', models.CharField(blank=True, max_length=256, null=True)),
                 ('status', models.CharField(blank=True, choices=[('created', 'created'), ('scheduled', 'scheduled'), ('running', 'running'), ('finished', 'finished'), ('stopped', 'stopped'), ('skipped', 'skipped')], default='created', max_length=64, null=True)),
-                ('pipeline_run', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='pipelines.PipelineRun')),
+                ('pipeline_run', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='constants', to='pipelines.PipelineRun')),
             ],
             options={
                 'ordering': ['created_at'],

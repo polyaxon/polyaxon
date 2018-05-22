@@ -10,12 +10,12 @@ from polyaxon_k8s.manager import K8SManager
 
 
 class Command(BaseMonitorCommand):
-    help = 'Watch jobs statuses events.'
+    help = 'Watch jobs constants events.'
 
     def handle(self, *args, **options):
         log_sleep_interval = options['log_sleep_interval']
         self.stdout.write(
-            "Started a new statuses monitor with, "
+            "Started a new constants monitor with, "
             "log sleep interval: `{}`.".format(log_sleep_interval),
             ending='\n')
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)

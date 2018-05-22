@@ -5,11 +5,11 @@ from kubernetes import watch
 from django.conf import settings
 
 from event_monitors.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from libs.redis_db import RedisJobContainers
 from runner.spawners.utils.jobs import get_job_state
 
-logger = logging.getLogger('polyaxon.monitors.statuses')
+logger = logging.getLogger('polyaxon.monitors.constants')
 
 
 def update_job_containers(event, status, job_container_name):
@@ -79,8 +79,8 @@ def run(k8s_manager):
             # Only update job containers if it's an experiment job not plugins
             if settings.CONTAINER_NAME_JOB in job_state['details']['container_statuses']:
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
-                # Handle experiment job statuses differently than plugin job statuses
+                # Handle experiment job constants differently than plugin job constants
                 handle_events_job_statuses.delay(payload=job_state)
             elif settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses']:
-                # Handle plugin job statuses
+                # Handle plugin job constants
                 handle_events_plugin_job_statuses.delay(payload=job_state)

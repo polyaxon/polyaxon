@@ -247,7 +247,7 @@ class PipelineRunStatus(StatusModel):
     pipeline_run = models.ForeignKey(
         'pipelines.PipelineRun',
         on_delete=models.CASCADE,
-        related_name='statuses')
+        related_name='constants')
 
     class Meta:
         verbose_name_plural = 'Pipeline Run Statuses'
@@ -270,7 +270,7 @@ class OperationRunStatus(StatusModel):
     operation_run = models.ForeignKey(
         'pipelines.OperationRun',
         on_delete=models.CASCADE,
-        related_name='statuses')
+        related_name='constants')
 
     class Meta:
         verbose_name_plural = 'Operation Run Statuses'

@@ -126,7 +126,7 @@ class TensorboardJobStatus(JobStatus):
     job = models.ForeignKey(
         'polyaxon.TensorboardJob',
         on_delete=models.CASCADE,
-        related_name='statuses')
+        related_name='constants')
 
     class Meta(JobStatus.Meta):
         app_label = 'polyaxon'
@@ -138,7 +138,7 @@ class NotebookJobStatus(JobStatus):
     job = models.ForeignKey(
         'polyaxon.NotebookJob',
         on_delete=models.CASCADE,
-        related_name='statuses')
+        related_name='constants')
 
     class Meta(JobStatus.Meta):
         app_label = 'polyaxon'

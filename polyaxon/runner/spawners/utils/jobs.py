@@ -1,4 +1,4 @@
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from polyaxon_schemas.experiment import JobStateConfig
 from runner.spawners.utils import pods
 from runner.spawners.utils.constants import ContainerStatuses, PodConditions, PodLifeCycle

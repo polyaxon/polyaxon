@@ -14,7 +14,7 @@ from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.factory_users import UserFactory
-from statuses.jobs import JobLifeCycle
+from constants.jobs import JobLifeCycle
 from polyaxon.urls import API_V1
 from repos import git
 from models.repos import Repo
