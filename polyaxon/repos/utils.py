@@ -1,4 +1,4 @@
-from repos.models import CodeReference
+from models.repos import CodeReference
 
 
 def get_latest_code_reference(instance):

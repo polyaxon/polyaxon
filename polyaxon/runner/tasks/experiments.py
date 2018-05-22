@@ -8,7 +8,7 @@ from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import get_valid_experiment
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals, RunnerCeleryTasks
-from repos.models import Repo
+from models.repos import Repo
 from runner.dockerizer.builders import experiments as experiments_builder
 from runner.schedulers import experiment_scheduler
 

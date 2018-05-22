@@ -1,14 +1,14 @@
 from django.contrib import admin
 
-from repos.models import ExternalRepo, Repo
+from models.repos import ExternalRepo, Repo
 
 
 class RepoAdmin(admin.ModelAdmin):
-    readonly_fields = ('project', 'path', 'git', 'last_commit',)
+    readonly_fields = ('project', 'path',)
 
 
 class ExternalRepoAdmin(admin.ModelAdmin):
-    readonly_fields = ('project', 'name', 'git_url', 'path', 'git', 'last_commit',)
+    readonly_fields = ('project', 'name', 'git_url', 'path',)
 
 
 admin.site.register(Repo, RepoAdmin)

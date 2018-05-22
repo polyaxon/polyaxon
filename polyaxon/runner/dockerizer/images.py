@@ -2,7 +2,7 @@ import logging
 
 from django.conf import settings
 
-from repos.models import ExternalRepo
+from models.repos import ExternalRepo
 from runner.dockerizer.builders.notebooks import NotebookDockerBuilder
 
 logger = logging.getLogger('polyaxon.dockerizer.images')

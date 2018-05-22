@@ -1,6 +1,6 @@
 import logging
 
-from repos.models import ExternalRepo
+from models.repos import ExternalRepo
 
 logger = logging.getLogger('polyaxon.jobs.utils')
 

@@ -6,7 +6,7 @@ from statuses.jobs import JobLifeCycle
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 from projects.utils import get_valid_project
-from repos.models import Repo
+from models.repos import Repo
 from runner.dockerizer.builders import notebooks as notebooks_builder
 from runner.dockerizer.images import get_notebook_image_info
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler

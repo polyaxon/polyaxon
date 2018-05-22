@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from libs.decorators import ignore_raw, ignore_updates
 from libs.paths import create_path, delete_path
 from repos import git
-from repos.models import ExternalRepo, Repo
+from models.repos import ExternalRepo, Repo
 
 
 @receiver(post_save, sender=Repo, dispatch_uid="repo_saved")

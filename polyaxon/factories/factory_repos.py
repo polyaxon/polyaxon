@@ -3,7 +3,7 @@ from faker import Factory as FakerFactory
 import factory
 
 from factories.factory_projects import ProjectFactory
-from repos.models import Repo
+from models.repos import Repo
 
 fake = FakerFactory.create()
 

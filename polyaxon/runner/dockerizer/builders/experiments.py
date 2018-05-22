@@ -7,7 +7,7 @@ from event_monitors import publisher
 from experiments.statuses import ExperimentLifeCycle
 from experiments.utils import is_experiment_still_running
 from repos import git
-from repos.models import CodeReference, ExternalRepo, Repo
+from models.repos import CodeReference, ExternalRepo, Repo
 from runner.dockerizer.builders.base import BaseDockerBuilder
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')

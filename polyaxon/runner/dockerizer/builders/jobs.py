@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from statuses.jobs import JobLifeCycle
 from repos import git
-from repos.models import ExternalRepo, Repo
+from models.repos import ExternalRepo, Repo
 from runner.dockerizer.builders.base import BaseDockerBuilder
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')
