@@ -22,6 +22,6 @@ class ActivityLogService(EventService):
         super(ActivityLogService, self).setup()
         # Load default event types
         import activitylogs.events  # noqa
-        from activitylogs.models import ActivityLog
+        from models.activitylogs import ActivityLog
 
         self.activity_log = ActivityLog

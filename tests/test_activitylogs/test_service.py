@@ -2,7 +2,7 @@
 
 import activitylogs
 
-from activitylogs.models import ActivityLog
+from models.activitylogs import ActivityLog
 from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
 from event_manager.events.user import USER_ACTIVATED
 from factories.factory_experiments import ExperimentFactory

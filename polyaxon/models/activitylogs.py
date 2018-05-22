@@ -21,6 +21,7 @@ class ActivityLog(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
 
     class Meta:
+        app_label = 'polyaxon'
         verbose_name = 'activity log'
         verbose_name_plural = 'activities logs'
 
