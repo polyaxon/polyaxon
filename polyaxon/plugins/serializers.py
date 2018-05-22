@@ -1,7 +1,7 @@
 from rest_framework import fields, serializers
 
 from libs.spec_validation import validate_plugin_spec_config
-from plugins.models import NotebookJob, TensorboardJob
+from models.plugins import NotebookJob, TensorboardJob
 
 
 class PluginJobBaseSerializer(serializers.ModelSerializer):

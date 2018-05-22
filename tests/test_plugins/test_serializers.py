@@ -2,7 +2,7 @@ from django.test import tag
 
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.fixtures import plugin_spec_parsed_content
-from plugins.models import NotebookJob, TensorboardJob
+from models.plugins import NotebookJob, TensorboardJob
 from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from tests.utils import RUNNER_TEST, BaseTest
 

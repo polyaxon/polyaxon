@@ -19,7 +19,7 @@ from event_manager.events.tensorboard import (
 )
 from statuses.jobs import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runner_signal
-from plugins.models import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
+from models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from models.projects import Project
 from repos.utils import assign_code_reference
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler

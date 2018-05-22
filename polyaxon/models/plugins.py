@@ -22,13 +22,14 @@ class PluginJobBase(Job):
         help_text='The compiled polyaxonfile for plugin job.',
         validators=[validate_plugin_spec_config])
     code_reference = models.ForeignKey(
-        'repos.CodeReference',
+        'polyaxon.CodeReference',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='+')
 
     class Meta:
+        app_label = 'polyaxon'
         abstract = True
 
     @cached_property
@@ -63,16 +64,19 @@ class PluginJobBase(Job):
 class TensorboardJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
     project = models.ForeignKey(
-        'projects.Project',
+        'polyaxon.Project',
         on_delete=models.CASCADE,
         related_name='tensorboard_jobs')
     job_status = models.OneToOneField(
-        'TensorboardJobStatus',
+        'polyaxon.TensorboardJobStatus',
         related_name='+',
         blank=True,
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
+
+    class Meta:
+        app_label = 'polyaxon'
 
     def __str__(self):
         return '{} tensorboard<{}>'.format(self.project, self.image)
@@ -92,16 +96,19 @@ class TensorboardJob(PluginJobBase):
 class NotebookJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
     project = models.ForeignKey(
-        'projects.Project',
+        'polyaxon.Project',
         on_delete=models.CASCADE,
         related_name='notebook_jobs')
     job_status = models.OneToOneField(
-        'NotebookJobStatus',
+        'polyaxon.NotebookJobStatus',
         related_name='+',
         blank=True,
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
+
+    class Meta:
+        app_label = 'polyaxon'
 
     def __str__(self):
         return '{} notebook'.format(self.project)
@@ -117,20 +124,22 @@ class NotebookJob(PluginJobBase):
 class TensorboardJobStatus(JobStatus):
     """A model that represents tensorboard job status at certain time."""
     job = models.ForeignKey(
-        TensorboardJob,
+        'polyaxon.TensorboardJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
     class Meta(JobStatus.Meta):
+        app_label = 'polyaxon'
         verbose_name_plural = 'Tensorboard Job Statuses'
 
 
 class NotebookJobStatus(JobStatus):
     """A model that represents notebook job status at certain time."""
     job = models.ForeignKey(
-        NotebookJob,
+        'polyaxon.NotebookJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
     class Meta(JobStatus.Meta):
+        app_label = 'polyaxon'
         verbose_name_plural = 'Notebook Job Statuses'

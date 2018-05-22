@@ -4,7 +4,7 @@ import factory
 
 from factories.factory_users import UserFactory
 from factories.fixtures import plugin_spec_parsed_content
-from plugins.models import NotebookJob, TensorboardJob
+from models.plugins import NotebookJob, TensorboardJob
 
 fake = FakerFactory.create()
 
