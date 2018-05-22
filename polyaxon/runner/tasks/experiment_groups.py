@@ -1,6 +1,6 @@
 import logging
 
-from experiment_groups.statuses import ExperimentGroupLifeCycle
+from statuses.experiment_groups import ExperimentGroupLifeCycle
 from experiment_groups.utils import get_running_experiment_group, get_valid_experiment_group
 from experiments.statuses import ExperimentLifeCycle
 from polyaxon.celery_api import app as celery_app

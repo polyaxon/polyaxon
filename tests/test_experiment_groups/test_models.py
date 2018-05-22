@@ -15,7 +15,7 @@ from experiment_groups.search_managers import (
     HyperbandSearchManager,
     RandomSearchManager
 )
-from experiment_groups.statuses import ExperimentGroupLifeCycle
+from statuses.experiment_groups import ExperimentGroupLifeCycle
 from experiments.models import Experiment, ExperimentMetric
 from experiments.statuses import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory

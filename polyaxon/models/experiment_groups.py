@@ -11,7 +11,7 @@ from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
-from experiment_groups.statuses import ExperimentGroupLifeCycle
+from statuses.experiment_groups import ExperimentGroupLifeCycle
 from experiments.statuses import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content

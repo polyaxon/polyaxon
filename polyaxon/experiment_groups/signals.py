@@ -17,7 +17,7 @@ from models.experiment_groups import (
     ExperimentGroupStatus
 )
 from experiment_groups.paths import delete_experiment_group_logs, delete_experiment_group_outputs
-from experiment_groups.statuses import ExperimentGroupLifeCycle
+from statuses.experiment_groups import ExperimentGroupLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from repos.utils import assign_code_reference
 
