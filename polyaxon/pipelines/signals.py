@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from libs.decorators import ignore_raw, ignore_updates
-from pipelines.constants import OperationStatuses, PipelineStatuses
+from constants.pipelines import OperationStatuses, PipelineStatuses
 from models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
 from pipelines.tasks import (
     check_pipeline_run_status,

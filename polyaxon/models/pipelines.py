@@ -11,7 +11,7 @@ from django.dispatch import Signal
 
 from libs.blacklist import validate_blacklist_name
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
-from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
+from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 

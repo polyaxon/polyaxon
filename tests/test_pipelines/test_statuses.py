@@ -1,4 +1,4 @@
-from pipelines.constants import OperationStatuses, PipelineStatuses
+from constants.pipelines import OperationStatuses, PipelineStatuses
 from tests.utils import BaseTest
 
 

@@ -11,7 +11,7 @@ from factories.factory_pipelines import (
     PipelineFactory,
     PipelineRunFactory
 )
-from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
+from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
 from models.pipelines import OperationRunStatus, PipelineRunStatus
 from tests.utils import BaseTest
 

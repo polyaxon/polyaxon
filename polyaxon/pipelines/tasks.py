@@ -1,7 +1,7 @@
 import logging
 
 from pipelines import dags
-from pipelines.constants import OperationStatuses, PipelineStatuses
+from constants.pipelines import OperationStatuses, PipelineStatuses
 from pipelines.utils import (
     get_operation_run,
     get_pipeline_run,
