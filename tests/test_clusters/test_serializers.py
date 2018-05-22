@@ -3,7 +3,7 @@ from django.test import override_settings, tag
 from models.clusters import Cluster
 from clusters.serializers import ClusterSerializer
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
-from runner.nodes.models import ClusterNode, NodeGPU
+from models.nodes import ClusterNode, NodeGPU
 from runner.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,

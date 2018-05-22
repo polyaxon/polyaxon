@@ -7,7 +7,7 @@ from models.clusters import Cluster
 from event_monitors.management.commands._base_monitor import BaseMonitorCommand
 from event_monitors.monitors import resources
 from libs.utils import to_bool
-from runner.nodes.models import ClusterNode
+from models.nodes import ClusterNode
 
 
 class Command(BaseMonitorCommand):

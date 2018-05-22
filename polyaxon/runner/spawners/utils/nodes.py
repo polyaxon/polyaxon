@@ -1,15 +1,16 @@
 from django.conf import settings
 
 from runner.spawners.utils import constants
+from constants.nodes import NodeLifeCycle, NodeRoles
 
 
 def get_status(node):
     status = [c.status for c in node.status.conditions if c.type == 'Ready'][0]
     if status == 'True':
-        return constants.NodeLifeCycle.READY
+        return NodeLifeCycle.READY
     if status == 'FALSE':
-        return constants.NodeLifeCycle.NOT_READY
-    return constants.NodeLifeCycle.UNKNOWN
+        return NodeLifeCycle.NOT_READY
+    return NodeLifeCycle.UNKNOWN
 
 
 def get_n_gpus(node):
@@ -29,14 +30,14 @@ def get_memory(node):
 
 def is_master(node):
     if ('node-role.kubernetes.io/master' in node.metadata.labels or
-            node.metadata.labels.get('kubernetes.io/role') == constants.NodeRoles.MASTER or
+            node.metadata.labels.get('kubernetes.io/role') == NodeRoles.MASTER or
             node.metadata.labels.get('kubernetes.io/hostname') == 'minikube'):
         return True
     return False
 
 
 def get_role(node):
-    return constants.NodeRoles.MASTER if is_master(node) else constants.NodeRoles.AGENT
+    return NodeRoles.MASTER if is_master(node) else NodeRoles.AGENT
 
 
 def get_docker_version(node):

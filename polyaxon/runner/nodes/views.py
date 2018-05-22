@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from models.clusters import Cluster
 from libs.views import ListCreateAPIView
-from runner.nodes.models import ClusterNode, NodeGPU
+from models.nodes import ClusterNode, NodeGPU
 from runner.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,

@@ -3,10 +3,8 @@ import uuid
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
-from models.clusters import Cluster
 from libs.models import DiffModel
-from runner.spawners.utils import nodes
-from runner.spawners.utils.constants import NodeLifeCycle, NodeRoles
+from constants.nodes import NodeLifeCycle, NodeRoles
 
 
 class ClusterNode(models.Model):
@@ -25,7 +23,7 @@ class ClusterNode(models.Model):
         null=False,
         help_text='Name of the node')
     cluster = models.ForeignKey(
-        Cluster,
+        'polyaxon.Cluster',
         on_delete=models.CASCADE,
         related_name='nodes')
     hostname = models.CharField(
@@ -56,6 +54,7 @@ class ClusterNode(models.Model):
     is_current = models.BooleanField(default=True)
 
     class Meta:
+        app_label = 'polyaxon'
         ordering = ['sequence']
         unique_together = (('cluster', 'sequence'),)
 
@@ -73,6 +72,8 @@ class ClusterNode(models.Model):
 
     @classmethod
     def from_node_item(cls, node):
+        from runner.spawners.utils import nodes
+
         return {
             'name': node.metadata.name,
             'hostname': nodes.get_hostname(node),
@@ -101,11 +102,12 @@ class NodeGPU(DiffModel):
     name = models.CharField(max_length=256)
     memory = models.BigIntegerField()
     cluster_node = models.ForeignKey(
-        ClusterNode,
+        'polyaxon.ClusterNode',
         on_delete=models.CASCADE,
         related_name='gpus')
 
     class Meta:
+        app_label = 'polyaxon'
         ordering = ['index']
         unique_together = (('cluster_node', 'index'),)
 
@@ -116,7 +118,7 @@ class NodeGPU(DiffModel):
 class ClusterEvent(models.Model):
     """A model to catch all errors and warning events of the cluster."""
     cluster = models.ForeignKey(
-        Cluster,
+        'polyaxon.Cluster',
         on_delete=models.CASCADE,
         related_name='events')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)

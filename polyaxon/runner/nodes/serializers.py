@@ -1,7 +1,7 @@
 from rest_framework import fields, serializers
 
 from clusters.serializers import ClusterSerializer
-from runner.nodes.models import Cluster, ClusterNode, NodeGPU
+from models.nodes import Cluster, ClusterNode, NodeGPU
 
 
 class GPUSerializer(serializers.ModelSerializer):

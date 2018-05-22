@@ -6,14 +6,14 @@ from models.clusters import Cluster
 from clusters.serializers import ClusterSerializer
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
 from polyaxon.urls import API_V1
-from runner.nodes.models import ClusterNode, NodeGPU
+from models.nodes import ClusterNode, NodeGPU
 from runner.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
     ClusterRunnerSerializer,
     GPUSerializer
 )
-from runner.spawners.utils.constants import NodeRoles
+from constants.nodes import NodeRoles
 from tests.utils import RUNNER_TEST, BaseViewTest
 
 
