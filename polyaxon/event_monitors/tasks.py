@@ -7,7 +7,7 @@ from experiments.models import Experiment, ExperimentJob
 from experiments.paths import get_experiment_logs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
-from projects.models import Project
+from models.projects import Project
 from runner.nodes.models import ClusterEvent
 
 logger = logging.getLogger('polyaxon.tasks.event_monitors')

@@ -11,7 +11,7 @@ from event_manager.events.project import (
     PROJECT_VIEWED
 )
 from libs.views import AuditorMixinView
-from projects.models import Project
+from models.projects import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly
 from projects.serializers import ProjectDetailSerializer, ProjectSerializer
 

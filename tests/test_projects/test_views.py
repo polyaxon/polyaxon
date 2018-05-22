@@ -10,7 +10,7 @@ from experiments.models import Experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
-from projects.models import Project
+from models.projects import Project
 from projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from tests.utils import RUNNER_TEST, BaseViewTest
 

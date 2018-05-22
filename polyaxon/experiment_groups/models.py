@@ -19,7 +19,7 @@ from libs.spec_validation import validate_group_params_config, validate_group_sp
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import Optimization
-from projects.models import Project
+from models.projects import Project
 
 logger = logging.getLogger('polyaxon.experiment_groups')
 

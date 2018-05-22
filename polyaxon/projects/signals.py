@@ -5,7 +5,7 @@ import auditor
 
 from event_manager.events.project import PROJECT_DELETED
 from libs.decorators import ignore_raw, ignore_updates
-from projects.models import Project
+from models.projects import Project
 from projects.paths import delete_project_logs, delete_project_outputs, delete_project_repos
 
 

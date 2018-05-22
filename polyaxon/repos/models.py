@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db import models
 
 from libs.models import DiffModel
-from projects.models import Project
+from models.projects import Project
 from repos import git
 
 

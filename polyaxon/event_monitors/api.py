@@ -19,7 +19,7 @@ from event_monitors.socket_manager import SocketManager
 from experiments.models import Experiment, ExperimentJob
 from libs.redis_db import RedisToStream
 from polyaxon.config_settings.celery_settings import CeleryQueues, RoutingKeys
-from projects.models import Project
+from models.projects import Project
 from projects.permissions import has_project_permissions
 
 logger = logging.getLogger('polyaxon.monitors.api')

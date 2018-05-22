@@ -30,6 +30,7 @@ class Project(DiffModel, DescribableModel):
         return self.unique_name
 
     class Meta:
+        app_label = 'polyaxon'
         unique_together = (('user', 'name'),)
 
     @property

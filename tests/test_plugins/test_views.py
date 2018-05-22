@@ -14,7 +14,7 @@ from jobs.statuses import JobLifeCycle
 from libs.views import ProtectedView
 from plugins.models import NotebookJob, TensorboardJob
 from polyaxon.urls import API_V1
-from projects.models import Project
+from models.projects import Project
 from runner.schedulers import notebook_scheduler
 from runner.spawners.notebook_spawner import NotebookSpawner
 from runner.spawners.project_spawner import ProjectSpawner

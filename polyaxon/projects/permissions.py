@@ -3,7 +3,7 @@ import logging
 from rest_framework import permissions
 from rest_framework.generics import get_object_or_404
 
-from projects.models import Project
+from models.projects import Project
 
 logger = logging.getLogger("polyaxon.projects.permissions")
 

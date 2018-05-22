@@ -1,7 +1,7 @@
 import factory
 
 from factories.factory_users import UserFactory
-from projects.models import Project
+from models.projects import Project
 
 
 class ProjectFactory(factory.DjangoModelFactory):
