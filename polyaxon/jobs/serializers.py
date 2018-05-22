@@ -1,6 +1,6 @@
 from rest_framework import fields, serializers
 
-from jobs.models import JobResources
+from models.jobs import JobResources
 
 
 class JobResourcesSerializer(serializers.ModelSerializer):

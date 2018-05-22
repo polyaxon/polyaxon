@@ -7,7 +7,7 @@ from experiments.models import (
     ExperimentMetric,
     ExperimentStatus
 )
-from jobs.admin import JobStatusAdmin
+from admin.jobs import JobStatusAdmin
 from libs.admin import DiffModelAdmin
 
 

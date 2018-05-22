@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from jobs.models import JobResources
+from models.jobs import JobResources
 
 
 class JobStatusAdmin(admin.ModelAdmin):

@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from jobs.models import Job, JobStatus
+from models.jobs import Job, JobStatus
 from libs.spec_validation import validate_plugin_spec_config
 from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 

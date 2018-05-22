@@ -21,6 +21,11 @@ class JobResources(models.Model):
         blank=True,
         validators=[validate_resource])
 
+    class Meta:
+        app_label = 'polyaxon'
+        verbose_name = 'job resources'
+        verbose_name_plural = 'jobs resources'
+
     def __str__(self):
         def get_resource(resource, resource_name):
             if not resource:
@@ -40,6 +45,7 @@ class Job(DiffModel, LastStatusMixin):
     STATUSES = JobLifeCycle
 
     class Meta:
+        app_label = 'polyaxon'
         abstract = True
 
     @property
@@ -97,6 +103,7 @@ class JobStatus(StatusModel):
         return '{} <{}>'.format(self.job.unique_name, self.status)
 
     class Meta:
+        app_label = 'polyaxon'
         verbose_name_plural = 'Job Statuses'
         ordering = ['created_at']
         abstract = True

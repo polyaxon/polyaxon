@@ -16,7 +16,7 @@ from event_manager.events.experiment import (
 )
 from experiments.clone import CloningStrategy
 from experiments.statuses import ExperimentLifeCycle
-from jobs.models import Job, JobResources, JobStatus
+from models.jobs import Job, JobResources, JobStatus
 from statuses.jobs import JobLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_experiment_spec_config
