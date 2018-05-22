@@ -46,6 +46,9 @@ class CliVersion(BaseValidationVersion):
     LATEST_VERSION = settings.CLI_LATEST_VERSION
     MIN_VERSION = settings.CLI_MIN_VERSION
 
+    class Meta:
+        app_label = 'polyaxon'
+
     def __str__(self):
         return 'Cli version'
 
@@ -54,6 +57,9 @@ class PlatformVersion(BaseValidationVersion):
     """A model that represents the polyaxon platform version."""
     LATEST_VERSION = settings.PLATFORM_LATEST_VERSION
     MIN_VERSION = settings.PLATFORM_MIN_VERSION
+
+    class Meta:
+        app_label = 'polyaxon'
 
     def __str__(self):
         return 'Platform version'
@@ -64,6 +70,9 @@ class LibVersion(BaseValidationVersion):
     LATEST_VERSION = settings.LIB_LATEST_VERSION
     MIN_VERSION = settings.LIB_MIN_VERSION
 
+    class Meta:
+        app_label = 'polyaxon'
+
     def __str__(self):
         return 'Lib version'
 
@@ -73,6 +82,9 @@ class ChartVersion(Singleton):
     VERSION = settings.CHART_VERSION
 
     version = models.CharField(max_length=16)
+
+    class Meta:
+        app_label = 'polyaxon'
 
     def __str__(self):
         return 'Chart version'

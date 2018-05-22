@@ -9,7 +9,7 @@ from polyaxon_schemas.version import (
     LibVersionConfig,
     PlatformVersionConfig
 )
-from versions.models import ChartVersion, CliVersion, LibVersion, PlatformVersion
+from models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 
 class CliVersionView(RetrieveAPIView):
