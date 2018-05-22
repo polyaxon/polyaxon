@@ -45,7 +45,6 @@ class Job(DiffModel, LastStatusMixin):
     STATUSES = JobLifeCycle
 
     class Meta:
-        app_label = 'polyaxon'
         abstract = True
 
     @property
@@ -103,7 +102,6 @@ class JobStatus(StatusModel):
         return '{} <{}>'.format(self.job.unique_name, self.status)
 
     class Meta:
-        app_label = 'polyaxon'
         verbose_name_plural = 'Job Statuses'
         ordering = ['created_at']
         abstract = True
