@@ -10,7 +10,7 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,

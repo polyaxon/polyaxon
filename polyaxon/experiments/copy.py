@@ -2,7 +2,7 @@ import logging
 
 from event_monitors import publisher
 from experiments.paths import copy_experiment_outputs
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 
 logger = logging.getLogger('polyaxon.tasks.experiments')
 

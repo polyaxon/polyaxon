@@ -18,7 +18,7 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_STOPPED_TRIGGERED,
     TENSORBOARD_VIEWED
 )
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 from libs.utils import to_bool
 from libs.views import ProtectedView
 from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer

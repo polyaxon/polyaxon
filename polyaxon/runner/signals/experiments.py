@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 from models.experiment_groups import ExperimentGroup
 from experiments.models import Experiment, ExperimentStatus
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 from libs.decorators import check_specification, ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
 from runner.tasks.experiments import build_experiment

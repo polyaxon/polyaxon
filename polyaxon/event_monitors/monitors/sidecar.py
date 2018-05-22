@@ -2,7 +2,7 @@ import logging
 import time
 
 from event_monitors import publisher
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 from polyaxon_schemas.experiment import JobLabelConfig
 from runner.spawners.utils.constants import PodLifeCycle
 

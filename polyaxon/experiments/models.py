@@ -15,7 +15,7 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESUMED
 )
 from experiments.clone import CloningStrategy
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 from models.jobs import Job, JobResources, JobStatus
 from statuses.jobs import JobLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel

@@ -12,7 +12,7 @@ from django.db.models import Q
 from django.utils.functional import cached_property
 
 from statuses.experiment_groups import ExperimentGroupLifeCycle
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification

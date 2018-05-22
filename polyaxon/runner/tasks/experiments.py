@@ -4,7 +4,7 @@ from docker.errors import DockerException
 
 from experiments.copy import copy_experiment
 from experiments.paths import create_experiment_outputs_path
-from experiments.statuses import ExperimentLifeCycle
+from statuses.experiments import ExperimentLifeCycle
 from experiments.utils import get_valid_experiment
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals, RunnerCeleryTasks
