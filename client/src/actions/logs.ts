@@ -5,6 +5,7 @@ import { BASE_API_URL } from '../constants/api';
 export enum actionTypes {
   RECEIVE_LOGS = 'RECEIVE_LOGS',
   REQUEST_LOGS = 'REQUEST_LOGS',
+  RECEIVE_LOGS_ERROR = 'RECEIVE_LOGS_ERROR',
 }
 
 export interface RequestLogsAction extends Action {
@@ -15,6 +16,12 @@ export interface RequestLogsAction extends Action {
 export interface ReceiveLogsAction extends Action {
   type: actionTypes.RECEIVE_LOGS;
   logs: string;
+}
+
+export interface ReceiveErrorAction extends Action {
+  type: actionTypes.RECEIVE_LOGS_ERROR;
+  statusCode: number;
+  msg: string;
 }
 
 export function requestLogsActionCreator(): RequestLogsAction {
@@ -31,9 +38,18 @@ export function receiveLogsActionCreator(logs: string): ReceiveLogsAction {
   };
 }
 
+export function receiveErrorActionCreator(statusCode: number, msg: string): ReceiveErrorAction {
+  return {
+    type: actionTypes.RECEIVE_LOGS_ERROR,
+    statusCode,
+    msg
+  };
+}
+
 export type LogsAction =
   RequestLogsAction
-  | ReceiveLogsAction;
+  | ReceiveLogsAction
+  | ReceiveErrorAction;
 
 export function fetchLogs(projectUniqueName: string, resources: string, id: number): any {
   return (dispatch: any, getState: any) => {
@@ -42,13 +58,26 @@ export function fetchLogs(projectUniqueName: string, resources: string, id: numb
     let logsUrl =
       BASE_API_URL + `/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/logs`;
 
+    function handleError(response: Response, dispatch: any): any {
+      if (!response.ok) {
+        if (response.status === 404) {
+          dispatch(receiveErrorActionCreator(response.status, 'No logs'));
+        } else {
+          dispatch(receiveErrorActionCreator(response.status, 'Failed to fetch logs'));
+        }
+
+        return Promise.reject(response.statusText);
+      }
+      return response;
+    }
+
     return fetch(logsUrl, {
       headers: {
         'Content-Type': 'text/plain;charset=UTF-8',
         'Authorization': 'token ' + getState().auth.token
       }
     })
-      .then(response => handleAuthError(response, dispatch))
+      .then(response => handleError(response, dispatch))
       .then(response => response.text())
       .then(text => dispatch(receiveLogsActionCreator(text)))
       .catch(error => undefined);
