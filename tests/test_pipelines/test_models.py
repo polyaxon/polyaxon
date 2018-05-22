@@ -12,7 +12,7 @@ from factories.factory_pipelines import (
     PipelineRunFactory
 )
 from pipelines.constants import OperationStatuses, PipelineStatuses, TriggerPolicy
-from pipelines.models import OperationRunStatus, PipelineRunStatus
+from models.pipelines import OperationRunStatus, PipelineRunStatus
 from tests.utils import BaseTest
 
 

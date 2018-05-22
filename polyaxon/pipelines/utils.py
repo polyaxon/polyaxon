@@ -1,7 +1,7 @@
 from django.db.models import F, Max
 
 from pipelines import dags
-from pipelines.models import OperationRun, PipelineRun
+from models.pipelines import OperationRun, PipelineRun
 
 
 def set_op_upstreams(op_run, op):

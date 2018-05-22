@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 from libs.decorators import ignore_raw, ignore_updates
 from pipelines.constants import OperationStatuses, PipelineStatuses
-from pipelines.models import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
+from models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
 from pipelines.tasks import (
     check_pipeline_run_status,
     skip_pipeline_operation_runs,

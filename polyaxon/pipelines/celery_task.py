@@ -1,6 +1,6 @@
 from billiard.exceptions import SoftTimeLimitExceeded
 
-from pipelines.models import OperationRun
+from models.pipelines import OperationRun
 from polyaxon.celery_api import CeleryTask
 from polyaxon_schemas.utils import to_list
 

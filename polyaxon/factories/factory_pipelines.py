@@ -2,7 +2,7 @@ import factory
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
-from pipelines.models import Operation, OperationRun, Pipeline, PipelineRun
+from models.pipelines import Operation, OperationRun, Pipeline, PipelineRun
 
 
 class PipelineFactory(factory.DjangoModelFactory):

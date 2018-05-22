@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from libs.admin import DiffModelAdmin
-from pipelines.models import (
+from models.pipelines import (
     Operation,
     OperationRun,
     OperationRunStatus,
