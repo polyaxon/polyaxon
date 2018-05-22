@@ -16,7 +16,7 @@ from event_manager.events.experiment_job import (
 from event_monitors.authentication import authorized
 from event_monitors.consumers import Consumer
 from event_monitors.socket_manager import SocketManager
-from experiments.models import Experiment, ExperimentJob
+from models.experiments import Experiment, ExperimentJob
 from libs.redis_db import RedisToStream
 from polyaxon.config_settings.celery_settings import CeleryQueues, RoutingKeys
 from models.projects import Project

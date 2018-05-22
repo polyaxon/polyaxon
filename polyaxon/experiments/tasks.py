@@ -2,7 +2,7 @@ import logging
 
 from django.db.models import Count
 
-from experiments.models import Experiment, ExperimentMetric
+from models.experiments import Experiment, ExperimentMetric
 from statuses.experiments import ExperimentLifeCycle
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks

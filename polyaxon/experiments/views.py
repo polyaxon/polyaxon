@@ -40,7 +40,7 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from models.experiment_groups import ExperimentGroup
-from experiments.models import (
+from models.experiments import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

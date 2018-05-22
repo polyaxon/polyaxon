@@ -69,6 +69,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         on_delete=models.SET_NULL)
 
     class Meta:
+        app_label = 'polyaxon'
         ordering = ['sequence']
         unique_together = (('project', 'sequence'),)
 
@@ -295,6 +296,7 @@ class ExperimentGroupIteration(DiffModel):
         help_text='The experiment group iteration meta data.')
 
     class Meta:
+        app_label = 'polyaxon'
         ordering = ['created_at']
 
     def __str__(self):
@@ -317,6 +319,7 @@ class ExperimentGroupStatus(StatusModel):
         choices=STATUSES.CHOICES)
 
     class Meta:
+        app_label = 'polyaxon'
         verbose_name_plural = 'Experiment group Statuses'
         ordering = ['created_at']
 

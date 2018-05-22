@@ -6,7 +6,7 @@ from rest_framework import status
 from django.test import override_settings, tag
 
 from models.experiment_groups import ExperimentGroup
-from experiments.models import Experiment
+from models.experiments import Experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1

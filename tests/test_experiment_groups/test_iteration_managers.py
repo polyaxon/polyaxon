@@ -6,7 +6,7 @@ from experiment_groups.iteration_managers import (
     get_search_iteration_manager
 )
 from models.experiment_groups import ExperimentGroupIteration
-from experiments.models import ExperimentMetric
+from models.experiments import ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.fixtures import (

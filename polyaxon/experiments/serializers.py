@@ -1,7 +1,7 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
-from experiments.models import (
+from models.experiments import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

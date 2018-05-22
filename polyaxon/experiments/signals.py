@@ -14,7 +14,7 @@ from event_manager.events.experiment import (
     EXPERIMENT_SUCCEEDED
 )
 from experiments.clone import CloningStrategy
-from experiments.models import (
+from models.experiments import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from django.test import override_settings
 
-from experiments.models import Experiment, ExperimentJob, ExperimentStatus
+from models.experiments import Experiment, ExperimentJob, ExperimentStatus
 from experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,

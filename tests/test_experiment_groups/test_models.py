@@ -16,7 +16,7 @@ from experiment_groups.search_managers import (
     RandomSearchManager
 )
 from statuses.experiment_groups import ExperimentGroupLifeCycle
-from experiments.models import Experiment, ExperimentMetric
+from models.experiments import Experiment, ExperimentMetric
 from statuses.experiments import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory

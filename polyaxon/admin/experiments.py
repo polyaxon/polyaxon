@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from experiments.models import (
+from models.experiments import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

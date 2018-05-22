@@ -12,7 +12,7 @@ from django.utils import timezone
 
 from experiments.clone import CloningStrategy
 from experiments.copy import copy_experiment
-from experiments.models import Experiment, ExperimentJob, ExperimentStatus
+from models.experiments import Experiment, ExperimentJob, ExperimentStatus
 from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from statuses.experiments import ExperimentLifeCycle
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses

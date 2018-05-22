@@ -1,7 +1,7 @@
 from django.conf import settings
 
 from event_monitors.monitors.statuses import update_job_containers
-from experiments.models import ExperimentJob
+from models.experiments import ExperimentJob
 from factories.factory_experiments import ExperimentJobFactory
 from statuses.jobs import JobLifeCycle
 from libs.redis_db import RedisJobContainers

@@ -7,7 +7,7 @@ from rest_framework import fields
 
 from django.conf import settings
 
-from experiments.models import ExperimentJob
+from models.experiments import ExperimentJob
 from experiments.serializers import ExperimentJobDetailSerializer
 from statuses.experiments import ExperimentLifeCycle
 from models.jobs import JobResources
