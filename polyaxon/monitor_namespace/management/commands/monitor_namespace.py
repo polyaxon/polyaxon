@@ -6,8 +6,8 @@ from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
 
 from db.models.clusters import Cluster
-from event_monitors.management.commands._base_monitor import BaseMonitorCommand
-from event_monitors.monitors import namespace
+from libs.base_monitor import BaseMonitorCommand
+from monitor_namespace import monitor
 from polyaxon_k8s.manager import K8SManager
 
 
@@ -21,7 +21,7 @@ class Command(BaseMonitorCommand):
             try:
                 return Cluster.load()
             except (InterfaceError, ProgrammingError, OperationalError) as e:
-                namespace.logger.exception("Database is not synced yet %s\n", e)
+                monitor.logger.exception("Database is not synced yet %s\n", e)
                 trials += 1
                 time.sleep(log_sleep_interval * 2)
         return None
@@ -40,10 +40,10 @@ class Command(BaseMonitorCommand):
 
         while True:
             try:
-                namespace.run(k8s_manager, cluster)
+                monitor.run(k8s_manager, cluster)
             except ApiException as e:
-                namespace.logger.error(
+                monitor.logger.error(
                     "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n", e)
                 time.sleep(log_sleep_interval)
             except Exception as e:
-                namespace.logger.exception("Unhandled exception occurred: %s\n", e)
+                monitor.logger.exception("Unhandled exception occurred: %s\n", e)
