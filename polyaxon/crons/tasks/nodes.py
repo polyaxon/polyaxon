@@ -1,4 +1,3 @@
-import logging
 import requests
 import uuid
 
@@ -16,12 +15,10 @@ from event_manager.events.cluster import (
     CLUSTER_UPDATED
 )
 from polyaxon.celery_api import app as celery_app
-from polyaxon.config_settings import RunnerCeleryTasks
+from polyaxon.settings import RunnerCeleryTasks
 from polyaxon_k8s.manager import K8SManager
 from polyaxon_schemas.utils import to_unit_memory
 from db.models.nodes import ClusterNode
-
-logger = logging.getLogger('polyaxon.tasks.clusters')
 
 
 def get_cluster_resources():
