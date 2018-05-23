@@ -2,8 +2,8 @@ import logging
 
 from django.conf import settings
 
+from docker_images.images_tags import LATEST_IMAGE_TAG
 from db.models.repos import ExternalRepo
-from runner.dockerizer.builders.notebooks import NotebookDockerBuilder
 
 logger = logging.getLogger('polyaxon.dockerizer.images')
 
@@ -62,4 +62,4 @@ def get_job_image_info(project, job):
 def get_notebook_image_info(project, job):
     """Return the image name and image tag for a job"""
     image_name, _ = get_job_image_info(project, job)
-    return image_name, NotebookDockerBuilder.LATEST_IMAGE_TAG
+    return image_name, LATEST_IMAGE_TAG
