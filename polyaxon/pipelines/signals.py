@@ -1,15 +1,11 @@
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
+from polyaxon.celery_api import app as celery_app
+from polyaxon.config_settings import CeleryTasks
 from libs.decorators import ignore_raw, ignore_updates
 from constants.pipelines import OperationStatuses, PipelineStatuses
 from db.models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
-from pipelines.tasks import (
-    check_pipeline_run_status,
-    skip_pipeline_operation_runs,
-    start_operation_run,
-    stop_pipeline_operation_runs
-)
 
 
 @receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_saved")
@@ -39,11 +35,15 @@ def new_pipeline_run_status(sender, **kwargs):
     pipeline_run.save()
     # Notify operations with status change. This is necessary if we skip or stop the dag run.
     if pipeline_run.stopped:
-        stop_pipeline_operation_runs.delay(pipeline_run_id=pipeline_run.id,
-                                           message='Pipeline run was stopped')
+        celery_app.send_task(
+            CeleryTasks.PIPELINES_STOP_OPERATIONS,
+            kwargs={'pipeline_run_id': pipeline_run.id,
+                    'message': 'Pipeline run was stopped'})
     if pipeline_run.skipped:
-        skip_pipeline_operation_runs.delay(pipeline_run_id=pipeline_run.id,
-                                           message='Pipeline run was skipped')
+        celery_app.send_task(
+            CeleryTasks.PIPELINES_SKIP_OPERATIONS,
+            kwargs={'pipeline_run_id': pipeline_run.id,
+                    'message': 'Pipeline run was skipped'})
 
 
 @receiver(post_save, sender=OperationRunStatus, dispatch_uid="new_operation_run_status_saved")
@@ -62,15 +62,19 @@ def new_operation_run_status(sender, **kwargs):
         return
 
     # Check if we need to update the pipeline_run's status
-    check_pipeline_run_status.delay(pipeline_run_id=pipeline_run.id,
-                                    status=instance.status,
-                                    message=instance.message)
+    celery_app.send_task(
+        CeleryTasks.PIPELINES_CHECK_STATUS,
+        kwargs={'pipeline_run_id': pipeline_run.id,
+                'status': instance.status,
+                'message': instance.message})
     if operation_run.is_done:
         # Notify downstream that instance is done, and that its dependency can start.
         downstream_runs = operation_run.downstream_runs.filter(
             status__status=OperationStatuses.CREATED)
         for op_run in downstream_runs:
-            start_operation_run.delay(operation_run_id=op_run.id)
+            celery_app.send_task(
+                CeleryTasks.PIPELINES_START_OPERATION,
+                kwargs={'operation_run_id': op_run.id})
 
 
 @receiver(pre_delete, sender=OperationRun, dispatch_uid="operation_run_deleted")
