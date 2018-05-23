@@ -1,7 +1,7 @@
-from experiment_groups.search_managers.bayesian_optimization.manager import BOSearchManager
-from experiment_groups.search_managers.grid import GridSearchManager
-from experiment_groups.search_managers.hyperband import HyperbandSearchManager
-from experiment_groups.search_managers.random import RandomSearchManager
+from hp_search.search_managers.bayesian_optimization.manager import BOSearchManager
+from hp_search.search_managers.grid import GridSearchManager
+from hp_search.search_managers import HyperbandSearchManager
+from hp_search.search_managers import RandomSearchManager
 from polyaxon_schemas.utils import SearchAlgorithms
 
 

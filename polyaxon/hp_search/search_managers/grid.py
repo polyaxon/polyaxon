@@ -1,6 +1,6 @@
 import itertools
 
-from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
+from hp_search.search_managers.base import BaseSearchAlgorithmManager
 from polyaxon_schemas.utils import SearchAlgorithms
 
 

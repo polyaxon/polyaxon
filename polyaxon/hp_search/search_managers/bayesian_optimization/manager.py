@@ -1,6 +1,6 @@
-from experiment_groups.search_managers.base import BaseSearchAlgorithmManager
-from experiment_groups.search_managers.bayesian_optimization.optimizer import BOOptimizer
-from experiment_groups.search_managers.utils import get_random_suggestions
+from hp_search.search_managers.base import BaseSearchAlgorithmManager
+from hp_search.search_managers.bayesian_optimization.optimizer import BOOptimizer
+from hp_search.search_managers.utils import get_random_suggestions
 from polyaxon_schemas.utils import SearchAlgorithms
 
 

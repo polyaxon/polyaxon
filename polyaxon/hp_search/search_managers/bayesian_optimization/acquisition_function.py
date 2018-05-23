@@ -5,7 +5,7 @@ from scipy.stats import norm
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, Matern
 
-from experiment_groups.search_managers.utils import get_random_generator
+from hp_search.search_managers.utils import get_random_generator
 from polyaxon_schemas.settings import GaussianProcessConfig, UtilityFunctionConfig
 from polyaxon_schemas.utils import AcquisitionFunctions, GaussianProcessesKernels
 
