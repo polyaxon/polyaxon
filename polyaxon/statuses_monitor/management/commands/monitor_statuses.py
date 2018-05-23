@@ -4,8 +4,8 @@ from kubernetes.client.rest import ApiException
 
 from django.conf import settings
 
-from event_monitors.management.commands._base_monitor import BaseMonitorCommand
-from event_monitors.monitors import statuses
+from libs.base_monitor import BaseMonitorCommand
+from statuses_monitor import monitor
 from polyaxon_k8s.manager import K8SManager
 
 
@@ -21,10 +21,10 @@ class Command(BaseMonitorCommand):
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
         while True:
             try:
-                statuses.run(k8s_manager)
+                monitor.run(k8s_manager)
             except ApiException as e:
-                statuses.logger.error(
+                monitor.logger.error(
                     "Exception when calling CoreV1Api->list_namespaced_pod: %s\n", e)
                 time.sleep(log_sleep_interval)
             except Exception as e:
-                statuses.logger.exception("Unhandled exception occurred %s\n", e)
+                monitor.logger.exception("Unhandled exception occurred %s\n", e)

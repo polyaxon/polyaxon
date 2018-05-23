@@ -9,7 +9,7 @@ from polyaxon.settings import RunnerCeleryTasks
 
 from constants.jobs import JobLifeCycle
 from libs.redis_db import RedisJobContainers
-from runner.spawners.utils.jobs import get_job_state
+from statuses_monitor.jobs import get_job_state
 
 logger = logging.getLogger('polyaxon.monitors.constants')
 
