@@ -1,14 +1,10 @@
-import logging
-
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from constants.jobs import JobLifeCycle
 from repos import git
 from db.models.repos import ExternalRepo, Repo
-from runner.dockerizer.builders.base import BaseDockerBuilder
-
-logger = logging.getLogger('polyaxon.dockerizer.builders')
+from dockerizer.builders.base import BaseDockerBuilder
 
 
 class BaseJobDockerBuilder(BaseDockerBuilder):

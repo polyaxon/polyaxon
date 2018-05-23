@@ -1,9 +1,9 @@
 import logging
 
 from db.models.projects import Project
-from runner.dockerizer.builders.jobs import BaseJobDockerBuilder, build_job
+from dockerizer.builders.jobs import BaseJobDockerBuilder, build_job
 
-logger = logging.getLogger('polyaxon.dockerizer.builders')
+_logger = logging.getLogger('polyaxon.dockerizer')
 
 
 class NotebookDockerBuilder(BaseJobDockerBuilder):
@@ -39,13 +39,13 @@ class NotebookDockerBuilder(BaseJobDockerBuilder):
             try:
                 project = Project.objects.get(id=self.project_id)
             except Project.DoesNotExist:
-                logger.info('Project `%s` does not exist anymore, stopping build',
-                            self.project_name)
+                _logger.info('Project `%s` does not exist anymore, stopping build',
+                             self.project_name)
                 return check_pulse, True
 
             if not project.notebook or not project.notebook.is_running:
-                logger.info('Project `%s` does not have a notebook anymore, stopping build',
-                            self.project_name)
+                _logger.info('Project `%s` does not have a notebook anymore, stopping build',
+                             self.project_name)
                 return check_pulse, True
             else:
                 check_pulse = 0

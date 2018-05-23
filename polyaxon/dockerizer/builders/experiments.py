@@ -3,14 +3,15 @@ import logging
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from event_monitors import publisher
+import publisher
+
 from constants.experiments import ExperimentLifeCycle
 from experiments.utils import is_experiment_still_running
 from repos import git
 from db.models.repos import CodeReference, ExternalRepo, Repo
-from runner.dockerizer.builders.base import BaseDockerBuilder
+from dockerizer.builders.base import BaseDockerBuilder
 
-logger = logging.getLogger('polyaxon.dockerizer.builders')
+_logger = logging.getLogger('polyaxon.dockerizer')
 
 
 class ExperimentDockerBuilder(BaseDockerBuilder):
@@ -42,7 +43,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
             dockerfile_name=dockerfile_name)
 
     def _handle_logs(self, log_line):
-        publisher.publish_log(
+        publisher.publish_experiment_log(
             log_line=log_line,
             status=ExperimentLifeCycle.BUILDING,
             experiment_uuid=self.experiment_uuid,
@@ -55,7 +56,7 @@ class ExperimentDockerBuilder(BaseDockerBuilder):
         # Check if experiment is not stopped in the meanwhile
         if check_pulse > self.CHECK_INTERVAL:
             if not is_experiment_still_running(experiment_uuid=self.experiment_uuid):
-                logger.info('Experiment `%s` is not running, stopping build', self.experiment_name)
+                _logger.info('Experiment `%s` is not running, stopping build', self.experiment_name)
                 return check_pulse, True
             else:
                 check_pulse = 0

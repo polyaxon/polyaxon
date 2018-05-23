@@ -14,9 +14,9 @@ from django.conf import settings
 from libs.paths import copy_to_tmp_dir, delete_path, delete_tmp_dir
 from libs.utils import get_list
 from repos import git
-from runner.dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
+from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 
-logger = logging.getLogger('polyaxon.dockerizer.builders')
+_logger = logging.getLogger('polyaxon.dockerizer')
 
 
 class BaseDockerBuilder(object):
@@ -84,7 +84,7 @@ class BaseDockerBuilder(object):
                               registry=registry_host,
                               reauth=True)
         except DockerException as e:
-            logger.exception('Failed to connect to registry %s\n', e)
+            _logger.exception('Failed to connect to registry %s\n', e)
 
     def _handle_logs(self, log_line):
         raise NotImplementedError
@@ -128,7 +128,7 @@ class BaseDockerBuilder(object):
         )
 
     def build(self, memory_limit=None):
-        logger.debug('Starting build in `%s`', self.build_repo_path)
+        _logger.debug('Starting build in `%s`', self.build_repo_path)
         # Checkout to the correct commit
         if self.image_tag != self.LATEST_IMAGE_TAG:
             git.checkout_commit(repo_path=self.build_repo_path, commit=self.image_tag)
@@ -179,7 +179,7 @@ class BaseDockerBuilder(object):
             lines = [json.loads(l) for l in lines]
             for progress in lines:
                 if 'error' in progress:
-                    logger.error(progress['error'], extra=dict(phase='failed'))
+                    _logger.error(progress['error'], extra=dict(phase='failed'))
                     return
                 if 'id' not in progress:
                     continue
@@ -188,7 +188,7 @@ class BaseDockerBuilder(object):
                 else:
                     layers[progress['id']] = progress['status']
                 if time.time() - last_emit_time > 1.5:
-                    logger.debug('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
+                    _logger.debug('Pushing image\n', extra=dict(progress=layers, phase='pushing'))
                     last_emit_time = time.time()
 
                 self._handle_logs(log_line)
