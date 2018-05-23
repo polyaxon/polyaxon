@@ -11,7 +11,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_NEW_STATUS,
     EXPERIMENT_GROUP_STOPPED
 )
-from models.experiment_groups import (
+from db.models.experiment_groups import (
     ExperimentGroup,
     ExperimentGroupIteration,
     ExperimentGroupStatus

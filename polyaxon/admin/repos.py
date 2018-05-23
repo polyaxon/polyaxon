@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models.repos import ExternalRepo, Repo
+from db.models.repos import ExternalRepo, Repo
 
 
 class RepoAdmin(admin.ModelAdmin):

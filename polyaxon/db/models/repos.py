@@ -3,7 +3,7 @@ import os
 from django.conf import settings
 from django.db import models
 
-from libs.models import DiffModel
+from db.models.utils import DiffModel
 
 
 class RepoMixin(object):
@@ -30,6 +30,8 @@ class RepoMixin(object):
     @property
     def last_commit(self):
         """Returns a tuple (hash, and commit object)"""
+        from repos import git
+
         return git.get_last_commit(repo_path=self.path)
 
     def get_tmp_tar_path(self):
@@ -39,13 +41,13 @@ class RepoMixin(object):
 class Repo(DiffModel, RepoMixin):
     """A model that represents a repository containing code."""
     project = models.OneToOneField(
-        'polyaxon.Project',
+        'db.Project',
         on_delete=models.CASCADE,
         related_name='repo')
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return '{} <repo>'.format(self.project)
@@ -54,14 +56,14 @@ class Repo(DiffModel, RepoMixin):
 class ExternalRepo(DiffModel, RepoMixin):
     """A model that represents an external repository containing code."""
     project = models.ForeignKey(
-        'polyaxon.Project',
+        'db.Project',
         on_delete=models.CASCADE,
         related_name='external_repos')
     git_url = models.URLField()
     is_public = models.BooleanField(default=True, help_text='If repo is public or private.')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         unique_together = (('project', 'git_url'),)
 
     def __str__(self):
@@ -82,13 +84,13 @@ class ExternalRepo(DiffModel, RepoMixin):
 class CodeReference(DiffModel):
     """A model that represents a reference to repo and code commit."""
     repo = models.ForeignKey(
-        'polyaxon.Repo',
+        'db.Repo',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         related_name='references')
     external_repo = models.ForeignKey(
-        'polyaxon.ExternalRepo',
+        'db.ExternalRepo',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
@@ -99,7 +101,7 @@ class CodeReference(DiffModel):
         null=True)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return '{} <{}>'.format(self.repo, self.commit)

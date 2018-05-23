@@ -7,10 +7,10 @@ from rest_framework import fields
 
 from django.conf import settings
 
-from models.experiments import ExperimentJob
+from db.models.experiments import ExperimentJob
 from experiments.serializers import ExperimentJobDetailSerializer
 from constants.experiments import ExperimentLifeCycle
-from models.jobs import JobResources
+from db.models.jobs import JobResources
 from polyaxon.utils import config
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,

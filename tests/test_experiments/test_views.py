@@ -6,7 +6,7 @@ from rest_framework import status
 
 from django.test import override_settings, tag
 
-from models.experiments import (
+from db.models.experiments import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

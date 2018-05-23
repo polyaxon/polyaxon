@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.db import models
 
 
-from libs.models import Singleton
+from db.models.utils import Singleton
 
 
 class Cluster(Singleton):
@@ -19,7 +19,7 @@ class Cluster(Singleton):
     version_api = JSONField(help_text='The cluster version api info')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return 'Cluster: {}'.format(self.uuid.hex)

@@ -11,7 +11,7 @@ from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
 
 from experiments.copy import copy_experiment
-from models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
+from db.models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
 from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from constants.experiments import ExperimentLifeCycle
 from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
@@ -30,7 +30,7 @@ from factories.fixtures import (
     exec_experiment_spec_content,
     experiment_spec_content
 )
-from models.jobs import JobResources
+from db.models.jobs import JobResources
 from constants.jobs import JobLifeCycle
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification

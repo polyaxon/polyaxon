@@ -64,13 +64,13 @@ class StatusModel(models.Model):
 
     e.g.
 
-    # status = models.CharField(
+    # status = db.CharField(
         max_length=64,
         blank=True,
         null=True,
         default=STATUSES.CREATED,
         choices=STATUSES.CHOICES)
-    # job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='constants')
+    # job = db.ForeignKey(Job, on_delete=db.CASCADE, related_name='statuses')
     """
     STATUSES = None
 
@@ -99,13 +99,13 @@ class LastStatusMixin(object):
 
     e.g.
 
-    experiment_status = models.OneToOneField(
+    experiment_status = db.OneToOneField(
         'ExperimentStatus',
         related_name='+',
         blank=True,
         null=True,
         editable=True,
-        on_delete=models.SET_NULL)
+        on_delete=db.SET_NULL)
     """
     STATUSES = None
 

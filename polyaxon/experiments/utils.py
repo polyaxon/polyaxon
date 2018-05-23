@@ -1,6 +1,6 @@
 import logging
 
-from models.experiments import Experiment
+from db.models.experiments import Experiment
 
 logger = logging.getLogger('polyaxon.experiments.utils')
 

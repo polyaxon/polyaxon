@@ -6,7 +6,7 @@ from rest_framework.response import Response
 import auditor
 
 from event_manager.events.experiment import EXPERIMENT_STOPPED_TRIGGERED
-from models.experiments import Experiment
+from db.models.experiments import Experiment
 from experiments.serializers import ExperimentSerializer
 from projects.permissions import get_permissible_project
 from runner.tasks.experiments import stop_experiment

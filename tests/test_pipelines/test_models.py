@@ -12,7 +12,7 @@ from factories.factory_pipelines import (
     PipelineRunFactory
 )
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
-from models.pipelines import OperationRunStatus, PipelineRunStatus
+from db.models.pipelines import OperationRunStatus, PipelineRunStatus
 from tests.utils import BaseTest
 
 
@@ -766,7 +766,7 @@ class TestOperationRunModel(BaseTest):
 
         assert start_operation_run.call_count == 1
 
-        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+        with patch('db.pipelines.OperationRun.start') as start_operation_run:
             assert operation_run.schedule_start() is False
 
         assert start_operation_run.call_count == 1
@@ -795,7 +795,7 @@ class TestOperationRunModel(BaseTest):
 
         assert start_operation_run.call_count == 1
 
-        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+        with patch('db.pipelines.OperationRun.start') as start_operation_run:
             assert operation_run.schedule_start() is True
 
         assert start_operation_run.call_count == 0
@@ -828,7 +828,7 @@ class TestOperationRunModel(BaseTest):
         new_operation_run = OperationRunFactory(operation=operation_run.operation)
         new_operation_run.upstream_runs.set([upstream_run1, upstream_run2])
 
-        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+        with patch('db.pipelines.OperationRun.start') as start_operation_run:
             assert operation_run.schedule_start() is False
 
         assert start_operation_run.call_count == 1
@@ -840,7 +840,7 @@ class TestOperationRunModel(BaseTest):
         new_operation_run.refresh_from_db()
         assert new_operation_run.last_status == OperationStatuses.CREATED
 
-        with patch('pipelines.models.OperationRun.start') as start_operation_run:
+        with patch('db.pipelines.OperationRun.start') as start_operation_run:
             assert new_operation_run.schedule_start() is True
 
         assert start_operation_run.call_count == 0

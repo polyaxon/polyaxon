@@ -2,7 +2,7 @@ from django.core.management import BaseCommand
 from django.db import ProgrammingError
 from django.db.models import Q
 
-from models.projects import Project
+from db.models.projects import Project
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler
 
 

@@ -16,10 +16,10 @@ from event_manager.events.experiment_job import (
 from event_monitors.authentication import authorized
 from event_monitors.consumers import Consumer
 from event_monitors.socket_manager import SocketManager
-from models.experiments import Experiment, ExperimentJob
+from db.models.experiments import Experiment, ExperimentJob
 from libs.redis_db import RedisToStream
 from polyaxon.config_settings.celery_settings import CeleryQueues, RoutingKeys
-from models.projects import Project
+from db.models.projects import Project
 from projects.permissions import has_project_permissions
 
 logger = logging.getLogger('polyaxon.monitors.api')

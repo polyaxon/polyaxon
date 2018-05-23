@@ -12,7 +12,7 @@ class BOIterationManager(BaseIterationManger):
 
     def create_iteration(self, experiment_ids, experiments_configs):
         """Create an iteration for the experiment group."""
-        from models.experiment_groups import ExperimentGroupIteration
+        from db.models.experiment_groups import ExperimentGroupIteration
 
         iteration_config = self.experiment_group.iteration_config
 

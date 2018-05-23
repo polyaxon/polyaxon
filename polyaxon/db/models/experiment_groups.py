@@ -13,13 +13,13 @@ from django.utils.functional import cached_property
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
-from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_group_params_config, validate_group_spec_content
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import Optimization
 
-logger = logging.getLogger('polyaxon.experiment_groups')
+logger = logging.getLogger('db.experiment_groups')
 
 
 class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
@@ -40,7 +40,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         null=False,
         help_text='The sequence number of this group within the project.', )
     project = models.ForeignKey(
-        'polyaxon.Project',
+        'db.Project',
         on_delete=models.CASCADE,
         related_name='experiment_groups',
         help_text='The project this polyaxonfile belongs to.')
@@ -55,13 +55,13 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         blank=True,
         validators=[validate_group_params_config])
     code_reference = models.ForeignKey(
-        'polyaxon.CodeReference',
+        'db.CodeReference',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='+')
     status = models.OneToOneField(
-        'polyaxon.ExperimentGroupStatus',
+        'db.ExperimentGroupStatus',
         related_name='+',
         blank=True,
         null=True,
@@ -69,7 +69,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         on_delete=models.SET_NULL)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         ordering = ['sequence']
         unique_together = (('project', 'sequence'),)
 
@@ -288,7 +288,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
 class ExperimentGroupIteration(DiffModel):
     experiment_group = models.ForeignKey(
-        'polyaxon.ExperimentGroup',
+        'db.ExperimentGroup',
         on_delete=models.CASCADE,
         related_name='iterations',
         help_text='The experiment group.')
@@ -296,7 +296,7 @@ class ExperimentGroupIteration(DiffModel):
         help_text='The experiment group iteration meta data.')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         ordering = ['created_at']
 
     def __str__(self):
@@ -308,9 +308,9 @@ class ExperimentGroupStatus(StatusModel):
     STATUSES = ExperimentGroupLifeCycle
 
     experiment_group = models.ForeignKey(
-        'polyaxon.ExperimentGroup',
+        'db.ExperimentGroup',
         on_delete=models.CASCADE,
-        related_name='constants')
+        related_name='statuses')
     status = models.CharField(
         max_length=64,
         blank=True,
@@ -319,7 +319,7 @@ class ExperimentGroupStatus(StatusModel):
         choices=STATUSES.CHOICES)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name_plural = 'Experiment group Statuses'
         ordering = ['created_at']
 

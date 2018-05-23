@@ -1,6 +1,6 @@
 from rest_framework import fields, serializers
 
-from models.clusters import Cluster
+from db.models.clusters import Cluster
 
 
 class ClusterSerializer(serializers.ModelSerializer):

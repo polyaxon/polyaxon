@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from django.test import override_settings
 
-from models.experiment_groups import ExperimentGroupIteration
+from db.models.experiment_groups import ExperimentGroupIteration
 from experiment_groups.schemas import BOIterationConfig
 from experiment_groups.search_managers import (
     BOSearchManager,

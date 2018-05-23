@@ -3,6 +3,7 @@ from polyaxon.utils import config
 PROJECT_APPS = (
     'polyaxon',
     'libs.apps.LibsConfig',
+    'db.apps.DBConfig',
     'users.apps.UsersConfig',
     'versions.apps.VersionsConfig',
     'clusters.apps.ClustersConfig',

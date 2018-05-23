@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from libs.admin import DiffModelAdmin
-from models.projects import Project
+from db.models.projects import Project
 
 
 class ProjectAdmin(DiffModelAdmin):

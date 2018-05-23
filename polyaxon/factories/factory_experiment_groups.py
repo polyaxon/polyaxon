@@ -1,6 +1,6 @@
 import factory
 
-from models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from factories.fixtures import experiment_group_spec_content_2_xps

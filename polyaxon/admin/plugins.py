@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from admin.jobs import JobStatusAdmin
 from libs.admin import DiffModelAdmin
-from models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
+from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 
 
 class TensorboardJobAdmin(DiffModelAdmin):

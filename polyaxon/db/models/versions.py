@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 
-from libs.models import Singleton
+from db.models.utils import Singleton
 
 
 class BaseValidationVersion(Singleton):
@@ -47,7 +47,7 @@ class CliVersion(BaseValidationVersion):
     MIN_VERSION = settings.CLI_MIN_VERSION
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return 'Cli version'
@@ -59,7 +59,7 @@ class PlatformVersion(BaseValidationVersion):
     MIN_VERSION = settings.PLATFORM_MIN_VERSION
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return 'Platform version'
@@ -71,7 +71,7 @@ class LibVersion(BaseValidationVersion):
     MIN_VERSION = settings.LIB_MIN_VERSION
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return 'Lib version'
@@ -84,7 +84,7 @@ class ChartVersion(Singleton):
     version = models.CharField(max_length=16)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return 'Chart version'

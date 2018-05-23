@@ -1,5 +1,5 @@
 from factories.factory_repos import RepoFactory
-from models.repos import Repo
+from db.models.repos import Repo
 from repos.serializers import RepoSerializer
 from tests.utils import BaseTest
 

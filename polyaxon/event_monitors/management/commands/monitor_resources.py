@@ -3,11 +3,11 @@ import time
 from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
 
-from models.clusters import Cluster
+from db.models.clusters import Cluster
 from event_monitors.management.commands._base_monitor import BaseMonitorCommand
 from event_monitors.monitors import resources
 from libs.utils import to_bool
-from models.nodes import ClusterNode
+from db.models.nodes import ClusterNode
 
 
 class Command(BaseMonitorCommand):

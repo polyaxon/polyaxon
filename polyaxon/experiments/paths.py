@@ -3,7 +3,7 @@ import shutil
 
 from django.conf import settings
 
-from models.experiments import CloningStrategy
+from db.models.experiments import CloningStrategy
 from libs.paths import create_path, delete_path
 
 

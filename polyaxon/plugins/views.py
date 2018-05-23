@@ -23,7 +23,7 @@ from libs.utils import to_bool
 from libs.views import ProtectedView
 from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from plugins.tasks import build_notebook, start_tensorboard, stop_notebook, stop_tensorboard
-from models.projects import Project
+from db.models.projects import Project
 from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from repos import git
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler

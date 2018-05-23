@@ -5,7 +5,7 @@ from django.core.validators import validate_slug
 from django.db import models
 
 from libs.blacklist import validate_blacklist_name
-from libs.models import DescribableModel, DiffModel
+from db.models.utils import DescribableModel, DiffModel
 
 
 class Project(DiffModel, DescribableModel):
@@ -30,7 +30,7 @@ class Project(DiffModel, DescribableModel):
         return self.unique_name
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         unique_together = (('user', 'name'),)
 
     @property

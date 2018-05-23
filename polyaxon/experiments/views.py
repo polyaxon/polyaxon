@@ -39,8 +39,8 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
-from models.experiment_groups import ExperimentGroup
-from models.experiments import (
+from db.models.experiment_groups import ExperimentGroup
+from db.models.experiments import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

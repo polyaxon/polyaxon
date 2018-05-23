@@ -10,12 +10,12 @@ from django.db import models
 from django.dispatch import Signal
 
 from libs.blacklist import validate_blacklist_name
-from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals
 
-logger = logging.getLogger('polyaxon.pipelines')
+logger = logging.getLogger('db.pipelines')
 
 status_change = Signal(providing_args=["instance", "status"])
 
@@ -45,7 +45,7 @@ class Schedule(DiffModel):
                   "sequentially while relying on the previous instances' schedule to succeed.")
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
 
 class ExecutableModel(models.Model):
@@ -57,7 +57,7 @@ class ExecutableModel(models.Model):
         unique=True,
         null=False)
     schedule = models.OneToOneField(
-        'polyaxon.Schedule',
+        'db.Schedule',
         null=True,
         blank=True,
         on_delete=models.SET_NULL)
@@ -101,7 +101,7 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
         blank=True,
         related_name='pipelines')
     project = models.ForeignKey(
-        'polyaxon.Project',
+        'db.Project',
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -113,7 +113,7 @@ class Pipeline(DiffModel, DescribableModel, ExecutableModel):
                   "allowed to run concurrently.")
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     @property
     def dag(self):
@@ -156,7 +156,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
     Add for wait for downstream `wait_for_downstream` of upstream operations before running.
     """
     pipeline = models.ForeignKey(
-        'polyaxon.Pipeline',
+        'db.Pipeline',
         on_delete=models.CASCADE,
         related_name='operations')
     upstream_operations = models.ManyToManyField(
@@ -214,7 +214,7 @@ class Operation(DiffModel, DescribableModel, ExecutableModel):
                   "If provided, it will override the queue provided in CELERY_TASK_ROUTES.")
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def get_countdown(self, retries):
         """Calculate the countdown for a celery task retry."""
@@ -255,12 +255,12 @@ class PipelineRunStatus(StatusModel):
         default=STATUSES.CREATED,
         choices=STATUSES.CHOICES)
     pipeline_run = models.ForeignKey(
-        'polyaxon.PipelineRun',
+        'db.PipelineRun',
         on_delete=models.CASCADE,
-        related_name='constants')
+        related_name='statuses')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name_plural = 'Pipeline Run Statuses'
         ordering = ['created_at']
 
@@ -279,12 +279,12 @@ class OperationRunStatus(StatusModel):
         default=STATUSES.CREATED,
         choices=STATUSES.CHOICES)
     operation_run = models.ForeignKey(
-        'polyaxon.OperationRun',
+        'db.OperationRun',
         on_delete=models.CASCADE,
-        related_name='constants')
+        related_name='statuses')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name_plural = 'Operation Run Statuses'
         ordering = ['created_at']
 
@@ -369,11 +369,11 @@ class PipelineRun(RunModel):
     STATUSES = PipelineStatuses
 
     pipeline = models.ForeignKey(
-        'polyaxon.Pipeline',
+        'db.Pipeline',
         on_delete=models.CASCADE,
         related_name='runs')
     status = models.OneToOneField(
-        'polyaxon.PipelineRunStatus',
+        'db.PipelineRunStatus',
         related_name='+',
         blank=True,
         null=True,
@@ -381,7 +381,7 @@ class PipelineRun(RunModel):
         on_delete=models.SET_NULL)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     @property
     def dag(self):
@@ -449,11 +449,11 @@ class OperationRun(RunModel):
     STATUSES = OperationStatuses
 
     operation = models.ForeignKey(
-        'polyaxon.Operation',
+        'db.Operation',
         on_delete=models.CASCADE,
         related_name='runs')
     pipeline_run = models.ForeignKey(
-        'polyaxon.PipelineRun',
+        'db.PipelineRun',
         on_delete=models.CASCADE,
         related_name='operation_runs')
     upstream_runs = models.ManyToManyField(
@@ -462,7 +462,7 @@ class OperationRun(RunModel):
         symmetrical=False,
         related_name='downstream_runs')
     status = models.OneToOneField(
-        'polyaxon.OperationRunStatus',
+        'db.OperationRunStatus',
         related_name='+',
         blank=True,
         null=True,
@@ -475,7 +475,7 @@ class OperationRun(RunModel):
     celery_task_id = models.CharField(max_length=36, null=False, blank=True)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def set_status(self, status, message=None, **kwargs):
         if self.can_transition(status):

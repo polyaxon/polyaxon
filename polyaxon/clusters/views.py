@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from django.conf import settings
 
-from models.clusters import Cluster
+from db.models.clusters import Cluster
 from clusters.serializers import ClusterSerializer
 
 

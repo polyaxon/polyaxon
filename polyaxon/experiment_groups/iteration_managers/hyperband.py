@@ -13,7 +13,7 @@ class HyperbandIterationManager(BaseIterationManger):
 
     def create_iteration(self, experiment_ids=None):
         """Create an iteration for the experiment group."""
-        from models.experiment_groups import ExperimentGroupIteration
+        from db.models.experiment_groups import ExperimentGroupIteration
 
         search_manager = self.experiment_group.search_manager
         iteration_config = self.experiment_group.iteration_config

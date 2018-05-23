@@ -17,7 +17,7 @@ from factories.factory_users import UserFactory
 from constants.jobs import JobLifeCycle
 from polyaxon.urls import API_V1
 from repos import git
-from models.repos import Repo
+from db.models.repos import Repo
 from repos.serializers import RepoSerializer
 from tests.utils import BaseViewTest
 

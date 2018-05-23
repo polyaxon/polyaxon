@@ -1,6 +1,6 @@
 import logging
 
-from models.experiments import Experiment
+from db.models.experiments import Experiment
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 from runner.tasks.experiments import build_experiment

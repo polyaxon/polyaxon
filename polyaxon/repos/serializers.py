@@ -1,6 +1,6 @@
 from rest_framework import fields, serializers
 
-from models.repos import Repo
+from db.models.repos import Repo
 
 
 class RepoSerializer(serializers.ModelSerializer):

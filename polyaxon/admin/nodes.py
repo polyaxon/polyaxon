@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from libs.admin import ReadOnlyAdmin
-from models.nodes import ClusterEvent, ClusterNode, NodeGPU
+from db.models.nodes import ClusterEvent, ClusterNode, NodeGPU
 
 
 class ClusterEventAdmin(ReadOnlyAdmin):

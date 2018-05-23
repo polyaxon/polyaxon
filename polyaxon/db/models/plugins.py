@@ -5,11 +5,11 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from models.jobs import Job, JobStatus
+from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_plugin_spec_config
 from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
-logger = logging.getLogger('polyaxon.plugins')
+logger = logging.getLogger('db.plugins')
 
 
 class PluginJobBase(Job):
@@ -22,14 +22,14 @@ class PluginJobBase(Job):
         help_text='The compiled polyaxonfile for plugin job.',
         validators=[validate_plugin_spec_config])
     code_reference = models.ForeignKey(
-        'polyaxon.CodeReference',
+        'db.CodeReference',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='+')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         abstract = True
 
     @cached_property
@@ -64,11 +64,11 @@ class PluginJobBase(Job):
 class TensorboardJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
     project = models.ForeignKey(
-        'polyaxon.Project',
+        'db.Project',
         on_delete=models.CASCADE,
         related_name='tensorboard_jobs')
     job_status = models.OneToOneField(
-        'polyaxon.TensorboardJobStatus',
+        'db.TensorboardJobStatus',
         related_name='+',
         blank=True,
         null=True,
@@ -76,7 +76,7 @@ class TensorboardJob(PluginJobBase):
         on_delete=models.SET_NULL)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return '{} tensorboard<{}>'.format(self.project, self.image)
@@ -96,11 +96,11 @@ class TensorboardJob(PluginJobBase):
 class NotebookJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
     project = models.ForeignKey(
-        'polyaxon.Project',
+        'db.Project',
         on_delete=models.CASCADE,
         related_name='notebook_jobs')
     job_status = models.OneToOneField(
-        'polyaxon.NotebookJobStatus',
+        'db.NotebookJobStatus',
         related_name='+',
         blank=True,
         null=True,
@@ -108,7 +108,7 @@ class NotebookJob(PluginJobBase):
         on_delete=models.SET_NULL)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
 
     def __str__(self):
         return '{} notebook'.format(self.project)
@@ -124,22 +124,22 @@ class NotebookJob(PluginJobBase):
 class TensorboardJobStatus(JobStatus):
     """A model that represents tensorboard job status at certain time."""
     job = models.ForeignKey(
-        'polyaxon.TensorboardJob',
+        'db.TensorboardJob',
         on_delete=models.CASCADE,
-        related_name='constants')
+        related_name='statuses')
 
     class Meta(JobStatus.Meta):
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name_plural = 'Tensorboard Job Statuses'
 
 
 class NotebookJobStatus(JobStatus):
     """A model that represents notebook job status at certain time."""
     job = models.ForeignKey(
-        'polyaxon.NotebookJob',
+        'db.NotebookJob',
         on_delete=models.CASCADE,
-        related_name='constants')
+        related_name='statuses')
 
     class Meta(JobStatus.Meta):
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name_plural = 'Notebook Job Statuses'

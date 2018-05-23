@@ -1,6 +1,6 @@
 import factory
 
-from models.experiments import (
+from db.models.experiments import (
     Experiment,
     ExperimentJob,
     ExperimentJobStatus,

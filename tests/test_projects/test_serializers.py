@@ -1,5 +1,5 @@
 from factories.factory_projects import ProjectFactory
-from models.projects import Project
+from db.models.projects import Project
 from projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from tests.utils import BaseTest
 

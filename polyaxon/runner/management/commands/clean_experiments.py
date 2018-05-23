@@ -1,7 +1,7 @@
 from django.core.management import BaseCommand
 from django.db import ProgrammingError
 
-from models.experiments import Experiment
+from db.models.experiments import Experiment
 from constants.experiments import ExperimentLifeCycle
 from runner.schedulers import experiment_scheduler
 

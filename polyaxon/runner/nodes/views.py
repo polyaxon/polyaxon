@@ -1,9 +1,9 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_404
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
-from models.clusters import Cluster
+from db.models.clusters import Cluster
 from libs.views import ListCreateAPIView
-from models.nodes import ClusterNode, NodeGPU
+from db.models.nodes import ClusterNode, NodeGPU
 from runner.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,

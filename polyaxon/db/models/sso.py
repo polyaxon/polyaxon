@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
 from django.utils import timezone
 
-from libs.models import DiffModel
+from db.models.utils import DiffModel
 from constants.sso_providers import Providers
 
 
@@ -24,7 +24,7 @@ class SSOIdentity(DiffModel):
     data = JSONField()
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         unique_together = (('provider', 'user'), ('provider', 'external_id'),)
         verbose_name = 'SSO identity'
         verbose_name_plural = 'SSO identities'

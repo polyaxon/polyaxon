@@ -1,6 +1,6 @@
 from django.test import override_settings
 
-from models.experiment_groups import ExperimentGroup
+from db.models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from tests.utils import BaseTest

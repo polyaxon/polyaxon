@@ -7,7 +7,7 @@ from django.db.models import Count, Sum
 
 import auditor
 
-from models.clusters import Cluster
+from db.models.clusters import Cluster
 from event_manager.events.cluster import (
     CLUSTER_NODE_CREATED,
     CLUSTER_NODE_DELETED,
@@ -19,7 +19,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.config_settings import RunnerCeleryTasks
 from polyaxon_k8s.manager import K8SManager
 from polyaxon_schemas.utils import to_unit_memory
-from models.nodes import ClusterNode
+from db.models.nodes import ClusterNode
 
 logger = logging.getLogger('polyaxon.tasks.clusters')
 

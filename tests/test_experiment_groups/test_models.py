@@ -8,7 +8,7 @@ from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 
 from experiment_groups.iteration_managers import BOIterationManager, HyperbandIterationManager
-from models.experiment_groups import ExperimentGroup, ExperimentGroupIteration
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration
 from experiment_groups.search_managers import (
     BOSearchManager,
     GridSearchManager,
@@ -16,7 +16,7 @@ from experiment_groups.search_managers import (
     RandomSearchManager
 )
 from constants.experiment_groups import ExperimentGroupLifeCycle
-from models.experiments import Experiment, ExperimentMetric
+from db.models.experiments import Experiment, ExperimentMetric
 from constants.experiments import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory

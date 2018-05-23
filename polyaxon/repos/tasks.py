@@ -12,7 +12,7 @@ from libs.paths import delete_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks
 from repos import git
-from models.repos import Repo
+from db.models.repos import Repo
 
 logger = logging.getLogger('polyaxon.tasks.repos')
 

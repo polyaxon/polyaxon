@@ -1,7 +1,7 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
-from models.experiment_groups import ExperimentGroup
+from db.models.experiment_groups import ExperimentGroup
 from libs.spec_validation import validate_group_spec_content
 
 

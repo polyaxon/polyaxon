@@ -1,6 +1,6 @@
 import logging
 
-from models.projects import Project
+from db.models.projects import Project
 from runner.dockerizer.builders.jobs import BaseJobDockerBuilder, build_job
 
 logger = logging.getLogger('polyaxon.dockerizer.builders')

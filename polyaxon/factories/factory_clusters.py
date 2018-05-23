@@ -2,8 +2,8 @@ from faker import Factory as FakerFactory
 
 import factory
 
-from models.clusters import Cluster
-from models.nodes import ClusterEvent, ClusterNode, NodeGPU
+from db.models.clusters import Cluster
+from db.models.nodes import ClusterEvent, ClusterNode, NodeGPU
 from constants.nodes import NodeRoles
 
 fake = FakerFactory.create()

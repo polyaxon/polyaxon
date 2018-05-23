@@ -1,6 +1,6 @@
 import logging
 
-from models.projects import Project
+from db.models.projects import Project
 
 logger = logging.getLogger('polyaxon.projects.utils')
 

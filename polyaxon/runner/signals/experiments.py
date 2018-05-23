@@ -3,8 +3,8 @@ import logging
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from models.experiment_groups import ExperimentGroup
-from models.experiments import Experiment, ExperimentStatus
+from db.models.experiment_groups import ExperimentGroup
+from db.models.experiments import Experiment, ExperimentStatus
 from constants.experiments import ExperimentLifeCycle
 from libs.decorators import check_specification, ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler

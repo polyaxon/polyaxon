@@ -2,7 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from constants.jobs import JobLifeCycle
-from libs.models import DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DiffModel, LastStatusMixin, StatusModel
 from libs.resource_validation import validate_resource
 
 
@@ -22,7 +22,7 @@ class JobResources(models.Model):
         validators=[validate_resource])
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name = 'job resources'
         verbose_name_plural = 'jobs resources'
 

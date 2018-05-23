@@ -12,9 +12,9 @@ from factories.factory_repos import RepoFactory
 from factories.fixtures import plugin_spec_parsed_content
 from constants.jobs import JobLifeCycle
 from libs.views import ProtectedView
-from models.plugins import NotebookJob, TensorboardJob
+from db.models.plugins import NotebookJob, TensorboardJob
 from polyaxon.urls import API_V1
-from models.projects import Project
+from db.models.projects import Project
 from runner.schedulers import notebook_scheduler
 from runner.spawners.notebook_spawner import NotebookSpawner
 from runner.spawners.project_spawner import ProjectSpawner

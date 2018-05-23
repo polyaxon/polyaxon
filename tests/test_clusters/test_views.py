@@ -2,11 +2,11 @@ from rest_framework import status
 
 from django.test import override_settings, tag
 
-from models.clusters import Cluster
+from db.models.clusters import Cluster
 from clusters.serializers import ClusterSerializer
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
 from polyaxon.urls import API_V1
-from models.nodes import ClusterNode, NodeGPU
+from db.models.nodes import ClusterNode, NodeGPU
 from runner.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,

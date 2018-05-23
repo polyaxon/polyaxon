@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models.experiment_groups import (
+from db.models.experiment_groups import (
     ExperimentGroup,
     ExperimentGroupIteration,
     ExperimentGroupStatus

@@ -4,9 +4,9 @@ from rest_framework import status
 
 from django.test import override_settings, tag
 
-from models.experiment_groups import ExperimentGroup
+from db.models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
-from models.experiments import Experiment
+from db.models.experiments import Experiment
 from constants.experiments import ExperimentLifeCycle
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory

@@ -15,14 +15,14 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESUMED
 )
 from constants.experiments import ExperimentLifeCycle
-from models.jobs import Job, JobStatus
+from db.models.jobs import Job, JobStatus
 from constants.jobs import JobLifeCycle
-from libs.models import DescribableModel, DiffModel, LastStatusMixin, StatusModel
+from db.models.utils import DescribableModel, DiffModel, LastStatusMixin, StatusModel
 from libs.spec_validation import validate_experiment_spec_config
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 
-logger = logging.getLogger('polyaxon.experiments')
+logger = logging.getLogger('db.experiments')
 
 
 class CloningStrategy(object):
@@ -53,7 +53,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         null=False,
         help_text='The sequence number of this experiment within the project.')
     project = models.ForeignKey(
-        'polyaxon.Project',
+        'db.Project',
         on_delete=models.CASCADE,
         related_name='experiments')
     user = models.ForeignKey(
@@ -61,7 +61,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         on_delete=models.CASCADE,
         related_name='experiments')
     experiment_group = models.ForeignKey(
-        'polyaxon.ExperimentGroup',
+        'db.ExperimentGroup',
         on_delete=models.CASCADE,
         blank=True,
         null=True,
@@ -94,28 +94,28 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         default=CloningStrategy.RESTART,
         choices=CloningStrategy.CHOICES)
     experiment_status = models.OneToOneField(
-        'polyaxon.ExperimentStatus',
+        'db.ExperimentStatus',
         related_name='+',
         blank=True,
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
     experiment_metric = models.OneToOneField(
-        'polyaxon.ExperimentMetric',
+        'db.ExperimentMetric',
         related_name='+',
         blank=True,
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
     code_reference = models.ForeignKey(
-        'polyaxon.CodeReference',
+        'db.CodeReference',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='+')
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         ordering = ['sequence']
         unique_together = (('project', 'sequence'),)
 
@@ -335,9 +335,9 @@ class ExperimentStatus(StatusModel):
     STATUSES = ExperimentLifeCycle
 
     experiment = models.ForeignKey(
-        'polyaxon.Experiment',
+        'db.Experiment',
         on_delete=models.CASCADE,
-        related_name='constants')
+        related_name='statuses')
     status = models.CharField(
         max_length=64,
         blank=True,
@@ -346,7 +346,7 @@ class ExperimentStatus(StatusModel):
         choices=STATUSES.CHOICES)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name_plural = 'Experiment Statuses'
         ordering = ['created_at']
 
@@ -357,7 +357,7 @@ class ExperimentStatus(StatusModel):
 class ExperimentMetric(models.Model):
     """A model that represents an experiment metric at certain time."""
     experiment = models.ForeignKey(
-        'polyaxon.Experiment',
+        'db.Experiment',
         on_delete=models.CASCADE,
         related_name='metrics')
     created_at = models.DateTimeField(default=timezone.now)
@@ -367,7 +367,7 @@ class ExperimentMetric(models.Model):
         return '{} <{}>'.format(self.experiment.unique_name, self.created_at)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         ordering = ['created_at']
 
 
@@ -379,7 +379,7 @@ class ExperimentJob(Job):
         unique=True,
         null=False)
     experiment = models.ForeignKey(
-        'polyaxon.Experiment',
+        'db.Experiment',
         on_delete=models.CASCADE,
         related_name='jobs')
     definition = JSONField(help_text='The specific values for this job.')
@@ -389,14 +389,14 @@ class ExperimentJob(Job):
         null=False,
         help_text='The sequence number of this job within the experiment.', )
     resources = models.OneToOneField(
-        'polyaxon.JobResources',
+        'db.JobResources',
         related_name='+',
         blank=True,
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
     job_status = models.OneToOneField(
-        'polyaxon.ExperimentJobStatus',
+        'db.ExperimentJobStatus',
         related_name='+',
         blank=True,
         null=True,
@@ -404,7 +404,7 @@ class ExperimentJob(Job):
         on_delete=models.SET_NULL)
 
     class Meta:
-        app_label = 'polyaxon'
+        app_label = 'db'
         ordering = ['sequence']
         unique_together = (('experiment', 'sequence'),)
 
@@ -435,10 +435,10 @@ class ExperimentJob(Job):
 class ExperimentJobStatus(JobStatus):
     """A model that represents job status at certain time."""
     job = models.ForeignKey(
-        'polyaxon.ExperimentJob',
+        'db.ExperimentJob',
         on_delete=models.CASCADE,
-        related_name='constants')
+        related_name='statuses')
 
     class Meta(JobStatus.Meta):
-        app_label = 'polyaxon'
+        app_label = 'db'
         verbose_name_plural = 'Experiment Job Statuses'

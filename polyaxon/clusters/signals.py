@@ -6,7 +6,7 @@ import auditor
 
 from event_manager.events.cluster import CLUSTER_CREATED
 from libs.decorators import ignore_raw, ignore_updates
-from models.clusters import Cluster
+from db.models.clusters import Cluster
 
 
 @receiver(post_save, sender=Cluster, dispatch_uid="cluster_created")
