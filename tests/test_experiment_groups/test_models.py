@@ -34,7 +34,7 @@ from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
 from runner.hp_search.bo import hp_bo_start
 from runner.hp_search.hyperband import hp_hyperband_start
-from runner.tasks.experiment_groups import stop_group_experiments
+from tasks.experiment_groups import stop_group_experiments
 from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
 
 
@@ -335,7 +335,7 @@ class TestExperimentGroupModel(BaseTest):
     @tag(RUNNER_TEST)
     def test_spec_creation_triggers_experiments_planning(self):
         with patch(
-            'runner.tasks.experiment_groups.create_group_experiments.apply_async'
+            'tasks.experiment_groups.create_group_experiments.apply_async'
         ) as mock_fct:
             experiment_group = ExperimentGroupFactory()
 

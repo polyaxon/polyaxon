@@ -34,11 +34,12 @@ def create_group_experiments(experiment_group):
 def start_group_experiments(experiment_group):
     # Check for early stopping before starting new experiments from this group
     if experiment_group.should_stop_early():
-        from runner.tasks.experiment_groups import stop_group_experiments
 
-        stop_group_experiments(experiment_group_id=experiment_group.id,
-                               pending=True,
-                               message='Early stopping')
+        celery_app.send_task(
+            RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            kwargs={'experiment_group_id': experiment_group.id,
+                    'pending': True,
+                    'message': 'Early stopping'})
         return
 
     experiment_to_start = experiment_group.n_experiments_to_start

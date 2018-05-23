@@ -10,7 +10,8 @@ from db.models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupSerializer
 from libs.utils import to_bool
 from projects.permissions import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
-from runner.tasks.experiment_groups import stop_group_experiments
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RunnerCeleryTasks
 
 
 class ExperimentGroupStopView(CreateAPIView):
@@ -30,7 +31,9 @@ class ExperimentGroupStopView(CreateAPIView):
                        instance=obj,
                        actor_id=request.user.id,
                        pending=pending)
-        stop_group_experiments.delay(experiment_group_id=obj.id,
-                                     pending=pending,
-                                     message='User stopped experiment group')
+        celery_app.send_task(
+            RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            kwargs={'experiment_group_id': obj.id,
+                    'pending': pending,
+                    'message': 'User stopped experiment group'})
         return Response(status=status.HTTP_200_OK)

@@ -4,7 +4,8 @@ from django.dispatch import receiver
 from db.models.experiment_groups import ExperimentGroup
 from libs.decorators import check_specification, ignore_raw, ignore_updates, runner_signal
 from runner.schedulers import experiment_scheduler
-from runner.tasks.experiment_groups import create_group_experiments
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RunnerCeleryTasks
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_create_experiments")
@@ -14,7 +15,10 @@ from runner.tasks.experiment_groups import create_group_experiments
 @ignore_raw
 def experiment_group_create_experiments(sender, **kwargs):
     instance = kwargs['instance']
-    create_group_experiments.apply_async((instance.id,), countdown=1)
+    celery_app.send_task(
+        RunnerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
+        kwargs={'experiment_group_id': instance.id},
+        countdown=1)
 
 
 @receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_stop_experiments")
