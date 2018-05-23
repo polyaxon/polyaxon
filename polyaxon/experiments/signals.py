@@ -27,9 +27,10 @@ from experiments.paths import (
     delete_experiment_outputs
 )
 from constants.experiments import ExperimentLifeCycle
-from experiments.tasks import check_experiment_status
 from constants.jobs import JobLifeCycle
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
+from polyaxon.settings import CeleryTasks
+from polyaxon.celery_api import app as celery_app
 from repos.utils import assign_code_reference
 
 logger = logging.getLogger('polyaxon.experiments')
@@ -133,7 +134,9 @@ def new_experiment_job_status(sender, **kwargs):
     if experiment.is_done:
         return
 
-    check_experiment_status.delay(experiment_uuid=experiment.uuid.hex)
+    celery_app.send_task(
+        CeleryTasks.EXPERIMENTS_CHECK_STATUS,
+        kwargs={'experiment_uuid': experiment.uuid.hex})
 
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_saved")

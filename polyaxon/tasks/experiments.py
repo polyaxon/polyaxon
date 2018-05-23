@@ -36,4 +36,6 @@ def sync_experiments_and_jobs_statuses():
         experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS)
     experiments = experiments.annotate(num_jobs=Count('jobs')).filter(num_jobs__gt=0)
     for experiment in experiments:
-        check_experiment_status.delay(experiment_uuid=experiment.uuid.hex)
+        celery_app.send_task(
+            CeleryTasks.EXPERIMENTS_CHECK_STATUS,
+            kwargs={'experiment_uuid': experiment.uuid.hex})

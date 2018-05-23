@@ -1,6 +1,6 @@
 import logging
 
-from experiments.tasks import build_experiment
+from runner.tasks.experiments import build_experiment
 from experiments.utils import get_valid_experiment
 from pipelines.celery_task import ClassBasedTask, OperationRunError
 from polyaxon.celery_api import app as celery_app

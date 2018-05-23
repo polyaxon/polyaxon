@@ -14,7 +14,7 @@ from experiments.copy import copy_experiment
 from db.models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
 from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from constants.experiments import ExperimentLifeCycle
-from experiments.tasks import set_metrics, sync_experiments_and_jobs_statuses
+from tasks.experiments import set_metrics, sync_experiments_and_jobs_statuses
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
