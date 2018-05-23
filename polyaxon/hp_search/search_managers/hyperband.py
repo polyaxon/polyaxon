@@ -1,6 +1,6 @@
 import math
 
-from experiment_groups.schemas import HyperbandIterationConfig
+from hp_search.schemas import HyperbandIterationConfig
 from hp_search.search_managers.base import BaseSearchAlgorithmManager
 from hp_search.search_managers.utils import get_random_suggestions
 from polyaxon_schemas.utils import SearchAlgorithms

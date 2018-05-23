@@ -1,6 +1,6 @@
 import logging
 
-logger = logging.getLogger('polyaxon.experiments_groups.iteration_manager')
+_logger = logging.getLogger('polyaxon.hp_search.iteration_manager')
 
 
 class BaseIterationManger(object):
@@ -13,8 +13,8 @@ class BaseIterationManger(object):
     def get_iteration_config(self):
         iteration_config = self.experiment_group.iteration_config
         if iteration_config is None:
-            logger.warning(
-                'Experiment group `%s` attempt to update, but has no iteration',
+            _logger.warning(
+                'Experiment group `%s` attempt to update iteration, but has no iteration',
                 self.experiment_group.id)
             return None
         return iteration_config

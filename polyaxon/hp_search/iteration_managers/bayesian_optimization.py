@@ -1,9 +1,5 @@
-import logging
-
-from experiment_groups.iteration_managers.base import BaseIterationManger
-from experiment_groups.schemas.bayesian_optimization import BOIterationConfig
-
-logger = logging.getLogger('polyaxon.experiments_groups.iteration_manager')
+from hp_search.iteration_managers.base import BaseIterationManger
+from hp_search.schemas.bayesian_optimization import BOIterationConfig
 
 
 class BOIterationManager(BaseIterationManger):
