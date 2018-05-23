@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 from polyaxon.celery_api import app as celery_app
-from polyaxon.config_settings import CeleryTasks
+from polyaxon.settings import CeleryTasks
 from libs.decorators import ignore_raw, ignore_updates
 from constants.pipelines import OperationStatuses, PipelineStatuses
 from db.models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
@@ -63,7 +63,7 @@ def new_operation_run_status(sender, **kwargs):
 
     # Check if we need to update the pipeline_run's status
     celery_app.send_task(
-        CeleryTasks.PIPELINES_CHECK_STATUS,
+        CeleryTasks.PIPELINES_CHECK_STATUSES,
         kwargs={'pipeline_run_id': pipeline_run.id,
                 'status': instance.status,
                 'message': instance.message})
