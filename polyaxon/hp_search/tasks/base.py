@@ -5,7 +5,7 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 from runner.tasks.experiments import build_experiment
 
-logger = logging.getLogger('polyaxon.runner.hp_search')
+_logger = logging.getLogger(__name__)
 
 
 def create_group_experiments(experiment_group):
@@ -14,7 +14,7 @@ def create_group_experiments(experiment_group):
     suggestions = experiment_group.get_suggestions()
 
     if not suggestions:
-        logger.warning('Search algorithm was not found `%s`', specification.search_algorithm)
+        _logger.warning('Search algorithm was not found `%s`', specification.search_algorithm)
         return
 
     experiments = []

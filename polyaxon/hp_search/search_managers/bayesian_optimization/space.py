@@ -3,7 +3,7 @@ import numpy as np
 
 from polyaxon_schemas.utils import Optimization
 
-logger = logging.getLogger('polyaxon.search_managers')
+_logger = logging.getLogger('polyaxon.hp_search.search_managers')
 
 
 class SearchSpace(object):
@@ -23,15 +23,15 @@ class SearchSpace(object):
         len_x = len(self.x)
         len_y = len(self.y)
         if len_x != len_y:
-            logger.warning("X and Y observations don't have the same size.")
+            _logger.warning("X and Y observations don't have the same size.")
             return False
 
         if len_x == 0:
-            logger.warning("Space has no observations.")
+            _logger.warning("Space has no observations.")
             return False
 
         if len_y == 0:
-            logger.warning("Space has no observations.")
+            _logger.warning("Space has no observations.")
             return False
 
         return True

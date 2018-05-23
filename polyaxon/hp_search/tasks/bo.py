@@ -2,7 +2,7 @@ from experiment_groups.utils import get_running_experiment_group
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 
-from runner.hp_search import base
+from hp_search.tasks import base
 
 
 def create(experiment_group):

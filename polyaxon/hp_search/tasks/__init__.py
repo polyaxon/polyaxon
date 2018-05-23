@@ -1,9 +1,14 @@
 from polyaxon_schemas.utils import SearchAlgorithms
 
 import auditor
-from event_manager.events.experiment_group import EXPERIMENT_GROUP_GRID, EXPERIMENT_GROUP_RANDOM, \
-    EXPERIMENT_GROUP_HYPERBAND, EXPERIMENT_GROUP_BO
-from runner.hp_search import bo, grid, hyperband, random
+
+from event_manager.events.experiment_group import (
+    EXPERIMENT_GROUP_GRID,
+    EXPERIMENT_GROUP_RANDOM,
+    EXPERIMENT_GROUP_HYPERBAND,
+    EXPERIMENT_GROUP_BO
+)
+from hp_search.tasks import grid, hyperband, bo, random
 
 
 def create(experiment_group):
