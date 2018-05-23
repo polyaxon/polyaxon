@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from event_monitors.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
+from tasks.monitors import handle_events_job_statuses, handle_events_plugin_job_statuses
 from db.models.experiments import ExperimentJobStatus
 from factories.factory_experiments import ExperimentJobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory

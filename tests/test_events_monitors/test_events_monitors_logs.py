@@ -4,7 +4,7 @@ import uuid
 
 from unittest.mock import patch
 
-from event_monitors.tasks import handle_events_job_logs
+from tasks.monitors import handle_events_job_logs
 from experiments.paths import get_experiment_logs_path
 from factories.factory_experiments import ExperimentFactory
 from polyaxon_schemas.utils import TaskType

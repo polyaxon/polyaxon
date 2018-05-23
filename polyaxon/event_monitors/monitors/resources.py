@@ -10,7 +10,9 @@ from django.conf import settings
 
 import polyaxon_gpustat
 
-from event_monitors.tasks import handle_events_resources
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RunnerCeleryTasks
+
 from libs.redis_db import RedisJobContainers, RedisToStream
 from polyaxon_schemas.experiment import ContainerResourcesConfig
 from db.models.nodes import ClusterNode, NodeGPU
@@ -160,7 +162,9 @@ def run(containers, node, persist):
         if payload:
             payload = payload.to_dict()
             logger.info("Publishing resources event")
-            handle_events_resources.delay(payload=payload, persist=persist)
+            celery_app.send_task(
+                RunnerCeleryTasks.EVENTS_HANDLE_NAMESPACE,
+                kwargs={'payload': payload, 'persist': persist})
 
             job_uuid = payload['job_uuid']
             # Check if we should stream the payload
