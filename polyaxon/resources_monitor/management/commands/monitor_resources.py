@@ -4,8 +4,8 @@ from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
 
 from db.models.clusters import Cluster
-from event_monitors.management.commands._base_monitor import BaseMonitorCommand
-from event_monitors.monitors import resources
+from libs.base_monitor import BaseMonitorCommand
+from resources_monitor import monitor
 from libs.utils import to_bool
 from db.models.nodes import ClusterNode
 
@@ -28,7 +28,7 @@ class Command(BaseMonitorCommand):
             try:
                 return self.get_node()
             except (InterfaceError, ProgrammingError, OperationalError) as e:
-                resources.logger.exception("Database is not synced yet %s\n", e)
+                monitor.logger.exception("Database is not synced yet %s\n", e)
                 trials += 1
                 time.sleep(log_sleep_interval * 2)
         return None
@@ -45,9 +45,9 @@ class Command(BaseMonitorCommand):
         while True:
             try:
                 if node:
-                    resources.run(containers, node, persist)
+                    monitor.run(containers, node, persist)
             except Exception as e:
-                resources.logger.exception("Unhandled exception occurred %s\n", e)
+                monitor.logger.exception("Unhandled exception occurred %s\n", e)
 
             time.sleep(log_sleep_interval)
             try:
@@ -56,5 +56,5 @@ class Command(BaseMonitorCommand):
                 else:
                     node = self.get_node()
             except (InterfaceError, ProgrammingError, OperationalError) as e:
-                resources.logger.exception("Database connection is probably already closed %s\n", e)
+                monitor.logger.exception("Database connection is probably already closed %s\n", e)
                 return

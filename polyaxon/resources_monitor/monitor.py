@@ -16,8 +16,7 @@ from polyaxon.settings import RunnerCeleryTasks
 from libs.redis_db import RedisJobContainers, RedisToStream
 from polyaxon_schemas.experiment import ContainerResourcesConfig
 from db.models.nodes import ClusterNode, NodeGPU
-from runner.nodes.tasks import update_system_info, update_system_nodes
-from runner.spawners.utils.constants import ContainerStatuses
+from constants.containers import ContainerStatuses
 
 logger = logging.getLogger('polyaxon.monitors.resources')
 
@@ -130,8 +129,8 @@ def get_container_resources(node, container, gpu_resources):
 
 
 def update_cluster(node_gpus):
-    update_system_info()
-    update_system_nodes()
+    celery_app.send_task(RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO)
+    celery_app.send_task(RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES)
     if not node_gpus:
         return
     node = ClusterNode.objects.filter(name=settings.K8S_NODE_NAME).first()
