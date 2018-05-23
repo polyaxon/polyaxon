@@ -13,16 +13,16 @@ from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_LOGS_VIEWED,
     EXPERIMENT_JOB_RESOURCES_VIEWED
 )
-from event_monitors.authentication import authorized
-from event_monitors.consumers import Consumer
-from event_monitors.socket_manager import SocketManager
+from streams.authentication import authorized
+from streams.consumers import Consumer
+from streams.socket_manager import SocketManager
 from db.models.experiments import Experiment, ExperimentJob
 from libs.redis_db import RedisToStream
-from polyaxon.config_settings.celery_settings import CeleryQueues, RoutingKeys
+from polyaxon.settings import CeleryQueues, RoutingKeys
 from db.models.projects import Project
-from projects.permissions import has_project_permissions
+from permissions.projects import has_project_permissions
 
-logger = logging.getLogger('polyaxon.monitors.api')
+logger = logging.getLogger('polyaxon.streams.api')
 
 SOCKET_SLEEP = 1
 MAX_RETRIES = 15
