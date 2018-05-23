@@ -1,12 +1,13 @@
 import logging
 import time
 
-from event_monitors import publisher
+import publisher
+
+from constants.pods import PodLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from polyaxon_schemas.experiment import JobLabelConfig
-from runner.spawners.utils.constants import PodLifeCycle
 
-logger = logging.getLogger('polyaxon.monitors.sidecar')
+logger = logging.getLogger(__name__)
 
 
 def run(k8s_manager,
@@ -23,13 +24,13 @@ def run(k8s_manager,
                                                       follow=True,
                                                       _preload_content=False)
     for log_line in raw.stream():
-        publisher.publish_log(log_line=log_line,
-                              status=ExperimentLifeCycle.RUNNING,
-                              experiment_uuid=experiment_uuid,
-                              experiment_name=experiment_name,
-                              job_uuid=job_uuid,
-                              task_type=task_type,
-                              task_idx=task_idx)
+        publisher.publish_experiment_log(log_line=log_line,
+                                         status=ExperimentLifeCycle.RUNNING,
+                                         experiment_uuid=experiment_uuid,
+                                         experiment_name=experiment_name,
+                                         job_uuid=job_uuid,
+                                         task_type=task_type,
+                                         task_idx=task_idx)
 
 
 def can_log(k8s_manager, pod_id, log_sleep_interval):

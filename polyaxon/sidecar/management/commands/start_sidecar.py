@@ -1,8 +1,8 @@
 from django.conf import settings
 
-from event_monitors.management.commands._base_monitor import BaseMonitorCommand
-from event_monitors.monitors import sidecar
+from libs.base_monitor import BaseMonitorCommand
 from polyaxon_k8s.manager import K8SManager
+from sidecar import monitor
 
 
 class Command(BaseMonitorCommand):
@@ -22,12 +22,12 @@ class Command(BaseMonitorCommand):
                                               log_sleep_interval),
             ending='\n')
         k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
-        is_running, labels = sidecar.can_log(k8s_manager, pod_id, log_sleep_interval)
+        is_running, labels = monitor.can_log(k8s_manager, pod_id, log_sleep_interval)
         if not is_running:
-            sidecar.logger.info('Jobs is not running anymore.')
+            monitor.logger.info('Jobs is not running anymore.')
             return
 
-        sidecar.run(k8s_manager=k8s_manager,
+        monitor.run(k8s_manager=k8s_manager,
                     pod_id=pod_id,
                     experiment_uuid=labels.experiment_uuid.hex,
                     experiment_name=labels.experiment_name,
@@ -35,4 +35,4 @@ class Command(BaseMonitorCommand):
                     task_type=labels.task_type,
                     task_idx=labels.task_idx,
                     container_job_name=settings.CONTAINER_NAME_JOB)
-        sidecar.logger.info('Finished logging')
+        monitor.logger.info('Finished logging')
