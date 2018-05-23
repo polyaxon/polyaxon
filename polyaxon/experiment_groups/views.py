@@ -12,7 +12,7 @@ from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
 from db.models.experiment_groups import ExperimentGroup
 from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
 from libs.views import AuditorMixinView, ListCreateAPIView
-from projects.permissions import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
+from permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 
 
 class ExperimentGroupListView(ListCreateAPIView):

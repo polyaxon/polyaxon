@@ -5,7 +5,7 @@ from rest_framework.generics import get_object_or_404
 
 from db.models.projects import Project
 
-logger = logging.getLogger("polyaxon.projects.permissions")
+_logger = logging.getLogger(__name__)
 
 
 def has_project_permissions(user, project, request_method):
@@ -26,7 +26,7 @@ class IsProjectOwnerOrPublicReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Check object type
         if not isinstance(obj, Project):
-            logger.warning('Trying to check projects permission against %s',
+            _logger.warning('Trying to check projects permission against %s',
                            obj.__class__.__name__)
             return False
 
@@ -43,7 +43,7 @@ class IsItemProjectOwnerOrPublicReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Check that obj has project attr
         if not hasattr(obj, 'project'):
-            logger.warning('Trying to check project item permission against %s',
+            _logger.warning('Trying to check project item permission against %s',
                            obj.__class__.__name__)
             return False
 

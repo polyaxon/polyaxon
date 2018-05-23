@@ -12,7 +12,7 @@ from event_manager.events.project import (
 )
 from libs.views import AuditorMixinView
 from db.models.projects import Project
-from projects.permissions import IsProjectOwnerOrPublicReadOnly
+from permissions.projects import IsProjectOwnerOrPublicReadOnly
 from projects.serializers import ProjectDetailSerializer, ProjectSerializer
 
 

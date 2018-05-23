@@ -12,7 +12,7 @@ import auditor
 
 from event_manager.events.repo import REPO_CREATED
 from libs.views import UploadView
-from projects.permissions import get_permissible_project
+from permissions.projects import get_permissible_project
 from repos.git import set_git_repo
 from db.models.repos import Repo
 from repos.serializers import RepoSerializer

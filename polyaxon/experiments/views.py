@@ -61,7 +61,7 @@ from experiments.serializers import (
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
 from libs.views import AuditorMixinView, ListCreateAPIView
-from projects.permissions import get_permissible_project
+from permissions.projects import get_permissible_project
 
 logger = logging.getLogger("polyaxon.experiments.views")
 
