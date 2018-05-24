@@ -1,0 +1,8 @@
+-r requirements-base.txt
+
+analytics-python==1.2.9
+docker==2.6.1
+GitPython==2.1.7
+Jinja2==2.9.6
+raven==6.7.0
+redis==2.10.6
