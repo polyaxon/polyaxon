@@ -1,6 +1,4 @@
 -r ../requirements-base.txt
 
 docker==2.6.1
-GitPython==2.1.7
-Jinja2==2.9.6
 redis==2.10.6
