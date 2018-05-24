@@ -3,8 +3,8 @@ import logging
 from polyaxon_schemas.environments import MXNetClusterConfig
 from polyaxon_schemas.polyaxonfile.specification.frameworks import MXNetSpecification
 from polyaxon_schemas.utils import TaskType
-from runner.spawners.experiment_spawner import ExperimentSpawner
-from runner.spawners.templates.config_maps import get_env_var
+from scheduler.spawners.experiment_spawner import ExperimentSpawner
+from scheduler.spawners.templates.config_maps import get_env_var
 
 logger = logging.getLogger('polyaxon.spawners.mxnet')
 

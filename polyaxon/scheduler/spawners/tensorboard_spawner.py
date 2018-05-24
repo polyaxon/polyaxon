@@ -4,10 +4,10 @@ import random
 
 from django.conf import settings
 
-from projects.paths import get_project_outputs_path
-from runner.spawners.base import get_pod_volumes
-from runner.spawners.project_spawner import ProjectSpawner
-from runner.spawners.templates import constants, deployments, ingresses, services
+from paths.projects import get_project_outputs_path
+from scheduler.spawners.base import get_pod_volumes
+from scheduler.spawners.project_spawner import ProjectSpawner
+from scheduler.spawners.templates import constants, deployments, ingresses, services
 
 logger = logging.getLogger('polyaxon.spawners.tensorboard')
 

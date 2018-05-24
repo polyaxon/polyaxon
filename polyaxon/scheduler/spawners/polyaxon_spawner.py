@@ -2,7 +2,7 @@ import json
 import logging
 
 from polyaxon_schemas.utils import TaskType
-from runner.spawners.tensorflow_spawner import TensorflowSpawner
+from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
 
 logger = logging.getLogger('polyaxon.spawners.polyaxon')
 

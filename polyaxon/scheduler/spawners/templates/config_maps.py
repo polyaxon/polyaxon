@@ -5,10 +5,10 @@ from kubernetes import client
 
 from django.conf import settings
 
-from experiments.paths import get_experiment_logs_path, get_experiment_outputs_path
+from paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from polyaxon_k8s import constants as k8s_constants
-from projects.paths import get_project_data_path
-from runner.spawners.templates import constants
+from paths.projects import get_project_data_path
+from scheduler.spawners.templates import constants
 
 
 def get_env_var(name, value, reraise=True):

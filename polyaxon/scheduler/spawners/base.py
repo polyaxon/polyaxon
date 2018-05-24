@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from runner.spawners.templates import constants, pods
+from scheduler.spawners.templates import constants, pods
 
 
 def get_pod_volumes():

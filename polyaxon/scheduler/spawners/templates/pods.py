@@ -9,7 +9,7 @@ from django.conf import settings
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from runner.spawners.templates import constants
+from scheduler.spawners.templates import constants
 
 logger = logging.getLogger('polyaxon.spawners.spawners')
 

@@ -1,14 +1,14 @@
 import logging
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
-from experiment_groups.utils import get_running_experiment_group, get_valid_experiment_group
+from db.getters import get_running_experiment_group, get_valid_experiment_group
 from constants.experiments import ExperimentLifeCycle
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import Intervals, RunnerCeleryTasks
-from runner import hp_search
-from runner.tasks.experiments import stop_experiment
+from suggester import tasks
+from scheduler.tasks.experiments import stop_experiment
 
-logger = logging.getLogger('polyaxon.tasks.experiment_groups')
+_logger = logging.getLogger(__name__)
 
 
 def _get_group_or_retry(experiment_group_id, task):
@@ -18,11 +18,11 @@ def _get_group_or_retry(experiment_group_id, task):
 
     # We retry if experiment group does not exist
     if task.request.retries < 2:
-        logger.info('Trying again for ExperimentGroup `%s`.', experiment_group_id)
+        _logger.info('Trying again for ExperimentGroup `%s`.', experiment_group_id)
         task.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
-    logger.info('Something went wrong, '
-                'the ExperimentGroup `%s` does not exist anymore.', experiment_group_id)
+    _logger.info('Something went wrong, '
+                 'the ExperimentGroup `%s` does not exist anymore.', experiment_group_id)
     return None
 
 
@@ -33,7 +33,7 @@ def create_group_experiments(self, experiment_group_id):
         return
 
     experiment_group.set_status(ExperimentGroupLifeCycle.RUNNING)
-    hp_search.create(experiment_group=experiment_group)
+    tasks.create(experiment_group=experiment_group)
 
 
 @celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)

@@ -3,7 +3,7 @@ import logging
 from django.conf import settings
 
 from constants.experiments import ExperimentLifeCycle
-from runner.spawners.notebook_spawner import NotebookSpawner
+from scheduler.spawners.notebook_spawner import NotebookSpawner
 
 logger = logging.getLogger('polyaxon.schedulers.notebook')
 
