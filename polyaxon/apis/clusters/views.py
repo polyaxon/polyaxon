@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from django.conf import settings
 
 from db.models.clusters import Cluster
-from clusters.serializers import ClusterSerializer
+from apis.clusters.serializers import ClusterSerializer
 
 
 class ClusterDetailView(RetrieveAPIView):
@@ -13,7 +13,7 @@ class ClusterDetailView(RetrieveAPIView):
 
     def get_serializer_class(self):
         if settings.DEPLOY_RUNNER:
-            from runner.nodes.serializers import ClusterRunnerSerializer
+            from nodes.serializers import ClusterRunnerSerializer
             return ClusterRunnerSerializer
         return ClusterSerializer
 
