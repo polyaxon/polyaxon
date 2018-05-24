@@ -2,7 +2,7 @@ import logging
 
 from db.models.experiments import Experiment
 
-logger = logging.getLogger('polyaxon.experiments.utils')
+_logger = logging.getLogger('polyaxon.db')
 
 
 def get_valid_experiment(experiment_id=None, experiment_uuid=None):
@@ -15,7 +15,7 @@ def get_valid_experiment(experiment_id=None, experiment_uuid=None):
         else:
             experiment = Experiment.objects.get(id=experiment_id)
     except Experiment.DoesNotExist:
-        logger.info('Experiment id `%s` does not exist', experiment_id)
+        _logger.info('Experiment id `%s` does not exist', experiment_id)
         return None
 
     return experiment
