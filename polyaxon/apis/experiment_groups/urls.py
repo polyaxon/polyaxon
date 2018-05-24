@@ -2,8 +2,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from experiment_groups import views
-from experiments import views as experiments_views
+from apis.experiment_groups import views
+from apis.experiments import views as experiments_views
 from libs.urls import NAME_PATTERN, SEQUENCE_PATTERN, USERNAME_PATTERN
 
 groups_urlpatterns = [
@@ -12,6 +12,8 @@ groups_urlpatterns = [
     re_path(
         r'^{}/{}/groups/{}/experiments/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         experiments_views.GroupExperimentListView.as_view()),
+    re_path(r'^{}/{}/groups/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
+            views.ExperimentGroupStopView.as_view()),
 ]
 
 # Order is important, because the patterns could swallow other urls
