@@ -24,7 +24,7 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
     # Add Polyaxon charts repo
     $ helm repo add polyaxon https://charts.polyaxon.com
 
-    # Deply Polyaxon
+    # Deploy Polyaxon
     $ helm install polyaxon/polyaxon \
         --name=polyaxon \
         --namespace=polyaxon \
