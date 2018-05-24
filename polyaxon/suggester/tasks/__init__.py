@@ -8,7 +8,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_HYPERBAND,
     EXPERIMENT_GROUP_BO
 )
-from hp_search.tasks import grid, hyperband, bo, random
+from suggester.tasks import grid, hyperband, bo, random
 
 
 def create(experiment_group):

@@ -3,7 +3,6 @@ import logging
 from db.models.experiments import Experiment
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
-from runner.tasks.experiments import build_experiment
 
 _logger = logging.getLogger(__name__)
 
@@ -47,7 +46,9 @@ def start_group_experiments(experiment_group):
     n_pending_experiment = experiment_group.pending_experiments.count()
 
     for experiment in pending_experiments:
-        build_experiment.delay(experiment_id=experiment.id)
+        celery_app.send_task(
+            RunnerCeleryTasks.EXPERIMENTS_BUILD,
+            kwargs={'experiment_id': experiment.id})
 
     return n_pending_experiment - experiment_to_start > 0
 

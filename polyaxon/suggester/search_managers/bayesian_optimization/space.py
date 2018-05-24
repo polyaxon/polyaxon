@@ -3,7 +3,7 @@ import numpy as np
 
 from polyaxon_schemas.utils import Optimization
 
-_logger = logging.getLogger('polyaxon.hp_search.search_managers')
+_logger = logging.getLogger('polyaxon.suggester.search_managers')
 
 
 class SearchSpace(object):

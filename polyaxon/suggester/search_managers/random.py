@@ -1,5 +1,5 @@
-from hp_search.search_managers.base import BaseSearchAlgorithmManager
-from hp_search.search_managers.utils import get_random_suggestions
+from suggester.search_managers.base import BaseSearchAlgorithmManager
+from suggester.search_managers.utils import get_random_suggestions
 from polyaxon_schemas.utils import SearchAlgorithms
 
 

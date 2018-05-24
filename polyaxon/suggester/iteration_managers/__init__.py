@@ -1,5 +1,5 @@
-from hp_search.iteration_managers import BOIterationManager
-from hp_search.iteration_managers.hyperband import HyperbandIterationManager
+from suggester.iteration_managers.bayesian_optimization import BOIterationManager
+from suggester.iteration_managers.hyperband import HyperbandIterationManager
 from polyaxon_schemas.utils import SearchAlgorithms
 
 

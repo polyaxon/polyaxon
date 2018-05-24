@@ -1,5 +1,5 @@
-from hp_search.schemas.bayesian_optimization import BOIterationConfig
-from hp_search.schemas.hyperband import HyperbandIterationConfig
+from suggester.schemas.bayesian_optimization import BOIterationConfig
+from suggester.schemas.hyperband import HyperbandIterationConfig
 from polyaxon_schemas.utils import SearchAlgorithms
 
 

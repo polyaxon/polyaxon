@@ -1,6 +1,6 @@
 import logging
 
-_logger = logging.getLogger('polyaxon.hp_search.iteration_manager')
+_logger = logging.getLogger('polyaxon.suggester.iteration_manager')
 
 
 class BaseIterationManger(object):
