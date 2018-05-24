@@ -1,5 +1,5 @@
 from constants.jobs import JobLifeCycle
-from libs.constants import UNKNOWN
+from constants.unknown import UNKNOWN
 from libs.statuses import BaseStatuses
 
 

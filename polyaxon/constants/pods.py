@@ -1,4 +1,11 @@
-from libs.constants import UNKNOWN
+from constants.unknown import UNKNOWN
+
+
+class EventTypes(object):
+    ADDED = 'ADDED'
+    MODIFIED = 'MODIFIED'
+    DELETED = 'DELETED'
+    ERROR = 'ERROR'
 
 
 class PodConditions(object):

@@ -1,4 +1,4 @@
-from libs.constants import UNKNOWN
+from constants.unknown import UNKNOWN
 
 
 class NodeLifeCycle(object):
