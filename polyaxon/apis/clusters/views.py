@@ -13,7 +13,7 @@ class ClusterDetailView(RetrieveAPIView):
 
     def get_serializer_class(self):
         if settings.DEPLOY_RUNNER:
-            from nodes.serializers import ClusterRunnerSerializer
+            from apis.nodes import ClusterRunnerSerializer
             return ClusterRunnerSerializer
         return ClusterSerializer
 
