@@ -8,7 +8,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 from libs.utils import to_bool
 
-logger = logging.getLogger('polyaxon.commands')
+_logger = logging.getLogger('polyaxon.commands')
 
 
 class NotRunningInTTYException(Exception):
@@ -71,9 +71,9 @@ class Command(BaseCommand):
         try:
             validate_password(password, self.UserModel(**user_data))
         except ValidationError as e:
-            logger.warning('The password provided is not valid %s', e)
+            _logger.warning('The password provided is not valid %s', e)
             if force:
-                logger.warning(
+                _logger.warning(
                     'The user will be created although the password does not meet the validation.')
             else:
                 raise e

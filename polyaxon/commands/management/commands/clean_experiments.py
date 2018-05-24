@@ -3,7 +3,7 @@ from django.db import ProgrammingError
 
 from db.models.experiments import Experiment
 from constants.experiments import ExperimentLifeCycle
-from runner.schedulers import experiment_scheduler
+from scheduler import experiment_scheduler
 
 
 class Command(BaseCommand):
