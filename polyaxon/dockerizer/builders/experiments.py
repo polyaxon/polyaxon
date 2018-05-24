@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import publisher
 
 from constants.experiments import ExperimentLifeCycle
-from experiments.utils import is_experiment_still_running
+from db.getters.experiments import is_experiment_still_running
 from repos import git
 from db.models.repos import CodeReference, ExternalRepo, Repo
 from dockerizer.builders.base import BaseDockerBuilder
