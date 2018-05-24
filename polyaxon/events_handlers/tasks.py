@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db import IntegrityError
 
 from db.models.experiments import Experiment, ExperimentJob
-from paths.experiments import get_experiment_logs_path
+from libs.paths.experiments import get_experiment_logs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 from db.models.projects import Project
