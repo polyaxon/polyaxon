@@ -1,4 +1,4 @@
-from libs.statuses import BaseStatuses
+from constants.statuses import BaseStatuses
 
 
 class PipelineStatuses(BaseStatuses):
