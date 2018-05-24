@@ -1,6 +1,8 @@
 from django.apps import AppConfig
 
 
-class HPSearchConfig(AppConfig):
+class SuggesterConfig(AppConfig):
     name = 'suggester'
-    verbose_name = 'HP Search'
+    verbose_name = 'Suggester'
+
+    from suggester.signals import new_experiment_group_iteration  # noqa
