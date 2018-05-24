@@ -21,12 +21,14 @@ from event_manager.events.tensorboard import (
 from constants.experiments import ExperimentLifeCycle
 from libs.utils import to_bool
 from libs.views import ProtectedView
-from plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
-from plugins.tasks import build_notebook, start_tensorboard, stop_notebook, stop_tensorboard
+from apis.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from db.models.projects import Project
-from projects.permissions import IsProjectOwnerOrPublicReadOnly, get_permissible_project
+from permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from repos import git
 from runner.schedulers import notebook_scheduler, tensorboard_scheduler
+
+from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.celery_api import app as celery_app
 
 
 class StartTensorboardView(CreateAPIView):
@@ -65,7 +67,9 @@ class StartTensorboardView(CreateAPIView):
             return Response(data='Tensorboard is already running', status=status.HTTP_200_OK)
         self._create_tensorboard(obj)
         if not obj.tensorboard.is_running:
-            start_tensorboard.delay(project_id=obj.id)
+            celery_app.send_task(
+                RunnerCeleryTasks.PROJECTS_TENSORBOARD_START,
+                kwargs={'project_id': obj.id})
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -81,7 +85,9 @@ class StopTensorboardView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.has_tensorboard:
-            stop_tensorboard.delay(project_id=obj.id)
+            celery_app.send_task(
+                RunnerCeleryTasks.PROJECTS_TENSORBOARD_STOP,
+                kwargs={'project_id': obj.id})
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=obj.tensorboard,
                            target='project',
@@ -114,7 +120,9 @@ class StartNotebookView(CreateAPIView):
             return Response(data='Notebook is already running', status=status.HTTP_200_OK)
         self._create_notebook(obj)
         if not obj.notebook.is_running:
-            build_notebook.delay(project_id=obj.id)
+            celery_app.send_task(
+                RunnerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
+                kwargs={'project_id': obj.id})
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -138,7 +146,9 @@ class StopNotebookView(CreateAPIView):
             else:
                 # Reset changes
                 git.undo(obj.repo.path)
-            stop_notebook.delay(project_id=obj.id)
+            celery_app.send_task(
+                RunnerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
+                kwargs={'project_id': obj.id})
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
                            instance=obj.notebook,
                            target='project',

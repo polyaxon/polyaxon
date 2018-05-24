@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from django.urls import re_path
 
 from libs.urls import NAME_PATTERN, USERNAME_PATTERN
-from plugins import views
+from apis.plugins import views
 
 projects_urlpatterns = [
     re_path(r'^{}/{}/tensorboard/start/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
