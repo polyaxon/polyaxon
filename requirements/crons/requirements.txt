@@ -1,0 +1,3 @@
+-r requirements-base.txt
+
+polyaxon-k8s==0.1.0
