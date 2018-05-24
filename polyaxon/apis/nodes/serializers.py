@@ -1,6 +1,6 @@
 from rest_framework import fields, serializers
 
-from clusters.serializers import ClusterSerializer
+from apis.clusters.serializers import ClusterSerializer
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 

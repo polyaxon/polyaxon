@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from db.models.clusters import Cluster
 from libs.views import ListCreateAPIView
 from db.models.nodes import ClusterNode, NodeGPU
-from nodes.serializers import (
+from apis.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
     GPUSerializer
