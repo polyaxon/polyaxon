@@ -1,4 +1,4 @@
--r requirements-service.txt
+-r requirements-base.txt
 
 polyaxon-schemas==0.1.0
 polyaxon-k8s==0.1.0

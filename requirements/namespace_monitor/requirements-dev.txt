@@ -1,0 +1,3 @@
+-r requirements-base.txt
+
+-e git+https://github.com/polyaxon/polyaxon-k8s.git@cb74e72a055149507b8cb0a5e2470e5bee4ffcc1#egg=polyaxon-k8s==0.1.0
