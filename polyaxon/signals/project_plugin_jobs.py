@@ -22,7 +22,7 @@ from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runn
 from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from db.models.projects import Project
 from repos.utils import assign_code_reference
-from runner.schedulers import notebook_scheduler, tensorboard_scheduler
+from scheduler import tensorboard_scheduler, notebook_scheduler
 
 logger = logging.getLogger('polyaxon.plugins')
 

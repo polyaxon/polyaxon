@@ -7,8 +7,10 @@ from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment, ExperimentStatus
 from constants.experiments import ExperimentLifeCycle
 from libs.decorators import check_specification, ignore_raw, ignore_updates, runner_signal
-from runner.schedulers import experiment_scheduler
-from runner.tasks.experiments import build_experiment
+from scheduler import experiment_scheduler
+
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RunnerCeleryTasks
 
 logger = logging.getLogger('polyaxon.runner.experiments')
 
@@ -22,7 +24,10 @@ def start_new_experiment(sender, **kwargs):
     instance = kwargs['instance']
     if instance.is_independent:
         # Start building the experiment and then Schedule it to be picked by the spawners
-        build_experiment.apply_async((instance.id, ), countdown=1)
+        celery_app.send_task(
+            RunnerCeleryTasks.EXPERIMENTS_BUILD,
+            kwargs={'experiment_id': instance.id},
+            countdown=1)
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="stop_running_experiment")

@@ -4,7 +4,7 @@ from django.urls import re_path
 
 from apis.experiment_groups import views
 from apis.experiments import views as experiments_views
-from libs.urls import NAME_PATTERN, SEQUENCE_PATTERN, USERNAME_PATTERN
+from constants.urls import NAME_PATTERN, SEQUENCE_PATTERN, USERNAME_PATTERN
 
 groups_urlpatterns = [
     re_path(r'^{}/{}/groups/{}/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),

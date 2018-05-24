@@ -2,7 +2,7 @@ import logging
 
 from db.models.experiments import ExperimentMetric
 from experiments.copy import copy_experiment
-from paths.experiments import create_experiment_outputs_path
+from libs.paths.experiments import create_experiment_outputs_path
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
 from polyaxon.celery_api import app as celery_app

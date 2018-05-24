@@ -25,7 +25,7 @@ from apis.plugins.serializers import NotebookJobSerializer, TensorboardJobSerial
 from db.models.projects import Project
 from permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from repos import git
-from runner.schedulers import notebook_scheduler, tensorboard_scheduler
+from scheduler import tensorboard_scheduler, notebook_scheduler
 
 from polyaxon.settings import RunnerCeleryTasks
 from polyaxon.celery_api import app as celery_app

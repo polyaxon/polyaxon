@@ -48,7 +48,7 @@ from db.models.experiments import (
     ExperimentMetric,
     ExperimentStatus
 )
-from experiments.paths import get_experiment_logs_path
+from libs.paths.experiments import get_experiment_logs_path
 from apis.experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentDetailSerializer,

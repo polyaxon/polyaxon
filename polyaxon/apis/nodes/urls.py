@@ -2,7 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from libs.urls import INDEX_PATTERN, SEQUENCE_PATTERN
+from constants.urls import INDEX_PATTERN, SEQUENCE_PATTERN
 from apis.nodes import views
 
 cluster_nodes_urlpatterns = [

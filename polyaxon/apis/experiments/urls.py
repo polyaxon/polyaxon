@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from django.urls import re_path
 
 from apis.experiments import views
-from libs.urls import (
+from constants.urls import (
     EXPERIMENT_SEQUENCE_PATTERN,
     NAME_PATTERN,
     SEQUENCE_PATTERN,

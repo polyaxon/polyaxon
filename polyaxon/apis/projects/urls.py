@@ -4,7 +4,7 @@ from django.urls import re_path
 
 from apis.experiment_groups import views as groups_views
 from apis.experiments import views as experiments_views
-from libs.urls import NAME_PATTERN, USERNAME_PATTERN
+from constants.urls import NAME_PATTERN, USERNAME_PATTERN
 from apis.projects import views
 
 projects_urlpatterns = [

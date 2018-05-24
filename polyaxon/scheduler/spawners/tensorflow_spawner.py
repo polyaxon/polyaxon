@@ -1,6 +1,6 @@
 import logging
 
-from paths.experiments import get_experiment_outputs_path
+from libs.paths.experiments import get_experiment_outputs_path
 from polyaxon_schemas.environments import TensorflowClusterConfig
 from polyaxon_schemas.polyaxonfile.specification.frameworks import TensorflowSpecification
 from polyaxon_schemas.utils import TaskType

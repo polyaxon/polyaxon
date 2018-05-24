@@ -5,9 +5,9 @@ from kubernetes import client
 
 from django.conf import settings
 
-from paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
+from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from polyaxon_k8s import constants as k8s_constants
-from paths.projects import get_project_data_path
+from libs.paths.projects import get_project_data_path
 from scheduler.spawners.templates import constants
 
 
