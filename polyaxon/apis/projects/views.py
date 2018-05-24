@@ -13,7 +13,7 @@ from event_manager.events.project import (
 from libs.views import AuditorMixinView
 from db.models.projects import Project
 from permissions.projects import IsProjectOwnerOrPublicReadOnly
-from projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from apis.projects.serializers import ProjectDetailSerializer, ProjectSerializer
 
 
 class ProjectCreateView(CreateAPIView):

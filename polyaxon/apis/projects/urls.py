@@ -2,10 +2,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from experiment_groups import views as groups_views
-from experiments import views as experiments_views
+from apis.experiment_groups import views as groups_views
+from apis.experiments import views as experiments_views
 from libs.urls import NAME_PATTERN, USERNAME_PATTERN
-from projects import views
+from apis.projects import views
 
 projects_urlpatterns = [
     re_path(r'^projects/?$',
