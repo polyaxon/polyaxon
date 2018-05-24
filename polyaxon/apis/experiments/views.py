@@ -61,7 +61,7 @@ from apis.experiments.serializers import (
 )
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
-from libs.views import AuditorMixinView, ListCreateAPIView
+from apis.utils import AuditorMixinView, ListCreateAPIView
 from permissions.projects import get_permissible_project
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks

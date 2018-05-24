@@ -20,7 +20,7 @@ from event_manager.events.tensorboard import (
 )
 from constants.experiments import ExperimentLifeCycle
 from libs.utils import to_bool
-from libs.views import ProtectedView
+from apis.utils import ProtectedView
 from apis.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from db.models.projects import Project
 from permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project

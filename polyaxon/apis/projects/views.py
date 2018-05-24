@@ -10,7 +10,7 @@ from event_manager.events.project import (
     PROJECT_UPDATED,
     PROJECT_VIEWED
 )
-from libs.views import AuditorMixinView
+from apis.utils import AuditorMixinView
 from db.models.projects import Project
 from permissions.projects import IsProjectOwnerOrPublicReadOnly
 from apis.projects.serializers import ProjectDetailSerializer, ProjectSerializer
