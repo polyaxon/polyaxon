@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 
 
 class BaseMonitorCommand(BaseCommand):
-    help = 'Watch namespace warning and errors events.'
+    help = 'Base events, resource, and errors monitor.'
 
     def add_arguments(self, parser):
         parser.add_argument('--log_sleep_interval',
