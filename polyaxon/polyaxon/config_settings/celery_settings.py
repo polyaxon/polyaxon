@@ -106,7 +106,7 @@ class CeleryTasks(object):
     PIPELINES_START_OPERATION = 'pipelines_start_operation'
     PIPELINES_STOP_OPERATIONS = 'pipelines_stop_operations'
     PIPELINES_SKIP_OPERATIONS = 'pipelines_skip_operations'
-    PIPELINES_CHECK_STATUS = 'pipelines_check_statuses'
+    PIPELINES_CHECK_STATUSES = 'pipelines_check_statuses'
 
 
 class RunnerCeleryTasks(object):
@@ -229,7 +229,7 @@ CELERY_TASK_ROUTES = {
     CeleryTasks.PIPELINES_START_OPERATION: {'queue': CeleryQueues.API_PIPELINES},
     CeleryTasks.PIPELINES_STOP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
     CeleryTasks.PIPELINES_SKIP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_CHECK_STATUS: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryTasks.PIPELINES_CHECK_STATUSES: {'queue': CeleryQueues.API_PIPELINES},
 
     # Operation tasks
     CeleryOperationTasks.EXPERIMENTS_SCHEDULE: {'queue': CeleryQueues.API_PIPELINES},

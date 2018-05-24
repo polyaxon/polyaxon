@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ActivityLogsConfig(AppConfig):
+class PublisherConfig(AppConfig):
     name = 'publisher'
     verbose_name = 'Publisher'

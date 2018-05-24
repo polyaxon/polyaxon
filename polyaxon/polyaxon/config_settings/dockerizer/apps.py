@@ -1,6 +1,8 @@
-from polyaxon.config_settings.auditor import AUDITOR_APPS
+from polyaxon.config_settings.apps import *
 
-PROJECT_APPS = AUDITOR_APPS + (
+PROJECT_APPS = (
     'publisher.apps.PublisherConfig',
-    'crons.apps.CronsConfig',
+    'dockerizer.apps.DockerizerConfig',
 )
+
+INSTALLED_APPS += PROJECT_APPS

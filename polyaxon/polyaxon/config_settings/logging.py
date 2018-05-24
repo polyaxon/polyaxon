@@ -48,6 +48,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        'polyaxon.streams': {
+            'handlers': ['console', ],
+            'propagate': True,
+            'level': 'INFO',
+        },
         'polyaxon.monitors': {
             'handlers': ['console', ],
             'propagate': True,
@@ -69,5 +74,3 @@ if not config.is_testing:
                                                 is_optional=True,
                                                 default='0.0.0')
     RAVEN_CONFIG['environment'] = config.env
-
-CLUSTER_NOTIFICATION_URL = config.notification_url
