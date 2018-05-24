@@ -5,7 +5,7 @@ from db.models.experiment_groups import (
     ExperimentGroupIteration,
     ExperimentGroupStatus
 )
-from libs.admin import DiffModelAdmin
+from db.admin.utils import DiffModelAdmin
 
 
 class ExperimentGroupAdmin(DiffModelAdmin):

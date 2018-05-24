@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from libs.admin import ReadOnlyAdmin
+from db.admin.utils import ReadOnlyAdmin
 from db.models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 
