@@ -2,7 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from versions import views
+from apis.versions import views
 
 urlpatterns = [
     re_path(r'^versions/cli/?$', views.CliVersionView.as_view()),
