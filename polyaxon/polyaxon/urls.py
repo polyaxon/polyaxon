@@ -18,7 +18,7 @@ API_V1 = 'api/v1'
 
 api_patterns = [
     re_path(r'', include(
-        ('clusters.urls', 'clusters'), namespace='clusters')),
+        ('commands.urls', 'commands'), namespace='commands')),
     re_path(r'', include(
         ('versions.urls', 'versions'), namespace='versions')),
     re_path(r'', include(

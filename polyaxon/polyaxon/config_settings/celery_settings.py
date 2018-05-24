@@ -183,7 +183,7 @@ class CeleryQueues(object):
     API_CLUSTERS = config.get_string(
         'POLYAXON_QUEUES_API_CLUSTERS',
         is_optional=True,
-        default='api.clusters')
+        default='api.commands')
     API_PIPELINES = config.get_string(
         'POLYAXON_QUEUES_API_PIPELINES',
         is_optional=True,
