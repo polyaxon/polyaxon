@@ -1,0 +1,3 @@
+-r ../requirements-base.txt
+
+redis==2.10.6
