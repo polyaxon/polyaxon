@@ -1,5 +1,5 @@
-from suggester.search_managers.bayesian_optimization.acquisition_function import UtilityFunction
-from suggester.search_managers.bayesian_optimization.space import SearchSpace
+from hpsearch.search_managers.bayesian_optimization.acquisition_function import UtilityFunction
+from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
 
 
 class BOOptimizer(object):

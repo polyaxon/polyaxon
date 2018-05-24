@@ -1,10 +1,10 @@
 import logging
 
-from suggester.iteration_managers.base import BaseIterationManger
-from suggester.schemas import HyperbandIterationConfig
+from hpsearch.iteration_managers.base import BaseIterationManger
+from hpsearch.schemas import HyperbandIterationConfig
 from polyaxon_schemas.utils import Optimization
 
-_logger = logging.getLogger('polyaxon.suggester.iteration_manager')
+_logger = logging.getLogger('polyaxon.hpsearch.iteration_manager')
 
 
 class HyperbandIterationManager(BaseIterationManger):

@@ -1,5 +1,5 @@
-from suggester.iteration_managers.base import BaseIterationManger
-from suggester.schemas.bayesian_optimization import BOIterationConfig
+from hpsearch.iteration_managers.base import BaseIterationManger
+from hpsearch.schemas.bayesian_optimization import BOIterationConfig
 
 
 class BOIterationManager(BaseIterationManger):
