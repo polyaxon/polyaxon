@@ -31,7 +31,8 @@ from event_manager.events.experiment import (
     EXPERIMENT_RESUMED_TRIGGERED,
     EXPERIMENT_STATUSES_VIEWED,
     EXPERIMENT_UPDATED,
-    EXPERIMENT_VIEWED
+    EXPERIMENT_VIEWED,
+    EXPERIMENT_STOPPED_TRIGGERED
 )
 from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
 from event_manager.events.experiment_job import (
@@ -48,7 +49,7 @@ from db.models.experiments import (
     ExperimentStatus
 )
 from experiments.paths import get_experiment_logs_path
-from experiments.serializers import (
+from apis.experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
@@ -62,6 +63,8 @@ from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
 from libs.views import AuditorMixinView, ListCreateAPIView
 from permissions.projects import get_permissible_project
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RunnerCeleryTasks
 
 logger = logging.getLogger("polyaxon.experiments.views")
 
@@ -372,3 +375,23 @@ class ExperimentJobStatusDetailView(ExperimentJobViewMixin, RetrieveUpdateAPIVie
     serializer_class = ExperimentJobStatusSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
+
+
+class ExperimentStopView(CreateAPIView):
+    queryset = Experiment.objects.all()
+    serializer_class = ExperimentSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'sequence'
+
+    def filter_queryset(self, queryset):
+        return queryset.filter(project=get_permissible_project(view=self))
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=EXPERIMENT_STOPPED_TRIGGERED,
+                       instance=obj,
+                       actor_id=request.user.id)
+        celery_app.send_task(
+            RunnerCeleryTasks.EXPERIMENTS_STOP,
+            kwargs={'experiment_id': obj.id})
+        return Response(status=status.HTTP_200_OK)

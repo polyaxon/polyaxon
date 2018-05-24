@@ -2,7 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from experiments import views
+from apis.experiments import views
 from libs.urls import (
     EXPERIMENT_SEQUENCE_PATTERN,
     NAME_PATTERN,
@@ -25,13 +25,13 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/copy/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentCopyView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/constants/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentStatusListView.as_view()),
     re_path(r'^{}/{}/experiments/{}/metrics/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentMetricListView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/constants/{}/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/statuses/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, UUID_PATTERN),
         views.ExperimentStatusDetailView.as_view()),
     re_path(r'^{}/{}/experiments/{}/jobs/?$'.format(
@@ -40,16 +40,19 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/logs/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN),
         views.ExperimentLogsView.as_view()),
+    re_path(
+        r'^{}/{}/experiments/{}/stop/?$'.format(USERNAME_PATTERN, NAME_PATTERN, SEQUENCE_PATTERN),
+        views.ExperimentStopView.as_view()),
 ]
 
 jobs_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/jobs/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentJobDetailView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/jobs/{}/constants/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, SEQUENCE_PATTERN),
         views.ExperimentJobStatusListView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/jobs/{}/constants/{}/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/{}/?$'.format(
         USERNAME_PATTERN, NAME_PATTERN, EXPERIMENT_SEQUENCE_PATTERN, SEQUENCE_PATTERN,
         UUID_PATTERN),
         views.ExperimentJobStatusDetailView.as_view()),
