@@ -8,7 +8,7 @@ from db.models.experiments import (
     ExperimentMetric,
     ExperimentStatus
 )
-from jobs.serializers import JobResourcesSerializer
+from apis.utils.serializers import JobResourcesSerializer
 from libs.spec_validation import validate_experiment_spec_config
 
 
