@@ -37,8 +37,48 @@ class SettingConfig(object):
                                                  default=True)
 
     @property
-    def config(self):
+    def service(self):
         return self._service
+
+    @property
+    def is_monolith_service(self):
+        return self.service == 'monolith'
+
+    @property
+    def is_api_service(self):
+        return self.service == 'api'
+
+    @property
+    def is_dockerizer_service(self):
+        return self.service == 'dockerizer'
+
+    @property
+    def is_crons_service(self):
+        return self.service == 'crons'
+
+    @property
+    def is_namespace_monitor_service(self):
+        return self.service == 'namespace_monitor'
+
+    @property
+    def is_resources_monitor_service(self):
+        return self.service == 'resources_monitor'
+
+    @property
+    def is_statuses_monitor_service(self):
+        return self.service == 'statuses_monitor'
+
+    @property
+    def is_sidecar_service(self):
+        return self.service == 'sidecar'
+
+    @property
+    def is_streams_service(self):
+        return self.service == 'streams'
+
+    @property
+    def is_hpsearch_service(self):
+        return self.service == 'hpsearch'
 
     @property
     def is_debug_mode(self):
