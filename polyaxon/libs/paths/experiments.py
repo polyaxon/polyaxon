@@ -4,7 +4,7 @@ import shutil
 from django.conf import settings
 
 from db.models.experiments import CloningStrategy
-from libs.paths import create_path, delete_path
+from libs.paths.utils import create_path, delete_path
 
 
 def get_experiment_outputs_path(experiment_name, original_name=None, cloning_strategy=None):

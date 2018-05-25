@@ -2,7 +2,7 @@ import os
 
 from django.conf import settings
 
-from libs.paths import delete_path
+from libs.paths.utils import delete_path
 
 
 def get_project_data_path(project_name):
