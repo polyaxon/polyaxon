@@ -2,7 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from libs.urls import USERNAME_PATTERN
+from constants.urls import USERNAME_PATTERN
 from users import views
 
 urlpatterns = [

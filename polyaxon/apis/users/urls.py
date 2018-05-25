@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import re_path
 from django.views.generic import TemplateView
 
-from polyaxon.config_settings import registration
+from polyaxon.settings import registration
 from users import views
 
 if registration.REGISTRATION_WORKFLOW == registration.REGISTRATION_SUPERUSER_VALIDATION_WORKFLOW:

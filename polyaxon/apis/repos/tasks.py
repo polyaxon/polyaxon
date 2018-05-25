@@ -11,7 +11,7 @@ from event_manager.events.repo import REPO_NEW_COMMIT
 from libs.paths import delete_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CeleryTasks
-from repos import git
+from libs.repos import git
 from db.models.repos import Repo
 
 logger = logging.getLogger('polyaxon.tasks.repos')

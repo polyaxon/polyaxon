@@ -24,7 +24,7 @@ from apis.utils import ProtectedView
 from apis.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from db.models.projects import Project
 from permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
-from repos import git
+from libs.repos import git
 from scheduler import tensorboard_scheduler, notebook_scheduler
 
 from polyaxon.settings import RunnerCeleryTasks
