@@ -1,10 +1,9 @@
 import logging
 
-from runner.tasks.experiments import build_experiment
-from experiments.utils import get_valid_experiment
+from db.getters import get_valid_experiment
 from pipelines.celery_task import ClassBasedTask, OperationRunError
 from polyaxon.celery_api import app as celery_app
-from polyaxon.config_settings import CeleryOperationTasks
+from polyaxon.settings import CeleryOperationTasks, RunnerCeleryTasks
 
 logger = logging.getLogger('polyaxon.tasks.experiments')
 
@@ -17,7 +16,10 @@ class ScheduleExperimentTask(ClassBasedTask):
         if not experiment:
             raise OperationRunError(
                 'The Experiment `{}` does not exist anymore.'.format(experiment_id))
-        build_experiment.apply_async(experiment_id=experiment_id)
+
+        celery_app.send_task(
+            RunnerCeleryTasks.EXPERIMENTS_BUILD,
+            kwargs={'experiment_id': experiment_id})
 
 
 @celery_app.task(name=CeleryOperationTasks.EXPERIMENTS_SCHEDULE, bind=True)
