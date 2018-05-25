@@ -30,9 +30,9 @@ import auditor
 from event_manager.events.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
 from event_manager.events.user import USER_ACTIVATED, USER_DELETED
 from polyaxon_schemas.user import UserConfig
-from users import signals
-from users.forms import RegistrationForm
-from users.utils import login_user, logout_user
+from signals import users as users_signals
+from api.users.forms import RegistrationForm
+from api.users.utils import login_user, logout_user
 
 
 class AuthTokenLogin(ObtainAuthToken):
@@ -110,9 +110,10 @@ class RegistrationView(FormView):
 
     def register(self, form):
         new_user = self.create_inactive_user(form)
-        signals.user_registered.send(sender=self.__class__,
-                                     user=new_user,
-                                     request=self.request)
+        users_signals.user_registered.send(
+            sender=self.__class__,
+            user=new_user,
+            request=self.request)
         return new_user
 
     def create_inactive_user(self, form):
@@ -255,7 +256,7 @@ class ActivationView(TemplateView):
         """
         activated_user = self.activate(*args, **kwargs)
         if activated_user:
-            signals.user_activated.send(
+            users_signals.user_activated.send(
                 sender=self.__class__,
                 user=activated_user,
                 request=request

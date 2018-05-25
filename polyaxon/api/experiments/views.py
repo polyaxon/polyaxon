@@ -31,7 +31,7 @@ from api.experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from api.utils import AuditorMixinView, ListCreateAPIView
+from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import (
     Experiment,
@@ -64,7 +64,7 @@ from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks
 
 logger = logging.getLogger("polyaxon.experiments.views")
 
@@ -392,6 +392,6 @@ class ExperimentStopView(CreateAPIView):
                        instance=obj,
                        actor_id=request.user.id)
         celery_app.send_task(
-            RunnerCeleryTasks.EXPERIMENTS_STOP,
+            SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={'experiment_id': obj.id})
         return Response(status=status.HTTP_200_OK)

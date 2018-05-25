@@ -9,7 +9,7 @@ from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer
 )
-from api.utils import AuditorMixinView, ListCreateAPIView
+from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
@@ -21,7 +21,7 @@ from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
 from libs.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks
 
 
 class ExperimentGroupListView(ListCreateAPIView):
@@ -78,7 +78,7 @@ class ExperimentGroupStopView(CreateAPIView):
                        actor_id=request.user.id,
                        pending=pending)
         celery_app.send_task(
-            RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
             kwargs={'experiment_group_id': obj.id,
                     'pending': pending,
                     'message': 'User stopped experiment group'})
