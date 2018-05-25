@@ -1,4 +1,6 @@
 from polyaxon_schemas.utils import SearchAlgorithms
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import HPCeleryTasks
 
 import auditor
 
@@ -11,6 +13,7 @@ from event_manager.events.experiment_group import (
 from hpsearch.tasks import grid, hyperband, bo, random
 
 
+@celery_app.task(name=HPCeleryTasks.HP_CREATE)
 def create(experiment_group):
     if SearchAlgorithms.is_grid(experiment_group.search_algorithm):
         auditor.record(event_type=EXPERIMENT_GROUP_GRID,
