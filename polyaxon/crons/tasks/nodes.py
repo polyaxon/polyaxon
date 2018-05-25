@@ -7,6 +7,7 @@ from django.db.models import Count, Sum
 import auditor
 
 from db.models.clusters import Cluster
+from db.models.nodes import ClusterNode
 from event_manager.events.cluster import (
     CLUSTER_NODE_CREATED,
     CLUSTER_NODE_DELETED,
@@ -14,11 +15,10 @@ from event_manager.events.cluster import (
     CLUSTER_RESOURCES_UPDATED,
     CLUSTER_UPDATED
 )
+from libs.utils import to_unit_memory
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 from polyaxon_k8s.manager import K8SManager
-from libs.units import to_unit_memory
-from db.models.nodes import ClusterNode
 
 
 def get_cluster_resources():

@@ -3,8 +3,8 @@ from django.dispatch import receiver
 
 import auditor
 
-from event_manager.events.experiment_group import EXPERIMENT_GROUP_ITERATION
 from db.models.experiment_groups import ExperimentGroupIteration
+from event_manager.events.experiment_group import EXPERIMENT_GROUP_ITERATION
 from libs.decorators import ignore_raw, ignore_updates
 
 

@@ -6,6 +6,7 @@ from django.conf import settings
 from django.dispatch import receiver
 
 import auditor
+
 from event_manager.events.user import USER_LDAP
 
 logger = logging.getLogger('polyaxon.users.auth_ldap')

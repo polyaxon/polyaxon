@@ -3,8 +3,8 @@ from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
 from django.utils import timezone
 
-from db.models.utils import DiffModel
 from constants.sso_providers import Providers
+from db.models.utils import DiffModel
 
 
 class SSOIdentity(DiffModel):

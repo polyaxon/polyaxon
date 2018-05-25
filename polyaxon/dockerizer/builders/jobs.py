@@ -2,9 +2,9 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from constants.jobs import JobLifeCycle
-from repos import git
 from db.models.repos import ExternalRepo, Repo
 from dockerizer.builders.base import BaseDockerBuilder
+from libs.repos import git
 
 
 class BaseJobDockerBuilder(BaseDockerBuilder):

@@ -1,4 +1,4 @@
-from polyaxon.utils import config, ROOT_DIR
+from polyaxon.utils import ROOT_DIR, config
 
 LIST_TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
@@ -8,13 +8,12 @@ LIST_TEMPLATE_CONTEXT_PROCESSORS = [
     'django.template.context_processors.static',
     'django.template.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
-    'versions.context_processors.versions',
-    'commands.context_processors.cluster',
-    'sso.context_processors.sso_enabled',
+    'polyaxon.context_processors.versions',
+    'polyaxon.context_processors.cluster',
+    'apis.context_processors.sso_enabled',
 ]
 
 JS_DEBUG = config.get_boolean('POLYAXON_JS_DEBUG')
-DEBUG = config.get_boolean('POLYAXON_DEBUG')
 
 if JS_DEBUG:
     def js_debug_processor(request):
@@ -22,6 +21,8 @@ if JS_DEBUG:
 
     LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.js_debug_processor',)
 
+TEMPLATES_DEBUG = (config.get_boolean('DJANGO_TEMPLATE_DEBUG', is_optional=True) or
+                   config.is_debug_mode)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -30,7 +31,7 @@ TEMPLATES = [
         ],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug': config.get_boolean('DJANGO_TEMPLATE_DEBUG', is_optional=True) or DEBUG,
+            'debug': TEMPLATES_DEBUG,
             'context_processors': LIST_TEMPLATE_CONTEXT_PROCESSORS,
         },
     },

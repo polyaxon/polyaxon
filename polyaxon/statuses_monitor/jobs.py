@@ -1,8 +1,7 @@
-from constants.jobs import JobLifeCycle
-from polyaxon_schemas.experiment import JobStateConfig
 from constants.containers import ContainerStatuses
+from constants.jobs import JobLifeCycle
 from constants.pods import PodConditions, PodLifeCycle
-from polyaxon_schemas.experiment import PodStateConfig
+from polyaxon_schemas.experiment import JobStateConfig, PodStateConfig
 
 
 def get_pod_state(event_type, event):

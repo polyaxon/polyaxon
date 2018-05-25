@@ -10,13 +10,12 @@ from django.conf import settings
 
 import polyaxon_gpustat
 
+from constants.containers import ContainerStatuses
+from db.models.nodes import ClusterNode, NodeGPU
+from libs.redis_db import RedisJobContainers, RedisToStream
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
-
-from libs.redis_db import RedisJobContainers, RedisToStream
 from polyaxon_schemas.experiment import ContainerResourcesConfig
-from db.models.nodes import ClusterNode, NodeGPU
-from constants.containers import ContainerStatuses
 
 logger = logging.getLogger('polyaxon.monitors.resources')
 

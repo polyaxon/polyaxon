@@ -31,7 +31,7 @@ class SettingConfig(object):
         self._secret_keys = set()
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
         self._service = self.get_string('POLYAXON_SERVICE')
-        self._is_debug_mode = self.get_string('POLYAXON_DEBUG')
+        self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG')
         self._enable_services = self.get_boolean('POLYAXON_ENABLE_SERVICES',
                                                  is_optional=True,
                                                  default=True)

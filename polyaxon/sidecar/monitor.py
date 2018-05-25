@@ -3,8 +3,8 @@ import time
 
 import publisher
 
-from constants.pods import PodLifeCycle
 from constants.experiments import ExperimentLifeCycle
+from constants.pods import PodLifeCycle
 from polyaxon_schemas.experiment import JobLabelConfig
 
 logger = logging.getLogger(__name__)

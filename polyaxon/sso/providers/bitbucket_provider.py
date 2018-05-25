@@ -2,8 +2,8 @@ import requests
 
 from django.conf import settings
 
-from event_manager.events.user import USER_BITBUCKET
 from constants.sso_providers import Providers
+from event_manager.events.user import USER_BITBUCKET
 from sso.providers.oauth2.provider import OAuth2Provider
 
 

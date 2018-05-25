@@ -1,6 +1,7 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
+from apis.utils.serializers import JobResourcesSerializer
 from db.models.experiments import (
     Experiment,
     ExperimentJob,
@@ -8,7 +9,6 @@ from db.models.experiments import (
     ExperimentMetric,
     ExperimentStatus
 )
-from apis.utils.serializers import JobResourcesSerializer
 from libs.spec_validation import validate_experiment_spec_config
 
 

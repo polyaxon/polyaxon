@@ -1,8 +1,8 @@
 from django.core.management import BaseCommand
 from django.db import ProgrammingError
 
-from db.models.experiments import Experiment
 from constants.experiments import ExperimentLifeCycle
+from db.models.experiments import Experiment
 from scheduler import experiment_scheduler
 
 

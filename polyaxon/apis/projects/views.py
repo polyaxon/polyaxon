@@ -4,16 +4,16 @@ from rest_framework.permissions import IsAuthenticated
 
 import auditor
 
+from apis.projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from apis.utils import AuditorMixinView
+from db.models.projects import Project
 from event_manager.events.project import (
     PROJECT_CREATED,
     PROJECT_DELETED_TRIGGERED,
     PROJECT_UPDATED,
     PROJECT_VIEWED
 )
-from apis.utils import AuditorMixinView
-from db.models.projects import Project
-from permissions.projects import IsProjectOwnerOrPublicReadOnly
-from apis.projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly
 
 
 class ProjectCreateView(CreateAPIView):

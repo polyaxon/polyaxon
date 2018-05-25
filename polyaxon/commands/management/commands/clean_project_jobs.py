@@ -3,7 +3,7 @@ from django.db import ProgrammingError
 from django.db.models import Q
 
 from db.models.projects import Project
-from scheduler import tensorboard_scheduler, notebook_scheduler
+from scheduler import notebook_scheduler, tensorboard_scheduler
 
 
 class Command(BaseCommand):

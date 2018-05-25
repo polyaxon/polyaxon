@@ -1,25 +1,27 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
-from rest_framework.response import Response
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 import auditor
 
+from apis.experiment_groups.serializers import (
+    ExperimentGroupDetailSerializer,
+    ExperimentGroupSerializer
+)
+from apis.utils import AuditorMixinView, ListCreateAPIView
+from db.models.experiment_groups import ExperimentGroup
 from event_manager.events.experiment_group import (
-    EXPERIMENT_GROUP_STOPPED_TRIGGERED,
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
+    EXPERIMENT_GROUP_STOPPED_TRIGGERED,
     EXPERIMENT_GROUP_UPDATED,
     EXPERIMENT_GROUP_VIEWED
 )
 from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
-from db.models.experiment_groups import ExperimentGroup
-from apis.experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
+from libs.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
-from apis.utils import AuditorMixinView, ListCreateAPIView
-from permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
 
 
 class ExperimentGroupListView(ListCreateAPIView):

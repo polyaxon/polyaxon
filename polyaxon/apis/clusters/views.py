@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from django.conf import settings
 
-from db.models.clusters import Cluster
 from apis.clusters.serializers import ClusterSerializer
+from db.models.clusters import Cluster
 
 
 class ClusterDetailView(RetrieveAPIView):

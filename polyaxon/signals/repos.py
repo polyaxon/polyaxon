@@ -3,10 +3,10 @@ import os
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
+from db.models.repos import CodeReference, ExternalRepo, Repo
 from libs.decorators import ignore_raw, ignore_updates
 from libs.paths import create_path, delete_path
-from repos import git
-from db.models.repos import ExternalRepo, Repo
+from libs.repos import git
 
 
 @receiver(post_save, sender=Repo, dispatch_uid="repo_saved")
@@ -15,6 +15,12 @@ from db.models.repos import ExternalRepo, Repo
 def new_repo(sender, **kwargs):
     instance = kwargs['instance']
     git.set_git_repo(instance)
+    last_commit = instance.last_commit
+    if not last_commit:
+        return None
+
+    # Set code reference
+    CodeReference.objects.get_or_create(repo=instance, commit=last_commit[0])
 
 
 @receiver(post_delete, sender=ExternalRepo, dispatch_uid="repo_deleted")

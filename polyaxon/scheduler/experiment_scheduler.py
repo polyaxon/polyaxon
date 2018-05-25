@@ -7,10 +7,11 @@ from rest_framework import fields
 
 from django.conf import settings
 
-from db.models.experiments import ExperimentJob
 from apis.experiments.serializers import ExperimentJobDetailSerializer
 from constants.experiments import ExperimentLifeCycle
+from db.models.experiments import ExperimentJob
 from db.models.jobs import JobResources
+from docker_images.image_info import get_experiment_image_info
 from polyaxon.utils import config
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,
@@ -19,7 +20,6 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification
 )
 from polyaxon_schemas.utils import Frameworks, TaskType
-from docker_images.image_info import get_experiment_image_info
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner

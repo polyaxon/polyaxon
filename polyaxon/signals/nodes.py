@@ -3,9 +3,9 @@ from django.dispatch import receiver
 
 import auditor
 
+from db.models.nodes import NodeGPU
 from event_manager.events.cluster import CLUSTER_NODE_GPU
 from libs.decorators import ignore_raw, ignore_updates, runner_signal
-from db.models.nodes import NodeGPU
 
 
 @receiver(post_save, sender=NodeGPU, dispatch_uid="node_gpu_created")

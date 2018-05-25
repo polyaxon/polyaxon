@@ -1,10 +1,10 @@
 import logging
 
 from constants.jobs import JobLifeCycle
-from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
 from db.getters import get_valid_project
 from dockerizer import get_notebook_image_info
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RunnerCeleryTasks
 from scheduler import notebook_scheduler
 
 _logger = logging.getLogger(__name__)

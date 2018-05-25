@@ -8,6 +8,10 @@ from django.http import Http404
 
 import auditor
 
+from apis.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
+from apis.utils import ProtectedView
+from constants.experiments import ExperimentLifeCycle
+from db.models.projects import Project
 from event_manager.events.notebook import (
     NOTEBOOK_STARTED_TRIGGERED,
     NOTEBOOK_STOPPED_TRIGGERED,
@@ -18,17 +22,12 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_STOPPED_TRIGGERED,
     TENSORBOARD_VIEWED
 )
-from constants.experiments import ExperimentLifeCycle
-from libs.utils import to_bool
-from apis.utils import ProtectedView
-from apis.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
-from db.models.projects import Project
-from permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
+from libs.permissions.projects import IsProjectOwnerOrPublicReadOnly, get_permissible_project
 from libs.repos import git
-from scheduler import tensorboard_scheduler, notebook_scheduler
-
-from polyaxon.settings import RunnerCeleryTasks
+from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RunnerCeleryTasks
+from scheduler import notebook_scheduler, tensorboard_scheduler
 
 
 class StartTensorboardView(CreateAPIView):

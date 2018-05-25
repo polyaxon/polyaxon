@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from db.models.clusters import Cluster
 from db.admin.utils import DiffModelAdmin
+from db.models.clusters import Cluster
 
 
 class ClusterAdmin(DiffModelAdmin):

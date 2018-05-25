@@ -10,13 +10,13 @@ from django.http import HttpResponseServerError
 
 import auditor
 
-from event_manager.events.repo import REPO_CREATED
-from apis.utils.views import UploadView
-from permissions.projects import get_permissible_project
-from libs.repos.git import set_git_repo
-from db.models.repos import Repo
 from apis.repos.serializers import RepoSerializer
 from apis.repos.tasks import handle_new_files
+from apis.utils.views import UploadView
+from db.models.repos import Repo
+from event_manager.events.repo import REPO_CREATED
+from libs.permissions.projects import get_permissible_project
+from libs.repos.git import set_git_repo
 
 logger = logging.getLogger(__name__)
 

@@ -23,16 +23,21 @@ class RepoMixin(object):
 
     @property
     def git(self):
-        from repos import git
+        from libs.repos import git
 
         return git.get_git_repo(repo_path=self.path)
 
     @property
     def last_commit(self):
         """Returns a tuple (hash, and commit object)"""
-        from repos import git
+        from libs.repos import git
 
         return git.get_last_commit(repo_path=self.path)
+
+    @property
+    def last_code_reference(self):
+        """Returns the last code reference"""
+        return self.references.last()
 
     def get_tmp_tar_path(self):
         return os.path.join(self.path, '{}_new.tar.gz'.format(self.project.name))

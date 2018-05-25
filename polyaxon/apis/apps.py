@@ -16,4 +16,3 @@ class APIsConfig(AppConfig):
         from apis.users.signals import create_auth_token  # noqa
         if settings.AUTH_LDAP_ENABLED:
             from apis.users.ldap_signals import populate_user_handler  # noqa
-

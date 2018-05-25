@@ -2,8 +2,8 @@ import logging
 
 from django.conf import settings
 
-from docker_images.images_tags import LATEST_IMAGE_TAG
 from db.models.repos import ExternalRepo
+from docker_images.images_tags import LATEST_IMAGE_TAG
 
 logger = logging.getLogger('polyaxon.dockerizer.images')
 

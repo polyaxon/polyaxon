@@ -10,9 +10,10 @@ from django.urls import reverse
 from django.utils import timezone
 
 import auditor
+
+from db.models.sso import SSOIdentity
 from libs.wizards import Wizard
 from sso import providers
-from db.models.sso import SSOIdentity
 from users.utils import login_user
 
 logger = logging.getLogger('polyaxon.identity')

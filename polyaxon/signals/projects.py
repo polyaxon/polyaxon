@@ -3,9 +3,9 @@ from django.dispatch import receiver
 
 import auditor
 
+from db.models.projects import Project
 from event_manager.events.project import PROJECT_DELETED
 from libs.decorators import ignore_raw, ignore_updates
-from db.models.projects import Project
 from libs.paths.projects import delete_project_logs, delete_project_outputs, delete_project_repos
 
 

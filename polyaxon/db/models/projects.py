@@ -4,8 +4,8 @@ from django.conf import settings
 from django.core.validators import validate_slug
 from django.db import models
 
-from libs.blacklist import validate_blacklist_name
 from db.models.utils import DescribableModel, DiffModel
+from libs.blacklist import validate_blacklist_name
 
 
 class Project(DiffModel, DescribableModel):

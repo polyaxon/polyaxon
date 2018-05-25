@@ -8,19 +8,19 @@ from django.core.exceptions import ValidationError
 
 import auditor
 
+from db.models.experiments import Experiment, ExperimentJob
+from db.models.projects import Project
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
 from event_manager.events.experiment_job import (
     EXPERIMENT_JOB_LOGS_VIEWED,
     EXPERIMENT_JOB_RESOURCES_VIEWED
 )
+from libs.permissions.projects import has_project_permissions
+from libs.redis_db import RedisToStream
+from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
 from streams.consumers import Consumer
 from streams.socket_manager import SocketManager
-from db.models.experiments import Experiment, ExperimentJob
-from libs.redis_db import RedisToStream
-from polyaxon.settings import CeleryQueues, RoutingKeys
-from db.models.projects import Project
-from permissions.projects import has_project_permissions
 
 logger = logging.getLogger('polyaxon.streams.api')
 

@@ -144,6 +144,8 @@ class HPCeleryTasks(object):
 
     N.B. make sure that the task name is not < 128.
     """
+    HP_CREATE = 'hp_create'
+
     HP_GRID_SEARCH_CREATE = 'hp_grid_search_create'
     HP_GRID_SEARCH_START = 'hp_grid_search_start'
 
@@ -272,6 +274,7 @@ if config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True):
         RunnerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED:
             {'queue': CeleryQueues.API_EXPERIMENTS},
 
+        HPCeleryTasks.HP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
         HPCeleryTasks.HP_GRID_SEARCH_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
         HPCeleryTasks.HP_GRID_SEARCH_START: {'queue': CeleryQueues.API_EXPERIMENTS},
         HPCeleryTasks.HP_RANDOM_SEARCH_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},

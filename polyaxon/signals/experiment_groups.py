@@ -3,6 +3,8 @@ from django.dispatch import receiver
 
 import auditor
 
+from constants.experiment_groups import ExperimentGroupLifeCycle
+from db.models.experiment_groups import ExperimentGroup, ExperimentGroupStatus
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_CREATED,
     EXPERIMENT_GROUP_DELETED,
@@ -10,18 +12,18 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_NEW_STATUS,
     EXPERIMENT_GROUP_STOPPED
 )
-from db.models.experiment_groups import (
-    ExperimentGroup,
-    ExperimentGroupStatus
+from libs.decorators import (
+    check_specification,
+    ignore_raw,
+    ignore_updates,
+    ignore_updates_pre,
+    runner_signal
 )
 from libs.paths.experiment_groups import (
     delete_experiment_group_logs,
     delete_experiment_group_outputs
 )
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runner_signal, \
-    check_specification
-from repos.utils import assign_code_reference
+from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 

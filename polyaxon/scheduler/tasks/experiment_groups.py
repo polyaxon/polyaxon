@@ -1,11 +1,10 @@
 import logging
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
-from db.getters import get_running_experiment_group, get_valid_experiment_group
 from constants.experiments import ExperimentLifeCycle
+from db.getters import get_running_experiment_group, get_valid_experiment_group
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import Intervals, RunnerCeleryTasks
-from suggester import tasks
+from polyaxon.settings import HPCeleryTasks, Intervals, RunnerCeleryTasks
 from scheduler.tasks.experiments import stop_experiment
 
 _logger = logging.getLogger(__name__)
@@ -33,7 +32,9 @@ def create_group_experiments(self, experiment_group_id):
         return
 
     experiment_group.set_status(ExperimentGroupLifeCycle.RUNNING)
-    tasks.create(experiment_group=experiment_group)
+    celery_app.send_task(
+        HPCeleryTasks.HP_CREATE,
+        kwargs={'experiment_group': experiment_group})
 
 
 @celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)

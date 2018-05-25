@@ -1,5 +1,5 @@
-from constants.unknown import UNKNOWN
 from constants.statuses import BaseStatuses
+from constants.unknown import UNKNOWN
 
 
 class JobLifeCycle(BaseStatuses):

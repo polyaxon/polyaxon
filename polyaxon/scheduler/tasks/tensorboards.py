@@ -1,9 +1,9 @@
 import logging
 
 from constants.jobs import JobLifeCycle
+from db.getters import get_valid_project
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
-from db.getters import get_valid_project
 from scheduler import tensorboard_scheduler
 
 _logger = logging.getLogger(__name__)
@@ -28,5 +28,3 @@ def projects_tensorboard_stop(project_id):
     if not project:
         return None
     tensorboard_scheduler.stop_tensorboard(project, update_status=True)
-
-

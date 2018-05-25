@@ -4,10 +4,10 @@ from django.conf import settings
 from django.db import InterfaceError, OperationalError, ProgrammingError
 
 from db.models.clusters import Cluster
-from libs.base_monitor import BaseMonitorCommand
-from resources_monitor import monitor
-from libs.utils import to_bool
 from db.models.nodes import ClusterNode
+from libs.base_monitor import BaseMonitorCommand
+from libs.utils import to_bool
+from resources_monitor import monitor
 
 
 class Command(BaseMonitorCommand):

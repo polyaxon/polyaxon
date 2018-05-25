@@ -1,11 +1,11 @@
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks
-from libs.decorators import ignore_raw, ignore_updates
 from constants.pipelines import OperationStatuses, PipelineStatuses
 from db.models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
+from libs.decorators import ignore_raw, ignore_updates
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import CeleryTasks
 
 
 @receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_saved")

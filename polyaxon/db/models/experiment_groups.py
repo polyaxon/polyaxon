@@ -259,19 +259,19 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
 
     @cached_property
     def search_manager(self):
-        from suggester.search_managers import get_search_algorithm_manager
+        from hpsearch.search_managers import get_search_algorithm_manager
 
         return get_search_algorithm_manager(params_config=self.params_config)
 
     @cached_property
     def iteration_manager(self):
-        from suggester.iteration_managers import get_search_iteration_manager
+        from hpsearch.iteration_managers import get_search_iteration_manager
 
         return get_search_iteration_manager(experiment_group=self)
 
     @property
     def iteration_config(self):
-        from suggester.schemas import get_iteration_config
+        from hpsearch.schemas import get_iteration_config
 
         if self.iteration_data and self.search_algorithm:
             return get_iteration_config(

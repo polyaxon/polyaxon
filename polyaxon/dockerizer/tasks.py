@@ -4,14 +4,13 @@ from docker.errors import DockerException
 
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
-from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import Intervals, RunnerCeleryTasks
-
 from db.getters.experiments import get_valid_experiment
 from db.getters.projects import get_valid_project
 from db.models.repos import Repo
 from dockerizer.builders import experiments as experiments_builder
 from dockerizer.builders import notebooks as notebooks_builder
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import Intervals, RunnerCeleryTasks
 
 _logger = logging.getLogger(__name__)
 

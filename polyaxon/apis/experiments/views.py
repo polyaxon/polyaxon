@@ -21,34 +21,6 @@ from django.http import StreamingHttpResponse
 
 import auditor
 
-from event_manager.events.experiment import (
-    EXPERIMENT_COPIED_TRIGGERED,
-    EXPERIMENT_CREATED,
-    EXPERIMENT_DELETED_TRIGGERED,
-    EXPERIMENT_JOBS_VIEWED,
-    EXPERIMENT_LOGS_VIEWED,
-    EXPERIMENT_RESTARTED_TRIGGERED,
-    EXPERIMENT_RESUMED_TRIGGERED,
-    EXPERIMENT_STATUSES_VIEWED,
-    EXPERIMENT_UPDATED,
-    EXPERIMENT_VIEWED,
-    EXPERIMENT_STOPPED_TRIGGERED
-)
-from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
-from event_manager.events.experiment_job import (
-    EXPERIMENT_JOB_STATUSES_VIEWED,
-    EXPERIMENT_JOB_VIEWED
-)
-from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
-from db.models.experiment_groups import ExperimentGroup
-from db.models.experiments import (
-    Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
-    ExperimentMetric,
-    ExperimentStatus
-)
-from libs.paths.experiments import get_experiment_logs_path
 from apis.experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentDetailSerializer,
@@ -59,10 +31,38 @@ from apis.experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
+from apis.utils import AuditorMixinView, ListCreateAPIView
+from db.models.experiment_groups import ExperimentGroup
+from db.models.experiments import (
+    Experiment,
+    ExperimentJob,
+    ExperimentJobStatus,
+    ExperimentMetric,
+    ExperimentStatus
+)
+from event_manager.events.experiment import (
+    EXPERIMENT_COPIED_TRIGGERED,
+    EXPERIMENT_CREATED,
+    EXPERIMENT_DELETED_TRIGGERED,
+    EXPERIMENT_JOBS_VIEWED,
+    EXPERIMENT_LOGS_VIEWED,
+    EXPERIMENT_RESTARTED_TRIGGERED,
+    EXPERIMENT_RESUMED_TRIGGERED,
+    EXPERIMENT_STATUSES_VIEWED,
+    EXPERIMENT_STOPPED_TRIGGERED,
+    EXPERIMENT_UPDATED,
+    EXPERIMENT_VIEWED
+)
+from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
+from event_manager.events.experiment_job import (
+    EXPERIMENT_JOB_STATUSES_VIEWED,
+    EXPERIMENT_JOB_VIEWED
+)
+from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
+from libs.paths.experiments import get_experiment_logs_path
+from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
-from apis.utils import AuditorMixinView, ListCreateAPIView
-from permissions.projects import get_permissible_project
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import RunnerCeleryTasks
 

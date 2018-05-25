@@ -1,13 +1,12 @@
-from libs.services import Service
-
 from amqp import AMQPError
 from redis import RedisError
 
 from django.conf import settings
 
-from polyaxon.settings import RoutingKeys, RunnerCeleryTasks
 from libs.redis_db import RedisToStream
+from libs.services import Service
 from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import RoutingKeys, RunnerCeleryTasks
 
 
 class PublisherService(Service):

@@ -1,6 +1,6 @@
 from constants.jobs import JobLifeCycle
-from constants.unknown import UNKNOWN
 from constants.statuses import BaseStatuses
+from constants.unknown import UNKNOWN
 
 
 class ExperimentLifeCycle(BaseStatuses):
