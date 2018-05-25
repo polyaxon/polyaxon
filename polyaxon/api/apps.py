@@ -7,12 +7,12 @@ class APIConfig(AppConfig):
     verbose_name = 'API'
 
     def ready(self):
-        from signals.experiments import *  # noqa
-        from signals.experiment_groups import *  # noqa
-        from signals.projects import *  # noqa
-        from signals.project_plugin_jobs import *  # noqa
-        from signals.nodes import *  # noqa
-        from signals.repos import *  # noqa
-        from api.users.signals import create_auth_token  # noqa
+        import signals.experiments  # noqa
+        import signals.experiment_groups  # noqa
+        import signals.projects  # noqa
+        import signals.project_plugin_jobs  # noqa
+        import signals.nodes  # noqa
+        import signals.repos  # noqa
+        from signals.users import create_auth_token  # noqa
         if settings.AUTH_LDAP_ENABLED:
             from api.users.ldap_signals import populate_user_handler  # noqa
