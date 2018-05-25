@@ -42,8 +42,16 @@ def copy_experiment(experiment):
             experiment.original_experiment.unique_name, experiment.unique_name)
 
 
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_BUILD, ignore_result=True)
+def experiments_build(experiment_id):
+    experiment = get_valid_experiment(experiment_id=experiment_id)
+    if not experiment:
+        return
+    pass
+
+
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
-def check_experiment_status(experiment_uuid):
+def experiments_check_status(experiment_uuid):
     experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
     if not experiment:
         return
@@ -51,7 +59,7 @@ def check_experiment_status(experiment_uuid):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
-def set_metrics(experiment_uuid, metrics, created_at=None):
+def experiments_set_metrics(experiment_uuid, metrics, created_at=None):
     experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
     if not experiment:
         return
@@ -63,7 +71,7 @@ def set_metrics(experiment_uuid, metrics, created_at=None):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_START, ignore_result=True)
-def start_experiment(experiment_id):
+def experiments_start(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         logger.info('Something went wrong, '
@@ -86,7 +94,7 @@ def start_experiment(experiment_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
-def stop_experiment(experiment_id):
+def experiments_stop(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         logger.info('Something went wrong, '

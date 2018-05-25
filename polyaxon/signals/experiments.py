@@ -29,7 +29,6 @@ from libs.decorators import (
     ignore_raw,
     ignore_updates,
     ignore_updates_pre,
-    runner_signal
 )
 from libs.paths.experiments import (
     create_experiment_logs_path,
@@ -38,7 +37,7 @@ from libs.paths.experiments import (
 )
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks, RunnerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks
 from scheduler import experiment_scheduler
 
 logger = logging.getLogger('polyaxon.signals.experiments')
@@ -143,7 +142,7 @@ def new_experiment_job_status(sender, **kwargs):
         return
 
     celery_app.send_task(
-        CeleryTasks.EXPERIMENTS_CHECK_STATUS,
+        SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
         kwargs={'experiment_uuid': experiment.uuid.hex})
 
 
@@ -196,7 +195,6 @@ def new_experiment_metric(sender, **kwargs):
 
 
 @receiver(post_save, sender=Experiment, dispatch_uid="start_new_experiment")
-@runner_signal
 @check_specification
 @ignore_updates
 @ignore_raw
@@ -205,13 +203,12 @@ def start_new_experiment(sender, **kwargs):
     if instance.is_independent:
         # Start building the experiment and then Schedule it to be picked by the spawners
         celery_app.send_task(
-            RunnerCeleryTasks.EXPERIMENTS_BUILD,
+            SchedulerCeleryTasks.EXPERIMENTS_BUILD,
             kwargs={'experiment_id': instance.id},
             countdown=1)
 
 
 @receiver(pre_delete, sender=Experiment, dispatch_uid="stop_running_experiment")
-@runner_signal
 @check_specification
 @ignore_raw
 def stop_running_experiment(sender, **kwargs):
@@ -228,7 +225,6 @@ def stop_running_experiment(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="handle_new_experiment_status")
-@runner_signal
 @ignore_raw
 def handle_new_experiment_status(sender, **kwargs):
     instance = kwargs['instance']

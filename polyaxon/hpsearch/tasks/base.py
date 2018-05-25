@@ -2,7 +2,7 @@ import logging
 
 from db.models.experiments import Experiment
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks
 
 _logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ def start_group_experiments(experiment_group):
     # Check for early stopping before starting new experiments from this group
     if experiment_group.should_stop_early():
         celery_app.send_task(
-            RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
+            SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
             kwargs={'experiment_group_id': experiment_group.id,
                     'pending': True,
                     'message': 'Early stopping'})
@@ -46,12 +46,12 @@ def start_group_experiments(experiment_group):
 
     for experiment in pending_experiments:
         celery_app.send_task(
-            RunnerCeleryTasks.EXPERIMENTS_BUILD,
+            SchedulerCeleryTasks.EXPERIMENTS_BUILD,
             kwargs={'experiment_id': experiment.id})
 
     return n_pending_experiment - experiment_to_start > 0
 
 
 def check_group_experiments_finished(experiment_group_id):
-    celery_app.send_task(RunnerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
+    celery_app.send_task(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
                          kwargs={'experiment_group_id': experiment_group_id})
