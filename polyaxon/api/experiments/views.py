@@ -21,7 +21,7 @@ from django.http import StreamingHttpResponse
 
 import auditor
 
-from apis.experiments.serializers import (
+from api.experiments.serializers import (
     ExperimentCreateSerializer,
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
@@ -31,7 +31,7 @@ from apis.experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from apis.utils import AuditorMixinView, ListCreateAPIView
+from api.utils import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import (
     Experiment,

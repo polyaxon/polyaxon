@@ -5,11 +5,11 @@ from rest_framework.response import Response
 
 import auditor
 
-from apis.experiment_groups.serializers import (
+from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer
 )
-from apis.utils import AuditorMixinView, ListCreateAPIView
+from api.utils import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_DELETED_TRIGGERED,

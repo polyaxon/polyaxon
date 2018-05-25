@@ -2,8 +2,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from apis.experiment_groups import views
-from apis.experiments import views as experiments_views
+from api.experiment_groups import views
+from api.experiments import views as experiments_views
 from constants.urls import NAME_PATTERN, SEQUENCE_PATTERN, USERNAME_PATTERN
 
 groups_urlpatterns = [

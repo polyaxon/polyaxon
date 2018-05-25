@@ -1,8 +1,8 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_404
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
-from apis.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
-from apis.utils import ListCreateAPIView
+from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
+from api.utils import ListCreateAPIView
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 

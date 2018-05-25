@@ -1,7 +1,7 @@
 from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
-from apis.utils.serializers import JobResourcesSerializer
+from api.utils.serializers import JobResourcesSerializer
 from db.models.experiments import (
     Experiment,
     ExperimentJob,

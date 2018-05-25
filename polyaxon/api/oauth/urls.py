@@ -2,7 +2,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from apis.oauth import views
+from api.oauth import views
 
 urlpatterns = [
     re_path(r'^(?P<provider>\w{0,50})/?$',

@@ -10,9 +10,9 @@ from django.http import HttpResponseServerError
 
 import auditor
 
-from apis.repos.serializers import RepoSerializer
-from apis.repos.tasks import handle_new_files
-from apis.utils.views import UploadView
+from api.repos.serializers import RepoSerializer
+from api.repos.tasks import handle_new_files
+from api.utils.views import UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED
 from libs.permissions.projects import get_permissible_project

@@ -8,8 +8,8 @@ from django.http import Http404
 
 import auditor
 
-from apis.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
-from apis.utils import ProtectedView
+from api.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
+from api.utils import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from db.models.projects import Project
 from event_manager.events.notebook import (

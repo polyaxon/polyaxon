@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 
 import auditor
 
-from apis.projects.serializers import ProjectDetailSerializer, ProjectSerializer
-from apis.utils import AuditorMixinView
+from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from api.utils import AuditorMixinView
 from db.models.projects import Project
 from event_manager.events.project import (
     PROJECT_CREATED,
