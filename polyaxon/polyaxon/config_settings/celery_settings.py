@@ -149,7 +149,7 @@ class SchedulerCeleryTasks(object):
     EXPERIMENTS_BUILD = 'experiments_build'
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_STOP = 'experiments_stop'
-    EXPERIMENTS_CHECK_STATUS = 'check_status'
+    EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
     EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
 
     EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
@@ -183,6 +183,11 @@ class HPCeleryTasks(object):
     HP_BO_CREATE = 'hp_bo_create'
     HP_BO_START = 'hp_bo_start'
     HP_BO_ITERATE = 'hp_bo_iterate'
+
+
+class DockerizerCeleryTasks(object):
+    BUILD_PROJECT_NOTEBOOK = 'build_project_notebook'
+    BUILD_EXPERIMENT = 'build_experiment'
 
 
 class CeleryQueues(object):

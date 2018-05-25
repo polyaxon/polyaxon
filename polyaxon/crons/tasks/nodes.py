@@ -17,7 +17,7 @@ from event_manager.events.cluster import (
 )
 from libs.utils import to_unit_memory
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.settings import CronsCeleryTasks
 from polyaxon_k8s.manager import K8SManager
 
 
@@ -29,7 +29,7 @@ def get_cluster_resources():
         n_gpus=Sum('nodes__n_gpus')).first()
 
 
-@celery_app.task(name=RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
+@celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
                  time_limit=150,
                  ignore_result=True)
 def update_system_info():
@@ -44,7 +44,7 @@ def update_system_info():
                        is_upgrade=settings.CHART_IS_UPGRADE)
 
 
-@celery_app.task(name=RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
+@celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
                  time_limit=150,
                  ignore_result=True)
 def update_system_nodes():
@@ -96,7 +96,7 @@ def update_system_nodes():
                        n_gpus=cluster.n_gpus)
 
 
-@celery_app.task(name=RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
+@celery_app.task(name=CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
                  time_limits=60,
                  ignore_result=True)
 def cluster_nodes_analytics():
