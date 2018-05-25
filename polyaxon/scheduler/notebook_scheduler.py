@@ -5,7 +5,7 @@ from django.conf import settings
 from constants.experiments import ExperimentLifeCycle
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 
-logger = logging.getLogger('polyaxon.schedulers.notebook')
+logger = logging.getLogger('polyaxon.scheduler.notebook')
 
 
 def start_notebook(project, image):

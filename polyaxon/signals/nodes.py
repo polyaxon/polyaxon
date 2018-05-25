@@ -5,11 +5,10 @@ import auditor
 
 from db.models.nodes import NodeGPU
 from event_manager.events.cluster import CLUSTER_NODE_GPU
-from libs.decorators import ignore_raw, ignore_updates, runner_signal
+from libs.decorators import ignore_raw, ignore_updates
 
 
 @receiver(post_save, sender=NodeGPU, dispatch_uid="node_gpu_created")
-@runner_signal
 @ignore_updates
 @ignore_raw
 def node_gpu_created(sender, **kwargs):

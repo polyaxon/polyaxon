@@ -6,7 +6,7 @@ from django.conf import settings
 from libs.redis_db import RedisToStream
 from libs.services import Service
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RoutingKeys, RunnerCeleryTasks
+from polyaxon.settings import RoutingKeys, EventsCeleryTasks
 
 
 class PublisherService(Service):
@@ -31,7 +31,7 @@ class PublisherService(Service):
         self._logger.info("Publishing log event for task: %s.%s, %s", task_type, task_idx,
                           experiment_name)
         celery_app.send_task(
-            RunnerCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR,
+            EventsCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR,
             kwargs={
                 'experiment_name': experiment_name,
                 'experiment_uuid': experiment_uuid,

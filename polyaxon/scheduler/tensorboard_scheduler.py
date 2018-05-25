@@ -5,7 +5,7 @@ from django.conf import settings
 from constants.experiments import ExperimentLifeCycle
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 
-logger = logging.getLogger('polyaxon.schedulers.tensorboard')
+logger = logging.getLogger('polyaxon.scheduler.tensorboard')
 
 
 def start_tensorboard(project):

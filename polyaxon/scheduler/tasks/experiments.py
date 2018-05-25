@@ -5,13 +5,12 @@ import publisher
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
 from db.models.experiments import ExperimentMetric
-from experiments.copy import copy_experiment
 from libs.paths.experiments import copy_experiment_outputs, create_experiment_outputs_path
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks, RunnerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks
 from scheduler import experiment_scheduler
 
-logger = logging.getLogger('polyaxon.tasks.runner.experiments')
+logger = logging.getLogger('polyaxon.scheduler.experiments')
 
 
 def copy_experiment(experiment):
@@ -43,7 +42,7 @@ def copy_experiment(experiment):
             experiment.original_experiment.unique_name, experiment.unique_name)
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
 def check_experiment_status(experiment_uuid):
     experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
     if not experiment:
@@ -51,7 +50,7 @@ def check_experiment_status(experiment_uuid):
     experiment.update_status()
 
 
-@celery_app.task(name=CeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
 def set_metrics(experiment_uuid, metrics, created_at=None):
     experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
     if not experiment:
@@ -63,7 +62,7 @@ def set_metrics(experiment_uuid, metrics, created_at=None):
     ExperimentMetric.objects.create(experiment=experiment, values=metrics, **kwargs)
 
 
-@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_START, ignore_result=True)
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_START, ignore_result=True)
 def start_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -86,7 +85,7 @@ def start_experiment(experiment_id):
     experiment_scheduler.start_experiment(experiment)
 
 
-@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP, ignore_result=True)
 def stop_experiment(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:

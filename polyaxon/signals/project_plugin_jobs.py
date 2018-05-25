@@ -20,7 +20,7 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_STOPPED,
     TENSORBOARD_SUCCEEDED
 )
-from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre, runner_signal
+from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
 from scheduler import notebook_scheduler, tensorboard_scheduler
 
@@ -124,7 +124,6 @@ def new_notebook_job_status(sender, **kwargs):
 
 
 @receiver(pre_delete, sender=Project, dispatch_uid="project_stop_plugins")
-@runner_signal
 @ignore_raw
 def project_stop_plugins(sender, **kwargs):
     instance = kwargs['instance']

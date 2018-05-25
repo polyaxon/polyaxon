@@ -14,7 +14,7 @@ import auditor
 from db.models.sso import SSOIdentity
 from libs.wizards import Wizard
 from sso import providers
-from users.utils import login_user
+from api.users.utils import login_user
 
 logger = logging.getLogger('polyaxon.identity')
 
@@ -26,7 +26,7 @@ class IdentityWizard(Wizard):
     manager = providers.default_manager
 
     def redirect_url(self, request):
-        associate_url = reverse('sso:create_identity', args=[self.provider.key])
+        associate_url = reverse('oauth:create_identity', args=[self.provider.key])
 
         # Use configured redirect_url if specified for the pipeline if available
         associate_url = self.config.get('redirect_url', associate_url)

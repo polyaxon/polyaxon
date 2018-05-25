@@ -7,7 +7,7 @@ from django.conf import settings
 from constants.jobs import JobLifeCycle
 from libs.redis_db import RedisJobContainers
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.settings import EventsCeleryTasks
 from statuses_monitor.jobs import get_job_state
 
 logger = logging.getLogger('polyaxon.monitors.statuses')
@@ -82,10 +82,10 @@ def run(k8s_manager):
                 update_job_containers(event_object, status, settings.CONTAINER_NAME_JOB)
                 # Handle experiment job statuses differently than plugin job statuses
                 celery_app.send_task(
-                    RunnerCeleryTasks.EVENTS_HANDLE_JOB_STATUSES,
+                    EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES,
                     kwargs={'payload': job_state})
             elif settings.CONTAINER_NAME_PLUGIN_JOB in job_state['details']['container_statuses']:
                 # Handle plugin job statuses
                 celery_app.send_task(
-                    RunnerCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
+                    EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                     kwargs={'payload': job_state})

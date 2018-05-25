@@ -2,9 +2,9 @@ import logging
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
-from db.getters import get_running_experiment_group, get_valid_experiment_group
+from db.getters.experiment_groups import get_running_experiment_group, get_valid_experiment_group
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import HPCeleryTasks, Intervals, RunnerCeleryTasks
+from polyaxon.settings import HPCeleryTasks, Intervals, SchedulerCeleryTasks
 from scheduler.tasks.experiments import stop_experiment
 
 _logger = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ def _get_group_or_retry(experiment_group_id, task):
     return None
 
 
-@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
 def create_group_experiments(self, experiment_group_id):
     experiment_group = _get_group_or_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
@@ -37,7 +37,7 @@ def create_group_experiments(self, experiment_group_id):
         kwargs={'experiment_group': experiment_group})
 
 
-@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS)
 def stop_group_experiments(experiment_group_id, pending, message=None):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -60,7 +60,7 @@ def stop_group_experiments(experiment_group_id, pending, message=None):
     experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED)
 
 
-@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
                  bind=True,
                  max_retries=None)
 def check_group_finished(self, experiment_group_id):

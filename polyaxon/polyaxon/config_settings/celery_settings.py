@@ -89,19 +89,31 @@ class CeleryPublishTask(object):
     PUBLISH_LOGS_SIDECAR = 'publish_logs_sidecar'
 
 
-class CeleryTasks(object):
-    """Normal celery tasks.
+class CronsCeleryTasks(object):
+    """Crons celery tasks.
 
     N.B. make sure that the task name is not < 128.
     """
-    EXPERIMENTS_CHECK_STATUS = 'experiments_check_status'
-    EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
     EXPERIMENTS_SYNC_JOBS_STATUSES = 'experiments_sync_jobs_statuses'
+    CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
+    CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
+    CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
+    CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
 
+
+class ReposCeleryTasks(object):
+    """Pipeline celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
     REPOS_HANDLE_FILE_UPLOAD = 'repos_handle_file_upload'
 
-    CLUSTERS_NOTIFICATION_ALIVE = 'clusters_notification_alive'
 
+class PipelineCeleryTasks(object):
+    """Pipeline celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
     PIPELINES_START = 'pipelines_start'
     PIPELINES_START_OPERATION = 'pipelines_start_operation'
     PIPELINES_STOP_OPERATIONS = 'pipelines_stop_operations'
@@ -109,18 +121,36 @@ class CeleryTasks(object):
     PIPELINES_CHECK_STATUSES = 'pipelines_check_statuses'
 
 
-class RunnerCeleryTasks(object):
+class CeleryOperationTasks(object):
+    """Celery operation tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
+    EXPERIMENTS_SCHEDULE = 'experiments_schedule'
+
+
+class EventsCeleryTasks(object):
     """Runner celery tasks.
 
     N.B. make sure that the task name is not < 128.
     """
-    CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
-    CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
-    CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
+    EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
+    EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
+    EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
+    EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
+    EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
 
+
+class SchedulerCeleryTasks(object):
+    """Scheduler celery tasks.
+
+    N.B. make sure that the task name is not < 128.
+    """
     EXPERIMENTS_BUILD = 'experiments_build'
     EXPERIMENTS_START = 'experiments_start'
     EXPERIMENTS_STOP = 'experiments_stop'
+    EXPERIMENTS_CHECK_STATUS = 'check_status'
+    EXPERIMENTS_SET_METRICS = 'experiments_set_metrics'
 
     EXPERIMENTS_GROUP_CREATE = 'experiments_group_create'
     EXPERIMENTS_GROUP_STOP_EXPERIMENTS = 'experiments_group_stop_experiments'
@@ -131,12 +161,6 @@ class RunnerCeleryTasks(object):
     PROJECTS_NOTEBOOK_BUILD = 'projects_notebook_build'
     PROJECTS_NOTEBOOK_START = 'projects_notebook_start'
     PROJECTS_NOTEBOOK_STOP = 'projects_notebook_stop'
-
-    EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
-    EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
-    EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
-    EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
-    EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
 
 
 class HPCeleryTasks(object):
@@ -161,35 +185,25 @@ class HPCeleryTasks(object):
     HP_BO_ITERATE = 'hp_bo_iterate'
 
 
-class CeleryOperationTasks(object):
-    """Celery operation tasks.
-
-    N.B. make sure that the task name is not < 128.
-    """
-    EXPERIMENTS_SCHEDULE = 'experiments_schedule'
-
-
 class CeleryQueues(object):
     """Celery Queues.
 
     N.B. make sure that the queue name is not < 128.
     """
-    API_EXPERIMENTS = config.get_string(
-        'POLYAXON_QUEUES_API_EXPERIMENTS',
-        is_optional=True,
-        default='api.experiments')
-    API_EXPERIMENTS_SYNC = config.get_string(
-        'POLYAXON_QUEUES_API_EXPERIMENTS_SYNC',
-        is_optional=True,
-        default='api.sync_experiments')
-    API_CLUSTERS = config.get_string(
-        'POLYAXON_QUEUES_API_CLUSTERS',
-        is_optional=True,
-        default='api.commands')
-    API_PIPELINES = config.get_string(
-        'POLYAXON_QUEUES_API_PIPELINES',
-        is_optional=True,
-        default='api.pipelines')
+    REPOS = config.get_string('POLYAXON_QUEUES_REPOS')
+
+    SCHEDULER_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS')
+    SCHEDULER_EXPERIMENT_GROUPS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS')
+    SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS')
+
+    PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES')
+
+    CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS')
+    CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES')
+    CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_API_CLUSTERS')
+
+    HP = config.get_string('POLYAXON_QUEUES_HP')
+
     EVENTS_NAMESPACE = config.get_string(
         'POLYAXON_QUEUES_EVENTS_NAMESPACE',
         is_optional=True,
@@ -220,107 +234,137 @@ CELERY_TASK_QUEUES = (
 )
 
 CELERY_TASK_ROUTES = {
-    CeleryTasks.EXPERIMENTS_CHECK_STATUS: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.REPOS_HANDLE_FILE_UPLOAD: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_SET_METRICS: {'queue': CeleryQueues.API_EXPERIMENTS},
-    CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES: {'queue': CeleryQueues.API_EXPERIMENTS_SYNC},
-    CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
+    ReposCeleryTasks.REPOS_HANDLE_FILE_UPLOAD:
+        {'queue': CeleryQueues.REPOS},
 
-    # Pipelines
-    CeleryTasks.PIPELINES_START: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_START_OPERATION: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_STOP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_SKIP_OPERATIONS: {'queue': CeleryQueues.API_PIPELINES},
-    CeleryTasks.PIPELINES_CHECK_STATUSES: {'queue': CeleryQueues.API_PIPELINES},
-
+    PipelineCeleryTasks.PIPELINES_START:
+        {'queue': CeleryQueues.PIPELINES},
+    PipelineCeleryTasks.PIPELINES_START_OPERATION:
+        {'queue': CeleryQueues.PIPELINES},
+    PipelineCeleryTasks.PIPELINES_STOP_OPERATIONS:
+        {'queue': CeleryQueues.PIPELINES},
+    PipelineCeleryTasks.PIPELINES_SKIP_OPERATIONS:
+        {'queue': CeleryQueues.PIPELINES},
+    PipelineCeleryTasks.PIPELINES_CHECK_STATUSES:
+        {'queue': CeleryQueues.PIPELINES},
     # Operation tasks
-    CeleryOperationTasks.EXPERIMENTS_SCHEDULE: {'queue': CeleryQueues.API_PIPELINES},
+    CeleryOperationTasks.EXPERIMENTS_SCHEDULE:
+        {'queue': CeleryQueues.PIPELINES},
 
-    CeleryPublishTask.PUBLISH_LOGS_SIDECAR: {'exchange': INTERNAL_EXCHANGE,
-                                             'routing_key': RoutingKeys.LOGS_SIDECARS,
-                                             'exchange_type': 'topic'},
+    CeleryPublishTask.PUBLISH_LOGS_SIDECAR:
+        {'exchange': INTERNAL_EXCHANGE,
+         'routing_key': RoutingKeys.LOGS_SIDECARS,
+         'exchange_type': 'topic'},
+
+    SchedulerCeleryTasks.EXPERIMENTS_START:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
+    SchedulerCeleryTasks.EXPERIMENTS_STOP:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
+    SchedulerCeleryTasks.EXPERIMENTS_BUILD:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
+    SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
+    SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENTS},
+
+    SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
+    SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
+    SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED:
+        {'queue': CeleryQueues.SCHEDULER_EXPERIMENT_GROUPS},
+
+    SchedulerCeleryTasks.PROJECTS_TENSORBOARD_START:
+        {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+    SchedulerCeleryTasks.PROJECTS_TENSORBOARD_STOP:
+        {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+    SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD:
+        {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+    SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START:
+        {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+    SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP:
+        {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+
+    CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES:
+        {'queue': CeleryQueues.CRONS_EXPERIMENTS},
+    CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE:
+        {'queue': CeleryQueues.CRONS_CLUSTERS},
+    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO:
+        {'queue': CeleryQueues.CRONS_CLUSTERS},
+    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES:
+        {'queue': CeleryQueues.CRONS_CLUSTERS},
+    CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE:
+        {'queue': CeleryQueues.CRONS_CLUSTERS},
+
+    HPCeleryTasks.HP_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_GRID_SEARCH_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_GRID_SEARCH_START:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_RANDOM_SEARCH_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_RANDOM_SEARCH_START:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_HYPERBAND_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_HYPERBAND_START:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_HYPERBAND_ITERATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_BO_CREATE:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_BO_START:
+        {'queue': CeleryQueues.HP},
+    HPCeleryTasks.HP_BO_ITERATE:
+        {'queue': CeleryQueues.HP},
+
+    EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE:
+        {'queue': CeleryQueues.EVENTS_NAMESPACE},
+    EventsCeleryTasks.EVENTS_HANDLE_RESOURCES:
+        {'queue': CeleryQueues.EVENTS_RESOURCES},
+    EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES:
+        {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
+    EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
+        {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
+    EventsCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR:
+        {'queue': CeleryQueues.LOGS_SIDECARS},
 }
 
 CELERY_BEAT_SCHEDULE = {
-    CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE + '_beat': {
-        'task': CeleryTasks.CLUSTERS_NOTIFICATION_ALIVE,
+    CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE + '_beat': {
+        'task': CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE,
         'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
         'options': {
             'expires': Intervals.get_expires(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
         },
     },
-    CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES + '_beat': {
-        'task': CeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES,
+    CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES + '_beat': {
+        'task': CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES,
         'schedule': Intervals.get_schedule(Intervals.EXPERIMENTS_SYNC),
         'options': {
             'expires': Intervals.get_expires(Intervals.EXPERIMENTS_SYNC),
         },
     },
+    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO + '_beat': {
+        'task': CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
+        'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
+        },
+    },
+    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES + '_beat': {
+        'task': CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
+        'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
+        },
+    },
+    CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE + '_beat': {
+        'task': CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
+        'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
+        'options': {
+            'expires': Intervals.get_expires(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
+        },
+    },
 }
-
-if config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True):
-    CELERY_TASK_ROUTES.update({
-        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO: {'queue': CeleryQueues.API_CLUSTERS},
-        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES: {'queue': CeleryQueues.API_CLUSTERS},
-        RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE: {'queue': CeleryQueues.API_CLUSTERS},
-
-        RunnerCeleryTasks.EXPERIMENTS_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.EXPERIMENTS_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.EXPERIMENTS_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
-
-        RunnerCeleryTasks.EXPERIMENTS_GROUP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS:
-            {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED:
-            {'queue': CeleryQueues.API_EXPERIMENTS},
-
-        HPCeleryTasks.HP_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_GRID_SEARCH_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_GRID_SEARCH_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_RANDOM_SEARCH_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_RANDOM_SEARCH_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_HYPERBAND_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_HYPERBAND_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_HYPERBAND_ITERATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_BO_CREATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_BO_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-        HPCeleryTasks.HP_BO_ITERATE: {'queue': CeleryQueues.API_EXPERIMENTS},
-
-        RunnerCeleryTasks.PROJECTS_TENSORBOARD_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.PROJECTS_TENSORBOARD_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.PROJECTS_NOTEBOOK_BUILD: {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.PROJECTS_NOTEBOOK_START: {'queue': CeleryQueues.API_EXPERIMENTS},
-        RunnerCeleryTasks.PROJECTS_NOTEBOOK_STOP: {'queue': CeleryQueues.API_EXPERIMENTS},
-
-        # Monitors
-        RunnerCeleryTasks.EVENTS_HANDLE_NAMESPACE: {'queue': CeleryQueues.EVENTS_NAMESPACE},
-        RunnerCeleryTasks.EVENTS_HANDLE_RESOURCES: {'queue': CeleryQueues.EVENTS_RESOURCES},
-        RunnerCeleryTasks.EVENTS_HANDLE_JOB_STATUSES: {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-        RunnerCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
-            {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
-        RunnerCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR: {'queue': CeleryQueues.LOGS_SIDECARS},
-    })
-
-    CELERY_BEAT_SCHEDULE.update({
-        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO + '_beat': {
-            'task': RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
-            'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
-            'options': {
-                'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_INFO),
-            },
-        },
-        RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES + '_beat': {
-            'task': RunnerCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
-            'schedule': Intervals.get_schedule(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
-            'options': {
-                'expires': Intervals.get_expires(Intervals.CLUSTERS_UPDATE_SYSTEM_NODES),
-            },
-        },
-        RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE + '_beat': {
-            'task': RunnerCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
-            'schedule': Intervals.get_schedule(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
-            'options': {
-                'expires': Intervals.get_expires(Intervals.CLUSTERS_NOTIFICATION_ALIVE),
-            },
-        },
-    })

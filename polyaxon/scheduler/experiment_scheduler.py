@@ -7,7 +7,7 @@ from rest_framework import fields
 
 from django.conf import settings
 
-from apis.experiments.serializers import ExperimentJobDetailSerializer
+from api.experiments.serializers import ExperimentJobDetailSerializer
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import ExperimentJob
 from db.models.jobs import JobResources
@@ -26,7 +26,7 @@ from scheduler.spawners.mxnet_spawner import MXNetSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
 
-logger = logging.getLogger('polyaxon.schedulers.experiment')
+logger = logging.getLogger('polyaxon.scheduler.experiment')
 
 
 def create_job(job_uuid, experiment, definition, role=None, resources=None):

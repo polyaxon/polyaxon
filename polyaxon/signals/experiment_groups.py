@@ -17,7 +17,6 @@ from libs.decorators import (
     ignore_raw,
     ignore_updates,
     ignore_updates_pre,
-    runner_signal
 )
 from libs.paths.experiment_groups import (
     delete_experiment_group_logs,
@@ -25,7 +24,7 @@ from libs.paths.experiment_groups import (
 )
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.settings import SchedulerCeleryTasks
 
 
 @receiver(pre_save, sender=ExperimentGroup, dispatch_uid="experiment_group_pre_save")
@@ -54,14 +53,13 @@ def new_experiment_group(sender, **kwargs):
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_create_experiments")
-@runner_signal
 @check_specification
 @ignore_updates
 @ignore_raw
 def experiment_group_create_experiments(sender, **kwargs):
     instance = kwargs['instance']
     celery_app.send_task(
-        RunnerCeleryTasks.EXPERIMENTS_GROUP_CREATE,
+        SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE,
         kwargs={'experiment_group_id': instance.id},
         countdown=1)
 
@@ -78,7 +76,6 @@ def experiment_group_pre_deleted(sender, **kwargs):
 
 
 @receiver(pre_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_stop_experiments")
-@runner_signal
 @check_specification
 @ignore_raw
 def experiment_group_stop_experiments(sender, **kwargs):
