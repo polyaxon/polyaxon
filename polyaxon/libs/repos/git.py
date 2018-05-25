@@ -10,7 +10,7 @@ from psutil import Popen
 
 from django.conf import settings
 
-from libs.paths import create_path, delete_path
+from libs.paths.utils import create_path, delete_path
 
 logger = logging.getLogger('polyaxon.repos.git')
 
