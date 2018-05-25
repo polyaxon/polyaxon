@@ -1,10 +1,3 @@
-from django.test import override_settings
-
-from experiment_groups.iteration_managers import (
-    BOIterationManager,
-    HyperbandIterationManager,
-    get_search_iteration_manager
-)
 from db.models.experiment_groups import ExperimentGroupIteration
 from db.models.experiments import ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -14,10 +7,14 @@ from factories.fixtures import (
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
+from hpsearch.iteration_managers import (
+    BOIterationManager,
+    HyperbandIterationManager,
+    get_search_iteration_manager
+)
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestIterationManagers(BaseTest):
     def test_get_search_iteration_manager(self):
         # Grid search
@@ -40,7 +37,6 @@ class TestIterationManagers(BaseTest):
         assert isinstance(get_search_iteration_manager(experiment_group), BOIterationManager)
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestHyperbandIterationManagers(BaseTest):
     def setUp(self):
         super().setUp()
@@ -107,7 +103,6 @@ class TestHyperbandIterationManagers(BaseTest):
         assert self.iteration_manager.get_reduced_configs() == []
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestBOIterationManagers(BaseTest):
     def setUp(self):
         super().setUp()

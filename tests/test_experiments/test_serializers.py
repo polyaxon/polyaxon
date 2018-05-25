@@ -1,9 +1,6 @@
 from unittest.mock import patch
 
-from django.test import override_settings
-
-from db.models.experiments import Experiment, ExperimentJob, ExperimentStatus
-from experiments.serializers import (
+from api.experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
@@ -11,6 +8,7 @@ from experiments.serializers import (
     ExperimentStatusSerializer
 )
 from constants.experiments import ExperimentLifeCycle
+from db.models.experiments import Experiment, ExperimentJob, ExperimentStatus
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
@@ -19,7 +17,6 @@ from factories.factory_experiments import (
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentSerializer(BaseTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
@@ -102,7 +99,6 @@ class TestExperimentSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentDetailSerializer(BaseTest):
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
@@ -281,7 +277,6 @@ class TestExperimentJobDetailsSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentStatusSerializer(BaseTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus

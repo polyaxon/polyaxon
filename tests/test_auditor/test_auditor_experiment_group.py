@@ -2,8 +2,6 @@
 
 from unittest.mock import patch
 
-from django.test import override_settings
-
 import activitylogs
 import auditor
 import tracker
@@ -13,7 +11,6 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class AuditorExperimentGroupTest(BaseTest):
     """Testing subscribed events"""
 

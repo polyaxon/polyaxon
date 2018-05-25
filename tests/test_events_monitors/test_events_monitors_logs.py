@@ -4,9 +4,9 @@ import uuid
 
 from unittest.mock import patch
 
-from tasks.monitors import handle_events_job_logs
-from experiments.paths import get_experiment_logs_path
+from events_handlers.tasks import handle_events_job_logs
 from factories.factory_experiments import ExperimentFactory
+from libs.paths.experiments import get_experiment_logs_path
 from polyaxon_schemas.utils import TaskType
 from tests.utils import BaseTest
 
@@ -17,7 +17,7 @@ class TestEventsLogsHandling(BaseTest):
         return len([_ for _ in open(filename)])
 
     def test_handle_events_job_logs_create_one_handler(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
+        with patch('hpsearch.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment = ExperimentFactory()
 
         params = dict(experiment_name=experiment.unique_name,

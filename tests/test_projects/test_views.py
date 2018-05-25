@@ -3,16 +3,14 @@ from unittest.mock import patch
 from flaky import flaky
 from rest_framework import status
 
-from django.test import override_settings, tag
-
+from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
+from db.models.projects import Project
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
-from db.models.projects import Project
-from projects.serializers import ProjectDetailSerializer, ProjectSerializer
-from tests.utils import RUNNER_TEST, BaseViewTest
+from tests.utils import BaseViewTest
 
 
 class TestProjectCreateViewV1(BaseViewTest):
@@ -111,7 +109,7 @@ class TestProjectDetailViewV1(BaseViewTest):
     factory_class = ProjectFactory
     HAS_AUTH = True
 
-    @patch('runner.hp_search.base.check_group_experiments_finished')
+    @patch('hpsearch.tasks.base.check_group_experiments_finished')
     def setUp(self, _):
         super().setUp()
         self.object = self.factory_class(user=self.auth_client.user)
@@ -171,15 +169,14 @@ class TestProjectDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url_private)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_delete(self):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
 
-        with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
-            with patch('experiment_groups.paths.delete_path') as delete_path_group_mock_stop:
-                with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
+        with patch('libs.paths.projects.delete_path') as delete_path_project_mock_stop:
+            with patch('libs.paths.experiment_groups.delete_path') as delete_path_group_mock_stop:
+                with patch('libs.paths.experiments.delete_path') as delete_path_xp_mock_stop:
                     resp = self.auth_client.delete(self.url)
         # 2 * project + 1 repo
         assert delete_path_project_mock_stop.call_count == 3
@@ -197,21 +194,21 @@ class TestProjectDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url_private)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
-    @tag(RUNNER_TEST)
     def test_delete_runner(self):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
         assert Experiment.objects.count() == 4
-        with patch('runner.schedulers.tensorboard_scheduler.'
+        with patch('scheduler.tensorboard_scheduler.'
                    'stop_tensorboard') as tensorboard_mock_fct:
-            with patch('runner.schedulers.notebook_scheduler.'
+            with patch('scheduler.notebook_scheduler.'
                        'stop_notebook') as notebook_mock_fct:
-                with patch('runner.schedulers.experiment_scheduler.'
+                with patch('scheduler.experiment_scheduler.'
                            'stop_experiment') as xp_mock_stop:
-                    with patch('projects.paths.delete_path') as delete_path_project_mock_stop:
-                        with patch('experiment_groups.paths.'
+                    with patch('libs.paths.projects.delete_path') as delete_path_project_mock_stop:
+                        with patch('libs.paths.experiment_groups.'
                                    'delete_path') as delete_path_group_mock_stop:
-                            with patch('experiments.paths.delete_path') as delete_path_xp_mock_stop:
+                            with patch('libs.paths.experiments.'
+                                       'delete_path') as delete_path_xp_mock_stop:
                                 resp = self.auth_client.delete(self.url)
         assert xp_mock_stop.call_count == 4
         assert tensorboard_mock_fct.call_count == 1

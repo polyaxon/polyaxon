@@ -1,20 +1,13 @@
-from django.test import override_settings
-
-from experiment_groups.schemas import (
-    BOIterationConfig,
-    HyperbandIterationConfig,
-    get_iteration_config
-)
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
     experiment_group_spec_content_bo,
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
+from hpsearch.schemas import BOIterationConfig, HyperbandIterationConfig, get_iteration_config
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestSearchManagers(BaseTest):
     def test_get_search_algorithm_manager(self):
         # Grid search
@@ -53,7 +46,6 @@ class TestSearchManagers(BaseTest):
                           BOIterationConfig)
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestHyperbandIterationConfig(BaseTest):
     def test_hyperband_iteration_config(self):
         config = {
@@ -66,7 +58,6 @@ class TestHyperbandIterationConfig(BaseTest):
         assert HyperbandIterationConfig.from_dict(config).to_dict() == config
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestBOIterationConfig(BaseTest):
     def test_bo_iteration_config(self):
         config = {

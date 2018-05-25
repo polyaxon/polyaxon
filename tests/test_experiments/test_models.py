@@ -6,15 +6,15 @@ import mock
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import override_settings, tag
 from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
 
-from experiments.copy import copy_experiment
-from db.models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
-from experiments.paths import create_experiment_outputs_path, get_experiment_outputs_path
 from constants.experiments import ExperimentLifeCycle
-from tasks.experiments import set_metrics, sync_experiments_and_jobs_statuses
+from constants.jobs import JobLifeCycle
+from crons.tasks.experiments import sync_experiments_and_jobs_statuses
+from db.models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
+from db.models.jobs import JobResources
+from scheduler.tasks.experiments import copy_experiment, set_metrics
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -30,41 +30,35 @@ from factories.fixtures import (
     exec_experiment_spec_content,
     experiment_spec_content
 )
-from db.models.jobs import JobResources
-from constants.jobs import JobLifeCycle
+from libs.paths.experiments import create_experiment_outputs_path, get_experiment_outputs_path
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 from tests.fixtures import start_experiment_value
-from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
+from tests.utils import BaseTest, BaseViewTest
 
 
 class TestExperimentModel(BaseTest):
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create_experiment_with_no_spec_or_declarations(self):
         experiment = ExperimentFactory(declarations=None, config=None)
         assert experiment.declarations is None
         assert experiment.specification is None
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create_experiment_with_no_spec_and_declarations(self):
         experiment = ExperimentFactory(declarations={'lr': 0.1, 'dropout': 0.5}, config=None)
         assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
         assert experiment.specification is None
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create_experiment_with_spec_trigger_declarations_creation(self):
         experiment = ExperimentFactory(config=exec_experiment_resources_parsed_content.parsed_data)
         assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
         assert isinstance(experiment.specification, ExperimentSpecification)
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_experiment_creation_triggers_status_creation_mocks(self):
         with patch.object(Experiment, 'set_status') as mock_fct2:
             ExperimentFactory()
         assert mock_fct2.call_count == 1
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_restart(self):
         experiment = ExperimentFactory()
         new_experiment = experiment.restart()
@@ -89,7 +83,6 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.declarations == declarations
         assert new_experiment.code_reference == experiment.code_reference
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_copy(self):
         experiment = ExperimentFactory()
         new_experiment = experiment.copy()
@@ -114,7 +107,6 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.declarations == declarations
         assert new_experiment.code_reference == experiment.code_reference
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_resume(self):
         experiment = ExperimentFactory()
         count_experiment = Experiment.objects.count()
@@ -174,35 +166,31 @@ class TestExperimentModel(BaseTest):
         experiment.delete()
         assert Experiment.objects.count() == 0
 
-    @tag(RUNNER_TEST)
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
-        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as _:  # noqa
+        with patch('dockerizer.builders.grid.hp_grid_search_start.apply_async') as _:  # noqa
             experiment_group = ExperimentGroupFactory()
 
-        with patch('runner.tasks.experiments.start_experiment.delay') as mock_fct:
+        with patch('dockerizer.builders.experiments.start_experiment.apply_async') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
                 ExperimentFactory(experiment_group=experiment_group)
 
         assert mock_fct.call_count == 0
         assert mock_fct2.call_count == 1
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_experiment_creation_triggers_status_creation(self):
         experiment = ExperimentFactory()
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
         assert experiment.last_status == ExperimentLifeCycle.CREATED
 
-    @tag(RUNNER_TEST)
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('dockerizer.builders.experiments.build_experiment.apply_async') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
                 ExperimentFactory()
 
         assert mock_fct.call_count == 1
         assert mock_fct2.call_count == 1
 
-    @tag(RUNNER_TEST)
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
         content = ExperimentSpecification.read(experiment_spec_content)
         experiment = ExperimentFactory(config=content.parsed_data)
@@ -217,13 +205,12 @@ class TestExperimentModel(BaseTest):
         # Assert also that experiment is monitored
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
-    @tag(RUNNER_TEST)
     def test_independent_experiment_creation_with_run_triggers_experiment_building_scheduling(self):
         config = ExperimentSpecification.read(exec_experiment_spec_content)
         # Create a repo for the project
         repo = RepoFactory()
 
-        with patch('runner.dockerizer.builders.experiments.build_experiment') as mock_docker_build:
+        with patch('dockerizer.builders.experiments.build_experiment') as mock_docker_build:
             experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
 
         assert mock_docker_build.call_count == 1
@@ -238,8 +225,7 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SCHEDULED
 
-    @tag(RUNNER_TEST)
-    @mock.patch('runner.schedulers.experiment_scheduler.ExperimentSpawner')
+    @mock.patch('scheduler.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
         config = ExperimentSpecification.read(experiment_spec_content)
 
@@ -270,8 +256,7 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @tag(RUNNER_TEST)
-    @mock.patch('runner.schedulers.experiment_scheduler.TensorflowSpawner')
+    @mock.patch('scheduler.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
         config = ExperimentSpecification.read(exec_experiment_resources_content)
 
@@ -302,7 +287,6 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @override_settings(DEPLOY_RUNNER=False)
     @patch('experiments.paths.delete_path')
     def test_delete_experiment_triggers_experiment_stop_mocks(self, delete_path):
         experiment = ExperimentFactory()
@@ -310,10 +294,9 @@ class TestExperimentModel(BaseTest):
         experiment.delete()
         assert delete_path.call_count == 2 + 2  # outputs + logs
 
-    @tag(RUNNER_TEST)
     def test_delete_experiment_triggers_experiment_stop_mocks_runner(self):
         experiment = ExperimentFactory()
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as mock_fct:
+        with patch('scheduler.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()
 
         assert mock_fct.call_count == 1
@@ -330,9 +313,8 @@ class TestExperimentModel(BaseTest):
 
         assert experiment.metrics.count() == 1
 
-    @tag(RUNNER_TEST)
     def test_master_success_influences_other_experiment_workers_status(self):
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+        with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
             with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiment = ExperimentFactory()
 
@@ -358,16 +340,15 @@ class TestExperimentModel(BaseTest):
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.SUCCEEDED
 
-    @tag(RUNNER_TEST)
     def test_sync_experiments_and_jobs_statuses(self):
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+        with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
             with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiments = [ExperimentFactory() for _ in range(3)]
 
         done_xp, no_jobs_xp, xp_with_jobs = experiments
 
         # Set done status
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
+        with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
             ExperimentStatusFactory(experiment=done_xp, status=JobLifeCycle.FAILED)
 
         # Create jobs for xp_with_jobs and update status, and do not update the xp status
@@ -379,7 +360,7 @@ class TestExperimentModel(BaseTest):
         assert xp_with_jobs.last_status is None
 
         # Mock sync experiments and jobs constants
-        with patch('experiments.tasks.check_experiment_status.delay') as check_status_mock:
+        with patch('scheduler.experiments.check_experiment_status.apply_async') as check_status_mock:
             sync_experiments_and_jobs_statuses()
 
         assert check_status_mock.call_count == 1
@@ -393,9 +374,8 @@ class TestExperimentModel(BaseTest):
         assert no_jobs_xp.last_status is None
         assert xp_with_jobs.last_status == ExperimentLifeCycle.RUNNING
 
-    @tag(RUNNER_TEST)
     def test_copying_an_experiment(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment1 = ExperimentFactory()
 
         # We create some outputs files for the experiment
@@ -403,7 +383,7 @@ class TestExperimentModel(BaseTest):
         open(os.path.join(path, 'file'), 'w+')
 
         # Create a new experiment that is a clone of the previous
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.build_experiment.apply_async') as _:  # noqa
             experiment2 = ExperimentFactory(original_experiment=experiment1)
 
         # Check that outputs path for experiment2 does not exist yet
@@ -431,7 +411,6 @@ class TestExperimentCommit(BaseViewTest):
         return SimpleUploadedFile(filename, file.read(),
                                   content_type='multipart/form-data')
 
-    @override_settings(DEPLOY_RUNNER=False)
     def create_experiment(self, config):
         config = ExperimentSpecification.read(config)
         return ExperimentFactory(config=config.parsed_data, project=self.project)

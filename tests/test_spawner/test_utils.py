@@ -1,13 +1,13 @@
 from django.conf import settings
 
-from event_monitors.monitors.statuses import update_job_containers
+from constants.jobs import JobLifeCycle
+from constants.pods import EventTypes, PodConditions, PodLifeCycle
 from db.models.experiments import ExperimentJob
 from factories.factory_experiments import ExperimentJobFactory
-from constants.jobs import JobLifeCycle
 from libs.redis_db import RedisJobContainers
 from polyaxon_schemas.experiment import JobStateConfig, PodStateConfig
-from runner.spawners.utils.constants import EventTypes, PodConditions, PodLifeCycle
-from runner.spawners.utils.jobs import get_job_state
+from statuses_monitor.jobs import get_job_state
+from statuses_monitor.monitor import update_job_containers
 from tests.fixtures import status_experiment_job_event, status_experiment_job_event_with_conditions
 from tests.utils import BaseTest
 

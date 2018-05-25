@@ -10,15 +10,15 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
+from api.repos.serializers import RepoSerializer
+from constants.jobs import JobLifeCycle
+from db.models.repos import Repo
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.factory_users import UserFactory
-from constants.jobs import JobLifeCycle
+from libs.repos import git
 from polyaxon.urls import API_V1
-from repos import git
-from db.models.repos import Repo
-from repos.serializers import RepoSerializer
 from tests.utils import BaseViewTest
 
 
@@ -91,7 +91,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.views.handle_new_files') as mock_task:
+        with patch('api.repos.views.handle_new_files') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file, 'json': json.dumps({'async': False})},
                                  content_type=MULTIPART_CONTENT)
@@ -113,7 +113,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.tasks.handle_new_files.delay') as mock_task:
+        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
@@ -136,7 +136,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.tasks.handle_new_files.delay') as mock_task:
+        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
@@ -279,7 +279,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.tasks.handle_new_files.delay') as mock_task:
+        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
             response = self.auth_client.put(self.url,
                                             data={'repo': uploaded_file},
                                             content_type=MULTIPART_CONTENT)

@@ -5,14 +5,14 @@ from mock import patch
 from django.conf import settings
 from django.utils import timezone
 
+from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
+from db.models.pipelines import OperationRunStatus, PipelineRunStatus
 from factories.factory_pipelines import (
     OperationFactory,
     OperationRunFactory,
     PipelineFactory,
     PipelineRunFactory
 )
-from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
-from db.models.pipelines import OperationRunStatus, PipelineRunStatus
 from tests.utils import BaseTest
 
 
@@ -738,7 +738,7 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
 
@@ -760,7 +760,7 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
 
@@ -787,7 +787,7 @@ class TestOperationRunModel(BaseTest):
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
             OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
@@ -816,7 +816,7 @@ class TestOperationRunModel(BaseTest):
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('pipelines.tasks.start_operation_run.delay') as start_operation_run:
+        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
             OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,

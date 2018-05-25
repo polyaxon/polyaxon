@@ -1,23 +1,20 @@
 from rest_framework import status
 
-from django.test import override_settings, tag
-
-from db.models.clusters import Cluster
-from clusters.serializers import ClusterSerializer
-from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
-from polyaxon.urls import API_V1
-from db.models.nodes import ClusterNode, NodeGPU
-from runner.nodes.serializers import (
+from api.clusters.serializers import ClusterSerializer
+from api.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
     ClusterRunnerSerializer,
     GPUSerializer
 )
 from constants.nodes import NodeRoles
-from tests.utils import RUNNER_TEST, BaseViewTest
+from db.models.clusters import Cluster
+from db.models.nodes import ClusterNode, NodeGPU
+from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
+from polyaxon.urls import API_V1
+from tests.utils import BaseViewTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestClusterDetailViewV1(BaseViewTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
@@ -39,7 +36,6 @@ class TestClusterDetailViewV1(BaseViewTest):
         assert resp.data == self.serializer_class(self.object).data
 
 
-@tag(RUNNER_TEST)
 class TestRunnerClusterDetailViewV1(BaseViewTest):
     serializer_class = ClusterRunnerSerializer
     model_class = Cluster
@@ -63,7 +59,6 @@ class TestRunnerClusterDetailViewV1(BaseViewTest):
         assert resp.data['nodes'] == ClusterNodeSerializer(self.object.nodes.all(), many=True).data
 
 
-@tag(RUNNER_TEST)
 class TestClusterNodeListViewV1(BaseViewTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
@@ -141,7 +136,6 @@ class TestClusterNodeListViewV1(BaseViewTest):
         assert last_object.n_gpus == 0
 
 
-@tag(RUNNER_TEST)
 class TestClusterNodeDetailViewV1(BaseViewTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
@@ -189,7 +183,6 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         assert NodeGPU.objects.count() == 0
 
 
-@tag(RUNNER_TEST)
 class TestClusterNodeGPUListViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
@@ -261,7 +254,6 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
         assert last_object.index == data['index']
 
 
-@tag(RUNNER_TEST)
 class TestClusterNodeGPUDetailViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU

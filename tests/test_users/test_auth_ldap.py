@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 from django.conf import settings
 
 from tests.utils import BaseTest
-from users.ldap_signals import populate_user_handler
+from api.users.ldap_signals import populate_user_handler
 
 
 class TestAuthLdap(BaseTest):

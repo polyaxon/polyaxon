@@ -1,13 +1,13 @@
 from django.conf import settings
 
-from tasks.monitors import handle_events_job_statuses, handle_events_plugin_job_statuses
+from constants.jobs import JobLifeCycle
 from db.models.experiments import ExperimentJobStatus
+from db.models.plugins import NotebookJobStatus, TensorboardJobStatus
+from events_handlers.tasks import handle_events_plugin_job_statuses, handle_events_job_statuses
 from factories.factory_experiments import ExperimentJobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from constants.jobs import JobLifeCycle
-from db.models.plugins import NotebookJobStatus, TensorboardJobStatus
-from runner.spawners.utils.jobs import get_job_state
+from statuses_monitor.jobs import get_job_state
 from tests.fixtures import (
     status_experiment_job_event,
     status_experiment_job_event_with_conditions,

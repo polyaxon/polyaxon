@@ -1,19 +1,16 @@
 import os
 
-from django.test import override_settings
-
-from experiments.paths import (
+from factories.factory_experiments import ExperimentFactory
+from libs.paths.experiments import (
     create_experiment_outputs_path,
     delete_experiment_logs,
     delete_experiment_outputs,
     get_experiment_logs_path,
     get_experiment_outputs_path
 )
-from factories.factory_experiments import ExperimentFactory
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestExperimentUtils(BaseTest):
     def setUp(self):
         super().setUp()

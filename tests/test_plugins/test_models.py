@@ -2,18 +2,16 @@ from mock import patch
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import tag
 from django.test.client import MULTIPART_CONTENT
 
-from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
-from factories.factory_projects import ProjectFactory
 from constants.jobs import JobLifeCycle
 from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
+from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
+from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
-from tests.utils import RUNNER_TEST, BaseTest, BaseViewTest
+from tests.utils import BaseTest, BaseViewTest
 
 
-@tag(RUNNER_TEST)
 class TestPluginsModel(BaseTest):
     def test_project_deletion_cascade_to_tensorboard_job(self):
         assert TensorboardJob.objects.count() == 0
@@ -21,8 +19,8 @@ class TestPluginsModel(BaseTest):
         TensorboardJobFactory(project=project)
         assert TensorboardJob.objects.count() == 1
 
-        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:  # noqa
-            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:  # noqa
+        with patch('scheduler.tensorboard_scheduler.stop_tensorboard') as _:  # noqa
+            with patch('scheduler.notebook_scheduler.stop_notebook') as _:  # noqa
                 project.delete()
         assert TensorboardJob.objects.count() == 0
 
@@ -32,8 +30,8 @@ class TestPluginsModel(BaseTest):
         NotebookJobFactory(project=project)
         assert NotebookJob.objects.count() == 1
 
-        with patch('runner.schedulers.tensorboard_scheduler.stop_tensorboard') as _:  # noqa
-            with patch('runner.schedulers.notebook_scheduler.stop_notebook') as _:  # noqa
+        with patch('scheduler.tensorboard_scheduler.stop_tensorboard') as _:  # noqa
+            with patch('scheduler.notebook_scheduler.stop_notebook') as _:  # noqa
                 project.delete()
         assert NotebookJob.objects.count() == 0
 
@@ -54,7 +52,6 @@ class TestPluginsModel(BaseTest):
         assert project.notebook.last_status == JobLifeCycle.CREATED
 
 
-@tag(RUNNER_TEST)
 class TestPluginJobCommit(BaseViewTest):
     factory_class = None
 

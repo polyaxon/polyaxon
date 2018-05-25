@@ -1,19 +1,16 @@
-from django.test import override_settings, tag
-
-from db.models.clusters import Cluster
-from clusters.serializers import ClusterSerializer
-from factories.factory_clusters import ClusterNodeFactory, GPUFactory
-from db.models.nodes import ClusterNode, NodeGPU
-from runner.nodes.serializers import (
+from api.clusters.serializers import ClusterSerializer
+from api.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
     ClusterRunnerSerializer,
     GPUSerializer
 )
-from tests.utils import RUNNER_TEST, BaseTest
+from db.models.clusters import Cluster
+from db.models.nodes import ClusterNode, NodeGPU
+from factories.factory_clusters import ClusterNodeFactory, GPUFactory
+from tests.utils import BaseTest
 
 
-@tag(RUNNER_TEST)
 class TestGPUSerializer(BaseTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
@@ -46,7 +43,6 @@ class TestGPUSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@tag(RUNNER_TEST)
 class TestClusterNodeSerializer(BaseTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
@@ -74,7 +70,6 @@ class TestClusterNodeSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@tag(RUNNER_TEST)
 class TestClusterNodeDetailsSerializer(BaseTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
@@ -108,7 +103,6 @@ class TestClusterNodeDetailsSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@override_settings(DEPLOY_RUNNER=False)
 class TestClusterDetailSerializer(BaseTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
@@ -132,7 +126,6 @@ class TestClusterDetailSerializer(BaseTest):
             assert getattr(self.cluster, k) == v
 
 
-@tag(RUNNER_TEST)
 class TestRunnerClusterDetailSerializer(BaseTest):
     serializer_class = ClusterRunnerSerializer
     model_class = Cluster

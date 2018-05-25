@@ -1,6 +1,6 @@
-from factories.factory_projects import ProjectFactory
+from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from db.models.projects import Project
-from projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 

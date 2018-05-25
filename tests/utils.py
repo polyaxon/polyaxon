@@ -16,14 +16,13 @@ from django.test import Client, TestCase
 from django.test.client import FakePayload
 
 from factories.factory_users import UserFactory
-from polyaxon.config_settings import RedisPools
+from polyaxon.settings import RedisPools
 
 # pylint:disable=arguments-differ
 
 # Stores the currently valid tokens to check against
 _valid_tokens = dict()
 CONTENT_TYPE_APPLICATION_JSON = 'application/json'
-RUNNER_TEST = 'runner'
 
 
 class AuthorizedClient(Client):
@@ -150,6 +149,15 @@ class BaseTest(TestCase):
         settings.OUTPUTS_ROOT = tempfile.mkdtemp()
         # Flush cache
         cache.clear()
+
+        from celery import current_app
+
+        def send_task(name, args=(), kwargs={}, **opts):
+            task = current_app.tasks[name]
+            return task.apply_async(args, kwargs, **opts)
+
+        current_app.send_task = send_task
+
         return super().setUp()
 
 
