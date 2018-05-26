@@ -6,6 +6,7 @@ import uuid
 from urllib.parse import urlparse
 
 import redis
+from mock import patch
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -138,6 +139,8 @@ class AuthorizedClient(Client):
 
 
 class BaseTest(TestCase):
+    DISABLE_RUNNER = False
+
     def setUp(self):
         # Flushing all redis databases
         redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
@@ -149,7 +152,15 @@ class BaseTest(TestCase):
         settings.OUTPUTS_ROOT = tempfile.mkdtemp()
         # Flush cache
         cache.clear()
+        # Mock celery default sent task
+        self.mock_send_task()
 
+        if self.DISABLE_RUNNER:
+            self.disable_experiment_groups_runner()
+            self.disable_experiments_runner()
+        return super().setUp()
+
+    def mock_send_task(self):
         from celery import current_app
 
         def send_task(name, args=(), kwargs={}, **opts):
@@ -158,7 +169,15 @@ class BaseTest(TestCase):
 
         current_app.send_task = send_task
 
-        return super().setUp()
+    def disable_experiment_groups_runner(self):
+        patcher = patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+        patcher = patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def disable_experiments_runner(self):
+        patcher = patch('scheduler.tasks.experiments.experiments_build.apply_async')
+        patcher = patcher.start()
+        self.addCleanup(patcher.stop)
 
 
 class BaseViewTest(BaseTest):
