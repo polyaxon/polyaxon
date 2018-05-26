@@ -1,3 +1,4 @@
+import pytest
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
@@ -19,6 +20,7 @@ from tests.fixtures import (
 from tests.utils import BaseTest
 
 
+@pytest.mark.monitors
 class TestEventsBaseJobsStatusesHandling(BaseTest):
     EVENT = None
     EVENT_WITH_CONDITIONS = None
@@ -70,6 +72,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.FAILED}
 
 
+@pytest.mark.monitors
 class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_experiment_job_event
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
@@ -82,6 +85,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
         return ExperimentJobFactory(uuid=job_uuid)
 
 
+@pytest.mark.monitors
 class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_tensorboard_job_event
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
@@ -95,6 +99,7 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
         return TensorboardJobFactory(project=project)
 
 
+@pytest.mark.monitors
 class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_notebook_job_event
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions
