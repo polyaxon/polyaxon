@@ -1,5 +1,6 @@
 import os
 
+import pytest
 from django.conf import settings
 
 from factories.factory_projects import ProjectFactory
@@ -8,6 +9,7 @@ from libs.paths.utils import copy_to_tmp_dir, get_tmp_path
 from tests.utils import BaseTest
 
 
+@pytest.mark.libs
 class TestPaths(BaseTest):
     def test_copy_repo_path_to_tmp_dir(self):
         project = ProjectFactory()
