@@ -1,3 +1,4 @@
+import pytest
 from rest_framework import status
 
 from api.clusters.serializers import ClusterSerializer
@@ -15,28 +16,8 @@ from polyaxon.urls import API_V1
 from tests.utils import BaseViewTest
 
 
+@pytest.mark.clusters
 class TestClusterDetailViewV1(BaseViewTest):
-    serializer_class = ClusterSerializer
-    model_class = Cluster
-    HAS_AUTH = True
-    ADMIN_USER = True
-
-    def setUp(self):
-        super().setUp()
-        self.object = Cluster.load()
-        self.url = '/{}/cluster/'.format(API_V1)
-
-        # Create related fields
-        for _ in range(2):
-            ClusterNodeFactory(cluster=self.object)
-
-    def test_get(self):
-        resp = self.auth_client.get(self.url)
-        assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == self.serializer_class(self.object).data
-
-
-class TestRunnerClusterDetailViewV1(BaseViewTest):
     serializer_class = ClusterRunnerSerializer
     model_class = Cluster
     HAS_AUTH = True
@@ -59,6 +40,7 @@ class TestRunnerClusterDetailViewV1(BaseViewTest):
         assert resp.data['nodes'] == ClusterNodeSerializer(self.object.nodes.all(), many=True).data
 
 
+@pytest.mark.clusters
 class TestClusterNodeListViewV1(BaseViewTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
@@ -136,6 +118,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
         assert last_object.n_gpus == 0
 
 
+@pytest.mark.clusters
 class TestClusterNodeDetailViewV1(BaseViewTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
@@ -183,6 +166,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         assert NodeGPU.objects.count() == 0
 
 
+@pytest.mark.clusters
 class TestClusterNodeGPUListViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
@@ -254,6 +238,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
         assert last_object.index == data['index']
 
 
+@pytest.mark.clusters
 class TestClusterNodeGPUDetailViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
