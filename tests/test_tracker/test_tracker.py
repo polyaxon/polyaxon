@@ -1,3 +1,4 @@
+import pytest
 from django.conf import settings
 from django.test import override_settings
 
@@ -6,6 +7,7 @@ import tracker
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor
 class TrackerTest(BaseTest):
     def test_default_backend_tracker(self):
         backend = tracker.get_tracker_backend()

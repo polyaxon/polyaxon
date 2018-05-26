@@ -2,6 +2,8 @@
 
 from unittest.mock import patch
 
+import pytest
+
 import activitylogs
 import auditor
 import tracker
@@ -11,6 +13,7 @@ from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor
 class AuditorProjectTest(BaseTest):
     """Testing subscribed events"""
 

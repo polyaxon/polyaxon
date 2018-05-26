@@ -2,6 +2,8 @@
 
 from unittest.mock import patch
 
+import pytest
+
 import activitylogs
 import auditor
 import tracker
@@ -12,11 +14,11 @@ from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor
 class AuditorPermissionTest(BaseTest):
     """Testing subscribed events"""
 
     def setUp(self):
-        self.notebook = NotebookJobFactory(project=ProjectFactory())
         auditor.validate()
         auditor.setup()
         tracker.validate()

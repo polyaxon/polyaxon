@@ -1,4 +1,5 @@
 # pylint:disable=ungrouped-imports
+import pytest
 
 import activitylogs
 
@@ -10,7 +11,10 @@ from factories.factory_users import UserFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor
 class ActivityLogsTest(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         self.experiment = ExperimentFactory()
         self.admin = UserFactory(is_staff=True, is_superuser=True)

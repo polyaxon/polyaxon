@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+import pytest
+
 from db.models.clusters import Cluster
 from event_manager.events.cluster import CLUSTER_CREATED
 from event_manager.events.user import USER_ACTIVATED
@@ -8,6 +10,7 @@ from tests.utils import BaseTest
 from tracker.publish_tracker import PublishTrackerService
 
 
+@pytest.mark.auditor
 class PublishTrackerTest(BaseTest):
     def setUp(self):
         self.cluster = Cluster.load()

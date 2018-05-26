@@ -2,6 +2,8 @@
 
 from unittest.mock import patch
 
+import pytest
+
 import activitylogs
 import auditor
 import tracker
@@ -10,6 +12,7 @@ from event_manager.events import superuser as superuser_events
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor
 class AuditorSuperUserTest(BaseTest):
     """Testing subscribed events"""
 

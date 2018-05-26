@@ -2,6 +2,8 @@
 
 from unittest.mock import patch
 
+import pytest
+
 import activitylogs
 import auditor
 import tracker
@@ -11,8 +13,10 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor
 class AuditorExperimentGroupTest(BaseTest):
     """Testing subscribed events"""
+    DISABLE_RUNNER = True
 
     def setUp(self):
         self.experiment_group = ExperimentGroupFactory()
