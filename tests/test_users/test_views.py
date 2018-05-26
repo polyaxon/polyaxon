@@ -1,3 +1,4 @@
+import pytest
 from rest_framework import status
 
 from django.contrib.auth import get_user_model
@@ -7,6 +8,7 @@ from polyaxon.urls import API_V1
 from tests.utils import BaseViewTest
 
 
+@pytest.mark.users
 class TestActivateViewV1(BaseViewTest):
     model_class = get_user_model()
     factory_class = UserFactory
@@ -37,6 +39,7 @@ class TestActivateViewV1(BaseViewTest):
         assert user.is_active is True
 
 
+@pytest.mark.users
 class TestDeleteViewV1(BaseViewTest):
     model_class = get_user_model()
     factory_class = UserFactory
@@ -65,6 +68,7 @@ class TestDeleteViewV1(BaseViewTest):
         assert self.model_class.objects.filter(pk=self.other_user.pk).count() == 0
 
 
+@pytest.mark.users
 class TestGrantSuperuserViewV1(BaseViewTest):
     model_class = get_user_model()
     factory_class = UserFactory
@@ -97,6 +101,7 @@ class TestGrantSuperuserViewV1(BaseViewTest):
         assert user.is_superuser is True
 
 
+@pytest.mark.users
 class TestRevokeSuperuserViewV1(BaseViewTest):
     model_class = get_user_model()
     factory_class = UserFactory
@@ -129,6 +134,7 @@ class TestRevokeSuperuserViewV1(BaseViewTest):
         assert user.is_superuser is False
 
 
+@pytest.mark.users
 class TestRefreshSessionView(BaseViewTest):
 
     def setUp(self):

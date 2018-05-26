@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from unittest.mock import MagicMock
 
+import pytest
 from django.conf import settings
 
 from tests.utils import BaseTest
 from api.users.ldap_signals import populate_user_handler
 
 
+@pytest.mark.users
 class TestAuthLdap(BaseTest):
     def test_populate_user(self):
         user = MagicMock()
