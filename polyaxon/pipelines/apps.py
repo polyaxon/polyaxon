@@ -6,4 +6,4 @@ class PipelinesConfig(AppConfig):
     verbose_name = 'Pipelines'
 
     def ready(self):
-        import pipelines.signals  # noqa
+        import signals.pipelines  # noqa
