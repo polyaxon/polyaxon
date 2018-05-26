@@ -5,7 +5,6 @@ from constants.experiments import ExperimentLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group, get_valid_experiment_group
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals, SchedulerCeleryTasks
-from scheduler.tasks.experiments import experiments_stop
 
 _logger = logging.getLogger(__name__)
 

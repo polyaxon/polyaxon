@@ -10,13 +10,13 @@ from db.models.repos import Repo
 from dockerizer.builders import experiments as experiments_builder
 from dockerizer.builders import notebooks as notebooks_builder
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import Intervals, RunnerCeleryTasks
+from polyaxon.settings import Intervals, SchedulerCeleryTasks, DockerizerCeleryTasks
 
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=RunnerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
-def projects_notebook_build(project_id):
+@celery_app.task(name=DockerizerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
+def build_project_notebook(project_id):
     project = get_valid_project(project_id)
     if not project or not project.notebook:
         return None
@@ -52,11 +52,11 @@ def projects_notebook_build(project_id):
 
     # Now we can start the notebook
     celery_app.send_task(
-        RunnerCeleryTasks.PROJECTS_NOTEBOOK_START,
+        SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
         kwargs={'project_id': project_id})
 
 
-@celery_app.task(name=RunnerCeleryTasks.EXPERIMENTS_BUILD, bind=True, max_retries=3)
+@celery_app.task(name=DockerizerCeleryTasks.EXPERIMENTS_BUILD, bind=True, max_retries=3)
 def build_experiment(self, experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -71,7 +71,7 @@ def build_experiment(self, experiment_id):
     # No need to build the image, start the experiment directly
     if not experiment.specification.run_exec:
         celery_app.send_task(
-            RunnerCeleryTasks.EXPERIMENTS_START,
+            SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id})
         return
 
@@ -108,5 +108,5 @@ def build_experiment(self, experiment_id):
 
     # Now we can start the experiment
     celery_app.send_task(
-        RunnerCeleryTasks.EXPERIMENTS_START,
+        SchedulerCeleryTasks.EXPERIMENTS_START,
         kwargs={'experiment_id': experiment_id})

@@ -9,15 +9,15 @@ import auditor
 
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_NEW_COMMIT
-from libs.paths import delete_path
+from libs.paths.utils import delete_path
 from libs.repos import git
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import CeleryTasks
+from polyaxon.settings import ReposCeleryTasks
 
 logger = logging.getLogger('polyaxon.tasks.repos')
 
 
-@celery_app.task(name=CeleryTasks.REPOS_HANDLE_FILE_UPLOAD, ignore_result=True)
+@celery_app.task(name=ReposCeleryTasks.REPOS_HANDLE_FILE_UPLOAD, ignore_result=True)
 def handle_new_files(user_id, repo_id, tar_file_name):
     if not tarfile.is_tarfile(tar_file_name):
         raise ValueError('Received wrong file format.')

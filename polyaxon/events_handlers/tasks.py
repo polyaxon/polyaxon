@@ -8,25 +8,25 @@ from db.models.nodes import ClusterEvent
 from db.models.projects import Project
 from libs.paths.experiments import get_experiment_logs_path
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import RunnerCeleryTasks
+from polyaxon.settings import EventsCeleryTasks
 
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_NAMESPACE)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_NAMESPACE)
 def handle_events_namespace(cluster_id, payload):
     _logger.info('handling events namespace for cluster: %s', cluster_id)
     ClusterEvent.objects.create(cluster_id=cluster_id, **payload)
 
 
-@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_RESOURCES)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_RESOURCES)
 def handle_events_resources(payload, persist):
     # here we must persist resources if requested
     _logger.info('handling events resources with persist:%s', persist)
     _logger.info(payload)
 
 
-@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
 def handle_events_job_statuses(payload):
     """Experiment jobs constants"""
     details = payload['details']
@@ -47,7 +47,7 @@ def handle_events_job_statuses(payload):
         pass
 
 
-@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
 def handle_events_plugin_job_statuses(payload):
     """Project Plugin jobs constants"""
     details = payload['details']
@@ -80,7 +80,7 @@ def handle_events_plugin_job_statuses(payload):
         pass
 
 
-@celery_app.task(name=RunnerCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR)
 def handle_events_job_logs(experiment_name,
                            experiment_uuid,
                            job_uuid,
