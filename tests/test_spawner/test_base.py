@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from unittest import TestCase
 
-from runner.spawners.base import get_pod_volumes
 from django.conf import settings
+
+from runner.spawners.base import get_pod_volumes
+
 
 class TestBase(TestCase):
     def test_get_pod_volumes(self):
@@ -30,4 +32,3 @@ class TestBase(TestCase):
         assert volumes[3].host_path.path == '/root/test'
         assert volume_mounts[2].mount_path == '/storage/1'
         assert volume_mounts[3].mount_path == '/storage/2'
-
