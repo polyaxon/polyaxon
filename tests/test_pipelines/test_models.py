@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+import pytest
 from mock import patch
 
 from django.conf import settings
@@ -16,6 +17,7 @@ from factories.factory_pipelines import (
 from tests.utils import BaseTest
 
 
+@pytest.mark.pipelines
 class TestPipelineModel(BaseTest):
     def test_dag_property(self):
         pipeline = PipelineFactory()
