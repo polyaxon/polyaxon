@@ -1,3 +1,5 @@
+import pytest
+
 from api.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
 from db.models.plugins import NotebookJob, TensorboardJob
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
@@ -5,6 +7,7 @@ from factories.fixtures import plugin_spec_parsed_content
 from tests.utils import BaseTest
 
 
+@pytest.mark.plugins
 class BasePluginJobSerializerTest(BaseTest):
     model_class = None
     serializer_class = None
@@ -46,12 +49,14 @@ class BasePluginJobSerializerTest(BaseTest):
         assert obj.config['version'] == 2
 
 
+@pytest.mark.plugins
 class TestTensorboardJobSerializer(BaseTest):
     serializer_class = TensorboardJobSerializer
     model_class = TensorboardJob
     factory_class = TensorboardJobFactory
 
 
+@pytest.mark.plugins
 class TestNotebookJobSerializer(BaseTest):
     serializer_class = NotebookJobSerializer
     model_class = NotebookJob

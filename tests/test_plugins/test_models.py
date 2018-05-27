@@ -1,3 +1,4 @@
+import pytest
 from mock import patch
 
 from django.core.files import File
@@ -12,6 +13,7 @@ from polyaxon.urls import API_V1
 from tests.utils import BaseTest, BaseViewTest
 
 
+@pytest.mark.plugins
 class TestPluginsModel(BaseTest):
     def test_project_deletion_cascade_to_tensorboard_job(self):
         assert TensorboardJob.objects.count() == 0
@@ -52,6 +54,7 @@ class TestPluginsModel(BaseTest):
         assert project.notebook.last_status == JobLifeCycle.CREATED
 
 
+@pytest.mark.plugins
 class TestPluginJobCommit(BaseViewTest):
     factory_class = None
 
@@ -100,10 +103,12 @@ class TestPluginJobCommit(BaseViewTest):
         assert new_plugin_job.code_reference.repo == self.project.repo
 
 
+@pytest.mark.plugins
 class TestTensorboardCommit(TestPluginJobCommit):
     factory_class = TensorboardJobFactory
 
 
+@pytest.mark.plugins
 class TestNotebookCommit(TestPluginJobCommit):
     factory_class = NotebookJobFactory
 
