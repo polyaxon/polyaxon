@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+import pytest
 from flaky import flaky
 from rest_framework import status
 
@@ -13,6 +14,7 @@ from polyaxon.urls import API_V1
 from tests.utils import BaseViewTest
 
 
+@pytest.mark.project
 class TestProjectCreateViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
     model_class = Project
@@ -36,6 +38,7 @@ class TestProjectCreateViewV1(BaseViewTest):
         assert self.model_class.objects.count() == self.num_objects + 1
 
 
+@pytest.mark.project
 class TestProjectListViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
     model_class = Project
@@ -103,6 +106,7 @@ class TestProjectListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
+@pytest.mark.project
 class TestProjectDetailViewV1(BaseViewTest):
     serializer_class = ProjectDetailSerializer
     model_class = Project

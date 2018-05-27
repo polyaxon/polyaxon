@@ -1,9 +1,12 @@
+import pytest
+
 from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
 from db.models.projects import Project
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.project
 class TestProjectSerializer(BaseTest):
     serializer_class = ProjectSerializer
     model_class = Project
@@ -39,6 +42,7 @@ class TestProjectSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
+@pytest.mark.project
 class TestProjectDetailSerializer(BaseTest):
     serializer_class = ProjectDetailSerializer
     model_class = Project
