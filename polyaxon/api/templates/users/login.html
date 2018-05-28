@@ -5,8 +5,10 @@
     {% if form.errors and not form.non_field_errors %}
         <p class="errornote">
             {% if form.errors.items|length == 1 %}
-                {% trans "Please correct the error below." %}{% else %}
-                {% trans "Please correct the errors below." %}{% endif %}
+                Please correct the error below.
+            {% else %}
+                Please correct the errors below.
+            {% endif %}
         </p>
     {% endif %}
 
@@ -40,11 +42,11 @@
             </div>
             {% if password_reset_url %}
                 <div class="password-reset-link">
-                    <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+                    <a href="{{ password_reset_url }}">Forgotten your password or username?</a>
                 </div>
             {% endif %}
             <div class="submit-row">
-                <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}"/>
+                <label>&nbsp;</label><input type="submit" value="Log in"/>
             </div>
         </form>
     {% if sso_enabled %}
