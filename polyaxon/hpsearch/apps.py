@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class HPSearchrConfig(AppConfig):
+class HPSearchConfig(AppConfig):
     name = 'hpsearch'
     verbose_name = 'HP Search'
 
