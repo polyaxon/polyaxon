@@ -18,8 +18,10 @@ from libs.paths.experiments import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupUtils(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()

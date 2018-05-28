@@ -17,8 +17,10 @@ from hpsearch.iteration_managers import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestIterationManagers(BaseTest):
+    DISABLE_RUNNER = True
+
     def test_get_search_iteration_manager(self):
         # Grid search
         experiment_group = ExperimentGroupFactory()
@@ -40,8 +42,10 @@ class TestIterationManagers(BaseTest):
         assert isinstance(get_search_iteration_manager(experiment_group), BOIterationManager)
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestHyperbandIterationManagers(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory(
@@ -107,8 +111,10 @@ class TestHyperbandIterationManagers(BaseTest):
         assert self.iteration_manager.get_reduced_configs() == []
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestBOIterationManagers(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory(

@@ -9,8 +9,10 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupSerializer(BaseTest):
+    DISABLE_RUNNER = True
+
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
@@ -50,7 +52,7 @@ class TestExperimentGroupSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupDetailSerializer(BaseTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup
@@ -62,6 +64,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         'concurrency', 'num_experiments', 'last_status', 'current_iteration', 'search_algorithm',
         'num_pending_experiments', 'num_running_experiments', 'num_scheduled_experiments',
         'num_succeeded_experiments', 'num_failed_experiments', 'num_stopped_experiments'}
+    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()

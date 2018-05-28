@@ -28,8 +28,8 @@ from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
 from tests.utils import BaseTest
 
 
-@pytest.mark.experiment_groups
-class TestIterationManagers(BaseTest):
+@pytest.mark.experiment_groups_mark
+class TestSearchManagers(BaseTest):
     DISABLE_RUNNER = True
 
     def test_get_search_manager(self):
@@ -57,8 +57,10 @@ class TestIterationManagers(BaseTest):
                           BOSearchManager)
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestGridSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def test_get_suggestions(self):
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
@@ -107,8 +109,10 @@ class TestGridSearchManager(BaseTest):
         assert to_numpy_mock.call_count == 2
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestRandomSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def test_get_suggestions(self):
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
@@ -167,8 +171,10 @@ class TestRandomSearchManager(BaseTest):
         assert sample_mock.call_count == 4
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestHyperbandSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
@@ -611,7 +617,7 @@ class TestHyperbandSearchManager(BaseTest):
             assert 'feature4' in suggestion
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestBOSearchManager(BaseTest):
     def setUp(self):
         params_config = SettingsConfig.from_dict({

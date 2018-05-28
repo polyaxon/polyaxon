@@ -10,8 +10,10 @@ from hpsearch.schemas import BOIterationConfig, HyperbandIterationConfig, get_it
 from tests.utils import BaseTest
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestSearchManagers(BaseTest):
+    DISABLE_RUNNER = True
+
     def test_get_search_algorithm_manager(self):
         # Grid search
         experiment_group = ExperimentGroupFactory()
@@ -49,8 +51,10 @@ class TestSearchManagers(BaseTest):
                           BOIterationConfig)
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestHyperbandIterationConfig(BaseTest):
+    DISABLE_RUNNER = True
+
     def test_hyperband_iteration_config(self):
         config = {
             'iteration': 1,
@@ -62,7 +66,7 @@ class TestHyperbandIterationConfig(BaseTest):
         assert HyperbandIterationConfig.from_dict(config).to_dict() == config
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestBOIterationConfig(BaseTest):
     def test_bo_iteration_config(self):
         config = {

@@ -38,7 +38,7 @@ from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 from tests.utils import BaseTest, BaseViewTest
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupModel(BaseTest):
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     @patch('libs.paths.experiment_groups.delete_path')

@@ -17,7 +17,7 @@ from polyaxon.urls import API_V1
 from tests.utils import BaseViewTest
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestProjectExperimentGroupListViewV1(BaseViewTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
@@ -176,7 +176,7 @@ model:
         assert last_object.content is None
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupDetailViewV1(BaseViewTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup
@@ -220,7 +220,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert Experiment.objects.count() == 2
-        with patch('experiments.paths.delete_path') as outputs_mock_stop:
+        with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
             resp = self.auth_client.delete(self.url)
         assert outputs_mock_stop.call_count == 4  # Outputs and Logs * 2
         assert resp.status_code == status.HTTP_204_NO_CONTENT
@@ -228,7 +228,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 0
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup
@@ -275,7 +275,7 @@ class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         assert Experiment.objects.count() == 4
         with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_stop:
-            with patch('experiments.paths.delete_path') as outputs_mock_stop:
+            with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
                 resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 4
         assert outputs_mock_stop.call_count == 8  # Outputs and Logs * 4
@@ -284,7 +284,7 @@ class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 0
 
 
-@pytest.mark.experiment_groups
+@pytest.mark.experiment_groups_mark
 class TestStopExperimentGroupViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
