@@ -579,6 +579,14 @@ Auth
 {{- end -}}
 
 {{/*
+Config extra_data
+*/}}
+{{- define "config.extra_data" }}
+- name: POLYAXON_EXTRA_PERSISTENCES
+  value: {{ toJson .Values.persistence.extra | quote }}
+{{- end -}}
+
+{{/*
 Volume mounts
 */}}
 {{- define "volumes.volumeMounts" }}
