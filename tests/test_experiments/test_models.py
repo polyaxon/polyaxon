@@ -3,6 +3,7 @@ import os
 from unittest.mock import patch
 
 import mock
+import pytest
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -14,7 +15,7 @@ from constants.jobs import JobLifeCycle
 from crons.tasks.experiments import sync_experiments_and_jobs_statuses
 from db.models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
 from db.models.jobs import JobResources
-from scheduler.tasks.experiments import copy_experiment, set_metrics
+from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -38,6 +39,7 @@ from tests.fixtures import start_experiment_value
 from tests.utils import BaseTest, BaseViewTest
 
 
+@pytest.mark.experiments_mark
 class TestExperimentModel(BaseTest):
     def test_create_experiment_with_no_spec_or_declarations(self):
         experiment = ExperimentFactory(declarations=None, config=None)
@@ -184,7 +186,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.CREATED
 
     def test_independent_experiment_creation_triggers_experiment_scheduling_mocks(self):
-        with patch('dockerizer.builders.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
                 ExperimentFactory()
 
@@ -210,7 +212,8 @@ class TestExperimentModel(BaseTest):
         # Create a repo for the project
         repo = RepoFactory()
 
-        with patch('dockerizer.builders.experiments.build_experiment') as mock_docker_build:
+        with patch(
+            'scheduler.tasks.experiments.experiments_build.apply_async') as mock_docker_build:
             experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
 
         assert mock_docker_build.call_count == 1
@@ -287,7 +290,7 @@ class TestExperimentModel(BaseTest):
             # Assert the jobs status is created
             assert job.last_status == JobLifeCycle.CREATED
 
-    @patch('experiments.paths.delete_path')
+    @patch('libs.paths.experiments.delete_path')
     def test_delete_experiment_triggers_experiment_stop_mocks(self, delete_path):
         experiment = ExperimentFactory()
         assert delete_path.call_count == 2  # outputs + logs
@@ -307,9 +310,9 @@ class TestExperimentModel(BaseTest):
         assert experiment.metrics.count() == 0
 
         create_at = timezone.now()
-        set_metrics(experiment_uuid=experiment.uuid.hex,
-                    created_at=create_at,
-                    metrics={'accuracy': 0.9, 'precision': 0.9})
+        experiments_set_metrics(experiment_uuid=experiment.uuid.hex,
+                                created_at=create_at,
+                                metrics={'accuracy': 0.9, 'precision': 0.9})
 
         assert experiment.metrics.count() == 1
 
@@ -360,7 +363,8 @@ class TestExperimentModel(BaseTest):
         assert xp_with_jobs.last_status is None
 
         # Mock sync experiments and jobs constants
-        with patch('scheduler.experiments.check_experiment_status.apply_async') as check_status_mock:
+        with patch(
+            'scheduler.experiments.check_experiment_status.apply_async') as check_status_mock:
             sync_experiments_and_jobs_statuses()
 
         assert check_status_mock.call_count == 1
@@ -375,7 +379,7 @@ class TestExperimentModel(BaseTest):
         assert xp_with_jobs.last_status == ExperimentLifeCycle.RUNNING
 
     def test_copying_an_experiment(self):
-        with patch('scheduler.tasks.experiments.build_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment1 = ExperimentFactory()
 
         # We create some outputs files for the experiment
@@ -383,7 +387,7 @@ class TestExperimentModel(BaseTest):
         open(os.path.join(path, 'file'), 'w+')
 
         # Create a new experiment that is a clone of the previous
-        with patch('scheduler.tasks.experiments.build_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment2 = ExperimentFactory(original_experiment=experiment1)
 
         # Check that outputs path for experiment2 does not exist yet
@@ -397,6 +401,7 @@ class TestExperimentModel(BaseTest):
         assert os.path.exists(os.path.join(experiment2_outputs_path, 'file')) is True
 
 
+@pytest.mark.experiments_mark
 class TestExperimentCommit(BaseViewTest):
     def setUp(self):
         super().setUp()

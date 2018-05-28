@@ -1,5 +1,7 @@
 import os
 
+import pytest
+
 from factories.factory_experiments import ExperimentFactory
 from libs.paths.experiments import (
     create_experiment_outputs_path,
@@ -11,7 +13,10 @@ from libs.paths.experiments import (
 from tests.utils import BaseTest
 
 
+@pytest.mark.experiments_mark
 class TestExperimentUtils(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         super().setUp()
         self.experiment = ExperimentFactory()
