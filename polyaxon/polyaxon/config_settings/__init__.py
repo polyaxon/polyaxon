@@ -1,4 +1,4 @@
-from .admin import *
+# Default configs
 from .celery_settings import *
 from .context_processors import *
 from .core import *
@@ -10,6 +10,7 @@ from .tracker import *
 
 from polyaxon.utils import config
 
+# Service configs
 if config.is_monolith_service:
     from .monolith import *
 elif config.is_api_service:
