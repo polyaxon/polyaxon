@@ -9,12 +9,13 @@ from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.projects import Project
 from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.urls import API_V1
 from tests.utils import BaseViewTest
 
 
-@pytest.mark.project
+@pytest.mark.projects
 class TestProjectCreateViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
     model_class = Project
@@ -38,7 +39,7 @@ class TestProjectCreateViewV1(BaseViewTest):
         assert self.model_class.objects.count() == self.num_objects + 1
 
 
-@pytest.mark.project
+@pytest.mark.projects
 class TestProjectListViewV1(BaseViewTest):
     serializer_class = ProjectSerializer
     model_class = Project
@@ -106,15 +107,15 @@ class TestProjectListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
-@pytest.mark.project
+@pytest.mark.projects
 class TestProjectDetailViewV1(BaseViewTest):
     serializer_class = ProjectDetailSerializer
     model_class = Project
     factory_class = ProjectFactory
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
-    @patch('hpsearch.tasks.base.check_group_experiments_finished')
-    def setUp(self, _):
+    def setUp(self):
         super().setUp()
         self.object = self.factory_class(user=self.auth_client.user)
         self.url = '/{}/{}/{}/'.format(API_V1, self.object.user.username, self.object.name)
@@ -124,8 +125,9 @@ class TestProjectDetailViewV1(BaseViewTest):
         for _ in range(2):
             ExperimentGroupFactory(project=self.object)
 
-        # creating the default factory should trigger the creation of 2 experiments per group
-        assert Experiment.objects.count() == 4
+        # Create related fields
+        for _ in range(2):
+            ExperimentFactory(project=self.object)
 
         # Other user objects
         self.other_object = self.factory_class()
@@ -142,7 +144,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data == self.serializer_class(self.object).data
-        assert resp.data['num_experiments'] == 4
+        assert resp.data['num_experiments'] == 2
         assert resp.data['num_experiment_groups'] == 2
 
         # Get other public project works
@@ -164,7 +166,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert new_object.user == self.object.user
         assert new_object.name != self.object.name
         assert new_object.name == new_name
-        assert new_object.experiments.count() == 4
+        assert new_object.experiments.count() == 2
         assert new_object.experiment_groups.count() == 2
 
         # Patch does not work for other project public and private
@@ -176,7 +178,7 @@ class TestProjectDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
-        assert Experiment.objects.count() == 4
+        assert Experiment.objects.count() == 2
 
         with patch('libs.paths.projects.delete_path') as delete_path_project_mock_stop:
             with patch('libs.paths.experiment_groups.delete_path') as delete_path_group_mock_stop:
@@ -186,7 +188,7 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert delete_path_project_mock_stop.call_count == 3
         # 2 * 2 * groups
         assert delete_path_group_mock_stop.call_count
-        assert delete_path_xp_mock_stop.call_count == 8  # 2 * 4  * groups
+        assert delete_path_xp_mock_stop.call_count == 4  # 2 * 2  * groups
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert ExperimentGroup.objects.count() == 0
@@ -201,7 +203,7 @@ class TestProjectDetailViewV1(BaseViewTest):
     def test_delete_runner(self):
         assert self.queryset.count() == 1
         assert ExperimentGroup.objects.count() == 2
-        assert Experiment.objects.count() == 4
+        assert Experiment.objects.count() == 2
         with patch('scheduler.tensorboard_scheduler.'
                    'stop_tensorboard') as tensorboard_mock_fct:
             with patch('scheduler.notebook_scheduler.'
@@ -214,14 +216,14 @@ class TestProjectDetailViewV1(BaseViewTest):
                             with patch('libs.paths.experiments.'
                                        'delete_path') as delete_path_xp_mock_stop:
                                 resp = self.auth_client.delete(self.url)
-        assert xp_mock_stop.call_count == 4
+        assert xp_mock_stop.call_count == 2
         assert tensorboard_mock_fct.call_count == 1
         assert notebook_mock_fct.call_count == 1
         # 2 * project + 1 repo
         assert delete_path_project_mock_stop.call_count == 3
         # 2 * 2 * groups
         assert delete_path_group_mock_stop.call_count
-        assert delete_path_xp_mock_stop.call_count == 8  # 2 * 4  * groups
+        assert delete_path_xp_mock_stop.call_count == 4  # 2 * 2  * groups
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.queryset.count() == 0
         assert ExperimentGroup.objects.count() == 0

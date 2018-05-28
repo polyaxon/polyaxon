@@ -6,7 +6,7 @@ from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.project
+@pytest.mark.projects
 class TestProjectSerializer(BaseTest):
     serializer_class = ProjectSerializer
     model_class = Project
@@ -42,7 +42,7 @@ class TestProjectSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@pytest.mark.project
+@pytest.mark.projects
 class TestProjectDetailSerializer(BaseTest):
     serializer_class = ProjectDetailSerializer
     model_class = Project
