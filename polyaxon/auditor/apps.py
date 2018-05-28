@@ -8,4 +8,4 @@ class AuditorConfig(AppConfig):
     def ready(self):
         from polyaxon.utils import config
 
-        config.setup_services()
+        config.setup_auditor_services()

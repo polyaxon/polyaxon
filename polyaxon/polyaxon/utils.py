@@ -32,9 +32,6 @@ class SettingConfig(object):
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
         self._service = self.get_string('POLYAXON_SERVICE')
         self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG')
-        self._enable_services = self.get_boolean('POLYAXON_ENABLE_SERVICES',
-                                                 is_optional=True,
-                                                 default=True)
 
     @property
     def service(self):
@@ -96,8 +93,8 @@ class SettingConfig(object):
             return True
         return False
 
-    def setup_services(self):
-        if not self.is_testing and self._enable_services:
+    def setup_auditor_services(self):
+        if not self.is_testing:
             import activitylogs
             import auditor
             import tracker
@@ -108,6 +105,12 @@ class SettingConfig(object):
             tracker.setup()
             activitylogs.validate()
             activitylogs.setup()
+
+    def setup_publisher_service(self):
+        import publisher
+
+        publisher.validate()
+        publisher.setup()
 
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name
