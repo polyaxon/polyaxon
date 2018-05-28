@@ -8,6 +8,7 @@ PROJECT_APPS = AUDITOR_APPS + (
     'hpsearch.apps.HPSearchConfig',
     'pipelines.apps.PipelinesConfig',
     'events_handlers.apps.EventsHandlersConfig',
+    'commands.apps.CommandsConfig',
 )
 
 INSTALLED_APPS += PROJECT_APPS

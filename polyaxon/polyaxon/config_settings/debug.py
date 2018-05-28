@@ -2,7 +2,8 @@ import sys
 
 from polyaxon.utils import config
 
-from .apps import INSTALLED_APPS, MIDDLEWARE
+from .apps import INSTALLED_APPS
+from .middlewares import MIDDLEWARE
 
 if config.is_debug_mode:
 

@@ -11,4 +11,3 @@ from polyaxon.config_settings.rest import *
 from polyaxon.config_settings.spawner import *
 from polyaxon.config_settings.middlewares import *
 from .apps import *
-from .context_processors import *
