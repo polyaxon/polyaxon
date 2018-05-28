@@ -41,8 +41,6 @@ spec:
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
         args: ["create_exchange"]
         env:
-        - name: POLYAXON_ENABLE_SERVICES
-          value: "false"
         {{ include "config.global" . | indent 8 }}
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.django" . | indent 8 }}
