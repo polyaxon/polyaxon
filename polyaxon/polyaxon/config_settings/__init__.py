@@ -5,8 +5,9 @@ from .core import *
 from .debug import *
 from .logging import *
 from .secrets import *
-from .versions import *
+from .redis_settings import *
 from .tracker import *
+from .versions import *
 
 from polyaxon.utils import config
 

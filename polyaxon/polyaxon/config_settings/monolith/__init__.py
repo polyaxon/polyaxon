@@ -1,4 +1,3 @@
-from .apps import *
 from polyaxon.config_settings.assets import *
 from polyaxon.config_settings.auth import *
 from polyaxon.config_settings.context_processors import *
@@ -14,3 +13,5 @@ from polyaxon.config_settings.registry import *
 from polyaxon.config_settings.rest import *
 from polyaxon.config_settings.spawner import *
 from polyaxon.config_settings.volume_claims import *
+from polyaxon.config_settings.middlewares import *
+from .apps import *
