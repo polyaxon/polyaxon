@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import validate_slug
 
 from libs.blacklist import validate_blacklist_name
-from users import validators
+from api.users import validators
 
 
 class RegistrationForm(UserCreationForm):

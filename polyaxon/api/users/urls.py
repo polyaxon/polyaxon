@@ -6,7 +6,7 @@ from django.urls import re_path
 from django.views.generic import TemplateView
 
 from polyaxon.settings import registration
-from users import views
+from api.users import views
 
 if registration.REGISTRATION_WORKFLOW == registration.REGISTRATION_SUPERUSER_VALIDATION_WORKFLOW:
     urlpatterns = [
