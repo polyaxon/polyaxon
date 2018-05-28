@@ -1,3 +1,5 @@
+import pytest
+
 from api.experiment_groups.serializers import (
     ExperimentGroupDetailSerializer,
     ExperimentGroupSerializer
@@ -7,6 +9,7 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.experiment_groups
 class TestExperimentGroupSerializer(BaseTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
@@ -47,6 +50,7 @@ class TestExperimentGroupSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
+@pytest.mark.experiment_groups
 class TestExperimentGroupDetailSerializer(BaseTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup

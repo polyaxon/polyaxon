@@ -1,3 +1,5 @@
+import pytest
+
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
     experiment_group_spec_content_bo,
@@ -8,6 +10,7 @@ from hpsearch.schemas import BOIterationConfig, HyperbandIterationConfig, get_it
 from tests.utils import BaseTest
 
 
+@pytest.mark.experiment_groups
 class TestSearchManagers(BaseTest):
     def test_get_search_algorithm_manager(self):
         # Grid search
@@ -46,6 +49,7 @@ class TestSearchManagers(BaseTest):
                           BOIterationConfig)
 
 
+@pytest.mark.experiment_groups
 class TestHyperbandIterationConfig(BaseTest):
     def test_hyperband_iteration_config(self):
         config = {
@@ -58,6 +62,7 @@ class TestHyperbandIterationConfig(BaseTest):
         assert HyperbandIterationConfig.from_dict(config).to_dict() == config
 
 
+@pytest.mark.experiment_groups
 class TestBOIterationConfig(BaseTest):
     def test_bo_iteration_config(self):
         config = {

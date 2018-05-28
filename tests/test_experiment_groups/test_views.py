@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+import pytest
 from rest_framework import status
 
 from api.experiment_groups.serializers import (
@@ -16,17 +17,16 @@ from polyaxon.urls import API_V1
 from tests.utils import BaseViewTest
 
 
+@pytest.mark.experiment_groups
 class TestProjectExperimentGroupListViewV1(BaseViewTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     num_objects = 3
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
-    @patch('hpsearch.tasks.base.check_group_experiments_finished')
-    @patch('dockerizer.builders.experiments.build_experiment')
-    @patch('scheduler.experiment_scheduler.start_experiment')
-    def setUp(self, _1, _2, _3):
+    def setUp(self):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.other_project = ProjectFactory()
@@ -176,11 +176,13 @@ model:
         assert last_object.content is None
 
 
+@pytest.mark.experiment_groups
 class TestExperimentGroupDetailViewV1(BaseViewTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -226,6 +228,7 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 0
 
 
+@pytest.mark.experiment_groups
 class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup
@@ -281,6 +284,7 @@ class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
         assert Experiment.objects.count() == 0
 
 
+@pytest.mark.experiment_groups
 class TestStopExperimentGroupViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
@@ -324,7 +328,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert self.object.stopped_experiments.count() == 0
 
         # Check that is calling the correct function
-        with patch('scheduler.experiment_groups.stop_group_experiments.apply_async') as mock_fct:
+        with patch('scheduler.task.experiment_groups.stop_group_experiments.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1

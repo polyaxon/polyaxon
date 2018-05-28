@@ -1,5 +1,7 @@
 import os
 
+import pytest
+
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from libs.paths.experiment_groups import (
@@ -16,6 +18,7 @@ from libs.paths.experiments import (
 from tests.utils import BaseTest
 
 
+@pytest.mark.experiment_groups
 class TestExperimentGroupUtils(BaseTest):
     def setUp(self):
         super().setUp()

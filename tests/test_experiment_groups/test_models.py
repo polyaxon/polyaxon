@@ -2,6 +2,7 @@ import random
 
 from unittest.mock import patch
 
+import pytest
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
@@ -33,19 +34,22 @@ from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
-from scheduler.tasks.experiment_groups import stop_group_experiments
+from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 from tests.utils import BaseTest, BaseViewTest
 
 
+@pytest.mark.experiment_groups
 class TestExperimentGroupModel(BaseTest):
-    @patch('experiment_groups.paths.delete_path')
-    def test_experiment_group_creation_deletes_old_data(self, delete_path):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    @patch('libs.paths.experiment_groups.delete_path')
+    def test_experiment_group_creation_deletes_old_data(self, delete_path, _):
         ExperimentGroupFactory()
 
         assert delete_path.call_count == 2  # outputs + logs
 
-    @patch('experiment_groups.paths.delete_path')
-    def test_experiment_group_deletion_deletes_old_data(self, delete_path):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    @patch('libs.paths.experiment_groups.delete_path')
+    def test_experiment_group_deletion_deletes_old_data(self, delete_path, _):
         experiment_group = ExperimentGroupFactory()
         assert delete_path.call_count == 2  # outputs + logs
         experiment_group.delete()
@@ -64,7 +68,8 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.search_algorithm is None
         assert experiment_group.early_stopping is None
 
-    def test_experiment_group_with_spec_create_params(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_experiment_group_with_spec_create_params(self, _):
         # Create group with spec creates params
         project = ProjectFactory()
         experiment_group = ExperimentGroup.objects.create(
@@ -99,7 +104,8 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.params_config.random_search.n_experiments == 10
         assert isinstance(experiment_group.params_config.matrix['lr'], MatrixConfig)
 
-    def test_iteration(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_iteration(self, _):
         experiment_group = ExperimentGroupFactory()
         assert experiment_group.iteration is None
         assert experiment_group.iteration_data is None
@@ -118,7 +124,8 @@ class TestExperimentGroupModel(BaseTest):
 
         assert experiment_group.iteration.data == {'dummy': 10, 'foo': 'bar'}
 
-    def test_should_stop_early(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_should_stop_early(self, _):
         # Experiment group with no early stopping
         experiment_group = ExperimentGroupFactory()
         assert experiment_group.should_stop_early() is False
@@ -149,7 +156,8 @@ class TestExperimentGroupModel(BaseTest):
 
         assert experiment_group.should_stop_early() is True
 
-    def test_get_ordered_experiments_by_metric(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_get_ordered_experiments_by_metric(self, _):
         experiment_group = ExperimentGroupFactory()
 
         assert len(  # pylint:disable=len-as-condition
@@ -203,7 +211,8 @@ class TestExperimentGroupModel(BaseTest):
         assert len(  # pylint:disable=len-as-condition
             [m for m in experiment_metrics if m.accuracy is not None]) == 0
 
-    def test_get_experiments_metrics(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_get_experiments_metrics(self, _):
         experiment_group = ExperimentGroupFactory()
 
         assert len(experiment_group.get_experiments_metrics(  # pylint:disable=len-as-condition
@@ -321,11 +330,9 @@ class TestExperimentGroupModel(BaseTest):
         assert isinstance(experiment_group.search_manager, BOSearchManager)
         assert isinstance(experiment_group.iteration_manager, BOIterationManager)
 
-    def test_spec_creation_triggers_experiments_planning(self):
-        with patch(
-            'tasks.experiment_groups.create_group_experiments.apply_async'
-        ) as mock_fct:
-            experiment_group = ExperimentGroupFactory()
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_spec_creation_triggers_experiments_planning(self, mock_fct):
+        experiment_group = ExperimentGroupFactory()
 
         assert Experiment.objects.filter(experiment_group=experiment_group).count() == 0
         assert mock_fct.call_count == 1
@@ -420,7 +427,7 @@ class TestExperimentGroupModel(BaseTest):
         assert mock_fct.call_count == 1
         assert experiment_group.pending_experiments.count() == 2
 
-        stop_group_experiments(experiment_group_id=experiment_group.id, pending=True)
+        experiments_group_stop_experiments(experiment_group_id=experiment_group.id, pending=True)
 
         assert experiment_group.pending_experiments.count() == 0
 
@@ -440,7 +447,8 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.stopped_experiments.count() == 0
 
         with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_fct:
-            stop_group_experiments(experiment_group_id=experiment_group.id, pending=False)
+            experiments_group_stop_experiments(experiment_group_id=experiment_group.id,
+                                               pending=False)
 
         assert experiment_group.pending_experiments.count() == 0
         assert experiment_group.running_experiments.count() == 1
@@ -478,7 +486,7 @@ class TestExperimentGroupModel(BaseTest):
         assert mock_fct.call_count == 1
 
         with patch('hpsearch.tasks.hyperband.hp_hyperband_iterate.apply_async') as mock_fct1:
-            with patch('hpsearch.tasks.experiments.build_experiment.apply_async') as mock_fct2:
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct2:
                 ExperimentGroupFactory(
                     content=experiment_group_spec_content_hyperband_trigger_reschedule)
 
@@ -530,7 +538,7 @@ class TestExperimentGroupModel(BaseTest):
         assert mock_fct.call_count == 1
 
         with patch('hpsearch.tasks.bo.hp_bo_iterate.apply_async') as mock_fct1:
-            with patch('dockerizer.builders.experiments.build_experiment.apply_async') as mock_fct2:
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct2:
                 ExperimentGroupFactory(
                     content=experiment_group_spec_content_bo)
 

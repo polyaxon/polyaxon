@@ -3,6 +3,8 @@ import numpy as np
 
 from unittest.mock import patch
 
+import pytest
+
 from db.models.experiment_groups import ExperimentGroupIteration
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
@@ -26,8 +28,11 @@ from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
 from tests.utils import BaseTest
 
 
+@pytest.mark.experiment_groups
 class TestIterationManagers(BaseTest):
-    def test_get_search_iteration_manager(self):
+    DISABLE_RUNNER = True
+
+    def test_get_search_manager(self):
         # Grid search
         experiment_group = ExperimentGroupFactory()
         assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
@@ -52,6 +57,7 @@ class TestIterationManagers(BaseTest):
                           BOSearchManager)
 
 
+@pytest.mark.experiment_groups
 class TestGridSearchManager(BaseTest):
     def test_get_suggestions(self):
         params_config = SettingsConfig.from_dict({
@@ -101,6 +107,7 @@ class TestGridSearchManager(BaseTest):
         assert to_numpy_mock.call_count == 2
 
 
+@pytest.mark.experiment_groups
 class TestRandomSearchManager(BaseTest):
     def test_get_suggestions(self):
         params_config = SettingsConfig.from_dict({
@@ -160,6 +167,7 @@ class TestRandomSearchManager(BaseTest):
         assert sample_mock.call_count == 4
 
 
+@pytest.mark.experiment_groups
 class TestHyperbandSearchManager(BaseTest):
     def setUp(self):
         params_config = SettingsConfig.from_dict({
@@ -603,6 +611,7 @@ class TestHyperbandSearchManager(BaseTest):
             assert 'feature4' in suggestion
 
 
+@pytest.mark.experiment_groups
 class TestBOSearchManager(BaseTest):
     def setUp(self):
         params_config = SettingsConfig.from_dict({

@@ -1,3 +1,5 @@
+import pytest
+
 from db.models.experiment_groups import ExperimentGroupIteration
 from db.models.experiments import ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -15,6 +17,7 @@ from hpsearch.iteration_managers import (
 from tests.utils import BaseTest
 
 
+@pytest.mark.experiment_groups
 class TestIterationManagers(BaseTest):
     def test_get_search_iteration_manager(self):
         # Grid search
@@ -37,6 +40,7 @@ class TestIterationManagers(BaseTest):
         assert isinstance(get_search_iteration_manager(experiment_group), BOIterationManager)
 
 
+@pytest.mark.experiment_groups
 class TestHyperbandIterationManagers(BaseTest):
     def setUp(self):
         super().setUp()
@@ -103,6 +107,7 @@ class TestHyperbandIterationManagers(BaseTest):
         assert self.iteration_manager.get_reduced_configs() == []
 
 
+@pytest.mark.experiment_groups
 class TestBOIterationManagers(BaseTest):
     def setUp(self):
         super().setUp()
