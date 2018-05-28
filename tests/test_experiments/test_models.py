@@ -161,18 +161,22 @@ class TestExperimentModel(BaseTest):
         assert experiment.clones.count() == 3
 
         # Deleting a resumed experiment does not delete other experiments
-        last_resumed_experiment_new.delete()
+        with patch('scheduler.experiment_scheduler.stop_experiment') as mock_stop:
+            last_resumed_experiment_new.delete()
         assert experiment.clones.count() == 2
+        assert mock_stop.call_count == 1
 
         # Deleting original experiment deletes all
-        experiment.delete()
+        with patch('scheduler.experiment_scheduler.stop_experiment') as mock_stop:
+            experiment.delete()
         assert Experiment.objects.count() == 0
+        assert mock_stop.call_count == 3
 
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
-        with patch('dockerizer.builders.grid.hp_grid_search_start.apply_async') as _:  # noqa
+        with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as _:  # noqa
             experiment_group = ExperimentGroupFactory()
 
-        with patch('dockerizer.builders.experiments.start_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_start.apply_async') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
                 ExperimentFactory(experiment_group=experiment_group)
 
@@ -212,8 +216,8 @@ class TestExperimentModel(BaseTest):
         # Create a repo for the project
         repo = RepoFactory()
 
-        with patch(
-            'scheduler.tasks.experiments.experiments_build.apply_async') as mock_docker_build:
+        with patch('scheduler.tasks.experiments.'
+                   'experiments_build.apply_async') as mock_docker_build:
             experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
 
         assert mock_docker_build.call_count == 1
@@ -294,14 +298,9 @@ class TestExperimentModel(BaseTest):
     def test_delete_experiment_triggers_experiment_stop_mocks(self, delete_path):
         experiment = ExperimentFactory()
         assert delete_path.call_count == 2  # outputs + logs
-        experiment.delete()
-        assert delete_path.call_count == 2 + 2  # outputs + logs
-
-    def test_delete_experiment_triggers_experiment_stop_mocks_runner(self):
-        experiment = ExperimentFactory()
         with patch('scheduler.experiment_scheduler.stop_experiment') as mock_fct:
             experiment.delete()
-
+        assert delete_path.call_count == 2 + 2  # outputs + logs
         assert mock_fct.call_count == 1
 
     def test_set_metrics(self):
@@ -317,7 +316,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.metrics.count() == 1
 
     def test_master_success_influences_other_experiment_workers_status(self):
-        with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiment = ExperimentFactory()
 
@@ -344,7 +343,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.SUCCEEDED
 
     def test_sync_experiments_and_jobs_statuses(self):
-        with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             with patch.object(Experiment, 'set_status') as _:  # noqa
                 experiments = [ExperimentFactory() for _ in range(3)]
 
@@ -363,8 +362,8 @@ class TestExperimentModel(BaseTest):
         assert xp_with_jobs.last_status is None
 
         # Mock sync experiments and jobs constants
-        with patch(
-            'scheduler.experiments.check_experiment_status.apply_async') as check_status_mock:
+        with patch('scheduler.tasks.experiments.'
+                   'experiments_check_status.apply_async') as check_status_mock:
             sync_experiments_and_jobs_statuses()
 
         assert check_status_mock.call_count == 1

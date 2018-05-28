@@ -244,7 +244,8 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
     HAS_AUTH = True
 
     @patch('hpsearch.tasks.base.check_group_experiments_finished')
-    def setUp(self, _):
+    @patch('scheduler.tasks.experiments.experiments_build.apply_async')
+    def setUp(self, _1, _2):
         super().setUp()
         content = """---
     version: 1
@@ -289,7 +290,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        with patch('tasks.grid.hp_grid_search_start.retry') as mock_fct:
+        with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as mock_fct:
             self.experiment_group = ExperimentGroupFactory(content=content)
 
         assert mock_fct.call_count == 1
@@ -506,10 +507,10 @@ class TestExperimentStatusListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
-            with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
-        self.url = '/{}/{}/{}/experiments/{}/constants/'.format(API_V1,
+        self.url = '/{}/{}/{}/experiments/{}/statuses/'.format(API_V1,
                                                                project.user.username,
                                                                project.name,
                                                                self.experiment.sequence)
@@ -579,7 +580,7 @@ class TestExperimentMetricListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:  # noqa
-            with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/metrics/'.format(API_V1,
@@ -647,10 +648,10 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:  # noqa
-            with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
-        self.url = '/{}/{}/{}/experiments/{}/constants/{}/'.format(
+        self.url = '/{}/{}/{}/experiments/{}/statuses/{}/'.format(
             API_V1,
             self.experiment.project.user.username,
             self.experiment.project.name,
@@ -801,12 +802,12 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             with patch.object(ExperimentJob, 'set_status') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
-        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/constants/'.format(
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/statuses/'.format(
             API_V1,
             project.user.username,
             project.name,
@@ -876,13 +877,13 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('scheduler.tasks.experiments.start_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             with patch.object(ExperimentJob, 'set_status') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
                 self.experiment_job = ExperimentJobFactory(experiment=experiment)
                 self.object = self.factory_class(job=self.experiment_job)
-        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/constants/{}'.format(
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/statuses/{}'.format(
             API_V1,
             project.user.username,
             project.name,
@@ -1136,7 +1137,7 @@ class TestStopExperimentViewV1(BaseViewTest):
     def test_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('dockerizer.builders.experiments.stop_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK

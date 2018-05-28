@@ -55,7 +55,8 @@ class TestExperimentGroupModel(BaseTest):
         experiment_group.delete()
         assert delete_path.call_count == 2 + 2  # outputs + logs
 
-    def test_experiment_group_without_spec_and_pramas(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_experiment_group_without_spec_and_params(self, _):
         # Create group without params and spec works
         project = ProjectFactory()
         experiment_group = ExperimentGroup.objects.create(
@@ -83,7 +84,8 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.search_algorithm == SearchAlgorithms.RANDOM
         assert len(experiment_group.early_stopping) == 2
 
-    def test_experiment_group_with_params(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_experiment_group_with_params(self, _):
         # Create group with spec creates params
         project = ProjectFactory()
         params = {
@@ -259,7 +261,8 @@ class TestExperimentGroupModel(BaseTest):
         assert len(  # pylint:disable=len-as-condition
             [m for m in experiment_metrics if m[1] is not None]) == 0
 
-    def test_managers(self):
+    @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
+    def test_managers(self, _):
         experiment_group = ExperimentGroupFactory(content=None, params=None)
         assert experiment_group.search_manager is None
 

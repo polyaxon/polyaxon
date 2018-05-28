@@ -142,6 +142,13 @@ class BaseTest(TestCase):
     DISABLE_RUNNER = False
 
     def setUp(self):
+        # Force tasks autodiscover
+        from scheduler import tasks  # noqa
+        from hpsearch import tasks  # noqa
+        from pipelines import tasks  # noqa
+        from crons import tasks  # noqa
+        from dockerizer import tasks  # noqa
+
         # Flushing all redis databases
         redis.Redis(connection_pool=RedisPools.JOB_CONTAINERS).flushall()
         redis.Redis(connection_pool=RedisPools.TO_STREAM).flushall()
@@ -158,6 +165,7 @@ class BaseTest(TestCase):
         if self.DISABLE_RUNNER:
             self.disable_experiment_groups_runner()
             self.disable_experiments_runner()
+            self.plugin_jobs_runner()
         return super().setUp()
 
     def mock_send_task(self):
@@ -176,6 +184,19 @@ class BaseTest(TestCase):
 
     def disable_experiments_runner(self):
         patcher = patch('scheduler.tasks.experiments.experiments_build.apply_async')
+        patcher = patcher.start()
+        self.addCleanup(patcher.stop)
+
+        patcher = patch('scheduler.experiment_scheduler.stop_experiment')
+        patcher = patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def plugin_jobs_runner(self):
+        patcher = patch('scheduler.tensorboard_scheduler.stop_tensorboard')
+        patcher = patcher.start()
+        self.addCleanup(patcher.stop)
+
+        patcher = patch('scheduler.notebook_scheduler.stop_notebook')
         patcher = patcher.start()
         self.addCleanup(patcher.stop)
 

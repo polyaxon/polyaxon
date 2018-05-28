@@ -740,11 +740,11 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
 
-        assert start_operation_run.call_count == 1
+        assert mock_fct.call_count == 1
 
         assert operation_run.schedule_start() is False
 
@@ -762,16 +762,16 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
 
-        assert start_operation_run.call_count == 1
+        assert mock_fct.call_count == 1
 
-        with patch('db.models.pipelines.OperationRun.start') as start_operation_run:
+        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
             assert operation_run.schedule_start() is False
 
-        assert start_operation_run.call_count == 1
+        assert mock_fct.call_count == 1
 
         operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SCHEDULED
@@ -789,18 +789,18 @@ class TestOperationRunModel(BaseTest):
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
             OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                               operation_run=upstream_run2)
 
-        assert start_operation_run.call_count == 1
+        assert mock_fct.call_count == 1
 
-        with patch('db.models.pipelines.OperationRun.start') as start_operation_run:
+        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
             assert operation_run.schedule_start() is True
 
-        assert start_operation_run.call_count == 0
+        assert mock_fct.call_count == 0
 
         operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
@@ -818,22 +818,22 @@ class TestOperationRunModel(BaseTest):
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
             OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
                                               operation_run=upstream_run2)
 
-        assert start_operation_run.call_count == 1
+        assert mock_fct.call_count == 1
 
         # Add another operation run for this operation with scheduled
         new_operation_run = OperationRunFactory(operation=operation_run.operation)
         new_operation_run.upstream_runs.set([upstream_run1, upstream_run2])
 
-        with patch('db.models.pipelines.OperationRun.start') as start_operation_run:
+        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
             assert operation_run.schedule_start() is False
 
-        assert start_operation_run.call_count == 1
+        assert mock_fct.call_count == 1
 
         operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SCHEDULED
@@ -842,10 +842,10 @@ class TestOperationRunModel(BaseTest):
         new_operation_run.refresh_from_db()
         assert new_operation_run.last_status == OperationStatuses.CREATED
 
-        with patch('db.models.pipelines.OperationRun.start') as start_operation_run:
+        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
             assert new_operation_run.schedule_start() is True
 
-        assert start_operation_run.call_count == 0
+        assert mock_fct.call_count == 0
 
         new_operation_run.refresh_from_db()
         assert new_operation_run.last_status == OperationStatuses.CREATED
