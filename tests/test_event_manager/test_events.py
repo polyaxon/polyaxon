@@ -18,7 +18,7 @@ from libs.json_utils import loads
 from tests.utils import BaseTest
 
 
-@pytest.mark.events
+@pytest.mark.events_mark
 class TestEvents(BaseTest):
     def test_events_subjects(self):  # pylint:disable=too-many-statements
         # Cluster

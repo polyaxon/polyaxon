@@ -13,7 +13,7 @@ from polyaxon_schemas.utils import TaskType
 from tests.utils import BaseTest
 
 
-@pytest.mark.monitors
+@pytest.mark.monitors_mark
 class TestEventsLogsHandling(BaseTest):
     @staticmethod
     def file_line_count(filename):

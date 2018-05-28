@@ -16,7 +16,7 @@ from polyaxon.urls import API_V1
 from tests.utils import BaseViewTest
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterDetailViewV1(BaseViewTest):
     serializer_class = ClusterRunnerSerializer
     model_class = Cluster
@@ -40,7 +40,7 @@ class TestClusterDetailViewV1(BaseViewTest):
         assert resp.data['nodes'] == ClusterNodeSerializer(self.object.nodes.all(), many=True).data
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterNodeListViewV1(BaseViewTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
@@ -118,7 +118,7 @@ class TestClusterNodeListViewV1(BaseViewTest):
         assert last_object.n_gpus == 0
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterNodeDetailViewV1(BaseViewTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
@@ -166,7 +166,7 @@ class TestClusterNodeDetailViewV1(BaseViewTest):
         assert NodeGPU.objects.count() == 0
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterNodeGPUListViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
@@ -238,7 +238,7 @@ class TestClusterNodeGPUListViewV1(BaseViewTest):
         assert last_object.index == data['index']
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterNodeGPUDetailViewV1(BaseViewTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU

@@ -7,7 +7,7 @@ from polyaxon.utils import config
 from tests.utils import BaseViewTest
 
 
-@pytest.mark.versions
+@pytest.mark.versions_mark
 class TestVersionViewsV1(BaseViewTest):
     HAS_AUTH = False
 

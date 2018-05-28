@@ -5,7 +5,7 @@ from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.projects
+@pytest.mark.projects_mark
 class TestProjectModel(BaseTest):
     def test_has_code(self):
         project = ProjectFactory()

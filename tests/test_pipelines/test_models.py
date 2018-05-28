@@ -17,7 +17,7 @@ from factories.factory_pipelines import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.pipelines
+@pytest.mark.pipelines_mark
 class TestPipelineModel(BaseTest):
     def test_dag_property(self):
         pipeline = PipelineFactory()
@@ -740,7 +740,7 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
 
@@ -762,7 +762,7 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
 
@@ -789,7 +789,7 @@ class TestOperationRunModel(BaseTest):
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
             OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
@@ -818,7 +818,7 @@ class TestOperationRunModel(BaseTest):
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('tasks.pipelines.start_operation_run.apply_async') as start_operation_run:
+        with patch('pipelines.tasks.start_operation_run.apply_async') as start_operation_run:
             OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
                                               operation_run=upstream_run1)
             OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,

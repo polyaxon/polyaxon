@@ -13,7 +13,7 @@ from factories.factory_clusters import ClusterNodeFactory, GPUFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestGPUSerializer(BaseTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
@@ -46,7 +46,7 @@ class TestGPUSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterNodeSerializer(BaseTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
@@ -74,7 +74,7 @@ class TestClusterNodeSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterNodeDetailsSerializer(BaseTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
@@ -108,7 +108,7 @@ class TestClusterNodeDetailsSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestClusterDetailSerializer(BaseTest):
     serializer_class = ClusterSerializer
     model_class = Cluster
@@ -132,7 +132,7 @@ class TestClusterDetailSerializer(BaseTest):
             assert getattr(self.cluster, k) == v
 
 
-@pytest.mark.clusters
+@pytest.mark.clusters_mark
 class TestRunnerClusterDetailSerializer(BaseTest):
     serializer_class = ClusterRunnerSerializer
     model_class = Cluster

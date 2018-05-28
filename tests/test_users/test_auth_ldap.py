@@ -8,7 +8,7 @@ from tests.utils import BaseTest
 from api.users.ldap_signals import populate_user_handler
 
 
-@pytest.mark.users
+@pytest.mark.users_mark
 class TestAuthLdap(BaseTest):
     def test_populate_user(self):
         user = MagicMock()

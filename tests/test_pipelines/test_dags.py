@@ -5,7 +5,7 @@ from pipelines import dags
 from tests.utils import BaseTest
 
 
-@pytest.mark.pipelines
+@pytest.mark.pipelines_mark
 class TestDags(BaseTest):
     def setUp(self):
 

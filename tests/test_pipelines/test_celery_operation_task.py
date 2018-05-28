@@ -7,7 +7,7 @@ from polyaxon.celery_api import app as celery_app
 from tests.utils import BaseTest
 
 
-@pytest.mark.pipelines
+@pytest.mark.pipelines_mark
 class TestOperationTask(BaseTest):
     def setUp(self):
 

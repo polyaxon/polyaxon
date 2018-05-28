@@ -13,7 +13,7 @@ from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.auditor
+@pytest.mark.auditor_mark
 class AuditorRepoTest(BaseTest):
     """Testing subscribed events"""
 

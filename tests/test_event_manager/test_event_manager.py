@@ -7,7 +7,7 @@ from event_manager.events.cluster import ClusterCreatedEvent, ClusterUpdatedEven
 from tests.utils import BaseTest
 
 
-@pytest.mark.events
+@pytest.mark.events_mark
 class TestEventManager(BaseTest):
     def setUp(self):
         self.manager = EventManager()

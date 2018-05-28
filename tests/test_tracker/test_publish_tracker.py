@@ -10,7 +10,7 @@ from tests.utils import BaseTest
 from tracker.publish_tracker import PublishTrackerService
 
 
-@pytest.mark.auditor
+@pytest.mark.auditor_mark
 class PublishTrackerTest(BaseTest):
     def setUp(self):
         self.cluster = Cluster.load()

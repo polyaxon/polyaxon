@@ -14,7 +14,7 @@ from factories.factory_clusters import ClusterNodeFactory, GPUFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.auditor
+@pytest.mark.auditor_mark
 class AuditorClusterTest(BaseTest):
     """Testing subscribed events"""
 

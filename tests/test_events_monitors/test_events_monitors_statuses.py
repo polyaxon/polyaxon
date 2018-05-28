@@ -20,7 +20,7 @@ from tests.fixtures import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.monitors
+@pytest.mark.monitors_mark
 class TestEventsBaseJobsStatusesHandling(BaseTest):
     EVENT = None
     EVENT_WITH_CONDITIONS = None
@@ -72,7 +72,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.FAILED}
 
 
-@pytest.mark.monitors
+@pytest.mark.monitors_mark
 class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_experiment_job_event
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
@@ -85,7 +85,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
         return ExperimentJobFactory(uuid=job_uuid)
 
 
-@pytest.mark.monitors
+@pytest.mark.monitors_mark
 class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_tensorboard_job_event
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
@@ -99,7 +99,7 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
         return TensorboardJobFactory(project=project)
 
 
-@pytest.mark.monitors
+@pytest.mark.monitors_mark
 class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_notebook_job_event
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions

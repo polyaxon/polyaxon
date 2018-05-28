@@ -13,7 +13,7 @@ from factories.factory_users import UserFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.auditor
+@pytest.mark.auditor_mark
 class AuditorUserTest(BaseTest):
     """Testing subscribed events"""
 

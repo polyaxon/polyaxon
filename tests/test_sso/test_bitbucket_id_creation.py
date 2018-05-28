@@ -6,7 +6,7 @@ from django.urls import reverse
 from tests.utils import BaseViewTest
 
 
-@pytest.mark.sso
+@pytest.mark.sso_mark
 class BitbucketIdentityTest(BaseViewTest):
     def test_wrong_provider_raises_404(self):
         auth_path = reverse('oauth:create_identity', kwargs={'provider': 'undefined'})

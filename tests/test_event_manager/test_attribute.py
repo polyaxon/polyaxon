@@ -9,7 +9,7 @@ from event_manager.event import Attribute
 from tests.utils import BaseTest
 
 
-@pytest.mark.events
+@pytest.mark.events_mark
 class TestAttribute(BaseTest):
     def test_name_should_not_be_instance(self):
         with self.assertRaises(AssertionError):

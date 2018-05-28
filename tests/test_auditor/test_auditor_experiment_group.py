@@ -13,7 +13,7 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.auditor
+@pytest.mark.auditor_mark
 class AuditorExperimentGroupTest(BaseTest):
     """Testing subscribed events"""
     DISABLE_RUNNER = True

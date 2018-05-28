@@ -11,7 +11,7 @@ from factories.factory_users import UserFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.auditor
+@pytest.mark.auditor_mark
 class ActivityLogsTest(BaseTest):
     DISABLE_RUNNER = True
 

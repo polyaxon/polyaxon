@@ -21,7 +21,7 @@ from libs.paths.projects import (
 from tests.utils import BaseTest
 
 
-@pytest.mark.projects
+@pytest.mark.projects_mark
 class TestProjectUtils(BaseTest):
     def setUp(self):
         super().setUp()

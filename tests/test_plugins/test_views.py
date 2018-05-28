@@ -22,7 +22,7 @@ from scheduler.spawners.tensorboard_spawner import TensorboardSpawner
 from tests.utils import BaseViewTest
 
 
-@pytest.mark.plugins
+@pytest.mark.plugins_mark
 class TestStartTensorboardViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -123,7 +123,7 @@ class TestStartTensorboardViewV1(BaseViewTest):
         assert start_mock.call_count == 0
 
 
-@pytest.mark.plugins
+@pytest.mark.plugins_mark
 class TestStopTensorboardViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -159,7 +159,7 @@ class TestStopTensorboardViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
-@pytest.mark.plugins
+@pytest.mark.plugins_mark
 class TestStartNotebookViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -263,7 +263,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert start_mock.call_count == 0
 
 
-@pytest.mark.plugins
+@pytest.mark.plugins_mark
 class TestStopNotebookViewV1(BaseViewTest):
     model_class = Project
     factory_class = ProjectFactory
@@ -317,7 +317,7 @@ class TestStopNotebookViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
-@pytest.mark.plugins
+@pytest.mark.plugins_mark
 class BaseTestPluginViewV1(BaseViewTest):
     plugin_app = ''
 
@@ -419,7 +419,7 @@ class TestTensorboardViewV1(BaseTestPluginViewV1):
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
 
-@pytest.mark.plugins
+@pytest.mark.plugins_mark
 class TestNotebookViewV1(BaseTestPluginViewV1):
     plugin_app = NotebookSpawner.NOTEBOOK_JOB_NAME
 

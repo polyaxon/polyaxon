@@ -31,7 +31,7 @@ class DummyObject(object):
         self.dummy_attr = dummy_attr
 
 
-@pytest.mark.events
+@pytest.mark.events_mark
 class TestEventService(BaseTest):
     def setUp(self):
         self.service = DummyEventService()

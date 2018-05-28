@@ -14,7 +14,7 @@ from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 
-@pytest.mark.auditor
+@pytest.mark.auditor_mark
 class AuditorNotebookTest(BaseTest):
     """Testing subscribed events"""
 

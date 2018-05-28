@@ -1,3 +1,4 @@
+import pytest
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
@@ -12,6 +13,7 @@ from tests.fixtures import status_experiment_job_event, status_experiment_job_ev
 from tests.utils import BaseTest
 
 
+@pytest.mark.spawner_mark
 class TestSpawner(BaseTest):
     def test_get_pending_job_state(self):
         job_state = get_job_state(event_type=status_experiment_job_event['type'],
