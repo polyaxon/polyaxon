@@ -82,7 +82,7 @@ class Command(BaseCommand):
         username = options[self.UserModel.USERNAME_FIELD].strip()
         password = options['password'].strip()
         email = options['email'].strip()
-        force = options['is_superuser']
+        force = to_bool(options['force'])
         is_superuser = to_bool(options['is_superuser'])
 
         try:
