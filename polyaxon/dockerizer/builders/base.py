@@ -12,7 +12,7 @@ from docker.errors import DockerException
 from django.conf import settings
 
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
-from libs.paths import copy_to_tmp_dir, delete_path, delete_tmp_dir
+from libs.paths.utils import copy_to_tmp_dir, delete_path, delete_tmp_dir
 from libs.repos import git
 from libs.utils import get_list
 
