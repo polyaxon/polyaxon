@@ -18,12 +18,16 @@ elif config.is_api_service:
     from .monolith import *
 elif config.is_dockerizer_service:
     from .dockerizer import *
+elif config.is_commands_service:
+    from .commands import *
 elif config.is_crons_service:
     from .crons import *
 elif config.is_namespace_monitor_service:
     from .namespace_monitor import *
 elif config.is_resources_monitor_service:
     from .resources_monitor import *
+elif config.is_scheduler_service:
+    from .scheduler import *
 elif config.is_statuses_monitor_service:
     from .statuses_monitor import *
 elif config.is_statuses_monitor_service:

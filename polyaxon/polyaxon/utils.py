@@ -46,6 +46,10 @@ class SettingConfig(object):
         return self.service == 'api'
 
     @property
+    def is_commands_service(self):
+        return self.service == 'commands'
+
+    @property
     def is_dockerizer_service(self):
         return self.service == 'dockerizer'
 
@@ -60,6 +64,10 @@ class SettingConfig(object):
     @property
     def is_resources_monitor_service(self):
         return self.service == 'resources_monitor'
+
+    @property
+    def is_scheduler_service(self):
+        return self.service == 'scheduler'
 
     @property
     def is_statuses_monitor_service(self):
