@@ -290,10 +290,13 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as mock_fct:
-            self.experiment_group = ExperimentGroupFactory(content=content)
+        with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as start_fct:
+            with patch('scheduler.tasks.experiments.'
+                       'experiments_build.apply_async') as build_fct:
+                self.experiment_group = ExperimentGroupFactory(content=content)
 
-        assert mock_fct.call_count == 1
+        assert start_fct.call_count == 1
+        assert build_fct.call_count == 1
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
                                                              self.experiment_group.project.user,
