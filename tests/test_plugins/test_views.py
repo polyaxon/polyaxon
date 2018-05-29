@@ -144,7 +144,8 @@ class TestStopTensorboardViewV1(BaseViewTest):
     def test_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('scheduler.tasks.tensorboards.projects_tensorboard_stop.apply_async') as mock_fct:
+        with patch('scheduler.tasks.tensorboards.'
+                   'projects_tensorboard_stop.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK

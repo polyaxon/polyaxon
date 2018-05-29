@@ -1,4 +1,4 @@
-from polyaxon.config_settings.apps import *
+from ..apps import *
 
 PROJECT_APPS = (
     'namespace_monitor.apps.NamespaceMonitorConfig',

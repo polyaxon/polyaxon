@@ -9,8 +9,6 @@ import auditor
 import tracker
 
 from event_manager.events import permission as permission_events
-from factories.factory_plugins import NotebookJobFactory
-from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 

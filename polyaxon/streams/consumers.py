@@ -86,7 +86,7 @@ class Consumer(SocketManager):
             self._connection.ioloop.stop()
         else:
             _logger.warning('Connection closed, reopening in 5 seconds: (%s) %s',
-                           reply_code, reply_text)
+                            reply_code, reply_text)
             self._connection.add_timeout(5, self.reconnect)
 
     def on_connection_open(self, unused_connection):
@@ -175,7 +175,7 @@ class Consumer(SocketManager):
         :param pika.frame.Method method_frame: The Queue.DeclareOk frame
         """
         _logger.info('Binding %s to %s with %s',
-                    self.EXCHANGE, self._queue, self._routing_key)
+                     self.EXCHANGE, self._queue, self._routing_key)
         self._channel.queue_bind(self.on_bindok, self._queue,
                                  self.EXCHANGE, self._routing_key)
 
@@ -220,7 +220,7 @@ class Consumer(SocketManager):
         :param str|unicode body: The message body
         """
         _logger.debug('Received message # %s from %s: %s',
-                     basic_deliver.delivery_tag, properties.app_id, body)
+                      basic_deliver.delivery_tag, properties.app_id, body)
         if self.ws and body:
             body = json.loads(body.decode('utf-8'))
             body = json.dumps(body)

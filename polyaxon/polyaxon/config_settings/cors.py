@@ -1,6 +1,6 @@
 from corsheaders.defaults import default_headers
 
-from polyaxon.utils import ROOT_DIR, config
+from polyaxon.utils import config
 
 # session settings
 CORS_ORIGIN_ALLOW_ALL = True

@@ -26,8 +26,8 @@ class IsProjectOwnerOrPublicReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Check object type
         if not isinstance(obj, Project):
-            _logger.warning('Trying to check projects permission against %s',
-                           obj.__class__.__name__)
+            _logger.warning(
+                'Trying to check projects permission against %s', obj.__class__.__name__)
             return False
 
         return has_project_permissions(user=request.user,
@@ -43,8 +43,8 @@ class IsItemProjectOwnerOrPublicReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Check that obj has project attr
         if not hasattr(obj, 'project'):
-            _logger.warning('Trying to check project item permission against %s',
-                           obj.__class__.__name__)
+            _logger.warning(
+                'Trying to check project item permission against %s', obj.__class__.__name__)
             return False
 
         return has_project_permissions(user=request.user,

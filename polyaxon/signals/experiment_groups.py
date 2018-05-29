@@ -82,7 +82,8 @@ def experiment_group_stop_experiments(sender, **kwargs):
         # this way no statuses will be updated in the meanwhile
         experiment.jobs.all().delete()
         # experiment_scheduler.stop_experiment(experiment, update_status=False)
-        #  TODO: we should actually just mark experiment as deleted (LIVEMODEL) and send a signal to stop
+        #  TODO: we should actually just mark experiment as deleted
+        #  (LIVEMODEL) and send a signal to stop
 
 
 @receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_deleted")

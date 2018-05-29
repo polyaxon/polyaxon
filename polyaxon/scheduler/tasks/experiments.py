@@ -47,7 +47,6 @@ def experiments_build(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         return
-    pass
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)

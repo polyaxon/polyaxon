@@ -9,6 +9,7 @@ max-line-length: 100
 ignore-patterns:
   - __init__.py
   - (^|/)migrations(/|$)
+  - (^|/)config_settings/.*/apps.py
   - src
 
 pep257:

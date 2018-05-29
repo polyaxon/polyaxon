@@ -171,7 +171,8 @@ class BaseTest(TestCase):
     def mock_send_task(self):
         from celery import current_app
 
-        def send_task(name, args=(), kwargs={}, **opts):
+        def send_task(name, args=(), kwargs=None, **opts):
+            kwargs = kwargs or {}
             task = current_app.tasks[name]
             return task.apply_async(args, kwargs, **opts)
 

@@ -588,7 +588,7 @@ class TestExperimentGroupCommit(BaseViewTest):
                                   content_type='multipart/form-data')
 
     def create_experiment_group(self):
-        with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as _:
+        with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as _:  # noqa
             return ExperimentGroupFactory(project=self.project)
 
     def test_experiment_group_is_saved_with_commit(self):

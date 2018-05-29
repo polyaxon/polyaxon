@@ -8,7 +8,9 @@ from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import CronsCeleryTasks
 
 
-@celery_app.task(name=CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE, time_limits=60, ignore_result=True)
+@celery_app.task(name=CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE,
+                 time_limits=60,
+                 ignore_result=True)
 def cluster_analytics():
     cluster = Cluster.load()
     notification = uuid.uuid4()

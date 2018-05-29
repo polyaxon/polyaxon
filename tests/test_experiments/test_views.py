@@ -86,7 +86,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
                    'experiments_group_create.apply_async') as mock_fct:
             group = ExperimentGroupFactory(project=self.project)
         assert mock_fct.call_count == 1
-        [self.factory_class(project=self.project, experiment_group=group) for _ in range(2)]
+        [self.factory_class(project=self.project, experiment_group=group) for _ in range(2)]  # noqa
         all_experiment_count = self.queryset.all().count()
         assert all_experiment_count == independent_count + group.experiments.count()
 
@@ -498,7 +498,6 @@ class TestExperimentStatusListViewV1(BaseViewTest):
     factory_class = ExperimentStatusFactory
     num_objects = 3
     HAS_AUTH = True
-
 
     def setUp(self):
         super().setUp()

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, re_path
 from django.views.generic import RedirectView
 
-from api.index.views import (
+from api.index.views import (  # noqa
     Handler50xView,
     Handler403View,
     Handler404View,

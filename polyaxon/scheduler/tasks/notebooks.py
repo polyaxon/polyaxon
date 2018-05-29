@@ -16,7 +16,6 @@ def projects_notebook_build(project_id):
     if not project or not project.notebook:
         _logger.warning('Project does not have a notebook.')
         return None
-    pass
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)

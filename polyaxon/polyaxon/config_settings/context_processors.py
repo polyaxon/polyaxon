@@ -13,7 +13,6 @@ if config.is_monolith_service or config.is_api_service:
         'api.context_processors.sso_enabled',
     ]
 
-
     JS_DEBUG = config.get_boolean('POLYAXON_JS_DEBUG')
 
     if JS_DEBUG:
@@ -21,7 +20,6 @@ if config.is_monolith_service or config.is_api_service:
             return {'js_debug': True}
 
         LIST_TEMPLATE_CONTEXT_PROCESSORS += ('polyaxon.settings.js_debug_processor',)
-
 
     TEMPLATES_DEBUG = (config.get_boolean('DJANGO_TEMPLATE_DEBUG', is_optional=True) or
                        config.is_debug_mode)
