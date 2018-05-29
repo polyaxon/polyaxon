@@ -27,7 +27,6 @@ from libs.repos import git
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from scheduler import notebook_scheduler, tensorboard_scheduler
 
 
 class StartTensorboardView(CreateAPIView):
@@ -210,9 +209,13 @@ class NotebookView(PluginJobView):
 
     @staticmethod
     def get_base_params(project):
+        from scheduler import notebook_scheduler
+
         return 'token={}'.format(notebook_scheduler.get_notebook_token(project=project))
 
     def get_service_url(self, project):
+        from scheduler import notebook_scheduler
+
         return notebook_scheduler.get_notebook_url(project=project)
 
     def has_plugin_job(self, project):
@@ -227,6 +230,8 @@ class NotebookView(PluginJobView):
 
 class TensorboardView(PluginJobView):
     def get_service_url(self, project):
+        from scheduler import tensorboard_scheduler
+
         return tensorboard_scheduler.get_tensorboard_url(project=project)
 
     def has_plugin_job(self, project):
