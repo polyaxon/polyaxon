@@ -7,7 +7,7 @@ from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode
 from libs.base_monitor import BaseMonitorCommand
 from libs.utils import to_bool
-from resources_monitor import monitor
+from monitor_resources import monitor
 
 
 class Command(BaseMonitorCommand):

@@ -24,8 +24,8 @@ elif config.is_crons_service:
     from .crons import *
 elif config.is_monitor_namespace_service:
     from .monitor_namespace import *
-elif config.is_resources_monitor_service:
-    from .resources_monitor import *
+elif config.is_monitor_resources_service:
+    from .monitor_resources import *
 elif config.is_scheduler_service:
     from .scheduler import *
 elif config.is_statuses_monitor_service:

@@ -62,8 +62,8 @@ class SettingConfig(object):
         return self.service == 'monitor_namespace'
 
     @property
-    def is_resources_monitor_service(self):
-        return self.service == 'resources_monitor'
+    def is_monitor_resources_service(self):
+        return self.service == 'monitor_resources'
 
     @property
     def is_scheduler_service(self):
