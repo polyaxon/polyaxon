@@ -14,4 +14,4 @@ def sync_experiments_and_jobs_statuses():
     for experiment in experiments:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
-            kwargs={'experiment_uuid': experiment.uuid.hex})
+            kwargs={'experiment_id': experiment.id})

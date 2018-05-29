@@ -51,8 +51,8 @@ def experiments_build(experiment_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
-def experiments_check_status(experiment_uuid):
-    experiment = get_valid_experiment(experiment_uuid=experiment_uuid)
+def experiments_check_status(experiment_uuid=None, experiment_id=None):
+    experiment = get_valid_experiment(experiment_id=experiment_id, experiment_uuid=experiment_uuid)
     if not experiment:
         return
     experiment.update_status()

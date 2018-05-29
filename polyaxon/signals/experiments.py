@@ -142,7 +142,7 @@ def new_experiment_job_status(sender, **kwargs):
 
     celery_app.send_task(
         SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
-        kwargs={'experiment_uuid': experiment.uuid.hex})
+        kwargs={'experiment_id': experiment.id})
 
 
 @receiver(post_save, sender=ExperimentStatus, dispatch_uid="experiment_status_saved")
@@ -237,6 +237,6 @@ def handle_new_experiment_status(sender, **kwargs):
                     'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
         celery_app.send_task(
-            SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
+            SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={'experiment_id': experiment.id,
                     'update_status': False})
