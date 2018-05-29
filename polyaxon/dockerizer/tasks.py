@@ -15,7 +15,7 @@ from polyaxon.settings import Intervals, SchedulerCeleryTasks, DockerizerCeleryT
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=DockerizerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
+@celery_app.task(name=DockerizerCeleryTasks.BUILD_PROJECT_NOTEBOOK, ignore_result=True)
 def build_project_notebook(project_id):
     project = get_valid_project(project_id)
     if not project or not project.notebook:
@@ -56,7 +56,7 @@ def build_project_notebook(project_id):
         kwargs={'project_id': project_id})
 
 
-@celery_app.task(name=DockerizerCeleryTasks.EXPERIMENTS_BUILD, bind=True, max_retries=3)
+@celery_app.task(name=DockerizerCeleryTasks.BUILD_EXPERIMENT, bind=True, max_retries=3)
 def build_experiment(self, experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
