@@ -14,7 +14,8 @@ class DataFrameSummaryTest(unittest.TestCase):
 
     def setUp(self):
         self.size = 1000
-        missing = [np.nan] * (self.size // 10) + list(range(10)) * ((self.size - self.size // 10) // 10)
+        missing = [np.nan] * (self.size // 10) + list(range(10)) * \
+            ((self.size - self.size // 10) // 10)
         shuffle(missing)
 
         self.types = [DataFrameSummary.TYPE_NUMERIC, DataFrameSummary.TYPE_BOOL,
@@ -33,7 +34,8 @@ class DataFrameSummaryTest(unittest.TestCase):
                            'c'.format(i) for i in range(self.size)],
             dnumerics1=range(self.size),
             dnumerics2=range(self.size,  2 * self.size),
-            dnumerics3=list(range(self.size - self.size // 10)) + list(range(-self.size // 10, 0)),
+            dnumerics3=list(range(self.size - self.size // 10)
+                            ) + list(range(-self.size // 10, 0)),
             dmissing=missing,
             dconstant=['a'] * self.size,
             ddates=pd.date_range('2010-01-01', periods=self.size, freq='1M')))
@@ -52,8 +54,10 @@ class DataFrameSummaryTest(unittest.TestCase):
                                         ['dnumerics1', 'dnumerics2', 'dnumerics3'])) == 7
 
     def test_column_types_works_as_expected(self):
-        expected = pd.Series(index=self.types, data=[4, 2, 1, 1, 1, 1], name='types')
-        assert_series_equal(self.dfs.columns_types[self.types], expected[self.types])
+        expected = pd.Series(index=self.types, data=[
+                             4, 2, 1, 1, 1, 1], name='types')
+        assert_series_equal(
+            self.dfs.columns_types[self.types], expected[self.types])
 
     def test_column_stats_works_as_expected(self):
         column_stats = self.dfs.columns_stats
@@ -77,8 +81,8 @@ class DataFrameSummaryTest(unittest.TestCase):
         expected[['dcategoricals']] = 3
         expected[['dconstant']] = 1
         expected[['dmissing']] = 10
-        assert_series_equal(column_stats[self.columns].loc['uniques'],
-                            expected[self.columns])
+        assert_series_equal(column_stats[self.columns].loc['uniques'].sort_index(),
+                            expected[self.columns].sort_index(), check_dtype=False)
 
         # missing
         expected = pd.Series(index=self.columns,
@@ -144,7 +148,8 @@ class DataFrameSummaryTest(unittest.TestCase):
 
     def test_uniques_summary(self):
         expected = pd.Series(index=['counts', 'uniques', 'missing', 'missing_perc', 'types'],
-                             data=[self.size, self.size, 0, '0%', DataFrameSummary.TYPE_UNIQUE],
+                             data=[self.size, self.size, 0, '0%',
+                                   DataFrameSummary.TYPE_UNIQUE],
                              name='duniques',
                              dtype=object)
         assert_series_equal(self.dfs['duniques'],
@@ -165,9 +170,9 @@ class DataFrameSummaryTest(unittest.TestCase):
                              data=[str(count0), perc0, str(count1), perc1,
                                    self.size, 2, 0, '0%', DataFrameSummary.TYPE_BOOL],
                              name='dbool1',
-                             dtype=object)
+                             dtype=object).sort_index()
 
-        assert_series_equal(self.dfs['dbool1'],
+        assert_series_equal(self.dfs['dbool1'].sort_index(),
                             expected)
 
     def test_bool2_summary(self):
@@ -206,9 +211,10 @@ class DataFrameSummaryTest(unittest.TestCase):
                              data=[dmax, dmin, dmax - dmin,
                                    self.size, self.size, 0, '0%', DataFrameSummary.TYPE_DATE],
                              name='ddates',
-                             dtype=object)
+                             dtype=object).sort_index()
 
-        assert_series_equal(self.dfs['ddates'],
+        tmp = self.dfs['ddates'].sort_index()
+        assert_series_equal(tmp,
                             expected)
 
     def test_numerics_summary(self):
@@ -222,7 +228,8 @@ class DataFrameSummaryTest(unittest.TestCase):
                                     'deviating_of_median_perc', 'top_correlations', 'counts',
                                     'uniques', 'missing', 'missing_perc', 'types'],
                              data=[num1.mean(), num1.std(), num1.var(), num1.min(), num1.max(),
-                                   num1.quantile(0.05), num1.quantile(0.25), num1.quantile(0.5),
+                                   num1.quantile(0.05), num1.quantile(
+                                       0.25), num1.quantile(0.5),
                                    num1.quantile(0.75), num1.quantile(0.95),
                                    num1.quantile(0.75) - num1.quantile(0.25),
                                    num1.kurt(), num1.skew(), num1.sum(), num1.mad(),

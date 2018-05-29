@@ -42,7 +42,8 @@ class DataFrameSummary(object):
             return self.df[list(column)].values
 
         if isinstance(column, pd.Index):
-            error_keys = [k for k in column.values if not self._clean_column(k)]
+            error_keys = [
+                k for k in column.values if not self._clean_column(k)]
             if len(error_keys) > 0:
                 raise KeyError(', '.join(error_keys))
             return self.df[column].values
@@ -60,7 +61,7 @@ class DataFrameSummary(object):
         return pd.value_counts(self.columns_stats.loc['types'])
 
     def summary(self):
-        return pd.concat([self.df.describe(), self.columns_stats])[self.df.columns]
+        return pd.concat([self.df.describe(), self.columns_stats], sort=True)[self.df.columns]
 
     @staticmethod
     def _number_format(x):
@@ -83,7 +84,7 @@ class DataFrameSummary(object):
         counts.name = 'counts'
         uniques = self._get_uniques()
         missing = self._get_missing(counts)
-        stats = pd.concat([counts, uniques, missing], axis=1)
+        stats = pd.concat([counts, uniques, missing], axis=1, sort=True)
 
         # settings types
         stats['types'] = ''
@@ -100,7 +101,7 @@ class DataFrameSummary(object):
         count.name = 'missing'
         perc = (count / self.length).apply(self._percent)
         perc.name = 'missing_perc'
-        return pd.concat([count, perc], axis=1)
+        return pd.concat([count, perc], axis=1, sort=True)
 
     def _get_columns_info(self, stats):
         column_info = {}
@@ -111,16 +112,19 @@ class DataFrameSummary(object):
                                         column_info['constant'].union(column_info['bool']))
         column_info[self.TYPE_NUMERIC] = pd.Index([c for c in rest_columns
                                                    if types.is_numeric_dtype(self.df[c])])
-        rest_columns = self.get_columns(self.df[rest_columns], self.EXCLUDE, column_info['numeric'])
+        rest_columns = self.get_columns(
+            self.df[rest_columns], self.EXCLUDE, column_info['numeric'])
         column_info[self.TYPE_DATE] = pd.Index([c for c in rest_columns
                                                 if types.is_datetime64_dtype(self.df[c])])
-        rest_columns = self.get_columns(self.df[rest_columns], self.EXCLUDE, column_info['date'])
+        rest_columns = self.get_columns(
+            self.df[rest_columns], self.EXCLUDE, column_info['date'])
         unique_columns = stats['uniques'][rest_columns] == stats['counts'][rest_columns]
         column_info[self.TYPE_UNIQUE] = stats['uniques'][rest_columns][unique_columns].index
         column_info[self.TYPE_CATEGORICAL] = stats['uniques'][rest_columns][~unique_columns].index
         return column_info
 
     """ Column summaries """
+
     def _get_deviation_of_mean(self, series, multiplier=3):
         """
         Returns count of values deviating of the mean, i.e. larger than `multiplier` * `std`.
@@ -128,7 +132,8 @@ class DataFrameSummary(object):
         :param multiplier:
         :return:
         """
-        capped_series = np.minimum(series, series.mean() + multiplier * series.std())
+        capped_series = np.minimum(
+            series, series.mean() + multiplier * series.std())
         count = pd.value_counts(series != capped_series)
         count = count[True] if True in count else 0
         perc = self._percent(count / self.length)
@@ -141,7 +146,8 @@ class DataFrameSummary(object):
         :param multiplier:
         :return (array):
         """
-        capped_series = np.minimum(series, series.median() + multiplier * series.mad())
+        capped_series = np.minimum(
+            series, series.median() + multiplier * series.mad())
         count = pd.value_counts(series != capped_series)
         count = count[True] if True in count else 0
         perc = self._percent(count / self.length)
@@ -181,20 +187,22 @@ class DataFrameSummary(object):
         stats['cv'] = stats['std'] / stats['mean'] if stats['mean'] else np.nan
         stats['zeros_num'] = self.length - np.count_nonzero(series)
         stats['zeros_perc'] = self._percent(stats['zeros_num'] / self.length)
-        deviation_of_mean, deviation_of_mean_perc = self._get_deviation_of_mean(series)
+        deviation_of_mean, deviation_of_mean_perc = self._get_deviation_of_mean(
+            series)
         stats['deviating_of_mean'] = deviation_of_mean
         stats['deviating_of_mean_perc'] = deviation_of_mean_perc
-        deviating_of_median, deviating_of_median_perc = self._get_median_absolute_deviation(series)
+        deviating_of_median, deviating_of_median_perc = self._get_median_absolute_deviation(
+            series)
         stats['deviating_of_median'] = deviating_of_median
         stats['deviating_of_median_perc'] = deviating_of_median_perc
         stats['top_correlations'] = self._get_top_correlations(column)
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]])
+        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
 
     def _get_date_summary(self, column):
         series = self.df[column]
         stats = {'min': series.min(), 'max': series.max()}
         stats['range'] = stats['max'] - stats['min']
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]])
+        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
 
     def _get_categorical_summary(self, column):
         series = self.df[column]
@@ -203,7 +211,7 @@ class DataFrameSummary(object):
         stats = {
             'top': '{}: {}'.format(value_counts.index[0], value_counts.iloc[0]),
         }
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]])
+        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
 
     def _get_constant_summary(self, column):
         return 'This is a constant value: {}'.format(self.df[column][0])
@@ -217,7 +225,7 @@ class DataFrameSummary(object):
             stats['"{}" perc'.format(class_name)] = '{}'.format(
                 self._percent(class_value / self.length))
 
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]])
+        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
 
     def _get_unique_summary(self, column):
         return self.columns_stats.ix[:, column]
@@ -256,7 +264,8 @@ class DataFrameSummary(object):
 
         if usage == self.INCLUDE:
             try:
-                columns_included = columns_included.intersection(pd.Index(columns))
+                columns_included = columns_included.intersection(
+                    pd.Index(columns))
             except TypeError:
                 pass
         elif usage == self.EXCLUDE:
