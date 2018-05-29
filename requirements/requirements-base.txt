@@ -6,4 +6,5 @@ djangorestframework==3.7.7
 kombu==4.1.0
 psycopg2-binary==2.7.4
 raven==6.7.0
+redis==2.10.6
 Unipath==1.1
