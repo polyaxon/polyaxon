@@ -14,8 +14,8 @@ class DataFrameSummaryTest(unittest.TestCase):
 
     def setUp(self):
         self.size = 1000
-        missing = [np.nan] * (self.size // 10) + list(range(10)) * \
-            ((self.size - self.size // 10) // 10)
+        missing = ([np.nan] * (self.size // 10) + list(range(10)) *
+                   ((self.size - self.size // 10) // 10))
         shuffle(missing)
 
         self.types = [DataFrameSummary.TYPE_NUMERIC, DataFrameSummary.TYPE_BOOL,
@@ -34,8 +34,7 @@ class DataFrameSummaryTest(unittest.TestCase):
                            'c'.format(i) for i in range(self.size)],
             dnumerics1=range(self.size),
             dnumerics2=range(self.size,  2 * self.size),
-            dnumerics3=list(range(self.size - self.size // 10)
-                            ) + list(range(-self.size // 10, 0)),
+            dnumerics3=list(range(self.size - self.size // 10)) + list(range(-self.size // 10, 0)),
             dmissing=missing,
             dconstant=['a'] * self.size,
             ddates=pd.date_range('2010-01-01', periods=self.size, freq='1M')))
@@ -91,11 +90,12 @@ class DataFrameSummaryTest(unittest.TestCase):
                              dtype='object')
         expected[['dmissing']] = 100
         assert_series_equal(column_stats[self.columns].loc['missing'],
-                            expected[self.columns])
+                            expected[self.columns],
+                            check_dtype=False)
 
         # missing_perc
         expected = pd.Series(index=self.columns,
-                             data=['0%'],
+                             data=['0%'] * 10,
                              name='missing_perc',
                              dtype='object')
 
@@ -105,7 +105,7 @@ class DataFrameSummaryTest(unittest.TestCase):
 
         # types
         expected = pd.Series(index=self.columns,
-                             data=[np.nan],
+                             data=[np.nan] * 10,
                              name='types',
                              dtype='object')
 
@@ -152,8 +152,7 @@ class DataFrameSummaryTest(unittest.TestCase):
                                    DataFrameSummary.TYPE_UNIQUE],
                              name='duniques',
                              dtype=object)
-        assert_series_equal(self.dfs['duniques'],
-                            expected)
+        assert_series_equal(self.dfs['duniques'], expected)
 
     def test_constant_summary(self):
         self.assertEqual(self.dfs['dconstant'], 'This is a constant value: a')
@@ -172,8 +171,7 @@ class DataFrameSummaryTest(unittest.TestCase):
                              name='dbool1',
                              dtype=object).sort_index()
 
-        assert_series_equal(self.dfs['dbool1'].sort_index(),
-                            expected)
+        assert_series_equal(self.dfs['dbool1'].sort_index(), expected)
 
     def test_bool2_summary(self):
         count_values = self.df['dbool2'].value_counts()
@@ -200,8 +198,7 @@ class DataFrameSummaryTest(unittest.TestCase):
                              name='dcategoricals',
                              dtype=object)
 
-        assert_series_equal(self.dfs['dcategoricals'],
-                            expected)
+        assert_series_equal(self.dfs['dcategoricals'], expected)
 
     def test_dates_summary(self):
         dmin = self.df['ddates'].min()
@@ -214,8 +211,7 @@ class DataFrameSummaryTest(unittest.TestCase):
                              dtype=object).sort_index()
 
         tmp = self.dfs['ddates'].sort_index()
-        assert_series_equal(tmp,
-                            expected)
+        assert_series_equal(tmp, expected)
 
     def test_numerics_summary(self):
         num1 = self.df['dnumerics1']
@@ -242,5 +238,4 @@ class DataFrameSummaryTest(unittest.TestCase):
                              name='dnumerics1',
                              dtype=object)
 
-        assert_series_equal(self.dfs['dnumerics1'],
-                            expected)
+        assert_series_equal(self.dfs['dnumerics1'], expected)

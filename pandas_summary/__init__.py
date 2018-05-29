@@ -5,7 +5,6 @@ from collections import OrderedDict
 
 import numpy as np
 import pandas as pd
-from pandas.core import common
 from pandas.api import types
 
 
@@ -158,7 +157,8 @@ class DataFrameSummary(object):
                                                                           inplace=False)
         top_corr = column_corr[(column_corr > threshold)][:top].index
         correlations = self.corr[column][top_corr].to_dict()
-        return ', '.join('{}: {}'.format(col, self._percent(val)) for col, val in correlations.items())
+        return ', '.join('{}: {}'.format(col, self._percent(val)) for
+                         col, val in correlations.items())
 
     def _get_numeric_summary(self, column, plot=True):
         series = self.df[column]
@@ -196,13 +196,17 @@ class DataFrameSummary(object):
         stats['deviating_of_median'] = deviating_of_median
         stats['deviating_of_median_perc'] = deviating_of_median_perc
         stats['top_correlations'] = self._get_top_correlations(column)
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
+        return pd.concat([pd.Series(stats, name=column),
+                          self.columns_stats.ix[:, column]],
+                         sort=True)
 
     def _get_date_summary(self, column):
         series = self.df[column]
         stats = {'min': series.min(), 'max': series.max()}
         stats['range'] = stats['max'] - stats['min']
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
+        return pd.concat([pd.Series(stats, name=column),
+                          self.columns_stats.ix[:, column]],
+                         sort=True)
 
     def _get_categorical_summary(self, column):
         series = self.df[column]
@@ -211,7 +215,9 @@ class DataFrameSummary(object):
         stats = {
             'top': '{}: {}'.format(value_counts.index[0], value_counts.iloc[0]),
         }
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
+        return pd.concat([pd.Series(stats, name=column),
+                          self.columns_stats.ix[:, column]],
+                         sort=True)
 
     def _get_constant_summary(self, column):
         return 'This is a constant value: {}'.format(self.df[column][0])
@@ -225,7 +231,9 @@ class DataFrameSummary(object):
             stats['"{}" perc'.format(class_name)] = '{}'.format(
                 self._percent(class_value / self.length))
 
-        return pd.concat([pd.Series(stats, name=column), self.columns_stats.ix[:, column]], sort=True)
+        return pd.concat([pd.Series(stats, name=column),
+                          self.columns_stats.ix[:, column]],
+                         sort=True)
 
     def _get_unique_summary(self, column):
         return self.columns_stats.ix[:, column]
@@ -264,8 +272,7 @@ class DataFrameSummary(object):
 
         if usage == self.INCLUDE:
             try:
-                columns_included = columns_included.intersection(
-                    pd.Index(columns))
+                columns_included = columns_included.intersection(pd.Index(columns))
             except TypeError:
                 pass
         elif usage == self.EXCLUDE:
