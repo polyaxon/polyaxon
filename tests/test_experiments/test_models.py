@@ -15,6 +15,7 @@ from constants.jobs import JobLifeCycle
 from crons.tasks.experiments import sync_experiments_and_jobs_statuses
 from db.models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
 from db.models.jobs import JobResources
+from dockerizer.tasks import build_experiment
 from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
@@ -173,8 +174,10 @@ class TestExperimentModel(BaseTest):
         assert mock_stop.call_count == 3
 
     def test_non_independent_experiment_creation_doesnt_trigger_start(self):
-        with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as _:  # noqa
+        with patch('hpsearch.tasks.hp_create.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory()
+
+        assert mock_fct.call_count == 1
 
         with patch('scheduler.tasks.experiments.experiments_start.apply_async') as mock_fct:
             with patch.object(Experiment, 'set_status') as mock_fct2:
@@ -202,6 +205,12 @@ class TestExperimentModel(BaseTest):
         experiment = ExperimentFactory(config=content.parsed_data)
         assert experiment.is_independent is True
 
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
+
+        build_experiment(experiment_id=experiment.id)
+
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 2
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED, ExperimentLifeCycle.SCHEDULED]
@@ -216,14 +225,21 @@ class TestExperimentModel(BaseTest):
         # Create a repo for the project
         repo = RepoFactory()
 
-        with patch('scheduler.tasks.experiments.'
-                   'experiments_build.apply_async') as mock_docker_build:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_build:
             experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
 
-        assert mock_docker_build.call_count == 1
+        assert mock_build.call_count == 1
         assert experiment.project.repo is not None
         assert experiment.is_independent is True
 
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
+
+        with patch('dockerizer.builders.experiments.build_experiment') as mock_build:
+            build_experiment(experiment_id=experiment.id)
+
+        assert mock_build.call_count == 1
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,
@@ -242,6 +258,12 @@ class TestExperimentModel(BaseTest):
 
         experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.is_independent is True
+
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
+
+        build_experiment(experiment_id=experiment.id)
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
@@ -266,13 +288,18 @@ class TestExperimentModel(BaseTest):
     @mock.patch('scheduler.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
         config = ExperimentSpecification.read(exec_experiment_resources_content)
-
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
         mock_instance.spec = config
 
         experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.is_independent is True
+
+        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
+        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
+            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
+
+        build_experiment(experiment_id=experiment.id)
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(

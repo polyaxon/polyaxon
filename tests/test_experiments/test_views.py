@@ -46,6 +46,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -63,8 +64,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(project=self.project)
         self.other_object = self.factory_class(project=self.other_project)
 
-    @patch('hpsearch.tasks.base.check_group_experiments_finished')
-    def test_get(self, _):
+    def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
@@ -81,7 +81,11 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
         independent_count = self.queryset.count()
         # Create group to test independent filter
-        group = ExperimentGroupFactory(project=self.project)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as mock_fct:
+            group = ExperimentGroupFactory(project=self.project)
+        assert mock_fct.call_count == 1
+        [self.factory_class(project=self.project, experiment_group=group) for _ in range(2)]
         all_experiment_count = self.queryset.all().count()
         assert all_experiment_count == independent_count + group.experiments.count()
 
@@ -186,9 +190,9 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
-    @patch('hpsearch.tasks.base.check_group_experiments_finished')
-    def setUp(self, _):
+    def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()
         self.objects = [self.factory_class(experiment_group=self.experiment_group)
@@ -243,9 +247,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
 
-    @patch('hpsearch.tasks.base.check_group_experiments_finished')
-    @patch('scheduler.tasks.experiments.experiments_build.apply_async')
-    def setUp(self, _1, _2):
+    def setUp(self):
         super().setUp()
         content = """---
     version: 1
@@ -476,16 +478,6 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert new_object.original_experiment == new_experiment
 
     def test_delete(self):
-        assert self.model_class.objects.count() == 1
-        assert ExperimentJob.objects.count() == 2
-        with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
-            resp = self.auth_client.delete(self.url)
-        assert outputs_mock_stop.call_count == 2  # Outputs and Logs
-        assert resp.status_code == status.HTTP_204_NO_CONTENT
-        assert self.model_class.objects.count() == 0
-        assert ExperimentJob.objects.count() == 0
-
-    def test_delete_triggers_runner(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
         with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_stop:
