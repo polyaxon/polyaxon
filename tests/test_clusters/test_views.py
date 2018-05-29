@@ -5,7 +5,6 @@ from api.clusters.serializers import ClusterSerializer
 from api.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
-    ClusterRunnerSerializer,
     GPUSerializer
 )
 from constants.nodes import NodeRoles
@@ -18,7 +17,7 @@ from tests.utils import BaseViewTest
 
 @pytest.mark.clusters_mark
 class TestClusterDetailViewV1(BaseViewTest):
-    serializer_class = ClusterRunnerSerializer
+    serializer_class = ClusterSerializer
     model_class = Cluster
     HAS_AUTH = True
     ADMIN_USER = True

@@ -4,7 +4,6 @@ from api.clusters.serializers import ClusterSerializer
 from api.nodes.serializers import (
     ClusterNodeDetailSerializer,
     ClusterNodeSerializer,
-    ClusterRunnerSerializer,
     GPUSerializer
 )
 from db.models.clusters import Cluster
@@ -111,30 +110,6 @@ class TestClusterNodeDetailsSerializer(BaseTest):
 @pytest.mark.clusters_mark
 class TestClusterDetailSerializer(BaseTest):
     serializer_class = ClusterSerializer
-    model_class = Cluster
-    expected_keys = {'uuid', 'version_api', 'created_at', 'updated_at', }
-
-    def setUp(self):
-        super().setUp()
-        self.cluster = Cluster.load()
-        ClusterNodeFactory(cluster=self.cluster)
-        ClusterNodeFactory(cluster=self.cluster)
-
-    def test_serialize_one(self):
-        data = self.serializer_class(self.cluster).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data.pop('uuid') == self.cluster.uuid.hex
-        data.pop('created_at')
-        data.pop('updated_at')
-
-        for k, v in data.items():
-            assert getattr(self.cluster, k) == v
-
-
-@pytest.mark.clusters_mark
-class TestRunnerClusterDetailSerializer(BaseTest):
-    serializer_class = ClusterRunnerSerializer
     model_class = Cluster
     expected_keys = {'uuid', 'version_api', 'created_at', 'updated_at', 'nodes', }
 

@@ -1,7 +1,5 @@
 from rest_framework import fields, serializers
 
-from api.clusters.serializers import ClusterSerializer
-from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 
 
@@ -31,11 +29,3 @@ class ClusterNodeDetailSerializer(ClusterNodeSerializer):
     class Meta:
         model = ClusterNode
         exclude = ('id', 'cluster',)
-
-
-class ClusterRunnerSerializer(ClusterSerializer):
-    nodes = ClusterNodeSerializer(many=True)
-
-    class Meta(ClusterSerializer.Meta):
-        model = Cluster
-        fields = ClusterSerializer.Meta.fields + ('nodes', )
