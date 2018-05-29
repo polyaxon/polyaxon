@@ -38,7 +38,6 @@ from libs.paths.experiments import (
 from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from scheduler import experiment_scheduler
 
 logger = logging.getLogger('polyaxon.signals.experiments')
 
@@ -212,6 +211,7 @@ def start_new_experiment(sender, **kwargs):
 @check_specification
 @ignore_raw
 def stop_running_experiment(sender, **kwargs):
+    from scheduler import experiment_scheduler
     instance = kwargs['instance']
     try:
         _ = instance.experiment_group  # noqa
@@ -236,4 +236,7 @@ def handle_new_experiment_status(sender, **kwargs):
         logger.info('One of the workers failed or Master for experiment `%s` is done, '
                     'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
-        experiment_scheduler.stop_experiment(experiment, update_status=False)
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
+            kwargs={'experiment_id': experiment.id,
+                    'update_status': False})

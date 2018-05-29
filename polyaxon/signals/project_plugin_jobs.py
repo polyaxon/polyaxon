@@ -22,7 +22,6 @@ from event_manager.events.tensorboard import (
 )
 from libs.decorators import ignore_raw, ignore_updates, ignore_updates_pre
 from libs.repos.utils import assign_code_reference
-from scheduler import notebook_scheduler, tensorboard_scheduler
 
 logger = logging.getLogger('polyaxon.plugins')
 
@@ -126,6 +125,8 @@ def new_notebook_job_status(sender, **kwargs):
 @receiver(pre_delete, sender=Project, dispatch_uid="project_stop_plugins")
 @ignore_raw
 def project_stop_plugins(sender, **kwargs):
+    from scheduler import notebook_scheduler, tensorboard_scheduler
+
     instance = kwargs['instance']
     tensorboard_scheduler.stop_tensorboard(instance, update_status=False)
     notebook_scheduler.stop_notebook(instance, update_status=False)
