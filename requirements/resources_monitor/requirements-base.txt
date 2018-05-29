@@ -1,6 +1,5 @@
 -r ../requirements-base.txt
 
-analytics-python==1.2.9
 docker==2.6.1
 redis==2.10.6
 requests==2.18.4

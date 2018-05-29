@@ -1,5 +1,8 @@
+analytics-python==1.2.9
 celery==4.1.0
 Django==2.0.3
+django-cors-headers==2.2.0
+djangorestframework==3.7.7
 kombu==4.1.0
 psycopg2-binary==2.7.4
 raven==6.7.0
