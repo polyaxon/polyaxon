@@ -219,7 +219,9 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         assert Experiment.objects.count() == 2
         with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
-            resp = self.auth_client.delete(self.url)
+            with patch('scheduler.experiment_scheduler.stop_experiment') as scheduler_mock:
+                resp = self.auth_client.delete(self.url)
+        assert scheduler_mock.call_count == 2
         assert outputs_mock_stop.call_count == 4  # Outputs and Logs * 2
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0

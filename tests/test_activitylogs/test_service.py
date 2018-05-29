@@ -16,12 +16,12 @@ class ActivityLogsTest(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):
+        super().setUp()
         self.experiment = ExperimentFactory()
         self.admin = UserFactory(is_staff=True, is_superuser=True)
         self.user = UserFactory()
         activitylogs.validate()
         activitylogs.setup()
-        super(ActivityLogsTest, self).setUp()
 
     def test_record_creates_activities(self):
         assert ActivityLog.objects.count() == 0

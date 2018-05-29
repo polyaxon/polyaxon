@@ -19,6 +19,7 @@ class AuditorExperimentGroupTest(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):
+        super().setUp()
         self.experiment_group = ExperimentGroupFactory()
         auditor.validate()
         auditor.setup()
@@ -26,7 +27,6 @@ class AuditorExperimentGroupTest(BaseTest):
         tracker.setup()
         activitylogs.validate()
         activitylogs.setup()
-        super(AuditorExperimentGroupTest, self).setUp()
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')

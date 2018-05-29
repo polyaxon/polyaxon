@@ -10,6 +10,15 @@ from scheduler import notebook_scheduler
 _logger = logging.getLogger(__name__)
 
 
+@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
+def projects_notebook_build(project_id):
+    project = get_valid_project(project_id)
+    if not project or not project.notebook:
+        _logger.warning('Project does not have a notebook.')
+        return None
+    pass
+
+
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
 def projects_notebook_start(project_id):
     project = get_valid_project(project_id)

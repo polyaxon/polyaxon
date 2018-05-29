@@ -19,6 +19,7 @@ class AuditorExperimentJobTest(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):
+        super().setUp()
         self.experiment_job = ExperimentJobFactory()
         auditor.validate()
         auditor.setup()
@@ -26,7 +27,6 @@ class AuditorExperimentJobTest(BaseTest):
         tracker.setup()
         activitylogs.validate()
         activitylogs.setup()
-        super(AuditorExperimentJobTest, self).setUp()
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')

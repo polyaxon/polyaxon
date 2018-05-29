@@ -176,6 +176,7 @@ class TestHyperbandSearchManager(BaseTest):
     DISABLE_RUNNER = True
 
     def setUp(self):
+        super().setUp()
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
             'hyperband': {
@@ -619,7 +620,10 @@ class TestHyperbandSearchManager(BaseTest):
 
 @pytest.mark.experiment_groups_mark
 class TestBOSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
+        super().setUp()
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
             'bo': {

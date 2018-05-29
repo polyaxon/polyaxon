@@ -187,8 +187,17 @@ class BaseTest(TestCase):
         patcher.start()
         self.addCleanup(patcher.stop)
 
+        patcher = patch('scheduler.tasks.experiment_groups.'
+                        'experiments_group_check_finished.apply_async')
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     def disable_experiments_runner(self):
         patcher = patch('scheduler.tasks.experiments.experiments_build.apply_async')
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        patcher = patch('scheduler.experiment_scheduler.stop_experiment')
         patcher.start()
         self.addCleanup(patcher.stop)
 
