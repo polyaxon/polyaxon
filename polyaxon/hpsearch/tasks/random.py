@@ -7,7 +7,10 @@ from polyaxon.settings import HPCeleryTasks, Intervals
 def create(experiment_group):
     base.create_group_experiments(experiment_group=experiment_group)
 
-    hp_random_search_start.apply_async((experiment_group.id,), countdown=1)
+    celery_app.send_task(
+        HPCeleryTasks.HP_RANDOM_SEARCH_START,
+        kwargs={'experiment_group_id': experiment_group.id},
+        countdown=1)
 
 
 @celery_app.task(name=HPCeleryTasks.HP_RANDOM_SEARCH_CREATE)

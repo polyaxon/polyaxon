@@ -11,7 +11,11 @@ def create(experiment_group):
     experiment_group.iteration_manager.create_iteration(
         experiment_ids=experiment_ids,
         experiments_configs=experiments_configs)
-    hp_bo_start.apply_async((experiment_group.id,), countdown=1)
+
+    celery_app.send_task(
+        HPCeleryTasks.HP_BO_START,
+        kwargs={'experiment_group_id': experiment_group.id},
+        countdown=1)
 
 
 @celery_app.task(name=HPCeleryTasks.HP_BO_CREATE)
@@ -35,7 +39,9 @@ def hp_bo_start(self, experiment_group_id):
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
         return
 
-    hp_bo_iterate.delay(experiment_group_id=experiment_group_id)
+    celery_app.send_task(
+        HPCeleryTasks.HP_BO_ITERATE,
+        kwargs={'experiment_group_id': experiment_group_id})
 
 
 @celery_app.task(name=HPCeleryTasks.HP_BO_ITERATE, bind=True, max_retries=None)
@@ -56,7 +62,9 @@ def hp_bo_iterate(self, experiment_group_id):
     iteration_manager.update_iteration()
 
     if search_manager.should_reschedule(iteration=iteration_config.iteration):
-        hp_bo_create.delay(experiment_group_id=experiment_group_id)
+        celery_app.send_task(
+            HPCeleryTasks.HP_BO_CREATE,
+            kwargs={'experiment_group_id': experiment_group_id})
         return
 
     base.check_group_experiments_finished(experiment_group_id)
