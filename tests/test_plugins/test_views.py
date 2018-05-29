@@ -9,6 +9,7 @@ from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
 from db.models.plugins import NotebookJob, TensorboardJob
 from db.models.projects import Project
+from dockerizer.tasks import build_project_notebook
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
@@ -195,9 +196,12 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert self.queryset.count() == 1
         with patch('scheduler.tasks.notebooks.'
                    'projects_notebook_build.apply_async') as build_mock_fct:
-            with patch('scheduler.tasks.notebooks.projects_notebook_start.apply_async') as mock_fct:
-                resp = self.auth_client.post(self.url, data)
+            resp = self.auth_client.post(self.url, data)
         assert build_mock_fct.call_count == 1
+
+        # Simulate build
+        with patch('dockerizer.builders.notebooks.build_notebook_job') as mock_fct:
+            build_project_notebook(project_id=self.object.id)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == 1
