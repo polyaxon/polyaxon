@@ -1,5 +1,4 @@
 -r ../requirements-base.txt
 
 docker==2.6.1
-redis==2.10.6
 requests==2.18.4
