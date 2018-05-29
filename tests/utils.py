@@ -179,25 +179,30 @@ class BaseTest(TestCase):
 
     def disable_experiment_groups_runner(self):
         patcher = patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
-        patcher = patcher.start()
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        patcher = patch('scheduler.tasks.experiment_groups.'
+                        'experiments_group_stop_experiments.apply_async')
+        patcher.start()
         self.addCleanup(patcher.stop)
 
     def disable_experiments_runner(self):
         patcher = patch('scheduler.tasks.experiments.experiments_build.apply_async')
-        patcher = patcher.start()
+        patcher.start()
         self.addCleanup(patcher.stop)
 
-        patcher = patch('scheduler.experiment_scheduler.stop_experiment')
-        patcher = patcher.start()
+        patcher = patch('scheduler.tasks.experiments.experiments_stop.apply_async')
+        patcher.start()
         self.addCleanup(patcher.stop)
 
     def plugin_jobs_runner(self):
         patcher = patch('scheduler.tensorboard_scheduler.stop_tensorboard')
-        patcher = patcher.start()
+        patcher.start()
         self.addCleanup(patcher.stop)
 
         patcher = patch('scheduler.notebook_scheduler.stop_notebook')
-        patcher = patcher.start()
+        patcher.start()
         self.addCleanup(patcher.stop)
 
 
