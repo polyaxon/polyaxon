@@ -47,15 +47,11 @@ class Project(DiffModel, DescribableModel):
 
     @property
     def tensorboard(self):
-        if settings.DEPLOY_RUNNER:
-            return self.tensorboard_jobs.last()
-        return None
+        return self.tensorboard_jobs.last()
 
     @property
     def notebook(self):
-        if settings.DEPLOY_RUNNER:
-            return self.notebook_jobs.last()
-        return None
+        return self.notebook_jobs.last()
 
     @property
     def has_tensorboard(self):
