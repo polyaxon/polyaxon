@@ -22,8 +22,8 @@ elif config.is_commands_service:
     from .commands import *
 elif config.is_crons_service:
     from .crons import *
-elif config.is_namespace_monitor_service:
-    from .namespace_monitor import *
+elif config.is_monitor_namespace_service:
+    from .monitor_namespace import *
 elif config.is_resources_monitor_service:
     from .resources_monitor import *
 elif config.is_scheduler_service:

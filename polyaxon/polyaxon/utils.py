@@ -58,8 +58,8 @@ class SettingConfig(object):
         return self.service == 'crons'
 
     @property
-    def is_namespace_monitor_service(self):
-        return self.service == 'namespace_monitor'
+    def is_monitor_namespace_service(self):
+        return self.service == 'monitor_namespace'
 
     @property
     def is_resources_monitor_service(self):

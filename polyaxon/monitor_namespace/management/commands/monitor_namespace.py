@@ -7,7 +7,7 @@ from django.db import InterfaceError, OperationalError, ProgrammingError
 
 from db.models.clusters import Cluster
 from libs.base_monitor import BaseMonitorCommand
-from namespace_monitor import monitor
+from monitor_namespace import monitor
 from polyaxon_k8s.manager import K8SManager
 
 
