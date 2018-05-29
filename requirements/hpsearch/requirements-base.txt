@@ -1,5 +1,4 @@
 -r ../requirements-base.txt
 
-analytics-python==1.2.9
 scikit-learn==0.19.1
 scipy==1.0.1
