@@ -70,8 +70,8 @@ class SettingConfig(object):
         return self.service == 'scheduler'
 
     @property
-    def is_statuses_monitor_service(self):
-        return self.service == 'statuses_monitor'
+    def is_monitor_statuses_service(self):
+        return self.service == 'monitor_statuses'
 
     @property
     def is_sidecar_service(self):

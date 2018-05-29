@@ -26,12 +26,10 @@ elif config.is_monitor_namespace_service:
     from .monitor_namespace import *
 elif config.is_monitor_resources_service:
     from .monitor_resources import *
+elif config.is_monitor_statuses_service:
+    from .monitor_statuses import *
 elif config.is_scheduler_service:
     from .scheduler import *
-elif config.is_statuses_monitor_service:
-    from .statuses_monitor import *
-elif config.is_statuses_monitor_service:
-    from .statuses_monitor import *
 elif config.is_sidecar_service:
     from .sidecar import *
 elif config.is_streams_service:

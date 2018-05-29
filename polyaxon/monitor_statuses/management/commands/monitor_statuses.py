@@ -6,7 +6,7 @@ from django.conf import settings
 
 from libs.base_monitor import BaseMonitorCommand
 from polyaxon_k8s.manager import K8SManager
-from statuses_monitor import monitor
+from monitor_statuses import monitor
 
 
 class Command(BaseMonitorCommand):

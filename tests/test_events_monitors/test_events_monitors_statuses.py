@@ -9,7 +9,7 @@ from events_handlers.tasks import handle_events_job_statuses, handle_events_plug
 from factories.factory_experiments import ExperimentJobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from statuses_monitor.jobs import get_job_state
+from monitor_statuses.jobs import get_job_state
 from tests.fixtures import (
     status_experiment_job_event,
     status_experiment_job_event_with_conditions,
