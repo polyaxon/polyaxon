@@ -3,7 +3,7 @@ from django.db.models import Count
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import Experiment
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import SchedulerCeleryTasks, CronsCeleryTasks
+from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 
 
 @celery_app.task(name=CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES, ignore_result=True)

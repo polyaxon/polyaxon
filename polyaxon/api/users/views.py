@@ -27,12 +27,12 @@ from django.views.generic import FormView, TemplateView
 
 import auditor
 
+from api.users.forms import RegistrationForm
+from api.users.utils import login_user, logout_user
 from event_manager.events.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
 from event_manager.events.user import USER_ACTIVATED, USER_DELETED
 from polyaxon_schemas.user import UserConfig
 from signals import users as users_signals
-from api.users.forms import RegistrationForm
-from api.users.utils import login_user, logout_user
 
 
 class AuthTokenLogin(ObtainAuthToken):

@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 
 import pytest
+
 from dateutil.tz import UTC
 
 from event_manager.event import Attribute

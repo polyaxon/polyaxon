@@ -3,6 +3,7 @@ import random
 from unittest.mock import patch
 
 import pytest
+
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT

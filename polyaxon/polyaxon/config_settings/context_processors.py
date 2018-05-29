@@ -1,6 +1,5 @@
 from polyaxon.utils import ROOT_DIR, config
 
-
 if config.is_monolith_service or config.is_api_service:
     LIST_TEMPLATE_CONTEXT_PROCESSORS = [
         'django.contrib.auth.context_processors.auth',

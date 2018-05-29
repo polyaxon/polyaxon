@@ -16,7 +16,6 @@ from crons.tasks.experiments import sync_experiments_and_jobs_statuses
 from db.models.experiments import CloningStrategy, Experiment, ExperimentJob, ExperimentStatus
 from db.models.jobs import JobResources
 from dockerizer.tasks import build_experiment
-from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -36,6 +35,7 @@ from libs.paths.experiments import create_experiment_outputs_path, get_experimen
 from polyaxon.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
+from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics
 from tests.fixtures import start_experiment_value
 from tests.utils import BaseTest, BaseViewTest
 

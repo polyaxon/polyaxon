@@ -24,12 +24,7 @@ from event_manager.events.experiment import (
     EXPERIMENT_STOPPED,
     EXPERIMENT_SUCCEEDED
 )
-from libs.decorators import (
-    check_specification,
-    ignore_raw,
-    ignore_updates,
-    ignore_updates_pre,
-)
+from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.experiments import (
     create_experiment_logs_path,
     delete_experiment_logs,

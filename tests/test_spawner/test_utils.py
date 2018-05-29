@@ -1,4 +1,5 @@
 import pytest
+
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle

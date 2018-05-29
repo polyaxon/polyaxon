@@ -2,8 +2,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from django.urls import re_path
 
-from constants.urls import USERNAME_PATTERN
 from api.users import views
+from constants.urls import USERNAME_PATTERN
 
 urlpatterns = [
     re_path(r'^users/?$',

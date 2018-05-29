@@ -1,12 +1,9 @@
 import pytest
+
 from rest_framework import status
 
 from api.clusters.serializers import ClusterSerializer
-from api.nodes.serializers import (
-    ClusterNodeDetailSerializer,
-    ClusterNodeSerializer,
-    GPUSerializer
-)
+from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
 from constants.nodes import NodeRoles
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU

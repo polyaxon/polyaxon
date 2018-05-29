@@ -14,7 +14,7 @@ from constants.containers import ContainerStatuses
 from db.models.nodes import ClusterNode, NodeGPU
 from libs.redis_db import RedisJobContainers, RedisToStream
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import EventsCeleryTasks, CronsCeleryTasks
+from polyaxon.settings import CronsCeleryTasks, EventsCeleryTasks
 from polyaxon_schemas.experiment import ContainerResourcesConfig
 
 logger = logging.getLogger('polyaxon.monitors.resources')

@@ -1,6 +1,7 @@
 from urllib.parse import urlparse
 
 import pytest
+
 from django.urls import reverse
 
 from tests.utils import BaseViewTest

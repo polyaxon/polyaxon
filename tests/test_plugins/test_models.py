@@ -1,4 +1,5 @@
 import pytest
+
 from mock import patch
 
 from django.core.files import File

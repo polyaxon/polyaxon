@@ -2,10 +2,11 @@
 from unittest.mock import MagicMock
 
 import pytest
+
 from django.conf import settings
 
-from tests.utils import BaseTest
 from api.users.ldap_signals import populate_user_handler
+from tests.utils import BaseTest
 
 
 @pytest.mark.users_mark

@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 import pytest
+
 from mock import patch
 
 from django.conf import settings

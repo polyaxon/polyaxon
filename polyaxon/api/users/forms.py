@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import validate_slug
 
-from libs.blacklist import validate_blacklist_name
 from api.users import validators
+from libs.blacklist import validate_blacklist_name
 
 
 class RegistrationForm(UserCreationForm):

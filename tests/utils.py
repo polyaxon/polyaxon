@@ -6,8 +6,8 @@ import uuid
 from urllib.parse import urlparse
 
 import redis
-from mock import patch
 
+from mock import patch
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 

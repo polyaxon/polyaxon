@@ -20,11 +20,10 @@ from hpsearch.search_managers import (
     RandomSearchManager,
     get_search_algorithm_manager
 )
-from polyaxon_schemas.matrix import MatrixConfig
-from polyaxon_schemas.settings import SettingsConfig
-
 from hpsearch.search_managers.bayesian_optimization.optimizer import BOOptimizer
 from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
+from polyaxon_schemas.matrix import MatrixConfig
+from polyaxon_schemas.settings import SettingsConfig
 from tests.utils import BaseTest
 
 

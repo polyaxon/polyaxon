@@ -1,6 +1,7 @@
 import os
 
 import pytest
+
 from django.conf import settings
 
 from factories.factory_projects import ProjectFactory

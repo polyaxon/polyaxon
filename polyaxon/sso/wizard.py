@@ -11,10 +11,10 @@ from django.utils import timezone
 
 import auditor
 
+from api.users.utils import login_user
 from db.models.sso import SSOIdentity
 from libs.wizards import Wizard
 from sso import providers
-from api.users.utils import login_user
 
 logger = logging.getLogger('polyaxon.identity')
 

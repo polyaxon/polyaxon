@@ -1,4 +1,5 @@
 import pytest
+
 from rest_framework import status
 
 from db.models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion

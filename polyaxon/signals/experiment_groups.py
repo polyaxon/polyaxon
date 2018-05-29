@@ -12,12 +12,7 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_NEW_STATUS,
     EXPERIMENT_GROUP_STOPPED
 )
-from libs.decorators import (
-    check_specification,
-    ignore_raw,
-    ignore_updates,
-    ignore_updates_pre,
-)
+from libs.decorators import check_specification, ignore_raw, ignore_updates, ignore_updates_pre
 from libs.paths.experiment_groups import (
     delete_experiment_group_logs,
     delete_experiment_group_outputs

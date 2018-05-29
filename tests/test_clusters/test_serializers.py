@@ -1,11 +1,7 @@
 import pytest
 
 from api.clusters.serializers import ClusterSerializer
-from api.nodes.serializers import (
-    ClusterNodeDetailSerializer,
-    ClusterNodeSerializer,
-    GPUSerializer
-)
+from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory

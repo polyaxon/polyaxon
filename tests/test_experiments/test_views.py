@@ -1,7 +1,8 @@
 # pylint:disable=too-many-lines
-import pytest
 from faker import Faker
 from unittest.mock import patch
+
+import pytest
 
 from rest_framework import status
 

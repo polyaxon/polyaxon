@@ -9,7 +9,7 @@ from pipelines.utils import (
     stop_operation_runs_for_pipeline_run
 )
 from polyaxon.celery_api import app as celery_app
-from polyaxon.settings import PipelineCeleryTasks, Intervals
+from polyaxon.settings import Intervals, PipelineCeleryTasks
 
 _logger = logging.getLogger(__name__)
 
