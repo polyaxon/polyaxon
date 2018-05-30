@@ -49,3 +49,34 @@ def safe_urlopen(
     )
 
     return response
+
+
+def download(url, access_token, filename, logger, headers=None, timeout=60):
+    """Download the file from the given url at the current path"""
+    logger.info("Downloading file from %s" % url)
+    # Auth headers if access_token is present
+    request_headers = {}
+    if access_token:
+        request_headers["Authorization"] = "Token " + access_token
+    # Add any additional headers
+    if headers:
+        request_headers.update(headers)
+
+    try:
+        response = requests.get(url,
+                                headers=request_headers,
+                                timeout=timeout,
+                                stream=True)
+
+        if response.status_code != 200:
+            logger("Failed to download file from %s: %s" % (url, response.status_code))
+            return None
+
+        with open(filename, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:
+                    f.write(chunk)
+        return filename
+    except requests.exceptions.RequestException as e:
+        logger.warning("Exception: %s" % e)
+        return None
