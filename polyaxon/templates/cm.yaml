@@ -20,5 +20,6 @@ data:
   container-name-job: "polyaxon-experiment-job"
   container-name-sidecar: "polyaxon-experiment-job-sidecar"
   container-name-plugin-job: "polyaxon-plugin-job"
+  container-name-dockerizer-job: "polyaxon-dockerizer-job"
   sidecar-persist: "0"
   sidecar-log-sleep-interval: "1"

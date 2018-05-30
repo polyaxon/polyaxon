@@ -81,6 +81,11 @@ global config
     configMapKeyRef:
       name: {{ template "polyaxon.fullname" . }}-config
       key: container-name-plugin-job
+- name: POLYAXON_CONTAINER_NAME_DOCKERIZER_JOB
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-dockerizer-job
 - name: POLYAXON_JOB_DOCKER_NAME
   value: "{{ .Values.job.image }}:{{ .Values.job.imageTag }}"
 - name: POLYAXON_JOB_SIDECAR_DOCKER_IMAGE
