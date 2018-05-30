@@ -14,7 +14,7 @@ from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import plugin_spec_parsed_content
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from scheduler import notebook_scheduler
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.project_spawner import ProjectSpawner

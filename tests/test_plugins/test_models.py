@@ -10,7 +10,7 @@ from constants.jobs import JobLifeCycle
 from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from tests.utils import BaseTest, BaseViewTest
 
 

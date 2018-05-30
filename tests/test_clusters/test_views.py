@@ -8,7 +8,7 @@ from constants.nodes import NodeRoles
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from tests.utils import BaseViewTest
 
 

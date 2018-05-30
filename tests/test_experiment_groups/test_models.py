@@ -30,7 +30,7 @@ from hpsearch.search_managers import (
 )
 from hpsearch.tasks.bo import hp_bo_start
 from hpsearch.tasks.hyperband import hp_hyperband_start
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig

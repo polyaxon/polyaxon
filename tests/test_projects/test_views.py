@@ -12,7 +12,7 @@ from db.models.projects import Project
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ProjectFactory
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from tests.utils import BaseViewTest
 
 

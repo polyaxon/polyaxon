@@ -13,8 +13,7 @@ from api.index.views import (  # noqa
     ReactIndexView
 )
 from api.users.views import LogoutView
-
-API_V1 = 'api/v1'
+from constants.urls import API_V1
 
 api_patterns = [
     re_path(r'', include(

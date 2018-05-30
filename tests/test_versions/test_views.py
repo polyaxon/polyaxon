@@ -3,7 +3,7 @@ import pytest
 from rest_framework import status
 
 from db.models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from polyaxon.utils import config
 from tests.utils import BaseViewTest
 

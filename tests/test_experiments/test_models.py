@@ -33,7 +33,7 @@ from factories.fixtures import (
     experiment_spec_content
 )
 from libs.paths.experiments import create_experiment_outputs_path, get_experiment_outputs_path
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics

@@ -5,7 +5,7 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 
 from factories.factory_users import UserFactory
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
 from tests.utils import BaseViewTest
 
 
