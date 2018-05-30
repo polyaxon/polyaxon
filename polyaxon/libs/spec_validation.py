@@ -1,4 +1,5 @@
 from marshmallow.exceptions import ValidationError as MarshmallowValidationError
+from polyaxon_schemas.run_exec import BuildConfig
 from rest_framework.exceptions import ValidationError
 
 from django.core.exceptions import ValidationError as DjangoValidationError
@@ -59,3 +60,13 @@ def validate_plugin_spec_config(config, raise_for_rest=False):
             raise DjangoValidationError(message_error)
 
     return spec
+
+
+def validate_build_config(config, raise_for_rest=False):
+    try:
+        BuildConfig.from_dict(config)
+    except MarshmallowValidationError as e:
+        if raise_for_rest:
+            raise ValidationError(e)
+        else:
+            raise DjangoValidationError(e)
