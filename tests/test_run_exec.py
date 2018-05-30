@@ -3,13 +3,30 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from tests.utils import assert_equal_dict
+from polyaxon_schemas.run_exec import BuildConfig, RunExecConfig
 
-from polyaxon_schemas.run_exec import RunExecConfig
+
+class TestBuildConfigs(TestCase):
+    def test_build_config(self):
+        config_dict = {
+            'image': 'some_image_name',
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
+    def test_build_from_git_repo_with_install_step_config(self):
+        config_dict = {
+            'image': 'tensorflow:1.3.0',
+            'build_steps': ['pip install tensor2tensor'],
+            'env_vars': [['LC_ALL', 'en_US.UTF-8']],
+            'git': 'https://github.com/tensorflow/tensor2tensor.git'
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
 
 
 class TestRunExecConfigs(TestCase):
-    def test_exce_config(self):
+    def test_exec_config(self):
         config_dict = {
             'cmd': 'python t2t-trainer '
                    '--generate_data '
@@ -23,7 +40,7 @@ class TestRunExecConfigs(TestCase):
         config = RunExecConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
-    def test_exce_from_git_repo_with_install_step_config(self):
+    def test_exec_from_git_repo_with_install_step_config(self):
         config_dict = {
             'cmd': 'python t2t-trainer '
                    '--generate_data '
