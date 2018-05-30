@@ -10,6 +10,8 @@ urlpatterns = [
             views.RepoDetailView.as_view()),
     re_path(r'^{}/{}/repo/upload/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
             views.UploadFilesView.as_view()),
+    re_path(r'^{}/{}/repo/upload/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+            views.DownloadFilesView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

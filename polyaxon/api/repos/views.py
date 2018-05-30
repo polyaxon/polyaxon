@@ -12,10 +12,11 @@ import auditor
 
 from api.repos.serializers import RepoSerializer
 from api.repos.tasks import handle_new_files
-from api.utils.views import UploadView
+from api.utils.views import UploadView, ProtectedView
 from db.models.repos import Repo
-from event_manager.events.repo import REPO_CREATED
+from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.permissions.projects import get_permissible_project
+from libs.repos import git
 from libs.repos.git import set_git_repo
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,24 @@ class RepoDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         return get_object_or_404(Repo, project=get_permissible_project(view=self))
+
+
+class DownloadFilesView(ProtectedView):
+    def get_object(self):
+        project = get_permissible_project(view=self)
+        if project.has_notebook:
+            self.permission_denied(
+                self.request,
+                'The Project `{}` is currently running a Notebook. '
+                'You must stop it before uploading a new version of the code.'.format(project.name))
+        repo, created = Repo.objects.get_or_create(project=project)
+        auditor.record(event_type=REPO_DOWNLOADED, instance=repo, actor_id=self.request.user.id)
+        return repo
+
+    def get(self, request, *args, **kwargs):
+        repo = self.get_object()
+        archive_path, archive_name = git.archive_repo(repo.git, repo.project.name)
+        return self.redirect(path=archive_path, filename=archive_name)
 
 
 class UploadFilesView(UploadView):
