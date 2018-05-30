@@ -172,7 +172,9 @@ global config
   value: {{ .Values.apps.tensorboard }}
 - name: POLYAXON_APP_LABELS_NOTEBOOK
   value: {{ .Values.apps.notebook }}
-- name: POLYAXON_TRACKER_BACKEND
+- name: POLYAXON_APP_LABELS_DOCKERIZER
+  value: {{ .Values.apps.dockerizer }}
+- name: APP_LABELS_NOTEBOOK
   value: "publisher"
 {{- end -}}
 

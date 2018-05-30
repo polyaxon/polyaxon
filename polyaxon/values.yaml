@@ -441,6 +441,7 @@ roles:
 apps:
   tensorboard: "polyaxon-tensorboard"
   notebook: "polyaxon-notebook"
+  notebook: "polyaxon-dockerizer"
 
 k8s: {}
 
