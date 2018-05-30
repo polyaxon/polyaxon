@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_TENSORBOARD_START, ignore_result=True)
 def projects_tensorboard_start(project_id):
-    project = get_valid_project(project_id)
+    project = get_valid_project(project_id=project_id)
     if not project or not project.tensorboard:
         _logger.warning('Project does not have a tensorboard.')
         return None
@@ -24,7 +24,7 @@ def projects_tensorboard_start(project_id):
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_TENSORBOARD_STOP, ignore_result=True)
 def projects_tensorboard_stop(project_id):
-    project = get_valid_project(project_id)
+    project = get_valid_project(project_id=project_id)
     if not project:
         return None
     tensorboard_scheduler.stop_tensorboard(project, update_status=True)
