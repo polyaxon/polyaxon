@@ -3,6 +3,7 @@ import os
 from django.conf import settings
 from django.db import models
 
+from constants.urls import API_V1
 from db.models.utils import DiffModel
 
 
@@ -56,6 +57,12 @@ class Repo(DiffModel, RepoMixin):
 
     def __str__(self):
         return '{} <repo>'.format(self.project)
+
+    @property
+    def download_url(self):
+        return '{}/{}/{}/repo/download'.format(API_V1,
+                                               self.project.user.username,
+                                               self.project.name)
 
 
 class ExternalRepo(DiffModel, RepoMixin):
