@@ -3,7 +3,7 @@ import pytest
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
-from db.models.experiments import ExperimentJobStatus
+from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.plugins import NotebookJobStatus, TensorboardJobStatus
 from events_handlers.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
 from factories.factory_experiments import ExperimentJobFactory

@@ -9,7 +9,7 @@ from django.conf import settings
 
 from api.experiments.serializers import ExperimentJobDetailSerializer
 from constants.experiments import ExperimentLifeCycle
-from db.models.experiments import ExperimentJob
+from db.models.experiment_jobs import ExperimentJob
 from db.models.jobs import JobResources
 from docker_images.image_info import get_experiment_image_info
 from polyaxon.utils import config

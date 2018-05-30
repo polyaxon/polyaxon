@@ -4,7 +4,7 @@ from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from constants.pods import EventTypes, PodConditions, PodLifeCycle
-from db.models.experiments import ExperimentJob
+from db.models.experiment_jobs import ExperimentJob
 from factories.factory_experiments import ExperimentJobFactory
 from libs.redis_db import RedisJobContainers
 from polyaxon_schemas.experiment import JobStateConfig, PodStateConfig

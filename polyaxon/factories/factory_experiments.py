@@ -2,11 +2,10 @@ import factory
 
 from db.models.experiments import (
     Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
     ExperimentMetric,
     ExperimentStatus
 )
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from factories.fixtures import exec_experiment_spec_parsed_content

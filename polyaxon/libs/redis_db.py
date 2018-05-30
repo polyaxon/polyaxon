@@ -71,7 +71,7 @@ class RedisJobContainers(BaseRedisDb):
     def monitor(cls, container_id, job_uuid):
         red = cls._get_redis()
         if not red.sismember(cls.KEY_CONTAINERS, container_id):
-            from db.models.experiments import ExperimentJob
+            from db.models.experiment_jobs import ExperimentJob
 
             try:
                 job = ExperimentJob.objects.get(uuid=job_uuid)

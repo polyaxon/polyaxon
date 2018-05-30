@@ -3,7 +3,8 @@ import logging
 from django.conf import settings
 from django.db import IntegrityError
 
-from db.models.experiments import Experiment, ExperimentJob
+from db.models.experiments import Experiment
+from db.models.experiment_jobs import ExperimentJob
 from db.models.nodes import ClusterEvent
 from db.models.projects import Project
 from libs.paths.experiments import get_experiment_logs_path

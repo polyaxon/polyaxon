@@ -11,11 +11,10 @@ from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import (
     CloningStrategy,
     Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
     ExperimentMetric,
     ExperimentStatus
 )
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from event_manager.events.experiment import (
     EXPERIMENT_DELETED,
     EXPERIMENT_FAILED,

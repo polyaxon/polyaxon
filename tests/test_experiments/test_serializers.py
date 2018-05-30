@@ -10,7 +10,8 @@ from api.experiments.serializers import (
     ExperimentStatusSerializer
 )
 from constants.experiments import ExperimentLifeCycle
-from db.models.experiments import Experiment, ExperimentJob, ExperimentStatus
+from db.models.experiments import Experiment, ExperimentStatus
+from db.models.experiment_jobs import ExperimentJob
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,

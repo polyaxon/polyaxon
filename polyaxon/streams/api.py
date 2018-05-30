@@ -8,7 +8,8 @@ from django.core.exceptions import ValidationError
 
 import auditor
 
-from db.models.experiments import Experiment, ExperimentJob
+from db.models.experiments import Experiment
+from db.models.experiment_jobs import ExperimentJob
 from db.models.projects import Project
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
 from event_manager.events.experiment_job import (

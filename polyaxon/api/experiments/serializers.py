@@ -4,11 +4,10 @@ from rest_framework.exceptions import ValidationError
 from api.utils.serializers import JobResourcesSerializer
 from db.models.experiments import (
     Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
     ExperimentMetric,
     ExperimentStatus
 )
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from libs.spec_validation import validate_experiment_spec_config
 
 

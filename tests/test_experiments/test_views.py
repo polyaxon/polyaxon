@@ -19,11 +19,10 @@ from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.experiments import (
     Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
     ExperimentMetric,
     ExperimentStatus
 )
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,

@@ -35,11 +35,10 @@ from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import (
     Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
     ExperimentMetric,
     ExperimentStatus
 )
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED_TRIGGERED,
     EXPERIMENT_CREATED,

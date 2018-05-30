@@ -4,11 +4,10 @@ from db.admin.jobs import JobStatusAdmin
 from db.admin.utils import DiffModelAdmin
 from db.models.experiments import (
     Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
     ExperimentMetric,
     ExperimentStatus
 )
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 
 
 class ExperimentAdmin(DiffModelAdmin):
