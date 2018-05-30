@@ -7,7 +7,7 @@ from rest_framework import status
 
 from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
-from db.models.plugins import NotebookJob, TensorboardJob
+from db.models.plugins import NotebookJob, TensorboardJob, TensorboardJobStatus, NotebookJobStatus
 from db.models.projects import Project
 from dockerizer.tasks import build_project_notebook
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
@@ -122,6 +122,26 @@ class TestStartTensorboardViewV1(BaseViewTest):
                    'projects_tensorboard_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
         assert start_mock.call_count == 0
+
+    def test_starting_stopping_tensorboard_creating_new_one_create_new_job(self):
+        with patch('scheduler.tasks.tensorboards.'
+                   'projects_tensorboard_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+        self.object.tensorboard.set_status(status=JobLifeCycle.STOPPED)
+        assert TensorboardJob.objects.count() == 1
+        assert TensorboardJobStatus.objects.count() == 2
+
+        with patch('scheduler.tasks.tensorboards.'
+                   'projects_tensorboard_start.apply_async') as start_mock:
+            self.auth_client.post(self.url)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.tensorboard.last_status == JobLifeCycle.CREATED
+        assert TensorboardJob.objects.count() == 2
+        assert TensorboardJobStatus.objects.count() == 3
 
 
 @pytest.mark.plugins_mark
@@ -266,6 +286,26 @@ class TestStartNotebookViewV1(BaseViewTest):
 
         assert resp.status_code == status.HTTP_200_OK
         assert start_mock.call_count == 0
+
+    def test_starting_stopping_notebook_creating_new_one_create_new_job(self):
+        data = {'config': plugin_spec_parsed_content.parsed_data}
+        with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as start_mock:
+            self.auth_client.post(self.url, data=data)
+
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.notebook.last_status == JobLifeCycle.CREATED
+        self.object.notebook.set_status(status=JobLifeCycle.STOPPED)
+        assert NotebookJob.objects.count() == 1
+        assert NotebookJobStatus.objects.count() == 2
+
+        with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as start_mock:
+            self.auth_client.post(self.url, data=data)
+        self.object.refresh_from_db()
+        assert start_mock.call_count == 1
+        assert self.object.notebook.last_status == JobLifeCycle.CREATED
+        assert NotebookJob.objects.count() == 2
+        assert NotebookJobStatus.objects.count() == 3
 
 
 @pytest.mark.plugins_mark

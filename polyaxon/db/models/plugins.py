@@ -48,18 +48,6 @@ class PluginJobBase(Job):
     def unique_name(self):
         return self.__str__()
 
-    def _set_status(self, status_model, logger, status, message=None, details=None):
-        # pylint:disable=redefined-outer-name
-        current_status = self.last_status
-        if status != current_status:
-            # Add new status to the job
-            status_model.objects.create(job=self,
-                                        status=status,
-                                        message=message,
-                                        details=details)
-            return True
-        return False
-
 
 class TensorboardJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""

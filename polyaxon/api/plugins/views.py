@@ -51,7 +51,7 @@ class StartTensorboardView(CreateAPIView):
 
     def _create_tensorboard(self, project):
         config = self.request.data or self._get_default_tensorboard_config()
-        serializer = self.get_serializer(instance=project.tensorboard, data=config)
+        serializer = self.get_serializer(data=config)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save(user=self.request.user, project=project)
         auditor.record(event_type=TENSORBOARD_STARTED_TRIGGERED,
@@ -104,7 +104,7 @@ class StartNotebookView(CreateAPIView):
         return queryset.filter(user__username=username)
 
     def _create_notebook(self, project):
-        serializer = self.get_serializer(instance=project.notebook, data=self.request.data)
+        serializer = self.get_serializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save(user=self.request.user, project=project)
         auditor.record(event_type=NOTEBOOK_STARTED_TRIGGERED,
