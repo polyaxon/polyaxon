@@ -85,6 +85,8 @@ global config
   value: "{{ .Values.job.image }}:{{ .Values.job.imageTag }}"
 - name: POLYAXON_JOB_SIDECAR_DOCKER_IMAGE
   value: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.imageTag }}"
+- name: POLYAXON_JOB_DOCKERIZER_IMAGE
+  value: "{{ .Values.dockerizer.image }}:{{ .Values.dockerizer.imageTag }}"
 - name: POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL
   valueFrom:
     configMapKeyRef:
