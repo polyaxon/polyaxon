@@ -44,7 +44,7 @@ class Command(BaseCommand):
             '--password',
             required=True,
             dest='password',
-            help='Specifies the pasword for the user/superuser.',
+            help='Specifies the password for the user/superuser.',
         )
         parser.add_argument(
             '--email',
