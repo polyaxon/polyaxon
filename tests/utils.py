@@ -89,7 +89,7 @@ class BaseClient(Client):
 class InternalClient(BaseClient):
     def __init__(self, authentication_type='InternalToken', service=None, **defaults):
         super().__init__(**defaults)
-        self.service = service or 'experiments'
+        self.service = service or 'helper'
         self.authorization_header = '{} {}'.format(authentication_type,
                                                    settings.INTERNAL_SECRET_TOKEN)
 
