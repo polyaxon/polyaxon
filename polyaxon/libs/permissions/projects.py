@@ -4,6 +4,8 @@ from rest_framework import permissions
 from rest_framework.generics import get_object_or_404
 
 from db.models.projects import Project
+from libs.permissions.authentication import is_internal_user
+from libs.permissions.internal import IsAuthenticatedOrInternal, IsInternal
 
 _logger = logging.getLogger(__name__)
 
@@ -53,6 +55,13 @@ class IsItemProjectOwnerOrPublicReadOnly(permissions.BasePermission):
 
 
 def check_access_project_item(view, request, project):
+    internal_condition = (
+        (IsAuthenticatedOrInternal in view.permission_classes or
+         IsInternal in view.permission_classes) and
+        is_internal_user(request.user)
+    )
+    if internal_condition:
+        return
     permission = IsProjectOwnerOrPublicReadOnly()
     if not permission.has_object_permission(request, view, project):
         view.permission_denied(
