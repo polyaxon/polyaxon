@@ -13,10 +13,15 @@ if CORS_ORIGIN_WHITELIST:
 else:
     CORS_ORIGIN_WHITELIST = []
 
+
+HEADERS_CLI_VERSION = 'X_POLYAXON_CLI_VERSION'
+HEADERS_CLIENT_VERSION = 'X_POLYAXON_CLIENT-VERSION'
+HEADERS_INTERNAL = 'X_POLYAXON_INTERNAL'
+
 CORS_ALLOW_HEADERS = default_headers + (
-    'x-polyaxon-cli-version',
-    'x-polyaxon-client-version',
-    'x-polyaxon-internal'
+    HEADERS_CLI_VERSION,
+    HEADERS_CLIENT_VERSION,
+    HEADERS_INTERNAL,
 )
 
 if SSL_ENABLED:
