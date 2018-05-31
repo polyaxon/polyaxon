@@ -21,7 +21,7 @@ class BuildJob(Job):
     project = models.ForeignKey(
         'db.Project',
         on_delete=models.CASCADE,
-        related_name='tensorboard_jobs')
+        related_name='build_jobs')
     config = JSONField(
         help_text='The compiled polyaxonfile for plugin job.',
         validators=[validate_build_config])
