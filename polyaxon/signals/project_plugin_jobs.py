@@ -128,5 +128,5 @@ def project_stop_plugins(sender, **kwargs):
     from scheduler import notebook_scheduler, tensorboard_scheduler
 
     instance = kwargs['instance']
-    tensorboard_scheduler.stop_tensorboard(instance, update_status=False)
-    notebook_scheduler.stop_notebook(instance, update_status=False)
+    tensorboard_scheduler.stop_tensorboard(instance.tensorboard, update_status=False)
+    notebook_scheduler.stop_notebook(instance.notebook, update_status=False)

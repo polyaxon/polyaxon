@@ -497,7 +497,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}?token={}'.format(
             service_url,
             'tree',
-            notebook_scheduler.get_notebook_token(project)
+            notebook_scheduler.get_notebook_token(notebook)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -519,7 +519,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}?token={}'.format(
             service_url,
             'tree',
-            notebook_scheduler.get_notebook_token(project)
+            notebook_scheduler.get_notebook_token(notebook)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 
@@ -531,7 +531,7 @@ class TestNotebookViewV1(BaseTestPluginViewV1):
         proxy_url = '{}/{}&token={}'.format(
             service_url,
             'static/components/something?v=4.7.0',
-            notebook_scheduler.get_notebook_token(project)
+            notebook_scheduler.get_notebook_token(notebook)
         )
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], proxy_url)
 

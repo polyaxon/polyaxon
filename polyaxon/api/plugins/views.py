@@ -211,12 +211,12 @@ class NotebookView(PluginJobView):
     def get_base_params(project):
         from scheduler import notebook_scheduler
 
-        return 'token={}'.format(notebook_scheduler.get_notebook_token(project=project))
+        return 'token={}'.format(notebook_scheduler.get_notebook_token(notebook=project.notebook))
 
     def get_service_url(self, project):
         from scheduler import notebook_scheduler
 
-        return notebook_scheduler.get_notebook_url(project=project)
+        return notebook_scheduler.get_notebook_url(notebook=project.notebook)
 
     def has_plugin_job(self, project):
         return project.has_notebook

@@ -37,7 +37,7 @@ def projects_notebook_start(project_id):
     job_docker_image = '{}:{}'.format(image_name, image_tag)
     _logger.info('Start notebook with built image `%s`', job_docker_image)
 
-    notebook_scheduler.start_notebook(project, image=job_docker_image)
+    notebook_scheduler.start_notebook(project.notebook, image=job_docker_image)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP, ignore_result=True)
@@ -46,4 +46,4 @@ def projects_notebook_stop(project_id):
     if not project:
         return None
 
-    notebook_scheduler.stop_notebook(project, update_status=True)
+    notebook_scheduler.stop_notebook(project.notebook, update_status=True)
