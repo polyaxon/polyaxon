@@ -6,7 +6,7 @@ from django.conf import settings
 
 from libs.crypto import get_hmac
 from libs.paths.projects import get_project_repos_path
-from scheduler.spawners.project_spawner import ProjectSpawner
+from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
 from scheduler.spawners.templates.volumes import get_volume, get_volume_mount, get_pod_volumes
@@ -14,7 +14,7 @@ from scheduler.spawners.templates.volumes import get_volume, get_volume_mount, g
 logger = logging.getLogger('polyaxon.spawners.notebook')
 
 
-class NotebookSpawner(ProjectSpawner):
+class NotebookSpawner(ProjectJobSpawner):
     NOTEBOOK_JOB_NAME = 'notebook'
     PORT = 8888
 
@@ -53,8 +53,8 @@ class NotebookSpawner(ProjectSpawner):
         code_volume, code_volume_mount = self.get_notebook_code_volume()
         volumes.append(code_volume)
         volume_mounts.append(code_volume_mount)
-        deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.NOTEBOOK_JOB_NAME)
+        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.NOTEBOOK_JOB_NAME,
+                                                           job_uuid=self.job_uuid)
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
@@ -69,6 +69,8 @@ class NotebookSpawner(ProjectSpawner):
             name=self.NOTEBOOK_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
+            job_name=self.job_name,
+            job_uuid=self.job_uuid,
             volume_mounts=volume_mounts,
             volumes=volumes,
             image=image,
@@ -128,8 +130,8 @@ class NotebookSpawner(ProjectSpawner):
         return results
 
     def stop_notebook(self):
-        deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=self.NOTEBOOK_JOB_NAME)
+        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.NOTEBOOK_JOB_NAME,
+                                                           job_uuid=self.job_uuid)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():

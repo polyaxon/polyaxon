@@ -6,14 +6,14 @@ from django.conf import settings
 
 from libs.paths.projects import get_project_outputs_path
 from scheduler.spawners.templates.volumes import get_pod_volumes
-from scheduler.spawners.project_spawner import ProjectSpawner
+from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
 
 logger = logging.getLogger('polyaxon.spawners.tensorboard')
 
 
-class TensorboardSpawner(ProjectSpawner):
+class TensorboardSpawner(ProjectJobSpawner):
     TENSORBOARD_JOB_NAME = 'tensorboard'
     PORT = 6006
 
@@ -54,8 +54,8 @@ class TensorboardSpawner(ProjectSpawner):
             node_selector=node_selectors,
             role=settings.ROLE_LABELS_DASHBOARD,
             type=settings.TYPE_LABELS_EXPERIMENT)
-        deployment_name = constants.DEPLOYMENT_NAME.format(
-            project_uuid=self.project_uuid, name=self.TENSORBOARD_JOB_NAME)
+        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.TENSORBOARD_JOB_NAME,
+                                                           job_uuid=self.job_uuid)
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
@@ -92,8 +92,8 @@ class TensorboardSpawner(ProjectSpawner):
         return results
 
     def stop_tensorboard(self):
-        deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,
-                                                           name=self.TENSORBOARD_JOB_NAME)
+        deployment_name = constants.DEPLOYMENT_NAME.format(name=self.TENSORBOARD_JOB_NAME,
+                                                           job_uuid=self.job_uuid)
         self.delete_deployment(name=deployment_name)
         self.delete_service(name=deployment_name)
         if self._use_ingress():

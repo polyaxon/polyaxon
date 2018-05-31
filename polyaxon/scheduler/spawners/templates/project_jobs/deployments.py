@@ -7,9 +7,13 @@ from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
 
 
-def get_labels(app, project_name, project_uuid, role=None, type=None):
+def get_labels(app, project_name, project_uuid, job_name, job_uuid, role=None, type=None):
     # pylint:disable=redefined-builtin
-    labels = {'app': app, 'project_name': project_name, 'project_uuid': project_uuid}
+    labels = {'app': app,
+              'project_name': project_name,
+              'project_uuid': project_uuid,
+              'job_name': job_name,
+              'job_uuid': job_uuid}
     if role:
         labels['role'] = role
     if type:
@@ -28,7 +32,7 @@ def get_project_pod_spec(volume_mounts,
                          node_selector=None,
                          env_vars=None,
                          restart_policy=None):
-    """Pod spec to be used to create pods for project side: tensorboard, notebooks."""
+    """Pod spec to be used to create pods for project: tensorboard, notebooks."""
     volume_mounts = get_list(volume_mounts)
     volumes = get_list(volumes)
 
@@ -57,6 +61,8 @@ def get_deployment_spec(namespace,
                         name,
                         project_name,
                         project_uuid,
+                        job_name,
+                        job_uuid,
                         volume_mounts,
                         volumes,
                         image,
@@ -73,10 +79,12 @@ def get_deployment_spec(namespace,
     labels = get_labels(app=app,
                         project_name=project_name,
                         project_uuid=project_uuid,
+                        job_name=job_name,
+                        job_uuid=job_uuid,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(name=name, project_uuid=project_uuid),
+        name=constants.DEPLOYMENT_NAME.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     pod_spec = get_project_pod_spec(volume_mounts=volume_mounts,
@@ -98,6 +106,8 @@ def get_deployment(namespace,
                    name,
                    project_name,
                    project_uuid,
+                   job_name,
+                   job_uuid,
                    volume_mounts,
                    volumes,
                    image,
@@ -114,10 +124,12 @@ def get_deployment(namespace,
     labels = get_labels(app=app,
                         project_name=project_name,
                         project_uuid=project_uuid,
+                        job_name=job_name,
+                        job_uuid=job_uuid,
                         role=role,
                         type=type)
     metadata = client.V1ObjectMeta(
-        name=constants.DEPLOYMENT_NAME.format(project_uuid=project_uuid, name=name),
+        name=constants.DEPLOYMENT_NAME.format(name=name, job_uuid=job_uuid),
         labels=labels,
         namespace=namespace)
     spec = get_deployment_spec(namespace=namespace,
@@ -125,6 +137,8 @@ def get_deployment(namespace,
                                name=name,
                                project_name=project_name,
                                project_uuid=project_uuid,
+                               job_name=job_name,
+                               job_uuid=job_uuid,
                                volume_mounts=volume_mounts,
                                volumes=volumes,
                                image=image,
