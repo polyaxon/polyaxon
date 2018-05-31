@@ -6,11 +6,15 @@ from libs.paths.utils import delete_path
 
 
 def get_experiment_group_outputs_path(experiment_group_name):
-    return os.path.join(settings.OUTPUTS_ROOT, experiment_group_name.replace('.', '/'))
+    values = experiment_group_name.split('.')
+    values.insert(2, 'groups')
+    return os.path.join(settings.OUTPUTS_ROOT, '/'.join(values))
 
 
 def get_experiment_group_logs_path(experiment_group_name):
-    return os.path.join(settings.LOGS_ROOT, experiment_group_name.replace('.', '/'))
+    values = experiment_group_name.split('.')
+    values.insert(2, 'groups')
+    return os.path.join(settings.LOGS_ROOT, '/'.join(values))
 
 
 def delete_experiment_group_outputs(experiment_group_name):

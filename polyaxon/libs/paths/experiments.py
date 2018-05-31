@@ -13,6 +13,8 @@ def get_experiment_outputs_path(experiment_name, original_name=None, cloning_str
         values = original_name.split('.')
     if len(values) == 3:
         values.insert(2, 'independents')
+    else:
+        values.insert(2, 'groups')
     return os.path.join(settings.OUTPUTS_ROOT, '/'.join(values))
 
 
@@ -20,6 +22,8 @@ def get_experiment_logs_path(experiment_name):
     values = experiment_name.split('.')
     if len(values) == 3:
         values.insert(2, 'independents')
+    else:
+        values.insert(2, 'groups')
     return os.path.join(settings.LOGS_ROOT, '/'.join(values))
 
 
@@ -37,6 +41,8 @@ def create_experiment_path(experiment_name, path):
     values = experiment_name.split('.')
     if len(values) == 3:
         values.insert(2, 'independents')
+    else:
+        values.insert(2, 'groups')
 
     for value in values[:-1]:
         path = os.path.join(path, value)
