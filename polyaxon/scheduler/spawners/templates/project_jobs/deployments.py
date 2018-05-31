@@ -1,59 +1,9 @@
 from kubernetes import client
 
-from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
-from scheduler.spawners.templates.resources import get_resources
-
-
-def get_labels(app, project_name, project_uuid, job_name, job_uuid, role=None, type=None):
-    # pylint:disable=redefined-builtin
-    labels = {'app': app,
-              'project_name': project_name,
-              'project_uuid': project_uuid,
-              'job_name': job_name,
-              'job_uuid': job_uuid}
-    if role:
-        labels['role'] = role
-    if type:
-        labels['type'] = type
-    return labels
-
-
-def get_project_pod_spec(volume_mounts,
-                         volumes,
-                         image,
-                         container_name=None,
-                         command=None,
-                         args=None,
-                         ports=None,
-                         resources=None,
-                         node_selector=None,
-                         env_vars=None,
-                         restart_policy=None):
-    """Pod spec to be used to create pods for project: tensorboard, notebooks."""
-    volume_mounts = get_list(volume_mounts)
-    volumes = get_list(volumes)
-
-    gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
-    volume_mounts += gpu_volume_mounts
-    volumes += gpu_volumes
-
-    ports = [client.V1ContainerPort(container_port=port) for port in ports]
-
-    containers = [client.V1Container(name=container_name,
-                                     image=image,
-                                     command=command,
-                                     args=args,
-                                     ports=ports,
-                                     env=env_vars,
-                                     resources=get_resources(resources),
-                                     volume_mounts=volume_mounts)]
-    return client.V1PodSpec(restart_policy=restart_policy,
-                            containers=containers,
-                            volumes=volumes,
-                            node_selector=node_selector)
+from scheduler.spawners.templates.project_jobs.labels import get_labels
+from scheduler.spawners.templates.project_jobs.pods import get_project_pod_spec
 
 
 def get_deployment_spec(namespace,
