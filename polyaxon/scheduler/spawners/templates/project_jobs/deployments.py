@@ -3,6 +3,7 @@ from kubernetes import client
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants, pods
+from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 
 
 def get_labels(app, project_name, project_uuid, role=None, type=None):
@@ -30,7 +31,7 @@ def get_project_pod_spec(volume_mounts,
     volume_mounts = get_list(volume_mounts)
     volumes = get_list(volumes)
 
-    gpu_volume_mounts, gpu_volumes = pods.get_gpu_volumes_def(resources)
+    gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
     volume_mounts += gpu_volume_mounts
     volumes += gpu_volumes
 
