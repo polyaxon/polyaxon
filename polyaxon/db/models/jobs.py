@@ -48,6 +48,7 @@ class Job(DiffModel, LastStatusMixin):
         editable=False,
         null=False,
         help_text='The sequence number of this job.', )
+    definition = JSONField(help_text='The specific values/manifest for this job.', default={})
 
     class Meta:
         abstract = True

@@ -98,8 +98,7 @@ class NotebookSpawner(ProjectSpawner):
                                                    project_uuid=self.project_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
                                                    type=settings.TYPE_LABELS_EXPERIMENT)
-
-        self.create_or_update_deployment(name=deployment_name, data=deployment)
+        dep_resp, _ = self.create_or_update_deployment(name=deployment_name, data=deployment)
         service = services.get_service(
             namespace=self.namespace,
             name=deployment_name,
@@ -108,7 +107,8 @@ class NotebookSpawner(ProjectSpawner):
             target_ports=target_ports,
             service_type=self._get_service_type())
 
-        self.create_or_update_service(name=deployment_name, data=service)
+        service_resp, _ = self.create_or_update_service(name=deployment_name, data=service)
+        results = {'deployment': dep_resp.to_dict(), 'service': service_resp}
 
         if self._use_ingress():
             annotations = json.loads(settings.K8S_INGRESS_ANNOTATIONS)
@@ -125,6 +125,7 @@ class NotebookSpawner(ProjectSpawner):
                                             annotations=annotations,
                                             paths=paths)
             self.create_or_update_ingress(name=deployment_name, data=ingress)
+        return results
 
     def stop_notebook(self):
         deployment_name = constants.DEPLOYMENT_NAME.format(project_uuid=self.project_uuid,

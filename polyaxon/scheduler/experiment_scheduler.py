@@ -1,13 +1,10 @@
-import json
 import logging
 import uuid
 
 from kubernetes.client.rest import ApiException
-from rest_framework import fields
 
 from django.conf import settings
 
-from api.experiments.serializers import ExperimentJobDetailSerializer
 from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.jobs import JobResources
@@ -25,6 +22,7 @@ from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
+from scheduler.spawners.utils import get_job_definition
 
 logger = logging.getLogger('polyaxon.scheduler.experiment')
 
@@ -56,14 +54,6 @@ def create_job(job_uuid, experiment, definition, role=None, resources=None):
     if job_resources:
         job.resources = JobResources.objects.create(**job_resources)
     job.save()
-
-
-def get_job_definition(definition):
-    serializer = ExperimentJobDetailSerializer(data={
-        'definition': json.dumps(definition, default=fields.DateTimeField().to_representation)
-    })
-    serializer.is_valid()
-    return json.loads(serializer.validated_data['definition'])
 
 
 def get_spawner_class(framework):

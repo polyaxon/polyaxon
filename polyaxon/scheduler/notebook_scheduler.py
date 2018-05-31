@@ -1,9 +1,11 @@
 import logging
 
 from django.conf import settings
+from kubernetes.client.rest import ApiException
 
-from constants.experiments import ExperimentLifeCycle
+from constants.jobs import JobLifeCycle
 from scheduler.spawners.notebook_spawner import NotebookSpawner
+from scheduler.spawners.utils import get_job_definition
 
 logger = logging.getLogger('polyaxon.scheduler.notebook')
 
@@ -16,9 +18,26 @@ def start_notebook(project, image):
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
 
-    spawner.start_notebook(image=image,
-                           resources=project.notebook.resources,
-                           node_selectors=project.notebook.node_selectors)
+    try:
+        results = spawner.start_notebook(image=image,
+                                         resources=project.notebook.resources,
+                                         node_selectors=project.notebook.node_selectors)
+    except ApiException as e:
+        logger.warning('Could not start notebook, please check your polyaxon spec %s', e)
+        project.notebook.set_status(
+            JobLifeCycle.FAILED,
+            message='Could not start notebook, encountered a Kubernetes ApiException.')
+        return
+    except Exception as e:
+        logger.warning('Could not start notebook, please check your polyaxon spec %s', e)
+        project.notebook.set_status(
+            JobLifeCycle.FAILED,
+            message='Could not start notebook encountered an {} exception.'.format(
+                e.__class__.__name__
+            ))
+        return
+    project.notebook.definition = get_job_definition(results)
+    project.notebook.save()
 
 
 def stop_notebook(project, update_status=False):
@@ -32,7 +51,7 @@ def stop_notebook(project, update_status=False):
     spawner.stop_notebook()
     if update_status:
         # Update experiment status to show that its stopped
-        project.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
+        project.notebook.set_status(status=JobLifeCycle.STOPPED,
                                     message='Notebook was stopped')
 
 

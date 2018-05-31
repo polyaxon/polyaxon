@@ -21,7 +21,6 @@ class ExperimentJob(Job):
         'db.Experiment',
         on_delete=models.CASCADE,
         related_name='jobs')
-    definition = JSONField(help_text='The specific values for this job.')
     role = models.CharField(max_length=64, default=TaskType.MASTER)
     resources = models.OneToOneField(
         'db.JobResources',
