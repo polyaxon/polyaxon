@@ -1,7 +1,5 @@
 import logging
-import uuid
 
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from db.models.jobs import Job, JobStatus
@@ -12,11 +10,6 @@ logger = logging.getLogger('db.experiments')
 
 class ExperimentJob(Job):
     """A model that represents job related to an experiment"""
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        editable=False,
-        unique=True,
-        null=False)
     experiment = models.ForeignKey(
         'db.Experiment',
         on_delete=models.CASCADE,

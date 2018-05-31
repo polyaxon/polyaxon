@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
@@ -44,6 +46,11 @@ class JobResources(models.Model):
 class Job(DiffModel, LastStatusMixin):
     STATUSES = JobLifeCycle
 
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     sequence = models.PositiveSmallIntegerField(
         editable=False,
         null=False,
