@@ -232,7 +232,7 @@ class TensorboardView(PluginJobView):
     def get_service_url(self, project):
         from scheduler import tensorboard_scheduler
 
-        return tensorboard_scheduler.get_tensorboard_url(project=project)
+        return tensorboard_scheduler.get_tensorboard_url(tensorboard=project.tensorboard)
 
     def has_plugin_job(self, project):
         return project.has_tensorboard

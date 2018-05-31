@@ -19,7 +19,7 @@ def projects_tensorboard_start(project_id):
     if project.tensorboard.last_status == JobLifeCycle.RUNNING:
         _logger.warning('Tensorboard is already running.')
         return None
-    tensorboard_scheduler.start_tensorboard(project)
+    tensorboard_scheduler.start_tensorboard(project.tensorboard)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_TENSORBOARD_STOP, ignore_result=True)
@@ -27,4 +27,4 @@ def projects_tensorboard_stop(project_id):
     project = get_valid_project(project_id=project_id)
     if not project:
         return None
-    tensorboard_scheduler.stop_tensorboard(project, update_status=True)
+    tensorboard_scheduler.stop_tensorboard(project.tensorboard, update_status=True)

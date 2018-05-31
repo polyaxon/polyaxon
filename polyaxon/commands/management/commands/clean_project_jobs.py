@@ -12,9 +12,9 @@ class Command(BaseCommand):
         filters = Q(tensorboard_jobs=None) | Q(notebook_jobs=None)
         for project in Project.objects.exclude(filters):
             if project.has_notebook:
-                notebook_scheduler.stop_notebook(project, update_status=False)
+                notebook_scheduler.stop_notebook(project.notebook, update_status=False)
             if project.has_tensorboard:
-                tensorboard_scheduler.stop_tensorboard(project, update_status=False)
+                tensorboard_scheduler.stop_tensorboard(project.tensorboard, update_status=False)
 
     def handle(self, *args, **options):
         try:
