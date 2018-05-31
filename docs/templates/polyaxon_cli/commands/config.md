@@ -29,7 +29,7 @@ Set the global config values.
 Example:
 
 ```bash
-$ polyaxon config set --hots=localhost http-port=80
+$ polyaxon config set --host=localhost http_port=80
 ```
 
 Options:
