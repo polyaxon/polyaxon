@@ -40,14 +40,14 @@ class DownloadFilesView(ProtectedView):
             repo = Repo.objects.get(project=project)
         except Repo.DoesNotExist:
             raise Http404('Repo does not exist.')
-        if not self.request.META.get('polyaxon-x-internal'):
+        if not self.request.META.get('HTTP_{}'.format(settings.HEADERS_INTERNAL)):
             auditor.record(event_type=REPO_DOWNLOADED, instance=repo, actor_id=self.request.user.id)
         return repo
 
     def get(self, request, *args, **kwargs):
         repo = self.get_object()
         archive_path, archive_name = git.archive_repo(repo.git, repo.project.name)
-        return self.redirect(path=archive_path, filename=archive_name)
+        return self.redirect(path='/archived_repos/{}'.format(archive_name))
 
 
 class UploadFilesView(UploadView):

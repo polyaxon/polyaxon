@@ -340,6 +340,4 @@ class DownloadRepoViewTest(BaseViewTest):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         settings.REPOS_ARCHIVE_ROOT)
-        self.assertEqual(response['content-disposition'],
-                         'attachment; filename="{}.tar"'.format(self.project.name))
+                         '/archived_repos/{}.tar'.format(self.project.name))

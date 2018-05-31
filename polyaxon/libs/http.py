@@ -72,7 +72,7 @@ def download(url, access_token, filename, logger, headers=None, timeout=60, unta
                                 stream=True)
 
         if response.status_code != 200:
-            logger("Failed to download file from %s: %s" % (url, response.status_code))
+            logger.warning("Failed to download file from %s: %s" % (url, response.status_code))
             return None
 
         with open(filename, 'wb') as f:

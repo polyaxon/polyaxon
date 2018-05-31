@@ -53,8 +53,8 @@ class ProtectedView(APIView):
     @classmethod
     def _redirect(cls, path, filename=None):
         response = HttpResponse()
-        response['Content-Type'] = u''
-        response[cls.NGINX_REDIRECT_HEADER] = path.encode('utf-8')
+        response['Content-Type'] = ''
+        response[cls.NGINX_REDIRECT_HEADER] = path
         if filename:
             response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
 
