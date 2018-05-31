@@ -31,11 +31,13 @@ class ProtectedView(APIView):
     permission_classes = (IsAuthenticated,)
 
     NGINX_REDIRECT_HEADER = 'X-Accel-Redirect'
+    HANDLE_UNAUTHENTICATED = True
 
     def handle_exception(self, exc):
         """Use custom exception handler for errors."""
-        if isinstance(exc, (rest_exceptions.NotAuthenticated,
-                            rest_exceptions.AuthenticationFailed)):
+        if isinstance(
+            exc, (rest_exceptions.NotAuthenticated,
+                  rest_exceptions.AuthenticationFailed)) and self.HANDLE_UNAUTHENTICATED:
             return HttpResponseRedirect('{}?next={}'.format(
                 reverse('users:login'),
                 self.request.get_full_path()))

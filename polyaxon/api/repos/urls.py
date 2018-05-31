@@ -10,7 +10,7 @@ urlpatterns = [
             views.RepoDetailView.as_view()),
     re_path(r'^{}/{}/repo/upload/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
             views.UploadFilesView.as_view()),
-    re_path(r'^{}/{}/repo/upload/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
+    re_path(r'^{}/{}/repo/download/?$'.format(USERNAME_PATTERN, NAME_PATTERN),
             views.DownloadFilesView.as_view()),
 ]
 

@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from django.conf import settings
-from django.http import HttpResponseServerError
+from django.http import HttpResponseServerError, Http404
 
 import auditor
 
@@ -32,15 +32,16 @@ class RepoDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class DownloadFilesView(ProtectedView):
+    HANDLE_UNAUTHENTICATED = False
+
     def get_object(self):
         project = get_permissible_project(view=self)
-        if project.has_notebook:
-            self.permission_denied(
-                self.request,
-                'The Project `{}` is currently running a Notebook. '
-                'You must stop it before uploading a new version of the code.'.format(project.name))
-        repo, created = Repo.objects.get_or_create(project=project)
-        auditor.record(event_type=REPO_DOWNLOADED, instance=repo, actor_id=self.request.user.id)
+        try:
+            repo = Repo.objects.get(project=project)
+        except Repo.DoesNotExist:
+            raise Http404('Repo does not exist.')
+        if not self.request.META.get('polyaxon-x-internal'):
+            auditor.record(event_type=REPO_DOWNLOADED, instance=repo, actor_id=self.request.user.id)
         return repo
 
     def get(self, request, *args, **kwargs):

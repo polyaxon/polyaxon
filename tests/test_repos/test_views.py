@@ -11,6 +11,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
 from api.repos.serializers import RepoSerializer
+from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
 from db.models.repos import Repo
 from factories.factory_plugins import NotebookJobFactory
@@ -291,3 +292,54 @@ class TestUploadFilesView(BaseViewTest):
         assert self.model_class.objects.count() == 0
         repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
+
+
+class DownloadRepoViewTest(BaseViewTest):
+    model_class = Repo
+    factory_class = RepoFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.upload_url = '/{}/{}/{}/repo/upload'.format(API_V1,
+                                                         self.project.user.username,
+                                                         self.project.name)
+        self.download_url = '/{}/{}/{}/repo/download'.format(API_V1,
+                                                             self.project.user.username,
+                                                             self.project.name)
+        self.url = self.download_url
+
+    def upload_file(self):
+        filename = 'repo'
+        file = File(open('./tests/fixtures_static/{}.tar.gz'.format(filename), 'rb'))
+        uploaded_file = SimpleUploadedFile(filename, file.read(),
+                                           content_type='multipart/form-data')
+        self.auth_client.put(self.upload_url,
+                             data={'repo': uploaded_file},
+                             content_type=MULTIPART_CONTENT)
+
+    def test_raise_404_if_repo_does_not_exist(self):
+        response = self.auth_client.get(self.download_url)
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_redirects_nginx_to_file(self):
+        self.upload_file()
+        user = self.auth_client.user
+        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+                                              user.username,
+                                              self.project.name,
+                                              self.project.name)
+        # Assert that the code_file_path exists
+        self.assertTrue(os.path.exists(code_file_path))
+        # Assert that the code_file_path is a git repo
+        git_file_path = '{}/.git'.format(code_file_path)
+        self.assertTrue(os.path.exists(git_file_path))
+
+        response = self.auth_client.get(self.download_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
+                         settings.REPOS_ARCHIVE_ROOT)
+        self.assertEqual(response['content-disposition'],
+                         'attachment; filename="{}.tar"'.format(self.project.name))
