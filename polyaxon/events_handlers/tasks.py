@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 from django.db import IntegrityError
 
+from db.models.build_jobs import BuildJob
 from db.models.experiments import Experiment
 from db.models.experiment_jobs import ExperimentJob
 from db.models.nodes import ClusterEvent
@@ -10,6 +11,8 @@ from db.models.projects import Project
 from libs.paths.experiments import get_experiment_logs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks
+
+from libs.paths.project_jobs import get_project_job_logs_path
 
 _logger = logging.getLogger(__name__)
 
@@ -96,6 +99,27 @@ def handle_events_job_logs(experiment_name,
         log_line = '{}.{} -- {}'.format(task_type, int(task_idx) + 1, log_line)
     xp_logger = logging.getLogger(experiment_name)
     log_path = get_experiment_logs_path(experiment_name)
+    try:
+        log_handler = logging.FileHandler(log_path)
+        log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+        log_handler.setFormatter(log_formatter)
+        xp_logger.addHandler(log_handler)
+        xp_logger.setLevel(logging.INFO)
+        xp_logger.info(log_line)
+        xp_logger.handlers = []
+    except OSError:
+        # TODO: retry instead?
+        pass
+
+
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB)
+def events_handle_logs_build_job(job_uuid, job_name, log_line):
+    # Must persist resources if logs according to the config
+    if not BuildJob.objects.filter(uuid=job_uuid).exists():
+        return
+    _logger.debug('handling log event for %s', job_uuid)
+    xp_logger = logging.getLogger(job_name)
+    log_path = get_project_job_logs_path(job_name)
     try:
         log_handler = logging.FileHandler(log_path)
         log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')

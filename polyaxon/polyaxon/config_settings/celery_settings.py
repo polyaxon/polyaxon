@@ -139,6 +139,7 @@ class EventsCeleryTasks(object):
     EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
     EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
     EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
+    EVENTS_HANDLE_LOGS_BUILD_JOB = 'events_handle_logs_build_job'
 
 
 class SchedulerCeleryTasks(object):
@@ -333,6 +334,8 @@ CELERY_TASK_ROUTES = {
     EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
         {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     EventsCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR:
+        {'queue': CeleryQueues.LOGS_SIDECARS},
+    EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB:
         {'queue': CeleryQueues.LOGS_SIDECARS},
 }
 

@@ -66,6 +66,17 @@ class PublisherService(Service):
                 except (TimeoutError, AMQPError):
                     pass
 
+    def publish_build_job_log(self, log_line, job_uuid, job_name):
+        try:
+            log_line = log_line.decode('utf-8')
+        except AttributeError:
+            pass
+
+        self._logger.info("Publishing log event for task: %s", job_uuid)
+        celery_app.send_task(
+            EventsCeleryTasks.EVENTS_HANDLE_LOGS_BUILD_JOB,
+            kwargs={'job_uuid': job_uuid, 'job_name': job_name, 'log_line': log_line})
+
     def setup(self):
         import logging
 
