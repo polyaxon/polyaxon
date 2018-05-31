@@ -16,16 +16,16 @@ class Command(BaseCommand):
     help = 'Used to build a docker image.'
 
     def add_arguments(self, parser):
-        parser.add_argument('build_job_id')
+        parser.add_argument('build_job_uuid')
         super(Command, self).add_arguments(parser)
 
     def handle(self, *args, **options):
-        build_job_id = options['build_job_id']
+        build_job_uuid = options['build_job_uuid']
         try:
-            build_job = BuildJob.objects.get(id=build_job_id)
+            build_job = BuildJob.objects.get(uuid=build_job_uuid)
         except BuildJob.DoesNotExist:
             self.stdout.write(
-                'The build job %s does not exist anymore.' % build_job_id,
+                'The build job %s does not exist anymore.' % build_job_uuid,
                 ending='\n')
             return
 
