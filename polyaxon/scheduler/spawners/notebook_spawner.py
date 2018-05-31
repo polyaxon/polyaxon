@@ -8,7 +8,8 @@ from libs.crypto import get_hmac
 from libs.paths.projects import get_project_repos_path
 from scheduler.spawners.base import get_pod_volumes
 from scheduler.spawners.project_spawner import ProjectSpawner
-from scheduler.spawners.templates import constants, deployments, ingresses, pods, services
+from scheduler.spawners.templates import constants, ingresses, pods, services
+from scheduler.spawners.templates.project_jobs import deployments
 
 logger = logging.getLogger('polyaxon.spawners.notebook')
 
