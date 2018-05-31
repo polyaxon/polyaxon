@@ -69,6 +69,19 @@ class TensorboardJob(PluginJobBase):
     def __str__(self):
         return '{} tensorboard<{}>'.format(self.project, self.image)
 
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
+        if self.pk is None:
+            last = TensorboardJob.objects.filter(project=self.project).last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
+
+        super(TensorboardJob, self).save(*args, **kwargs)
+
+    @property
+    def unique_name(self):
+        return '{}.tensorboards.{}'.format(self.project.unique_name, self.sequence)
+
     @cached_property
     def image(self):
         return self.specification.run_exec.image
@@ -83,6 +96,8 @@ class TensorboardJob(PluginJobBase):
 
 class NotebookJob(PluginJobBase):
     """A model that represents the configuration for tensorboard job."""
+    JOBS_NAME = 'notebooks'
+
     project = models.ForeignKey(
         'db.Project',
         on_delete=models.CASCADE,
@@ -100,6 +115,19 @@ class NotebookJob(PluginJobBase):
 
     def __str__(self):
         return '{} notebook'.format(self.project)
+
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
+        if self.pk is None:
+            last = NotebookJob.objects.filter(project=self.project).last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
+
+        super(NotebookJob, self).save(*args, **kwargs)
+
+    @property
+    def unique_name(self):
+        return '{}.notebooks.{}'.format(self.project.unique_name, self.sequence)
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=NotebookJobStatus,

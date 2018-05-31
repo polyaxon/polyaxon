@@ -44,6 +44,11 @@ class JobResources(models.Model):
 class Job(DiffModel, LastStatusMixin):
     STATUSES = JobLifeCycle
 
+    sequence = models.PositiveSmallIntegerField(
+        editable=False,
+        null=False,
+        help_text='The sequence number of this job.', )
+
     class Meta:
         abstract = True
 

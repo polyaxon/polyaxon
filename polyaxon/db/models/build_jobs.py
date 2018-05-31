@@ -45,6 +45,19 @@ class BuildJob(Job):
     def __str__(self):
         return '{} build<{}, ref({})>'.format(self.project, self.image, self.code_reference)
 
+    def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
+        if self.pk is None:
+            last = BuildJob.objects.filter(project=self.project).last()
+            self.sequence = 1
+            if last:
+                self.sequence = last.sequence + 1
+
+        super(BuildJob, self).save(*args, **kwargs)
+
+    @property
+    def unique_name(self):
+        return '{}.builds.{}'.format(self.project.unique_name, self.sequence)
+
     @cached_property
     def specification(self):
         return BuildConfig.from_dict(self.config)

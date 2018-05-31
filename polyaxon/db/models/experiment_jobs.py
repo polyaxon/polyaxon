@@ -23,10 +23,6 @@ class ExperimentJob(Job):
         related_name='jobs')
     definition = JSONField(help_text='The specific values for this job.')
     role = models.CharField(max_length=64, default=TaskType.MASTER)
-    sequence = models.PositiveSmallIntegerField(
-        editable=False,
-        null=False,
-        help_text='The sequence number of this job within the experiment.', )
     resources = models.OneToOneField(
         'db.JobResources',
         related_name='+',
