@@ -62,7 +62,7 @@ def validate_plugin_spec_config(config, raise_for_rest=False):
     return spec
 
 
-def validate_build_config(config, raise_for_rest=False):
+def validate_build_spec_config(config, raise_for_rest=False):
     try:
         BuildConfig.from_dict(config)
     except MarshmallowValidationError as e:

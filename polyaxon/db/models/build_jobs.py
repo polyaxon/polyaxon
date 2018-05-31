@@ -7,7 +7,7 @@ from django.utils.functional import cached_property
 from polyaxon_schemas.run_exec import BuildConfig
 
 from db.models.jobs import Job, JobStatus
-from libs.spec_validation import validate_build_config
+from libs.spec_validation import validate_build_spec_config
 
 logger = logging.getLogger('db.build_jobs')
 
@@ -24,7 +24,7 @@ class BuildJob(Job):
         related_name='build_jobs')
     config = JSONField(
         help_text='The compiled polyaxonfile for plugin job.',
-        validators=[validate_build_config])
+        validators=[validate_build_spec_config])
     code_reference = models.ForeignKey(
         'db.CodeReference',
         on_delete=models.SET_NULL,
