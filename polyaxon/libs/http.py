@@ -1,3 +1,6 @@
+import os
+import tarfile
+
 import requests
 
 
@@ -51,7 +54,7 @@ def safe_urlopen(
     return response
 
 
-def download(url, access_token, filename, logger, headers=None, timeout=60):
+def download(url, access_token, filename, logger, headers=None, timeout=60, untar=False):
     """Download the file from the given url at the current path"""
     logger.info("Downloading file from %s" % url)
     # Auth headers if access_token is present
@@ -76,7 +79,22 @@ def download(url, access_token, filename, logger, headers=None, timeout=60):
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
+        if untar:
+            untar_file(filename=filename, logger=logger, delete_tar=True)
         return filename
+
     except requests.exceptions.RequestException as e:
         logger.warning("Exception: %s" % e)
         return None
+
+
+def untar_file(filename, logger, delete_tar=False):
+    if filename:
+        logger.info("Untarring the contents of the file ...")
+        tar = tarfile.open(filename)
+        tar.extractall()
+        tar.close()
+    if delete_tar:
+        logger.info("Cleaning up the tar file ...")
+        os.remove(filename)
+    return filename

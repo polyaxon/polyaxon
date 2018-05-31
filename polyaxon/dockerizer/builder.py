@@ -180,13 +180,11 @@ def download_code(build_job, build_path, filename, token):
                          access_token=token,
                          filename=filename,
                          logger=_logger,
-                         headers={'x-polyaxon-internal': 'dockerizer'})
+                         headers={'x-polyaxon-internal': 'dockerizer'},
+                         untar=True)
     if not repo_file:
         build_job.set_status(JobLifeCycle.FAILED,
                              message='Could not download code to build the image.')
-    build_file = os.path.join(build_path, repo_file)
-    zipfile.ZipFile(build_file).extractall(build_path)
-    os.remove(build_file)
 
 
 def build(build_job, token, image_tag=None):
