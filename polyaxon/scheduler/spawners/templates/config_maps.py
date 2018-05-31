@@ -11,17 +11,6 @@ from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates import constants
 
 
-def get_env_var(name, value, reraise=True):
-    if not isinstance(value, str):
-        try:
-            value = json.dumps(value)
-        except (ValueError, TypeError) as e:
-            if reraise:
-                raise e
-
-    return client.V1EnvVar(name=name, value=value)
-
-
 def get_map_labels(project_name,
                    experiment_group_name,
                    experiment_name,
