@@ -100,7 +100,10 @@ class PodManager(object):
                 constants.CONFIG_MAP_EXPERIMENT_LOGS_PATH_KEY_NAME),
             self.get_from_experiment_config_map(
                 constants.CONFIG_MAP_EXPERIMENT_DATA_PATH_KEY_NAME),
-            self.get_from_experiment_secret(constants.SECRET_USER_TOKEN),
+            self.get_from_app_secret('POLYAXON_SECRET_KEY',
+                                     'polyaxon-secret'),
+            self.get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN',
+                                     'polyaxon-internal-secret-token'),
         ]
 
         if resources:

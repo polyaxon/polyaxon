@@ -197,21 +197,6 @@ class ExperimentSpawner(K8SManager):
 
         self.create_or_update_config_map(name=name, body=config_map, reraise=True)
 
-    def create_experiment_secret(self, user_token):
-        name = constants.SECRET_NAME.format(experiment_uuid=self.experiment_uuid)
-        secret = config_maps.get_secret(
-            namespace=self.namespace,
-            project_name=self.project_name,
-            experiment_group_name=self.experiment_group_name,
-            experiment_name=self.experiment_name,
-            project_uuid=self.project_uuid,
-            experiment_group_uuid=self.experiment_group_uuid,
-            experiment_uuid=self.experiment_uuid,
-            user_token=user_token
-        )
-
-        self.create_or_update_secret(name=name, body=secret, reraise=True)
-
     def delete_experiment_config_map(self):
         name = constants.CONFIG_MAP_NAME.format(experiment_uuid=self.experiment_uuid)
         self.delete_config_map(name, reraise=True)
@@ -220,9 +205,8 @@ class ExperimentSpawner(K8SManager):
         name = constants.SECRET_NAME.format(experiment_uuid=self.experiment_uuid)
         self.delete_secret(name, reraise=True)
 
-    def start_experiment(self, user_token=None):
+    def start_experiment(self):
         self.create_experiment_config_map()
-        self.create_experiment_secret(user_token)
         master_resp = self.create_master()
         return {
             TaskType.MASTER: master_resp,
@@ -230,7 +214,6 @@ class ExperimentSpawner(K8SManager):
 
     def stop_experiment(self):
         self.delete_experiment_config_map()
-        self.delete_experiment_secret()
         self.delete_master()
 
     def _get_pod_address(self, host):

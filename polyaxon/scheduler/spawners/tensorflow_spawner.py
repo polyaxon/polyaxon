@@ -71,8 +71,8 @@ class TensorflowSpawner(ExperimentSpawner):
     def get_n_pods(self, task_type):
         return self.spec.cluster_def[0].get(task_type, 0)
 
-    def start_experiment(self, user_token=None):
-        experiment = super(TensorflowSpawner, self).start_experiment(user_token=user_token)
+    def start_experiment(self):
+        experiment = super(TensorflowSpawner, self).start_experiment()
         experiment[TaskType.WORKER] = self.create_multi_jobs(task_type=TaskType.WORKER,
                                                              add_service=self.WORKER_SERVICE)
         experiment[TaskType.PS] = self.create_multi_jobs(task_type=TaskType.PS,
