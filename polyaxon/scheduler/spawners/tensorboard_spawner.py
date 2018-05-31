@@ -43,6 +43,8 @@ class TensorboardSpawner(ProjectJobSpawner):
             name=self.TENSORBOARD_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
+            job_name=self.job_name,
+            job_uuid=self.job_uuid,
             volume_mounts=volume_mounts,
             volumes=volumes,
             image=image,
@@ -59,6 +61,8 @@ class TensorboardSpawner(ProjectJobSpawner):
         deployment_labels = deployments.get_labels(app=settings.APP_LABELS_TENSORBOARD,
                                                    project_name=self.project_name,
                                                    project_uuid=self.project_uuid,
+                                                   job_name=self.job_name,
+                                                   job_uuid=self.job_uuid,
                                                    role=settings.ROLE_LABELS_DASHBOARD,
                                                    type=settings.TYPE_LABELS_EXPERIMENT)
 
