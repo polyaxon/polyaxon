@@ -179,7 +179,8 @@ def download_code(build_job, build_path, filename, token):
     repo_file = download(url=download_url,
                          access_token=token,
                          filename=filename,
-                         logger=_logger)
+                         logger=_logger,
+                         headers={'x-polyaxon-internal': 'dockerizer'})
     if not repo_file:
         build_job.set_status(JobLifeCycle.FAILED,
                              message='Could not download code to build the image.')
