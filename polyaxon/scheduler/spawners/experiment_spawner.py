@@ -2,9 +2,9 @@ import logging
 
 from polyaxon_k8s.manager import K8SManager
 from polyaxon_schemas.utils import TaskType
-from scheduler.spawners.base import get_pod_volumes
 from scheduler.spawners.templates import constants, pods, services
 from scheduler.spawners.templates.experiments import config_maps
+from scheduler.spawners.templates.volumes import get_pod_volumes
 
 logger = logging.getLogger('polyaxon.spawners.experiment')
 

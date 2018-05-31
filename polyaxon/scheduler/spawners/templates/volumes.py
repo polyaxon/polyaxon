@@ -1,0 +1,39 @@
+from django.conf import settings
+from kubernetes import client
+
+from scheduler.spawners.templates import constants
+
+
+def get_volume_mount(volume, volume_mount=None):
+    return client.V1VolumeMount(name=volume, mount_path=volume_mount)
+
+
+def get_volume(volume, claim_name=None, volume_mount=None):
+    if claim_name:
+        pv_claim = client.V1PersistentVolumeClaimVolumeSource(claim_name=claim_name)
+        return client.V1Volume(name=volume, persistent_volume_claim=pv_claim)
+
+    if volume_mount:
+        return client.V1Volume(
+            name=volume,
+            host_path=client.V1HostPathVolumeSource(path=volume_mount))
+
+    empty_dir = client.V1EmptyDirVolumeSource()
+    return client.V1Volume(name=volume, empty_dir=empty_dir)
+
+
+def get_pod_volumes():
+    volumes = []
+    volume_mounts = []
+    volumes.append(get_volume(volume=constants.DATA_VOLUME,
+                              claim_name=settings.DATA_CLAIM_NAME,
+                              volume_mount=settings.DATA_ROOT))
+    volume_mounts.append(get_volume_mount(volume=constants.DATA_VOLUME,
+                                          volume_mount=settings.DATA_ROOT))
+
+    volumes.append(get_volume(volume=constants.OUTPUTS_VOLUME,
+                              claim_name=settings.OUTPUTS_CLAIM_NAME,
+                              volume_mount=settings.OUTPUTS_ROOT))
+    volume_mounts.append(get_volume_mount(volume=constants.OUTPUTS_VOLUME,
+                                          volume_mount=settings.OUTPUTS_ROOT))
+    return volumes, volume_mounts

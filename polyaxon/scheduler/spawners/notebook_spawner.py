@@ -6,10 +6,10 @@ from django.conf import settings
 
 from libs.crypto import get_hmac
 from libs.paths.projects import get_project_repos_path
-from scheduler.spawners.base import get_pod_volumes
 from scheduler.spawners.project_spawner import ProjectSpawner
-from scheduler.spawners.templates import constants, ingresses, pods, services
+from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
+from scheduler.spawners.templates.volumes import get_volume, get_volume_mount, get_pod_volumes
 
 logger = logging.getLogger('polyaxon.spawners.notebook')
 
@@ -26,12 +26,12 @@ class NotebookSpawner(ProjectSpawner):
 
     @staticmethod
     def get_notebook_code_volume():
-        volume = pods.get_volume(volume=constants.REPOS_VOLUME,
-                                 claim_name=settings.REPOS_CLAIM_NAME,
-                                 volume_mount=settings.REPOS_ROOT)
+        volume = get_volume(volume=constants.REPOS_VOLUME,
+                            claim_name=settings.REPOS_CLAIM_NAME,
+                            volume_mount=settings.REPOS_ROOT)
 
-        volume_mount = pods.get_volume_mount(volume=constants.REPOS_VOLUME,
-                                             volume_mount=settings.REPOS_ROOT)
+        volume_mount = get_volume_mount(volume=constants.REPOS_VOLUME,
+                                        volume_mount=settings.REPOS_ROOT)
         return volume, volume_mount
 
     def request_notebook_port(self):

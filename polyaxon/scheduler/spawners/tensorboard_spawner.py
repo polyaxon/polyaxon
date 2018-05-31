@@ -5,7 +5,7 @@ import random
 from django.conf import settings
 
 from libs.paths.projects import get_project_outputs_path
-from scheduler.spawners.base import get_pod_volumes
+from scheduler.spawners.templates.volumes import get_pod_volumes
 from scheduler.spawners.project_spawner import ProjectSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
