@@ -4,7 +4,6 @@ import logging
 import os
 import stat
 import time
-import zipfile
 
 from docker import APIClient
 from docker.errors import DockerException

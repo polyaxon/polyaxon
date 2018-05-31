@@ -17,7 +17,7 @@ from api.utils.views import ProtectedView, UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.permissions.authentication import InternalAuthentication, is_internal_user
-from libs.permissions.internal import IsAuthenticatedOrInternal, IsInternal
+from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.repos import git
 from libs.repos.git import set_git_repo
@@ -53,7 +53,7 @@ class DownloadFilesView(ProtectedView):
 
     def get(self, request, *args, **kwargs):
         repo = self.get_object()
-        archive_path, archive_name = git.archive_repo(repo.git, repo.project.name)
+        _, archive_name = git.archive_repo(repo.git, repo.project.name)
         return self.redirect(path='/archived_repos/{}'.format(archive_name))
 
 
