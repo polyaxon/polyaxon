@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from django.conf import settings
 from django.http import HttpResponseServerError, Http404
+from rest_framework.settings import api_settings
 
 import auditor
 
@@ -15,6 +16,8 @@ from api.repos.tasks import handle_new_files
 from api.utils.views import UploadView, ProtectedView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
+from libs.permissions.authentication import InternalAuthentication, is_internal_user
+from libs.permissions.internal import IsInternal, IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.repos import git
 from libs.repos.git import set_git_repo
@@ -33,6 +36,10 @@ class RepoDetailView(RetrieveUpdateDestroyAPIView):
 
 class DownloadFilesView(ProtectedView):
     HANDLE_UNAUTHENTICATED = False
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
+    permission_classes = (IsAuthenticatedOrInternal, )
 
     def get_object(self):
         project = get_permissible_project(view=self)
@@ -40,7 +47,7 @@ class DownloadFilesView(ProtectedView):
             repo = Repo.objects.get(project=project)
         except Repo.DoesNotExist:
             raise Http404('Repo does not exist.')
-        if not self.request.META.get('HTTP_{}'.format(settings.HEADERS_INTERNAL)):
+        if is_internal_user(self.request.user):
             auditor.record(event_type=REPO_DOWNLOADED, instance=repo, actor_id=self.request.user.id)
         return repo
 

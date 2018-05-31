@@ -298,6 +298,7 @@ class DownloadRepoViewTest(BaseViewTest):
     model_class = Repo
     factory_class = RepoFactory
     HAS_AUTH = True
+    HAS_INTERNAL = True
 
     def setUp(self):
         super().setUp()
@@ -337,6 +338,25 @@ class DownloadRepoViewTest(BaseViewTest):
         self.assertTrue(os.path.exists(git_file_path))
 
         response = self.auth_client.get(self.download_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
+                         '/archived_repos/{}.tar'.format(self.project.name))
+
+    def test_redirects_nginx_to_file_works_with_internal_client(self):
+        self.upload_file()
+        user = self.auth_client.user
+        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+                                              user.username,
+                                              self.project.name,
+                                              self.project.name)
+        # Assert that the code_file_path exists
+        self.assertTrue(os.path.exists(code_file_path))
+        # Assert that the code_file_path is a git repo
+        git_file_path = '{}/.git'.format(code_file_path)
+        self.assertTrue(os.path.exists(git_file_path))
+
+        response = self.internal_client.get(self.download_url)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
