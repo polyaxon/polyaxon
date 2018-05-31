@@ -16,6 +16,7 @@ else:
 CORS_ALLOW_HEADERS = default_headers + (
     'x-polyaxon-cli-version',
     'x-polyaxon-client-version',
+    'x-polyaxon-internal'
 )
 
 if SSL_ENABLED:
