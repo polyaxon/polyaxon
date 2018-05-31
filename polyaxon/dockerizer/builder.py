@@ -186,11 +186,14 @@ def download_code(build_job, build_path, filename, token):
                              message='Could not download code to build the image.')
 
 
-def build(build_job, token, image_tag=None):
+def build(build_job, image_tag=None):
     """Build necessary code for a job to run"""
     build_path = '/tmp/build'
     filename = 'code'
-    download_code(build_job=build_job, build_path=build_path, filename=filename, token=token)
+    download_code(build_job=build_job,
+                  build_path=build_path,
+                  filename=filename,
+                  token=settings.INTERNAL_SECRET_TOKEN)
 
     repo_path = '{}/{}'.format(build_path, filename)
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, build_job.project.name)
