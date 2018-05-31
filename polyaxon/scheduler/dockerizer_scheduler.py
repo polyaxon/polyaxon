@@ -1,7 +1,8 @@
 import logging
 
-from django.conf import settings
 from kubernetes.client.rest import ApiException
+
+from django.conf import settings
 
 from constants.jobs import JobLifeCycle
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner

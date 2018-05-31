@@ -1,7 +1,8 @@
 import logging
 
-from django.core.management.base import BaseCommand
 from docker.errors import DockerException
+
+from django.core.management.base import BaseCommand
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob

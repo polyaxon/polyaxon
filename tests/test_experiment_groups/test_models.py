@@ -10,6 +10,7 @@ from django.test.client import MULTIPART_CONTENT
 
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
+from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup, ExperimentGroupIteration
 from db.models.experiments import Experiment, ExperimentMetric
 from factories.factory_experiment_groups import ExperimentGroupFactory, ExperimentGroupStatusFactory
@@ -30,7 +31,6 @@ from hpsearch.search_managers import (
 )
 from hpsearch.tasks.bo import hp_bo_start
 from hpsearch.tasks.hyperband import hp_hyperband_start
-from constants.urls import API_V1
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.specification import GroupSpecification
 from polyaxon_schemas.settings import SettingsConfig

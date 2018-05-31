@@ -9,7 +9,7 @@ from libs.paths.projects import get_project_repos_path
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.project_jobs import deployments
-from scheduler.spawners.templates.volumes import get_volume, get_volume_mount, get_pod_volumes
+from scheduler.spawners.templates.volumes import get_pod_volumes, get_volume, get_volume_mount
 
 logger = logging.getLogger('polyaxon.spawners.notebook')
 

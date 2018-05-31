@@ -1,5 +1,6 @@
-from django.conf import settings
 from kubernetes import client
+
+from django.conf import settings
 
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants

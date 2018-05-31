@@ -7,14 +7,14 @@ from rest_framework import status
 
 from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
-from db.models.plugins import NotebookJob, TensorboardJob, TensorboardJobStatus, NotebookJobStatus
+from constants.urls import API_V1
+from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 from db.models.projects import Project
 from dockerizer.tasks import build_project_notebook
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import plugin_spec_parsed_content
-from constants.urls import API_V1
 from scheduler import notebook_scheduler
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner

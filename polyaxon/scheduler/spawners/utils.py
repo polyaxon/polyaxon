@@ -2,7 +2,6 @@ import json
 
 from rest_framework import fields
 
-
 from api.experiments.serializers import ExperimentJobDetailSerializer
 
 

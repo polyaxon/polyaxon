@@ -1,5 +1,6 @@
-from django.conf import settings
 from kubernetes import client
+
+from django.conf import settings
 
 from scheduler.spawners.templates import constants
 

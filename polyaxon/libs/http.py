@@ -1,7 +1,6 @@
 import os
-import tarfile
-
 import requests
+import tarfile
 
 
 def safe_urlopen(

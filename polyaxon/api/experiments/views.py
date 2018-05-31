@@ -16,9 +16,9 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 from django.http import StreamingHttpResponse
-from rest_framework.settings import api_settings
 
 import auditor
 
@@ -34,12 +34,8 @@ from api.experiments.serializers import (
 )
 from api.utils.views import AuditorMixinView, ListCreateAPIView
 from db.models.experiment_groups import ExperimentGroup
-from db.models.experiments import (
-    Experiment,
-    ExperimentMetric,
-    ExperimentStatus
-)
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
+from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED_TRIGGERED,
     EXPERIMENT_CREATED,

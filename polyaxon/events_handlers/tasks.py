@@ -4,15 +4,14 @@ from django.conf import settings
 from django.db import IntegrityError
 
 from db.models.build_jobs import BuildJob
-from db.models.experiments import Experiment
 from db.models.experiment_jobs import ExperimentJob
+from db.models.experiments import Experiment
 from db.models.nodes import ClusterEvent
 from db.models.projects import Project
 from libs.paths.experiments import get_experiment_logs_path
+from libs.paths.project_jobs import get_project_job_logs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import EventsCeleryTasks
-
-from libs.paths.project_jobs import get_project_job_logs_path
 
 _logger = logging.getLogger(__name__)
 

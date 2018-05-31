@@ -9,12 +9,12 @@ from api.experiment_groups.serializers import (
     ExperimentGroupSerializer
 )
 from constants.experiments import ExperimentLifeCycle
+from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
-from constants.urls import API_V1
 from tests.utils import BaseViewTest
 
 

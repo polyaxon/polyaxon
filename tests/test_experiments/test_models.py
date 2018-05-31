@@ -12,9 +12,10 @@ from django.utils import timezone
 
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
+from constants.urls import API_V1
 from crons.tasks.experiments import sync_experiments_and_jobs_statuses
-from db.models.experiments import CloningStrategy, Experiment, ExperimentStatus
 from db.models.experiment_jobs import ExperimentJob
+from db.models.experiments import CloningStrategy, Experiment, ExperimentStatus
 from db.models.jobs import JobResources
 from dockerizer.tasks import build_experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
@@ -33,7 +34,6 @@ from factories.fixtures import (
     experiment_spec_content
 )
 from libs.paths.experiments import create_experiment_outputs_path, get_experiment_outputs_path
-from constants.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from polyaxon_schemas.utils import TaskType
 from scheduler.tasks.experiments import copy_experiment, experiments_set_metrics

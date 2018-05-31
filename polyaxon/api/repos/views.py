@@ -4,20 +4,20 @@ import os
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 from django.conf import settings
-from django.http import HttpResponseServerError, Http404
-from rest_framework.settings import api_settings
+from django.http import Http404, HttpResponseServerError
 
 import auditor
 
 from api.repos.serializers import RepoSerializer
 from api.repos.tasks import handle_new_files
-from api.utils.views import UploadView, ProtectedView
+from api.utils.views import ProtectedView, UploadView
 from db.models.repos import Repo
 from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.permissions.authentication import InternalAuthentication, is_internal_user
-from libs.permissions.internal import IsInternal, IsAuthenticatedOrInternal
+from libs.permissions.internal import IsAuthenticatedOrInternal, IsInternal
 from libs.permissions.projects import get_permissible_project
 from libs.repos import git
 from libs.repos.git import set_git_repo

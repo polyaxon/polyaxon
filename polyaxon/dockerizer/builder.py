@@ -1,19 +1,19 @@
-import zipfile
-
 import jinja2
 import json
 import logging
 import os
 import stat
 import time
+import zipfile
 
-from django.core.exceptions import ObjectDoesNotExist
 from docker import APIClient
 from docker.errors import DockerException
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 import publisher
+
 from constants.jobs import JobLifeCycle
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from libs.http import download

@@ -6,13 +6,13 @@ from flaky import flaky
 from rest_framework import status
 
 from api.projects.serializers import ProjectDetailSerializer, ProjectSerializer
+from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.projects import Project
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_projects import ProjectFactory
-from constants.urls import API_V1
 from tests.utils import BaseViewTest
 
 

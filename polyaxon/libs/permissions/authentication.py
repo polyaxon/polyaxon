@@ -1,6 +1,7 @@
-from django.conf import settings
 from rest_framework import HTTP_HEADER_ENCODING, exceptions
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
+
+from django.conf import settings
 
 
 class InternalUser(object):

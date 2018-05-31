@@ -13,13 +13,13 @@ from django.test.client import MULTIPART_CONTENT
 from api.repos.serializers import RepoSerializer
 from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
+from constants.urls import API_V1
 from db.models.repos import Repo
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.factory_users import UserFactory
 from libs.repos import git
-from constants.urls import API_V1
 from tests.utils import BaseViewTest
 
 

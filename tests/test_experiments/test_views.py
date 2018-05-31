@@ -17,12 +17,9 @@ from api.experiments.serializers import (
 )
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
-from db.models.experiments import (
-    Experiment,
-    ExperimentMetric,
-    ExperimentStatus
-)
+from constants.urls import API_V1
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
+from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -34,7 +31,6 @@ from factories.factory_experiments import (
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
 from libs.paths.experiments import get_experiment_logs_path
-from constants.urls import API_V1
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
 from tests.utils import BaseViewTest
 

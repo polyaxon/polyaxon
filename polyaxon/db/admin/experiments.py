@@ -2,12 +2,8 @@ from django.contrib import admin
 
 from db.admin.jobs import JobStatusAdmin
 from db.admin.utils import DiffModelAdmin
-from db.models.experiments import (
-    Experiment,
-    ExperimentMetric,
-    ExperimentStatus
-)
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
+from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 
 
 class ExperimentAdmin(DiffModelAdmin):

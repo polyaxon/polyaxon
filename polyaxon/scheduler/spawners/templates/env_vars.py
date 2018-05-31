@@ -1,7 +1,8 @@
 import json
 
-from django.conf import settings
 from kubernetes import client
+
+from django.conf import settings
 
 
 def get_from_experiment_config_map(name, key_name):

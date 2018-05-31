@@ -5,10 +5,10 @@ from rest_framework import status
 from api.clusters.serializers import ClusterSerializer
 from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
 from constants.nodes import NodeRoles
+from constants.urls import API_V1
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory, get_cluster_node
-from constants.urls import API_V1
 from tests.utils import BaseViewTest
 
 
