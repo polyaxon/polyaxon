@@ -216,6 +216,11 @@ django config
     secretKeyRef:
       name: {{ template "polyaxon.fullname" . }}-secret
       key: polyaxon-secret
+- name: POLYAXON_INTERNAL_SECRET_TOKEN
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-secret
+      key: polyaxon-internal-secret-token
 - name: POLYAXON_CELERY_ALWAYS_EAGER
   value: "false"
 - name: POLYAXON_CELERYD_PREFETCH_MULTIPLIER
