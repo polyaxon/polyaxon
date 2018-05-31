@@ -10,6 +10,7 @@ from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from scheduler.spawners.templates import constants
+from scheduler.spawners.templates.env_vars import get_from_app_secret
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
 
@@ -72,14 +73,6 @@ class PodManager(object):
         value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
         return client.V1EnvVar(name=key_name, value_from=value)
 
-    @staticmethod
-    def get_from_app_secret(key_name, key, secret_ref_name=None):
-        secret_ref_name = secret_ref_name or settings.POLYAXON_K8S_APP_SECRET_NAME
-        secret_key_ref = client.V1SecretKeySelector(name=secret_ref_name,
-                                                    key=key)
-        value = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
-        return client.V1EnvVar(name=key_name, value_from=value)
-
     def get_pod_container(self,
                           volume_mounts,
                           env_vars=None,
@@ -100,10 +93,8 @@ class PodManager(object):
                 constants.CONFIG_MAP_EXPERIMENT_LOGS_PATH_KEY_NAME),
             self.get_from_experiment_config_map(
                 constants.CONFIG_MAP_EXPERIMENT_DATA_PATH_KEY_NAME),
-            self.get_from_app_secret('POLYAXON_SECRET_KEY',
-                                     'polyaxon-secret'),
-            self.get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN',
-                                     'polyaxon-internal-secret-token'),
+            get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret'),
+            get_from_app_secret('POLYAXON_INTERNAL_SECRET_TOKEN', 'polyaxon-internal-secret-token')
         ]
 
         if resources:
@@ -131,10 +122,9 @@ class PodManager(object):
             client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
             client.V1EnvVar(name='POLYAXON_POD_ID', value=job_name),
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
-            self.get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret'),
-            self.get_from_app_secret('POLYAXON_RABBITMQ_PASSWORD',
-                                     'rabbitmq-password',
-                                     settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME)
+            get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret'),
+            get_from_app_secret('POLYAXON_RABBITMQ_PASSWORD', 'rabbitmq-password',
+                                settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME)
         ]
         for k, v in self.sidecar_config.items():
             env_vars.append(client.V1EnvVar(name=k, value=v))

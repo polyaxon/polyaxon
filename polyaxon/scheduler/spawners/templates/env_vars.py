@@ -1,17 +1,12 @@
 import json
 
+from django.conf import settings
 from kubernetes import client
 
 
 def get_from_experiment_config_map(name, key_name):
     config_map_key_ref = client.V1ConfigMapKeySelector(name=name, key=key_name)
     value_from = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
-    return client.V1EnvVar(name=key_name, value_from=value_from)
-
-
-def get_from_secret(secret_name, secret_key_name, key_name):
-    secret_key_ref = client.V1SecretKeySelector(name=secret_name, key=secret_key_name)
-    value_from = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
     return client.V1EnvVar(name=key_name, value_from=value_from)
 
 
@@ -24,3 +19,10 @@ def get_env_var(name, value, reraise=True):
                 raise e
 
     return client.V1EnvVar(name=name, value=value)
+
+
+def get_from_app_secret(key_name, secret_key_name, secret_ref_name=None):
+    secret_ref_name = secret_ref_name or settings.POLYAXON_K8S_APP_SECRET_NAME
+    secret_key_ref = client.V1SecretKeySelector(name=secret_ref_name, key=secret_key_name)
+    value_from = client.V1EnvVarSource(secret_key_ref=secret_key_ref)
+    return client.V1EnvVar(name=key_name, value_from=value_from)
