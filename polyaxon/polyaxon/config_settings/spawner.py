@@ -19,9 +19,10 @@ NOTEBOOK_PORT_RANGE = [6700, 7700]
 TYPE_LABELS_CORE = config.get_string('POLYAXON_TYPE_LABELS_CORE')
 TYPE_LABELS_EXPERIMENT = config.get_string('POLYAXON_TYPE_LABELS_EXPERIMENT')
 
-# Plugin jobs app
+# Labels
 APP_LABELS_TENSORBOARD = config.get_string('POLYAXON_APP_LABELS_TENSORBOARD')
 APP_LABELS_NOTEBOOK = config.get_string('POLYAXON_APP_LABELS_NOTEBOOK')
+APP_LABELS_DOCKERIZER = config.get_string('POLYAXON_APP_LABELS_DOCKERIZER')
 
 # Selectors
 NODE_SELECTORS_EXPERIMENTS = config.get_string(
@@ -32,12 +33,14 @@ NODE_SELECTORS_CORE = config.get_string(
 CONTAINER_NAME_JOB = config.get_string('POLYAXON_CONTAINER_NAME_JOB')
 CONTAINER_NAME_SIDECAR = config.get_string('POLYAXON_CONTAINER_NAME_SIDECAR')
 CONTAINER_NAME_PLUGIN_JOB = config.get_string('POLYAXON_CONTAINER_NAME_PLUGIN_JOB')
+CONTAINER_NAME_DOCKERIZER_JOB = config.get_string('POLYAXON_CONTAINER_NAME_DOCKERIZER_JOB')
 JOB_DOCKER_NAME = config.get_string('POLYAXON_JOB_DOCKER_NAME',
                                     is_optional=True,
                                     default='polyaxon/polyaxon-lib')
 JOB_SIDECAR_DOCKER_IMAGE = config.get_string('POLYAXON_JOB_SIDECAR_DOCKER_IMAGE',
-                                             is_optional=True,
-                                             default='polyaxon/polyaxon-sidecar')
+                                             is_optional=True)
+JOB_DOCKERIZER_IMAGE = config.get_string('POLYAXON_JOB_DOCKERIZER_IMAGE',
+                                         is_optional=True,)
 TENSORBOARD_DOCKER_IMAGE = config.get_string('POLYAXON_TENSORBOARD_DOCKER_IMAGE',
                                              is_optional=True,
                                              default='tensorflow/tensorflow:1.4.1-py3')
