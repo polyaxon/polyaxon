@@ -18,3 +18,5 @@ DATA_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_DATA', is_optional=True)
 LOGS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_LOGS', is_optional=True)
 OUTPUTS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_OUTPUTS', is_optional=True)
 REPOS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_REPOS', is_optional=True)
+
+REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
