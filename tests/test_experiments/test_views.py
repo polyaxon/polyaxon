@@ -570,6 +570,7 @@ class TestExperimentMetricListViewV1(BaseViewTest):
     factory_class = ExperimentMetricFactory
     num_objects = 3
     HAS_AUTH = True
+    HAS_INTERNAL = True
 
     def setUp(self):
         super().setUp()
@@ -625,6 +626,19 @@ class TestExperimentMetricListViewV1(BaseViewTest):
 
         data = {'values': {'precision': 0.9}}
         resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.experiment == self.experiment
+        assert last_object.values == data['values']
+
+    def test_create_internal(self):
+        data = {}
+        resp = self.internal_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        data = {'values': {'precision': 0.9}}
+        resp = self.internal_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 1
         last_object = self.model_class.objects.last()

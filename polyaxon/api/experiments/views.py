@@ -18,6 +18,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from django.http import StreamingHttpResponse
+from rest_framework.settings import api_settings
 
 import auditor
 
@@ -59,6 +60,8 @@ from event_manager.events.experiment_job import (
 )
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.paths.experiments import get_experiment_logs_path
+from libs.permissions.authentication import InternalAuthentication
+from libs.permissions.internal import IsAuthenticatedOrInternal
 from libs.permissions.projects import get_permissible_project
 from libs.spec_validation import validate_experiment_spec_config
 from libs.utils import to_bool
@@ -265,7 +268,10 @@ class ExperimentStatusListView(ExperimentViewMixin, ListCreateAPIView):
 class ExperimentMetricListView(ExperimentViewMixin, ListCreateAPIView):
     queryset = ExperimentMetric.objects.all()
     serializer_class = ExperimentMetricSerializer
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
+    permission_classes = (IsAuthenticatedOrInternal,)
 
     def perform_create(self, serializer):
         serializer.save(experiment=self.get_experiment())
