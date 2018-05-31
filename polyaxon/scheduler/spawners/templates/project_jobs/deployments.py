@@ -2,8 +2,9 @@ from kubernetes import client
 
 from libs.utils import get_list
 from polyaxon_k8s import constants as k8s_constants
-from scheduler.spawners.templates import constants, pods
+from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
+from scheduler.spawners.templates.resources import get_resources
 
 
 def get_labels(app, project_name, project_uuid, role=None, type=None):
@@ -43,7 +44,7 @@ def get_project_pod_spec(volume_mounts,
                                      args=args,
                                      ports=ports,
                                      env=env_vars,
-                                     resources=pods.get_resources(resources),
+                                     resources=get_resources(resources),
                                      volume_mounts=volume_mounts)]
     return client.V1PodSpec(restart_policy=restart_policy,
                             containers=containers,

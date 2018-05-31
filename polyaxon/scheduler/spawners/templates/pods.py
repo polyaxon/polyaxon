@@ -11,41 +11,9 @@ from polyaxon_k8s import constants as k8s_constants
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
+from scheduler.spawners.templates.resources import get_resources
 
 logger = logging.getLogger('polyaxon.spawners.spawners')
-
-
-def get_resources(resources):
-    """Create resources requirements.
-
-    Args:
-        resources: `PodResourcesConfig`
-
-    Return:
-        `V1ResourceRequirements`
-    """
-    limits = {}
-    requests = {}
-    if resources is None:
-        return None
-    if resources.cpu:
-        if resources.cpu.limits:
-            limits['cpu'] = resources.cpu.limits
-        if resources.cpu.requests:
-            requests['cpu'] = resources.cpu.requests
-
-    if resources.memory:
-        if resources.memory.limits:
-            limits['memory'] = '{}Mi'.format(resources.memory.limits)
-        if resources.memory.requests:
-            requests['memory'] = '{}Mi'.format(resources.memory.requests)
-
-    if resources.gpu:
-        if resources.gpu.limits:
-            limits[settings.K8S_GPU_RESOURCE_KEY] = resources.gpu.limits
-        if resources.gpu.requests:
-            requests[settings.K8S_GPU_RESOURCE_KEY] = resources.gpu.requests
-    return client.V1ResourceRequirements(limits=limits or None, requests=requests or None)
 
 
 class PodManager(object):
