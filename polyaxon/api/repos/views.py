@@ -47,7 +47,7 @@ class DownloadFilesView(ProtectedView):
             repo = Repo.objects.get(project=project)
         except Repo.DoesNotExist:
             raise Http404('Repo does not exist.')
-        if is_internal_user(self.request.user):
+        if not is_internal_user(self.request.user):
             auditor.record(event_type=REPO_DOWNLOADED, instance=repo, actor_id=self.request.user.id)
         return repo
 
