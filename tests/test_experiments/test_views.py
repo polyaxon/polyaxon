@@ -725,10 +725,6 @@ class TestExperimentJobListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
     def test_create(self):
-        data = {}
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-
         data = {'definition': {'key': 'my new kob k8s'}}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
