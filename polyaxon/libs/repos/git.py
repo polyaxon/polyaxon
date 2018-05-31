@@ -106,8 +106,14 @@ def fetch(git_url, repo_path, overwrite=False):
 
 
 def archive_repo(repo, repo_name):
-    with open(os.path.join(settings.REPOS_ARCHIVE_ROOT, '{}.tar'.format(repo_name)), 'wb') as fp:
+    if not os.path.exists(settings.REPOS_ARCHIVE_ROOT):
+        os.makedirs(settings.REPOS_ARCHIVE_ROOT)
+
+    archive_name = '{}.tar'.format(repo_name)
+    with open(os.path.join(settings.REPOS_ARCHIVE_ROOT, archive_name), 'wb') as fp:
         repo.archive(fp)
+
+    return settings.REPOS_ARCHIVE_ROOT, archive_name
 
 
 def checkout_commit(repo_path, commit=None):  # pylint:disable=redefined-outer-name
