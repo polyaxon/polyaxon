@@ -4,7 +4,7 @@ isort==4.3.4
 mock==2.0.0
 prospector==0.12.11
 pep8-naming==0.7.0
-pyflakes==1.6.0
+pyflakes==2.0.0
 pytest==3.4.2
 pylint==1.8.4
 tox==2.9.1
