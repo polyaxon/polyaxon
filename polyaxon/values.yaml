@@ -145,7 +145,7 @@ api:
   resources:
     limits:
       cpu: 500m
-      memory: 300Mi
+      memory: 400Mi
     requests:
       cpu: 128m
       memory: 300Mi
@@ -156,81 +156,65 @@ api:
     internalPort: 80
     nodePort: 31811
 
-apiEvents:
-  image: polyaxon/polyaxon-api-events
+streams:
+  image: polyaxon/polyaxon-streams
   imageTag: 0.1.0
   imagePullPolicy: IfNotPresent
-  replicas: 1
   resources:
     limits:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 200m
+      memory: 256Mi
     requests:
       cpu: 100m
       memory: 128Mi
 
   service:  # service type is the same as api
-    name: api-events
+    name: streams
     externalPort: 1337
     internalPort: 1337
     nodePort: 31812
 
-workers:
-  scheduler:
-    image: polyaxon/polyaxon-workers
-    imageTag: 0.1.0
-    imagePullPolicy: IfNotPresent
-    replicas: 1
-    concurrency: 2
-    resources:
-      limits:
-        cpu: 350m
-        memory: 350Mi
-      requests:
-        cpu: 150m
-        memory: 200Mi
+scheduler:
+  image: polyaxon/polyaxon-scheduler
+  imageTag: 0.1.0
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  concurrency: 2
+  resources:
+    limits:
+      cpu: 350m
+      memory: 350Mi
+    requests:
+      cpu: 150m
+      memory: 200Mi
 
-  pipelines:
-    image: polyaxon/polyaxon-workers
-    imageTag: 0.1.0
-    imagePullPolicy: IfNotPresent
-    replicas: 1
-    concurrency: 2
-    resources:
-      limits:
-        cpu: 350m
-        memory: 350Mi
-      requests:
-        cpu: 150m
-        memory: 200Mi
+hpsearch:
+  image: polyaxon/polyaxon-hpsearch
+  imageTag: 0.1.0
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  concurrency: 2
+  resources:
+    limits:
+      cpu: 350m
+      memory: 350Mi
+    requests:
+      cpu: 150m
+      memory: 200Mi
 
-  events:
-    image: polyaxon/polyaxon-workers
-    imageTag: 0.1.0
-    imagePullPolicy: IfNotPresent
-    replicas: 1
-    concurrency: 2
-    resources:
-      limits:
-        cpu: 200m
-        memory: 300Mi
-      requests:
-        cpu: 130m
-        memory: 200Mi
-
-  crons:
-    image: polyaxon/polyaxon-workers
-    imageTag: 0.1.0
-    imagePullPolicy: IfNotPresent
-    replicas: 1
-    concurrency: 2
-    resources:
-      limits:
-        cpu: 100m
-        memory: 256Mi
-      requests:
-        cpu: 100m
-        memory: 100Mi
+eventsHandlers:
+  image: polyaxon/polyaxon-events-handlers
+  imageTag: 0.1.0
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  concurrency: 2
+  resources:
+    limits:
+      cpu: 200m
+      memory: 300Mi
+    requests:
+      cpu: 130m
+      memory: 200Mi
 
 beat:
   image: polyaxon/polyaxon-beat
@@ -245,13 +229,28 @@ beat:
       cpu: 50m
       memory: 128Mi
 
+crons:
+  image: polyaxon/polyaxon-crons
+  imageTag: 0.1.0
+  imagePullPolicy: IfNotPresent
+  replicas: 1
+  concurrency: 2
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
 eventMonitors:
+  replicas: 1
+
   namespace:
     enabled: true
     image: polyaxon/polyaxon-monitor-namespace
     imageTag: 0.1.0
     imagePullPolicy: IfNotPresent
-    replicas: 1
     resources:
       limits:
         cpu: 120m
@@ -267,7 +266,6 @@ eventMonitors:
     image: polyaxon/polyaxon-monitor-statuses
     imageTag: 0.1.0
     imagePullPolicy: IfNotPresent
-    replicas: 1
     resources:
       limits:
         cpu: 120m
@@ -295,6 +293,10 @@ resourcesDaemon:
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
+  imageTag: 0.1.0
+
+dockerizer:
+  image: polyaxon/polyaxon-dockerizer
   imageTag: 0.1.0
 
 job:
@@ -441,7 +443,7 @@ roles:
 apps:
   tensorboard: "polyaxon-tensorboard"
   notebook: "polyaxon-notebook"
-  notebook: "polyaxon-dockerizer"
+  dockerizer: "polyaxon-dockerizer"
 
 k8s: {}
 
@@ -460,15 +462,22 @@ intervals:  # in seconds
   operations_max_retry_delay: 3600
 
 queues:
-  apiExperiments: 'api.experiments'
-  apiExperimentsSync: 'api.sync_experiments'
-  apiClusters: 'api.clusters'
-  apiPipelines: 'api.pipelines'
-  eventsNamespace: 'events.namespace'
-  eventsResources: 'events.resources'
-  eventsStatuses: 'events.statuses'
-  logsSidecars: 'logs.sidecars'
-  streamEventsNamespace: 'stream.events.namespace'
-  streamEventsResources: 'stream.events.resources'
-  streamEventsStatuses: 'stream.events.statuses'
-  streamLogsSidecars: 'stream.logs.sidecars'
+  repos: 'queues.repos'
+
+  schedulerExperiments: 'queues.scheduler.experiments'
+  schedulerExperimentGroups: 'queues.scheduler.experimentGroups'
+  schedulerProjects: 'queues.scheduler.projects'
+
+  pipelines: 'queues.pipelines'
+
+  cronsExperiments: 'queues.crons.experiments'
+  cronsPipelines: 'queues.crons.pipelines'
+  cronsClusters: 'queues.crons.clusters'
+
+  hp: 'queues.hp'
+
+  eventsNamespace: 'queues.events.namespace'
+  eventsResources: 'queues.events.resources'
+  eventsJobStatuses: 'queues.events.jobStatuses'
+  logsSidecars: 'queues.logs.sidecars'
+  streamLogsSidecars: 'queues.stream.logs.sidecars'
