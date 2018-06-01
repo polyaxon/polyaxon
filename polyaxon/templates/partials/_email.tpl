@@ -1,7 +1,7 @@
 {{/*
 Config dirs
 */}}
-{{- define "config.email" }}
+{{- define "config.emails" }}
 - name: POLYAXON_ADMIN_NAME
   value: {{ .Values.user.name | quote }}
 - name: POLYAXON_ADMIN_MAIL

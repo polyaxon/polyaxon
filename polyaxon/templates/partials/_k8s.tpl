@@ -2,15 +2,6 @@
 k8s config
 */}}
 {{- define "config.k8s" }}
-- name: POLYAXON_CLUSTER_ID
-  valueFrom:
-    configMapKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-config
-      key: cluster-id
-- name: POLYAXON_K8S_NODE_NAME
-  valueFrom:
-    fieldRef:
-     fieldPath: spec.nodeName
 - name: POLYAXON_K8S_APP_NAME
   value: {{ template "polyaxon.fullname" . }}
 - name: POLYAXON_K8S_API_HOST
