@@ -4,6 +4,7 @@ from .context_processors import *
 from .core import *
 from .debug import *
 from .logging import *
+from .oauth import *
 from .secrets import *
 from .redis_settings import *
 from .tracker import *
