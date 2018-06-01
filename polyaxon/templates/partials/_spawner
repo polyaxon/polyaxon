@@ -1,0 +1,76 @@
+{{/*
+Spawner config
+*/}}
+{{- define "config.spawner" }}
+- name: POLYAXON_PUBLIC_PLUGIN_JOBS
+  value: {{ default false .Values.publicJobs | quote }}
+- name: POLYAXON_K8S_INGRESS_ENABLED
+  value: {{ .Values.ingress.enabled | quote }}
+- name: POLYAXON_K8S_INGRESS_ANNOTATIONS
+  value: {{ toJson .Values.ingress.annotations | quote }}
+- name: POLYAXON_K8S_RBAC_ENABLED
+  value: {{ .Values.rbac.enabled | quote }}
+- name: POLYAXON_K8S_PROVISIONER_ENABLED
+  value: {{ .Values.nfsProvisioner.enabled | quote }}
+- name: POLYAXON_K8S_SERVICE_ACCOUNT_NAME
+  value: {{ template "polyaxon.fullname" . }}-serviceaccount
+- name: POLYAXON_K8S_GPU_RESOURCE_KEY
+{{- if ge .Capabilities.KubeVersion.Minor "8" }}
+  value: 'nvidia.com/gpu'
+{{- else }}
+  value: "alpha.kubernetes.io/nvidia-gpu"
+{{- end }}
+- name: POLYAXON_CONTAINER_NAME_JOB
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-job
+- name: POLYAXON_CONTAINER_NAME_SIDECAR
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-sidecar
+- name: POLYAXON_CONTAINER_NAME_PLUGIN_JOB
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-plugin-job
+- name: POLYAXON_CONTAINER_NAME_DOCKERIZER_JOB
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: container-name-dockerizer-job
+- name: POLYAXON_JOB_DOCKER_NAME
+  value: "{{ .Values.job.image }}:{{ .Values.job.imageTag }}"
+- name: POLYAXON_JOB_SIDECAR_DOCKER_IMAGE
+  value: "{{ .Values.sidecar.image }}:{{ .Values.sidecar.imageTag }}"
+- name: POLYAXON_JOB_DOCKERIZER_IMAGE
+  value: "{{ .Values.dockerizer.image }}:{{ .Values.dockerizer.imageTag }}"
+- name: POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ template "polyaxon.fullname" . }}-config
+      key: sidecar-log-sleep-interval
+- name: POLYAXON_NODE_SELECTORS_CORE
+  value: {{ toJson .Values.nodeSelectors.core | quote }}
+- name: POLYAXON_NODE_SELECTORS_EXPERIMENTS
+  value: {{ toJson .Values.nodeSelectors.experiments | quote }}
+- name: POLYAXON_ROLE_LABELS_API
+  value: {{ .Values.roles.api }}
+- name: POLYAXON_ROLE_LABELS_LOG
+  value: {{ .Values.roles.log }}
+- name: POLYAXON_ROLE_LABELS_WORKER
+  value: {{ .Values.roles.worker }}
+- name: POLYAXON_ROLE_LABELS_DASHBOARD
+  value: {{ .Values.roles.dashboard }}
+- name: POLYAXON_TYPE_LABELS_CORE
+  value: {{ .Values.types.core }}
+- name: POLYAXON_TYPE_LABELS_EXPERIMENT
+  value: {{ .Values.types.experiment }}
+- name: POLYAXON_APP_LABELS_TENSORBOARD
+  value: {{ .Values.apps.tensorboard }}
+- name: POLYAXON_APP_LABELS_NOTEBOOK
+  value: {{ .Values.apps.notebook }}
+- name: POLYAXON_APP_LABELS_DOCKERIZER
+  value: {{ .Values.apps.dockerizer }}
+{{- end -}}
