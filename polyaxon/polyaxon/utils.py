@@ -86,6 +86,10 @@ class SettingConfig(object):
         return self.service == 'hpsearch'
 
     @property
+    def is_events_handlers_service(self):
+        return self.service == 'events_handlers'
+
+    @property
     def is_debug_mode(self):
         return self._is_debug_mode
 

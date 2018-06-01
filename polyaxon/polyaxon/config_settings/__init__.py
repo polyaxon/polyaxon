@@ -36,3 +36,5 @@ elif config.is_streams_service:
     from .streams import *
 elif config.is_hpsearch_service:
     from .streams import *
+elif config.is_events_handlers_service:
+    from .events_handlers import *
