@@ -1,5 +1,5 @@
 -r ../requirements-base.txt
 
 pika==0.11.2
-sanic==0.6.0
+sanic==0.7.0
 websockets==3.4
