@@ -4,8 +4,7 @@ from polyaxon.config_settings.auth import *
 from polyaxon.config_settings.cors import *
 from polyaxon.config_settings.email import *
 from polyaxon.config_settings.k8s import *
-from polyaxon.config_settings.oauth import *
-from polyaxon.config_settings.paths import *
+from polyaxon.config_settings.dirs import *
 from polyaxon.config_settings.registration import *
 from polyaxon.config_settings.rest import *
 from polyaxon.config_settings.spawner import *

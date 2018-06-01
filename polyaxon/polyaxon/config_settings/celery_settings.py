@@ -210,26 +210,11 @@ class CeleryQueues(object):
 
     HP = config.get_string('POLYAXON_QUEUES_HP')
 
-    EVENTS_NAMESPACE = config.get_string(
-        'POLYAXON_QUEUES_EVENTS_NAMESPACE',
-        is_optional=True,
-        default='events.namespace')
-    EVENTS_RESOURCES = config.get_string(
-        'POLYAXON_QUEUES_EVENTS_RESOURCES',
-        is_optional=True,
-        default='events.resources')
-    EVENTS_JOB_STATUSES = config.get_string(
-        'POLYAXON_QUEUES_EVENTS_JOB_STATUSES',
-        is_optional=True,
-        default='events.constants')
-    LOGS_SIDECARS = config.get_string(
-        'POLYAXON_QUEUES_LOGS_SIDECARS',
-        is_optional=True,
-        default='logs.sidecars')
-    STREAM_LOGS_SIDECARS = config.get_string(
-        'POLYAXON_QUEUES_STREAM_LOGS_SIDECARS',
-        is_optional=True,
-        default='stream.logs.sidecars')
+    EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_EVENTS_NAMESPACE')
+    EVENTS_RESOURCES = config.get_string('POLYAXON_QUEUES_EVENTS_RESOURCES')
+    EVENTS_JOB_STATUSES = config.get_string('POLYAXON_QUEUES_EVENTS_JOB_STATUSES')
+    LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS')
+    STREAM_LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_STREAM_LOGS_SIDECARS')
 
 
 # Queues on non default exchange
