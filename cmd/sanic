@@ -5,5 +5,5 @@ source $DIR/environment
 $DIR/check
 if [ $? -eq 0 ]; then
     # Does not expose any ports, so you can use the runserver at the same time.
-    docker-compose run --publish 1337:1337 -w /polyaxon/polyaxon --rm --name=polyaxon_sanic web python3 -m sanic event_monitors.api.app --host=0.0.0.0 --port=1337 --workers=1
+    docker-compose run --publish 1337:1337 -w /polyaxon/polyaxon --rm --name=polyaxon_sanic web python3 -m sanic streams.api.app --host=0.0.0.0 --port=1337 --workers=1
 fi
