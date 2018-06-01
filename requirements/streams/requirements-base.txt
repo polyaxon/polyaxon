@@ -2,4 +2,4 @@
 
 pika==0.11.2
 sanic==0.7.0
-websockets==3.4
+websockets==5.0.1
