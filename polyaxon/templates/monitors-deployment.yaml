@@ -1,25 +1,25 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "polyaxon.fullname" . }}-beat
+  name: {{ template "polyaxon.fullname" . }}-monitors
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/cm.yaml") . | sha256sum }}
   labels:
-    app: {{ template "polyaxon.fullname" . }}-beat
+    app: {{ template "polyaxon.fullname" . }}-monitors
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
-    role: {{ .Values.roles.worker }}
+    role: {{ .Values.roles.log }}
 spec:
-  replicas: {{ .Values.beat.replicas }}
+  replicas: {{ .Values.eventMonitors.replicas }}
   template:
     metadata:
       labels:
-        app: {{ template "polyaxon.fullname" . }}-beat
+        app: {{ template "polyaxon.fullname" . }}-monitors
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
-        role: {{ .Values.roles.worker }}
+        role: {{ .Values.roles.log }}
     spec:
       {{- if .Values.nodeSelectors.core }}
       nodeSelector:
@@ -35,9 +35,12 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      - name: {{ .Chart.Name }}-beat
-        image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
-        imagePullPolicy: {{ .Values.beat.imagePullPolicy }}
+      {{- if .Values.eventMonitors.namespace.enabled }}
+      # namespace event monitor
+      - name: {{ .Chart.Name }}-namespace
+        image: "{{ .Values.eventMonitors.namespace.image }}:{{ .Values.eventMonitors.namespace.imageTag }}"
+        imagePullPolicy: {{ .Values.eventMonitors.namespace.imagePullPolicy }}
+        args: ["--log_sleep_interval={{ .Values.eventMonitors.namespace.logSleepInterval }}", "--persist={{ .Values.eventMonitors.namespace.persists }}"]
         env:
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
@@ -55,11 +58,14 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.beat.resources | indent 10 }}
-      - name: {{ .Chart.Name }}-crons
-        image: "{{ .Values.crons.image }}:{{ .Values.crons.imageTag }}"
-        imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
-        args: ["{{ .Values.queues.cronsExperiments }},{{ .Values.queues.cronsPipelines }},{{ .Values.queues.cronsClusters }}", "--concurrency={{ .Values.crons.concurrency }}"]
+{{ toYaml .Values.eventMonitors.namespace.resources | indent 10 }}
+      {{- end }}
+      # statuses event monitor
+      {{- if .Values.eventMonitors.statuses.enabled }}
+      - name: {{ .Chart.Name }}-statuses
+        image: "{{ .Values.eventMonitors.statuses.image }}:{{ .Values.eventMonitors.statuses.imageTag }}"
+        imagePullPolicy: {{ .Values.eventMonitors.statuses.imagePullPolicy }}
+        args: ["--log_sleep_interval={{ .Values.eventMonitors.statuses.logSleepInterval }}", "--persist={{ .Values.eventMonitors.statuses.persists }}"]
         env:
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
@@ -77,4 +83,5 @@ spec:
         {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.crons.resources | indent 10 }}
+{{ toYaml .Values.eventMonitors.statuses.resources | indent 10 }}
+      {{- end }}

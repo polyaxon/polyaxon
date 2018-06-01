@@ -10,16 +10,16 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     type: {{ .Values.types.core }}
-    role: {{ .Values.roles.log }}
+    role: {{ .Values.roles.worker }}
 spec:
-  replicas: {{ .Values.eventMonitors.replicas }}
+  replicas: {{ .Values.eventsHandlers.replicas }}
   template:
     metadata:
       labels:
         app: {{ template "polyaxon.fullname" . }}-events
         release: "{{ .Release.Name }}"
         type: {{ .Values.types.core }}
-        role: {{ .Values.roles.log }}
+        role: {{ .Values.roles.worker }}
     spec:
       {{- if .Values.nodeSelectors.core }}
       nodeSelector:
@@ -35,51 +35,29 @@ spec:
       {{- end }}
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
       containers:
-      {{- if .Values.eventMonitors.namespace.enabled }}
-      # namespace event monitor
-      - name: {{ .Chart.Name }}-namespace
-        image: "{{ .Values.eventMonitors.namespace.image }}:{{ .Values.eventMonitors.namespace.imageTag }}"
-        imagePullPolicy: {{ .Values.eventMonitors.namespace.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.eventMonitors.namespace.logSleepInterval }}", "--persist={{ .Values.eventMonitors.namespace.persists }}"]
+      - name: {{ .Chart.Name }}-events
+        image: "{{ .Values.eventsHandlers.image }}:{{ .Values.eventsHandlers.imageTag }}"
+        imagePullPolicy: {{ .Values.eventsHandlers.imagePullPolicy }}
+        args: ["{{ .Values.queues.eventsNamespace }},{{ .Values.queues.eventsResources }},{{ .Values.queues.eventsJobStatuses }},{{ .Values.queues.logsSidecars }},{{ .Values.queues.streamLogsSidecars }}", "--concurrency={{ .Values.eventsHandlers.concurrency }}"]
         env:
-        {{ include "config.global" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.django" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.routingKeys" . | indent 8 }}
-        {{ include "config.queues" . | indent 8 }}
-        {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.celery" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.emails" . | indent 8 }}
+        {{ include "config.k8s" . | indent 8 }}
+        {{ include "config.extra_data" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.mount_paths" . | indent 8 }}
         {{ include "config.sub_paths" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
-        resources:
-{{ toYaml .Values.eventMonitors.namespace.resources | indent 10 }}
-      {{- end }}
-      # statuses event monitor
-      {{- if .Values.eventMonitors.statuses.enabled }}
-      - name: {{ .Chart.Name }}-statuses
-        image: "{{ .Values.eventMonitors.statuses.image }}:{{ .Values.eventMonitors.statuses.imageTag }}"
-        imagePullPolicy: {{ .Values.eventMonitors.statuses.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.eventMonitors.statuses.logSleepInterval }}", "--persist={{ .Values.eventMonitors.statuses.persists }}"]
-        env:
-        {{ include "config.global" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.django" . | indent 8 }}
         {{ include "config.registry" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
+        {{ include "config.spawner" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
         {{ include "config.redis" . | indent 8 }}
-        {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.routingKeys" . | indent 8 }}
-        {{ include "config.queues" . | indent 8 }}
-        {{ include "config.intervals" . | indent 8 }}
-        {{ include "config.mount_paths" . | indent 8 }}
-        {{ include "config.sub_paths" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
+        volumeMounts:
+        {{ include "volumes.volumeMounts.logs" . | indent 8}}
         resources:
-{{ toYaml .Values.eventMonitors.statuses.resources | indent 10 }}
-      {{- end }}
+{{ toYaml .Values.eventsHandlers.resources | indent 10 }}
+      volumes:
+      {{ include "volumes.volumes.logs" . | indent 6 }}

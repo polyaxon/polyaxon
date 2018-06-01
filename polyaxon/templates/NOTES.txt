@@ -48,7 +48,7 @@ Polyaxon is currently running:
 
   export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
 
-  export POLYAXON_WS_PORT={{ .Values.apiEvents.service.externalPort }}
+  export POLYAXON_WS_PORT={{ .Values.streams.service.externalPort }}
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
@@ -56,7 +56,7 @@ Polyaxon is currently running:
 
   export POLYAXON_IP=<YOUR HOSTNAME/IP>
   export POLYAXON_HTTP_PORT={{ .Values.api.service.externalPort }}
-  export POLYAXON_WS_PORT={{ .Values.apiEvents.service.externalPort }}
+  export POLYAXON_WS_PORT={{ .Values.streams.service.externalPort }}
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 

@@ -28,6 +28,27 @@ spec:
 {{ toYaml .Values.tolerations.resourcesDaemon | indent 8 }}
       {{- end }}
       serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+      initContainers:
+      - name: {{ .Chart.Name }}-sync-db
+        image: "{{ .Values.hooks.image }}:{{ .Values.hooks.imageTag }}"
+        imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
+        args: ["migrate"]
+        env:
+        {{ include "config.core" . | indent 8 }}
+        {{ include "config.amqp" . | indent 8 }}
+        {{ include "config.celery" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.emails" . | indent 8 }}
+        {{ include "config.k8s" . | indent 8 }}
+        {{ include "config.extra_data" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
+        {{ include "config.mount_paths" . | indent 8 }}
+        {{ include "config.sub_paths" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
+        {{ include "config.spawner" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
       containers:
       - name: {{ .Chart.Name }}-resources
         image: "{{ .Values.resourcesDaemon.image }}:{{ .Values.resourcesDaemon.imageTag }}"
@@ -36,20 +57,21 @@ spec:
         securityContext:
           privileged: true
         env:
-        {{ include "config.global" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.django" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.routingKeys" . | indent 8 }}
-        {{ include "config.queues" . | indent 8 }}
-        {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.celery" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.emails" . | indent 8 }}
+        {{ include "config.k8s" . | indent 8 }}
+        {{ include "config.extra_data" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.mount_paths" . | indent 8 }}
         {{ include "config.sub_paths" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
+        {{ include "config.spawner" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
         resources:
 {{ toYaml .Values.resourcesDaemon.resources | indent 10 }}
         volumeMounts:

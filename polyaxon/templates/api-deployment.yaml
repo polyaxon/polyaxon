@@ -41,26 +41,30 @@ spec:
         ports:
         - containerPort: {{ .Values.api.service.internalPort }}
         env:
-        {{ include "config.global" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.django" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.routingKeys" . | indent 8 }}
-        {{ include "config.queues" . | indent 8 }}
-        {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.celery" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.emails" . | indent 8 }}
+        {{ include "config.k8s" . | indent 8 }}
+        {{ include "config.extra_data" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.mount_paths" . | indent 8 }}
         {{ include "config.sub_paths" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
-        {{ include "config.auth" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
+        {{ include "config.spawner" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
         volumeMounts:
-        {{ include "volumes.volumeMounts" . | indent 8}}
+        {{ include "volumes.volumeMounts.data" . | indent 8}}
+        {{ include "volumes.volumeMounts.logs" . | indent 8}}
+        {{ include "volumes.volumeMounts.outputs" . | indent 8}}
+        {{ include "volumes.volumeMounts.repos" . | indent 8}}
+        {{ include "volumes.volumeMounts.upload" . | indent 8}}
         {{ include "volumes.dirMounts" . | indent 8}}
         livenessProbe:
-          failureThreshold: 5
+          failureThreshold: 10
           httpGet:
             path: /_health/
             port: {{ .Values.api.service.internalPort }}
@@ -81,28 +85,33 @@ spec:
           timeoutSeconds: 2
         resources:
 {{ toYaml .Values.api.resources | indent 10 }}
-      - name: {{ .Chart.Name }}-api-events
-        image: "{{ .Values.apiEvents.image }}:{{ .Values.apiEvents.imageTag }}"
-        imagePullPolicy: {{ .Values.api.imagePullPolicy }}
+      - name: {{ .Chart.Name }}-streams
+        image: "{{ .Values.streams.image }}:{{ .Values.streams.imageTag }}"
+        imagePullPolicy: {{ .Values.streams.imagePullPolicy }}
         ports:
-        - containerPort: {{ .Values.apiEvents.service.internalPort }}
+        - containerPort: {{ .Values.streams.service.internalPort }}
         env:
-        {{ include "config.global" . | indent 8 }}
-        {{ include "config.versions" . | indent 8 }}
-        {{ include "config.django" . | indent 8 }}
-        {{ include "config.registry" . | indent 8 }}
-        {{ include "config.db" . | indent 8 }}
-        {{ include "config.redis" . | indent 8 }}
+        {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}
-        {{ include "config.routingKeys" . | indent 8 }}
-        {{ include "config.queues" . | indent 8 }}
-        {{ include "config.intervals" . | indent 8 }}
+        {{ include "config.celery" . | indent 8 }}
+        {{ include "config.db" . | indent 8 }}
+        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.emails" . | indent 8 }}
+        {{ include "config.k8s" . | indent 8 }}
+        {{ include "config.extra_data" . | indent 8 }}
+        {{ include "config.claim_names" . | indent 8 }}
         {{ include "config.mount_paths" . | indent 8 }}
         {{ include "config.sub_paths" . | indent 8 }}
-        {{ include "config.claim_names" . | indent 8 }}
-        {{ include "config.dirs" . | indent 8 }}
+        {{ include "config.registry" . | indent 8 }}
+        {{ include "config.spawner" . | indent 8 }}
+        {{ include "config.versions" . | indent 8 }}
+        {{ include "config.redis" . | indent 8 }}
         resources:
-{{ toYaml .Values.apiEvents.resources | indent 10 }}
+{{ toYaml .Values.streams.resources | indent 10 }}
       volumes:
-      {{ include "volumes.volumes" . | indent 6 }}
+      {{ include "volumes.volumes.data" . | indent 6}}
+      {{ include "volumes.volumes.logs" . | indent 6}}
+      {{ include "volumes.volumes.outputs" . | indent 6}}
+      {{ include "volumes.volumes.repos" . | indent 6}}
+      {{ include "volumes.volumes.upload" . | indent 6}}
       {{ include "volumes.dirs" . | indent 6 }}
