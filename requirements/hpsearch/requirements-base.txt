@@ -1,4 +1,4 @@
 -r ../requirements-base.txt
 
 scikit-learn==0.19.1
-scipy==1.0.1
+scipy==1.1.0
