@@ -4,8 +4,6 @@ from kubernetes import client
 
 from polyaxon.utils import config
 
-K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
-K8S_NODE_NAME = config.get_string('POLYAXON_K8S_NODE_NAME')
 POLYAXON_K8S_APP_NAME = config.get_string('POLYAXON_K8S_APP_NAME')
 POLYAXON_K8S_API_HOST = config.get_string('POLYAXON_K8S_API_HOST')
 POLYAXON_K8S_API_PORT = config.get_int('POLYAXON_K8S_API_PORT')

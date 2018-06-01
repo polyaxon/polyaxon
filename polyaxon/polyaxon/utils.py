@@ -32,6 +32,16 @@ class SettingConfig(object):
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
         self._service = self.get_string('POLYAXON_SERVICE')
         self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG')
+        self._namespace = self.get_string('POLYAXON_K8S_NAMESPACE')
+        self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME')
+
+    @property
+    def namespace(self):
+        return self._namespace
+
+    @property
+    def node_name(self):
+        return self._node_name
 
     @property
     def service(self):

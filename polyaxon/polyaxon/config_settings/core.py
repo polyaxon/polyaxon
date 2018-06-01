@@ -3,6 +3,8 @@ from polyaxon.utils import config
 DEBUG = config.is_debug_mode
 POLYAXON_SERVICE = config.service
 POLYAXON_ENVIRONMENT = config.env
+K8S_NAMESPACE = config.namespace
+K8S_NODE_NAME = config.node_name
 
 ALLOWED_HOSTS = ['*']
 
