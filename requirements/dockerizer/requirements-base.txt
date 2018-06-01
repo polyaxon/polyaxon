@@ -2,4 +2,4 @@
 
 docker==3.3.0
 GitPython==2.1.10
-Jinja2==2.9.6
+Jinja2==2.10
