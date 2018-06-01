@@ -3,33 +3,35 @@ import numpy as np
 
 from unittest.mock import patch
 
-from django.test import override_settings
+import pytest
 
-from experiment_groups.models import ExperimentGroupIteration
-from experiment_groups.schemas import BOIterationConfig
-from experiment_groups.search_managers import (
-    BOSearchManager,
-    GridSearchManager,
-    HyperbandSearchManager,
-    RandomSearchManager,
-    get_search_algorithm_manager
-)
-from experiment_groups.search_managers.bayesian_optimization.optimizer import BOOptimizer
-from experiment_groups.search_managers.bayesian_optimization.space import SearchSpace
+from db.models.experiment_groups import ExperimentGroupIteration
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.fixtures import (
     experiment_group_spec_content_bo,
     experiment_group_spec_content_early_stopping,
     experiment_group_spec_content_hyperband
 )
+from hpsearch.schemas import BOIterationConfig
+from hpsearch.search_managers import (
+    BOSearchManager,
+    GridSearchManager,
+    HyperbandSearchManager,
+    RandomSearchManager,
+    get_search_algorithm_manager
+)
+from hpsearch.search_managers.bayesian_optimization.optimizer import BOOptimizer
+from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.settings import SettingsConfig
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
-class TestIterationManagers(BaseTest):
-    def test_get_search_iteration_manager(self):
+@pytest.mark.experiment_groups_mark
+class TestSearchManagers(BaseTest):
+    DISABLE_RUNNER = True
+
+    def test_get_search_manager(self):
         # Grid search
         experiment_group = ExperimentGroupFactory()
         assert isinstance(get_search_algorithm_manager(experiment_group.params_config),
@@ -54,8 +56,10 @@ class TestIterationManagers(BaseTest):
                           BOSearchManager)
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiment_groups_mark
 class TestGridSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def test_get_suggestions(self):
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
@@ -104,8 +108,10 @@ class TestGridSearchManager(BaseTest):
         assert to_numpy_mock.call_count == 2
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiment_groups_mark
 class TestRandomSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def test_get_suggestions(self):
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
@@ -164,9 +170,12 @@ class TestRandomSearchManager(BaseTest):
         assert sample_mock.call_count == 4
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiment_groups_mark
 class TestHyperbandSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
+        super().setUp()
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
             'hyperband': {
@@ -608,9 +617,12 @@ class TestHyperbandSearchManager(BaseTest):
             assert 'feature4' in suggestion
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiment_groups_mark
 class TestBOSearchManager(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
+        super().setUp()
         params_config = SettingsConfig.from_dict({
             'concurrency': 2,
             'bo': {

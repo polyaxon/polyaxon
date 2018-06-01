@@ -23,7 +23,7 @@ _cache = ImportStringCache()
 def import_string(path):
     """Path must be module.path.ClassName
 
-    >>> cls = import_string('experiments.models.Experiment')
+    >>> cls = import_string('module_x.ClassY')
     """
     result = _cache[path]
     return result

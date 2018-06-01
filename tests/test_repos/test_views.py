@@ -10,15 +10,16 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
+from api.repos.serializers import RepoSerializer
+from api.utils.views import ProtectedView
+from constants.jobs import JobLifeCycle
+from constants.urls import API_V1
+from db.models.repos import Repo
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.factory_users import UserFactory
-from jobs.statuses import JobLifeCycle
-from polyaxon.urls import API_V1
-from repos import git
-from repos.models import Repo
-from repos.serializers import RepoSerializer
+from libs.repos import git
 from tests.utils import BaseViewTest
 
 
@@ -91,7 +92,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.views.handle_new_files') as mock_task:
+        with patch('api.repos.views.handle_new_files') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file, 'json': json.dumps({'async': False})},
                                  content_type=MULTIPART_CONTENT)
@@ -113,7 +114,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.tasks.handle_new_files.delay') as mock_task:
+        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
@@ -136,7 +137,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.tasks.handle_new_files.delay') as mock_task:
+        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
             self.auth_client.put(self.url,
                                  data={'repo': uploaded_file},
                                  content_type=MULTIPART_CONTENT)
@@ -279,7 +280,7 @@ class TestUploadFilesView(BaseViewTest):
 
         uploaded_file = self.get_upload_file()
 
-        with patch('repos.tasks.handle_new_files.delay') as mock_task:
+        with patch('api.repos.tasks.handle_new_files.apply_async') as mock_task:
             response = self.auth_client.put(self.url,
                                             data={'repo': uploaded_file},
                                             content_type=MULTIPART_CONTENT)
@@ -291,3 +292,72 @@ class TestUploadFilesView(BaseViewTest):
         assert self.model_class.objects.count() == 0
         repo_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT, user.username, repo_name, repo_name)
         self.assertFalse(os.path.exists(repo_path))
+
+
+class DownloadRepoViewTest(BaseViewTest):
+    model_class = Repo
+    factory_class = RepoFactory
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.upload_url = '/{}/{}/{}/repo/upload'.format(API_V1,
+                                                         self.project.user.username,
+                                                         self.project.name)
+        self.download_url = '/{}/{}/{}/repo/download'.format(API_V1,
+                                                             self.project.user.username,
+                                                             self.project.name)
+        self.url = self.download_url
+
+    def upload_file(self):
+        filename = 'repo'
+        file = File(open('./tests/fixtures_static/{}.tar.gz'.format(filename), 'rb'))
+        uploaded_file = SimpleUploadedFile(filename, file.read(),
+                                           content_type='multipart/form-data')
+        self.auth_client.put(self.upload_url,
+                             data={'repo': uploaded_file},
+                             content_type=MULTIPART_CONTENT)
+
+    def test_raise_404_if_repo_does_not_exist(self):
+        response = self.auth_client.get(self.download_url)
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_redirects_nginx_to_file(self):
+        self.upload_file()
+        user = self.auth_client.user
+        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+                                              user.username,
+                                              self.project.name,
+                                              self.project.name)
+        # Assert that the code_file_path exists
+        self.assertTrue(os.path.exists(code_file_path))
+        # Assert that the code_file_path is a git repo
+        git_file_path = '{}/.git'.format(code_file_path)
+        self.assertTrue(os.path.exists(git_file_path))
+
+        response = self.auth_client.get(self.download_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
+                         '/archived_repos/{}.tar'.format(self.project.name))
+
+    def test_redirects_nginx_to_file_works_with_internal_client(self):
+        self.upload_file()
+        user = self.auth_client.user
+        code_file_path = '{}/{}/{}/{}'.format(settings.REPOS_ROOT,
+                                              user.username,
+                                              self.project.name,
+                                              self.project.name)
+        # Assert that the code_file_path exists
+        self.assertTrue(os.path.exists(code_file_path))
+        # Assert that the code_file_path is a git repo
+        git_file_path = '{}/.git'.format(code_file_path)
+        self.assertTrue(os.path.exists(git_file_path))
+
+        response = self.internal_client.get(self.download_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
+                         '/archived_repos/{}.tar'.format(self.project.name))

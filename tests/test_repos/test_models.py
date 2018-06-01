@@ -2,10 +2,10 @@ import os
 
 from django.conf import settings
 
+from db.models.repos import ExternalRepo
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
-from repos import git
-from repos.models import ExternalRepo
+from libs.repos import git
 from tests.utils import BaseTest
 
 

@@ -1,7 +1,7 @@
 import logging
 
+from constants.pipelines import OperationStatuses, PipelineStatuses
 from pipelines import dags
-from pipelines.constants import OperationStatuses, PipelineStatuses
 from pipelines.utils import (
     get_operation_run,
     get_pipeline_run,
@@ -9,16 +9,16 @@ from pipelines.utils import (
     stop_operation_runs_for_pipeline_run
 )
 from polyaxon.celery_api import app as celery_app
-from polyaxon.config_settings import CeleryTasks, Intervals
+from polyaxon.settings import Intervals, PipelineCeleryTasks
 
-logger = logging.getLogger('polyaxon.tasks.pipelines')
+_logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_START, bind=True, max_retries=None)
-def start_pipeline_run(self, pipeline_run_id):
+@celery_app.task(name=PipelineCeleryTasks.PIPELINES_START, bind=True, max_retries=None)
+def pipelines_start(self, pipeline_run_id):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
+        _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     pipeline_run.on_schedule()
     dag, op_runs = pipeline_run.dag
@@ -40,29 +40,29 @@ def start_pipeline_run(self, pipeline_run_id):
         self.retry(countdown=Intervals.PIPELINES_SCHEDULER)
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_START_OPERATION)
-def start_operation_run(operation_run_id):
+@celery_app.task(name=PipelineCeleryTasks.PIPELINES_START_OPERATION)
+def pipelines_start_operation(operation_run_id):
     operation_run = get_operation_run(operation_run_id=operation_run_id)
     if not operation_run:
-        logger.info('Operation `%s` does not exist any more.', operation_run_id)
+        _logger.info('Operation `%s` does not exist any more.', operation_run_id)
 
     operation_run.schedule_start()
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_STOP_OPERATIONS, ignore_result=True)
-def stop_pipeline_operation_runs(pipeline_run_id, message=None):
+@celery_app.task(name=PipelineCeleryTasks.PIPELINES_STOP_OPERATIONS, ignore_result=True)
+def pipelines_stop_operations(pipeline_run_id, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
+        _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     stop_operation_runs_for_pipeline_run(pipeline_run, message=message)
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_SKIP_OPERATIONS, ignore_result=True)
-def skip_pipeline_operation_runs(pipeline_run_id, message=None):
+@celery_app.task(name=PipelineCeleryTasks.PIPELINES_SKIP_OPERATIONS, ignore_result=True)
+def pipelines_skip_operations(pipeline_run_id, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
+        _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     # We stop all op runs first
     stop_operation_runs_for_pipeline_run(pipeline_run, message=message)
@@ -70,11 +70,11 @@ def skip_pipeline_operation_runs(pipeline_run_id, message=None):
     skip_operation_runs_for_pipeline_run(pipeline_run, message=message)
 
 
-@celery_app.task(name=CeleryTasks.PIPELINES_CHECK_STATUS, ignore_result=True)
-def check_pipeline_run_status(pipeline_run_id, status, message=None):
+@celery_app.task(name=PipelineCeleryTasks.PIPELINES_CHECK_STATUSES, ignore_result=True)
+def pipelines_check_statuses(pipeline_run_id, status, message=None):
     pipeline_run = get_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
-        logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
+        _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     if status in OperationStatuses.DONE_STATUS:
         status = PipelineStatuses.FINISHED

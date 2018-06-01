@@ -1,13 +1,15 @@
+import pytest
+
 from django.conf import settings
 
-from event_monitors.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
-from experiments.models import ExperimentJobStatus
+from constants.jobs import JobLifeCycle
+from db.models.experiment_jobs import ExperimentJobStatus
+from db.models.plugins import NotebookJobStatus, TensorboardJobStatus
+from events_handlers.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
 from factories.factory_experiments import ExperimentJobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from jobs.statuses import JobLifeCycle
-from plugins.models import NotebookJobStatus, TensorboardJobStatus
-from runner.spawners.utils.jobs import get_job_state
+from monitor_statuses.jobs import get_job_state
 from tests.fixtures import (
     status_experiment_job_event,
     status_experiment_job_event_with_conditions,
@@ -19,6 +21,7 @@ from tests.fixtures import (
 from tests.utils import BaseTest
 
 
+@pytest.mark.monitors_mark
 class TestEventsBaseJobsStatusesHandling(BaseTest):
     EVENT = None
     EVENT_WITH_CONDITIONS = None
@@ -70,6 +73,7 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
         assert set(statuses) == {JobLifeCycle.CREATED, JobLifeCycle.FAILED}
 
 
+@pytest.mark.monitors_mark
 class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_experiment_job_event
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
@@ -82,6 +86,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
         return ExperimentJobFactory(uuid=job_uuid)
 
 
+@pytest.mark.monitors_mark
 class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_tensorboard_job_event
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
@@ -95,6 +100,7 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
         return TensorboardJobFactory(project=project)
 
 
+@pytest.mark.monitors_mark
 class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
     EVENT = status_notebook_job_event
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions

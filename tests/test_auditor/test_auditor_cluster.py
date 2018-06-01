@@ -2,16 +2,19 @@
 
 from unittest.mock import patch
 
+import pytest
+
 import activitylogs
 import auditor
 import tracker
 
-from clusters.models import Cluster
+from db.models.clusters import Cluster
 from event_manager.events import cluster as cluster_events
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor_mark
 class AuditorClusterTest(BaseTest):
     """Testing subscribed events"""
 

@@ -2,9 +2,10 @@ import sys
 
 from polyaxon.utils import config
 
-from .apps import INSTALLED_APPS, MIDDLEWARE
+from .apps import INSTALLED_APPS
+from .middlewares import MIDDLEWARE
 
-if config.get_boolean('POLYAXON_DEBUG', is_optional=True):
+if config.is_debug_mode:
 
     def show_toolbar(request):
         # debug toolbar makes import take VERY long (because of SQL traces) and can break tests

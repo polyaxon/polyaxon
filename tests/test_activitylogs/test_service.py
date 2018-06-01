@@ -1,8 +1,9 @@
 # pylint:disable=ungrouped-imports
+import pytest
 
 import activitylogs
 
-from activitylogs.models import ActivityLog
+from db.models.activitylogs import ActivityLog
 from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
 from event_manager.events.user import USER_ACTIVATED
 from factories.factory_experiments import ExperimentFactory
@@ -10,14 +11,17 @@ from factories.factory_users import UserFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.auditor_mark
 class ActivityLogsTest(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
+        super().setUp()
         self.experiment = ExperimentFactory()
         self.admin = UserFactory(is_staff=True, is_superuser=True)
         self.user = UserFactory()
         activitylogs.validate()
         activitylogs.setup()
-        super(ActivityLogsTest, self).setUp()
 
     def test_record_creates_activities(self):
         assert ActivityLog.objects.count() == 0

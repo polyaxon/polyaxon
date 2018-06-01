@@ -15,7 +15,7 @@ class PublishTrackerService(TrackerService):
         if self.cluster_id:
             return self.cluster_id
 
-        from clusters.models import Cluster
+        from db.models.clusters import Cluster
         try:
             cluster_uuid = Cluster.load().uuid.hex
             self.cluster_id = cluster_uuid

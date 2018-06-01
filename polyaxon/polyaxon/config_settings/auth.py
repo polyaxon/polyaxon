@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 
 import django_auth_ldap.config as django_auth_ldap_config

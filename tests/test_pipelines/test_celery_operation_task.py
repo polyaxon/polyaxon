@@ -1,10 +1,13 @@
+import pytest
+
+from constants.pipelines import OperationStatuses, PipelineStatuses
 from factories.factory_pipelines import OperationRunFactory
 from pipelines.celery_task import ClassBasedTask, OperationTask
-from pipelines.constants import OperationStatuses, PipelineStatuses
 from polyaxon.celery_api import app as celery_app
 from tests.utils import BaseTest
 
 
+@pytest.mark.pipelines_mark
 class TestOperationTask(BaseTest):
     def setUp(self):
 

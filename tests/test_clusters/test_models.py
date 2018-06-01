@@ -1,9 +1,12 @@
 import datetime
 
-from clusters.models import Cluster
+import pytest
+
+from db.models.clusters import Cluster
 from tests.utils import BaseTest
 
 
+@pytest.mark.clusters_mark
 class TestClusterModel(BaseTest):
     def test_loads_works(self):
         assert Cluster.load() is not None

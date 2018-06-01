@@ -2,7 +2,7 @@
 
 from unittest.mock import patch
 
-from django.test import override_settings
+import pytest
 
 import activitylogs
 import auditor
@@ -13,7 +13,7 @@ from factories.factory_repos import RepoFactory
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.auditor_mark
 class AuditorRepoTest(BaseTest):
     """Testing subscribed events"""
 
@@ -31,6 +31,16 @@ class AuditorRepoTest(BaseTest):
     @patch('activitylogs.service.ActivityLogService.record_event')
     def test_repo_created(self, activitylogs_record, tracker_record):
         auditor.record(event_type=repo_events.REPO_CREATED,
+                       instance=self.project,
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_repo_downloaded(self, activitylogs_record, tracker_record):
+        auditor.record(event_type=repo_events.REPO_DOWNLOADED,
                        instance=self.project,
                        actor_id=1)
 

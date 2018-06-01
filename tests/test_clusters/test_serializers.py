@@ -1,19 +1,14 @@
-from django.test import override_settings, tag
+import pytest
 
-from clusters.models import Cluster
-from clusters.serializers import ClusterSerializer
+from api.clusters.serializers import ClusterSerializer
+from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerializer, GPUSerializer
+from db.models.clusters import Cluster
+from db.models.nodes import ClusterNode, NodeGPU
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
-from runner.nodes.models import ClusterNode, NodeGPU
-from runner.nodes.serializers import (
-    ClusterNodeDetailSerializer,
-    ClusterNodeSerializer,
-    ClusterRunnerSerializer,
-    GPUSerializer
-)
-from tests.utils import RUNNER_TEST, BaseTest
+from tests.utils import BaseTest
 
 
-@tag(RUNNER_TEST)
+@pytest.mark.clusters_mark
 class TestGPUSerializer(BaseTest):
     serializer_class = GPUSerializer
     model_class = NodeGPU
@@ -46,7 +41,7 @@ class TestGPUSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@tag(RUNNER_TEST)
+@pytest.mark.clusters_mark
 class TestClusterNodeSerializer(BaseTest):
     serializer_class = ClusterNodeSerializer
     model_class = ClusterNode
@@ -74,7 +69,7 @@ class TestClusterNodeSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@tag(RUNNER_TEST)
+@pytest.mark.clusters_mark
 class TestClusterNodeDetailsSerializer(BaseTest):
     serializer_class = ClusterNodeDetailSerializer
     model_class = ClusterNode
@@ -108,33 +103,9 @@ class TestClusterNodeDetailsSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.clusters_mark
 class TestClusterDetailSerializer(BaseTest):
     serializer_class = ClusterSerializer
-    model_class = Cluster
-    expected_keys = {'uuid', 'version_api', 'created_at', 'updated_at', }
-
-    def setUp(self):
-        super().setUp()
-        self.cluster = Cluster.load()
-        ClusterNodeFactory(cluster=self.cluster)
-        ClusterNodeFactory(cluster=self.cluster)
-
-    def test_serialize_one(self):
-        data = self.serializer_class(self.cluster).data
-
-        assert set(data.keys()) == self.expected_keys
-        assert data.pop('uuid') == self.cluster.uuid.hex
-        data.pop('created_at')
-        data.pop('updated_at')
-
-        for k, v in data.items():
-            assert getattr(self.cluster, k) == v
-
-
-@tag(RUNNER_TEST)
-class TestRunnerClusterDetailSerializer(BaseTest):
-    serializer_class = ClusterRunnerSerializer
     model_class = Cluster
     expected_keys = {'uuid', 'version_api', 'created_at', 'updated_at', 'nodes', }
 

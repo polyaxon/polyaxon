@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 from unittest import TestCase
 
 from django.conf import settings
 
-from runner.spawners.base import get_pod_volumes
+from scheduler.spawners.templates.volumes import get_pod_volumes
 
 
 class TestBase(TestCase):

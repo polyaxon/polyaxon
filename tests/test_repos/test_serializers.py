@@ -1,6 +1,6 @@
+from api.repos.serializers import RepoSerializer
+from db.models.repos import Repo
 from factories.factory_repos import RepoFactory
-from repos.models import Repo
-from repos.serializers import RepoSerializer
 from tests.utils import BaseTest
 
 

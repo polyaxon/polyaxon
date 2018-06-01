@@ -1,25 +1,27 @@
 import os
 
-from django.test import override_settings
+import pytest
 
-from experiment_groups.paths import (
+from factories.factory_experiment_groups import ExperimentGroupFactory
+from factories.factory_experiments import ExperimentFactory
+from libs.paths.experiment_groups import (
     delete_experiment_group_logs,
     delete_experiment_group_outputs,
     get_experiment_group_logs_path,
     get_experiment_group_outputs_path
 )
-from experiments.paths import (
+from libs.paths.experiments import (
     create_experiment_outputs_path,
     get_experiment_logs_path,
     get_experiment_outputs_path
 )
-from factories.factory_experiment_groups import ExperimentGroupFactory
-from factories.factory_experiments import ExperimentFactory
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupUtils(BaseTest):
+    DISABLE_RUNNER = True
+
     def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()

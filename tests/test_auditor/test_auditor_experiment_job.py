@@ -2,7 +2,7 @@
 
 from unittest.mock import patch
 
-from django.test import override_settings
+import pytest
 
 import activitylogs
 import auditor
@@ -13,11 +13,13 @@ from factories.factory_experiments import ExperimentJobFactory
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.auditor_mark
 class AuditorExperimentJobTest(BaseTest):
     """Testing subscribed events"""
+    DISABLE_RUNNER = True
 
     def setUp(self):
+        super().setUp()
         self.experiment_job = ExperimentJobFactory()
         auditor.validate()
         auditor.setup()
@@ -25,7 +27,6 @@ class AuditorExperimentJobTest(BaseTest):
         tracker.setup()
         activitylogs.validate()
         activitylogs.setup()
-        super(AuditorExperimentJobTest, self).setUp()
 
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')

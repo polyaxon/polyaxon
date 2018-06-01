@@ -1,8 +1,11 @@
+import pytest
+
 from factories.factory_pipelines import OperationFactory
 from pipelines import dags
 from tests.utils import BaseTest
 
 
+@pytest.mark.pipelines_mark
 class TestDags(BaseTest):
     def setUp(self):
 

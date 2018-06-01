@@ -30,9 +30,64 @@ class SettingConfig(object):
         self._requested_keys = set()
         self._secret_keys = set()
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
-        self._enable_services = self.get_boolean('POLYAXON_ENABLE_SERVICES',
-                                                 is_optional=True,
-                                                 default=True)
+        self._service = self.get_string('POLYAXON_SERVICE')
+        self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG')
+
+    @property
+    def service(self):
+        return self._service
+
+    @property
+    def is_monolith_service(self):
+        return self.service == 'monolith'
+
+    @property
+    def is_api_service(self):
+        return self.service == 'api'
+
+    @property
+    def is_commands_service(self):
+        return self.service == 'commands'
+
+    @property
+    def is_dockerizer_service(self):
+        return self.service == 'dockerizer'
+
+    @property
+    def is_crons_service(self):
+        return self.service == 'crons'
+
+    @property
+    def is_monitor_namespace_service(self):
+        return self.service == 'monitor_namespace'
+
+    @property
+    def is_monitor_resources_service(self):
+        return self.service == 'monitor_resources'
+
+    @property
+    def is_scheduler_service(self):
+        return self.service == 'scheduler'
+
+    @property
+    def is_monitor_statuses_service(self):
+        return self.service == 'monitor_statuses'
+
+    @property
+    def is_sidecar_service(self):
+        return self.service == 'sidecar'
+
+    @property
+    def is_streams_service(self):
+        return self.service == 'streams'
+
+    @property
+    def is_hpsearch_service(self):
+        return self.service == 'hpsearch'
+
+    @property
+    def is_debug_mode(self):
+        return self._is_debug_mode
 
     @property
     def env(self):
@@ -46,8 +101,8 @@ class SettingConfig(object):
             return True
         return False
 
-    def setup_services(self):
-        if not self.is_testing and self._enable_services:
+    def setup_auditor_services(self):
+        if not self.is_testing:
             import activitylogs
             import auditor
             import tracker
@@ -58,6 +113,12 @@ class SettingConfig(object):
             tracker.setup()
             activitylogs.validate()
             activitylogs.setup()
+
+    def setup_publisher_service(self):
+        import publisher
+
+        publisher.validate()
+        publisher.setup()
 
     @classmethod
     def read_configs(cls, config_values):  # pylint:disable=redefined-outer-name

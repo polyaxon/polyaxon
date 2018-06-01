@@ -1,9 +1,12 @@
 import uuid
 
+import pytest
+
 from libs.redis_db import RedisToStream
 from tests.utils import BaseTest
 
 
+@pytest.mark.redis_mark
 class TestRedisToStream(BaseTest):
     def test_monitor_job_resources(self):
         job_uuid = uuid.uuid4().hex

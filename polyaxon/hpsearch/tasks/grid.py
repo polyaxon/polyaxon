@@ -1,0 +1,37 @@
+from db.getters.experiment_groups import get_running_experiment_group
+from hpsearch.tasks import base
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import HPCeleryTasks, Intervals
+
+
+def create(experiment_group):
+    base.create_group_experiments(experiment_group=experiment_group)
+
+    celery_app.send_task(
+        HPCeleryTasks.HP_GRID_SEARCH_START,
+        kwargs={'experiment_group_id': experiment_group.id},
+        countdown=1)
+
+
+@celery_app.task(name=HPCeleryTasks.HP_GRID_SEARCH_CREATE)
+def hp_grid_search_create(experiment_group_id):
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
+    if not experiment_group:
+        return
+
+    create(experiment_group)
+
+
+@celery_app.task(name=HPCeleryTasks.HP_GRID_SEARCH_START, bind=True, max_retries=None)
+def hp_grid_search_start(self, experiment_group_id):
+    experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
+    if not experiment_group:
+        return
+
+    should_retry = base.start_group_experiments(experiment_group=experiment_group)
+    if should_retry:
+        # Schedule another task
+        self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+        return
+
+    base.check_group_experiments_finished(experiment_group_id)

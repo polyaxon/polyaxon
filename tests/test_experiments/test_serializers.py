@@ -1,16 +1,17 @@
 from unittest.mock import patch
 
-from django.test import override_settings
+import pytest
 
-from experiments.models import Experiment, ExperimentJob, ExperimentStatus
-from experiments.serializers import (
+from api.experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from experiments.statuses import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
+from db.models.experiment_jobs import ExperimentJob
+from db.models.experiments import Experiment, ExperimentStatus
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentJobFactory,
@@ -19,8 +20,9 @@ from factories.factory_experiments import (
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiments_mark
 class TestExperimentSerializer(BaseTest):
+    DISABLE_RUNNER = True
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -102,8 +104,9 @@ class TestExperimentSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiments_mark
 class TestExperimentDetailSerializer(BaseTest):
+    DISABLE_RUNNER = True
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -209,7 +212,9 @@ class TestExperimentDetailSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
+@pytest.mark.experiments_mark
 class TestExperimentJobSerializer(BaseTest):
+    DISABLE_RUNNER = True
     serializer_class = ExperimentJobSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
@@ -246,6 +251,7 @@ class TestExperimentJobSerializer(BaseTest):
 
 
 class TestExperimentJobDetailsSerializer(BaseTest):
+    DISABLE_RUNNER = True
     serializer_class = ExperimentJobDetailSerializer
     model_class = ExperimentJob
     factory_class = ExperimentJobFactory
@@ -281,8 +287,9 @@ class TestExperimentJobDetailsSerializer(BaseTest):
             assert set(d.keys()) == self.expected_keys
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiments_mark
 class TestExperimentStatusSerializer(BaseTest):
+    DISABLE_RUNNER = True
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
     factory_class = ExperimentStatusFactory

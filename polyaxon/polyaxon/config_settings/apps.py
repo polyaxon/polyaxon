@@ -1,35 +1,9 @@
-from polyaxon.utils import config
-
-PROJECT_APPS = (
+DEFAULT_APPS = (
     'polyaxon',
-    'libs.apps.LibsConfig',
-    'users.apps.UsersConfig',
-    'versions.apps.VersionsConfig',
-    'clusters.apps.ClustersConfig',
-    'projects.apps.ProjectsConfig',
-    'repos.apps.ReposConfig',
-    'jobs.apps.JobsConfig',
-    'experiment_groups.apps.ExperimentGroupsConfig',
-    'experiments.apps.ExperimentsConfig',
-    'pipelines.apps.PipelinesConfig',
-    'event_monitors.apps.EventMonitorsConfig',
-    'event_manager.apps.EventManagerConfig',
-    'activitylogs.apps.ActivityLogsConfig',
-    'tracker.apps.TrackerConfig',
-    'auditor.apps.AuditorConfig',
-    'sso.apps.SSOConfig'
+    'db.apps.DBConfig',
 )
 
-DEPLOY_RUNNER = config.get_boolean('POLYAXON_DEPLOY_RUNNER', is_optional=True, default=True)
-if DEPLOY_RUNNER:
-    PROJECT_APPS += (
-        'plugins.apps.PluginsConfig',
-        'runner.apps.RunnerConfig',
-        'runner.nodes.apps.NodesConfig',
-    )
-
 THIRD_PARTY_APPS = (
-    'raven.contrib.django.raven_compat',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
@@ -43,17 +17,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'raven.contrib.django.raven_compat',
 )
 
-INSTALLED_APPS += THIRD_PARTY_APPS + PROJECT_APPS
-
-MIDDLEWARE = (
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+INSTALLED_APPS += THIRD_PARTY_APPS + DEFAULT_APPS

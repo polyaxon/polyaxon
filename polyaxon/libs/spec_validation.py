@@ -9,6 +9,7 @@ from polyaxon_schemas.polyaxonfile.specification import (
     GroupSpecification,
     PluginSpecification
 )
+from polyaxon_schemas.run_exec import BuildConfig
 from polyaxon_schemas.settings import SettingsConfig
 
 
@@ -59,3 +60,13 @@ def validate_plugin_spec_config(config, raise_for_rest=False):
             raise DjangoValidationError(message_error)
 
     return spec
+
+
+def validate_build_spec_config(config, raise_for_rest=False):
+    try:
+        BuildConfig.from_dict(config)
+    except MarshmallowValidationError as e:
+        if raise_for_rest:
+            raise ValidationError(e)
+        else:
+            raise DjangoValidationError(e)

@@ -2,8 +2,8 @@ import requests
 
 from django.conf import settings
 
+from constants.sso_providers import Providers
 from event_manager.events.user import USER_BITBUCKET
-from sso.providers.constants import PROVIDERS
 from sso.providers.oauth2.provider import OAuth2Provider
 
 
@@ -66,7 +66,7 @@ class BitbucketIdentityProvider(OAuth2Provider):
         email = self.get_email(access_token=access_token, username=username)
 
         return {
-            'type': PROVIDERS.BITBUCKET,
+            'type': Providers.BITBUCKET,
             'id': user['uuid'],
             'email': email,
             'username': username,

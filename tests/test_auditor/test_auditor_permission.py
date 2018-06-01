@@ -2,24 +2,21 @@
 
 from unittest.mock import patch
 
-from django.test import override_settings
+import pytest
 
 import activitylogs
 import auditor
 import tracker
 
 from event_manager.events import permission as permission_events
-from factories.factory_plugins import NotebookJobFactory
-from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.auditor_mark
 class AuditorPermissionTest(BaseTest):
     """Testing subscribed events"""
 
     def setUp(self):
-        self.notebook = NotebookJobFactory(project=ProjectFactory())
         auditor.validate()
         auditor.setup()
         tracker.validate()

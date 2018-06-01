@@ -1,7 +1,10 @@
-from pipelines.constants import OperationStatuses, PipelineStatuses
+import pytest
+
+from constants.pipelines import OperationStatuses, PipelineStatuses
 from tests.utils import BaseTest
 
 
+@pytest.mark.pipelines_mark
 class TestStatusesTransition(BaseTest):
     def test_pipeline_statuses_transition(self):  # pylint:disable=too-many-branches
         # Cannot transition to `CREATED`

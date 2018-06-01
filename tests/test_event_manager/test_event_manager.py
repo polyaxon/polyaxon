@@ -1,10 +1,13 @@
 from __future__ import absolute_import
 
+import pytest
+
 from event_manager.event_manager import EventManager
 from event_manager.events.cluster import ClusterCreatedEvent, ClusterUpdatedEvent
 from tests.utils import BaseTest
 
 
+@pytest.mark.events_mark
 class TestEventManager(BaseTest):
     def setUp(self):
         self.manager = EventManager()

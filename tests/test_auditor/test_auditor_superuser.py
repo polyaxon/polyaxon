@@ -2,7 +2,7 @@
 
 from unittest.mock import patch
 
-from django.test import override_settings
+import pytest
 
 import activitylogs
 import auditor
@@ -12,7 +12,7 @@ from event_manager.events import superuser as superuser_events
 from tests.utils import BaseTest
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.auditor_mark
 class AuditorSuperUserTest(BaseTest):
     """Testing subscribed events"""
 

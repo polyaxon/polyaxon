@@ -1,11 +1,14 @@
+import pytest
+
 from rest_framework import status
 
-from polyaxon.urls import API_V1
+from constants.urls import API_V1
+from db.models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion
 from polyaxon.utils import config
 from tests.utils import BaseViewTest
-from versions.models import ChartVersion, CliVersion, LibVersion, PlatformVersion
 
 
+@pytest.mark.versions_mark
 class TestVersionViewsV1(BaseViewTest):
     HAS_AUTH = False
 

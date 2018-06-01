@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import pytest
+
 from event_manager.event import Attribute, Event
 from event_manager.event_manager import EventManager
 from event_manager.event_service import EventService
@@ -29,6 +31,7 @@ class DummyObject(object):
         self.dummy_attr = dummy_attr
 
 
+@pytest.mark.events_mark
 class TestEventService(BaseTest):
     def setUp(self):
         self.service = DummyEventService()

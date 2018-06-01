@@ -1,31 +1,33 @@
 from unittest.mock import patch
 
+import pytest
+
 from rest_framework import status
 
-from django.test import override_settings, tag
-
-from experiment_groups.models import ExperimentGroup
-from experiment_groups.serializers import ExperimentGroupDetailSerializer, ExperimentGroupSerializer
-from experiments.models import Experiment
-from experiments.statuses import ExperimentLifeCycle
+from api.experiment_groups.serializers import (
+    ExperimentGroupDetailSerializer,
+    ExperimentGroupSerializer
+)
+from constants.experiments import ExperimentLifeCycle
+from constants.urls import API_V1
+from db.models.experiment_groups import ExperimentGroup
+from db.models.experiments import Experiment
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_projects import ProjectFactory
-from polyaxon.urls import API_V1
-from tests.utils import RUNNER_TEST, BaseViewTest
+from tests.utils import BaseViewTest
 
 
+@pytest.mark.experiment_groups_mark
 class TestProjectExperimentGroupListViewV1(BaseViewTest):
     serializer_class = ExperimentGroupSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     num_objects = 3
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
-    @patch('runner.hp_search.base.check_group_experiments_finished')
-    @patch('runner.dockerizer.builders.experiments.build_experiment')
-    @patch('runner.schedulers.experiment_scheduler.start_experiment')
-    def setUp(self, _1, _2, _3):
+    def setUp(self):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
         self.other_project = ProjectFactory()
@@ -108,7 +110,6 @@ model:
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         assert self.queryset.count() == self.num_objects
 
-    @tag(RUNNER_TEST)
     def test_create_with_valid_group(self):
         data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
@@ -138,9 +139,7 @@ model:
           kernel_initializer: Ones"""
 
         data = {'content': content, 'description': 'new-deep'}
-        with patch('runner.hp_search.base.check_group_experiments_finished') as mock_check:
-            resp = self.auth_client.post(self.url, data)
-        assert mock_check.call_count == 1
+        resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1
         last_object = self.model_class.objects.last()
@@ -150,7 +149,6 @@ model:
         assert last_object.params['concurrency'] == 3
         assert last_object.params['matrix']['lr'] is not None
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create_without_content_passes_if_no_spec_validation_requested(self):
         data = {}
         resp = self.auth_client.post(self.url, data)
@@ -160,7 +158,6 @@ model:
         assert last_object.project == self.project
         assert last_object.content is None
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create_with_params(self):
         data = {
             'params': {
@@ -178,12 +175,13 @@ model:
         assert last_object.content is None
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiment_groups_mark
 class TestExperimentGroupDetailViewV1(BaseViewTest):
     serializer_class = ExperimentGroupDetailSerializer
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -221,71 +219,17 @@ class TestExperimentGroupDetailViewV1(BaseViewTest):
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert Experiment.objects.count() == 2
-        with patch('experiments.paths.delete_path') as outputs_mock_stop:
-            resp = self.auth_client.delete(self.url)
+        with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
+            with patch('scheduler.experiment_scheduler.stop_experiment') as scheduler_mock:
+                resp = self.auth_client.delete(self.url)
+        assert scheduler_mock.call_count == 2
         assert outputs_mock_stop.call_count == 4  # Outputs and Logs * 2
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
         assert Experiment.objects.count() == 0
 
 
-@tag(RUNNER_TEST)
-class TestRunnerExperimentGroupDetailViewV1(BaseViewTest):
-    serializer_class = ExperimentGroupDetailSerializer
-    model_class = ExperimentGroup
-    factory_class = ExperimentGroupFactory
-    HAS_AUTH = True
-
-    def setUp(self):
-        super().setUp()
-        project = ProjectFactory(user=self.auth_client.user)
-        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
-            self.object = self.factory_class(project=project)
-
-        assert mock_fct.call_count == 1
-        self.url = '/{}/{}/{}/groups/{}/'.format(API_V1,
-                                                 project.user.username,
-                                                 project.name,
-                                                 self.object.sequence)
-        self.queryset = self.model_class.objects.all()
-
-        # Add 2 more experiments
-        for _ in range(2):
-            ExperimentFactory(experiment_group=self.object)
-
-    def test_get(self):
-        resp = self.auth_client.get(self.url)
-        assert resp.status_code == status.HTTP_200_OK
-        self.object.refresh_from_db()
-        assert resp.data == self.serializer_class(self.object).data
-        assert resp.data['num_pending_experiments'] == 4
-
-    def test_patch(self):
-        new_description = 'updated_xp_name'
-        data = {'description': new_description}
-        assert self.object.description != data['description']
-        resp = self.auth_client.patch(self.url, data=data)
-        assert resp.status_code == status.HTTP_200_OK
-        new_object = self.model_class.objects.get(id=self.object.id)
-        assert new_object.user == self.object.user
-        assert new_object.description != self.object.description
-        assert new_object.description == new_description
-        assert new_object.experiments.count() == 4
-
-    def test_delete(self):
-        assert self.model_class.objects.count() == 1
-        assert Experiment.objects.count() == 4
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
-            with patch('experiments.paths.delete_path') as outputs_mock_stop:
-                resp = self.auth_client.delete(self.url)
-        assert spawner_mock_stop.call_count == 4
-        assert outputs_mock_stop.call_count == 8  # Outputs and Logs * 4
-        assert resp.status_code == status.HTTP_204_NO_CONTENT
-        assert self.model_class.objects.count() == 0
-        assert Experiment.objects.count() == 0
-
-
-@tag(RUNNER_TEST)
+@pytest.mark.experiment_groups_mark
 class TestStopExperimentGroupViewV1(BaseViewTest):
     model_class = ExperimentGroup
     factory_class = ExperimentGroupFactory
@@ -294,7 +238,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         project = ProjectFactory(user=self.auth_client.user)
-        with patch('runner.hp_search.grid.hp_grid_search_start.apply_async') as mock_fct:
+        with patch('hpsearch.tasks.grid.hp_grid_search_start.apply_async') as mock_fct:
             self.object = self.factory_class(project=project)
 
         assert mock_fct.call_count == 1
@@ -312,13 +256,14 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert self.object.stopped_experiments.count() == 0
 
         # Check that is calling the correct function
-        with patch('runner.tasks.experiment_groups.stop_group_experiments.delay') as mock_fct:
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_stop_experiments.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1
 
         # Execute the function
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as _:  # noqa
+        with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_200_OK
@@ -329,7 +274,8 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
         assert self.object.stopped_experiments.count() == 0
 
         # Check that is calling the correct function
-        with patch('runner.tasks.experiment_groups.stop_group_experiments.delay') as mock_fct:
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_stop_experiments.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1

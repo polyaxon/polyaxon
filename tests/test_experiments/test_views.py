@@ -2,19 +2,11 @@
 from faker import Faker
 from unittest.mock import patch
 
+import pytest
+
 from rest_framework import status
 
-from django.test import override_settings, tag
-
-from experiments.models import (
-    Experiment,
-    ExperimentJob,
-    ExperimentJobStatus,
-    ExperimentMetric,
-    ExperimentStatus
-)
-from experiments.paths import get_experiment_logs_path
-from experiments.serializers import (
+from api.experiments.serializers import (
     ExperimentDetailSerializer,
     ExperimentJobDetailSerializer,
     ExperimentJobSerializer,
@@ -23,7 +15,11 @@ from experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from experiments.statuses import ExperimentLifeCycle
+from constants.experiments import ExperimentLifeCycle
+from constants.jobs import JobLifeCycle
+from constants.urls import API_V1
+from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
+from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentFactory,
@@ -34,18 +30,19 @@ from factories.factory_experiments import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import exec_experiment_spec_parsed_content
-from jobs.statuses import JobLifeCycle
-from polyaxon.urls import API_V1
+from libs.paths.experiments import get_experiment_logs_path
 from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification
-from tests.utils import RUNNER_TEST, BaseViewTest
+from tests.utils import BaseViewTest
 
 
+@pytest.mark.experiments_mark
 class TestProjectExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
@@ -63,8 +60,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(project=self.project)
         self.other_object = self.factory_class(project=self.other_project)
 
-    @patch('runner.hp_search.base.check_group_experiments_finished')
-    def test_get(self, _):
+    def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
 
@@ -81,7 +77,11 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
         independent_count = self.queryset.count()
         # Create group to test independent filter
-        group = ExperimentGroupFactory(project=self.project)
+        with patch('scheduler.tasks.experiment_groups.'
+                   'experiments_group_create.apply_async') as mock_fct:
+            group = ExperimentGroupFactory(project=self.project)
+        assert mock_fct.call_count == 1
+        [self.factory_class(project=self.project, experiment_group=group) for _ in range(2)]  # noqa
         all_experiment_count = self.queryset.all().count()
         assert all_experiment_count == independent_count + group.experiments.count()
 
@@ -117,7 +117,6 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert len(data) == 1
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create(self):
         data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
@@ -133,14 +132,13 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.other_url, data)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
-    @tag(RUNNER_TEST)
     def test_create_with_runner(self):
         data = {'check_specification': True}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {'config': exec_experiment_spec_parsed_content.parsed_data}
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -151,7 +149,6 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.other_url, data)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create_without_config_passes_if_no_spec_validation_requested(self):
         data = {}
         resp = self.auth_client.post(self.url, data)
@@ -161,7 +158,6 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert last_object.project == self.project
         assert last_object.config is None
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_create_with_declarations_and_dockerfile(self):
         data = {
             'declarations': {
@@ -183,16 +179,16 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert last_object.dockerfile == 'test'
 
 
-@override_settings(DEPLOY_RUNNER=False)
+@pytest.mark.experiments_mark
 class TestExperimentGroupExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
     factory_class = ExperimentFactory
     num_objects = 3
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
-    @patch('runner.hp_search.base.check_group_experiments_finished')
-    def setUp(self, _):
+    def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()
         self.objects = [self.factory_class(experiment_group=self.experiment_group)
@@ -239,7 +235,7 @@ class TestExperimentGroupExperimentListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
-@tag(RUNNER_TEST)
+@pytest.mark.experiments_mark
 class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
@@ -247,8 +243,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
     num_objects = 3
     HAS_AUTH = True
 
-    @patch('runner.hp_search.base.check_group_experiments_finished')
-    def setUp(self, _):
+    def setUp(self):
         super().setUp()
         content = """---
     version: 1
@@ -293,10 +288,13 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
           data_files: ["../data/mnist/mnist_train.tfrecord"]
           meta_data_file: "../data/mnist/meta_data.json"
 """
-        with patch('runner.hp_search.grid.hp_grid_search_start.retry') as mock_fct:
-            self.experiment_group = ExperimentGroupFactory(content=content)
+        with patch('hpsearch.tasks.grid.hp_grid_search_start.retry') as start_fct:
+            with patch('scheduler.tasks.experiments.'
+                       'experiments_build.apply_async') as build_fct:
+                self.experiment_group = ExperimentGroupFactory(content=content)
 
-        assert mock_fct.call_count == 1
+        assert start_fct.call_count == 1
+        assert build_fct.call_count == 1
         assert self.experiment_group.specification.matrix_space == 3
         self.url = '/{}/{}/{}/groups/{}/experiments/'.format(API_V1,
                                                              self.experiment_group.project.user,
@@ -340,6 +338,7 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
+@pytest.mark.experiments_mark
 class TestExperimentListViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
@@ -390,6 +389,7 @@ class TestExperimentListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
 
+@pytest.mark.experiments_mark
 class TestExperimentDetailViewV1(BaseViewTest):
     serializer_class = ExperimentDetailSerializer
     model_class = Experiment
@@ -473,23 +473,11 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert new_object.is_clone is True
         assert new_object.original_experiment == new_experiment
 
-    @override_settings(DEPLOY_RUNNER=False)
     def test_delete(self):
         assert self.model_class.objects.count() == 1
         assert ExperimentJob.objects.count() == 2
-        with patch('experiments.paths.delete_path') as outputs_mock_stop:
-            resp = self.auth_client.delete(self.url)
-        assert outputs_mock_stop.call_count == 2  # Outputs and Logs
-        assert resp.status_code == status.HTTP_204_NO_CONTENT
-        assert self.model_class.objects.count() == 0
-        assert ExperimentJob.objects.count() == 0
-
-    @tag(RUNNER_TEST)
-    def test_delete_triggers_runner(self):
-        assert self.model_class.objects.count() == 1
-        assert ExperimentJob.objects.count() == 2
-        with patch('runner.schedulers.experiment_scheduler.stop_experiment') as spawner_mock_stop:
-            with patch('experiments.paths.delete_path') as outputs_mock_stop:
+        with patch('scheduler.experiment_scheduler.stop_experiment') as spawner_mock_stop:
+            with patch('libs.paths.experiments.delete_path') as outputs_mock_stop:
                 resp = self.auth_client.delete(self.url)
         assert spawner_mock_stop.call_count == 1
         assert outputs_mock_stop.call_count == 2  # Outputs and Logs
@@ -498,6 +486,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert ExperimentJob.objects.count() == 0
 
 
+@pytest.mark.experiments_mark
 class TestExperimentStatusListViewV1(BaseViewTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
@@ -508,7 +497,7 @@ class TestExperimentStatusListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:
-            with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/statuses/'.format(API_V1,
@@ -570,17 +559,19 @@ class TestExperimentStatusListViewV1(BaseViewTest):
         assert last_object.status == data['status']
 
 
+@pytest.mark.experiments_mark
 class TestExperimentMetricListViewV1(BaseViewTest):
     serializer_class = ExperimentMetricSerializer
     model_class = ExperimentMetric
     factory_class = ExperimentMetricFactory
     num_objects = 3
     HAS_AUTH = True
+    HAS_INTERNAL = True
 
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:  # noqa
-            with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 self.experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/metrics/'.format(API_V1,
@@ -637,7 +628,21 @@ class TestExperimentMetricListViewV1(BaseViewTest):
         assert last_object.experiment == self.experiment
         assert last_object.values == data['values']
 
+    def test_create_internal(self):
+        data = {}
+        resp = self.internal_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
+        data = {'values': {'precision': 0.9}}
+        resp = self.internal_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.experiment == self.experiment
+        assert last_object.values == data['values']
+
+
+@pytest.mark.experiments_mark
 class TestExperimentStatusDetailViewV1(BaseViewTest):
     serializer_class = ExperimentStatusSerializer
     model_class = ExperimentStatus
@@ -647,7 +652,7 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         with patch.object(Experiment, 'set_status') as _:  # noqa
-            with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+            with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
                 self.experiment = ExperimentFactory()
         self.object = self.factory_class(experiment=self.experiment)
         self.url = '/{}/{}/{}/experiments/{}/statuses/{}/'.format(
@@ -675,6 +680,7 @@ class TestExperimentStatusDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
 
 
+@pytest.mark.experiments_mark
 class TestExperimentJobListViewV1(BaseViewTest):
     serializer_class = ExperimentJobSerializer
     model_class = ExperimentJob
@@ -729,10 +735,6 @@ class TestExperimentJobListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
     def test_create(self):
-        data = {}
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_400_BAD_REQUEST
-
         data = {'definition': {'key': 'my new kob k8s'}}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
@@ -742,6 +744,7 @@ class TestExperimentJobListViewV1(BaseViewTest):
         assert last_object.definition == data['definition']
 
 
+@pytest.mark.experiments_mark
 class TestExperimentJobDetailViewV1(BaseViewTest):
     serializer_class = ExperimentJobDetailSerializer
     model_class = ExperimentJob
@@ -789,6 +792,7 @@ class TestExperimentJobDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 0
 
 
+@pytest.mark.experiments_mark
 class TestExperimentJobStatusListViewV1(BaseViewTest):
     serializer_class = ExperimentJobStatusSerializer
     model_class = ExperimentJobStatus
@@ -798,7 +802,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             with patch.object(ExperimentJob, 'set_status') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
@@ -864,6 +868,7 @@ class TestExperimentJobStatusListViewV1(BaseViewTest):
         assert last_object.status == data['status']
 
 
+@pytest.mark.experiments_mark
 class TestExperimentJobStatusDetailViewV1(BaseViewTest):
     serializer_class = ExperimentJobStatusSerializer
     model_class = ExperimentJobStatus
@@ -872,7 +877,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
 
     def setUp(self):
         super().setUp()
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             with patch.object(ExperimentJob, 'set_status') as _:  # noqa
                 project = ProjectFactory(user=self.auth_client.user)
                 experiment = ExperimentFactory(project=project)
@@ -914,6 +919,7 @@ class TestExperimentJobStatusDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
 
 
+@pytest.mark.experiments_mark
 class TestRestartExperimentViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
@@ -934,7 +940,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
     def test_restart(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert mock_fct.call_count == 1
@@ -951,7 +957,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
     def test_restart_patch_config(self):
         data = {'config': {'declarations': {'lr': 0.1}}}
         assert self.queryset.first().declarations is None
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -971,7 +977,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
     def test_restart_patch_wrong_config_raises(self):
         data = {'config': {'lr': 0.1}}
         assert self.queryset.first().declarations is None
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
@@ -979,6 +985,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
+@pytest.mark.experiments_mark
 class TestResumeExperimentViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
@@ -999,7 +1006,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
     def test_resume(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert mock_fct.call_count == 1
@@ -1016,7 +1023,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
     def test_resume_patch_config(self):
         data = {'config': {'declarations': {'lr': 0.1}}}
         assert self.queryset.first().declarations is None
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -1036,7 +1043,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
     def test_resume_patch_wrong_config_raises(self):
         data = {'config': {'lr': 0.1}}
         assert self.queryset.first().declarations is None
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
@@ -1044,6 +1051,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
+@pytest.mark.experiments_mark
 class TestCopyExperimentViewV1(BaseViewTest):
     serializer_class = ExperimentSerializer
     model_class = Experiment
@@ -1064,7 +1072,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
     def test_resume(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert mock_fct.call_count == 1
@@ -1081,7 +1089,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
     def test_resume_patch_config(self):
         data = {'config': {'declarations': {'lr': 0.1}}}
         assert self.queryset.first().declarations is None
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -1101,7 +1109,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
     def test_resume_patch_wrong_config_raises(self):
         data = {'config': {'lr': 0.1}}
         assert self.queryset.first().declarations is None
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
@@ -1109,6 +1117,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
 
+@pytest.mark.experiments_mark
 class TestStopExperimentViewV1(BaseViewTest):
     model_class = Experiment
     factory_class = ExperimentFactory
@@ -1128,22 +1137,23 @@ class TestStopExperimentViewV1(BaseViewTest):
     def test_stop(self):
         data = {}
         assert self.queryset.count() == 1
-        with patch('runner.tasks.experiments.stop_experiment.delay') as mock_fct:
+        with patch('scheduler.tasks.experiments.experiments_stop.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
 
 
+@pytest.mark.experiments_mark
 class TestExperimentLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True
+    DISABLE_RUNNER = True
 
     def setUp(self):
         super().setUp()
-        with patch('runner.tasks.experiments.start_experiment.delay') as _:
-            project = ProjectFactory(user=self.auth_client.user)
-            experiment = ExperimentFactory(project=project)
+        project = ProjectFactory(user=self.auth_client.user)
+        experiment = ExperimentFactory(project=project)
         self.url = '/{}/{}/{}/experiments/{}/logs'.format(
             API_V1,
             project.user.username,

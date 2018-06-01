@@ -2,15 +2,17 @@ import os
 
 from unittest.mock import patch
 
-from experiments.paths import (
+import pytest
+
+from factories.factory_experiments import ExperimentFactory
+from factories.factory_projects import ProjectFactory
+from factories.factory_repos import RepoFactory
+from libs.paths.experiments import (
     create_experiment_outputs_path,
     get_experiment_logs_path,
     get_experiment_outputs_path
 )
-from factories.factory_experiments import ExperimentFactory
-from factories.factory_projects import ProjectFactory
-from factories.factory_repos import RepoFactory
-from projects.paths import (
+from libs.paths.projects import (
     delete_project_logs,
     delete_project_outputs,
     get_project_logs_path,
@@ -19,6 +21,7 @@ from projects.paths import (
 from tests.utils import BaseTest
 
 
+@pytest.mark.projects_mark
 class TestProjectUtils(BaseTest):
     def setUp(self):
         super().setUp()
@@ -26,7 +29,7 @@ class TestProjectUtils(BaseTest):
         self.repo = RepoFactory(project=self.project)
 
     def test_project_logs_path_creation_deletion(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         experiment_logs_path = get_experiment_logs_path(experiment.unique_name)
         open(experiment_logs_path, '+w')
@@ -42,7 +45,7 @@ class TestProjectUtils(BaseTest):
         assert os.path.exists(project_repos_path) is False
 
     def test_project_outputs_path_creation_deletion(self):
-        with patch('runner.tasks.experiments.build_experiment.apply_async') as _:  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment = ExperimentFactory(user=self.project.user, project=self.project)
         create_experiment_outputs_path(experiment.unique_name)
         experiment_outputs_path = get_experiment_outputs_path(experiment.unique_name)
