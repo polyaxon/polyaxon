@@ -1,6 +1,6 @@
 analytics-python==1.2.9
 celery==4.1.1
-Django==2.0.3
+Django==2.0.6
 django-cors-headers==2.2.0
 djangorestframework==3.7.7
 kombu==4.1.0
