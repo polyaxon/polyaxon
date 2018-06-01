@@ -23,5 +23,5 @@ spec:
       - path: /ws
         backend:
           serviceName: {{ template "polyaxon.fullname" . }}-api
-          servicePort: {{ .Values.apiEvents.service.externalPort }}
+          servicePort: {{ .Values.streams.service.externalPort }}
 {{- end }}
