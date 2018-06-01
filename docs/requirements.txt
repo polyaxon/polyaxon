@@ -1,7 +1,7 @@
-mkdocs==0.17.2
-mkdocs-material==2.2.6
+mkdocs==0.17.3
+mkdocs-material==2.7.3
 Pygments==2.2.0
-pymdown-extensions==4.7
+pymdown-extensions==4.10.2
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas
 -e git+https://github.com/polyaxon/polyaxon-cli.git@master#egg=polyaxon-cli
 -e git+https://github.com/polyaxon/polyaxon.git@master#egg=polyaxon

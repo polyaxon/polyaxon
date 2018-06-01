@@ -1,4 +1,4 @@
 -r ../requirements-base.txt
 
-docker==2.6.1
+docker==3.3.0
 requests==2.18.4
