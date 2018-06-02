@@ -4,10 +4,10 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
+from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_build_spec_config
-from polyaxon_schemas.run_exec import BuildConfig
 
 logger = logging.getLogger('db.build_jobs')
 
@@ -60,15 +60,19 @@ class BuildJob(Job):
 
     @cached_property
     def specification(self):
-        return BuildConfig.from_dict(self.config)
+        return BuildSpecification.from_dict(self.config)
 
     @cached_property
     def image(self):
-        return self.specification.image
+        return self.specification.build.image
 
     @cached_property
     def build_steps(self):
-        return self.specification.build_steps
+        return self.specification.build.build_steps
+
+    @cached_property
+    def env_vars(self):
+        return self.specification.build.env_vars
 
     @cached_property
     def resources(self):
@@ -88,6 +92,20 @@ class BuildJob(Job):
                                 status=status,
                                 message=message,
                                 details=details)
+
+    @staticmethod
+    def create(user, project, config, code_reference):
+        build_config = BuildSpecification.create_specification(config)
+        try:
+            job = BuildJob.objects.get(project=project,
+                                       config=config,
+                                       code_reference=code_reference)
+        except BuildJob.DoesNotExist:
+            job = BuildJob.objects.create(user=user,
+                                          project=project,
+                                          config=build_config,
+                                          code_reference=code_reference)
+        return job
 
 
 class BuildJobStatus(JobStatus):
