@@ -24,7 +24,7 @@ Celery config
   value: {{ .Values.queues.cronsExperiments | quote }}
 - name: POLYAXON_QUEUES_CRONS_PIPELINES
   value: {{ .Values.queues.cronsPipelines | quote }}
-- name: POLYAXON_QUEUES_API_CLUSTERS
+- name: POLYAXON_QUEUES_CRONS_CLUSTERS
   value: {{ .Values.queues.cronsClusters | quote }}
 - name: POLYAXON_QUEUES_HP
   value: {{ .Values.queues.hp | quote }}
