@@ -2,6 +2,11 @@ import os
 import requests
 import tarfile
 
+from django.conf import settings
+from rest_framework.authentication import TokenAuthentication
+
+from libs.permissions.authentication import InternalAuthentication
+
 
 def safe_urlopen(
     url,
@@ -53,18 +58,35 @@ def safe_urlopen(
     return response
 
 
-def download(url, access_token, filename, logger, headers=None, timeout=60, untar=False):
+def download(url,
+             filename,
+             logger,
+             authentication_type=None,
+             access_token=None,
+             headers=None,
+             timeout=60,
+             untar=False):
     """Download the file from the given url at the current path"""
-    logger.info("Downloading file from %s" % url)
+    logger.info("Downloading file from %s using %s" % (url, authentication_type))
+    authentication_type = authentication_type or InternalAuthentication.keyword
+    if authentication_type == InternalAuthentication.keyword and not access_token:
+        access_token = settings.INTERNAL_SECRET_TOKEN
+    elif authentication_type == TokenAuthentication.keyword and not access_token:
+        raise ValueError('Access token is required')
+
     # Auth headers if access_token is present
     request_headers = {}
     if access_token:
-        request_headers["Authorization"] = "Token " + access_token
+        request_headers["Authorization"] = "{} {}".format(authentication_type, access_token)
     # Add any additional headers
     if headers:
         request_headers.update(headers)
 
     try:
+        api = '{}//{}:{}'.format(settings.PROTOCOL,
+                                 settings.POLYAXON_K8S_API_HOST,
+                                 settings.POLYAXON_K8S_API_PORT)
+        url = '{}/{}'.format(api, url)
         response = requests.get(url,
                                 headers=request_headers,
                                 timeout=timeout,

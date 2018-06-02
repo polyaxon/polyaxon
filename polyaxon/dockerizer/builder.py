@@ -169,17 +169,16 @@ class DockerBuilder(object):
         return True
 
 
-def download_code(build_job, build_path, filename, token):
+def download_code(build_job, build_path, filename):
     if not os.path.exists(build_path):
         os.makedirs(build_path)
 
     download_url = build_job.download_url
 
     repo_file = download(url=download_url,
-                         access_token=token,
                          filename=filename,
                          logger=_logger,
-                         headers={'x-polyaxon-internal': 'dockerizer'},
+                         headers={settings.HEADERS_INTERNAL: 'dockerizer'},
                          untar=True)
     if not repo_file:
         build_job.set_status(JobLifeCycle.FAILED,
@@ -192,8 +191,7 @@ def build(build_job, image_tag=None):
     filename = 'code'
     download_code(build_job=build_job,
                   build_path=build_path,
-                  filename=filename,
-                  token=settings.INTERNAL_SECRET_TOKEN)
+                  filename=filename)
 
     repo_path = '{}/{}'.format(build_path, filename)
     image_name = '{}/{}'.format(settings.REGISTRY_HOST, build_job.project.name)
