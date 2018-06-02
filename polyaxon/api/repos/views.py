@@ -53,8 +53,8 @@ class DownloadFilesView(ProtectedView):
 
     def get(self, request, *args, **kwargs):
         repo = self.get_object()
-        _, archive_name = git.archive_repo(repo.git, repo.project.name)
-        return self.redirect(path='/archived_repos/{}'.format(archive_name))
+        archived_path, archive_name = git.archive_repo(repo.git, repo.project.name)
+        return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 
 class UploadFilesView(UploadView):
