@@ -206,12 +206,6 @@ class TestExperimentModel(BaseTest):
         experiment = ExperimentFactory(config=content.parsed_data)
         assert experiment.is_independent is True
 
-        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
-        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
-            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
-
-        build_experiment(experiment_id=experiment.id)
-
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 2
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED, ExperimentLifeCycle.SCHEDULED]
@@ -260,12 +254,6 @@ class TestExperimentModel(BaseTest):
         experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.is_independent is True
 
-        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
-        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
-            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
-
-        build_experiment(experiment_id=experiment.id)
-
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,
@@ -296,17 +284,12 @@ class TestExperimentModel(BaseTest):
         experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.is_independent is True
 
-        assert ExperimentStatus.objects.filter(experiment=experiment).count() == 1
-        assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
-            'status', flat=True)) == [ExperimentLifeCycle.CREATED]
-
-        build_experiment(experiment_id=experiment.id)
-
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
         assert list(ExperimentStatus.objects.filter(experiment=experiment).values_list(
             'status', flat=True)) == [ExperimentLifeCycle.CREATED,
                                       ExperimentLifeCycle.SCHEDULED,
                                       ExperimentLifeCycle.STARTING]
+
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STARTING
 

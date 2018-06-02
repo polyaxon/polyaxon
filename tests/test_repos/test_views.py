@@ -341,7 +341,7 @@ class DownloadRepoViewTest(BaseViewTest):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         '/archived_repos/{}.tar'.format(self.project.name))
+                         '{}/{}.tar'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
 
     def test_redirects_nginx_to_file_works_with_internal_client(self):
         self.upload_file()
@@ -360,4 +360,4 @@ class DownloadRepoViewTest(BaseViewTest):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         '/archived_repos/{}.tar'.format(self.project.name))
+                         '{}/{}.tar'.format(settings.REPOS_ARCHIVE_ROOT, self.project.name))
