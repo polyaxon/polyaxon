@@ -63,3 +63,16 @@ def get_notebook_image_info(project, job):
     """Return the image name and image tag for a job"""
     image_name, _ = get_job_image_info(project, job)
     return image_name, LATEST_IMAGE_TAG
+
+
+def get_image_name(build_job):
+    return '{}/{}'.format(settings.REGISTRY_HOST, build_job.project.name)
+
+
+def get_image_image_info(build_job):
+    return get_image_name(build_job=build_job), build_job.uuid.hex
+
+
+def get_tagged_image(build_job):
+    image_name, image_tag = get_image_image_info(build_job)
+    return '{}:{}'.format(image_name, image_tag)
