@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
         # Building the docker image
         try:
-            status = builder.build(build_job=build_job, image_tag=build_job.commit)
+            status = builder.build(build_job=build_job)
         except DockerException as e:
             _logger.warning('Failed to build job %s', e)
             build_job.set_status(JobLifeCycle.FAILED)

@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import publisher
 
 from constants.jobs import JobLifeCycle
+from docker_images.image_info import get_image_name, get_tagged_image
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
 from libs.http import download
 from libs.paths.utils import delete_path
@@ -28,19 +29,18 @@ class DockerBuilder(object):
     WORKDIR = '/code'
 
     def __init__(self,
-                 job_uuid,
+                 build_job,
                  repo_path,
                  from_image,
-                 image_name,
-                 image_tag,
                  copy_code=True,
                  build_steps=None,
                  env_vars=None,
                  dockerfile_name='Dockerfile'):
-        self.job_uuid = job_uuid
+        self.build_job = build_job
+        self.job_uuid = build_job.uuid.hex
         self.from_image = from_image
-        self.image_name = image_name
-        self.image_tag = image_tag
+        self.image_name = get_image_name(self.build_job)
+        self.image_tag = self.job_uuid
         self.folder_name = repo_path.split('/')[-1]
         self.repo_path = repo_path
         self.copy_code = copy_code
@@ -56,7 +56,7 @@ class DockerBuilder(object):
         self.docker_url = None
 
     def get_tagged_image(self):
-        return '{}:{}'.format(self.image_name, self.image_tag)
+        return get_tagged_image(self.build_job)
 
     def check_image(self):
         return self.docker.images(self.get_tagged_image())
@@ -185,7 +185,7 @@ def download_code(build_job, build_path, filename):
                              message='Could not download code to build the image.')
 
 
-def build(build_job, image_tag=None):
+def build(build_job):
     """Build necessary code for a job to run"""
     build_path = '/tmp/build'
     filename = 'code'
@@ -194,15 +194,12 @@ def build(build_job, image_tag=None):
                   filename=filename)
 
     repo_path = '{}/{}'.format(build_path, filename)
-    image_name = '{}/{}'.format(settings.REGISTRY_HOST, build_job.project.name)
 
     # Build the image
     docker_builder = DockerBuilder(
-        job_uuid=build_job.uuid.hex,
+        build_job=build_job,
         repo_path=repo_path,
         from_image=build_job.image,
-        image_name=image_name,
-        image_tag=image_tag or build_job.code_reference.commit,
         build_steps=build_job.conig.build_steps,
         env_vars=build_job.config.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
