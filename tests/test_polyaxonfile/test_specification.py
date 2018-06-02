@@ -29,6 +29,14 @@ class TestSpecifications(TestCase):
             BuildSpecification.read(os.path.abspath(
                 'tests/fixtures/missing_build.yml'))
 
+    def test_create_plugin_specification(self):
+        config = PluginSpecification.create_specification({'image': 'blabla'})
+        assert PluginSpecification.read(config).parsed_data == config
+
+    def test_create_build_specification(self):
+        config = BuildSpecification.create_specification({'image': 'blabla'})
+        assert BuildSpecification.read(config).parsed_data == config
+
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(
             'tests/fixtures/env_without_framework.yml'))

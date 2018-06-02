@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import copy
+from collections import Mapping
+
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
+from polyaxon_schemas.run_exec import BuildConfig
 
 
 class BuildSpecification(BaseSpecification):
@@ -45,3 +49,19 @@ class BuildSpecification(BaseSpecification):
     @cached_property
     def node_selectors(self):
         return self.environment.node_selectors if self.environment else None
+
+    @classmethod
+    def create_specification(cls, run_config):
+        if isinstance(run_config, BuildConfig):
+            config = run_config.to_dict()
+        elif isinstance(run_config, Mapping):
+            config = copy.deepcopy(run_config)
+        else:
+            raise PolyaxonConfigurationError(
+                'Create specification expects a dict or an instance of BuildConfig.')
+
+        return {
+            cls.VERSION: 1,
+            cls.KIND: cls._SPEC_KIND,
+            cls.BUILD: config
+        }
