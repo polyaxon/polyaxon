@@ -21,7 +21,7 @@ class BuildSpecification(BaseSpecification):
     _SPEC_KIND = BaseSpecification._BUILD
 
     def _extra_validation(self):
-        if (self.BUILD not in self.validated_data or not self.validated_data[self.BUILD]):
+        if self.BUILD not in self.validated_data or not self.validated_data[self.BUILD]:
             raise PolyaxonConfigurationError(
                 'Build specification must contain a valid `build` section.')
 
@@ -50,11 +50,11 @@ class BuildSpecification(BaseSpecification):
         return self.environment.node_selectors if self.environment else None
 
     @classmethod
-    def create_specification(cls, run_config):
-        if isinstance(run_config, BuildConfig):
-            config = run_config.to_dict()
-        elif isinstance(run_config, Mapping):
-            config = copy.deepcopy(run_config)
+    def create_specification(cls, build_config):
+        if isinstance(build_config, BuildConfig):
+            config = build_config.to_dict()
+        elif isinstance(build_config, Mapping):
+            config = copy.deepcopy(build_config)
         else:
             raise PolyaxonConfigurationError(
                 'Create specification expects a dict or an instance of BuildConfig.')
