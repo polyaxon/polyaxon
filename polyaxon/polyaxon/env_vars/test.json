@@ -22,7 +22,7 @@
   "POLYAXON_QUEUES_PIPELINES": "queues.pipelines",
   "POLYAXON_QUEUES_CRONS_EXPERIMENTS": "queues.crons.experiments",
   "POLYAXON_QUEUES_CRONS_PIPELINES": "queues.crons.pipelines",
-  "POLYAXON_QUEUES_API_CLUSTERS": "queues.crons.clusters",
+  "POLYAXON_QUEUES_CRONS_CLUSTERS": "queues.crons.clusters",
   "POLYAXON_QUEUES_HP": "queus.hp",
   "POLYAXON_QUEUES_EVENTS_NAMESPACE": "queues.events.namespace",
   "POLYAXON_QUEUES_EVENTS_RESOURCES": "queues.events.resources",
