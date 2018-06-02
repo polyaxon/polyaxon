@@ -5,6 +5,7 @@ POLYAXON_SERVICE = config.service
 POLYAXON_ENVIRONMENT = config.env
 K8S_NAMESPACE = config.namespace
 K8S_NODE_NAME = config.node_name
+K8S_GPU_RESOURCE_KEY = config.get_string('POLYAXON_K8S_GPU_RESOURCE_KEY')
 
 ALLOWED_HOSTS = ['*']
 
