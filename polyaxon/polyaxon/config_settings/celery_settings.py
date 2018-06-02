@@ -206,7 +206,7 @@ class CeleryQueues(object):
 
     CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS')
     CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES')
-    CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_API_CLUSTERS')
+    CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS')
 
     HP = config.get_string('POLYAXON_QUEUES_HP')
 
