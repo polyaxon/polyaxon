@@ -94,7 +94,7 @@ class BuildJob(Job):
         build_config = BuildSpecification.create_specification(config)
         try:
             job = BuildJob.objects.get(project=project,
-                                       config=config,
+                                       config=build_config,
                                        code_reference=code_reference)
         except BuildJob.DoesNotExist:
             job = BuildJob.objects.create(user=user,
