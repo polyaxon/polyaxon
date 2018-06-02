@@ -71,10 +71,6 @@ class BuildJob(Job):
         return self.specification.build.build_steps
 
     @cached_property
-    def env_vars(self):
-        return self.specification.build.env_vars
-
-    @cached_property
     def resources(self):
         return None
 
