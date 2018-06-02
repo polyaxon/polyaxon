@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
 from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.specification.group import GroupSpecification
 from polyaxon_schemas.polyaxonfile.specification.plugin import PluginSpecification
@@ -8,5 +9,6 @@ from polyaxon_schemas.polyaxonfile.specification.plugin import PluginSpecificati
 SPECIFICATION_BY_KIND = {
     ExperimentSpecification._SPEC_KIND: ExperimentSpecification,
     GroupSpecification._SPEC_KIND: GroupSpecification,
-    PluginSpecification._SPEC_KIND: PluginSpecification
+    PluginSpecification._SPEC_KIND: PluginSpecification,
+    BuildSpecification._SPEC_KIND: BuildSpecification,
 }

@@ -35,6 +35,7 @@ def validate(spec, data):
 
     add_validated_section(spec.ENVIRONMENT, EnvironmentConfig)
     add_validated_section(spec.RUN_EXEC, RunExecConfig)
+    add_validated_section(spec.BUILD, RunExecConfig)
     add_validated_section(spec.MODEL, ModelConfig)
     add_validated_section(spec.TRAIN, TrainConfig)
     add_validated_section(spec.EVAL, EvalConfig)

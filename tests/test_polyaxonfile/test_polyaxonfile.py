@@ -1183,7 +1183,19 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/plugin_with_node_selector.yml'))
         spec = plxfile.specification
         assert spec.version == 1
+        assert spec.is_plugin is True
         assert spec.settings is None
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
         assert spec.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
+
+    def test_build_job_with_node_selectors(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/build_with_node_selector.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.is_build is True
+        assert spec.settings is None
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_build_jobs'}
+        assert spec.node_selectors == {'polyaxon.com': 'node_for_build_jobs'}

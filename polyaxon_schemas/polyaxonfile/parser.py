@@ -55,6 +55,10 @@ class Parser(object):
             parsed_data[spec.RUN_EXEC] = cls.parse_expression(
                 spec, data[spec.RUN_EXEC], declarations, True, False)
 
+        if spec.BUILD in data:
+            parsed_data[spec.BUILD] = cls.parse_expression(
+                spec, data[spec.BUILD], declarations, True, False)
+
         for section in spec.GRAPH_SECTIONS:
             if section in data:
                 parsed_data[section] = cls.parse_expression(

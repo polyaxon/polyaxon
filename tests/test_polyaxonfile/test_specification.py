@@ -6,7 +6,11 @@ import os
 from unittest import TestCase
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.polyaxonfile.specification import ExperimentSpecification, PluginSpecification
+from polyaxon_schemas.polyaxonfile.specification import (
+    BuildSpecification,
+    ExperimentSpecification,
+    PluginSpecification
+)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -19,6 +23,11 @@ class TestSpecifications(TestCase):
         with self.assertRaises(PolyaxonConfigurationError):
             PluginSpecification.read(os.path.abspath(
                 'tests/fixtures/plugin_run_exec_simple_file_with_cmd.yml'))
+
+    def test_plugin_specification_raises_for_missing_build_section(self):
+        with self.assertRaises(PolyaxonConfigurationError):
+            BuildSpecification.read(os.path.abspath(
+                'tests/fixtures/missing_build.yml'))
 
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(

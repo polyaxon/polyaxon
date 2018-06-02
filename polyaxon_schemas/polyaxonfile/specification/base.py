@@ -22,7 +22,8 @@ class BaseSpecification(object):
     _GROUP = 'group'
     _JOB = 'job'
     _PLUGIN = 'plugin'
-    _KINDS = {_EXPERIMENT, _GROUP, _JOB, _PLUGIN}
+    _BUILD = 'build'
+    _KINDS = {_EXPERIMENT, _GROUP, _JOB, _PLUGIN, _BUILD}
 
     _SPEC_KIND = None
 
@@ -35,12 +36,13 @@ class BaseSpecification(object):
     DECLARATIONS = 'declarations'
     ENVIRONMENT = 'environment'
     RUN_EXEC = 'run'
+    BUILD = 'build'
     MODEL = 'model'
     TRAIN = 'train'
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, KIND, ENVIRONMENT, DECLARATIONS, SETTINGS, RUN_EXEC, MODEL, TRAIN, EVAL
+        VERSION, KIND, ENVIRONMENT, DECLARATIONS, SETTINGS, BUILD, RUN_EXEC, MODEL, TRAIN, EVAL
     )
 
     HEADER_SECTIONS = (
@@ -152,6 +154,10 @@ class BaseSpecification(object):
     @cached_property
     def is_plugin(self):
         return self.kind == self._PLUGIN
+
+    @cached_property
+    def is_build(self):
+        return self.kind == self._BUILD
 
     @property
     def values(self):
