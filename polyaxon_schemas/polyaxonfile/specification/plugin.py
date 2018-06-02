@@ -21,9 +21,10 @@ class PluginSpecification(BaseSpecification):
     _SPEC_KIND = BaseSpecification._PLUGIN
 
     def _extra_validation(self):
-        if (self.RUN_EXEC not in self.validated_data or
-            not self.validated_data[self.RUN_EXEC] or
-            self.validated_data[self.RUN_EXEC].cmd is not None):
+        condition = (self.RUN_EXEC not in self.validated_data or
+                     not self.validated_data[self.RUN_EXEC] or
+                     self.validated_data[self.RUN_EXEC].cmd is not None)
+        if condition:
             raise PolyaxonConfigurationError(
                 'Plugin specification must contain a valid `run` section.')
 

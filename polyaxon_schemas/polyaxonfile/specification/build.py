@@ -21,8 +21,7 @@ class BuildSpecification(BaseSpecification):
     _SPEC_KIND = BaseSpecification._BUILD
 
     def _extra_validation(self):
-        if (self.BUILD not in self.validated_data or
-                not self.validated_data[self.BUILD]):
+        if (self.BUILD not in self.validated_data or not self.validated_data[self.BUILD]):
             raise PolyaxonConfigurationError(
                 'Build specification must contain a valid `build` section.')
 
