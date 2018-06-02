@@ -2,8 +2,9 @@ import os
 import requests
 import tarfile
 
-from django.conf import settings
 from rest_framework.authentication import TokenAuthentication
+
+from django.conf import settings
 
 from libs.permissions.authentication import InternalAuthentication
 

@@ -4,10 +4,10 @@ from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
-from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_build_spec_config
+from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 
 logger = logging.getLogger('db.build_jobs')
 

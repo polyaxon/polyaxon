@@ -1,4 +1,3 @@
-from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -28,6 +27,7 @@ from libs.repos import git
 from libs.utils import to_bool
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
+from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
 
 class StartTensorboardView(CreateAPIView):
