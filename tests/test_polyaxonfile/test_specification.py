@@ -44,7 +44,6 @@ class TestSpecifications(TestCase):
 
         # Run config
         run_config = {'image': 'blabla', 'cmd': 'some command'}
-        import pdb; pdb.set_trace()
         config = BuildSpecification.create_specification(run_config)
         assert BuildSpecification.read(config).parsed_data == config
         assert config['build'] == {'image': 'blabla'}
