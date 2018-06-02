@@ -1,3 +1,4 @@
+from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -41,13 +42,9 @@ class StartTensorboardView(CreateAPIView):
 
     @staticmethod
     def _get_default_tensorboard_config():
-        return {
-            'config': {
-                'version': 1,
-                'kind': 'plugin',
-                'run': {'image': settings.TENSORBOARD_DOCKER_IMAGE}
-            }
-        }
+        specification = PluginSpecification.create_specification(
+            {'image': settings.TENSORBOARD_DOCKER_IMAGE})
+        return {'config': specification}
 
     def _create_tensorboard(self, project):
         config = self.request.data or self._get_default_tensorboard_config()
