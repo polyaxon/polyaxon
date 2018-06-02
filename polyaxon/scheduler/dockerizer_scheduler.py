@@ -5,10 +5,18 @@ from kubernetes.client.rest import ApiException
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
+from docker_images.image_info import get_tagged_image
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.utils import get_job_definition
 
 logger = logging.getLogger('polyaxon.scheduler.dockerizer')
+
+
+def check_image(build_job):
+    from docker import APIClient
+
+    docker = APIClient(version='auto')
+    return docker.images(get_tagged_image(build_job))
 
 
 def start_dockerizer(build_job):
@@ -30,7 +38,7 @@ def start_dockerizer(build_job):
         build_job.set_status(
             JobLifeCycle.FAILED,
             message='Could not start build job, encountered a Kubernetes ApiException.')
-        return
+        return False
     except Exception as e:
         logger.warning('Could not start build job, please check your polyaxon spec %s', e)
         build_job.set_status(
@@ -38,9 +46,10 @@ def start_dockerizer(build_job):
             message='Could not start build job encountered an {} exception.'.format(
                 e.__class__.__name__
             ))
-        return
+        return False
     build_job.definition = get_job_definition(results)
     build_job.save()
+    return True
 
 
 def stop_dockerizer(build_job, update_status=False):
