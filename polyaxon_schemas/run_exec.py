@@ -55,6 +55,7 @@ class RunExecSchema(BuildSchema):
 class RunExecConfig(BuildConfig):
     SCHEMA = RunExecSchema
     IDENTIFIER = 'run'
+    REDUCED_ATTRIBUTES = ['cmd', 'build_steps', 'env_vars', 'git']
 
     def __init__(self, image, cmd=None, build_steps=None, env_vars=None, git=None):
         self.cmd = cmd

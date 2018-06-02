@@ -55,9 +55,10 @@ class PluginSpecification(BaseSpecification):
     @classmethod
     def create_specification(cls, run_config):
         if isinstance(run_config, RunExecConfig):
-            config = run_config.to_dict()
+            config = run_config.to_light_dict()
         elif isinstance(run_config, Mapping):
-            config = copy.deepcopy(run_config)
+            config = RunExecConfig.from_dict(run_config)
+            config = config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(
                 'Create specification expects a dict or an instance of RunExecConfig.')

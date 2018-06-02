@@ -7,7 +7,7 @@ from collections import Mapping
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.run_exec import BuildConfig
+from polyaxon_schemas.run_exec import BuildConfig, RunExecConfig
 
 
 class BuildSpecification(BaseSpecification):
@@ -52,9 +52,14 @@ class BuildSpecification(BaseSpecification):
     @classmethod
     def create_specification(cls, build_config):
         if isinstance(build_config, BuildConfig):
-            config = build_config.to_dict()
+            config = build_config.to_light_dict()
+        elif isinstance(build_config, RunExecConfig):
+            config = build_config.to_light_dict()
+            config = BuildConfig.from_dict(config)
+            config = config.to_light_dict()
         elif isinstance(build_config, Mapping):
-            config = copy.deepcopy(build_config)
+            config = BuildConfig.from_dict(build_config)
+            config = config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(
                 'Create specification expects a dict or an instance of BuildConfig.')

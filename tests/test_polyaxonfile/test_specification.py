@@ -30,12 +30,24 @@ class TestSpecifications(TestCase):
                 'tests/fixtures/missing_build.yml'))
 
     def test_create_plugin_specification(self):
-        config = PluginSpecification.create_specification({'image': 'blabla'})
+        run_config = {'image': 'blabla'}
+        config = PluginSpecification.create_specification(run_config)
         assert PluginSpecification.read(config).parsed_data == config
+        assert config['run'] == run_config
 
     def test_create_build_specification(self):
-        config = BuildSpecification.create_specification({'image': 'blabla'})
+        # Normal build config
+        build_config = {'image': 'blabla'}
+        config = BuildSpecification.create_specification(build_config)
         assert BuildSpecification.read(config).parsed_data == config
+        assert config['build'] == build_config
+
+        # Run config
+        run_config = {'image': 'blabla', 'cmd': 'some command'}
+        import pdb; pdb.set_trace()
+        config = BuildSpecification.create_specification(run_config)
+        assert BuildSpecification.read(config).parsed_data == config
+        assert config['build'] == {'image': 'blabla'}
 
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(
