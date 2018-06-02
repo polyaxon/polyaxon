@@ -4,13 +4,15 @@ import publisher
 
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
+from db.models.build_jobs import BuildJob
 from db.models.experiments import ExperimentMetric
 from libs.paths.experiments import copy_experiment_outputs, create_experiment_outputs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scheduler import experiment_scheduler
+from scheduler import dockerizer_scheduler
 
-logger = logging.getLogger('polyaxon.scheduler.experiments')
+_logger = logging.getLogger('polyaxon.scheduler.experiments')
 
 
 def copy_experiment(experiment):
@@ -37,7 +39,7 @@ def copy_experiment(experiment):
             experiment_name=experiment.unique_name,
             job_uuid='all',
         )
-        logger.warning(
+        _logger.warning(
             'Could not copy the outputs of experiment `%s` into experiment `%s`',
             experiment.original_experiment.unique_name, experiment.unique_name)
 
@@ -47,6 +49,42 @@ def experiments_build(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
         return
+
+    # No need to build the image, start the experiment directly
+    if not experiment.specification.run_exec:
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_START,
+            kwargs={'experiment_id': experiment_id})
+        return
+
+    build_job = BuildJob.create(
+        user=experiment.user,
+        project=experiment.project,
+        config=experiment.run_exec,
+        code_reference=experiment.code_reference)
+
+    if dockerizer_scheduler.check_image(build_job=build_job):
+        # The image already exists, so we can start the experiment right away
+        celery_app.send_task(
+            SchedulerCeleryTasks.EXPERIMENTS_START,
+            kwargs={'experiment_id': experiment_id})
+        return
+
+    # We need to build the image first
+    build_status = dockerizer_scheduler.start_dockerizer(build_job=build_job)
+
+    if not build_status:
+        experiment.set_status(ExperimentLifeCycle.FAILED, message='Could not start build process.')
+        return
+
+    if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
+                                              status_to=ExperimentLifeCycle.BUILDING):
+        _logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
+                     experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
+        return
+
+    # Update experiment status to show that its building
+    experiment.set_status(ExperimentLifeCycle.BUILDING)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
@@ -73,14 +111,14 @@ def experiments_set_metrics(experiment_uuid, metrics, created_at=None):
 def experiments_start(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
-        logger.info('Something went wrong, '
-                    'the Experiment `%s` does not exist anymore.', experiment_id)
+        _logger.info('Something went wrong, '
+                     'the Experiment `%s` does not exist anymore.', experiment_id)
         return
 
     if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
                                               status_to=ExperimentLifeCycle.SCHEDULED):
-        logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
-                    experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
+        _logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
+                     experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
         return None
 
     # Check if we need to copy an experiment
@@ -96,8 +134,8 @@ def experiments_start(experiment_id):
 def experiments_stop(experiment_id, update_status=True):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
-        logger.info('Something went wrong, '
-                    'the Experiment `%s` does not exist anymore.', experiment_id)
+        _logger.info('Something went wrong, '
+                     'the Experiment `%s` does not exist anymore.', experiment_id)
         return
 
     experiment_scheduler.stop_experiment(experiment, update_status=update_status)
