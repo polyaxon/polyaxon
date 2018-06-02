@@ -30,7 +30,7 @@ def start_dockerizer(build_job):
         in_cluster=True)
 
     try:
-        results = spawner.start_dockerizer(commit=build_job.commit,
+        results = spawner.start_dockerizer(commit=build_job.code_reference.commit,
                                            resources=build_job.resources,
                                            node_selectors=build_job.node_selectors)
     except ApiException as e:
