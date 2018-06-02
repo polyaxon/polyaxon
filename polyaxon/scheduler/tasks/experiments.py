@@ -59,7 +59,7 @@ def experiments_build(experiment_id):
     build_job = BuildJob.create(
         user=experiment.user,
         project=experiment.project,
-        config=experiment.run_exec,
+        config=experiment.specification.run_exec,
         code_reference=experiment.code_reference)
 
     if dockerizer_scheduler.check_image(build_job=build_job):
