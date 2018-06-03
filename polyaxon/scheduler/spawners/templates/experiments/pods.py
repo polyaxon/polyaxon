@@ -13,6 +13,7 @@ from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_from_app_secret
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
+from scheduler.spawners.templates.services.default_env_vars import get_service_env_vars
 
 logger = logging.getLogger('polyaxon.spawners.spawners')
 
@@ -122,10 +123,8 @@ class PodManager(object):
             client.V1EnvVar(name='POLYAXON_K8S_NAMESPACE', value=self.namespace),
             client.V1EnvVar(name='POLYAXON_POD_ID', value=job_name),
             client.V1EnvVar(name='POLYAXON_JOB_ID', value=self.job_container_name),
-            get_from_app_secret('POLYAXON_SECRET_KEY', 'polyaxon-secret'),
-            get_from_app_secret('POLYAXON_RABBITMQ_PASSWORD', 'rabbitmq-password',
-                                settings.POLYAXON_K8S_RABBITMQ_SECRET_NAME)
         ]
+        env_vars += get_service_env_vars()
         for k, v in self.sidecar_config.items():
             env_vars.append(client.V1EnvVar(name=k, value=v))
         return client.V1Container(name=self.sidecar_container_name,

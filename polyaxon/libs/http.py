@@ -84,10 +84,9 @@ def download(url,
         request_headers.update(headers)
 
     try:
-        api = '{}//{}:{}'.format(settings.PROTOCOL,
-                                 settings.POLYAXON_K8S_API_HOST,
-                                 settings.POLYAXON_K8S_API_PORT)
-        url = '{}/{}'.format(api, url)
+        from libs.api import API_URL
+
+        url = '{}/{}'.format(API_URL, url)
         response = requests.get(url,
                                 headers=request_headers,
                                 timeout=timeout,
