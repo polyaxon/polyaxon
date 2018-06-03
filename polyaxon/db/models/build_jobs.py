@@ -81,7 +81,7 @@ class BuildJob(Job):
 
     @cached_property
     def env_vars(self):
-        return self.specification.env_vars
+        return self.specification.build.env_vars
 
     def set_status(self, status, message=None, details=None):  # pylint:disable=arguments-differ
         return self._set_status(status_model=BuildJobStatus,

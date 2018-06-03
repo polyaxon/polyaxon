@@ -205,8 +205,8 @@ def build(build_job):
         build_job=build_job,
         repo_path=repo_path,
         from_image=build_job.image,
-        build_steps=build_job.conig.build_steps,
-        env_vars=build_job.config.env_vars)
+        build_steps=build_job.build_steps,
+        env_vars=build_job.env_vars)
     docker_builder.login(registry_user=settings.REGISTRY_USER,
                          registry_password=settings.REGISTRY_PASSWORD,
                          registry_host=settings.REGISTRY_HOST)
