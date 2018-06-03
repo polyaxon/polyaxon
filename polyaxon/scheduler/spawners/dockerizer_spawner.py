@@ -5,7 +5,7 @@ from django.conf import settings
 from polyaxon.utils import config
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants
-from scheduler.spawners.templates.env_vars import get_env_var, get_from_app_secret
+from scheduler.spawners.templates.env_vars import get_env_var
 from scheduler.spawners.templates.project_jobs import pods
 from scheduler.spawners.templates.services.default_env_vars import get_service_env_vars
 
