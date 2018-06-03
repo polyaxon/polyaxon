@@ -106,5 +106,5 @@ def run(k8s_manager):
             elif dockerizer_job_condition:
                 # Handle dockerizer job statuses
                 celery_app.send_task(
-                    EventsCeleryTasks.EVENTS_HANDLE_DOCKERIZER_JOB_STATUSES,
+                    EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
                     kwargs={'payload': job_state})
