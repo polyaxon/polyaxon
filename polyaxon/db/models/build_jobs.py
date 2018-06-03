@@ -60,7 +60,7 @@ class BuildJob(Job):
 
     @cached_property
     def specification(self):
-        return BuildSpecification.from_dict(self.config)
+        return BuildSpecification(values=self.config)
 
     @cached_property
     def image(self):

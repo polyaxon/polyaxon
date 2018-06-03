@@ -7,9 +7,8 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError, Polyaxonfile
 from polyaxon_schemas.polyaxonfile.specification import (
     ExperimentSpecification,
     GroupSpecification,
-    PluginSpecification
-)
-from polyaxon_schemas.run_exec import BuildConfig
+    PluginSpecification,
+    BuildSpecification)
 from polyaxon_schemas.settings import SettingsConfig
 
 
@@ -64,9 +63,12 @@ def validate_plugin_spec_config(config, raise_for_rest=False):
 
 def validate_build_spec_config(config, raise_for_rest=False):
     try:
-        BuildConfig.from_dict(config)
-    except MarshmallowValidationError as e:
+        spec = BuildSpecification.read(config)
+    except (PolyaxonfileError, PolyaxonConfigurationError) as e:
+        message_error = 'Received non valid tensorboard specification config. %s' % e
         if raise_for_rest:
-            raise ValidationError(e)
+            raise ValidationError(message_error)
         else:
-            raise DjangoValidationError(e)
+            raise DjangoValidationError(message_error)
+
+    return spec
