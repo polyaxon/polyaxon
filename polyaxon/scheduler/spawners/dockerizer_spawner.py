@@ -33,7 +33,7 @@ class DockerizerSpawner(ProjectJobSpawner):
     def start_dockerizer(self, commit, resources=None, node_selectors=None):
         deployment = pods.get_pod(
             namespace=self.namespace,
-            app=settings.APP_LABELS_TENSORBOARD,
+            app=settings.APP_LABELS_DOCKERIZER,
             name=self.DOCKERIZER_JOB_NAME.format(commit),
             project_name=self.project_name,
             project_uuid=self.project_uuid,
@@ -49,7 +49,7 @@ class DockerizerSpawner(ProjectJobSpawner):
             container_name=settings.CONTAINER_NAME_DOCKERIZER_JOB,
             resources=resources,
             node_selector=node_selectors,
-            role=settings.ROLE_LABELS_DOCKERIZER,
+            role=settings.ROLE_LABELS_WORKER,
             type=settings.TYPE_LABELS_EXPERIMENT)
         pod_name = constants.DEPLOYMENT_NAME.format(
             job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)

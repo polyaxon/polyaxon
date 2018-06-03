@@ -13,4 +13,4 @@ class CodeReferenceFactory(factory.DjangoModelFactory):
         model = CodeReference
 
     repo = factory.SubFactory(RepoFactory)
-    commit = factory.Sequence('commit{}'.forma)
+    commit = factory.Sequence('commit{}'.format)
