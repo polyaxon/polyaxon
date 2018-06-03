@@ -603,6 +603,8 @@ status_notebook_job_event = get_status_event(
         'app': settings.APP_LABELS_NOTEBOOK,
         'project_name': 'mike/project1',
         'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/notebook/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
         'role': settings.ROLE_LABELS_DASHBOARD,
         'type': settings.TYPE_LABELS_EXPERIMENT
     }
@@ -615,6 +617,8 @@ status_notebook_job_event_with_conditions = get_status_event_with_conditions(
         'app': settings.APP_LABELS_NOTEBOOK,
         'project_name': 'mike/project1',
         'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/notebook/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
         'role': settings.ROLE_LABELS_DASHBOARD,
         'type': settings.TYPE_LABELS_EXPERIMENT
     }
@@ -628,6 +632,8 @@ status_tensorboard_job_event = get_status_event(
         'app': settings.APP_LABELS_TENSORBOARD,
         'project_name': 'mike/project1',
         'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/tensorboards/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
         'role': settings.ROLE_LABELS_DASHBOARD,
         'type': settings.TYPE_LABELS_EXPERIMENT
     }
@@ -640,6 +646,37 @@ status_tensorboard_job_event_with_conditions = get_status_event_with_conditions(
         'app': settings.APP_LABELS_TENSORBOARD,
         'project_name': 'mike/project1',
         'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/tensorboards/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'role': settings.ROLE_LABELS_DASHBOARD,
+        'type': settings.TYPE_LABELS_EXPERIMENT
+    }
+)
+
+status_build_job_event = get_status_event(
+    name='plxproject-project_uuid-build',
+    container_name=settings.CONTAINER_NAME_DOCKERIZER_JOB,
+    labels={
+        'app': settings.APP_LABELS_DOCKERIZER,
+        'project_name': 'mike/project1',
+        'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/builds/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'role': settings.ROLE_LABELS_DASHBOARD,
+        'type': settings.TYPE_LABELS_EXPERIMENT
+    }
+)
+
+
+status_build_job_event_with_conditions = get_status_event_with_conditions(
+    name='plxproject-project_uuid-build',
+    container_name=settings.CONTAINER_NAME_DOCKERIZER_JOB,
+    labels={
+        'app': settings.APP_LABELS_DOCKERIZER,
+        'project_name': 'mike/project1',
+        'project_uuid': 'fa6203c189a855dd977019854a7ffcc3',
+        'job_name': 'mike/project1/builds/1',
+        'job_uuid': 'fa6203c189a855dd977019854a7ffcc3',
         'role': settings.ROLE_LABELS_DASHBOARD,
         'type': settings.TYPE_LABELS_EXPERIMENT
     }

@@ -3,9 +3,15 @@ import pytest
 from django.conf import settings
 
 from constants.jobs import JobLifeCycle
+from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.plugins import NotebookJobStatus, TensorboardJobStatus
-from events_handlers.tasks import handle_events_job_statuses, handle_events_plugin_job_statuses
+from events_handlers.tasks import (
+    events_handle_experiment_job_statuses,
+    events_handle_plugin_job_statuses,
+    events_handle_build_job_statuses
+)
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentJobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
@@ -16,7 +22,9 @@ from tests.fixtures import (
     status_notebook_job_event,
     status_notebook_job_event_with_conditions,
     status_tensorboard_job_event,
-    status_tensorboard_job_event_with_conditions
+    status_tensorboard_job_event_with_conditions,
+    status_build_job_event,
+    status_build_job_event_with_conditions
 )
 from tests.utils import BaseTest
 
@@ -79,7 +87,7 @@ class TestEventsExperimentJobsStatusesHandling(TestEventsBaseJobsStatusesHandlin
     EVENT_WITH_CONDITIONS = status_experiment_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_JOB
     STATUS_MODEL = ExperimentJobStatus
-    STATUS_HANDLER = handle_events_job_statuses
+    STATUS_HANDLER = events_handle_experiment_job_statuses
 
     def get_job_object(self, job_state):
         job_uuid = job_state.details.labels.job_uuid.hex
@@ -92,12 +100,13 @@ class TestEventsTensorboardJobsStatusesHandling(TestEventsBaseJobsStatusesHandli
     EVENT_WITH_CONDITIONS = status_tensorboard_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = TensorboardJobStatus
-    STATUS_HANDLER = handle_events_plugin_job_statuses
+    STATUS_HANDLER = events_handle_plugin_job_statuses
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
         project = ProjectFactory(uuid=project_uuid)
-        return TensorboardJobFactory(project=project)
+        job_uuid = job_state.details.labels.job_uuid.hex
+        return TensorboardJobFactory(uuid=job_uuid, project=project)
 
 
 @pytest.mark.monitors_mark
@@ -106,12 +115,28 @@ class TestEventsNotebookJobsStatusesHandling(TestEventsBaseJobsStatusesHandling)
     EVENT_WITH_CONDITIONS = status_notebook_job_event_with_conditions
     CONTAINER_NAME = settings.CONTAINER_NAME_PLUGIN_JOB
     STATUS_MODEL = NotebookJobStatus
-    STATUS_HANDLER = handle_events_plugin_job_statuses
+    STATUS_HANDLER = events_handle_plugin_job_statuses
 
     def get_job_object(self, job_state):
         project_uuid = job_state.details.labels.project_uuid.hex
         project = ProjectFactory(uuid=project_uuid)
-        return NotebookJobFactory(project=project)
+        job_uuid = job_state.details.labels.job_uuid.hex
+        return NotebookJobFactory(uuid=job_uuid, project=project)
+
+
+@pytest.mark.monitors_mark
+class TestEventsDockerizerJobsStatusesHandling(TestEventsBaseJobsStatusesHandling):
+    EVENT = status_build_job_event
+    EVENT_WITH_CONDITIONS = status_build_job_event_with_conditions
+    CONTAINER_NAME = settings.CONTAINER_NAME_DOCKERIZER_JOB
+    STATUS_MODEL = BuildJobStatus
+    STATUS_HANDLER = events_handle_build_job_statuses
+
+    def get_job_object(self, job_state):
+        project_uuid = job_state.details.labels.project_uuid.hex
+        project = ProjectFactory(uuid=project_uuid)
+        job_uuid = job_state.details.labels.job_uuid.hex
+        return BuildJobFactory(uuid=job_uuid, project=project)
 
 
 # Prevent this base class from running tests
