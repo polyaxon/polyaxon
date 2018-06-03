@@ -3,8 +3,6 @@ import logging
 from django.conf import settings
 
 from polyaxon.utils import config
-
-from libs.api import API_URL
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_from_app_secret
