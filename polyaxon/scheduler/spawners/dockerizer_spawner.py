@@ -36,7 +36,7 @@ class DockerizerSpawner(ProjectJobSpawner):
             volumes=[],
             image=settings.JOB_DOCKERIZER_IMAGE,
             command=None,
-            args=["--build_job_uuid={}".format(self.job_uuid)],
+            args=[self.job_uuid],
             ports=[],
             env_vars=self.get_env_vars(),
             container_name=settings.CONTAINER_NAME_DOCKERIZER_JOB,
