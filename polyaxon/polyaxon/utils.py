@@ -34,7 +34,10 @@ class SettingConfig(object):
         self._service = self.get_string('POLYAXON_SERVICE', is_local=True)
         self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG')
         self._namespace = self.get_string('POLYAXON_K8S_NAMESPACE')
-        self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
+        if self.is_sidecar_service or self.is_dockerizer_service:
+            self._node_name = None
+        else:
+            self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
 
     @property
     def namespace(self):
