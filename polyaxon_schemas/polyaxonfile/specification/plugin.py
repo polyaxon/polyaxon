@@ -52,7 +52,7 @@ class PluginSpecification(BaseSpecification):
         return self.environment.node_selectors if self.environment else None
 
     @classmethod
-    def create_specification(cls, run_config):
+    def create_specification(cls, run_config, to_dict=True):
         if isinstance(run_config, RunExecConfig):
             config = run_config.to_light_dict()
         elif isinstance(run_config, Mapping):
@@ -62,8 +62,11 @@ class PluginSpecification(BaseSpecification):
             raise PolyaxonConfigurationError(
                 'Create specification expects a dict or an instance of RunExecConfig.')
 
-        return {
+        specification = {
             cls.VERSION: 1,
             cls.KIND: cls._SPEC_KIND,
             cls.RUN_EXEC: config
         }
+        if to_dict:
+            return specification
+        return cls.read(specification)

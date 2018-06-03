@@ -34,6 +34,8 @@ class TestSpecifications(TestCase):
         config = PluginSpecification.create_specification(run_config)
         assert PluginSpecification.read(config).parsed_data == config
         assert config['run'] == run_config
+        spec = PluginSpecification.create_specification(run_config, to_dict=False)
+        assert spec.run_exec.image == run_config['image']
 
     def test_create_build_specification(self):
         # Normal build config
@@ -41,12 +43,16 @@ class TestSpecifications(TestCase):
         config = BuildSpecification.create_specification(build_config)
         assert BuildSpecification.read(config).parsed_data == config
         assert config['build'] == build_config
+        spec = BuildSpecification.create_specification(build_config, to_dict=False)
+        assert spec.build.image == build_config['image']
 
         # Run config
         run_config = {'image': 'blabla', 'cmd': 'some command'}
         config = BuildSpecification.create_specification(run_config)
         assert BuildSpecification.read(config).parsed_data == config
         assert config['build'] == {'image': 'blabla'}
+        spec = BuildSpecification.create_specification(run_config, to_dict=False)
+        assert spec.build.image == run_config['image']
 
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(

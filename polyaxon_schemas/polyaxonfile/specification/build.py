@@ -49,7 +49,7 @@ class BuildSpecification(BaseSpecification):
         return self.environment.node_selectors if self.environment else None
 
     @classmethod
-    def create_specification(cls, build_config):
+    def create_specification(cls, build_config, to_dict=True):
         if isinstance(build_config, RunExecConfig):
             config = build_config.to_light_dict()
             config = BuildConfig.from_dict(config)
@@ -63,8 +63,12 @@ class BuildSpecification(BaseSpecification):
             raise PolyaxonConfigurationError(
                 'Create specification expects a dict or an instance of BuildConfig.')
 
-        return {
+        specification = {
             cls.VERSION: 1,
             cls.KIND: cls._SPEC_KIND,
             cls.BUILD: config
         }
+
+        if to_dict:
+            return specification
+        return cls.read(specification)
