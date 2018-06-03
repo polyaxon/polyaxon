@@ -286,12 +286,13 @@ class JobLabelSchema(Schema):
     project_name = fields.Str()
     experiment_group_name = fields.Str(allow_none=True)
     experiment_name = fields.Str(allow_none=True)
+    job_name = fields.Str(allow_none=True)
     project_uuid = UUID()
     experiment_group_uuid = UUID(allow_none=True)
     experiment_uuid = UUID(allow_none=True)
+    job_uuid = UUID(allow_none=True)
     task_type = fields.Str(allow_none=True)
     task_idx = fields.Str(allow_none=True)
-    job_uuid = UUID(allow_none=True)
     role = fields.Str()
     type = fields.Str()
 
@@ -311,7 +312,7 @@ class JobLabelConfig(BaseConfig):
     SCHEMA = JobLabelSchema
     IDENTIFIER = 'JobLabel'
     REDUCED_ATTRIBUTES = [
-        'app', 'experiment_name', 'experiment_uuid',
+        'app', 'experiment_name', 'job_name', 'experiment_uuid',
         'experiment_group_name', 'experiment_group_uuid',
         'task_type', 'task_idx', 'job_uuid'
     ]
@@ -326,6 +327,7 @@ class JobLabelConfig(BaseConfig):
                  app=None,
                  task_type=None,
                  task_idx=None,
+                 job_name=None,
                  job_uuid=None,
                  experiment_group_name=None,
                  experiment_group_uuid=None,
@@ -339,6 +341,7 @@ class JobLabelConfig(BaseConfig):
         self.task_type = task_type
         self.task_idx = task_idx
         self.job_uuid = job_uuid
+        self.job_name = job_name
         self.role = role
         self.type = type
         self.app = app
