@@ -25,5 +25,3 @@ REPOS_SUB_PATHS = config.get_string('POLYAXON_SUB_PATHS_REPOS', is_optional=True
 EXTRA_PERSISTENCES = config.get_string('POLYAXON_EXTRA_PERSISTENCES', is_optional=True)
 if EXTRA_PERSISTENCES:
     EXTRA_PERSISTENCES = json.loads(EXTRA_PERSISTENCES)
-
-REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
