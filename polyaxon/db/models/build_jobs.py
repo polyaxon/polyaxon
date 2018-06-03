@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from db.models.jobs import Job, JobStatus
+from docker_images.images_tags import LATEST_IMAGE_TAG
 from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 
@@ -91,17 +92,20 @@ class BuildJob(Job):
 
     @staticmethod
     def create(user, project, config, code_reference):
-        build_config = BuildSpecification.create_specification(config)
-        try:
-            job = BuildJob.objects.get(project=project,
-                                       config=build_config,
+        build_config = BuildSpecification.create_specification(config, to_dict=False)
+        # Check if image is not using latest tag, then we can reuse a previous build
+        if build_config.build.image_tag != LATEST_IMAGE_TAG:
+            try:
+                return BuildJob.objects.get(project=project,
+                                            config=build_config.parsed_data,
+                                            code_reference=code_reference)
+            except BuildJob.DoesNotExist:
+                pass
+
+        return BuildJob.objects.create(user=user,
+                                       project=project,
+                                       config=build_config.parsed_data,
                                        code_reference=code_reference)
-        except BuildJob.DoesNotExist:
-            job = BuildJob.objects.create(user=user,
-                                          project=project,
-                                          config=build_config,
-                                          code_reference=code_reference)
-        return job
 
 
 class BuildJobStatus(JobStatus):
