@@ -19,6 +19,9 @@ PERMISSION_TENSORBOARD_DENIED = '{}.{}.{}'.format(event_subjects.TENSORBOARD,
 PERMISSION_NOTEBOOK_DENIED = '{}.{}.{}'.format(event_subjects.NOTEBOOK,
                                                event_actions.DENIED,
                                                event_subjects.PERMISSION)
+PERMISSION_BUILD_JOB_DENIED = '{}.{}.{}'.format(event_subjects.BUILD_JOB,
+                                                event_actions.DENIED,
+                                                event_subjects.PERMISSION)
 PERMISSION_EXPERIMENT_JOB_DENIED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_JOB,
                                                      event_actions.DENIED,
                                                      event_subjects.PERMISSION)
@@ -93,6 +96,19 @@ class PermissionTensorboardDeniedEvent(Event):
 
 class PermissionNotebookDeniedEvent(Event):
     event_type = PERMISSION_NOTEBOOK_DENIED
+    actor_id = 'actor_id'
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('actor_id'),
+        Attribute('event')
+    )
+
+
+class PermissionBuildJobDeniedEvent(Event):
+    event_type = PERMISSION_BUILD_JOB_DENIED
     actor_id = 'actor_id'
     attributes = (
         Attribute('id'),
