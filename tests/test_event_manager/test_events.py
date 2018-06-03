@@ -12,7 +12,8 @@ from event_manager.events import (
     repo,
     superuser,
     tensorboard,
-    user
+    user,
+    build_job,
 )
 from libs.json_utils import loads
 from tests.utils import BaseTest
@@ -105,6 +106,16 @@ class TestEvents(BaseTest):
         assert notebook.NotebookFailedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSucceededEvent.get_event_subject() == 'notebook'
 
+        # BuildJob
+        assert build_job.BuildJobStartedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobStartedTriggeredEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobSoppedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobSoppedTriggeredEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobViewedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobNewStatusEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobFailedEvent.get_event_subject() == 'build_job'
+        assert build_job.BuildJobSucceededEvent.get_event_subject() == 'build_job'
+
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
         assert permission.PermissionRepoDeniedEvent.get_event_subject() == 'repo'
@@ -113,6 +124,7 @@ class TestEvents(BaseTest):
         assert permission.PermissionExperimentDeniedEvent.get_event_subject() == 'experiment'
         assert permission.PermissionTensorboardDeniedEvent.get_event_subject() == 'tensorboard'
         assert permission.PermissionNotebookDeniedEvent.get_event_subject() == 'notebook'
+        assert permission.PermissionBuildJobDeniedEvent.get_event_subject() == 'build_job'
         assert permission.PermissionExperimentJobDeniedEvent.get_event_subject() == 'experiment_job'
         assert permission.PermissionClusterDeniedEvent.get_event_subject() == 'cluster'
         assert permission.PermissionUserRoleEvent.get_event_subject() == 'superuser'
@@ -227,6 +239,16 @@ class TestEvents(BaseTest):
         assert notebook.NotebookFailedEvent.get_event_action() is None
         assert notebook.NotebookSucceededEvent.get_event_action() is None
 
+        # Notebook
+        assert build_job.BuildJobStartedEvent.get_event_action() is None
+        assert build_job.BuildJobStartedTriggeredEvent.get_event_action() == 'started'
+        assert build_job.BuildJobSoppedEvent.get_event_action() is None
+        assert build_job.BuildJobSoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert build_job.BuildJobViewedEvent.get_event_action() == 'viewed'
+        assert build_job.BuildJobNewStatusEvent.get_event_action() is None
+        assert build_job.BuildJobFailedEvent.get_event_action() is None
+        assert build_job.BuildJobSucceededEvent.get_event_action() is None
+
         # Permission
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionRepoDeniedEvent.get_event_action() == 'denied'
@@ -234,6 +256,7 @@ class TestEvents(BaseTest):
         assert permission.PermissionExperimentDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionTensorboardDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionNotebookDeniedEvent.get_event_action() == 'denied'
+        assert permission.PermissionBuildJobDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionExperimentJobDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionClusterDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionUserRoleEvent.get_event_action() == 'denied'

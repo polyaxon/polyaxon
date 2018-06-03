@@ -38,7 +38,7 @@ def project_stop_jobs(sender, **kwargs):
     instance = kwargs['instance']
     tensorboard_scheduler.stop_tensorboard(instance.tensorboard, update_status=False)
     notebook_scheduler.stop_notebook(instance.notebook, update_status=False)
-    for build_job in instance.build_jobs:
+    for build_job in instance.build_jobs.all():
         dockerizer_scheduler.stop_dockerizer(build_job, update_status=False)
 
 
