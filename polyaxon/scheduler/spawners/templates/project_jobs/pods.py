@@ -71,6 +71,7 @@ def get_pod(namespace,
             node_selector=None,
             type=None,  # pylint:disable=redefined-builtin
             role=None,
+            restart_policy=None,
             use_service_account=False):
     pod_spec = get_project_pod_spec(
         volume_mounts=volume_mounts,
@@ -83,7 +84,8 @@ def get_pod(namespace,
         node_selector=node_selector,
         ports=ports,
         env_vars=env_vars,
-        use_service_account=use_service_account)
+        use_service_account=use_service_account,
+        restart_policy=restart_policy)
 
     labels = get_labels(app=app,
                         project_name=project_name,

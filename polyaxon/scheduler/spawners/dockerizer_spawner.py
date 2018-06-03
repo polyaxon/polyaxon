@@ -45,7 +45,8 @@ class DockerizerSpawner(ProjectJobSpawner):
             resources=resources,
             node_selector=node_selectors,
             role=settings.ROLE_LABELS_WORKER,
-            type=settings.TYPE_LABELS_EXPERIMENT)
+            type=settings.TYPE_LABELS_EXPERIMENT,
+            restart_policy='Never')
         pod_name = constants.DEPLOYMENT_NAME.format(
             job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
 
