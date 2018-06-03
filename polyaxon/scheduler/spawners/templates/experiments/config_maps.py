@@ -3,7 +3,7 @@ import json
 
 from kubernetes import client
 
-from libs.api import API_URL
+from libs.api import API_KEY_NAME, get_settings_api_url
 from libs.paths.experiments import get_experiment_logs_path, get_experiment_outputs_path
 from libs.paths.projects import get_project_data_path
 from polyaxon_k8s import constants as k8s_constants
@@ -57,7 +57,7 @@ def get_config_map(namespace,
         constants.CONFIG_MAP_DECLARATIONS_KEY_NAME: json.dumps(declarations) or '{}',
         constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME: json.dumps(labels),
         constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME: log_level,
-        constants.CONFIG_MAP_API_KEY_NAME: API_URL,
+        API_KEY_NAME: get_settings_api_url(),
         constants.CONFIG_MAP_EXPERIMENT_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path,
         constants.CONFIG_MAP_EXPERIMENT_LOGS_PATH_KEY_NAME: experiment_logs_path,
         constants.CONFIG_MAP_EXPERIMENT_DATA_PATH_KEY_NAME: experiment_data_path,

@@ -6,6 +6,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from django.conf import settings
 
+from libs.api import get_service_api_url
 from libs.permissions.authentication import InternalAuthentication
 
 
@@ -84,9 +85,8 @@ def download(url,
         request_headers.update(headers)
 
     try:
-        from libs.api import API_URL
-
-        url = '{}/{}'.format(API_URL, url)
+        api_url = get_service_api_url()
+        url = '{}/{}'.format(api_url, url)
         response = requests.get(url,
                                 headers=request_headers,
                                 timeout=timeout,
