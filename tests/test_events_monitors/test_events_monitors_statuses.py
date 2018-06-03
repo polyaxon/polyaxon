@@ -7,9 +7,9 @@ from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.plugins import NotebookJobStatus, TensorboardJobStatus
 from events_handlers.tasks import (
+    events_handle_build_job_statuses,
     events_handle_experiment_job_statuses,
-    events_handle_plugin_job_statuses,
-    events_handle_build_job_statuses
+    events_handle_plugin_job_statuses
 )
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentJobFactory
@@ -17,14 +17,14 @@ from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from monitor_statuses.jobs import get_job_state
 from tests.fixtures import (
+    status_build_job_event,
+    status_build_job_event_with_conditions,
     status_experiment_job_event,
     status_experiment_job_event_with_conditions,
     status_notebook_job_event,
     status_notebook_job_event_with_conditions,
     status_tensorboard_job_event,
-    status_tensorboard_job_event_with_conditions,
-    status_build_job_event,
-    status_build_job_event_with_conditions
+    status_tensorboard_job_event_with_conditions
 )
 from tests.utils import BaseTest
 
