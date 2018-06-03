@@ -2,10 +2,11 @@ import logging
 
 from constants.jobs import JobLifeCycle
 from db.getters.projects import get_valid_project
+from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_notebook_image_info
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from scheduler import notebook_scheduler
+from scheduler import notebook_scheduler, dockerizer_scheduler
 
 _logger = logging.getLogger(__name__)
 
@@ -16,6 +17,37 @@ def projects_notebook_build(project_id):
     if not project or not project.notebook:
         _logger.warning('Project does not have a notebook.')
         return None
+
+    job = project.notebook
+
+    build_job = BuildJob.create(
+        user=job.user,
+        project=job.project,
+        config=job.specification.run_exec,
+        code_reference=job.code_reference)
+
+    if dockerizer_scheduler.check_image(build_job=build_job):
+        # The image already exists, so we can start the experiment right away
+        celery_app.send_task(
+            SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
+            kwargs={'project_id': project_id})
+        return
+
+    # We need to build the image first
+    build_status = dockerizer_scheduler.start_dockerizer(build_job=build_job)
+
+    if not build_status:
+        job.set_status(JobLifeCycle.FAILED, message='Could not start build process.')
+        return
+
+    if not JobLifeCycle.can_transition(status_from=job.last_status,
+                                       status_to=JobLifeCycle.BUILDING):
+        _logger.info('Notebook for project id `%s` cannot transition from `%s` to `%s`.',
+                     project_id, job.last_status, JobLifeCycle.BUILDING)
+        return
+
+    # Update job status to show that its building docker image
+    job.set_status(JobLifeCycle.BUILDING, message='Building container')
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
