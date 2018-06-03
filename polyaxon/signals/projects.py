@@ -30,6 +30,18 @@ def project_pre_deleted(sender, **kwargs):
     delete_project_repos(instance.unique_name)
 
 
+@receiver(pre_delete, sender=Project, dispatch_uid="project_stop_jobs")
+@ignore_raw
+def project_stop_jobs(sender, **kwargs):
+    from scheduler import dockerizer_scheduler, notebook_scheduler, tensorboard_scheduler
+
+    instance = kwargs['instance']
+    tensorboard_scheduler.stop_tensorboard(instance.tensorboard, update_status=False)
+    notebook_scheduler.stop_notebook(instance.notebook, update_status=False)
+    for build_job in instance.build_jobs:
+        dockerizer_scheduler.stop_dockerizer(build_job, update_status=False)
+
+
 @receiver(post_delete, sender=Project, dispatch_uid="project_deleted")
 @ignore_raw
 def project_post_deleted(sender, **kwargs):

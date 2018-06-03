@@ -1,13 +1,12 @@
 import logging
 
-from django.db.models.signals import post_save, pre_delete, pre_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 import auditor
 
 from constants.jobs import JobLifeCycle
 from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
-from db.models.projects import Project
 from event_manager.events.notebook import (
     NOTEBOOK_FAILED,
     NOTEBOOK_NEW_STATUS,
@@ -120,13 +119,3 @@ def new_notebook_job_status(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
-
-
-@receiver(pre_delete, sender=Project, dispatch_uid="project_stop_plugins")
-@ignore_raw
-def project_stop_plugins(sender, **kwargs):
-    from scheduler import notebook_scheduler, tensorboard_scheduler
-
-    instance = kwargs['instance']
-    tensorboard_scheduler.stop_tensorboard(instance.tensorboard, update_status=False)
-    notebook_scheduler.stop_notebook(instance.notebook, update_status=False)

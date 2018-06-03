@@ -7,6 +7,7 @@ class APIConfig(AppConfig):
     verbose_name = 'API'
 
     def ready(self):
+        import signals.build_jobs  # noqa
         import signals.experiments  # noqa
         import signals.experiment_groups  # noqa
         import signals.projects  # noqa

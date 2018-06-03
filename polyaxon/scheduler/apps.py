@@ -6,6 +6,7 @@ class SchedulerConfig(AppConfig):
     verbose_name = 'Scheduler'
 
     def ready(self):
+        import signals.build_jobs  # noqa
         import signals.experiments  # noqa
         import signals.experiment_groups  # noqa
         import signals.projects  # noqa
