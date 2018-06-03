@@ -29,11 +29,12 @@ class SettingConfig(object):
         self._params = params
         self._requested_keys = set()
         self._secret_keys = set()
+        self._local_keys = set()
         self._env = self.get_string('POLYAXON_ENVIRONMENT')
-        self._service = self.get_string('POLYAXON_SERVICE')
+        self._service = self.get_string('POLYAXON_SERVICE', is_local=True)
         self._is_debug_mode = self.get_boolean('POLYAXON_DEBUG')
         self._namespace = self.get_string('POLYAXON_K8S_NAMESPACE')
-        self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME')
+        self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
 
     @property
     def namespace(self):
@@ -170,22 +171,31 @@ class SettingConfig(object):
         key = 'VXdvYlBQOUdoT2wzMmNoWkhtVDl4R05venk1ZWFVb1o='
         return self._decode(key)
 
-    def get_requested_params(self, include_secrets=False, to_str=False):
+    def get_requested_params(self, include_secrets=False, include_locals=False, to_str=False):
         params = {}
         for key in self._requested_keys:
             if not include_secrets and key in self._secret_keys:
+                continue
+            if not include_locals and key in self._local_keys:
                 continue
             value = self._params[key]
             params[key] = '{}'.format(value) if to_str else value
         return params
 
-    def get_int(self, key, is_optional=False, is_secret=False, default=None, options=None):
+    def get_int(self,
+                key,
+                is_optional=False,
+                is_secret=False,
+                is_local=False,
+                default=None,
+                options=None):
         """Get a the value corresponding to the key and converts it to `int`.
 
         Args:
             key: the dict key.
             is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
         Return:
@@ -196,17 +206,26 @@ class SettingConfig(object):
                                      type_convert=int,
                                      is_optional=is_optional,
                                      is_secret=is_secret,
+                                     is_local=is_local,
                                      default=default,
                                      options=options)
 
-    def get_float(self, key, is_optional=False, is_secret=False, default=None, options=None):
+    def get_float(self,
+                  key,
+                  is_optional=False,
+                  is_secret=False,
+                  is_local=False,
+                  default=None,
+                  options=None):
         """Get a the value corresponding to the key and converts it to `float`.
 
         Args:
             key: the dict key.
             is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
             default: default value if is_optional is True.
+            options: list/tuple if provided, the value must be one of these values.
         Return:
             `float`: value corresponding to the key.
         """
@@ -215,16 +234,24 @@ class SettingConfig(object):
                                      type_convert=float,
                                      is_optional=is_optional,
                                      is_secret=is_secret,
+                                     is_local=is_local,
                                      default=default,
                                      options=options)
 
-    def get_boolean(self, key, is_optional=False, is_secret=False, default=None, options=None):
+    def get_boolean(self,
+                    key,
+                    is_optional=False,
+                    is_secret=False,
+                    is_local=False,
+                    default=None,
+                    options=None):
         """Get a the value corresponding to the key and converts it to `bool`.
 
         Args:
             key: the dict key.
             is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
         Return:
@@ -235,16 +262,23 @@ class SettingConfig(object):
                                      type_convert=lambda x: bool(strtobool(x)),
                                      is_optional=is_optional,
                                      is_secret=is_secret,
+                                     is_local=is_local,
                                      default=default,
                                      options=options)
 
-    def get_string(self, key, is_optional=False, is_secret=False, default=None, options=None):
+    def get_string(self, key,
+                   is_optional=False,
+                   is_secret=False,
+                   is_local=False,
+                   default=None,
+                   options=None):
         """Get a the value corresponding to the key and converts it to `str`.
 
         Args:
             key: the dict key.
             is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
         Return:
@@ -255,6 +289,7 @@ class SettingConfig(object):
                                      type_convert=str,
                                      is_optional=is_optional,
                                      is_secret=is_secret,
+                                     is_local=is_local,
                                      default=default,
                                      options=options)
 
@@ -270,10 +305,12 @@ class SettingConfig(object):
         """
         return self._params[key]
 
-    def _add_key(self, key, is_secret=False):
+    def _add_key(self, key, is_secret=False, is_local=False):
         self._requested_keys.add(key)
         if is_secret:
             self._secret_keys.add(key)
+        if is_local:
+            self._local_keys.add(key)
 
     @staticmethod
     def _check_options(key, value, options):
@@ -288,6 +325,7 @@ class SettingConfig(object):
                          type_convert,
                          is_optional=False,
                          is_secret=False,
+                         is_local=False,
                          default=None,
                          options=None):
         """Returns the value corresponding to the key converted to the given type.
@@ -298,6 +336,7 @@ class SettingConfig(object):
             type_convert: A lambda expression that converts the key to the desired type.
             is_optional: To raise an error if key was not found.
             is_secret: If the key is a secret.
+            is_local: If the key is a local to this service.
             default: default value if is_optional is True.
             options: list/tuple if provided, the value must be one of these values.
 
@@ -314,7 +353,7 @@ class SettingConfig(object):
 
         if isinstance(value, str):
             try:
-                self._add_key(key, is_secret)
+                self._add_key(key, is_secret=is_secret, is_local=is_local)
                 self._check_options(key=key, value=value, options=options)
                 return type_convert(value)
             except ValueError:
@@ -322,7 +361,7 @@ class SettingConfig(object):
                                          "to `{}`".format(value, key, target_type))
 
         if isinstance(value, target_type):
-            self._add_key(key, is_secret)
+            self._add_key(key, is_secret=is_secret, is_local=is_local)
             self._check_options(key=key, value=value, options=options)
             return value
         raise ConfigurationError(key, value, target_type)

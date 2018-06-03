@@ -7,7 +7,7 @@ from polyaxon.utils import config
 
 DEFAULT_EMAIL_DOMAIN = 'local_polyaxon.com'
 
-AUTH_LDAP_ENABLED = config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True)
+AUTH_LDAP_ENABLED = config.get_boolean('POLYAXON_AUTH_LDAP', is_optional=True, is_local=True)
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
