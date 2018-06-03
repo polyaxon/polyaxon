@@ -29,8 +29,8 @@ def handle_events_resources(payload, persist):
     _logger.info(payload)
 
 
-@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES)
-def handle_events_job_statuses(payload):
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES)
+def events_handle_experiment_job_statuses(payload):
     """Experiment jobs constants"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -51,7 +51,7 @@ def handle_events_job_statuses(payload):
 
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
-def handle_events_plugin_job_statuses(payload):
+def events_handle_plugin_job_statuses(payload):
     """Project Plugin jobs constants"""
     details = payload['details']
     app = details['labels']['app']
@@ -78,6 +78,29 @@ def handle_events_plugin_job_statuses(payload):
     # Set the new status
     try:
         job.set_status(status=payload['status'], message=payload['message'], details=details)
+    except IntegrityError:
+        # Due to concurrency this could happen, we just ignore it
+        pass
+
+
+@celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES)
+def events_handle_build_job_statuses(payload):
+    """Project Plugin jobs constants"""
+    details = payload['details']
+    app = details['labels']['app']
+    job_uuid = details['labels']['job_uuid']
+    job_name = details['labels']['job_name']
+    _logger.debug('handling events status for build jon %s %s', job_name, app)
+
+    try:
+        build_job = BuildJob.objects.get(uuid=job_uuid)
+    except BuildJob.DoesNotExist:
+        _logger.info('Build job `%s` does not exist', job_name)
+        return
+
+    # Set the new status
+    try:
+        build_job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
         pass

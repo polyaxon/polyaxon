@@ -136,8 +136,9 @@ class EventsCeleryTasks(object):
     """
     EVENTS_HANDLE_NAMESPACE = 'events_handle_namespace'
     EVENTS_HANDLE_RESOURCES = 'events_handle_resources'
-    EVENTS_HANDLE_JOB_STATUSES = 'events_handle_job_statuses'
+    EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES = 'events_handle_experiment_job_statuses'
     EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'events_handle_plugin_job_statuses'
+    EVENTS_HANDLE_BUILD_JOB_STATUSES = 'events_handle_build_job_statuses'
     EVENTS_HANDLE_LOGS_SIDECAR = 'events_handle_logs_sidecar'
     EVENTS_HANDLE_LOGS_BUILD_JOB = 'events_handle_logs_build_job'
 
@@ -314,9 +315,11 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.EVENTS_NAMESPACE},
     EventsCeleryTasks.EVENTS_HANDLE_RESOURCES:
         {'queue': CeleryQueues.EVENTS_RESOURCES},
-    EventsCeleryTasks.EVENTS_HANDLE_JOB_STATUSES:
+    EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES:
         {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
+        {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
+    EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES:
         {'queue': CeleryQueues.EVENTS_JOB_STATUSES},
     EventsCeleryTasks.EVENTS_HANDLE_LOGS_SIDECAR:
         {'queue': CeleryQueues.LOGS_SIDECARS},
