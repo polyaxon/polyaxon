@@ -107,4 +107,3 @@ class TestBuildJobModels(BaseTest):
         assert BuildJobStatus.objects.count() == 2
         assert BuildJob.objects.count() == 2
         assert new_build_job != build_job
-

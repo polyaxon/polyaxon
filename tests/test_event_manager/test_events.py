@@ -2,6 +2,7 @@ import pytest
 
 from event_manager.event import Attribute, Event
 from event_manager.events import (
+    build_job,
     cluster,
     experiment,
     experiment_group,
@@ -12,8 +13,7 @@ from event_manager.events import (
     repo,
     superuser,
     tensorboard,
-    user,
-    build_job,
+    user
 )
 from libs.json_utils import loads
 from tests.utils import BaseTest

@@ -2,15 +2,16 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import auditor
+
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from event_manager.events.build_job import (
+    BUILD_JOB_FAILED,
     BUILD_JOB_NEW_STATUS,
     BUILD_JOB_STOPPED,
-    BUILD_JOB_FAILED,
     BUILD_JOB_SUCCEEDED
 )
-from libs.decorators import ignore_updates, ignore_raw
+from libs.decorators import ignore_raw, ignore_updates
 
 
 @receiver(post_save, sender=BuildJob, dispatch_uid="build_job_saved")

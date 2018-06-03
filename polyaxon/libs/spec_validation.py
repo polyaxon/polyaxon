@@ -5,10 +5,11 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.polyaxonfile.specification import (
+    BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,
-    PluginSpecification,
-    BuildSpecification)
+    PluginSpecification
+)
 from polyaxon_schemas.settings import SettingsConfig
 
 
