@@ -48,7 +48,8 @@ class DockerizerSpawner(ProjectJobSpawner):
         pod_name = constants.DEPLOYMENT_NAME.format(
             job_uuid=self.job_uuid, name=self.DOCKERIZER_JOB_NAME)
 
-        return self.create_or_update_pod(name=pod_name, data=deployment).to_dict()
+        pod_resp, _ = self.create_or_update_pod(name=pod_name, data=deployment)
+        return pod_resp.to_dict()
 
     def stop_dockerizer(self):
         pod_name = constants.DEPLOYMENT_NAME.format(job_uuid=self.job_uuid,
