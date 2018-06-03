@@ -3,16 +3,38 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from marshmallow import ValidationError
+
 from polyaxon_schemas.run_exec import BuildConfig, RunExecConfig
 
 
 class TestBuildConfigs(TestCase):
+    def test_valid_image(self):
+        config_dict = {
+            'image': None,
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
+        config_dict = {
+            'image': '',
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
+        config_dict = {
+            'image': 'some_image_name:sdf:sdf',
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
     def test_build_config(self):
         config_dict = {
             'image': 'some_image_name',
         }
         config = BuildConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
+        assert config.image_tag == 'latest'
 
     def test_build_from_git_repo_with_install_step_config(self):
         config_dict = {
@@ -23,6 +45,7 @@ class TestBuildConfigs(TestCase):
         }
         config = BuildConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
+        assert config.image_tag == '1.3.0'
 
 
 class TestRunExecConfigs(TestCase):
