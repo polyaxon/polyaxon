@@ -50,12 +50,12 @@ class BuildSpecification(BaseSpecification):
 
     @classmethod
     def create_specification(cls, build_config):
-        if isinstance(build_config, BuildConfig):
-            config = build_config.to_light_dict()
-        elif isinstance(build_config, RunExecConfig):
+        if isinstance(build_config, RunExecConfig):
             config = build_config.to_light_dict()
             config = BuildConfig.from_dict(config)
             config = config.to_light_dict()
+        elif isinstance(build_config, BuildConfig):
+            config = build_config.to_light_dict()
         elif isinstance(build_config, Mapping):
             config = BuildConfig.from_dict(build_config)
             config = config.to_light_dict()
