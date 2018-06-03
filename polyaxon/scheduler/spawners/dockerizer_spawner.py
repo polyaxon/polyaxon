@@ -23,11 +23,11 @@ class DockerizerSpawner(ProjectJobSpawner):
 
         return env_vars
 
-    def start_dockerizer(self, commit, resources=None, node_selectors=None):
+    def start_dockerizer(self, resources=None, node_selectors=None):
         deployment = pods.get_pod(
             namespace=self.namespace,
             app=settings.APP_LABELS_DOCKERIZER,
-            name=self.DOCKERIZER_JOB_NAME.format(commit),
+            name=self.DOCKERIZER_JOB_NAME,
             project_name=self.project_name,
             project_uuid=self.project_uuid,
             job_name=self.job_name,
