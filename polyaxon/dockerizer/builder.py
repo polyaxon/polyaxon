@@ -173,7 +173,12 @@ def download_code(build_job, build_path, filename):
     if not os.path.exists(build_path):
         os.makedirs(build_path)
 
-    download_url = build_job.download_url
+    if build_job.code_reference.repo:
+        download_url = build_job.repo.download_url
+    elif build_job.code_reference.external_repo:
+        download_url = build_job.external_repo.download_url
+    else:
+        raise ValueError('Code reference for this build job does not have any repo.')
 
     repo_file = download(url=download_url,
                          filename=filename,
