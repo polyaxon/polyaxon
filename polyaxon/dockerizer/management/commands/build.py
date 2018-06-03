@@ -45,7 +45,7 @@ class Command(BaseCommand):
                                  message='No code was found for to build this job.')
             return
         except Exception as e:  # Other exceptions
-            _logger.warning('Failed to build experiment %s', e)
+            _logger.warning('Failed to create build job %s', e)
             build_job.set_status(JobLifeCycle.FAILED)
             return
 
