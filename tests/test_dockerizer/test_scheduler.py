@@ -1,19 +1,13 @@
-import os
-
-from pathlib import Path
 from unittest.mock import patch
 
 import pytest
 
-from django.conf import settings
-from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
-
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
-from dockerizer.builder import DockerBuilder
 from factories.code_reference import CodeReferenceFactory
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_projects import ProjectFactory
+from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 from scheduler import dockerizer_scheduler
 from tests.utils import BaseTest
 

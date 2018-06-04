@@ -2,7 +2,7 @@ import pytest
 
 from django.conf import settings
 
-from docker_images.image_info import get_image_name, get_image_info, get_tagged_image
+from docker_images.image_info import get_image_info, get_image_name, get_tagged_image
 from factories.factory_build_jobs import BuildJobFactory
 from tests.utils import BaseTest
 

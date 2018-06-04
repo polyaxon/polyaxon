@@ -5,6 +5,7 @@ from kubernetes.client.rest import ApiException
 from django.conf import settings
 
 import auditor
+
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_tagged_image

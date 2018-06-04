@@ -5,7 +5,6 @@ from db.getters.projects import get_valid_project
 from docker_images.image_info import get_notebook_image_info
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-
 from scheduler import dockerizer_scheduler, notebook_scheduler
 
 _logger = logging.getLogger(__name__)
