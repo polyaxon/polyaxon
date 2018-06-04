@@ -16,7 +16,7 @@ import publisher
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_name, get_tagged_image
 from dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE
-from libs.http import download
+from libs.http import download, untar_file
 from libs.paths.utils import delete_path
 from libs.repos import git
 from libs.utils import get_list
@@ -173,6 +173,8 @@ def download_code(build_job, build_path, filename):
     if not os.path.exists(build_path):
         os.makedirs(build_path)
 
+    filename = '{}/{}'.format(build_path, filename)
+
     if build_job.code_reference.repo:
         download_url = build_job.code_reference.repo.download_url
     elif build_job.code_reference.external_repo:
@@ -184,8 +186,8 @@ def download_code(build_job, build_path, filename):
         url=download_url,
         filename=filename,
         logger=_logger,
-        headers={settings.HEADERS_INTERNAL.replace('_', '-'): 'dockerizer'},
-        untar=True)
+        headers={settings.HEADERS_INTERNAL.replace('_', '-'): 'dockerizer'})
+    untar_file(build_path=build_path, filename=filename, logger=_logger, delete_tar=True)
     if not repo_file:
         build_job.set_status(JobLifeCycle.FAILED,
                              message='Could not download code to build the image.')
@@ -194,7 +196,7 @@ def download_code(build_job, build_path, filename):
 def build(build_job):
     """Build necessary code for a job to run"""
     build_path = '/tmp/build'
-    filename = 'code'
+    filename = '_code'
     download_code(build_job=build_job,
                   build_path=build_path,
                   filename=filename)

@@ -58,6 +58,11 @@ LOGGING = {
             'propagate': True,
             'level': 'INFO',
         },
+        'polyaxon.dockerizer': {
+            'handlers': ['console', ],
+            'propagate': True,
+            'level': 'INFO',
+        },
         'django.request': {
             'level': 'DEBUG',
             'propagate': True,

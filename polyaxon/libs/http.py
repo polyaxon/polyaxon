@@ -61,13 +61,13 @@ def safe_urlopen(
 
 
 def download(url,
+
              filename,
              logger,
              authentication_type=None,
              access_token=None,
              headers=None,
-             timeout=60,
-             untar=False):
+             timeout=60):
     """Download the file from the given url at the current path"""
     authentication_type = authentication_type or InternalAuthentication.keyword
     logger.info("Downloading file from %s using %s" % (url, authentication_type))
@@ -100,8 +100,6 @@ def download(url,
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
-        if untar:
-            untar_file(filename=filename, logger=logger, delete_tar=True)
         return filename
 
     except requests.exceptions.RequestException as e:
@@ -109,11 +107,11 @@ def download(url,
         return None
 
 
-def untar_file(filename, logger, delete_tar=False):
+def untar_file(build_path, filename, logger, delete_tar=False):
     if filename:
         logger.info("Untarring the contents of the file ...")
         tar = tarfile.open(filename)
-        tar.extractall()
+        tar.extractall(build_path)
         tar.close()
     if delete_tar:
         logger.info("Cleaning up the tar file ...")
