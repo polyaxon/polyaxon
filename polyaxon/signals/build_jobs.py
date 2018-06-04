@@ -74,6 +74,6 @@ def handle_new_build_job_status(sender, **kwargs):
                      'send signal to stop.', build_job.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
         celery_app.send_task(
-            SchedulerCeleryTasks.BUILDS_STOP,
+            SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={'build_job_id': build_job.id,
                     'update_status': False})
