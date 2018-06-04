@@ -6,8 +6,9 @@ from django.conf import settings
 
 import auditor
 from constants.jobs import JobLifeCycle
+from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_tagged_image
-from event_manager.events.build_job import BUILD_JOB_STARTED
+from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.utils import get_job_definition
 
@@ -19,6 +20,46 @@ def check_image(build_job):
 
     docker = APIClient(version='auto')
     return docker.images(get_tagged_image(build_job))
+
+
+def create_build_job(user, project, config, code_reference):
+    """Get or Create a build job based on the params.
+
+    If a build job already exists, then we check if the build has already an image created.
+    If the image does not exists, and the job is already done we force create a new job.
+
+    Returns:
+        tuple: (build_job, image_exists[bool], build_status[bool])
+    """
+    build_job = BuildJob.create(
+        user=user,
+        project=project,
+        config=config,
+        code_reference=code_reference)
+
+    if check_image(build_job=build_job):
+        return build_job, True, False
+
+    # We need to build the image first
+    auditor.record(event_type=BUILD_JOB_STARTED_TRIGGERED,
+                   instance=build_job,
+                   target='project',
+                   actor_id=user.id)
+
+    if build_job.is_done:
+        build_job = BuildJob.create(
+            user=user,
+            project=project,
+            config=config,
+            code_reference=code_reference,
+            force=True)
+
+    if not build_job.is_running:
+        build_status = start_dockerizer(build_job=build_job)
+    else:
+        build_status = True
+
+    return build_job, False, build_status
 
 
 def start_dockerizer(build_job):

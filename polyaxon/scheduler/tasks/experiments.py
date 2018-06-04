@@ -1,13 +1,10 @@
 import logging
 
-import auditor
 import publisher
 
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
-from db.models.build_jobs import BuildJob
 from db.models.experiments import ExperimentMetric
-from event_manager.events.build_job import BUILD_JOB_STARTED_TRIGGERED
 from libs.paths.experiments import copy_experiment_outputs, create_experiment_outputs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -58,34 +55,27 @@ def experiments_build(experiment_id):
             kwargs={'experiment_id': experiment_id})
         return
 
-    build_job = BuildJob.create(
+    if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
+                                              status_to=ExperimentLifeCycle.BUILDING):
+        _logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
+                     experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
+        return
+
+    build_job, image_exists, build_status = dockerizer_scheduler.create_build_job(
         user=experiment.user,
         project=experiment.project,
         config=experiment.specification.run_exec,
         code_reference=experiment.code_reference)
 
-    if dockerizer_scheduler.check_image(build_job=build_job):
+    if image_exists:
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id})
         return
 
-    # We need to build the image first
-    auditor.record(event_type=BUILD_JOB_STARTED_TRIGGERED,
-                   instance=build_job,
-                   target='project',
-                   actor_id=experiment.user.id)
-    build_status = dockerizer_scheduler.start_dockerizer(build_job=build_job)
-
     if not build_status:
         experiment.set_status(ExperimentLifeCycle.FAILED, message='Could not start build process.')
-        return
-
-    if not ExperimentLifeCycle.can_transition(status_from=experiment.last_status,
-                                              status_to=ExperimentLifeCycle.BUILDING):
-        _logger.info('Experiment id `%s` cannot transition from `%s` to `%s`.',
-                     experiment_id, experiment.last_status, ExperimentLifeCycle.BUILDING)
         return
 
     # Update experiment status to show that its building
