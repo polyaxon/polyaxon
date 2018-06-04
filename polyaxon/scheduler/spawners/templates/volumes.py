@@ -51,3 +51,10 @@ def get_pod_volumes():
                 volume_mounts.append(get_volume_mount(volume=volume_name,
                                                       volume_mount=mount_path))
     return volumes, volume_mounts
+
+
+def get_docker_volumes():
+    volumes = [get_volume(volume=constants.DOCKER_VOLUME, volume_mount=settings.MOUNT_PATHS_DOCKER)]
+    volume_mounts = [get_volume_mount(volume=constants.DOCKER_VOLUME,
+                                      volume_mount=settings.MOUNT_PATHS_DOCKER)]
+    return volumes, volume_mounts

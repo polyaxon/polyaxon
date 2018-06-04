@@ -6,6 +6,7 @@ from polyaxon.utils import config
 # dirs
 DIRS_DOCKER = config.get_string('POLYAXON_DIRS_DOCKER')
 DIRS_NVIDIA = config.get_string('POLYAXON_DIRS_NVIDIA')
+MOUNT_PATHS_DOCKER = config.get_string('POLYAXON_MOUNT_PATHS_DOCKER')
 MOUNT_PATHS_NVIDIA = config.get_string('POLYAXON_MOUNT_PATHS_NVIDIA', is_optional=True)
 LD_LIBRARY_PATH = config.get_string('LD_LIBRARY_PATH', is_optional=True)
 

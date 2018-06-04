@@ -204,7 +204,6 @@ def build(build_job):
                   filename=filename)
 
     _logger.info('Starting build ...')
-    _logger.info(os.listdir(build_path))
     # Build the image
     docker_builder = DockerBuilder(
         build_job=build_job,

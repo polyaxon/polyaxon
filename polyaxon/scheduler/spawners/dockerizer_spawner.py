@@ -8,6 +8,7 @@ from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var
 from scheduler.spawners.templates.project_jobs import pods
 from scheduler.spawners.templates.services.default_env_vars import get_service_env_vars
+from scheduler.spawners.templates.volumes import get_docker_volumes
 
 logger = logging.getLogger('polyaxon.spawners.dockerizer')
 
@@ -24,6 +25,7 @@ class DockerizerSpawner(ProjectJobSpawner):
         return env_vars
 
     def start_dockerizer(self, resources=None, node_selectors=None):
+        volumes, volume_mounts = get_docker_volumes()
         deployment = pods.get_pod(
             namespace=self.namespace,
             app=settings.APP_LABELS_DOCKERIZER,
@@ -32,8 +34,8 @@ class DockerizerSpawner(ProjectJobSpawner):
             project_uuid=self.project_uuid,
             job_name=self.job_name,
             job_uuid=self.job_uuid,
-            volume_mounts=[],
-            volumes=[],
+            volume_mounts=volume_mounts,
+            volumes=volumes,
             image=settings.JOB_DOCKERIZER_IMAGE,
             command=None,
             args=[self.job_uuid],

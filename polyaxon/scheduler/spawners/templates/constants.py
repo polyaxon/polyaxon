@@ -28,3 +28,4 @@ def SIDECAR_ARGS_FN(pod_id):  # noqa, uppercase function name
 DATA_VOLUME = 'data'
 OUTPUTS_VOLUME = 'outputs'
 REPOS_VOLUME = 'repos'
+DOCKER_VOLUME = 'docker'
