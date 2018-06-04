@@ -6,7 +6,7 @@ API_KEY_NAME = 'POLYAXON_API'
 
 
 def get_settings_api_url():
-    return '{}//{}:{}'.format(settings.PROTOCOL,
+    return '{}://{}:{}'.format(settings.PROTOCOL,
                               settings.POLYAXON_K8S_API_HOST,
                               settings.POLYAXON_K8S_API_PORT)
 
