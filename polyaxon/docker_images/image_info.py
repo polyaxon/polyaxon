@@ -69,10 +69,10 @@ def get_image_name(build_job):
     return '{}/{}'.format(settings.REGISTRY_HOST, build_job.project.name)
 
 
-def get_image_image_info(build_job):
+def get_image_info(build_job):
     return get_image_name(build_job=build_job), build_job.uuid.hex
 
 
 def get_tagged_image(build_job):
-    image_name, image_tag = get_image_image_info(build_job)
+    image_name, image_tag = get_image_info(build_job)
     return '{}:{}'.format(image_name, image_tag)
