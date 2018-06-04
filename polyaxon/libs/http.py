@@ -69,8 +69,8 @@ def download(url,
              timeout=60,
              untar=False):
     """Download the file from the given url at the current path"""
-    logger.info("Downloading file from %s using %s" % (url, authentication_type))
     authentication_type = authentication_type or InternalAuthentication.keyword
+    logger.info("Downloading file from %s using %s" % (url, authentication_type))
     if authentication_type == InternalAuthentication.keyword and not access_token:
         access_token = settings.INTERNAL_SECRET_TOKEN
     elif authentication_type == TokenAuthentication.keyword and not access_token:
