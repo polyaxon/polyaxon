@@ -41,12 +41,6 @@ def create_build_job(user, project, config, code_reference):
     if check_image(build_job=build_job):
         return build_job, True, False
 
-    # We need to build the image first
-    auditor.record(event_type=BUILD_JOB_STARTED_TRIGGERED,
-                   instance=build_job,
-                   target='project',
-                   actor_id=user.id)
-
     if build_job.is_done:
         build_job = BuildJob.create(
             user=user,
@@ -56,6 +50,11 @@ def create_build_job(user, project, config, code_reference):
             force=True)
 
     if not build_job.is_running:
+        # We need to build the image first
+        auditor.record(event_type=BUILD_JOB_STARTED_TRIGGERED,
+                       instance=build_job,
+                       target='project',
+                       actor_id=user.id)
         build_status = start_dockerizer(build_job=build_job)
     else:
         build_status = True
