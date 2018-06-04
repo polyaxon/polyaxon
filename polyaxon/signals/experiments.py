@@ -28,7 +28,7 @@ from libs.repos.utils import assign_code_reference
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
-logger = logging.getLogger('polyaxon.signals.experiments')
+_logger = logging.getLogger('polyaxon.signals.experiments')
 
 
 @receiver(pre_save, sender=Experiment, dispatch_uid="experiment_pre_save")
@@ -222,8 +222,8 @@ def handle_new_experiment_status(sender, **kwargs):
         return
 
     if instance.status in (ExperimentLifeCycle.FAILED, ExperimentLifeCycle.SUCCEEDED):
-        logger.info('One of the workers failed or Master for experiment `%s` is done, '
-                    'send signal to other workers to stop.', experiment.unique_name)
+        _logger.info('One of the workers failed or Master for experiment `%s` is done, '
+                     'send signal to other workers to stop.', experiment.unique_name)
         # Schedule stop for this experiment because other jobs may be still running
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
