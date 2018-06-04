@@ -180,11 +180,12 @@ def download_code(build_job, build_path, filename):
     else:
         raise ValueError('Code reference for this build job does not have any repo.')
 
-    repo_file = download(url=download_url,
-                         filename=filename,
-                         logger=_logger,
-                         headers={settings.HEADERS_INTERNAL: 'dockerizer'},
-                         untar=True)
+    repo_file = download(
+        url=download_url,
+        filename=filename,
+        logger=_logger,
+        headers={settings.HEADERS_INTERNAL.replace('_', '-'): 'dockerizer'},
+        untar=True)
     if not repo_file:
         build_job.set_status(JobLifeCycle.FAILED,
                              message='Could not download code to build the image.')
