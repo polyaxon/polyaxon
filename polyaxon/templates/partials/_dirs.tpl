@@ -8,10 +8,10 @@ Config dirs
   value: {{ toJson .Values.dirs.nvidia | quote }}
 {{- if .Values.mountPaths.docker }}
 - name: POLYAXON_MOUNT_PATHS_DOCKER
-  value: {{ toJson .Values.mountPaths.docker | quote }}
+  value: {{ .Values.mountPaths.docker | quote }}
 {{- else }}
 - name: POLYAXON_MOUNT_PATHS_DOCKER
-  value: {{ toJson .Values.dirs.docker | quote }}
+  value: {{ .Values.dirs.docker | quote }}
 {{- end }}
 {{- if and .Values.mountPaths.nvidia.lib .Values.mountPaths.nvidia.bin .Values.mountPaths.nvidia.libcuda }}
 - name: POLYAXON_MOUNT_PATHS_NVIDIA
