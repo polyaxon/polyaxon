@@ -164,6 +164,9 @@ class SchedulerCeleryTasks(object):
     PROJECTS_NOTEBOOK_START = 'projects_notebook_start'
     PROJECTS_NOTEBOOK_STOP = 'projects_notebook_stop'
 
+    BUILD_JOBS_START = 'build_jobs_start'
+    BUILD_JOBS_STOP = 'build_jobs_stop'
+
 
 class HPCeleryTasks(object):
     """Hyperparams celery tasks.
@@ -202,6 +205,7 @@ class CeleryQueues(object):
     SCHEDULER_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS')
     SCHEDULER_EXPERIMENT_GROUPS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS')
     SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS')
+    SCHEDULER_BUILD_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS')
 
     PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES')
 
@@ -276,6 +280,11 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
     SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP:
         {'queue': CeleryQueues.SCHEDULER_PROJECTS},
+
+    SchedulerCeleryTasks.BUILD_JOBS_START:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
+    SchedulerCeleryTasks.BUILD_JOBS_STOP:
+        {'queue': CeleryQueues.SCHEDULER_BUILD_JOBS},
 
     CronsCeleryTasks.EXPERIMENTS_SYNC_JOBS_STATUSES:
         {'queue': CeleryQueues.CRONS_EXPERIMENTS},
