@@ -4,8 +4,10 @@ from kubernetes.client.rest import ApiException
 
 from django.conf import settings
 
+import auditor
 from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_tagged_image
+from event_manager.events.build_job import BUILD_JOB_STARTED
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.utils import get_job_definition
 
@@ -28,10 +30,11 @@ def start_dockerizer(build_job):
         k8s_config=settings.K8S_CONFIG,
         namespace=settings.K8S_NAMESPACE,
         in_cluster=True)
-
     try:
         results = spawner.start_dockerizer(resources=build_job.resources,
                                            node_selectors=build_job.node_selectors)
+        auditor.record(event_type=BUILD_JOB_STARTED,
+                       instance=build_job)
     except ApiException as e:
         logger.warning('Could not start build job, please check your polyaxon spec %s', e)
         build_job.set_status(

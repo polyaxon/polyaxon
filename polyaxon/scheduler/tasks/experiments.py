@@ -1,11 +1,13 @@
 import logging
 
+import auditor
 import publisher
 
 from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
 from db.models.build_jobs import BuildJob
 from db.models.experiments import ExperimentMetric
+from event_manager.events.build_job import BUILD_JOB_STARTED_TRIGGERED
 from libs.paths.experiments import copy_experiment_outputs, create_experiment_outputs_path
 from polyaxon.celery_api import app as celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -70,6 +72,10 @@ def experiments_build(experiment_id):
         return
 
     # We need to build the image first
+    auditor.record(event_type=BUILD_JOB_STARTED_TRIGGERED,
+                   instance=build_job,
+                   target='project',
+                   actor_id=experiment.user.id)
     build_status = dockerizer_scheduler.start_dockerizer(build_job=build_job)
 
     if not build_status:
