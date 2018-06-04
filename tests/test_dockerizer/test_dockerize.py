@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
+
 from django.conf import settings
 
 from dockerizer.builder import DockerBuilder
@@ -10,6 +12,7 @@ from factories.factory_build_jobs import BuildJobFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.dockerizer_mark
 class TestDockerize(BaseTest):
     @patch('dockerizer.builder.APIClient')
     def test_get_requirements_and_setup_path_works_as_expected(self, _):

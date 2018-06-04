@@ -1,3 +1,5 @@
+import pytest
+
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from factories.code_reference import CodeReferenceFactory
@@ -7,6 +9,7 @@ from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
 
 
+@pytest.mark.build_jobs_mark
 class TestBuildJobModels(BaseTest):
     DISABLE_RUNNER = True
 
