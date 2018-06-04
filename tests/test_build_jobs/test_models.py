@@ -65,6 +65,39 @@ class TestBuildJobModels(BaseTest):
         assert BuildJob.objects.count() == 1
         assert new_build_job == build_job
 
+    def test_create_build_with_same_config_and_force_create_new_build_job(self):
+        assert BuildJobStatus.objects.count() == 0
+        assert BuildJob.objects.count() == 0
+        build_job = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:test'},
+            code_reference=self.code_reference)
+        assert build_job.last_status == JobLifeCycle.CREATED
+        assert BuildJobStatus.objects.count() == 1
+        assert BuildJob.objects.count() == 1
+
+        # Building with same config and force creates a new build job
+        new_build_job = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:test'},
+            code_reference=self.code_reference,
+            force=True)
+        assert BuildJobStatus.objects.count() == 2
+        assert BuildJob.objects.count() == 2
+        assert new_build_job != build_job
+
+        # Building with same config does not create a new build job
+        new_build_job_v2 = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:test'},
+            code_reference=self.code_reference)
+        assert BuildJobStatus.objects.count() == 2
+        assert BuildJob.objects.count() == 2
+        assert new_build_job == new_build_job_v2
+
     def test_create_build_with_latest_tag_always_results_in_new_job(self):
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0

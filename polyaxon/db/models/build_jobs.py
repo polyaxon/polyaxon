@@ -91,16 +91,15 @@ class BuildJob(Job):
                                 details=details)
 
     @staticmethod
-    def create(user, project, config, code_reference):
+    def create(user, project, config, code_reference, force=False):
         build_config = BuildSpecification.create_specification(config, to_dict=False)
         # Check if image is not using latest tag, then we can reuse a previous build
-        if build_config.build.image_tag != LATEST_IMAGE_TAG:
-            try:
-                return BuildJob.objects.get(project=project,
-                                            config=build_config.parsed_data,
-                                            code_reference=code_reference)
-            except BuildJob.DoesNotExist:
-                pass
+        if not force and build_config.build.image_tag != LATEST_IMAGE_TAG:
+            job = BuildJob.objects.filter(project=project,
+                                          config=build_config.parsed_data,
+                                          code_reference=code_reference).last()
+            if job:
+                return job
 
         return BuildJob.objects.create(user=user,
                                        project=project,
