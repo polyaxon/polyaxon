@@ -201,12 +201,10 @@ def build(build_job):
                   build_path=build_path,
                   filename=filename)
 
-    repo_path = '{}/{}'.format(build_path, filename)
-
     # Build the image
     docker_builder = DockerBuilder(
         build_job=build_job,
-        repo_path=repo_path,
+        repo_path=build_path,
         from_image=build_job.image,
         build_steps=build_job.build_steps,
         env_vars=build_job.env_vars)

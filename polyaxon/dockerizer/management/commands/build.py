@@ -30,14 +30,13 @@ class Command(BaseCommand):
                 ending='\n')
             return
 
-        build_job.set_status(JobLifeCycle.BUILDING)
-
         # Building the docker image
         try:
             status = builder.build(build_job=build_job)
         except DockerException as e:
             _logger.warning('Failed to build job %s', e)
-            build_job.set_status(JobLifeCycle.FAILED)
+            build_job.set_status(JobLifeCycle.FAILED,
+                                 message='Failed to build job %s' % e)
             return
         except Repo.DoesNotExist:
             _logger.warning('No code was found for this project')
@@ -46,7 +45,8 @@ class Command(BaseCommand):
             return
         except Exception as e:  # Other exceptions
             _logger.warning('Failed to create build job %s', e)
-            build_job.set_status(JobLifeCycle.FAILED)
+            build_job.set_status(JobLifeCycle.FAILED,
+                                 message='Failed to build job %s' % e)
             return
 
         if not status:
