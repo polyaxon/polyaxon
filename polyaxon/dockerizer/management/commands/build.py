@@ -37,17 +37,17 @@ class Command(BaseCommand):
             _logger.warning('Failed to build job %s', e)
             build_job.set_status(JobLifeCycle.FAILED,
                                  message='Failed to build job %s' % e)
-            return
+            status = False
         except Repo.DoesNotExist:
             _logger.warning('No code was found for this project')
             build_job.set_status(JobLifeCycle.FAILED,
                                  message='No code was found for to build this job.')
-            return
+            status = False
         except Exception as e:  # Other exceptions
             _logger.warning('Failed to create build job %s', e)
             build_job.set_status(JobLifeCycle.FAILED,
                                  message='Failed to build job %s' % e)
-            return
+            status = False
 
         if not status:
             return

@@ -61,7 +61,6 @@ def safe_urlopen(
 
 
 def download(url,
-
              filename,
              logger,
              authentication_type=None,
@@ -70,7 +69,6 @@ def download(url,
              timeout=60):
     """Download the file from the given url at the current path"""
     authentication_type = authentication_type or InternalAuthentication.keyword
-    logger.info("Downloading file from %s using %s" % (url, authentication_type))
     if authentication_type == InternalAuthentication.keyword and not access_token:
         access_token = settings.INTERNAL_SECRET_TOKEN
     elif authentication_type == TokenAuthentication.keyword and not access_token:
@@ -87,6 +85,7 @@ def download(url,
     try:
         api_url = get_service_api_url()
         url = '{}/{}'.format(api_url, url)
+        logger.info("Downloading file from %s using %s" % (url, authentication_type))
         response = requests.get(url,
                                 headers=request_headers,
                                 timeout=timeout,

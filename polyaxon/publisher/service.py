@@ -10,7 +10,7 @@ from polyaxon.settings import EventsCeleryTasks, RoutingKeys
 
 
 class PublisherService(Service):
-    __all__ = ('publish_experiment_log', 'setup')
+    __all__ = ('publish_experiment_log', 'publish_build_job_log', 'setup')
 
     def __init__(self):
         self._logger = None

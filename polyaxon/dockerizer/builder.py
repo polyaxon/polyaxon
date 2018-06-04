@@ -38,6 +38,7 @@ class DockerBuilder(object):
                  dockerfile_name='Dockerfile'):
         self.build_job = build_job
         self.job_uuid = build_job.uuid.hex
+        self.job_name = build_job.unique_name
         self.from_image = from_image
         self.image_name = get_image_name(self.build_job)
         self.image_tag = self.job_uuid
@@ -78,6 +79,7 @@ class DockerBuilder(object):
         publisher.publish_build_job_log(
             log_line=log_line,
             job_uuid=self.job_uuid,
+            job_name=self.job_name
         )
 
     def _get_requirements_path(self):
@@ -201,6 +203,8 @@ def build(build_job):
                   build_path=build_path,
                   filename=filename)
 
+    _logger.info('Starting build ...')
+    _logger.info(os.listdir(build_path))
     # Build the image
     docker_builder = DockerBuilder(
         build_job=build_job,
