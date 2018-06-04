@@ -76,7 +76,8 @@ def start_dockerizer(build_job):
         results = spawner.start_dockerizer(resources=build_job.resources,
                                            node_selectors=build_job.node_selectors)
         auditor.record(event_type=BUILD_JOB_STARTED,
-                       instance=build_job)
+                       instance=build_job,
+                       target='project')
     except ApiException as e:
         logger.warning('Could not start build job, please check your polyaxon spec %s', e)
         build_job.set_status(
