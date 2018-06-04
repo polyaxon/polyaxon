@@ -6,7 +6,6 @@ from django.core.management.base import BaseCommand
 
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
-from db.models.repos import Repo
 from dockerizer import builder
 
 _logger = logging.getLogger('polyaxon.dockerizer.commands')
@@ -37,11 +36,6 @@ class Command(BaseCommand):
             _logger.warning('Failed to build job %s', e)
             build_job.set_status(JobLifeCycle.FAILED,
                                  message='Failed to build job %s' % e)
-            status = False
-        except Repo.DoesNotExist:
-            _logger.warning('No code was found for this project')
-            build_job.set_status(JobLifeCycle.FAILED,
-                                 message='No code was found for to build this job.')
             status = False
         except Exception as e:  # Other exceptions
             _logger.warning('Failed to create build job %s', e)
