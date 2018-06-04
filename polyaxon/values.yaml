@@ -467,6 +467,7 @@ queues:
   schedulerExperiments: 'queues.scheduler.experiments'
   schedulerExperimentGroups: 'queues.scheduler.experimentGroups'
   schedulerProjects: 'queues.scheduler.projects'
+  schedulerBuildJobs: 'queues.scheduler.build_jobs'
 
   pipelines: 'queues.pipelines'
 

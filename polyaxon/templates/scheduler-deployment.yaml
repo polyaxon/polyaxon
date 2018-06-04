@@ -38,7 +38,7 @@ spec:
       - name: {{ .Chart.Name }}-scheduler
         image: "{{ .Values.scheduler.image }}:{{ .Values.scheduler.imageTag }}"
         imagePullPolicy: {{ .Values.scheduler.imagePullPolicy }}
-        args: ["{{ .Values.queues.schedulerExperiments }},{{ .Values.queues.schedulerExperimentGroups }},{{ .Values.queues.schedulerProjects }}", "--concurrency={{ .Values.scheduler.concurrency }}"]
+        args: ["{{ .Values.queues.schedulerExperiments }},{{ .Values.queues.schedulerExperimentGroups }},{{ .Values.queues.schedulerProjects }}, {{ .Values.queues..schedulerBuildJobs }}", "--concurrency={{ .Values.scheduler.concurrency }}"]
         env:
         {{ include "config.core" . | indent 8 }}
         {{ include "config.amqp" . | indent 8 }}

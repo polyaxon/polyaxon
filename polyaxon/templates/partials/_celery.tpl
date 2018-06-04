@@ -18,6 +18,8 @@ Celery config
   value: {{ .Values.queues.schedulerExperimentGroups | quote }}
 - name: POLYAXON_QUEUES_SCHEDULER_PROJECTS
   value: {{ .Values.queues.schedulerProjects | quote }}
+- name: POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS
+  value: {{ .Values.queues.schedulerBuildJobs | quote }}
 - name: POLYAXON_QUEUES_PIPELINES
   value: {{ .Values.queues.pipelines | quote }}
 - name: POLYAXON_QUEUES_CRONS_EXPERIMENTS
