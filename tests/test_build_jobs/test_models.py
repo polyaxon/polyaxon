@@ -143,3 +143,20 @@ class TestBuildJobModels(BaseTest):
         assert BuildJobStatus.objects.count() == 2
         assert BuildJob.objects.count() == 2
         assert new_build_job != build_job
+
+    def test_build_job_statuses(self):
+        assert BuildJobStatus.objects.count() == 0
+        experiment = ExperimentFactory(project=self.project)
+
+        build_job = BuildJob.create(
+            user=experiment.user,
+            project=experiment.project,
+            config=experiment.specification.run_exec,
+            code_reference=self.code_reference)
+
+        assert build_job.last_status == JobLifeCycle.CREATED
+        assert BuildJobStatus.objects.count() == 1
+        build_job.set_status(JobLifeCycle.FAILED)
+        assert BuildJobStatus.objects.count() == 2
+        build_job.set_status(JobLifeCycle.SUCCEEDED)
+        assert BuildJobStatus.objects.count() == 2

@@ -101,8 +101,6 @@ def events_handle_build_job_statuses(payload):
 
     # Set the new status
     try:
-        if JobLifeCycle.is_done(payload['status']):
-            build_job.refresh_from_db()
         build_job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
