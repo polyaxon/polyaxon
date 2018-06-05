@@ -9,7 +9,6 @@ from docker import APIClient
 from docker.errors import DockerException
 
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 
 import publisher
 
@@ -20,6 +19,8 @@ from libs.http import download, untar_file
 from libs.paths.utils import delete_path
 from libs.repos import git
 from libs.utils import get_list
+from polyaxon.celery_api import app as celery_app
+from polyaxon.settings import EventsCeleryTasks
 
 _logger = logging.getLogger('polyaxon.dockerizer')
 
@@ -191,8 +192,9 @@ def download_code(build_job, build_path, filename):
         headers={settings.HEADERS_INTERNAL.replace('_', '-'): 'dockerizer'})
     untar_file(build_path=build_path, filename=filename, logger=_logger, delete_tar=True)
     if not repo_file:
-        build_job.set_status(JobLifeCycle.FAILED,
-                             message='Could not download code to build the image.')
+        send_status(build_job=build_job,
+                    status=JobLifeCycle.FAILED,
+                    message='Could not download code to build the image.')
 
 
 def build(build_job):
@@ -223,11 +225,26 @@ def build(build_job):
         return False
     if not docker_builder.push():
         docker_builder.clean()
-        try:
-            build_job.set_status(JobLifeCycle.FAILED,
-                                 message='The docker image could not be pushed.')
-        except ObjectDoesNotExist:
-            pass
+        send_status(build_job=build_job,
+                    status=JobLifeCycle.FAILED,
+                    message='The docker image could not be pushed.')
         return False
     docker_builder.clean()
     return True
+
+
+def send_status(build_job, status, message=None):
+    payload = {
+        'details': {
+            'labels': {
+                'app': 'dockerizer',
+                'job_uuid': build_job.uuid.hex,
+                'job_name': build_job.unique_name
+            }
+        },
+        'status': status,
+        'message': message
+    }
+    celery_app.send_task(
+        EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES,
+        kwargs={'payload': payload})

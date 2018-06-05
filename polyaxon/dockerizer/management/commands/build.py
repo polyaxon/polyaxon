@@ -33,17 +33,23 @@ class Command(BaseCommand):
         try:
             status = builder.build(build_job=build_job)
         except DockerException as e:
-            build_job.set_status(JobLifeCycle.FAILED,
-                                 message='Failed to build job %s' % e)
+            builder.send_status(
+                build_job=build_job,
+                status=JobLifeCycle.FAILED,
+                message='Failed to build job %s' % e)
             _logger.exception('Failed to build job %s', e)
             status = False
         except Exception as e:  # Other exceptions
-            build_job.set_status(JobLifeCycle.FAILED,
-                                 message='Failed to build job %s' % e)
+            builder.send_status(
+                build_job=build_job,
+                status=JobLifeCycle.FAILED,
+                message='Failed to build job %s' % e)
             _logger.exception('Failed to create build job %s', e)
             status = False
 
         if not status:
             return
 
-        build_job.set_status(JobLifeCycle.SUCCEEDED)
+        builder.send_status(
+            build_job=build_job,
+            status=JobLifeCycle.SUCCEEDED)
