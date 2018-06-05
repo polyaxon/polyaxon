@@ -1,13 +1,6 @@
 from rest_framework import fields, serializers
 
-from db.models.jobs import JobResources
-
-
-class JobResourcesSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = JobResources
-        exclude = ('id',)
+from api.utils.serializers.job_resources import JobResourcesSerializer
 
 
 class JobSerializer(serializers.ModelSerializer):

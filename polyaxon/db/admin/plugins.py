@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from db.admin.jobs import JobStatusAdmin
+from db.admin.abstract_job import JobStatusAdmin
 from db.admin.utils import DiffModelAdmin
 from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
 
