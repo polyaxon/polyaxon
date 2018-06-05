@@ -17,11 +17,17 @@ class PluginJobBase(AbstractJob):
         on_delete=models.CASCADE,
         related_name='+')
     config = JSONField(
-        help_text='The compiled polyaxonfile for plugin job.',
+        help_text='The compiled polyaxonfile for the plugin job.',
         validators=[validate_plugin_spec_config])
     code_reference = models.ForeignKey(
         'db.CodeReference',
         on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='+')
+    build_job = models.ForeignKey(
+        'db.BuildJob',
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
         related_name='+')

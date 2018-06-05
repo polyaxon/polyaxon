@@ -59,6 +59,12 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='experiments')
+    build_job = models.ForeignKey(
+        'db.BuildJob',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='+')
     experiment_group = models.ForeignKey(
         'db.ExperimentGroup',
         on_delete=models.CASCADE,

@@ -8,6 +8,7 @@ from db.models.utils import DiffModel, LastStatusMixin, StatusModel
 
 
 class AbstractJob(DiffModel, LastStatusMixin):
+    """An abstract base class for job, used both by experiment jobs and other jobs."""
     STATUSES = JobLifeCycle
 
     uuid = models.UUIDField(

@@ -24,7 +24,7 @@ class BuildJob(AbstractJob):
         on_delete=models.CASCADE,
         related_name='build_jobs')
     config = JSONField(
-        help_text='The compiled polyaxonfile for plugin job.',
+        help_text='The compiled polyaxonfile for the build job.',
         validators=[validate_build_spec_config])
     code_reference = models.ForeignKey(
         'db.CodeReference',
@@ -44,7 +44,7 @@ class BuildJob(AbstractJob):
         app_label = 'db'
 
     def __str__(self):
-        return '{} build<{}, ref({})>'.format(self.project, self.image, self.code_reference)
+        return self.unique_name
 
     def save(self, *args, **kwargs):  # pylint:disable=arguments-differ
         if self.pk is None:
