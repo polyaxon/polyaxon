@@ -1,0 +1,18 @@
+---
+version: 1
+
+kind: job
+
+environment:
+  node_selectors:
+    polyaxon.com: node_for_plugin_jobs
+
+run:
+  image: my_image
+  build_steps:
+    - pip install package1
+  env_vars:
+    - ['KEY1', 'en_US.UTF-8']
+    - ['KEY2', 2]
+  cmd: test
+...

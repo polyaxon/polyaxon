@@ -9,6 +9,7 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError, Polyaxonfile
 from polyaxon_schemas.polyaxonfile.specification import (
     BuildSpecification,
     ExperimentSpecification,
+    JobSpecification,
     PluginSpecification
 )
 from polyaxon_schemas.utils import TaskType
@@ -28,6 +29,11 @@ class TestSpecifications(TestCase):
         with self.assertRaises(PolyaxonConfigurationError):
             BuildSpecification.read(os.path.abspath(
                 'tests/fixtures/missing_build.yml'))
+
+    def test_job_specification_raises_for_missing_run_section(self):
+        with self.assertRaises(PolyaxonConfigurationError):
+            JobSpecification.read(os.path.abspath(
+                'tests/fixtures/job_missing_run_exec.yml'))
 
     def test_create_plugin_specification(self):
         run_config = {'image': 'blabla'}
@@ -53,6 +59,14 @@ class TestSpecifications(TestCase):
         assert config['build'] == {'image': 'blabla'}
         spec = BuildSpecification.create_specification(run_config, to_dict=False)
         assert spec.build.image == run_config['image']
+
+    def test_create_job_specification(self):
+        run_config = {'image': 'blabla', 'cmd': 'some command'}
+        config = JobSpecification.create_specification(run_config)
+        assert JobSpecification.read(config).parsed_data == config
+        assert config['run'] == run_config
+        spec = JobSpecification.create_specification(run_config, to_dict=False)
+        assert spec.run_exec.image == run_config['image']
 
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(
