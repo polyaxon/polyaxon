@@ -67,6 +67,8 @@ def experiments_build(experiment_id):
         config=experiment.specification.run_exec,
         code_reference=experiment.code_reference)
 
+    experiment.build_job = build_job
+    experiment.save()
     if image_exists:
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(

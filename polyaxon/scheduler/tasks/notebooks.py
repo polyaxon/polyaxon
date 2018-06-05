@@ -31,6 +31,8 @@ def projects_notebook_build(project_id):
         config=job.specification.run_exec,
         code_reference=job.code_reference)
 
+    job.build_job = build_job
+    job.save()
     if image_exists:
         # The image already exists, so we can start the experiment right away
         celery_app.send_task(
