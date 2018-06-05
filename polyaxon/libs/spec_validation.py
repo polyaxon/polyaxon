@@ -8,7 +8,8 @@ from polyaxon_schemas.polyaxonfile.specification import (
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,
-    PluginSpecification
+    PluginSpecification,
+    JobSpecification,
 )
 from polyaxon_schemas.settings import SettingsConfig
 
@@ -53,7 +54,7 @@ def validate_plugin_spec_config(config, raise_for_rest=False):
     try:
         spec = PluginSpecification.read(config)
     except (PolyaxonfileError, PolyaxonConfigurationError) as e:
-        message_error = 'Received non valid tensorboard specification config. %s' % e
+        message_error = 'Received non valid plugin specification config. %s' % e
         if raise_for_rest:
             raise ValidationError(message_error)
         else:
@@ -66,7 +67,20 @@ def validate_build_spec_config(config, raise_for_rest=False):
     try:
         spec = BuildSpecification.read(config)
     except (PolyaxonfileError, PolyaxonConfigurationError) as e:
-        message_error = 'Received non valid tensorboard specification config. %s' % e
+        message_error = 'Received non valid build specification config. %s' % e
+        if raise_for_rest:
+            raise ValidationError(message_error)
+        else:
+            raise DjangoValidationError(message_error)
+
+    return spec
+
+
+def validate_job_spec_config(config, raise_for_rest=False):
+    try:
+        spec = JobSpecification.read(config)
+    except (PolyaxonfileError, PolyaxonConfigurationError) as e:
+        message_error = 'Received non valid job specification config. %s' % e
         if raise_for_rest:
             raise ValidationError(message_error)
         else:
