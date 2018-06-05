@@ -3,7 +3,6 @@ import logging
 from django.conf import settings
 from django.db import IntegrityError
 
-from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment
@@ -32,7 +31,7 @@ def handle_events_resources(payload, persist):
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES)
 def events_handle_experiment_job_statuses(payload):
-    """Experiment jobs constants"""
+    """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
     _logger.debug('handling events status for job_uuid: %s', job_uuid)
@@ -53,7 +52,7 @@ def events_handle_experiment_job_statuses(payload):
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_PLUGIN_JOB_STATUSES)
 def events_handle_plugin_job_statuses(payload):
-    """Project Plugin jobs constants"""
+    """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
     project_uuid = details['labels']['project_uuid']
@@ -86,7 +85,7 @@ def events_handle_plugin_job_statuses(payload):
 
 @celery_app.task(name=EventsCeleryTasks.EVENTS_HANDLE_BUILD_JOB_STATUSES)
 def events_handle_build_job_statuses(payload):
-    """Project Plugin jobs constants"""
+    """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
     job_uuid = details['labels']['job_uuid']
