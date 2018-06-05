@@ -164,42 +164,42 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
     @property
     def scheduled_experiments(self):
         return self.experiments.filter(
-            experiment_status__status=ExperimentLifeCycle.SCHEDULED).distinct()
+            status__status=ExperimentLifeCycle.SCHEDULED).distinct()
 
     @property
     def succeeded_experiments(self):
         return self.experiments.filter(
-            experiment_status__status=ExperimentLifeCycle.SUCCEEDED).distinct()
+            status__status=ExperimentLifeCycle.SUCCEEDED).distinct()
 
     @property
     def failed_experiments(self):
         return self.experiments.filter(
-            experiment_status__status=ExperimentLifeCycle.FAILED).distinct()
+            status__status=ExperimentLifeCycle.FAILED).distinct()
 
     @property
     def stopped_experiments(self):
         return self.experiments.filter(
-            experiment_status__status=ExperimentLifeCycle.STOPPED).distinct()
+            status__status=ExperimentLifeCycle.STOPPED).distinct()
 
     @property
     def pending_experiments(self):
         return self.experiments.filter(
-            experiment_status__status__in=ExperimentLifeCycle.PENDING_STATUS).distinct()
+            status__status__in=ExperimentLifeCycle.PENDING_STATUS).distinct()
 
     @property
     def running_experiments(self):
         return self.experiments.filter(
-            experiment_status__status__in=ExperimentLifeCycle.RUNNING_STATUS).distinct()
+            status__status__in=ExperimentLifeCycle.RUNNING_STATUS).distinct()
 
     @property
     def done_experiments(self):
         return self.experiments.filter(
-            experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
+            status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
 
     @property
     def non_done_experiments(self):
         return self.experiments.exclude(
-            experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
+            status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
 
     @property
     def n_experiments_to_start(self):

@@ -36,7 +36,7 @@ def new_build_job_status_saved(sender, **kwargs):
     job = instance.job
     previous_status = job.last_status
     # Update job last_status
-    job.job_status = instance
+    job.status = instance
     job.save()
     auditor.record(event_type=BUILD_JOB_NEW_STATUS,
                    instance=job,

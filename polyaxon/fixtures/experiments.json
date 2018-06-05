@@ -36,7 +36,7 @@
             "kind": "experiment"
         },
         "original_experiment": null,
-        "experiment_status": 6,
+        "status": 6,
         "experiment_metric": 1,
         "code_reference": null
     }
@@ -67,7 +67,7 @@
             "kind": "experiment"
         },
         "original_experiment": null,
-        "experiment_status": 14,
+        "status": 14,
         "experiment_metric": 2,
         "code_reference": null
     }
@@ -98,7 +98,7 @@
             "kind": "experiment"
         },
         "original_experiment": null,
-        "experiment_status": 22,
+        "status": 22,
         "experiment_metric": null,
         "code_reference": null
     }
@@ -129,7 +129,7 @@
             "kind": "experiment"
         },
         "original_experiment": null,
-        "experiment_status": 29,
+        "status": 29,
         "experiment_metric": null,
         "code_reference": null
     }
@@ -374,7 +374,7 @@
             }
         },
         "original_experiment": null,
-        "experiment_status": 39,
+        "status": 39,
         "experiment_metric": null,
         "code_reference": null
     }
@@ -619,7 +619,7 @@
             }
         },
         "original_experiment": null,
-        "experiment_status": 37,
+        "status": 37,
         "experiment_metric": null,
         "code_reference": null
     }
@@ -1745,7 +1745,7 @@
         },
         "role": "master",
         "sequence": 1,
-        "job_status": 5,
+        "status": 5,
         "resources": 1
     }
 },
@@ -2456,7 +2456,7 @@
         },
         "role": "master",
         "sequence": 1,
-        "job_status": 10,
+        "status": 10,
         "resources": 2
     }
 },
@@ -3167,7 +3167,7 @@
         },
         "role": "master",
         "sequence": 1,
-        "job_status": 15,
+        "status": 15,
         "resources": null
     }
 },
@@ -3878,7 +3878,7 @@
         },
         "role": "master",
         "sequence": 1,
-        "job_status": 20,
+        "status": 20,
         "resources": null
     }
 },
@@ -4594,7 +4594,7 @@
         },
         "role": "master",
         "sequence": 1,
-        "job_status": 27,
+        "status": 27,
         "resources": null
     }
 },
@@ -5310,7 +5310,7 @@
         },
         "role": "worker",
         "sequence": 2,
-        "job_status": 28,
+        "status": 28,
         "resources": null
     }
 },
@@ -6026,7 +6026,7 @@
         },
         "role": "ps",
         "sequence": 3,
-        "job_status": 35,
+        "status": 35,
         "resources": null
     }
 },
@@ -6742,7 +6742,7 @@
         },
         "role": "master",
         "sequence": 1,
-        "job_status": 36,
+        "status": 36,
         "resources": null
     }
 },
@@ -7458,7 +7458,7 @@
         },
         "role": "worker",
         "sequence": 2,
-        "job_status": 37,
+        "status": 37,
         "resources": null
     }
 },
@@ -8174,7 +8174,7 @@
         },
         "role": "ps",
         "sequence": 3,
-        "job_status": 34,
+        "status": 34,
         "resources": null
     }
 },

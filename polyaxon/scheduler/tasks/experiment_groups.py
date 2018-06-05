@@ -48,7 +48,7 @@ def experiments_group_stop_experiments(experiment_group_id, pending, message=Non
             experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
     else:
         experiments = experiment_group.experiments.exclude(
-            experiment_status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
+            status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
         for experiment in experiments:
             if experiment.is_running:
                 celery_app.send_task(

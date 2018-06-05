@@ -53,4 +53,5 @@ class JobLifeCycle(BaseStatuses):
         SUCCEEDED: {CREATED, RUNNING, UNKNOWN, },
         FAILED: {CREATED, RUNNING, UNKNOWN, },
         STOPPED: set(VALUES),
+        UNKNOWN: set(VALUES),
     }

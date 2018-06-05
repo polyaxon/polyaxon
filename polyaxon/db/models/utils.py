@@ -99,7 +99,7 @@ class LastStatusMixin(object):
 
     e.g.
 
-    experiment_status = db.OneToOneField(
+    status = db.OneToOneField(
         'ExperimentStatus',
         related_name='+',
         blank=True,

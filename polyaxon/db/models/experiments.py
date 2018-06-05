@@ -92,7 +92,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         null=True,
         default=CloningStrategy.RESTART,
         choices=CloningStrategy.CHOICES)
-    experiment_status = models.OneToOneField(
+    status = models.OneToOneField(
         'db.ExperimentStatus',
         related_name='+',
         blank=True,
@@ -178,7 +178,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @property
     def last_status(self):
-        return self.experiment_status.status if self.experiment_status else None
+        return self.status.status if self.status else None
 
     @property
     def last_metric(self):

@@ -55,7 +55,7 @@ class TensorboardJob(PluginJobBase):
         'db.Project',
         on_delete=models.CASCADE,
         related_name='tensorboard_jobs')
-    job_status = models.OneToOneField(
+    status = models.OneToOneField(
         'db.TensorboardJobStatus',
         related_name='+',
         blank=True,
@@ -102,7 +102,7 @@ class NotebookJob(PluginJobBase):
         'db.Project',
         on_delete=models.CASCADE,
         related_name='notebook_jobs')
-    job_status = models.OneToOneField(
+    status = models.OneToOneField(
         'db.NotebookJobStatus',
         related_name='+',
         blank=True,

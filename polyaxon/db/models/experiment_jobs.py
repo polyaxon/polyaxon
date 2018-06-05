@@ -22,7 +22,7 @@ class ExperimentJob(Job):
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
-    job_status = models.OneToOneField(
+    status = models.OneToOneField(
         'db.ExperimentJobStatus',
         related_name='+',
         blank=True,

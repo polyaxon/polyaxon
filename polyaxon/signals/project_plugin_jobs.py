@@ -63,7 +63,7 @@ def new_tensorboard_job_status(sender, **kwargs):
     job = instance.job
     previous_status = job.last_status
     # Update job last_status
-    job.job_status = instance
+    job.status = instance
     job.save()
     auditor.record(event_type=TENSORBOARD_NEW_STATUS,
                    instance=job,
@@ -96,7 +96,7 @@ def new_notebook_job_status(sender, **kwargs):
     job = instance.job
     previous_status = job.last_status
     # Update job last_status
-    job.job_status = instance
+    job.status = instance
     job.save()
     auditor.record(event_type=NOTEBOOK_NEW_STATUS,
                    instance=job,

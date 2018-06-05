@@ -32,7 +32,7 @@ class BuildJob(Job):
         blank=True,
         null=True,
         related_name='+')
-    job_status = models.OneToOneField(
+    status = models.OneToOneField(
         'db.BuildJobStatus',
         related_name='+',
         blank=True,

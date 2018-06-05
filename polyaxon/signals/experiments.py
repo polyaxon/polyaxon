@@ -111,7 +111,7 @@ def new_experiment_job_status(sender, **kwargs):
 
     if created:
         # update job last_status
-        job.job_status = instance
+        job.status = instance
         job.save()
 
     # check if the new status is done to remove the containers from the monitors
@@ -144,7 +144,7 @@ def new_experiment_status(sender, **kwargs):
 
     if created:
         # update experiment last_status
-        experiment.experiment_status = instance
+        experiment.status = instance
         experiment.save()
         auditor.record(event_type=EXPERIMENT_NEW_STATUS,
                        instance=experiment,

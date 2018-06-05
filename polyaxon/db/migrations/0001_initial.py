@@ -545,7 +545,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='tensorboardjob',
-            name='job_status',
+            name='status',
             field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.TensorboardJobStatus'),
         ),
         migrations.AddField(
@@ -610,7 +610,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='notebookjob',
-            name='job_status',
+            name='status',
             field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.NotebookJobStatus'),
         ),
         migrations.AddField(
@@ -630,7 +630,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='experimentjob',
-            name='job_status',
+            name='status',
             field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.ExperimentJobStatus'),
         ),
         migrations.AddField(
@@ -665,7 +665,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='experiment',
-            name='experiment_status',
+            name='status',
             field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.ExperimentStatus'),
         ),
         migrations.AddField(
@@ -700,7 +700,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='buildjob',
-            name='job_status',
+            name='status',
             field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.BuildJobStatus'),
         ),
         migrations.AddField(

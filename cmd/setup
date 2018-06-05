@@ -40,5 +40,5 @@ if [ $? -eq 0 ]; then
     $DIR/manage migrate
     $DIR/manage migrate
 
-    $DIR/manage loaddata polyaxon/fixtures/users.json polyaxon/fixtures/authtoken.json polyaxon/fixtures/clusters.json polyaxon/fixtures/projects.json polyaxon/fixtures/experiment_groups.json polyaxon/fixtures/jobs.json polyaxon/fixtures/experiments.json
+    # $DIR/manage loaddata polyaxon/fixtures/users.json polyaxon/fixtures/authtoken.json polyaxon/fixtures/clusters.json polyaxon/fixtures/projects.json polyaxon/fixtures/experiment_groups.json polyaxon/fixtures/jobs.json polyaxon/fixtures/experiments.json
 fi

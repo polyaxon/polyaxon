@@ -62,7 +62,7 @@ class Job(DiffModel, LastStatusMixin):
 
     @property
     def last_status(self):
-        return self.job_status.status if self.job_status else None
+        return self.status.status if self.status else None
 
     @property
     def started_at(self):
