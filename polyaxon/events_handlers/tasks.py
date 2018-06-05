@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 from django.db import IntegrityError
 
+from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment
@@ -100,6 +101,8 @@ def events_handle_build_job_statuses(payload):
 
     # Set the new status
     try:
+        if JobLifeCycle.is_done(payload['status']):
+            build_job.refresh_from_db()
         build_job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
         # Due to concurrency this could happen, we just ignore it
