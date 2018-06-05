@@ -109,9 +109,9 @@ def archive_repo(repo, repo_name):
     if not os.path.exists(settings.REPOS_ARCHIVE_ROOT):
         os.makedirs(settings.REPOS_ARCHIVE_ROOT)
 
-    archive_name = '{}.tar'.format(repo_name)
+    archive_name = '{}.tar.gz'.format(repo_name)
     with open(os.path.join(settings.REPOS_ARCHIVE_ROOT, archive_name), 'wb') as fp:
-        repo.archive(fp)
+        repo.archive(fp, format='tgz')
 
     return settings.REPOS_ARCHIVE_ROOT, archive_name
 
