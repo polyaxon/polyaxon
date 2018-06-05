@@ -112,15 +112,33 @@ class SettingConfig(object):
         return self._env
 
     @property
-    def is_testing(self):
+    def is_testing_env(self):
         if TESTING:
             return True
         if self.env == 'testing':
             return True
         return False
 
+    @property
+    def is_local_env(self):
+        if self.env == 'local':
+            return True
+        return False
+
+    @property
+    def is_staging_env(self):
+        if self.env == 'staging':
+            return True
+        return False
+
+    @property
+    def is_production_env(self):
+        if self.env == 'production':
+            return True
+        return False
+
     def setup_auditor_services(self):
-        if not self.is_testing:
+        if not self.is_testing_env:
             import activitylogs
             import auditor
             import tracker

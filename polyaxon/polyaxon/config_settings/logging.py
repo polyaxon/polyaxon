@@ -72,7 +72,7 @@ LOGGING = {
 }
 
 RAVEN_CONFIG = {}
-if not config.is_testing:
+if not (config.is_testing_env and config.is_local_env):
     RAVEN_CONFIG['dsn'] = config.platform_dns
     RAVEN_CONFIG['transport'] = "raven.transport.threaded_requests.ThreadedRequestsHTTPTransport"
     RAVEN_CONFIG['release'] = config.get_string('POLYAXON_CHART_VERSION',
