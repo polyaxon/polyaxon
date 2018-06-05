@@ -100,7 +100,7 @@ def events_handle_build_job_statuses(payload):
         return
 
     # Set the new status
-    _logger.warning('Current status %s'.format(build_job.last_status))
+    _logger.warning('Current status %s' % build_job.last_status)
     try:
         build_job.set_status(status=payload['status'], message=payload['message'], details=details)
     except IntegrityError:
