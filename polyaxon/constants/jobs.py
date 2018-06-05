@@ -49,7 +49,7 @@ class JobLifeCycle(BaseStatuses):
     TRANSITION_MATRIX = {
         CREATED: {None, },
         BUILDING: {CREATED, },
-        RUNNING: {CREATED, UNKNOWN},
+        RUNNING: {CREATED, BUILDING, UNKNOWN},
         SUCCEEDED: {CREATED, RUNNING, UNKNOWN, },
         FAILED: {CREATED, RUNNING, UNKNOWN, },
         STOPPED: set(VALUES),
