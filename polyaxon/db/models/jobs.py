@@ -82,14 +82,14 @@ class Job(DiffModel, LastStatusMixin):
 
     def _set_status(self, status_model, logger, status, message=None, details=None):
         current_status = self.last_status
-        # We should not update constants anymore
-        if JobLifeCycle.is_done(current_status):
+        if self.is_done:
+            # We should not update statuses anymore
             logger.info(
                 'Received a new status `{}` for job `{}`. '
                 'But the job is already done with status `{}`'.format(
                     status, self.unique_name, current_status))
             return False
-        if status != current_status:
+        if JobLifeCycle.can_transition(status_from=current_status, status_to=status):
             # Add new status to the job
             status_model.objects.create(job=self,
                                         status=status,
