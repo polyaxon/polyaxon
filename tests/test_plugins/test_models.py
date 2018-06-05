@@ -8,7 +8,8 @@ from django.test.client import MULTIPART_CONTENT
 
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
-from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
+from db.models.notebooks import NotebookJob, NotebookJobStatus
+from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest, BaseViewTest

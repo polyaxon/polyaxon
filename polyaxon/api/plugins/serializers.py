@@ -1,6 +1,7 @@
 from rest_framework import fields, serializers
 
-from db.models.plugins import NotebookJob, TensorboardJob
+from db.models.notebooks import NotebookJob
+from db.models.tensorboards import TensorboardJob
 from libs.spec_validation import validate_plugin_spec_config
 
 

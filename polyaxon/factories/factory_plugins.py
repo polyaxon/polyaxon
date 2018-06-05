@@ -2,7 +2,8 @@ from faker import Factory as FakerFactory
 
 import factory
 
-from db.models.plugins import NotebookJob, TensorboardJob
+from db.models.notebooks import NotebookJob
+from db.models.tensorboards import TensorboardJob
 from factories.factory_users import UserFactory
 from factories.fixtures import plugin_spec_parsed_content
 

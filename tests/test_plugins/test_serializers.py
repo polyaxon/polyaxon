@@ -1,7 +1,8 @@
 import pytest
 
 from api.plugins.serializers import NotebookJobSerializer, TensorboardJobSerializer
-from db.models.plugins import NotebookJob, TensorboardJob
+from db.models.notebooks import NotebookJob
+from db.models.tensorboards import TensorboardJob
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.fixtures import plugin_spec_parsed_content
 from tests.utils import BaseTest

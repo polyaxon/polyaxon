@@ -6,7 +6,8 @@ from django.dispatch import receiver
 import auditor
 
 from constants.jobs import JobLifeCycle
-from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
+from db.models.notebooks import NotebookJob, NotebookJobStatus
+from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from event_manager.events.notebook import (
     NOTEBOOK_FAILED,
     NOTEBOOK_NEW_STATUS,

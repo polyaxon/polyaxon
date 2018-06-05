@@ -5,7 +5,8 @@ from django.conf import settings
 from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_jobs import ExperimentJobStatus
-from db.models.plugins import NotebookJobStatus, TensorboardJobStatus
+from db.models.notebooks import NotebookJobStatus
+from db.models.tensorboards import TensorboardJobStatus
 from events_handlers.tasks import (
     events_handle_build_job_statuses,
     events_handle_experiment_job_statuses,

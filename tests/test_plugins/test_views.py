@@ -8,7 +8,8 @@ from rest_framework import status
 from api.utils.views import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
-from db.models.plugins import NotebookJob, NotebookJobStatus, TensorboardJob, TensorboardJobStatus
+from db.models.notebooks import NotebookJob, NotebookJobStatus
+from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from db.models.projects import Project
 from dockerizer.tasks import build_project_notebook
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
