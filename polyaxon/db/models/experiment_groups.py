@@ -225,7 +225,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         for early_stopping_metric in self.early_stopping:
             comparison = (
                 'gte' if Optimization.maximize(early_stopping_metric.optimization) else 'lte')
-            metric_filter = 'experiment_metric__values__{}__{}'.format(
+            metric_filter = 'metric__values__{}__{}'.format(
                 early_stopping_metric.metric, comparison)
             filters.append({metric_filter: early_stopping_metric.value})
         if filters:
@@ -237,7 +237,7 @@ class ExperimentGroup(DiffModel, DescribableModel, LastStatusMixin):
         if experiment_ids:
             query = query.filter(id__in=experiment_ids)
         annotation = {
-            metric: KeyTransform(metric, 'experiment_metric__values')
+            metric: KeyTransform(metric, 'metric__values')
         }
         return query.annotate(**annotation)
 

@@ -176,7 +176,7 @@ def new_experiment_metric(sender, **kwargs):
     instance = kwargs['instance']
     experiment = instance.experiment
     # update experiment last_metric
-    experiment.experiment_metric = instance
+    experiment.metric = instance
     experiment.save()
     auditor.record(event_type=EXPERIMENT_NEW_METRIC,
                    instance=experiment)

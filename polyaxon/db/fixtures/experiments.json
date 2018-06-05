@@ -37,7 +37,7 @@
         },
         "original_experiment": null,
         "status": 6,
-        "experiment_metric": 1,
+        "metric": 1,
         "code_reference": null
     }
 },
@@ -68,7 +68,7 @@
         },
         "original_experiment": null,
         "status": 14,
-        "experiment_metric": 2,
+        "metric": 2,
         "code_reference": null
     }
 },
@@ -99,7 +99,7 @@
         },
         "original_experiment": null,
         "status": 22,
-        "experiment_metric": null,
+        "metric": null,
         "code_reference": null
     }
 },
@@ -130,7 +130,7 @@
         },
         "original_experiment": null,
         "status": 29,
-        "experiment_metric": null,
+        "metric": null,
         "code_reference": null
     }
 },
@@ -375,7 +375,7 @@
         },
         "original_experiment": null,
         "status": 39,
-        "experiment_metric": null,
+        "metric": null,
         "code_reference": null
     }
 },
@@ -620,7 +620,7 @@
         },
         "original_experiment": null,
         "status": 37,
-        "experiment_metric": null,
+        "metric": null,
         "code_reference": null
     }
 },

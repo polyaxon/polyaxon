@@ -99,7 +99,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
         null=True,
         editable=True,
         on_delete=models.SET_NULL)
-    experiment_metric = models.OneToOneField(
+    metric = models.OneToOneField(
         'db.ExperimentMetric',
         related_name='+',
         blank=True,
@@ -182,7 +182,7 @@ class Experiment(DiffModel, DescribableModel, LastStatusMixin):
 
     @property
     def last_metric(self):
-        return self.experiment_metric.values if self.experiment_metric else None
+        return self.metric.values if self.metric else None
 
     @property
     def finished_at(self):
