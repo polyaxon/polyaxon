@@ -2,13 +2,13 @@ import logging
 
 from django.db import models
 
-from db.models.jobs import Job, JobStatus
+from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from polyaxon_schemas.utils import TaskType
 
 logger = logging.getLogger('db.experiments')
 
 
-class ExperimentJob(Job):
+class ExperimentJob(AbstractJob):
     """A model that represents job related to an experiment"""
     experiment = models.ForeignKey(
         'db.Experiment',
@@ -59,13 +59,13 @@ class ExperimentJob(Job):
                                 details=details)
 
 
-class ExperimentJobStatus(JobStatus):
+class ExperimentJobStatus(AbstractJobStatus):
     """A model that represents job status at certain time."""
     job = models.ForeignKey(
         'db.ExperimentJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(JobStatus.Meta):
+    class Meta(AbstractJobStatus.Meta):
         app_label = 'db'
         verbose_name_plural = 'Experiment Job Statuses'

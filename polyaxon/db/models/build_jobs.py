@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from db.models.jobs import Job, JobStatus
+from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from docker_images.images_tags import LATEST_IMAGE_TAG
 from libs.spec_validation import validate_build_spec_config
 from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
@@ -13,7 +13,7 @@ from polyaxon_schemas.polyaxonfile.specification import BuildSpecification
 logger = logging.getLogger('db.build_jobs')
 
 
-class BuildJob(Job):
+class BuildJob(AbstractJob):
     """A model that represents the configuration for build job."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -107,13 +107,13 @@ class BuildJob(Job):
                                        code_reference=code_reference)
 
 
-class BuildJobStatus(JobStatus):
+class BuildJobStatus(AbstractJobStatus):
     """A model that represents build job status at certain time."""
     job = models.ForeignKey(
         'db.BuildJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(JobStatus.Meta):
+    class Meta(AbstractJobStatus.Meta):
         app_label = 'db'
         verbose_name_plural = 'Build Job Statuses'

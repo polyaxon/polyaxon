@@ -5,14 +5,14 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from db.models.jobs import Job, JobStatus
+from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from libs.spec_validation import validate_plugin_spec_config
 from polyaxon_schemas.polyaxonfile.specification import PluginSpecification
 
 logger = logging.getLogger('db.plugins')
 
 
-class PluginJobBase(Job):
+class PluginJobBase(AbstractJob):
     """A base model for plugin jobs."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -137,25 +137,25 @@ class NotebookJob(PluginJobBase):
                                 details=details)
 
 
-class TensorboardJobStatus(JobStatus):
+class TensorboardJobStatus(AbstractJobStatus):
     """A model that represents tensorboard job status at certain time."""
     job = models.ForeignKey(
         'db.TensorboardJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(JobStatus.Meta):
+    class Meta(AbstractJobStatus.Meta):
         app_label = 'db'
         verbose_name_plural = 'Tensorboard Job Statuses'
 
 
-class NotebookJobStatus(JobStatus):
+class NotebookJobStatus(AbstractJobStatus):
     """A model that represents notebook job status at certain time."""
     job = models.ForeignKey(
         'db.NotebookJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(JobStatus.Meta):
+    class Meta(AbstractJobStatus.Meta):
         app_label = 'db'
         verbose_name_plural = 'Notebook Job Statuses'
