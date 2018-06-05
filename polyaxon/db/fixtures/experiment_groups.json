@@ -1,6 +1,6 @@
 [
 {
-    "model": "experiment_groups.experimentgroup",
+    "model": "db.experimentgroup",
     "pk": 1,
     "fields": {
         "description": null,

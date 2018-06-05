@@ -1,6 +1,6 @@
 [
 {
-    "model": "jobs.jobresources",
+    "model": "db.jobresources",
     "pk": 1,
     "fields": {
         "cpu": {
@@ -14,7 +14,7 @@
     }
 },
 {
-    "model": "jobs.jobresources",
+    "model": "db.jobresources",
     "pk": 2,
     "fields": {
         "cpu": {

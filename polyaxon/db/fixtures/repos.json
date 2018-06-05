@@ -1,6 +1,6 @@
 [
 {
-    "model": "repos.repo",
+    "model": "db.repo",
     "pk": 1,
     "fields": {
         "created_at": "2017-12-24T17:18:51.002Z",

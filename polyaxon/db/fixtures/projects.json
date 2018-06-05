@@ -1,6 +1,6 @@
 [
 {
-    "model": "projects.project",
+    "model": "db.project",
     "pk": 1,
     "fields": {
         "description": "Classify pictures of cats and dogs",
@@ -15,7 +15,7 @@
     }
 },
 {
-    "model": "projects.project",
+    "model": "db.project",
     "pk": 2,
     "fields": {
         "description": "Classic dataset of handwritten images",
@@ -30,7 +30,7 @@
     }
 },
 {
-    "model": "projects.project",
+    "model": "db.project",
     "pk": 3,
     "fields": {
         "description": "Titanic: Machine Learning from Disaster. Predict survival on the Titanic and get familiar with ML basics",
@@ -45,7 +45,7 @@
     }
 },
 {
-    "model": "projects.project",
+    "model": "db.project",
     "pk": 4,
     "fields": {
         "description": "Predict sales prices and practice feature engineering, RFs, and gradient boosting",
