@@ -3,9 +3,8 @@ version: 1
 
 kind: experiment
 
-settings:
-  logging:
-    level: INFO
+logging:
+  level: INFO
 
 environment:
   resources:
@@ -42,7 +41,9 @@ environment:
           requests: 512
           limits: 1024
 
-run:
+build:
   image: my_image
+
+run:
   cmd: video_prediction_train --model=DNA --num_masks=1
 ...

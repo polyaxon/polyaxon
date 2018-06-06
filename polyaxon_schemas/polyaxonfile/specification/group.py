@@ -9,7 +9,6 @@ from polyaxon_schemas.polyaxonfile.parser import Parser
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.experiment import ExperimentSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.settings import SettingsConfig
 from polyaxon_schemas.utils import SearchAlgorithms
 
 
@@ -18,16 +17,27 @@ class GroupSpecification(BaseSpecification):
 
     SECTIONS:
         VERSION: defines the version of the file to be parsed and validated.
-        SETTINGS: defines the logging, run type and concurrent runs.
+        LOGGING: defines the logging
+        HYPER_PARAMS: hyper params tuning and concurrent runs.
         ENVIRONMENT: defines the run environment for experiment.
         DECLARATIONS: variables/modules that can be reused.
-        RUN_EXEC: defines the run step where the user can set a docker image to execute
+        RUN: defines the run step where the user can set a docker image to execute
         MODEL: defines the model to use based on the declarative API.
         TRAIN: defines how to train a model and how to read the data.
         EVAL: defines how to evaluate a model and how to read the data.
     """
 
     _SPEC_KIND = BaseSpecification._GROUP
+
+    HEADER_SECTIONS = ExperimentSpecification.HEADER_SECTIONS + (
+        BaseSpecification.HP_TUNING,
+    )
+    REQUIRED_SECTIONS = ExperimentSpecification.REQUIRED_SECTIONS + (
+        BaseSpecification.HP_TUNING,
+    )
+    POSSIBLE_SECTIONS = ExperimentSpecification.POSSIBLE_SECTIONS + (
+        BaseSpecification.HP_TUNING,
+    )
 
     def _extra_validation(self):
         if not self.matrix:
@@ -43,17 +53,18 @@ class GroupSpecification(BaseSpecification):
     def get_experiment_spec(self, matrix_declaration):
         """Returns and experiment spec for this group spec and the given matrix declaration."""
         parsed_data = Parser.parse(self, self._data, matrix_declaration)
-        settings = SettingsConfig.get_experiment_settings(parsed_data[self.SETTINGS])
-        del parsed_data[self.SETTINGS]
-        if settings:
-            parsed_data[self.SETTINGS] = settings
+        del parsed_data[self.HP_TUNING]
         validator.validate(spec=self, data=parsed_data)
         return ExperimentSpecification(values=[parsed_data, {'kind': self._EXPERIMENT}])
 
     @cached_property
+    def hptuning(self):
+        return self.headers[self.HP_TUNING]
+
+    @cached_property
     def matrix(self):
-        if self.settings:
-            return self.settings.matrix
+        if self.hptuning:
+            return self.hptuning.matrix
         return None
 
     @cached_property
@@ -70,19 +81,19 @@ class GroupSpecification(BaseSpecification):
     @cached_property
     def early_stopping(self):
         early_stopping = None
-        if self.settings:
-            early_stopping = self.settings.early_stopping
+        if self.hptuning:
+            early_stopping = self.hptuning.early_stopping
         return early_stopping or []
 
     @cached_property
     def search_algorithm(self):
-        return self.settings.search_algorithm
+        return self.hptuning.search_algorithm
 
     @cached_property
     def concurrency(self):
         concurrency = None
-        if self.settings:
-            concurrency = self.settings.concurrency
+        if self.hptuning:
+            concurrency = self.hptuning.concurrency
         return concurrency or 1
 
     @cached_property
@@ -93,11 +104,11 @@ class GroupSpecification(BaseSpecification):
             'concurrency': self.concurrency
         }
         if SearchAlgorithms.is_grid(self.search_algorithm):
-            if self.settings.grid_search and self.settings.grid_search.n_experiments:
-                definition['n_experiments'] = self.settings.grid_search.n_experiments
+            if self.hptuning.grid_search and self.hptuning.grid_search.n_experiments:
+                definition['n_experiments'] = self.hptuning.grid_search.n_experiments
         if SearchAlgorithms.is_random(self.search_algorithm):
-            if self.settings.random_search and self.settings.random_search.n_experiments:
-                definition['n_experiments'] = self.settings.random_search.n_experiments
+            if self.hptuning.random_search and self.hptuning.random_search.n_experiments:
+                definition['n_experiments'] = self.hptuning.random_search.n_experiments
 
         return definition
 

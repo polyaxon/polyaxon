@@ -3,10 +3,9 @@ version: 1
 
 kind: experiment
 
-settings:
-  logging:
-    level: INFO
-    path: /mypath/project1
+logging:
+  level: INFO
+  path: /mypath/project1
 
 environment:
   resources:

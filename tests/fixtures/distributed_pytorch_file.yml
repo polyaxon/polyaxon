@@ -3,10 +3,9 @@ version: 1
 
 kind: experiment
 
-settings:
-  logging:
-    level: INFO
-    path: /mypath/project1
+logging:
+  level: INFO
+  path: /mypath/project1
 
 environment:
   resources:
@@ -31,7 +30,9 @@ environment:
           requests: 300
           limits: 300
 
-run:
+build:
   image: my_image
+
+run:
   cmd: video_prediction_train --model=DNA --num_masks=1
 ...

@@ -15,7 +15,6 @@ from marshmallow import (
 
 from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.logging import LoggingConfig, LoggingSchema
 from polyaxon_schemas.matrix import MatrixConfig
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import (
@@ -378,8 +377,7 @@ def validate_matrix(matrix, is_grid_search=False, is_bo=False):
     return matrix_data
 
 
-class SettingsSchema(Schema):
-    logging = fields.Nested(LoggingSchema, allow_none=True)
+class HPTuningSchema(Schema):
     seed = fields.Int(allow_none=True)
     matrix = fields.Dict(allow_none=True)
     concurrency = fields.Int(allow_none=True)
@@ -394,11 +392,11 @@ class SettingsSchema(Schema):
 
     @post_load
     def make(self, data):
-        return SettingsConfig(**data)
+        return HPTuningConfig(**data)
 
     @post_dump
     def unmake(self, data):
-        return SettingsConfig.remove_reduced_attrs(data)
+        return HPTuningConfig.remove_reduced_attrs(data)
 
     @validates_schema
     def validate_search_algorithm(self, data):
@@ -417,13 +415,12 @@ class SettingsSchema(Schema):
         validate_matrix(data.get('matrix'), is_grid_search=is_grid_search, is_bo=is_bo)
 
 
-class SettingsConfig(BaseConfig):
-    SCHEMA = SettingsSchema
-    IDENTIFIER = 'settings'
+class HPTuningConfig(BaseConfig):
+    SCHEMA = HPTuningSchema
+    IDENTIFIER = 'hptuning'
     REDUCED_ATTRIBUTES = ['grid_search', 'random_search', 'hyperband', 'bo']
 
     def __init__(self,
-                 logging=LoggingConfig(),
                  seed=None,
                  matrix=None,
                  concurrency=1,
@@ -432,7 +429,6 @@ class SettingsConfig(BaseConfig):
                  hyperband=None,
                  bo=None,
                  early_stopping=None):
-        self.logging = logging
         self.seed = seed
         matrix = validate_matrix(matrix,
                                  is_grid_search=grid_search is not None,
@@ -449,27 +445,11 @@ class SettingsConfig(BaseConfig):
         self.early_stopping = early_stopping
 
     def to_dict(self, humanize_values=False):
-        results = super(SettingsConfig, self).to_dict(humanize_values=humanize_values)
+        results = super(HPTuningConfig, self).to_dict(humanize_values=humanize_values)
         if not results.get('matrix'):
             return results
         results['matrix'] = {k: v.to_dict() for k, v in six.iteritems(results['matrix'])}
         return results
-
-    @classmethod
-    def get_experiment_settings(cls, data):
-        _data = {}
-        logging = data.get('logging')
-        if logging:
-            _data['logging'] = logging
-        early_stopping = data.get('early_stopping')
-        condition = (
-            early_stopping and
-            (EarlyStoppingPolicy.stop_experiment(early_stopping) or
-             EarlyStoppingPolicy.stop_all(early_stopping)))
-        if condition:
-            _data['early_stopping'] = early_stopping
-
-        return _data or None
 
     @cached_property
     def search_algorithm(self):

@@ -6,15 +6,17 @@ import os
 from unittest import TestCase
 
 from polyaxon_schemas.bridges import NoOpBridgeConfig
+from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.environments import (
     EnvironmentConfig,
     K8SResourcesConfig,
     PodResourcesConfig,
-    RunConfig,
-    SessionConfig
+    SessionConfig,
+    TFRunConfig
 )
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.graph import GraphConfig
+from polyaxon_schemas.hptuning import EarlyStoppingMetricConfig, HPTuningConfig
 from polyaxon_schemas.logging import LoggingConfig
 from polyaxon_schemas.losses import AbsoluteDifferenceConfig, MeanSquaredErrorConfig
 from polyaxon_schemas.matrix import MatrixConfig
@@ -28,8 +30,7 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     TensorflowSpecification
 )
 from polyaxon_schemas.processing.pipelines import TFRecordImagePipelineConfig
-from polyaxon_schemas.run_exec import RunExecConfig
-from polyaxon_schemas.settings import EarlyStoppingMetricConfig, SettingsConfig
+from polyaxon_schemas.run_exec import RunConfig
 from polyaxon_schemas.utils import Frameworks, SearchAlgorithms, TaskType
 
 
@@ -46,10 +47,13 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.settings is None
+        assert spec.logging is None
+        assert spec.build is None
+        assert spec.run is None
         assert spec.environment is None
         assert spec.framework is None
         assert spec.is_runnable
+        assert spec.is_experiment
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert isinstance(spec.model, RegressorConfig)
         assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
@@ -66,10 +70,13 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_generator_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.settings is None
+        assert spec.logging is None
+        assert spec.build is None
+        assert spec.run is None
         assert spec.environment is None
         assert spec.framework is None
         assert spec.is_runnable
+        assert spec.is_experiment
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert isinstance(spec.model, GeneratorConfig)
         assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
@@ -84,16 +91,15 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/advanced_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_runnable
+        assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
         assert spec.environment.tensorflow.delay_workers_by_global_step is True
-        assert isinstance(spec.environment.tensorflow.run_config, RunConfig)
+        assert isinstance(spec.environment.tensorflow.run_config, TFRunConfig)
         assert spec.environment.tensorflow.run_config.tf_random_seed == 100
         assert spec.environment.tensorflow.run_config.save_summary_steps == 100
         assert spec.environment.tensorflow.run_config.save_checkpoints_secs == 60
@@ -154,16 +160,15 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/advanced_file_with_custom_configs_and_resources.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert isinstance(spec.logging, LoggingConfig)
+        assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.TENSORFLOW
         assert spec.environment.tensorflow.n_workers == 5
         assert spec.environment.tensorflow.n_ps == 10
         assert spec.environment.tensorflow.delay_workers_by_global_step is True
-        assert isinstance(spec.environment.tensorflow.run_config, RunConfig)
+        assert isinstance(spec.environment.tensorflow.run_config, TFRunConfig)
         assert spec.environment.tensorflow.run_config.tf_random_seed == 100
         assert spec.environment.tensorflow.run_config.save_summary_steps == 100
         assert spec.environment.tensorflow.run_config.save_checkpoints_secs == 60
@@ -265,17 +270,18 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings.matrix['lr'], MatrixConfig)
-        assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
-        assert spec.settings.matrix['lr'].to_dict() == {
+        assert spec.is_group
+        assert isinstance(spec.hptuning.matrix['lr'], MatrixConfig)
+        assert isinstance(spec.hptuning.matrix['loss'], MatrixConfig)
+        assert spec.hptuning.matrix['lr'].to_dict() == {
             'logspace': {'start': 0.01, 'stop': 0.1, 'num': 5}}
-        assert spec.settings.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
+        assert spec.hptuning.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 10
-        assert isinstance(spec.settings, SettingsConfig)
-        assert spec.settings.concurrency == 2
+        assert isinstance(spec.hptuning, HPTuningConfig)
+        assert spec.hptuning.concurrency == 2
         assert spec.search_algorithm == SearchAlgorithms.GRID
-        assert spec.settings.early_stopping is None
+        assert spec.hptuning.early_stopping is None
         assert spec.early_stopping == []
 
         assert spec.experiments_def == {
@@ -305,15 +311,16 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/matrix_file_with_int_float_types.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings.matrix['param1'], MatrixConfig)
-        assert isinstance(spec.settings.matrix['param2'], MatrixConfig)
-        assert spec.settings.matrix['param1'].to_dict() == {'values': [1, 2]}
-        assert spec.settings.matrix['param2'].to_dict() == {'values': [3.3, 4.4]}
+        assert spec.is_group
+        assert isinstance(spec.hptuning.matrix['param1'], MatrixConfig)
+        assert isinstance(spec.hptuning.matrix['param2'], MatrixConfig)
+        assert spec.hptuning.matrix['param1'].to_dict() == {'values': [1, 2]}
+        assert spec.hptuning.matrix['param2'].to_dict() == {'values': [3.3, 4.4]}
         assert spec.matrix_space == 4
-        assert isinstance(spec.settings, SettingsConfig)
-        assert spec.settings.concurrency == 2
+        assert isinstance(spec.hptuning, HPTuningConfig)
+        assert spec.hptuning.concurrency == 2
         assert spec.search_algorithm == SearchAlgorithms.GRID
-        assert spec.settings.early_stopping is None
+        assert spec.hptuning.early_stopping is None
         assert spec.early_stopping == []
 
         assert spec.experiments_def == {
@@ -339,19 +346,20 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings.matrix['lr'], MatrixConfig)
-        assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
-        assert spec.settings.matrix['lr'].to_dict() == {
+        assert spec.is_group
+        assert isinstance(spec.hptuning.matrix['lr'], MatrixConfig)
+        assert isinstance(spec.hptuning.matrix['loss'], MatrixConfig)
+        assert spec.hptuning.matrix['lr'].to_dict() == {
             'logspace': {'start': 0.01, 'stop': 0.1, 'num': 5}}
-        assert spec.settings.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
+        assert spec.hptuning.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 10
-        assert isinstance(spec.settings, SettingsConfig)
-        assert spec.settings.concurrency == 2
-        assert spec.settings.random_search.n_experiments == 5
-        assert spec.early_stopping == spec.settings.early_stopping
-        assert len(spec.settings.early_stopping) == 1
-        assert isinstance(spec.settings.early_stopping[0], EarlyStoppingMetricConfig)
+        assert isinstance(spec.hptuning, HPTuningConfig)
+        assert spec.hptuning.concurrency == 2
+        assert spec.hptuning.random_search.n_experiments == 5
+        assert spec.early_stopping == spec.hptuning.early_stopping
+        assert len(spec.hptuning.early_stopping) == 1
+        assert isinstance(spec.hptuning.early_stopping[0], EarlyStoppingMetricConfig)
 
         assert spec.experiments_def == {
             'search_algorithm': SearchAlgorithms.RANDOM,
@@ -382,17 +390,18 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath('tests/fixtures/matrix_file_ignored_n_experiments.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings.matrix['lr'], MatrixConfig)
-        assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
-        assert spec.settings.matrix['lr'].to_dict() == {
+        assert spec.is_group
+        assert isinstance(spec.hptuning.matrix['lr'], MatrixConfig)
+        assert isinstance(spec.hptuning.matrix['loss'], MatrixConfig)
+        assert spec.hptuning.matrix['lr'].to_dict() == {
             'logspace': {'start': 0.01, 'stop': 0.1, 'num': 5}}
-        assert spec.settings.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
+        assert spec.hptuning.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 10
-        assert isinstance(spec.settings, SettingsConfig)
-        assert spec.settings.concurrency == 2
+        assert isinstance(spec.hptuning, HPTuningConfig)
+        assert spec.hptuning.concurrency == 2
         assert spec.search_algorithm == SearchAlgorithms.RANDOM
-        assert spec.settings.random_search.n_experiments == 300
+        assert spec.hptuning.random_search.n_experiments == 300
         assert spec.early_stopping == []
 
         assert spec.experiments_def == {
@@ -423,9 +432,10 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.settings is not None
-        assert isinstance(spec.settings.matrix['loss'], MatrixConfig)
-        assert spec.settings.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
+        assert spec.is_group
+        assert spec.hptuning is not None
+        assert isinstance(spec.hptuning.matrix['loss'], MatrixConfig)
+        assert spec.hptuning.matrix['loss'].to_dict() == {'values': ['MeanSquaredError',
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 2
 
@@ -449,36 +459,39 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.settings is None
+        assert spec.logging is None
+        assert spec.is_experiment
+        assert isinstance(spec.build, BuildConfig)
+        assert isinstance(spec.run, RunConfig)
         assert spec.is_runnable
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.model is None
-        run_exec = spec.run_exec
-        assert isinstance(run_exec, RunExecConfig)
-        assert run_exec.cmd == "video_prediction_train --model=DNA --num_masks=1"
+        run = spec.run
+        assert isinstance(run, RunConfig)
+        assert run.cmd == "video_prediction_train --model=DNA --num_masks=1"
 
     def test_run_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings.matrix['model'], MatrixConfig)
-        assert spec.settings.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
+        assert spec.is_group
+        assert isinstance(spec.hptuning.matrix['model'], MatrixConfig)
+        assert spec.hptuning.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert spec.matrix_space == 3
-        assert isinstance(spec.settings, SettingsConfig)
+        assert isinstance(spec.hptuning, HPTuningConfig)
         declarations = spec.matrix_declaration_test
         spec = spec.get_experiment_spec(declarations)
         assert spec.is_runnable
         assert spec.environment is None
-        assert spec.settings is not None
-        assert spec.settings.logging is not None
+        assert spec.logging is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.model is None
-        run_exec = spec.run_exec
-        assert isinstance(run_exec, RunExecConfig)
+        run = spec.run
+        assert isinstance(run, RunConfig)
         declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
-        assert run_exec.cmd == ('video_prediction_train '
+        assert run.cmd == ('video_prediction_train '
                                 '--model="{model}" '
                                 '--num_masks={num_masks}').format(
             **declarations
@@ -488,27 +501,27 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_sampling_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings.matrix['model'], MatrixConfig)
-        assert spec.settings.matrix['learning_rate'].to_dict() == {
+        assert spec.is_group
+        assert isinstance(spec.hptuning.matrix['model'], MatrixConfig)
+        assert spec.hptuning.matrix['learning_rate'].to_dict() == {
             'normal': {'loc': 0, 'scale': 0.9}}
-        assert spec.settings.matrix['dropout'].to_dict() == {
+        assert spec.hptuning.matrix['dropout'].to_dict() == {
             'qloguniform': {'high': 0.8, 'low': 0, 'q': 0.1}}
-        assert spec.settings.matrix['activation'].to_dict() == {
+        assert spec.hptuning.matrix['activation'].to_dict() == {
             'pvalues': [['relu', 0.1], ['sigmoid', 0.8]]}
-        assert spec.settings.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
-        assert isinstance(spec.settings, SettingsConfig)
+        assert spec.hptuning.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
+        assert isinstance(spec.hptuning, HPTuningConfig)
         declarations = spec.matrix_declaration_test
         spec = spec.get_experiment_spec(declarations)
         assert spec.is_runnable
         assert spec.environment is None
-        assert spec.settings is not None
-        assert spec.settings.logging is not None
+        assert spec.logging is not None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.model is None
-        run_exec = spec.run_exec
-        assert isinstance(run_exec, RunExecConfig)
+        run = spec.run
+        assert isinstance(run, RunConfig)
         declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
-        assert run_exec.cmd == ('video_prediction_train '
+        assert run.cmd == ('video_prediction_train '
                                 '--model="{model}" '
                                 '--num_masks={num_masks}').format(
             **declarations
@@ -519,9 +532,8 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_tensorflow_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert isinstance(spec.logging, LoggingConfig)
+        assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.environment.node_selectors is None
@@ -597,14 +609,13 @@ class TestPolyaxonfile(TestCase):
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)
 
-    def test_distributed_tensorflow_passes(self):
+    def test_distributed_tensorflow_passes_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/distributed_tensorflow_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
@@ -715,9 +726,8 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_horovod_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.HOROVOD
@@ -773,9 +783,8 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_horovod_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
@@ -848,9 +857,8 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_pytorch_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.PYTORCH
@@ -906,9 +914,8 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_pytorch_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
@@ -981,9 +988,8 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_mxnet_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.framework == Frameworks.MXNET
@@ -1066,9 +1072,8 @@ class TestPolyaxonfile(TestCase):
             'tests/fixtures/distributed_mxnet_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert isinstance(spec.settings, SettingsConfig)
-        assert isinstance(spec.settings.logging, LoggingConfig)
-        assert spec.settings.matrix is None
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.is_runnable
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_master_task'}
@@ -1178,27 +1183,44 @@ class TestPolyaxonfile(TestCase):
             tuple(spec.environment.mxnet.default_ps_node_selectors.items()),
             tuple(spec.environment.mxnet.ps_node_selectors[0].items())}
 
-    def test_plugin_job_with_node_selectors(self):
+    def test_notebook_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/plugin_with_node_selector.yml'))
+            'tests/fixtures/notebook_with_node_selector.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.is_plugin is True
-        assert spec.settings is None
+        assert spec.is_notebook
+        assert spec.is_notebook is True
+        assert spec.logging is None
+        assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
-        assert spec.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
+        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_notebook_jobs'}
+        assert spec.node_selectors == {'polyaxon.com': 'node_for_notebook_jobs'}
+
+    def test_tensorboard_job_with_node_selectors(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/tensorboard_with_node_selector.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.is_tensorboard
+        assert spec.is_tensorboard is True
+        assert spec.logging is None
+        assert isinstance(spec.build, BuildConfig)
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_tensorboard_jobs'}
+        assert spec.node_selectors == {'polyaxon.com': 'node_for_tensorboard_jobs'}
 
     def test_run_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/run_with_node_selector.yml'))
         spec = plxfile.specification
         assert spec.version == 1
-        assert spec.is_job is True
-        assert spec.settings is None
+        assert spec.is_job
+        assert spec.logging is None
+        assert isinstance(spec.build, BuildConfig)
+        assert isinstance(spec.run, RunConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
-        assert spec.node_selectors == {'polyaxon.com': 'node_for_plugin_jobs'}
+        assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_jobs'}
+        assert spec.node_selectors == {'polyaxon.com': 'node_for_jobs'}
 
     def test_build_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
@@ -1206,7 +1228,8 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_build is True
-        assert spec.settings is None
+        assert spec.logging is None
+        assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.node_selectors == {'polyaxon.com': 'node_for_build_jobs'}
         assert spec.node_selectors == {'polyaxon.com': 'node_for_build_jobs'}

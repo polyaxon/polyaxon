@@ -17,10 +17,10 @@ from polyaxon_schemas.environments import (
     PodResourcesConfig,
     PytorchClusterConfig,
     PytorchConfig,
-    RunConfig,
     SessionConfig,
     TensorflowClusterConfig,
-    TensorflowConfig
+    TensorflowConfig,
+    TFRunConfig
 )
 from polyaxon_schemas.utils import TaskType
 
@@ -176,19 +176,19 @@ class TestEnvironmentsConfigs(TestCase):
             'keep_checkpoint_max': 5,
             'keep_checkpoint_every_n_hours': 10000,
         }
-        config = RunConfig.from_dict(config_dict)
+        config = TFRunConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add session config
         config_dict['session'] = SessionConfig().to_dict()
-        config = RunConfig.from_dict(config_dict)
+        config = TFRunConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add cluster config
         config_dict['cluster'] = TensorflowClusterConfig(
             worker=[TaskType.WORKER], ps=[TaskType.PS]
         ).to_dict()
-        config = RunConfig.from_dict(config_dict)
+        config = TFRunConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
     def test_tensorflow_config(self):
@@ -201,7 +201,7 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add run config
-        config_dict['run_config'] = RunConfig().to_dict()
+        config_dict['run_config'] = TFRunConfig().to_dict()
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 

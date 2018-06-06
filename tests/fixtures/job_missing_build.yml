@@ -3,6 +3,6 @@ version: 1
 
 kind: job
 
-build:
-  image: foobar
+run:
+  cmd: test
 ...

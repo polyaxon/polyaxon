@@ -10,38 +10,54 @@ from polyaxon_schemas.polyaxonfile.specification import (
     BuildSpecification,
     ExperimentSpecification,
     JobSpecification,
-    PluginSpecification
+    NotebookSpecification,
+    TensorboardSpecification
 )
 from polyaxon_schemas.utils import TaskType
 
 
 class TestSpecifications(TestCase):
-    def test_plugin_specification_raises_for_invalid_run_section(self):
-        with self.assertRaises(PolyaxonConfigurationError):
-            PluginSpecification.read(os.path.abspath(
-                'tests/fixtures/plugin_missing_run_exec.yml'))
+    def test_notebook_specification_raises_for_invalid_run_section(self):
+        with self.assertRaises(PolyaxonfileError):
+            NotebookSpecification.read({'version': 1, 'kind': 'notebook'})
+
+        with self.assertRaises(PolyaxonfileError):
+            NotebookSpecification.read(os.path.abspath(
+                'tests/fixtures/notebook_run_exec_simple_file_with_cmd.yml'))
+
+    def test_tensorboard_specification_raises_for_invalid_run_section(self):
+        with self.assertRaises(PolyaxonfileError):
+            TensorboardSpecification.read({'version': 1, 'kind': 'tensorboard'})
 
         with self.assertRaises(PolyaxonConfigurationError):
-            PluginSpecification.read(os.path.abspath(
-                'tests/fixtures/plugin_run_exec_simple_file_with_cmd.yml'))
+            TensorboardSpecification.read(os.path.abspath(
+                'tests/fixtures/tensorboard_run_exec_simple_file_with_cmd.yml'))
 
-    def test_plugin_specification_raises_for_missing_build_section(self):
-        with self.assertRaises(PolyaxonConfigurationError):
-            BuildSpecification.read(os.path.abspath(
-                'tests/fixtures/missing_build.yml'))
+    def test_job_specification_raises_for_missing_build_section(self):
+        with self.assertRaises(PolyaxonfileError):
+            JobSpecification.read(os.path.abspath(
+                'tests/fixtures/job_missing_build.yml'))
 
     def test_job_specification_raises_for_missing_run_section(self):
-        with self.assertRaises(PolyaxonConfigurationError):
+        with self.assertRaises(PolyaxonfileError):
             JobSpecification.read(os.path.abspath(
                 'tests/fixtures/job_missing_run_exec.yml'))
 
-    def test_create_plugin_specification(self):
-        run_config = {'image': 'blabla'}
-        config = PluginSpecification.create_specification(run_config)
-        assert PluginSpecification.read(config).parsed_data == config
-        assert config['run'] == run_config
-        spec = PluginSpecification.create_specification(run_config, to_dict=False)
-        assert spec.run_exec.image == run_config['image']
+    def test_create_notebook_specification(self):
+        build_config = {'image': 'blabla'}
+        config = NotebookSpecification.create_specification(build_config)
+        assert NotebookSpecification.read(config).parsed_data == config
+        assert config['build'] == build_config
+        spec = NotebookSpecification.create_specification(build_config, to_dict=False)
+        assert spec.build.image == build_config['image']
+
+    def test_create_tensorboard_specification(self):
+        build_config = {'image': 'blabla'}
+        config = TensorboardSpecification.create_specification(build_config)
+        assert TensorboardSpecification.read(config).parsed_data == config
+        assert config['build'] == build_config
+        spec = TensorboardSpecification.create_specification(build_config, to_dict=False)
+        assert spec.build.image == build_config['image']
 
     def test_create_build_specification(self):
         # Normal build config
@@ -61,12 +77,18 @@ class TestSpecifications(TestCase):
         assert spec.build.image == run_config['image']
 
     def test_create_job_specification(self):
-        run_config = {'image': 'blabla', 'cmd': 'some command'}
-        config = JobSpecification.create_specification(run_config)
+        build_config = {'image': 'blabla'}
+        run_config = {'cmd': 'some command'}
+        config = JobSpecification.create_specification(build_config=build_config,
+                                                       run_config=run_config)
         assert JobSpecification.read(config).parsed_data == config
         assert config['run'] == run_config
-        spec = JobSpecification.create_specification(run_config, to_dict=False)
-        assert spec.run_exec.image == run_config['image']
+        assert config['build'] == build_config
+        spec = JobSpecification.create_specification(build_config=build_config,
+                                                     run_config=run_config,
+                                                     to_dict=False)
+        assert spec.build.image == build_config['image']
+        assert spec.run.cmd == run_config['cmd']
 
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(
@@ -77,7 +99,8 @@ class TestSpecifications(TestCase):
         content = {
             'version': 1,
             'kind': 'experiment',
-            'run': {'image': 'my_image',  'cmd': 'train'}
+            'build': {'image': 'my_image'},
+            'run': {'cmd': 'train'}
         }
         spec = ExperimentSpecification.read(content)
         assert spec.declarations is None
@@ -100,8 +123,8 @@ class TestSpecifications(TestCase):
         assert spec.environment.resources.gpu.to_dict() == env['environment']['resources']['gpu']
 
         # Patch with unsupported spec
-        matrix = {'settings': {'matrix': {'lr': {'values': [0.1, 0.2]}}}}
-        with self.assertRaises(PolyaxonConfigurationError):
+        matrix = {'hptuning': {'matrix': {'lr': {'values': [0.1, 0.2]}}}}
+        with self.assertRaises(PolyaxonfileError):
             spec.patch(values=matrix)
 
         # Patch with unsupported spec

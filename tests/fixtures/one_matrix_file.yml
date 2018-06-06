@@ -3,7 +3,7 @@ version: 1
 
 kind: group
 
-settings:
+hptuning:
   matrix:
     loss:
       values: [MeanSquaredError, AbsoluteDifference]

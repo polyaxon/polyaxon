@@ -1,72 +1,42 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from collections import Mapping
-
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
-from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.run_exec import RunExecConfig
+from polyaxon_schemas.polyaxonfile.specification.build import BuildSpecification
 
 
-class PluginSpecification(BaseSpecification):
-    """The polyaxonfile specification for plugins.
+class NotebookSpecification(BuildSpecification):
+    """The polyaxonfile specification for notebooks.
 
     SECTIONS:
         VERSION: defines the version of the file to be parsed and validated.
         ENVIRONMENT: defines the run environment for experiment.
-        RUN_EXEC: defines the run step where the user can set a docker image to execute
+        BUILD: defines the build step where the user can set a docker image definition
     """
-    _SPEC_KIND = BaseSpecification._PLUGIN
+    _SPEC_KIND = BaseSpecification._NOTEBOOK  # pylint:disable=protected-access
 
     def _extra_validation(self):
-        condition = (self.RUN_EXEC not in self.validated_data or
-                     not self.validated_data[self.RUN_EXEC] or
-                     self.validated_data[self.RUN_EXEC].cmd is not None)
-        if condition:
+        try:
+            super(NotebookSpecification, self)._extra_validation()
+        except PolyaxonConfigurationError:
             raise PolyaxonConfigurationError(
-                'Plugin specification must contain a valid `run` section.')
+                'NotebookSpecification must contain a valid `build` section.')
 
-    @cached_property
-    def parsed_data(self):
-        return self._parsed_data
 
-    @cached_property
-    def validated_data(self):
-        return self._validated_data
+class TensorboardSpecification(BuildSpecification):
+    """The polyaxonfile specification for tensorboard.
 
-    @cached_property
-    def run_exec(self):
-        return self.validated_data[self.RUN_EXEC]
+    SECTIONS:
+        VERSION: defines the version of the file to be parsed and validated.
+        ENVIRONMENT: defines the run environment for experiment.
+        BUILD: defines the build step where the user can set a docker image definition
+    """
+    _SPEC_KIND = BaseSpecification._TENSORBOARD  # pylint:disable=protected-access
 
-    @cached_property
-    def environment(self):
-        return self.validated_data.get(self.ENVIRONMENT, None)
-
-    @cached_property
-    def resources(self):
-        return self.environment.resources if self.environment else None
-
-    @cached_property
-    def node_selectors(self):
-        return self.environment.node_selectors if self.environment else None
-
-    @classmethod
-    def create_specification(cls, run_config, to_dict=True):
-        if isinstance(run_config, RunExecConfig):
-            config = run_config.to_light_dict()
-        elif isinstance(run_config, Mapping):
-            config = RunExecConfig.from_dict(run_config)
-            config = config.to_light_dict()
-        else:
+    def _extra_validation(self):
+        try:
+            super(TensorboardSpecification, self)._extra_validation()
+        except PolyaxonConfigurationError:
             raise PolyaxonConfigurationError(
-                'Create specification expects a dict or an instance of RunExecConfig.')
-
-        specification = {
-            cls.VERSION: 1,
-            cls.KIND: cls._SPEC_KIND,
-            cls.RUN_EXEC: config
-        }
-        if to_dict:
-            return specification
-        return cls.read(specification)
+                'NotebookSpecification must contain a valid `build` section.')

@@ -3,10 +3,9 @@ version: 1
 
 kind: experiment
 
-settings:
-  logging:
-    level: INFO
-    path: /mypath/project1
+logging:
+  level: INFO
+  path: /mypath/project1
 
 environment:
   resources:
@@ -41,7 +40,9 @@ environment:
       - index: 2
         polyaxon.com: node_for_worker_task_2
 
-run:
+build:
   image: my_image
+
+run:
   cmd: video_prediction_train --model=DNA --num_masks=1
 ...

@@ -21,9 +21,10 @@ class BaseSpecification(object):
     _EXPERIMENT = 'experiment'
     _GROUP = 'group'
     _JOB = 'job'
-    _PLUGIN = 'plugin'
+    _NOTEBOOK = 'notebook'
+    _TENSORBOARD = 'tensorboard'
     _BUILD = 'build'
-    _KINDS = {_EXPERIMENT, _GROUP, _JOB, _PLUGIN, _BUILD}
+    _KINDS = {_EXPERIMENT, _GROUP, _JOB, _NOTEBOOK, _TENSORBOARD, _BUILD}
 
     _SPEC_KIND = None
 
@@ -32,21 +33,23 @@ class BaseSpecification(object):
 
     VERSION = 'version'
     KIND = 'kind'
-    SETTINGS = 'settings'
+    LOGGING = 'logging'
+    HP_TUNING = 'hptuning'
     DECLARATIONS = 'declarations'
     ENVIRONMENT = 'environment'
-    RUN_EXEC = 'run'
+    RUN = 'run'
     BUILD = 'build'
     MODEL = 'model'
     TRAIN = 'train'
     EVAL = 'eval'
 
     SECTIONS = (
-        VERSION, KIND, ENVIRONMENT, DECLARATIONS, SETTINGS, BUILD, RUN_EXEC, MODEL, TRAIN, EVAL
+        VERSION, KIND, ENVIRONMENT, DECLARATIONS, LOGGING, HP_TUNING,
+        BUILD, RUN, MODEL, TRAIN, EVAL
     )
 
     HEADER_SECTIONS = (
-        VERSION, KIND, SETTINGS
+        VERSION, KIND, LOGGING
     )
 
     GRAPH_SECTIONS = (
@@ -55,6 +58,10 @@ class BaseSpecification(object):
 
     REQUIRED_SECTIONS = (
         VERSION, KIND
+    )
+
+    POSSIBLE_SECTIONS = (
+        VERSION, KIND, LOGGING
     )
 
     OPERATORS = {
@@ -115,9 +122,16 @@ class BaseSpecification(object):
                 "The specification used `{}` is incompatible with the kind `{}`.".format(
                     self.__class__.__name__, data[self.KIND]))
         for key in set(six.iterkeys(data)) - set(self.SECTIONS):
-            raise PolyaxonfileError("Unexpected section `{}` in Polyaxonfile version `{}`. "
-                                    "Please check the Polyaxonfile specification "
-                                    "for this version.".format(key, 'v1'))
+            raise PolyaxonfileError(
+                "Unexpected section `{}` in Polyaxonfile version `{}`. "
+                "Please check the Polyaxonfile specification "
+                "for this version.".format(key, data[self.VERSION]))
+
+        for key in set(six.iterkeys(data)) - set(self.POSSIBLE_SECTIONS):
+            raise PolyaxonfileError(
+                "Unexpected section `{}` for specification kind `{}` version `{}`. "
+                "Please check the Polyaxonfile specification "
+                "for this version.".format(key, self._SPEC_KIND, data[self.VERSION]))
 
         for key in self.REQUIRED_SECTIONS:
             if key not in data:
@@ -152,8 +166,12 @@ class BaseSpecification(object):
         return self.kind == self._JOB
 
     @cached_property
-    def is_plugin(self):
-        return self.kind == self._PLUGIN
+    def is_notebook(self):
+        return self.kind == self._NOTEBOOK
+
+    @cached_property
+    def is_tensorboard(self):
+        return self.kind == self._TENSORBOARD
 
     @cached_property
     def is_build(self):
@@ -184,11 +202,11 @@ class BaseSpecification(object):
         return self.headers[self.KIND]
 
     @cached_property
-    def settings(self):
-        return self.headers.get(self.SETTINGS, None)
+    def logging(self):
+        return self.headers.get(self.LOGGING, None)
 
     @cached_property
     def log_level(self):
-        if self.settings and self.settings.logging:
-            return self.settings.logging.level
+        if self.logging:
+            return self.logging.level
         return 'INFO'

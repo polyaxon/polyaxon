@@ -6,16 +6,15 @@ from unittest import TestCase
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.logging import LoggingConfig
-from polyaxon_schemas.settings import (
+from polyaxon_schemas.hptuning import (
     BOConfig,
     EarlyStoppingMetricConfig,
     GaussianProcessConfig,
     GridSearchConfig,
+    HPTuningConfig,
     HyperbandConfig,
     RandomSearchConfig,
     SearchMetricConfig,
-    SettingsConfig,
     UtilityFunctionConfig
 )
 from polyaxon_schemas.utils import (
@@ -182,51 +181,50 @@ class TestSettingConfigs(TestCase):
         config = BOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-    def test_settings_config_raise_conditions(self):
+    def test_hptuning_config_raise_conditions(self):
         config_dict = {
-            'logging': LoggingConfig().to_dict(),
             'concurrency': 2,
         }
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-        config = SettingsConfig.from_dict(config.to_dict())
+        config = HPTuningConfig.from_dict(config.to_dict())
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add random_search without matrix should raise
         config_dict['random_search'] = {'n_experiments': 10}
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         # Add a matrix definition with 2 methods
         config_dict['matrix'] = {
             'lr': {'values': [1, 2, 3], 'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
         }
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         # Using a distribution with random search should pass
         config_dict['matrix'] = {
             'lr': {'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
         }
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add matrix definition should pass
         config_dict['matrix'] = {
             'lr': {'values': [1, 2, 3]}
         }
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add grid_search should raise
         config_dict['grid_search'] = {'n_experiments': 10}
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         # Remove random_search should pass
         del config_dict['random_search']
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Adding a distribution should raise
@@ -234,13 +232,13 @@ class TestSettingConfigs(TestCase):
             'lr': {'pvalues': [(1, 0.3), (2, 0.3), (3, 0.3)]}
         }
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         # Updating the matrix should pass
         config_dict['matrix'] = {
             'lr': {'values': [1, 2, 3]}
         }
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add hyperband should raise
@@ -252,11 +250,11 @@ class TestSettingConfigs(TestCase):
             'metric': SearchMetricConfig(name='loss', optimization=Optimization.MINIMIZE).to_dict()
         }
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         # Remove grid_search should pass
         del config_dict['grid_search']
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add early stopping
@@ -274,7 +272,7 @@ class TestSettingConfigs(TestCase):
                 'policy': EarlyStoppingPolicy.EXPERIMENT
             }
         ]
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Add bo should raise
@@ -294,11 +292,11 @@ class TestSettingConfigs(TestCase):
             }
         }
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         # Remove hyperband should pass
         del config_dict['hyperband']
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
         # Using non uniform distribution should raise
@@ -307,29 +305,28 @@ class TestSettingConfigs(TestCase):
             'lr': {'pvalues': [[0.1, 0.1], [0.2, 0.9]]}
         }
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         config_dict['matrix'] = {
             'lr': {'normal': [0.1, 0.2]}
         }
         with self.assertRaises(ValidationError):
-            SettingsConfig.from_dict(config_dict)
+            HPTuningConfig.from_dict(config_dict)
 
         # Using uniform distribution should raise
         config_dict['matrix'] = {
             'lr': {'uniform': {'low': 0.1, 'high': 0.2}}
         }
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
     def test_random_and_grid_search_without_n_experiments(self):
         config_dict = {
-            'logging': LoggingConfig().to_dict(),
             'concurrency': 1,
             'matrix': {'lr': {'values': [1, 2, 3]}},
             'random_search': {},
             'early_stopping': [],
             'seed': None
         }
-        config = SettingsConfig.from_dict(config_dict)
+        config = HPTuningConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

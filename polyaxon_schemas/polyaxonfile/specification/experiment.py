@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     HorovodSpecification,
@@ -9,44 +8,37 @@ from polyaxon_schemas.polyaxonfile.specification.frameworks import (
     PytorchSpecification,
     TensorflowSpecification
 )
+from polyaxon_schemas.polyaxonfile.specification.job import JobSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
 from polyaxon_schemas.utils import Frameworks, TaskType
 
 
-class ExperimentSpecification(BaseSpecification):
+class ExperimentSpecification(JobSpecification):
     """The Base polyaxonfile specification (parsing and validation of Polyaxonfiles/Configurations).
 
     SECTIONS:
         VERSION: defines the version of the file to be parsed and validated.
-        SETTINGS: defines the logging, run type and concurrent runs.
+        LOGGING: defines the logging
         ENVIRONMENT: defines the run environment for experiment.
         DECLARATIONS: variables/modules that can be reused.
-        RUN_EXEC: defines the run step where the user can set a docker image to execute
-        MODEL: defines the model to use based on the declarative API.
-        TRAIN: defines how to train a model and how to read the data.
-        EVAL: defines how to evaluate a modela how to read the data
+        BUILD: defines the build step where the user can set a docker image definition
+        RUN: defines the run step where the user can run a command
     """
-    _SPEC_KIND = BaseSpecification._EXPERIMENT
+    _SPEC_KIND = BaseSpecification._EXPERIMENT  # pylint:disable=protected-access
 
-    def _extra_validation(self):
-        if self.settings and self.settings.matrix:
-            raise PolyaxonConfigurationError(
-                'ExperimentSpecification cannot contain a `matrix` section, you should '
-                'use a GroupSpecification instead.')
-
-    @cached_property
-    def parsed_data(self):
-        return self._parsed_data
-
-    @cached_property
-    def validated_data(self):
-        return self._validated_data
+    POSSIBLE_SECTIONS = JobSpecification.POSSIBLE_SECTIONS + (
+        JobSpecification.DECLARATIONS,
+        JobSpecification.MODEL,
+        JobSpecification.TRAIN,
+        JobSpecification.EVAL
+    )
+    REQUIRED_SECTIONS = BaseSpecification.REQUIRED_SECTIONS
 
     @cached_property
     def is_runnable(self):
         """Checks of the sections required to run experiment exist."""
         sections = set(self.validated_data.keys())
-        condition = (self.RUN_EXEC in sections or
+        condition = (self.RUN in sections or
                      {self.MODEL, self.TRAIN} <= sections or
                      {self.MODEL, self.EVAL} <= sections)
         if condition:
@@ -54,16 +46,8 @@ class ExperimentSpecification(BaseSpecification):
         return False
 
     @cached_property
-    def run_exec(self):
-        return self.validated_data.get(self.RUN_EXEC, None)
-
-    @cached_property
     def model(self):
         return self.validated_data.get(self.MODEL, None)
-
-    @cached_property
-    def environment(self):
-        return self.validated_data.get(self.ENVIRONMENT, None)
 
     @cached_property
     def train(self):

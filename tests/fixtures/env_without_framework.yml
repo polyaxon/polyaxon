@@ -9,6 +9,8 @@ environment:
       requests: 1
       limits: 1
 
-run:
+build:
   image: test
+
+run:
   cmd: python test.py

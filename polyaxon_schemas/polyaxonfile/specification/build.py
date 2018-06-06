@@ -3,10 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
+from polyaxon_schemas.build import BuildConfig
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyaxonfile.specification.base import BaseSpecification
 from polyaxon_schemas.polyaxonfile.utils import cached_property
-from polyaxon_schemas.run_exec import BuildConfig, RunExecConfig
 
 
 class BuildSpecification(BaseSpecification):
@@ -19,14 +19,12 @@ class BuildSpecification(BaseSpecification):
     """
     _SPEC_KIND = BaseSpecification._BUILD
 
-    def _extra_validation(self):
-        if self.BUILD not in self.validated_data or not self.validated_data[self.BUILD]:
-            raise PolyaxonConfigurationError(
-                'Build specification must contain a valid `build` section.')
-
-    @cached_property
-    def parsed_data(self):
-        return self._parsed_data
+    REQUIRED_SECTIONS = BaseSpecification.REQUIRED_SECTIONS + (
+        BaseSpecification.BUILD,
+    )
+    POSSIBLE_SECTIONS = BaseSpecification.POSSIBLE_SECTIONS + (
+        BaseSpecification.ENVIRONMENT, BaseSpecification.BUILD,
+    )
 
     @cached_property
     def validated_data(self):
@@ -34,7 +32,7 @@ class BuildSpecification(BaseSpecification):
 
     @cached_property
     def build(self):
-        return self.validated_data[self.BUILD]
+        return self.validated_data.get(self.BUILD, None)
 
     @cached_property
     def environment(self):
@@ -50,11 +48,7 @@ class BuildSpecification(BaseSpecification):
 
     @classmethod
     def create_specification(cls, build_config, to_dict=True):
-        if isinstance(build_config, RunExecConfig):
-            config = build_config.to_light_dict()
-            config = BuildConfig.from_dict(config)
-            config = config.to_light_dict()
-        elif isinstance(build_config, BuildConfig):
+        if isinstance(build_config, BuildConfig):
             config = build_config.to_light_dict()
         elif isinstance(build_config, Mapping):
             config = BuildConfig.from_dict(build_config)

@@ -286,7 +286,7 @@ class SessionConfig(BaseConfig):
         self.inter_op_parallelism_threads = inter_op_parallelism_threads
 
 
-class RunSchema(Schema):
+class TFRunSchema(Schema):
     tf_random_seed = fields.Int(allow_none=True)
     save_summary_steps = fields.Int(allow_none=True)
     save_checkpoints_secs = fields.Int(allow_none=True)
@@ -302,16 +302,16 @@ class RunSchema(Schema):
 
     @post_load
     def make(self, data):
-        return RunConfig(**data)
+        return TFRunConfig(**data)
 
     @post_dump
     def unmake(self, data):
-        return RunConfig.remove_reduced_attrs(data)
+        return TFRunConfig.remove_reduced_attrs(data)
 
 
-class RunConfig(BaseConfig):
+class TFRunConfig(BaseConfig):
     IDENTIFIER = 'run'
-    SCHEMA = RunSchema
+    SCHEMA = TFRunSchema
 
     def __init__(self,
                  tf_random_seed=None,
@@ -336,7 +336,7 @@ class TensorflowSchema(Schema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
-    run_config = fields.Nested(RunSchema, allow_none=True)
+    run_config = fields.Nested(TFRunSchema, allow_none=True)
     default_worker_config = fields.Nested(SessionSchema, allow_none=True)
     default_worker_resources = fields.Nested(PodResourcesSchema, allow_none=True)
     default_worker_node_selectors = fields.Dict(allow_none=True)

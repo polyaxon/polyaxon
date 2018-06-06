@@ -1,17 +1,16 @@
 ---
 version: 1
 
-kind: plugin
+kind: notebook
 
-environment:
-  node_selectors:
-    polyaxon.com: node_for_plugin_jobs
-
-run:
+build:
   image: my_image
   build_steps:
     - pip install package1
   env_vars:
     - ['KEY1', 'en_US.UTF-8']
     - ['KEY2', 2]
+
+run:
+  cmd: video_prediction_train --model=DNA --num_masks=1
 ...

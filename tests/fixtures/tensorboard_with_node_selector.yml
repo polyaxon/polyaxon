@@ -1,7 +1,11 @@
 ---
 version: 1
 
-kind: experiment
+kind: tensorboard
+
+environment:
+  node_selectors:
+    polyaxon.com: node_for_tensorboard_jobs
 
 build:
   image: my_image
@@ -10,7 +14,4 @@ build:
   env_vars:
     - ['KEY1', 'en_US.UTF-8']
     - ['KEY2', 2]
-
-run:
-  cmd: video_prediction_train --model=DNA --num_masks=1
 ...

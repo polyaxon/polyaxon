@@ -3,17 +3,19 @@ version: 1
 
 kind: group
 
-settings:
+hptuning:
   logging:
     level: INFO
   matrix:
     model:
       values: [CDNA, DNA, STP]
 
-run:
+build:
   image: my_image
   install:
     - pip install some_lib
+
+run:
   cmd:
     if:
       cond: "'DNA' == '{{ model }}'"

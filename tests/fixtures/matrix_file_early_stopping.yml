@@ -3,7 +3,7 @@ version: 1
 
 kind: group
 
-settings:
+hptuning:
   concurrency: 2
   random_search:
     n_experiments: 5

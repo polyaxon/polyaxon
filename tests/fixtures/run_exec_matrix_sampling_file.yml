@@ -3,9 +3,10 @@ version: 1
 
 kind: group
 
-settings:
-  logging:
-    level: INFO
+logging:
+  level: INFO
+
+hptuning:
   matrix:
     learning_rate:
       normal: [0, 0.9]
@@ -16,10 +17,12 @@ settings:
     model:
       values: [CDNA, DNA, STP]
 
-run:
+build:
   image: my_image
   install:
     - pip install some_lib
+
+run:
   cmd:
     if:
       cond: "'DNA' == '{{ model }}'"
