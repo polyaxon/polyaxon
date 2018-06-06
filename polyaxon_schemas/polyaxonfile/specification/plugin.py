@@ -39,4 +39,4 @@ class TensorboardSpecification(BuildSpecification):
             super(TensorboardSpecification, self)._extra_validation()
         except PolyaxonConfigurationError:
             raise PolyaxonConfigurationError(
-                'NotebookSpecification must contain a valid `build` section.')
+                'TensorboardSpecification must contain a valid `build` section.')
