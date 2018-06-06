@@ -67,15 +67,15 @@ def notify_build_job_stopped(build_job):
 
     tensorboard_jobs = TensorboardJob.objects.filter(build_job=build_job)
     for tensorboard_job in tensorboard_jobs:
-        tensorboard_job.set_status(JobLifeCycle.FAILED, message=message, details=details)
+        tensorboard_job.set_status(JobLifeCycle.STOPPED, message=message, details=details)
 
     notebook_jobs = NotebookJob.objects.filter(build_job=build_job)
     for notebook_job in notebook_jobs:
-        notebook_job.set_status(JobLifeCycle.FAILED, message=message, details=details)
+        notebook_job.set_status(JobLifeCycle.STOPPED, message=message, details=details)
 
     experiments = Experiment.objects.filter(build_job=build_job)
     for experiment in experiments:
-        experiment.set_status(ExperimentLifeCycle.FAILED, message=message, details=details)
+        experiment.set_status(ExperimentLifeCycle.STOPPED, message=message, details=details)
 
 
 def notify_build_job_succeeded(build_job):
